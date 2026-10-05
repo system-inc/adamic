@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"fmt"
 	"math"
 	"strconv"
 
@@ -206,6 +207,21 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return ir.NumberConstant{Value: value}, nil
 		}
 		return nil, l.notYet(node, "Number."+name)
+	}
+	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration {
+		// A method read off its object, not called: JavaScript loses its this (unbound-method,
+		// docs/0.1.md). A call never comes here; callOrMethod lowers it.
+		object := "object"
+		if receiver := ast.SkipParentheses(access.Expression); ast.IsIdentifier(receiver) {
+			object = receiver.Text()
+		} else if receiver.Kind == ast.KindThisKeyword {
+			object = "this"
+		}
+		return nil, &Refused{
+			Where: l.program.Where(node),
+			What:  "a method read off its object, which loses its this when called (unbound-method)",
+			Fix:   fmt.Sprintf("wrap the call in an arrow function, which keeps its object: (value) => %s.%s(value)", object, name),
+		}
 	}
 	if receiver := l.checker.GetTypeAtLocation(access.Expression); checker.IsTupleType(receiver) || checker.IsTupleType(l.checker.GetNonNullableType(receiver)) {
 		// A tuple is held as an object of its elements, "0", "1", ..., read by index; its length and
