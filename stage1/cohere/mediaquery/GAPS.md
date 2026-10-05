@@ -85,7 +85,9 @@ On a `string | undefined`, `text?.length` reads `stage 0 can't lower optional ch
 
 **Around it:** the driver's count mode (main.ts) narrows `parsed.value.nodes` into a local and tests it for undefined.
 
-## 4. A tree with mutable child arrays is refused as cycle-capable
+## 4. A tree with mutable child arrays is refused as cycle-capable (closed)
+
+Closed by the cycle finder's relaxation for fresh writes (docs/memory.md): every push here is of a fresh node, so the program compiles and prints 2. The port's workaround (readonly lists grown by copying, below) is still in place.
 
 Not a NotYet: a rule of 0.1, the cycle finder's (`internal/lower/cycles.go`, docs/memory.md "Cycles"), which landed on main at 4ddd17f and refused this port as first written. A node whose children are a mutable array of nodes can be given itself (`root.nodes.push(root)`), a cycle reference counting can't free:
 
@@ -107,7 +109,9 @@ console.log(`${root.nodes.length}`);
 Adamic 0.1 refuses TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free; declare the elements weak, Weak<TreeNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly TreeNode[] (adamic/cycle-capable)        (Node prints 2)
 ```
 
-## 5. ... and so is a tree built from a local array of children
+## 5. ... and so is a tree built from a local array of children (closed)
+
+Closed the same way: the local array is made in `build`, which pushes into it before anything else holds it.
 
 The same rule refuses the way nearly every parser builds a tree bottom-up: collect the children in a local array, then make the node with them as `readonly nodes`, never writing the array again. The finder reads types, not what happens to a value, so the local `TreeNode[]` is cycle-capable whatever follows:
 
