@@ -1,0 +1,49 @@
+// An optional call on a method of a maybe-undefined object (reviewer R found p?.describe() crashed
+// lowering): undefined when the receiver is, the call otherwise, its arguments evaluated only then.
+class Point {
+	readonly x: number;
+	readonly next: Point | undefined;
+	constructor(x: number, next: Point | undefined) {
+		this.x = x;
+		this.next = next;
+	}
+	describe(): string {
+		return `p${this.x}`;
+	}
+	doubled(): number {
+		return this.x * 2;
+	}
+	positive(): boolean {
+		return this.x > 0;
+	}
+	moved(by: number): Point {
+		return new Point(this.x + by, undefined);
+	}
+	log(prefix: string): void {
+		console.log(`${prefix} ${this.x}`);
+	}
+	nextName(): string {
+		return `${this.next?.describe() ?? 'end'}`;
+	}
+}
+
+let evaluated = 0;
+function counted(value: number): number {
+	evaluated += 1;
+	return value;
+}
+
+function pick(x: number): Point | undefined {
+	return x >= 0 ? new Point(x, x > 1 ? new Point(x - 1, undefined) : undefined) : undefined;
+}
+
+for (const x of [3, 1, -1]) {
+	const p = pick(x);
+	const far = p?.moved(counted(10));
+	console.log(`${p?.describe()} ${p?.doubled()} ${p?.positive()} ${far?.describe()}`);
+	console.log(`${p?.describe() ?? 'none'} ${(p?.doubled() ?? -1) + 1} ${p?.next?.describe()} ${p?.nextName()}`);
+	p?.log(`log ${x}:`);
+	p?.next?.log('next:');
+	const moved = p?.moved(counted(5));
+	console.log(`${moved === undefined ? 'no move' : moved.describe()} evaluated ${evaluated}`);
+}

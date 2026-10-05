@@ -497,6 +497,15 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	expression = ast.SkipParentheses(expression)
 	switch expression.Kind {
 	case ast.KindCallExpression:
+		if callee := ast.SkipParentheses(expression.AsCallExpression().Expression); callee.Kind == ast.KindPropertyAccessExpression && callee.AsPropertyAccessExpression().QuestionDotToken != nil {
+			// receiver?.method(...) as a statement: the call when the receiver is there, whatever it
+			// returns.
+			call, receiver, err := l.methodCall(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: receiver}}, Then: []ir.Statement{ir.Evaluate{Value: call}}}}, nil
+		}
 		if l.isConsole(expression.AsCallExpression().Expression) {
 			statement, err := l.console(expression)
 			if err != nil {

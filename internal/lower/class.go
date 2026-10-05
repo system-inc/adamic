@@ -260,43 +260,102 @@ func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expressi
 
 // callOrMethod lowers a call to one of the module's functions, or to a method of one of its classes.
 func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
+	call, receiver, err := l.methodCall(node)
+	if err != nil || receiver == nil {
+		return call, err
+	}
+	// receiver?.method(...): undefined when the receiver is, and otherwise the call, whose result may
+	// now be undefined too.
+	returns := call.Type()
+	if returns == 0 {
+		return nil, l.notYet(node, "the value of an optional call to a method that returns nothing")
+	}
+	// The call first: a conditional is its first branch's type, and undefined alone is an object's.
+	return ir.Conditional{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: receiver}}, WhenTrue: fit(call, ir.Maybe(returns)), WhenNot: fit(ir.Undefined{}, ir.Maybe(returns))}, nil
+}
+
+// methodCall lowers a call to one of the module's functions, or to a method of one of its classes.
+// For receiver?.method(...), it's the call as if the receiver were there, and the receiver, which
+// the caller tests for undefined first: lowered once and read twice, so only a receiver whose reading
+// does nothing (a variable, this, a field of one) is taken, and the rest of a chain after a ?. isn't.
+func (l *lowering) methodCall(node *ast.Node) (ir.Expression, ir.Expression, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if callee.Kind != ast.KindPropertyAccessExpression {
-		return l.call(node)
+		call, err := l.call(node)
+		return call, nil, err
+	}
+	optional := callee.AsPropertyAccessExpression().QuestionDotToken != nil
+	if !optional && callee.Flags&ast.NodeFlagsOptionalChain != 0 {
+		return nil, nil, l.notYet(node, "an optional chain longer than one step")
 	}
 	method := l.checker.GetSymbolAtLocation(callee)
 	if method == nil || len(method.Declarations) == 0 || method.Declarations[0].Kind != ast.KindMethodDeclaration {
-		return l.call(node)
+		if optional {
+			return nil, nil, l.notYet(node, "an optional call to anything but a method of the module's classes")
+		}
+		call, err := l.call(node)
+		return call, nil, err
 	}
 	class := method.Declarations[0].Parent
 	declaration, isClass := l.classes[l.symbol(class.Name())]
 	if !isClass {
-		return nil, l.notYet(node, "a method of a class stage 0 doesn't have")
+		return nil, nil, l.notYet(node, "a method of a class stage 0 doesn't have")
 	}
 	receiver := callee.AsPropertyAccessExpression().Expression
+	receiverType := l.checker.GetTypeAtLocation(receiver)
+	if optional {
+		// The class is what the receiver is when it's there.
+		receiverType = l.checker.GetNonNullableType(receiverType)
+	}
 	// this.method() is the instantiation being lowered: this is the polymorphic this type there,
 	// which carries no type arguments of its own.
 	lowered := l.instance
 	if ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword || lowered == nil {
 		var err error
-		if lowered, err = l.instantiate(declaration, l.checker.GetTypeAtLocation(receiver), callee); err != nil {
-			return nil, err
+		if lowered, err = l.instantiate(declaration, receiverType, callee); err != nil {
+			return nil, nil, err
 		}
 	}
 	object, err := l.expression(receiver)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	arguments := []ir.Expression{object}
+	if optional && !readsOnly(object) {
+		return nil, nil, l.notYet(node, "an optional call on something other than a variable, this or a field of one (it would be evaluated twice)")
+	}
+	this := object
+	if optional {
+		// Where the call runs, the receiver is there.
+		this = ir.Defined{Value: object, Message: "TypeError: Cannot read properties of undefined (reading '" + callee.Name().Text() + "')"}
+	}
+	arguments := []ir.Expression{this}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		value, err := l.expression(argument)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 		arguments = append(arguments, value)
 	}
 	function := lowered.methods[callee.Name().Text()]
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
+	call := ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}
+	if !optional {
+		return call, nil, nil
+	}
+	return call, object, nil
+}
+
+// readsOnly reports whether evaluating an expression only reads: a variable, or a field of one (an
+// optional one too), so evaluating it twice with nothing between gives the same value.
+func readsOnly(expression ir.Expression) bool {
+	switch expression := expression.(type) {
+	case ir.Read:
+		return true
+	case ir.Property:
+		return readsOnly(expression.Object)
+	case ir.Defined:
+		return readsOnly(expression.Value)
+	}
+	return false
 }
 
 // setProperty lowers object.name = value, as a statement.

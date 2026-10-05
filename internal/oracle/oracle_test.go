@@ -124,6 +124,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/fresh_writes.a", true, false},
 	// The holder proof across calls: a helper's push judged where it's called.
 	{"internal/oracle/testdata/fresh_calls.a", true, false},
+	// An optional call on a method of a maybe-undefined object (reviewer R): every shape of result.
+	{"internal/oracle/testdata/optional_calls.a", true, false},
 	{"internal/oracle/testdata/weak_narrowed.a", true, false},
 	{"internal/oracle/testdata/exceptions.a", true, false},
 	{"internal/oracle/testdata/exceptions_uncaught.a", true, false},
