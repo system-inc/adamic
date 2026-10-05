@@ -197,6 +197,9 @@ static void free_one(void *value) {
 	case adamic_kind_number:
 	case adamic_kind_boolean:
 		break;
+	case adamic_kind_weak:
+		adamic_weak_dropped(value);
+		break;
 	case adamic_kind_map_iterator: {
 		// The iteration is over: the map may compact again.
 		adamic_map_iterator *iterator = value;
@@ -205,6 +208,8 @@ static void free_one(void *value) {
 		break;
 	}
 	}
+	// Anything weak that pointed here now points at nothing, before the memory can be anything else.
+	adamic_weak_forget(value);
 	deallocate(value);
 	ADAMIC_COUNT_FREE();
 }

@@ -3,13 +3,16 @@
 // class is expected, its fields in an order of its own, and stage 0 compiles it, so the literal's
 // fields must still be found by name. Reads and writes, of numbers, strings, arrays and objects,
 // through this, through ?., through compound assignment, and the generic class, which is looked up.
+// next is Weak: a mutable Point | undefined in a Point could close a cycle, which 0.1 refuses.
+
+import type { Weak } from 'adamic';
 
 class Point {
 	y = 0;
 	x = 0;
 	label = 'point'.repeat(1);
 	tags: string[] = [];
-	next: Point | undefined = undefined;
+	next: Weak<Point> = undefined;
 
 	move(by: number): number {
 		this.x += by;
@@ -42,7 +45,8 @@ reordered.label = `${reordered.label}:${literal.next?.x ?? -1}`;
 console.log(`${describe(literal)} ${describe(reordered)} ${literal.x + reordered.y}`);
 
 // Mixed in one array, read in one loop: the same place in the program sees both shapes in turn.
-const points: Point[] = [first, literal, second, reordered, new Point()];
+// readonly: a literal's move can be any closure, which could hold this array, so a mutable one is refused.
+const points: readonly Point[] = [first, literal, second, reordered, new Point()];
 let total = 0;
 const labels: string[] = [];
 for (const point of points) {

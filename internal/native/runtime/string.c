@@ -560,10 +560,22 @@ static adamic_string *pieces_join(pieces *list) {
 	return joined;
 }
 
+// units_piece is the string of the UTF-16 units from one index up to another, made from the units
+// already in hand, so it costs what it holds: slicing the string itself would walk it from the
+// start each time, and replaceAll, which cuts a piece per match, would be quadratic. The halves of a
+// pair that both fall inside are glued back into one character by the builder's finish.
+static adamic_string *units_piece(const unsigned *units, size_t from, size_t to) {
+	builder build = {NULL, 0, 0};
+	for (size_t index = from; index < to; index++) {
+		builder_unit(&build, units[index]);
+	}
+	return builder_finish(&build);
+}
+
 // substitution is ECMAScript's GetSubstitution for a match of a string pattern, from start to end
 // in UTF-16 units: $$ is $, $& the match, $` what precedes it and $' what follows. A string pattern
 // has no groups, so $1 and $< are themselves, like every other character.
-static adamic_string *substitution(const adamic_string *string, const adamic_string *replacement, double start, double end, double length) {
+static adamic_string *substitution(const unsigned *units, const adamic_string *replacement, size_t start, size_t end, size_t length) {
 	if (memchr(replacement->bytes, '$', replacement->length) == NULL) {
 		return adamic_retain((adamic_string *)replacement);
 	}
@@ -579,13 +591,13 @@ static adamic_string *substitution(const adamic_string *string, const adamic_str
 			expanded = adamic_string_slice_bytes(replacement, at, 1);
 			break;
 		case '&':
-			expanded = adamic_string_slice(string, start, end, true);
+			expanded = units_piece(units, start, end);
 			break;
 		case '`':
-			expanded = adamic_string_slice(string, 0, start, true);
+			expanded = units_piece(units, 0, start);
 			break;
 		case '\'':
-			expanded = adamic_string_slice(string, end, length, true);
+			expanded = units_piece(units, end, length);
 			break;
 		}
 		if (expanded == NULL) {
@@ -606,11 +618,11 @@ adamic_string *adamic_string_replace(const adamic_string *string, const adamic_s
 	size_t haystack_count, needle_count;
 	unsigned *haystack = to_units(string, &haystack_count), *needle = to_units(search, &needle_count);
 	pieces list = {NULL, 0, 0};
-	double kept = 0;
+	size_t kept = 0;
 	for (double found = unit_index_of(haystack, haystack_count, needle, needle_count, 0); found >= 0;) {
-		double end = found + (double)needle_count;
-		pieces_add(&list, adamic_string_slice(string, kept, found, true));
-		pieces_add(&list, substitution(string, replacement, found, end, (double)haystack_count));
+		size_t end = (size_t)found + needle_count;
+		pieces_add(&list, units_piece(haystack, kept, (size_t)found));
+		pieces_add(&list, substitution(haystack, replacement, (size_t)found, end, haystack_count));
 		kept = end;
 		if (!all) {
 			break;
@@ -619,7 +631,7 @@ adamic_string *adamic_string_replace(const adamic_string *string, const adamic_s
 		size_t next = (size_t)found + (needle_count == 0 ? 1 : needle_count);
 		found = next > haystack_count ? -1 : unit_index_of(haystack, haystack_count, needle, needle_count, next);
 	}
-	pieces_add(&list, adamic_string_slice(string, kept, (double)haystack_count, true));
+	pieces_add(&list, units_piece(haystack, kept, haystack_count));
 	free(haystack);
 	free(needle);
 	return pieces_join(&list);

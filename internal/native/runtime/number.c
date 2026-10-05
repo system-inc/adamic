@@ -8,35 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// shortest_digits finds the fewest significant digits that read back as value (positive and
-// finite), and the decimal exponent of the first one: value is 0.d1d2d3... times 10^point.
-//
-// printf's %e rounds correctly, so its p-digit answer is the p-digit decimal closest to value, and
-// on an exact tie it takes the even one. The first p that round-trips through strtod is therefore
-// ECMAScript's choice: as few digits as possible, then the closest, then the even (ECMA-262,
-// Number::toString). That's plain rather than fast; the oracle's sweep is what says it's right, and
-// a faster algorithm has to pass the same sweep before it replaces this.
-static int shortest_digits(double value, char digits[18], int *point) {
-	char scientific[40];
-	for (int precision = 1; precision <= 17; precision++) {
-		snprintf(scientific, sizeof scientific, "%.*e", precision - 1, value);
-		if (strtod(scientific, NULL) == value) {
-			break;
-		}
-	}
-	int count = 0;
-	const char *cursor = scientific;
-	digits[count++] = *cursor++;
-	if (*cursor == '.') {
-		cursor++;
-		while (*cursor != 'e') {
-			digits[count++] = *cursor++;
-		}
-	}
-	*point = atoi(cursor + 1) + 1;
-	return count;
-}
-
 static size_t append(char *buffer, size_t length, const char *text) {
 	while (*text != '\0') {
 		buffer[length++] = *text++;
@@ -79,7 +50,11 @@ size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX])
 
 	char digits[18];
 	int point;
-	int count = shortest_digits(value, digits, &point);
+	// The fewest digits that read back, and the closest of those, from V8's own algorithm (dtoa.c).
+	// Asking printf for the closest p-digit decimal at each p, as this once did, isn't the same:
+	// just below a power of two the doubles are twice as dense, and the closest 16-digit decimal to
+	// 2 ** 976 doesn't read back where a farther one does, so it wrote 17 digits where Node writes 16.
+	int count = adamic_number_shortest_digits(value, digits, &point);
 
 	if (count <= point && point <= 21) {
 		// An integer: the digits, then zeros out to the point.

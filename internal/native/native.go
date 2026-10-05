@@ -98,6 +98,10 @@ func Build(source string, output string, options Options) error {
 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
 	arguments = append(arguments, "-ffp-contract=off")
+	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
+	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
+	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
+	arguments = append(arguments, "-fno-optimize-sibling-calls")
 	if options.Count {
 		arguments = append(arguments, "-DADAMIC_COUNT")
 	}
