@@ -4,7 +4,7 @@ The port beside this file is cohere's `internal/gitignore` (gitignore.go and glo
 
 Each program here typechecks under stage 0's options and runs on Node 24.21.0 with the output shown; stage 0 (main at 7055396) refuses it with `NotYet` at the place shown. None of them reached clang, and none compiled wrong.
 
-Three of the eight closed when the language-gaps stream landed on main at 80c3098 (gaps 5, 6 and 7), and the port went back to writing those places as the Go does. They stay below, marked closed, so the record is whole. The other five are open.
+Three of the first eight closed when the language-gaps stream landed on main at 80c3098 (gaps 5, 6 and 7), and the port went back to writing those places as the Go does. They stay below, marked closed, so the record is whole. The other five are open, and so is gap 9, found when the driver began reading its cases.
 
 ## 1. `String.fromCharCode` and `String.fromCodePoint`
 
@@ -172,9 +172,31 @@ The Go returns two results in several places: `strings.CutPrefix`'s `(after, fou
 
 **Around it:** named fields. `Cut { after, found }` (strings.CutPrefix's own result names), and `Verdict { ignored, source }` (cohere's differential test names the pair `verdict`). The cases hold a tree's entries as a `ReadonlyMap` written `new Map<string, Entry>([...])`, the one place tuple literals lower.
 
+## 9. `return panic(...)`
+
+Found when the driver began reading its cases at run time. `panic` returns `never`, so TypeScript writes the end of a function whose `switch` didn't return as `return panic(...)`. Stage 0 lowers `x ?? panic(...)`, and `panic(...)` as a statement, but not `panic(...)` as a returned value.
+
+```ts
+import { panic } from 'adamic';
+function kindOf(kind: string): number {
+	switch (kind) {
+		case 'one':
+			return 1;
+	}
+	return panic(`no kind ${kind}`);
+}
+console.log(`${kindOf('one')}`);
+```
+
+```
+stage 0 can't lower reading panic yet        (Node prints 1)
+```
+
+**Around it:** `panic(...)` as a statement (case.ts, `entryOf`). The checker accepts that, since nothing after a `never` call is reachable.
+
 ## Not a stage 0 gap: input
 
-When this port began, 0.1 had no input, so the Go's reads through `os` (`os.Lstat`, `os.Stat` and `os.ReadFile` of ignore files and `.git` entries) are reads of a `WorkingTree` the program is given. `readTextFile` from 'adamic' has since landed on main. Reading a real tree also needs lstat, stat, symbolic links and directory listing, which 'adamic' doesn't have yet. So the cases stay constants, written by the test into `cases.ts`. When the matcher can stat, a `WorkingTree` read from disk can take the in-memory one's place, and nothing else in the port changes.
+When this port began, 0.1 had no input, so the Go's reads through `os` (`os.Lstat`, `os.Stat` and `os.ReadFile` of ignore files and `.git` entries) became reads of a `WorkingTree` the program is given, and the cases were constants. `readTextFile` and `programArguments` have since landed on main. The driver now reads its cases from the file its argument names (`main.ts`, and the format in `case.ts`), so the port compiles once, whatever it's asked. Reading a real tree also needs lstat, stat, symbolic links and directory listing, which 'adamic' doesn't have yet. When it does, a `WorkingTree` read from disk can take the in-memory one's place, and nothing else in the port changes.
 
 ## Not a gap, a cost: bytes
 
@@ -186,9 +208,9 @@ What lowered as written, and is worth saying so: discriminated unions narrowed b
 
 ## Performance, observed (not refusals)
 
-These lowered and answered correctly, but they're the numbers to beat on the way to "faster and leaner than Go cohere". All measured on this Linux container, x86-64, with the case set that includes cohere's own checkout as a real tree (`ADAMIC_GITIGNORE_COHERE_TREE=1`): 50 trees, 6,212 tree paths, 21 pattern lists and 421 globs, and output identical on every side.
+These lowered and answered correctly, but they're the numbers to beat on the way to "faster and leaner than Go cohere". All measured on this Linux container, x86-64, with the test's case set, which includes cohere's own checkout as a real tree: 50 trees, about 6,200 tree paths, 21 pattern lists and 421 globs, and output identical on every side.
 
-- **Native is 5 times slower than Node.** The unsanitized `-O2` binary ran in 2.06 s, and Node ran the source in 0.42 s. Under callgrind, 42% of the native run's instructions are in `adamic_string_length` and 39% in `adamic_string_char_code_at` (internal/native/runtime/string.c). Each of them walks the string's UTF-8 from its first byte. So `text.length`, `text.charCodeAt(index)` and `text[index]` cost the length of the string, and a loop over a string's indexes is quadratic. The glob reads its pattern and its text that way, as the Go does. That's natural code, and every 0.1 program that reads a string by index pays the same. docs/memory.md already names the fix: an ASCII-only flag, so the common case is a load. Smallest program that shows the shape:
+- **Native is 3.5 to 5 times slower than Node.** With the cases compiled in as constants, the unsanitized `-O2` binary ran in 2.06 s and Node in 0.42 s. Read from a 447 KB cases file, it is 2.09 s and 0.59 s. Under callgrind, 42% of the native run's instructions are in `adamic_string_length` and 39% in `adamic_string_char_code_at` (internal/native/runtime/string.c). Each of them walks the string's UTF-8 from its first byte. So `text.length`, `text.charCodeAt(index)` and `text[index]` cost the length of the string, and a loop over a string's indexes is quadratic. The glob reads its pattern and its text that way, as the Go does. That's natural code, and every 0.1 program that reads a string by index pays the same. docs/memory.md already names the fix: an ASCII-only flag, so the common case is a load. Smallest program that shows the shape:
 
   ```ts
   const text = 'a'.repeat(100000);
@@ -203,4 +225,4 @@ These lowered and answered correctly, but they're the numbers to beat on the way
 
   Built with `adamic build` (`-O2`), it takes 11.1 s natively. Node runs it in 0.085 s.
 
-- **Constant data compiles slowly.** The cases are constants (7,360 lines of TypeScript). They become 3.4 MB of C, which clang takes 39 s to compile at `-O2`, and longer under the sanitizers. That's why the default test asks about this repository as its only real tree, and cohere's checkout only when `ADAMIC_GITIGNORE_COHERE_TREE` is set: with it, the test takes about five minutes. Reading the cases at run time, now that `readTextFile` has landed, would compile the port once.
+- **Constant data compiles slowly.** When the cases were constants (7,360 lines of TypeScript), they became 3.4 MB of C, which clang took 39 s to compile at `-O2`, and longer under the sanitizers. With cohere's checkout among the trees, the test took five and a half minutes. The driver now reads them at run time, and the same test takes 27 s. It would still cost any program with a large table in its source.

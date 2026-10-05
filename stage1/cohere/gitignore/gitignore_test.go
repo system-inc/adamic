@@ -30,7 +30,7 @@ import (
 // repository is the repository's root, from this package's directory.
 const repository = "../../.."
 
-// portFiles are the port and its driver: everything main.ts runs but the cases.
+// portFiles are the port and its driver.
 var portFiles = []string{"bytes.ts", "path.ts", "glob.ts", "gitignore.ts", "case.ts", "main.ts"}
 
 // generatedSeed fixes the generated trees, so a failure names trees anyone can make again. Setting
@@ -91,7 +91,8 @@ type run struct {
 // port's is git's.
 //
 // The questions: cohere's documented semantics, its refusals, generated trees from cohere's own
-// generator (COHERE_GITIGNORE_GENERATED of them, 40 by default), this repository as a real tree, and,
+// generator (COHERE_GITIGNORE_GENERATED of them, 40 by default), this repository and cohere's checkout
+// as real trees, and,
 // when COHERE_GIT_SOURCE names a git source checkout as it does for cohere, git's t0008 check-ignore
 // corpus and t3070 wildmatch corpus.
 func TestThePortAnswersAsGoCohereAndGitDo(t *testing.T) {
@@ -104,14 +105,15 @@ func TestThePortAnswersAsGoCohereAndGitDo(t *testing.T) {
 			gitAnswers[tree.Name] = gitCheckIgnore(t, tree)
 		}
 	}
-	portSource := portDirectory(t, asked, nil)
+	casesPath := casesFile(t, asked)
+	portSource := portDirectory(t, nil)
 	program := lowered(t, filepath.Join(portSource, "main.ts"))
 
 	t.Run("natively and on Node, as Go cohere", func(t *testing.T) {
 		t.Parallel()
-		nodeRun := onNode(t, filepath.Join(portSource, "main.ts"))
-		nativeRun, sanitized := natively(t, program)
-		backendRun := onJavaScriptBackend(t, program)
+		nodeRun := onNode(t, filepath.Join(portSource, "main.ts"), casesPath)
+		nativeRun, sanitized := natively(t, program, casesPath)
+		backendRun := onJavaScriptBackend(t, program, casesPath)
 		for _, side := range []struct {
 			name string
 			run  run
@@ -123,7 +125,7 @@ func TestThePortAnswersAsGoCohereAndGitDo(t *testing.T) {
 				t.Errorf("%s and Go cohere differ: %s", side.name, difference)
 			}
 		}
-		if leaked := leaks(t, program, sanitized); leaked != "" {
+		if leaked := leaks(t, program, sanitized, casesPath); leaked != "" {
 			t.Errorf("leaks:\n%s", leaked)
 		}
 
@@ -153,12 +155,12 @@ func TestThePortAnswersAsGoCohereAndGitDo(t *testing.T) {
 	for _, mutant := range mutants {
 		t.Run("catches "+mutant.name, func(t *testing.T) {
 			t.Parallel()
-			mutated := portDirectory(t, asked, &mutant)
+			mutated := portDirectory(t, &mutant)
 			mutatedProgram := lowered(t, filepath.Join(mutated, "main.ts"))
 			for _, side := range []struct {
 				name string
 				run  run
-			}{{"natively", nativelyRun(t, mutatedProgram)}, {"on Node", onNode(t, filepath.Join(mutated, "main.ts"))}} {
+			}{{"natively", nativelyRun(t, mutatedProgram, casesPath)}, {"on Node", onNode(t, filepath.Join(mutated, "main.ts"), casesPath)}} {
 				if side.run.exitCode != 0 {
 					t.Errorf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, side.run.exitCode, side.run.stderr)
 					continue
@@ -303,10 +305,7 @@ func askedCases(t *testing.T) cases {
 	if err != nil {
 		t.Fatal(err)
 	}
-	realTrees := []string{repositoryRoot}
-	if os.Getenv("ADAMIC_GITIGNORE_COHERE_TREE") != "" {
-		realTrees = append(realTrees, filepath.Join(repositoryRoot, "cohere"))
-	}
+	realTrees := []string{repositoryRoot, filepath.Join(repositoryRoot, "cohere")}
 	output := filepath.Join(scratch, "cases.json")
 	cohereSide(t, map[string]any{
 		"mode": "generate", "scratch": scratch, "seed": seed, "generated": generated,
@@ -384,9 +383,8 @@ func cohereSide(t *testing.T, request map[string]any) {
 	}
 }
 
-// portDirectory copies the port into a directory of its own, with a cases.ts holding asked, and with
-// a mutant applied when there is one.
-func portDirectory(t *testing.T, asked cases, applied *mutant) string {
+// portDirectory copies the port into a directory of its own, with a mutant applied when there is one.
+func portDirectory(t *testing.T, applied *mutant) string {
 	t.Helper()
 	directory := t.TempDir()
 	for _, name := range portFiles {
@@ -405,73 +403,73 @@ func portDirectory(t *testing.T, asked cases, applied *mutant) string {
 			t.Fatal(err)
 		}
 	}
-	if err := os.WriteFile(filepath.Join(directory, "cases.ts"), []byte(casesSource(t, asked)), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	// ADAMIC_GITIGNORE_KEEP names a directory to keep the unmutated program in, to run it by hand.
-	if keep := os.Getenv("ADAMIC_GITIGNORE_KEEP"); keep != "" && applied == nil {
-		if err := os.CopyFS(keep, os.DirFS(directory)); err != nil {
-			t.Fatal(err)
-		}
-	}
 	return directory
 }
 
-// casesSource is asked as the cases.ts main.ts imports: constants, since stage 0's port reads no input.
-func casesSource(t *testing.T, asked cases) string {
+// casesFile writes asked as the cases file main.ts reads (case.ts says the format), and returns its
+// path. ADAMIC_GITIGNORE_KEEP names a path to keep a copy at, to run the port on by hand.
+func casesFile(t *testing.T, asked cases) string {
 	t.Helper()
-	literal := func(text string) string {
-		if !utf8.ValidString(text) {
-			t.Fatalf("%q is not UTF-8, which a string constant can't hold", text)
+	escape := strings.NewReplacer("\\", "\\\\", "\t", "\\t", "\n", "\\n", "\r", "\\r")
+	var text strings.Builder
+	record := func(fields ...string) {
+		for index, field := range fields {
+			if !utf8.ValidString(field) {
+				t.Fatalf("%q is not UTF-8, which the port reads its cases as", field)
+			}
+			if index > 0 {
+				text.WriteByte('\t')
+			}
+			text.WriteString(escape.Replace(field))
 		}
-		encoded, err := json.Marshal(text)
-		if err != nil {
-			t.Fatal(err)
-		}
-		return string(encoded)
+		text.WriteByte('\n')
 	}
-	var source strings.Builder
-	source.WriteString("// Written by gitignore_test.go: every case cohere's tests and git's corpora ask.\n\n")
-	source.WriteString("import type { GlobCase, PatternsCase, TreeCase } from './case.ts';\nimport type { Entry } from './gitignore.ts';\n\n")
-	source.WriteString("export const trees: readonly TreeCase[] = [\n")
+	bit := func(value bool) string {
+		if value {
+			return "1"
+		}
+		return "0"
+	}
 	for _, tree := range asked.Trees {
-		fmt.Fprintf(&source, "\t{\n\t\tname: %s,\n\t\troot: %s,\n\t\tentries: new Map<string, Entry>([\n", literal(tree.Name), literal(tree.Root))
+		record("tree", tree.Name, tree.Root)
 		for _, entry := range tree.Entries {
 			switch entry.Kind {
 			case "File":
-				fmt.Fprintf(&source, "\t\t\t[%s, { kind: 'File', contents: %s }],\n", literal(entry.Path), literal(entry.Contents))
+				record("entry", entry.Path, entry.Kind, entry.Contents)
 			case "SymbolicLink":
-				fmt.Fprintf(&source, "\t\t\t[%s, { kind: 'SymbolicLink', target: %s }],\n", literal(entry.Path), literal(entry.Target))
+				record("entry", entry.Path, entry.Kind, entry.Target)
 			case "Directory", "Other":
-				fmt.Fprintf(&source, "\t\t\t[%s, { kind: '%s' }],\n", literal(entry.Path), entry.Kind)
+				record("entry", entry.Path, entry.Kind)
 			default:
 				t.Fatalf("an entry of kind %q", entry.Kind)
 			}
 		}
-		source.WriteString("\t\t]),\n\t\tqueries: [\n")
 		for _, query := range tree.Queries {
-			fmt.Fprintf(&source, "\t\t\t{ path: %s, isDirectory: %v },\n", literal(query.Path), query.IsDirectory)
+			record("query", query.Path, bit(query.IsDirectory))
 		}
-		source.WriteString("\t\t],\n\t},\n")
 	}
-	source.WriteString("];\n\nexport const patternsCases: readonly PatternsCase[] = [\n")
 	for _, list := range asked.Patterns {
-		fmt.Fprintf(&source, "\t{\n\t\tname: %s,\n\t\tlines: [\n", literal(list.Name))
+		record("patterns", list.Name)
 		for _, line := range list.Lines {
-			fmt.Fprintf(&source, "\t\t\t%s,\n", literal(line))
+			record("line", line)
 		}
-		source.WriteString("\t\t],\n\t\tqueries: [\n")
 		for _, query := range list.Queries {
-			fmt.Fprintf(&source, "\t\t\t{ path: %s, isDirectory: %v },\n", literal(query.Path), query.IsDirectory)
+			record("query", query.Path, bit(query.IsDirectory))
 		}
-		source.WriteString("\t\t],\n\t},\n")
 	}
-	source.WriteString("];\n\nexport const globCases: readonly GlobCase[] = [\n")
 	for _, glob := range asked.Globs {
-		fmt.Fprintf(&source, "\t{ pattern: %s, text: %s, path: %v },\n", literal(glob.Pattern), literal(glob.Text), glob.Path)
+		record("glob", glob.Pattern, glob.Text, bit(glob.Path))
 	}
-	source.WriteString("];\n")
-	return source.String()
+	path := filepath.Join(t.TempDir(), "cases.txt")
+	if err := os.WriteFile(path, []byte(text.String()), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if keep := os.Getenv("ADAMIC_GITIGNORE_KEEP"); keep != "" {
+		if err := os.WriteFile(keep, []byte(text.String()), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	return path
 }
 
 // answersByTree splits main.ts's output into each tree's answer lines, and the glob lines under
@@ -613,37 +611,37 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
 
-// onNode runs the port's source on Node, through the oracle's runner.
-func onNode(t *testing.T, path string) run {
+// onNode runs the port's source on Node, through the oracle's runner, asking it about the cases file.
+func onNode(t *testing.T, path string, casesPath string) run {
 	t.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	return execute(t, nil, "node", "--disable-warning=ExperimentalWarning", runner, path)
+	return execute(t, nil, "node", "--disable-warning=ExperimentalWarning", runner, path, casesPath)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program) run {
+func onJavaScriptBackend(t *testing.T, program *ir.Program, casesPath string) run {
 	t.Helper()
 	path := filepath.Join(t.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	return onNode(t, path)
+	return onNode(t, path, casesPath)
 }
 
 // nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program) run {
+func nativelyRun(t *testing.T, program *ir.Program, casesPath string) run {
 	t.Helper()
-	result, _ := natively(t, program)
+	result, _ := natively(t, program, casesPath)
 	return result
 }
 
 // natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
 // returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
 // its own run.
-func natively(t *testing.T, program *ir.Program) (run, string) {
+func natively(t *testing.T, program *ir.Program, casesPath string) (run, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "port")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
@@ -653,13 +651,13 @@ func natively(t *testing.T, program *ir.Program) (run, string) {
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	return execute(t, environment, binary), binary
+	return execute(t, environment, binary, casesPath), binary
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string) string {
+func leaks(t *testing.T, program *ir.Program, sanitized string, casesPath string) string {
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
@@ -667,13 +665,13 @@ func leaks(t *testing.T, program *ir.Program, sanitized string) string {
 		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
 			t.Fatal(err)
 		}
-		report := execute(t, nil, "leaks", "--atExit", "--", binary)
+		report := execute(t, nil, "leaks", "--atExit", "--", binary, casesPath)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return string(report.stdout)
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized)
+		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, casesPath)
 		if report.exitCode == 0 {
 			return ""
 		}
