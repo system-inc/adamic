@@ -26,7 +26,7 @@ var gaps = []struct {
 }{
 	{path: "gaps/1_generic_return.ts", notYet: "a function returning Item", stdout: "a\n"},
 	{path: "gaps/1_generic_parameter.ts", notYet: "a value of type Item", stdout: "3\n"},
-	{path: "gaps/2_return_undefined.ts", badC: "incompatible pointer types returning 'adamic_object *'", stdout: "none\n"},
+	{path: "gaps/2_return_undefined.ts", stdout: "none\n"},
 	{path: "gaps/3_optional_chaining_array.ts", notYet: "optional chaining on a value", stdout: "1 0\n"},
 	{path: "gaps/4_mutable_child_array.ts", refused: "TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free", stdout: "2\n"},
 	{path: "gaps/5_local_children_array.ts", refused: "TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free", stdout: "2\n"},
