@@ -130,7 +130,13 @@ func (e *emitter) line(format string, arguments ...any) {
 var identifier = regexp.MustCompile(`[^A-Za-z0-9_]`)
 
 func (e *emitter) name(local int) string {
-	return fmt.Sprintf("local_%d_%s", local, identifier.ReplaceAllString(e.program.Locals[local].Name, ""))
+	return Name(e.program, local)
+}
+
+// Name is the JavaScript name of a local that isn't captured (a captured one lives in a cell), for a
+// test that reads it through Options.Mark.
+func Name(program *ir.Program, local int) string {
+	return fmt.Sprintf("local_%d_%s", local, identifier.ReplaceAllString(program.Locals[local].Name, ""))
 }
 
 func (e *emitter) cellName(local int) string {

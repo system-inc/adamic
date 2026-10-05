@@ -32,6 +32,7 @@ func Build(program *ir.Program, function int) *Function {
 			}
 		}
 	}
+	builder.function.Program = program
 	builder.statements(statements)
 	// Falling off the end returns, as a void function and the top level do.
 	builder.terminate(&Return{})

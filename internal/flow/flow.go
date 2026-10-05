@@ -40,14 +40,22 @@ type InstructionId uint32
 // IdentifierId names one value. Two places with the same IdentifierId are the same value.
 type IdentifierId uint32
 
+// EvaluationOrder is a position in the function's evaluation, assigned by MarkEvaluationOrder in
+// reverse postorder from 1; zero means unassigned. A back edge shows as a decrease.
+type EvaluationOrder uint32
+
 // DeclarationId names one variable across every value it takes: the IR's local index, plus one, so
-// that zero is never a variable.
+// that zero is never a variable. A temporary the effect inference mints (infer.go) has zero.
 type DeclarationId uint32
 
 // Function is one IR function (or the program's top level) as a control-flow graph.
 type Function struct {
 	// Name is the IR function's name, or "main" for the top level, for reading only.
 	Name string
+
+	// Program is the IR program the function is from: its locals' types, and the statements its
+	// instructions point back at.
+	Program *ir.Program
 
 	// Params are the parameters the graph tracks, in order, defined on entry.
 	Params []Place
@@ -96,6 +104,9 @@ type Phi struct {
 type Instruction struct {
 	Id InstructionId
 
+	// Order is where this evaluates relative to everything else in the function.
+	Order EvaluationOrder
+
 	// At is the IR statement this came from, where it stands in its slice, and Part which piece of it
 	// this is: 0 for the statement itself (or its condition, a for...of's iterable, a switch's value),
 	// 1 for a for...of binding its next element, and 1, 2 and on for a switch's case tests in order.
@@ -142,17 +153,23 @@ type Terminal interface{ terminal() }
 
 type (
 	// Goto continues at Block.
-	Goto struct{ Block BlockId }
+	Goto struct {
+		Block BlockId
+		Order EvaluationOrder
+	}
 
 	// If continues at Consequent or Alternate, on what the block's last instruction decided: a
 	// condition, a switch's case test, or (for a for...of's head) whether there's a next element.
-	If struct{ Consequent, Alternate BlockId }
+	If struct {
+		Consequent, Alternate BlockId
+		Order                 EvaluationOrder
+	}
 
 	// Return leaves the function. Its value, if any, is read by the block's last instruction.
-	Return struct{}
+	Return struct{ Order EvaluationOrder }
 
 	// Unreachable ends a path that never continues: a panic.
-	Unreachable struct{}
+	Unreachable struct{ Order EvaluationOrder }
 )
 
 func (*Goto) terminal()        {}
@@ -237,4 +254,19 @@ func EachSuccessor(terminal Terminal, visit func(block BlockId)) {
 	default:
 		panic(fmt.Sprintf("flow: no successors known for %T", terminal))
 	}
+}
+
+// TerminalOrder is a terminal's position in evaluation order.
+func TerminalOrder(terminal Terminal) EvaluationOrder {
+	switch terminal := terminal.(type) {
+	case *Goto:
+		return terminal.Order
+	case *If:
+		return terminal.Order
+	case *Return:
+		return terminal.Order
+	case *Unreachable:
+		return terminal.Order
+	}
+	return 0
 }

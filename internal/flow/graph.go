@@ -2,24 +2,25 @@
 // other pass assumes. Lifted from cohere's graph.go (high_level_intermediate_representation at
 // 715ba94); what changed is said where it changed.
 //
-// Two invariants are established here and every consumer may rely on them:
+// Three invariants are established here and every consumer may rely on them:
 //
 //  1. Function.Blocks is in reverse postorder, and unreachable blocks have been removed.
 //  2. Every block's Predecessors is exactly the set of blocks with a real edge into it.
+//  3. Every instruction and terminal has a nonzero, monotonically increasing EvaluationOrder.
 //
-// cohere's third, an evaluation order on every instruction, isn't here yet: nothing that reads it
-// (mutable ranges) has been lifted. They are re-established by calling Finalize, which any pass that
-// restructures the graph must do.
+// They are re-established by calling Finalize, which any pass that restructures the graph must do.
 package flow
 
 // Finalize brings a freshly lowered function into the state every pass assumes.
 //
 // Order matters: reverse postorder first, because it drops unreachable blocks and the predecessor
-// edges must not name a block that is gone. (cohere's also recurses into nested functions; an Adamic
-// closure is a function of its own in the IR, and is built and finalized on its own.)
+// edges must not name a block that is gone; evaluation order last, because it walks the blocks in
+// their final order. (cohere's also recurses into nested functions; an Adamic closure is a function
+// of its own in the IR, and is built and finalized on its own.)
 func Finalize(function *Function) {
 	ReversePostorder(function)
 	MarkPredecessors(function)
+	MarkEvaluationOrder(function)
 }
 
 // ReversePostorder reorders Function.Blocks into reverse postorder and drops unreachable blocks.
@@ -168,5 +169,38 @@ func MarkPredecessors(function *Function) {
 			}
 			successor.Predecessors = append(successor.Predecessors, block.Id)
 		})
+	}
+}
+
+// MarkEvaluationOrder assigns each instruction and terminal its position in evaluation order.
+//
+// Numbering follows Function.Blocks, which is reverse postorder, so a forward analysis sees
+// increasing numbers along any acyclic path. Across a back edge the number decreases, which is the
+// correct and expected signal that a loop was traversed.
+//
+// Starts at 1: zero means unassigned, and a pass that reads an order of zero has found a block the
+// finalizer did not reach.
+func MarkEvaluationOrder(function *Function) {
+	order := EvaluationOrder(1)
+	for _, block := range function.Blocks {
+		for _, instructionId := range block.Instructions {
+			function.Instructions[instructionId].Order = order
+			order++
+		}
+		setTerminalOrder(block.Terminal, order)
+		order++
+	}
+}
+
+func setTerminalOrder(terminal Terminal, order EvaluationOrder) {
+	switch t := terminal.(type) {
+	case *Return:
+		t.Order = order
+	case *Unreachable:
+		t.Order = order
+	case *Goto:
+		t.Order = order
+	case *If:
+		t.Order = order
 	}
 }
