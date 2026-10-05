@@ -373,7 +373,20 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	if !ast.IsIdentifier(name) && name.Kind != ast.KindArrayBindingPattern {
 		return nil, l.notYet(initializer, "a for...of destructuring an object")
 	}
-	iterable, err := l.expression(statement.Expression)
+	// map.entries(), map.keys() and map.values() are the map itself, iterated for that part.
+	iterated, mapPart := statement.Expression, ""
+	if call := ast.SkipParentheses(iterated); call.Kind == ast.KindCallExpression && len(call.AsCallExpression().Arguments.Nodes) == 0 {
+		if callee := ast.SkipParentheses(call.AsCallExpression().Expression); callee.Kind == ast.KindPropertyAccessExpression {
+			receiver := callee.AsPropertyAccessExpression().Expression
+			if receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); receiverType == ir.Map {
+				switch part := callee.Name().Text(); part {
+				case "entries", "keys", "values":
+					iterated, mapPart = receiver, part
+				}
+			}
+		}
+	}
+	iterable, err := l.expression(iterated)
 	if err != nil {
 		return nil, err
 	}
@@ -386,6 +399,8 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	case ir.String:
 		// A string's elements are its code points, each a string.
 		element = ir.String
+	case ir.Map:
+		return l.forOfMap(node, iterable, iterated, mapPart, name)
 	default:
 		return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
 	}
@@ -418,6 +433,51 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		}
 	}
 	if lowered.Body, err = l.statement(statement.Statement); err != nil {
+		return nil, err
+	}
+	return []ir.Statement{lowered}, nil
+}
+
+// forOfMap lowers for...of over a map: for (const [key, value] of map), and over map.keys() or
+// map.values() into one name. An entry as one name would be a tuple made each step, which stage 0
+// doesn't do yet.
+func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *ast.Node, part string, name *ast.Node) ([]ir.Statement, error) {
+	key, value, err := l.mapTypes(iterated)
+	if err != nil {
+		return nil, err
+	}
+	if part == "" {
+		part = "entries"
+	}
+	lowered := ir.ForOf{Iterable: iterable, MapPart: part, Key: key, Value: value}
+	switch {
+	case part == "entries" && name.Kind == ast.KindArrayBindingPattern:
+		elements := name.AsBindingPattern().Elements.Nodes
+		if len(elements) > 2 {
+			return nil, l.notYet(name, "destructuring more than a key and a value")
+		}
+		for index, binding := range elements {
+			if binding.Kind == ast.KindOmittedExpression {
+				continue
+			}
+			bound := binding.AsBindingElement()
+			if !ast.IsIdentifier(binding.Name()) || bound.Initializer != nil || bound.DotDotDotToken != nil {
+				return nil, l.notYet(binding, "a destructured name that isn't plain")
+			}
+			local, err := l.declareLocal(binding.Name())
+			if err != nil {
+				return nil, err
+			}
+			lowered.Pattern = append(lowered.Pattern, ir.Binding{Local: local, Field: strconv.Itoa(index)})
+		}
+	case part != "entries" && ast.IsIdentifier(name):
+		if lowered.Local, err = l.declareLocal(name); err != nil {
+			return nil, err
+		}
+	default:
+		return nil, l.notYet(name, "for...of over a map's "+part+" into this name (write [key, value], or iterate keys() or values())")
+	}
+	if lowered.Body, err = l.statement(node.AsForInOrOfStatement().Statement); err != nil {
 		return nil, err
 	}
 	return []ir.Statement{lowered}, nil

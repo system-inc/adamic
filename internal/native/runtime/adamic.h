@@ -21,6 +21,7 @@ enum adamic_kind {
 	adamic_kind_map,
 	adamic_kind_cell,
 	adamic_kind_closure,
+	adamic_kind_map_iterator,
 };
 
 typedef struct adamic_heap {
@@ -146,7 +147,24 @@ typedef struct adamic_map {
 	size_t *buckets;
 	bool string_keys;
 	bool reference_values;
+	// iterating counts the iterations open over the map; while there are any, its entries keep their
+	// places (map.c).
+	size_t iterating;
 } adamic_map;
+
+// adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
+// to them are visited, and entries deleted before it gets to them aren't, as ECMA-262 requires. It
+// holds the map, and letting go of it ends the iteration.
+typedef struct adamic_map_iterator {
+	adamic_heap heap;
+	adamic_map *map;
+	size_t next;
+} adamic_map_iterator;
+
+adamic_map_iterator *adamic_map_iterate(adamic_map *map);
+
+// adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
+bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
 
 adamic_map *adamic_map_new(bool string_keys, bool reference_values);
 

@@ -1100,7 +1100,8 @@ func (e *emitter) mathCall(call ir.MathCall) string {
 
 // forOf emits for (const element of array). The array is held (retained) for the whole loop, as
 // JavaScript's iterator holds it even if the variable naming it is reassigned, and its length is read
-// again before each pass.
+// again before each pass. Over a map, what's held is an iterator, which holds the map and keeps it
+// from compacting until every way out of the loop has let go of it.
 func (e *emitter) forOf(statement ir.ForOf) {
 	e.line("{")
 	e.indent++
@@ -1108,14 +1109,23 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	iterable := e.value(statement.Iterable)
 	held := e.temporary()
 	overString := statement.Iterable.Type() == ir.String
-	e.line("%s %s = adamic_retain(%s);", cType(statement.Iterable.Type()), held, iterable)
+	overMap := statement.MapPart != ""
+	if overMap {
+		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
+	} else {
+		e.line("%s %s = adamic_retain(%s);", cType(statement.Iterable.Type()), held, iterable)
+	}
 	e.hold(held)
 	e.end()
 	index := e.temporary()
 	size := e.temporary()
 	e.temporaries++
 	current := &loop{label: fmt.Sprintf("adamic_continue_%d", e.temporaries)}
-	if overString {
+	entryKey, entryValue := e.temporary(), e.temporary()
+	if overMap {
+		e.line("adamic_value %s, %s;", entryKey, entryValue)
+		e.line("while (adamic_map_iterator_next(%s, &%s, &%s)) {", held, entryKey, entryValue)
+	} else if overString {
 		// A code point at a time: size is its byte length, and the element is a string of it.
 		e.line("for (size_t %s = 0, %s = 0; %s < %s->length; %s += %s) {", index, size, index, held, index, size)
 		e.line("\t%s = adamic_string_next(%s, %s);", size, held, index)
@@ -1132,7 +1142,31 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.indent++
 	e.scopes = append(e.scopes, nil)
 	element := fmt.Sprintf("%s->elements[%s].%s", held, index, member(statement.Element))
-	if statement.Pattern != nil {
+	// bindEntry declares a local from the step's key or value, retained, since the body may delete
+	// the entry.
+	bindEntry := func(local int, slot string, of ir.Type) {
+		reading := slot + "." + member(of)
+		if of.IsReference() {
+			reading = fmt.Sprintf("(%s)%s", cType(of), reading)
+		}
+		e.declareLocal(local, reading, false)
+	}
+	if overMap {
+		switch statement.MapPart {
+		case "keys":
+			bindEntry(statement.Local, entryKey, statement.Key)
+		case "values":
+			bindEntry(statement.Local, entryValue, statement.Value)
+		default:
+			for _, binding := range statement.Pattern {
+				if binding.Field == "0" {
+					bindEntry(binding.Local, entryKey, statement.Key)
+				} else {
+					bindEntry(binding.Local, entryValue, statement.Value)
+				}
+			}
+		}
+	} else if statement.Pattern != nil {
 		// Each name reads its field of the tuple, which the array holds while the body runs.
 		for _, binding := range statement.Pattern {
 			bound := e.program.Locals[binding.Local]

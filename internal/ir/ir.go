@@ -641,6 +641,11 @@ type (
 		// Pattern, when set, destructures each element, a tuple, into locals: for (const [a, b] of
 		// pairs). Local is unused then.
 		Pattern []Binding
+
+		// Over a Map, MapPart is what each step gives: "entries" ([key, value], destructured by
+		// Pattern), "keys" or "values" (in Local), with Key and Value the map's types.
+		MapPart    string
+		Key, Value Type
 	}
 
 	// Switch matches Value against each case's tests in order with ===, and runs the first match's

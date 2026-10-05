@@ -291,9 +291,13 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.line("{")
 	e.indent++
 	e.line("const %s = %s;", held, e.value(statement.Iterable))
-	if statement.Iterable.Type() == ir.String {
+	switch {
+	case statement.MapPart == "keys" || statement.MapPart == "values":
+		e.line("for (const %s of %s.%s()) {", index, held, statement.MapPart)
+	case statement.Iterable.Type() == ir.String || statement.MapPart != "":
+		// A string's code points, or a map's [key, value] entries.
 		e.line("for (const %s of %s) {", index, held)
-	} else {
+	default:
 		e.line("for (let %s_index = 0; %s_index < %s.length; %s_index++) {", index, index, held, index)
 		e.line("\tconst %s = %s[%s_index];", index, held, index)
 	}

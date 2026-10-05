@@ -1,7 +1,8 @@
 // map.c: Map, as JavaScript has it. Entries keep insertion order in one array, and a hash index
 // finds them. Keys compare with SameValueZero: NaN equals NaN, and +0 equals -0. Deleting leaves a
-// tombstone, so an iteration in progress keeps its place; entries added during an iteration are
-// visited, and deleted ones aren't, as ECMA-262 requires.
+// tombstone, and while an iteration is open a full map grows rather than compacting them away, so
+// the iteration keeps its place; entries added during it are visited, and deleted ones aren't, as
+// ECMA-262 requires.
 
 #include "adamic.h"
 
@@ -29,6 +30,7 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->buckets = NULL;
 	map->string_keys = string_keys;
 	map->reference_values = reference_values;
+	map->iterating = 0;
 	return map;
 }
 
@@ -78,15 +80,18 @@ static size_t find(const adamic_map *map, adamic_value key) {
 	}
 }
 
-// rebuild compacts away tombstones and rehashes into enough buckets for the live entries to grow.
+// rebuild compacts away tombstones, unless an iteration is open, and rehashes into enough buckets
+// for the entries to grow.
 static void rebuild(adamic_map *map, size_t entries_needed) {
-	size_t live = 0;
-	for (size_t index = 0; index < map->used; index++) {
-		if (!map->entries[index].deleted) {
-			map->entries[live++] = map->entries[index];
+	if (map->iterating == 0) {
+		size_t live = 0;
+		for (size_t index = 0; index < map->used; index++) {
+			if (!map->entries[index].deleted) {
+				map->entries[live++] = map->entries[index];
+			}
 		}
+		map->used = live;
 	}
-	map->used = live;
 	if (entries_needed > map->capacity) {
 		size_t capacity = map->capacity == 0 ? 8 : map->capacity;
 		while (capacity < entries_needed) {
@@ -108,6 +113,10 @@ static void rebuild(adamic_map *map, size_t entries_needed) {
 	map->buckets = allocate_zeroed(map->bucket_count, sizeof *map->buckets);
 	size_t mask = map->bucket_count - 1;
 	for (size_t index = 0; index < map->used; index++) {
+		if (map->entries[index].deleted) {
+			// Kept for an open iteration; its key was let go, and nothing finds it.
+			continue;
+		}
 		size_t bucket = hash_key(map, map->entries[index].key) & mask;
 		while (map->buckets[bucket] != 0) {
 			bucket = (bucket + 1) & mask;
@@ -135,8 +144,9 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 		return;
 	}
 	if (map->used == map->capacity) {
-		// Full: grow when most entries are live, and when most are tombstones, compact in place.
-		size_t needed = map->count * 2 > map->capacity ? map->capacity * 2 : map->capacity;
+		// Full: grow when most entries are live, and when most are tombstones, compact in place, unless
+		// an iteration is open, which needs every entry where it is.
+		size_t needed = map->iterating > 0 || map->count * 2 > map->capacity ? map->capacity * 2 : map->capacity;
 		rebuild(map, needed == 0 ? 8 : needed);
 	}
 	adamic_map_entry *entry = &map->entries[map->used];
@@ -184,6 +194,27 @@ void adamic_map_free_children(adamic_map *map, void (*let_go)(void *)) {
 	}
 	free(map->entries);
 	free(map->buckets);
+}
+
+adamic_map_iterator *adamic_map_iterate(adamic_map *map) {
+	adamic_map_iterator *iterator = adamic_allocate(sizeof *iterator, adamic_kind_map_iterator);
+	iterator->map = adamic_retain(map);
+	iterator->next = 0;
+	map->iterating++;
+	return iterator;
+}
+
+bool adamic_map_iterator_next(adamic_map_iterator *iterator, adamic_value *key, adamic_value *value) {
+	// used is read each time, so an entry added since the last step is still ahead.
+	while (iterator->next < iterator->map->used) {
+		const adamic_map_entry *entry = &iterator->map->entries[iterator->next++];
+		if (!entry->deleted) {
+			*key = entry->key;
+			*value = entry->value;
+			return true;
+		}
+	}
+	return false;
 }
 
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair) {
