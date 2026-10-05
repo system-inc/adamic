@@ -33,8 +33,8 @@ enum adamic_kind {
 typedef struct adamic_heap {
 	size_t references;
 	enum adamic_kind kind;
-	// slab is the size class the value's memory came from, plus one, or 0 for memory from malloc and
-	// for a value never freed (heap.c). It fills what was padding.
+	// slab is the number of the chunk the value's memory came from, plus one, or 0 for memory from
+	// malloc and for a value never freed (heap.c). It fills what was padding.
 	uint32_t slab;
 } adamic_heap;
 
