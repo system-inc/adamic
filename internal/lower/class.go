@@ -52,7 +52,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		return existing, nil
 	}
 
-	// Register every function of the instantiation first, so methods can call each other.
+	// Register every function of the instantiation first, so methods can find each other.
 	name := declaration.Name().Text()
 	for _, argument := range arguments {
 		name += "_" + typeName(argument)
@@ -90,6 +90,17 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	}
 	defer func() { l.substitution, l.locals, l.instance = outerSubstitution, outerLocals, outerInstance }()
 
+	// Every method's signature is written before any body is lowered, the constructor's included, so a
+	// method can call one declared below it, and two can call each other.
+	for _, member := range members {
+		if member.Kind != ast.KindMethodDeclaration {
+			continue
+		}
+		method := lowered.methods[member.Name().Text()]
+		if err := l.signature(method, member, l.thisLocal(method)); err != nil {
+			return nil, err
+		}
+	}
 	if err := l.constructor(lowered.constructor, declaration); err != nil {
 		return nil, err
 	}
@@ -98,7 +109,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 			continue
 		}
 		method := lowered.methods[member.Name().Text()]
-		if err := l.lowerFunction(method, member, l.thisLocal(method)); err != nil {
+		if err := l.lowerFunction(method, member, -1); err != nil {
 			return nil, err
 		}
 	}

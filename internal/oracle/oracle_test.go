@@ -123,6 +123,13 @@ var fixtures = []struct {
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
 	{"internal/oracle/testdata/borrow_map_overwrite.a", true, false},
+	// Signatures before bodies: calls to functions and methods declared later, mutual recursion, and
+	// declared functions as values.
+	{"internal/oracle/testdata/declared_later.a", true, false},
+	// return panic('why'), in functions of each kind of result and in an arrow, where it doesn't run
+	// and where it does.
+	{"internal/oracle/testdata/return_panic.a", true, false},
+	{"internal/oracle/testdata/return_panic_fires.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

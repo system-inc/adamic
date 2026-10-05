@@ -121,6 +121,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		if !isLocal && (l.isLibraryGlobal(node, "NaN") || l.isLibraryGlobal(node, "Infinity")) {
 			return ir.NumberConstant{Value: numberConstants[node.Text()]}, nil
 		}
+		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
+			return l.functionValue(node, function)
+		}
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
@@ -532,6 +535,52 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	return ir.MakeClosure{Function: index}, nil
+}
+
+// functionValue lowers a module function read as a value rather than called: a function value whose
+// code forwards its arguments to the function, made once for each function read so. It takes exactly
+// the parameters the function declares, so one with a parameter that may be left out isn't made yet:
+// a function value is called with the arguments its caller has, and no more.
+func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if forwarder, isMade := l.forwarders[target]; isMade {
+		return ir.MakeClosure{Function: forwarder}, nil
+	}
+	symbol := l.symbol(node)
+	for _, parameter := range symbol.Declarations[0].Parameters() {
+		declared := parameter.AsParameterDeclaration()
+		if declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
+			return nil, l.notYet(node, "a function with an optional or rest parameter, as a value")
+		}
+	}
+	callee := l.result.Functions[target]
+	if slotless(callee.Returns) {
+		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
+	}
+	index := len(l.result.Functions)
+	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns}
+	arguments := []ir.Expression{}
+	for _, parameter := range callee.Parameters {
+		declared := l.result.Locals[parameter]
+		if slotless(declared.Type) {
+			return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
+		}
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: declared.Name, Type: declared.Type, Function: index})
+		forwarder.Parameters = append(forwarder.Parameters, local)
+		arguments = append(arguments, ir.Read{Local: local, Of: declared.Type})
+	}
+	call := ir.Call{Function: target, Arguments: arguments, Returns: callee.Returns}
+	if callee.Returns == 0 {
+		forwarder.Body = []ir.Statement{ir.Evaluate{Value: call}}
+	} else {
+		forwarder.Body = []ir.Statement{ir.Return{Value: call}}
+	}
+	l.result.Functions = append(l.result.Functions, forwarder)
+	if l.forwarders == nil {
+		l.forwarders = map[int]int{}
+	}
+	l.forwarders[target] = index
 	return ir.MakeClosure{Function: index}, nil
 }
 
