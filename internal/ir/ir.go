@@ -255,8 +255,11 @@ type (
 
 	// Unwrap is a Maybe pair the checker has proven present (narrowed), as what it holds. A narrowing
 	// outlives a call that assigns the variable again (the checker doesn't look inside the call), so
-	// it's checked, in both backends: undefined there panics.
-	Unwrap struct{ Value Expression }
+	// where a call can (Checked), it's checked, in both backends: undefined there panics.
+	Unwrap struct {
+		Value   Expression
+		Checked bool
+	}
 
 	// Defined is a reference the checker narrowed undefined out of, checked for the same reason as
 	// Unwrap: undefined there panics with Message. Where the value is about to be read through a

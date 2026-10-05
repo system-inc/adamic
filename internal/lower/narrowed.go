@@ -20,14 +20,88 @@ import (
 // a place typed not to hold undefined. A variable, a field and an array element are all read so.
 
 // declaredUndefined reports whether node, a variable or a field, is declared with undefined in its
-// type. An array element always may be undefined (noUncheckedIndexedAccess), and its caller says so.
+// type and may have it put back by a call. Any call can write a field. A variable only one written
+// inside a function other than its own can: a global a function assigns, a let a closure assigns.
+// A parameter or a local nothing else writes keeps its narrowing, and is read plainly, which is
+// what lets reuse in place take it over. An array element always may be undefined
+// (noUncheckedIndexedAccess), and its caller says so.
 func (l *lowering) declaredUndefined(node *ast.Node) bool {
 	at := node
 	if node.Kind == ast.KindPropertyAccessExpression {
 		at = node.Name()
 	}
 	symbol := l.checker.GetSymbolAtLocation(at)
-	return symbol != nil && l.includesUndefined(l.checker.GetTypeOfSymbol(symbol))
+	if symbol == nil || !l.includesUndefined(l.checker.GetTypeOfSymbol(symbol)) {
+		return false
+	}
+	return node.Kind == ast.KindPropertyAccessExpression || l.writtenElsewhere[l.symbol(at)]
+}
+
+// findWritesElsewhere notes every variable a module writes (=, a compound assignment, ++ or --) from
+// inside a function other than the one that declares it: those are the narrowings a call can undo.
+// It runs over every module before anything is lowered, since a closure lowered after a read can
+// still run before it.
+func (l *lowering) findWritesElsewhere(module *ast.SourceFile) {
+	if l.writtenElsewhere == nil {
+		l.writtenElsewhere = map[*ast.Symbol]bool{}
+	}
+	note := func(target *ast.Node, at *ast.Node) {
+		target = ast.SkipParentheses(target)
+		if target.Kind != ast.KindIdentifier {
+			// A destructuring assignment writes every name in it.
+			if target.Kind == ast.KindArrayLiteralExpression || target.Kind == ast.KindObjectLiteralExpression {
+				var names ast.Visitor
+				names = func(child *ast.Node) bool {
+					if child.Kind == ast.KindIdentifier {
+						l.noteWrite(child, at)
+					}
+					return child.ForEachChild(names)
+				}
+				target.ForEachChild(names)
+			}
+			return
+		}
+		l.noteWrite(target, at)
+	}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		switch node.Kind {
+		case ast.KindBinaryExpression:
+			if binary := node.AsBinaryExpression(); ast.IsAssignmentOperator(binary.OperatorToken.Kind) {
+				note(binary.Left, node)
+			}
+		case ast.KindPrefixUnaryExpression:
+			if prefix := node.AsPrefixUnaryExpression(); prefix.Operator == ast.KindPlusPlusToken || prefix.Operator == ast.KindMinusMinusToken {
+				note(prefix.Operand, node)
+			}
+		case ast.KindPostfixUnaryExpression:
+			note(node.AsPostfixUnaryExpression().Operand, node)
+		}
+		return node.ForEachChild(visit)
+	}
+	module.AsNode().ForEachChild(visit)
+}
+
+// noteWrite notes identifier's variable when at, the write, is in another function than its
+// declaration.
+func (l *lowering) noteWrite(identifier *ast.Node, at *ast.Node) {
+	symbol := l.symbol(identifier)
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return
+	}
+	if enclosingFunction(at) != enclosingFunction(symbol.Declarations[0]) {
+		l.writtenElsewhere[symbol] = true
+	}
+}
+
+// enclosingFunction is the function-like node around node, or nil at a module's top level.
+func enclosingFunction(node *ast.Node) *ast.Node {
+	for current := node.Parent; current != nil; current = current.Parent {
+		if ast.IsFunctionLike(current) {
+			return current
+		}
+	}
+	return nil
 }
 
 // checkNarrowed checks value, read at node, where the checker has narrowed undefined out of what's
@@ -37,20 +111,19 @@ func (l *lowering) declaredUndefined(node *ast.Node) bool {
 // word; anywhere else, with Adamic's own words, since JavaScript would go on with undefined in a
 // place typed not to hold it.
 func (l *lowering) checkNarrowed(node *ast.Node, value ir.Expression, declared bool) ir.Expression {
-	if !declared || l.mayHoldUndefined(node) {
-		return value
-	}
 	here := l.checker.GetTypeAtLocation(node)
-	if l.includesUndefined(here) {
+	if l.includesUndefined(here) || l.mayHoldUndefined(node) {
 		return value
 	}
 	if value.Type().IsMaybe() {
+		// Read as what it holds wherever the checker narrowed it, and checked where a call may have
+		// put undefined back.
 		if narrowed, isKnown := l.representation(here); isKnown && narrowed == value.Type().Present() {
-			return ir.Unwrap{Value: value}
+			return ir.Unwrap{Value: value, Checked: declared}
 		}
 		return value
 	}
-	if !value.Type().IsReference() || value.Type() == ir.Union {
+	if !declared || !value.Type().IsReference() || value.Type() == ir.Union {
 		return value
 	}
 	message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
