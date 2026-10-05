@@ -156,6 +156,8 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return ir.NumberConstant{Value: 3.141592653589793}, nil
 		case "E":
 			return ir.NumberConstant{Value: 2.718281828459045}, nil
+		case "random":
+			return nil, refusedRandom(l, node)
 		}
 		return nil, l.notYet(node, "Math."+name)
 	}
@@ -221,6 +223,16 @@ func (l *lowering) isLibraryGlobal(node *ast.Node, name string) bool {
 var mathFunctions = map[string]int{
 	"abs": 1, "ceil": 1, "floor": 1, "round": 1, "trunc": 1, "sign": 1, "sqrt": 1,
 	"pow": 2, "max": -1, "min": -1,
+	// V8's fdlibm, ported bit for bit (runtime/ieee754.c), and its hypot (runtime/hypot.c).
+	"sin": 1, "cos": 1, "tan": 1, "asin": 1, "acos": 1, "atan": 1, "atan2": 2,
+	"sinh": 1, "cosh": 1, "tanh": 1, "asinh": 1, "acosh": 1, "atanh": 1,
+	"exp": 1, "expm1": 1, "log": 1, "log1p": 1, "log2": 1, "log10": 1, "cbrt": 1, "hypot": -1,
+}
+
+// refusedRandom refuses Math.random for good in 0.1: a program's output would no longer be a function
+// of its source, and the oracle compares it with Node's byte for byte (docs/0.1.md).
+func refusedRandom(l *lowering, node *ast.Node) error {
+	return &Refused{Where: l.program.Where(node), What: "Math.random", Fix: "0.1 programs are deterministic, so the oracle can hold them to Node; compute the values you need, with a generator of your own seeded by a constant"}
 }
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
@@ -294,6 +306,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if isMath {
 		count, isKnown := mathFunctions[name]
+		if name == "random" {
+			return nil, true, refusedRandom(l, node)
+		}
 		if !isKnown {
 			return nil, true, l.notYet(node, "Math."+name)
 		}
@@ -948,6 +963,8 @@ var stringMethods = map[string]struct {
 	"lastIndexOf": {[]ir.Type{ir.String}, 0},
 	"trimStart":   {nil, 0},
 	"trimEnd":     {nil, 0},
+	"toUpperCase": {nil, 0},
+	"toLowerCase": {nil, 0},
 	"at":          {[]ir.Type{ir.Number}, 0},
 	// A pattern that's a string, and a replacement that's a string: a regular expression or a
 	// function there isn't a string, and stays not yet.

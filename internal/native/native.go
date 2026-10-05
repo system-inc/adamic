@@ -46,6 +46,10 @@ func cString(value string) string {
 type Options struct {
 	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
 	Sanitize bool
+
+	// cpu, for tests, compiles for a particular processor (-march), so a test on an x86 machine can
+	// see what fused multiply-adds would do, as on arm64.
+	cpu string
 }
 
 // Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
@@ -55,6 +59,13 @@ func Flags(options Options) []string {
 	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
 	// no-self-assign), not a reason the C can't compile.
 	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
+	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
+	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
+	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
+	flags = append(flags, "-ffp-contract=off")
+	if options.cpu != "" {
+		flags = append(flags, "-march="+options.cpu)
+	}
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
 	}
