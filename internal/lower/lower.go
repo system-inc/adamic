@@ -80,6 +80,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
+	borrow(lowering.result)
 	return lowering.result, nil
 }
 

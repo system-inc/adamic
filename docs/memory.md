@@ -39,9 +39,9 @@ The counts are what let Adamic mutate in place without anyone seeing:
 
 Stage 0 doesn't reuse anything yet. It retains and releases on every assignment, the simple baseline. Reuse is added against that baseline, counted (retains and releases per fixture) and timed, and the oracle and the leak check keep it honest.
 
-## Borrowed parameters (designed, not built)
+## Borrowed parameters
 
-Status: **a design on paper, October 5, 2026, by stream A2** (#r3s6nwg's follow-on, with #5jck546 answered at the end). Nothing here is in the compiler yet. The numbers come from a prototype that was measured and then thrown away.
+Status: **built**, as designed on paper on October 5, 2026 by stream A2 (#r3s6nwg's follow-on, with #5jck546 answered at the end). The design is kept below as written, and what landing it measured follows each part it predicted.
 
 ### What a parameter costs today
 
@@ -85,12 +85,20 @@ A prototype of exactly this rule (the walk, plus the emitter change, nothing els
 
 When it lands, the table's diff should be exactly that: retains and releases down by equal amounts, and nothing else moving.
 
+**Landed, it was.** By then the table had grown to 60 rows (main's new fixtures and the input fixtures), plus the two fixtures below. Measured against the table just before borrowing: 20 rows moved, every one by equal retains and releases and nothing else. Allocations, frees and peak didn't move on any row. Retains fell from 19,283 to 18,828 (455 fewer) and releases from 52,171 to 51,716. Each of the 54 rows the prototype measured moved by exactly what the prototype said, 444 in all, and the other 11 are `read_files.a`, added since.
+
 ### Proving it can fail
 
 Two mutants, each needing a fixture that builds its strings at runtime (literals are immortal):
 
 1. **Borrow a reassigned parameter.** A function that reassigns a string parameter it was handed, called with a string the caller goes on using, makes `store` release the caller's string. ASan has to catch a use after free or a double free.
 2. **Borrow a closure's parameter.** A `map` callback that overwrites the element it was given, then reads its parameter, makes the parameter dangle. ASan has to catch it. That fixture is also what would let closure parameters be borrowed later. `map`'s loop would retain each element it hands out, as the other visits already do, or the aliasing analysis below would prove the callback can't write the array.
+
+Both are oracle fixtures: `borrow_reassigned.a` and `borrow_map_overwrite.a`. The mutants, run against the whole oracle:
+
+- **Borrowing reassigned parameters** is stopped first by the emitter's own guard: a store into a borrowed parameter is a Go panic, a compiler bug said out loud.
+- **The same, with that guard removed:** ASan caught a heap-use-after-free in `borrow_reassigned.a`, where `framed` read the string `louder`'s store had freed. `functions.a` failed too, on the leak check, where a reassigned parameter's new value was never let go.
+- **Borrowing closures' parameters:** ASan caught a heap-use-after-free in `borrow_map_overwrite.a`'s callback, which read the `name` the overwrite had freed. Nothing else failed.
 
 ### Where it goes next: reuse in place pulls the other way
 

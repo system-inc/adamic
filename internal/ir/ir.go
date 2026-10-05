@@ -86,6 +86,11 @@ type Local struct {
 
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
+
+	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
+	// for the whole call, so the function neither retains it on entry nor releases it on the way out
+	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
+	Borrowed bool
 }
 
 // Expression is a value. Evaluating a String expression yields a reference its consumer owns: the

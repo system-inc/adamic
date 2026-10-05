@@ -195,7 +195,8 @@ func (e *emitter) functionBody(function ir.Function) {
 		}
 	}
 	for _, parameter := range function.Parameters {
-		if e.program.Locals[parameter].Type.IsReference() {
+		// A borrowed parameter is its caller's, kept alive for the whole call.
+		if e.program.Locals[parameter].Type.IsReference() && !e.program.Locals[parameter].Borrowed {
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
 		}
@@ -376,6 +377,11 @@ func (e *emitter) statement(statement ir.Statement) {
 // store gives a local a value; a string's new reference is taken before the old one is let go,
 // since they may be the same string.
 func (e *emitter) store(local int, value string) {
+	if e.program.Locals[local].Borrowed {
+		// Storing would release the old value, which is the caller's. Lowering never borrows a
+		// parameter anything assigns, so reaching this is a compiler bug, said out loud.
+		panic(fmt.Sprintf("native: a store into the borrowed parameter %s", e.program.Locals[local].Name))
+	}
 	name := e.localName(local)
 	if slot := e.cellSlot(local); slot != "" {
 		if !e.program.Locals[local].Type.IsReference() {
