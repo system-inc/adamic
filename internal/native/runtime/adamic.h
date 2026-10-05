@@ -33,6 +33,9 @@ enum adamic_kind {
 typedef struct adamic_heap {
 	size_t references;
 	enum adamic_kind kind;
+	// slab is the number of the chunk the value's memory came from, plus one, or 0 for memory from
+	// malloc and for a value never freed (heap.c). It fills what was padding.
+	uint32_t slab;
 } adamic_heap;
 
 // adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
@@ -105,10 +108,10 @@ extern char adamic_literal_mark;
 #define ADAMIC_LITERAL_INDEX ((struct adamic_string_index *)&adamic_literal_mark)
 
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
-#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX}
+#define ADAMIC_STRING(text) {{0, adamic_kind_string, 0}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX}
 
 // ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
-#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string}, size, array, 0, ADAMIC_LITERAL_INDEX}
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, array, 0, ADAMIC_LITERAL_INDEX}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 typedef struct adamic_shape {
@@ -254,6 +257,15 @@ void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 // trunc(index) exactly (below 2^53 the conversion is exact, and from there every double is whole), so
 // a fraction is caught without calling trunc, which on x86-64 without SSE4.1 is a call into libm on
 // every read. -0 is index 0, as JavaScript reads it.
+// adamic_array_at_integer is array[index] for an index that's a whole number already, a loop counter
+// kept in an integer (lower/counters.go): the same answer, with only the bounds to check.
+static inline adamic_value *adamic_array_at_integer(const adamic_array *array, int64_t index) {
+	if (index < 0 || (uint64_t)index >= array->length) {
+		return NULL;
+	}
+	return &array->elements[index];
+}
+
 static inline adamic_value *adamic_array_at(const adamic_array *array, double index) {
 	if (!(index >= 0) || index >= (double)array->length) {
 		return NULL;
@@ -367,8 +379,23 @@ adamic_maybe_number adamic_maybe_number_unpack(double packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
-double adamic_string_length(const adamic_string *string);
-double adamic_string_char_code_at(const adamic_string *string, double position);
+//
+// length is the count of units, once it's been made, inline; and charCodeAt of an ASCII string (its
+// units are its bytes) at an index inside it is that byte, inline, which is what a scanner's loop
+// does. NaN, a negative, past the end, a non-ASCII string (through its index, string_index.c) and a
+// length not yet counted go to adamic_string_char_code, out of line. A position from 0 up to the
+// length truncates to its index as (size_t) does.
+size_t adamic_string_units(const adamic_string *string);
+double adamic_string_char_code(const adamic_string *string, double position);
+static inline double adamic_string_length(const adamic_string *string) {
+	return string->units != 0 ? (double)(string->units - 1) : (double)adamic_string_units(string);
+}
+static inline double adamic_string_char_code_at(const adamic_string *string, double position) {
+	if (string->units == string->length + 1 && position >= 0 && position < (double)string->length) {
+		return (double)(unsigned char)string->bytes[(size_t)position];
+	}
+	return adamic_string_char_code(string, position);
+}
 adamic_string *adamic_string_trim(adamic_string *string);
 
 // for...of over a string walks code points: adamic_string_next is the byte size of the one at offset,

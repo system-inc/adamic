@@ -35,7 +35,7 @@ static adamic_string other_type = ADAMIC_STRING("other");
 // on every platform. The JavaScript runtime says the same (oracle/adamic.mjs), from Node's error
 // codes, which are these errno names.
 static adamic_object *failure(const char *prefix, size_t prefix_length, const adamic_string *path, int error, bool listing) {
-	adamic_string before = {{0, adamic_kind_string}, prefix_length, prefix, 0, NULL};
+	adamic_string before = {{0, adamic_kind_string, 0}, prefix_length, prefix, 0, NULL};
 	static adamic_string missing_file = ADAMIC_STRING(": no such file");
 	static adamic_string missing_directory = ADAMIC_STRING(": no such directory");
 	static adamic_string not_directory = ADAMIC_STRING(": not a directory");
