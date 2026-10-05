@@ -104,3 +104,12 @@ size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX])
 	}
 	return length;
 }
+
+double adamic_power(double base, double exponent) {
+	// Where JavaScript and C disagree (ECMA-262, Number::exponentiate): a NaN exponent is NaN even
+	// for base 1, and a base of magnitude 1 to an infinite power is NaN, where C's pow says 1.
+	if (isnan(exponent) || (fabs(base) == 1 && isinf(exponent))) {
+		return NAN;
+	}
+	return pow(base, exponent);
+}

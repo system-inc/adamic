@@ -23,8 +23,8 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 	return 0;
 }
 
-void adamic_write_line(enum adamic_stream stream, const char *bytes, size_t length) {
-	if (write_all((int)stream, bytes, length) != 0 || write_all((int)stream, "\n", 1) != 0) {
+void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
+	if (write_all((int)stream, string->bytes, string->length) != 0 || write_all((int)stream, "\n", 1) != 0) {
 		static const char message[] = "writing output failed";
 		adamic_panic(message, sizeof message - 1);
 	}

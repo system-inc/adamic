@@ -29,7 +29,7 @@ var fixtures = []struct {
 }{
 	{"dedication/dedication.a", true},
 	{"internal/load/testdata/0.1/compile/01_hello.ts", true},
-	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", false},
+	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true},
 	{"internal/load/testdata/0.1/compile/03_shapes.ts", false},
 	{"internal/load/testdata/0.1/compile/04_closures.ts", false},
 	{"internal/load/testdata/0.1/compile/05_wordcount.ts", false},
@@ -38,6 +38,11 @@ var fixtures = []struct {
 	{"internal/load/testdata/0.1/compile/08_results.ts", false},
 	{"internal/load/testdata/0.1/compile/09_tree.ts", false},
 	{"internal/load/testdata/0.1/compile/10_unicode.ts", false},
+	{"internal/oracle/testdata/strings.a", true},
+	{"internal/oracle/testdata/numbers.a", true},
+	{"internal/oracle/testdata/loops.a", true},
+	{"internal/oracle/testdata/booleans.a", true},
+	{"internal/oracle/testdata/shadowing.a", true},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
@@ -87,6 +92,22 @@ func natively(t *testing.T, program *ir.Program) run {
 	return execute(t, binary)
 }
 
+// leaks builds a lowered program without sanitizers (they and macOS's leaks tool don't mix), runs it
+// under leaks --atExit, and returns its report when anything leaked. No garbage collector means every
+// reference the compiler hands out has to come back; this is where a missing release shows.
+func leaks(t *testing.T, program *ir.Program) string {
+	t.Helper()
+	binary := filepath.Join(t.TempDir(), "program")
+	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+		t.Fatal(err)
+	}
+	report := execute(t, "leaks", "--atExit", "--", binary)
+	if report.exitCode == 0 {
+		return ""
+	}
+	return string(report.stdout)
+}
+
 // disagreement says how two runs differ, or "" when they don't.
 func disagreement(oracle run, native run) string {
 	switch {
@@ -125,6 +146,9 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			if difference := disagreement(oracle, native); difference != "" {
 				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
+			}
+			if leaked := leaks(t, program); leaked != "" {
+				t.Errorf("leaks:\n%s", leaked)
 			}
 		})
 	}
