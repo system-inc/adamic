@@ -590,6 +590,15 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Map) + ".get(" + e.value(expression.Key) + ")"
 	case ir.MapSet:
 		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"
+	case ir.SetNew:
+		if expression.Values == nil {
+			return "new Set()"
+		}
+		return "new Set(" + e.value(expression.Values) + ")"
+	case ir.SetAdd:
+		return e.value(expression.Set) + ".add(" + e.value(expression.Value) + ")"
+	case ir.SetValues:
+		return "[..." + e.value(expression.Set) + "]"
 	case ir.MapHas:
 		return e.value(expression.Map) + ".has(" + e.value(expression.Key) + ")"
 	case ir.MapDelete:

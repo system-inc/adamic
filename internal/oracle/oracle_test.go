@@ -139,6 +139,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/interleaved.a", true, false},
 	// sin, cos and tan where reducing by pi / 2 cancels the most bits, as no sweep input does.
 	{"internal/oracle/testdata/trig_reduction.a", true, false},
+	{"internal/oracle/testdata/sets.a", true, false},
+	{"internal/oracle/testdata/maybe_collections.a", true, false},
+	// A run of marks longer than any the normalize sweep has, for canonical ordering.
+	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

@@ -1,0 +1,98 @@
+// Set<string> and Set<number>: new Set(array), add (which is the set), has, delete, size, [...set],
+// and for...of in insertion order, live as a Map's is: what's added during the loop is visited, what's
+// deleted before its turn isn't, and what's deleted and added again comes round at the end.
+
+const words = new Set<string>();
+words.add('pear').add('apple').add('pear').add('');
+console.log(`${words.size} ${words.has('pear')} ${words.has('plum')} ${words.has('')}`);
+console.log(`${words.delete('pear')} ${words.delete('pear')} ${words.size} ${words.has('pear')}`);
+words.add('pear');
+console.log([...words].join('|'));
+
+const numbers = new Set([3, 1, 3, 2, NaN, NaN, 0, -0]);
+console.log(`${numbers.size}: ${[...numbers].join(' ')}`);
+console.log(`${numbers.has(NaN)} ${numbers.has(-0)} ${numbers.has(4)}`);
+// -0 goes in as +0, as ECMA-262 says.
+for (const value of new Set([-0])) {
+	console.log(`${1 / value}`);
+}
+
+// Live iteration.
+const live = new Set(['a', 'b', 'c', 'd']);
+const seen: string[] = [];
+for (const letter of live) {
+	seen.push(letter);
+	if (letter === 'a') {
+		live.add('e');
+		live.delete('c');
+		live.delete('b');
+		live.add('b');
+	}
+}
+console.log(seen.join(' '));
+
+// keys() and values() are the same elements.
+const parts: string[] = [];
+for (const value of live.values()) {
+	parts.push(value);
+}
+for (const key of live.keys()) {
+	parts.push(key.toUpperCase());
+}
+console.log(parts.join(''));
+
+// Lone surrogates are keys like any other string.
+const odd = new Set(['\uD800', '\uDC00', '𐀀', '\uD800']);
+console.log(`${odd.size} ${odd.has('\uD800')} ${odd.has('\uD800' + '\uDC00')}`);
+
+function count(of: ReadonlySet<string>, among: readonly string[]): number {
+	let found = 0;
+	for (const word of among) {
+		if (of.has(word)) {
+			found += 1;
+		}
+	}
+	return found;
+}
+console.log(`${count(words, ['apple', 'plum', '', 'pear'])}`);
+
+// Many adds and deletes: the table grows and compacts, and grows instead while a loop is open.
+const many = new Set<number>();
+for (let index = 0; index < 5000; index += 1) {
+	many.add(index);
+	if (index % 3 === 0) {
+		many.delete(index - 1);
+	}
+}
+let sum = 0;
+let steps = 0;
+for (const value of many) {
+	sum += value;
+	steps += 1;
+	if (steps < 3000) {
+		many.delete(value + 1);
+		many.add(value + 10000);
+	}
+}
+console.log(`${many.size} ${steps} ${sum}`);
+const sorted = [...many].sort((left, right) => right - left);
+console.log(`${sorted[0] ?? -1} ${sorted[sorted.length - 1] ?? -1}`);
+
+// Strings the program builds, which are counted, unlike constants: a Set that didn't take its own
+// reference to each would be holding freed strings by the time these print.
+let built: string[] = [];
+for (let index = 0; index < 50; index += 1) {
+	built.push(`word ${index % 20}`);
+}
+const fromBuilt = new Set(built);
+built = [];
+const added = new Set<string>();
+for (let index = 0; index < 30; index += 1) {
+	added.add(`item ${index % 7}`);
+}
+const copied = [...added];
+for (const item of copied) {
+	added.delete(item);
+}
+console.log(`${fromBuilt.size} ${[...fromBuilt].join(',')} ${built.length}`);
+console.log(`${added.size} ${copied.join(',')}`);
