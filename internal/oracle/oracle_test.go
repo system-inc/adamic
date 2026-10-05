@@ -57,6 +57,7 @@ var fixtures = []struct {
 	// A local console is the program's, and lowering it as the prelude's would print what the program
 	// never asked to print.
 	{"internal/oracle/testdata/local_console.a", true},
+	{"internal/oracle/testdata/indexing.a", true},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

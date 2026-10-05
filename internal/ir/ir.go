@@ -224,6 +224,13 @@ type (
 	// CodePoints is [...string]: an array of its code points, each a string.
 	CodePoints struct{ Value Expression }
 
+	// ArrayIndex is array[index]: the element, or undefined when index isn't one of the array's (a
+	// null reference, or a MaybeNumber).
+	ArrayIndex struct {
+		Array, Index Expression
+		Element      Type
+	}
+
 	// ArrayPop is array.pop(): the last element, removed, or undefined when there's none (a null
 	// reference, or a MaybeNumber).
 	ArrayPop struct {
@@ -345,6 +352,13 @@ func (MapEntries) Type() Type      { return Array }
 func (MakeClosure) Type() Type     { return Closure }
 func (c CallClosure) Type() Type   { return c.Returns }
 func (ArrayMap) Type() Type        { return Array }
+
+func (i ArrayIndex) Type() Type {
+	if i.Element == Number {
+		return MaybeNumber
+	}
+	return i.Element
+}
 
 func (p ArrayPop) Type() Type {
 	if p.Element == Number {

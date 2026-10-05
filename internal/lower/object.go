@@ -670,6 +670,23 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if object.Type() == ir.Array {
+		element, err := l.elementType(access.Expression)
+		if err != nil {
+			return nil, err
+		}
+		if element == ir.Boolean {
+			return nil, l.notYet(node, "an index into an array of booleans (boolean | undefined)")
+		}
+		position, err := l.expression(access.ArgumentExpression)
+		if err != nil {
+			return nil, err
+		}
+		if position.Type() != ir.Number {
+			return nil, l.notYet(node, "an array index that isn't a number")
+		}
+		return ir.ArrayIndex{Array: object, Index: position, Element: element}, nil
+	}
 	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
 		return nil, l.notYet(node, describe(node))
 	}

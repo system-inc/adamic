@@ -152,3 +152,12 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 	}
 	free(scratch);
 }
+
+adamic_value *adamic_array_at(const adamic_array *array, double index) {
+	// An array index is an integer from 0 up to the length; anything else (negative, a fraction,
+	// NaN, past the end) is a property the array doesn't have, which reads as undefined.
+	if (!(index >= 0) || index >= (double)array->length || index != trunc(index)) {
+		return NULL;
+	}
+	return &array->elements[(size_t)index];
+}

@@ -610,6 +610,18 @@ func (e *emitter) value(expression ir.Expression) string {
 		e.line("\tadamic_array_push(%s, %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}));", mapped, callback, callback, source, index, index, source)
 		e.line("}")
 		return mapped
+	case ir.ArrayIndex:
+		array := e.value(expression.Array)
+		index := e.value(expression.Index)
+		slot := e.temporary()
+		e.line("adamic_value *%s = adamic_array_at(%s, %s);", slot, array, index)
+		if expression.Element == ir.Number {
+			result := e.temporary()
+			e.line("adamic_maybe_number %s = %s == NULL ? (adamic_maybe_number){false, 0.0} : (adamic_maybe_number){true, %s->number};", result, slot, slot)
+			return result
+		}
+		// Retained, so a write later in the statement can't free it from under its reader.
+		return e.own(expression.Element, fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s->reference)", slot, cType(expression.Element), slot))
 	case ir.ArrayPop:
 		array := e.temporary()
 		e.line("adamic_array *%s = %s;", array, e.value(expression.Array))

@@ -58,8 +58,8 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 	}{
 		{"a closure", "function outer(): number {\n\tfunction inner(): number {\n\t\treturn 1;\n\t}\n\treturn inner();\n}\nconsole.log(`${outer()}`);\n", "main.a:2:2: stage 0 can't lower a function inside a function (a closure) yet"},
 		{"a class inside a function", "function make(): number {\n\tclass Box {\n\t\treadonly size = 1;\n\t}\n\treturn 1;\n}\nconsole.log(`${make()}`);\n", "main.a:2:2: stage 0 can't lower a class inside a function yet"},
-		// array[index] is number | undefined, read with a bounds check stage 0 doesn't emit yet.
-		{"an index into an array", "const numbers: number[] = [1];\nconsole.log(`${numbers[0] ?? 0}`);\n", "main.a:2:16: stage 0 can't lower an ElementAccessExpression yet"},
+		// Writing past an array's end panics in 0.1, a check the JavaScript backend has to emit too.
+		{"a write into an array", "const numbers: number[] = [1];\nnumbers[0] = 2;\n", "main.a:2:1: stage 0 can't lower assigning to an ElementAccessExpression yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

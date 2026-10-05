@@ -161,6 +161,9 @@ bool adamic_map_delete(adamic_map *map, adamic_value key);
 // adamic_map_free_children lets go of what a map holds, for the heap's freeing.
 void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 
+// adamic_array_at is array[index]: the element's slot, or NULL (undefined) when there isn't one.
+adamic_value *adamic_array_at(const adamic_array *array, double index);
+
 // adamic_array_slice is array.slice(start, end); adamic_array_sort sorts in place, stably.
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value));
