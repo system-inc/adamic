@@ -549,7 +549,20 @@ void adamic_arguments_save(int count, char **values);
 adamic_array *adamic_program_arguments(void);
 adamic_object *adamic_read_text_file(const adamic_string *path);
 
-// adamic_write_text_file is writeTextFile(path, text) (output.c): { kind: 'Ok' } or { kind: 'Error',
+// adamic_decode_utf8 makes a string of bytes decoded as Node decodes them, WHATWG UTF-8 with U+FFFD
+// for each invalid sequence, and adamic_path_bytes is a path as the terminated bytes Node names a file
+// by, a lone surrogate as U+FFFD, or NULL when it holds a NUL, which names no file; the caller frees it
+// (input.c).
+adamic_string *adamic_decode_utf8(const unsigned char *bytes, size_t length);
+char *adamic_path_bytes(const adamic_string *path);
+
+// adamic_read_directory is readDirectory(path), { kind: 'Ok', names } with the names in Node's order,
+// and adamic_file_status is fileStatus(path), { kind: 'Ok', type, size, symbolicLink }, each or
+// { kind: 'Error', message } (directory.c). Both return a reference the caller owns.
+adamic_object *adamic_read_directory(const adamic_string *path);
+adamic_object *adamic_file_status(const adamic_string *path);
+
+// adamic_write_text_file is writeTextFile(path, text) (input.c): { kind: 'Ok' } or { kind: 'Error',
 // message }, a reference the caller owns.
 adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text);
 

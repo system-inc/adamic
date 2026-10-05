@@ -579,6 +579,16 @@ type (
 	// written as UTF-8 the way Node's writeFileSync(path, text) writes it (a lone surrogate as U+FFFD),
 	// in { kind: 'Ok' }, or what went wrong in { kind: 'Error', message }.
 	WriteTextFile struct{ Path, Text Expression }
+
+	// ReadDirectory is readDirectory(Path) from 'adamic': { kind: 'Ok', names }, the names as Node's
+	// readdirSync gives them on the same machine (sorted by their bytes, without . and ..), or
+	// { kind: 'Error', message }.
+	ReadDirectory struct{ Path Expression }
+
+	// FileStatus is fileStatus(Path) from 'adamic': { kind: 'Ok', type, size, symbolicLink }, the type
+	// and size of what Path names, a symbolic link followed, and whether Path is itself one, or
+	// { kind: 'Error', message }.
+	FileStatus struct{ Path Expression }
 )
 
 // Field is one field of an object literal.
@@ -686,6 +696,8 @@ func (c StringCall) Type() Type {
 func (ReadTextFile) Type() Type     { return Object }
 func (ProgramArguments) Type() Type { return Array }
 func (WriteTextFile) Type() Type    { return Object }
+func (ReadDirectory) Type() Type    { return Object }
+func (FileStatus) Type() Type       { return Object }
 
 func (MapNew) Type() Type     { return Map }
 func (MapKeys) Type() Type    { return Array }
