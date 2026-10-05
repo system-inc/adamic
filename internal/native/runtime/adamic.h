@@ -52,4 +52,8 @@ double adamic_power(double base, double exponent);
 // adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
 _Noreturn void adamic_panic(const char *message, size_t length);
 
+// adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
+// bug, and it says so rather than returning garbage.
+_Noreturn void adamic_unreachable(void);
+
 #endif

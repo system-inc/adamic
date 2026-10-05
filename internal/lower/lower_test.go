@@ -59,7 +59,7 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		// A local console is not the prelude's, and lowering it as console.log would print what the
 		// program never asked to print.
 		{"a local console", "const console = { log: (message: string): void => {} };\nconsole.log('x');\n", "main.a:1:7: stage 0 can't lower a value of type { log: (message: string) => void; } yet"},
-		{"a function call", "function name(): string {\n\treturn 'x';\n}\nconsole.log(name());\n", "main.a:1:1: stage 0 can't lower a FunctionDeclaration yet"},
+		{"a closure", "function outer(): number {\n\tfunction inner(): number {\n\t\treturn 1;\n\t}\n\treturn inner();\n}\nconsole.log(`${outer()}`);\n", "main.a:2:2: stage 0 can't lower a function inside a function (a closure) yet"},
 		{"an import", "import { panic } from 'adamic';\npanic('x');\n", "main.a:1:1: stage 0 can't lower an ImportDeclaration yet"},
 		// String < compares UTF-16 code units, which the runtime doesn't do yet (docs/0.1.md, program 10).
 		{"a string comparison", "console.log(`${'a' < 'b'}`);\n", "main.a:1:16: stage 0 can't lower a BinaryExpression with a string and a string yet"},

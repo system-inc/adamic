@@ -38,3 +38,8 @@ _Noreturn void adamic_panic(const char *message, size_t length) {
 	(void)write_all(adamic_stderr, "\n", 1);
 	_exit(70);
 }
+
+_Noreturn void adamic_unreachable(void) {
+	static const char message[] = "compiler bug: a function ended without returning";
+	adamic_panic(message, sizeof message - 1);
+}

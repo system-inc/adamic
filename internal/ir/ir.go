@@ -17,8 +17,24 @@ type Program struct {
 	// Locals are every variable the program declares, each its own, so shadowing is already resolved.
 	Locals []Local
 
+	// Functions are the module's function declarations, callable from anywhere in it.
+	Functions []Function
+
 	// Main is what the program does, in order.
 	Main []Statement
+}
+
+// Function is a function declaration.
+type Function struct {
+	Name string
+
+	// Parameters are locals, in order.
+	Parameters []int
+
+	// Returns is the result's type, or 0 for void.
+	Returns Type
+
+	Body []Statement
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of
@@ -35,6 +51,9 @@ const (
 type Local struct {
 	Name string
 	Type Type
+
+	// Global is a variable declared at the module's top level, which functions can read and write.
+	Global bool
 }
 
 // Expression is a value. Evaluating a String expression yields a reference its consumer owns: the
@@ -49,9 +68,19 @@ type (
 	StringConstant  struct{ Index int }
 
 	// Read reads a local. Of is the local's type, so a Read is typed without the program in hand.
+	// Checked is a read of a global from inside a function, which may run before the global's
+	// declaration has: JavaScript throws there (the temporal dead zone), and so does Adamic, out loud.
 	Read struct {
-		Local int
-		Of    Type
+		Local   int
+		Of      Type
+		Checked bool
+	}
+
+	// Call calls a function. Returns is its result type, 0 for void.
+	Call struct {
+		Function  int
+		Arguments []Expression
+		Returns   Type
 	}
 
 	// Unary is -, + and ! on its operand.
@@ -93,6 +122,7 @@ func (Concat) Type() Type          { return String }
 func (c Conditional) Type() Type   { return c.WhenTrue.Type() }
 
 func (r Read) Type() Type { return r.Of }
+func (c Call) Type() Type { return c.Returns }
 
 func (u Unary) Type() Type {
 	if u.Operator == Not {
@@ -158,11 +188,19 @@ type (
 		Value Expression
 	}
 
-	// Assign gives a local a new value, releasing the old one if it's a string.
+	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
+	// Read: a write to a global from inside a function.
 	Assign struct {
-		Local int
-		Value Expression
+		Local   int
+		Value   Expression
+		Checked bool
 	}
+
+	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
+	Evaluate struct{ Value Expression }
+
+	// Return leaves the function, with Value unless it returns void.
+	Return struct{ Value Expression }
 
 	// If runs Then when Condition holds, and Else (perhaps empty) when it doesn't.
 	If struct {
@@ -190,6 +228,8 @@ type (
 func (WriteLine) statement() {}
 func (Declare) statement()   {}
 func (Assign) statement()    {}
+func (Evaluate) statement()  {}
+func (Return) statement()    {}
 func (If) statement()        {}
 func (Loop) statement()      {}
 func (Block) statement()     {}

@@ -43,6 +43,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/loops.a", true},
 	{"internal/oracle/testdata/booleans.a", true},
 	{"internal/oracle/testdata/shadowing.a", true},
+	{"internal/oracle/testdata/functions.a", true},
+	{"internal/oracle/testdata/effects.a", true},
+	{"internal/oracle/testdata/dead_zone.a", true},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

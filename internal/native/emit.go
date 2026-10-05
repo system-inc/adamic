@@ -11,11 +11,17 @@ import (
 
 // C is a program as one C translation unit, to be compiled with the runtime.
 //
-// Every string reference is released exactly once. An expression's string goes into a temporary
-// that's released when its statement ends; a variable takes its own reference (retain) and gives it
-// back when it's reassigned or its scope ends, break and continue included. Stage 0 pays a retain and
-// a release on every assignment for that simplicity, and removing them where they cancel (reuse in
-// place) is the memory model's work, measured against this.
+// Expressions are evaluated in JavaScript's order. Each one yields a C expression that stays valid
+// to the end of its statement: a constant, a local nothing can change mid-statement, or a temporary.
+// A global is copied before anything after it runs, since a call may change it. &&, || and ?: become
+// real branches whenever their later operands have work to do, so what JavaScript doesn't evaluate,
+// Adamic doesn't either.
+//
+// Every string reference is released exactly once. A string made mid-statement lives in a temporary
+// released when the statement ends; a variable takes its own reference (retain) and gives it back
+// when reassigned or when its scope ends, by break, continue or return included. Stage 0 pays a
+// retain and a release on every assignment for that simplicity; removing them where they cancel is
+// the memory model's work, measured against this.
 func C(program *ir.Program) string {
 	emitter := &emitter{program: program}
 	var builder strings.Builder
@@ -26,6 +32,35 @@ func C(program *ir.Program) string {
 	if len(program.Strings) > 0 {
 		builder.WriteString("\n")
 	}
+
+	globals := false
+	for index, local := range program.Locals {
+		if !local.Global {
+			continue
+		}
+		globals = true
+		fmt.Fprintf(&builder, "static %s %s = %s;\n", cType(local.Type), emitter.localName(index), zero(local.Type))
+		fmt.Fprintf(&builder, "static bool %s = false;\n", readyName(index))
+	}
+	if globals {
+		builder.WriteString("\n")
+	}
+
+	for index := range program.Functions {
+		fmt.Fprintf(&builder, "static %s;\n", emitter.signature(index))
+	}
+	if len(program.Functions) > 0 {
+		builder.WriteString("\n")
+	}
+	for index, function := range program.Functions {
+		fmt.Fprintf(&builder, "static %s {\n", emitter.signature(index))
+		emitter.indent = 1
+		emitter.functionBody(function)
+		builder.WriteString(emitter.out.String())
+		emitter.out.Reset()
+		builder.WriteString("}\n\n")
+	}
+
 	builder.WriteString("int main(void) {\n")
 	emitter.indent = 1
 	emitter.block(program.Main, nil)
@@ -42,10 +77,8 @@ type emitter struct {
 	// temporaries counts the C temporaries made so far, for unique names.
 	temporaries int
 
-	// pending is what the statement being emitted has to run first (string temporaries), and owned is
-	// what it has to release after.
-	pending []string
-	owned   []string
+	// owned is the string temporaries the statement being emitted releases when it ends.
+	owned []string
 
 	// scopes holds, innermost last, the string locals each open scope must release when it ends.
 	scopes [][]int
@@ -53,6 +86,10 @@ type emitter struct {
 	// loops holds, innermost last, each open loop's scope depth and continue label, and whether
 	// anything jumps to that label.
 	loops []*loop
+
+	// function is the function being emitted, and functionDepth the scope depth its body starts at.
+	function      *ir.Function
+	functionDepth int
 }
 
 type loop struct {
@@ -74,13 +111,67 @@ func (e *emitter) temporary() string {
 
 // localName is a local's C name: its index, which is unique, and its name as written, for reading.
 func (e *emitter) localName(local int) string {
-	return fmt.Sprintf("adamic_local_%d_%s", local, cIdentifier.ReplaceAllString(e.program.Locals[local].Name, ""))
+	prefix := "adamic_local"
+	if e.program.Locals[local].Global {
+		prefix = "adamic_global"
+	}
+	return fmt.Sprintf("%s_%d_%s", prefix, local, cIdentifier.ReplaceAllString(e.program.Locals[local].Name, ""))
+}
+
+// readyName is the flag that says a global's declaration has run.
+func readyName(local int) string {
+	return fmt.Sprintf("adamic_ready_%d", local)
 }
 
 var cIdentifier = regexp.MustCompile(`[^A-Za-z0-9_]`)
 
-// block emits statements in a scope of their own. after, when set, runs in the scope just before it
-// closes: a loop's update, which needs the loop's continue label in front of it.
+func (e *emitter) functionName(function int) string {
+	return fmt.Sprintf("adamic_function_%d_%s", function, cIdentifier.ReplaceAllString(e.program.Functions[function].Name, ""))
+}
+
+func (e *emitter) signature(function int) string {
+	declared := e.program.Functions[function]
+	returns := "void"
+	if declared.Returns != 0 {
+		returns = cType(declared.Returns)
+	}
+	parameters := []string{}
+	for _, parameter := range declared.Parameters {
+		parameters = append(parameters, cType(e.program.Locals[parameter].Type)+" "+e.localName(parameter))
+	}
+	if len(parameters) == 0 {
+		parameters = append(parameters, "void")
+	}
+	return fmt.Sprintf("%s %s(%s)", returns, e.functionName(function), strings.Join(parameters, ", "))
+}
+
+// functionBody emits a function's body. A string parameter is retained on entry and released on
+// every way out, like any local, so a function may reassign it without touching its caller's.
+func (e *emitter) functionBody(function ir.Function) {
+	e.function = &function
+	e.functionDepth = len(e.scopes)
+	e.scopes = append(e.scopes, nil)
+	for _, parameter := range function.Parameters {
+		if e.program.Locals[parameter].Type == ir.String {
+			e.line("adamic_retain(%s);", e.localName(parameter))
+			e.scopes[len(e.scopes)-1] = append(e.scopes[len(e.scopes)-1], parameter)
+		}
+	}
+	for _, statement := range function.Body {
+		e.statement(statement)
+	}
+	if function.Returns == 0 {
+		e.releaseScopes(e.functionDepth)
+	} else {
+		// The checker proved every path returns (noImplicitReturns), so this is never reached; C
+		// can't see that, and if it ever is reached it's a compiler bug, said out loud.
+		e.line("adamic_unreachable();")
+	}
+	e.scopes = e.scopes[:e.functionDepth]
+	e.function = nil
+}
+
+// block emits statements in a scope of their own.
 func (e *emitter) block(statements []ir.Statement, after func()) {
 	e.scopes = append(e.scopes, nil)
 	for _, statement := range statements {
@@ -102,15 +193,7 @@ func (e *emitter) releaseScopes(depth int) {
 	}
 }
 
-// begin and end bracket one statement: begin flushes its pending temporaries, end releases what it
-// owned.
-func (e *emitter) begin() {
-	for _, pending := range e.pending {
-		e.line("%s", pending)
-	}
-	e.pending = nil
-}
-
+// end releases what the statement just emitted owned.
 func (e *emitter) end() {
 	for index := len(e.owned) - 1; index >= 0; index-- {
 		e.line("adamic_release(%s);", e.owned[index])
@@ -118,15 +201,14 @@ func (e *emitter) end() {
 	e.owned = nil
 }
 
-// decide evaluates a condition with its temporaries released before anything branches on it, and
-// returns the C name holding the answer.
+// decide evaluates a condition and releases its temporaries before anything branches on it,
+// returning the C expression holding the answer.
 func (e *emitter) decide(condition ir.Expression) string {
-	value := e.expression(condition)
-	if len(e.pending) == 0 && len(e.owned) == 0 {
+	value := e.value(condition)
+	if len(e.owned) == 0 {
 		return value
 	}
 	name := e.temporary()
-	e.begin()
 	e.line("bool %s = %s;", name, value)
 	e.end()
 	return name
@@ -139,38 +221,43 @@ func (e *emitter) statement(statement ir.Statement) {
 		if statement.Stream == ir.Stderr {
 			stream = "adamic_stderr"
 		}
-		value := e.expression(statement.Value)
-		e.begin()
+		value := e.value(statement.Value)
 		e.line("adamic_write_line(%s, %s);", stream, value)
 		e.end()
 	case ir.Declare:
 		local := e.program.Locals[statement.Local]
 		value := zero(local.Type)
 		if statement.Value != nil {
-			value = e.expression(statement.Value)
+			value = e.value(statement.Value)
 		}
-		e.begin()
-		if local.Type == ir.String {
+		switch {
+		case local.Global:
+			e.store(statement.Local, value)
+			e.line("%s = true;", readyName(statement.Local))
+		case local.Type == ir.String:
 			e.line("adamic_string *%s = adamic_retain(%s);", e.localName(statement.Local), value)
 			e.scopes[len(e.scopes)-1] = append(e.scopes[len(e.scopes)-1], statement.Local)
-		} else {
+		default:
 			e.line("%s %s = %s;", cType(local.Type), e.localName(statement.Local), value)
 		}
 		e.end()
 	case ir.Assign:
-		value := e.expression(statement.Value)
-		e.begin()
-		name := e.localName(statement.Local)
-		if e.program.Locals[statement.Local].Type == ir.String {
-			// Retain the new value before releasing the old, which may be the same string.
-			old := e.temporary()
-			e.line("adamic_string *%s = %s;", old, name)
-			e.line("%s = adamic_retain(%s);", name, value)
-			e.line("adamic_release(%s);", old)
+		value := e.value(statement.Value)
+		if statement.Checked {
+			// After the value, as JavaScript does: the right side runs, then the write throws.
+			e.checkReady(statement.Local)
+		}
+		e.store(statement.Local, value)
+		e.end()
+	case ir.Evaluate:
+		if call, isCall := statement.Value.(ir.Call); isCall && call.Returns == 0 {
+			e.line("%s(%s);", e.functionName(call.Function), strings.Join(e.arguments(call), ", "))
 		} else {
-			e.line("%s = %s;", name, value)
+			e.value(statement.Value)
 		}
 		e.end()
+	case ir.Return:
+		e.returnStatement(statement)
 	case ir.If:
 		condition := e.decide(statement.Condition)
 		e.line("if (%s) {", unwrap(condition))
@@ -200,6 +287,48 @@ func (e *emitter) statement(statement ir.Statement) {
 	}
 }
 
+// store gives a local a value; a string's new reference is taken before the old one is let go,
+// since they may be the same string.
+func (e *emitter) store(local int, value string) {
+	name := e.localName(local)
+	if e.program.Locals[local].Type != ir.String {
+		e.line("%s = %s;", name, value)
+		return
+	}
+	old := e.temporary()
+	e.line("adamic_string *%s = %s;", old, name)
+	e.line("%s = adamic_retain(%s);", name, value)
+	e.line("adamic_release(%s);", old)
+}
+
+// checkReady panics as JavaScript throws when a global is touched before its declaration has run.
+func (e *emitter) checkReady(local int) {
+	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
+	e.line("if (!%s) {", readyName(local))
+	e.line("\tstatic const char message[] = %s;", cString(message))
+	e.line("\tadamic_panic(message, sizeof message - 1);")
+	e.line("}")
+}
+
+func (e *emitter) returnStatement(statement ir.Return) {
+	if statement.Value == nil {
+		e.end()
+		e.releaseScopes(e.functionDepth)
+		e.line("return;")
+		return
+	}
+	value := e.value(statement.Value)
+	result := e.temporary()
+	if statement.Value.Type() == ir.String {
+		e.line("adamic_string *%s = adamic_retain(%s);", result, value)
+	} else {
+		e.line("%s %s = %s;", cType(statement.Value.Type()), result, value)
+	}
+	e.end()
+	e.releaseScopes(e.functionDepth)
+	e.line("return %s;", result)
+}
+
 // nested emits statements one level in, in a scope of their own.
 func (e *emitter) nested(statements []ir.Statement, after func()) {
 	e.indent++
@@ -211,11 +340,11 @@ func (e *emitter) nested(statements []ir.Statement, after func()) {
 // body in its own scope, then a continue label and the update. A continue releases the body's
 // locals and jumps to the label, so it runs the update and the check, as JavaScript's does.
 func (e *emitter) loop(statement ir.Loop) {
-	current := &loop{label: fmt.Sprintf("adamic_continue_%d", e.temporaries+1)}
 	e.temporaries++
+	current := &loop{label: fmt.Sprintf("adamic_continue_%d", e.temporaries)}
 	check := func() {
 		condition := e.decide(statement.Condition)
-		e.line("if (!(%s)) {", condition)
+		e.line("if (!(%s)) {", unwrap(condition))
 		e.line("\tbreak;")
 		e.line("}")
 	}
@@ -249,9 +378,9 @@ func (e *emitter) loop(statement ir.Loop) {
 	e.line("}")
 }
 
-// expression is a C expression for a value. A string's reference is registered to be released when
-// the statement ends, unless it's a constant (immortal) or a local (the local holds it).
-func (e *emitter) expression(expression ir.Expression) string {
+// value emits what an expression needs evaluated first, in JavaScript's order, and returns a C
+// expression that stays valid to the end of the statement.
+func (e *emitter) value(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
@@ -260,9 +389,9 @@ func (e *emitter) expression(expression ir.Expression) string {
 	case ir.StringConstant:
 		return fmt.Sprintf("&adamic_string_%d", expression.Index)
 	case ir.Read:
-		return e.localName(expression.Local)
+		return e.read(expression)
 	case ir.Unary:
-		operand := e.expression(expression.Operand)
+		operand := e.value(expression.Operand)
 		switch expression.Operator {
 		case ir.Negate:
 			return "(-" + operand + ")"
@@ -272,30 +401,144 @@ func (e *emitter) expression(expression ir.Expression) string {
 			return "(!" + operand + ")"
 		}
 	case ir.Binary:
-		return e.binary(expression)
+		if expression.Operator == ir.And || expression.Operator == ir.Or {
+			return e.logical(expression)
+		}
+		return e.binary(expression.Operator, expression.Left.Type(), e.value(expression.Left), e.value(expression.Right))
+	case ir.Call:
+		arguments := e.arguments(expression)
+		call := fmt.Sprintf("%s(%s)", e.functionName(expression.Function), strings.Join(arguments, ", "))
+		if expression.Returns == ir.String {
+			return e.own(call)
+		}
+		result := e.temporary()
+		e.line("%s %s = %s;", cType(expression.Returns), result, call)
+		return result
 	case ir.NumberToString:
-		return e.own(fmt.Sprintf("adamic_string_from_number(%s)", e.expression(expression.Value)))
+		return e.own(fmt.Sprintf("adamic_string_from_number(%s)", e.value(expression.Value)))
 	case ir.BooleanToString:
-		return fmt.Sprintf("((%s) ? &adamic_string_true : &adamic_string_false)", e.expression(expression.Value))
+		return fmt.Sprintf("((%s) ? &adamic_string_true : &adamic_string_false)", e.value(expression.Value))
 	case ir.Concat:
 		parts := make([]string, 0, len(expression.Parts))
 		for _, part := range expression.Parts {
-			parts = append(parts, e.expression(part))
+			parts = append(parts, e.value(part))
 		}
 		return e.own(fmt.Sprintf("adamic_string_concat(%d, (adamic_string *const[]){%s})", len(parts), strings.Join(parts, ", ")))
 	case ir.Conditional:
-		// Both branches are evaluated first (stage 0's string expressions have no effects to
-		// reorder), and both are already released at the statement's end, so the result owns nothing
-		// more.
-		return fmt.Sprintf("(%s ? %s : %s)", e.expression(expression.Condition), e.expression(expression.WhenTrue), e.expression(expression.WhenNot))
+		return e.conditional(expression)
 	}
 	panic(fmt.Sprintf("native: no C for %T", expression))
 }
 
-// own puts a string the caller owns in a temporary released when the statement ends.
+// read reads a local. A global may change under a later call in the same statement, so its value is
+// copied (a string retained) the moment JavaScript would read it; and from inside a function it's
+// checked against the temporal dead zone first.
+func (e *emitter) read(read ir.Read) string {
+	name := e.localName(read.Local)
+	if !e.program.Locals[read.Local].Global {
+		return name
+	}
+	if read.Checked {
+		e.checkReady(read.Local)
+	}
+	if read.Of == ir.String {
+		return e.own(fmt.Sprintf("adamic_retain(%s)", name))
+	}
+	snapshot := e.temporary()
+	e.line("%s %s = %s;", cType(read.Of), snapshot, name)
+	return snapshot
+}
+
+func (e *emitter) arguments(call ir.Call) []string {
+	arguments := make([]string, 0, len(call.Arguments))
+	for _, argument := range call.Arguments {
+		arguments = append(arguments, e.value(argument))
+	}
+	return arguments
+}
+
+// aside emits work into a buffer of its own, one level in, with temporaries of its own, and returns
+// the text, the value, and what it owns, so the caller can decide where the work belongs.
+func (e *emitter) aside(expression ir.Expression) (string, string, []string) {
+	savedOut, savedOwned := e.out, e.owned
+	e.out, e.owned = strings.Builder{}, nil
+	e.indent++
+	value := e.value(expression)
+	e.indent--
+	text, owned := e.out.String(), e.owned
+	e.out, e.owned = savedOut, savedOwned
+	return text, value, owned
+}
+
+// logical emits && and ||. When the right operand has nothing to run first, C's own operator
+// short-circuits the same way; otherwise the right side runs only on the branch JavaScript takes.
+func (e *emitter) logical(binary ir.Binary) string {
+	left := e.value(binary.Left)
+	text, right, owned := e.aside(binary.Right)
+	operator := "&&"
+	if binary.Operator == ir.Or {
+		operator = "||"
+	}
+	if text == "" && len(owned) == 0 {
+		return fmt.Sprintf("(%s %s %s)", left, operator, right)
+	}
+	result := e.temporary()
+	e.line("bool %s = %s;", result, left)
+	if binary.Operator == ir.And {
+		e.line("if (%s) {", result)
+	} else {
+		e.line("if (!%s) {", result)
+	}
+	e.out.WriteString(text)
+	e.indent++
+	e.line("%s = %s;", result, right)
+	for index := len(owned) - 1; index >= 0; index-- {
+		e.line("adamic_release(%s);", owned[index])
+	}
+	e.indent--
+	e.line("}")
+	return result
+}
+
+// conditional emits ?:, evaluating only the branch JavaScript takes.
+func (e *emitter) conditional(conditional ir.Conditional) string {
+	condition := e.value(conditional.Condition)
+	trueText, whenTrue, trueOwned := e.aside(conditional.WhenTrue)
+	notText, whenNot, notOwned := e.aside(conditional.WhenNot)
+	if trueText == "" && notText == "" && len(trueOwned) == 0 && len(notOwned) == 0 {
+		return fmt.Sprintf("(%s ? %s : %s)", condition, whenTrue, whenNot)
+	}
+	valueType := conditional.Type()
+	result := e.temporary()
+	e.line("%s %s;", cType(valueType), result)
+	branch := func(text string, value string, owned []string) {
+		e.out.WriteString(text)
+		e.indent++
+		if valueType == ir.String {
+			e.line("%s = adamic_retain(%s);", result, value)
+		} else {
+			e.line("%s = %s;", result, value)
+		}
+		for index := len(owned) - 1; index >= 0; index-- {
+			e.line("adamic_release(%s);", owned[index])
+		}
+		e.indent--
+	}
+	e.line("if (%s) {", unwrap(condition))
+	branch(trueText, whenTrue, trueOwned)
+	e.line("} else {")
+	branch(notText, whenNot, notOwned)
+	e.line("}")
+	if valueType == ir.String {
+		e.owned = append(e.owned, result)
+	}
+	return result
+}
+
+// own puts a string the statement owns in a temporary, released when the statement ends.
 func (e *emitter) own(value string) string {
 	name := e.temporary()
-	e.pending = append(e.pending, fmt.Sprintf("adamic_string *%s = %s;", name, value))
+	e.line("adamic_string *%s = %s;", name, value)
 	e.owned = append(e.owned, name)
 	return name
 }
@@ -303,23 +546,22 @@ func (e *emitter) own(value string) string {
 var cOperators = map[ir.Operator]string{
 	ir.Add: "+", ir.Subtract: "-", ir.Multiply: "*", ir.Divide: "/",
 	ir.Less: "<", ir.LessOrEqual: "<=", ir.Greater: ">", ir.GreaterOrEqual: ">=",
-	ir.Equal: "==", ir.NotEqual: "!=", ir.And: "&&", ir.Or: "||",
+	ir.Equal: "==", ir.NotEqual: "!=",
 }
 
-func (e *emitter) binary(binary ir.Binary) string {
-	left, right := e.expression(binary.Left), e.expression(binary.Right)
+func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string, right string) string {
 	switch {
-	case binary.Operator == ir.Remainder:
+	case operator == ir.Remainder:
 		// JavaScript's % is C's fmod: truncated, with the sign of the dividend.
 		return fmt.Sprintf("fmod(%s, %s)", left, right)
-	case binary.Operator == ir.Power:
+	case operator == ir.Power:
 		return fmt.Sprintf("adamic_power(%s, %s)", left, right)
-	case binary.Left.Type() == ir.String && binary.Operator == ir.Equal:
+	case operandType == ir.String && operator == ir.Equal:
 		return fmt.Sprintf("adamic_string_equal(%s, %s)", left, right)
-	case binary.Left.Type() == ir.String && binary.Operator == ir.NotEqual:
+	case operandType == ir.String && operator == ir.NotEqual:
 		return fmt.Sprintf("(!adamic_string_equal(%s, %s))", left, right)
 	}
-	return fmt.Sprintf("(%s %s %s)", left, cOperators[binary.Operator], right)
+	return fmt.Sprintf("(%s %s %s)", left, cOperators[operator], right)
 }
 
 // unwrap drops one pair of parentheses around a whole expression, so a condition reads if (a == b)

@@ -79,9 +79,9 @@ func Build(source string, output string, options Options) error {
 		}
 	}
 
-	// A program may declare a variable it never reads, as JavaScript allows; that's the linter's
-	// business (cohere's no-unused-vars), not a reason the C can't compile.
-	arguments := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable"}
+	// A program may declare a variable or a function it never uses, as JavaScript allows; that's the
+	// linter's business (cohere's no-unused-vars), not a reason the C can't compile.
+	arguments := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function"}
 	if options.Sanitize {
 		arguments = append(arguments, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
 	} else {

@@ -54,6 +54,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}}
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(sourceFile))
+	if err := lowering.declareModule(sourceFile.Statements.Nodes); err != nil {
+		return nil, err
+	}
 	main, err := lowering.statements(sourceFile.Statements.Nodes)
 	if err != nil {
 		return nil, err
@@ -72,6 +75,89 @@ type lowering struct {
 
 	// locals maps each variable's symbol to its index in result.Locals.
 	locals map[*ast.Symbol]int
+
+	// functions maps each function declaration's symbol to its index in result.Functions.
+	functions map[*ast.Symbol]int
+
+	// function is the function being lowered, or nil for the module's top level.
+	function *ir.Function
+}
+
+// declareModule registers the module's globals and functions before anything is lowered, so a
+// function can call one declared below it and read a global declared below it, as JavaScript
+// allows, and then lowers each function's body.
+func (l *lowering) declareModule(statements []*ast.Node) error {
+	declarations := []*ast.Node{}
+	for _, statement := range statements {
+		switch statement.Kind {
+		case ast.KindVariableStatement:
+			list := statement.AsVariableStatement().DeclarationList
+			if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+				continue // statements() refuses var where it stands
+			}
+			for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
+				if ast.IsIdentifier(declaration.Name()) {
+					local, err := l.declareLocal(declaration.Name())
+					if err != nil {
+						return err
+					}
+					l.result.Locals[local].Global = true
+				}
+			}
+		case ast.KindFunctionDeclaration:
+			symbol := l.checker.GetSymbolAtLocation(statement.Name())
+			if l.functions == nil {
+				l.functions = map[*ast.Symbol]int{}
+			}
+			l.functions[symbol] = len(l.result.Functions)
+			l.result.Functions = append(l.result.Functions, ir.Function{Name: statement.Name().Text()})
+			declarations = append(declarations, statement)
+		}
+	}
+	for _, declaration := range declarations {
+		if err := l.functionBody(declaration); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// functionBody lowers a function declaration's parameters and body.
+func (l *lowering) functionBody(declaration *ast.Node) error {
+	function := &l.result.Functions[l.functions[l.checker.GetSymbolAtLocation(declaration.Name())]]
+	signature := l.checker.GetSignatureFromDeclaration(declaration)
+	returns := l.checker.GetReturnTypeOfSignature(signature)
+	if returns.Flags()&checker.TypeFlagsVoid == 0 {
+		valueType, isKnown := representation(returns)
+		if !isKnown {
+			return l.notYet(declaration.Name(), "a function returning "+l.checker.TypeToString(returns))
+		}
+		function.Returns = valueType
+	}
+	for _, parameter := range declaration.Parameters() {
+		declared := parameter.AsParameterDeclaration()
+		if !ast.IsIdentifier(parameter.Name()) || declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
+			return l.notYet(parameter, "a parameter that isn't a plain name")
+		}
+		local, err := l.declareLocal(parameter.Name())
+		if err != nil {
+			return err
+		}
+		function.Parameters = append(function.Parameters, local)
+	}
+	body := declaration.Body()
+	if body == nil {
+		return l.notYet(declaration, "a function without a body")
+	}
+	outer := l.function
+	l.function = function
+	lowered, err := l.statements(body.AsBlock().Statements.Nodes)
+	l.function = outer
+	if err != nil {
+		return err
+	}
+	function.Body = lowered
+	return nil
 }
 
 func (l *lowering) notYet(node *ast.Node, what string) error {
@@ -97,6 +183,14 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
+	case ast.KindFunctionDeclaration:
+		if l.function != nil {
+			return nil, l.notYet(node, "a function inside a function (a closure)")
+		}
+		// Lowered already, by declareModule.
+		return nil, nil
+	case ast.KindReturnStatement:
+		return l.returnStatement(node)
 	case ast.KindExpressionStatement:
 		return l.expressionStatement(node.AsExpressionStatement().Expression)
 	case ast.KindVariableStatement:
@@ -131,11 +225,19 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	expression = ast.SkipParentheses(expression)
 	switch expression.Kind {
 	case ast.KindCallExpression:
-		statement, err := l.console(expression)
+		if l.isConsole(expression.AsCallExpression().Expression) {
+			statement, err := l.console(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{statement}, nil
+		}
+		// A call for its effects, void or not.
+		call, err := l.call(expression)
 		if err != nil {
 			return nil, err
 		}
-		return []ir.Statement{statement}, nil
+		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
 		return l.assignment(expression)
 	case ast.KindPrefixUnaryExpression, ast.KindPostfixUnaryExpression:
@@ -201,6 +303,10 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	if l.locals == nil {
 		l.locals = map[*ast.Symbol]int{}
 	}
+	if local, isDeclared := l.locals[symbol]; isDeclared {
+		// A global, registered before anything was lowered.
+		return local, nil
+	}
 	l.locals[symbol] = len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType})
 	return l.locals[symbol], nil
@@ -230,12 +336,34 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, err
 	}
 	if isCompound {
-		current := ir.Read{Local: local, Of: l.result.Locals[local].Type}
+		current := ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}
 		if value, err = l.combine(node, operator, current, value); err != nil {
 			return nil, err
 		}
 	}
-	return []ir.Statement{ir.Assign{Local: local, Value: value}}, nil
+	return []ir.Statement{ir.Assign{Local: local, Value: value, Checked: l.checked(local)}}, nil
+}
+
+// checked reports whether touching a local must be checked against the temporal dead zone: a
+// global, from inside a function, which may run before the global's declaration has.
+func (l *lowering) checked(local int) bool {
+	return l.function != nil && l.result.Locals[local].Global
+}
+
+// returnStatement lowers return, with or without a value.
+func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
+	if l.function == nil {
+		return nil, errors.New("lower: " + l.program.Where(node) + ": return outside a function, and the checker let it through")
+	}
+	expression := node.AsReturnStatement().Expression
+	if expression == nil {
+		return []ir.Statement{ir.Return{}}, nil
+	}
+	value, err := l.expression(expression)
+	if err != nil {
+		return nil, err
+	}
+	return []ir.Statement{ir.Return{Value: value}}, nil
 }
 
 var compoundAssignments = map[ast.Kind]ast.Kind{
@@ -268,8 +396,8 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 	if operator == ast.KindMinusMinusToken {
 		step = ir.Subtract
 	}
-	current := ir.Read{Local: local, Of: ir.Number}
-	return []ir.Statement{ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}}}, nil
+	current := ir.Read{Local: local, Of: ir.Number, Checked: l.checked(local)}
+	return []ir.Statement{ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}}, nil
 }
 
 func (l *lowering) ifStatement(node *ast.Node) ([]ir.Statement, error) {
@@ -364,6 +492,15 @@ func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 		return nil, &Refused{Where: l.program.Where(node), What: "a " + typeName(condition.Type()) + " as a condition", Fix: "compare it explicitly, like name.length > 0 or count !== 0"}
 	}
 	return condition, nil
+}
+
+// isConsole reports whether a callee is a method of the prelude's console.
+func (l *lowering) isConsole(callee *ast.Node) bool {
+	if callee.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	symbol := l.checker.GetSymbolAtLocation(callee.AsPropertyAccessExpression().Expression)
+	return symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
 // consoleStream is the stream a callee writes to, when it is the prelude's console.log or

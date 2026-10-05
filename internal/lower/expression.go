@@ -56,7 +56,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
-		return ir.Read{Local: local, Of: l.result.Locals[local].Type}, nil
+		return ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}, nil
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindBinaryExpression:
@@ -74,6 +74,17 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return l.template(node)
 	case ast.KindConditionalExpression:
 		return l.conditional(node)
+	case ast.KindCallExpression:
+		call, err := l.call(node)
+		if err != nil {
+			return nil, err
+		}
+		if call.Type() == 0 {
+			// The checker allows a void call where a value goes only in places 0.1 refuses anyway
+			// (a template of void prints "undefined"); stage 0 says so rather than guess.
+			return nil, l.notYet(node, "a void call used as a value")
+		}
+		return call, nil
 	}
 	return nil, l.notYet(node, describe(node))
 }
@@ -210,4 +221,23 @@ func typeName(valueType ir.Type) string {
 		return "string"
 	}
 	return "value"
+}
+
+// call lowers a call to one of the module's functions.
+func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+	call := node.AsCallExpression()
+	callee := ast.SkipParentheses(call.Expression)
+	function, isFunction := l.functions[l.checker.GetSymbolAtLocation(callee)]
+	if !ast.IsIdentifier(callee) || !isFunction {
+		return nil, l.notYet(node, "a call to "+describe(callee))
+	}
+	arguments := []ir.Expression{}
+	for _, argument := range call.Arguments.Nodes {
+		lowered, err := l.expression(argument)
+		if err != nil {
+			return nil, err
+		}
+		arguments = append(arguments, lowered)
+	}
+	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
 }
