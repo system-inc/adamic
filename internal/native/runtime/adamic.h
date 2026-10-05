@@ -25,6 +25,7 @@ enum adamic_kind {
 	adamic_kind_map_iterator,
 	adamic_kind_number,
 	adamic_kind_boolean,
+	adamic_kind_weak,
 };
 
 typedef struct adamic_heap {
@@ -371,6 +372,19 @@ extern adamic_string adamic_typeof_boolean;
 extern adamic_string adamic_typeof_undefined;
 extern adamic_string adamic_typeof_object;
 extern adamic_string adamic_typeof_function;
+
+// adamic_weak is the handle a Weak<Target> slot holds (weak.c): counted itself, it doesn't count its
+// target, and it says NULL once the target is freed. adamic_weak_of is the target's handle, retained
+// for the caller (NULL for NULL); adamic_weak_target is what a handle points to, and
+// adamic_weak_target_present the same where the checker proved it present, panicking if it was freed.
+// The heap tells weak.c when a target is freed (adamic_weak_forget) and when a handle is
+// (adamic_weak_dropped).
+typedef struct adamic_weak adamic_weak;
+adamic_weak *adamic_weak_of(void *target);
+void *adamic_weak_target(const adamic_weak *handle);
+void *adamic_weak_target_present(const adamic_weak *handle);
+void adamic_weak_forget(void *target);
+void adamic_weak_dropped(adamic_weak *handle);
 
 // adamic_write_line writes a string and a newline, as console.log does with one string.
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string);

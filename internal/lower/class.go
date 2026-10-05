@@ -81,7 +81,10 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	// Lower with this instantiation's meaning of each type parameter, and locals of its own: the
 	// same parameter is a string here and may be a number in another instantiation.
 	outerSubstitution, outerLocals, outerInstance := l.substitution, l.locals, l.instance
+	outerClassType, outerClassNode := l.classType, l.classNode
 	l.substitution, l.instance = substitution, lowered
+	l.classType, l.classNode = classType, declaration.Name()
+	defer func() { l.classType, l.classNode = outerClassType, outerClassNode }()
 	l.locals = map[*ast.Symbol]int{}
 	for symbol, local := range outerLocals {
 		if l.result.Locals[local].Global {
@@ -108,6 +111,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 // thisLocal makes a fresh local for the this of the method or constructor at owner.
 func (l *lowering) thisLocal(owner int) int {
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: owner})
+	l.noteLocal(len(l.result.Locals)-1, l.classType, l.classNode)
 	return len(l.result.Locals) - 1
 }
 
@@ -274,6 +278,10 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		return nil, err
 	}
 	of, err := l.typeOf(target)
+	if field := l.checker.GetSymbolAtLocation(target.Name()); field != nil {
+		// What the field is declared to keep, not what the checker narrowed this write to.
+		of, err = l.typeOfSymbol(target, field)
+	}
 	if err != nil || slotless(of) || slotless(value.Type()) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}

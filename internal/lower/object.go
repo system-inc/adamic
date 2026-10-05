@@ -46,8 +46,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, name.Text()) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, name.Text()); declared == ir.MaybeNumber {
-				// Where the field is number | undefined, what it's given is packed as one.
+			if declared := l.declaredField(node, name.Text()); declared == ir.MaybeNumber || declared == ir.Weak {
+				// Where the field is number | undefined, what it's given is packed as one; where it's
+				// a Weak, what it's given is kept weakly.
 				value = fit(value, declared)
 			}
 			if slotless(value.Type()) {
@@ -157,11 +158,14 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	arrayType := l.checker.GetTypeAtLocation(node)
-	if literal := ast.SkipParentheses(node); literal.Kind == ast.KindArrayLiteralExpression && len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+	if literal := ast.SkipParentheses(node); literal.Kind == ast.KindArrayLiteralExpression {
 		// [] is never[] to the checker; what it will hold is the type it's written into, as in
-		// const values: number[] = [].
+		// const values: number[] = []. So is [node] written into a Weak<Node>[]: its elements are
+		// kept weakly.
 		if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
-			arrayType = contextual
+			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 || declared == ir.Weak {
+				arrayType = contextual
+			}
 		}
 	}
 	if !l.checker.IsArrayType(arrayType) {
@@ -217,6 +221,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	case object.Type() == ir.Map && name == "size":
 		return ir.MapSize{Map: object}, nil
 	case object.Type() == ir.Object:
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.Weak {
+				// The field keeps a handle, whatever the checker narrowed the read to.
+				return ir.Property{Object: object, Name: name, Of: ir.Weak, Optional: access.QuestionDotToken != nil}, nil
+			}
+		}
 		of, err := l.typeOf(node)
 		if err != nil && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 			// Narrowed to undefined (just assigned it): read as the field is declared.
@@ -930,7 +940,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		lowered.Entries = append(lowered.Entries, [2]ir.Expression{entryKey, entryValue})
+		lowered.Entries = append(lowered.Entries, [2]ir.Expression{entryKey, fit(entryValue, value)})
 	}
 	return lowered, nil
 }
@@ -956,6 +966,9 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	want := 1
 	if name == "set" {
 		want = 2
+	}
+	if name == "set" && len(arguments) == 2 {
+		arguments[1] = fit(arguments[1], value)
 	}
 	if len(arguments) != want || arguments[0].Type() != key || (name == "set" && arguments[1].Type() != value) {
 		return nil, true, l.notYet(node, "map."+name+" with arguments of other types")
@@ -1156,6 +1169,14 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, describe(node))
 	}
 	of, err := l.typeOf(node)
+	if elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(access.Expression)); err == nil {
+		// What the tuple keeps there, not what the checker narrowed the read to: a Weak keeps a handle.
+		if position, convertErr := strconv.Atoi(index.Text()); convertErr == nil && position < len(elements) {
+			if declared, isKnown := l.representation(elements[position]); isKnown && declared == ir.Weak {
+				of = declared
+			}
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
