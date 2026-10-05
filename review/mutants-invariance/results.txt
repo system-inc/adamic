@@ -1,3 +1,4 @@
 m01_property_readonly_ignored: branch tests CATCH; probes changed 5 (a08_readonly_iface.a; b2_silent.a; b53_readonly_laundering.a; b54_minus_readonly.a; b55_readonly_laundering_array_field.a)
 m02_property_check_gone: branch tests CATCH; probes changed 2 (b2_direct.a; b34_field_fn.a)
 m03_property_recursion_gone: branch tests pass; probes changed 0
+m04_elements_never_mutable: branch tests CATCH; probes changed 26 (a13_map_method.a; a14_fresh_new_map.a; a17_return_fresh.a; a19_conditional_fresh.a; a20_fresh_copies.a; b02_conditional.a; b03_nullish.a; b07_spread_array.a; b21_map.a; b22_set.a; b23_callback_param.a; b24_property_mutable.a; b25_return.a; b26_closure_capture_fn_value.a; b35_weak.a; b39_generic_identity.a; b40_array_of_arrays_push.a; b41_map_set_value.a; b43_closure_returns_alias.a; b44_callback_return.a; b45_array_index_write.a; b46_readonly_outer_mutable_inner.a; b48_fill.a; b50_unshift_splice.a; b64_array_of_functions.a; b70_destructuring_assignment.a)
