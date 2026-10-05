@@ -165,6 +165,8 @@ var fixtures = []struct {
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
 	// was moved or spread.
 	{"internal/oracle/testdata/move_throw.a", true, false},
+	// Reviewer R's round 8b: a spread of a value that may be undefined is {} with the literal's fields.
+	{"internal/oracle/testdata/spread_undefined.a", true, false},
 	// A read lent without a count, beside a call that reassigns what was read.
 	{"internal/oracle/testdata/lent_reads.a", true, false},
 	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).

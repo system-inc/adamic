@@ -28,6 +28,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(property, "spreading a "+typeName(spread.Type()))
 			}
 			literal.Spread = spread
+			literal.SpreadMaybeUndefined = l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
 			name := property.Name()
 			if !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
@@ -59,7 +60,43 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
 	}
+	if literal.SpreadMaybeUndefined {
+		empty, err := l.emptySpread(node, literal.Fields)
+		if err != nil {
+			return nil, err
+		}
+		literal.Empty = empty
+	}
 	return literal, nil
+}
+
+// emptySpread is the object { ...source, fields } makes when source is undefined: JavaScript's is
+// only the literal's own fields, and a read of any other field the source's type has is undefined,
+// so each of those is there, undefined. A field that can hold undefined only as a pair (a boolean),
+// or that keeps a handle (a Weak), says NotYet.
+func (l *lowering) emptySpread(node *ast.Node, own []ir.Field) ([]ir.Field, error) {
+	spread := node.AsObjectLiteralExpression().Properties.Nodes[0]
+	given := map[string]bool{}
+	for _, field := range own {
+		given[field.Name] = true
+	}
+	empty := []ir.Field{}
+	source := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(spread.AsSpreadAssignment().Expression))
+	for _, property := range l.checker.GetPropertiesOfType(source) {
+		if given[property.Name] {
+			continue
+		}
+		fieldType, _ := l.representation(l.checker.GetTypeOfSymbol(property))
+		switch fieldType {
+		case ir.Number, ir.MaybeNumber:
+			empty = append(empty, ir.Field{Name: property.Name, Value: ir.MaybeOf{Of: ir.MaybeNumber}})
+		case ir.String, ir.Object, ir.Array, ir.Map, ir.Closure:
+			empty = append(empty, ir.Field{Name: property.Name, Value: ir.Undefined{}})
+		default:
+			return nil, l.notYet(spread, "spreading a value that may be undefined, whose field "+property.Name+" can't be left undefined yet")
+		}
+	}
+	return empty, nil
 }
 
 // typeOfSymbol is what's left at runtime of a symbol's declared type, or NotYet at node.
@@ -88,7 +125,8 @@ func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
 
 // hasProperty reports whether a value's type has a field of that name.
 func (l *lowering) hasProperty(node *ast.Node, name string) bool {
-	for _, property := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(node)) {
+	// A source that may be undefined has its fields where it's there.
+	for _, property := range l.checker.GetPropertiesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))) {
 		if property.Name == name {
 			return true
 		}

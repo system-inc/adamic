@@ -199,9 +199,15 @@ type (
 
 	// ObjectLiteral makes an object. With Spread, it's { ...Spread, fields }: a copy of Spread's
 	// object, whatever its shape, with Fields replaced (each one a field Spread's type has).
+	//
+	// SpreadMaybeUndefined says Spread may be undefined, and then JavaScript's { ...undefined } is
+	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
+	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
-		Spread Expression
-		Fields []Field
+		Spread               Expression
+		Fields               []Field
+		SpreadMaybeUndefined bool
+		Empty                []Field
 
 		// Tuple is a tuple written out, [key, value]: natively an object whose fields are named "0",
 		// "1" and on, as every tuple is, and in JavaScript an array, as the source's is. (What 0.2

@@ -471,8 +471,14 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	unique := e.temporary()
 	// Checked before any field's value is evaluated, which can't make anything else hold it: the plan
 	// saw that nothing in this instruction but the literal reads the source, and only its fields.
-	e.line("bool %s = %s;", unique, uniquelyHeld(source))
-	object := e.own(ir.Object, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_object_copy(%s))", unique, source, source))
+	held := uniquelyHeld(source)
+	if literal.SpreadMaybeUndefined {
+		// Undefined is nothing to take over: the object is made as JavaScript's {} is (spreadCopy).
+		held = fmt.Sprintf("(%s != NULL && %s)", source, held)
+	}
+	e.line("bool %s = %s;", unique, held)
+	object := e.own(ir.Object, fmt.Sprintf("(%s ? adamic_retain(%s) : %s)", unique, source, e.spreadCopy(literal, source)))
+	e.emptySpread(literal, source, object)
 	replaced := map[string]bool{}
 	for _, field := range literal.Fields {
 		replaced[field.Name] = true
@@ -496,6 +502,44 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 		}
 	}
 	return object, true
+}
+
+// spreadCopy is the object a spread that isn't reused starts from: a copy of the source's, or, when
+// the source may be undefined and is, a new object with the source type's other fields and the
+// literal's own, as JavaScript's { ...undefined } is {} with the literal's fields written in.
+func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
+	if !literal.SpreadMaybeUndefined {
+		return fmt.Sprintf("adamic_object_copy(%s)", source)
+	}
+	return fmt.Sprintf("(%s != NULL ? adamic_object_copy(%s) : adamic_object_new(&%s))", source, source, e.shape(emptyFields(literal)))
+}
+
+// emptySpread gives the fields of the object spreadCopy made for an undefined source the value
+// undefined has in each: a new object's slots are zero, which is undefined only for a reference.
+func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object string) {
+	if !literal.SpreadMaybeUndefined {
+		return
+	}
+	lines := []string{}
+	for index, field := range literal.Empty {
+		if !field.Value.Type().IsReference() {
+			lines = append(lines, fmt.Sprintf("\t%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value))))
+		}
+	}
+	if len(lines) == 0 {
+		return
+	}
+	e.line("if (%s == NULL) {", source)
+	for _, line := range lines {
+		e.line("%s", line)
+	}
+	e.line("}")
+}
+
+// emptyFields is the layout of the object an undefined spread makes: the source type's fields the
+// literal doesn't give, then the literal's own, which are written by name after.
+func emptyFields(literal ir.ObjectLiteral) []ir.Field {
+	return append(slices.Clone(literal.Empty), literal.Fields...)
 }
 
 // take emits a read of a field a reused spread replaces: moved out of the object when it's unique,
