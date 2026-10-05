@@ -506,7 +506,27 @@ Two mutants, each run against `regions.a` and each caught:
 | A heap call to a fresh function is taken as in a region (its result uncounted) | the leak check |
 | A region literal holds every field without a retain, its heap strings included | ASan heap-use-after-free, on a label string the region's end let go of |
 
-**Still left for later:** a retain of a constant `undefined`, which is never needed anywhere, not only in a region.
+### No retain of the constant undefined
+
+Retain passes over the null pointer, but each `adamic_retain(NULL)` was still a call. Every place the emitter retains a value it keeps now goes through `retained` (`emit.go`). When the value's C is the null pointer constant, however it's parenthesized or cast (an `undefined`, a missing argument, `undefined` boxed into a union), it is kept as it is, with no call. Before this, the 0.1 fixtures and the oracle's held 50 such calls: 27 into object fields, 13 into globals and locals, 4 into array elements, 6 elsewhere. None are left.
+
+Measured on `bench/trees.ts`, counted, against 926feae:
+
+| | retains | releases |
+|---|---:|---:|
+| Before | 71,827,454 | 3,145,768 |
+| After | 3,145,726 | 3,145,768 |
+
+That's 68,681,728 fewer retains: the two `undefined` children of every leaf. Nothing else moved. The merge of main had already taken `trees` from 139,810,138 retains and 71,128,452 releases to the "before" row: lent reads now see through `ir.Defined`, so `check` reads its tree's children without a count.
+
+**Releases didn't fall, on any row, and can't.** 22 rows of the oracle's table moved, each by retains alone, from 1 (`main.ts`) to 112 (`regions.a`). Allocations, frees and peak moved on none. A retain of the null constant has no counted release to match. When it went into a field or an element, the slot is let go of by the runtime when its holder is freed (`let_go` in `heap.c`), which isn't a counted release. When it went into a variable or a global, the release that comes later is of whatever the variable holds by then, and that release still happens.
+
+Two mutants:
+
+| Mutant | Result |
+|---|---|
+| Any C containing `NULL` taken for the constant | changes no fixture's C: no value that reaches `retained` contains `NULL` but the constant, so it proves nothing |
+| Any cast pointer, `((T *)(name))`, taken for the constant | changes only `unions.a`, where a string or object boxed into a union loses its retain: ASan heap-use-after-free |
 
 ## Strings, specifically
 

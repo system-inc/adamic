@@ -496,7 +496,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 		if field.Value.Type().IsReference() {
 			// A field moved out of a unique object left NULL behind, and releasing that is nothing.
 			e.line("adamic_release(%s->reference);", slot)
-			e.line("%s->reference = adamic_retain(%s);", slot, values[index])
+			e.line("%s->reference = %s;", slot, retained(values[index]))
 		} else {
 			e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 		}
@@ -580,7 +580,7 @@ func (e *emitter) handOver(argument ir.Expression) string {
 	if slices.Contains(e.owned, value) {
 		return value
 	}
-	return "adamic_retain(" + value + ")"
+	return retained(value)
 }
 
 // handedOver gives up the statement's temporaries a call's consumed parameters take, once every
@@ -681,7 +681,7 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 		case literal.Spread[index+1]:
 			e.line("adamic_array_append(%s, %s);", array, value)
 		case literal.Element.IsReference():
-			e.line("adamic_array_push(%s, (adamic_value){.reference = adamic_retain(%s)});", array, value)
+			e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, retained(value))
 		default:
 			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(literal.Element), slotted(literal.Element, value))
 		}

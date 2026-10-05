@@ -453,7 +453,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
 		if statement.Element.IsReference() {
-			value = "adamic_retain(" + value + ")"
+			value = retained(value)
 		}
 		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
@@ -472,7 +472,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = adamic_retain(%s);", slot, value)
+			e.line("%s->reference = %s;", slot, retained(value))
 			e.line("adamic_release(%s);", old)
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
@@ -539,7 +539,7 @@ func (e *emitter) store(local int, value string) {
 		}
 		old := e.temporary()
 		e.line("void *%s = %s.reference;", old, slot)
-		e.line("%s.reference = adamic_retain(%s);", slot, value)
+		e.line("%s.reference = %s;", slot, retained(value))
 		e.line("adamic_release(%s);", old)
 		return
 	}
@@ -549,7 +549,7 @@ func (e *emitter) store(local int, value string) {
 	}
 	old := e.temporary()
 	e.line("%s %s = %s;", cType(e.program.Locals[local].Type), old, name)
-	e.line("%s = adamic_retain(%s);", name, value)
+	e.line("%s = %s;", name, retained(value))
 	e.line("adamic_release(%s);", old)
 }
 
@@ -603,7 +603,7 @@ func (e *emitter) returnStatement(statement ir.Return) {
 	}
 	result := e.temporary()
 	if statement.Value.Type().IsReference() && !e.regionValues[value] {
-		e.line("%s %s = adamic_retain(%s);", cType(statement.Value.Type()), result, value)
+		e.line("%s %s = %s;", cType(statement.Value.Type()), result, retained(value))
 	} else {
 		e.line("%s %s = %s;", cType(statement.Value.Type()), result, value)
 	}
@@ -1095,7 +1095,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
 		if expression.Element.IsReference() {
-			value = "adamic_retain(" + value + ")"
+			value = retained(value)
 		}
 		// The append happens here, in JavaScript's order, and the new length is the value.
 		e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
@@ -1120,7 +1120,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				case expression.Spread[index]:
 					e.line("adamic_array_append(%s, %s);", array, value)
 				case expression.Element.IsReference():
-					e.line("adamic_array_push(%s, (adamic_value){.reference = adamic_retain(%s)});", array, value)
+					e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, retained(value))
 				default:
 					e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
 				}
@@ -1134,7 +1134,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, %t)", len(elements), expression.Element.IsReference()))
 		for _, element := range elements {
 			if expression.Element.IsReference() {
-				element = "adamic_retain(" + element + ")"
+				element = retained(element)
 			}
 			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, element))
 		}
@@ -1409,7 +1409,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
-				e.line("%s->reference = adamic_retain(%s);", slot, values[index])
+				e.line("%s->reference = %s;", slot, retained(values[index]))
 			} else {
 				e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 			}
@@ -1442,7 +1442,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			continue
 		}
 		if field.Value.Type().IsReference() {
-			value = "adamic_retain(" + value + ")"
+			value = retained(value)
 		}
 		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 	}
@@ -1680,7 +1680,7 @@ func (e *emitter) switchStatement(statement ir.Switch) {
 	value := e.value(statement.Value)
 	held := e.temporary()
 	if statement.Value.Type().IsReference() {
-		e.line("%s %s = adamic_retain(%s);", cType(statement.Value.Type()), held, value)
+		e.line("%s %s = %s;", cType(statement.Value.Type()), held, retained(value))
 		e.hold(held)
 	} else {
 		e.line("%s %s = %s;", cType(statement.Value.Type()), held, value)
@@ -1869,7 +1869,7 @@ func (e *emitter) conditional(conditional ir.Conditional) string {
 		e.out.WriteString(text)
 		e.indent++
 		if valueType.IsReference() {
-			e.line("%s = adamic_retain(%s);", result, value)
+			e.line("%s = %s;", result, retained(value))
 		} else {
 			e.line("%s = %s;", result, value)
 		}
@@ -1896,6 +1896,19 @@ func (e *emitter) snapshot(valueType ir.Type, value string) string {
 	e.line("%s %s = %s;", cType(valueType), name, value)
 	return name
 }
+
+// retained is a reference retained, for a place that keeps it: the constant undefined (the null
+// pointer, however it's cast) needs no retain, since retain passes over it, and costs a call.
+func retained(value string) string {
+	if constantUndefined.MatchString(value) {
+		return value
+	}
+	return "adamic_retain(" + value + ")"
+}
+
+// constantUndefined matches C that is the null pointer constant, as Undefined and a missing argument
+// are emitted: NULL, perhaps parenthesized and cast to a pointer type.
+var constantUndefined = regexp.MustCompile(`^\(*(\([a-z_]+ \*\)\(*)?NULL\)*$`)
 
 // own puts a reference the statement owns in a temporary, released when the statement ends.
 func (e *emitter) own(valueType ir.Type, value string) string {
@@ -2028,7 +2041,7 @@ func cNumber(value float64) string {
 // held is a value as an adamic_value whose reference, if it has one, the receiver keeps.
 func held(valueType ir.Type, value string) string {
 	if valueType.IsReference() {
-		return fmt.Sprintf("(adamic_value){.reference = adamic_retain(%s)}", value)
+		return fmt.Sprintf("(adamic_value){.reference = %s}", retained(value))
 	}
 	return fmt.Sprintf("(adamic_value){.%s = %s}", member(valueType), slotted(valueType, value))
 }
@@ -2064,7 +2077,7 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	e.line("%s %s;", cType(coalesce.Of), result)
 	e.line("if (%s) {", present)
 	if coalesce.Of.IsReference() && !fresh {
-		e.line("\t%s = adamic_retain(%s);", result, unwrapped)
+		e.line("\t%s = %s;", result, retained(unwrapped))
 	} else {
 		e.line("\t%s = %s;", result, unwrapped)
 	}
@@ -2072,7 +2085,7 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	e.out.WriteString(text)
 	e.indent++
 	if coalesce.Of.IsReference() {
-		e.line("%s = adamic_retain(%s);", result, fallback)
+		e.line("%s = %s;", result, retained(fallback))
 	} else {
 		e.line("%s = %s;", result, fallback)
 	}
@@ -2173,7 +2186,7 @@ func (e *emitter) declareLocal(local int, value string, owned bool) {
 	name := e.localName(local)
 	if declared.Type.IsReference() {
 		if !owned {
-			value = "adamic_retain(" + value + ")"
+			value = retained(value)
 		}
 		e.line("%s %s = %s;", cType(declared.Type), name, value)
 		e.hold(name)
@@ -2186,7 +2199,7 @@ func (e *emitter) declareLocal(local int, value string, owned bool) {
 func (e *emitter) makeCell(local int, value string, owned bool) {
 	declared := e.program.Locals[local]
 	if declared.Type.IsReference() && !owned {
-		value = "adamic_retain(" + value + ")"
+		value = retained(value)
 	}
 	cell := e.cellName(local)
 	e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", cell, member(declared.Type), slotted(declared.Type, value), declared.Type.IsReference())
