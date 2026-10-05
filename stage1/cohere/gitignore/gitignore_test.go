@@ -154,6 +154,9 @@ func TestThePortAnswersAsGoCohereAndGitDo(t *testing.T) {
 	for _, mutant := range mutants {
 		t.Run("catches "+mutant.name, func(t *testing.T) {
 			t.Parallel()
+			if mutant.needsLargest && !largest() {
+				t.Skip("only an ignore file of exactly 100 MiB shows this one, asked about when ADAMIC_GITIGNORE_LARGEST is set")
+			}
 			mutated := portDirectory(t, &mutant)
 			mutatedProgram := lowered(t, filepath.Join(mutated, "main.ts"))
 			for _, side := range []struct {
@@ -244,6 +247,10 @@ type mutant struct {
 	// seenByGit says whether git has a word on what the mutant breaks, which it does for trees and not
 	// for a pattern list's refusal.
 	seenByGit bool
+
+	// needsLargest is a mutant only the 100 MiB ignore file can show, asked about only when
+	// ADAMIC_GITIGNORE_LARGEST is set (largest).
+	needsLargest bool
 }
 
 var mutants = []mutant{
@@ -253,7 +260,7 @@ var mutants = []mutant{
 		name: "** matching one segment too few",
 		file: "glob.ts",
 		from: "\t\t\t\t\t\taddPosition(nextInside, position);\n",
-		to:   "\t\t\t\t\t\tif (character !== '/') {\n\t\t\t\t\t\t\taddPosition(nextInside, position);\n\t\t\t\t\t\t}\n",
+		to:   "\t\t\t\t\t\tif (character !== 0x2f) {\n\t\t\t\t\t\t\taddPosition(nextInside, position);\n\t\t\t\t\t\t}\n",
 
 		seenByGit: true,
 	},
@@ -329,7 +336,15 @@ var mutants = []mutant{
 		file: "gitignore.ts",
 		from: "if (utf8Length(info.contents) > maximumFileSize) {",
 		to:   "if (utf8Length(info.contents) >= maximumFileSize) {",
+
+		needsLargest: true,
 	},
+}
+
+// largest says whether to ask about an ignore file of exactly 100 MiB, which makes every cases file
+// over 100 MB: too much for every gate's parallel runs, so it's asked for with ADAMIC_GITIGNORE_LARGEST.
+func largest() bool {
+	return os.Getenv("ADAMIC_GITIGNORE_LARGEST") != ""
 }
 
 // gitSource is the git checkout git's corpora are read from, as cohere's tests read them, or "".
@@ -365,7 +380,7 @@ func askedCases(t *testing.T) cases {
 	output := filepath.Join(scratch, "cases.json")
 	cohereSide(t, map[string]any{
 		"mode": "generate", "scratch": scratch, "seed": seed, "generated": generated,
-		"gitSource": gitSource(), "realTrees": realTrees, "output": output,
+		"gitSource": gitSource(), "realTrees": realTrees, "output": output, "largest": largest(),
 	})
 	contents, err := os.ReadFile(output)
 	if err != nil {

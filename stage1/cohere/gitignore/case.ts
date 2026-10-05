@@ -59,39 +59,35 @@ function unescape(field: string): string {
 	if (!field.includes('\\')) {
 		return field;
 	}
-	let text = '';
-	let escaped = false;
-	for (const character of field) {
-		if (!escaped) {
-			if (character === '\\') {
-				escaped = true;
-			} else {
-				text += character;
-			}
-			continue;
-		}
-		escaped = false;
-		switch (character) {
+	// The runs between escapes, kept whole and joined once: a field can be 100 MiB, and natively each
+	// += copies the string so far, so building it a character at a time would be quadratic.
+	const pieces: string[] = [];
+	let start = 0;
+	let backslash = field.indexOf('\\');
+	while (backslash >= 0) {
+		pieces.push(field.slice(start, backslash));
+		const escape = field[backslash + 1] ?? panic('cases: a field ending in a lone backslash');
+		switch (escape) {
 			case '\\':
-				text += '\\';
+				pieces.push('\\');
 				break;
 			case 't':
-				text += '\t';
+				pieces.push('\t');
 				break;
 			case 'n':
-				text += '\n';
+				pieces.push('\n');
 				break;
 			case 'r':
-				text += '\r';
+				pieces.push('\r');
 				break;
 			default:
-				panic(`cases: an unknown escape \\${character}`);
+				panic(`cases: an unknown escape \\${escape}`);
 		}
+		start = backslash + 2;
+		backslash = field.indexOf('\\', start);
 	}
-	if (escaped) {
-		panic('cases: a field ending in a lone backslash');
-	}
-	return text;
+	pieces.push(field.slice(start));
+	return pieces.join('');
 }
 
 // field is a record's field at index, unescaped. A record without it is a malformed cases file.

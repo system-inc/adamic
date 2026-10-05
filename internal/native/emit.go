@@ -1904,6 +1904,9 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 	case "split":
 		return e.own(ir.Array, fmt.Sprintf("adamic_string_split(%s, %s)", value, arguments[0]))
 	case "indexOf":
+		if len(arguments) == 2 {
+			return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_index_of_from(%s, %s, %s)", value, arguments[0], arguments[1]))
+		}
 		return fmt.Sprintf("adamic_string_index_of(%s, %s)", value, arguments[0])
 	case "lastIndexOf":
 		return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_last_index_of(%s, %s)", value, arguments[0]))
@@ -1920,6 +1923,9 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 	case "replace", "replaceAll":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_replace(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "replaceAll"))
 	case "includes":
+		if len(arguments) == 2 {
+			return e.snapshot(ir.Boolean, fmt.Sprintf("(adamic_string_index_of_from(%s, %s, %s) != -1)", value, arguments[0], arguments[1]))
+		}
 		return fmt.Sprintf("(adamic_string_index_of(%s, %s) != -1)", value, arguments[0])
 	case "startsWith":
 		return fmt.Sprintf("adamic_string_starts_with(%s, %s)", value, arguments[0])

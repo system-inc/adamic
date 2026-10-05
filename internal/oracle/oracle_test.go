@@ -171,6 +171,8 @@ var fixtures = []struct {
 	// A string's UTF-8 read in place, and past its end.
 	{"internal/oracle/testdata/utf8_view.a", true, false},
 	{"internal/oracle/testdata/utf8_view_fails.a", true, false},
+	// indexOf and includes from a position.
+	{"internal/oracle/testdata/search_from.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

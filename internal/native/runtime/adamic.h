@@ -352,6 +352,8 @@ int adamic_string_compare(const adamic_string *left, const adamic_string *right)
 adamic_string *adamic_string_repeat(const adamic_string *string, double count);
 adamic_string *adamic_string_pad(const adamic_string *string, double target, const adamic_string *fill, bool at_start);
 double adamic_string_index_of(const adamic_string *string, const adamic_string *search);
+// adamic_string_index_of_from is indexOf with its starting position (string_from.c).
+double adamic_string_index_of_from(const adamic_string *string, const adamic_string *search, double position);
 bool adamic_string_starts_with(const adamic_string *string, const adamic_string *search);
 bool adamic_string_ends_with(const adamic_string *string, const adamic_string *search);
 struct adamic_array *adamic_string_code_points(const adamic_string *string);
