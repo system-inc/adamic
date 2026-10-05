@@ -1,0 +1,35 @@
+interface Animal {
+	name: string;
+}
+interface Dog extends Animal {
+	bark: string;
+}
+interface Cat extends Animal {
+	lives: number;
+}
+function makeDog(index: number): Dog {
+	return { name: `dog${index}`, bark: 'wo'.repeat(index + 1) };
+}
+function makeCat(index: number): Cat {
+	return { name: `cat${index}`, lives: index };
+}
+const dogs: Dog[] = [makeDog(1)];
+const cat = makeCat(2);
+function report(list: Dog[]): void {
+	for (const dog of list) {
+		console.log(`${dog.name} says ${dog.bark.toUpperCase()}`);
+	}
+}
+function count<T>(list: T[]): number {
+	return list.length;
+}
+function add<T>(list: T[], item: T): number {
+	list.push(item);
+	return list.length;
+}
+function names<T extends Animal>(list: readonly T[]): string {
+	return list.map((item) => item.name).join(',');
+}
+console.log(`${count(dogs)} ${add(dogs, makeDog(3))} ${names(dogs)}`);
+const lists: Dog[][] = [dogs];
+console.log(`${count(lists)}`);

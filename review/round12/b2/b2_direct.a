@@ -1,0 +1,18 @@
+interface Animal {
+	name: string;
+}
+interface Dog extends Animal {
+	weight: number;
+}
+interface Cat extends Animal {
+	weight: string;
+}
+function makeDog(index: number): Dog {
+	return { name: `dog${index}`, weight: index * 10 };
+}
+const kennel: { pet: Dog } = { pet: makeDog(1) };
+const pen: { pet: Animal } = kennel;
+const cat: Cat = { name: `cat${kennel.pet.name.length}`, weight: `heavy${kennel.pet.weight}` };
+pen.pet = cat;
+const total = kennel.pet.weight + 1;
+console.log(`${kennel.pet.name} weighs ${total} ${total.toFixed(2)}`);

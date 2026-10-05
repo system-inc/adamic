@@ -13,7 +13,7 @@ trap 'rm -rf "$work"' EXIT
 (cd "$repository" && go run ./cmd/adamic c "$file") > "$work/program.c" || exit 1
 (cd "$repository" && go run ./cmd/adamic js "$file") > "$work/program.mjs" || exit 1
 clang -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable \
-	-Wno-unused-function -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all \
+	-Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all \
 	-I "$repository/internal/native/runtime" -o "$work/program" "$work/program.c" \
 	"$repository"/internal/native/runtime/*.c -lm || exit 1
 echo "== node"

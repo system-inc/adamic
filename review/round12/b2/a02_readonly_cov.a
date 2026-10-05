@@ -1,0 +1,35 @@
+interface Animal {
+	name: string;
+}
+interface Dog extends Animal {
+	bark: string;
+}
+interface Cat extends Animal {
+	lives: number;
+}
+function makeDog(index: number): Dog {
+	return { name: `dog${index}`, bark: 'wo'.repeat(index + 1) };
+}
+function makeCat(index: number): Cat {
+	return { name: `cat${index}`, lives: index };
+}
+const dogs: Dog[] = [makeDog(1)];
+const cat = makeCat(2);
+function report(list: Dog[]): void {
+	for (const dog of list) {
+		console.log(`${dog.name} says ${dog.bark.toUpperCase()}`);
+	}
+}
+function names(list: readonly Animal[]): string {
+	return list.map((animal) => animal.name).join(',');
+}
+const ro: readonly Dog[] = dogs;
+const wide: readonly Animal[] = ro;
+console.log(names(dogs) + names(ro) + names(wide));
+const dogMap = new Map<string, Dog>();
+dogMap.set('a', makeDog(3));
+const view: ReadonlyMap<string, Animal> = dogMap;
+console.log(view.get('a')?.name ?? 'none');
+const dogSet = new Set<Dog>([makeDog(4)]);
+const setView: ReadonlySet<Animal> = dogSet;
+console.log(`${setView.size}`);

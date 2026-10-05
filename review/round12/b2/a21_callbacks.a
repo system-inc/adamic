@@ -1,0 +1,28 @@
+interface Animal {
+	name: string;
+}
+interface Dog extends Animal {
+	bark: string;
+}
+interface Cat extends Animal {
+	lives: number;
+}
+function makeDog(index: number): Dog {
+	return { name: `dog${index}`, bark: 'wo'.repeat(index + 1) };
+}
+function makeCat(index: number): Cat {
+	return { name: `cat${index}`, lives: index };
+}
+const dogs: Dog[] = [makeDog(1)];
+const cat = makeCat(2);
+function report(list: Dog[]): void {
+	for (const dog of list) {
+		console.log(`${dog.name} says ${dog.bark.toUpperCase()}`);
+	}
+}
+dogs.forEach((animal: Animal) => console.log(animal.name));
+const names = dogs.map((animal: Animal) => animal.name);
+const kept = dogs.filter((animal: Animal) => animal.name.length > 0);
+console.log(`${names.length} ${kept.length}`);
+const dogMap = new Map<string, Dog>([['a', makeDog(2)]]);
+dogMap.forEach((animal: Animal, key: string) => console.log(`${key} ${animal.name}`));

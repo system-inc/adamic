@@ -1,0 +1,31 @@
+interface Animal {
+	name: string;
+}
+interface Dog extends Animal {
+	bark: string;
+}
+interface Cat extends Animal {
+	lives: number;
+}
+function makeDog(index: number): Dog {
+	return { name: `dog${index}`, bark: 'wo'.repeat(index + 1) };
+}
+function makeCat(index: number): Cat {
+	return { name: `cat${index}`, lives: index };
+}
+const dogs: Dog[] = [makeDog(1)];
+const cat = makeCat(2);
+function report(list: Dog[]): void {
+	for (const dog of list) {
+		console.log(`${dog.name} says ${dog.bark.toUpperCase()}`);
+	}
+}
+type Mutable<T> = { -readonly [K in keyof T]: T[K] };
+interface View {
+	readonly pet: Animal;
+}
+const kennel: { pet: Dog } = { pet: makeDog(1) };
+const view: View = kennel;
+const pen: Mutable<View> = view;
+pen.pet = cat;
+console.log(`${kennel.pet.name} says ${kennel.pet.bark.toUpperCase()}`);

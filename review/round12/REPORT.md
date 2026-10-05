@@ -14,6 +14,31 @@ each probe four ways:
 3. Native as `adamic build` makes it (-O2).
 4. The JavaScript backend.
 
+## Summary, worst first
+
+1. **B2, silent:** a readonly view turns back into a mutable one (`b2_silent.a`). A Cat lands in a Dog's
+   slot, and native reads Cat's string `weight` as a number. It prints `cat4 weighs 1 1.00` with exit 0,
+   sanitizers clean, where Node throws.
+2. **B3, a silent leak:** a constructor pushes `this` into its parent's array (or Set), then sets a readonly
+   `parent` (`ctor_readonly.a`, `ctor_wrapped.a`, `ctor_set.a`). The cycle compiles. LeakSanitizer catches
+   it; the release build doesn't. A one-line patch holds and costs no fixture.
+3. **B2, loud:** 16 more unsound programs compile and fail at run time, all a Cat read as a Dog. Their routes:
+   - views `viewSite` doesn't list: shorthand, default parameters, class field initializers, object spread,
+     `as`;
+   - union sources and targets;
+   - method signatures;
+   - tuple tails;
+   - class targets;
+   - method bivariance.
+
+   Four more are masked by NotYet today.
+4. **Main, loud:**
+   - `p?.describe()` on a `Point | undefined` crashes the compiler (`a2/x_optional_method.a`);
+   - a class called through an interface it implements panics natively (`b2/c02_class_as_interface_sound.a`).
+5. **B2, too strict:** fresh copies are refused (`slice()`, `map`, a conditional of literals,
+   `new Map<string, Dog>()`).
+6. **A2:** nothing found. The region end on a throw is held by a mutant only LeakSanitizer catches.
+
 ## B3: the fresh-write relaxation (691ed9e)
 
 ### Confirmed: a constructor can push `this` and then close the cycle through a readonly field
@@ -186,3 +211,175 @@ until the trailing throw was removed.
   - default parameters that make a fresh value;
   - a Weak to a region object, which escape analysis keeps out by reading alone.
 - **No gate:** the full gate wasn't run on 926feae.
+
+## B2: invariance refusals (7340724)
+
+A sub-review hunted this half under my instructions. Its probes are in `review/round12/b2/`, and each starts
+with `prelude.txt`: Animal, Dog and Cat with mutable fields; `dogs: Dog[]`; `cat`; and `report(list: Dog[])`,
+which reads `bark`. I re-ran its headline findings myself on 7340724 and added one probe, `b2_silent.a`.
+
+The core rule works: the direct shapes (`Dog[]` seen as `Animal[]`, `{ pet: Dog }` as `{ pet: Animal }`) are
+refused. What's left is in where the rule is applied, plus one hole in the design.
+
+### Confirmed, worst first
+
+**1. A readonly view turned back into a mutable one, and it can be silent.** The rule keeps readonly
+properties covariant, which is right on its own. But tsc ignores `readonly` when it relates properties, so
+the readonly view converts straight back to a mutable type. Both sides of that second step say `Animal`, so
+the walk finds nothing:
+
+    const kennel: { pet: Dog } = { pet: makeDog(1) };
+    const view: { readonly pet: Animal } = kennel;   // allowed: readonly is covariant
+    const pen: { pet: Animal } = view;                // allowed: tsc ignores readonly here
+    pen.pet = cat;                                    // kennel.pet is now a Cat
+
+In `b2_silent.a`, Dog's `weight` is a number and Cat's `weight` is a string:
+
+| Run | Result |
+|---|---|
+| Node and the JavaScript backend | `TypeError: total.toFixed is not a function`, exit 70 |
+| Native, sanitized | `cat4 weighs 1 1.00`, exit 0, sanitizers clean |
+| Native, -O2 | `cat4 weighs 1 1.00`, exit 0 |
+
+That's a silent miscompile: a string read as a number. `b2_direct.a`, the same program without the readonly
+hop, is refused on B2, so the readonly view is the only thing letting it through. On main (4ff4657) both
+compile, since main has no invariance rule.
+
+When the Cat simply lacks the Dog's field, it's loud instead. `b53_readonly_laundering.a` (I re-ran it)
+panics natively with `compiler bug: a field the checker proved is there is missing`, where Node and the
+JavaScript backend give the TypeError. Exit is 70 everywhere. Two more versions of the hole compile:
+
+- `b54_minus_readonly.a`: the same through a `-readonly` mapped type.
+- `b55_readonly_laundering_array_field.a`: the same with a readonly array field.
+
+A fix: refuse a mutable target property whose source property is readonly, unless the two types are
+identical.
+
+Every finding below fails the same loud way as `b53` when run: a Cat read as a Dog, the native panic, and
+Node's TypeError.
+
+**2. Places a value enters a typed slot that `viewSite` doesn't list:**
+
+- `b01_shorthand.a` (I re-ran it): a shorthand property, `{ pets }`.
+- `b05_default_param.a`: a parameter default, `animals: Animal[] = dogs`.
+- `b06_class_field.a`: a class field's initializer.
+- `b08_spread_object.a`: an object spread, `{ ...kennel }`. The copy is shallow, so the array is shared.
+- `b04_as.a`: `dogs as Animal[]`. cast.go treats an upcast as the value itself, and nothing checks it.
+
+**3. Union targets and union sources are skipped.** `withoutUndefined` gives up when more than one member is
+left besides undefined:
+
+- `b09_union_target.a`: `Animal[] | string`.
+- `b10_union_source.a` (I re-ran it): `Dog[] | Cat[]` seen as `Animal[]`.
+- `b31_conditional_union.a`: `dogs.length > 0 ? dogs : cats`.
+- `b49_ternary_union_obj.a`: the same shape with objects.
+- `b72_function_union_return.a`: a function returning `Dog[] | Cat[]`, passed as `Animal[]`.
+
+**4. A method signature in the target is skipped.** `widened` passes over a target property that's a method,
+so a method's return type is never compared:
+
+- `b51_method_signature_target.a`: `{ list(): Animal[] }`.
+- `b36_class_method_returns.a`: the same with a class instance as the source.
+
+**5. A tuple is compared only up to the target's type argument count.** `b11_tuple_tail.a` compares index 0
+of `[Animal, Dog]` and never the Dog at index 1. Natively it can't show this yet, because a tuple seen as an
+array is already broken (the c3.a finding from earlier rounds).
+
+**6. Classes:**
+
+- `b17_class_to_class.a` (`Box<Dog>` seen as `Box<Animal>`) and `b38_param_property_class_target.a`. The code
+  says class-to-class belongs to the nominal rule stage 0 doesn't check yet, so this is known. Still, today
+  it's a wrong run, not a refusal.
+- `b18_object_to_class.a` (I re-ran it): a plain object seen as a class. `isClassInstance(to)` returns
+  before the walk.
+
+**7. Holes masked by NotYet today.** The refusal pass lets these through; lowering then stops with NotYet.
+They'll compile wrong once stage 0 lowers them:
+
+- `b12_constraint_push.a`: `T extends Animal[]`, then `list.push(cat)`.
+- `b13_constraint_assign.a`: `T extends Animal[]` assigned to `Animal[]`.
+- `b14_constraint_field.a`: `T extends { pet: Animal }`, then `holder.pet = cat`.
+- `b66_spread_argument.a`: `adopt(...args)`.
+
+**8. Method bivariance**, in `b33_class_method_bivariance.a`. This is docs/0.1.md's `method-signature-style`,
+not this commit's rule, but it compiles and fails at run time.
+
+### Sound programs it now refuses
+
+All four are conservative rather than wrong, but each refuses a value nothing else holds:
+
+- `a19_conditional_fresh.a`: `dogs.length > 5 ? [cat] : []`. The array-literal exemption doesn't reach a
+  conditional's branches.
+- `a20_fresh_copies.a`: `dogs.slice()`. It stops at that first line, so `filter` and `Array.from` in the same
+  file weren't reached.
+- `a13_map_method.a`: `dogs.map((dog) => dog)`.
+- `a14_fresh_new_map.a`: `new Map<string, Dog>()` into `Map<string, Animal>`.
+
+`a17_return_fresh.a`, a local `Dog[]` returned as `Animal[]`, is refused too. That one would need escape
+analysis to allow.
+
+### Confirmed on main, not this branch: a sound program panics
+
+`c02_class_as_interface_sound.a` calls a class through an interface it implements:
+
+    const handler: Handler = new AnimalHandler();
+    handler.handle(cat);
+
+On main (4ff4657):
+
+- Node prints `handled dog1` and `handled cat2`, exit 0.
+- Both native builds panic with `compiler bug: a field the checker proved is there is missing`.
+- The JavaScript backend panics reading `code`.
+
+It's loud, but it's a sound everyday program that doesn't run. It may share a root with `method_value.a`,
+already routed to B2.
+
+`c01_tuple_same_type.a` is the open c3.a again: a tuple seen as an array. ASan reports a heap-buffer-overflow
+in `adamic_array_set`, and -O2 segfaults.
+
+### Held
+
+- **Refused, correctly:**
+  - conditionals and `??` whose type is `Dog[]`;
+  - a spread element;
+  - Map and Set;
+  - a callback parameter, either way;
+  - a field assignment, and `return`;
+  - an optional field;
+  - an intersection source;
+  - a readonly-to-mutable `as`;
+  - function-typed fields;
+  - `Weak<Dog[]>`;
+  - a class seen as a structural type;
+  - an explicit type argument;
+  - the arguments of `push`, `Map.set`, `fill`, `unshift` and `splice`;
+  - a nested object;
+  - a closure returning the alias;
+  - an element write;
+  - an array of functions;
+  - destructuring assignment.
+- **Compiled, not refused:** readonly arrays, ReadonlyMap and ReadonlySet, covariant as they should be. Of
+  those, `a21_callbacks.a` and `a23_readonly_map_of_arrays.a` were run all four ways and agree.
+- **Existing programs:**
+  - All ten of docs/0.1.md's compile programs still compile.
+  - No oracle fixture is refused.
+  - `go test ./internal/lower` passes.
+  - In the oracle, TestNativeAgreesWithNode passes, including `invariance_readonly.a`. The input fixtures
+    failed only on the worktree permission issue described under B3.
+
+### Not covered on B2
+
+- No mutant was run against the new checks.
+- The full gate wasn't run on 7340724.
+- Stopped by NotYet, or refused for another reason, so the rule wasn't reached:
+  - overloads past the first signature;
+  - destructuring declarations and binding defaults;
+  - `??=`;
+  - `concat`;
+  - arrays of a union element type.
+- Not probed: index signatures and getters (both refused anyway), and `satisfies`.
+
+### Fixed along the way
+
+`review/fxspptb/probe.sh` lacked `-Wno-unused-parameter -Wno-self-assign`, which native.Build passes, so a
+class method that doesn't use `this` failed `-Werror` under it. It now copies native.Build's flags again.
