@@ -402,6 +402,11 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value) + ".length"
 	case ir.MathCall:
 		return "Math." + expression.Function + "(" + e.values(expression.Arguments) + ")"
+	case ir.StringFromCodes:
+		if expression.CodePoints {
+			return "String.fromCodePoint(" + e.values(expression.Codes) + ")"
+		}
+		return "String.fromCharCode(" + e.values(expression.Codes) + ")"
 	case ir.NumberCall:
 		return "Number." + expression.Function + "(" + e.values(expression.Arguments) + ")"
 	case ir.ToFixed:

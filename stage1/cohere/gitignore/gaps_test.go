@@ -20,7 +20,7 @@ var gaps = []struct {
 	notYet string
 	stdout string
 }{
-	{"gaps/1_from_char_code.ts", true, "reading String", "hé\n"},
+	{"gaps/1_from_char_code.ts", false, "", "hé\n"},
 	{"gaps/2_bitwise.ts", true, "a BinaryExpression with a number and a number", "25 800 15 8 201 203 -201\n"},
 	{"gaps/3_later_function.ts", false, "", "7\n"},
 	{"gaps/3_later_method.ts", false, "", "3\n"},

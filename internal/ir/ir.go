@@ -213,6 +213,13 @@ type (
 	// Length is array.length.
 	Length struct{ Array Expression }
 
+	// StringFromCodes is String.fromCharCode(...Codes), or String.fromCodePoint when CodePoints is
+	// set: a string of the UTF-16 units, or of the code points, the numbers name.
+	StringFromCodes struct {
+		Codes      []Expression
+		CodePoints bool
+	}
+
 	// MathCall is Math.<Function>(...), on numbers.
 	MathCall struct {
 		Function  string
@@ -528,6 +535,7 @@ func (p Property) Type() Type {
 func (ArrayLiteral) Type() Type { return Array }
 func (Length) Type() Type       { return Number }
 func (MathCall) Type() Type     { return Number }
+func (StringFromCodes) Type() Type { return String }
 
 func (c NumberCall) Type() Type {
 	if c.Function == "parseInt" || c.Function == "parseFloat" {

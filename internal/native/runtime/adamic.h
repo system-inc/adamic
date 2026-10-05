@@ -442,6 +442,12 @@ double adamic_math_hypot(size_t count, const double *values);
 adamic_string *adamic_number_to_exponential(double value, double digits, bool has_digits);
 adamic_string *adamic_number_to_precision(double value, double digits, bool has_digits);
 
+// String.fromCharCode and String.fromCodePoint over their arguments, already evaluated in order
+// (from_codes.c): each a string the caller owns. fromCodePoint panics with V8's RangeError where a
+// value isn't a code point.
+adamic_string *adamic_string_from_char_codes(size_t count, const double values[]);
+adamic_string *adamic_string_from_code_points(size_t count, const double values[]);
+
 // adamic_number_to_radix is value.toString(radix), V8's (radix.c), and returns a string the caller
 // owns.
 adamic_string *adamic_number_to_radix(double value, double radix);

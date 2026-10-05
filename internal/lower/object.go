@@ -300,6 +300,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if l.isLibraryGlobal(receiver, "Array") && name == "from" {
 		return l.arrayFrom(node)
 	}
+	if l.isLibraryGlobal(receiver, "String") && (name == "fromCharCode" || name == "fromCodePoint") {
+		return l.stringFromCodes(node, name == "fromCodePoint")
+	}
 	if receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); receiverType == ir.Number && name == "toString" && len(node.AsCallExpression().Arguments.Nodes) == 0 {
 		value, err := l.expression(receiver)
 		if err != nil {
@@ -1191,4 +1194,24 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 		return nil, err
 	}
 	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element}}, nil
+}
+
+// stringFromCodes lowers String.fromCharCode(...) and String.fromCodePoint(...), each argument a
+// number, evaluated in order.
+func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expression, bool, error) {
+	lowered := ir.StringFromCodes{CodePoints: codePoints}
+	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+		if argument.Kind == ast.KindSpreadElement {
+			return nil, true, l.notYet(argument, "a spread argument to String."+node.AsCallExpression().Expression.Name().Text())
+		}
+		value, err := l.expression(argument)
+		if err != nil {
+			return nil, true, err
+		}
+		if value.Type() != ir.Number {
+			return nil, true, l.notYet(argument, "a "+typeName(value.Type())+" argument to String."+node.AsCallExpression().Expression.Name().Text())
+		}
+		lowered.Codes = append(lowered.Codes, value)
+	}
+	return lowered, true, nil
 }

@@ -138,6 +138,10 @@ var fixtures = []struct {
 	// and where it does.
 	{"internal/oracle/testdata/return_panic.a", true, false},
 	{"internal/oracle/testdata/return_panic_fires.a", true, false},
+	// String.fromCharCode over ToUint16's edges, and String.fromCodePoint, surrogates joined into pairs
+	// as JavaScript joins them, and its RangeError.
+	{"internal/oracle/testdata/from_codes.a", true, false},
+	{"internal/oracle/testdata/from_code_point_fails.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

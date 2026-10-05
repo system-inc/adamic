@@ -895,6 +895,19 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->length", e.value(expression.Array)))
 	case ir.MathCall:
 		return e.mathCall(expression)
+	case ir.StringFromCodes:
+		function := "adamic_string_from_char_codes"
+		if expression.CodePoints {
+			function = "adamic_string_from_code_points"
+		}
+		codes := make([]string, 0, len(expression.Codes))
+		for _, code := range expression.Codes {
+			codes = append(codes, e.value(code))
+		}
+		if len(codes) == 0 {
+			return e.own(ir.String, function+"(0, NULL)")
+		}
+		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
 	case ir.NumberCall:
 		arguments := []string{}
 		for _, argument := range expression.Arguments {
