@@ -286,6 +286,14 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
 adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
+// adamic_string_allocate makes a string of length bytes for the caller to fill, references 1.
+adamic_string *adamic_string_allocate(size_t length);
+
+// toUpperCase and toLowerCase (case.c): Unicode's full, locale-independent case mapping, final
+// sigma included, as Node does it. They return a string the caller owns.
+adamic_string *adamic_string_to_upper(const adamic_string *string);
+adamic_string *adamic_string_to_lower(const adamic_string *string);
+
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
 
