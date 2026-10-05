@@ -171,6 +171,8 @@ var fixtures = []struct {
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
 	// was moved or spread.
 	{"internal/oracle/testdata/move_throw.a", true, false},
+	// Reviewer R's round 8b: a spread of a value that may be undefined is {} with the literal's fields.
+	{"internal/oracle/testdata/spread_undefined.a", true, false},
 	// A read lent without a count, beside a call that reassigns what was read.
 	{"internal/oracle/testdata/lent_reads.a", true, false},
 	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).
@@ -193,11 +195,17 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/write_stdout_order.a", true, false},
 	{"internal/oracle/testdata/write_stderr_order.a", true, false},
 	{"internal/oracle/testdata/prompt_then_read.a", true, false},
+	{"internal/oracle/testdata/collections.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
 	// read back (reviewer R, from the first night's number.c).
 	{"internal/oracle/testdata/power_of_two_string.a", true, false},
+	// Reuse meeting exceptions, narrowing and lending (integration 7): a throw after a move, a narrowed
+	// field emptied in place, and a lent global moved under its borrower.
+	{"internal/oracle/testdata/reuse_throw.a", true, false},
+	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
+	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

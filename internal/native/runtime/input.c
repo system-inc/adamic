@@ -128,6 +128,10 @@ static adamic_string *decode(const unsigned char *bytes, size_t length) {
 	return string;
 }
 
+adamic_string *adamic_decode_utf8(const unsigned char *bytes, size_t length) {
+	return decode(bytes, length);
+}
+
 static int argument_count;
 static char **argument_values;
 
@@ -340,4 +344,8 @@ adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_st
 	adamic_object *result = adamic_object_new(&written_shape);
 	result->slots[0].reference = &ok_kind;
 	return result;
+}
+
+char *adamic_path_bytes(const adamic_string *path) {
+	return file_name(path);
 }

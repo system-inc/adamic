@@ -78,7 +78,7 @@ func pure(expression ir.Expression) bool {
 		ir.CharCodeAt, ir.StringIndex, ir.ArrayIndex, ir.Property, ir.MapGet, ir.MapHas, ir.MapSize,
 		ir.IsUndefined, ir.Unwrap, ir.MaybeOf, ir.Box, ir.Narrow, ir.TypeOf, ir.Conditional, ir.Coalesce,
 		ir.MathCall, ir.NumberCall, ir.ToFixed, ir.NumberFormat, ir.Trim, ir.StringCall, ir.CodePoints,
-		ir.ArraySearch, ir.CheckedCast, ir.UnionToString, ir.MaybeToString:
+		ir.ArraySearch, ir.CheckedCast, ir.UnionToString, ir.MaybeToString, ir.Defined:
 	default:
 		return false
 	}
