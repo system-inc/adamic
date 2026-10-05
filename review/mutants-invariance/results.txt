@@ -8,3 +8,4 @@ m07_element_recursion_gone: branch tests CATCH; probes changed 1 (b46_readonly_o
 m08_parameters_not_swapped: branch tests CATCH; probes changed 2 (b23_callback_param.a; b26_closure_capture_fn_value.a)
 m09_parameters_skipped: branch tests CATCH; probes changed 2 (b23_callback_param.a; b26_closure_capture_fn_value.a)
 m10_return_skipped: branch tests pass; probes changed 2 (b43_closure_returns_alias.a; b44_callback_return.a)
+m11_type_parameter_target_allowed: branch tests CATCH; probes changed 0
