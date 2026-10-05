@@ -43,10 +43,8 @@ adamic_string *adamic_string_from_number(double value) {
 
 // V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit): past it, every way of making
 // a string throws RangeError: Invalid string length, and so Adamic panics there too.
-#define MAX_UNITS 536870888.0
-
 void adamic_string_check_length(double units) {
-	if (units > MAX_UNITS) {
+	if (units > ADAMIC_STRING_MAX_UNITS) {
 		static const char message[] = "RangeError: Invalid string length";
 		adamic_panic(message, sizeof message - 1);
 	}
@@ -62,7 +60,7 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 		length += parts[index]->length;
 	}
 	// A string's UTF-16 units are never more than its bytes, so only a long one needs counting.
-	if ((double)length > MAX_UNITS) {
+	if (length > ADAMIC_STRING_MAX_UNITS) {
 		double units = 0;
 		for (size_t index = 0; index < count; index++) {
 			units += adamic_string_length(parts[index]);

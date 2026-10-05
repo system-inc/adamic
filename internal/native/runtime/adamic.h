@@ -318,6 +318,9 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
 adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
+// ADAMIC_STRING_MAX_UNITS is V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit).
+#define ADAMIC_STRING_MAX_UNITS 536870888
+
 // adamic_string_check_length panics, as V8 throws RangeError: Invalid string length, when a string
 // would be longer than V8's longest, in UTF-16 units.
 void adamic_string_check_length(double units);
