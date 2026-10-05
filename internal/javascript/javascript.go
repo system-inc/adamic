@@ -376,7 +376,15 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return e.value(expression.Object) + "[" + quote(expression.Name) + "]"
 	case ir.ArrayLiteral:
-		return "[" + e.values(expression.Elements) + "]"
+		elements := []string{}
+		for index, element := range expression.Elements {
+			if expression.Spread != nil && expression.Spread[index] {
+				elements = append(elements, "..."+e.value(element))
+			} else {
+				elements = append(elements, e.value(element))
+			}
+		}
+		return "[" + strings.Join(elements, ", ") + "]"
 	case ir.Length:
 		return e.value(expression.Array) + ".length"
 	case ir.StringLength:

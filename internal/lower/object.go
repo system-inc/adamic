@@ -70,7 +70,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	}
 	literal := ir.ArrayLiteral{Element: element}
 	items := node.AsArrayLiteralExpression().Elements.Nodes
-	if len(items) == 1 && items[0].Kind == ast.KindSpreadElement {
+	if len(items) == 1 && items[0].Kind == ast.KindSpreadElement && !l.checker.IsArrayType(l.checker.GetTypeAtLocation(items[0].AsSpreadElement().Expression)) {
 		// [...text] is the text's code points.
 		spread, err := l.expression(items[0].AsSpreadElement().Expression)
 		if err != nil {
@@ -88,15 +88,33 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(items[0], "spreading a "+typeName(spread.Type())+" into an array")
 	}
+	spreads := false
 	for _, item := range items {
-		if item.Kind == ast.KindSpreadElement || item.Kind == ast.KindOmittedExpression {
+		if item.Kind == ast.KindOmittedExpression {
 			return nil, l.notYet(item, describe(item)+" in an array literal")
+		}
+		spread := item.Kind == ast.KindSpreadElement
+		if spread {
+			item = item.AsSpreadElement().Expression
 		}
 		value, err := l.expression(item)
 		if err != nil {
 			return nil, err
 		}
+		if spread {
+			if value.Type() != ir.Array {
+				return nil, l.notYet(item, "spreading a "+typeName(value.Type())+" among other elements")
+			}
+			if other, err := l.elementType(item); err != nil || other != element {
+				return nil, l.notYet(item, "spreading an array of other elements")
+			}
+			spreads = true
+		}
 		literal.Elements = append(literal.Elements, value)
+		literal.Spread = append(literal.Spread, spread)
+	}
+	if !spreads {
+		literal.Spread = nil
 	}
 	return literal, nil
 }

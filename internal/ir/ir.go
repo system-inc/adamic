@@ -159,10 +159,12 @@ type (
 		Optional bool
 	}
 
-	// ArrayLiteral makes an array.
+	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
+	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
 		Element  Type
 		Elements []Expression
+		Spread   []bool
 	}
 
 	// Length is array.length.

@@ -211,6 +211,18 @@ adamic_array *adamic_array_reverse(adamic_array *array) {
 	return array;
 }
 
+void adamic_array_append(adamic_array *array, const adamic_array *source) {
+	// The length is read once: [...items, ...items] spreads items twice, never into itself.
+	size_t length = source->length;
+	for (size_t index = 0; index < length; index++) {
+		adamic_value value = source->elements[index];
+		if (array->references) {
+			adamic_retain(value.reference);
+		}
+		adamic_array_push(array, value);
+	}
+}
+
 adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
 	size_t length = 0;
 	for (size_t which = 0; which < count; which++) {

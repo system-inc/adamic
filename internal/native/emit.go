@@ -768,6 +768,23 @@ func (e *emitter) value(expression ir.Expression) string {
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
 	case ir.ArrayLiteral:
+		if expression.Spread != nil {
+			// A spread is iterated where it stands, before the elements after it are evaluated, so the
+			// array is made first (which nothing can see) and each element appended as it comes.
+			array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", expression.Element.IsReference()))
+			for index, element := range expression.Elements {
+				value := e.value(element)
+				switch {
+				case expression.Spread[index]:
+					e.line("adamic_array_append(%s, %s);", array, value)
+				case expression.Element.IsReference():
+					e.line("adamic_array_push(%s, (adamic_value){.reference = adamic_retain(%s)});", array, value)
+				default:
+					e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), value)
+				}
+			}
+			return array
+		}
 		elements := make([]string, 0, len(expression.Elements))
 		for _, element := range expression.Elements {
 			elements = append(elements, e.value(element))

@@ -184,6 +184,10 @@ double adamic_array_index_of(const adamic_array *array, adamic_value value, enum
 // adamic_array_reverse reverses in place and is the array; adamic_array_concat makes a new array of
 // every array's elements in order, references retained.
 adamic_array *adamic_array_reverse(adamic_array *array);
+
+// adamic_array_append is a spread, [...source], into an array being made: each element pushed, a
+// reference retained.
+void adamic_array_append(adamic_array *array, const adamic_array *source);
 adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
 
 // adamic_array_slice is array.slice(start, end); adamic_array_sort sorts in place, stably.
