@@ -1111,6 +1111,14 @@ var cMath = map[string]string{
 	"round": "adamic_math_round", "sign": "adamic_math_sign", "pow": "adamic_power",
 }
 
+// cIeee754 are the Math functions ported from V8 (runtime/ieee754.c), each adamic_math_<name>. C's
+// own sin, exp and the rest differ from V8's in the last bit, so they're never called.
+var cIeee754 = map[string]bool{
+	"sin": true, "cos": true, "tan": true, "asin": true, "acos": true, "atan": true, "atan2": true,
+	"sinh": true, "cosh": true, "tanh": true, "asinh": true, "acosh": true, "atanh": true,
+	"exp": true, "expm1": true, "log": true, "log1p": true, "log2": true, "log10": true, "cbrt": true,
+}
+
 func (e *emitter) mathCall(call ir.MathCall) string {
 	arguments := make([]string, 0, len(call.Arguments))
 	for _, argument := range call.Arguments {
@@ -1118,6 +1126,16 @@ func (e *emitter) mathCall(call ir.MathCall) string {
 	}
 	if function, isDirect := cMath[call.Function]; isDirect {
 		return fmt.Sprintf("%s(%s)", function, strings.Join(arguments, ", "))
+	}
+	if cIeee754[call.Function] {
+		return fmt.Sprintf("adamic_math_%s(%s)", call.Function, strings.Join(arguments, ", "))
+	}
+	if call.Function == "hypot" {
+		// Math.hypot() is +0; otherwise the values go as an array, already evaluated in order.
+		if len(arguments) == 0 {
+			return "0.0"
+		}
+		return fmt.Sprintf("adamic_math_hypot(%d, (const double[]){%s})", len(arguments), strings.Join(arguments, ", "))
 	}
 	// max and min take any number of arguments: none gives -Infinity (max) or Infinity (min), one
 	// gives itself, and more fold pairwise, every argument already evaluated, as JavaScript does.
