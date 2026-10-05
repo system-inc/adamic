@@ -1,10 +1,10 @@
-// The port's driver: it decides every query of every tree in cases.ts, and matches every glob case, in
-// the words git check-ignore --verbose --non-matching uses, so its output can be held byte for byte to
-// Go cohere's and to git's. Each answer line is `<ignored> <file>:<line>:<pattern><TAB><path>`, with
+// The port's driver: it decides every query of every tree and every pattern list in cases.ts, and matches
+// every glob case, in the words git check-ignore --verbose --non-matching uses, so its output can be held
+// byte for byte to Go cohere's and to git's. Each answer line is `<ignored> <file>:<line>:<pattern><TAB><path>`, with
 // `::` for a path no rule decided, and `<ignored>` 1 or 0.
 
-import { globCases, trees } from './cases.ts';
-import { newMatcher } from './gitignore.ts';
+import { globCases, patternsCases, trees } from './cases.ts';
+import { compilePatterns, newMatcher } from './gitignore.ts';
 import { compileGlob } from './glob.ts';
 
 for (const tree of trees) {
@@ -21,6 +21,19 @@ for (const tree of trees) {
 			continue;
 		}
 		const verdict = answer.value;
+		console.log(`${verdict.ignored ? '1' : '0'} ${verdict.source.isZero() ? '::' : verdict.source.toString()}\t${query.path}`);
+	}
+}
+
+for (const patternsCase of patternsCases) {
+	console.log(`patterns ${patternsCase.name}`);
+	const compiled = compilePatterns(patternsCase.lines, patternsCase.name);
+	if (compiled.kind === 'Error') {
+		console.log(`error ${compiled.error.message}`);
+		continue;
+	}
+	for (const query of patternsCase.queries) {
+		const verdict = compiled.value.ignored(query.path, query.isDirectory);
 		console.log(`${verdict.ignored ? '1' : '0'} ${verdict.source.isZero() ? '::' : verdict.source.toString()}\t${query.path}`);
 	}
 }

@@ -18,6 +18,14 @@ export interface TreeCase {
 	readonly queries: readonly Query[];
 }
 
+// A list of ignore-file lines that is not a file in a tree, compiled as compilePatterns does, with the
+// paths to decide by it.
+export interface PatternsCase {
+	readonly name: string;
+	readonly lines: readonly string[];
+	readonly queries: readonly Query[];
+}
+
 // One glob matched against one text, as a path or as a base name.
 export interface GlobCase {
 	readonly pattern: string;

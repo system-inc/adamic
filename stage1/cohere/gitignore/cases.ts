@@ -2,7 +2,7 @@
 // (cohere/internal/gitignore/gitignore_test.go) with its cases, and a few of glob_test.go's. The test
 // (gitignore_test.go) writes a cases.ts of its own, with everything cohere's tests and git's corpus ask.
 
-import type { GlobCase, TreeCase } from './case.ts';
+import type { GlobCase, PatternsCase, TreeCase } from './case.ts';
 import type { Entry } from './gitignore.ts';
 
 export const trees: readonly TreeCase[] = [
@@ -61,6 +61,19 @@ export const trees: readonly TreeCase[] = [
 			{ path: 'second', isDirectory: false },
 		],
 	},
+];
+
+export const patternsCases: readonly PatternsCase[] = [
+	{
+		name: 'house ignore',
+		lines: ['*.generated.ts', '!keep.generated.ts', 'vendor/'],
+		queries: [
+			{ path: 'a/b.generated.ts', isDirectory: false },
+			{ path: 'keep.generated.ts', isDirectory: false },
+			{ path: 'vendor', isDirectory: true },
+		],
+	},
+	{ name: 'a newline', lines: ['fine', 'not\tfine\n'], queries: [] },
 ];
 
 export const globCases: readonly GlobCase[] = [

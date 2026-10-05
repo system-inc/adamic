@@ -42,8 +42,17 @@ type adamicRequest struct {
 
 // adamicCases is every tree and glob the port is asked about.
 type adamicCases struct {
-	Trees []adamicTree `json:"trees"`
-	Globs []adamicGlob `json:"globs"`
+	Trees    []adamicTree     `json:"trees"`
+	Patterns []adamicPatterns `json:"patterns"`
+	Globs    []adamicGlob     `json:"globs"`
+}
+
+// adamicPatterns is a list of lines for CompilePatterns, and the paths to decide by it. git has no word
+// for a list that is not a file, so these are Go cohere's and the port's alone.
+type adamicPatterns struct {
+	Name    string        `json:"name"`
+	Lines   []string      `json:"lines"`
+	Queries []adamicQuery `json:"queries"`
 }
 
 // adamicTree is one working tree: where it is on disk, what of it the matcher reads, and the paths to
@@ -151,6 +160,18 @@ func adamicAnswer(cases adamicCases) string {
 			fmt.Fprintf(&output, "%s %s\t%s\n", adamicBit(ignored), adamicSource(source), query.Path)
 		}
 	}
+	for _, list := range cases.Patterns {
+		fmt.Fprintf(&output, "patterns %s\n", list.Name)
+		patterns, err := CompilePatterns(list.Lines, list.Name)
+		if err != nil {
+			fmt.Fprintf(&output, "error %s\n", err)
+			continue
+		}
+		for _, query := range list.Queries {
+			ignored, source := patterns.Ignored(query.Path, query.IsDirectory)
+			fmt.Fprintf(&output, "%s %s\t%s\n", adamicBit(ignored), adamicSource(source), query.Path)
+		}
+	}
 	for index, glob := range cases.Globs {
 		compiled := compileGlob(glob.Pattern, glob.Path)
 		fmt.Fprintf(&output, "glob %d %s\n", index, adamicBit(compiled.matches(glob.Text, glob.Path)))
@@ -255,6 +276,27 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 		adamicGitInit(t, root, exclude)
 		cases.Trees = append(cases.Trees, adamicDescribe(t, fmt.Sprintf("generated %d (seed %d)", index, request.Seed), root, adamicWalk(t, root), "run"))
 	}
+
+	// CompilePatterns, which cohere's tests do not ask about: each generated tree's root ignore file read
+	// as a list, asked about every path of its tree, and the lines it refuses, with the quoting its
+	// refusal uses.
+	for _, generated := range cases.Trees {
+		if !strings.HasPrefix(generated.Name, "generated ") {
+			continue
+		}
+		for _, entry := range generated.Entries {
+			if entry.Path == IgnoreFileName && entry.Kind == "File" {
+				cases.Patterns = append(cases.Patterns, adamicPatterns{Name: "list of " + generated.Name, Lines: strings.Split(entry.Contents, "\n"), Queries: generated.Queries})
+			}
+		}
+	}
+	cases.Patterns = append(cases.Patterns,
+		adamicPatterns{Name: "house ignore", Lines: []string{"# generated", "*.generated.ts", "!keep.generated.ts", "vendor/", "", "/rooted\r"},
+			Queries: []adamicQuery{{"a/b.generated.ts", false}, {"keep.generated.ts", false}, {"vendor", true}, {"vendor", false}, {"rooted", false}, {"a/rooted", false}}},
+		adamicPatterns{Name: "a newline", Lines: []string{"fine", "not\tfine\n"}},
+		adamicPatterns{Name: "a NUL byte", Lines: []string{"a\x00b"}},
+		adamicPatterns{Name: "quoted", Lines: []string{"\"q\" \\ \a\b\f\r\v\x01\x1f\x7f é 🌍\n"}},
+	)
 
 	// cohere's TestTheMatcherAgreesWithGitOnRealTrees.
 	for _, root := range request.RealTrees {

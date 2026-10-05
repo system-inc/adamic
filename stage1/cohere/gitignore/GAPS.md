@@ -183,3 +183,24 @@ A Go string is its bytes, and git matches bytes: `?` against `é` is false, beca
 ## What lowered as written
 
 What lowered as written, and is worth saying so: discriminated unions narrowed by `switch` (the Go's token is one), classes with `#private` fields written only while `enter` builds a new matcher, a generic `Result<Value>` union for the Go's `(value, error)`, `?? panic(...)` for every index the Go would bounds-check, closures assigned in a `switch`, `for...of` over strings by code point, a `Map` of a discriminated union, and string `switch` throughout the glob compiler.
+
+## Performance, observed (not refusals)
+
+These lowered and answered correctly, but they're the numbers to beat on the way to "faster and leaner than Go cohere". All measured on this Linux container, x86-64, with the case set that includes cohere's own checkout as a real tree (`ADAMIC_GITIGNORE_COHERE_TREE=1`): 50 trees, 6,212 tree paths, 21 pattern lists and 421 globs, and output identical on every side.
+
+- **Native is 5 times slower than Node.** The unsanitized `-O2` binary ran in 2.06 s, and Node ran the source in 0.42 s. Under callgrind, 42% of the native run's instructions are in `adamic_string_length` and 39% in `adamic_string_char_code_at` (internal/native/runtime/string.c). Each of them walks the string's UTF-8 from its first byte. So `text.length`, `text.charCodeAt(index)` and `text[index]` cost the length of the string, and a loop over a string's indexes is quadratic. The glob reads its pattern and its text that way, as the Go does. That's natural code, and every 0.1 program that reads a string by index pays the same. docs/memory.md already names the fix: an ASCII-only flag, so the common case is a load. Smallest program that shows the shape:
+
+  ```ts
+  const text = 'a'.repeat(100000);
+  let count = 0;
+  for (let index = 0; index < text.length; index++) {
+  	if (text.charCodeAt(index) === 97) {
+  		count++;
+  	}
+  }
+  console.log(`${count}`);
+  ```
+
+  Built with `adamic build` (`-O2`), it takes 11.1 s natively. Node runs it in 0.085 s.
+
+- **Constant data compiles slowly.** The cases are constants (7,360 lines of TypeScript). They become 3.4 MB of C, which clang takes 39 s to compile at `-O2`, and longer under the sanitizers. That's why the default test asks about this repository as its only real tree, and cohere's checkout only when `ADAMIC_GITIGNORE_COHERE_TREE` is set: with it, the test takes about five minutes. Reading the cases at run time, now that `readTextFile` has landed, would compile the port once.

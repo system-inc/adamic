@@ -39,8 +39,15 @@ const generatedSeed = 20261005
 
 // cases is everything the port is asked, as cohere_side_test.go describes it.
 type cases struct {
-	Trees []tree `json:"trees"`
-	Globs []glob `json:"globs"`
+	Trees    []tree     `json:"trees"`
+	Patterns []patterns `json:"patterns"`
+	Globs    []glob     `json:"globs"`
+}
+
+type patterns struct {
+	Name    string   `json:"name"`
+	Lines   []string `json:"lines"`
+	Queries []query  `json:"queries"`
 }
 
 type tree struct {
@@ -130,7 +137,8 @@ func TestThePortAnswersAsGoCohereAndGitDo(t *testing.T) {
 		if compared == 0 || ignored == 0 || reincluded == 0 {
 			t.Errorf("git was asked too little: %d paths compared, %d ignored, %d re-included", compared, ignored, reincluded)
 		}
-		t.Logf("%d trees, %d globs: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend", len(asked.Trees), len(asked.Globs))
+		t.Logf("%d trees, %d pattern lists, %d globs: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend",
+			len(asked.Trees), len(asked.Patterns), len(asked.Globs))
 		t.Logf("git: %d paths compared (%d ignored, %d re-included by a negation; %d of them as git's t0008 states), %d globs as git's corpus and cohere's rules state",
 			compared, ignored, reincluded, scripted, globsAsserted)
 		if gitSource() == "" {
@@ -161,7 +169,7 @@ func TestThePortAnswersAsGoCohereAndGitDo(t *testing.T) {
 					continue
 				}
 				t.Logf("%s, caught: %s", side.name, difference)
-				if side.name == "on Node" {
+				if side.name == "on Node" && mutant.seenByGit {
 					agreement := againstGit(asked, gitAnswers, string(side.run.stdout))
 					if len(agreement.differences) == 0 {
 						t.Errorf("the mutant agrees with git: the comparison with git cannot see it")
@@ -231,6 +239,10 @@ func againstGit(asked cases, gitAnswers map[string][]string, output string) agre
 // mutant is one change to one port file.
 type mutant struct {
 	name, file, from, to string
+
+	// seenByGit says whether git has a word on what the mutant breaks, which it does for trees and not
+	// for a pattern list's refusal.
+	seenByGit bool
 }
 
 var mutants = []mutant{
@@ -241,6 +253,8 @@ var mutants = []mutant{
 		file: "glob.ts",
 		from: "\t\t\t\t\t\taddPosition(nextInside, position);\n",
 		to:   "\t\t\t\t\t\tif (character !== '/') {\n\t\t\t\t\t\t\taddPosition(nextInside, position);\n\t\t\t\t\t\t}\n",
+
+		seenByGit: true,
 	},
 	// The deepest ignore file no longer goes first: the root's decides before a subdirectory's.
 	{
@@ -248,6 +262,15 @@ var mutants = []mutant{
 		file: "gitignore.ts",
 		from: "for (let fileIndex = fileCount - 1; fileIndex >= 0; fileIndex--) {",
 		to:   "for (let fileIndex = 0; fileIndex < fileCount; fileIndex++) {",
+
+		seenByGit: true,
+	},
+	// A refusal quotes its line with uppercase hexadecimal, where Go's %q writes lowercase.
+	{
+		name: "%q in uppercase hexadecimal",
+		file: "gitignore.ts",
+		from: "'0123456789abcdef'",
+		to:   "'0123456789ABCDEF'",
 	},
 }
 
@@ -280,10 +303,14 @@ func askedCases(t *testing.T) cases {
 	if err != nil {
 		t.Fatal(err)
 	}
+	realTrees := []string{repositoryRoot}
+	if os.Getenv("ADAMIC_GITIGNORE_COHERE_TREE") != "" {
+		realTrees = append(realTrees, filepath.Join(repositoryRoot, "cohere"))
+	}
 	output := filepath.Join(scratch, "cases.json")
 	cohereSide(t, map[string]any{
 		"mode": "generate", "scratch": scratch, "seed": seed, "generated": generated,
-		"gitSource": gitSource(), "realTrees": []string{repositoryRoot}, "output": output,
+		"gitSource": gitSource(), "realTrees": realTrees, "output": output,
 	})
 	contents, err := os.ReadFile(output)
 	if err != nil {
@@ -381,6 +408,12 @@ func portDirectory(t *testing.T, asked cases, applied *mutant) string {
 	if err := os.WriteFile(filepath.Join(directory, "cases.ts"), []byte(casesSource(t, asked)), 0o644); err != nil {
 		t.Fatal(err)
 	}
+	// ADAMIC_GITIGNORE_KEEP names a directory to keep the unmutated program in, to run it by hand.
+	if keep := os.Getenv("ADAMIC_GITIGNORE_KEEP"); keep != "" && applied == nil {
+		if err := os.CopyFS(keep, os.DirFS(directory)); err != nil {
+			t.Fatal(err)
+		}
+	}
 	return directory
 }
 
@@ -399,7 +432,7 @@ func casesSource(t *testing.T, asked cases) string {
 	}
 	var source strings.Builder
 	source.WriteString("// Written by gitignore_test.go: every case cohere's tests and git's corpora ask.\n\n")
-	source.WriteString("import type { GlobCase, TreeCase } from './case.ts';\nimport type { Entry } from './gitignore.ts';\n\n")
+	source.WriteString("import type { GlobCase, PatternsCase, TreeCase } from './case.ts';\nimport type { Entry } from './gitignore.ts';\n\n")
 	source.WriteString("export const trees: readonly TreeCase[] = [\n")
 	for _, tree := range asked.Trees {
 		fmt.Fprintf(&source, "\t{\n\t\tname: %s,\n\t\troot: %s,\n\t\tentries: new Map<string, Entry>([\n", literal(tree.Name), literal(tree.Root))
@@ -421,6 +454,18 @@ func casesSource(t *testing.T, asked cases) string {
 		}
 		source.WriteString("\t\t],\n\t},\n")
 	}
+	source.WriteString("];\n\nexport const patternsCases: readonly PatternsCase[] = [\n")
+	for _, list := range asked.Patterns {
+		fmt.Fprintf(&source, "\t{\n\t\tname: %s,\n\t\tlines: [\n", literal(list.Name))
+		for _, line := range list.Lines {
+			fmt.Fprintf(&source, "\t\t\t%s,\n", literal(line))
+		}
+		source.WriteString("\t\t],\n\t\tqueries: [\n")
+		for _, query := range list.Queries {
+			fmt.Fprintf(&source, "\t\t\t{ path: %s, isDirectory: %v },\n", literal(query.Path), query.IsDirectory)
+		}
+		source.WriteString("\t\t],\n\t},\n")
+	}
 	source.WriteString("];\n\nexport const globCases: readonly GlobCase[] = [\n")
 	for _, glob := range asked.Globs {
 		fmt.Fprintf(&source, "\t{ pattern: %s, text: %s, path: %v },\n", literal(glob.Pattern), literal(glob.Text), glob.Path)
@@ -438,6 +483,8 @@ func answersByTree(output string) map[string][]string {
 		switch {
 		case strings.HasPrefix(line, "tree "):
 			current = strings.TrimPrefix(line, "tree ")
+		case strings.HasPrefix(line, "patterns "):
+			current = line
 		case strings.HasPrefix(line, "glob "):
 			answers["globs"] = append(answers["globs"], line)
 		default:
