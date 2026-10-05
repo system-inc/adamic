@@ -296,7 +296,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value}}, nil
+	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value, Class: l.classOf(target)}}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
@@ -329,7 +329,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 		}
 	}
 	name := target.Name().Text()
-	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of})
+	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
 	if operator == ast.KindPlusToken && valueNode != nil {
 		current, value = l.spelled(target, current), l.spelled(valueNode, value)
 	}
@@ -337,11 +337,30 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	if err != nil {
 		return nil, err
 	}
-	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated})
+	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target)})
 	if len(statements) == 1 {
 		return statements, nil
 	}
 	return []ir.Statement{ir.Block{Body: statements}}, nil
+}
+
+// classOf is, for an access to a class's field, that class's constructor plus one, and 0 for any other
+// access, so the emitter can find the field where the class's layout puts it. Only a class without
+// type parameters, already lowered, is looked up: one with them has a layout per instantiation, and
+// looking up never lowers a class, so a program that compiled before can't stop compiling here.
+func (l *lowering) classOf(access *ast.Node) int {
+	field := l.checker.GetSymbolAtLocation(access.Name())
+	if field == nil || len(field.Declarations) != 1 || field.Declarations[0].Kind != ast.KindPropertyDeclaration {
+		return 0
+	}
+	class := field.Declarations[0].Parent
+	if class == nil || class.Kind != ast.KindClassDeclaration || len(class.TypeParameters()) > 0 {
+		return 0
+	}
+	if lowered, isLowered := l.instances[l.program.Where(class)+":"+class.Name().Text()]; isLowered {
+		return lowered.constructor + 1
+	}
+	return 0
 }
 
 func nodesOf(list *ast.NodeList) []*ast.Node {

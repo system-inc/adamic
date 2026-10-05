@@ -245,7 +245,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			// box?.size is number | undefined because box may be; the field itself is what's stored.
 			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 				if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == of.Present() {
-					return ir.Property{Object: object, Name: name, Of: stored, Optional: true}, nil
+					return ir.Property{Object: object, Name: name, Of: stored, Optional: true, Class: l.classOf(node)}, nil
 				}
 			}
 		}
@@ -255,12 +255,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if of == ir.MaybeNumber {
 			// number | undefined, whether the field holds it or ?. makes it: the packed word, or
 			// undefined when the object is.
-			return ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional}, nil
+			return ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional, Class: l.classOf(node)}, nil
 		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
-		return ir.Property{Object: object, Name: name, Of: of, Optional: optional}, nil
+		return ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}, nil
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }
@@ -787,6 +787,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	}
 	separator := ir.Expression(ir.StringConstant{Index: l.constant(",")})
 	if len(arguments) == 1 {
+		arguments[0] = l.orDefault(node.AsCallExpression().Arguments.Nodes[0], arguments[0], ",")
 		if arguments[0].Type() != ir.String {
 			return nil, true, l.notYet(node, "join with a separator that isn't a string")
 		}
@@ -1097,6 +1098,9 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 		lowered, err := l.expression(argument)
 		if err != nil {
 			return nil, true, err
+		}
+		if fallback, isOptional := optionalStrings[name][index]; isOptional {
+			lowered = l.orDefault(argument, lowered, fallback)
 		}
 		if lowered.Type() != shape.arguments[index] {
 			return nil, true, l.notYet(argument, "a "+typeName(lowered.Type())+" argument to "+name)

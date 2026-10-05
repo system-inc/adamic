@@ -197,15 +197,6 @@ int adamic_compare_closure(adamic_value left, adamic_value right, void *context)
 	return result < 0 ? -1 : result > 0 ? 1 : 0;
 }
 
-adamic_value *adamic_array_at(const adamic_array *array, double index) {
-	// An array index is an integer from 0 up to the length; anything else (negative, a fraction,
-	// NaN, past the end) is a property the array doesn't have, which reads as undefined.
-	if (!(index >= 0) || index >= (double)array->length || index != trunc(index)) {
-		return NULL;
-	}
-	return &array->elements[(size_t)index];
-}
-
 adamic_value *adamic_array_at_relative(const adamic_array *array, double index) {
 	// array.at(index): ToIntegerOrInfinity, so NaN is 0 and a fraction truncates, then a negative
 	// index counts from the end. Anywhere outside the array is undefined.
