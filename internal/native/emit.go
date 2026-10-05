@@ -56,7 +56,7 @@ func C(program *ir.Program) string {
 		emitter.out.Reset()
 		bodies.WriteString("}\n\n")
 	}
-	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_arguments_save(argc, argv);\n")
+	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n")
 	emitter.indent = 1
 	emitter.block(program.Main, nil)
 	emitter.releaseGlobals()
@@ -803,11 +803,15 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.own(ir.Array, fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t)", array, arguments[0], arguments[1], len(expression.Arguments) == 2))
 	case ir.ArraySort:
 		array := e.value(expression.Array)
+		sort := "adamic_array_sort"
+		if expression.Element == ir.MaybeNumber {
+			sort = "adamic_array_sort_undefined_last"
+		}
 		if expression.Callback != nil {
-			e.line("adamic_array_sort(%s, adamic_compare_closure, %s);", array, e.value(expression.Callback))
+			e.line("%s(%s, adamic_compare_closure, %s);", sort, array, e.value(expression.Callback))
 			return array
 		}
-		e.line("adamic_array_sort(%s, %s, NULL);", array, e.comparator(expression))
+		e.line("%s(%s, %s, NULL);", sort, array, e.comparator(expression))
 		return array
 	case ir.CodePoints:
 		return e.own(ir.Array, fmt.Sprintf("adamic_string_code_points(%s)", e.value(expression.Value)))
@@ -829,6 +833,23 @@ func (e *emitter) value(expression ir.Expression) string {
 			e.line("adamic_map_set(%s, %s, %s);", created, held(expression.Key, entry[0]), held(expression.Value, entry[1]))
 		}
 		return created
+	case ir.SetNew:
+		var values string
+		if expression.Values != nil {
+			values = e.value(expression.Values)
+		}
+		created := e.own(ir.Map, fmt.Sprintf("adamic_map_new(%t, false)", expression.Element == ir.String))
+		if expression.Values != nil {
+			e.line("adamic_set_add_all(%s, %s);", created, values)
+		}
+		return created
+	case ir.SetAdd:
+		set := e.value(expression.Set)
+		value := e.value(expression.Value)
+		e.line("adamic_map_set(%s, %s, (adamic_value){.number = 0});", set, held(expression.Element, value))
+		return set
+	case ir.SetValues:
+		return e.own(ir.Array, fmt.Sprintf("adamic_set_values(%s)", e.value(expression.Set)))
 	case ir.MapGet:
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
@@ -861,6 +882,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
 	case ir.ProgramArguments:
 		return e.own(ir.Array, "adamic_program_arguments()")
+	case ir.WriteTextFile:
+		path := e.value(expression.Path)
+		text := e.value(expression.Text)
+		return e.own(ir.Object, fmt.Sprintf("adamic_write_text_file(%s, %s)", path, text))
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
@@ -1073,7 +1098,7 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 		e.line("adamic_retain(%s.reference);", element)
 	}
 	e.line("adamic_value %s = %s->code(%s, (adamic_value[]){{.%s = %s}, %s, {.number = (double)%s}, {.reference = %s}});",
-		answer, callback, callback, member(reduce.Result), accumulator, element, index, source)
+		answer, callback, callback, member(reduce.Result), slotted(reduce.Result, accumulator), element, index, source)
 	if reduce.Element.IsReference() {
 		e.line("adamic_release(%s.reference);", element)
 	}
@@ -1081,7 +1106,7 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 		e.line("adamic_release(%s);", accumulator)
 		e.line("%s = (%s)%s.reference;", accumulator, cType(reduce.Result), answer)
 	} else {
-		e.line("%s = %s.%s;", accumulator, answer, member(reduce.Result))
+		e.line("%s = %s;", accumulator, unslotted(reduce.Result, answer+"."+member(reduce.Result)))
 	}
 	e.indent--
 	e.line("}")
@@ -1300,7 +1325,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	// bindEntry declares a local from the step's key or value, retained, since the body may delete
 	// the entry.
 	bindEntry := func(local int, slot string, of ir.Type) {
-		reading := slot + "." + member(of)
+		reading := unslotted(of, slot+"."+member(of))
 		if of.IsReference() {
 			reading = fmt.Sprintf("(%s)%s", cType(of), reading)
 		}
@@ -1816,7 +1841,7 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 func (e *emitter) comparator(sort ir.ArraySort) string {
 	e.temporaries++
 	name := fmt.Sprintf("adamic_compare_%d", e.temporaries)
-	argument := "left." + member(sort.Element) + ", right." + member(sort.Element)
+	argument := unslotted(sort.Element, "left."+member(sort.Element)) + ", " + unslotted(sort.Element, "right."+member(sort.Element))
 	e.declarations = append(e.declarations, fmt.Sprintf(
 		"static int %s(adamic_value left, adamic_value right, void *context) {\n\t(void)context;\n\tdouble result = %s(%s);\n\treturn result < 0 ? -1 : result > 0 ? 1 : 0;\n}",
 		name, e.functionName(sort.Comparator), argument))

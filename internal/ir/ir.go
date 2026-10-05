@@ -58,7 +58,8 @@ const (
 	// Array is an array; its element type travels on the expressions and statements that read it.
 	Array
 
-	// Map is a Map; its key and value types travel on the expressions that read it.
+	// Map is a Map; its key and value types travel on the expressions that read it. A Set is one too,
+	// its values unused: the same order, keys and iteration (lower/set.go).
 	Map
 
 	// MaybeNumber is number | undefined: a number that may be missing, as Map.get gives it.
@@ -370,10 +371,11 @@ type (
 
 	// ArrayFrom is Array.from({ length: Length }, Callback): a new array of Length elements (ToLength,
 	// and more than 2^32 - 1 panics as JavaScript throws), each the callback's result called with
-	// undefined and its index, in order.
+	// undefined and its index, in order. First is the type of the callback's first parameter, which
+	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {
 		Length, Callback Expression
-		Element          Type
+		Element, First   Type
 	}
 
 	// ArrayReverse is array.reverse(): in place, and the array.
@@ -489,6 +491,25 @@ type (
 		KeyType  Type
 	}
 
+	// SetNew is new Set(), or new Set(Values), an array of the elements, each added in order.
+	SetNew struct {
+		Element Type
+		Values  Expression
+	}
+
+	// SetAdd is set.add(Value), which is the set. An element it already has keeps its place. has,
+	// delete and size are a Map's (MapHas, MapDelete, MapSize).
+	SetAdd struct {
+		Set, Value Expression
+		Element    Type
+	}
+
+	// SetValues is [...set]: a new array of its elements, in order.
+	SetValues struct {
+		Set     Expression
+		Element Type
+	}
+
 	// MapSize is map.size.
 	MapSize struct{ Map Expression }
 
@@ -507,6 +528,11 @@ type (
 	// ProgramArguments is programArguments() from 'adamic': a new array of the arguments after the
 	// program, as process.argv.slice(2) is.
 	ProgramArguments struct{}
+
+	// WriteTextFile is writeTextFile(Path, Text) from 'adamic': the file made or emptied, then Text
+	// written as UTF-8 the way Node's writeFileSync(path, text) writes it (a lone surrogate as U+FFFD),
+	// in { kind: 'Ok' }, or what went wrong in { kind: 'Error', message }.
+	WriteTextFile struct{ Path, Text Expression }
 )
 
 // Field is one field of an object literal.
@@ -612,8 +638,12 @@ func (c StringCall) Type() Type {
 }
 func (ReadTextFile) Type() Type     { return Object }
 func (ProgramArguments) Type() Type { return Array }
+func (WriteTextFile) Type() Type    { return Object }
 
 func (MapNew) Type() Type    { return Map }
+func (SetNew) Type() Type    { return Map }
+func (SetAdd) Type() Type    { return Map }
+func (SetValues) Type() Type { return Array }
 func (MapSet) Type() Type    { return Map }
 func (MapHas) Type() Type    { return Boolean }
 func (MapDelete) Type() Type { return Boolean }

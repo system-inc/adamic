@@ -283,7 +283,7 @@ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic
 	}
 	free(list.items);
 	// Decomposing can lengthen a string (U+FDFA is eighteen code points) past V8's longest.
-	if (length > 536870888) {
+	if (length > ADAMIC_STRING_MAX_UNITS) {
 		adamic_string_check_length(adamic_string_length(result));
 	}
 	return result;

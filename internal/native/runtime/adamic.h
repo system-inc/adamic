@@ -88,10 +88,15 @@ typedef struct adamic_string {
 	adamic_heap heap;
 	size_t length;
 	const char *bytes;
+	// units is the length in UTF-16 units plus one, once it's been asked for, and 0 until then; index is
+	// a long non-ASCII string's position index, once built (string_index.c). Both are caches, which
+	// every initializer that leaves them out leaves empty.
+	size_t units;
+	struct adamic_string_index *index;
 } adamic_string;
 
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
-#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text}
+#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, NULL}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 typedef struct adamic_shape {
@@ -185,6 +190,12 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value);
 
 bool adamic_map_delete(adamic_map *map, adamic_value key);
 
+// A Set is a map whose values aren't used (set.c). adamic_set_add_all adds an array's elements in
+// order, new Set(array), each reference retained; adamic_set_values is [...set], a new array the caller
+// owns.
+void adamic_set_add_all(adamic_map *set, const adamic_array *values);
+adamic_array *adamic_set_values(const adamic_map *set);
+
 // adamic_map_free_children lets go of what a map holds, for the heap's freeing.
 void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 
@@ -240,6 +251,10 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
 // adamic_timsort sorts count values in place by V8's algorithm (sort.c).
 void adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_value, adamic_value, void *), void *context);
+
+// adamic_array_sort_undefined_last sorts an array of number | undefined as JavaScript does: every
+// undefined goes to the end, never passed to the comparator (sort_undefined.c).
+void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 
 // adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);
@@ -320,6 +335,9 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
 adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
+// ADAMIC_STRING_MAX_UNITS is V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit).
+#define ADAMIC_STRING_MAX_UNITS 536870888
+
 // adamic_string_check_length panics, as V8 throws RangeError: Invalid string length, when a string
 // would be longer than V8's longest, in UTF-16 units.
 void adamic_string_check_length(double units);
@@ -335,6 +353,13 @@ adamic_string *adamic_string_to_lower(const adamic_string *string);
 // normalize (normalize.c): NFC, NFD, NFKC or NFKD as form names it, and a panic, as JavaScript's
 // RangeError, for any other form. It returns a string the caller owns.
 adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form);
+
+// adamic_string_units is a string's length in UTF-16 units, counted once. adamic_string_locate is
+// where a unit below that length is: the byte offset of the code point holding it, and whether the unit
+// is the low half of a surrogate pair there. Both take constant time amortized (string_index.c).
+size_t adamic_string_units(const adamic_string *string);
+size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low);
+void adamic_string_free_index(adamic_string *string);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
@@ -374,7 +399,12 @@ extern adamic_string adamic_typeof_undefined;
 extern adamic_string adamic_typeof_object;
 extern adamic_string adamic_typeof_function;
 
-// adamic_write_line writes a string and a newline, as console.log does with one string.
+// adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
+// rather than kill, as on Node.
+void adamic_start(int count, char **values);
+
+// adamic_write_line writes a string and a newline, as console.log does with one string. Stdout is
+// buffered, and flushed wherever Node's writing it at once could be told apart (adamic.c).
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string);
 
 // ADAMIC_NUMBER_FORMAT_MAX holds the longest number text, "-1.2345678901234567e-308", with room.
@@ -438,6 +468,10 @@ adamic_string *adamic_number_to_fixed(double value, double digits);
 void adamic_arguments_save(int count, char **values);
 adamic_array *adamic_program_arguments(void);
 adamic_object *adamic_read_text_file(const adamic_string *path);
+
+// adamic_write_text_file is writeTextFile(path, text) (output.c): { kind: 'Ok' } or { kind: 'Error',
+// message }, a reference the caller owns.
+adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text);
 
 // adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
 _Noreturn void adamic_panic(const char *message, size_t length);
