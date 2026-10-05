@@ -231,3 +231,14 @@ These lowered and answered correctly, but they're the numbers to beat on the way
   In the port, 78% of the native run's instructions are under `utf8Bytes` (bytes.ts). Before it spells a text as bytes, it checks whether the text is ASCII by this very loop, and the glob calls it once for every text it matches. With `length` and `charCodeAt` constant time, the loop is a few instructions per character.
 
 - **Constant data compiles slowly.** When the cases were constants (7,360 lines of TypeScript), they became 3.4 MB of C, which clang took 39 s to compile at `-O2`, and longer under the sanitizers. With cohere's checkout among the trees, the test took five and a half minutes. The driver now reads them at run time, and the same test takes 27 s. It would still cost any program with a large table in its source.
+
+## Path cleaning (added by stream P2)
+
+`path.ts`'s `clean` split every path at its slashes and joined it again, so it copied even a path already clean, which is most of what it is asked. In the format walk (stage1/cohere/formatfiles), which cleans every path it builds, that was 40% of native's instructions. Go's `path.Clean` returns a clean path as itself.
+
+First try, Go's way: one pass over the units into a lazy buffer that copies nothing until the output first differs from the input, comparing by `charCodeAt`. It answered as Go does, and the walk took 4.72 s where it had taken 2.7 s. Under callgrind, `adamic_string_char_code_at` was 47% of the run: each call goes out of line, and on a short string holding anything but ASCII it walks the UTF-8 from the start (mediaquery's GAPS.md, the third performance shape), about 200 instructions a unit. In stage 0 today a loop over a string's units, written in the program, loses to the string library's own calls, which run in C.
+
+So `clean` asks first whether the path is clean, with the library's scans (`includes('//')`, `startsWith('./')`, `endsWith('/..')` and the rest, `isClean`), returns it as it is when it is, and takes it apart only when it isn't. `dir` cleans what comes before the last slash without that slash, which cleans to the same path and then is usually clean already. The walk takes 2.26 s (from 2.7), and this slice's own run is unchanged within noise (0.66 to 0.77 s, from 0.71 to 0.73; Node 0.77 to 0.80). Of what remains in `clean`, most is `adamic_string_index_of`, which compares at every position with a call to `memcmp`.
+
+`path_test.go` holds `clean`, `base` and `dir` to Go's `path.Clean`, `path.Base` and `path.Dir` on 5,040 paths, natively, on Node and through the JavaScript backend: every string of up to seven units over `/`, `.` and `a`; every sequence of up to six of `/`, `.`, `..` and `a`; every string of up to four over `/`, `.`, `é`, `😀` and `.a`; and long ones by hand. Six mutants, each taking one test out of `isClean` or moving `dir`'s cut, are caught natively and on Node. The lazy buffer's four mutants were caught too, while it was the code.
+

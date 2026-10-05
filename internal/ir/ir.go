@@ -139,6 +139,11 @@ type Local struct {
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
 	Borrowed bool
+
+	// Counter is a for loop's counter proven to hold only whole numbers no larger than 2^53, each a
+	// double exactly, so the native backend keeps it in an integer and reads it as the same double
+	// (internal/lower/counters.go). Only the loop's update ever writes it.
+	Counter bool
 }
 
 // Expression is a value. Evaluating a String expression yields a reference its consumer owns: the

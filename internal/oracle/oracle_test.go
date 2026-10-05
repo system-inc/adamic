@@ -151,6 +151,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_positions.a", true, false},
 	{"internal/oracle/testdata/long_literals.a", true, false},
 	{"internal/oracle/testdata/class_layouts.a", true, false},
+	{"internal/oracle/testdata/ascii_scan.a", true, false},
+	{"internal/oracle/testdata/size_class_churn.a", true, false},
 	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
@@ -206,6 +208,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
+	// and a counted loop inside one.
+	{"internal/oracle/testdata/try_assignments.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
@@ -287,6 +292,16 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 // On Linux, ASan carries LeakSanitizer and runs it at exit by default. This run is the comparison, and
 // a program that panics exits 70 holding what it held, which isn't a leak, so leak detection is off
 // here and the leak check is a run of its own. macOS's ASan has no leak detection to turn off.
+// released builds a lowered program as a user's build is made, without sanitizers, and runs it.
+func released(t *testing.T, program *ir.Program) run {
+	t.Helper()
+	binary := filepath.Join(t.TempDir(), "release")
+	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+		t.Fatal(err)
+	}
+	return execute(t, binary)
+}
+
 func natively(t *testing.T, program *ir.Program) (run, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program")
@@ -381,6 +396,12 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			}
 			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
 			native, sanitized := natively(t, program)
+			// The build a user gets (clang -O2, no sanitizers, heap values from the size-class
+			// allocator rather than malloc) must say exactly what the sanitized one did.
+			if released := released(t, program); disagreement(native, released) != "" {
+				t.Errorf("the release build: %s\nsanitized: exit %d, stdout %q, stderr %q\nrelease:   exit %d, stdout %q, stderr %q",
+					disagreement(native, released), native.exitCode, native.stdout, native.stderr, released.exitCode, released.stdout, released.stderr)
+			}
 			if fixture.checked {
 				// The check fires, so the source on Node goes on where Adamic stops: hold native to the
 				// backend that carries the same check, and make sure the check really did fire.

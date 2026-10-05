@@ -142,10 +142,6 @@ static unsigned decode(const unsigned char *bytes, size_t size) {
 	return ((unsigned)(bytes[0] & 0x07) << 18) | ((unsigned)(bytes[1] & 0x3f) << 12) | ((unsigned)(bytes[2] & 0x3f) << 6) | (bytes[3] & 0x3f);
 }
 
-double adamic_string_length(const adamic_string *string) {
-	return (double)adamic_string_units(string);
-}
-
 // unit_at is the UTF-16 unit at an index below the length: a code point of the BMP or a lone
 // surrogate, or one half of a pair.
 static unsigned unit_at(const adamic_string *string, size_t index) {
@@ -159,7 +155,7 @@ static unsigned unit_at(const adamic_string *string, size_t index) {
 	return point;
 }
 
-double adamic_string_char_code_at(const adamic_string *string, double position) {
+double adamic_string_char_code(const adamic_string *string, double position) {
 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
 	position = isnan(position) ? 0 : trunc(position);
 	if (position < 0 || position >= (double)adamic_string_units(string)) {
@@ -202,7 +198,7 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 		}
 		end = lead;
 	}
-	adamic_string piece = {{0, adamic_kind_string}, end - start, string->bytes + start, 0, NULL};
+	adamic_string piece = {{0, adamic_kind_string, 0}, end - start, string->bytes + start, 0, NULL};
 	return adamic_string_concat(1, (adamic_string *const[]){&piece});
 }
 
@@ -211,7 +207,7 @@ size_t adamic_string_next(const adamic_string *string, size_t offset) {
 }
 
 adamic_string *adamic_string_slice_bytes(const adamic_string *string, size_t offset, size_t size) {
-	adamic_string piece = {{0, adamic_kind_string}, size, string->bytes + offset, 0, NULL};
+	adamic_string piece = {{0, adamic_kind_string, 0}, size, string->bytes + offset, 0, NULL};
 	return adamic_string_concat(1, (adamic_string *const[]){&piece});
 }
 
@@ -302,7 +298,7 @@ static void builder_unit(builder *build, unsigned unit) {
 }
 
 static adamic_string *builder_finish(builder *build) {
-	adamic_string piece = {{0, adamic_kind_string}, build->length, build->bytes, 0, NULL};
+	adamic_string piece = {{0, adamic_kind_string, 0}, build->length, build->bytes, 0, NULL};
 	adamic_string *string = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(build->bytes);
 	return string;

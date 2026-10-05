@@ -58,6 +58,18 @@ func sweep() []float64 {
 	for integer := -1000; integer <= 2000; integer++ {
 		values = append(values, float64(integer))
 	}
+	// Whole numbers are written directly below 2^53 and searched for from there: both sides of that
+	// edge, every power of two up to 2^60 and the integers beside it, and every 10^k - 1 and 10^k.
+	for power := 0; power <= 60; power++ {
+		two := math.Ldexp(1, power)
+		values = append(values, two, two-1, two+1, -two, -(two - 1))
+	}
+	nine := 0.0
+	for digits := 1; digits <= 22; digits++ {
+		nine = nine*10 + 9
+		values = append(values, nine, nine+1, -nine)
+	}
+	values = append(values, 9007199254740991, 9007199254740990, 9007199254740989, 4503599627370495.5)
 	for exponent := -330; exponent <= 310; exponent++ {
 		power := math.Pow(10, float64(exponent))
 		values = append(values, power, math.Nextafter(power, 0), math.Nextafter(power, math.Inf(1)), -power)
