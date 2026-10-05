@@ -1,0 +1,16 @@
+import type { Weak } from 'adamic';
+
+// A map in place between an array of Weak handles and an array of their targets, each way. The
+// slots hold handles in one and the boxes themselves in the other.
+interface Box {
+	readonly label: string;
+}
+function toStrong(fallback: Box, first: Box, second: Box): string {
+	const handles: Weak<Box>[] = [first, second];
+	const strong: Box[] = handles.map((handle) => handle ?? fallback);
+	return strong.map((box) => box.label).join(',');
+}
+const a: Box = { label: `a${1}` };
+const b: Box = { label: `b${2}` };
+const c: Box = { label: `c${3}` };
+console.log(toStrong(c, a, b));

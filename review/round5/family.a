@@ -1,0 +1,43 @@
+// More of the reuse family: one variable given to two consumed calls, a field of a moved value read
+// in the same call, a reassigned consumed parameter in a loop, a popped element spread, a map whose
+// callback returns its own element, a spread that reads its source twice, and a discarded splice
+// of an element a for-of still holds.
+type Tree = { value: number; label: string };
+function grow(tree: Tree, by: number): Tree {
+	return { ...tree, value: tree.value + by };
+}
+function pair(left: Tree, right: Tree): string {
+	return `${left.value} ${right.value}`;
+}
+function climb(tree: Tree, steps: number): Tree {
+	for (let step = 0; step < steps; step++) {
+		tree = grow(tree, step);
+	}
+	return tree;
+}
+function run(): void {
+	const tree: Tree = { value: 1, label: `t${1}` };
+	console.log(pair(grow(tree, 1), grow(tree, 2)));
+	console.log(`${grow(tree, tree.value).value} ${tree.value}`);
+	console.log(`${climb(tree, 4).value} ${tree.value}`);
+	const stack: Tree[] = [{ value: 5, label: `s${5}` }, { value: 6, label: `s${6}` }];
+	const top = stack.pop();
+	if (top !== undefined) {
+		const moved = { ...top, value: 60 };
+		console.log(`${moved.value} ${moved.label} ${stack.length}`);
+	}
+	let labels: string[] = [`a${1}`, `b${2}`];
+	labels = labels.map((label) => label);
+	labels = [...labels, `${labels.length}`];
+	console.log(labels.join(','));
+	let numbers: number[] = [1, 2, 3];
+	numbers = numbers.map((number, index) => number * 10 + index);
+	numbers = [...numbers, ...numbers.map((number) => number + 1)];
+	console.log(numbers.join(','));
+	const items: Tree[] = [{ value: 7, label: `i${7}` }, { value: 8, label: `i${8}` }];
+	for (const item of items) {
+		items.splice(0, 1);
+		console.log(`${item.label} ${items.length}`);
+	}
+}
+run();

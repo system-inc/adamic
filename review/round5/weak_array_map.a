@@ -1,0 +1,29 @@
+import type { Weak } from 'adamic';
+
+// A map that could run in place over an array a Weak also reaches. The array is alive throughout,
+// so native and Node must agree: the callback, reading through the Weak, sees the old elements
+// (JavaScript makes a new array), and so does the Weak after.
+interface Holder {
+	numbers: Weak<number[]>;
+}
+const holder: Holder = { numbers: undefined };
+function peek(index: number): number {
+	const numbers = holder.numbers;
+	return numbers === undefined ? -1 : (numbers[index] ?? -2);
+}
+function run(): void {
+	let numbers: number[] = [1, 2, 3];
+	holder.numbers = numbers;
+	const kept = numbers;
+	numbers = numbers.map((number, index) => number * 10 + peek(index === 0 ? 0 : index - 1));
+	console.log(`${numbers.join(',')} ${kept.join(',')}`);
+}
+function runAlone(): string {
+	let numbers: number[] = [1, 2, 3];
+	holder.numbers = numbers;
+	numbers = numbers.map((number, index) => number * 10 + peek(index === 0 ? 0 : index - 1));
+	const seen = holder.numbers;
+	return `${numbers.join(',')} ${seen === undefined ? 'gone' : seen.join(',')}`;
+}
+run();
+console.log(runAlone());
