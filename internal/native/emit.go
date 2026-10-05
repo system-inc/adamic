@@ -633,6 +633,16 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.maybeToString(expression.Value)
 	case ir.Box:
 		return e.box(expression.Value)
+	case ir.WeakOf:
+		return e.own(ir.Weak, fmt.Sprintf("adamic_weak_of(%s)", e.value(expression.Value)))
+	case ir.WeakTarget:
+		target := "adamic_weak_target"
+		if expression.Present {
+			target = "adamic_weak_target_present"
+		}
+		// Retained, as any reference read out of a slot is: a call later in the statement may let go
+		// of the last strong holder.
+		return e.own(expression.To, fmt.Sprintf("(%s)adamic_retain(%s(%s))", cType(expression.To), target, e.value(expression.Value)))
 	case ir.Narrow:
 		return e.narrow(expression)
 	case ir.TypeOf:
@@ -1483,12 +1493,13 @@ func (e *emitter) arguments(call ir.Call) []string {
 				value = maybe(of, value)
 			}
 		}
-		if index < len(parameters) && e.program.Locals[parameters[index]].Type == ir.Union && argument.Type() != ir.Union {
+		if index < len(parameters) && (e.program.Locals[parameters[index]].Type == ir.Union || e.program.Locals[parameters[index]].Type == ir.Weak) && argument.Type() != e.program.Locals[parameters[index]].Type {
 			// A number, a boolean or a reference where a union goes, boxed here, where the signature
-			// is known.
-			boxed, fresh := converted(argument.Type(), ir.Union, value)
+			// is known; a reference where a Weak goes, its handle.
+			takes := e.program.Locals[parameters[index]].Type
+			boxed, fresh := converted(argument.Type(), takes, value)
 			if fresh {
-				boxed = e.own(ir.Union, boxed)
+				boxed = e.own(takes, boxed)
 			}
 			value = boxed
 		}
@@ -1669,6 +1680,8 @@ func cType(valueType ir.Type) string {
 		return "adamic_maybe_boolean"
 	case ir.Union:
 		return "adamic_heap *"
+	case ir.Weak:
+		return "adamic_weak *"
 	}
 	return "adamic_string *"
 }
