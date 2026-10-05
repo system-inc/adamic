@@ -120,7 +120,46 @@ What it has that Adamic will need: a control-flow graph with single assignment, 
 
 **Recommendation: lift its passes onto Adamic's IR. Don't build the HIR.** Adamic keeps one lowering, from the checked AST to its typed IR. When a pass needs control flow, Adamic builds a graph from its own IR, which is already structured (`If`, `Loop`, `ForOf`, `Switch`, `Break`, `Continue`, `Return`), so the blocks fall out mechanically. Then cohere's single-assignment construction and its aliasing and ranges machinery get lifted onto that graph. React's signature table is replaced by facts the IR already carries. Every runtime operation is its own IR node with one known effect, written down once. Every direct call names its function, whose summary is computed from its body. Only a call through a closure value falls back to the conservative default. Borrowed parameters, as designed above, need none of this: they land on today's tree IR. The decision starts to cost something at Perceus.
 
-That recommendation comes from reading, not from measuring. What would settle it is lifting `ssa.go`'s `Construct` onto a graph built from Adamic's IR, and counting how much of it carries over unchanged.
+That recommendation came from reading, not from measuring. What would settle it was lifting `ssa.go`'s `Construct` onto a graph built from Adamic's IR, and counting how much of it carries over unchanged. Kirk decided for lifting, and that has now been done and measured.
+
+### The lift, measured
+
+`internal/flow` is the graph. `Build` makes one per IR function and one for the top level. Each instruction points back at the IR statement or condition it came from and lists the locals it reads and the one it writes. That's all single assignment needs, and evaluation order stays decided in one place. Globals and captured variables aren't values in the graph: any call may write a global, and any closure holding a cell may write a captured variable. cohere leaves its `LoadGlobal` unrenamed for the same reason.
+
+cohere's `ssa.go`, `ssa_eliminate.go`, `ssa_verify.go` and `graph.go` (at 715ba94) were copied in and then edited only where Adamic's graph differs. Counted line by line against the originals (`difflib`, comments and blank lines apart):
+
+| File | Code lines kept | Removed or changed | New | Comments kept |
+|---|---:|---:|---:|---:|
+| `ssa.go` (`Construct`) | 182 of 226 | 44 | 3 | 123 of 235 |
+| `ssa_eliminate.go` | 81 of 82 | 1 | 0 | 36 of 37 |
+| `ssa_verify.go` | 222 of 229 | 7 | 2 | 70 of 91 |
+| `graph.go` | 108 of 188 | 80 | 2 | 34 of 62 |
+| **All four** | **593 of 725 (82%)** | **132** | **7** | **263 of 425 (62%)** |
+
+What the 132 were:
+
+- 57 are cohere's evaluation order. It's deferred, not incompatible: nothing lifted reads it yet, and mutable ranges will bring it back.
+- About 20 are structural fallthroughs, which Adamic's terminals don't have. Removing them keeps the order a reverse postorder, which is what single assignment needs. Ranges will want cohere's loop-body-first order back, and a fallthrough on `If` with it.
+- 17 rename the `Returns` place. An Adamic return's value is read by an instruction instead.
+- About 15 handle context stores. A captured variable isn't in the graph at all.
+- 7 copy a place's effect, reactivity and source range, which an Adamic place doesn't carry.
+- The rest recurse into nested functions. An Adamic closure is its own IR function, with its own graph.
+
+The algorithms themselves came over unchanged: Braun's lookup, sealing and incomplete phis, redundant-phi elimination to a fixed point, and the dominance verifier. What Adamic wrote is the graph (`flow.go`, 235 lines) and the builder from its IR (`build.go`, 280 lines). The answer to #5jck546 holds up: the passes lift, and the part that's Adamic's own is the part that should be, the graph made from the IR that carries the proven types.
+
+**How it's held.** `TestEveryFunctionIsInSingleAssignment` builds and constructs every function of every oracle program, plus `internal/flow/testdata/joins.a` (every shape of join). That's 217 functions, 52 phis and 640 uses. Three checks run on each, and none of them is built from the construction:
+
+- cohere's verifier: every value is defined once, and every use is dominated by its definition.
+- Reaching definitions, computed the textbook way over the graph before construction. A use that one definition reaches must name that definition's value. A use that several reach must name a phi whose operands come to exactly those definitions.
+- A count of the IR's reads made by `fmt`'s `%#v` rather than by `Build`'s walk, so a read the builder drops shows up.
+
+Three mutants, each caught by the check aimed at it:
+
+- A loop header that skips its incomplete phi failed reaching definitions 127 times and the verifier never. The first predecessor dominates the header, so dominance alone can't see a loop-carried value lost.
+- Collapsing every phi failed the verifier 17 times and reaching definitions 140 times.
+- A builder walk that misses reads inside slices failed the read count 76 times.
+
+**What isn't held yet: the graph's shape.** Nothing checks where a `break`, a `continue` or a switch's fallthrough to its default actually goes, except reading `build.go`. Reaching definitions runs over the same graph, so it would agree with a wrong edge. Nothing feeds code generation from this graph yet. The first analysis that does has to bring a check that executes the graph against the program: walk the blocks with the values the native binary computes, and compare.
 
 ## Cycles: the open question
 

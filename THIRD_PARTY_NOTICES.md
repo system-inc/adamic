@@ -114,3 +114,8 @@ The `adamic` compiler (stage 0) is built on cohere and the TypeScript compiler i
 Copyright (c) Microsoft Corporation, Apache License 2.0), and on the Go toolchain. Their notices are in
 [cohere/NOTICE](cohere/NOTICE) and [cohere/THIRD_PARTY_NOTICES.md](cohere/THIRD_PARTY_NOTICES.md), and they travel with
 any build of the compiler.
+
+`internal/flow` lifts its single-assignment construction, redundant-phi elimination, verifier and graph
+maintenance from cohere's high-level IR (`cohere/internal/lint/ecmascript/high_level_intermediate_representation`),
+which follows the React Compiler's (Copyright (c) Meta Platforms, Inc. and affiliates, MIT); that notice is in
+cohere's THIRD_PARTY_NOTICES.md.
