@@ -1,0 +1,18 @@
+// Optional number arguments that are undefined at run time, where undefined means something other
+// than 0: lastIndexOf's position is +Infinity, endsWith's is the length, slice's end is the length,
+// toString's radix is 10, toFixed's digits are 0, splice's deleteCount is 0.
+function run(position?: number): void {
+	const text = 'abcabc';
+	console.log(`${text.lastIndexOf('b', position)} ${text.indexOf('c', position)} ${text.endsWith('c', position)} ${text.startsWith('a', position)} ${text.includes('a', position)}`);
+	console.log(`${text.slice(1, position)} ${text.substring(2, position)} ${text.at(position ?? 0)}`);
+	console.log(`${(255).toString(position)} ${(1.5).toFixed(position)} ${(1234.5).toPrecision(position)} ${(1234.5).toExponential(position)}`);
+	const items = [1, 2, 3, 4];
+	console.log(`${items.slice(1, position).join()} ${items.indexOf(3, position)} ${items.lastIndexOf(1, position)} ${items.includes(4, position)}`);
+	const spliced = [1, 2, 3, 4];
+	const removed = spliced.splice(1, position);
+	console.log(`${removed.join()} ${spliced.join()}`);
+	const filled = [1, 2, 3, 4].fill(0, 1, position);
+	console.log(`${filled.join()}`);
+}
+run();
+run(2);

@@ -1,0 +1,29 @@
+// Objects that share a class's field names, seen through the class: the inline read must be right
+// for every shape: the class's, another class's in another order, and literals in both orders.
+class Counter {
+	count: number | undefined = undefined;
+	label: string = 'start';
+	other: number = 0;
+}
+class Reordered {
+	other: number = 1;
+	label: string = 'reordered';
+	count: number | undefined = 5;
+}
+function show(counter: Counter): string {
+	counter.other += 1;
+	const label = counter.label;
+	return `${counter.count} ${typeof label} ${label} ${counter.other}`;
+}
+const plain = { count: 3, label: `plain${1}`, other: 10 };
+const items: Counter[] = [new Counter(), plain, new Reordered(), { other: 7, label: `l${42}`, count: undefined }];
+for (const item of items) {
+	console.log(show(item));
+	item.count = (item.count ?? 0) + 1;
+	item.label = `${item.other * 2}`;
+	console.log(show(item));
+}
+const nan = parseFloat('x');
+const packed = new Counter();
+packed.count = nan;
+console.log(`${packed.count} ${packed.count === undefined} ${Number.isNaN(packed.count)}`);

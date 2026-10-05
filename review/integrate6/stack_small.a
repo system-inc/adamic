@@ -1,0 +1,12 @@
+// Recursion with no end, run under ulimit -s 1024 (bash -c 'ulimit -s 1024; ./program'). On
+// integrate-5 native panicked as Node does; on integrate-6 the quarter kept back for arguments and
+// environment leaves size > 2 * reserved false at 1 MiB, so stack.c sets no limit, and native
+// segfaults (exit 139) where Node panics (exit 70).
+function sum(n: number): number {
+	if (n === 0) {
+		return 0;
+	}
+	return n + sum(n - 1);
+}
+console.log('start');
+console.log(`${sum(1e9)}`);
