@@ -28,6 +28,8 @@ static adamic_string *allocate(size_t length) {
 	string->bytes = (const char *)(string + 1);
 	string->units = 0;
 	string->index = NULL;
+	string->owner = NULL;
+	string->capacity = length;
 	return string;
 }
 
@@ -77,11 +79,15 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 		}
 		cursor += parts[index]->length;
 	}
+	string->length = adamic_string_join_halves((char *)string->bytes, 0, length);
+	return string;
+}
+
+size_t adamic_string_join_halves(char *bytes, size_t from, size_t length) {
 	// A lone high surrogate followed by a lone low one is a character again, as in JavaScript, and
 	// WTF-8 writes it as UTF-8's four bytes, so equal strings stay equal byte for byte.
-	char *bytes = (char *)string->bytes;
-	size_t kept = 0;
-	for (size_t at = 0; at < length;) {
+	size_t kept = from;
+	for (size_t at = from; at < length;) {
 		unsigned char *here = (unsigned char *)bytes + at;
 		if (at + 6 <= length && here[0] == 0xed && here[1] >= 0xa0 && here[1] <= 0xaf && here[3] == 0xed && here[4] >= 0xb0 && here[4] <= 0xbf) {
 			unsigned high = decode(here, 3), low = decode(here + 3, 3);
@@ -95,8 +101,7 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 		}
 		bytes[kept++] = bytes[at++];
 	}
-	string->length = kept;
-	return string;
+	return kept;
 }
 
 int adamic_string_equal(const adamic_string *left, const adamic_string *right) {
@@ -202,8 +207,7 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 		}
 		end = lead;
 	}
-	adamic_string piece = {{0, adamic_kind_string}, end - start, string->bytes + start, 0, NULL};
-	return adamic_string_concat(1, (adamic_string *const[]){&piece});
+	return adamic_string_share(string, start, end - start);
 }
 
 size_t adamic_string_next(const adamic_string *string, size_t offset) {
@@ -211,8 +215,7 @@ size_t adamic_string_next(const adamic_string *string, size_t offset) {
 }
 
 adamic_string *adamic_string_slice_bytes(const adamic_string *string, size_t offset, size_t size) {
-	adamic_string piece = {{0, adamic_kind_string}, size, string->bytes + offset, 0, NULL};
-	return adamic_string_concat(1, (adamic_string *const[]){&piece});
+	return adamic_string_share(string, offset, size);
 }
 
 // A view of a string as UTF-16 code units, walked from the start. Each step yields the unit's value
@@ -302,7 +305,7 @@ static void builder_unit(builder *build, unsigned unit) {
 }
 
 static adamic_string *builder_finish(builder *build) {
-	adamic_string piece = {{0, adamic_kind_string}, build->length, build->bytes, 0, NULL};
+	adamic_string piece = {{0, adamic_kind_string}, build->length, build->bytes, 0, NULL, NULL, 0};
 	adamic_string *string = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(build->bytes);
 	return string;
@@ -322,26 +325,34 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	double length = adamic_string_length(string);
 	double from = clamp_index(start, length);
 	double to = has_end ? clamp_index(end, length) : length;
+	if (!(from < to)) {
+		return allocate(0);
+	}
+	// Whole code points are their bytes, in one piece, shared with the string where that's worth it
+	// (string_share.c). A slice that starts on the low half of a pair begins with that half, and one
+	// that ends between the halves ends with the high one, each a lone surrogate, which isn't in the
+	// string's bytes, so that slice is built.
+	size_t first = (size_t)from, last = (size_t)to;
+	bool low;
+	size_t offset = adamic_string_locate(string, first, &low);
+	if (low) {
+		offset += 4;
+	}
+	bool ends_low = false;
+	size_t stop = last < (size_t)length ? adamic_string_locate(string, last, &ends_low) : string->length;
+	size_t middle = stop > offset ? stop - offset : 0;
+	if (!low && !ends_low) {
+		return adamic_string_share(string, offset, middle);
+	}
 	builder build = {NULL, 0, 0};
-	if (from < to) {
-		// Whole code points are copied as their bytes, in one piece. A slice that starts on the low
-		// half of a pair begins with that half, and one that ends between the halves ends with the
-		// high one, each a lone surrogate.
-		size_t first = (size_t)from, last = (size_t)to;
-		bool low;
-		size_t offset = adamic_string_locate(string, first, &low);
-		if (low) {
-			builder_unit(&build, unit_at(string, first));
-			offset += 4;
-		}
-		bool ends_low = false;
-		size_t stop = last < (size_t)length ? adamic_string_locate(string, last, &ends_low) : string->length;
-		if (stop > offset) {
-			builder_add(&build, string->bytes + offset, stop - offset);
-		}
-		if (ends_low) {
-			builder_unit(&build, unit_at(string, last - 1));
-		}
+	if (low) {
+		builder_unit(&build, unit_at(string, first));
+	}
+	if (middle > 0) {
+		builder_add(&build, string->bytes + offset, middle);
+	}
+	if (ends_low) {
+		builder_unit(&build, unit_at(string, last - 1));
 	}
 	return builder_finish(&build);
 }
@@ -486,18 +497,35 @@ static double unit_index_of(const unsigned *haystack, size_t haystack_count, con
 }
 
 double adamic_string_index_of(const adamic_string *string, const adamic_string *search) {
+	return adamic_string_index_of_at(string, search, 0);
+}
+
+double adamic_string_index_of_at(const adamic_string *string, const adamic_string *search, size_t from) {
 	if (search->length == 0) {
-		return 0;
+		return (double)from;
 	}
 	if (halves_pairs(search)) {
 		size_t haystack_count, needle_count;
 		unsigned *haystack = to_units(string, &haystack_count), *needle = to_units(search, &needle_count);
-		double found = unit_index_of(haystack, haystack_count, needle, needle_count, 0);
+		double found = unit_index_of(haystack, haystack_count, needle, needle_count, from);
 		free(haystack);
 		free(needle);
 		return found;
 	}
-	for (size_t offset = 0; offset + search->length <= string->length;) {
+	size_t start = 0;
+	if (from > 0) {
+		if (from >= adamic_string_units(string)) {
+			return -1;
+		}
+		// From the low half of a pair, the search can begin only at the next code point: it doesn't
+		// begin with a low half, or halves_pairs would have said so.
+		bool low;
+		start = adamic_string_locate(string, from, &low);
+		if (low) {
+			start += 4;
+		}
+	}
+	for (size_t offset = start; offset + search->length <= string->length;) {
 		if (memcmp(string->bytes + offset, search->bytes, search->length) == 0) {
 			return (double)adamic_string_units_before(string, offset);
 		}

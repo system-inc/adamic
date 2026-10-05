@@ -96,6 +96,14 @@ typedef struct adamic_string {
 	// every initializer that leaves them out leaves empty.
 	size_t units;
 	struct adamic_string_index *index;
+	// owner is the string whose bytes these are, when they aren't this string's own: a shared slice
+	// holds a reference to it, let go when the slice is freed (string_share.c). It's NULL for a
+	// string with bytes of its own, and for a slice of a constant, whose bytes never go away.
+	struct adamic_string *owner;
+	// capacity is how many bytes fit where this string's own bytes are, so an append can write in
+	// place when nothing else holds the string (string_append.c). It's 0 for every string whose
+	// bytes can't grow: a constant, a shared slice, one made on the stack.
+	size_t capacity;
 } adamic_string;
 
 // ADAMIC_LITERAL_INDEX marks a constant's index as not yet built: a constant lives as long as the
@@ -105,10 +113,10 @@ extern char adamic_literal_mark;
 #define ADAMIC_LITERAL_INDEX ((struct adamic_string_index *)&adamic_literal_mark)
 
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
-#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX}
+#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
 
 // ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
-#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string}, size, array, 0, ADAMIC_LITERAL_INDEX}
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string}, size, array, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 typedef struct adamic_shape {
@@ -344,6 +352,10 @@ adamic_string *adamic_string_trim(adamic_string *string);
 size_t adamic_string_next(const adamic_string *string, size_t offset);
 adamic_string *adamic_string_slice_bytes(const adamic_string *string, size_t offset, size_t size);
 
+// adamic_string_share is the size bytes at offset as a string the caller owns, reading the string's
+// own bytes where that's worth it (string_share.c). offset and size must fall between code points.
+adamic_string *adamic_string_share(const adamic_string *string, size_t offset, size_t size);
+
 // The rest of a string's UTF-16 view (string.c), each as JavaScript means it. These that return a
 // string return one the caller owns.
 adamic_string *adamic_string_slice(const adamic_string *string, double start, double end, bool has_end);
@@ -352,7 +364,10 @@ int adamic_string_compare(const adamic_string *left, const adamic_string *right)
 adamic_string *adamic_string_repeat(const adamic_string *string, double count);
 adamic_string *adamic_string_pad(const adamic_string *string, double target, const adamic_string *fill, bool at_start);
 double adamic_string_index_of(const adamic_string *string, const adamic_string *search);
-// adamic_string_index_of_from is indexOf with its starting position (string_from.c).
+// adamic_string_index_of_at is indexOf from the UTF-16 index from, at most the string's length, in
+// place (string.c). adamic_string_index_of_from is indexOf with its position as JavaScript gives it
+// (string_from.c).
+double adamic_string_index_of_at(const adamic_string *string, const adamic_string *search, size_t from);
 double adamic_string_index_of_from(const adamic_string *string, const adamic_string *search, double position);
 bool adamic_string_starts_with(const adamic_string *string, const adamic_string *search);
 bool adamic_string_ends_with(const adamic_string *string, const adamic_string *search);
@@ -394,6 +409,16 @@ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic
 // adamic_string_units is a string's length in UTF-16 units, counted once. adamic_string_locate is
 // where a unit below that length is: the byte offset of the code point holding it, and whether the unit
 // is the low half of a surrogate pair there. Both take constant time amortized (string_index.c).
+// adamic_string_join_halves makes each lone high surrogate followed by a lone low one in bytes, from
+// offset from on, the character they are together, as JavaScript joins them, and returns the new
+// length (string.c).
+size_t adamic_string_join_halves(char *bytes, size_t from, size_t length);
+
+// adamic_string_append is string + parts, taking the caller's reference to string: written in place
+// when the caller held the only reference and there's room, and otherwise a new string with room to
+// grow, string let go (string_append.c).
+adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_string *const parts[]);
+
 size_t adamic_string_units(const adamic_string *string);
 size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low);
 

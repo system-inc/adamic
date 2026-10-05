@@ -173,6 +173,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/utf8_view_fails.a", true, false},
 	// indexOf and includes from a position.
 	{"internal/oracle/testdata/search_from.a", true, false},
+	{"internal/oracle/testdata/shared_slices.a", true, false},
+	{"internal/oracle/testdata/string_append.a", true, false},
+	{"internal/oracle/testdata/search_from_sweep.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

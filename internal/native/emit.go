@@ -356,6 +356,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		e.end()
 	case ir.Assign:
+		if parts, appends := e.appendsTo(statement); appends {
+			e.appendTo(statement.Local, parts)
+			e.end()
+			break
+		}
 		value := e.value(statement.Value)
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
@@ -463,6 +468,36 @@ func (e *emitter) store(local int, value string) {
 	e.line("%s %s = %s;", cType(e.program.Locals[local].Type), old, name)
 	e.line("%s = adamic_retain(%s);", name, value)
 	e.line("adamic_release(%s);", old)
+}
+
+// appendsTo is the parts after the first of an assignment text = text + ..., to a string local only
+// this function can see: not a global, which a call among the parts could write, not captured, which a
+// closure among them could, and not borrowed. Those are the assignments appendTo writes, where text's
+// own reference goes to adamic_string_append, which may write in place.
+func (e *emitter) appendsTo(statement ir.Assign) ([]ir.Expression, bool) {
+	declared := e.program.Locals[statement.Local]
+	if declared.Type != ir.String || declared.Global || declared.Captured || declared.Borrowed || statement.Checked {
+		return nil, false
+	}
+	concat, isConcat := statement.Value.(ir.Concat)
+	if !isConcat || len(concat.Parts) < 2 {
+		return nil, false
+	}
+	if read, isRead := concat.Parts[0].(ir.Read); !isRead || read.Local != statement.Local || read.Checked {
+		return nil, false
+	}
+	return concat.Parts[1:], true
+}
+
+// appendTo is text = text + parts: the parts first, as JavaScript reads them after text, which only
+// this function writes, then the append, which takes text's reference and gives one back.
+func (e *emitter) appendTo(local int, parts []ir.Expression) {
+	values := make([]string, 0, len(parts))
+	for _, part := range parts {
+		values = append(values, e.value(part))
+	}
+	name := e.localName(local)
+	e.line("%s = adamic_string_append(%s, %d, (adamic_string *const[]){%s});", name, name, len(values), strings.Join(values, ", "))
 }
 
 // releaseGlobals lets go of every global main declared, the last declared first, once main has run

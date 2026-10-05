@@ -61,6 +61,8 @@ static void free_one(void *value) {
 	switch (heap->kind) {
 	case adamic_kind_string:
 		adamic_string_free_index(value);
+		// A shared slice lets go of the string whose bytes it reads.
+		let_go(((adamic_string *)value)->owner);
 		break;
 	case adamic_kind_object: {
 		adamic_object *object = value;
