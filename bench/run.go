@@ -53,7 +53,7 @@ type measurement struct {
 	failure string
 }
 
-var countsLine = regexp.MustCompile(`adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+)`)
+var countsLine = regexp.MustCompile(`adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)`)
 
 func main() {
 	rounds := flag.Int("rounds", 5, "how many interleaved rounds; the best of them is reported")
@@ -141,8 +141,8 @@ func main() {
 	fmt.Println()
 	fmt.Println("counted native build, run once (adamic build --count): heap values and reference-count calls")
 	fmt.Println()
-	fmt.Println("| benchmark | allocations | frees | retains | releases | peak live |")
-	fmt.Println("|---|---:|---:|---:|---:|---:|")
+	fmt.Println("| benchmark | allocations | frees | retains | releases | peak live | in regions |")
+	fmt.Println("|---|---:|---:|---:|---:|---:|---:|")
 	for _, program := range programs {
 		fmt.Println(counts(program, *timeout))
 	}
@@ -272,11 +272,11 @@ func counts(program program, timeout time.Duration) string {
 	process.Stdout = nil
 	_ = process.Run()
 	if ctx.Err() != nil {
-		return fmt.Sprintf("| %s | did not finish in %s | | | | |", program.name, timeout)
+		return fmt.Sprintf("| %s | did not finish in %s | | | | | |", program.name, timeout)
 	}
 	match := countsLine.FindStringSubmatch(stderr.String())
 	if match == nil {
-		return fmt.Sprintf("| %s | no counts written | | | | |", program.name)
+		return fmt.Sprintf("| %s | no counts written | | | | | |", program.name)
 	}
 	cells := []string{program.name}
 	for _, number := range match[1:] {

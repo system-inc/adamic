@@ -168,6 +168,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_global_sibling.a", true, false},
 	{"internal/oracle/testdata/reuse_weak_during_spread.a", true, false},
 	{"internal/oracle/testdata/reuse_weak_after_reuse.a", true, false},
+	// Regions: a statement's fresh values let go of together, and every way one could escape kept off it.
+	{"internal/oracle/testdata/regions.a", true, false},
+	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
+	{"internal/oracle/testdata/regions_throw.a", true, false},
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
 	// was moved or spread.
 	{"internal/oracle/testdata/move_throw.a", true, false},
