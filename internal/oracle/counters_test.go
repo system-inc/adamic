@@ -55,6 +55,7 @@ func TestLoopCountersAgreeWithNode(t *testing.T) {
 		{"values.length % 3", 0, 0, false},
 		{"9007199254740000 + values.length", 0, 0, false}, {"-9007199254740000 - values.length", 0, 0, false},
 		{"values.length * -2097152", -two53, 0, true}, {"values.length * 2097153", 0, 0, false},
+		{"values.length * values.length", 0, 0, false},
 	}
 	// The updates, each with its step (0 for one the pass never takes) and its comparison.
 	type update struct {
