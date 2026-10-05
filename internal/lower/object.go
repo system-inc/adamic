@@ -47,8 +47,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, name.Text()) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, name.Text()); declared == ir.MaybeNumber {
-				// Where the field is number | undefined, what it's given is packed as one.
+			if declared := l.declaredField(node, name.Text()); declared == ir.MaybeNumber || declared == ir.Weak {
+				// Where the field is number | undefined, what it's given is packed as one; where it's
+				// a Weak, what it's given is kept weakly.
 				value = fit(value, declared)
 			}
 			if slotless(value.Type()) {
@@ -164,11 +165,14 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	arrayType := l.checker.GetTypeAtLocation(node)
-	if literal := ast.SkipParentheses(node); literal.Kind == ast.KindArrayLiteralExpression && len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+	if literal := ast.SkipParentheses(node); literal.Kind == ast.KindArrayLiteralExpression {
 		// [] is never[] to the checker; what it will hold is the type it's written into, as in
-		// const values: number[] = [].
+		// const values: number[] = []. So is [node] written into a Weak<Node>[]: its elements are
+		// kept weakly.
 		if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
-			arrayType = contextual
+			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 || declared == ir.Weak {
+				arrayType = contextual
+			}
 		}
 	}
 	if !l.checker.IsArrayType(arrayType) {
@@ -250,6 +254,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	case object.Type() == ir.Map && name == "size":
 		return ir.MapSize{Map: object}, nil
 	case object.Type() == ir.Object:
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.Weak {
+				// The field keeps a handle, whatever the checker narrowed the read to.
+				return ir.Property{Object: object, Name: name, Of: ir.Weak, Optional: access.QuestionDotToken != nil}, nil
+			}
+		}
 		of, err := l.typeOf(node)
 		if err != nil && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 			// Narrowed to undefined (just assigned it): read as the field is declared.
@@ -265,7 +275,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			// box?.size is number | undefined because box may be; the field itself is what's stored.
 			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 				if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == of.Present() {
-					return ir.Property{Object: object, Name: name, Of: stored, Optional: true}, nil
+					return ir.Property{Object: object, Name: name, Of: stored, Optional: true, Class: l.classOf(node)}, nil
 				}
 			}
 		}
@@ -275,12 +285,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if of == ir.MaybeNumber {
 			// number | undefined, whether the field holds it or ?. makes it: the packed word, or
 			// undefined when the object is.
-			return ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional}, nil
+			return ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional, Class: l.classOf(node)}, nil
 		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
-		return ir.Property{Object: object, Name: name, Of: of, Optional: optional}, nil
+		return ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}, nil
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }
@@ -825,6 +835,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	}
 	separator := ir.Expression(ir.StringConstant{Index: l.constant(",")})
 	if len(arguments) == 1 {
+		arguments[0] = l.orDefault(node.AsCallExpression().Arguments.Nodes[0], arguments[0], ",")
 		if arguments[0].Type() != ir.String {
 			return nil, true, l.notYet(node, "join with a separator that isn't a string")
 		}
@@ -1136,6 +1147,9 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 		if err != nil {
 			return nil, true, err
 		}
+		if fallback, isOptional := optionalStrings[name][index]; isOptional {
+			lowered = l.orDefault(argument, lowered, fallback)
+		}
 		if lowered.Type() != shape.arguments[index] {
 			return nil, true, l.notYet(argument, "a "+typeName(lowered.Type())+" argument to "+name)
 		}
@@ -1222,6 +1236,14 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, describe(node))
 	}
 	of, err := l.typeOf(node)
+	if elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(access.Expression)); err == nil {
+		// What the tuple keeps there, not what the checker narrowed the read to: a Weak keeps a handle.
+		if position, convertErr := strconv.Atoi(index.Text()); convertErr == nil && position < len(elements) {
+			if declared, isKnown := l.representation(elements[position]); isKnown && declared == ir.Weak {
+				of = declared
+			}
+		}
+	}
 	if err != nil {
 		return nil, err
 	}

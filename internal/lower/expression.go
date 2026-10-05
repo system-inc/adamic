@@ -26,6 +26,13 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		substituted, isKnown := l.substitution[proven]
 		return substituted, isKnown
 	}
+	if flags&checker.TypeFlagsIntersection != 0 {
+		// Target & WeakBrand is what a Weak<Target> reads as where it's present: the target.
+		if target := l.weakTarget(proven); target != nil {
+			return l.representation(target)
+		}
+		return 0, false
+	}
 	switch {
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
@@ -45,11 +52,16 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		var shared ir.Type
-		mixed := false
+		mixed, weak := false, false
 		for _, member := range proven.Types() {
 			if member.Flags()&checker.TypeFlagsUndefined != 0 {
 				// undefined joins a union of references as a null pointer; it's checked below that
 				// the rest are references.
+				continue
+			}
+			if l.weakTarget(member) != nil {
+				// Weak<Target> is (Target & WeakBrand) | undefined: kept weakly.
+				weak = true
 				continue
 			}
 			memberType, isKnown := l.representation(member)
@@ -60,6 +72,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				mixed = true
 			}
 			shared = memberType
+		}
+		if weak {
+			return ir.Weak, shared == 0
 		}
 		if mixed {
 			// Members held differently (string | number) are one Union, which holds undefined too.
@@ -104,8 +119,84 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 	return false
 }
 
-// expression lowers a value.
+// expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
+// is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	value, err := l.value(node)
+	if err == nil && (value.Type() == ir.Array || value.Type() == ir.Map) && ast.SkipParentheses(node).Kind != ast.KindArrayLiteralExpression {
+		// The checker lets an array of Node be seen as an array of Weak<Node> and back, but one
+		// holds targets and the other handles to them, so the same array can't be both.
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.keepsWeakly(contextual) != l.keepsWeakly(l.checker.GetTypeAtLocation(node)) {
+			return nil, l.notYet(node, "an array or map of "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))+" seen as one of "+l.checker.TypeToString(contextual)+" (one keeps its elements weakly, the other doesn't)")
+		}
+	}
+	if err != nil || value.Type() != ir.Weak {
+		return value, err
+	}
+	read := l.checker.GetTypeAtLocation(node)
+	to, present := ir.Object, false
+	if target, isKnown := l.representation(read); isKnown && target != ir.Weak {
+		// The checker narrowed it to present (Target & WeakBrand).
+		to, present = target, true
+	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range read.Types() {
+			if target := l.weakTarget(member); target != nil {
+				if to, isKnown = l.representation(target); !isKnown {
+					return nil, l.notYet(node, "a Weak of "+l.checker.TypeToString(target))
+				}
+			}
+		}
+	}
+	if !to.IsReference() {
+		return nil, l.notYet(node, "a Weak of "+l.checker.TypeToString(read))
+	}
+	return ir.WeakTarget{Value: value, To: to, Present: present}, nil
+}
+
+// keepsWeakly reports whether an array's elements or a map's values are Weak.
+func (l *lowering) keepsWeakly(proven *checker.Type) bool {
+	arguments := []*checker.Type{}
+	switch {
+	case l.checker.IsArrayType(proven):
+		arguments = append(arguments, l.checker.GetElementTypeOfArrayType(proven))
+	case l.isLibraryType(proven, "Map", "ReadonlyMap"):
+		if both := l.checker.GetTypeArguments(proven); len(both) == 2 {
+			arguments = append(arguments, both[1])
+		}
+	}
+	for _, argument := range arguments {
+		if kept, _ := l.representation(argument); kept == ir.Weak {
+			return true
+		}
+	}
+	return false
+}
+
+// weakTarget is the Target of Target & WeakBrand, the present half of a Weak<Target>, or nil for
+// any other type.
+func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
+	if proven.Flags()&checker.TypeFlagsIntersection == 0 {
+		return nil
+	}
+	var target *checker.Type
+	branded := false
+	for _, member := range proven.Types() {
+		if symbol := member.Symbol(); symbol != nil && symbol.Name == "WeakBrand" && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+			branded = true
+		} else if target == nil {
+			target = member
+		} else {
+			return nil
+		}
+	}
+	if !branded {
+		return nil
+	}
+	return target
+}
+
+// value lowers a value, as expression does, but leaves a Weak as it's kept.
+func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
 	switch node.Kind {
 	case ast.KindNumericLiteral:
@@ -225,6 +316,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 // number | undefined or boolean | undefined goes, since that is two words and they are one. Anything
 // else is left as it is.
 func fit(value ir.Expression, to ir.Type) ir.Expression {
+	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
+		return ir.WeakOf{Value: value}
+	}
 	if to == ir.Union && value != nil && value.Type() != ir.Union {
 		return ir.Box{Value: value}
 	}
@@ -568,6 +662,7 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 	index := len(l.result.Functions)
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "closure", Closure: true})
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index})
 	l.closures = append(l.closures, index)
 	err := l.lowerFunction(index, node, -1)
 	l.closures = l.closures[:len(l.closures)-1]

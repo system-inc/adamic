@@ -22,11 +22,8 @@ adamic_object *adamic_object_copy(const adamic_object *source) {
 	return object;
 }
 
-adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	adamic_object *mutable = (adamic_object *)object;
-	if (cache->shape == object->shape) {
-		return &mutable->slots[cache->index];
-	}
 	for (size_t index = 0; index < object->shape->count; index++) {
 		if (strcmp(object->shape->names[index], name) == 0) {
 			cache->shape = object->shape;

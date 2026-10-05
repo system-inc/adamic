@@ -27,8 +27,17 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 	if (getrlimit(RLIMIT_STACK, &limit) == 0 && limit.rlim_cur != RLIM_INFINITY && limit.rlim_cur < size * 128) {
 		size = (uintptr_t)limit.rlim_cur;
 	}
-	// A stack too small to keep the margin gets no check rather than one that fires at once.
-	adamic_stack_limit = size > 2 * MARGIN && base > size ? base - size + MARGIN : 0;
+	// The stack's size counts from its top, and above this first frame sit the program's arguments
+	// and environment, as long as they are: three arguments of 120 KB are 360 KB the frame never sees,
+	// and a limit counted from it once sat below the stack's real end, so deep recursion crashed
+	// before the check fired. The system caps them at a quarter of the stack (Linux's execve allows
+	// arguments and environment a quarter of the stack's limit, and macOS's ARG_MAX of 1 MB is less
+	// than a quarter of its default 8 MB), so a quarter is kept back for them. Measuring where they
+	// really end would be closer, but then how deep a program gets would change with its environment,
+	// and this way it never does.
+	uintptr_t reserved = size / 4 + MARGIN;
+	// A stack too small to keep the reserve gets no check rather than one that fires at once.
+	adamic_stack_limit = size > 2 * reserved && base > size ? base - size + reserved : 0;
 }
 
 _Noreturn void adamic_stack_overflow(void) {

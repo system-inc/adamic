@@ -65,13 +65,16 @@ static size_t encode(uint32_t point, char *out) {
 static const uint32_t pattern[] = {@PATTERN@};
 #define PATTERN_LENGTH (sizeof pattern / sizeof pattern[0])
 
-// make is a heap string of count code points from the pattern, starting at shift, made as the runtime
-// makes strings, so lone halves that meet join into a pair, as they do in JavaScript.
+// make is a heap string of count code points from the pattern, chosen by a small generator seeded
+// with shift, so a substring is seldom found anywhere but where it was taken from. It's made as the
+// runtime makes strings, so lone halves that meet join into a pair, as they do in JavaScript.
 static adamic_string *make(size_t count, size_t shift) {
 	adamic_string *result = adamic_string_concat(0, NULL);
+	size_t state = shift;
 	for (size_t index = 0; index < count; index++) {
+		state = (state * 25173 + 13849) % 65536;
 		char bytes[4];
-		adamic_string piece = {{0, adamic_kind_string}, encode(pattern[(index + shift) % PATTERN_LENGTH], bytes), bytes, 0, NULL};
+		adamic_string piece = {{0, adamic_kind_string}, encode(pattern[(state >> 8) % PATTERN_LENGTH], bytes), bytes, 0, NULL};
 		adamic_string *longer = adamic_string_concat(2, (adamic_string *const[]){result, &piece});
 		adamic_release(result);
 		result = longer;
@@ -117,6 +120,14 @@ int main(void) {
 			for (size_t step = 0, at = 5; step < length; step++) {
 				at = (at * 37 + 11) % (length + 1);
 				read_at(first, (double)at);
+			}
+			putchar('\n');
+			// indexOf of pieces taken from all over the string: its answer in units, from far in.
+			for (size_t step = 0, at = 1; step < length; step++) {
+				at = (at * 29 + 3) % (length + 1);
+				adamic_string *piece = adamic_string_slice(first, (double)at, (double)(at + 1 + step % 6), true);
+				put_number(adamic_string_index_of(first, piece));
+				adamic_release(piece);
 			}
 			putchar('\n');
 			if (length <= @SLICE_LIMIT@) {
@@ -177,8 +188,10 @@ const pattern = [@PATTERN@];
 const character = (point) => (point >= 0xd800 && point <= 0xdfff ? String.fromCharCode(point) : String.fromCodePoint(point));
 const make = (count, shift) => {
 	let result = '';
+	let state = shift;
 	for (let index = 0; index < count; index++) {
-		result += character(pattern[(index + shift) % pattern.length]);
+		state = (state * 25173 + 13849) % 65536;
+		result += character(pattern[(state >> 8) % pattern.length]);
 	}
 	return result;
 };
@@ -207,6 +220,12 @@ for (const count of [@COUNTS@]) {
 		for (let step = 0, at = 5; step < length; step++) {
 			at = (at * 37 + 11) % (length + 1);
 			line += readAt(first, at);
+		}
+		lines.push(line);
+		line = '';
+		for (let step = 0, at = 1; step < length; step++) {
+			at = (at * 29 + 3) % (length + 1);
+			line += ' ' + first.indexOf(first.slice(at, at + 1 + step % 6));
 		}
 		lines.push(line);
 		if (length <= @SLICE_LIMIT@) {

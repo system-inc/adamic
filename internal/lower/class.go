@@ -15,6 +15,10 @@ import (
 type instance struct {
 	constructor int
 	methods     map[string]int
+
+	// thisLocals are the this of its constructor and methods, which every instantiation sharing it
+	// (Box<Tree> and Box<Listener> are both objects) has as its own type, for the cycle finder.
+	thisLocals []int
 }
 
 // instantiate lowers a class for the type arguments of a type of it, once per distinct set.
@@ -49,6 +53,9 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	}
 	key = l.program.Where(declaration) + ":" + key
 	if existing, isLowered := l.instances[key]; isLowered {
+		for _, this := range existing.thisLocals {
+			l.noteAlso(this, classType)
+		}
 		return existing, nil
 	}
 
@@ -81,7 +88,10 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	// Lower with this instantiation's meaning of each type parameter, and locals of its own: the
 	// same parameter is a string here and may be a number in another instantiation.
 	outerSubstitution, outerLocals, outerInstance := l.substitution, l.locals, l.instance
+	outerClassType, outerClassNode := l.classType, l.classNode
 	l.substitution, l.instance = substitution, lowered
+	l.classType, l.classNode = classType, declaration.Name()
+	defer func() { l.classType, l.classNode = outerClassType, outerClassNode }()
 	l.locals = map[*ast.Symbol]int{}
 	for symbol, local := range outerLocals {
 		if l.result.Locals[local].Global {
@@ -119,6 +129,8 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 // thisLocal makes a fresh local for the this of the method or constructor at owner.
 func (l *lowering) thisLocal(owner int) int {
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: owner})
+	l.noteLocal(len(l.result.Locals)-1, l.classType, l.classNode)
+	l.instance.thisLocals = append(l.instance.thisLocals, len(l.result.Locals)-1)
 	return len(l.result.Locals) - 1
 }
 
@@ -285,13 +297,17 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		return nil, err
 	}
 	of, err := l.typeOf(target)
+	if field := l.checker.GetSymbolAtLocation(target.Name()); field != nil {
+		// What the field is declared to keep, not what the checker narrowed this write to.
+		of, err = l.typeOfSymbol(target, field)
+	}
 	if err != nil || slotless(of) || slotless(value.Type()) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value}}, nil
+	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value, Class: l.classOf(target)}}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
@@ -324,7 +340,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 		}
 	}
 	name := target.Name().Text()
-	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of})
+	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
 	if operator == ast.KindPlusToken && valueNode != nil {
 		current, value = l.spelled(target, current), l.spelled(valueNode, value)
 	}
@@ -332,11 +348,30 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	if err != nil {
 		return nil, err
 	}
-	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated})
+	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target)})
 	if len(statements) == 1 {
 		return statements, nil
 	}
 	return []ir.Statement{ir.Block{Body: statements}}, nil
+}
+
+// classOf is, for an access to a class's field, that class's constructor plus one, and 0 for any other
+// access, so the emitter can find the field where the class's layout puts it. Only a class without
+// type parameters, already lowered, is looked up: one with them has a layout per instantiation, and
+// looking up never lowers a class, so a program that compiled before can't stop compiling here.
+func (l *lowering) classOf(access *ast.Node) int {
+	field := l.checker.GetSymbolAtLocation(access.Name())
+	if field == nil || len(field.Declarations) != 1 || field.Declarations[0].Kind != ast.KindPropertyDeclaration {
+		return 0
+	}
+	class := field.Declarations[0].Parent
+	if class == nil || class.Kind != ast.KindClassDeclaration || len(class.TypeParameters()) > 0 {
+		return 0
+	}
+	if lowered, isLowered := l.instances[l.program.Where(class)+":"+class.Name().Text()]; isLowered {
+		return lowered.constructor + 1
+	}
+	return 0
 }
 
 func nodesOf(list *ast.NodeList) []*ast.Node {

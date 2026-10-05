@@ -78,6 +78,12 @@ const (
 	// Tree): one counted reference, which says at runtime which member it is. A number is boxed to
 	// be one, a boolean is one of two constant boxes, and undefined is a null reference.
 	Union
+
+	// Weak is where a Weak<Target> is kept (docs/memory.md): a reference that doesn't count, held as
+	// a counted handle the target is found through, which says undefined once the target is freed.
+	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
+	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
+	Weak
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -110,7 +116,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -203,6 +209,10 @@ type (
 		Name     string
 		Of       Type
 		Optional bool
+		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
+		// otherwise: the constructor's object has the class's layout, so the field's place in it is
+		// known, for an object that has that layout.
+		Class int
 	}
 
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
@@ -301,6 +311,19 @@ type (
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
 	TypeOf struct{ Value Expression }
+
+	// WeakOf is Value, a reference, kept weakly: the handle to it, made if it has none yet, or
+	// undefined when Value is.
+	WeakOf struct{ Value Expression }
+
+	// WeakTarget is what a Weak value points to, as To: undefined once the target is freed. Present
+	// is a read the checker narrowed to present, which panics natively if the target was freed since
+	// (JavaScript would still have it; docs/memory.md).
+	WeakTarget struct {
+		Value   Expression
+		To      Type
+		Present bool
+	}
 
 	// UnionToString is String(Value) for a Union whose members are numbers, booleans, strings and
 	// undefined, each written as String() writes it.
@@ -605,6 +628,8 @@ func (Box) Type() Type           { return Union }
 func (n Narrow) Type() Type      { return n.To }
 func (TypeOf) Type() Type        { return String }
 func (UnionToString) Type() Type { return String }
+func (WeakOf) Type() Type        { return Weak }
+func (w WeakTarget) Type() Type  { return w.To }
 func (c Coalesce) Type() Type    { return c.Of }
 func (l StringLength) Type() Type {
 	if l.Optional {
@@ -788,6 +813,8 @@ type (
 		Object Expression
 		Name   string
 		Value  Expression
+		// Class is as Property's.
+		Class int
 	}
 
 	// Return leaves the function, with Value unless it returns void.

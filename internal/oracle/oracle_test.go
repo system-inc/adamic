@@ -101,6 +101,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/array_from.a", true, false},
 	{"internal/oracle/testdata/array_from_length.a", true, false},
 	{"internal/oracle/testdata/array_from_undefined.a", true, false},
+	{"internal/oracle/testdata/weak_parent.a", true, false},
+	{"internal/oracle/testdata/doubly_linked.a", true, false},
 	{"internal/oracle/testdata/maybe_booleans.a", true, false},
 	{"internal/oracle/testdata/maybe_boolean_panic.a", true, false},
 	{"internal/oracle/testdata/unions.a", true, false},
@@ -121,6 +123,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/normalize.a", true, false},
 	{"internal/oracle/testdata/normalize_form.a", true, false},
 	{"internal/oracle/testdata/string_positions.a", true, false},
+	{"internal/oracle/testdata/long_literals.a", true, false},
+	{"internal/oracle/testdata/class_layouts.a", true, false},
 	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
@@ -133,8 +137,17 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/trig_reduction.a", true, false},
 	{"internal/oracle/testdata/sets.a", true, false},
 	{"internal/oracle/testdata/maybe_collections.a", true, false},
+	// Tail calls keep their frames, so recursion runs out of stack as on Node (native.go).
+	{"internal/oracle/testdata/stack_tail_call.a", true, false},
+	{"internal/oracle/testdata/stack_forever.a", true, false},
+	{"internal/oracle/testdata/optional_strings.a", true, false},
+	{"internal/oracle/testdata/concat_too_long.a", true, false},
+	{"internal/oracle/testdata/replace_all_large.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
+	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
+	// read back (reviewer R, from the first night's number.c).
+	{"internal/oracle/testdata/power_of_two_string.a", true, false},
 	// Signatures before bodies: calls to functions and methods declared later, mutual recursion, and
 	// declared functions as values.
 	{"internal/oracle/testdata/declared_later.a", true, false},
