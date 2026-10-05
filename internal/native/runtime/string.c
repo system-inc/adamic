@@ -499,8 +499,7 @@ double adamic_string_index_of(const adamic_string *string, const adamic_string *
 	}
 	for (size_t offset = 0; offset + search->length <= string->length;) {
 		if (memcmp(string->bytes + offset, search->bytes, search->length) == 0) {
-			adamic_string prefix = {{0, adamic_kind_string}, offset, string->bytes, 0, NULL};
-			return adamic_string_length(&prefix);
+			return (double)adamic_string_units_before(string, offset);
 		}
 		offset += sequence((unsigned char)string->bytes[offset]);
 	}

@@ -10,8 +10,8 @@
 // code points away. The index is built once, in one pass, and freed with the string.
 //
 // A string is immutable, so nothing cached can go stale while it lives, and a string's memory comes
-// back from allocate with nothing cached. Stack pieces and the program's constants (references 0)
-// cache their length but never get an index, which only a free could let go of.
+// back from allocate with nothing cached. The program's literals are immortal, and so is the index a
+// long one gets; stack pieces cache their length but never get an index, which nothing would free.
 
 #include "adamic.h"
 
@@ -91,6 +91,55 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
 	return index;
 }
 
+char adamic_literal_mark;
+
+// usable is a string's index, built the first time it's wanted, or NULL for a string that has none: a
+// short one, an ASCII one, or one made on the stack. A literal (marked by ADAMIC_STRING) is immortal,
+// so its index is built once and kept for as long as the program runs.
+static struct adamic_string_index *usable(const adamic_string *string, size_t units) {
+	struct adamic_string_index *index = string->index;
+	if (index != NULL && index != ADAMIC_LITERAL_INDEX) {
+		return index;
+	}
+	bool literal = index == ADAMIC_LITERAL_INDEX;
+	// Offsets must fit a checkpoint, shifted: every string V8 allows does, by a factor of two.
+	if ((literal || string->heap.references != 0) && units != string->length && string->length >= MINIMUM && string->length <= UINT32_MAX >> 1) {
+		return build((adamic_string *)string, units);
+	}
+	return NULL;
+}
+
+size_t adamic_string_units_before(const adamic_string *string, size_t offset) {
+	size_t units = adamic_string_units(string);
+	if (units == string->length) {
+		return offset;
+	}
+	struct adamic_string_index *index = usable(string, units);
+	size_t start = 0, at = 0;
+	if (index != NULL) {
+		// The last checkpoint at or before offset, by its offset (checkpoints never go backward), and
+		// on from there.
+		size_t low = 1, high = index->count;
+		while (low < high) {
+			size_t middle = low + (high - low) / 2;
+			if ((index->checkpoints[middle] >> 1) <= offset) {
+				low = middle + 1;
+			} else {
+				high = middle;
+			}
+		}
+		uint32_t checkpoint = index->checkpoints[low - 1];
+		start = (low - 1) * STEP - (checkpoint & 1);
+		at = checkpoint >> 1;
+	}
+	while (at < offset) {
+		size_t size = width((unsigned char)string->bytes[at]);
+		start += size == 4 ? 2 : 1;
+		at += size;
+	}
+	return start;
+}
+
 size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low) {
 	size_t units = adamic_string_units(string);
 	if (units == string->length) {
@@ -98,11 +147,7 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 		*low = false;
 		return unit;
 	}
-	struct adamic_string_index *index = string->index;
-	// Offsets must fit a checkpoint, shifted: every string V8 allows does, by a factor of two.
-	if (index == NULL && string->heap.references != 0 && string->length >= MINIMUM && string->length <= UINT32_MAX >> 1) {
-		index = build((adamic_string *)string, units);
-	}
+	struct adamic_string_index *index = usable(string, units);
 	size_t start = 0, offset = 0;
 	if (index != NULL) {
 		if (CURSOR && unit >= index->cursor_unit && unit - index->cursor_unit < STEP) {
