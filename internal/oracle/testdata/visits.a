@@ -1,0 +1,98 @@
+// The array methods that call a function per element: forEach, filter, some, every, find, findIndex,
+// and map, with the length read once and lost indexes skipped, as JavaScript does.
+interface Pet {
+	readonly name: string;
+	readonly age: number;
+}
+
+const numbers = [3, 1, 4, 1, 5, 9, 2, 6];
+const words = [' tea ', 'kettle', '', 'cup'];
+const pets: Pet[] = [
+	{ name: 'Rex', age: 3 },
+	{ name: 'Tom', age: 9 },
+];
+
+let total = 0;
+numbers.forEach((value, index) => {
+	total += value * index;
+});
+words.forEach((word) => console.log(`[${word}]`));
+// A callback whose result is a string forEach throws away.
+words.forEach((word) => word.trim());
+console.log(`${total}`);
+
+console.log(numbers.filter((value) => value > 3).join(','));
+console.log(words.filter((word) => word.length > 0).join('|'));
+console.log(`${pets.filter((pet) => pet.age > 5).length}`);
+
+let looked = 0;
+const anyBig = numbers.some((value) => {
+	looked++;
+	return value > 4;
+});
+console.log(`${anyBig} after ${looked}`);
+looked = 0;
+const allSmall = numbers.every((value) => {
+	looked++;
+	return value < 5;
+});
+const none: number[] = [];
+console.log(`${allSmall} after ${looked} ${none.every((value) => value > 0)} ${none.some((value) => value > 0)}`);
+
+console.log(`${numbers.find((value) => value > 4) ?? -1} ${numbers.find((value) => value > 100) ?? -1}`);
+console.log(`${words.find((word) => word.startsWith('k')) ?? 'none'} ${words.find((word) => word === 'mug') ?? 'none'}`);
+console.log(pets.find((pet) => pet.age > 5)?.name ?? 'nobody');
+console.log(`${numbers.findIndex((value) => value === 1)} ${numbers.findIndex((value) => value === 7)}`);
+
+// The length is read once: what's pushed during a visit isn't visited, and an index popped away is
+// skipped.
+const queue = [1, 2, 3, 4];
+const seen: number[] = [];
+queue.forEach((value) => {
+	queue.pop();
+	seen.push(value);
+});
+console.log(`${seen.join(',')} left ${queue.join(',')}`);
+const growing = [1, 2];
+growing.forEach((value) => {
+	growing.push(value * 10);
+});
+console.log(growing.join(','));
+const popped = [1, 2, 3];
+const refilled: number[] = [];
+popped.forEach((value) => {
+	if (value === 1) {
+		popped.pop();
+		popped.pop();
+		popped.push(7);
+	}
+	refilled.push(value);
+});
+console.log(refilled.join(','));
+
+// The callback takes the very element it's given out of the array; filter keeps what it was given.
+// The names are made, not written: a string literal is never freed, so it couldn't show a hold missed.
+const names = ['ann', 'bob', 'cat'].map((name) => `${name}${name.length}`);
+const kept = names.filter((name) => {
+	names.pop();
+	return name.length === 4;
+});
+console.log(`${kept.join(',')} left ${names.join(',')}`);
+
+// The callback is evaluated once, before the first call.
+let made = 0;
+function makeAdder(step: number): (value: number) => number {
+	made++;
+	return (value) => value + step;
+}
+console.log(`${[1, 2, 3].map(makeAdder(10)).join(',')} made ${made}`);
+
+const grid: number[][] = [[1, 2], [3], [4, 5, 6]];
+console.log(`${grid.filter((row) => row.length > 1).length}`);
+for (const row of grid) {
+	console.log(row.join('+'));
+}
+const middle = grid[1];
+if (middle !== undefined) {
+	console.log(`${middle.length}`);
+}

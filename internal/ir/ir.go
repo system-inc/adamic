@@ -272,6 +272,19 @@ type (
 		Result   Type
 	}
 
+	// ArrayVisit is one of the array methods that call a function per element, in order, with the
+	// element, its index and the array: forEach, filter, some, every, find and findIndex. The length
+	// is read once, before the first call, and an index the array no longer has when its turn comes
+	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
+	// method but forEach requires a boolean.
+	ArrayVisit struct {
+		Method   string
+		Array    Expression
+		Callback Expression
+		Element  Type
+		Returns  Type
+	}
+
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
 	// are named "0" and "1".
 	MapEntries struct {
@@ -369,6 +382,23 @@ func (MakeClosure) Type() Type     { return Closure }
 func (CheckedCast) Type() Type     { return Object }
 func (c CallClosure) Type() Type   { return c.Returns }
 func (ArrayMap) Type() Type        { return Array }
+
+func (v ArrayVisit) Type() Type {
+	switch v.Method {
+	case "filter":
+		return Array
+	case "some", "every":
+		return Boolean
+	case "findIndex":
+		return Number
+	case "find":
+		if v.Element == Number {
+			return MaybeNumber
+		}
+		return v.Element
+	}
+	return 0
+}
 
 func (i ArrayIndex) Type() Type {
 	if i.Element == Number {

@@ -162,6 +162,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a function expression (an arrow function captures this as written)")
 	case ast.KindCallExpression:
 		if lowered, isBuiltin, err := l.builtin(node); isBuiltin {
+			if err == nil && lowered.Type() == 0 {
+				// forEach is void; as a value it's undefined, which only places 0.1 refuses would use.
+				return nil, l.notYet(node, "a void call used as a value")
+			}
 			return lowered, err
 		}
 		call, err := l.callOrMethod(node)
@@ -420,6 +424,14 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
 		}
+	}
+	for _, argument := range arguments {
+		if argument.Type() == ir.MaybeNumber {
+			return nil, l.notYet(node, "passing number | undefined to a function value")
+		}
+	}
+	if returns == ir.MaybeNumber {
+		return nil, l.notYet(node, "a function value returning number | undefined")
 	}
 	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil
 }

@@ -246,7 +246,15 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		if err != nil {
 			return err
 		}
+		if function.Closure && l.result.Locals[local].Type == ir.MaybeNumber {
+			return l.notYet(parameter, "a function value taking number | undefined")
+		}
 		function.Parameters = append(function.Parameters, local)
+	}
+	if function.Closure && function.Returns == ir.MaybeNumber {
+		// A function value's arguments and result are each one adamic_value, and number | undefined
+		// needs two words.
+		return l.notYet(declaration, "a function value returning number | undefined")
 	}
 	body := declaration.Body()
 	if body == nil {
@@ -264,15 +272,14 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 	var err error
 	if body.Kind == ast.KindBlock {
 		lowered, err = l.statements(body.AsBlock().Statements.Nodes)
+	} else if function.Returns == 0 {
+		// An arrow function's expression body, when it returns nothing, is a statement.
+		lowered, err = l.expressionStatement(body)
 	} else {
-		// An arrow function's expression body: its value is what it returns.
+		// Otherwise its value is what it returns.
 		var value ir.Expression
 		if value, err = l.expression(body); err == nil {
-			if function.Returns == 0 {
-				lowered = []ir.Statement{ir.Evaluate{Value: value}}
-			} else {
-				lowered = []ir.Statement{ir.Return{Value: value}}
-			}
+			lowered = []ir.Statement{ir.Return{Value: value}}
 		}
 	}
 	l.function, l.this, l.functionIndex = outer, outerThis, outerIndex

@@ -116,7 +116,8 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	valueType, isKnown := l.representation(element)
-	if !isKnown || valueType == ir.Array {
+	if !isKnown || valueType == ir.MaybeNumber {
+		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
 	}
 	return valueType, nil
@@ -143,6 +144,10 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if access.QuestionDotToken != nil && object.Type() != ir.Object {
+		// words[0]?.length is number | undefined, which a length read as a number can't hold.
+		return nil, l.notYet(node, "optional chaining on a "+typeName(object.Type()))
+	}
 	switch {
 	case object.Type() == ir.Array && name == "length":
 		return ir.Length{Array: object}, nil
@@ -160,9 +165,6 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
 		return ir.Property{Object: object, Name: name, Of: of, Optional: optional}, nil
-	}
-	if access.QuestionDotToken != nil {
-		return nil, l.notYet(node, "optional chaining on a "+typeName(object.Type()))
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }
@@ -206,7 +208,7 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		return ir.ArrayPop{Array: array, Element: element}, true, nil
 	}
-	if receiverType == ir.Array && (name == "push" || name == "join" || name == "slice" || name == "sort" || name == "map") {
+	if _, isVisit := visits[name]; receiverType == ir.Array && (isVisit || name == "push" || name == "join" || name == "slice" || name == "sort" || name == "map") {
 		return l.arrayMethod(node, receiver, name)
 	}
 	if receiverType == ir.Map && (name == "get" || name == "set" || name == "has" || name == "delete") {
@@ -408,6 +410,9 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		}
 		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result}, true, nil
 	}
+	if _, isVisit := visits[name]; isVisit {
+		return l.arrayVisit(node, array, element, name)
+	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		lowered, err := l.expression(argument)
@@ -433,9 +438,10 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		}
 		return ir.ArrayPush{Array: array, Value: arguments[0], Element: element}, true, nil
 	}
-	if element == ir.Object {
-		// JavaScript writes each object as "[object Object]"; 0.1 has no use for that.
-		return nil, true, l.notYet(node, "join on an array of objects")
+	if element != ir.Number && element != ir.Boolean && element != ir.String {
+		// JavaScript writes an object as "[object Object]", a function as its source, and an array as
+		// its own join, flattened; 0.1 has no use for any of that.
+		return nil, true, l.notYet(node, "join on an array of objects, arrays, maps or functions")
 	}
 	separator := ir.Expression(ir.StringConstant{Index: l.constant(",")})
 	if len(arguments) == 1 {
@@ -447,6 +453,44 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		return nil, true, l.notYet(node, "join with more than one argument")
 	}
 	return ir.ArrayJoin{Array: array, Separator: separator, Element: element}, true, nil
+}
+
+// visits are the array methods that call a function per element and look at what it returns.
+var visits = map[string]struct{}{"forEach": {}, "filter": {}, "some": {}, "every": {}, "find": {}, "findIndex": {}}
+
+// arrayVisit lowers forEach, filter, some, every, find and findIndex. All but forEach decide by what
+// the callback returns, which 0.1 requires to be a boolean: JavaScript would take any value's
+// truthiness there, and 0.1 has none.
+func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Type, name string) (ir.Expression, bool, error) {
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) != 1 {
+		return nil, true, l.notYet(node, name+" with other than one callback")
+	}
+	callback, err := l.expression(arguments[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if callback.Type() != ir.Closure {
+		return nil, true, l.notYet(arguments[0], name+" with a callback that isn't a function")
+	}
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(arguments[0]), checker.SignatureKindCall)
+	if len(signatures) != 1 {
+		return nil, true, l.notYet(arguments[0], name+" with an overloaded callback")
+	}
+	var returns ir.Type
+	if result := l.checker.GetReturnTypeOfSignature(signatures[0]); result.Flags()&checker.TypeFlagsVoid == 0 {
+		var isKnown bool
+		if returns, isKnown = l.representation(result); !isKnown {
+			return nil, true, l.notYet(arguments[0], name+" with a callback returning "+l.checker.TypeToString(result))
+		}
+	}
+	if name != "forEach" && returns != ir.Boolean {
+		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
+	}
+	if name == "find" && element == ir.Boolean {
+		return nil, true, l.notYet(node, "find in an array of booleans (boolean | undefined)")
+	}
+	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns}, true, nil
 }
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.

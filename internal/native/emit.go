@@ -624,6 +624,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		e.line("\tadamic_array_push(%s, %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}));", mapped, callback, callback, source, index, index, source)
 		e.line("}")
 		return mapped
+	case ir.ArrayVisit:
+		return e.arrayVisit(expression)
 	case ir.CheckedCast:
 		object := e.temporary()
 		e.line("adamic_object *%s = %s;", object, e.value(expression.Value))
@@ -764,6 +766,96 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.own(ir.String, fmt.Sprintf("adamic_number_to_fixed(%s, %s)", value, digits))
 	}
 	panic(fmt.Sprintf("native: no C for %T", expression))
+}
+
+// arrayVisit emits forEach, filter, some, every, find and findIndex as one loop. The length is read
+// once and an index the array has lost is skipped, as JavaScript does (0.1's arrays have no holes, so
+// a lost index is one past a shrunken end). Each element is held across its call, since the callback
+// may take it out of the array; filter and find hand that hold to what they return.
+func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
+	source := e.temporary()
+	e.line("adamic_array *%s = %s;", source, e.value(visit.Array))
+	callback := e.value(visit.Callback)
+	references := visit.Element.IsReference()
+	result := "0"
+	switch visit.Method {
+	case "filter":
+		result = e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", references))
+	case "some", "every":
+		result = e.snapshot(ir.Boolean, strconv.FormatBool(visit.Method == "every"))
+	case "findIndex":
+		result = e.snapshot(ir.Number, "-1.0")
+	case "find":
+		if visit.Element == ir.Number {
+			result = e.snapshot(ir.MaybeNumber, zero(ir.MaybeNumber))
+		} else {
+			result = e.own(visit.Element, "NULL")
+		}
+	}
+	count, index, element, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
+	e.line("size_t %s = %s->length;", count, source)
+	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
+	e.indent++
+	e.line("if (%s >= %s->length) {", index, source)
+	e.line("\tcontinue;")
+	e.line("}")
+	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	if references {
+		e.line("adamic_retain(%s.reference);", element)
+	}
+	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}})", callback, callback, element, index, source)
+	if visit.Method == "forEach" && !visit.Returns.IsReference() {
+		e.line("%s;", call)
+	} else {
+		e.line("adamic_value %s = %s;", answer, call)
+	}
+	release := func() {
+		if references {
+			e.line("adamic_release(%s.reference);", element)
+		}
+	}
+	switch visit.Method {
+	case "forEach":
+		if visit.Returns.IsReference() {
+			// A callback's result comes back owned, and forEach has no use for it.
+			e.line("adamic_release(%s.reference);", answer)
+		}
+		release()
+	case "filter":
+		e.line("if (%s.boolean) {", answer)
+		e.line("\tadamic_array_push(%s, %s);", result, element)
+		if references {
+			e.line("} else {")
+			e.line("\tadamic_release(%s.reference);", element)
+		}
+		e.line("}")
+	case "find":
+		e.line("if (%s.boolean) {", answer)
+		if visit.Element == ir.Number {
+			e.line("\t%s = (adamic_maybe_number){true, %s.number};", result, element)
+		} else {
+			e.line("\t%s = %s.reference;", result, element)
+		}
+		e.line("\tbreak;")
+		e.line("}")
+		release()
+	default:
+		release()
+		found, value := answer+".boolean", "true"
+		switch visit.Method {
+		case "every":
+			found, value = "!"+found, "false"
+		case "findIndex":
+			value = "(double)" + index
+		}
+		e.line("if (%s) {", found)
+		e.line("\t%s = %s;", result, value)
+		e.line("\tbreak;")
+		e.line("}")
+	}
+	e.indent--
+	e.line("}")
+	return result
 }
 
 // objectLiteral makes an object. Its fields' values are evaluated in order first; making the object
