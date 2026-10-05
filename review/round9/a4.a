@@ -1,0 +1,7 @@
+function pick(i: number): string | undefined {
+	if (i > 0) {
+		return `p${i}`;
+	}
+	return undefined;
+}
+console.log(pick(1) ?? 'U');

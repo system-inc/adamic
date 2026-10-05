@@ -1,0 +1,13 @@
+let found = 0;
+for (let round = 0; round < 300; round += 1) {
+	const m = new Set<number>();
+	for (let i = 0; i < 1000; i += 1) {
+		m.add(i);
+	}
+	for (let i = 0; i < 1000; i += 1) {
+		if (m.has(i)) {
+			found += 1;
+		}
+	}
+}
+console.log(`${found}`);

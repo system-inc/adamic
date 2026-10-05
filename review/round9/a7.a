@@ -1,0 +1,10 @@
+const work = new Set<number>([0]);
+let steps = 0;
+for (const x of work) {
+	work.delete(x);
+	steps += 1;
+	if (x < 3000000) {
+		work.add(x + 1);
+	}
+}
+console.log(`${steps} ${work.size}`);

@@ -1,0 +1,5 @@
+const q: readonly number[] = [3, 4] as [number, number];
+console.log(`${q.length} ${q[1] ?? -1}`);
+const r: number[] = [5, 6] as [number, number];
+r.push(7);
+console.log(`${r.length}`);

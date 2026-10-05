@@ -1,0 +1,11 @@
+const arr: (string | undefined)[] = [undefined, `b${arr0()}`, undefined];
+function arr0(): number {
+	return 1;
+}
+const s = new Set<string | undefined>(arr);
+console.log(`${s.size}`);
+const m = new Map<string | undefined, number>();
+for (const k of arr) {
+	m.set(k, 1);
+}
+console.log(`${m.size} ${m.has(arr[0])}`);

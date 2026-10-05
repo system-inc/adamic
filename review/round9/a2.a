@@ -1,0 +1,105 @@
+class Box {
+	readonly name: string;
+	constructor(name: string) {
+		this.name = name;
+	}
+}
+function w(s: string, i: number): string {
+	return `${s}${i}`;
+}
+// object key freed after delete, then new objects allocated (address reuse)
+const m = new Map<Box, Box>();
+const first = new Box(w('b', 0));
+m.set(first, first);
+m.set(new Box(w('b', 1)), new Box(w('v', 1)));
+for (let i = 2; i < 40; i += 1) {
+	m.set(new Box(w('b', i)), new Box(w('v', i)));
+}
+const names: string[] = [];
+for (const [k, v] of m) {
+	if (k.name === 'b3') {
+		m.delete(k);
+		names.push(`del ${k.name} ${v.name}`);
+	}
+}
+// delete all but first while iterating, and grow a lot during iteration
+let grown = 0;
+for (const [k] of m) {
+	if (k !== first) {
+		m.delete(k);
+	}
+	if (grown < 200) {
+		grown += 1;
+		m.set(new Box(w('g', grown)), new Box(w('h', grown)));
+	}
+}
+console.log(`${names.join(',')} size=${m.size} grown=${grown}`);
+const fresh = new Box(w('b', 1));
+console.log(`${m.has(fresh)} ${m.get(first)?.name ?? 'none'}`);
+// overwrite value, and overwrite with same value
+m.set(first, new Box(w('o', 1)));
+m.set(first, first);
+m.set(first, first);
+console.log(`${m.get(first)?.name ?? 'none'} ${m.size}`);
+// break out of a loop and let the map die
+function dies(): string {
+	const local = new Map<Box, string>();
+	for (let i = 0; i < 20; i += 1) {
+		local.set(new Box(w('x', i)), w('y', i));
+	}
+	let found = 'none';
+	for (const [k, v] of local) {
+		local.delete(k);
+		if (k.name === 'x5') {
+			found = v;
+			break;
+		}
+	}
+	return found;
+}
+console.log(dies());
+// forEach on identity set, deleting the element passed
+const set = new Set<Box>();
+for (let i = 0; i < 10; i += 1) {
+	set.add(new Box(w('s', i)));
+}
+const visited: string[] = [];
+set.forEach((a, b, all) => {
+	all.delete(a);
+	visited.push(`${a.name}${b.name}`);
+	if (a.name === 's2') {
+		all.clear();
+		all.add(new Box(w('late', 1)));
+	}
+});
+console.log(`${visited.join(' ')} ${set.size}`);
+// clear an identity map during for-of then the map dies with tombstones
+function clearing(): number {
+	const local = new Map<Box, Box>();
+	for (let i = 0; i < 9; i += 1) {
+		local.set(new Box(w('c', i)), new Box(w('d', i)));
+	}
+	let count = 0;
+	for (const [k, v] of local) {
+		count += k.name.length + v.name.length;
+		local.clear();
+		local.set(new Box(w('e', count)), new Box(w('f', count)));
+		if (count > 30) {
+			break;
+		}
+	}
+	return count;
+}
+console.log(`${clearing()}`);
+// arrays and maps as keys
+const arrays = new Map<string[], Map<string, number>>();
+const arr = [w('q', 1)];
+const inner = new Map<string, number>([[w('i', 1), 1]]);
+arrays.set(arr, inner);
+arrays.set([w('q', 1)], new Map<string, number>());
+arrays.delete(arr);
+arr.push(w('q', 2));
+console.log(`${arrays.size} ${arrays.has(arr)} ${arr.join(',')} ${inner.size}`);
+const sets = new Set<Map<string, number>>([inner, inner]);
+sets.add(new Map<string, number>());
+console.log(`${sets.size}`);

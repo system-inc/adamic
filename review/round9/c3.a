@@ -1,0 +1,5 @@
+const q: readonly number[] = [3, 4] as [number, number];
+console.log(`${q.length}`);
+const t: readonly string[] = [`a${q.length}`, `b`] as [string, string];
+console.log(`${t.length > 0}`);
+console.log(`done`);

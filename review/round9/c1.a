@@ -1,0 +1,6 @@
+function w(i: number): string {
+	return `x${i}`;
+}
+const p: readonly [string, string] = [w(1), w(2)];
+const a: readonly string[] = p;
+console.log(`${a.length} ${a.join('-')}`);
