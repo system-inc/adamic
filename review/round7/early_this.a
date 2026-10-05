@@ -1,0 +1,17 @@
+// The same hole without any exception: this escapes before a field is set, and is read there.
+const registry: Pair[] = [];
+function describe(pair: Pair): string {
+	return `${pair.left} ${pair.right} ${typeof pair.right}`;
+}
+class Pair {
+	left: string;
+	right: string;
+	constructor() {
+		this.left = `left${1}`;
+		registry.push(this);
+		console.log(describe(this));
+		this.right = `right${2}`;
+	}
+}
+const pair = new Pair();
+console.log(describe(pair));

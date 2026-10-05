@@ -1,0 +1,24 @@
+// A constructor that hands this to someone else and then throws before setting every field. In
+// JavaScript the object exists, its unset field is undefined, and whoever holds it can read it.
+const registry: Pair[] = [];
+class Pair {
+	left: string;
+	right: string;
+	constructor(fail: boolean) {
+		this.left = `left${1}`;
+		registry.push(this);
+		if (fail) {
+			throw new Error(`half${1}`);
+		}
+		this.right = `right${2}`;
+	}
+}
+try {
+	const pair = new Pair(true);
+	console.log(pair.left);
+} catch (error) {
+	console.log(`caught ${error instanceof Error ? error.message : ''}`);
+}
+for (const pair of registry) {
+	console.log(`${pair.left} ${pair.right} ${typeof pair.right}`);
+}

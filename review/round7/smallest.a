@@ -1,0 +1,8 @@
+function f(): void {
+	throw new Error(`x${1}`);
+}
+try {
+	f();
+} catch (error) {
+	console.log(`caught`);
+}

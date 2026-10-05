@@ -1,0 +1,103 @@
+import type { Weak } from 'adamic';
+
+// Unwinding through every frame shape that holds something: a for...of over a Map and over an array,
+// a finally that makes and lets go of strings of its own and one that throws over a pending error,
+// a constructor that throws halfway through its fields, and a Weak live across the throw.
+function failAt(round: number, at: number): string {
+	if (round === at) {
+		throw new Error(`stop at ${round}`);
+	}
+	return `ok${round}`;
+}
+function overMap(): string {
+	const scores = new Map<string, string>();
+	for (let index = 0; index < 4; index++) {
+		scores.set(`key${index}`, `value${index}`);
+	}
+	const seen: string[] = [];
+	try {
+		for (const [key, value] of scores) {
+			seen.push(`${key}=${value}:${failAt(seen.length, 2)}`);
+		}
+	} catch (error) {
+		seen.push(error instanceof Error ? error.message : 'unknown');
+	}
+	scores.set(`after`, `still${scores.size}`);
+	return `${seen.join(',')} ${scores.size}`;
+}
+function overArray(): string {
+	const words: string[] = [`a${1}`, `b${2}`, `c${3}`];
+	let out = '';
+	try {
+		for (const word of words) {
+			out = `${out}${word}${failAt(out.length, 6)}`;
+		}
+	} catch (error) {
+		out = `${out}|${error instanceof Error ? error.message : ''}`;
+	}
+	return out;
+}
+function finallyHolding(): string {
+	let log = '';
+	try {
+		try {
+			log = `${log}try${failAt(1, 1)}`;
+		} finally {
+			const note = `finally${log.length}`;
+			log = `${log}${note}`;
+		}
+	} catch (error) {
+		log = `${log}|caught ${error instanceof Error ? error.message : ''}`;
+	}
+	return log;
+}
+function finallyThrows(): string {
+	try {
+		try {
+			throw new Error(`first${1}`);
+		} finally {
+			throw new Error(`second${2}`);
+		}
+	} catch (error) {
+		return error instanceof Error ? error.message : '';
+	}
+}
+class Pair {
+	left: string;
+	right: string;
+	constructor(fail: boolean) {
+		this.left = `left${1}`;
+		this.right = failAt(fail ? 1 : 0, 1);
+	}
+}
+function halfBuilt(): string {
+	try {
+		const pair = new Pair(true);
+		return pair.left;
+	} catch (error) {
+		return `constructor: ${error instanceof Error ? error.message : ''}`;
+	}
+}
+interface Box {
+	readonly label: string;
+}
+interface Holder {
+	box: Weak<Box>;
+}
+function weakAcross(): string {
+	const holder: Holder = { box: undefined };
+	const box: Box = { label: `box${1}` };
+	holder.box = box;
+	try {
+		failAt(1, 1);
+	} catch (error) {
+		return `${holder.box?.label ?? 'gone'} ${error instanceof Error ? error.message : ''}`;
+	}
+	return 'none';
+}
+console.log(overMap());
+console.log(overArray());
+console.log(finallyHolding());
+console.log(finallyThrows());
+console.log(halfBuilt());
+console.log(weakAcross());

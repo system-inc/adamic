@@ -1,0 +1,16 @@
+// A return whose finally throws: the value being returned is let go, and the error goes on.
+function make(): string {
+	try {
+		return `made${1}`.repeat(3);
+	} finally {
+		throw new Error(`finally${2}`);
+	}
+}
+function run(): string {
+	try {
+		return make();
+	} catch (error) {
+		return `caught ${error instanceof Error ? error.message : ''}`;
+	}
+}
+console.log(run());

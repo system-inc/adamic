@@ -1,0 +1,47 @@
+// A throw between a move and its use. Perceus moves a variable into a consumed parameter when
+// liveness says nothing reads it after; a catch in the same function that reads it must keep it.
+type Tree = { value: number; label: string };
+let tree: Tree = { value: 1, label: `tree${1}` };
+function insert(node: Tree, extra: number): Tree {
+	return { ...node, value: node.value + extra };
+}
+function fail(when: boolean): number {
+	if (when) {
+		throw new Error(`failed${1}`);
+	}
+	return 1;
+}
+function growGlobal(): void {
+	try {
+		tree = insert(tree, fail(true));
+	} catch (error) {
+		console.log(`global caught: ${error instanceof Error ? error.message : ''} ${tree.value} ${tree.label}`);
+	}
+}
+function insertOrThrow(node: Tree, when: boolean): Tree {
+	if (when) {
+		throw new Error(`inner${2}`);
+	}
+	return { ...node, value: node.value + 1 };
+}
+function growLocal(): string {
+	let local: Tree = { value: 5, label: `local${5}` };
+	try {
+		local = insertOrThrow(local, true);
+	} catch (error) {
+		return `local caught: ${local.value} ${local.label}`;
+	}
+	return `${local.value}`;
+}
+function spreadThrow(): string {
+	const item: Tree = { value: 7, label: `item${7}` };
+	try {
+		const next = { ...item, label: `${fail(true)}`, value: item.value + 1 };
+		return `${next.value}`;
+	} catch (error) {
+		return `spread caught: ${item.value} ${item.label}`;
+	}
+}
+growGlobal();
+console.log(growLocal());
+console.log(spreadThrow());
