@@ -12,47 +12,76 @@ import (
 )
 
 // The loop counter sweep: for loops at every edge of what lower/counters.go keeps in an integer,
+// counting up and down, by steps of one and more, from starts and to bounds computed by arithmetic,
 // against Node. Each loop runs at most six passes (huge bounds break out), and prints how many it ran,
 // the sum of its counter and of an array read by it, the sign of 1 / counter on its first pass (an
-// integer has no -0) and its last value, so a counter that ran past 2^53, where JavaScript's + 1 stops
-// changing it, or that lost a fraction or a sign, says so. Every loop is also checked to have been
+// integer has no -0) and its last value, so a counter that ran past 2^53, where JavaScript's + step
+// rounds, or that lost a fraction or a sign, says so. Every loop is also checked to have been
 // kept in an integer exactly when it should: the ones that fall back to a double must, and the ones
 // that qualify mustn't miss out, so the sweep proves what it's sweeping.
 func TestLoopCountersAgreeWithNode(t *testing.T) {
 	t.Parallel()
-	two53 := 9007199254740992.0
-	starts := []struct {
-		source string
-		whole  bool
-	}{
-		{"0", true}, {"-0", false}, {"2", true}, {"-2", true}, {"0.5", false},
-		{"9007199254740989", true}, {"9007199254740992", true}, {"-9007199254740992", true},
-		{"9007199254740994", false}, {"2 ** 3", false},
+	two32, two53 := 4294967296.0, 9007199254740992.0
+	// Every start and bound with the range it can take, worked out by hand rather than by the pass's
+	// own arithmetic, and whether it's one the pass may keep (whole within 2^53 at both ends and, for a
+	// start, never -0).
+	type value struct {
+		source    string
+		low, high float64
+		whole     bool
 	}
-	bounds := []struct {
-		source string
-		// limit is the most the bound can be and still be a whole bound: 0 for one that's never one.
-		value float64
-		whole bool
-	}{
-		{"values.length", 0, true}, {"text.length", 0, true}, {"sizes.size", 0, true}, {"wholeConstant", 0, true},
-		{"5", 5, true}, {"0", 0, true}, {"-3", -3, true}, {"9007199254740991", two53 - 1, true},
-		{"9007199254740992", two53, true}, {"9007199254740994", 0, false}, {"2.5", 0, false}, {"-0.5", 0, false},
-		{"NaN", 0, false}, {"Infinity", 0, false}, {"-Infinity", 0, false},
-		{"fractionConstant", 0, false}, {"changing", 0, false}, {"2 ** 2", 0, false},
+	starts := []value{
+		{"0", 0, 0, true}, {"-0", 0, 0, false}, {"2", 2, 2, true}, {"-2", -2, -2, true}, {"0.5", 0, 0, false},
+		{"9007199254740989", two53 - 3, two53 - 3, true}, {"-9007199254740989", 3 - two53, 3 - two53, true},
+		{"9007199254740992", two53, two53, true},
+		{"-9007199254740992", -two53, -two53, true}, {"9007199254740994", 0, 0, false}, {"2 ** 3", 0, 0, false},
+		{"values.length - 1", -1, two32 - 1, true}, {"wholeConstant + 1", 1, two32 + 1, true},
+		{"0 - values.length", -two32, 0, true}, {"-empty.length", 0, 0, false}, {"0 * -1", 0, 0, false},
+		{"values.length * 2", 0, 0, false}, {"text.length / 2", 0, 0, false}, {"changing", 0, 0, false},
+	}
+	bounds := []value{
+		{"values.length", 0, two32, true}, {"text.length", 0, two32, true}, {"sizes.size", 0, two32, true},
+		{"wholeConstant", 0, two32, true}, {"5", 5, 5, true}, {"0", 0, 0, true}, {"-0", 0, 0, true}, {"-3", -3, -3, true},
+		{"9007199254740991", two53 - 1, two53 - 1, true}, {"9007199254740992", two53, two53, true},
+		{"-9007199254740992", -two53, -two53, true}, {"9007199254740994", 0, 0, false},
+		{"2.5", 0, 0, false}, {"-0.5", 0, 0, false}, {"NaN", 0, 0, false}, {"Infinity", 0, 0, false},
+		{"-Infinity", 0, 0, false}, {"fractionConstant", 0, 0, false}, {"changing", 0, 0, false}, {"2 ** 2", 0, 0, false},
+		{"values.length - 1", -1, two32 - 1, true}, {"values.length + 2", 2, two32 + 2, true},
+		{"values.length * 2", 0, 2 * two32, true}, {"-values.length", -two32, 0, true},
+		{"wholeConstant - 1", -1, two32 - 1, true}, {"derived", -3, 2*two32 - 3, true},
+		{"9007199254740991 - values.length", two53 - 1 - two32, two53 - 1, true},
+		{"values.length - 9007199254740991", 1 - two53, two32 + 1 - two53, true},
+		{"values.length + 9007199254740990", 0, 0, false}, {"text.length / 2", 0, 0, false},
+		{"values.length % 3", 0, 0, false},
+	}
+	// The updates, each with its step (0 for one the pass never takes) and its comparison.
+	type update struct {
+		comparison, source string
+		step               float64
+	}
+	directions := []update{{"<", "NAME++", 1}, {"<=", "NAME += 1", 1}, {">", "NAME--", -1}, {">=", "NAME -= 1", -1}}
+	steps := []update{
+		{"<", "NAME += 2", 2}, {"<=", "NAME = NAME + 3", 3}, {">", "NAME -= 2", -2}, {">=", "NAME = NAME - 3", -3},
+		{"<", "NAME += 0", 0}, {"<", "NAME += 0.5", 0}, {">", "NAME -= -1", 0}, {"<", "NAME += 2 ** 1", 0},
+		{"<", "NAME = 1 + NAME", 0}, {">", "NAME++", 1}, {"<", "NAME--", -1}, {">=", "NAME += 2", 2},
 	}
 	var source strings.Builder
 	source.WriteString(`const values = [10, 20, 30, 40, 50];
+const empty: number[] = [];
 const text = 'héllo';
 const sizes = new Map<string, number>([['a', 1], ['b', 2], ['c', 3]]);
 const wholeConstant = values.length;
+const derived = values.length * 2 - 3;
 const fractionConstant = 4.5;
 let changing = 4;
 changing = 6;
+function report(name: string, seen: number, sum: number, sign: number, last: number): void {
+	console.log(` + "`${name} ${seen} ${sum} ${sign} ${last}`" + `);
+}
 `)
 	expected := map[string]bool{}
 	loop := func(name string, header string, extra string) {
-		fmt.Fprintf(&source, `function %s(): string {
+		fmt.Fprintf(&source, `function %s(): void {
 	let seen = 0;
 	let sum = 0;
 	let sign = 0;
@@ -68,42 +97,81 @@ changing = 6;
 			break;
 		}
 	}
-	return %s;
+	report('%s', seen, sum, sign, last);
 }
-console.log(%s());
-`, name, header, name, extra, name, name, name, fmt.Sprintf("`%s ${seen} ${sum} ${sign} ${last}`", name), name)
+%s();
+`, name, header, name, extra, name, name, name, name, name)
+	}
+	// kept is the rule the pass follows, said again: the furthest a counter can go, one step past the
+	// last value its bound lets through, counting toward the bound, is within 2^53. It's worked out in
+	// integers, where 2^53 + 1 is still 2^53 + 1.
+	kept := func(start value, bound value, each update) bool {
+		if !start.whole || !bound.whole || each.step == 0 {
+			return false
+		}
+		low, high, step := int64(bound.low), int64(bound.high), int64(each.step)
+		var furthest int64
+		switch {
+		case step > 0 && each.comparison == "<":
+			furthest = high - 1 + step
+		case step > 0 && each.comparison == "<=":
+			furthest = high + step
+		case step < 0 && each.comparison == ">":
+			furthest = low + 1 + step
+		case step < 0 && each.comparison == ">=":
+			furthest = low + step
+		default:
+			return false
+		}
+		return furthest <= 1<<53 && furthest >= -(1<<53)
 	}
 	cases := 0
+	add := func(start value, bound value, each update) {
+		cases++
+		name := fmt.Sprintf("c%d", cases)
+		header := fmt.Sprintf("let %s = %s; %s %s %s; %s", name, start.source, name, each.comparison, bound.source,
+			strings.ReplaceAll(each.source, "NAME", name))
+		loop(name, header, "")
+		expected[name] = kept(start, bound, each)
+	}
+	// Whether a loop qualifies turns on its start alone, and on its bound and step together, so the
+	// sweep crosses each with the edges of the others rather than everything with everything, which
+	// would build thousands of loops under the sanitizers: every start, counting up and down, against
+	// two bounds; every bound against the starts that reach its edges; and every step against the
+	// starts and bounds at its.
+	edgeStarts := []value{starts[0], starts[5], starts[6], starts[11]}
 	for _, start := range starts {
-		for _, bound := range bounds {
-			for _, comparison := range []string{"<", "<="} {
-				cases++
-				name := fmt.Sprintf("c%d", cases)
-				loop(name, fmt.Sprintf("let %s = %s; %s %s %s; %s++", name, start.source, name, comparison, bound.source, name), "")
-				whole := bound.whole
-				if whole && bound.value != 0 || bound.source == "0" {
-					// A constant: no larger than 2^53 for <, and smaller for <=.
-					limit := two53
-					if comparison == "<=" {
-						limit = two53 - 1
-					}
-					whole = bound.value <= limit && bound.value >= -limit
-				}
-				expected[name] = start.whole && whole
+		for _, bound := range []value{bounds[0], bounds[7]} {
+			for _, each := range directions {
+				add(start, bound, each)
 			}
 		}
 	}
-	// The other updates that count, and the loops that must keep a double for what they do.
+	for _, start := range edgeStarts {
+		for _, bound := range bounds {
+			for _, each := range directions {
+				add(start, bound, each)
+			}
+		}
+	}
+	edgeBounds := []value{bounds[0], bounds[8], bounds[9], bounds[10], bounds[14], bounds[20], bounds[26], bounds[27]}
+	for _, each := range steps {
+		for _, start := range edgeStarts {
+			for _, bound := range edgeBounds {
+				add(start, bound, each)
+			}
+		}
+	}
+	// The loops that must keep a double for what their bodies do.
 	specials := []struct {
 		header, extra string
 		integer       bool
 	}{
 		{"let NAME = 0; NAME < 5; ++NAME", "", true},
-		{"let NAME = 0; NAME < 5; NAME += 1", "", true},
-		{"let NAME = 0; NAME < 5; NAME = NAME + 1", "", true},
-		{"let NAME = 0; NAME < 9; NAME += 2", "", false},
+		{"let NAME = 9; NAME > 0; --NAME", "", true},
 		{"let NAME = 0; NAME < 9; NAME++", "\t\tif (NAME === 1) {\n\t\t\tNAME += 2;\n\t\t}\n", false},
 		{"let NAME = 0; NAME < 5; NAME++", "\t\tconst read = (): number => NAME;\n\t\tsum += read();\n", false},
+		{"let NAME = 9; NAME >= 0; NAME -= 2", "\t\tconst read = (): number => NAME;\n\t\tsum += read();\n", false},
 	}
 	for _, special := range specials {
 		cases++

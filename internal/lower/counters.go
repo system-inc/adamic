@@ -9,24 +9,31 @@ import (
 // counters marks the loop counters the native backend may keep in an integer (ir.Local.Counter).
 //
 // A number in JavaScript is a double, and a loop counter is one too. But a counter that starts at a
-// whole number, only ever has 1 added to it, and runs while it's below (or at) a bound that's always a
-// whole number no larger than 2^53 never holds anything but a whole number no larger than 2^53, and
-// every one of those is a double exactly. So an integer holds the same values, and read as a double
-// it's the same number: the same answers, for an integer's increment and an integer index into an
-// array. The loop has to be one this can see whole:
+// whole number, steps by a whole number, and stops at a bound that's a whole number in a range known
+// at compile time can only ever hold the whole numbers between its start and one step past its
+// bound. When every one of those is no larger than 2^53 in size, each is a double exactly, and every
+// step on the way is exact too, so an integer holds the same values, and read as a double it's the
+// same number: the same answers, for an integer's step and an integer index into an array. The loop
+// has to be one this can see whole:
 //
-//		for (let counter = start; counter < bound; counter++)    (or <=, or counter += 1)
+//		for (let counter = start; counter < bound; counter += step)    (or <=, counter++, = counter + step)
+//		for (let counter = start; counter > bound; counter -= step)    (or >=, counter--, = counter - step)
 //
 //	  - start is a whole-number constant within 2^53 that isn't -0, since an integer has no -0 and
-//	    1 / counter would tell;
+//	    1 / counter would tell; step is a whole-number constant, 1 or more;
 //	  - nothing but the update writes the counter, and no closure captures it (a cell holds a double);
-//	  - bound is, every time the condition reads it, a whole number: an array's, a string's or a map's
-//	    size, a whole-number constant, or a variable nothing writes but its declaration, of one of those.
-//	    A constant must be no larger than 2^53 for <, and smaller for <=: at 2^53 JavaScript's counter + 1
-//	    is the counter again, and the loop never ends, where an integer would go on. NaN, Infinity and
-//	    fractions aren't whole numbers, so their loops keep a double, as does anything else.
+//	  - bound is, every time the condition reads it, a whole number in a known range: an array's, a
+//	    string's or a map's size (from 0 to 2^32), a constant, a variable nothing writes but its
+//	    declaration, or any of those negated, added, subtracted or multiplied, which keep whole numbers
+//	    whole while they stay within 2^53. Division and remainder don't, and NaN, infinities and
+//	    fractions aren't whole; their loops keep a double, as does anything else;
+//	  - and the last value the counter can take, one step past the largest bound below which it still
+//	    runs (or the smallest, counting down), is within 2^53: past it, JavaScript's counter + step is
+//	    rounded, and the loop can stop moving, where an integer would go on.
 //
-// A global counter keeps a double too, since a function may run before its loop has.
+// Counting up runs with < or <=, and down with > or >=; a counter that moves away from its bound
+// keeps a double, since nothing bounds where it goes. A global counter keeps a double too, since a
+// function may run before its loop has.
 func counters(program *ir.Program) {
 	assigned := map[int]bool{}
 	declared := map[int]ir.Expression{}
@@ -47,6 +54,9 @@ func counters(program *ir.Program) {
 	mark(program.Main)
 }
 
+// exact is 2^53: every whole number no larger than it in size is a double exactly.
+var exact = math.Ldexp(1, 53)
+
 // markCounter marks the counter of a for loop's block, if it has one this can keep in an integer.
 func markCounter(program *ir.Program, block ir.Block, assigned map[int]bool, declared map[int]ir.Expression) {
 	if len(block.Body) == 0 {
@@ -57,7 +67,7 @@ func markCounter(program *ir.Program, block ir.Block, assigned map[int]bool, dec
 		return
 	}
 	condition, isBinary := loop.Condition.(ir.Binary)
-	if !isBinary || (condition.Operator != ir.Less && condition.Operator != ir.LessOrEqual) {
+	if !isBinary {
 		return
 	}
 	counterRead, isRead := condition.Left.(ir.Read)
@@ -69,14 +79,18 @@ func markCounter(program *ir.Program, block ir.Block, assigned map[int]bool, dec
 	if local.Type != ir.Number || local.Global || local.Captured || !perIteration(loop, counter) {
 		return
 	}
-	// Its start: a declaration in this block, of a whole-number constant within 2^53, not -0.
+	// Its start: a declaration in this block, of a whole number within 2^53, as a bound is, that
+	// can't be -0.
 	start, isDeclared := declaredIn(block, counter)
-	value, isConstant := constantOf(start)
-	if !isDeclared || !isConstant || !whole(value, math.Ldexp(1, 53)) || (value == 0 && math.Signbit(value)) {
+	if !isDeclared || start == nil {
 		return
 	}
-	// Its update, counter + 1, and nothing in the body that writes it.
-	if !increments(loop.Update[0], counter) {
+	if _, _, isWhole := boundRange(start, assigned, declared, 0); !isWhole || !neverNegativeZero(start, assigned, declared, 0) {
+		return
+	}
+	// Its update, a whole step toward the bound, and nothing in the body that writes it.
+	step, isStep := stepOf(loop.Update[0], counter)
+	if !isStep {
 		return
 	}
 	written := map[int]bool{}
@@ -84,33 +98,134 @@ func markCounter(program *ir.Program, block ir.Block, assigned map[int]bool, dec
 	if written[counter] {
 		return
 	}
-	limit := math.Ldexp(1, 53)
-	if condition.Operator == ir.LessOrEqual {
-		// counter <= 2^53 would end at 2^53 + 1, which JavaScript's counter + 1 never reaches.
-		limit = math.Nextafter(limit, 0)
+	low, high, isWhole := boundRange(condition.Right, assigned, declared, 0)
+	if !isWhole {
+		return
 	}
-	if !wholeBound(condition.Right, limit, assigned, declared, 0) {
+	// The furthest the counter can go, one step past the last value the condition lets through, must
+	// be within 2^53. It's checked as a limit on the bound, since high + step, done in doubles, would
+	// round: 2^53 + 1 is the double 2^53. Each limit is exact, the step being whole and within 2^53.
+	size := math.Abs(step)
+	switch {
+	case step > 0 && condition.Operator == ir.Less:
+		// high - 1 + step <= 2^53
+		isWhole = high <= exact-(size-1)
+	case step > 0 && condition.Operator == ir.LessOrEqual:
+		// high + step <= 2^53
+		isWhole = high <= exact-size
+	case step < 0 && condition.Operator == ir.Greater:
+		// low + 1 - size >= -2^53
+		isWhole = low >= -exact+(size-1)
+	case step < 0 && condition.Operator == ir.GreaterOrEqual:
+		// low - size >= -2^53
+		isWhole = low >= -exact+size
+	default:
+		// A counter moving away from its bound, or a comparison that isn't one of these.
+		isWhole = false
+	}
+	if !isWhole {
 		return
 	}
 	program.Locals[counter].Counter = true
 }
 
-// wholeBound reports whether a bound is a whole number no larger than limit every time it's read.
-func wholeBound(bound ir.Expression, limit float64, assigned map[int]bool, declared map[int]ir.Expression, depth int) bool {
+// boundRange is the least and the most a bound can be, every time it's read, when it's always a whole
+// number within 2^53, and false otherwise.
+func boundRange(bound ir.Expression, assigned map[int]bool, declared map[int]ir.Expression, depth int) (float64, float64, bool) {
+	if depth > 8 {
+		return 0, 0, false
+	}
+	var low, high float64
 	switch bound := bound.(type) {
 	case ir.Length, ir.StringLength, ir.MapSize:
-		// Sizes are whole, and far below 2^53.
-		return true
-	case ir.NumberConstant, ir.Unary, ir.Binary:
-		value, isConstant := constantOf(bound)
-		return isConstant && whole(value, limit)
+		// An array's length is below 2^32, and a string's and a map's size far below.
+		low, high = 0, math.Ldexp(1, 32)
+	case ir.NumberConstant:
+		low, high = bound.Value, bound.Value
 	case ir.Read:
-		// A variable nothing writes but its declaration, of a whole bound: in effect a const.
+		// A variable nothing writes but its declaration: in effect a const, of its declared bound.
 		value, isDeclared := declared[bound.Local]
-		if bound.Of != ir.Number || assigned[bound.Local] || !isDeclared || value == nil || depth > 8 {
+		if bound.Of != ir.Number || assigned[bound.Local] || !isDeclared || value == nil {
+			return 0, 0, false
+		}
+		return boundRange(value, assigned, declared, depth+1)
+	case ir.Unary:
+		operandLow, operandHigh, isWhole := boundRange(bound.Operand, assigned, declared, depth+1)
+		switch {
+		case !isWhole:
+			return 0, 0, false
+		case bound.Operator == ir.Negate:
+			low, high = -operandHigh, -operandLow
+		case bound.Operator == ir.Plus:
+			low, high = operandLow, operandHigh
+		default:
+			return 0, 0, false
+		}
+	case ir.Binary:
+		leftLow, leftHigh, isLeft := boundRange(bound.Left, assigned, declared, depth+1)
+		rightLow, rightHigh, isRight := boundRange(bound.Right, assigned, declared, depth+1)
+		if !isLeft || !isRight {
+			return 0, 0, false
+		}
+		switch bound.Operator {
+		case ir.Add:
+			low, high = leftLow+rightLow, leftHigh+rightHigh
+		case ir.Subtract:
+			low, high = leftLow-rightHigh, leftHigh-rightLow
+		case ir.Multiply:
+			products := []float64{leftLow * rightLow, leftLow * rightHigh, leftHigh * rightLow, leftHigh * rightHigh}
+			low, high = products[0], products[0]
+			for _, product := range products[1:] {
+				low, high = math.Min(low, product), math.Max(high, product)
+			}
+		default:
+			// Division and remainder needn't give a whole number, and ** is V8's pow, not Go's.
+			return 0, 0, false
+		}
+	default:
+		return 0, 0, false
+	}
+	// Whole numbers within 2^53, at both ends, so every value between, and every sum and product on
+	// the way to them, is a whole number a double holds exactly.
+	if !whole(low, exact) || !whole(high, exact) || low > high {
+		return 0, 0, false
+	}
+	return low, high, true
+}
+
+// neverNegativeZero reports whether an expression boundRange accepts can never be -0: a sum or a
+// difference is -0 only when one side is, while a negation or a product of a zero is -0 when its
+// signs say so, so those are refused rather than followed.
+func neverNegativeZero(expression ir.Expression, assigned map[int]bool, declared map[int]ir.Expression, depth int) bool {
+	if depth > 8 {
+		return false
+	}
+	switch expression := expression.(type) {
+	case ir.Length, ir.StringLength, ir.MapSize:
+		return true
+	case ir.NumberConstant:
+		return !(expression.Value == 0 && math.Signbit(expression.Value))
+	case ir.Read:
+		value, isDeclared := declared[expression.Local]
+		if expression.Of != ir.Number || assigned[expression.Local] || !isDeclared || value == nil {
 			return false
 		}
-		return wholeBound(value, limit, assigned, declared, depth+1)
+		return neverNegativeZero(value, assigned, declared, depth+1)
+	case ir.Unary:
+		if expression.Operator == ir.Negate {
+			// A constant negated is a constant, and says what it is.
+			value, isConstant := constantOf(expression)
+			return isConstant && !(value == 0 && math.Signbit(value))
+		}
+		return expression.Operator == ir.Plus && neverNegativeZero(expression.Operand, assigned, declared, depth+1)
+	case ir.Binary:
+		switch expression.Operator {
+		case ir.Add, ir.Subtract:
+			return neverNegativeZero(expression.Left, assigned, declared, depth+1) && neverNegativeZero(expression.Right, assigned, declared, depth+1)
+		case ir.Multiply:
+			value, isConstant := constantOf(expression)
+			return isConstant && !(value == 0 && math.Signbit(value))
+		}
 	}
 	return false
 }
@@ -156,20 +271,27 @@ func whole(value float64, limit float64) bool {
 	return value == math.Trunc(value) && math.Abs(value) <= limit
 }
 
-// increments reports whether a statement is counter = counter + 1, which counter++, ++counter and
-// counter += 1 all lower to.
-func increments(statement ir.Statement, counter int) bool {
+// stepOf is how far a counter's update moves it: counter = counter + step or counter - step, which
+// counter++, counter--, counter += step and counter -= step lower to, for a whole constant step of 1
+// or more (negative counting down), and false for any other update.
+func stepOf(statement ir.Statement, counter int) (float64, bool) {
 	assign, isAssign := statement.(ir.Assign)
 	if !isAssign || assign.Local != counter || assign.Checked {
-		return false
+		return 0, false
 	}
 	sum, isBinary := assign.Value.(ir.Binary)
-	if !isBinary || sum.Operator != ir.Add {
-		return false
+	if !isBinary || (sum.Operator != ir.Add && sum.Operator != ir.Subtract) {
+		return 0, false
 	}
 	read, isRead := sum.Left.(ir.Read)
-	one, isConstant := sum.Right.(ir.NumberConstant)
-	return isRead && read.Local == counter && isConstant && one.Value == 1
+	step, isConstant := constantOf(sum.Right)
+	if !isRead || read.Local != counter || !isConstant || !whole(step, exact) || step < 1 {
+		return 0, false
+	}
+	if sum.Operator == ir.Subtract {
+		step = -step
+	}
+	return step, true
 }
 
 func perIteration(loop ir.Loop, local int) bool {
