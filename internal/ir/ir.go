@@ -187,6 +187,15 @@ type (
 	// ToFixed is Value.toFixed(Digits).
 	ToFixed struct{ Value, Digits Expression }
 
+	// NumberFormat is Value.toExponential(Argument) or Value.toPrecision(Argument), as Method says.
+	// Argument is nil when the call has none, which means something of its own to each (the
+	// shortest digits, and String(Value)).
+	NumberFormat struct {
+		Method   string
+		Value    Expression
+		Argument Expression
+	}
+
 	// Undefined is undefined where a reference goes: an object, an array or a string that may be
 	// missing (Tree | undefined), held as a null pointer.
 	Undefined struct{}
@@ -404,6 +413,15 @@ type (
 		Separator Expression
 		Element   Type
 	}
+
+	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
+	// Node's readFileSync(path, 'utf8') decodes them, in { kind: 'Ok', text }, or what went wrong in
+	// { kind: 'Error', message }, a message in Adamic's own words.
+	ReadTextFile struct{ Path Expression }
+
+	// ProgramArguments is programArguments() from 'adamic': a new array of the arguments after the
+	// program, as process.argv.slice(2) is.
+	ProgramArguments struct{}
 )
 
 // Field is one field of an object literal.
@@ -437,6 +455,7 @@ func (c NumberCall) Type() Type {
 	return Boolean
 }
 func (ToFixed) Type() Type       { return String }
+func (NumberFormat) Type() Type  { return String }
 func (Undefined) Type() Type     { return Object }
 func (IsUndefined) Type() Type   { return Boolean }
 func (ArrayPush) Type() Type     { return Number }
@@ -513,6 +532,9 @@ func (c StringCall) Type() Type {
 	}
 	return String
 }
+func (ReadTextFile) Type() Type     { return Object }
+func (ProgramArguments) Type() Type { return Array }
+
 func (MapNew) Type() Type    { return Map }
 func (MapSet) Type() Type    { return Map }
 func (MapHas) Type() Type    { return Boolean }
