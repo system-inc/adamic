@@ -110,7 +110,7 @@ stage 0 can't lower an array of never yet        (Node prints 1 0)
 
 ## The cycle rule's cost
 
-Not a gap: a rule, the one mediaquery's GAPS.md describes under the same heading, with its smallest program. Here it reshaped the parser. Upstream's Container has `nodes`, and the parser appends to it long after it made the node: a func gets its arguments, the value gets its words. A mutable `nodes` field, or a mutable field holding a `readonly` list, can be made to hold its own node, and is refused (adamic/cycle-capable). Copying on every append, as the media query port does, would be quadratic in a long value.
+Not a NotYet: a rule, the one mediaquery's GAPS.md records as gaps 4 and 5, "a tree with mutable child arrays is refused as cycle-capable", with their smallest programs. Upstream's Container is gap 4's program exactly. Here it reshaped the parser. Upstream's Container has `nodes`, and the parser appends to it long after it made the node: a func gets its arguments, the value gets its words. A mutable `nodes` field, or a mutable field holding a `readonly` list, can be made to hold its own node, and is refused (adamic/cycle-capable). Copying on every append, as the media query port does, would be quadratic in a long value.
 
 So a container has an `id`, the parser keeps each container's children in `#children` by it, a `ValueNode[][]` (a ValueNode no longer reaches a list of nodes, so nothing there can close a cycle), and when the parse is done, `tree` builds the `ValueTree` the parse returns, whose lists are `readonly`. That's the arena docs/memory.md describes for stage 1, kept by hand: one parse's nodes live in one table until the parse ends. The timings didn't move (2.65 s before, 2.60 to 2.65 s after).
 

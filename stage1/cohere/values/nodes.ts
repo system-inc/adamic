@@ -16,7 +16,7 @@
 // A container's children are not a field of its node while the parse runs. The parser appends to them
 // long after it made the node (a func's arguments, a value's words), and a mutable list of nodes that
 // a node keeps could be made to hold that node itself, a cycle stage 0 refuses (adamic/cycle-capable;
-// "The cycle rule's cost" in GAPS.md). So a container has an id, the parser keeps each container's
+// mediaquery's GAPS.md, gaps 4 and 5). So a container has an id, the parser keeps each container's
 // children by it, and when the parse is done it builds the tree the library returns, a ValueTree, whose
 // lists are readonly.
 //

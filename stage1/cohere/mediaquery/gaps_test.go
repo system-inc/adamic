@@ -13,19 +13,23 @@ import (
 )
 
 // gaps are GAPS.md's smallest programs, each with what Node prints running it, and where stage 0 stands
-// on it: refused with the words GAPS.md records (notYet), lowered to C that clang refuses with the words
-// it records (badC), or closed (neither), when it must lower and print natively what it prints on Node,
-// leaking nothing. So when a gap moves, this test says so, and the port's workaround for it can go.
+// on it: not yet lowered, with the words GAPS.md records (notYet); refused by a rule of 0.1, with the
+// words it records (refused); lowered to C that clang refuses with the words it records (badC); or
+// closed (none of them), when it must lower and print natively what it prints on Node, leaking nothing.
+// So when a gap moves, this test says so, and the port's workaround for it can go.
 var gaps = []struct {
-	path   string
-	notYet string
-	badC   string
-	stdout string
+	path    string
+	notYet  string
+	refused string
+	badC    string
+	stdout  string
 }{
 	{path: "gaps/1_generic_return.ts", notYet: "a function returning Item", stdout: "a\n"},
 	{path: "gaps/1_generic_parameter.ts", notYet: "a value of type Item", stdout: "3\n"},
 	{path: "gaps/2_return_undefined.ts", badC: "incompatible pointer types returning 'adamic_object *'", stdout: "none\n"},
 	{path: "gaps/3_optional_chaining_array.ts", notYet: "optional chaining on a value", stdout: "1 0\n"},
+	{path: "gaps/4_mutable_child_array.ts", refused: "TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free", stdout: "2\n"},
+	{path: "gaps/5_local_children_array.ts", refused: "TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free", stdout: "2\n"},
 }
 
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
@@ -58,6 +62,19 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 				}
 				if notYet.What != gap.notYet {
 					t.Fatalf("stage 0 refuses with %q now, where GAPS.md records %q", notYet.What, gap.notYet)
+				}
+				return
+			}
+			if gap.refused != "" {
+				if err == nil {
+					t.Fatalf("0.1 accepts this program now: mark the gap closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)")
+				}
+				var refused *lower.Refused
+				if !errors.As(err, &refused) {
+					t.Fatalf("stage 0 refuses another way now: %v", err)
+				}
+				if refused.What != gap.refused {
+					t.Fatalf("stage 0 refuses with %q now, where GAPS.md records %q", refused.What, gap.refused)
 				}
 				return
 			}

@@ -85,14 +85,31 @@ On a `string | undefined`, `text?.length` reads `stage 0 can't lower optional ch
 
 **Around it:** the driver's count mode (main.ts) narrows `parsed.value.nodes` into a local and tests it for undefined.
 
-## The cycle rule's cost
+## 4. A tree with mutable child arrays is refused as cycle-capable
 
-Not a gap: a rule. When main brought the cycle finder (`internal/lower/cycles.go`, docs/memory.md "Cycles"), it refused this port as first written, twice, and it was right both times by its rule.
+Not a NotYet: a rule of 0.1, the cycle finder's (`internal/lower/cycles.go`, docs/memory.md "Cycles"), which landed on main at 4ddd17f and refused this port as first written. A node whose children are a mutable array of nodes can be given itself (`root.nodes.push(root)`), a cycle reference counting can't free:
 
-- The parser built each list of nodes in a local `MediaNode[]` with `push`, and handed that same array to the container as its `nodes`. A mutable array of nodes that can reach an array like it can be made to hold its own container, so it's refused: `Adamic 0.1 refuses MediaNode[], an array whose elements can reach back to an array like it ... (adamic/cycle-capable)`. The lists are now `readonly MediaNode[]`, and `appended` (parsers.ts) grows one by copying, `[...list, node]`.
-- The Go's `mediaQueryElement` has exactly the fields a MediaNode has, so a MediaNode can be seen as one, and through the element's mutable `nodes` field it could be given itself. The element's nodes are now a local, `elementNodes`, reset with it.
+```ts
+class TreeNode {
+	readonly name: string;
+	readonly nodes: TreeNode[] = [];
+	constructor(name: string) {
+		this.name = name;
+	}
+}
+const root = new TreeNode('root');
+root.nodes.push(new TreeNode('a'));
+root.nodes.push(new TreeNode('b'));
+console.log(`${root.nodes.length}`);
+```
 
-The first is the one worth a look. Building a tree bottom-up, a list filled and then handed to a node that keeps it as `readonly`, is how nearly every parser builds children, and the finder refuses it though nothing writes the list once it's handed over:
+```
+Adamic 0.1 refuses TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free; declare the elements weak, Weak<TreeNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly TreeNode[] (adamic/cycle-capable)        (Node prints 2)
+```
+
+## 5. ... and so is a tree built from a local array of children
+
+The same rule refuses the way nearly every parser builds a tree bottom-up: collect the children in a local array, then make the node with them as `readonly nodes`, never writing the array again. The finder reads types, not what happens to a value, so the local `TreeNode[]` is cycle-capable whatever follows:
 
 ```ts
 class TreeNode {
@@ -113,10 +130,12 @@ console.log(`${build().nodes.length}`);
 ```
 
 ```
-Adamic 0.1 refuses TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free; declare the elements weak, Weak<TreeNode>[] (import type { Weak } from 'adamic'), ... or make it readonly TreeNode[] (adamic/cycle-capable)        (Node prints 2)
+Adamic 0.1 refuses TreeNode[], an array whose elements can reach back to an array like it: ... (adamic/cycle-capable)        (Node prints 2)
 ```
 
-The finder works on types, so it can't see that `children` is never written after `new TreeNode('root', children)` takes it. Copying on every append (here) or keeping children outside the nodes until the end (the values slice) both work, and both cost what the mutable list didn't: here, about a tenth on the generated params (2.15 s before, 2.3 to 2.5 s after, the same run otherwise). A rule that let a local mutable array be handed to a `readonly` slot as its last use (the array moved, not shared) would accept this program and refuse `children.push(root)` after it. That's for @system_adamic to weigh; the port doesn't wait on it.
+A rule that let a local mutable array be handed to a `readonly` slot as its last use (moved, not shared) would accept this program and still refuse `children.push(root)` after it. That's for @system_adamic and stream B2 to weigh; the port doesn't wait on it.
+
+**Around both:** the parser built each list of nodes in a local `MediaNode[]` with `push` and handed that array to the container as its `nodes`, which is gap 5's shape. Now the lists are `readonly MediaNode[]` from the start, and `appended` (parsers.ts) grows one by copying, `[...list, node]`: nothing writes a list once it exists. Each list holds a handful of nodes; on the generated params the copying costs about a tenth (2.15 s before, 2.3 to 2.5 s after). The finder also refused the Go's `mediaQueryElement`, rightly: with a `nodes` field it had every field a MediaNode has, so a MediaNode could be seen as one and given itself through that mutable field. Its nodes are now a local, `elementNodes`, reset with it. The values slice, whose lists can be long, keeps each container's children in a table instead (its GAPS.md, "The cycle rule's cost"). Every answer is byte for byte what it was.
 
 ## The first slice's gaps, met again
 

@@ -42,7 +42,7 @@ function nodeAt(list: readonly MediaNode[], index: number): MediaNode {
 
 // appended is result.push(node) as a new list: the lists of nodes are readonly, since a node keeps its
 // children's list, and stage 0 refuses a mutable list of nodes that can reach a list like it, a cycle
-// reference counting couldn't free (adamic/cycle-capable; "The cycle rule's cost" in GAPS.md). Each
+// reference counting couldn't free (adamic/cycle-capable; gaps 4 and 5 in GAPS.md). Each
 // list holds a handful of nodes, so copying it costs little.
 function appended(list: readonly MediaNode[], node: MediaNode): readonly MediaNode[] {
 	return [...list, node];
@@ -159,7 +159,7 @@ function parseMediaFeature(text: string, index: number): Result<readonly MediaNo
 // plus the type and sourceIndex it may gain) before handing it to Node or Container. The nodes it may
 // gain are elementNodes in parseMediaQuery, not a field: with them this interface has every field a
 // MediaNode has, so a MediaNode can be seen as one, and a mutable nodes field could then be given the
-// node itself, a cycle stage 0 refuses (adamic/cycle-capable).
+// node itself, a cycle stage 0 refuses (adamic/cycle-capable; gap 4 in GAPS.md).
 interface MediaQueryElement {
 	before: string;
 	after: string;
