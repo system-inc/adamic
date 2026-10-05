@@ -48,6 +48,19 @@ type Options struct {
 	Sanitize bool
 }
 
+// Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
+// with the same ones, so what it finds is what Build would.
+func Flags(options Options) []string {
+	// A program may declare a variable, a function or a parameter it never uses, or assign a variable
+	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
+	// no-self-assign), not a reason the C can't compile.
+	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
+	if options.Sanitize {
+		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
+	}
+	return append(flags, "-O2")
+}
+
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
 	directory, err := os.MkdirTemp("", "adamic-build-")
@@ -79,15 +92,7 @@ func Build(source string, output string, options Options) error {
 		}
 	}
 
-	// A program may declare a variable or a function it never uses, as JavaScript allows; that's the
-	// linter's business (cohere's no-unused-vars), not a reason the C can't compile.
-	arguments := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function"}
-	if options.Sanitize {
-		arguments = append(arguments, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
-	} else {
-		arguments = append(arguments, "-O2")
-	}
-	arguments = append(arguments, "-o", output)
+	arguments := append(Flags(options), "-o", output)
 	arguments = append(arguments, units...)
 	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
