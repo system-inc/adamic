@@ -212,6 +212,20 @@ What lowered as written, and is worth saying so: discriminated unions narrowed b
 
 ## Performance, observed (not refusals)
 
+### On merged main at ddfed83, with every gap closed
+
+Main now carries stream C's constant-time string index (integrate-2), and the port no longer works around anything. The test's case set (53 trees, 6,318 tree paths each asked twice, by path and by walk, 21 pattern lists and 421 globs; 13,464 answer lines) was timed best of seven on the same 4-vCPU container, at a load average under 1, with all three outputs byte for byte the same:
+
+| | time | peak memory |
+|---|---|---|
+| Go cohere (cohere_side_test.go's answer step, reading the trees from disk and the cases as JSON) | 0.11 s | not measured apart from `go test` |
+| the native port (`adamic build`, `-O2`, reading the cases file) | 0.730 s | 10 MB |
+| Node running the port's source | 0.800 s | 94 MB |
+
+**Go cohere is now 6.6 times faster than the native port, where it was 20 times faster.** The native port is a little faster than Node and uses a ninth of Node's memory. callgrind puts 7.4 billion instructions in the native run, down from 26.4 billion. 56% of them are under `utf8Bytes`: before the glob matches a text, it spells the text as bytes, and its first step is a `charCodeAt` loop asking whether the text is ASCII. Each step is constant time now, but it's a call and a few conversions per character, once for every text the glob matches. That's the bytes cost below, and it's most of the distance to Go, which gets a string's bytes for free. A byte view of a string, or `TextEncoder`, would close most of it; so would the glob converting only past its literal and suffix fast paths, as the Go's never converts at all.
+
+### Before
+
 These lowered and answered correctly, but they're the numbers to beat on the way to "faster and leaner than Go cohere". All measured on this Linux container, x86-64, with the test's case set, which includes cohere's own checkout as a real tree: 50 trees, about 6,200 tree paths, 21 pattern lists and 421 globs, and output identical on every side.
 
 - **Go cohere is 20 times faster than the native port.** The same 50 trees, pattern lists and globs, answered byte for byte the same, take Go cohere 0.10 s (the whole `go test` of cohere_side_test.go's answer step, reading the trees' ignore files from disk and its cases as JSON). The native port takes 2.1 s, and Node 0.62 s. The rest of this section is where the native time goes.
