@@ -18,6 +18,7 @@ enum adamic_kind {
 	adamic_kind_string = 1,
 	adamic_kind_object,
 	adamic_kind_array,
+	adamic_kind_map,
 };
 
 typedef struct adamic_heap {
@@ -39,6 +40,12 @@ typedef union adamic_value {
 	bool boolean;
 	void *reference;
 } adamic_value;
+
+// adamic_maybe_number is number | undefined: present, and the number when it is.
+typedef struct adamic_maybe_number {
+	bool present;
+	double number;
+} adamic_maybe_number;
 
 // adamic_string is an immutable string: UTF-8 bytes (string.c).
 typedef struct adamic_string {
@@ -96,6 +103,46 @@ adamic_array *adamic_array_new(size_t capacity, bool references);
 // adamic_array_push appends; a reference pushed belongs to the array.
 void adamic_array_push(adamic_array *array, adamic_value value);
 
+// adamic_map is a Map with string or number keys (map.c).
+typedef struct adamic_map_entry {
+	adamic_value key;
+	adamic_value value;
+	bool deleted;
+} adamic_map_entry;
+
+typedef struct adamic_map {
+	adamic_heap heap;
+	size_t count;
+	size_t used;
+	size_t capacity;
+	adamic_map_entry *entries;
+	size_t bucket_count;
+	size_t *buckets;
+	bool string_keys;
+	bool reference_values;
+} adamic_map;
+
+adamic_map *adamic_map_new(bool string_keys, bool reference_values);
+
+// adamic_map_get is the value's slot, or NULL when the key isn't there.
+adamic_value *adamic_map_get(const adamic_map *map, adamic_value key);
+
+// adamic_map_set takes the key and value it's given: references passed in belong to the map.
+void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value);
+
+bool adamic_map_delete(adamic_map *map, adamic_value key);
+
+// adamic_map_free_children lets go of what a map holds, for the heap's freeing.
+void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
+
+// adamic_array_join is array.join(separator), each element written as String() would.
+enum adamic_join {
+	adamic_join_numbers = 1,
+	adamic_join_booleans,
+	adamic_join_strings,
+};
+struct adamic_string *adamic_array_join(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind);
+
 // These return a reference the caller owns.
 adamic_string *adamic_string_from_number(double value);
 adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]);
@@ -104,6 +151,16 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]);
 extern adamic_string adamic_string_empty;
 extern adamic_string adamic_string_true;
 extern adamic_string adamic_string_false;
+
+// A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
+double adamic_string_length(const adamic_string *string);
+double adamic_string_char_code_at(const adamic_string *string, double position);
+adamic_string *adamic_string_trim(adamic_string *string);
+
+// for...of over a string walks code points: adamic_string_next is the byte size of the one at offset,
+// and adamic_string_slice_bytes makes it a string the caller owns.
+size_t adamic_string_next(const adamic_string *string, size_t offset);
+adamic_string *adamic_string_slice_bytes(const adamic_string *string, size_t offset, size_t size);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);

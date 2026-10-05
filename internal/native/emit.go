@@ -46,26 +46,36 @@ func C(program *ir.Program) string {
 		builder.WriteString("\n")
 	}
 
+	// Bodies first: the shapes and field caches they use are found while they're emitted.
+	bodies := strings.Builder{}
+	for index, function := range program.Functions {
+		fmt.Fprintf(&bodies, "static %s {\n", emitter.signature(index))
+		emitter.indent = 1
+		emitter.functionBody(function)
+		bodies.WriteString(emitter.out.String())
+		emitter.out.Reset()
+		bodies.WriteString("}\n\n")
+	}
+	bodies.WriteString("int main(void) {\n")
+	emitter.indent = 1
+	emitter.block(program.Main, nil)
+	bodies.WriteString(emitter.out.String())
+	bodies.WriteString("\treturn 0;\n}\n")
+
+	for _, declaration := range emitter.declarations {
+		builder.WriteString(declaration)
+		builder.WriteString("\n")
+	}
+	if len(emitter.declarations) > 0 {
+		builder.WriteString("\n")
+	}
 	for index := range program.Functions {
 		fmt.Fprintf(&builder, "static %s;\n", emitter.signature(index))
 	}
 	if len(program.Functions) > 0 {
 		builder.WriteString("\n")
 	}
-	for index, function := range program.Functions {
-		fmt.Fprintf(&builder, "static %s {\n", emitter.signature(index))
-		emitter.indent = 1
-		emitter.functionBody(function)
-		builder.WriteString(emitter.out.String())
-		emitter.out.Reset()
-		builder.WriteString("}\n\n")
-	}
-
-	builder.WriteString("int main(void) {\n")
-	emitter.indent = 1
-	emitter.block(program.Main, nil)
-	builder.WriteString(emitter.out.String())
-	builder.WriteString("\treturn 0;\n}\n")
+	builder.WriteString(bodies.String())
 	return builder.String()
 }
 
@@ -80,12 +90,22 @@ type emitter struct {
 	// owned is the string temporaries the statement being emitted releases when it ends.
 	owned []string
 
-	// scopes holds, innermost last, the string locals each open scope must release when it ends.
-	scopes [][]int
+	// scopes holds, innermost last, the references (C names) each open scope releases when it ends.
+	scopes [][]string
 
 	// loops holds, innermost last, each open loop's scope depth and continue label, and whether
 	// anything jumps to that label.
 	loops []*loop
+
+	// breakables holds, innermost last, the scope depth of each open loop or switch: what a break
+	// leaves.
+	breakables []int
+
+	// declarations are file-scope lines the bodies need: object shapes and field caches.
+	declarations []string
+
+	// shapes names each object layout already declared, by its fields.
+	shapes map[string]string
 
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.
 	function      *ir.Function
@@ -152,9 +172,9 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.functionDepth = len(e.scopes)
 	e.scopes = append(e.scopes, nil)
 	for _, parameter := range function.Parameters {
-		if e.program.Locals[parameter].Type == ir.String {
+		if e.program.Locals[parameter].Type.IsReference() {
 			e.line("adamic_retain(%s);", e.localName(parameter))
-			e.scopes[len(e.scopes)-1] = append(e.scopes[len(e.scopes)-1], parameter)
+			e.hold(e.localName(parameter))
 		}
 	}
 	for _, statement := range function.Body {
@@ -188,9 +208,14 @@ func (e *emitter) block(statements []ir.Statement, after func()) {
 func (e *emitter) releaseScopes(depth int) {
 	for scope := len(e.scopes) - 1; scope >= depth; scope-- {
 		for index := len(e.scopes[scope]) - 1; index >= 0; index-- {
-			e.line("adamic_release(%s);", e.localName(e.scopes[scope][index]))
+			e.line("adamic_release(%s);", e.scopes[scope][index])
 		}
 	}
+}
+
+// hold makes the innermost scope release a reference when it ends.
+func (e *emitter) hold(name string) {
+	e.scopes[len(e.scopes)-1] = append(e.scopes[len(e.scopes)-1], name)
 }
 
 // end releases what the statement just emitted owned.
@@ -234,9 +259,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		case local.Global:
 			e.store(statement.Local, value)
 			e.line("%s = true;", readyName(statement.Local))
-		case local.Type == ir.String:
-			e.line("adamic_string *%s = adamic_retain(%s);", e.localName(statement.Local), value)
-			e.scopes[len(e.scopes)-1] = append(e.scopes[len(e.scopes)-1], statement.Local)
+		case local.Type.IsReference():
+			e.line("%s %s = adamic_retain(%s);", cType(local.Type), e.localName(statement.Local), value)
+			e.hold(e.localName(statement.Local))
 		default:
 			e.line("%s %s = %s;", cType(local.Type), e.localName(statement.Local), value)
 		}
@@ -253,11 +278,17 @@ func (e *emitter) statement(statement ir.Statement) {
 		if call, isCall := statement.Value.(ir.Call); isCall && call.Returns == 0 {
 			e.line("%s(%s);", e.functionName(call.Function), strings.Join(e.arguments(call), ", "))
 		} else {
-			e.value(statement.Value)
+			// The value goes, but whatever making it did stays: a push's append is its effect.
+			e.line("(void)%s;", e.value(statement.Value))
 		}
 		e.end()
 	case ir.Return:
 		e.returnStatement(statement)
+	case ir.Panic:
+		// The program ends here, so nothing it holds needs letting go.
+		message := e.value(statement.Message)
+		e.line("adamic_panic((%s)->bytes, (%s)->length);", message, message)
+		e.owned = nil
 	case ir.If:
 		condition := e.decide(statement.Condition)
 		e.line("if (%s) {", unwrap(condition))
@@ -273,8 +304,12 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("}")
 	case ir.Loop:
 		e.loop(statement)
+	case ir.ForOf:
+		e.forOf(statement)
+	case ir.Switch:
+		e.switchStatement(statement)
 	case ir.Break:
-		e.releaseScopes(e.loops[len(e.loops)-1].depth)
+		e.releaseScopes(e.breakables[len(e.breakables)-1])
 		e.line("break;")
 	case ir.Continue:
 		current := e.loops[len(e.loops)-1]
@@ -291,12 +326,12 @@ func (e *emitter) statement(statement ir.Statement) {
 // since they may be the same string.
 func (e *emitter) store(local int, value string) {
 	name := e.localName(local)
-	if e.program.Locals[local].Type != ir.String {
+	if !e.program.Locals[local].Type.IsReference() {
 		e.line("%s = %s;", name, value)
 		return
 	}
 	old := e.temporary()
-	e.line("adamic_string *%s = %s;", old, name)
+	e.line("%s %s = %s;", cType(e.program.Locals[local].Type), old, name)
 	e.line("%s = adamic_retain(%s);", name, value)
 	e.line("adamic_release(%s);", old)
 }
@@ -319,8 +354,8 @@ func (e *emitter) returnStatement(statement ir.Return) {
 	}
 	value := e.value(statement.Value)
 	result := e.temporary()
-	if statement.Value.Type() == ir.String {
-		e.line("adamic_string *%s = adamic_retain(%s);", result, value)
+	if statement.Value.Type().IsReference() {
+		e.line("%s %s = adamic_retain(%s);", cType(statement.Value.Type()), result, value)
 	} else {
 		e.line("%s %s = %s;", cType(statement.Value.Type()), result, value)
 	}
@@ -358,9 +393,11 @@ func (e *emitter) loop(statement ir.Loop) {
 	e.out = strings.Builder{}
 	current.depth = len(e.scopes)
 	e.loops = append(e.loops, current)
+	e.breakables = append(e.breakables, current.depth)
 	e.line("{")
 	e.nested(statement.Body, nil)
 	e.line("}")
+	e.breakables = e.breakables[:len(e.breakables)-1]
 	e.loops = e.loops[:len(e.loops)-1]
 	body := e.out.String()
 	e.out = saved
@@ -408,14 +445,14 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Call:
 		arguments := e.arguments(expression)
 		call := fmt.Sprintf("%s(%s)", e.functionName(expression.Function), strings.Join(arguments, ", "))
-		if expression.Returns == ir.String {
-			return e.own(call)
+		if expression.Returns.IsReference() {
+			return e.own(expression.Returns, call)
 		}
 		result := e.temporary()
 		e.line("%s %s = %s;", cType(expression.Returns), result, call)
 		return result
 	case ir.NumberToString:
-		return e.own(fmt.Sprintf("adamic_string_from_number(%s)", e.value(expression.Value)))
+		return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", e.value(expression.Value)))
 	case ir.BooleanToString:
 		return fmt.Sprintf("((%s) ? &adamic_string_true : &adamic_string_false)", e.value(expression.Value))
 	case ir.Concat:
@@ -423,11 +460,329 @@ func (e *emitter) value(expression ir.Expression) string {
 		for _, part := range expression.Parts {
 			parts = append(parts, e.value(part))
 		}
-		return e.own(fmt.Sprintf("adamic_string_concat(%d, (adamic_string *const[]){%s})", len(parts), strings.Join(parts, ", ")))
+		return e.own(ir.String, fmt.Sprintf("adamic_string_concat(%d, (adamic_string *const[]){%s})", len(parts), strings.Join(parts, ", ")))
 	case ir.Conditional:
 		return e.conditional(expression)
+	case ir.ObjectLiteral:
+		return e.objectLiteral(expression)
+	case ir.Property:
+		object := e.value(expression.Object)
+		field := fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", object, cString(expression.Name), e.cache(), member(expression.Of))
+		if expression.Optional {
+			return fmt.Sprintf("(%s == NULL ? NULL : %s)", object, field)
+		}
+		return field
+	case ir.Undefined:
+		return "NULL"
+	case ir.IsUndefined:
+		if expression.Value.Type() == ir.MaybeNumber {
+			return fmt.Sprintf("(!(%s).present)", e.value(expression.Value))
+		}
+		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
+	case ir.Unwrap:
+		return fmt.Sprintf("(%s).number", e.value(expression.Value))
+	case ir.Coalesce:
+		return e.coalesce(expression)
+	case ir.StringLength:
+		return fmt.Sprintf("adamic_string_length(%s)", e.value(expression.Value))
+	case ir.CharCodeAt:
+		value := e.value(expression.Value)
+		index := e.value(expression.Index)
+		return fmt.Sprintf("adamic_string_char_code_at(%s, %s)", value, index)
+	case ir.Trim:
+		return e.own(ir.String, fmt.Sprintf("adamic_string_trim(%s)", e.value(expression.Value)))
+	case ir.MapNew:
+		entries := make([][2]string, 0, len(expression.Entries))
+		for _, entry := range expression.Entries {
+			entries = append(entries, [2]string{e.value(entry[0]), e.value(entry[1])})
+		}
+		created := e.own(ir.Map, fmt.Sprintf("adamic_map_new(%t, %t)", expression.Key == ir.String, expression.Value.IsReference()))
+		for _, entry := range entries {
+			e.line("adamic_map_set(%s, %s, %s);", created, held(expression.Key, entry[0]), held(expression.Value, entry[1]))
+		}
+		return created
+	case ir.MapGet:
+		object := e.value(expression.Map)
+		key := e.value(expression.Key)
+		slot := e.temporary()
+		e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
+		if expression.ValueType == ir.Number {
+			result := e.temporary()
+			e.line("adamic_maybe_number %s = %s == NULL ? (adamic_maybe_number){false, 0.0} : (adamic_maybe_number){true, %s->number};", result, slot, slot)
+			return result
+		}
+		// Retained, so a set later in the same statement can't free it from under its reader.
+		return e.own(expression.ValueType, fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->%s)", slot, slot, member(expression.ValueType)))
+	case ir.MapSet:
+		object := e.value(expression.Map)
+		key := e.value(expression.Key)
+		value := e.value(expression.Value)
+		e.line("adamic_map_set(%s, %s, %s);", object, held(expression.KeyType, key), held(expression.ValueType, value))
+		return object
+	case ir.MapHas:
+		object := e.value(expression.Map)
+		key := e.value(expression.Key)
+		return fmt.Sprintf("(adamic_map_get(%s, %s) != NULL)", object, borrowed(expression.KeyType, key))
+	case ir.MapDelete:
+		object := e.value(expression.Map)
+		key := e.value(expression.Key)
+		result := e.temporary()
+		e.line("bool %s = adamic_map_delete(%s, %s);", result, object, borrowed(expression.KeyType, key))
+		return result
+	case ir.MapSize:
+		return fmt.Sprintf("((double)%s->count)", e.value(expression.Map))
+	case ir.ArrayPush:
+		array := e.value(expression.Array)
+		value := e.value(expression.Value)
+		if expression.Element.IsReference() {
+			value = "adamic_retain(" + value + ")"
+		}
+		// The append happens here, in JavaScript's order, and the new length is the value.
+		e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), value)
+		length := e.temporary()
+		e.line("double %s = (double)%s->length;", length, array)
+		return length
+	case ir.ArrayJoin:
+		array := e.value(expression.Array)
+		separator := e.value(expression.Separator)
+		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
+	case ir.ArrayLiteral:
+		elements := make([]string, 0, len(expression.Elements))
+		for _, element := range expression.Elements {
+			elements = append(elements, e.value(element))
+		}
+		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, %t)", len(elements), expression.Element.IsReference()))
+		for _, element := range elements {
+			if expression.Element.IsReference() {
+				element = "adamic_retain(" + element + ")"
+			}
+			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), element)
+		}
+		return array
+	case ir.Length:
+		return fmt.Sprintf("((double)%s->length)", e.value(expression.Array))
+	case ir.MathCall:
+		return e.mathCall(expression)
+	case ir.ToFixed:
+		value := e.value(expression.Value)
+		digits := e.value(expression.Digits)
+		return e.own(ir.String, fmt.Sprintf("adamic_number_to_fixed(%s, %s)", value, digits))
 	}
 	panic(fmt.Sprintf("native: no C for %T", expression))
+}
+
+// objectLiteral makes an object. Its fields' values are evaluated in order first; making the object
+// itself can't be observed, so it may come after them.
+func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
+	source := ""
+	if literal.Spread != nil {
+		source = e.value(literal.Spread)
+	}
+	values := make([]string, 0, len(literal.Fields))
+	for _, field := range literal.Fields {
+		values = append(values, e.value(field.Value))
+	}
+	if literal.Spread != nil {
+		// A copy of the source's object, whatever its shape, with the named fields replaced.
+		object := e.own(ir.Object, fmt.Sprintf("adamic_object_copy(%s)", source))
+		for index, field := range literal.Fields {
+			slot := e.temporary()
+			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+			if field.Value.Type().IsReference() {
+				e.line("adamic_release(%s->reference);", slot)
+				e.line("%s->reference = adamic_retain(%s);", slot, values[index])
+			} else {
+				e.line("%s->%s = %s;", slot, member(field.Value.Type()), values[index])
+			}
+		}
+		return object
+	}
+	object := e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.shape(literal.Fields)))
+	for index, field := range literal.Fields {
+		value := values[index]
+		if field.Value.Type().IsReference() {
+			value = "adamic_retain(" + value + ")"
+		}
+		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), value)
+	}
+	return object
+}
+
+// shape declares an object layout once, at file scope, and names it.
+func (e *emitter) shape(fields []ir.Field) string {
+	names, references := []string{}, []string{}
+	for _, field := range fields {
+		names = append(names, cString(field.Name))
+		references = append(references, strconv.FormatBool(field.Value.Type().IsReference()))
+	}
+	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	if e.shapes == nil {
+		e.shapes = map[string]string{}
+	}
+	if name, isDeclared := e.shapes[key]; isDeclared {
+		return name
+	}
+	name := fmt.Sprintf("adamic_shape_%d", len(e.shapes))
+	e.shapes[key] = name
+	if len(fields) == 0 {
+		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL};", name))
+	} else {
+		e.declarations = append(e.declarations,
+			fmt.Sprintf("static const char *const %s_names[] = {%s};", name, strings.Join(names, ", ")),
+			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
+			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references};", name, len(fields), name, name))
+	}
+	return name
+}
+
+// cache declares a field cache for one place in the program that finds a field.
+func (e *emitter) cache() string {
+	e.temporaries++
+	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
+	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
+	return name
+}
+
+var cMath = map[string]string{
+	"abs": "fabs", "ceil": "ceil", "floor": "floor", "trunc": "trunc", "sqrt": "sqrt",
+	"round": "adamic_math_round", "sign": "adamic_math_sign", "pow": "adamic_power",
+}
+
+func (e *emitter) mathCall(call ir.MathCall) string {
+	arguments := make([]string, 0, len(call.Arguments))
+	for _, argument := range call.Arguments {
+		arguments = append(arguments, e.value(argument))
+	}
+	if function, isDirect := cMath[call.Function]; isDirect {
+		return fmt.Sprintf("%s(%s)", function, strings.Join(arguments, ", "))
+	}
+	// max and min take any number of arguments: none gives -Infinity (max) or Infinity (min), one
+	// gives itself, and more fold pairwise, every argument already evaluated, as JavaScript does.
+	switch len(arguments) {
+	case 0:
+		if call.Function == "max" {
+			return "(-HUGE_VAL)"
+		}
+		return "HUGE_VAL"
+	case 1:
+		return "(+" + arguments[0] + ")"
+	}
+	folded := arguments[0]
+	for _, argument := range arguments[1:] {
+		folded = fmt.Sprintf("adamic_math_%s(%s, %s)", call.Function, folded, argument)
+	}
+	return folded
+}
+
+// forOf emits for (const element of array). The array is held (retained) for the whole loop, as
+// JavaScript's iterator holds it even if the variable naming it is reassigned, and its length is read
+// again before each pass.
+func (e *emitter) forOf(statement ir.ForOf) {
+	e.line("{")
+	e.indent++
+	e.scopes = append(e.scopes, nil)
+	iterable := e.value(statement.Iterable)
+	held := e.temporary()
+	overString := statement.Iterable.Type() == ir.String
+	e.line("%s %s = adamic_retain(%s);", cType(statement.Iterable.Type()), held, iterable)
+	e.hold(held)
+	e.end()
+	index := e.temporary()
+	size := e.temporary()
+	e.temporaries++
+	current := &loop{label: fmt.Sprintf("adamic_continue_%d", e.temporaries)}
+	if overString {
+		// A code point at a time: size is its byte length, and the element is a string of it.
+		e.line("for (size_t %s = 0, %s = 0; %s < %s->length; %s += %s) {", index, size, index, held, index, size)
+		e.line("\t%s = adamic_string_next(%s, %s);", size, held, index)
+	} else {
+		e.line("for (size_t %s = 0; %s < %s->length; %s++) {", index, index, held, index)
+	}
+	e.indent++
+	saved := e.out
+	e.out = strings.Builder{}
+	current.depth = len(e.scopes)
+	e.loops = append(e.loops, current)
+	e.breakables = append(e.breakables, current.depth)
+	e.line("{")
+	e.indent++
+	e.scopes = append(e.scopes, nil)
+	element := fmt.Sprintf("%s->elements[%s].%s", held, index, member(statement.Element))
+	name := e.localName(statement.Local)
+	if overString {
+		e.line("adamic_string *%s = adamic_string_slice_bytes(%s, %s, %s);", name, held, index, size)
+		e.hold(name)
+	} else if statement.Element.IsReference() {
+		e.line("%s %s = adamic_retain(%s);", cType(statement.Element), name, element)
+		e.hold(name)
+	} else {
+		e.line("%s %s = %s;", cType(statement.Element), name, element)
+	}
+	for _, inner := range statement.Body {
+		e.statement(inner)
+	}
+	e.releaseScopes(len(e.scopes) - 1)
+	e.scopes = e.scopes[:len(e.scopes)-1]
+	e.indent--
+	e.line("}")
+	e.breakables = e.breakables[:len(e.breakables)-1]
+	e.loops = e.loops[:len(e.loops)-1]
+	body := e.out.String()
+	e.out = saved
+	e.out.WriteString(body)
+	if current.continued {
+		e.line("%s:;", current.label)
+	}
+	e.indent--
+	e.line("}")
+	e.releaseScopes(len(e.scopes) - 1)
+	e.scopes = e.scopes[:len(e.scopes)-1]
+	e.indent--
+	e.line("}")
+}
+
+// switchStatement emits a switch as do { if / else } while (0), so a break inside a case leaves the
+// switch exactly as JavaScript's does: the do is the innermost thing a C break leaves.
+func (e *emitter) switchStatement(statement ir.Switch) {
+	e.line("{")
+	e.indent++
+	e.scopes = append(e.scopes, nil)
+	value := e.value(statement.Value)
+	held := e.temporary()
+	if statement.Value.Type().IsReference() {
+		e.line("%s %s = adamic_retain(%s);", cType(statement.Value.Type()), held, value)
+		e.hold(held)
+	} else {
+		e.line("%s %s = %s;", cType(statement.Value.Type()), held, value)
+	}
+	e.end()
+	e.line("do {")
+	e.indent++
+	e.breakables = append(e.breakables, len(e.scopes))
+	depth := 0
+	for _, matched := range statement.Cases {
+		tests := []string{}
+		for _, test := range matched.Tests {
+			tests = append(tests, e.binary(ir.Equal, statement.Value.Type(), held, e.value(test)))
+		}
+		e.line("if (%s) {", unwrap(strings.Join(tests, " || ")))
+		e.nested(matched.Body, nil)
+		e.line("} else {")
+		e.indent++
+		depth++
+	}
+	e.block(statement.Default, nil)
+	for ; depth > 0; depth-- {
+		e.indent--
+		e.line("}")
+	}
+	e.breakables = e.breakables[:len(e.breakables)-1]
+	e.indent--
+	e.line("} while (0);")
+	e.releaseScopes(len(e.scopes) - 1)
+	e.scopes = e.scopes[:len(e.scopes)-1]
+	e.indent--
+	e.line("}")
 }
 
 // read reads a local. A global may change under a later call in the same statement, so its value is
@@ -441,8 +796,8 @@ func (e *emitter) read(read ir.Read) string {
 	if read.Checked {
 		e.checkReady(read.Local)
 	}
-	if read.Of == ir.String {
-		return e.own(fmt.Sprintf("adamic_retain(%s)", name))
+	if read.Of.IsReference() {
+		return e.own(read.Of, fmt.Sprintf("adamic_retain(%s)", name))
 	}
 	snapshot := e.temporary()
 	e.line("%s %s = %s;", cType(read.Of), snapshot, name)
@@ -514,7 +869,7 @@ func (e *emitter) conditional(conditional ir.Conditional) string {
 	branch := func(text string, value string, owned []string) {
 		e.out.WriteString(text)
 		e.indent++
-		if valueType == ir.String {
+		if valueType.IsReference() {
 			e.line("%s = adamic_retain(%s);", result, value)
 		} else {
 			e.line("%s = %s;", result, value)
@@ -529,16 +884,16 @@ func (e *emitter) conditional(conditional ir.Conditional) string {
 	e.line("} else {")
 	branch(notText, whenNot, notOwned)
 	e.line("}")
-	if valueType == ir.String {
+	if valueType.IsReference() {
 		e.owned = append(e.owned, result)
 	}
 	return result
 }
 
-// own puts a string the statement owns in a temporary, released when the statement ends.
-func (e *emitter) own(value string) string {
+// own puts a reference the statement owns in a temporary, released when the statement ends.
+func (e *emitter) own(valueType ir.Type, value string) string {
 	name := e.temporary()
-	e.line("adamic_string *%s = %s;", name, value)
+	e.line("%s %s = %s;", cType(valueType), name, value)
 	e.owned = append(e.owned, name)
 	return name
 }
@@ -592,8 +947,27 @@ func cType(valueType ir.Type) string {
 		return "double"
 	case ir.Boolean:
 		return "bool"
+	case ir.Object:
+		return "adamic_object *"
+	case ir.Array:
+		return "adamic_array *"
+	case ir.Map:
+		return "adamic_map *"
+	case ir.MaybeNumber:
+		return "adamic_maybe_number"
 	}
 	return "adamic_string *"
+}
+
+// member is the adamic_value member that holds a value of the type.
+func member(valueType ir.Type) string {
+	switch valueType {
+	case ir.Number:
+		return "number"
+	case ir.Boolean:
+		return "boolean"
+	}
+	return "reference"
 }
 
 // zero is a declared local's value before its first assignment. The checker proves no read comes
@@ -604,8 +978,12 @@ func zero(valueType ir.Type) string {
 		return "0.0"
 	case ir.Boolean:
 		return "false"
+	case ir.String:
+		return "&adamic_string_empty"
+	case ir.MaybeNumber:
+		return "(adamic_maybe_number){false, 0.0}"
 	}
-	return "&adamic_string_empty"
+	return "NULL"
 }
 
 // cNumber is a double as a C literal that reads back as exactly the same bits: hexadecimal floating
@@ -620,4 +998,72 @@ func cNumber(value float64) string {
 		return "(-HUGE_VAL)"
 	}
 	return "(" + strconv.FormatFloat(value, 'x', -1, 64) + ")"
+}
+
+// held is a value as an adamic_value whose reference, if it has one, the receiver keeps.
+func held(valueType ir.Type, value string) string {
+	if valueType.IsReference() {
+		return fmt.Sprintf("(adamic_value){.reference = adamic_retain(%s)}", value)
+	}
+	return fmt.Sprintf("(adamic_value){.%s = %s}", member(valueType), value)
+}
+
+// borrowed is a value as an adamic_value the receiver only looks at.
+func borrowed(valueType ir.Type, value string) string {
+	return fmt.Sprintf("(adamic_value){.%s = %s}", member(valueType), value)
+}
+
+// coalesce emits value ?? fallback, the fallback evaluated only when the value is missing, and
+// value ?? panic(message), which ends the program there.
+func (e *emitter) coalesce(coalesce ir.Coalesce) string {
+	value := e.value(coalesce.Value)
+	present, unwrapped := value+" != NULL", value
+	if coalesce.Value.Type() == ir.MaybeNumber {
+		present, unwrapped = value+".present", value+".number"
+	}
+	if coalesce.Panic != nil {
+		text, message, _ := e.aside(coalesce.Panic)
+		e.line("if (!(%s)) {", present)
+		e.out.WriteString(text)
+		e.line("\tadamic_panic((%s)->bytes, (%s)->length);", message, message)
+		e.line("}")
+		return unwrapped
+	}
+	text, fallback, owned := e.aside(coalesce.Fallback)
+	result := e.temporary()
+	e.line("%s %s;", cType(coalesce.Of), result)
+	e.line("if (%s) {", present)
+	if coalesce.Of.IsReference() {
+		e.line("\t%s = adamic_retain(%s);", result, unwrapped)
+	} else {
+		e.line("\t%s = %s;", result, unwrapped)
+	}
+	e.line("} else {")
+	e.out.WriteString(text)
+	e.indent++
+	if coalesce.Of.IsReference() {
+		e.line("%s = adamic_retain(%s);", result, fallback)
+	} else {
+		e.line("%s = %s;", result, fallback)
+	}
+	for index := len(owned) - 1; index >= 0; index-- {
+		e.line("adamic_release(%s);", owned[index])
+	}
+	e.indent--
+	e.line("}")
+	if coalesce.Of.IsReference() {
+		e.owned = append(e.owned, result)
+	}
+	return result
+}
+
+// joinKind tells the runtime how join writes an element.
+func joinKind(element ir.Type) string {
+	switch element {
+	case ir.Number:
+		return "adamic_join_numbers"
+	case ir.Boolean:
+		return "adamic_join_booleans"
+	}
+	return "adamic_join_strings"
 }

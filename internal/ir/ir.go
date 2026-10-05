@@ -45,7 +45,25 @@ const (
 	Number Type = iota + 1
 	Boolean
 	String
+
+	// Object is a plain object, of any shape: which fields it has is the checker's business, and the
+	// runtime finds each by name.
+	Object
+
+	// Array is an array; its element type travels on the expressions and statements that read it.
+	Array
+
+	// Map is a Map; its key and value types travel on the expressions that read it.
+	Map
+
+	// MaybeNumber is number | undefined: a number that may be missing, as Map.get gives it.
+	MaybeNumber
 )
+
+// IsReference reports whether a value of the type lives on the heap and is counted.
+func (t Type) IsReference() bool {
+	return t == String || t == Object || t == Array || t == Map
+}
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
@@ -111,7 +129,121 @@ type (
 		Condition         Expression
 		WhenTrue, WhenNot Expression
 	}
+
+	// ObjectLiteral makes an object. With Spread, it's { ...Spread, fields }: a copy of Spread's
+	// object, whatever its shape, with Fields replaced (each one a field Spread's type has).
+	ObjectLiteral struct {
+		Spread Expression
+		Fields []Field
+	}
+
+	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is.
+	Property struct {
+		Object   Expression
+		Name     string
+		Of       Type
+		Optional bool
+	}
+
+	// ArrayLiteral makes an array.
+	ArrayLiteral struct {
+		Element  Type
+		Elements []Expression
+	}
+
+	// Length is array.length.
+	Length struct{ Array Expression }
+
+	// MathCall is Math.<Function>(...), on numbers.
+	MathCall struct {
+		Function  string
+		Arguments []Expression
+	}
+
+	// ToFixed is Value.toFixed(Digits).
+	ToFixed struct{ Value, Digits Expression }
+
+	// Undefined is undefined where a reference goes: an object, an array or a string that may be
+	// missing (Tree | undefined), held as a null pointer.
+	Undefined struct{}
+
+	// IsUndefined is Value === undefined, for a reference that may be missing.
+	IsUndefined struct{ Value Expression }
+
+	// ArrayPush is Array.push(Value): it appends and is the new length.
+	ArrayPush struct {
+		Array   Expression
+		Value   Expression
+		Element Type
+	}
+
+	// Unwrap is a MaybeNumber the checker has proven present (narrowed), as a Number.
+	Unwrap struct{ Value Expression }
+
+	// Coalesce is Value ?? Fallback: Value when it's present, and otherwise Fallback, evaluated only
+	// then. With Panic set instead of Fallback, it's Value ?? panic(Panic).
+	Coalesce struct {
+		Value    Expression
+		Fallback Expression
+		Panic    Expression
+		Of       Type
+	}
+
+	// StringLength is string.length, in UTF-16 code units.
+	StringLength struct{ Value Expression }
+
+	// CharCodeAt is string.charCodeAt(Index): a UTF-16 code unit, or NaN.
+	CharCodeAt struct{ Value, Index Expression }
+
+	// Trim is string.trim().
+	Trim struct{ Value Expression }
+
+	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
+	MapNew struct {
+		Key, Value Type
+		Entries    [][2]Expression
+	}
+
+	// MapGet is map.get(Key): the value, or undefined (a null reference, or a MaybeNumber).
+	MapGet struct {
+		Map, Key  Expression
+		KeyType   Type
+		ValueType Type
+	}
+
+	// MapSet is map.set(Key, Value), which is the map.
+	MapSet struct {
+		Map, Key, Value Expression
+		KeyType         Type
+		ValueType       Type
+	}
+
+	// MapHas is map.has(Key), and MapDelete map.delete(Key).
+	MapHas struct {
+		Map, Key Expression
+		KeyType  Type
+	}
+	MapDelete struct {
+		Map, Key Expression
+		KeyType  Type
+	}
+
+	// MapSize is map.size.
+	MapSize struct{ Map Expression }
+
+	// ArrayJoin is Array.join(Separator), writing each element as String() would.
+	ArrayJoin struct {
+		Array     Expression
+		Separator Expression
+		Element   Type
+	}
 )
+
+// Field is one field of an object literal.
+type Field struct {
+	Name  string
+	Value Expression
+}
 
 func (NumberConstant) Type() Type  { return Number }
 func (BooleanConstant) Type() Type { return Boolean }
@@ -120,6 +252,33 @@ func (NumberToString) Type() Type  { return String }
 func (BooleanToString) Type() Type { return String }
 func (Concat) Type() Type          { return String }
 func (c Conditional) Type() Type   { return c.WhenTrue.Type() }
+func (ObjectLiteral) Type() Type   { return Object }
+func (p Property) Type() Type      { return p.Of }
+func (ArrayLiteral) Type() Type    { return Array }
+func (Length) Type() Type          { return Number }
+func (MathCall) Type() Type        { return Number }
+func (ToFixed) Type() Type         { return String }
+func (Undefined) Type() Type       { return Object }
+func (IsUndefined) Type() Type     { return Boolean }
+func (ArrayPush) Type() Type       { return Number }
+func (ArrayJoin) Type() Type       { return String }
+func (Unwrap) Type() Type          { return Number }
+func (c Coalesce) Type() Type      { return c.Of }
+func (StringLength) Type() Type    { return Number }
+func (CharCodeAt) Type() Type      { return Number }
+func (Trim) Type() Type            { return String }
+func (MapNew) Type() Type          { return Map }
+func (MapSet) Type() Type          { return Map }
+func (MapHas) Type() Type          { return Boolean }
+func (MapDelete) Type() Type       { return Boolean }
+func (MapSize) Type() Type         { return Number }
+
+func (g MapGet) Type() Type {
+	if g.ValueType == Number {
+		return MaybeNumber
+	}
+	return g.ValueType
+}
 
 func (r Read) Type() Type { return r.Of }
 func (c Call) Type() Type { return c.Returns }
@@ -199,6 +358,9 @@ type (
 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
 	Evaluate struct{ Value Expression }
 
+	// Panic is the prelude's panic(message): write "adamic: panic: <message>" and exit 70.
+	Panic struct{ Message Expression }
+
 	// Return leaves the function, with Value unless it returns void.
 	Return struct{ Value Expression }
 
@@ -221,17 +383,45 @@ type (
 	// Block is a scope: locals declared in it are released when it ends.
 	Block struct{ Body []Statement }
 
+	// ForOf runs Body once per element of Iterable, with the element in Local. Over an array, its
+	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
+	// elements are its code points, each a string.
+	ForOf struct {
+		Iterable Expression
+		Element  Type
+		Local    int
+		Body     []Statement
+	}
+
+	// Switch matches Value against each case's tests in order with ===, and runs the first match's
+	// Body, or Default's when none matches. A break inside a case leaves the switch. (0.1 has no
+	// fallthrough: the checker refuses it.)
+	Switch struct {
+		Value   Expression
+		Cases   []Case
+		Default []Statement
+	}
+
 	Break    struct{}
 	Continue struct{}
 )
+
+// Case is one switch case: the constants it matches, and what it runs.
+type Case struct {
+	Tests []Expression
+	Body  []Statement
+}
 
 func (WriteLine) statement() {}
 func (Declare) statement()   {}
 func (Assign) statement()    {}
 func (Evaluate) statement()  {}
+func (Panic) statement()     {}
 func (Return) statement()    {}
 func (If) statement()        {}
 func (Loop) statement()      {}
 func (Block) statement()     {}
+func (ForOf) statement()     {}
+func (Switch) statement()    {}
 func (Break) statement()     {}
 func (Continue) statement()  {}

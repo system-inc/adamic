@@ -77,6 +77,9 @@ static void free_one(void *value) {
 		free(array->elements);
 		break;
 	}
+	case adamic_kind_map:
+		adamic_map_free_children(value, let_go);
+		break;
 	}
 	free(value);
 }

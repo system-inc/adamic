@@ -45,23 +45,32 @@ func (r *Refused) Error() string {
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	files := program.Files()
 	if len(files) != 1 {
-		return nil, fmt.Errorf("lower: stage 0 compiles one file, got %d", len(files))
+		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
 	}
-	sourceFile := files[0]
-	typeChecker, release := program.Checker(ctx, sourceFile)
+	entry := files[0]
+	// Stage 0 checks single-threaded, so one checker answers for every file.
+	typeChecker, release := program.Checker(ctx, entry)
 	defer release()
 
 	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}}
 	// The base name only, so the same program emits the same C on every machine.
-	lowering.result.Source = filepath.Base(program.FileName(sourceFile))
-	if err := lowering.declareModule(sourceFile.Statements.Nodes); err != nil {
-		return nil, err
-	}
-	main, err := lowering.statements(sourceFile.Statements.Nodes)
+	lowering.result.Source = filepath.Base(program.FileName(entry))
+	modules, err := lowering.moduleOrder(entry)
 	if err != nil {
 		return nil, err
 	}
-	lowering.result.Main = main
+	for _, module := range modules {
+		if err := lowering.declareModule(module.Statements.Nodes); err != nil {
+			return nil, err
+		}
+	}
+	for _, module := range modules {
+		body, err := lowering.statements(module.Statements.Nodes)
+		if err != nil {
+			return nil, err
+		}
+		lowering.result.Main = append(lowering.result.Main, body...)
+	}
 	return lowering.result, nil
 }
 
@@ -81,6 +90,52 @@ type lowering struct {
 
 	// function is the function being lowered, or nil for the module's top level.
 	function *ir.Function
+}
+
+// moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
+// depth-first in the order they're written, then the module itself. The prelude's 'adamic' module
+// has no body to run. An import cycle is refused, as 0.1 says (docs/0.1.md).
+func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
+	order := []*ast.SourceFile{}
+	state := map[*ast.SourceFile]int{} // 1 while its imports are being visited, 2 once placed
+	var visit func(module *ast.SourceFile, from *ast.Node) error
+	visit = func(module *ast.SourceFile, from *ast.Node) error {
+		switch state[module] {
+		case 1:
+			return &Refused{Where: l.program.Where(from), What: "an import cycle", Fix: "move what both modules need into a third that neither imports"}
+		case 2:
+			return nil
+		}
+		state[module] = 1
+		for _, statement := range module.Statements.Nodes {
+			if statement.Kind != ast.KindImportDeclaration && statement.Kind != ast.KindExportDeclaration {
+				continue
+			}
+			specifier := statement.ModuleSpecifier()
+			if specifier == nil {
+				continue
+			}
+			target := l.checker.GetSymbolAtLocation(specifier)
+			if target == nil || len(target.Declarations) == 0 || target.Declarations[0].Kind != ast.KindSourceFile {
+				// 'adamic' is an ambient module in the prelude: nothing to run.
+				continue
+			}
+			imported := target.Declarations[0].AsSourceFile()
+			if load.IsPrelude(imported) || load.IsLibrary(imported) {
+				continue
+			}
+			if err := visit(imported, statement); err != nil {
+				return err
+			}
+		}
+		state[module] = 2
+		order = append(order, module)
+		return nil
+	}
+	if err := visit(entry, entry.AsNode()); err != nil {
+		return nil, err
+	}
+	return order, nil
 }
 
 // declareModule registers the module's globals and functions before anything is lowered, so a
@@ -105,7 +160,7 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				}
 			}
 		case ast.KindFunctionDeclaration:
-			symbol := l.checker.GetSymbolAtLocation(statement.Name())
+			symbol := l.symbol(statement.Name())
 			if l.functions == nil {
 				l.functions = map[*ast.Symbol]int{}
 			}
@@ -124,11 +179,11 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 
 // functionBody lowers a function declaration's parameters and body.
 func (l *lowering) functionBody(declaration *ast.Node) error {
-	function := &l.result.Functions[l.functions[l.checker.GetSymbolAtLocation(declaration.Name())]]
+	function := &l.result.Functions[l.functions[l.symbol(declaration.Name())]]
 	signature := l.checker.GetSignatureFromDeclaration(declaration)
 	returns := l.checker.GetReturnTypeOfSignature(signature)
 	if returns.Flags()&checker.TypeFlagsVoid == 0 {
-		valueType, isKnown := representation(returns)
+		valueType, isKnown := l.representation(returns)
 		if !isKnown {
 			return l.notYet(declaration.Name(), "a function returning "+l.checker.TypeToString(returns))
 		}
@@ -183,6 +238,12 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
+	case ast.KindImportDeclaration:
+		// What an import brings in is resolved through the checker at each use, and the module it
+		// names runs first (moduleOrder).
+		return nil, nil
+	case ast.KindExportDeclaration, ast.KindExportAssignment:
+		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {
 			return nil, l.notYet(node, "a function inside a function (a closure)")
@@ -207,6 +268,10 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		return l.forStatement(node)
 	case ast.KindWhileStatement, ast.KindDoStatement:
 		return l.whileStatement(node)
+	case ast.KindForOfStatement:
+		return l.forOf(node)
+	case ast.KindSwitchStatement:
+		return l.switchStatement(node)
 	case ast.KindBreakStatement, ast.KindContinueStatement:
 		if node.Label() != nil {
 			return nil, l.notYet(node, "a labeled "+strings.ToLower(strings.TrimSuffix(strings.TrimPrefix(node.Kind.String(), "Kind"), "Statement")))
@@ -231,6 +296,24 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 				return nil, err
 			}
 			return []ir.Statement{statement}, nil
+		}
+		if l.isPreludeFunction(expression.AsCallExpression().Expression, "panic") {
+			arguments := expression.AsCallExpression().Arguments.Nodes
+			if len(arguments) != 1 {
+				return nil, errors.New("lower: " + l.program.Where(expression) + ": panic takes one argument, and the checker let another count through")
+			}
+			message, err := l.expression(arguments[0])
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Panic{Message: message}}, nil
+		}
+		// A builtin's result thrown away, like map.set(key, value) or array.push(value).
+		if lowered, isBuiltin, err := l.builtin(expression); isBuiltin {
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: lowered}}, nil
 		}
 		// A call for its effects, void or not.
 		call, err := l.call(expression)
@@ -296,7 +379,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	symbol := l.checker.GetSymbolAtLocation(name)
+	symbol := l.symbol(name)
 	if symbol == nil {
 		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
 	}
@@ -312,9 +395,22 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	return l.locals[symbol], nil
 }
 
+// symbol is what a name refers to, the same whichever file names it: an import resolves to what it
+// imports, and an exported declaration to its export symbol, so one declaration is one symbol.
+func (l *lowering) symbol(node *ast.Node) *ast.Symbol {
+	symbol := l.checker.GetSymbolAtLocation(node)
+	if symbol == nil {
+		return nil
+	}
+	if symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		symbol = l.checker.GetAliasedSymbol(symbol)
+	}
+	return l.checker.GetExportSymbolOfSymbol(symbol)
+}
+
 // local finds the local an identifier refers to.
 func (l *lowering) local(identifier *ast.Node) (int, bool) {
-	symbol := l.checker.GetSymbolAtLocation(identifier)
+	symbol := l.symbol(identifier)
 	local, isLocal := l.locals[symbol]
 	return local, isLocal
 }
@@ -492,6 +588,17 @@ func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 		return nil, &Refused{Where: l.program.Where(node), What: "a " + typeName(condition.Type()) + " as a condition", Fix: "compare it explicitly, like name.length > 0 or count !== 0"}
 	}
 	return condition, nil
+}
+
+// isPreludeFunction reports whether a callee is the prelude's function of that name, as imported
+// from 'adamic', and not one of the program's that shares the name.
+func (l *lowering) isPreludeFunction(callee *ast.Node, name string) bool {
+	callee = ast.SkipParentheses(callee)
+	if !ast.IsIdentifier(callee) {
+		return false
+	}
+	symbol := l.symbol(callee)
+	return symbol != nil && symbol.Name == name && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
 // isConsole reports whether a callee is a method of the prelude's console.

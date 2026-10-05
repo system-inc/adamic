@@ -163,6 +163,12 @@ func IsPrelude(sourceFile *ast.SourceFile) bool {
 	return sourceFile != nil && sourceFile.FileName() == preludePath
 }
 
+// IsLibrary reports whether a declaration comes from TypeScript's bundled library (lib.es2024.d.ts and
+// the files it includes), which is where Math, Array and String are declared.
+func IsLibrary(sourceFile *ast.SourceFile) bool {
+	return sourceFile != nil && strings.HasPrefix(sourceFile.FileName(), bundled.LibPath())
+}
+
 // rootFileName is the name the checker knows a source file by, refusing anything that isn't Adamic.
 func rootFileName(fs *sourceFS, currentDirectory string, path string) (string, error) {
 	fileName := tspath.NormalizePath(path)

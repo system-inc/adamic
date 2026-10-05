@@ -30,13 +30,13 @@ var fixtures = []struct {
 	{"dedication/dedication.a", true},
 	{"internal/load/testdata/0.1/compile/01_hello.ts", true},
 	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true},
-	{"internal/load/testdata/0.1/compile/03_shapes.ts", false},
+	{"internal/load/testdata/0.1/compile/03_shapes.ts", true},
 	{"internal/load/testdata/0.1/compile/04_closures.ts", false},
 	{"internal/load/testdata/0.1/compile/05_wordcount.ts", false},
 	{"internal/load/testdata/0.1/compile/06_stack.ts", false},
-	{"internal/load/testdata/0.1/compile/07_modules/main.ts", false},
-	{"internal/load/testdata/0.1/compile/08_results.ts", false},
-	{"internal/load/testdata/0.1/compile/09_tree.ts", false},
+	{"internal/load/testdata/0.1/compile/07_modules/main.ts", true},
+	{"internal/load/testdata/0.1/compile/08_results.ts", true},
+	{"internal/load/testdata/0.1/compile/09_tree.ts", true},
 	{"internal/load/testdata/0.1/compile/10_unicode.ts", false},
 	{"internal/oracle/testdata/strings.a", true},
 	{"internal/oracle/testdata/numbers.a", true},
@@ -46,6 +46,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/functions.a", true},
 	{"internal/oracle/testdata/effects.a", true},
 	{"internal/oracle/testdata/dead_zone.a", true},
+	{"internal/oracle/testdata/objects.a", true},
+	{"internal/oracle/testdata/modules/main.a", true},
+	{"internal/oracle/testdata/panic.a", true},
+	{"internal/oracle/testdata/maps_and_text.a", true},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
@@ -150,8 +154,12 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
 			}
-			if leaked := leaks(t, program); leaked != "" {
-				t.Errorf("leaks:\n%s", leaked)
+			// A program that panicked stopped where it stood, as Node's does, so what it held then
+			// isn't a leak; every program that finishes must have let go of everything.
+			if oracle.exitCode == 0 {
+				if leaked := leaks(t, program); leaked != "" {
+					t.Errorf("leaks:\n%s", leaked)
+				}
 			}
 		})
 	}

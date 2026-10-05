@@ -7,18 +7,19 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
-	if valueType, isKnown := representation(l.checker.GetTypeAtLocation(node)); isKnown {
+	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
 	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 }
 
-func representation(proven *checker.Type) (ir.Type, bool) {
+func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	flags := proven.Flags()
 	switch {
 	case flags&checker.TypeFlagsNumberLike != 0:
@@ -27,18 +28,61 @@ func representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.String, true
 	case flags&checker.TypeFlagsBooleanLike != 0:
 		return ir.Boolean, true
+	case flags&checker.TypeFlagsObject != 0 && l.checker.IsArrayType(proven):
+		return ir.Array, true
+	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap"):
+		return ir.Map, true
+	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
+		// A plain object. One with call signatures is a function, which stage 0 can't hold as a value.
+		return ir.Object, true
 	case flags&checker.TypeFlagsUnion != 0:
 		var shared ir.Type
 		for _, member := range proven.Types() {
-			memberType, isKnown := representation(member)
+			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+				// undefined joins a union of references as a null pointer; it's checked below that
+				// the rest are references.
+				continue
+			}
+			memberType, isKnown := l.representation(member)
 			if !isKnown || (shared != 0 && memberType != shared) {
 				return 0, false
 			}
 			shared = memberType
 		}
+		if shared != 0 && !shared.IsReference() && l.includesUndefined(proven) {
+			// number | undefined is a present-and-value pair; boolean | undefined is not yet.
+			if shared == ir.Number {
+				return ir.MaybeNumber, true
+			}
+			return 0, false
+		}
 		return shared, shared != 0
 	}
 	return 0, false
+}
+
+// isLibraryType reports whether a type is one of the library's, by name: Map, not a program's own
+// interface that happens to be called Map.
+func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
+	symbol := proven.Symbol()
+	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+		return false
+	}
+	for _, name := range names {
+		if symbol.Name == name {
+			return true
+		}
+	}
+	return false
+}
+
+func (l *lowering) includesUndefined(proven *checker.Type) bool {
+	for _, member := range proven.Types() {
+		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+			return true
+		}
+	}
+	return false
 }
 
 // expression lowers a value.
@@ -53,14 +97,27 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
 	case ast.KindIdentifier:
 		local, isLocal := l.local(node)
+		if !isLocal && node.Text() == "undefined" {
+			return ir.Undefined{}, nil
+		}
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
-		return ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}, nil
+		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
+		if l.result.Locals[local].Type == ir.MaybeNumber {
+			// Where the checker has narrowed it to number, it's read as one.
+			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == ir.Number {
+				read = ir.Unwrap{Value: read}
+			}
+		}
+		return read, nil
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
+		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
+			return l.coalesce(node)
+		}
 		left, err := l.expression(binary.Left)
 		if err != nil {
 			return nil, err
@@ -74,7 +131,18 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return l.template(node)
 	case ast.KindConditionalExpression:
 		return l.conditional(node)
+	case ast.KindObjectLiteralExpression:
+		return l.objectLiteral(node)
+	case ast.KindArrayLiteralExpression:
+		return l.arrayLiteral(node)
+	case ast.KindPropertyAccessExpression:
+		return l.property(node)
+	case ast.KindNewExpression:
+		return l.newExpression(node)
 	case ast.KindCallExpression:
+		if lowered, isBuiltin, err := l.builtin(node); isBuiltin {
+			return lowered, err
+		}
 		call, err := l.call(node)
 		if err != nil {
 			return nil, err
@@ -147,6 +215,25 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	}
 	if lowered, isComparison := comparisons[operator]; isComparison && both(ir.Number) {
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	}
+	if operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken {
+		// x === undefined tests for a missing reference, whatever x's type.
+		_, leftUndefined := left.(ir.Undefined)
+		_, rightUndefined := right.(ir.Undefined)
+		if leftUndefined != rightUndefined {
+			value := left
+			if leftUndefined {
+				value = right
+			}
+			if !value.Type().IsReference() && value.Type() != ir.MaybeNumber {
+				return nil, l.notYet(node, "comparing a "+typeName(value.Type())+" with undefined")
+			}
+			test := ir.Expression(ir.IsUndefined{Value: value})
+			if operator == ast.KindExclamationEqualsEqualsToken {
+				test = ir.Unary{Operator: ir.Not, Operand: test}
+			}
+			return test, nil
+		}
 	}
 	if (operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken) && left.Type() == right.Type() {
 		lowered := ir.Equal
@@ -227,7 +314,7 @@ func typeName(valueType ir.Type) string {
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	function, isFunction := l.functions[l.checker.GetSymbolAtLocation(callee)]
+	function, isFunction := l.functions[l.symbol(callee)]
 	if !ast.IsIdentifier(callee) || !isFunction {
 		return nil, l.notYet(node, "a call to "+describe(callee))
 	}
@@ -240,4 +327,37 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		arguments = append(arguments, lowered)
 	}
 	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
+}
+
+// coalesce lowers value ?? fallback, and value ?? panic('why'), evaluating the right side only when
+// the left is missing.
+func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
+	binary := node.AsBinaryExpression()
+	value, err := l.expression(binary.Left)
+	if err != nil {
+		return nil, err
+	}
+	present := value.Type()
+	if present == ir.MaybeNumber {
+		present = ir.Number
+	} else if !present.IsReference() {
+		// A value that can't be missing: ?? never runs its right side.
+		return value, nil
+	}
+	right := ast.SkipParentheses(binary.Right)
+	if right.Kind == ast.KindCallExpression && l.isPreludeFunction(right.AsCallExpression().Expression, "panic") && len(right.AsCallExpression().Arguments.Nodes) == 1 {
+		message, err := l.expression(right.AsCallExpression().Arguments.Nodes[0])
+		if err != nil {
+			return nil, err
+		}
+		return ir.Coalesce{Value: value, Panic: message, Of: present}, nil
+	}
+	fallback, err := l.expression(binary.Right)
+	if err != nil {
+		return nil, err
+	}
+	if fallback.Type() != present {
+		return nil, l.notYet(node, "?? whose sides have different types")
+	}
+	return ir.Coalesce{Value: value, Fallback: fallback, Of: present}, nil
 }
