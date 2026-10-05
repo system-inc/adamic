@@ -89,6 +89,8 @@ func Build(source string, output string, options Options) error {
 	}
 	arguments = append(arguments, "-o", output)
 	arguments = append(arguments, units...)
+	// libm is part of libc on macOS, and a library of its own on Linux.
+	arguments = append(arguments, "-lm")
 	command := exec.Command("clang", arguments...)
 	if combined, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
