@@ -1545,6 +1545,14 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 		return e.own(ir.Array, fmt.Sprintf("adamic_string_split(%s, %s)", value, arguments[0]))
 	case "indexOf":
 		return fmt.Sprintf("adamic_string_index_of(%s, %s)", value, arguments[0])
+	case "lastIndexOf":
+		return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_last_index_of(%s, %s)", value, arguments[0]))
+	case "trimStart", "trimEnd":
+		return e.own(ir.String, fmt.Sprintf("adamic_string_trim_sides(%s, %t, %t)", value, call.Method == "trimStart", call.Method == "trimEnd"))
+	case "at":
+		return e.own(ir.String, fmt.Sprintf("adamic_string_at_relative(%s, %s)", value, arguments[0]))
+	case "replace", "replaceAll":
+		return e.own(ir.String, fmt.Sprintf("adamic_string_replace(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "replaceAll"))
 	case "includes":
 		return fmt.Sprintf("(adamic_string_index_of(%s, %s) != -1)", value, arguments[0])
 	case "startsWith":

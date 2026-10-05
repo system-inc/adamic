@@ -238,8 +238,17 @@ struct adamic_array *adamic_string_code_points(const adamic_string *string);
 struct adamic_array *adamic_string_split(const adamic_string *string, const adamic_string *separator);
 
 // adamic_string_at is string[index]: the UTF-16 code unit there, as a string the caller owns, or NULL
-// (undefined) where the string has no such index.
+// (undefined) where the string has no such index. adamic_string_at_relative is string.at(index).
 adamic_string *adamic_string_at(const adamic_string *string, double index);
+adamic_string *adamic_string_at_relative(const adamic_string *string, double index);
+
+// trimStart and trimEnd; trim is both.
+adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bool at_end);
+
+// lastIndexOf, and replace and replaceAll with a string pattern and a replacement string (its $$, $&,
+// $` and $' expanded, as JavaScript does).
+double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
+adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);

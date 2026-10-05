@@ -752,6 +752,14 @@ var stringMethods = map[string]struct {
 	"startsWith":  {[]ir.Type{ir.String}, 0},
 	"endsWith":    {[]ir.Type{ir.String}, 0},
 	"split":       {[]ir.Type{ir.String}, 0},
+	"lastIndexOf": {[]ir.Type{ir.String}, 0},
+	"trimStart":   {nil, 0},
+	"trimEnd":     {nil, 0},
+	"at":          {[]ir.Type{ir.Number}, 0},
+	// A pattern that's a string, and a replacement that's a string: a regular expression or a
+	// function there isn't a string, and stays not yet.
+	"replace":    {[]ir.Type{ir.String, ir.String}, 0},
+	"replaceAll": {[]ir.Type{ir.String, ir.String}, 0},
 }
 
 func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {

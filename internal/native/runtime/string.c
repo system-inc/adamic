@@ -169,15 +169,19 @@ static bool is_space(unsigned point) {
 }
 
 adamic_string *adamic_string_trim(adamic_string *string) {
+	return adamic_string_trim_sides(string, true, true);
+}
+
+adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bool at_end) {
 	size_t start = 0, end = string->length;
-	while (start < end) {
+	while (at_start && start < end) {
 		size_t size = sequence((unsigned char)string->bytes[start]);
 		if (!is_space(decode((const unsigned char *)string->bytes + start, size))) {
 			break;
 		}
 		start += size;
 	}
-	while (end > start) {
+	while (at_end && end > start) {
 		// Back up to the start of the last code point: continuation bytes are 10xxxxxx.
 		size_t lead = end - 1;
 		while (lead > start && ((unsigned char)string->bytes[lead] & 0xc0) == 0x80) {
@@ -493,6 +497,127 @@ static bool affix(const adamic_string *string, const adamic_string *search, bool
 	free(haystack);
 	free(needle);
 	return found;
+}
+
+double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search) {
+	size_t haystack_count, needle_count;
+	unsigned *haystack = to_units(string, &haystack_count), *needle = to_units(search, &needle_count);
+	double found = -1;
+	if (needle_count <= haystack_count) {
+		for (size_t at = haystack_count - needle_count + 1; at-- > 0;) {
+			if (memcmp(haystack + at, needle, needle_count * sizeof *needle) == 0) {
+				found = (double)at;
+				break;
+			}
+		}
+	}
+	free(haystack);
+	free(needle);
+	return found;
+}
+
+// pieces collects the strings a result is joined from, each owned until the join.
+typedef struct pieces {
+	adamic_string **items;
+	size_t count;
+	size_t capacity;
+} pieces;
+
+static void pieces_add(pieces *list, adamic_string *piece) {
+	if (list->count == list->capacity) {
+		list->capacity = list->capacity == 0 ? 8 : list->capacity * 2;
+		adamic_string **grown = realloc(list->items, list->capacity * sizeof *grown);
+		if (grown == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		list->items = grown;
+	}
+	list->items[list->count++] = piece;
+}
+
+// pieces_join joins the pieces (halves of a pair glued where they meet) and lets go of them.
+static adamic_string *pieces_join(pieces *list) {
+	adamic_string *joined = adamic_string_concat(list->count, list->items);
+	for (size_t index = 0; index < list->count; index++) {
+		adamic_release(list->items[index]);
+	}
+	free(list->items);
+	return joined;
+}
+
+// substitution is ECMAScript's GetSubstitution for a match of a string pattern, from start to end
+// in UTF-16 units: $$ is $, $& the match, $` what precedes it and $' what follows. A string pattern
+// has no groups, so $1 and $< are themselves, like every other character.
+static adamic_string *substitution(const adamic_string *string, const adamic_string *replacement, double start, double end, double length) {
+	if (memchr(replacement->bytes, '$', replacement->length) == NULL) {
+		return adamic_retain((adamic_string *)replacement);
+	}
+	pieces list = {NULL, 0, 0};
+	size_t literal = 0;
+	for (size_t at = 0; at < replacement->length; at++) {
+		if (replacement->bytes[at] != '$' || at + 1 == replacement->length) {
+			continue;
+		}
+		adamic_string *expanded = NULL;
+		switch (replacement->bytes[at + 1]) {
+		case '$':
+			expanded = adamic_string_slice_bytes(replacement, at, 1);
+			break;
+		case '&':
+			expanded = adamic_string_slice(string, start, end, true);
+			break;
+		case '`':
+			expanded = adamic_string_slice(string, 0, start, true);
+			break;
+		case '\'':
+			expanded = adamic_string_slice(string, end, length, true);
+			break;
+		}
+		if (expanded == NULL) {
+			continue;
+		}
+		pieces_add(&list, adamic_string_slice_bytes(replacement, literal, at - literal));
+		pieces_add(&list, expanded);
+		at++;
+		literal = at + 1;
+	}
+	pieces_add(&list, adamic_string_slice_bytes(replacement, literal, replacement->length - literal));
+	return pieces_join(&list);
+}
+
+adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all) {
+	// By UTF-16 units throughout: an empty search matches between every unit, the halves of a pair
+	// included, as JavaScript's does.
+	size_t haystack_count, needle_count;
+	unsigned *haystack = to_units(string, &haystack_count), *needle = to_units(search, &needle_count);
+	pieces list = {NULL, 0, 0};
+	double kept = 0;
+	for (double found = unit_index_of(haystack, haystack_count, needle, needle_count, 0); found >= 0;) {
+		double end = found + (double)needle_count;
+		pieces_add(&list, adamic_string_slice(string, kept, found, true));
+		pieces_add(&list, substitution(string, replacement, found, end, (double)haystack_count));
+		kept = end;
+		if (!all) {
+			break;
+		}
+		// The next search starts past the match, or one unit on from an empty one.
+		size_t next = (size_t)found + (needle_count == 0 ? 1 : needle_count);
+		found = next > haystack_count ? -1 : unit_index_of(haystack, haystack_count, needle, needle_count, next);
+	}
+	pieces_add(&list, adamic_string_slice(string, kept, (double)haystack_count, true));
+	free(haystack);
+	free(needle);
+	return pieces_join(&list);
+}
+
+adamic_string *adamic_string_at_relative(const adamic_string *string, double index) {
+	// string.at(index), as array.at: a fraction truncates, NaN is 0, a negative counts from the end.
+	index = isnan(index) ? 0 : trunc(index);
+	if (index < 0) {
+		index += adamic_string_length(string);
+	}
+	return adamic_string_at(string, index);
 }
 
 bool adamic_string_starts_with(const adamic_string *string, const adamic_string *search) {
