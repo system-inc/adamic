@@ -1,0 +1,18 @@
+// A local that aliases a borrowed parameter, then spread with the local dead after.
+type Point = { x: number; name: string };
+function shift(point: Point): Point {
+	const copy = point;
+	return { ...copy, x: copy.x + 1 };
+}
+function main(): void {
+	const start: Point = { x: 1, name: `start${1}` };
+	const shifted = shift(start);
+	console.log(`${start.x} ${shifted.x}`);
+	const items: Point[] = [{ x: 5, name: `item${1}` }];
+	for (const item of items) {
+		const next = { ...item, x: item.x * 2 };
+		console.log(`${item.x} ${next.x}`);
+	}
+	console.log(`${items[0]?.x}`);
+}
+main();

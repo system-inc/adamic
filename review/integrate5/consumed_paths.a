@@ -1,0 +1,32 @@
+// A consumed parameter on every way out, and sources live around loops.
+type Point = { x: number; name: string };
+function clamp(point: Point, limit: number): Point {
+	if (point.x > limit) {
+		return point;
+	}
+	for (let step = 0; step < 3; step++) {
+		if (step === limit) {
+			return { ...point, x: -1 };
+		}
+	}
+	return { ...point, x: point.x + 1 };
+}
+function run(): void {
+	let current: Point = { x: 0, name: `p${0}` };
+	const kept: Point[] = [];
+	for (let round = 0; round < 6; round++) {
+		const next = { ...current, x: current.x + round };
+		kept.push(current);
+		current = clamp(next, round);
+		if (round % 2 === 0) {
+			continue;
+		}
+		current = { ...current, name: `p${round}` };
+	}
+	console.log(`${current.x} ${current.name} ${kept.map((point) => `${point.x}${point.name}`).join(",")}`);
+	let shared: Point = { x: 7, name: `s${7}` };
+	const alias = shared;
+	shared = clamp(shared, 100);
+	console.log(`${alias.x} ${shared.x}`);
+}
+run();
