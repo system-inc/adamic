@@ -172,10 +172,12 @@ func adamicGenerated(t *testing.T, random *rand.Rand, root string) []string {
 	t.Helper()
 	pick := func(choices []string) string { return choices[random.Intn(len(choices))] }
 	var paths []string
+	// A path whose directory can't be made, since a file or a link already stands where a directory of
+	// it would go (a .git file, then .git/HEAD), is skipped: the tree already has something there.
 	write := func(relative string, contents string) {
 		path := filepath.Join(root, relative)
 		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			t.Fatal(err)
+			return
 		}
 		if _, err := os.Lstat(path); err == nil {
 			return
@@ -188,7 +190,7 @@ func adamicGenerated(t *testing.T, random *rand.Rand, root string) []string {
 	link := func(relative string, target string) {
 		path := filepath.Join(root, relative)
 		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			t.Fatal(err)
+			return
 		}
 		if _, err := os.Lstat(path); err == nil {
 			return

@@ -51,15 +51,15 @@ The suppression slice's GAPS.md has Node 24.21.0 failing a `writev` with EINVAL 
 
 ## Performance, observed (not refusals)
 
-On 3,013 trees (13 of cohere's and 3,000 generated, seed 20261005), 162,350 lines answered, unsanitized `-O2`, each run twice, every side's output identical to Go cohere's:
+On 3,013 trees (13 of cohere's and 3,000 generated, seed 20261005), every side's output identical to Go cohere's, unsanitized `-O2`, each run three times:
 
 | | Native | Node | Go cohere |
 |---|---|---|---|
-| the whole run | 2.69 s | 4.18 to 4.27 s | 1.27 to 1.29 s |
+| the whole run | 2.26 to 2.27 s | 3.56 to 3.65 s | 1.16 to 1.19 s |
 
-Go cohere's time is the same calls, Enumerate and the rest, on the same trees, with every answer formatted into memory, not written out. Native is faster than Node, as in the suppression slice. It was 3.3 s before the driver's `quote` wrote a string with nothing to escape whole; under callgrind it had been 29% of the run, visiting every character of every absolute path.
+Go cohere's time is the same calls, Enumerate and the rest, on the same trees, with every answer formatted into memory, not written out. Native is faster than Node, as in the suppression slice. It was 3.3 s before the driver's `quote` wrote a string with nothing to escape whole (29% of the run under callgrind, visiting every character of every absolute path), and 2.7 s before the gitignore slice's `clean` returned an already-clean path as itself (40% of the run; the gitignore slice's GAPS.md, "Path cleaning", has how, and why Go's own way of writing it was slower here).
 
-Not system calls: on 145 of the trees, strace counted 23,122 calls natively against Go's 40,016 (26,053 of them file status calls, most of them `formatoptions.Resolve` probing for settings files, which the port is given the answer of). The native time is the walk's string work: under callgrind, on the 413 trees the test walks and with `quote`'s fast path, 40% of the instructions are the gitignore slice's `clean` (`path.Clean`, written over `split` and `join`, which the port's `join` calls for every entry it walks), and `adamic_string_concat` and `adamic_release` are 24% and 18% with what they call. A `clean` that returned a path it finds already clean, as Go's does without allocating, would remove most of the first; it is the gitignore slice's file, so it is noted here rather than changed.
+Not system calls: on 145 of the trees, strace counted 23,122 calls natively against Go's 40,016 (26,053 of them file status calls, most of them `formatoptions.Resolve` probing for settings files, which the port is given the answer of). What is left is the walk's string work: `clean`'s scans, a third of the instructions, most of it `includes`, which compares at every position with a call to `memcmp`; and building paths a piece at a time.
 
 ## Not covered
 
