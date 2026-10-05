@@ -7,11 +7,13 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -87,6 +89,16 @@ func onNode(t *testing.T, path string) run {
 	return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
 }
 
+// onJavaScriptBackend runs a lowered program through the JavaScript backend, on Node.
+func onJavaScriptBackend(t *testing.T, program *ir.Program) run {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "program.mjs")
+	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return onNode(t, path)
+}
+
 // lowered checks and lowers a program, or returns stage 0's refusal.
 func lowered(t *testing.T, path string) (*ir.Program, error) {
 	t.Helper()
@@ -157,10 +169,16 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Lower: %v", err)
 			}
-			oracle, native := onNode(t, path), natively(t, program)
+			oracle, native, backend := onNode(t, path), natively(t, program), onJavaScriptBackend(t, program)
 			if difference := disagreement(oracle, native); difference != "" {
 				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
+			}
+			// The JavaScript backend runs the same IR the native one compiled, with nothing of C, so
+			// where it differs from the source the fault is in lowering.
+			if difference := disagreement(oracle, backend); difference != "" {
+				t.Errorf("JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
+					difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
 			}
 			// A program that panicked stopped where it stood, as Node's does, so what it held then
 			// isn't a leak; every program that finishes must have let go of everything.

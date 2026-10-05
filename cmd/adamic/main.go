@@ -2,6 +2,7 @@
 //
 //	adamic types <file.a|file.ts>...        check, and print every declaration's proven type
 //	adamic c <file.a|file.ts>               print the program as C
+//	adamic js <file.a|file.ts>              print the program as JavaScript
 //	adamic build <file.a|file.ts> -o <out>  compile it to a native binary
 package main
 
@@ -13,6 +14,7 @@ import (
 	"path/filepath"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -21,6 +23,7 @@ import (
 const usage = `usage:
   adamic types <file.a|file.ts>...
   adamic c <file.a|file.ts>
+  adamic js <file.a|file.ts>
   adamic build <file.a|file.ts> -o <out>`
 
 func main() {
@@ -46,6 +49,13 @@ func run(arguments []string) int {
 			return code
 		}
 		fmt.Print(native.C(lowered))
+		return 0
+	case len(arguments) == 2 && arguments[0] == "js":
+		lowered, code := compile(arguments[1])
+		if lowered == nil {
+			return code
+		}
+		fmt.Print(javascript.JavaScript(lowered))
 		return 0
 	case len(arguments) == 4 && arguments[0] == "build" && arguments[2] == "-o":
 		lowered, code := compile(arguments[1])
