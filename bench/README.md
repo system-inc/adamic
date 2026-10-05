@@ -48,3 +48,14 @@ Native uses the least memory in every row, 3x to 14x less than Node. On time it 
 - **nbody: field access through a call, and retains on every element read.** Every field read and write is a call to `adamic_object_field` with a slot cache, even on a class instance whose layout is fixed, and each `bodies[i] ?? ...` costs four retains and three releases (52 million in all). Fixed offsets for class fields and borrowed element reads are the fix. Bun's 0.2 s here is JavaScriptCore's optimizing compiler keeping the five bodies' fields in registers.
 
 The two wins, sort and word_count, are TimSort over unboxed doubles and the runtime's map, with no JIT warm-up to pay.
+
+## The tokenizer after the constant-time string index
+
+Stream C's string index (`a93acb9`: a cached length, checkpoints and a cursor, in runtime/string.c) made `length` and `charCodeAt` constant time. The same benchmark, rerun on `cloud/integrate-2` at `f1511de` on the same kind of cloud container, best of 5, load 2.41 before (the gate had just run), so noisier than the table above:
+
+| tokenizer | native | Node | Bun | native vs Node |
+|---|---|---|---|---|
+| before, `0955c44` | did not finish in 120 s | 0.383 s, 146.1 MB | 0.425 s, 88.6 MB | over 300x, slower |
+| after, `f1511de` | 1.482 s, 56.7 MB | 0.385 s, 126.5 MB | 0.435 s, 88.3 MB | 3.85x, slower |
+
+The counted build now finishes: 1,194,976 allocations and frees, 10,048,047 retains, 10,043,004 releases, 597,494 peak live. What's left of the loss is retain and release traffic: every `text.charCodeAt(position)` retains the global `text` before the call and releases it after, which is about ten million pairs, and each `charCodeAt` is a call into the runtime's translation unit, where clang can't inline it. Borrowing a global's reference for the length of a call, as borrowed parameters do for parameters, and an inlinable ASCII path for `charCodeAt` are what would close it.
