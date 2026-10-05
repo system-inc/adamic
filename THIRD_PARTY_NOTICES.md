@@ -121,3 +121,16 @@ The `adamic` compiler (stage 0) is built on cohere and the TypeScript compiler i
 Copyright (c) Microsoft Corporation, Apache License 2.0), and on the Go toolchain. Their notices are in
 [cohere/NOTICE](cohere/NOTICE) and [cohere/THIRD_PARTY_NOTICES.md](cohere/THIRD_PARTY_NOTICES.md), and they travel with
 any build of the compiler.
+
+## In stage 1
+
+Stage 1 ports cohere to Adamic (`stage1/cohere/`). cohere's own code is under the same licenses as Adamic's; what cohere ported from others keeps its notice here.
+
+### postcss-media-query-parser
+
+- Source: https://github.com/dryoma/postcss-media-query-parser
+- Version: 0.2.3
+- License: `MIT`
+- In Adamic: `stage1/cohere/mediaquery/`, a port of cohere's port of it (internal/format/css/mediaquery), keeping its doc comments.
+
+No license text is published with this package or in its repository. Its package.json declares MIT, and names dryoma as its author.
