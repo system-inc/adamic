@@ -550,6 +550,39 @@ Two mutants, each run against the whole oracle and each caught by ASan alone:
 | A value the statement doesn't own is moved too, so nothing retains it | heap-use-after-free, in 28 fixtures |
 | An owned temporary is moved but still let go of at the statement's end | heap-use-after-free, in 63 fixtures |
 
+### Declarations, assignments and `??` take what the statement owns
+
+`nbody` made 8 objects and 52,000,118 retains. Read in its C first: every `const other = bodies[j] ?? new Body(...)` retained the element into a temporary, retained that again as what `??` makes, and retained it a third time into `other`. The statement then let go of the first two, and `other`'s scope of the third. That's three pairs where one does. With `body` the same way, it comes to about 51 pairs a step.
+
+Three moves, each where nothing can run between the move and the end of what owned the count:
+
+- **A declaration or a statement's assignment** takes the statement's own temporary (`taken` in `emit.go`). The store is the statement's last write, so nothing after it can assign the variable while the statement still reads the value. That's the case `kept` left out: an assignment inside a larger expression, where a later call could.
+- **`??` passes its left operand on** when the statement owns it. When the left operand isn't there, it's NULL, with nothing to let go of.
+- **`??` passes a fallback it made on** with its count, in its own branch.
+
+Counted:
+
+| | retains | releases |
+|---|---:|---:|
+| `nbody` before | 52,000,118 | 52,000,122 |
+| `nbody` after | 22,000,050 | 22,000,054 |
+| `word_count` | 7,140,552 to 6,100,372 | 6,140,609 to 5,100,429 |
+| `tokenizer` | 2,407,586 to 2,405,063 | 2,402,543 to 2,400,020 |
+
+`trees` lost its last 2 of each, and `sort` 2 of each. In the oracle's table 114 rows moved, 1,025,184 retains and 1,025,233 releases in all. Allocations, frees and peak moved on none.
+
+**15 rows fell by more releases than retains**, from 1 more (`string_positions.a`) to 7 (`string_index.a`). That's the second move: when `??` found its left operand absent, the statement used to release that NULL temporary at its end, a counted call. Proof: with a release of the left operand put back in the absent branch, all 114 rows fell by equal amounts.
+
+Time, best of 5 at load about 3: `nbody` 0.393 s to 0.242 s interleaved against the commit before; against Node, 0.241 s to 0.763 s, **0.32x Node**, in 4.0 MB to Node's 72.1. Bun is at 0.127 s. The 22 million retains left are one per element read, the count a variable keeps on what it was given. Borrowing a local from an array nothing can change while the local lives is the next step there.
+
+Three mutants, each run against the whole oracle and each caught by ASan alone:
+
+| Mutant | Caught by |
+|---|---|
+| An assignment takes a value the statement doesn't own, so nothing retains it | heap-use-after-free, in 3 fixtures |
+| `??` passes its left operand on, and the statement still lets go of it | heap-use-after-free, in 19 fixtures |
+| `??` passes its fallback on, and still lets go of it | heap-use-after-free, in 3 fixtures |
+
 ## Strings, specifically
 
 UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.

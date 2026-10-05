@@ -414,12 +414,14 @@ func (e *emitter) statement(statement ir.Statement) {
 		if statement.Value != nil {
 			value = e.value(statement.Value)
 		}
+		// The declaration is the statement's last write: what it owns, the variable can take.
+		owned := e.taken(value)
 		if local.Global {
-			e.store(statement.Local, value)
+			e.store(statement.Local, value, owned)
 			e.line("%s = true;", readyName(statement.Local))
 			e.initialized = append(e.initialized, statement.Local)
 		} else {
-			e.declareLocal(statement.Local, value, false)
+			e.declareLocal(statement.Local, value, owned)
 		}
 		e.end()
 	case ir.Assign:
@@ -428,7 +430,9 @@ func (e *emitter) statement(statement ir.Statement) {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			e.checkReady(statement.Local)
 		}
-		e.store(statement.Local, value)
+		// The store is the statement's last write: nothing after it can assign the variable again
+		// while the statement still reads the value, so what the statement owns, the variable takes.
+		e.store(statement.Local, value, e.taken(value))
 		e.end()
 	case ir.Evaluate:
 		if splice, isSplice := statement.Value.(ir.ArraySplice); isSplice {
@@ -526,7 +530,7 @@ func (e *emitter) statement(statement ir.Statement) {
 
 // store gives a local a value; a string's new reference is taken before the old one is let go,
 // since they may be the same string.
-func (e *emitter) store(local int, value string) {
+func (e *emitter) store(local int, value string, owned bool) {
 	if e.program.Locals[local].Borrowed {
 		// Storing would release the old value, which is the caller's. Lowering never borrows a
 		// parameter anything assigns, so reaching this is a compiler bug, said out loud.
@@ -538,9 +542,12 @@ func (e *emitter) store(local int, value string) {
 			e.line("%s.%s = %s;", slot, member(e.program.Locals[local].Type), slotted(e.program.Locals[local].Type, value))
 			return
 		}
+		if !owned {
+			value = retained(value)
+		}
 		old := e.temporary()
 		e.line("void *%s = %s.reference;", old, slot)
-		e.line("%s.reference = %s;", slot, retained(value))
+		e.line("%s.reference = %s;", slot, value)
 		e.line("adamic_release(%s);", old)
 		return
 	}
@@ -548,9 +555,12 @@ func (e *emitter) store(local int, value string) {
 		e.line("%s = %s;", name, value)
 		return
 	}
+	if !owned {
+		value = retained(value)
+	}
 	old := e.temporary()
 	e.line("%s %s = %s;", cType(e.program.Locals[local].Type), old, name)
-	e.line("%s = %s;", name, retained(value))
+	e.line("%s = %s;", name, value)
 	e.line("adamic_release(%s);", old)
 }
 
@@ -1924,6 +1934,17 @@ func (e *emitter) kept(value string) string {
 	return retained(value)
 }
 
+// taken gives up the statement's own count of a temporary, when value is one, to whatever is about
+// to hold it without a retain: true says it was given up.
+func (e *emitter) taken(value string) bool {
+	index := slices.Index(e.owned, value)
+	if index < 0 {
+		return false
+	}
+	e.owned = slices.Delete(e.owned, index, index+1)
+	return true
+}
+
 // own puts a reference the statement owns in a temporary, released when the statement ends.
 func (e *emitter) own(valueType ir.Type, value string) string {
 	name := e.temporary()
@@ -2090,7 +2111,11 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	result := e.temporary()
 	e.line("%s %s;", cType(coalesce.Of), result)
 	e.line("if (%s) {", present)
-	if coalesce.Of.IsReference() && !fresh {
+	if coalesce.Of.IsReference() && !fresh && e.taken(unwrapped) {
+		// The value the statement owns is passed on as what ?? makes; when it isn't there it's
+		// undefined, and there was nothing to let go of.
+		e.line("\t%s = %s;", result, unwrapped)
+	} else if coalesce.Of.IsReference() && !fresh {
 		e.line("\t%s = %s;", result, retained(unwrapped))
 	} else {
 		e.line("\t%s = %s;", result, unwrapped)
@@ -2098,7 +2123,11 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	e.line("} else {")
 	e.out.WriteString(text)
 	e.indent++
-	if coalesce.Of.IsReference() {
+	if index := slices.Index(owned, fallback); coalesce.Of.IsReference() && index >= 0 {
+		// A fallback made here is passed on with its count.
+		owned = slices.Delete(slices.Clone(owned), index, index+1)
+		e.line("%s = %s;", result, fallback)
+	} else if coalesce.Of.IsReference() {
 		e.line("%s = %s;", result, retained(fallback))
 	} else {
 		e.line("%s = %s;", result, fallback)
