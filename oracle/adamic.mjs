@@ -3,7 +3,7 @@
 // A panic writes one line to stderr and exits 70. It sets process.exitCode rather than calling
 // process.exit, because stdout to a pipe is asynchronous on macOS and process.exit would drop what
 // the program already printed. 0.1 has no try, so nothing catches the throw.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 
 class AdamicPanic extends Error {}
 
@@ -67,6 +67,43 @@ function failure(code, writing) {
 			return 'is a directory';
 	}
 	return 'failed';
+}
+
+// readDirectory is a directory's names as readdirSync gives them: libuv's scandir, sorted by their
+// bytes, without . and .., each decoded as UTF-8. The native runtime sorts and decodes the same way
+// (directory.c).
+export function readDirectory(path) {
+	try {
+		return { kind: 'Ok', names: readdirSync(path) };
+	} catch (error) {
+		return { kind: 'Error', message: `cannot read directory ${path}: ${listingFailure(error.code)}` };
+	}
+}
+
+function listingFailure(code) {
+	switch (code) {
+		case 'ENOENT':
+			return 'no such directory';
+		case 'ENOTDIR':
+			return 'not a directory';
+		case 'EACCES':
+		case 'EPERM':
+			return 'permission denied';
+	}
+	return 'failed';
+}
+
+// fileStatus is what a path names, as statSync sees it, following a symbolic link, with whether the
+// path is itself one, as lstatSync sees it. A link to nothing is no such file, as statSync says.
+export function fileStatus(path) {
+	try {
+		const link = lstatSync(path);
+		const status = link.isSymbolicLink() ? statSync(path) : link;
+		const type = status.isFile() ? 'file' : status.isDirectory() ? 'directory' : 'other';
+		return { kind: 'Ok', type, size: status.size, symbolicLink: link.isSymbolicLink() };
+	} catch (error) {
+		return { kind: 'Error', message: `cannot read status of ${path}: ${failure(error.code, false)}` };
+	}
 }
 
 // programArguments is the arguments after the program, as process.argv.slice(2) is when Node runs the

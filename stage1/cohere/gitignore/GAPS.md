@@ -145,9 +145,9 @@ stage 0 can't lower a BinaryExpression with a value and a number yet        (Nod
 
 **Around it, until it closed:** `(set[member] ?? 0) === 1`. Nothing in the port needs it now.
 
-## 8. A tuple as a value
+## 8. A tuple as a value (closed on cloud/collections-fs)
 
-A tuple literal anywhere except directly inside `new Map([...])` is refused: returned, assigned, or as an element of a constant array.
+A tuple literal anywhere except directly inside `new Map([...])` was refused: returned, assigned, or as an element of a constant array. Stream C2 closed it: a tuple written out is a value wherever the checker types it a tuple, and `const [a, b] = tuple` (and `let`) destructures one, at a module's top level too.
 
 ```ts
 function cut(text: string): readonly [string, number] {
@@ -172,7 +172,7 @@ stage 0 can't lower a value of type [string, number] where an array goes yet
 
 The Go returns two results in several places: `strings.CutPrefix`'s `(after, found)`, and `(bool, Source)` from `Ignored` and `Excluded`. A tuple is how TypeScript says that.
 
-**Around it:** named fields. `Cut { after, found }` (strings.CutPrefix's own result names), and `Verdict { ignored, source }` (cohere's differential test names the pair `verdict`). While the cases were constants, a tree's entries were written `new Map<string, Entry>([...])`, the one place tuple literals lower. case.ts now builds the map with `set` as it reads them.
+**Around it, until it closed:** named fields. `Cut { after, found }` (strings.CutPrefix's own result names), and `Verdict { ignored, source }` (cohere's differential test names the pair `verdict`). While the cases were constants, a tree's entries were written `new Map<string, Entry>([...])`, the one place tuple literals lower. case.ts now builds the map with `set` as it reads them.
 
 ## 9. `return panic(...)`
 
