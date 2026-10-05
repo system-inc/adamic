@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <math.h>
+
 enum adamic_stream {
 	adamic_stdout = 1,
 	adamic_stderr = 2,
@@ -25,6 +27,7 @@ enum adamic_kind {
 	adamic_kind_map_iterator,
 	adamic_kind_number,
 	adamic_kind_boolean,
+	adamic_kind_weak,
 };
 
 typedef struct adamic_heap {
@@ -95,8 +98,17 @@ typedef struct adamic_string {
 	struct adamic_string_index *index;
 } adamic_string;
 
+// ADAMIC_LITERAL_INDEX marks a constant's index as not yet built: a constant lives as long as the
+// program, so a long one can have an index that does too (string_index.c). Only a constant of static
+// storage may carry it.
+extern char adamic_literal_mark;
+#define ADAMIC_LITERAL_INDEX ((struct adamic_string_index *)&adamic_literal_mark)
+
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
-#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, NULL}
+#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX}
+
+// ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string}, size, array, 0, ADAMIC_LITERAL_INDEX}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 typedef struct adamic_shape {
@@ -127,8 +139,16 @@ adamic_object *adamic_object_new(const adamic_shape *shape);
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
 
-// adamic_object_field finds a field by name. The checker proved the field is there.
-adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+// adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
+// the program last saw the same shape, the field is where it was then, which is inline, since it's
+// what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
+adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (cache->shape == object->shape) {
+		return &((adamic_object *)object)->slots[cache->index];
+	}
+	return adamic_object_find(object, name, cache);
+}
 
 // adamic_array is an array (array.c). references says whether its elements are references.
 typedef struct adamic_array {
@@ -200,7 +220,24 @@ adamic_array *adamic_set_values(const adamic_map *set);
 void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 
 // adamic_array_at is array[index]: the element's slot, or NULL (undefined) when there isn't one.
-adamic_value *adamic_array_at(const adamic_array *array, double index);
+// It's inline, since a loop over an array reads through it every pass. An array index is an integer
+// from 0 up to the length; anything else (negative, a fraction, NaN, past the end) is a property the
+// array doesn't have, which reads as undefined.
+//
+// Past the bounds check, 0 <= index < length, so (size_t)index is defined and, back as a double, is
+// trunc(index) exactly (below 2^53 the conversion is exact, and from there every double is whole), so
+// a fraction is caught without calling trunc, which on x86-64 without SSE4.1 is a call into libm on
+// every read. -0 is index 0, as JavaScript reads it.
+static inline adamic_value *adamic_array_at(const adamic_array *array, double index) {
+	if (!(index >= 0) || index >= (double)array->length) {
+		return NULL;
+	}
+	size_t whole = (size_t)index;
+	if ((double)whole != index) {
+		return NULL;
+	}
+	return &array->elements[whole];
+}
 
 // adamic_array_set is array[index] = value, which takes the value; it panics at an index the array
 // doesn't have.
@@ -357,6 +394,10 @@ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic
 // is the low half of a surrogate pair there. Both take constant time amortized (string_index.c).
 size_t adamic_string_units(const adamic_string *string);
 size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low);
+
+// adamic_string_units_before is how many UTF-16 units come before a byte offset that starts a code
+// point: indexOf's answer, found through the index rather than by counting from the start.
+size_t adamic_string_units_before(const adamic_string *string, size_t offset);
 void adamic_string_free_index(adamic_string *string);
 
 // adamic_string_equal is ===.
@@ -396,6 +437,19 @@ extern adamic_string adamic_typeof_boolean;
 extern adamic_string adamic_typeof_undefined;
 extern adamic_string adamic_typeof_object;
 extern adamic_string adamic_typeof_function;
+
+// adamic_weak is the handle a Weak<Target> slot holds (weak.c): counted itself, it doesn't count its
+// target, and it says NULL once the target is freed. adamic_weak_of is the target's handle, retained
+// for the caller (NULL for NULL); adamic_weak_target is what a handle points to, and
+// adamic_weak_target_present the same where the checker proved it present, panicking if it was freed.
+// The heap tells weak.c when a target is freed (adamic_weak_forget) and when a handle is
+// (adamic_weak_dropped).
+typedef struct adamic_weak adamic_weak;
+adamic_weak *adamic_weak_of(void *target);
+void *adamic_weak_target(const adamic_weak *handle);
+void *adamic_weak_target_present(const adamic_weak *handle);
+void adamic_weak_forget(void *target);
+void adamic_weak_dropped(adamic_weak *handle);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
 // rather than kill, as on Node.
@@ -445,6 +499,10 @@ double adamic_math_sinh(double x);
 double adamic_math_tan(double x);
 double adamic_math_tanh(double x);
 double adamic_math_hypot(size_t count, const double *values);
+
+// adamic_number_shortest_digits is V8's shortest digits for a positive, finite value (dtoa.c), as
+// Number::toString writes them: value is 0.d1d2d3... times 10^point, and it returns how many.
+int adamic_number_shortest_digits(double value, char digits[18], int *point);
 
 // adamic_number_to_exponential is value.toExponential(digits), and the shortest digits when there
 // are none; adamic_number_to_precision is value.toPrecision(digits), and String(value) when there

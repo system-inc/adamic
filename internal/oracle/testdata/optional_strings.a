@@ -1,0 +1,32 @@
+// An optional string parameter given undefined is its default, as in JavaScript: padStart's and
+// padEnd's fill a space, normalize's form NFC, join's separator a comma. A string that may be
+// undefined is held as a null reference, which once reached the runtime and crashed there.
+function pad(fill?: string): string {
+	return `${'x'.padStart(3, fill)}|${'y'.padEnd(4, fill)}`;
+}
+console.log(pad());
+console.log(pad('*'));
+console.log(pad(''));
+console.log(`[${'x'.padStart(3, undefined)}]`);
+
+function form(chosen?: string): number {
+	return 'é'.normalize(chosen).length;
+}
+console.log(`${form()} ${form('NFD')} ${form('NFC')} ${'é'.normalize(undefined).length}`);
+
+function joined(separator?: string): string {
+	return [1, 2, 3].join(separator);
+}
+console.log(`${joined()} ${joined(' - ')} ${['a', 'b'].join(undefined)}`);
+
+let fill: string | undefined = undefined;
+const shown: string[] = [];
+for (let round = 0; round < 3; round += 1) {
+	shown.push(`${round}`.padStart(4, fill));
+	if (round === 0) {
+		fill = '0';
+	} else {
+		fill = undefined;
+	}
+}
+console.log(shown.join(','));
