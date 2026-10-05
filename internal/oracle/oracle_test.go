@@ -128,6 +128,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/output_then_panic.a", true, false},
 	{"internal/oracle/testdata/interleaved.a", true, false},
 	{"internal/oracle/testdata/sets.a", true, false},
+	{"internal/oracle/testdata/maybe_collections.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

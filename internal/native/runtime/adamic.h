@@ -245,6 +245,10 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
 
+// adamic_array_sort_undefined_last sorts an array of number | undefined as JavaScript does: every
+// undefined goes to the end, never passed to the comparator (sort_undefined.c).
+void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
+
 // adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);
 
