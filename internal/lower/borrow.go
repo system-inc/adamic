@@ -51,6 +51,10 @@ func findAssigned(statements []ir.Statement, assigned map[int]bool) {
 				findAssigned(switchCase.Body, assigned)
 			}
 			findAssigned(statement.Default, assigned)
+		case ir.Try:
+			findAssigned(statement.Body, assigned)
+			findAssigned(statement.Catch, assigned)
+			findAssigned(statement.Finally, assigned)
 		}
 	}
 }

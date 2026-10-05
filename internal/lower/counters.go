@@ -387,5 +387,9 @@ func eachNested(statement ir.Statement, visit func([]ir.Statement)) {
 			visit(switchCase.Body)
 		}
 		visit(statement.Default)
+	case ir.Try:
+		visit(statement.Body)
+		visit(statement.Catch)
+		visit(statement.Finally)
 	}
 }
