@@ -810,6 +810,23 @@ func (e *emitter) value(expression ir.Expression) string {
 			e.line("adamic_map_set(%s, %s, %s);", created, held(expression.Key, entry[0]), held(expression.Value, entry[1]))
 		}
 		return created
+	case ir.SetNew:
+		var values string
+		if expression.Values != nil {
+			values = e.value(expression.Values)
+		}
+		created := e.own(ir.Map, fmt.Sprintf("adamic_map_new(%t, false)", expression.Element == ir.String))
+		if expression.Values != nil {
+			e.line("adamic_set_add_all(%s, %s);", created, values)
+		}
+		return created
+	case ir.SetAdd:
+		set := e.value(expression.Set)
+		value := e.value(expression.Value)
+		e.line("adamic_map_set(%s, %s, (adamic_value){.number = 0});", set, held(expression.Element, value))
+		return set
+	case ir.SetValues:
+		return e.own(ir.Array, fmt.Sprintf("adamic_set_values(%s)", e.value(expression.Set)))
 	case ir.MapGet:
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)

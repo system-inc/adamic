@@ -185,6 +185,12 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value);
 
 bool adamic_map_delete(adamic_map *map, adamic_value key);
 
+// A Set is a map whose values aren't used (set.c). adamic_set_add_all adds an array's elements in
+// order, new Set(array), each reference retained; adamic_set_values is [...set], a new array the caller
+// owns.
+void adamic_set_add_all(adamic_map *set, const adamic_array *values);
+adamic_array *adamic_set_values(const adamic_map *set);
+
 // adamic_map_free_children lets go of what a map holds, for the heap's freeing.
 void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 

@@ -111,6 +111,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		if spread.Type() == ir.String {
 			return ir.CodePoints{Value: spread}, nil
 		}
+		if spread.Type() == ir.Map && l.isSet(items[0].AsSpreadElement().Expression) {
+			return l.setValues(items[0].AsSpreadElement().Expression, spread)
+		}
 		if spread.Type() == ir.Map {
 			key, value, err := l.mapTypes(items[0].AsSpreadElement().Expression)
 			if err != nil {
@@ -327,6 +330,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if _, isVisit := visits[name]; receiverType == ir.Array && (isVisit || arrayMethods[name]) {
 		return l.arrayMethod(node, receiver, name)
 	}
+	if receiverType == ir.Map && l.isSet(receiver) {
+		return l.setMethod(node, receiver, name)
+	}
 	if receiverType == ir.Map && (name == "get" || name == "set" || name == "has" || name == "delete") {
 		return l.mapMethod(node, receiver, name)
 	}
@@ -537,6 +543,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 // map.values() into one name. An entry as one name would be a tuple made each step, which stage 0
 // doesn't do yet.
 func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *ast.Node, part string, name *ast.Node) ([]ir.Statement, error) {
+	if l.isSet(iterated) {
+		return l.forOfSet(node, iterable, iterated, part, name)
+	}
 	key, value, err := l.mapTypes(iterated)
 	if err != nil {
 		return nil, err
@@ -900,6 +909,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	created := node.AsNewExpression()
 	if declaration, isClass := l.classes[l.symbol(ast.SkipParentheses(created.Expression))]; isClass {
 		return l.construct(node, declaration)
+	}
+	if l.isLibraryGlobal(created.Expression, "Set") {
+		return l.newSet(node)
 	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {
 		return nil, l.notYet(node, "new "+describe(created.Expression))
