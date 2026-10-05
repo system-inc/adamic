@@ -117,7 +117,7 @@ func planReuse(program *ir.Program) *reusePlan {
 					if !isRead || index >= len(parameters) || !plan.consumed[parameters[index]] {
 						continue
 					}
-					if plan.movable(program, instruction, each.live[instruction.Id], read, call.Function) {
+					if plan.movable(program, instruction, each.live[instruction.Id], read) {
 						if plan.moves[instruction.At] == nil {
 							plan.moves[instruction.At] = map[int]bool{}
 						}
@@ -203,18 +203,39 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 
 // movable reports whether an argument that reads a variable may move its value into a consumed
 // parameter: nothing reads the variable's current value after.
-func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instruction, live map[flow.DeclarationId]bool, read ir.Read, callee int) bool {
+func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instruction, live map[flow.DeclarationId]bool, read ir.Read) bool {
 	local := program.Locals[read.Local]
 	if local.Captured || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
+		return false
+	}
+	if local.Borrowed && !plan.consumed[read.Local] {
+		// A borrowed parameter's count is its caller's: there's nothing here to move, and handing
+		// it on as if there were gives the caller's object to a callee that may reuse or free it.
 		return false
 	}
 	if !local.Global {
 		return !live[flow.DeclarationId(read.Local+1)] || defines(instruction, read.Local)
 	}
-	// A global: only when this statement assigns it anew, and nothing the call can reach reads or
-	// writes it, or calls something this can't see into (a closure, or a callback).
+	// A global: only when this statement assigns it anew, and nothing that runs while it's moved out
+	// reads or writes it, or calls something this can't see into (a closure, or a callback). That's
+	// every call in the statement, not only the callee: another argument, evaluated after this one
+	// is moved, may read the global.
 	assign, ok := (*instruction.At).(ir.Assign)
-	return ok && assign.Local == read.Local && !touches(program, callee, read.Local, map[int]bool{})
+	if !ok || assign.Local != read.Local {
+		return false
+	}
+	reached := false
+	walk(evaluated(instruction), func(expression ir.Expression) {
+		switch expression := expression.(type) {
+		case ir.Call:
+			if touches(program, expression.Function, read.Local, map[int]bool{}) {
+				reached = true
+			}
+		case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
+			reached = true
+		}
+	})
+	return !reached
 }
 
 // touches reports whether a function, or anything it calls, reads or writes a global, or calls a
@@ -408,7 +429,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	unique := e.temporary()
 	// Checked before any field's value is evaluated, which can't make anything else hold it: the plan
 	// saw that nothing in this instruction but the literal reads the source, and only its fields.
-	e.line("bool %s = %s->heap.references == 1;", unique, source)
+	e.line("bool %s = %s;", unique, uniquelyHeld(source))
 	object := e.own(ir.Object, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_object_copy(%s))", unique, source, source))
 	replaced := map[string]bool{}
 	for _, field := range literal.Fields {
@@ -513,7 +534,7 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 	}
 	source := e.localName(read.Local)
 	unique := e.temporary()
-	e.line("bool %s = %s->heap.references == 1;", unique, source)
+	e.line("bool %s = %s;", unique, uniquelyHeld(source))
 	callback := e.value(expression.Callback)
 	mapped := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(%s->length, %t))", unique, source, source, expression.Result.IsReference()))
 	count, index, result := e.temporary(), e.temporary(), e.temporary()
@@ -550,7 +571,7 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 	}
 	source := e.localName(read.Local)
 	unique := e.temporary()
-	e.line("bool %s = %s->heap.references == 1;", unique, source)
+	e.line("bool %s = %s;", unique, uniquelyHeld(source))
 	array := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(0, %t))", unique, source, literal.Element.IsReference()))
 	e.line("if (!%s) {", unique)
 	e.line("\tadamic_array_append(%s, %s);", array, source)
@@ -567,4 +588,11 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 		}
 	}
 	return array, true
+}
+
+// uniquelyHeld is the C test that a value nothing else can reach: its count is 1, and no Weak points
+// at it. A Weak doesn't count, so a count of 1 alone leaves the Weak's holder able to read or write
+// the value while it's being taken over, and to find the new value at the old one's place after.
+func uniquelyHeld(value string) string {
+	return fmt.Sprintf("(%s->heap.references == 1 && !adamic_weak_held(%s))", value, value)
 }

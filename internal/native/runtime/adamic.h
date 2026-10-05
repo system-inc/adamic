@@ -413,6 +413,9 @@ void *adamic_weak_target(const adamic_weak *handle);
 void *adamic_weak_target_present(const adamic_weak *handle);
 void adamic_weak_forget(void *target);
 void adamic_weak_dropped(adamic_weak *handle);
+// adamic_weak_held reports whether a Weak points at a value: reuse in place takes over only a value
+// nothing else can reach, and a Weak reaches without counting.
+bool adamic_weak_held(const void *target);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
 // rather than kill, as on Node.

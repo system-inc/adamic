@@ -64,6 +64,20 @@ An argument a consumed parameter takes is **moved** when nothing reads its varia
 
 Liveness is held the way the graph's edges are. `TestLivenessHoldsOnEveryPath` walks every call's points backward, and wherever the next thing to touch a variable is a read, liveness must say it's live: 3,417,833 checks over every program. Liveness that doesn't flow back around a loop failed 1,147,791 of them, in 36 programs.
 
+**Three holes, found in review (integration 5), and closed.** Reviewer R's probes are now oracle fixtures (`reuse_*.a`):
+
+- **A borrowed parameter was moved.** `forward(point) { return bump(point) }` moved `point` into `bump`'s consumed parameter, but `point`'s count was the caller's. `bump` saw a count of 1 and reused the caller's object, then freed it. A move now hands over only a count the function owns.
+- **A moved global was read by a sibling argument.** In `tree = insert(tree, size())`, `size()` read `tree` after it was moved out (nulled). The check looked only inside the callee. It now looks at every call in the statement.
+- **A `Weak` was ignored.** A `Weak` reaches its target without counting, so a count of 1 doesn't mean nothing else can reach it. The `Weak`'s holder could write the object while it was being taken over, and find the new object in the old one's place after. Reuse now also requires that no `Weak` points at the value (`adamic_weak_held`, one comparison in a program with no `Weak`).
+
+Each has a mutant that puts the old behavior back:
+
+| Mutant | Caught by |
+|---|---|
+| A borrowed parameter moved | ASan, in `reuse_forward.a` |
+| Only the callee checked before moving a global | UBSan null dereference, in `reuse_global_sibling.a` |
+| Weak handles ignored | stdout differs, in both `Weak` fixtures |
+
 **Found on the way:** the spread itself was miscompiled. Native copied the source's object after evaluating the fields' values, so `{ ...point, x: moveY(point) }` showed a write `moveY` made to `point.y`. Node prints `1 0 99`, native printed `1 99 99`. It's fixed, and `spread_snapshot.a` holds it.
 
 **Reuse for arrays.** There are three more places a value is consumed to build one of its own kind. Each is taken over under the same rules: owned here, dead after the instruction, and read once in it.

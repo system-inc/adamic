@@ -133,6 +133,13 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse.a", true, false},
 	// Reuse for arrays: a map in place, a spread appended to, a splice with nothing to return.
 	{"internal/oracle/testdata/reuse_arrays.a", true, false},
+	// Reviewer R's probes of integration 5, each a way reuse in place was once seen: a borrowed
+	// parameter moved on, a global moved out while another argument reads it, and a value a Weak
+	// reaches taken over, during the spread and after it.
+	{"internal/oracle/testdata/reuse_forward.a", true, false},
+	{"internal/oracle/testdata/reuse_global_sibling.a", true, false},
+	{"internal/oracle/testdata/reuse_weak_during_spread.a", true, false},
+	{"internal/oracle/testdata/reuse_weak_after_reuse.a", true, false},
 	// A read lent without a count, beside a call that reassigns what was read.
 	{"internal/oracle/testdata/lent_reads.a", true, false},
 	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).
