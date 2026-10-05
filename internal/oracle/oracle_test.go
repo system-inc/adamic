@@ -192,11 +192,17 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/write_stdout_order.a", true, false},
 	{"internal/oracle/testdata/write_stderr_order.a", true, false},
 	{"internal/oracle/testdata/prompt_then_read.a", true, false},
+	{"internal/oracle/testdata/collections.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
 	// read back (reviewer R, from the first night's number.c).
 	{"internal/oracle/testdata/power_of_two_string.a", true, false},
+	// Reuse meeting exceptions, narrowing and lending (integration 7): a throw after a move, a narrowed
+	// field emptied in place, and a lent global moved under its borrower.
+	{"internal/oracle/testdata/reuse_throw.a", true, false},
+	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
+	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

@@ -39,9 +39,18 @@ Send test output to a log and read the log. Never pipe a test run into `head` or
 
 On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that job.
 
+## Adamic's own code passes Adamic's own gate
+
+cohere checks and formats every Adamic program in this repository, `.ts` and `.a` alike. `tsconfig.json` carries the same compiler options stage 0 sets in `internal/load/load.go` (keep the two identical), the prelude as the one global declaration file, and `"sourceExtensions": [".a"]`, which cohere's TypeScript reads and stock tools ignore. `CohereSettings.json` turns on `cohere:typescript` (soundness, style and correctness) and ignores the files that are wrong on purpose, for these reasons:
+
+- `internal/load/testdata/0.1/refuse/**`: docs/0.1.md's five refused programs, whose job is to be refused.
+- `stage1/**/gaps/**`: each stage-1 slice's smallest programs for what stage 0 can't hold yet, kept exactly as written so their gaps tests notice when a gap closes.
+- `review/**`: reviewers' probes, written to break things.
+
 ## Working here
 
 - Write code that reads like the code around it: plain Go, comments that say why, names spelled out in full.
 - Never overwrite a file wholesale; edit it. Never force-push, never rewrite history, never delete a branch you didn't make.
+- Shell state doesn't persist between Bash calls, so a variable set in one call is empty in the next. Set any variable in the same command that uses it, and write removals as `rm -f "${S:?}/name"`: an unset variable then stops the command instead of collapsing the path to `/`. Delete only named files under the scratch directory or the repository, never by a path that begins with a bare variable. `.claude/hooks/guard-removals.mjs` refuses a command that breaks this and says why, so no one has to press Deny.
 - Commit messages say what changed and why, in plain sentences. The first commit was `stuff`, after Ken; only the first one gets to be.
 - No em-dashes in docs, comments or commit messages.
