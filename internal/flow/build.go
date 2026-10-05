@@ -451,7 +451,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				if program.Functions[int(value.FieldByName("Function").Int())].MayThrow {
 					throws = true
 				}
-			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType:
+			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
 				// A call through a function value, written out or made by the runtime's loop.
 				if program.ClosuresMayThrow {
 					throws = true
@@ -483,4 +483,5 @@ var (
 	arrayReduceType = reflect.TypeOf(ir.ArrayReduce{})
 	arrayFromType   = reflect.TypeOf(ir.ArrayFrom{})
 	arraySortType   = reflect.TypeOf(ir.ArraySort{})
+	mapForEachType  = reflect.TypeOf(ir.MapForEach{})
 )

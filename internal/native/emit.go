@@ -1287,12 +1287,23 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 		hold(value, visit.Value, "adamic_retain")
 	}
 	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, %s, {.reference = %s}})", callback, callback, first, key, collection)
+	// A throw lets go of the key and value held across the call, and the iterator.
+	holds := []string{}
+	if !visit.Set && visit.Value.IsReference() {
+		holds = append(holds, value+".reference")
+	}
+	if visit.Key.IsReference() {
+		holds = append(holds, key+".reference")
+	}
+	holds = append(holds, iterator)
 	if visit.Returns.IsReference() {
 		// A callback's result comes back owned, and forEach has no use for it.
 		e.line("adamic_value %s = %s;", answer, call)
+		e.closureThrown(holds...)
 		e.line("adamic_release(%s.reference);", answer)
 	} else {
 		e.line("%s;", call)
+		e.closureThrown(holds...)
 	}
 	if !visit.Set {
 		hold(value, visit.Value, "adamic_release")
