@@ -66,6 +66,8 @@ static int compare_names(const void *left, const void *right) {
 
 adamic_object *adamic_read_directory(const adamic_string *path) {
 	static const char prefix[] = "cannot read directory ";
+	// What was printed comes first, as on Node, before anything of the file system is looked at.
+	adamic_output_flush();
 	char *name = adamic_path_bytes(path);
 	if (name == NULL) {
 		return failure(prefix, sizeof prefix - 1, path, 0, true);
@@ -129,6 +131,9 @@ adamic_object *adamic_read_directory(const adamic_string *path) {
 
 adamic_object *adamic_file_status(const adamic_string *path) {
 	static const char prefix[] = "cannot read status of ";
+	// What was printed comes first, as on Node: the path may be stdout itself, its size what's
+	// been written.
+	adamic_output_flush();
 	char *name = adamic_path_bytes(path);
 	if (name == NULL) {
 		return failure(prefix, sizeof prefix - 1, path, 0, false);

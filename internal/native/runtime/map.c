@@ -31,8 +31,15 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->buckets = NULL;
 	map->string_keys = string_keys;
 	map->reference_keys = string_keys;
+	map->boolean_keys = false;
 	map->reference_values = reference_values;
 	map->iterating = 0;
+	return map;
+}
+
+adamic_map *adamic_map_new_booleans(bool reference_values) {
+	adamic_map *map = adamic_map_new(false, reference_values);
+	map->boolean_keys = true;
 	return map;
 }
 
@@ -57,6 +64,9 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 		}
 		return hash;
 	}
+	if (map->boolean_keys) {
+		return key.boolean ? 0x9e3779b97f4a7c15ull : 0x7f4a7c159e3779b9ull;
+	}
 	if (map->reference_keys) {
 		// By identity: the address, its low bits (alignment, always zero) mixed up into the rest.
 		uint64_t bits = (uint64_t)(uintptr_t)key.reference;
@@ -77,6 +87,9 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 static bool same_key(const adamic_map *map, adamic_value left, adamic_value right) {
 	if (map->string_keys) {
 		return adamic_string_equal(left.reference, right.reference);
+	}
+	if (map->boolean_keys) {
+		return left.boolean == right.boolean;
 	}
 	if (map->reference_keys) {
 		return left.reference == right.reference;
@@ -172,7 +185,7 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 		rebuild(map, needed == 0 ? 8 : needed);
 	}
 	adamic_map_entry *entry = &map->entries[map->used];
-	if (!map->reference_keys && key.number == 0) {
+	if (!map->reference_keys && !map->boolean_keys && key.number == 0) {
 		// Map.prototype.set stores -0 as +0 (ECMA-262), so iterating gives back +0: 1 / key is Infinity.
 		key.number = 0;
 	}

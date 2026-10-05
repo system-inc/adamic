@@ -65,35 +65,49 @@ func withStreams(t *testing.T, stdout *os.File, stderr *os.File, name string, ar
 }
 
 // Node writes each line at once, so with stdout and stderr on one file the lines land in the order
-// the program wrote them. Native must flush stdout before every write to stderr to land the same.
+// the program wrote them. Native must flush stdout before every write to stderr to land the same, and
+// before a status is taken or a directory listed, since the file looked at may be stdout itself.
 func TestOneFileHoldsNodesOrder(t *testing.T) {
 	t.Parallel()
-	path, binary, script := sanitized(t, "internal/oracle/testdata/interleaved.a")
-	runner := filepath.Join(repository, "oracle", "node.mjs")
-	landed := func(name string, arguments ...string) (int, []byte) {
-		file, err := os.Create(filepath.Join(t.TempDir(), "both"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		defer file.Close()
-		exitCode := withStreams(t, file, file, name, arguments...)
-		contents, err := os.ReadFile(file.Name())
-		if err != nil {
-			t.Fatal(err)
-		}
-		return exitCode, contents
-	}
-	nodeExit, node := landed("node", "--disable-warning=ExperimentalWarning", runner, path)
-	nativeExit, natively := landed(binary)
-	backendExit, backend := landed("node", "--disable-warning=ExperimentalWarning", runner, script)
-	if !bytes.Contains(node, []byte("out 0\nerr 0\nout 1\n")) {
-		t.Fatalf("want Node's lines in the order written, got %.200q", node)
-	}
-	if nativeExit != nodeExit || !bytes.Equal(natively, node) {
-		t.Errorf("native: exit %d, %d bytes; Node: exit %d, %d bytes; first difference at %d", nativeExit, len(natively), nodeExit, len(node), firstDifference(natively, node))
-	}
-	if backendExit != nodeExit || !bytes.Equal(backend, node) {
-		t.Errorf("JavaScript backend: exit %d, %d bytes; Node: exit %d, %d bytes", backendExit, len(backend), nodeExit, len(node))
+	for _, fixture := range []struct {
+		path string
+
+		// written is what Node's file must hold, so a run where the case didn't come up can't pass.
+		written string
+	}{
+		{"internal/oracle/testdata/interleaved.a", "out 0\nerr 0\nout 1\n"},
+		{"internal/oracle/testdata/status_of_stdout.a", "written before the status\nfile 26\n"},
+	} {
+		t.Run(fixture.path, func(t *testing.T) {
+			t.Parallel()
+			path, binary, script := sanitized(t, fixture.path)
+			runner := filepath.Join(repository, "oracle", "node.mjs")
+			landed := func(name string, arguments ...string) (int, []byte) {
+				file, err := os.Create(filepath.Join(t.TempDir(), "both"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				defer file.Close()
+				exitCode := withStreams(t, file, file, name, arguments...)
+				contents, err := os.ReadFile(file.Name())
+				if err != nil {
+					t.Fatal(err)
+				}
+				return exitCode, contents
+			}
+			nodeExit, node := landed("node", "--disable-warning=ExperimentalWarning", runner, path)
+			nativeExit, natively := landed(binary)
+			backendExit, backend := landed("node", "--disable-warning=ExperimentalWarning", runner, script)
+			if !bytes.Contains(node, []byte(fixture.written)) {
+				t.Fatalf("want Node's file to hold %q, got %.200q", fixture.written, node)
+			}
+			if nativeExit != nodeExit || !bytes.Equal(natively, node) {
+				t.Errorf("native: exit %d, %q; Node: exit %d, %q; first difference at %d", nativeExit, natively, nodeExit, node, firstDifference(natively, node))
+			}
+			if backendExit != nodeExit || !bytes.Equal(backend, node) {
+				t.Errorf("JavaScript backend: exit %d, %d bytes; Node: exit %d, %d bytes", backendExit, len(backend), nodeExit, len(node))
+			}
+		})
 	}
 }
 

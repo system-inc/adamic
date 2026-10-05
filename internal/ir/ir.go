@@ -200,6 +200,10 @@ type (
 	Conditional struct {
 		Condition         Expression
 		WhenTrue, WhenNot Expression
+
+		// Of, when set, is what the conditional gives where its branches' own types don't say:
+		// flag ? text : undefined is a string that may be missing, though one branch is undefined.
+		Of Type
 	}
 
 	// ObjectLiteral makes an object. With Spread, it's { ...Spread, fields }: a copy of Spread's
@@ -631,8 +635,13 @@ func (StringConstant) Type() Type  { return String }
 func (NumberToString) Type() Type  { return String }
 func (BooleanToString) Type() Type { return String }
 func (Concat) Type() Type          { return String }
-func (c Conditional) Type() Type   { return c.WhenTrue.Type() }
-func (ObjectLiteral) Type() Type   { return Object }
+func (c Conditional) Type() Type {
+	if c.Of != 0 {
+		return c.Of
+	}
+	return c.WhenTrue.Type()
+}
+func (ObjectLiteral) Type() Type { return Object }
 func (p Property) Type() Type {
 	if p.Optional {
 		return Maybe(p.Of)
