@@ -28,6 +28,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(property, "spreading a "+typeName(spread.Type()))
 			}
 			literal.Spread = spread
+			literal.SpreadMaybeUndefined = l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
 			name := property.Name()
 			if !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
@@ -59,7 +60,43 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
 	}
+	if literal.SpreadMaybeUndefined {
+		empty, err := l.emptySpread(node, literal.Fields)
+		if err != nil {
+			return nil, err
+		}
+		literal.Empty = empty
+	}
 	return literal, nil
+}
+
+// emptySpread is the object { ...source, fields } makes when source is undefined: JavaScript's is
+// only the literal's own fields, and a read of any other field the source's type has is undefined,
+// so each of those is there, undefined. A field that can hold undefined only as a pair (a boolean),
+// or that keeps a handle (a Weak), says NotYet.
+func (l *lowering) emptySpread(node *ast.Node, own []ir.Field) ([]ir.Field, error) {
+	spread := node.AsObjectLiteralExpression().Properties.Nodes[0]
+	given := map[string]bool{}
+	for _, field := range own {
+		given[field.Name] = true
+	}
+	empty := []ir.Field{}
+	source := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(spread.AsSpreadAssignment().Expression))
+	for _, property := range l.checker.GetPropertiesOfType(source) {
+		if given[property.Name] {
+			continue
+		}
+		fieldType, _ := l.representation(l.checker.GetTypeOfSymbol(property))
+		switch fieldType {
+		case ir.Number, ir.MaybeNumber:
+			empty = append(empty, ir.Field{Name: property.Name, Value: ir.MaybeOf{Of: ir.MaybeNumber}})
+		case ir.String, ir.Object, ir.Array, ir.Map, ir.Closure:
+			empty = append(empty, ir.Field{Name: property.Name, Value: ir.Undefined{}})
+		default:
+			return nil, l.notYet(spread, "spreading a value that may be undefined, whose field "+property.Name+" can't be left undefined yet")
+		}
+	}
+	return empty, nil
 }
 
 // typeOfSymbol is what's left at runtime of a symbol's declared type, or NotYet at node.
@@ -88,7 +125,8 @@ func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
 
 // hasProperty reports whether a value's type has a field of that name.
 func (l *lowering) hasProperty(node *ast.Node, name string) bool {
-	for _, property := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(node)) {
+	// A source that may be undefined has its fields where it's there.
+	for _, property := range l.checker.GetPropertiesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))) {
 		if property.Name == name {
 			return true
 		}
@@ -171,11 +209,15 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 			}
 		}
 	}
+	if target := l.weakTarget(arrayType); target != nil {
+		// A Weak<Node[]> narrowed to present is the array.
+		arrayType = target
+	}
 	if !l.checker.IsArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
-	valueType, isKnown := l.representation(element)
+	valueType, isKnown := l.kept(element)
 	if !isKnown || slotless(valueType) {
 		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
@@ -260,7 +302,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
-		return ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}, nil
+		return l.defined(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }
@@ -519,6 +561,11 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	if ast.IsIdentifier(name) {
 		if lowered.Local, err = l.declareLocal(name); err != nil {
 			return nil, err
+		}
+		if element == ir.Weak {
+			// An array of Weak<Node> narrowed to present (by filter) still holds handles, so the
+			// variable holds one too, and each read of it is the target.
+			l.result.Locals[lowered.Local].Type = ir.Weak
 		}
 	} else {
 		// for (const [a, b] of pairs): each name reads a field of the tuple, "0", "1", ...
@@ -900,12 +947,12 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
 func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
-	arguments := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(node))
+	arguments := l.typeArguments(l.checker.GetTypeAtLocation(node))
 	if len(arguments) != 2 {
 		return 0, 0, l.notYet(node, "a Map whose key and value types aren't known")
 	}
 	key, keyKnown := l.representation(arguments[0])
-	value, valueKnown := l.representation(arguments[1])
+	value, valueKnown := l.kept(arguments[1])
 	if !keyKnown || (key != ir.String && key != ir.Number) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings or numbers")
 	}
@@ -925,6 +972,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	}
 	if l.isLibraryGlobal(created.Expression, "Set") {
 		return l.newSet(node)
+	}
+	if l.isLibraryGlobal(created.Expression, "Error") {
+		return l.newError(node)
 	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {
 		return nil, l.notYet(node, "new "+describe(created.Expression))
@@ -1188,7 +1238,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, describe(node))
 	}
 	of, err := l.typeOf(node)
-	if elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(access.Expression)); err == nil {
+	if elements := l.typeArguments(l.checker.GetTypeAtLocation(access.Expression)); err == nil {
 		// What the tuple keeps there, not what the checker narrowed the read to: a Weak keeps a handle.
 		if position, convertErr := strconv.Atoi(index.Text()); convertErr == nil && position < len(elements) {
 			if declared, isKnown := l.representation(elements[position]); isKnown && declared == ir.Weak {

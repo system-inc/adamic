@@ -80,6 +80,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
+	if err := lowering.exceptions(); err != nil {
+		return nil, err
+	}
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
@@ -131,6 +134,12 @@ type lowering struct {
 	// missing.
 	alwaysUndefined map[*ast.Symbol]bool
 
+	// caught are the variables a catch binds, each always an Error; tries are the try statements
+	// lowered (exceptions.go).
+	caught        map[*ast.Symbol]bool
+	tries         []tryRecord
+	functionNodes map[int]*ast.Node
+
 	// initializing is the variables whose initializers are being lowered, by where each is declared.
 	initializing map[int]*ast.Node
 
@@ -142,6 +151,11 @@ type lowering struct {
 	closureRecords []closureRecord
 	classType      *checker.Type
 	classNode      *ast.Node
+
+	// typeMapper is what the type parameters of the instantiation being lowered, and of those it's
+	// inside, stand for; instantiated is every class type an instantiation was made for (instantiate.go).
+	typeMapper   *typeMapper
+	instantiated []*checker.Type
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
@@ -222,6 +236,10 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.functions = map[*ast.Symbol]int{}
 			}
 			l.functions[symbol] = len(l.result.Functions)
+			if l.functionNodes == nil {
+				l.functionNodes = map[int]*ast.Node{}
+			}
+			l.functionNodes[len(l.result.Functions)] = statement
 			l.result.Functions = append(l.result.Functions, ir.Function{Name: statement.Name().Text()})
 			declarations = append(declarations, statement)
 		}
@@ -246,6 +264,15 @@ func (l *lowering) functionBody(declaration *ast.Node) error {
 // appends functions, and a pointer into the slice would be left pointing at the old one.
 func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {
 	function := l.result.Functions[index]
+	if !function.Closure {
+		// A function declaration, a method or a constructor is lowered where a use of it is first met,
+		// a closure's body included, but it's declared at the top level and captures nothing from
+		// the closures being lowered there: a local of its own read in a closure of its own must not
+		// land in their environments.
+		outerClosures := l.closures
+		l.closures = nil
+		defer func() { l.closures = outerClosures }()
+	}
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
@@ -256,7 +283,12 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		if returns.Flags()&checker.TypeFlagsVoid == 0 {
 			valueType, isKnown := l.representation(returns)
 			if !isKnown {
-				return l.notYet(declaration.Name(), "a function returning "+l.checker.TypeToString(returns))
+				// An arrow function has no name to point at, so it's pointed at whole.
+				where := declaration.Name()
+				if where == nil {
+					where = declaration
+				}
+				return l.notYet(where, "a function returning "+l.checker.TypeToString(returns))
 			}
 			function.Returns = valueType
 		}
@@ -433,6 +465,10 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 			return []ir.Statement{ir.Break{}}, nil
 		}
 		return []ir.Statement{ir.Continue{}}, nil
+	case ast.KindThrowStatement:
+		return l.throwStatement(node)
+	case ast.KindTryStatement:
+		return l.tryStatement(node)
 	}
 	return nil, l.notYet(node, describe(node))
 }
@@ -539,7 +575,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
-	if !l.alwaysUndefined[symbol] {
+	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {
 			return 0, err
@@ -571,7 +607,10 @@ func (l *lowering) noteLocal(local int, proven *checker.Type, node *ast.Node) {
 	if l.localTypes == nil {
 		l.localTypes, l.localNodes = map[int]*checker.Type{}, map[int]*ast.Node{}
 	}
-	l.localTypes[local], l.localNodes[local] = proven, node
+	l.localTypes[local], l.localNodes[local] = l.concrete(proven), node
+	if l.instance != nil {
+		l.instance.templates = append(l.instance.templates, template{local: local, proven: proven})
+	}
 }
 
 // symbol is what a name refers to, the same whichever file names it: an import resolves to what it
@@ -653,6 +692,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	local, isLocal := l.local(target)
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
+	}
+	if l.caught[l.symbol(target)] {
+		return nil, l.notYet(target, "assigning to what a catch caught")
 	}
 	if l.alwaysUndefined[l.symbol(target)] {
 		// Its type is unknown, so anything could be written to it, and it holds only undefined.

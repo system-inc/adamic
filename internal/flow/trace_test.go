@@ -84,10 +84,34 @@ const adamicPrint = (value, seen) => {
 	if (Array.isArray(value)) return '[' + value.map((element) => adamicPrint(element, seen)).join(',') + ']';
 	return '{' + Object.keys(value).map((key) => key + ':' + adamicPrint(value[key], seen)).join(',') + '}';
 };
+// A panic on Node is a throw a catch can take, though natively it ends the program where it stands, so
+// what runs after one isn't a path of the program: the runtime silences stdout when it panics, and
+// from the first point after that, the trace says so and records nothing more.
+const adamicStdoutWrite = process.stdout.write;
+let adamicStopped = false;
+const adamicPanicked = () => {
+	if (!adamicStopped && process.stdout.write !== adamicStdoutWrite) {
+		adamicStopped = true;
+		adamicTrace.push('panicked');
+	}
+	return adamicStopped;
+};
 const adamicFrames = [{ last: -1, held: new Map() }];
-const adamicEnter = () => { adamicFrames.push({ last: -1, held: new Map() }); };
-const adamicLeave = () => { adamicFrames.pop(); };
+const adamicEnter = (function_) => {
+	if (adamicPanicked()) return;
+	adamicFrames.push({ last: -1, held: new Map() });
+	adamicTrace.push('enter ' + function_);
+};
+const adamicLeave = (function_) => {
+	if (adamicPanicked()) return;
+	adamicFrames.pop();
+	adamicTrace.push('leave ' + function_);
+};
+const adamicMissing = () => {
+	if (!adamicPanicked()) adamicTrace.push('missing');
+};
 const adamicPoint = (point, variables) => {
+	if (adamicPanicked()) return;
 	const frame = adamicFrames[adamicFrames.length - 1];
 	for (const [local, read] of variables) {
 		let value;
@@ -148,16 +172,16 @@ func traced(t *testing.T, path string) run {
 		Mark: func(at *ir.Statement, part int) string {
 			found, ok := points[at][part]
 			if !ok {
-				return "adamicTrace.push('missing')"
+				return "adamicMissing()"
 			}
 			result.marked = append(result.marked, found)
 			return fmt.Sprintf("adamicPoint(%d, %s)", len(result.marked)-1, variables[found.function])
 		},
 		Enter: func(function int) string {
-			return fmt.Sprintf("(adamicEnter(), adamicTrace.push('enter %d'))", function)
+			return fmt.Sprintf("adamicEnter(%d)", function)
 		},
 		Leave: func(function int) string {
-			return fmt.Sprintf("(adamicLeave(), adamicTrace.push('leave %d'))", function)
+			return fmt.Sprintf("adamicLeave(%d)", function)
 		},
 	}
 	directory := t.TempDir()
@@ -212,6 +236,9 @@ func walk(graphs map[int]*Function, marked []point, events []string) []string {
 			stack = stack[:len(stack)-1]
 		case strings.HasPrefix(event, "exit "):
 			exit = strings.TrimPrefix(event, "exit ")
+		case event == "panicked":
+			// Nothing after a panic is a path of the program (traceRuntime); the trace records only its
+			// exit from here, and a program that panicked isn't held to its calls' ends.
 		case strings.HasPrefix(event, "mutated "):
 			// The ranges' business (ranges_test.go), not the path's.
 		default:
@@ -279,7 +306,7 @@ func finishes(graph *Function, last *point) string {
 		}
 		from = block
 	}
-	if _, returns := from.Terminal.(*Return); returns {
+	if leaves(from.Terminal) {
 		return ""
 	}
 	if reaches(graph, from, nil) {
@@ -288,8 +315,18 @@ func finishes(graph *Function, last *point) string {
 	return fmt.Sprintf("the call ended at bb%d, which doesn't lead to a return", from.Id)
 }
 
+// leaves reports whether a terminal ends the call: a return, or a throw out of the function (a call
+// a throw left ends there too, its caller's catch or finally taking it).
+func leaves(terminal Terminal) bool {
+	switch terminal.(type) {
+	case *Return, *Throw:
+		return true
+	}
+	return false
+}
+
 // reaches reports whether a block's terminal leads, through blocks that run nothing, to a block
-// with instructions that accept takes, or (accept nil) to a return.
+// with instructions that accept takes, or (accept nil) to a return or a throw out.
 func reaches(graph *Function, from *BasicBlock, accept func(*BasicBlock) bool) bool {
 	seen := map[BlockId]bool{}
 	queue := []*BasicBlock{from}
@@ -310,7 +347,7 @@ func reaches(graph *Function, from *BasicBlock, accept func(*BasicBlock) bool) b
 				found = accept != nil && accept(successor)
 				return
 			}
-			if _, returns := successor.Terminal.(*Return); returns && accept == nil {
+			if leaves(successor.Terminal) && accept == nil {
 				found = true
 				return
 			}

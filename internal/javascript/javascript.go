@@ -52,7 +52,14 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
+	// map reads the length once, as JavaScript's does; an array the callback shrinks would leave a hole,
+	// which 0.1 has no way to hold, so it's a panic, the same one native's map has.
+	builder.WriteString("const adamicMap = (array, callback) => {\n\tconst count = array.length;\n\tconst mapped = [];\n\tfor (let index = 0; index < count; index++) {\n\t\tif (index >= array.length) panic('map: the array shrank while it was being mapped');\n\t\tmapped.push(adamicCall(callback, [array[index], index, array]));\n\t}\n\treturn mapped;\n};\n")
+	// find and findIndex call the callback even at an index the callback took away, with undefined,
+	// which the element's type can't hold: a panic there, the same one native has.
+	builder.WriteString("const adamicFind = (array, method, callback) => {\n\tconst count = array.length;\n\tfor (let index = 0; index < count; index++) {\n\t\tif (index >= array.length) panic(`${method}: the array shrank while it was being searched`);\n\t\tconst element = array[index];\n\t\tif (adamicCall(callback, [element, index, array])) return method === 'find' ? element : index;\n\t}\n\treturn method === 'find' ? undefined : -1;\n};\n")
 	builder.WriteString("const adamicFrom = (length, callback) => Array.from({ length }, (element, index) => adamicCall(callback, [element, index]));\n")
+	builder.WriteString("const adamicDefined = (value, message) => value === undefined ? panic(message) : value;\n")
 	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
@@ -226,7 +233,7 @@ func (e *emitter) declare(local int, value string) {
 
 func (e *emitter) statement(at *ir.Statement) {
 	switch (*at).(type) {
-	case ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue:
+	case ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try:
 		// Marked inside, where their parts run, or not at all: a block, a break and a continue run
 		// nothing of their own.
 	default:
@@ -325,6 +332,28 @@ func (e *emitter) statement(at *ir.Statement) {
 		e.line("break;")
 	case ir.Continue:
 		e.line("break %s;", e.continues[len(e.continues)-1])
+	case ir.Throw:
+		e.line("throw %s;", e.value(statement.Value))
+	case ir.Try:
+		e.line("try {")
+		e.nested(statement.Body)
+		if statement.HasCatch {
+			caught := e.temporary()
+			e.line("} catch (%s) {", caught)
+			e.indent++
+			// Part 1 of a try is its catch taking the error (flow.Instruction.Part).
+			e.markLine(at, 1)
+			if statement.CatchLocal >= 0 {
+				e.declare(statement.CatchLocal, caught)
+			}
+			e.statements(statement.Catch)
+			e.indent--
+		}
+		if statement.HasFinally {
+			e.line("} finally {")
+			e.nested(statement.Finally)
+		}
+		e.line("}")
 	default:
 		panic(fmt.Sprintf("javascript: no JavaScript for %T", statement))
 	}
@@ -491,7 +520,10 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.IsUndefined:
 		return "(" + e.value(expression.Value) + " === undefined)"
 	case ir.Unwrap:
-		return e.value(expression.Value)
+		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
+		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
+	case ir.Defined:
+		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
 	case ir.MaybeOf:
 		if expression.Value == nil {
 			return "undefined"
@@ -499,6 +531,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.Box:
 		return e.value(expression.Value)
+	case ir.MakeError:
+		return "new Error(" + e.value(expression.Message) + ")"
 	case ir.WeakOf:
 		// A plain reference: Node keeps what it points to as long as anything does, which is what the
 		// source on Node does too (docs/memory.md says where native differs).
@@ -583,8 +617,11 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.CallClosure:
 		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
 	case ir.ArrayMap:
-		return "adamicVisit(" + e.value(expression.Array) + ", \"map\", " + e.value(expression.Callback) + ")"
+		return "adamicMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayVisit:
+		if expression.Method == "find" || expression.Method == "findIndex" {
+			return "adamicFind(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"
+		}
 		return "adamicVisit(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"
 	case ir.MapNew:
 		entries := []string{}
@@ -701,3 +738,6 @@ func quote(text string) string {
 	builder.WriteByte('"')
 	return builder.String()
 }
+
+// narrowedAwayMessage is native's (internal/native), word for word: the checks are the same on both sides.
+const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"

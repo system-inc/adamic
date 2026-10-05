@@ -142,6 +142,9 @@ func (plan *regionPlan) escaping(body []ir.Statement, parameter int) bool {
 			return derived(expression.Object)
 		case ir.Narrow:
 			return derived(expression.Value)
+		case ir.Defined:
+			// A check that the value is there, and the value itself.
+			return derived(expression.Value)
 		case ir.Unwrap:
 			return derived(expression.Value)
 		case ir.CheckedCast:

@@ -302,6 +302,8 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
+// adamic_timsort sorts count values in place by V8's algorithm (sort.c).
+void adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_value, adamic_value, void *), void *context);
 
 // adamic_array_sort_undefined_last sorts an array of number | undefined as JavaScript does: every
 // undefined goes to the end, never passed to the comparator (sort_undefined.c).
@@ -470,9 +472,20 @@ void adamic_weak_dropped(adamic_weak *handle);
 // nothing else can reach, and a Weak reaches without counting.
 bool adamic_weak_held(const void *target);
 
+// adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
+// every call that can throw, and taken by the catch that lands it. adamic_error_new is new
+// Error(message), and adamic_uncaught the panic of an error nothing caught.
+extern adamic_object *adamic_thrown;
+adamic_object *adamic_error_new(adamic_string *message);
+_Noreturn void adamic_uncaught(void);
+
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
 // rather than kill, as on Node.
 void adamic_start(int count, char **values);
+
+// adamic_output_flush writes out what stdout's buffer holds, before a file is read or written: the
+// file may be stdout itself, or stdin waiting on a prompt just printed (adamic.c).
+void adamic_output_flush(void);
 
 // adamic_write_line writes a string and a newline, as console.log does with one string. Stdout is
 // buffered, and flushed wherever Node's writing it at once could be told apart (adamic.c).

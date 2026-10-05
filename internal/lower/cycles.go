@@ -27,6 +27,7 @@ import (
 type closureRecord struct {
 	proven   *checker.Type
 	function int
+	node     *ast.Node
 }
 
 // cycleNode is one thing reaching is followed through: a type, or the cell of a captured local.
@@ -78,6 +79,11 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			return node.ForEachChild(visit)
 		}
 		module.AsNode().ForEachChild(visit)
+	}
+	// Every instantiation lowering made, Box<Node> inside Maker<Node> included, which the source may
+	// never write.
+	for _, proven := range l.instantiated {
+		finder.use(proven, l.classNodeFor(proven))
 	}
 	for _, proven := range finder.seen {
 		if err := finder.slotsOf(proven); err != nil {

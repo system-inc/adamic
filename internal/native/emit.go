@@ -213,6 +213,11 @@ type emitter struct {
 	// ECMAScript's order, and each module's from the top.
 	initialized []int
 
+	// handlers are the tries open in the function being emitted, innermost last, and outerOwned what
+	// the statement owned outside each aside being emitted (exceptions.go).
+	handlers   []*handler
+	outerOwned [][]string
+
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.
 	function      *ir.Function
 	functionDepth int
@@ -433,6 +438,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		if call, isCall := statement.Value.(ir.Call); isCall && call.Returns == 0 {
 			e.line("%s(%s);", e.functionName(call.Function), strings.Join(e.arguments(call), ", "))
+			if e.program.Functions[call.Function].MayThrow {
+				e.checkThrown()
+			}
 		} else {
 			// The value goes, but whatever making it did stays: a push's append is its effect.
 			e.line("(void)%s;", e.value(statement.Value))
@@ -452,6 +460,12 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.SetProperty:
 		object := e.value(statement.Object)
 		value := e.value(statement.Value)
+		// The object may be undefined where the checker narrowed it away and a call since put it back
+		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
+		e.line("if (%s == NULL) {", object)
+		e.line("\tstatic const char message[] = %s;", cString("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+		e.line("}")
 		slot := e.temporary()
 		e.line("adamic_value *%s = %s;", slot, e.fieldSlot(object, statement.Name, statement.Class))
 		if statement.Value.Type().IsReference() {
@@ -489,13 +503,20 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.Switch:
 		e.switchStatement(statement)
 	case ir.Break:
+		// A try inside the loop or switch is left: its finally runs first.
+		e.finallies(e.innerHandlers(e.breakables[len(e.breakables)-1]))
 		e.releaseScopes(e.breakables[len(e.breakables)-1])
 		e.line("break;")
 	case ir.Continue:
 		current := e.loops[len(e.loops)-1]
 		current.continued = true
+		e.finallies(e.innerHandlers(current.depth))
 		e.releaseScopes(current.depth)
 		e.line("goto %s;", current.label)
+	case ir.Throw:
+		e.throwStatement(statement)
+	case ir.Try:
+		e.tryStatement(statement)
 	default:
 		// Lowering only produces statements this switch knows. Reaching this is a compiler bug.
 		panic(fmt.Sprintf("native: no C for %T", statement))
@@ -560,6 +581,7 @@ func (e *emitter) checkReady(local int) {
 func (e *emitter) returnStatement(statement ir.Return) {
 	if statement.Value == nil {
 		e.end()
+		e.finallies(0)
 		e.releaseScopes(e.functionDepth)
 		if e.function != nil && e.function.Closure {
 			e.line("return (adamic_value){.number = 0};")
@@ -586,6 +608,17 @@ func (e *emitter) returnStatement(statement ir.Return) {
 		e.line("%s %s = %s;", cType(statement.Value.Type()), result, value)
 	}
 	e.end()
+	if len(e.handlers) > 0 {
+		// Every finally open runs before the function returns. The result waits in a scope of its
+		// own, so a throw from a finally, which replaces the return, lets go of it.
+		held := []string{}
+		if statement.Value.Type().IsReference() {
+			held = append(held, result)
+		}
+		e.scopes = append(e.scopes, held)
+		e.finallies(0)
+		e.scopes = e.scopes[:len(e.scopes)-1]
+	}
 	e.releaseScopes(e.functionDepth)
 	if e.function != nil && e.function.Closure {
 		e.line("return (adamic_value){.%s = %s};", member(statement.Value.Type()), slotted(statement.Value.Type(), result))
@@ -691,17 +724,22 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Call:
 		region := e.regionFor(expression)
 		arguments := e.arguments(expression)
-		if region != "" {
-			arguments = append([]string{region}, arguments...)
-			// What it returns is in that region: no count to own (region.go).
-			return e.regionValue(fmt.Sprintf("%s(%s)", e.regionFunctionName(expression.Function), strings.Join(arguments, ", ")))
-		}
 		call := fmt.Sprintf("%s(%s)", e.functionName(expression.Function), strings.Join(arguments, ", "))
-		if expression.Returns.IsReference() {
-			return e.own(expression.Returns, call)
+		var result string
+		switch {
+		case region != "":
+			// What it returns is in that region: no count to own (region.go).
+			result = e.regionValue(fmt.Sprintf("%s(%s)", e.regionFunctionName(expression.Function), strings.Join(append([]string{region}, arguments...), ", ")))
+		case expression.Returns.IsReference():
+			result = e.own(expression.Returns, call)
+		default:
+			result = e.temporary()
+			e.line("%s %s = %s;", cType(expression.Returns), result, call)
 		}
-		result := e.temporary()
-		e.line("%s %s = %s;", cType(expression.Returns), result, call)
+		if e.program.Functions[expression.Function].MayThrow {
+			// A throw left the call: the result is the zero value it returned, owned like any.
+			e.checkThrown()
+		}
 		return result
 	case ir.NumberToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", e.value(expression.Value)))
@@ -756,7 +794,17 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.Unwrap:
-		return fmt.Sprintf("(%s).%s", e.value(expression.Value), member(expression.Type()))
+		// The checker narrowed undefined away, but a call since may have put it back (ir.Unwrap).
+		value := e.snapshot(expression.Value.Type(), e.value(expression.Value))
+		e.line("if (!%s.present) {", value)
+		e.line("\tstatic const char message[] = %s;", cString(narrowedAwayMessage))
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+		e.line("}")
+		return fmt.Sprintf("(%s).%s", value, member(expression.Type()))
+	case ir.Defined:
+		value := e.value(expression.Value)
+		e.checkDefined(value, expression.Message)
+		return value
 	case ir.MaybeOf:
 		if expression.Value == nil {
 			return zero(expression.Of)
@@ -766,6 +814,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.maybeToString(expression.Value)
 	case ir.Box:
 		return e.box(expression.Value)
+	case ir.MakeError:
+		return e.own(ir.Object, fmt.Sprintf("adamic_error_new(%s)", e.value(expression.Message)))
 	case ir.WeakOf:
 		return e.own(ir.Weak, fmt.Sprintf("adamic_weak_of(%s)", e.value(expression.Value)))
 	case ir.WeakTarget:
@@ -1135,7 +1185,15 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
 	e.indent++
 	e.line("if (%s >= %s->length) {", index, source)
-	e.line("\tcontinue;")
+	if visit.Method == "find" || visit.Method == "findIndex" {
+		// The other visits skip an index the callback took away, as JavaScript's do; find and
+		// findIndex call it with undefined there, which the element's type can't hold. A panic, the
+		// same in both backends.
+		e.line("\tstatic const char message[] = \"%s: the array shrank while it was being searched\";", visit.Method)
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+	} else {
+		e.line("\tcontinue;")
+	}
 	e.line("}")
 	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
 	if references {
@@ -1269,7 +1327,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		// is made the moment the spread is evaluated, before any field's value: JavaScript reads the
 		// spread's fields first, so a field's expression that writes one of them (a call that sets
 		// it) must not show in the result.
-		object := e.own(ir.Object, fmt.Sprintf("adamic_object_copy(%s)", e.value(literal.Spread)))
+		source := e.value(literal.Spread)
+		object := e.own(ir.Object, e.spreadCopy(literal, source))
+		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
 			values = append(values, e.value(field.Value))
@@ -1632,9 +1692,13 @@ func (e *emitter) read(read ir.Read) string {
 func (e *emitter) arguments(call ir.Call) []string {
 	parameters := e.program.Functions[call.Function].Parameters
 	arguments := make([]string, 0, len(parameters))
+	handed := []string{}
+	defer func() { e.handedOver(handed) }()
 	for index, argument := range call.Arguments {
 		if index < len(parameters) && e.reuse.consumed[parameters[index]] {
-			arguments = append(arguments, e.handOver(argument))
+			value := e.handOver(argument)
+			handed = append(handed, value)
+			arguments = append(arguments, value)
 			continue
 		}
 		value := ""
@@ -1679,9 +1743,12 @@ func (e *emitter) arguments(call ir.Call) []string {
 func (e *emitter) aside(expression ir.Expression) (string, string, []string) {
 	savedOut, savedOwned := e.out, e.owned
 	e.out, e.owned = strings.Builder{}, nil
+	// A throw from inside lets go of what the statement owned before the aside too.
+	e.outerOwned = append(e.outerOwned, savedOwned)
 	e.indent++
 	value := e.value(expression)
 	e.indent--
+	e.outerOwned = e.outerOwned[:len(e.outerOwned)-1]
 	text, owned := e.out.String(), e.owned
 	e.out, e.owned = savedOut, savedOwned
 	return text, value, owned
@@ -2084,6 +2151,10 @@ func (e *emitter) cellReference(local int) string {
 	}
 	return e.cellName(local)
 }
+
+// narrowedAwayMessage is the panic of a number or a boolean the checker narrowed undefined out of,
+// read where a call since put it back (ir.Unwrap). JavaScript would go on computing with undefined.
+const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
 
 // spliceArguments evaluates a splice's operands, in order, as the runtime's splice takes them.
 func (e *emitter) spliceArguments(splice ir.ArraySplice) string {

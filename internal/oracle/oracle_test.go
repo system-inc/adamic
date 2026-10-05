@@ -93,6 +93,21 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/map_iteration.a", true, false},
 	{"internal/oracle/testdata/sorts.a", true, false},
 	{"internal/oracle/testdata/sort_releases.a", true, false},
+	{"internal/oracle/testdata/timsort.a", true, false},
+	{"internal/oracle/testdata/unused_parameters.a", true, false},
+	{"internal/oracle/testdata/map_shrinks.a", true, true},
+	{"internal/oracle/testdata/find_shrinks.a", true, true},
+	{"internal/oracle/testdata/find_index_shrinks.a", true, true},
+	{"internal/oracle/testdata/self_assignments.a", true, false},
+	{"internal/oracle/testdata/method_closures.a", true, false},
+	{"internal/oracle/testdata/splice_empty.a", true, false},
+	// A narrowing outlives a call that assigns the variable again: what was narrowed away is checked.
+	{"internal/oracle/testdata/narrowed_reads.a", true, false},
+	{"internal/oracle/testdata/narrowed_writes.a", true, false},
+	{"internal/oracle/testdata/narrowed_methods.a", true, false},
+	{"internal/oracle/testdata/narrowed_fields.a", true, false},
+	{"internal/oracle/testdata/narrowed_numbers.a", true, true},
+	{"internal/oracle/testdata/narrowed_compared.a", true, false},
 	// The same sorts at the top level, where only the globals' release at exit lets the leak check see.
 	{"internal/oracle/testdata/sort_top_level.a", true, false},
 	{"internal/oracle/testdata/splices.a", true, false},
@@ -103,6 +118,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/array_from_undefined.a", true, false},
 	{"internal/oracle/testdata/weak_parent.a", true, false},
 	{"internal/oracle/testdata/doubly_linked.a", true, false},
+	{"internal/oracle/testdata/weak_narrowed.a", true, false},
+	{"internal/oracle/testdata/exceptions.a", true, false},
+	{"internal/oracle/testdata/exceptions_uncaught.a", true, false},
+	{"internal/oracle/testdata/exceptions_empty.a", true, false},
+	{"internal/oracle/testdata/panic_in_try.a", true, false},
 	{"internal/oracle/testdata/maybe_booleans.a", true, false},
 	{"internal/oracle/testdata/maybe_boolean_panic.a", true, false},
 	{"internal/oracle/testdata/unions.a", true, false},
@@ -144,6 +164,13 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_weak_after_reuse.a", true, false},
 	// Regions: a statement's fresh values let go of together, and every way one could escape kept off it.
 	{"internal/oracle/testdata/regions.a", true, false},
+	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
+	{"internal/oracle/testdata/regions_throw.a", true, false},
+	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
+	// was moved or spread.
+	{"internal/oracle/testdata/move_throw.a", true, false},
+	// Reviewer R's round 8b: a spread of a value that may be undefined is {} with the literal's fields.
+	{"internal/oracle/testdata/spread_undefined.a", true, false},
 	// A read lent without a count, beside a call that reassigns what was read.
 	{"internal/oracle/testdata/lent_reads.a", true, false},
 	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).
@@ -160,6 +187,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/optional_strings.a", true, false},
 	{"internal/oracle/testdata/concat_too_long.a", true, false},
 	{"internal/oracle/testdata/replace_all_large.a", true, false},
+	// A file read or written after console.log: what was printed is out first. output_test.go also runs
+	// these with both streams on one pipe and stdin answered after the prompt; killed_after_output.a
+	// is only there, since it runs until a signal stops it.
+	{"internal/oracle/testdata/write_stdout_order.a", true, false},
+	{"internal/oracle/testdata/write_stderr_order.a", true, false},
+	{"internal/oracle/testdata/prompt_then_read.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that

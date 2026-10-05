@@ -77,16 +77,16 @@ func planReuse(program *ir.Program) *reusePlan {
 	for _, each := range functions {
 		forEachInstruction(each.graph, func(instruction *flow.Instruction) {
 			for _, literal := range spreadsOf(evaluated(instruction)) {
-				source := literal.Spread.(ir.Read).Local
-				if !plan.reusable(program, each.index, comparators, instruction, each.live[instruction.Id], source) {
+				source, _ := variableRead(literal.Spread)
+				if !plan.reusable(program, each.index, comparators, instruction, each.live[instruction.Id], source.Local) {
 					continue
 				}
 				if plan.spreads[instruction.At] == nil {
 					plan.spreads[instruction.At] = map[int]bool{}
 				}
-				plan.spreads[instruction.At][source] = true
-				if program.Locals[source].Borrowed {
-					plan.consumed[source] = true
+				plan.spreads[instruction.At][source.Local] = true
+				if program.Locals[source.Local].Borrowed {
+					plan.consumed[source.Local] = true
 				}
 			}
 			for _, source := range arraysTaken(program, evaluated(instruction)) {
@@ -113,7 +113,7 @@ func planReuse(program *ir.Program) *reusePlan {
 				}
 				parameters := program.Functions[call.Function].Parameters
 				for index, argument := range call.Arguments {
-					read, isRead := argument.(ir.Read)
+					read, isRead := variableRead(argument)
 					if !isRead || index >= len(parameters) || !plan.consumed[parameters[index]] {
 						continue
 					}
@@ -157,7 +157,15 @@ func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[
 			return false
 		}
 	}
-	return !live[flow.DeclarationId(source+1)] || defines(instruction, source)
+	return !live[flow.DeclarationId(source+1)] || overwrites(program, instruction, source)
+}
+
+// overwrites reports whether an instruction gives a variable a new value on every way it ends, so
+// the old value is dead after it even though the variable is live: a declaration or an assignment
+// that can't throw. One that can throw leaves the old value in place for the catch, the finally or
+// the caller that takes the throw.
+func overwrites(program *ir.Program, instruction *flow.Instruction, local int) bool {
+	return defines(instruction, local) && !flow.CanThrow(program, instruction)
 }
 
 // readOnlyInside reports whether, in an instruction, source is read only by one object spread and by
@@ -167,7 +175,7 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 	spreads := 0
 	var literal *ir.ObjectLiteral
 	for _, each := range spreadsOf(expression) {
-		if each.Spread.(ir.Read).Local == source {
+		if read, _ := variableRead(each.Spread); read.Local == source {
 			spreads++
 			copied := each
 			literal = &copied
@@ -185,7 +193,7 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 	for _, field := range literal.Fields {
 		walk(field.Value, func(expression ir.Expression) {
 			if property, ok := expression.(ir.Property); ok {
-				if read, ok := property.Object.(ir.Read); ok && read.Local == source {
+				if read, ok := variableRead(property.Object); ok && read.Local == source {
 					inside++
 					fieldReads[property.Name]++
 				}
@@ -214,7 +222,12 @@ func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instructio
 		return false
 	}
 	if !local.Global {
-		return !live[flow.DeclarationId(read.Local+1)] || defines(instruction, read.Local)
+		return !live[flow.DeclarationId(read.Local+1)] || overwrites(program, instruction, read.Local)
+	}
+	if flow.CanThrow(program, instruction) {
+		// A global moved out and then a throw: whoever takes it, in this function or a caller, may
+		// read the global and find it NULL.
+		return false
 	}
 	// A global: only when this statement assigns it anew, and nothing that runs while it's moved out
 	// reads or writes it, or calls something this can't see into (a closure, or a callback). That's
@@ -275,6 +288,35 @@ func touches(program *ir.Program, function int, global int, seen map[int]bool) b
 	return found
 }
 
+// variableRead is the variable an expression reads: a read, or a read checked for undefined
+// (ir.Defined), whose check the emitter makes when it evaluates the expression.
+func variableRead(expression ir.Expression) (ir.Read, bool) {
+	if defined, ok := expression.(ir.Defined); ok {
+		expression = defined.Value
+	}
+	read, ok := expression.(ir.Read)
+	return read, ok
+}
+
+// variable emits the check for undefined of an expression variableRead took apart, when it has one,
+// and is the variable's own name: what reuse takes over or moves is the variable, never a copy of it
+// (a global's read retains one).
+func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
+	name := e.localName(read.Local)
+	if defined, ok := expression.(ir.Defined); ok {
+		e.checkDefined(name, defined.Message)
+	}
+	return name
+}
+
+// checkDefined emits ir.Defined's check of a value: NULL panics with the message.
+func (e *emitter) checkDefined(value string, message string) {
+	e.line("if (%s == NULL) {", value)
+	e.line("\tstatic const char message[] = %s;", cString(message))
+	e.line("\tadamic_panic(message, sizeof message - 1);")
+	e.line("}")
+}
+
 func isParameter(program *ir.Program, local int) bool {
 	function := program.Locals[local].Function
 	if function < 0 {
@@ -326,7 +368,7 @@ func spreadsOf(node any) []ir.ObjectLiteral {
 	var literals []ir.ObjectLiteral
 	walk(node, func(expression ir.Expression) {
 		if literal, ok := expression.(ir.ObjectLiteral); ok {
-			if _, isRead := literal.Spread.(ir.Read); isRead {
+			if _, isRead := variableRead(literal.Spread); isRead {
 				literals = append(literals, literal)
 			}
 		}
@@ -421,16 +463,22 @@ type taking struct {
 // literal's fields written over its own; otherwise a copy, as any spread. Either way the result is a
 // reference the statement owns.
 func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
-	read, ok := literal.Spread.(ir.Read)
+	read, ok := variableRead(literal.Spread)
 	if !ok || !e.reuse.spreads[e.at][read.Local] {
 		return "", false
 	}
-	source := e.localName(read.Local)
+	source := e.variable(literal.Spread, read)
 	unique := e.temporary()
 	// Checked before any field's value is evaluated, which can't make anything else hold it: the plan
 	// saw that nothing in this instruction but the literal reads the source, and only its fields.
-	e.line("bool %s = %s;", unique, uniquelyHeld(source))
-	object := e.own(ir.Object, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_object_copy(%s))", unique, source, source))
+	held := uniquelyHeld(source)
+	if literal.SpreadMaybeUndefined {
+		// Undefined is nothing to take over: the object is made as JavaScript's {} is (spreadCopy).
+		held = fmt.Sprintf("(%s != NULL && %s)", source, held)
+	}
+	e.line("bool %s = %s;", unique, held)
+	object := e.own(ir.Object, fmt.Sprintf("(%s ? adamic_retain(%s) : %s)", unique, source, e.spreadCopy(literal, source)))
+	e.emptySpread(literal, source, object)
 	replaced := map[string]bool{}
 	for _, field := range literal.Fields {
 		replaced[field.Name] = true
@@ -456,18 +504,57 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	return object, true
 }
 
+// spreadCopy is the object a spread that isn't reused starts from: a copy of the source's, or, when
+// the source may be undefined and is, a new object with the source type's other fields and the
+// literal's own, as JavaScript's { ...undefined } is {} with the literal's fields written in.
+func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
+	if !literal.SpreadMaybeUndefined {
+		return fmt.Sprintf("adamic_object_copy(%s)", source)
+	}
+	return fmt.Sprintf("(%s != NULL ? adamic_object_copy(%s) : adamic_object_new(&%s))", source, source, e.shape(emptyFields(literal)))
+}
+
+// emptySpread gives the fields of the object spreadCopy made for an undefined source the value
+// undefined has in each: a new object's slots are zero, which is undefined only for a reference.
+func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object string) {
+	if !literal.SpreadMaybeUndefined {
+		return
+	}
+	lines := []string{}
+	for index, field := range literal.Empty {
+		if !field.Value.Type().IsReference() {
+			lines = append(lines, fmt.Sprintf("\t%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value))))
+		}
+	}
+	if len(lines) == 0 {
+		return
+	}
+	e.line("if (%s == NULL) {", source)
+	for _, line := range lines {
+		e.line("%s", line)
+	}
+	e.line("}")
+}
+
+// emptyFields is the layout of the object an undefined spread makes: the source type's fields the
+// literal doesn't give, then the literal's own, which are written by name after.
+func emptyFields(literal ir.ObjectLiteral) []ir.Field {
+	return append(slices.Clone(literal.Empty), literal.Fields...)
+}
+
 // take emits a read of a field a reused spread replaces: moved out of the object when it's unique,
 // since the literal writes over it and nothing else can see it, and retained otherwise.
 func (e *emitter) take(property ir.Property) (string, bool) {
 	if e.taking == nil || property.Optional || !property.Of.IsReference() || property.Of == ir.Union {
 		return "", false
 	}
-	read, ok := property.Object.(ir.Read)
+	read, ok := variableRead(property.Object)
 	if !ok || read.Local != e.taking.source || !e.taking.replaced[property.Name] {
 		return "", false
 	}
+	object := e.variable(property.Object, read)
 	slot := e.temporary()
-	e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, e.localName(read.Local), cString(property.Name), e.cache())
+	e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(property.Name), e.cache())
 	value := e.own(property.Of, fmt.Sprintf("(%s)(%s ? %s->reference : adamic_retain(%s->reference))", cType(property.Of), e.taking.unique, slot, slot))
 	e.line("if (%s) {", e.taking.unique)
 	e.line("\t%s->reference = NULL;", slot)
@@ -477,21 +564,33 @@ func (e *emitter) take(property ir.Property) (string, bool) {
 
 // handOver evaluates an argument a consumed parameter takes, as a reference handed to the callee:
 // moved out of its variable where the plan says nothing reads it after, a statement's temporary as
-// it is (the statement no longer releases it), and anything else retained.
+// it is, and anything else retained. A moved or handed-over temporary stays the statement's to let go
+// of until every argument is evaluated (handedOver): an argument after it may throw, and then the call
+// is never made.
 func (e *emitter) handOver(argument ir.Expression) string {
-	if read, ok := argument.(ir.Read); ok && e.reuse.moves[e.at][read.Local] {
-		variable := e.localName(read.Local)
+	if read, ok := variableRead(argument); ok && e.reuse.moves[e.at][read.Local] {
+		variable := e.variable(argument, read)
 		moved := e.temporary()
 		e.line("%s %s = %s;", cType(read.Of), moved, variable)
 		e.line("%s = NULL;", variable)
+		e.owned = append(e.owned, moved)
 		return moved
 	}
 	value := e.value(argument)
-	if index := slices.Index(e.owned, value); index >= 0 {
-		e.owned = slices.Delete(e.owned, index, index+1)
+	if slices.Contains(e.owned, value) {
 		return value
 	}
 	return "adamic_retain(" + value + ")"
+}
+
+// handedOver gives up the statement's temporaries a call's consumed parameters take, once every
+// argument is evaluated and the call is about to be made: the callee lets go of them from here.
+func (e *emitter) handedOver(arguments []string) {
+	for _, argument := range arguments {
+		if index := slices.Index(e.owned, argument); index >= 0 {
+			e.owned = slices.Delete(e.owned, index, index+1)
+		}
+	}
 }
 
 // arraysTaken is every variable whose array an expression could take over: the array a map maps,
@@ -503,14 +602,14 @@ func arraysTaken(program *ir.Program, node any) []int {
 	walk(node, func(expression ir.Expression) {
 		switch expression := expression.(type) {
 		case ir.ArrayMap:
-			read, isRead := expression.Array.(ir.Read)
+			read, isRead := variableRead(expression.Array)
 			closure, isClosure := expression.Callback.(ir.MakeClosure)
 			if isRead && isClosure && len(program.Functions[closure.Function].Parameters) < 3 && sameSlots(expression.Element, expression.Result) {
 				sources = append(sources, read.Local)
 			}
 		case ir.ArrayLiteral:
 			if len(expression.Spread) > 0 && expression.Spread[0] {
-				if read, isRead := expression.Elements[0].(ir.Read); isRead {
+				if read, isRead := variableRead(expression.Elements[0]); isRead {
 					sources = append(sources, read.Local)
 				}
 			}
@@ -528,11 +627,11 @@ func sameSlots(left, right ir.Type) bool {
 // mapped emits a map the plan reuses: when its array is unique, each result is written over the
 // element it came from, in the array itself; otherwise a new array, as any map.
 func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
-	read, ok := expression.Array.(ir.Read)
+	read, ok := variableRead(expression.Array)
 	if !ok || !e.reuse.arrays[e.at][read.Local] {
 		return "", false
 	}
-	source := e.localName(read.Local)
+	source := e.variable(expression.Array, read)
 	unique := e.temporary()
 	e.line("bool %s = %s;", unique, uniquelyHeld(source))
 	callback := e.value(expression.Callback)
@@ -565,11 +664,11 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 	if len(literal.Spread) == 0 || !literal.Spread[0] {
 		return "", false
 	}
-	read, ok := literal.Elements[0].(ir.Read)
+	read, ok := variableRead(literal.Elements[0])
 	if !ok || !e.reuse.arrays[e.at][read.Local] {
 		return "", false
 	}
-	source := e.localName(read.Local)
+	source := e.variable(literal.Elements[0], read)
 	unique := e.temporary()
 	e.line("bool %s = %s;", unique, uniquelyHeld(source))
 	array := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(0, %t))", unique, source, literal.Element.IsReference()))

@@ -1,0 +1,74 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// A narrowing outlives a call. The checker narrows undefined out of a variable at a check (if
+// (chain !== undefined)) or an assignment, and keeps the narrowing across a call that assigns the
+// variable again, since it doesn't look inside the call:
+//
+//	let chain: Link | undefined = { value: 1 };
+//	function drop(): void { chain = undefined; }
+//	if (chain !== undefined) { drop(); console.log(`${chain.value}`); }
+//
+// Node throws a TypeError there, and native read through a null pointer; with a number | undefined,
+// Node computed with undefined (NaN) and native printed a number that was never there. So a read
+// the checker narrowed undefined out of is checked, the same in both backends.
+
+// narrowedAway reports whether node, a variable or a field, reads a value whose declared type has
+// undefined in it while its type here doesn't.
+func (l *lowering) narrowedAway(node *ast.Node) bool {
+	at := node
+	if node.Kind == ast.KindPropertyAccessExpression {
+		at = node.Name()
+	}
+	symbol := l.checker.GetSymbolAtLocation(at)
+	if symbol == nil {
+		return false
+	}
+	return l.includesUndefined(l.checker.GetTypeOfSymbol(symbol)) && !l.includesUndefined(l.checker.GetTypeAtLocation(node))
+}
+
+// defined checks a reference the checker narrowed undefined out of. Read through a property next,
+// it panics with the TypeError JavaScript throws there, word for word; anywhere else, with Adamic's
+// own words, since JavaScript would go on with undefined in a place typed not to hold it.
+func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
+	if !value.Type().IsReference() || value.Type() == ir.Union || !l.narrowedAway(node) || comparedWithUndefined(node) {
+		return value
+	}
+	message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
+	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
+		if written := parent.Parent; written != nil && written.Kind == ast.KindBinaryExpression && written.AsBinaryExpression().Left == parent && written.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+			// object.name = value: JavaScript evaluates the value first and throws at the write, so
+			// the check is the write's own (native checks the object there; JavaScript throws).
+			return value
+		}
+		message = "TypeError: Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
+	}
+	return ir.Defined{Value: value, Message: message}
+}
+
+// comparedWithUndefined reports whether node is one side of === or !== with undefined on the other:
+// asking whether it's there is the one read that must see undefined as it is, with no check and no
+// unwrapping.
+func comparedWithUndefined(node *ast.Node) bool {
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		node, parent = parent, parent.Parent
+	}
+	if parent == nil || parent.Kind != ast.KindBinaryExpression {
+		return false
+	}
+	binary := parent.AsBinaryExpression()
+	if operator := binary.OperatorToken.Kind; operator != ast.KindEqualsEqualsEqualsToken && operator != ast.KindExclamationEqualsEqualsToken {
+		return false
+	}
+	other := binary.Right
+	if binary.Right == node {
+		other = binary.Left
+	}
+	other = ast.SkipParentheses(other)
+	return other.Kind == ast.KindIdentifier && other.Text() == "undefined"
+}
