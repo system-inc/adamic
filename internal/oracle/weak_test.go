@@ -22,6 +22,16 @@ func TestWeakReadsUndefinedOnceFreed(t *testing.T) {
 			run{stdout: []byte("while held: bbb\nafter: bbb false\n")},
 		},
 		{
+			"internal/oracle/testdata/weak/probe_chain.a",
+			run{stdout: []byte("0\n")},
+			run{stdout: []byte("100\n")},
+		},
+		{
+			"internal/oracle/testdata/weak/reuse.a",
+			run{stdout: []byte("gone 0\n")},
+			run{stdout: []byte("t1 0\n")},
+		},
+		{
 			"internal/oracle/testdata/weak/narrowed.a",
 			run{stdout: []byte("before: cc\n"), stderr: []byte("adamic: panic: a weak reference was read after what it pointed to was freed\n"), exitCode: 70},
 			run{stdout: []byte("before: cc\nafter: cc\n")},

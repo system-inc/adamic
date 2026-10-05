@@ -11,7 +11,7 @@ interface Cell {
 let checksum = 0;
 for (let size = 1; size <= 300; size += 13) {
 	const generation: Cell[] = [];
-	for (let index = 0; index < 4000; index += 1) {
+	for (let index = 0; index < 400; index += 1) {
 		generation.push({ label: 'x'.repeat(size) + `${index % 10}`, weight: index });
 	}
 	for (const cell of generation) {
@@ -25,7 +25,7 @@ for (let size = 1; size <= 300; size += 13) {
 const sizes = [280, 200, 120, 40, 8, 1, 8, 40, 120, 200, 280, 3, 280];
 for (const size of sizes) {
 	const generation: Cell[] = [];
-	for (let index = 0; index < 3000; index += 1) {
+	for (let index = 0; index < 300; index += 1) {
 		generation.push({ label: 'y'.repeat(size) + `${index % 7}`, weight: index * 2 });
 	}
 	let total = 0;

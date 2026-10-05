@@ -18,13 +18,13 @@ func (l *lowering) isSet(node *ast.Node) bool {
 
 // setElement is the representation of a Set's elements, strings or numbers in 0.2.
 func (l *lowering) setElement(node *ast.Node) (ir.Type, error) {
-	arguments := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(node))
+	arguments := l.typeArguments(l.checker.GetTypeAtLocation(node))
 	if len(arguments) != 1 {
 		return 0, l.notYet(node, "a Set whose element type isn't known")
 	}
 	element, isKnown := l.representation(arguments[0])
-	if !isKnown || (element != ir.String && element != ir.Number) {
-		return 0, l.notYet(node, "a Set of "+l.checker.TypeToString(arguments[0])+" (a Set holds strings or numbers so far)")
+	if !isKnown || !keyable(element) {
+		return 0, l.notYet(node, "a Set of "+l.checker.TypeToString(arguments[0])+" (a Set holds strings, numbers, objects, arrays, maps or functions so far)")
 	}
 	return element, nil
 }
@@ -43,15 +43,14 @@ func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
 	if len(arguments.Nodes) != 1 {
 		return nil, l.notYet(node, "new Set with more than one argument")
 	}
-	values, err := l.expression(arguments.Nodes[0])
+	// From anything iterable: an array, a string's code points, a Set, a Map's entries, or what keys()
+	// and values() give (collections.go).
+	values, from, err := l.iterated(arguments.Nodes[0])
 	if err != nil {
 		return nil, err
 	}
-	if values.Type() != ir.Array {
-		return nil, l.notYet(arguments.Nodes[0], "new Set from a "+typeName(values.Type())+" (an array is what it takes so far)")
-	}
-	if from, err := l.elementType(arguments.Nodes[0]); err != nil || from != element {
-		return nil, l.notYet(arguments.Nodes[0], "new Set from an array of other elements")
+	if from != element {
+		return nil, l.notYet(arguments.Nodes[0], "new Set from elements held otherwise than the Set's")
 	}
 	lowered.Values = values
 	return lowered, nil
@@ -60,6 +59,9 @@ func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
 // setMethod lowers set.add, set.has and set.delete. isBuiltin is false for any other method, which
 // is left to be refused as a call stage 0 doesn't know.
 func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	if name == "clear" || name == "forEach" {
+		return l.clearOrVisit(node, receiver, name, true)
+	}
 	if name != "add" && name != "has" && name != "delete" {
 		return nil, false, nil
 	}
@@ -94,31 +96,54 @@ func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (i
 // forOfSet lowers for (const element of set), and of set.keys() and set.values(), which give the
 // same elements. Its steps are a Map's keys.
 func (l *lowering) forOfSet(node *ast.Node, iterable ir.Expression, iterated *ast.Node, part string, name *ast.Node) ([]ir.Statement, error) {
-	if part == "entries" {
-		return nil, l.notYet(iterated, "for...of over a Set's entries ([element, element] pairs)")
-	}
-	if !ast.IsIdentifier(name) {
-		return nil, l.notYet(name, "destructuring a Set's element")
-	}
 	element, err := l.setElement(iterated)
 	if err != nil {
 		return nil, err
 	}
 	lowered := ir.ForOf{Iterable: iterable, MapPart: "keys", Key: element, Value: ir.Number}
-	if lowered.Local, err = l.declareLocal(name); err != nil {
-		return nil, err
+	// Each entry is [element, element]: the first name bound takes the element, and any other is
+	// declared from it, each its own variable.
+	var others []ir.Statement
+	switch {
+	case part == "entries" && name.Kind == ast.KindArrayBindingPattern:
+		bound := false
+		elements := name.AsBindingPattern().Elements.Nodes
+		if len(elements) > 2 {
+			return nil, l.notYet(name, "destructuring more than a Set entry's two elements")
+		}
+		for _, binding := range elements {
+			// A hole, [, second], is a binding element with no name.
+			if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
+				continue
+			}
+			declared := binding.AsBindingElement()
+			if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
+				return nil, l.notYet(binding, "a destructured name that isn't plain")
+			}
+			local, err := l.declareLocal(binding.Name())
+			if err != nil {
+				return nil, err
+			}
+			if !bound {
+				lowered.Local, bound = local, true
+				continue
+			}
+			others = append(others, ir.Declare{Local: local, Value: ir.Read{Local: lowered.Local, Of: element}})
+		}
+		if !bound {
+			return nil, l.notYet(name, "a Set entry destructured into no names")
+		}
+	case part != "entries" && ast.IsIdentifier(name):
+		if lowered.Local, err = l.declareLocal(name); err != nil {
+			return nil, err
+		}
+	default:
+		return nil, l.notYet(name, "for...of over a Set's "+part+" into this name")
 	}
-	if lowered.Body, err = l.statement(node.AsForInOrOfStatement().Statement); err != nil {
-		return nil, err
-	}
-	return []ir.Statement{lowered}, nil
-}
-
-// setValues lowers [...set]: a new array of its elements, in order.
-func (l *lowering) setValues(spread *ast.Node, set ir.Expression) (ir.Expression, error) {
-	element, err := l.setElement(spread)
+	body, err := l.statement(node.AsForInOrOfStatement().Statement)
 	if err != nil {
 		return nil, err
 	}
-	return ir.SetValues{Set: set, Element: element}, nil
+	lowered.Body = append(others, body...)
+	return []ir.Statement{lowered}, nil
 }

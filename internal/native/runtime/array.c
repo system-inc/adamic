@@ -128,18 +128,19 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 	return sliced;
 }
 
-// adamic_array_sort sorts stably (ECMA-262 requires it since 2019), by merging. compare is the
-// program's comparator through an adapter that gives -1, 0 or 1, NaN read as 0, with context passed
-// through. Like V8, it sorts a copy of the elements (each reference held) and writes the result back
-// by index, so a comparator that changes the array can't pull memory out from under the sort.
+// adamic_array_sort sorts stably (ECMA-262 requires it since 2019), by V8's TimSort (sort.c), so a
+// comparator that isn't consistent gives the order, and is called in the order, Node's is. compare is
+// the program's comparator through an adapter that gives -1, 0 or 1, NaN read as 0, with context
+// passed through. Like V8, it sorts a copy of the elements (each reference held) and writes the
+// result back by index, so a comparator that changes the array can't pull memory out from under the
+// sort.
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context) {
 	size_t length = array->length;
 	if (length < 2) {
 		return;
 	}
 	adamic_value *work = malloc(length * sizeof *work);
-	adamic_value *scratch = malloc(length * sizeof *scratch);
-	if (work == NULL || scratch == NULL) {
+	if (work == NULL) {
 		static const char message[] = "out of memory";
 		adamic_panic(message, sizeof message - 1);
 	}
@@ -150,29 +151,7 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 			adamic_retain(work[index].reference);
 		}
 	}
-	for (size_t width = 1; width < length; width *= 2) {
-		for (size_t left = 0; left < length; left += 2 * width) {
-			size_t middle = left + width < length ? left + width : length;
-			size_t right = left + 2 * width < length ? left + 2 * width : length;
-			size_t from_left = left, from_right = middle, out = left;
-			while (from_left < middle && from_right < right) {
-				// Take from the right only when it's strictly smaller: that keeps equal elements in
-				// their original order.
-				if (compare(work[from_right], work[from_left], context) < 0) {
-					scratch[out++] = work[from_right++];
-				} else {
-					scratch[out++] = work[from_left++];
-				}
-			}
-			while (from_left < middle) {
-				scratch[out++] = work[from_left++];
-			}
-			while (from_right < right) {
-				scratch[out++] = work[from_right++];
-			}
-		}
-		memcpy(work, scratch, length * sizeof *scratch);
-	}
+	adamic_timsort(work, length, compare, context);
 	// Written back as V8 does, index by index: each held reference becomes the array's, and what it
 	// held there is let go. Past a length the comparator shrank, the array grows again.
 	for (size_t index = 0; index < length; index++) {
@@ -186,7 +165,6 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 			adamic_array_push(array, work[index]);
 		}
 	}
-	free(scratch);
 	free(work);
 }
 
@@ -286,7 +264,9 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 	return array;
 }
 
-adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
+// splice_into is splice, the removed elements moving to removed, or let go when removed is NULL:
+// a splice whose result nothing uses (adamic_array_remove) allocates no array to hold them.
+static void splice_into(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, adamic_array **removed) {
 	// ECMAScript's relative start, clamped to the array; a count left out is everything after it, and
 	// a count given is clamped to what's there.
 	double length = (double)array->length;
@@ -298,13 +278,25 @@ adamic_array *adamic_array_splice(adamic_array *array, double start, double coun
 		removing = count < 0 ? 0 : (count > removing ? removing : count);
 	}
 	size_t from = (size_t)start, removed_count = (size_t)removing;
-	// The removed elements move to the result, their references with them.
-	adamic_array *removed = adamic_array_new(removed_count, array->references);
-	for (size_t index = 0; index < removed_count; index++) {
-		adamic_array_push(removed, array->elements[from + index]);
+	// The removed elements move to the result, their references with them, or are let go.
+	if (removed != NULL) {
+		*removed = adamic_array_new(removed_count, array->references);
+		for (size_t index = 0; index < removed_count; index++) {
+			adamic_array_push(*removed, array->elements[from + index]);
+		}
 	}
+	// Let go of after the array is whole again, below: releasing one may free what releases another.
 	size_t after = array->length - from - removed_count;
 	size_t new_length = array->length - removed_count + item_count;
+	adamic_value *dropped = NULL;
+	if (removed == NULL && array->references && removed_count > 0) {
+		dropped = malloc(removed_count * sizeof *dropped);
+		if (dropped == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		memcpy(dropped, array->elements + from, removed_count * sizeof *dropped);
+	}
 	if (new_length > array->capacity) {
 		adamic_value *grown = realloc(array->elements, new_length * sizeof *grown);
 		if (grown == NULL) {
@@ -315,12 +307,31 @@ adamic_array *adamic_array_splice(adamic_array *array, double start, double coun
 		array->capacity = new_length;
 	}
 	// The tail moves to make room (or close the gap), then the items, which the array takes, go in.
-	memmove(array->elements + from + item_count, array->elements + from + removed_count, after * sizeof *array->elements);
+	// An array that never held anything has no storage, and arithmetic on its null pointer is undefined
+	// even to move nothing, so nothing is moved unless there's a tail.
+	if (after > 0) {
+		memmove(array->elements + from + item_count, array->elements + from + removed_count, after * sizeof *array->elements);
+	}
 	if (item_count > 0) {
 		memcpy(array->elements + from, items, item_count * sizeof *items);
 	}
 	array->length = new_length;
+	if (dropped != NULL) {
+		for (size_t index = 0; index < removed_count; index++) {
+			adamic_release(dropped[index].reference);
+		}
+		free(dropped);
+	}
+}
+
+adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
+	adamic_array *removed;
+	splice_into(array, start, count, has_count, item_count, items, &removed);
 	return removed;
+}
+
+void adamic_array_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
+	splice_into(array, start, count, has_count, item_count, items, NULL);
 }
 
 void adamic_array_append(adamic_array *array, const adamic_array *source) {

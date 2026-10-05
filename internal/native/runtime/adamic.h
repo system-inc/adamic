@@ -183,6 +183,9 @@ typedef struct adamic_map {
 	size_t bucket_count;
 	size_t *buckets;
 	bool string_keys;
+	// reference_keys is keys that are counted references: strings, compared by their text, or, when
+	// string_keys isn't set, objects, arrays, maps and functions, compared by identity, as === does.
+	bool reference_keys;
 	bool reference_values;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
@@ -204,6 +207,23 @@ adamic_map_iterator *adamic_map_iterate(adamic_map *map);
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
 
 adamic_map *adamic_map_new(bool string_keys, bool reference_values);
+
+// adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
+// key, found by identity (map.c).
+adamic_map *adamic_map_new_identity(bool reference_values);
+
+// adamic_map_clear is map.clear() and set.clear(): every entry deleted, as if one by one, so an
+// iteration open over it goes on with whatever is added after.
+void adamic_map_clear(adamic_map *map);
+
+// adamic_map_keys and adamic_map_values are [...map.keys()] and [...map.values()]: new arrays the
+// caller owns, in insertion order.
+adamic_array *adamic_map_keys(const adamic_map *map);
+
+// adamic_map_add_pairs sets each [key, value] tuple of an array in a map, in order: new Map(pairs).
+// The map takes its own references.
+void adamic_map_add_pairs(adamic_map *map, const adamic_array *pairs);
+adamic_array *adamic_map_values(const adamic_map *map);
 
 // adamic_map_get is the value's slot, or NULL when the key isn't there.
 adamic_value *adamic_map_get(const adamic_map *map, adamic_value key);
@@ -286,6 +306,9 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 // adamic_array_splice is array.splice(start, count, ...items): what's removed, in a new array the
 // caller owns. The items' references are the array's from then on.
 adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
+// adamic_array_remove is a splice whose result nothing uses: what it removes is let go of, and no
+// array is made to hold it.
+void adamic_array_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
 
 // adamic_array_append is a spread, [...source], into an array being made: each element pushed, a
 // reference retained.
@@ -298,6 +321,8 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
+// adamic_timsort sorts count values in place by V8's algorithm (sort.c).
+void adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_value, adamic_value, void *), void *context);
 
 // adamic_array_sort_undefined_last sorts an array of number | undefined as JavaScript does: every
 // undefined goes to the end, never passed to the comparator (sort_undefined.c).
@@ -477,10 +502,24 @@ void *adamic_weak_target(const adamic_weak *handle);
 void *adamic_weak_target_present(const adamic_weak *handle);
 void adamic_weak_forget(void *target);
 void adamic_weak_dropped(adamic_weak *handle);
+// adamic_weak_held reports whether a Weak points at a value: reuse in place takes over only a value
+// nothing else can reach, and a Weak reaches without counting.
+bool adamic_weak_held(const void *target);
+
+// adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
+// every call that can throw, and taken by the catch that lands it. adamic_error_new is new
+// Error(message), and adamic_uncaught the panic of an error nothing caught.
+extern adamic_object *adamic_thrown;
+adamic_object *adamic_error_new(adamic_string *message);
+_Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
 // rather than kill, as on Node.
 void adamic_start(int count, char **values);
+
+// adamic_output_flush writes out what stdout's buffer holds, before a file is read or written: the
+// file may be stdout itself, or stdin waiting on a prompt just printed (adamic.c).
+void adamic_output_flush(void);
 
 // adamic_write_line writes a string and a newline, as console.log does with one string. Stdout is
 // buffered, and flushed wherever Node's writing it at once could be told apart (adamic.c).
@@ -552,7 +591,20 @@ void adamic_arguments_save(int count, char **values);
 adamic_array *adamic_program_arguments(void);
 adamic_object *adamic_read_text_file(const adamic_string *path);
 
-// adamic_write_text_file is writeTextFile(path, text) (output.c): { kind: 'Ok' } or { kind: 'Error',
+// adamic_decode_utf8 makes a string of bytes decoded as Node decodes them, WHATWG UTF-8 with U+FFFD
+// for each invalid sequence, and adamic_path_bytes is a path as the terminated bytes Node names a file
+// by, a lone surrogate as U+FFFD, or NULL when it holds a NUL, which names no file; the caller frees it
+// (input.c).
+adamic_string *adamic_decode_utf8(const unsigned char *bytes, size_t length);
+char *adamic_path_bytes(const adamic_string *path);
+
+// adamic_read_directory is readDirectory(path), { kind: 'Ok', names } with the names in Node's order,
+// and adamic_file_status is fileStatus(path), { kind: 'Ok', type, size, symbolicLink }, each or
+// { kind: 'Error', message } (directory.c). Both return a reference the caller owns.
+adamic_object *adamic_read_directory(const adamic_string *path);
+adamic_object *adamic_file_status(const adamic_string *path);
+
+// adamic_write_text_file is writeTextFile(path, text) (input.c): { kind: 'Ok' } or { kind: 'Error',
 // message }, a reference the caller owns.
 adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text);
 
