@@ -801,6 +801,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
 	case ir.ProgramArguments:
 		return e.own(ir.Array, "adamic_program_arguments()")
+	case ir.WriteTextFile:
+		path := e.value(expression.Path)
+		text := e.value(expression.Text)
+		return e.own(ir.Object, fmt.Sprintf("adamic_write_text_file(%s, %s)", path, text))
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)

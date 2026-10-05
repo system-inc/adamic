@@ -358,6 +358,10 @@ void adamic_arguments_save(int count, char **values);
 adamic_array *adamic_program_arguments(void);
 adamic_object *adamic_read_text_file(const adamic_string *path);
 
+// adamic_write_text_file is writeTextFile(path, text) (output.c): { kind: 'Ok' } or { kind: 'Error',
+// message }, a reference the caller owns.
+adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text);
+
 // adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
 _Noreturn void adamic_panic(const char *message, size_t length);
 
