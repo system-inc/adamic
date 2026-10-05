@@ -121,3 +121,48 @@ The `adamic` compiler (stage 0) is built on cohere and the TypeScript compiler i
 Copyright (c) Microsoft Corporation, Apache License 2.0), and on the Go toolchain. Their notices are in
 [cohere/NOTICE](cohere/NOTICE) and [cohere/THIRD_PARTY_NOTICES.md](cohere/THIRD_PARTY_NOTICES.md), and they travel with
 any build of the compiler.
+
+## In stage 1
+
+Stage 1 ports cohere to Adamic (`stage1/cohere/`). cohere's own code is under the same licenses as Adamic's; what cohere ported from others keeps its notice here.
+
+### postcss-media-query-parser
+
+- Source: https://github.com/dryoma/postcss-media-query-parser
+- Version: 0.2.3
+- License: `MIT`
+- In Adamic: `stage1/cohere/mediaquery/`, a port of cohere's port of it (internal/format/css/mediaquery), keeping its doc comments.
+
+No license text is published with this package or in its repository. Its package.json declares MIT, and names dryoma as its author.
+
+### postcss-values-parser
+
+- Source: https://github.com/shellscape/postcss-values-parser
+- Version: 2.0.1
+- License: `MIT`
+- In Adamic: `stage1/cohere/values/`, a port of cohere's port of it (internal/format/css/values), keeping its comments.
+
+````text
+Copyright (c) Andrew Powell <andrew@shellscape.org>
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+````
