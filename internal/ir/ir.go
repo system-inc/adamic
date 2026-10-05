@@ -360,10 +360,11 @@ type (
 
 	// ArrayFrom is Array.from({ length: Length }, Callback): a new array of Length elements (ToLength,
 	// and more than 2^32 - 1 panics as JavaScript throws), each the callback's result called with
-	// undefined and its index, in order.
+	// undefined and its index, in order. First is the type of the callback's first parameter, which
+	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {
 		Length, Callback Expression
-		Element          Type
+		Element, First   Type
 	}
 
 	// ArrayReverse is array.reverse(): in place, and the array.
@@ -497,6 +498,11 @@ type (
 	// ProgramArguments is programArguments() from 'adamic': a new array of the arguments after the
 	// program, as process.argv.slice(2) is.
 	ProgramArguments struct{}
+
+	// WriteTextFile is writeTextFile(Path, Text) from 'adamic': the file made or emptied, then Text
+	// written as UTF-8 the way Node's writeFileSync(path, text) writes it (a lone surrogate as U+FFFD),
+	// in { kind: 'Ok' }, or what went wrong in { kind: 'Error', message }.
+	WriteTextFile struct{ Path, Text Expression }
 )
 
 // Field is one field of an object literal.
@@ -601,6 +607,7 @@ func (c StringCall) Type() Type {
 }
 func (ReadTextFile) Type() Type     { return Object }
 func (ProgramArguments) Type() Type { return Array }
+func (WriteTextFile) Type() Type    { return Object }
 
 func (MapNew) Type() Type    { return Map }
 func (MapSet) Type() Type    { return Map }
