@@ -1,7 +1,10 @@
 package lower
 
 import (
+	"strings"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
 // refusal is one construct Adamic 0.1 doesn't allow (docs/0.1.md, "What's refused in 0.1"), and the
@@ -72,6 +75,28 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) {
+			// A method read as a value loses its object: this is undefined when it's called.
+			access := node.AsPropertyAccessExpression()
+			// Math.random has its own refusal, called or not.
+			isRandom := l.isLibraryGlobal(access.Expression, "Math") && access.Name().Text() == "random"
+			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 && !isRandom {
+				object := "its object"
+				if ast.IsIdentifier(access.Expression) || access.Expression.Kind == ast.KindThisKeyword {
+					object = scannedText(access.Expression)
+				}
+				parameters := "value"
+				if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(symbol), checker.SignatureKindCall); len(signatures) > 0 {
+					names := []string{}
+					for _, parameter := range signatures[0].Parameters() {
+						names = append(names, parameter.Name)
+					}
+					parameters = strings.Join(names, ", ")
+				}
+				found = &Refused{Where: l.program.Where(node), What: "a method read as a value (" + symbol.Name + " would lose its object, and this with it)", Fix: "call it in an arrow that keeps the object: (" + parameters + ") => " + object + "." + symbol.Name + "(" + parameters + ") (unbound-method)"}
+				return true
+			}
+		}
 		if err := l.refuseWidening(node); err != nil {
 			found = err
 			return true
@@ -81,4 +106,21 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	}
 	module.AsNode().ForEachChild(visit)
 	return found
+}
+
+// called reports whether a property access is what a call calls, through any parentheses around it:
+// a method called on its object, which keeps it.
+func called(node *ast.Node) bool {
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	return node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && node.Parent.AsCallExpression().Expression == node
+}
+
+// scannedText is an identifier's name, or this.
+func scannedText(node *ast.Node) string {
+	if node.Kind == ast.KindThisKeyword {
+		return "this"
+	}
+	return node.Text()
 }

@@ -364,3 +364,61 @@ func TestATupleSeenAsAnArrayIsNotYet(t *testing.T) {
 		})
 	}
 }
+
+// shelter is a class with a method, for the method-value probes.
+const shelter = `class Shelter {
+	readonly name: string;
+	constructor(name: string) {
+		this.name = name;
+	}
+	admit(pet: string): string {
+		return ` + "`${this.name} took ${pet}`" + `;
+	}
+}
+const shelter = new Shelter('Haven');
+`
+
+// A method read as a value loses its object, and this is undefined when it's called (R's
+// method_value.a panicked "compiler bug" natively). 0.1 refuses it, with the arrow that keeps it.
+func TestAMethodReadAsAValueIsRefused(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name   string
+		source string
+		want   string
+	}{
+		{"held in a variable", "const admit = shelter.admit;\n", "main.a:11:15: Adamic 0.1 refuses a method read as a value (admit would lose its object, and this with it); call it in an arrow that keeps the object: (pet) => shelter.admit(pet) (unbound-method)"},
+		{"passed as a callback", "console.log(['Rex'].map(shelter.admit).join());\n", "main.a:11:25: Adamic 0.1 refuses a method read as a value (admit would lose its object"},
+		{"in parentheses", "const admit = (shelter.admit);\n", "main.a:11:16: Adamic 0.1 refuses a method read as a value (admit would lose its object"},
+		{"read through this", "class Desk {\n\treadonly greeting: string = 'hi';\n\tgreet(): string {\n\t\treturn this.greeting;\n\t}\n\tlater(): () => string {\n\t\treturn this.greet;\n\t}\n}\n", "main.a:17:10: Adamic 0.1 refuses a method read as a value (greet would lose its object, and this with it); call it in an arrow that keeps the object: () => this.greet()"},
+		{"an interface's method", "interface Greeter {\n\tgreet(name: string): string;\n}\nfunction detach(greeter: Greeter): (name: string) => string {\n\treturn greeter.greet;\n}\n", "main.a:15:9: Adamic 0.1 refuses a method read as a value (greet would lose its object"},
+		{"an array's method", "const names: string[] = [];\nconst add = names.push;\n", "main.a:12:13: Adamic 0.1 refuses a method read as a value (push would lose its object"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, shelter+probe.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
+				t.Errorf("got %v, want a refusal containing %q", err, probe.want)
+			}
+		})
+	}
+	for _, neighbor := range []struct {
+		name   string
+		source string
+	}{
+		{"called on its object", "console.log(shelter.admit('Rex'));\n"},
+		{"called through parentheses", "console.log((shelter.admit)('Rex'));\n"},
+		{"called in an arrow", "console.log(['Rex'].map((pet) => shelter.admit(pet)).join());\n"},
+		{"a field holding a function", "const holder: { readonly admit: (pet: string) => string } = { admit: (pet) => shelter.admit(pet) };\nconst admit = holder.admit;\nconsole.log(admit('Rex'));\n"},
+	} {
+		t.Run("not "+neighbor.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, shelter+neighbor.source)
+			var refused *Refused
+			if errors.As(err, &refused) {
+				t.Errorf("refused a method that keeps its object: %v", err)
+			}
+		})
+	}
+}
