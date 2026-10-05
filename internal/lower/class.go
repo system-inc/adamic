@@ -438,5 +438,5 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 			return nil
 		}
 	}
-	return l.notYet(node, "this used in a constructor before every field is assigned, other than to read or write a field (a method it calls may read a field not set yet; assign the fields first)")
+	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}
 }
