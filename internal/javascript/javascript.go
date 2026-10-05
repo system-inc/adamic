@@ -27,6 +27,7 @@ func JavaScript(program *ir.Program) string {
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
+	builder.WriteString("const adamicFrom = (length, callback) => Array.from({ length }, (element, index) => adamicCall(callback, [element, index]));\n")
 	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
@@ -439,6 +440,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			method = ".includes("
 		}
 		return e.value(expression.Array) + method + e.value(expression.Value) + ")"
+	case ir.ArrayFrom:
+		return "adamicFrom(" + e.value(expression.Length) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayReverse:
 		return e.value(expression.Array) + ".reverse()"
 	case ir.ArrayFill:

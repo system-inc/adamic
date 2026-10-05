@@ -237,6 +237,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if l.isLibraryGlobal(receiver, "Number") {
 		return l.numberCall(node, name)
 	}
+	if l.isLibraryGlobal(receiver, "Array") && name == "from" {
+		return l.arrayFrom(node)
+	}
 	if receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); receiverType == ir.Number && name == "toString" && len(node.AsCallExpression().Arguments.Nodes) == 0 {
 		value, err := l.expression(receiver)
 		if err != nil {

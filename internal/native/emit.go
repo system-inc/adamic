@@ -677,6 +677,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			packed = "(adamic_value[]){" + strings.Join(items, ", ") + "}"
 		}
 		return e.own(ir.Array, fmt.Sprintf("adamic_array_splice(%s, %s, %s, %t, %d, %s)", array, start, count, expression.Count != nil, len(items), packed))
+	case ir.ArrayFrom:
+		return e.arrayFrom(expression)
 	case ir.ArrayReverse:
 		array := e.value(expression.Array)
 		e.line("adamic_array_reverse(%s);", array)

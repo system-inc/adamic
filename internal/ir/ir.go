@@ -282,6 +282,14 @@ type (
 		Element                          Type
 	}
 
+	// ArrayFrom is Array.from({ length: Length }, Callback): a new array of Length elements (ToLength,
+	// and more than 2^32 - 1 panics as JavaScript throws), each the callback's result called with
+	// undefined and its index, in order.
+	ArrayFrom struct {
+		Length, Callback Expression
+		Element          Type
+	}
+
 	// ArrayReverse is array.reverse(): in place, and the array.
 	ArrayReverse struct{ Array Expression }
 
@@ -496,6 +504,7 @@ func (s ArraySearch) Type() Type {
 func (ArrayReverse) Type() Type  { return Array }
 func (ArraySplice) Type() Type   { return Array }
 func (ArrayFill) Type() Type     { return Array }
+func (ArrayFrom) Type() Type     { return Array }
 func (ArrayConcat) Type() Type   { return Array }
 func (r ArrayReduce) Type() Type { return r.Result }
 func (ArraySort) Type() Type     { return Array }

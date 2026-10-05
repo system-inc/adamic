@@ -199,6 +199,10 @@ enum adamic_equality {
 };
 double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
 
+// adamic_array_from_length is the length Array.from({ length }) makes (array_from.c): ToLength of
+// the number, and a panic where JavaScript throws, past 2^32 - 1.
+size_t adamic_array_from_length(double length);
+
 // adamic_array_reverse reverses in place and is the array; adamic_array_concat makes a new array of
 // every array's elements in order, references retained.
 adamic_array *adamic_array_reverse(adamic_array *array);

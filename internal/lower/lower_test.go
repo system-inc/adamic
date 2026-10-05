@@ -66,6 +66,10 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a field of type number | undefined", "interface Spot {\n\tx: number | undefined;\n}\nconst spot: Spot = { x: 1 };\nconsole.log(`${spot.x ?? -1}`);\n", "main.a:5:16: stage 0 can't lower a field of type number | undefined yet"},
 		{"a captured number | undefined", "function run(): number {\n\tlet best: number | undefined;\n\tconst pick = (): void => {\n\t\tbest = 1;\n\t};\n\tpick();\n\treturn best ?? -1;\n}\nconsole.log(`${run()}`);\n", "main.a:4:3: stage 0 can't lower a number | undefined variable a function value captures yet"},
 		{"a rest parameter", "function sum(...values: number[]): number {\n\treturn values.length;\n}\nconsole.log(`${sum(1, 2)}`);\n", "main.a:1:14: stage 0 can't lower a parameter that isn't a plain name yet"},
+		{"Array.from of an array", "const copy = Array.from([1, 2], (value) => value);\n", "main.a:1:25: stage 0 can't lower Array.from of anything but { length } yet"},
+		{"Array.from without a callback", "const holes = Array.from({ length: 2 });\n", "main.a:1:15: stage 0 can't lower Array.from with other than { length } and a callback yet"},
+		{"Array.from with a named callback", "const wide = true;\nconst made = Array.from({ length: 2 }, wide ? (_, index) => index : (_, index) => -index);\n", "main.a:2:40: stage 0 can't lower Array.from with a callback that isn't an arrow function written in place yet"},
+		{"assigning Array.from's undefined", "const made = Array.from({ length: 2 }, (value, index) => {\n\tvalue = index;\n\treturn index;\n});\n", "main.a:2:2: stage 0 can't lower assigning to a parameter that only ever receives undefined yet"},
 		{"a default for a boolean", "function greet(loud = false): string {\n\treturn loud ? 'HI' : 'hi';\n}\nconsole.log(greet());\n", "main.a:1:16: stage 0 can't lower a default for a boolean parameter yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

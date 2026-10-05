@@ -121,6 +121,11 @@ type lowering struct {
 
 	// unlowerable is the first construct found not lowerable somewhere that can't return an error.
 	unlowerable error
+
+	// alwaysUndefined are parameters that only ever receive undefined, whatever the checker calls
+	// their type: the first of an Array.from callback's (from.go). Each is a reference that's always
+	// missing.
+	alwaysUndefined map[*ast.Symbol]bool
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
@@ -505,13 +510,16 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 
 // declareLocal makes a new local for a declared name, typed by what the checker proved for it.
 func (l *lowering) declareLocal(name *ast.Node) (int, error) {
-	valueType, err := l.typeOf(name)
-	if err != nil {
-		return 0, err
-	}
 	symbol := l.symbol(name)
 	if symbol == nil {
 		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
+	}
+	valueType := ir.Object
+	if !l.alwaysUndefined[symbol] {
+		var err error
+		if valueType, err = l.typeOf(name); err != nil {
+			return 0, err
+		}
 	}
 	if l.locals == nil {
 		l.locals = map[*ast.Symbol]int{}
@@ -599,6 +607,10 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	local, isLocal := l.local(target)
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
+	}
+	if l.alwaysUndefined[l.symbol(target)] {
+		// Its type is unknown, so anything could be written to it, and it holds only undefined.
+		return nil, l.notYet(target, "assigning to a parameter that only ever receives undefined")
 	}
 	value, err := l.expression(binary.Right)
 	if err != nil {

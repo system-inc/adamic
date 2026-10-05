@@ -90,6 +90,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/splices.a", true, false},
 	{"internal/oracle/testdata/fills.a", true, false},
 	{"internal/oracle/testdata/fill_length.a", true, false},
+	{"internal/oracle/testdata/array_from.a", true, false},
+	{"internal/oracle/testdata/array_from_length.a", true, false},
 	{"internal/oracle/testdata/case_mapping.a", true, false},
 }
 
