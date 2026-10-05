@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -37,11 +38,25 @@ func run() int {
 	findings := flag.String("findings", "", "where shrunk findings are written (default: under -work)")
 	print := flag.Bool("print", false, "print the program -seed makes, and stop")
 	verbose := flag.Bool("v", false, "say what each program came to")
+	without := flag.String("without", "", "features to leave out, by name, comma-separated (fuzz.Features), to stay inside what an older stage 0 lowered")
 	try := flag.String("try", "", "run one program file three ways, print what each did, and stop")
 	flag.Parse()
 
+	var leftOut []string
+	if *without != "" {
+		leftOut = strings.Split(*without, ",")
+		for _, feature := range leftOut {
+			if !slices.Contains(fuzz.Features, feature) {
+				fmt.Fprintf(os.Stderr, "adamic-fuzz: no feature %q; the features are %s\n", feature, strings.Join(fuzz.Features, ", "))
+				return 2
+			}
+		}
+	}
+	generate := func(seed uint64) *fuzz.Program {
+		return fuzz.GenerateWithout(seed, leftOut)
+	}
 	if *print {
-		fmt.Print(fuzz.Generate(*seed).Source())
+		fmt.Print(generate(*seed).Source())
 		return 0
 	}
 	if *findings == "" {
@@ -97,7 +112,7 @@ func run() int {
 				}
 				programSeed := *seed + index
 				directory := filepath.Join(*work, "programs", fmt.Sprintf("worker%d", worker))
-				program := fuzz.Generate(programSeed)
+				program := generate(programSeed)
 				outcome := checkout.Try(program.Source(), directory)
 				mutex.Lock()
 				verdicts[outcome.Verdict]++
@@ -119,7 +134,7 @@ func run() int {
 					})
 					program = shrunk
 				}
-				if err := fuzz.WriteFinding(path, program, programSeed, outcome.Key); err != nil {
+				if err := fuzz.WriteFinding(path, program, programSeed, leftOut, outcome.Key); err != nil {
 					fmt.Fprintln(os.Stderr, err)
 				}
 				mutex.Lock()

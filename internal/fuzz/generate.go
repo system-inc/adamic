@@ -19,13 +19,45 @@ import (
 // globals and the holder, and calls go everywhere a value can, so the order of reads and calls in
 // an expression is under test everywhere.
 func Generate(seed uint64) *Program {
-	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963))}
+	return GenerateWithout(seed, nil)
+}
+
+// Features are the parts of the language the generator can leave out by name, so it can stay inside
+// what an older stage 0 lowered: fuzzing an old commit, a program that's all not-yets tests nothing.
+var Features = []string{
+	"field-updates",    // +=, ++ and the rest on a field (holder.value += 1), not plain =
+	"number-tostring",  // (1.5).toString()
+	"number-functions", // Number.parseInt, parseFloat, isInteger, isNaN, isFinite
+	"string-index",     // text[index] and text.at(index)
+	"string-search",    // lastIndexOf, replaceAll, trimStart, trimEnd
+	"array-index",      // list[index] and list.at(index), read
+	"array-write",      // list[index] = value
+	"array-spread",     // [...list, value]
+	"array-search",     // indexOf and includes on an array
+	"array-methods",    // reverse, concat, reduce, filter, find, findIndex, some, every
+	"sort-callback",    // sort with an arrow function as the comparator
+	"map-iteration",    // for...of over a Map
+}
+
+// GenerateWithout makes the program a seed names with some features left out. The same seed and the
+// same features always make the same program.
+func GenerateWithout(seed uint64, without []string) *Program {
+	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}}
+	for _, feature := range without {
+		generator.without[feature] = true
+	}
 	return generator.program()
 }
 
+// allowed says whether a feature may be used.
+func (g *generator) allowed(feature string) bool {
+	return !g.without[feature]
+}
+
 type generator struct {
-	random *rand.Rand
-	scope  *scope
+	random  *rand.Rand
+	without map[string]bool
+	scope   *scope
 	// names counts every name made, so each is unique in the program and a shrunk expression that
 	// escapes its scope fails the checker instead of meaning something else.
 	names int
@@ -181,9 +213,16 @@ func (g *generator) program() *Program {
 	for _, shown := range everything {
 		add(statement("console.log(@e);", shown))
 	}
-	add(statement("for (const [key, value] of table) @b", &Block{Statements: []*Statement{
-		statement("console.log(`${key}=${value}`);"),
-	}}))
+	if g.allowed("map-iteration") {
+		add(statement("for (const [key, value] of table) @b", &Block{Statements: []*Statement{
+			statement("console.log(`${key}=${value}`);"),
+		}}))
+		return program
+	}
+	// Without iteration, every key the program can make, read one by one.
+	for _, key := range []string{"a", "b", "c", "k0", "k1", "k2", "k3"} {
+		add(statement("console.log(`" + key + "=${table.get('" + key + "') ?? -1}`);"))
+	}
 	return program
 }
 
@@ -349,6 +388,9 @@ func (g *generator) mutation() *Statement {
 			if targets := g.visible(Number, true); len(targets) > 0 {
 				target := targets[g.random.IntN(len(targets))]
 				operator := g.pick("=", "+=", "-=", "*=", "/=", "%=", "**=", "++", "--")
+				if strings.Contains(target.name, ".") && !g.allowed("field-updates") {
+					operator = "="
+				}
 				switch operator {
 				case "++", "--":
 					if g.chance(1, 2) {
@@ -363,7 +405,7 @@ func (g *generator) mutation() *Statement {
 		case 2, 3:
 			if targets := g.visible(String, true); len(targets) > 0 {
 				target := targets[g.random.IntN(len(targets))]
-				if g.chance(1, 2) {
+				if g.chance(1, 2) && (!strings.Contains(target.name, ".") || g.allowed("field-updates")) {
 					// += with something short, so it grows by little each time.
 					return statement(target.name+" += @e;", g.short())
 				}
@@ -383,13 +425,21 @@ func (g *generator) mutation() *Statement {
 				case 0:
 					return statement(array.name + ".pop();")
 				case 1:
-					return statement(array.name + ".reverse();")
+					if g.allowed("array-methods") {
+						return statement(array.name + ".reverse();")
+					}
 				case 2:
+					if !g.allowed("sort-callback") {
+						break
+					}
 					if element == Number {
 						return statement(array.name + ".sort((left, right) => left - right);")
 					}
 					return statement(array.name + ".sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));")
 				case 3:
+					if !g.allowed("array-write") {
+						break
+					}
 					// A write at an index that exists; past the end is an inserted check, not a finding.
 					index := g.expression(Number, 1)
 					return statement(fmt.Sprintf("if (%s.length > 0) @b", array.name), &Block{Statements: []*Statement{
@@ -546,6 +596,9 @@ func (g *generator) number(depth int) *Expression {
 	case 7:
 		return compose(Number, "@e.length", g.expression(NumberArray, next))
 	case 8:
+		if !g.allowed("array-index") {
+			return g.leaf(Number)
+		}
 		return compose(Number, "(@e[@e] ?? @e)", g.expression(NumberArray, next), g.expression(Number, next), g.literal(Number))
 	case 9:
 		return compose(Number, "(table.get(@e) ?? @e)", g.key(), g.literal(Number))
@@ -563,6 +616,9 @@ func (g *generator) number(depth int) *Expression {
 	case 15:
 		return compose(Number, "(@e ? @e : @e)", g.expression(Boolean, next), g.expression(Number, next), g.expression(Number, next))
 	case 16:
+		if !g.allowed("array-methods") {
+			return g.leaf(Number)
+		}
 		parameter := g.name("sum")
 		item := g.name("item")
 		g.push()
@@ -572,8 +628,14 @@ func (g *generator) number(depth int) *Expression {
 		g.pop()
 		return compose(Number, "@e.reduce(("+parameter+", "+item+") => @e, @e)", g.expression(NumberArray, next), body, g.literal(Number))
 	case 17:
+		if !g.allowed("array-search") {
+			return g.leaf(Number)
+		}
 		return compose(Number, "@e.indexOf(@e)", g.expression(NumberArray, next), g.expression(Number, next))
 	case 18:
+		if !g.allowed("array-methods") {
+			return g.leaf(Number)
+		}
 		item := g.name("item")
 		g.push()
 		g.declare(item, Number, false)
@@ -584,16 +646,28 @@ func (g *generator) number(depth int) *Expression {
 		}
 		return compose(Number, "(@e.find(("+item+") => @e) ?? @e)", g.expression(NumberArray, next), test, g.literal(Number))
 	case 19:
+		if !g.allowed("array-index") {
+			return g.leaf(Number)
+		}
 		return compose(Number, "(@e.at(@e) ?? @e)", g.expression(NumberArray, next), g.expression(Number, next), g.literal(Number))
 	case 20:
+		if !g.allowed("number-functions") {
+			return g.leaf(Number)
+		}
 		return compose(Number, "Number.parseInt(@e, 10)", g.expression(String, next))
 	case 21:
+		if !g.allowed("number-functions") {
+			return g.leaf(Number)
+		}
 		return compose(Number, "Number.parseFloat(@e)", g.expression(String, next))
 	case 22:
 		return compose(Number, "((@e) ** @e)", g.expression(Number, next), text(Number, g.pick("2", "3", "0.5", "-1")))
 	case 23:
 		return compose(Number, "(@e.codePointAt(@e) ?? @e)", g.expression(String, next), g.expression(Number, next), g.literal(Number))
 	case 24:
+		if !g.allowed("string-search") {
+			return g.leaf(Number)
+		}
 		return compose(Number, "@e.lastIndexOf(@e)", g.expression(String, next), g.expression(String, next))
 	}
 	return g.leaf(Number)
@@ -623,18 +697,37 @@ func (g *generator) string(depth int) *Expression {
 	case 13:
 		return compose(String, "@e."+g.pick("padStart", "padEnd")+"(@e, @e)", g.expression(String, next), text(Number, g.pick("0", "3", "8")), text(String, g.pick("'-'", "'ab'", "'🌍'")))
 	case 14:
-		return compose(String, "@e."+g.pick("trim", "trimStart", "trimEnd")+"()", g.expression(String, next))
+		trim := g.pick("trim", "trimStart", "trimEnd")
+		if !g.allowed("string-search") {
+			trim = "trim"
+		}
+		return compose(String, "@e."+trim+"()", g.expression(String, next))
 	case 15:
+		if !g.allowed("string-index") {
+			return g.leaf(String)
+		}
 		return compose(String, "(@e.at(@e) ?? @e)", g.expression(String, next), g.expression(Number, next), g.literal(String))
 	case 16:
+		if !g.allowed("string-index") {
+			return g.leaf(String)
+		}
 		return compose(String, "(@e[@e] ?? @e)", g.expression(String, next), g.expression(Number, next), g.literal(String))
 	case 17:
 		return compose(String, "(@e ? @e : @e)", g.expression(Boolean, next), g.expression(String, next), g.expression(String, next))
 	case 18:
+		if !g.allowed("number-tostring") {
+			return g.leaf(String)
+		}
 		return compose(String, "@e.toString()", g.parenthesized(g.expression(Number, next)))
 	case 19:
+		if !g.allowed("string-search") {
+			return g.leaf(String)
+		}
 		return compose(String, "@e.replaceAll(@e, @e)", g.expression(String, next), text(String, g.pick("'a'", "','", "''")), g.short())
 	case 20:
+		if !g.allowed("array-index") {
+			return g.leaf(String)
+		}
 		return compose(String, "(@e[@e] ?? @e)", g.expression(StringArray, next), g.expression(Number, next), g.literal(String))
 	}
 	return g.leaf(String)
@@ -665,14 +758,23 @@ func (g *generator) boolean(depth int) *Expression {
 	case 6:
 		return compose(Boolean, "!@e", g.expression(Boolean, next))
 	case 7:
+		if !g.allowed("array-search") {
+			return g.leaf(Boolean)
+		}
 		return compose(Boolean, "@e.includes(@e)", g.expression(NumberArray, next), g.expression(Number, next))
 	case 8:
 		return compose(Boolean, "table.has(@e)", g.key())
 	case 9:
 		return compose(Boolean, "@e."+g.pick("startsWith", "endsWith", "includes")+"(@e)", g.expression(String, next), g.expression(String, next))
 	case 10:
+		if !g.allowed("number-functions") {
+			return g.leaf(Boolean)
+		}
 		return compose(Boolean, g.pick("Number.isInteger", "Number.isNaN", "Number.isFinite")+"(@e)", g.expression(Number, next))
 	case 11:
+		if !g.allowed("array-methods") {
+			return g.leaf(Boolean)
+		}
 		item := g.name("item")
 		g.push()
 		g.declare(item, Number, false)
@@ -710,6 +812,9 @@ func (g *generator) numberArray(depth int) *Expression {
 		g.pop()
 		return compose(NumberArray, "@e.map(("+item+") => @e)", g.expression(NumberArray, next), body)
 	case 3:
+		if !g.allowed("array-methods") {
+			return g.leaf(NumberArray)
+		}
 		item := g.name("item")
 		g.push()
 		g.declare(item, Number, false)
@@ -717,8 +822,14 @@ func (g *generator) numberArray(depth int) *Expression {
 		g.pop()
 		return compose(NumberArray, "@e.filter(("+item+") => @e)", g.expression(NumberArray, next), test)
 	case 4:
+		if !g.allowed("array-spread") {
+			return g.leaf(NumberArray)
+		}
 		return compose(NumberArray, "[...@e, @e]", g.expression(NumberArray, next), g.expression(Number, next))
 	case 5:
+		if !g.allowed("array-methods") {
+			return g.leaf(NumberArray)
+		}
 		return compose(NumberArray, "@e.concat(@e)", g.expression(NumberArray, next), g.expression(NumberArray, next))
 	case 6:
 		return compose(NumberArray, "@e.map((item) => item.length)", g.expression(StringArray, next))

@@ -188,10 +188,14 @@ func simplest(t Type) *Expression {
 
 // WriteFinding writes a shrunk finding as a program with a header that says where it came from and
 // how to make it again.
-func WriteFinding(path string, program *Program, seed uint64, key string) error {
+func WriteFinding(path string, program *Program, seed uint64, without []string, key string) error {
 	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 		return err
 	}
-	header := fmt.Sprintf("// Found by adamic-fuzz from seed %d (go run ./cmd/adamic-fuzz -seed %d -count 1), shrunk: %s.\n", seed, seed, strings.ReplaceAll(key, "\n", " "))
+	command := fmt.Sprintf("go run ./cmd/adamic-fuzz -seed %d -count 1", seed)
+	if len(without) > 0 {
+		command += " -without " + strings.Join(without, ",")
+	}
+	header := fmt.Sprintf("// Found by adamic-fuzz from seed %d (%s), shrunk: %s.\n", seed, command, strings.ReplaceAll(key, "\n", " "))
 	return os.WriteFile(path, []byte(header+program.Source()), 0o644)
 }
