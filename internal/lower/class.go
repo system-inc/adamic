@@ -127,6 +127,16 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	}
 	defer func() { l.substitution, l.locals, l.instance = outerSubstitution, outerLocals, outerInstance }()
 
+	// Every method's result is known before any body is lowered, the constructor's included, so a
+	// method calling one declared after it reads what it returns rather than taking it for void. It is
+	// read with this instantiation's meaning of each type parameter.
+	for _, member := range members {
+		if member.Kind == ast.KindMethodDeclaration {
+			if err := l.declareReturns(lowered.methods[member.Name().Text()], member); err != nil {
+				return nil, err
+			}
+		}
+	}
 	if err := l.constructor(lowered.constructor, declaration); err != nil {
 		return nil, err
 	}

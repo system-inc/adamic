@@ -1,0 +1,163 @@
+// Calls to functions and methods declared further down, and cycles of them: every result is known
+// before any body is lowered, so a call reads what its callee returns whatever the order. Each kind of
+// result is here: a number, a string, a boolean, number | undefined, an object and an array, from a
+// class instantiated more than once and from a generic one, with strings the program builds.
+
+// A recursive descent parser whose methods call each other in a cycle, the caller first: value calls
+// list and pair, declared after it, and they call value back.
+class Reader {
+	readonly text: string;
+	position = 0;
+
+	constructor(text: string) {
+		this.text = text;
+	}
+
+	value(): string {
+		const character = this.peek();
+		if (character === '[') {
+			return this.list();
+		}
+		if (character === '(') {
+			return this.pair();
+		}
+		this.position++;
+		return `${character}${this.depthOf(character)}`;
+	}
+
+	list(): string {
+		this.position++;
+		const items: string[] = [];
+		while (this.peek() !== ']') {
+			items.push(this.value());
+		}
+		this.position++;
+		return `[${items.join(' ')}]`;
+	}
+
+	pair(): string {
+		this.position++;
+		const left = this.value();
+		const right = this.value();
+		this.position++;
+		return `(${right}.${left})`;
+	}
+
+	peek(): string {
+		return this.text[this.position] ?? ')';
+	}
+
+	depthOf(character: string): number {
+		return this.isDigit(character) ? (character.charCodeAt(0) - 48) * 2 : character.length;
+	}
+
+	isDigit(character: string): boolean {
+		return character >= '0' && character <= '9';
+	}
+}
+
+for (const text of ['[1 [2 3] (4 5)]', '(a[bc])', '7', '[[[]]]']) {
+	console.log(new Reader(text.split(' ').join('')).value());
+}
+
+// The same cycle the other way round: the callees first, each calling back a method declared after
+// it, with results that are maybe a number, an object and an array.
+class Counter {
+	count = 0;
+
+	odd(value: number): boolean {
+		this.count++;
+		return value === 0 ? false : this.even(value - 1);
+	}
+
+	firstAbove(values: readonly number[], floor: number): number | undefined {
+		return values.length === 0 ? undefined : this.head(values, floor);
+	}
+
+	collect(limit: number): number[] {
+		return limit <= 0 ? [] : this.grown(limit);
+	}
+
+	even(value: number): boolean {
+		this.count++;
+		return value === 0 ? true : this.odd(value - 1);
+	}
+
+	head(values: readonly number[], floor: number): number | undefined {
+		const first = values[0] ?? 0;
+		return first > floor ? first : this.firstAbove(values.slice(1), floor);
+	}
+
+	grown(limit: number): number[] {
+		const below = this.collect(limit - 1);
+		below.push(limit * limit);
+		return below;
+	}
+
+	twin(): Counter {
+		const made = this.made();
+		made.count = this.count;
+		return made;
+	}
+
+	made(): Counter {
+		return new Counter();
+	}
+}
+
+const counter = new Counter();
+console.log(`${counter.even(10)} ${counter.odd(7)} ${counter.even(3)} after ${counter.count} calls`);
+console.log(`${counter.firstAbove([1, 5, 9], 4) ?? 'none'} ${counter.firstAbove([1, 2], 4) ?? 'none'} ${counter.firstAbove([], 0) ?? 'none'}`);
+console.log(counter.collect(5).join(','));
+console.log(`twin ${counter.twin().count}`);
+
+// A generic class whose methods call later ones and return its type parameter, instantiated twice.
+class Pile<Item> {
+	readonly items: Item[] = [];
+
+	topOr(fallback: Item): Item {
+		return this.isEmpty() ? fallback : this.top(fallback);
+	}
+
+	top(fallback: Item): Item {
+		return this.items[this.items.length - 1] ?? fallback;
+	}
+
+	isEmpty(): boolean {
+		return this.size() === 0;
+	}
+
+	size(): number {
+		return this.items.length;
+	}
+}
+
+const words = new Pile<string>();
+console.log(`${words.topOr('nothing')} ${words.size()}`);
+words.items.push(`w${words.size()}`);
+words.items.push(`w${words.size()}`);
+console.log(`${words.topOr('nothing')} ${words.size()}`);
+const numbers = new Pile<number>();
+numbers.items.push(4 * 4);
+console.log(`${numbers.topOr(-1)} ${numbers.isEmpty()}`);
+
+// Module functions, each calling one declared after it, in a cycle and in a chain.
+function describe(value: number): string {
+	return isEven(value) ? `${value} is even, half ${half(value) ?? 'none'}` : `${value} is odd`;
+}
+
+function isEven(value: number): boolean {
+	return value === 0 ? true : isOdd(value - 1);
+}
+
+function isOdd(value: number): boolean {
+	return value === 0 ? false : isEven(value - 1);
+}
+
+function half(value: number): number | undefined {
+	return value === 0 ? undefined : value / 2;
+}
+
+for (const value of [0, 3, 8]) {
+	console.log(describe(value));
+}

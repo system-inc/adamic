@@ -12,7 +12,7 @@ The first three slices were parsers: a string in, a tree out, nothing kept. Ahra
 - **A single lint rule's pure core** (runner-up): every rule's fixtures are whole sources run through typescript-go's AST, which a port can't take as input, so a pure core would be held by fixtures of my own extracting, not the rule's. Not the oracle Ahra asked for.
 - **lint/report** (looked at): 125 lines of formatting, too little state.
 
-## 1. Two functions that call each other
+## 1. Two functions that call each other (closed by stream P2)
 
 gitignore's gap 3 is a call to a function declared later, taken for a void call. Its GAPS.md says that taking signatures from the checker up front "would also make mutual recursion possible, which no order can give today", and this is that program:
 
@@ -30,7 +30,9 @@ console.log(`${isEven(4)} ${isOdd(4)}`);
 stage 0 can't lower a void call used as a value yet        (Node prints true false)
 ```
 
-**Around it:** scan.go's `scanCode` calls `skipTemplate` for a template literal, and `skipTemplate` calls `scanCode` for each `${...}`, because an interpolation is code. The port writes `skipTemplate`'s loop inside `scanCode`'s template case (scan.ts), where the recursion is a function calling itself, which lowers.
+**Closed** with gitignore's gap 3, by `declareReturns` (internal/lower/lower.go), which sets every function's result before any body is lowered.
+
+**Around it, until it closed:** scan.go's `scanCode` calls `skipTemplate` for a template literal, and `skipTemplate` calls `scanCode` for each `${...}`, because an interpolation is code. The port writes `skipTemplate`'s loop inside `scanCode`'s template case (scan.ts), where the recursion is a function calling itself, which lowers. Now that the gap is closed, scan.ts has `skipTemplate` as its own function again, after `scanCode`, as scan.go has it.
 
 ## 2. `return undefined` from a function returning an array or undefined
 

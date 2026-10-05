@@ -258,11 +258,42 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			declarations = append(declarations, statement)
 		}
 	}
+	// Every function's result is known before any body is lowered, so a call to a function declared
+	// further down, or one that calls back, reads what it returns rather than taking it for void.
+	for _, declaration := range declarations {
+		if err := l.declareReturns(l.functions[l.symbol(declaration.Name())], declaration); err != nil {
+			return err
+		}
+	}
 	for _, declaration := range declarations {
 		if err := l.functionBody(declaration); err != nil {
 			return err
 		}
 	}
+	return nil
+}
+
+// declareReturns sets what the function at index returns, from its declaration's signature, as the
+// checker already knows it: nothing for void and for a constructor.
+func (l *lowering) declareReturns(index int, declaration *ast.Node) error {
+	if declaration.Kind == ast.KindConstructor {
+		return nil
+	}
+	signature := l.checker.GetSignatureFromDeclaration(declaration)
+	returns := l.checker.GetReturnTypeOfSignature(signature)
+	if returns.Flags()&checker.TypeFlagsVoid != 0 {
+		return nil
+	}
+	valueType, isKnown := l.representation(returns)
+	if !isKnown {
+		// An arrow function has no name to point at, so it's pointed at whole.
+		where := declaration.Name()
+		if where == nil {
+			where = declaration
+		}
+		return l.notYet(where, "a function returning "+l.checker.TypeToString(returns))
+	}
+	l.result.Functions[index].Returns = valueType
 	return nil
 }
 
@@ -291,22 +322,10 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
 	}
-	if declaration.Kind != ast.KindConstructor {
-		signature := l.checker.GetSignatureFromDeclaration(declaration)
-		returns := l.checker.GetReturnTypeOfSignature(signature)
-		if returns.Flags()&checker.TypeFlagsVoid == 0 {
-			valueType, isKnown := l.representation(returns)
-			if !isKnown {
-				// An arrow function has no name to point at, so it's pointed at whole.
-				where := declaration.Name()
-				if where == nil {
-					where = declaration
-				}
-				return l.notYet(where, "a function returning "+l.checker.TypeToString(returns))
-			}
-			function.Returns = valueType
-		}
+	if err := l.declareReturns(index, declaration); err != nil {
+		return err
 	}
+	function.Returns = l.result.Functions[index].Returns
 	outerIndexForParameters := l.functionIndex
 	l.functionIndex = index
 	defer func() { l.functionIndex = outerIndexForParameters }()

@@ -139,27 +139,7 @@ function scanCode(text: string, start: number, inInterpolation: boolean, comment
 			index = skipQuoted(text, index, character);
 			previousToken = character;
 		} else if (character === '`') {
-			// scan.go: skipTemplate advances past a template literal, lexing each `${...}` as code,
-			// because a comment, a string or a regular expression can live inside an interpolation. It
-			// is written here rather than as its own function: it and scanCode call each other, and
-			// stage 0 lowers no pair of functions that do (gap 1 in GAPS.md).
-			index++;
-			while (index < text.length) {
-				const inTemplate = text[index];
-				if (inTemplate === '\\') {
-					index += 2;
-					continue;
-				}
-				if (inTemplate === '`') {
-					index++;
-					break;
-				}
-				if (inTemplate === '$' && text[index + 1] === '{') {
-					index = scanCode(text, index + 2, true, comments);
-					continue;
-				}
-				index++;
-			}
+			index = skipTemplate(text, index, comments);
 			previousToken = character;
 		} else if (character === '/' && opensRegularExpression(previousToken)) {
 			index = skipRegularExpression(text, index);
@@ -179,6 +159,29 @@ function scanCode(text: string, start: number, inInterpolation: boolean, comment
 		}
 	}
 
+	return index;
+}
+
+// scan.go: skipTemplate advances past a template literal, lexing each `${...}` as code, because a
+// comment, a string or a regular expression can live inside an interpolation. It and scanCode call
+// each other.
+function skipTemplate(text: string, start: number, comments: CommentSpan[]): number {
+	let index = start + 1;
+	while (index < text.length) {
+		const character = text[index];
+		if (character === '\\') {
+			index += 2;
+			continue;
+		}
+		if (character === '`') {
+			return index + 1;
+		}
+		if (character === '$' && text[index + 1] === '{') {
+			index = scanCode(text, index + 2, true, comments);
+			continue;
+		}
+		index++;
+	}
 	return index;
 }
 
