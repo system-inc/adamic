@@ -414,6 +414,11 @@ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic
 // length (string.c).
 size_t adamic_string_join_halves(char *bytes, size_t from, size_t length);
 
+// adamic_string_put writes part's bytes after the first written of bytes, joining halves of a pair
+// where they meet, and returns how many bytes there are now (string.c). Every string's own halves are
+// joined already, so only the meeting is looked at.
+size_t adamic_string_put(char *bytes, size_t written, const adamic_string *part);
+
 // adamic_string_append is string + parts, taking the caller's reference to string: written in place
 // when the caller held the only reference and there's room, and otherwise a new string with room to
 // grow, string let go (string_append.c).

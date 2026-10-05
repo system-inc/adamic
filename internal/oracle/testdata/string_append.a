@@ -105,3 +105,27 @@ function capturedLocal(): string {
 	return local;
 }
 console.log(capturedLocal());
+
+// Halves of a pair meet only where pieces do: across two parts, with an empty part between them, after
+// a part shorter than a half, and text += text with a low half at its start and a high one at its end.
+function seams(): void {
+	const high = String.fromCharCode(0xd83c);
+	const low = String.fromCharCode(0xdf0d);
+	const empty = high.slice(0, 0);
+	const pieces = [`${high}${low}`, `a${high}${empty}${low}b`, `${high}${empty}${empty}${low}`, `${low}${high}`, `x${high}`, `${low}y`];
+	for (const piece of pieces) {
+		console.log(`${piece.length} ${piece.codePointAt(0)} ${piece.codePointAt(1)} ${[...piece].length}`);
+	}
+	const joined = `${pieces[4] ?? ''}${pieces[5] ?? ''}`;
+	console.log(`${joined.length} ${joined === 'x🌍y'}`);
+	let twice = `${low}ab${high}`;
+	twice += twice;
+	console.log(`${twice.length} ${twice.codePointAt(3)} ${[...twice].length}`);
+	let grow = `${low}${'z'.repeat(20)}`;
+	grow += high;
+	grow += low;
+	grow += `${high}${low}${high}`;
+	grow += low;
+	console.log(`${grow.length} ${[...grow].length} ${grow.codePointAt(21)} ${grow.codePointAt(23)} ${grow.codePointAt(25)}`);
+}
+seams();

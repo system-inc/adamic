@@ -47,8 +47,15 @@ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_
 		}
 		adamic_string_check_length(units);
 	}
+	// text += text can't be written in place: joining halves where the pieces meet would rewrite the
+	// bytes the copy of text is still reading. Room is never as much as the length today (a string
+	// grows to twice what it held before), so this guards a change to how strings grow.
+	bool itself = false;
+	for (size_t index = 0; index < count; index++) {
+		itself = itself || parts[index] == string;
+	}
 	adamic_string *result = string;
-	if (string->heap.references == 1 && string->capacity - length >= added) {
+	if (string->heap.references == 1 && !itself && string->capacity - length >= added) {
 		// The bytes are about to change, so what was cached about the old ones goes: the length in
 		// units, and the position index (string_index.c).
 		adamic_string_free_index(string);
@@ -64,18 +71,13 @@ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_
 			memcpy((char *)result->bytes, string->bytes, length);
 		}
 	}
-	// A part may be the string itself (text += text): its length is still the one before the append,
-	// which is only set at the end, and its bytes, before the end, are where the copy reads them.
-	char *cursor = (char *)result->bytes + length;
+	// A part that is the string itself is read from its own bytes, untouched, since that append
+	// made a new string.
+	size_t written = length;
 	for (size_t index = 0; index < count; index++) {
-		if (parts[index]->length > 0) {
-			memcpy(cursor, parts[index]->bytes, parts[index]->length);
-		}
-		cursor += parts[index]->length;
+		written = adamic_string_put((char *)result->bytes, written, parts[index]);
 	}
-	// Halves of a surrogate pair can meet only where the pieces do: from the last character of the
-	// string before (three bytes, a lone surrogate's) on.
-	result->length = adamic_string_join_halves((char *)result->bytes, length >= 3 ? length - 3 : 0, length + added);
+	result->length = written;
 	if (result != string) {
 		adamic_release(string);
 	}

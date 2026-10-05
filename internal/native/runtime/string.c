@@ -72,15 +72,36 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 		adamic_string_check_length(units);
 	}
 	adamic_string *string = allocate(length);
-	char *cursor = (char *)string->bytes;
-	for (size_t index = 0; index < count; index++) {
-		if (parts[index]->length > 0) {
-			memcpy(cursor, parts[index]->bytes, parts[index]->length);
+	if (count == 1) {
+		// One piece is a copy, and its bytes may be a builder's (a stack piece, from fromCharCode or
+		// slice), which can hold halves of a pair side by side: every byte is looked at.
+		if (length > 0) {
+			memcpy((char *)string->bytes, parts[0]->bytes, length);
 		}
-		cursor += parts[index]->length;
+		string->length = adamic_string_join_halves((char *)string->bytes, 0, length);
+		return string;
 	}
-	string->length = adamic_string_join_halves((char *)string->bytes, 0, length);
+	size_t written = 0;
+	for (size_t index = 0; index < count; index++) {
+		written = adamic_string_put((char *)string->bytes, written, parts[index]);
+	}
+	string->length = written;
 	return string;
+}
+
+size_t adamic_string_put(char *bytes, size_t written, const adamic_string *part) {
+	// A string's own halves are joined already, so halves of a pair can meet only where two pieces
+	// do: a lone high surrogate the bytes so far end with, and a lone low one the part begins with.
+	// The part's first three bytes go in first, and only those six are looked at.
+	size_t head = part->length < 3 ? part->length : 3;
+	if (head > 0) {
+		memcpy(bytes + written, part->bytes, head);
+	}
+	written = adamic_string_join_halves(bytes, written >= 3 ? written - 3 : 0, written + head);
+	if (part->length > head) {
+		memcpy(bytes + written, part->bytes + head, part->length - head);
+	}
+	return written + part->length - head;
 }
 
 size_t adamic_string_join_halves(char *bytes, size_t from, size_t length) {
