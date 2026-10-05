@@ -1,0 +1,15 @@
+// A field the checker narrowed undefined out of, put back by a call: reading through it is
+// JavaScript's TypeError, in all three runs.
+interface Link {
+	value: number;
+	next: Link | undefined;
+}
+const head: Link = { value: 1, next: { value: 2, next: undefined } };
+function cut(): void {
+	head.next = undefined;
+}
+if (head.next !== undefined) {
+	console.log(`${head.next.value}`);
+	cut();
+	console.log(`${head.next.value}`);
+}

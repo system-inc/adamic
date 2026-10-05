@@ -247,7 +247,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
-		return ir.Property{Object: object, Name: name, Of: of, Optional: optional}, nil
+		return l.defined(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional}), nil
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }

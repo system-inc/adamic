@@ -326,6 +326,12 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.SetProperty:
 		object := e.value(statement.Object)
 		value := e.value(statement.Value)
+		// The object may be undefined where the checker narrowed it away and a call since put it back
+		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
+		e.line("if (%s == NULL) {", object)
+		e.line("\tstatic const char message[] = %s;", cString("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+		e.line("}")
 		slot := e.temporary()
 		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(statement.Name), e.cache())
 		if statement.Value.Type().IsReference() {
@@ -601,7 +607,20 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.Unwrap:
-		return fmt.Sprintf("(%s).%s", e.value(expression.Value), member(expression.Type()))
+		// The checker narrowed undefined away, but a call since may have put it back (ir.Unwrap).
+		value := e.snapshot(expression.Value.Type(), e.value(expression.Value))
+		e.line("if (!%s.present) {", value)
+		e.line("\tstatic const char message[] = %s;", cString(narrowedAwayMessage))
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+		e.line("}")
+		return fmt.Sprintf("(%s).%s", value, member(expression.Type()))
+	case ir.Defined:
+		value := e.value(expression.Value)
+		e.line("if (%s == NULL) {", value)
+		e.line("\tstatic const char message[] = %s;", cString(expression.Message))
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+		e.line("}")
+		return value
 	case ir.MaybeOf:
 		if expression.Value == nil {
 			return zero(expression.Of)
@@ -1863,3 +1882,7 @@ func (e *emitter) cellReference(local int) string {
 	}
 	return e.cellName(local)
 }
+
+// narrowedAwayMessage is the panic of a number or a boolean the checker narrowed undefined out of,
+// read where a call since put it back (ir.Unwrap). JavaScript would go on computing with undefined.
+const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
