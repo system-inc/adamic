@@ -1,0 +1,30 @@
+// Sorting references inside a function: the sort holds every element while it works and lets each
+// go as it writes them back. A variable at the top level is still held when the program ends, so the
+// leak check can't see what it holds; here the array dies with the function, and anything the sort
+// didn't let go of is a leak. The strings are built at runtime, since literals are immortal.
+interface Task {
+	readonly name: string;
+	readonly priority: number;
+}
+
+function sortedWords(count: number): string {
+	const words: string[] = [];
+	for (let index = 0; index < count; index++) {
+		words.push(`word${(index * 7) % count}`);
+	}
+	words.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+	return words.join(',');
+}
+
+function sortedTasks(): string {
+	const tasks: Task[] = [];
+	const names = ['write', 'test', 'ship', 'plan'];
+	for (let index = 0; index < names.length; index++) {
+		tasks.push({ name: `${names[index] ?? ''}${index}`, priority: index % 2 });
+	}
+	tasks.sort((left, right) => right.priority - left.priority);
+	return tasks.map((task) => task.name).join(',');
+}
+
+console.log(sortedWords(5));
+console.log(sortedTasks());

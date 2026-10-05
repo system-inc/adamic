@@ -30,3 +30,19 @@ It is a language for the minds that will write most of the code from here on. Th
 ```
 cd dedication && ./build.sh && ./dedication
 ```
+
+## With gratitude
+
+Adamic is dedicated to Ken. It also stands on the work of others, and we want to thank them by name.
+
+- **Dennis Ritchie** made C, and Unix with Ken. Adamic writes every program out as C before it becomes machine code, so everything Adamic builds passes through his language.
+- **Anders Hejlsberg and the TypeScript team** gave JavaScript the types it was missing, and made a type system you can program. Adamic is their language, its syntax and its types, and their compiler reads every Adamic program before ours does.
+- **Rob Pike and Robert Griesemer** made Go with Ken. Adamic's first compiler is written in Go, and so is cohere, its gate. Go showed that a language can be small, plain and fast all at once, and that is the bar we hold ourselves to.
+- **Brendan Eich** made JavaScript. Every Adamic program must print exactly what it prints when JavaScript runs it, so his language is the judge of ours.
+- **Chris Lattner** made LLVM, with Vikram Adve, and clang on top of it. clang turns the C we write into fast machine code for every chip we care about.
+
+## License
+
+Adamic is licensed under either of the Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE)) or the MIT license ([LICENSE-MIT](LICENSE-MIT)), at your option. Code ported from other projects carries its own license, reproduced in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+Unless you explicitly state otherwise, any contribution you intentionally submit for inclusion in Adamic, as defined in the Apache-2.0 license, is dual licensed as above, without any additional terms or conditions.
