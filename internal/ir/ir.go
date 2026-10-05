@@ -187,6 +187,15 @@ type (
 	// ToFixed is Value.toFixed(Digits).
 	ToFixed struct{ Value, Digits Expression }
 
+	// NumberFormat is Value.toExponential(Argument) or Value.toPrecision(Argument), as Method says.
+	// Argument is nil when the call has none, which means something of its own to each (the
+	// shortest digits, and String(Value)).
+	NumberFormat struct {
+		Method   string
+		Value    Expression
+		Argument Expression
+	}
+
 	// Undefined is undefined where a reference goes: an object, an array or a string that may be
 	// missing (Tree | undefined), held as a null pointer.
 	Undefined struct{}
@@ -437,6 +446,7 @@ func (c NumberCall) Type() Type {
 	return Boolean
 }
 func (ToFixed) Type() Type       { return String }
+func (NumberFormat) Type() Type  { return String }
 func (Undefined) Type() Type     { return Object }
 func (IsUndefined) Type() Type   { return Boolean }
 func (ArrayPush) Type() Type     { return Number }
