@@ -214,6 +214,10 @@ What lowered as written, and is worth saying so: discriminated unions narrowed b
 
 ## Performance, observed (not refusals)
 
+### At a0c4027, with halves joined only where pieces meet, and main 4ff4657 merged
+
+Concatenation now looks for a surrogate pair's halves only where two pieces meet, and main brings integrations 7 and 8 (Perceus reuse and the rest). Same case set, best of seven at a load average under 1, all three outputs byte for byte the same: Go cohere 0.11 s, **the native port 0.236 s** (was 0.252 s), Node 0.392 s. **Go cohere is 2.1 times faster than the native port.** callgrind: 2.19 billion instructions, down from 2.34 billion. Two things moved them, and they're apart in the profile: `adamic_string_join_halves`, 76 million before, is gone from it (this branch), and `adamic_release` fell from 458 million to 378 million (the merge; releases belong to borrow inference). The top is now releases 17%, slice 8%, malloc and free 15%, and the glob's own `lastMatching` and `matches`.
+
 ### At 15e0b5f, with shared slices, appends in place and indexOf in place
 
 Main 1d72913 merged. A slice of 64 bytes or more, and a quarter of its owner, reads its owner's bytes; `text += more` on a local appends in place when the local holds the only reference; `indexOf` from a position no longer slices (docs/memory.md, "Strings, specifically"). The same case set as below, best of seven at a load average under 1, all three outputs byte for byte the same:
