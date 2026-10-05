@@ -4,6 +4,7 @@
 #define _POSIX_C_SOURCE 200809L
 
 #include "adamic.h"
+#include "count.h"
 
 #include <errno.h>
 #include <signal.h>
@@ -141,6 +142,7 @@ _Noreturn void adamic_panic(const char *message, size_t length) {
 	(void)write_all(adamic_stderr, prefix, sizeof prefix - 1);
 	(void)write_all(adamic_stderr, message, length);
 	(void)write_all(adamic_stderr, "\n", 1);
+	ADAMIC_COUNT_REPORT();
 	_exit(70);
 }
 

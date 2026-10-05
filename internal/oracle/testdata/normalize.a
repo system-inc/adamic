@@ -1,0 +1,36 @@
+// String.prototype.normalize in its four forms, as Node does it. The normalization sweep
+// (internal/native/normalize_test.go) holds every code point; this holds the method through the
+// compiler, on strings the program builds.
+
+function units(text: string): string {
+	const codes: number[] = [];
+	for (let index = 0; index < text.length; index++) {
+		codes.push(text.charCodeAt(index));
+	}
+	return codes.join(',');
+}
+
+function show(label: string, text: string): void {
+	const forms = [text.normalize(), text.normalize('NFD'), text.normalize('NFKC'), text.normalize('NFKD')];
+	console.log(`${label}: ${forms.map((form) => `[${units(form)}]`).join(' ')}`);
+}
+
+show('ascii', 'plain text');
+show('composed and not', `caf${'e'}́ café`);
+show('marks out of order', 'ạ́ ạ́');
+show('blocked by a mark of the same class', 'á́');
+show('compatibility', 'ﬁ ① ẛ̣ ¼');
+show('singletons', 'Å Ω ̈́');
+show('hangul', '한국어 각 각');
+show('beyond the BMP', '\u{1D15E}\u{1D165} 𝅗𝅥');
+show('longest decomposition', 'ﷺ');
+const high = '😀'.slice(0, 1);
+const low = '😀'.slice(1);
+show('lone surrogates', `${high}́${low} e${low}́`);
+
+// Normalizing is idempotent, and NFC of NFD is NFC.
+const built = `${'Amélie'.repeat(2)}-${'ǅ'}`;
+console.log(`${built.normalize('NFD').normalize() === built.normalize()} ${built.normalize('NFKD').normalize('NFKD') === built.normalize('NFKD')}`);
+const decomposed: string = 'e\u0301';
+const precomposed: string = '\u00e9';
+console.log(`${decomposed === precomposed} ${decomposed.normalize() === precomposed} ${precomposed.normalize('NFD').length}`);

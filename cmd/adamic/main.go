@@ -4,6 +4,9 @@
 //	adamic c <file.a|file.ts>               print the program as C
 //	adamic js <file.a|file.ts>              print the program as JavaScript
 //	adamic build <file.a|file.ts> -o <out>  compile it to a native binary
+//
+// build --count makes a binary that counts its allocations, frees, retains and releases and writes
+// them to stderr as it exits, for measuring what the memory model costs.
 package main
 
 import (
@@ -24,7 +27,7 @@ const usage = `usage:
   adamic types <file.a|file.ts>...
   adamic c <file.a|file.ts>
   adamic js <file.a|file.ts>
-  adamic build <file.a|file.ts> -o <out>`
+  adamic build <file.a|file.ts> -o <out> [--count]`
 
 func main() {
 	os.Exit(run(os.Args[1:]))
@@ -57,12 +60,12 @@ func run(arguments []string) int {
 		}
 		fmt.Print(javascript.JavaScript(lowered))
 		return 0
-	case len(arguments) == 4 && arguments[0] == "build" && arguments[2] == "-o":
+	case (len(arguments) == 4 || len(arguments) == 5 && arguments[4] == "--count") && arguments[0] == "build" && arguments[2] == "-o":
 		lowered, code := compile(arguments[1])
 		if lowered == nil {
 			return code
 		}
-		if err := native.Build(native.C(lowered), arguments[3], native.Options{}); err != nil {
+		if err := native.Build(native.C(lowered), arguments[3], native.Options{Count: len(arguments) == 5}); err != nil {
 			fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
 			return 1
 		}

@@ -59,10 +59,22 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 			bytes = array->elements[index].boolean ? "true" : "false";
 			size = strlen(bytes);
 			break;
+		case adamic_join_maybe_numbers: {
+			// join writes undefined as nothing at all.
+			adamic_maybe_number element = adamic_maybe_number_unpack(array->elements[index].number);
+			if (element.present) {
+				size = adamic_number_format(element.number, number);
+				bytes = number;
+			}
+			break;
+		}
 		case adamic_join_strings: {
+			// An undefined element (a string | undefined array's NULL) joins as nothing, as JavaScript's does.
 			const adamic_string *string = array->elements[index].reference;
-			bytes = string->bytes;
-			size = string->length;
+			if (string != NULL) {
+				bytes = string->bytes;
+				size = string->length;
+			}
 			break;
 		}
 		}
@@ -225,6 +237,13 @@ double adamic_array_index_of(const adamic_array *array, adamic_value value, enum
 		case adamic_equal_identity:
 			equal = element.reference == value.reference;
 			break;
+		case adamic_equal_maybe_numbers: {
+			// undefined finds undefined; a number is compared as numbers are, NaN found only by includes.
+			adamic_maybe_number left = adamic_maybe_number_unpack(element.number);
+			adamic_maybe_number right = adamic_maybe_number_unpack(value.number);
+			equal = left.present == right.present && (!left.present || left.number == right.number || (same_value_zero && isnan(left.number) && isnan(right.number)));
+			break;
+		}
 		}
 		if (equal) {
 			return (double)index;
