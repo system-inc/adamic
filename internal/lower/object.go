@@ -237,6 +237,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if lowered, isInput, err := l.input(node); isInput {
+		return lowered, true, err
+	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	// The global parseInt and parseFloat are Number's, the same functions.
 	if l.isLibraryGlobal(callee, "parseInt") || l.isLibraryGlobal(callee, "parseFloat") {

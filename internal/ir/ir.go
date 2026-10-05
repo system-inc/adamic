@@ -413,6 +413,15 @@ type (
 		Separator Expression
 		Element   Type
 	}
+
+	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
+	// Node's readFileSync(path, 'utf8') decodes them, in { kind: 'Ok', text }, or what went wrong in
+	// { kind: 'Error', message }, a message in Adamic's own words.
+	ReadTextFile struct{ Path Expression }
+
+	// ProgramArguments is programArguments() from 'adamic': a new array of the arguments after the
+	// program, as process.argv.slice(2) is.
+	ProgramArguments struct{}
 )
 
 // Field is one field of an object literal.
@@ -523,6 +532,9 @@ func (c StringCall) Type() Type {
 	}
 	return String
 }
+func (ReadTextFile) Type() Type     { return Object }
+func (ProgramArguments) Type() Type { return Array }
+
 func (MapNew) Type() Type    { return Map }
 func (MapSet) Type() Type    { return Map }
 func (MapHas) Type() Type    { return Boolean }
