@@ -275,6 +275,13 @@ type (
 		Element             Type
 	}
 
+	// ArrayFill is array.fill(Value, Start, End), Start and End perhaps nil (left out); in place, and
+	// the array. With Array nil, it's new Array(Length).fill(Value): a new array, every element Value.
+	ArrayFill struct {
+		Array, Length, Value, Start, End Expression
+		Element                          Type
+	}
+
 	// ArrayReverse is array.reverse(): in place, and the array.
 	ArrayReverse struct{ Array Expression }
 
@@ -488,6 +495,7 @@ func (s ArraySearch) Type() Type {
 }
 func (ArrayReverse) Type() Type  { return Array }
 func (ArraySplice) Type() Type   { return Array }
+func (ArrayFill) Type() Type     { return Array }
 func (ArrayConcat) Type() Type   { return Array }
 func (r ArrayReduce) Type() Type { return r.Result }
 func (ArraySort) Type() Type     { return Array }

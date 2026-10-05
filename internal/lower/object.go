@@ -537,6 +537,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 
 // arrayMethod lowers array.push(value) and array.join(separator).
 func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	if created := ast.SkipParentheses(receiver); name == "fill" && created.Kind == ast.KindNewExpression && l.isLibraryGlobal(created.AsNewExpression().Expression, "Array") {
+		return l.newArrayFilled(node, created)
+	}
 	element, err := l.elementType(receiver)
 	if err != nil {
 		return nil, true, err
@@ -621,6 +624,22 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		return ir.ArrayIndex{Array: array, Index: arguments[0], Element: element, Relative: true}, true, nil
 	case "reverse":
 		return ir.ArrayReverse{Array: array}, true, nil
+	case "fill":
+		if len(arguments) == 0 || len(arguments) > 3 || arguments[0].Type() != element {
+			return nil, true, l.notYet(node, "fill with other than a value of the elements' type")
+		}
+		fill := ir.ArrayFill{Array: array, Value: arguments[0], Element: element}
+		for index, bound := range arguments[1:] {
+			if bound.Type() != ir.Number {
+				return nil, true, l.notYet(node, "fill with a bound that isn't a number")
+			}
+			if index == 0 {
+				fill.Start = bound
+			} else {
+				fill.End = bound
+			}
+		}
+		return fill, true, nil
 	case "splice":
 		if len(arguments) == 0 || arguments[0].Type() != ir.Number || (len(arguments) > 1 && arguments[1].Type() != ir.Number) {
 			return nil, true, l.notYet(node, "splice without a start and a count that are numbers")
@@ -668,6 +687,33 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 var arrayMethods = map[string]bool{
 	"push": true, "join": true, "slice": true, "sort": true, "map": true, "reduce": true,
 	"includes": true, "indexOf": true, "at": true, "reverse": true, "concat": true, "splice": true,
+	"fill": true,
+}
+
+// newArrayFilled lowers new Array(length).fill(value). new Array(length) alone is an array of holes,
+// which 0.1 can't hold, so it lowers only filled, and filled whole.
+func (l *lowering) newArrayFilled(node *ast.Node, created *ast.Node) (ir.Expression, bool, error) {
+	element, err := l.elementType(node)
+	if err != nil {
+		return nil, true, err
+	}
+	constructed := created.AsNewExpression().Arguments
+	filled := node.AsCallExpression().Arguments.Nodes
+	if constructed == nil || len(constructed.Nodes) != 1 || len(filled) != 1 {
+		return nil, true, l.notYet(node, "new Array filled with other than one length and one value (a part left unfilled is a hole)")
+	}
+	length, err := l.expression(constructed.Nodes[0])
+	if err != nil {
+		return nil, true, err
+	}
+	value, err := l.expression(filled[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if length.Type() != ir.Number || value.Type() != element {
+		return nil, true, l.notYet(node, "new Array(length).fill(value) with a length that isn't a number or a value of another type")
+	}
+	return ir.ArrayFill{Length: length, Value: value, Element: element}, true, nil
 }
 
 // visits are the array methods that call a function per element and look at what it returns.

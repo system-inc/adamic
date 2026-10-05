@@ -644,6 +644,23 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.snapshot(ir.Boolean, found+" != -1")
 		}
 		return e.snapshot(ir.Number, found)
+	case ir.ArrayFill:
+		if expression.Array == nil {
+			length := e.value(expression.Length)
+			value := e.value(expression.Value)
+			return e.own(ir.Array, fmt.Sprintf("adamic_array_filled(%s, %s, %t)", length, borrowed(expression.Element, value), expression.Element.IsReference()))
+		}
+		array := e.value(expression.Array)
+		value := e.value(expression.Value)
+		start, end := "0.0", "0.0"
+		if expression.Start != nil {
+			start = e.value(expression.Start)
+		}
+		if expression.End != nil {
+			end = e.value(expression.End)
+		}
+		e.line("adamic_array_fill(%s, %s, %s, %s, %t, %t);", array, borrowed(expression.Element, value), start, end, expression.Start != nil, expression.End != nil)
+		return array
 	case ir.ArraySplice:
 		array := e.value(expression.Array)
 		start := e.value(expression.Start)

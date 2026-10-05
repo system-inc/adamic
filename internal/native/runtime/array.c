@@ -242,6 +242,40 @@ adamic_array *adamic_array_reverse(adamic_array *array) {
 	return array;
 }
 
+adamic_array *adamic_array_filled(double length, adamic_value value, bool references) {
+	// new Array(length): an integer from 0 to 2^32 - 1, or JavaScript throws.
+	if (!(length >= 0) || length > 4294967295.0 || length != trunc(length)) {
+		static const char message[] = "RangeError: Invalid array length";
+		adamic_panic(message, sizeof message - 1);
+	}
+	adamic_array *array = adamic_array_new((size_t)length, references);
+	for (size_t index = 0; index < (size_t)length; index++) {
+		if (references) {
+			adamic_retain(value.reference);
+		}
+		adamic_array_push(array, value);
+	}
+	return array;
+}
+
+adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end) {
+	// ECMAScript's relative indexes, as slice reads them.
+	double length = (double)array->length;
+	start = has_start ? (isnan(start) ? 0 : trunc(start)) : 0;
+	start = start < 0 ? (length + start < 0 ? 0 : length + start) : (start > length ? length : start);
+	end = has_end ? (isnan(end) ? 0 : trunc(end)) : length;
+	end = end < 0 ? (length + end < 0 ? 0 : length + end) : (end > length ? length : end);
+	for (size_t index = (size_t)start; (double)index < end; index++) {
+		if (array->references) {
+			// The new reference first: the value may be the one already there.
+			adamic_retain(value.reference);
+			adamic_release(array->elements[index].reference);
+		}
+		array->elements[index] = value;
+	}
+	return array;
+}
+
 adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
 	// ECMAScript's relative start, clamped to the array; a count left out is everything after it, and
 	// a count given is clamped to what's there.

@@ -203,6 +203,12 @@ double adamic_array_index_of(const adamic_array *array, adamic_value value, enum
 // every array's elements in order, references retained.
 adamic_array *adamic_array_reverse(adamic_array *array);
 
+// adamic_array_filled is new Array(length).fill(value), a new array the caller owns;
+// adamic_array_fill is array.fill(value, start, end), in place, and is the array. Both hold the value
+// once per element; the caller keeps its own.
+adamic_array *adamic_array_filled(double length, adamic_value value, bool references);
+adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end);
+
 // adamic_array_splice is array.splice(start, count, ...items): what's removed, in a new array the
 // caller owns. The items' references are the array's from then on.
 adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
