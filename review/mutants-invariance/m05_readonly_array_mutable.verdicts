@@ -1,0 +1,85 @@
+a01_same_type.a: compiles
+a02_readonly_cov.a: adamic: /home/user/adamic/review/round12/b2/a02_readonly_cov.a:27:33: Adamic 0.1 refuses a value of type readonly Dog[] seen as readonly Ani
+a03_generic_infer.a: adamic: /home/user/adamic/review/round12/b2/a03_generic_infer.a:23:10: stage 0 can't lower a function returning T | undefined yet
+a04_fresh_literal.a: compiles
+a05_spread_copy.a: compiles
+a06_tuple_to_readonly.a: adamic: /home/user/adamic/review/round12/b2/a06_tuple_to_readonly.a:24:33: Adamic 0.1 refuses a value of type [Dog, Dog] seen as readonly An
+a07_contravariant_fn.a: adamic: /home/user/adamic/review/round12/b2/a07_contravariant_fn.a:31:39: Adamic 0.1 refuses a value of type (list: readonly Animal[]) => vo
+a08_readonly_iface.a: adamic: /home/user/adamic/review/round12/b2/a08_readonly_iface.a:32:18: Adamic 0.1 refuses a value of type Kennel seen as Pen, which can wri
+a09_union_elements.a: adamic: /home/user/adamic/review/round12/b2/a09_union_elements.a:27:44: Adamic 0.1 refuses a value of type string[] seen as readonly (string
+a10_optional.a: compiles
+a11_class_instances.a: compiles
+a12_map_value_wider.a: adamic: /home/user/adamic/review/round12/b2/a12_map_value_wider.a:28:22: Adamic 0.1 refuses a value of type Map<string, Dog> seen as Readonl
+a13_map_method.a: adamic: /home/user/adamic/review/round12/b2/a13_map_method.a:23:27: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can wri
+a14_fresh_new_map.a: adamic: /home/user/adamic/review/round12/b2/a14_fresh_new_map.a:23:40: Adamic 0.1 refuses a value of type Map<string, Dog> seen as Map<strin
+a15_callback_generic_map.a: adamic: /home/user/adamic/review/round12/b2/a15_callback_generic_map.a:26:48: stage 0 can't lower .localeCompare on a string yet
+a16_literal_types.a: compiles
+a17_return_fresh.a: adamic: /home/user/adamic/review/round12/b2/a17_return_fresh.a:25:9: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can wr
+a18_literal_widening.a: compiles
+a19_conditional_fresh.a: adamic: /home/user/adamic/review/round12/b2/a19_conditional_fresh.a:23:27: Adamic 0.1 refuses a value of type Cat[] seen as Animal[], which 
+a20_fresh_copies.a: adamic: /home/user/adamic/review/round12/b2/a20_fresh_copies.a:23:26: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can w
+a21_callbacks.a: compiles
+a22_generics.a: adamic: /home/user/adamic/review/round12/b2/a22_generics.a:26:28: stage 0 can't lower a value of type T yet
+a23_readonly_map_of_arrays.a: adamic: /home/user/adamic/review/round12/b2/a23_readonly_map_of_arrays.a:25:54: Adamic 0.1 refuses a value of type Map<string, Dog[]> seen a
+b01_shorthand.a: compiles
+b02_conditional.a: adamic: /home/user/adamic/review/round12/b2/b02_conditional.a:24:27: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can wr
+b03_nullish.a: adamic: /home/user/adamic/review/round12/b2/b03_nullish.a:24:27: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write 
+b04_as.a: compiles
+b05_default_param.a: compiles
+b06_class_field.a: compiles
+b07_spread_array.a: adamic: /home/user/adamic/review/round12/b2/b07_spread_array.a:24:27: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can w
+b08_spread_object.a: compiles
+b09_union_target.a: compiles
+b10_union_source.a: compiles
+b11_tuple_tail.a: adamic: /home/user/adamic/review/round12/b2/b11_tuple_tail.a:24:27: stage 0 can't lower a [Animal, Dog] seen as a Animal[] (a tuple is held 
+b12_constraint_push.a: adamic: /home/user/adamic/review/round12/b2/b12_constraint_push.a:23:10: stage 0 can't lower a function returning T yet
+b13_constraint_assign.a: adamic: /home/user/adamic/review/round12/b2/b13_constraint_assign.a:23:37: stage 0 can't lower a value of type T yet
+b14_constraint_field.a: adamic: /home/user/adamic/review/round12/b2/b14_constraint_field.a:23:42: stage 0 can't lower a value of type T yet
+b15_method_bivariance.a: adamic: /home/user/adamic/review/round12/b2/b15_method_bivariance.a:27:2: stage 0 can't lower a MethodDeclaration in an object literal yet
+b16_method_returns.a: adamic: /home/user/adamic/review/round12/b2/b16_method_returns.a:27:2: stage 0 can't lower a MethodDeclaration in an object literal yet
+b17_class_to_class.a: compiles
+b18_object_to_class.a: compiles
+b19_nullish_assign.a: adamic: /home/user/adamic/review/round12/b2/b19_nullish_assign.a:27:1: stage 0 can't lower a BinaryExpression as a statement yet
+b20_destructure_default.a: adamic: /home/user/adamic/review/round12/b2/b20_destructure_default.a:24:7: stage 0 can't lower a destructuring declaration yet
+b21_map.a: adamic: /home/user/adamic/review/round12/b2/b21_map.a:25:40: Adamic 0.1 refuses a value of type Map<string, Dog> seen as Map<string, Animal>
+b22_set.a: adamic: /home/user/adamic/review/round12/b2/b22_set.a:25:32: Adamic 0.1 refuses a value of type Set<Dog> seen as Set<Animal>, which can writ
+b23_callback_param.a: adamic: /home/user/adamic/review/round12/b2/b23_callback_param.a:26:12: Adamic 0.1 refuses a value of type (list: Animal[]) => void seen as 
+b24_property_mutable.a: adamic: /home/user/adamic/review/round12/b2/b24_property_mutable.a:24:14: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which c
+b25_return.a: adamic: /home/user/adamic/review/round12/b2/b25_return.a:24:9: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write An
+b26_closure_capture_fn_value.a: adamic: /home/user/adamic/review/round12/b2/b26_closure_capture_fn_value.a:26:34: Adamic 0.1 refuses a value of type (list: Animal[]) => voi
+b27_overload_second.a: adamic: /home/user/adamic/review/round12/b2/b27_overload_second.a:29:16: stage 0 can't lower reading addAny yet
+b28_optional_field.a: adamic: /home/user/adamic/review/round12/b2/b28_optional_field.a:24:34: Adamic 0.1 refuses a value of type { pets?: Dog[]; } seen as { pets?
+b29_intersection_source.a: adamic: /home/user/adamic/review/round12/b2/b29_intersection_source.a:25:33: Adamic 0.1 refuses a value of type { pets: Dog[]; } & Tagged se
+b2_direct.a: adamic: /home/user/adamic/review/round12/b2/b2_direct.a:14:30: Adamic 0.1 refuses a value of type { pet: Dog; } seen as { pet: Animal; }, wh
+b2_silent.a: compiles
+b30_readonly_tuple_cast.a: adamic: /home/user/adamic/review/round12/b2/b30_readonly_tuple_cast.a:23:36: Adamic 0.1 refuses a value of type Dog[] seen as readonly Anima
+b31_conditional_union.a: compiles
+b33_class_method_bivariance.a: compiles
+b34_field_fn.a: adamic: /home/user/adamic/review/round12/b2/b34_field_fn.a:24:47: Adamic 0.1 refuses a value of type { visit: (animal: Animal) => void; } se
+b35_weak.a: adamic: /home/user/adamic/review/round12/b2/b35_weak.a:25:37: Adamic 0.1 refuses a value of type Dog[] & WeakBrand seen as Weak<Animal[]>, w
+b36_class_method_returns.a: compiles
+b37_property_holds_class.a: adamic: /home/user/adamic/review/round12/b2/b37_property_holds_class.a:26:33: Adamic 0.1 refuses a value of type Kennel seen as { pets: Anim
+b38_param_property_class_target.a: compiles
+b39_generic_identity.a: adamic: /home/user/adamic/review/round12/b2/b39_generic_identity.a:26:27: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which c
+b40_array_of_arrays_push.a: adamic: /home/user/adamic/review/round12/b2/b40_array_of_arrays_push.a:24:12: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], whi
+b41_map_set_value.a: adamic: /home/user/adamic/review/round12/b2/b41_map_set_value.a:24:20: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can 
+b42_compound_object.a: adamic: /home/user/adamic/review/round12/b2/b42_compound_object.a:27:18: Adamic 0.1 refuses a value of type { inner: { pets: Dog[]; }; } see
+b43_closure_returns_alias.a: adamic: /home/user/adamic/review/round12/b2/b43_closure_returns_alias.a:24:9: Adamic 0.1 refuses a value of type () => Dog[] seen as () => A
+b44_callback_return.a: adamic: /home/user/adamic/review/round12/b2/b44_callback_return.a:26:7: Adamic 0.1 refuses a value of type () => Dog[] seen as () => Animal[
+b45_array_index_write.a: adamic: /home/user/adamic/review/round12/b2/b45_array_index_write.a:24:12: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which 
+b46_readonly_outer_mutable_inner.a: adamic: /home/user/adamic/review/round12/b2/b46_readonly_outer_mutable_inner.a:24:35: Adamic 0.1 refuses a value of type Dog[][] seen as rea
+b47_concat.a: adamic: /home/user/adamic/review/round12/b2/b47_concat.a:25:16: stage 0 can't lower concat on an array of arrays yet
+b48_fill.a: adamic: /home/user/adamic/review/round12/b2/b48_fill.a:24:12: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Ani
+b49_ternary_union_obj.a: compiles
+b50_unshift_splice.a: adamic: /home/user/adamic/review/round12/b2/b50_unshift_splice.a:24:15: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can
+b51_method_signature_target.a: compiles
+b53_readonly_laundering.a: compiles
+b54_minus_readonly.a: compiles
+b55_readonly_laundering_array_field.a: adamic: /home/user/adamic/review/round12/b2/b55_readonly_laundering_array_field.a:24:52: Adamic 0.1 refuses a value of type { pets: Dog[]; }
+b64_array_of_functions.a: adamic: /home/user/adamic/review/round12/b2/b64_array_of_functions.a:24:40: Adamic 0.1 refuses a value of type ((animal: Animal) => void)[] 
+b66_spread_argument.a: adamic: /home/user/adamic/review/round12/b2/b66_spread_argument.a:27:7: stage 0 can't lower a SpreadElement yet
+b70_destructuring_assignment.a: adamic: /home/user/adamic/review/round12/b2/b70_destructuring_assignment.a:24:14: Adamic 0.1 refuses a value of type Dog[] seen as Animal[],
+b71_object_destructuring_assignment.a: adamic: /home/user/adamic/review/round12/b2/b71_object_destructuring_assignment.a:25:22: Adamic 0.1 refuses a value of type { pets: Dog[]; }
+b72_function_union_return.a: compiles
+c01_tuple_same_type.a: adamic: /home/user/adamic/review/round12/b2/c01_tuple_same_type.a:24:27: stage 0 can't lower a [Animal, Animal] seen as a Animal[] (a tuple 
+c02_class_as_interface_sound.a: compiles

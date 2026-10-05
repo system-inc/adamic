@@ -1,0 +1,11 @@
+--- FAIL: TestATupleSeenAsAnArrayIsNotYet (0.00s)
+--- FAIL: TestAViewThatCantWriteIsNotRefused (0.00s)
+--- FAIL: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat (0.00s)
+--- FAIL: TestAMutableLocationSeenWiderIsRefused (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.752s
+FAIL
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.053s
+FAIL
