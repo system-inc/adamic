@@ -212,6 +212,7 @@ What lowered as written, and is worth saying so: discriminated unions narrowed b
 
 These lowered and answered correctly, but they're the numbers to beat on the way to "faster and leaner than Go cohere". All measured on this Linux container, x86-64, with the test's case set, which includes cohere's own checkout as a real tree: 50 trees, about 6,200 tree paths, 21 pattern lists and 421 globs, and output identical on every side.
 
+- **Go cohere is 20 times faster than the native port.** The same 50 trees, pattern lists and globs, answered byte for byte the same, take Go cohere 0.10 s (the whole `go test` of cohere_side_test.go's answer step, reading the trees' ignore files from disk and its cases as JSON). The native port takes 2.1 s, and Node 0.62 s. The rest of this section is where the native time goes.
 - **Native is 3.5 to 5 times slower than Node.** With the cases compiled in as constants, the unsanitized `-O2` binary ran in 2.06 s and Node in 0.42 s. Read from a 447 KB cases file, it is 2.09 s and 0.59 s. Under callgrind, 42% of the native run's instructions are in `adamic_string_length` and 39% in `adamic_string_char_code_at` (internal/native/runtime/string.c). Each of them walks the string's UTF-8 from its first byte. So `text.length`, `text.charCodeAt(index)` and `text[index]` cost the length of the string, and a loop over a string's indexes is quadratic. The glob reads its pattern and its text that way, as the Go does. That's natural code, and every 0.1 program that reads a string by index pays the same. docs/memory.md already names the fix: an ASCII-only flag, so the common case is a load. Smallest program that shows the shape:
 
   ```ts
@@ -226,5 +227,7 @@ These lowered and answered correctly, but they're the numbers to beat on the way
   ```
 
   Built with `adamic build` (`-O2`), it takes 11.1 s natively. Node runs it in 0.085 s.
+
+  In the port, 78% of the native run's instructions are under `utf8Bytes` (bytes.ts). Before it spells a text as bytes, it checks whether the text is ASCII by this very loop, and the glob calls it once for every text it matches. With `length` and `charCodeAt` constant time, the loop is a few instructions per character.
 
 - **Constant data compiles slowly.** When the cases were constants (7,360 lines of TypeScript), they became 3.4 MB of C, which clang took 39 s to compile at `-O2`, and longer under the sanitizers. With cohere's checkout among the trees, the test took five and a half minutes. The driver now reads them at run time, and the same test takes 27 s. It would still cost any program with a large table in its source.

@@ -8,8 +8,34 @@
 
 import { panic, programArguments, readTextFile } from 'adamic';
 import { parseCases } from './case.ts';
-import { compilePatterns, newMatcher } from './gitignore.ts';
+import { compilePatterns, newMatcher, type Matcher, type Result, type Verdict } from './gitignore.ts';
+import { dir } from './path.ts';
 import { compileGlob } from './glob.ts';
+
+// verdictLine is a verdict in check-ignore's verbose words, without the path.
+function verdictLine(verdict: Verdict): string {
+	return `${verdict.ignored ? '1' : '0'} ${verdict.source.isZero() ? '::' : verdict.source.toString()}`;
+}
+
+// scopeFor is the matcher for directory, as a walk has it: entered from the nearest directory above it
+// that was entered before, and kept for the next path there. The root's is always kept.
+function scopeFor(scopes: Map<string, Matcher>, directory: string): Result<Matcher> {
+	let ancestor = directory;
+	let entered = scopes.get(ancestor);
+	while (entered === undefined) {
+		const parent = dir(ancestor);
+		ancestor = parent === '.' ? '' : parent;
+		entered = scopes.get(ancestor);
+	}
+	if (ancestor === directory) {
+		return { kind: 'Ok', value: entered };
+	}
+	const scope = entered.enter(directory);
+	if (scope.kind === 'Ok') {
+		scopes.set(directory, scope.value);
+	}
+	return scope;
+}
 
 const casesPath = programArguments()[0] ?? panic('usage: main.ts <cases file>');
 const read = readTextFile(casesPath);
@@ -31,8 +57,22 @@ for (const tree of asked.trees) {
 			console.log(`error ${answer.error.message}${answer.error.nestedRepository ? ' (nested repository)' : ''}`);
 			continue;
 		}
-		const verdict = answer.value;
-		console.log(`${verdict.ignored ? '1' : '0'} ${verdict.source.isZero() ? '::' : verdict.source.toString()}\t${query.path}`);
+		console.log(`${verdictLine(answer.value)}\t${query.path}`);
+	}
+
+	// The same paths again, as cohere's walk asks them: each through the matcher of its own directory,
+	// entered from the nearest one entered before, with whether that directory is itself excluded.
+	console.log(`walk ${tree.name}`);
+	const scopes = new Map<string, Matcher>([['', created.value]]);
+	for (const query of tree.queries) {
+		const parent = dir(query.path);
+		const scope = scopeFor(scopes, parent === '.' ? '' : parent);
+		if (scope.kind === 'Error') {
+			console.log(`error ${scope.error.message}${scope.error.nestedRepository ? ' (nested repository)' : ''}`);
+			continue;
+		}
+		const excluded = scope.value.excluded();
+		console.log(`${verdictLine(scope.value.ignored(query.path, query.isDirectory))}\t${query.path}\t${verdictLine(excluded)}`);
 	}
 }
 
@@ -44,8 +84,7 @@ for (const patternsCase of asked.patterns) {
 		continue;
 	}
 	for (const query of patternsCase.queries) {
-		const verdict = compiled.value.ignored(query.path, query.isDirectory);
-		console.log(`${verdict.ignored ? '1' : '0'} ${verdict.source.isZero() ? '::' : verdict.source.toString()}\t${query.path}`);
+		console.log(`${verdictLine(compiled.value.ignored(query.path, query.isDirectory))}\t${query.path}`);
 	}
 }
 

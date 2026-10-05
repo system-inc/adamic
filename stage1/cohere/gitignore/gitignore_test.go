@@ -258,6 +258,14 @@ var mutants = []mutant{
 
 		seenByGit: true,
 	},
+	// Entering from a matcher below the root keeps only the root's ignore file, forgetting those read
+	// on the way down to it. From the root there is nothing else to forget, so only a walk sees it.
+	{
+		name: "entering from below the root forgetting the files above",
+		file: "gitignore.ts",
+		from: "const entered = new Matcher(this.#tree, this.#directory, this.#files.slice(), this.#exclude, this.#excludedBy);",
+		to:   "const entered = new Matcher(this.#tree, this.#directory, this.#files.slice(0, 1), this.#exclude, this.#excludedBy);",
+	},
 	// The deepest ignore file no longer goes first: the root's decides before a subdirectory's.
 	{
 		name: "precedence read from the root down",
@@ -481,7 +489,7 @@ func answersByTree(output string) map[string][]string {
 		switch {
 		case strings.HasPrefix(line, "tree "):
 			current = strings.TrimPrefix(line, "tree ")
-		case strings.HasPrefix(line, "patterns "):
+		case strings.HasPrefix(line, "patterns "), strings.HasPrefix(line, "walk "):
 			current = line
 		case strings.HasPrefix(line, "glob "):
 			answers["globs"] = append(answers["globs"], line)

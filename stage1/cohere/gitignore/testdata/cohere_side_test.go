@@ -159,6 +159,38 @@ func adamicAnswer(cases adamicCases) string {
 			}
 			fmt.Fprintf(&output, "%s %s\t%s\n", adamicBit(ignored), adamicSource(source), query.Path)
 		}
+
+		// The walk: each path through its own directory's matcher, entered from the nearest one entered
+		// before, as main.ts's scopeFor does.
+		fmt.Fprintf(&output, "walk %s\n", tree.Name)
+		scopes := map[string]*Matcher{"": matcher}
+		for _, query := range tree.Queries {
+			directory := path.Dir(query.Path)
+			if directory == "." {
+				directory = ""
+			}
+			ancestor := directory
+			entered, found := scopes[ancestor]
+			for !found {
+				ancestor = path.Dir(ancestor)
+				if ancestor == "." {
+					ancestor = ""
+				}
+				entered, found = scopes[ancestor]
+			}
+			scope := entered
+			if ancestor != directory {
+				scope, err = entered.Enter(directory)
+				if err != nil {
+					fmt.Fprintf(&output, "error %s\n", shown(err))
+					continue
+				}
+				scopes[directory] = scope
+			}
+			ignored, source := scope.Ignored(query.Path, query.IsDirectory)
+			excluded, excludedBy := scope.Excluded()
+			fmt.Fprintf(&output, "%s %s\t%s\t%s %s\n", adamicBit(ignored), adamicSource(source), query.Path, adamicBit(excluded), adamicSource(excludedBy))
+		}
 	}
 	for _, list := range cases.Patterns {
 		fmt.Fprintf(&output, "patterns %s\n", list.Name)
