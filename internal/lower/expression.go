@@ -260,6 +260,8 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 		return ir.Unary{Operator: ir.Plus, Operand: operand}, nil
 	case prefix.Operator == ast.KindExclamationToken && operand.Type() == ir.Boolean:
 		return ir.Unary{Operator: ir.Not, Operand: operand}, nil
+	case prefix.Operator == ast.KindTildeToken && operand.Type() == ir.Number:
+		return ir.Unary{Operator: ir.BitNot, Operand: operand}, nil
 	}
 	return nil, l.notYet(node, describe(node)+" on a "+typeName(operand.Type()))
 }
@@ -271,6 +273,16 @@ var arithmetic = map[ast.Kind]ir.Operator{
 	ast.KindSlashToken:            ir.Divide,
 	ast.KindPercentToken:          ir.Remainder,
 	ast.KindAsteriskAsteriskToken: ir.Power,
+}
+
+// bitwise are the binary bitwise operators, on two numbers.
+var bitwise = map[ast.Kind]ir.Operator{
+	ast.KindAmpersandToken:                         ir.BitAnd,
+	ast.KindBarToken:                               ir.BitOr,
+	ast.KindCaretToken:                             ir.BitXor,
+	ast.KindLessThanLessThanToken:                  ir.ShiftLeft,
+	ast.KindGreaterThanGreaterThanToken:            ir.ShiftRight,
+	ast.KindGreaterThanGreaterThanGreaterThanToken: ir.ShiftRightUnsigned,
 }
 
 var comparisons = map[ast.Kind]ir.Operator{
@@ -287,6 +299,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
 	}
 	if lowered, isArithmetic := arithmetic[operator]; isArithmetic && both(ir.Number) {
+		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	}
+	if lowered, isBitwise := bitwise[operator]; isBitwise && both(ir.Number) {
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
 	if lowered, isComparison := comparisons[operator]; isComparison && (both(ir.Number) || both(ir.String)) {

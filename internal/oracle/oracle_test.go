@@ -142,6 +142,8 @@ var fixtures = []struct {
 	// as JavaScript joins them, and its RangeError.
 	{"internal/oracle/testdata/from_codes.a", true, false},
 	{"internal/oracle/testdata/from_code_point_fails.a", true, false},
+	// &, |, ^, ~, <<, >> and >>>, swept over every pair of 36 edge values against Node.
+	{"internal/oracle/testdata/bitwise.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

@@ -725,6 +725,13 @@ var compoundAssignments = map[ast.Kind]ast.Kind{
 	ast.KindSlashEqualsToken:            ast.KindSlashToken,
 	ast.KindPercentEqualsToken:          ast.KindPercentToken,
 	ast.KindAsteriskAsteriskEqualsToken: ast.KindAsteriskAsteriskToken,
+
+	ast.KindAmpersandEqualsToken:                         ast.KindAmpersandToken,
+	ast.KindBarEqualsToken:                               ast.KindBarToken,
+	ast.KindCaretEqualsToken:                             ast.KindCaretToken,
+	ast.KindLessThanLessThanEqualsToken:                  ast.KindLessThanLessThanToken,
+	ast.KindGreaterThanGreaterThanEqualsToken:            ast.KindGreaterThanGreaterThanToken,
+	ast.KindGreaterThanGreaterThanGreaterThanEqualsToken: ast.KindGreaterThanGreaterThanGreaterThanToken,
 }
 
 // increment lowers ++ and -- on a number local or field, as a statement, where prefix and postfix

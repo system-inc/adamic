@@ -542,6 +542,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "(+" + operand + ")"
 		case ir.Not:
 			return "(!" + operand + ")"
+		case ir.BitNot:
+			return "adamic_bitwise_not(" + operand + ")"
 		}
 	case ir.Binary:
 		if expression.Operator == ir.And || expression.Operator == ir.Or {
@@ -1558,6 +1560,12 @@ func (e *emitter) own(valueType ir.Type, value string) string {
 	return name
 }
 
+// cBitwise are the runtime's bitwise operators (bitwise.c).
+var cBitwise = map[ir.Operator]string{
+	ir.BitAnd: "adamic_bitwise_and", ir.BitOr: "adamic_bitwise_or", ir.BitXor: "adamic_bitwise_xor",
+	ir.ShiftLeft: "adamic_shift_left", ir.ShiftRight: "adamic_shift_right", ir.ShiftRightUnsigned: "adamic_shift_right_unsigned",
+}
+
 var cOperators = map[ir.Operator]string{
 	ir.Add: "+", ir.Subtract: "-", ir.Multiply: "*", ir.Divide: "/",
 	ir.Less: "<", ir.LessOrEqual: "<=", ir.Greater: ">", ir.GreaterOrEqual: ">=",
@@ -1571,6 +1579,8 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 		return fmt.Sprintf("fmod(%s, %s)", left, right)
 	case operator == ir.Power:
 		return fmt.Sprintf("adamic_power(%s, %s)", left, right)
+	case cBitwise[operator] != "":
+		return fmt.Sprintf("%s(%s, %s)", cBitwise[operator], left, right)
 	case operandType == ir.String && (operator == ir.Less || operator == ir.LessOrEqual || operator == ir.Greater || operator == ir.GreaterOrEqual):
 		return fmt.Sprintf("(adamic_string_compare(%s, %s) %s 0)", left, right, cOperators[operator])
 	case operandType == ir.String && operator == ir.Equal:

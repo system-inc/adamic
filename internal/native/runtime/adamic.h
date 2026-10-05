@@ -442,6 +442,15 @@ double adamic_math_hypot(size_t count, const double *values);
 adamic_string *adamic_number_to_exponential(double value, double digits, bool has_digits);
 adamic_string *adamic_number_to_precision(double value, double digits, bool has_digits);
 
+// JavaScript's bitwise operators on numbers, each through ToInt32 or ToUint32 exactly (bitwise.c).
+double adamic_bitwise_and(double left, double right);
+double adamic_bitwise_or(double left, double right);
+double adamic_bitwise_xor(double left, double right);
+double adamic_bitwise_not(double value);
+double adamic_shift_left(double left, double right);
+double adamic_shift_right(double left, double right);
+double adamic_shift_right_unsigned(double left, double right);
+
 // String.fromCharCode and String.fromCodePoint over their arguments, already evaluated in order
 // (from_codes.c): each a string the caller owns. fromCodePoint panics with V8's RangeError where a
 // value isn't a code point.

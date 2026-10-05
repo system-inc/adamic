@@ -6,6 +6,8 @@
 // and the oracle has checked what it prints.
 package ir
 
+import "fmt"
+
 // Program is one compiled Adamic program.
 type Program struct {
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
@@ -532,9 +534,9 @@ func (p Property) Type() Type {
 	}
 	return p.Of
 }
-func (ArrayLiteral) Type() Type { return Array }
-func (Length) Type() Type       { return Number }
-func (MathCall) Type() Type     { return Number }
+func (ArrayLiteral) Type() Type    { return Array }
+func (Length) Type() Type          { return Number }
+func (MathCall) Type() Type        { return Number }
 func (StringFromCodes) Type() Type { return String }
 
 func (c NumberCall) Type() Type {
@@ -637,10 +639,13 @@ func (u Unary) Type() Type {
 
 func (b Binary) Type() Type {
 	switch b.Operator {
-	case Add, Subtract, Multiply, Divide, Remainder, Power:
+	case Add, Subtract, Multiply, Divide, Remainder, Power, BitAnd, BitOr, BitXor, ShiftLeft, ShiftRight, ShiftRightUnsigned:
 		return Number
+	case Less, LessOrEqual, Greater, GreaterOrEqual, Equal, NotEqual, And, Or:
+		return Boolean
 	}
-	return Boolean
+	// An operator neither list names would be typed by a guess, and a wrong guess compiles wrong.
+	panic(fmt.Sprintf("ir: a binary operator %d with no type", b.Operator))
 }
 
 // Operator is an arithmetic, comparison, equality or logical operator.
@@ -664,6 +669,16 @@ const (
 	Not
 	Negate
 	Plus
+
+	// The bitwise operators, on numbers, each through ToInt32 or ToUint32 as JavaScript's are: &, |,
+	// ^, <<, >>, >>> and ~.
+	BitAnd
+	BitOr
+	BitXor
+	ShiftLeft
+	ShiftRight
+	ShiftRightUnsigned
+	BitNot
 )
 
 // Statement is one step of a program.
