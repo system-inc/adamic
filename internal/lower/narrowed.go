@@ -126,14 +126,15 @@ func (l *lowering) checkNarrowed(node *ast.Node, value ir.Expression, declared b
 	if !declared || !value.Type().IsReference() || value.Type() == ir.Union {
 		return value
 	}
-	message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
+	// V8's words reading through undefined; with the property's name where one is read next.
+	message := "Cannot read properties of undefined"
 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
 		if written := parent.Parent; written != nil && written.Kind == ast.KindBinaryExpression && written.AsBinaryExpression().Left == parent && written.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 			// object.name = value: JavaScript evaluates the value first and throws at the write, so
 			// the check is the write's own (native checks the object there; JavaScript throws).
 			return value
 		}
-		message = "TypeError: Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
+		message = "Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
 	}
 	return ir.Defined{Value: value, Message: message}
 }
@@ -194,4 +195,28 @@ func (l *lowering) mayHoldUndefined(node *ast.Node) bool {
 	}
 	contextual := l.checker.GetContextualType(inner, checker.ContextFlagsNone)
 	return contextual != nil && l.includesUndefined(contextual)
+}
+
+// narrowedObject reports whether node, an object written through, is one the checker narrowed
+// undefined out of and a call may have put back: the write is checked (ir.SetProperty's Checked).
+func (l *lowering) narrowedObject(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	if node.Kind != ast.KindIdentifier && node.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	return l.declaredUndefined(node) && !l.includesUndefined(l.checker.GetTypeAtLocation(node))
+}
+
+// throwsNarrowed reports whether node is a narrowing check, which throws a TypeError when a call
+// undid the narrowing: for exceptions, it's a throw like any other.
+func throwsNarrowed(node any) bool {
+	switch node := node.(type) {
+	case ir.Defined:
+		return true
+	case ir.Unwrap:
+		return node.Checked
+	case ir.SetProperty:
+		return node.Checked
+	}
+	return false
 }

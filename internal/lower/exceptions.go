@@ -17,6 +17,8 @@ import (
 type tryRecord struct {
 	node *ast.Node
 	body []ir.Statement
+	// function is the function the try is in, or -1 in a module's top level.
+	function int
 }
 
 // throwStatement lowers throw.
@@ -64,7 +66,7 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 	if lowered.Body, err = l.statements(statement.TryBlock.AsBlock().Statements.Nodes); err != nil {
 		return nil, err
 	}
-	l.tries = append(l.tries, tryRecord{node: node, body: lowered.Body})
+	l.tries = append(l.tries, tryRecord{node: node, body: lowered.Body, function: l.functionIndex})
 	if clause := statement.CatchClause; clause != nil {
 		lowered.HasCatch = true
 		if declaration := clause.AsCatchClause().VariableDeclaration; declaration != nil {
@@ -139,10 +141,11 @@ func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 // a library call whose failure is a panic natively but a throw on Node.
 func (l *lowering) exceptions() error {
 	functions := l.result.Functions
+	l.narrowingThrows()
 	for changed := true; changed; {
 		changed = false
 		for index := range functions {
-			if !functions[index].MayThrow && l.throwsOut(functions[index].Body) {
+			if !functions[index].MayThrow && l.throwsOut(functions[index].Body, functions[index].NarrowingThrows) {
 				functions[index].MayThrow = true
 				changed = true
 			}
@@ -179,18 +182,20 @@ func (l *lowering) exceptions() error {
 
 // throwsOut reports whether a throw can leave statements: a throw, or a call to a function that can
 // throw, that isn't inside a try's body with a catch.
-func (l *lowering) throwsOut(statements []ir.Statement) bool {
+func (l *lowering) throwsOut(statements []ir.Statement, narrowingThrows bool) bool {
 	found := false
 	walk(statements, func(node any) bool {
 		switch node := node.(type) {
 		case ir.Try:
 			if node.HasCatch {
 				// The body's throws are caught; the catch's and the finally's aren't.
-				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
+				found = found || l.throwsOut(node.Catch, narrowingThrows) || l.throwsOut(node.Finally, narrowingThrows)
 				return false
 			}
 		case ir.Throw:
 			found = true
+		case ir.Defined, ir.Unwrap, ir.SetProperty:
+			found = found || narrowingThrows && throwsNarrowed(node)
 		case ir.Call:
 			if l.result.Functions[node.Function].MayThrow {
 				found = true
@@ -320,5 +325,48 @@ func walkValue(value reflect.Value, visit func(node any) bool) {
 		for index := 0; index < value.NumField(); index++ {
 			walkValue(value.Field(index), visit)
 		}
+	}
+}
+
+// narrowingThrows marks every function a try can reach (ir.Function's NarrowingThrows): the functions
+// trys are in, and every function their bodies call, directly or through a function value (any of
+// them), and so on. Only there can a catch take a narrowing check's TypeError, so only there does the
+// check throw; elsewhere it ends the program with the same words, and a function value with one in
+// it stays one the runtime's loops can call.
+func (l *lowering) narrowingThrows() {
+	functions := l.result.Functions
+	var reach func(statements []ir.Statement)
+	mark := func(index int) {
+		if index >= 0 && !functions[index].NarrowingThrows {
+			functions[index].NarrowingThrows = true
+			reach(functions[index].Body)
+		}
+	}
+	reach = func(statements []ir.Statement) {
+		callsClosures := false
+		walk(statements, func(node any) bool {
+			switch node := node.(type) {
+			case ir.Call:
+				mark(node.Function)
+			case ir.ArraySort:
+				if node.Callback == nil {
+					mark(node.Comparator)
+				} else {
+					callsClosures = true
+				}
+			case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom:
+				callsClosures = true
+			}
+			return true
+		})
+		if callsClosures {
+			for _, closure := range l.closureRecords {
+				mark(closure.function)
+			}
+		}
+	}
+	for _, record := range l.tries {
+		mark(record.function)
+		reach(record.body)
 	}
 }

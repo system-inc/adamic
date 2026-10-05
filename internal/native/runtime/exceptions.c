@@ -21,6 +21,17 @@ adamic_object *adamic_error_new(adamic_string *message) {
 	return error;
 }
 
+static adamic_string type_error_name = ADAMIC_STRING("TypeError");
+
+adamic_object *adamic_type_error_new(const char *message, size_t length) {
+	adamic_object *error = adamic_object_new(&error_shape);
+	error->slots[0].reference = adamic_retain(&type_error_name);
+	adamic_string *text = adamic_string_allocate(length);
+	memcpy((char *)text->bytes, message, length);
+	error->slots[1].reference = text;
+	return error;
+}
+
 _Noreturn void adamic_uncaught(void) {
 	// String(error), as Node's runner reports an error nothing caught: name, and ": " and the message
 	// when there is one.

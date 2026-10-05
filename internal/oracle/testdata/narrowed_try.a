@@ -1,0 +1,52 @@
+// A narrowing a call undid throws the TypeError JavaScript throws there, so a try catches it, in the
+// function that read it or in a caller, and the program goes on as Node's does. Reviewer R, round
+// 8b (defined_try.a): the check was a panic natively and in the JavaScript backend, where Node
+// caught the TypeError and printed 'after'.
+interface Link {
+	value: number;
+	label: string;
+}
+let chain: Link | undefined = { value: 1, label: `built ${1}` };
+function drop(): void {
+	chain = undefined;
+}
+if (chain !== undefined) {
+	drop();
+	try {
+		console.log(`read ${chain.value}`);
+	} catch (error) {
+		console.log(`caught ${error instanceof Error ? error.message : ''}`);
+	}
+}
+let other: Link | undefined = { value: 2, label: `made ${2}` };
+function dropOther(): number {
+	other = undefined;
+	return 3;
+}
+function readOther(): number {
+	if (other !== undefined) {
+		dropOther();
+		return other.value;
+	}
+	return -1;
+}
+try {
+	console.log(`returned ${readOther()}`);
+} catch (error) {
+	console.log(`caught from a call ${error instanceof Error ? error.message : ''}`);
+}
+other = { value: 4, label: `again ${4}` };
+if (other !== undefined) {
+	try {
+		other.value = dropOther();
+		console.log('wrote');
+	} catch (error) {
+		console.log(`caught a write ${error instanceof Error ? error.message : ''}`);
+	}
+}
+console.log('after');
+chain = { value: 5, label: `last ${5}` };
+if (chain !== undefined) {
+	drop();
+	console.log(`${chain.label}`);
+}

@@ -59,7 +59,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// which the element's type can't hold: a panic there, the same one native has.
 	builder.WriteString("const adamicFind = (array, method, callback) => {\n\tconst count = array.length;\n\tfor (let index = 0; index < count; index++) {\n\t\tif (index >= array.length) panic(`${method}: the array shrank while it was being searched`);\n\t\tconst element = array[index];\n\t\tif (adamicCall(callback, [element, index, array])) return method === 'find' ? element : index;\n\t}\n\treturn method === 'find' ? undefined : -1;\n};\n")
 	builder.WriteString("const adamicFrom = (length, callback) => Array.from({ length }, (element, index) => adamicCall(callback, [element, index]));\n")
-	builder.WriteString("const adamicDefined = (value, message) => value === undefined ? panic(message) : value;\n")
+	// A narrowing a call undid throws the TypeError JavaScript throws reading through undefined, which
+	// a try catches; native throws the same one.
+	builder.WriteString("const adamicDefined = (value, message) => { if (value === undefined) throw new TypeError(message); return value; };\n")
 	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
@@ -743,4 +745,4 @@ func quote(text string) string {
 }
 
 // narrowedAwayMessage is native's (internal/native), word for word: the checks are the same on both sides.
-const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
+const narrowedAwayMessage = "Cannot read properties of undefined"

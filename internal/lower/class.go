@@ -323,7 +323,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value, Class: l.classOf(target)}}, nil
+	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value, Class: l.classOf(target), Checked: l.narrowedObject(target.AsPropertyAccessExpression().Expression)}}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).

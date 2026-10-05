@@ -27,6 +27,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if spread.Type() != ir.Object {
 				return nil, l.notYet(property, "spreading a "+typeName(spread.Type()))
 			}
+			if l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
+				// { ...undefined } is {} in JavaScript, an object of no fields where the type has them
+				// all optional; stage 0 copies a shape, and has none to copy.
+				return nil, l.notYet(property, "spreading a value that may be undefined")
+			}
 			literal.Spread = spread
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
 			name := property.Name()

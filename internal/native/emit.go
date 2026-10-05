@@ -428,12 +428,11 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.SetProperty:
 		object := e.value(statement.Object)
 		value := e.value(statement.Value)
-		// The object may be undefined where the checker narrowed it away and a call since put it back
-		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
-		e.line("if (%s == NULL) {", object)
-		e.line("\tstatic const char message[] = %s;", cString("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
-		e.line("\tadamic_panic(message, sizeof message - 1);")
-		e.line("}")
+		if statement.Checked {
+			// The object may be undefined where the checker narrowed it away and a call since put it
+			// back (ir.SetProperty): JavaScript throws at the write, after the value, and so does this.
+			e.throwTypeError(object+" == NULL", "Cannot set properties of undefined (setting '"+statement.Name+"')")
+		}
 		slot := e.temporary()
 		e.line("adamic_value *%s = %s;", slot, e.fieldSlot(object, statement.Name, statement.Class))
 		if statement.Value.Type().IsReference() {
@@ -752,10 +751,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		// The checker narrowed undefined away, but a call since may have put it back (ir.Unwrap).
 		value := e.snapshot(expression.Value.Type(), e.value(expression.Value))
-		e.line("if (!%s.present) {", value)
-		e.line("\tstatic const char message[] = %s;", cString(narrowedAwayMessage))
-		e.line("\tadamic_panic(message, sizeof message - 1);")
-		e.line("}")
+		e.throwTypeError("!"+value+".present", narrowedAwayMessage)
 		return fmt.Sprintf("(%s).%s", value, member(expression.Type()))
 	case ir.Defined:
 		value := e.value(expression.Value)
@@ -2082,9 +2078,30 @@ func (e *emitter) cellReference(local int) string {
 	return e.cellName(local)
 }
 
-// narrowedAwayMessage is the panic of a number or a boolean the checker narrowed undefined out of,
-// read where a call since put it back (ir.Unwrap). JavaScript would go on computing with undefined.
-const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
+// narrowedAwayMessage is the TypeError of a narrowing a call undid, where no property is read next
+// (ir.Unwrap, and ir.Defined elsewhere): V8's words for reading through undefined, without the name
+// of a property JavaScript would only reach later, if at all.
+const narrowedAwayMessage = "Cannot read properties of undefined"
+
+// throwTypeError emits a narrowing check: when condition holds, a TypeError with message is thrown,
+// as JavaScript throws reading through undefined, and the jump made as for any throw (exceptions.go),
+// so a try catches it and one nothing catches ends the program as Node's does. In a function no try
+// can reach (ir.Function's NarrowingThrows), it ends the program with those same words at once.
+func (e *emitter) throwTypeError(condition string, message string) {
+	if e.function != nil && !e.function.NarrowingThrows {
+		// No try can reach this function, so nothing could catch the TypeError: the program ends with
+		// what an uncaught one prints, and the function stays one that can't throw.
+		e.line("if (%s) {", condition)
+		e.line("\tstatic const char message[] = %s;", cString("TypeError: "+message))
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+		e.line("}")
+		return
+	}
+	e.line("if (%s) {", condition)
+	e.line("\tadamic_thrown = adamic_type_error_new(%s, %d);", cString(message), len(message))
+	e.line("}")
+	e.checkThrown()
+}
 
 // spliceArguments evaluates a splice's operands, in order, as the runtime's splice takes them.
 func (e *emitter) spliceArguments(splice ir.ArraySplice) string {

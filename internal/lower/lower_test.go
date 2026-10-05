@@ -64,6 +64,9 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a rest parameter", "function sum(...values: number[]): number {\n\treturn values.length;\n}\nconsole.log(`${sum(1, 2)}`);\n", "main.a:1:14: stage 0 can't lower a parameter that isn't a plain name yet"},
 		// An arrow in a branch the checker knows is dead returns never, and has no name to point at:
 		// that was a nil dereference, a crash where a not-yet belongs (found by the fuzzer, seed 102).
+		// { ...undefined } is {} in JavaScript, which stage 0 has no shape for (reviewer R, round 8b,
+		// spread_undefined.a: a NULL dereference before).
+		{"a spread of what may be undefined", "type Tree = { value: number };\nfunction make(): Tree | undefined {\n\treturn undefined;\n}\nconst maybe = make();\nconst spread = { ...maybe };\n", "main.a:6:18: stage 0 can't lower spreading a value that may be undefined yet"},
 		{"an arrow returning never", "let flag: boolean = false;\nif (flag) {\n\tconsole.log([0].filter((item) => flag).join(','));\n}\n", "main.a:3:25: stage 0 can't lower a function returning never yet"},
 		{"Array.from of an array", "const copy = Array.from([1, 2], (value) => value);\n", "main.a:1:25: stage 0 can't lower Array.from of anything but { length } yet"},
 		{"Array.from without a callback", "const holes = Array.from({ length: 2 });\n", "main.a:1:15: stage 0 can't lower Array.from with other than { length } and a callback yet"},

@@ -44,6 +44,11 @@ type Function struct {
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
+
+	// NarrowingThrows is a function a try can reach: its narrowing checks (ir.Defined, ir.Unwrap,
+	// ir.SetProperty) throw a TypeError a catch can take. Anywhere else they end the program with
+	// what an uncaught TypeError prints, and leave the function not throwing.
+	NarrowingThrows bool
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of
@@ -276,8 +281,9 @@ type (
 	}
 
 	// Defined is a reference the checker narrowed undefined out of, checked for the same reason as
-	// Unwrap: undefined there panics with Message. Where the value is about to be read through a
-	// property, Message is the TypeError JavaScript throws there, so the check is what Node does.
+	// Unwrap. Undefined there throws a TypeError with Message, as JavaScript would: where the value
+	// is about to be read through a property, Message is V8's own words there. Unwrap's check throws
+	// the same way, and a try catches either.
 	Defined struct {
 		Value   Expression
 		Message string
@@ -782,6 +788,9 @@ type (
 		Value  Expression
 		// Class is as Property's.
 		Class int
+		// Checked is a write through an object the checker narrowed undefined out of, which a call may
+		// have put back (ir.Defined): JavaScript throws at the write, after the value, and so does this.
+		Checked bool
 	}
 
 	// Return leaves the function, with Value unless it returns void.

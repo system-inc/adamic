@@ -450,6 +450,15 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 					throws = true
 				}
 			}
+			// A narrowing check throws a TypeError when a call undid the narrowing (ir.Defined).
+			switch value.Type() {
+			case definedType:
+				throws = true
+			case unwrapType, setPropertyType:
+				if value.FieldByName("Checked").Bool() {
+					throws = true
+				}
+			}
 			for index := 0; index < value.NumField(); index++ {
 				walk(value.Field(index))
 			}
@@ -463,4 +472,9 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 	return throws
 }
 
-var callType = reflect.TypeOf(ir.Call{})
+var (
+	callType        = reflect.TypeOf(ir.Call{})
+	definedType     = reflect.TypeOf(ir.Defined{})
+	unwrapType      = reflect.TypeOf(ir.Unwrap{})
+	setPropertyType = reflect.TypeOf(ir.SetProperty{})
+)

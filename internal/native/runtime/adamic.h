@@ -464,6 +464,9 @@ bool adamic_weak_held(const void *target);
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
 extern adamic_object *adamic_thrown;
 adamic_object *adamic_error_new(adamic_string *message);
+// adamic_type_error_new is new TypeError(message), what JavaScript throws reading through undefined:
+// the narrowing checks throw it (ir.Defined, ir.Unwrap).
+adamic_object *adamic_type_error_new(const char *message, size_t length);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
