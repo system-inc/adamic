@@ -182,6 +182,32 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	return nil, l.notYet(node, describe(node))
 }
 
+// fit makes a value fit where a value of type to goes: a number, or undefined, where number |
+// undefined goes, since that is two words and they are one. Anything else is left as it is.
+func fit(value ir.Expression, to ir.Type) ir.Expression {
+	if to != ir.MaybeNumber || value == nil {
+		return value
+	}
+	if value.Type() == ir.Number {
+		return ir.MaybeNumberOf{Value: value}
+	}
+	if _, isUndefined := value.(ir.Undefined); isUndefined {
+		return ir.MaybeNumberOf{}
+	}
+	return value
+}
+
+// fitArguments fits each argument of a call to its parameter.
+func (l *lowering) fitArguments(call ir.Call) ir.Call {
+	parameters := l.result.Functions[call.Function].Parameters
+	for index, argument := range call.Arguments {
+		if index < len(parameters) {
+			call.Arguments[index] = fit(argument, l.result.Locals[parameters[index]].Type)
+		}
+	}
+	return call
+}
+
 // numericLiteral is the value the checker read from the literal, so 0x1F, 1_000 and 1e3 all mean
 // what JavaScript says they mean without a second parser here.
 func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error) {
@@ -355,7 +381,7 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		arguments = append(arguments, lowered)
 	}
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
+	return l.fitArguments(ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}), nil
 }
 
 // coalesce lowers value ?? fallback, and value ?? panic('why'), evaluating the right side only when

@@ -570,6 +570,11 @@ func (e *emitter) value(expression ir.Expression) string {
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.Unwrap:
 		return fmt.Sprintf("(%s).number", e.value(expression.Value))
+	case ir.MaybeNumberOf:
+		if expression.Value == nil {
+			return zero(ir.MaybeNumber)
+		}
+		return fmt.Sprintf("((adamic_maybe_number){true, %s})", e.value(expression.Value))
 	case ir.Coalesce:
 		return e.coalesce(expression)
 	case ir.StringLength:

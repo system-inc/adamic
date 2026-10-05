@@ -196,6 +196,10 @@ type (
 	// Unwrap is a MaybeNumber the checker has proven present (narrowed), as a Number.
 	Unwrap struct{ Value Expression }
 
+	// MaybeNumberOf is a number where number | undefined goes: Value, present, or undefined when
+	// Value is nil.
+	MaybeNumberOf struct{ Value Expression }
+
 	// Coalesce is Value ?? Fallback: Value when it's present, and otherwise Fallback, evaluated only
 	// then. With Panic set instead of Fallback, it's Value ?? panic(Panic).
 	Coalesce struct {
@@ -401,6 +405,7 @@ func (IsUndefined) Type() Type     { return Boolean }
 func (ArrayPush) Type() Type       { return Number }
 func (ArrayJoin) Type() Type       { return String }
 func (Unwrap) Type() Type          { return Number }
+func (MaybeNumberOf) Type() Type   { return MaybeNumber }
 func (c Coalesce) Type() Type      { return c.Of }
 func (StringLength) Type() Type    { return Number }
 func (CharCodeAt) Type() Type      { return Number }

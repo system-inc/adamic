@@ -63,6 +63,8 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a function value returning number | undefined", "const pick = (): number | undefined => 1;\n", "main.a:1:14: stage 0 can't lower a function value returning number | undefined yet"},
 		{"?. on a string", "const words = ['a'];\nconsole.log(`${words[0]?.length ?? 0}`);\n", "main.a:2:16: stage 0 can't lower optional chaining on a string yet"},
 		{"concat on an array of arrays", "const grid: number[][] = [[1]];\nconst more = grid.concat([[2]]);\n", "main.a:2:14: stage 0 can't lower concat on an array of arrays yet"},
+		{"a field of type number | undefined", "interface Spot {\n\tx: number | undefined;\n}\nconst spot: Spot = { x: 1 };\nconsole.log(`${spot.x ?? -1}`);\n", "main.a:5:16: stage 0 can't lower a field of type number | undefined yet"},
+		{"a captured number | undefined", "function run(): number {\n\tlet best: number | undefined;\n\tconst pick = (): void => {\n\t\tbest = 1;\n\t};\n\tpick();\n\treturn best ?? -1;\n}\nconsole.log(`${run()}`);\n", "main.a:4:3: stage 0 can't lower a number | undefined variable a function value captures yet"},
 		{"a default parameter", "function twice(value = 1): number {\n\treturn value * 2;\n}\nconsole.log(`${twice()}`);\n", "main.a:1:16: stage 0 can't lower a parameter that isn't a plain name yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

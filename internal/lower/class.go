@@ -209,7 +209,7 @@ func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expressi
 			arguments = append(arguments, value)
 		}
 	}
-	return ir.Call{Function: lowered.constructor, Arguments: arguments, Returns: ir.Object}, nil
+	return l.fitArguments(ir.Call{Function: lowered.constructor, Arguments: arguments, Returns: ir.Object}), nil
 }
 
 // callOrMethod lowers a call to one of the module's functions, or to a method of one of its classes.
@@ -250,7 +250,7 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		arguments = append(arguments, value)
 	}
 	function := lowered.methods[callee.Name().Text()]
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
+	return l.fitArguments(ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}), nil
 }
 
 // setProperty lowers object.name = value, as a statement.
@@ -265,6 +265,9 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	value, err := l.expression(valueNode)
 	if err != nil {
 		return nil, err
+	}
+	if value.Type() == ir.MaybeNumber {
+		return nil, l.notYet(target, "storing number | undefined in a field")
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
 	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value}}, nil

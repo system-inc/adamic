@@ -77,6 +77,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		}
 		lowering.result.Main = append(lowering.result.Main, body...)
 	}
+	if lowering.unlowerable != nil {
+		return nil, lowering.unlowerable
+	}
 	return lowering.result, nil
 }
 
@@ -115,6 +118,9 @@ type lowering struct {
 
 	// substitution is what each type parameter stands for in the instantiation being lowered.
 	substitution map[*checker.Type]ir.Type
+
+	// unlowerable is the first construct found not lowerable somewhere that can't return an error.
+	unlowerable error
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
@@ -279,7 +285,7 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		// Otherwise its value is what it returns.
 		var value ir.Expression
 		if value, err = l.expression(body); err == nil {
-			lowered = []ir.Statement{ir.Return{Value: value}}
+			lowered = []ir.Statement{ir.Return{Value: fit(value, function.Returns)}}
 		}
 	}
 	l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
@@ -452,7 +458,7 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 				return nil, err
 			}
 		}
-		statements = append(statements, ir.Declare{Local: local, Value: value})
+		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
 	}
 	return statements, nil
 }
@@ -499,6 +505,11 @@ func (l *lowering) local(identifier *ast.Node) (int, bool) {
 	local, isLocal := l.locals[symbol]
 	if isLocal {
 		l.touch(local)
+		if declared := l.result.Locals[local]; declared.Captured && declared.Type == ir.MaybeNumber && l.unlowerable == nil {
+			// A cell holds one adamic_value, and number | undefined needs two words. Lower says so once
+			// it's done, since the capture is found here, where nothing can return an error.
+			l.unlowerable = l.notYet(identifier, "a number | undefined variable a function value captures")
+		}
 	}
 	return local, isLocal
 }
@@ -559,7 +570,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 			return nil, err
 		}
 	}
-	return []ir.Statement{ir.Assign{Local: local, Value: value, Checked: l.checked(local)}}, nil
+	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local)}}, nil
 }
 
 // checked reports whether touching a local must be checked against the temporal dead zone: a
@@ -581,7 +592,7 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	return []ir.Statement{ir.Return{Value: value}}, nil
+	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
 }
 
 var compoundAssignments = map[ast.Kind]ast.Kind{

@@ -179,6 +179,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		optional := access.QuestionDotToken != nil
+		if of == ir.MaybeNumber && !optional {
+			return nil, l.notYet(node, "a field of type number | undefined")
+		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
@@ -335,6 +338,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			local, err := l.declareLocal(binding.Name())
 			if err != nil {
 				return nil, err
+			}
+			if l.result.Locals[local].Type == ir.MaybeNumber {
+				return nil, l.notYet(binding, "a tuple element of type number | undefined")
 			}
 			lowered.Pattern = append(lowered.Pattern, ir.Binding{Local: local, Field: strconv.Itoa(index)})
 		}
@@ -841,6 +847,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	of, err := l.typeOf(node)
 	if err != nil {
 		return nil, err
+	}
+	if of == ir.MaybeNumber {
+		return nil, l.notYet(node, "a tuple element of type number | undefined")
 	}
 	return ir.Property{Object: object, Name: index.Text(), Of: of}, nil
 }
