@@ -1,8 +1,8 @@
 // A throw between a move and its use. bump takes its counter over (reuse in place) and only then
 // throws, so the caller's assignment never happens: on Node, total and held keep the values they
 // had. A move of total into bump, or of held, would leave each pointing at what it handed over.
-// The graph doesn't follow a throw to its handler yet, so a program that throws is planned no
-// reuse (native/reuse.go); this is what holds whoever teaches it to.
+// The graph follows a throw to its handler (flow's MayThrow edges), and reuse overwrites a variable
+// only in a statement that can't throw (native/reuse.go, overwrites).
 interface Counter {
 	readonly count: number;
 	readonly label: string;
