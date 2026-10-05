@@ -442,7 +442,11 @@ func (e *emitter) store(local int, value string) {
 func (e *emitter) releaseGlobals() {
 	for index := len(e.initialized) - 1; index >= 0; index-- {
 		if e.program.Locals[e.initialized[index]].Type.IsReference() {
+			// And forgotten: a global still pointing at its object would keep it reachable, and a
+			// count it never gave back (a leak of the global's own object) would hide from the leak
+			// check.
 			e.line("adamic_release(%s);", e.localName(e.initialized[index]))
+			e.line("%s = NULL;", e.localName(e.initialized[index]))
 		}
 	}
 }
