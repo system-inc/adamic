@@ -1,0 +1,17 @@
+// A function that makes nothing and returns what a global holds, which is the holder.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+let saved: Node = { kind: 'empty', nodes: [] };
+function current(): Node {
+	return saved;
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	saved = node;
+	node.nodes.push(current()); // closes the cycle
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);
+saved = { kind: 'cleared', nodes: [] };

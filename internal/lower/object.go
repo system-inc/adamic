@@ -726,7 +726,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		if len(arguments) != 1 {
 			return nil, true, l.notYet(node, "push with other than one value")
 		}
-		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element}, true, nil
+		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
 	}
 	switch name {
 	case "includes", "indexOf":
@@ -751,7 +751,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		if len(arguments) == 0 || len(arguments) > 3 || arguments[0].Type() != element {
 			return nil, true, l.notYet(node, "fill with other than a value of the elements' type")
 		}
-		fill := ir.ArrayFill{Array: array, Value: arguments[0], Element: element}
+		fill := ir.ArrayFill{Array: array, Value: arguments[0], Element: element, Site: l.writeSite(receiver)}
 		for index, bound := range arguments[1:] {
 			if bound.Type() != ir.Number {
 				return nil, true, l.notYet(node, "fill with a bound that isn't a number")
@@ -767,7 +767,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		if len(arguments) == 0 || arguments[0].Type() != ir.Number || (len(arguments) > 1 && arguments[1].Type() != ir.Number) {
 			return nil, true, l.notYet(node, "splice without a start and a count that are numbers")
 		}
-		splice := ir.ArraySplice{Array: array, Start: arguments[0], Element: element}
+		splice := ir.ArraySplice{Array: array, Start: arguments[0], Element: element, Site: l.writeSite(receiver)}
 		if len(arguments) > 1 {
 			splice.Count = arguments[1]
 			for _, item := range arguments[2:] {
@@ -1009,7 +1009,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	case "get":
 		return ir.MapGet{Map: object, Key: arguments[0], KeyType: key, ValueType: value}, true, nil
 	case "set":
-		return ir.MapSet{Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value}, true, nil
+		return ir.MapSet{Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver)}, true, nil
 	case "has":
 		return ir.MapHas{Map: object, Key: arguments[0], KeyType: key}, true, nil
 	}
@@ -1242,5 +1242,5 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 	if err != nil {
 		return nil, err
 	}
-	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element}}, nil
+	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element, Site: l.writeSite(access.Expression)}}, nil
 }
