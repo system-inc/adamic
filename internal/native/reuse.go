@@ -156,6 +156,9 @@ func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[
 		if !local.Borrowed || program.Functions[function].Closure || comparators[function] {
 			return false
 		}
+	} else if local.Borrowed {
+		// A variable borrowed from an array (element_borrow.go): its count is the array's.
+		return false
 	}
 	return !live[flow.DeclarationId(source+1)] || overwrites(program, instruction, source)
 }

@@ -166,6 +166,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions.a", true, false},
 	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
 	{"internal/oracle/testdata/regions_throw.a", true, false},
+	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
+	{"internal/oracle/testdata/borrow_element.a", true, false},
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
 	// was moved or spread.
 	{"internal/oracle/testdata/move_throw.a", true, false},
