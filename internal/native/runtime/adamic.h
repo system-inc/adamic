@@ -168,6 +168,24 @@ adamic_value *adamic_array_at(const adamic_array *array, double index);
 // doesn't have.
 void adamic_array_set(adamic_array *array, double index, adamic_value value);
 
+// adamic_array_at_relative is array.at(index): the element's slot, or NULL (undefined).
+adamic_value *adamic_array_at_relative(const adamic_array *array, double index);
+
+// adamic_array_index_of is array.indexOf(value), and array.includes(value) with same_value_zero:
+// the first index whose element equals value, or -1. equality says how elements compare.
+enum adamic_equality {
+	adamic_equal_numbers = 1,
+	adamic_equal_booleans,
+	adamic_equal_strings,
+	adamic_equal_identity,
+};
+double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
+
+// adamic_array_reverse reverses in place and is the array; adamic_array_concat makes a new array of
+// every array's elements in order, references retained.
+adamic_array *adamic_array_reverse(adamic_array *array);
+adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
+
 // adamic_array_slice is array.slice(start, end); adamic_array_sort sorts in place, stably.
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value));

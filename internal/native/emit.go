@@ -626,6 +626,26 @@ func (e *emitter) value(expression ir.Expression) string {
 		return mapped
 	case ir.ArrayVisit:
 		return e.arrayVisit(expression)
+	case ir.ArrayReduce:
+		return e.arrayReduce(expression)
+	case ir.ArraySearch:
+		array := e.value(expression.Array)
+		value := e.value(expression.Value)
+		found := fmt.Sprintf("adamic_array_index_of(%s, %s, %s, %t)", array, borrowed(expression.Element, value), equality(expression.Element), expression.Includes)
+		if expression.Includes {
+			return e.snapshot(ir.Boolean, found+" != -1")
+		}
+		return e.snapshot(ir.Number, found)
+	case ir.ArrayReverse:
+		array := e.value(expression.Array)
+		e.line("adamic_array_reverse(%s);", array)
+		return array
+	case ir.ArrayConcat:
+		arrays := []string{e.value(expression.Array)}
+		for _, other := range expression.Others {
+			arrays = append(arrays, e.value(other))
+		}
+		return e.own(ir.Array, fmt.Sprintf("adamic_array_concat(%d, (adamic_array *const[]){%s})", len(arrays), strings.Join(arrays, ", ")))
 	case ir.CheckedCast:
 		object := e.temporary()
 		e.line("adamic_object *%s = %s;", object, e.value(expression.Value))
@@ -646,7 +666,11 @@ func (e *emitter) value(expression ir.Expression) string {
 		array := e.value(expression.Array)
 		index := e.value(expression.Index)
 		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_array_at(%s, %s);", slot, array, index)
+		lookup := "adamic_array_at"
+		if expression.Relative {
+			lookup = "adamic_array_at_relative"
+		}
+		e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
 		if expression.Element == ir.Number {
 			result := e.temporary()
 			e.line("adamic_maybe_number %s = %s == NULL ? (adamic_maybe_number){false, 0.0} : (adamic_maybe_number){true, %s->number};", result, slot, slot)
@@ -856,6 +880,60 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	e.indent--
 	e.line("}")
 	return result
+}
+
+// arrayReduce emits reduce as arrayVisit's loop, carrying what the callback last returned. The callee
+// holds its own copy of each argument, so after each call the old accumulator is let go and the new
+// one, which comes back owned, is taken.
+func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
+	source := e.temporary()
+	e.line("adamic_array *%s = %s;", source, e.value(reduce.Array))
+	callback := e.value(reduce.Callback)
+	initial := e.value(reduce.Initial)
+	var accumulator string
+	if reduce.Result.IsReference() {
+		accumulator = e.own(reduce.Result, fmt.Sprintf("adamic_retain(%s)", initial))
+	} else {
+		accumulator = e.snapshot(reduce.Result, initial)
+	}
+	count, index, element, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
+	e.line("size_t %s = %s->length;", count, source)
+	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
+	e.indent++
+	e.line("if (%s >= %s->length) {", index, source)
+	e.line("\tcontinue;")
+	e.line("}")
+	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	if reduce.Element.IsReference() {
+		e.line("adamic_retain(%s.reference);", element)
+	}
+	e.line("adamic_value %s = %s->code(%s, (adamic_value[]){{.%s = %s}, %s, {.number = (double)%s}, {.reference = %s}});",
+		answer, callback, callback, member(reduce.Result), accumulator, element, index, source)
+	if reduce.Element.IsReference() {
+		e.line("adamic_release(%s.reference);", element)
+	}
+	if reduce.Result.IsReference() {
+		e.line("adamic_release(%s);", accumulator)
+		e.line("%s = (%s)%s.reference;", accumulator, cType(reduce.Result), answer)
+	} else {
+		e.line("%s = %s.%s;", accumulator, answer, member(reduce.Result))
+	}
+	e.indent--
+	e.line("}")
+	return accumulator
+}
+
+// equality tells the runtime how indexOf and includes compare elements.
+func equality(element ir.Type) string {
+	switch element {
+	case ir.Number:
+		return "adamic_equal_numbers"
+	case ir.Boolean:
+		return "adamic_equal_booleans"
+	case ir.String:
+		return "adamic_equal_strings"
+	}
+	return "adamic_equal_identity"
 }
 
 // objectLiteral makes an object. Its fields' values are evaluated in order first; making the object

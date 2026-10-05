@@ -27,6 +27,7 @@ func JavaScript(program *ir.Program) string {
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
+	builder.WriteString("const adamicReduce = (array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
@@ -408,7 +409,22 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.CodePoints:
 		return "[..." + e.value(expression.Value) + "]"
 	case ir.ArrayIndex:
+		if expression.Relative {
+			return e.value(expression.Array) + ".at(" + e.value(expression.Index) + ")"
+		}
 		return e.value(expression.Array) + "[" + e.value(expression.Index) + "]"
+	case ir.ArraySearch:
+		method := ".indexOf("
+		if expression.Includes {
+			method = ".includes("
+		}
+		return e.value(expression.Array) + method + e.value(expression.Value) + ")"
+	case ir.ArrayReverse:
+		return e.value(expression.Array) + ".reverse()"
+	case ir.ArrayConcat:
+		return e.value(expression.Array) + ".concat(" + e.values(expression.Others) + ")"
+	case ir.ArrayReduce:
+		return "adamicReduce(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ", " + e.value(expression.Initial) + ")"
 	case ir.StringIndex:
 		return e.value(expression.Value) + "[" + e.value(expression.Index) + "]"
 	case ir.CheckedCast:

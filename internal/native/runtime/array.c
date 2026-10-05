@@ -163,6 +163,72 @@ adamic_value *adamic_array_at(const adamic_array *array, double index) {
 	return &array->elements[(size_t)index];
 }
 
+adamic_value *adamic_array_at_relative(const adamic_array *array, double index) {
+	// array.at(index): ToIntegerOrInfinity, so NaN is 0 and a fraction truncates, then a negative
+	// index counts from the end. Anywhere outside the array is undefined.
+	index = isnan(index) ? 0 : trunc(index);
+	if (index < 0) {
+		index += (double)array->length;
+	}
+	if (!(index >= 0) || index >= (double)array->length) {
+		return NULL;
+	}
+	return &array->elements[(size_t)index];
+}
+
+double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero) {
+	for (size_t index = 0; index < array->length; index++) {
+		adamic_value element = array->elements[index];
+		bool equal = false;
+		switch (equality) {
+		case adamic_equal_numbers:
+			// === never finds NaN; SameValueZero (includes) does. Both take 0 and -0 as equal.
+			equal = element.number == value.number || (same_value_zero && isnan(element.number) && isnan(value.number));
+			break;
+		case adamic_equal_booleans:
+			equal = element.boolean == value.boolean;
+			break;
+		case adamic_equal_strings:
+			equal = adamic_string_equal(element.reference, value.reference);
+			break;
+		case adamic_equal_identity:
+			equal = element.reference == value.reference;
+			break;
+		}
+		if (equal) {
+			return (double)index;
+		}
+	}
+	return -1;
+}
+
+adamic_array *adamic_array_reverse(adamic_array *array) {
+	for (size_t left = 0, right = array->length; left + 1 < right; left++, right--) {
+		adamic_value swapped = array->elements[left];
+		array->elements[left] = array->elements[right - 1];
+		array->elements[right - 1] = swapped;
+	}
+	return array;
+}
+
+adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
+	size_t length = 0;
+	for (size_t which = 0; which < count; which++) {
+		length += arrays[which]->length;
+	}
+	adamic_array *joined = adamic_array_new(length, arrays[0]->references);
+	for (size_t which = 0; which < count; which++) {
+		for (size_t index = 0; index < arrays[which]->length; index++) {
+			adamic_value value = arrays[which]->elements[index];
+			if (joined->references) {
+				adamic_retain(value.reference);
+			}
+			adamic_array_push(joined, value);
+		}
+	}
+	return joined;
+}
+
 void adamic_array_set(adamic_array *array, double index, adamic_value value) {
 	// 0.1 writes only at an index the array has: JavaScript would grow the array, or leave a hole, and
 	// a hole is something 0.1 can't hold. push is how to append.

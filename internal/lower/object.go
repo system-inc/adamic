@@ -208,7 +208,7 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		return ir.ArrayPop{Array: array, Element: element}, true, nil
 	}
-	if _, isVisit := visits[name]; receiverType == ir.Array && (isVisit || name == "push" || name == "join" || name == "slice" || name == "sort" || name == "map") {
+	if _, isVisit := visits[name]; receiverType == ir.Array && (isVisit || arrayMethods[name]) {
 		return l.arrayMethod(node, receiver, name)
 	}
 	if receiverType == ir.Map && (name == "get" || name == "set" || name == "has" || name == "delete") {
@@ -413,6 +413,14 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	if _, isVisit := visits[name]; isVisit {
 		return l.arrayVisit(node, array, element, name)
 	}
+	if name == "reduce" {
+		return l.arrayReduce(node, array, element)
+	}
+	if name == "concat" && element == ir.Array {
+		// TypeScript says grid.concat(row) appends row as one element; JavaScript spreads any array it's
+		// given, so the types and the program would disagree.
+		return nil, true, l.notYet(node, "concat on an array of arrays")
+	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		lowered, err := l.expression(argument)
@@ -438,6 +446,36 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		}
 		return ir.ArrayPush{Array: array, Value: arguments[0], Element: element}, true, nil
 	}
+	switch name {
+	case "includes", "indexOf":
+		if len(arguments) != 1 {
+			return nil, true, l.notYet(node, name+" with a starting index")
+		}
+		if arguments[0].Type() != element {
+			return nil, true, l.notYet(node, name+" with a value of another type than the elements")
+		}
+		return ir.ArraySearch{Array: array, Value: arguments[0], Element: element, Includes: name == "includes"}, true, nil
+	case "at":
+		if len(arguments) != 1 || arguments[0].Type() != ir.Number {
+			return nil, true, l.notYet(node, "at with other than one number")
+		}
+		if element == ir.Boolean {
+			return nil, true, l.notYet(node, "at on an array of booleans (boolean | undefined)")
+		}
+		return ir.ArrayIndex{Array: array, Index: arguments[0], Element: element, Relative: true}, true, nil
+	case "reverse":
+		return ir.ArrayReverse{Array: array}, true, nil
+	case "concat":
+		for index, argument := range arguments {
+			if argument.Type() != ir.Array {
+				return nil, true, l.notYet(node, "concat with a value that isn't an array (JavaScript appends it)")
+			}
+			if other, err := l.elementType(node.AsCallExpression().Arguments.Nodes[index]); err != nil || other != element {
+				return nil, true, l.notYet(node, "concat of arrays of different elements")
+			}
+		}
+		return ir.ArrayConcat{Array: array, Others: arguments}, true, nil
+	}
 	if element != ir.Number && element != ir.Boolean && element != ir.String {
 		// JavaScript writes an object as "[object Object]", a function as its source, and an array as
 		// its own join, flattened; 0.1 has no use for any of that.
@@ -453,6 +491,12 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		return nil, true, l.notYet(node, "join with more than one argument")
 	}
 	return ir.ArrayJoin{Array: array, Separator: separator, Element: element}, true, nil
+}
+
+// arrayMethods are the array methods arrayMethod lowers, beside the visits.
+var arrayMethods = map[string]bool{
+	"push": true, "join": true, "slice": true, "sort": true, "map": true, "reduce": true,
+	"includes": true, "indexOf": true, "at": true, "reverse": true, "concat": true,
 }
 
 // visits are the array methods that call a function per element and look at what it returns.
@@ -491,6 +535,37 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 		return nil, true, l.notYet(node, "find in an array of booleans (boolean | undefined)")
 	}
 	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns}, true, nil
+}
+
+// arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
+// without one, an empty array throws and a one-element array returns it without a call.
+func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) == 1 {
+		return nil, true, &Refused{Where: l.program.Where(node), What: "reduce without an initial value", Fix: "pass one, like reduce((sum, value) => sum + value, 0): without it, an empty array throws"}
+	}
+	if len(arguments) != 2 {
+		return nil, true, l.notYet(node, "reduce with other than a callback and an initial value")
+	}
+	callback, err := l.expression(arguments[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if callback.Type() != ir.Closure {
+		return nil, true, l.notYet(arguments[0], "reduce with a callback that isn't a function")
+	}
+	initial, err := l.expression(arguments[1])
+	if err != nil {
+		return nil, true, err
+	}
+	result, err := l.typeOf(node)
+	if err != nil {
+		return nil, true, err
+	}
+	if result != initial.Type() || result == ir.MaybeNumber {
+		return nil, true, l.notYet(node, "reduce to a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
+	}
+	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result}, true, nil
 }
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.

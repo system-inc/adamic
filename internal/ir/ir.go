@@ -236,10 +236,38 @@ type (
 	}
 
 	// ArrayIndex is array[index]: the element, or undefined when index isn't one of the array's (a
-	// null reference, or a MaybeNumber).
+	// null reference, or a MaybeNumber). Relative is array.at(index), where a negative index counts
+	// from the end and a fraction truncates.
 	ArrayIndex struct {
 		Array, Index Expression
 		Element      Type
+		Relative     bool
+	}
+
+	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,
+	// which finds NaN.
+	ArraySearch struct {
+		Array, Value Expression
+		Element      Type
+		Includes     bool
+	}
+
+	// ArrayReverse is array.reverse(): in place, and the array.
+	ArrayReverse struct{ Array Expression }
+
+	// ArrayConcat is array.concat(Others...): a new array of every one's elements, in order. Each of
+	// Others is an array of the same elements.
+	ArrayConcat struct {
+		Array  Expression
+		Others []Expression
+	}
+
+	// ArrayReduce is array.reduce(Callback, Initial): the callback called per element with what it
+	// last returned (Initial the first time), the element, its index and the array, read and skipped
+	// as ArrayVisit does. Result is Initial's type, and the callback's.
+	ArrayReduce struct {
+		Array, Callback, Initial Expression
+		Element, Result          Type
 	}
 
 	// StringIndex is string[index]: the UTF-16 code unit there, as a string, or undefined when index
@@ -414,7 +442,17 @@ func (p ArrayPop) Type() Type {
 	return p.Element
 }
 func (ArraySlice) Type() Type { return Array }
-func (ArraySort) Type() Type  { return Array }
+
+func (s ArraySearch) Type() Type {
+	if s.Includes {
+		return Boolean
+	}
+	return Number
+}
+func (ArrayReverse) Type() Type  { return Array }
+func (ArrayConcat) Type() Type   { return Array }
+func (r ArrayReduce) Type() Type { return r.Result }
+func (ArraySort) Type() Type     { return Array }
 
 func (c StringCall) Type() Type {
 	switch c.Method {
