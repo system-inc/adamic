@@ -644,6 +644,22 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.snapshot(ir.Boolean, found+" != -1")
 		}
 		return e.snapshot(ir.Number, found)
+	case ir.ArraySplice:
+		array := e.value(expression.Array)
+		start := e.value(expression.Start)
+		count := "0.0"
+		if expression.Count != nil {
+			count = e.value(expression.Count)
+		}
+		items := []string{}
+		for _, item := range expression.Items {
+			items = append(items, held(expression.Element, e.value(item)))
+		}
+		packed := "NULL"
+		if len(items) > 0 {
+			packed = "(adamic_value[]){" + strings.Join(items, ", ") + "}"
+		}
+		return e.own(ir.Array, fmt.Sprintf("adamic_array_splice(%s, %s, %s, %t, %d, %s)", array, start, count, expression.Count != nil, len(items), packed))
 	case ir.ArrayReverse:
 		array := e.value(expression.Array)
 		e.line("adamic_array_reverse(%s);", array)

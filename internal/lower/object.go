@@ -621,6 +621,21 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		return ir.ArrayIndex{Array: array, Index: arguments[0], Element: element, Relative: true}, true, nil
 	case "reverse":
 		return ir.ArrayReverse{Array: array}, true, nil
+	case "splice":
+		if len(arguments) == 0 || arguments[0].Type() != ir.Number || (len(arguments) > 1 && arguments[1].Type() != ir.Number) {
+			return nil, true, l.notYet(node, "splice without a start and a count that are numbers")
+		}
+		splice := ir.ArraySplice{Array: array, Start: arguments[0], Element: element}
+		if len(arguments) > 1 {
+			splice.Count = arguments[1]
+			for _, item := range arguments[2:] {
+				if item.Type() != element {
+					return nil, true, l.notYet(node, "splice inserting a value of another type than the elements")
+				}
+				splice.Items = append(splice.Items, item)
+			}
+		}
+		return splice, true, nil
 	case "concat":
 		for index, argument := range arguments {
 			if argument.Type() != ir.Array {
@@ -652,7 +667,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 // arrayMethods are the array methods arrayMethod lowers, beside the visits.
 var arrayMethods = map[string]bool{
 	"push": true, "join": true, "slice": true, "sort": true, "map": true, "reduce": true,
-	"includes": true, "indexOf": true, "at": true, "reverse": true, "concat": true,
+	"includes": true, "indexOf": true, "at": true, "reverse": true, "concat": true, "splice": true,
 }
 
 // visits are the array methods that call a function per element and look at what it returns.

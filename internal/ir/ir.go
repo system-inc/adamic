@@ -267,6 +267,14 @@ type (
 		Includes     bool
 	}
 
+	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
+	// Start), and what's removed, a new array.
+	ArraySplice struct {
+		Array, Start, Count Expression
+		Items               []Expression
+		Element             Type
+	}
+
 	// ArrayReverse is array.reverse(): in place, and the array.
 	ArrayReverse struct{ Array Expression }
 
@@ -479,6 +487,7 @@ func (s ArraySearch) Type() Type {
 	return Number
 }
 func (ArrayReverse) Type() Type  { return Array }
+func (ArraySplice) Type() Type   { return Array }
 func (ArrayConcat) Type() Type   { return Array }
 func (r ArrayReduce) Type() Type { return r.Result }
 func (ArraySort) Type() Type     { return Array }

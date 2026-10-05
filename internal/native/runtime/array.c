@@ -242,6 +242,43 @@ adamic_array *adamic_array_reverse(adamic_array *array) {
 	return array;
 }
 
+adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
+	// ECMAScript's relative start, clamped to the array; a count left out is everything after it, and
+	// a count given is clamped to what's there.
+	double length = (double)array->length;
+	start = isnan(start) ? 0 : trunc(start);
+	start = start < 0 ? (length + start < 0 ? 0 : length + start) : (start > length ? length : start);
+	double removing = length - start;
+	if (has_count) {
+		count = isnan(count) ? 0 : trunc(count);
+		removing = count < 0 ? 0 : (count > removing ? removing : count);
+	}
+	size_t from = (size_t)start, removed_count = (size_t)removing;
+	// The removed elements move to the result, their references with them.
+	adamic_array *removed = adamic_array_new(removed_count, array->references);
+	for (size_t index = 0; index < removed_count; index++) {
+		adamic_array_push(removed, array->elements[from + index]);
+	}
+	size_t after = array->length - from - removed_count;
+	size_t new_length = array->length - removed_count + item_count;
+	if (new_length > array->capacity) {
+		adamic_value *grown = realloc(array->elements, new_length * sizeof *grown);
+		if (grown == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		array->elements = grown;
+		array->capacity = new_length;
+	}
+	// The tail moves to make room (or close the gap), then the items, which the array takes, go in.
+	memmove(array->elements + from + item_count, array->elements + from + removed_count, after * sizeof *array->elements);
+	if (item_count > 0) {
+		memcpy(array->elements + from, items, item_count * sizeof *items);
+	}
+	array->length = new_length;
+	return removed;
+}
+
 void adamic_array_append(adamic_array *array, const adamic_array *source) {
 	// The length is read once: [...items, ...items] spreads items twice, never into itself.
 	size_t length = source->length;

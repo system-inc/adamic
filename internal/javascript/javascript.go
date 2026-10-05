@@ -441,6 +441,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Array) + method + e.value(expression.Value) + ")"
 	case ir.ArrayReverse:
 		return e.value(expression.Array) + ".reverse()"
+	case ir.ArraySplice:
+		arguments := []ir.Expression{expression.Start}
+		if expression.Count != nil {
+			arguments = append(arguments, expression.Count)
+			arguments = append(arguments, expression.Items...)
+		}
+		return e.value(expression.Array) + ".splice(" + e.values(arguments) + ")"
 	case ir.ArrayConcat:
 		return e.value(expression.Array) + ".concat(" + e.values(expression.Others) + ")"
 	case ir.ArrayReduce:

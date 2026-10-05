@@ -203,6 +203,10 @@ double adamic_array_index_of(const adamic_array *array, adamic_value value, enum
 // every array's elements in order, references retained.
 adamic_array *adamic_array_reverse(adamic_array *array);
 
+// adamic_array_splice is array.splice(start, count, ...items): what's removed, in a new array the
+// caller owns. The items' references are the array's from then on.
+adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
+
 // adamic_array_append is a spread, [...source], into an array being made: each element pushed, a
 // reference retained.
 void adamic_array_append(adamic_array *array, const adamic_array *source);
