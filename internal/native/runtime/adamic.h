@@ -162,6 +162,18 @@ adamic_string *adamic_string_trim(adamic_string *string);
 size_t adamic_string_next(const adamic_string *string, size_t offset);
 adamic_string *adamic_string_slice_bytes(const adamic_string *string, size_t offset, size_t size);
 
+// The rest of a string's UTF-16 view (string.c), each as JavaScript means it. These that return a
+// string return one the caller owns.
+adamic_string *adamic_string_slice(const adamic_string *string, double start, double end, bool has_end);
+adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position);
+int adamic_string_compare(const adamic_string *left, const adamic_string *right);
+adamic_string *adamic_string_repeat(const adamic_string *string, double count);
+adamic_string *adamic_string_pad(const adamic_string *string, double target, const adamic_string *fill, bool at_start);
+double adamic_string_index_of(const adamic_string *string, const adamic_string *search);
+bool adamic_string_starts_with(const adamic_string *string, const adamic_string *search);
+bool adamic_string_ends_with(const adamic_string *string, const adamic_string *search);
+struct adamic_array *adamic_string_code_points(const adamic_string *string);
+
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
 

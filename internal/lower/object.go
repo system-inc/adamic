@@ -67,7 +67,19 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	literal := ir.ArrayLiteral{Element: element}
-	for _, item := range node.AsArrayLiteralExpression().Elements.Nodes {
+	items := node.AsArrayLiteralExpression().Elements.Nodes
+	if len(items) == 1 && items[0].Kind == ast.KindSpreadElement {
+		// [...text] is the text's code points.
+		spread, err := l.expression(items[0].AsSpreadElement().Expression)
+		if err != nil {
+			return nil, err
+		}
+		if spread.Type() == ir.String {
+			return ir.CodePoints{Value: spread}, nil
+		}
+		return nil, l.notYet(items[0], "spreading a "+typeName(spread.Type())+" into an array")
+	}
+	for _, item := range items {
 		if item.Kind == ast.KindSpreadElement || item.Kind == ast.KindOmittedExpression {
 			return nil, l.notYet(item, describe(item)+" in an array literal")
 		}
@@ -182,6 +194,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if receiverType == ir.String && (name == "trim" || name == "charCodeAt") {
 		return l.stringMethod(node, receiver, name)
+	}
+	if _, isKnown := stringMethods[name]; isKnown && receiverType == ir.String {
+		return l.stringCall(node, receiver, name)
 	}
 	if !isMath && !isToFixed {
 		return nil, false, nil
@@ -496,4 +511,53 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(property, "a field from a number | undefined variable")
 	}
 	return ir.Read{Local: local, Of: of, Checked: l.checked(local)}, nil
+}
+
+// stringMethods are the string methods stringCall lowers: the types of their arguments, and how many
+// may be left out, each filled in with JavaScript's default.
+var stringMethods = map[string]struct {
+	arguments []ir.Type
+	optional  int
+}{
+	"slice":       {[]ir.Type{ir.Number, ir.Number}, 2},
+	"codePointAt": {[]ir.Type{ir.Number}, 1},
+	"padStart":    {[]ir.Type{ir.Number, ir.String}, 1},
+	"padEnd":      {[]ir.Type{ir.Number, ir.String}, 1},
+	"repeat":      {[]ir.Type{ir.Number}, 0},
+	"indexOf":     {[]ir.Type{ir.String}, 0},
+	"includes":    {[]ir.Type{ir.String}, 0},
+	"startsWith":  {[]ir.Type{ir.String}, 0},
+	"endsWith":    {[]ir.Type{ir.String}, 0},
+}
+
+func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	shape := stringMethods[name]
+	value, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	written := node.AsCallExpression().Arguments.Nodes
+	if len(written) > len(shape.arguments) || len(written) < len(shape.arguments)-shape.optional {
+		return nil, true, l.notYet(node, name+" with these arguments")
+	}
+	arguments := []ir.Expression{}
+	for index, argument := range written {
+		lowered, err := l.expression(argument)
+		if err != nil {
+			return nil, true, err
+		}
+		if lowered.Type() != shape.arguments[index] {
+			return nil, true, l.notYet(argument, "a "+typeName(lowered.Type())+" argument to "+name)
+		}
+		arguments = append(arguments, lowered)
+	}
+	// JavaScript's defaults: codePointAt() is position 0, and padStart's fill is a space. slice's end
+	// stays missing, which is different from any number, so the emitter is told how many were given.
+	switch {
+	case name == "codePointAt" && len(arguments) == 0:
+		arguments = append(arguments, ir.NumberConstant{Value: 0})
+	case (name == "padStart" || name == "padEnd") && len(arguments) == 1:
+		arguments = append(arguments, ir.StringConstant{Index: l.constant(" ")})
+	}
+	return ir.StringCall{Method: name, Value: value, Arguments: arguments}, true, nil
 }

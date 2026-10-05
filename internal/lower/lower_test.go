@@ -61,8 +61,8 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a local console", "const console = { log: (message: string): void => {} };\nconsole.log('x');\n", "main.a:1:24: stage 0 can't lower an ArrowFunction yet"},
 		{"a closure", "function outer(): number {\n\tfunction inner(): number {\n\t\treturn 1;\n\t}\n\treturn inner();\n}\nconsole.log(`${outer()}`);\n", "main.a:2:2: stage 0 can't lower a function inside a function (a closure) yet"},
 		{"a class", "class Box {\n\treadonly size = 1;\n}\nconsole.log('x');\n", "main.a:1:1: stage 0 can't lower a ClassDeclaration yet"},
-		// String < compares UTF-16 code units, which the runtime doesn't do yet (docs/0.1.md, program 10).
-		{"a string comparison", "console.log(`${'a' < 'b'}`);\n", "main.a:1:16: stage 0 can't lower a BinaryExpression with a string and a string yet"},
+		// array[index] is number | undefined, read with a bounds check stage 0 doesn't emit yet.
+		{"an index into an array", "const numbers: number[] = [1];\nconsole.log(`${numbers[0] ?? 0}`);\n", "main.a:2:16: stage 0 can't lower an ElementAccessExpression yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

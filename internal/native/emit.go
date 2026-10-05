@@ -489,6 +489,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		value := e.value(expression.Value)
 		index := e.value(expression.Index)
 		return fmt.Sprintf("adamic_string_char_code_at(%s, %s)", value, index)
+	case ir.CodePoints:
+		return e.own(ir.Array, fmt.Sprintf("adamic_string_code_points(%s)", e.value(expression.Value)))
+	case ir.StringCall:
+		return e.stringCall(expression)
 	case ir.Trim:
 		return e.own(ir.String, fmt.Sprintf("adamic_string_trim(%s)", e.value(expression.Value)))
 	case ir.MapNew:
@@ -911,6 +915,8 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 		return fmt.Sprintf("fmod(%s, %s)", left, right)
 	case operator == ir.Power:
 		return fmt.Sprintf("adamic_power(%s, %s)", left, right)
+	case operandType == ir.String && (operator == ir.Less || operator == ir.LessOrEqual || operator == ir.Greater || operator == ir.GreaterOrEqual):
+		return fmt.Sprintf("(adamic_string_compare(%s, %s) %s 0)", left, right, cOperators[operator])
 	case operandType == ir.String && operator == ir.Equal:
 		return fmt.Sprintf("adamic_string_equal(%s, %s)", left, right)
 	case operandType == ir.String && operator == ir.NotEqual:
@@ -1066,4 +1072,38 @@ func joinKind(element ir.Type) string {
 		return "adamic_join_booleans"
 	}
 	return "adamic_join_strings"
+}
+
+func (e *emitter) stringCall(call ir.StringCall) string {
+	value := e.value(call.Value)
+	arguments := make([]string, 0, len(call.Arguments))
+	for _, argument := range call.Arguments {
+		arguments = append(arguments, e.value(argument))
+	}
+	switch call.Method {
+	case "slice":
+		start, end, hasEnd := "0.0", "0.0", false
+		if len(arguments) > 0 {
+			start = arguments[0]
+		}
+		if len(arguments) > 1 {
+			end, hasEnd = arguments[1], true
+		}
+		return e.own(ir.String, fmt.Sprintf("adamic_string_slice(%s, %s, %s, %t)", value, start, end, hasEnd))
+	case "codePointAt":
+		result := e.temporary()
+		e.line("adamic_maybe_number %s = adamic_string_code_point_at(%s, %s);", result, value, arguments[0])
+		return result
+	case "padStart", "padEnd":
+		return e.own(ir.String, fmt.Sprintf("adamic_string_pad(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "padStart"))
+	case "repeat":
+		return e.own(ir.String, fmt.Sprintf("adamic_string_repeat(%s, %s)", value, arguments[0]))
+	case "indexOf":
+		return fmt.Sprintf("adamic_string_index_of(%s, %s)", value, arguments[0])
+	case "includes":
+		return fmt.Sprintf("(adamic_string_index_of(%s, %s) != -1)", value, arguments[0])
+	case "startsWith":
+		return fmt.Sprintf("adamic_string_starts_with(%s, %s)", value, arguments[0])
+	}
+	return fmt.Sprintf("adamic_string_ends_with(%s, %s)", value, arguments[0])
 }

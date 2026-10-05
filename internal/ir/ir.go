@@ -198,6 +198,18 @@ type (
 	// Trim is string.trim().
 	Trim struct{ Value Expression }
 
+	// StringCall is one of a string's methods with JavaScript's meaning: slice, codePointAt,
+	// padStart, padEnd, repeat, indexOf, includes, startsWith, endsWith. Arguments are as written;
+	// lowering filled in any default.
+	StringCall struct {
+		Method    string
+		Value     Expression
+		Arguments []Expression
+	}
+
+	// CodePoints is [...string]: an array of its code points, each a string.
+	CodePoints struct{ Value Expression }
+
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
 		Key, Value Type
@@ -267,11 +279,24 @@ func (c Coalesce) Type() Type      { return c.Of }
 func (StringLength) Type() Type    { return Number }
 func (CharCodeAt) Type() Type      { return Number }
 func (Trim) Type() Type            { return String }
-func (MapNew) Type() Type          { return Map }
-func (MapSet) Type() Type          { return Map }
-func (MapHas) Type() Type          { return Boolean }
-func (MapDelete) Type() Type       { return Boolean }
-func (MapSize) Type() Type         { return Number }
+func (CodePoints) Type() Type      { return Array }
+
+func (c StringCall) Type() Type {
+	switch c.Method {
+	case "codePointAt":
+		return MaybeNumber
+	case "indexOf":
+		return Number
+	case "includes", "startsWith", "endsWith":
+		return Boolean
+	}
+	return String
+}
+func (MapNew) Type() Type    { return Map }
+func (MapSet) Type() Type    { return Map }
+func (MapHas) Type() Type    { return Boolean }
+func (MapDelete) Type() Type { return Boolean }
+func (MapSize) Type() Type   { return Number }
 
 func (g MapGet) Type() Type {
 	if g.ValueType == Number {

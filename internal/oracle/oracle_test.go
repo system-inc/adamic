@@ -37,7 +37,7 @@ var fixtures = []struct {
 	{"internal/load/testdata/0.1/compile/07_modules/main.ts", true},
 	{"internal/load/testdata/0.1/compile/08_results.ts", true},
 	{"internal/load/testdata/0.1/compile/09_tree.ts", true},
-	{"internal/load/testdata/0.1/compile/10_unicode.ts", false},
+	{"internal/load/testdata/0.1/compile/10_unicode.ts", true},
 	{"internal/oracle/testdata/strings.a", true},
 	{"internal/oracle/testdata/numbers.a", true},
 	{"internal/oracle/testdata/loops.a", true},
@@ -50,6 +50,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/modules/main.a", true},
 	{"internal/oracle/testdata/panic.a", true},
 	{"internal/oracle/testdata/maps_and_text.a", true},
+	{"internal/oracle/testdata/lone_surrogates.a", true},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
