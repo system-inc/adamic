@@ -408,12 +408,16 @@ func (e *emitter) store(local int, value string) {
 
 // releaseGlobals lets go of every global main declared, the last declared first, once main has run
 // to its end. Nothing reads them after that, and a program that let go of everything is one the leak
-// check can hold to account: a reference still held at exit hides whatever it reaches. A panic exits
+// check can hold to account: a reference still held at exit, or still written in a global, hides
+// whatever it reaches. A panic exits
 // where it stands, as Node does, and never gets here.
 func (e *emitter) releaseGlobals() {
 	for index := len(e.initialized) - 1; index >= 0; index-- {
 		if e.program.Locals[e.initialized[index]].Type.IsReference() {
 			e.line("adamic_release(%s);", e.localName(e.initialized[index]))
+			// Cleared too: the leak check counts what a global points at as alive, so a cycle the
+			// global led into would otherwise hide.
+			e.line("%s = NULL;", e.localName(e.initialized[index]))
 		}
 	}
 }

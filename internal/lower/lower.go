@@ -137,6 +137,7 @@ type lowering struct {
 	// For the cycle finder (cycles.go): the checker's type of each local, and where it's declared;
 	// every function value made, with its type; and the class type being instantiated, for this.
 	localTypes     map[int]*checker.Type
+	localAlso      map[int][]*checker.Type
 	localNodes     map[int]*ast.Node
 	closureRecords []closureRecord
 	classType      *checker.Type
@@ -555,6 +556,14 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex})
 	l.noteLocal(l.locals[symbol], l.checker.GetTypeAtLocation(name), name)
 	return l.locals[symbol], nil
+}
+
+// noteAlso keeps another checker type a local has: a this shared by more than one instantiation.
+func (l *lowering) noteAlso(local int, proven *checker.Type) {
+	if l.localAlso == nil {
+		l.localAlso = map[int][]*checker.Type{}
+	}
+	l.localAlso[local] = append(l.localAlso[local], proven)
 }
 
 // noteLocal keeps a local's checker type and declaration for the cycle finder.

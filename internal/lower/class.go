@@ -15,6 +15,10 @@ import (
 type instance struct {
 	constructor int
 	methods     map[string]int
+
+	// thisLocals are the this of its constructor and methods, which every instantiation sharing it
+	// (Box<Tree> and Box<Listener> are both objects) has as its own type, for the cycle finder.
+	thisLocals []int
 }
 
 // instantiate lowers a class for the type arguments of a type of it, once per distinct set.
@@ -49,6 +53,9 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	}
 	key = l.program.Where(declaration) + ":" + key
 	if existing, isLowered := l.instances[key]; isLowered {
+		for _, this := range existing.thisLocals {
+			l.noteAlso(this, classType)
+		}
 		return existing, nil
 	}
 
@@ -112,6 +119,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 func (l *lowering) thisLocal(owner int) int {
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: owner})
 	l.noteLocal(len(l.result.Locals)-1, l.classType, l.classNode)
+	l.instance.thisLocals = append(l.instance.thisLocals, len(l.result.Locals)-1)
 	return len(l.result.Locals) - 1
 }
 

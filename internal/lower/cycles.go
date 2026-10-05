@@ -144,7 +144,7 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 	if proven == nil {
 		return
 	}
-	if _, isSeen := f.where[proven]; isSeen {
+	if _, isSeen := f.where[proven]; isSeen || f.template(proven) {
 		return
 	}
 	f.where[proven] = where
@@ -190,6 +190,24 @@ func declaredAt(field *ast.Symbol, otherwise *ast.Node) *ast.Node {
 		return field.Declarations[0]
 	}
 	return otherwise
+}
+
+// template reports whether a type is a generic one not yet instantiated, or instantiated with any (a
+// class seen from its own declaration): no value has it, and any relates to everything, so it would
+// make every slot look cycle-capable.
+func (f *cycleFinder) template(proven *checker.Type) bool {
+	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
+		return true
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+		return false
+	}
+	for _, argument := range f.l.checker.GetTypeArguments(proven) {
+		if argument.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
+			return true
+		}
+	}
+	return false
 }
 
 // fields is an object type's fields, its methods left out: a method is code, and holds nothing.
@@ -288,11 +306,15 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			if proven := f.l.localTypes[node.cell-1]; proven != nil {
 				queue = append(queue, cycleNode{proven: proven})
 			}
+			// A this shared by every instantiation of a class held the same way is each of them.
+			for _, proven := range f.l.localAlso[node.cell-1] {
+				queue = append(queue, cycleNode{proven: proven})
+			}
 			continue
 		}
 		proven := node.proven
 		flags := proven.Flags()
-		if f.weak(proven) {
+		if f.weak(proven) || f.template(proven) {
 			// A Weak holds nothing.
 			continue
 		}
