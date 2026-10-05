@@ -8,12 +8,12 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// keyable reports whether values of a type can be a Map's keys or a Set's elements: strings and
-// numbers, compared as === compares them (SameValueZero), and objects, arrays, maps and functions,
-// each its own key, compared by identity.
+// keyable reports whether values of a type can be a Map's keys or a Set's elements: strings, numbers
+// and booleans, compared as === compares them (numbers by SameValueZero), and objects, arrays, maps
+// and functions, each its own key, compared by identity.
 func keyable(valueType ir.Type) bool {
 	switch valueType {
-	case ir.String, ir.Number, ir.Object, ir.Array, ir.Map, ir.Closure:
+	case ir.String, ir.Number, ir.Boolean, ir.Object, ir.Array, ir.Map, ir.Closure:
 		return true
 	}
 	return false
@@ -209,7 +209,9 @@ func (l *lowering) tupleLiteral(node *ast.Node) (ir.Expression, error) {
 	// What it's written into decides how each element is held: [key, undefined] pushed onto an array
 	// of [string, number | undefined] holds number | undefined, which its own type wouldn't say.
 	tuple := l.checker.GetTypeAtLocation(node)
-	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && checker.IsTupleType(contextual) {
+	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && checker.IsTupleType(contextual) && l.everyKnown(l.checker.GetTypeArguments(contextual)) {
+		// (Under as const the contextual tuple's elements are any, and the literal's own type says
+		// how they're held.)
 		tuple = contextual
 	}
 	types := l.checker.GetTypeArguments(tuple)
@@ -256,27 +258,41 @@ func (l *lowering) tupleLength(node *ast.Node, tuple *ast.Node) (ir.Expression, 
 	return l.numericLiteral(node)
 }
 
-// destructure lowers const [a, b] = tuple, and let: the tuple is held in a local of its own, made
-// here, and each name is declared from its field, in order, as JavaScript reads them.
+// destructure lowers const [a, b] = tuple and const { x, y } = object, and let: what's destructured
+// is held in a local of its own, made here, and each name is declared from its field, in order, as
+// JavaScript reads them.
 func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.Statement, error) {
 	if initializer == nil {
 		return nil, l.notYet(pattern, "a destructuring declaration without a value")
 	}
-	tupleType := l.checker.GetTypeAtLocation(initializer)
-	if !checker.IsTupleType(tupleType) {
-		return nil, l.notYet(pattern, "destructuring anything but a tuple")
-	}
-	elementTypes := l.checker.GetTypeArguments(tupleType)
 	value, err := l.expression(initializer)
 	if err != nil {
 		return nil, err
 	}
-	if value.Type() != ir.Object {
-		return nil, l.notYet(initializer, "destructuring a "+typeName(value.Type()))
-	}
 	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "tuple", Type: ir.Object, Function: l.functionIndex})
-	statements := []ir.Statement{ir.Declare{Local: held, Value: value}}
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: l.functionIndex})
+	declared, err := l.destructureFrom(pattern, l.checker.GetTypeAtLocation(initializer), value.Type(), held)
+	if err != nil {
+		return nil, err
+	}
+	return append([]ir.Statement{ir.Declare{Local: held, Value: value}}, declared...), nil
+}
+
+// destructureFrom declares a pattern's names from the local held, which holds a value of type
+// destructured (held as heldAs): a tuple's elements by position, an object's fields by name.
+func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type, heldAs ir.Type, held int) ([]ir.Statement, error) {
+	tuple := pattern.Kind == ast.KindArrayBindingPattern
+	if tuple && !checker.IsTupleType(destructured) {
+		return nil, l.notYet(pattern, "destructuring anything but a tuple into [names]")
+	}
+	if heldAs != ir.Object {
+		return nil, l.notYet(pattern, "destructuring a "+typeName(heldAs))
+	}
+	var elementTypes []*checker.Type
+	if tuple {
+		elementTypes = l.checker.GetTypeArguments(destructured)
+	}
+	statements := []ir.Statement{}
 	for index, binding := range pattern.AsBindingPattern().Elements.Nodes {
 		// A hole, [, second], is a binding element with no name.
 		if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
@@ -286,19 +302,69 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 		if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
 			return nil, l.notYet(binding, "a destructured name that isn't plain")
 		}
-		if index >= len(elementTypes) {
-			return nil, l.notYet(binding, "destructuring past a tuple's end")
+		var field string
+		var fieldType *checker.Type
+		if tuple {
+			if index >= len(elementTypes) {
+				return nil, l.notYet(binding, "destructuring past a tuple's end")
+			}
+			field, fieldType = strconv.Itoa(index), elementTypes[index]
+		} else {
+			// { x } reads x, and { x: other } reads x into other.
+			field = binding.Name().Text()
+			if declared.PropertyName != nil {
+				if !ast.IsIdentifier(declared.PropertyName) && declared.PropertyName.Kind != ast.KindStringLiteral {
+					return nil, l.notYet(declared.PropertyName, "a computed field name")
+				}
+				field = declared.PropertyName.Text()
+			}
+			property := l.checker.GetPropertyOfType(destructured, field)
+			if property == nil {
+				return nil, l.notYet(binding, "destructuring a field the type doesn't name")
+			}
+			fieldType = l.checker.GetTypeOfSymbol(property)
 		}
 		local, err := l.declareLocal(binding.Name())
 		if err != nil {
 			return nil, err
 		}
 		of := l.result.Locals[local].Type
-		if element, isKnown := l.representation(elementTypes[index]); !isKnown || element != of || slotless(of) {
-			return nil, l.notYet(binding, "a destructured name held otherwise than its tuple element")
+		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) {
+			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
-		field := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: strconv.Itoa(index), Of: of}
-		statements = append(statements, ir.Declare{Local: local, Value: field})
+		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of}
+		statements = append(statements, ir.Declare{Local: local, Value: value})
 	}
 	return statements, nil
+}
+
+// optionalTupleElement is tuple?.[index], a tuple that may be missing: its field when it's there, and
+// undefined when it isn't, which a number field gives as number | undefined and a reference field as
+// a null one. Fields held any other way stay not yet, as for ?. on a field (object.go's property).
+func (l *lowering) optionalTupleElement(node *ast.Node, object ir.Expression, index *ast.Node) (ir.Expression, error) {
+	access := node.AsElementAccessExpression()
+	tuple := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+	if index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(tuple) {
+		return nil, l.notYet(node, "?.[] on anything but a tuple, at a position written out")
+	}
+	elements := l.checker.GetTypeArguments(tuple)
+	position, err := strconv.Atoi(index.Text())
+	if err != nil || position >= len(elements) {
+		return nil, l.notYet(node, "?.[] past a tuple's end")
+	}
+	held, isKnown := l.representation(elements[position])
+	if !isKnown || (held != ir.Number && !held.IsReference()) || held == ir.Weak {
+		return nil, l.notYet(node, "?.[] to a tuple element of type "+l.checker.TypeToString(elements[position]))
+	}
+	return ir.Property{Object: object, Name: strconv.Itoa(position), Of: held, Optional: true}, nil
+}
+
+// everyKnown reports whether every type has a representation.
+func (l *lowering) everyKnown(types []*checker.Type) bool {
+	for _, each := range types {
+		if _, isKnown := l.representation(each); !isKnown {
+			return false
+		}
+	}
+	return true
 }

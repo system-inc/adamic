@@ -150,6 +150,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/write_stderr_order.a", true, false},
 	{"internal/oracle/testdata/prompt_then_read.a", true, false},
 	{"internal/oracle/testdata/collections.a", true, false},
+	{"internal/oracle/testdata/gaps.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that

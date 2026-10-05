@@ -507,6 +507,17 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if whenTrue.Type() != whenNot.Type() {
+		// flag ? text : undefined is a reference that may be missing, held as text is, with undefined
+		// the null one: the checker's type for the whole says which.
+		_, trueUndefined := whenTrue.(ir.Undefined)
+		_, notUndefined := whenNot.(ir.Undefined)
+		present := whenTrue
+		if trueUndefined {
+			present = whenNot
+		}
+		if of, err := l.typeOf(node); err == nil && trueUndefined != notUndefined && present.Type().IsReference() && of == present.Type() {
+			return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: whenNot, Of: of}, nil
+		}
 		return nil, l.notYet(node, "a conditional whose branches have different types")
 	}
 	return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: whenNot}, nil
