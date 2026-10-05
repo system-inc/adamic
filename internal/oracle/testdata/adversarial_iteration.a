@@ -1,0 +1,52 @@
+// Adversarial reading, iterators: arrays pushed to, written and reassigned while for...of walks
+// them, and maps deleted from, re-added to and grown while they're iterated, nested too.
+const list = ['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2)];
+const seen: string[] = [];
+for (const item of list) {
+	seen.push(item);
+	if (list.length < 6) {
+		list.push(`${item}+`);
+	}
+	list[0] = 'z'.repeat(3);
+}
+console.log(`${seen.join(',')} | ${list.join(',')}`);
+let names = ['p'.repeat(2), 'q'.repeat(2)];
+for (const name of names) {
+	names = ['r'.repeat(2)];
+	console.log(`${name} ${names.join(',')}`);
+}
+const keyed = new Map<string, string>([['a', 'x'.repeat(2)], ['b', 'y'.repeat(2)], ['c', 'z'.repeat(2)]]);
+for (const [key, value] of keyed) {
+	keyed.delete('b');
+	keyed.set(key, `${value}!`);
+	if (key === 'a') {
+		keyed.set('d', 'w'.repeat(2));
+	}
+	console.log(`${key}=${value}`);
+}
+const finalValues: string[] = [];
+for (const value of keyed.values()) {
+	finalValues.push(value);
+}
+console.log(finalValues.join(","));
+const inner = new Map<string, number>([['a', 1], ['b', 2], ['c', 3]]);
+for (const outerKey of inner.keys()) {
+	for (const innerKey of inner.keys()) {
+		if (innerKey !== outerKey) {
+			inner.delete(innerKey);
+			break;
+		}
+	}
+	console.log(`${outerKey} ${inner.size}`);
+}
+
+const reordered = new Map<string, number>([['a', 1], ['b', 2]]);
+let moved = false;
+for (const [key, value] of reordered) {
+	console.log(`${key}=${value}`);
+	if (key === 'a' && !moved) {
+		moved = true;
+		reordered.delete('a');
+		reordered.set('a', 3);
+	}
+}

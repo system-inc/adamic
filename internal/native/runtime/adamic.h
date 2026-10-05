@@ -5,6 +5,7 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 enum adamic_stream {
 	adamic_stdout = 1,
@@ -286,6 +287,10 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
 adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
+// adamic_string_check_length panics, as V8 throws RangeError: Invalid string length, when a string
+// would be longer than V8's longest, in UTF-16 units.
+void adamic_string_check_length(double units);
+
 // adamic_string_allocate makes a string of length bytes for the caller to fill, references 1.
 adamic_string *adamic_string_allocate(size_t length);
 
@@ -293,6 +298,10 @@ adamic_string *adamic_string_allocate(size_t length);
 // sigma included, as Node does it. They return a string the caller owns.
 adamic_string *adamic_string_to_upper(const adamic_string *string);
 adamic_string *adamic_string_to_lower(const adamic_string *string);
+
+// normalize (normalize.c): NFC, NFD, NFKC or NFKD as form names it, and a panic, as JavaScript's
+// RangeError, for any other form. It returns a string the caller owns.
+adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
@@ -364,6 +373,19 @@ adamic_object *adamic_read_text_file(const adamic_string *path);
 
 // adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
 _Noreturn void adamic_panic(const char *message, size_t length);
+
+// ADAMIC_CHECK_STACK starts every function the compiler emits: past adamic_stack_limit, the stack is
+// nearly gone, and that's a panic, as Node's RangeError is, rather than a segfault (stack.c). The
+// stack grows down on every processor Adamic targets. __builtin_frame_address is the real frame even
+// when the address sanitizer keeps locals elsewhere.
+extern uintptr_t adamic_stack_limit;
+_Noreturn void adamic_stack_overflow(void);
+#define ADAMIC_CHECK_STACK() \
+	do { \
+		if ((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit) { \
+			adamic_stack_overflow(); \
+		} \
+	} while (0)
 
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.

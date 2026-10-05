@@ -997,6 +997,7 @@ var stringMethods = map[string]struct {
 	"trimEnd":     {nil, 0},
 	"toUpperCase": {nil, 0},
 	"toLowerCase": {nil, 0},
+	"normalize":   {[]ir.Type{ir.String}, 1},
 	"at":          {[]ir.Type{ir.Number}, 0},
 	// A pattern that's a string, and a replacement that's a string: a regular expression or a
 	// function there isn't a string, and stays not yet.
@@ -1032,6 +1033,8 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 		arguments = append(arguments, ir.NumberConstant{Value: 0})
 	case (name == "padStart" || name == "padEnd") && len(arguments) == 1:
 		arguments = append(arguments, ir.StringConstant{Index: l.constant(" ")})
+	case name == "normalize" && len(arguments) == 0:
+		arguments = append(arguments, ir.StringConstant{Index: l.constant("NFC")})
 	}
 	return ir.StringCall{Method: name, Value: value, Arguments: arguments}, true, nil
 }
