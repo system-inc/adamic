@@ -17,8 +17,8 @@ void adamic_count_allocation(void) {
 
 void adamic_count_report(void) {
 	char line[200];
-	int length = snprintf(line, sizeof line, "adamic: counts: allocations %zu frees %zu retains %zu releases %zu peak %zu\n",
-		adamic_counted.allocations, adamic_counted.frees, adamic_counted.retains, adamic_counted.releases, adamic_counted.peak);
+	int length = snprintf(line, sizeof line, "adamic: counts: allocations %zu frees %zu retains %zu releases %zu peak %zu regions %zu\n",
+		adamic_counted.allocations, adamic_counted.frees, adamic_counted.retains, adamic_counted.releases, adamic_counted.peak, adamic_counted.regions);
 	if (length > 0 && (size_t)length < sizeof line) {
 		// Best effort, as a panic's message is: stderr may be what failed.
 		(void)!write(2, line, (size_t)length);

@@ -322,7 +322,7 @@ Some work allocates a lot and frees it all at once: one request, one file checke
 
 ### The design (#272q6cv, on paper)
 
-Status: **designed October 5, 2026, by stream A2; not built.** The benchmark it answers is `bench/trees.ts`. It makes 68,332,244 objects, each its own `malloc` and `free`. Node and Bun bump-allocate them in a young generation and drop each dead tree at once. Reuse in place can't help: nothing there is consumed to build its own shape.
+Status: **built** (`internal/native/region.go`, `runtime/region.c`), as designed below. What building it measured is at the end of this section. The benchmark it answers is `bench/trees.ts`. It makes 68,332,244 objects, each its own `malloc` and `free`. Node and Bun bump-allocate them in a young generation and drop each dead tree at once. Reuse in place can't help: nothing there is consumed to build its own shape.
 
 **What lives in a region.** A region is scoped to one statement, alive while it runs and freed when it ends. It holds the values the statement creates, directly or through calls, that are dead when it ends. In `total += check(build(depth))`, every node `build` makes is read by `check`, which keeps none of them, and nothing holds the tree after the statement. All of them can be allocated in the statement's region and freed with it: no `free` per node, no count reaching zero node by node.
 
@@ -357,6 +357,48 @@ Each needs a fixture that builds its strings and objects at runtime. Each must f
 - **Frees:** 1,572,862, those two trees.
 - **Retains and releases:** unchanged as calls. On a region value they cost a branch and touch no count. Removing the calls for values statically known to be in a region is a later step.
 - **Peak live:** unchanged. A region frees at the statement's end, which is when each of those trees died anyway.
+
+**What building it measured.** The design held, with one correction to its prediction. On `bench/trees.ts`, counted:
+
+| | allocations | frees | in regions | retains | releases | peak live |
+|---|---:|---:|---:|---:|---:|---:|
+| Before | 68,332,244 | 68,332,244 | 0 | 272,979,306 | 204,647,140 | 2,097,149 |
+| After | 68,332,244 | 1,572,900 | 66,759,344 | 272,979,306 | 204,647,140 | 2,097,149 |
+
+- **In regions:** 66,759,344 is exactly the nodes of every `check(build(depth))`. It's the sum of the counts the program prints for its eight depths.
+- **The correction:** the prediction above (66,759,382 in regions and 1,572,862 frees) took every allocation besides the two long-lived trees for a node. It forgot the 38 strings the program builds to print, which are freed one at a time.
+- **Unchanged, as designed:** retains, releases and peak.
+
+**Time barely moved.** `go run ./bench -only trees -rounds 5`, best of 5, in the noisy cloud container (load about 4):
+
+| | native | Node | native vs Node |
+|---|---:|---:|---:|
+| Before | 2.727 s | 1.602 s | 1.70x |
+| After | 2.519 s | 1.464 s | 1.72x |
+
+Native's 8% is the same as Node's own run-to-run swing. Native's memory stayed at 97.9 MB, because the two long-lived trees are on the heap.
+
+So 66.8 million `malloc`s and `free`s were cheap here: glibc's small-object cache serves same-sized nodes quickly. What's left is, by inference rather than profiling, the 273 million retain calls. Each is a call into the runtime even when it does nothing for a region value, plus the recursion itself. Not emitting retains and releases on values statically known to be in a region is the next step for this benchmark.
+
+**How it's held.** `regions.a` puts one honest region beside every way a value could outlive its statement:
+
+- A callee keeps its parameter, keeps something read out of it, returns it, or stores it into another object.
+- A function keeps what it makes as well as returning it, or keeps a fresh value it doesn't return.
+- A fresh value is declared into a variable.
+- One statement has a region and also makes a value that escapes.
+
+Each kept value is read after its statement. Mutants, against the whole oracle:
+
+| Mutant | Caught by |
+|---|---|
+| No parameter escapes | ASan heap-use-after-free |
+| A fresh function hands its region to calls that don't feed its return | ASan heap-use-after-free |
+| Every fresh call in a statement that has a region gets it | ASan heap-use-after-free, on the one-statement-two-values line |
+| Every statement with a fresh call gets a region | ASan, in `regions.a` and the existing `weak_parent.a` and `08_results.ts` |
+| A region's end doesn't release what its values hold | the leak check |
+| A region's end doesn't free its blocks | the leak check |
+
+Freeing the blocks at the region's end is what poisons them: the blocks are ordinary `malloc` blocks, so ASan sees any later read as a use after free.
 
 **What it leaves for later.**
 

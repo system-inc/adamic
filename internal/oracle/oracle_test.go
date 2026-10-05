@@ -142,6 +142,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_global_sibling.a", true, false},
 	{"internal/oracle/testdata/reuse_weak_during_spread.a", true, false},
 	{"internal/oracle/testdata/reuse_weak_after_reuse.a", true, false},
+	// Regions: a statement's fresh values let go of together, and every way one could escape kept off it.
+	{"internal/oracle/testdata/regions.a", true, false},
 	// A read lent without a count, beside a call that reassigns what was read.
 	{"internal/oracle/testdata/lent_reads.a", true, false},
 	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).
