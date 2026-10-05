@@ -1,0 +1,13 @@
+// ?. on a variable the checker narrowed to Link, which a call has put back to undefined: in JavaScript
+// chain?.next is then undefined, and nothing throws.
+interface Link {
+	readonly value: number;
+	readonly next: Link | undefined;
+}
+let chain: Link | undefined = { value: 1, next: undefined };
+function drop(): void {
+	chain = undefined;
+}
+drop();
+chain = chain?.next;
+console.log(`${chain === undefined}`);

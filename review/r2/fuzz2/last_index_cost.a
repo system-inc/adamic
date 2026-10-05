@@ -1,0 +1,13 @@
+// lastIndexOf's cost on a long string, where the answer is found at once: an empty search (the
+// length), and a search that matches at the very end. V8 does neither by reading the whole string.
+let text = '';
+for (let index = 0; index < 20000; index += 1) {
+	text += `${index % 10}é`;
+}
+let sum = 0;
+for (let round = 0; round < 20000; round += 1) {
+	sum += text.lastIndexOf('');
+	sum += text.lastIndexOf('9é');
+	sum += text.indexOf('0é');
+}
+console.log(`${text.length} ${sum}`);

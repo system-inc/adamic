@@ -1,0 +1,114 @@
+diff --git a/cmd/adamic-fuzz/main.go b/cmd/adamic-fuzz/main.go
+index 034eafd..6e109b5 100644
+--- a/cmd/adamic-fuzz/main.go
++++ b/cmd/adamic-fuzz/main.go
+@@ -123,6 +123,15 @@ func run() int {
+ 					fmt.Printf("seed %d: %s %s\n", programSeed, outcome.Verdict, outcome.Key)
+ 				}
+ 				mutex.Unlock()
++				if outcome.Verdict == fuzz.Checked {
++					// Review r2: every checked program is kept, with the check it stopped at, to be held
++					// to Node by hand.
++					checked := filepath.Join(*findings, "checked")
++					if err := os.MkdirAll(checked, 0o755); err == nil {
++						_ = os.WriteFile(filepath.Join(checked, fmt.Sprintf("seed%d.a", programSeed)), []byte(program.Source()), 0o644)
++						_ = os.WriteFile(filepath.Join(checked, fmt.Sprintf("seed%d.txt", programSeed)), []byte(outcome.Detail+"\n"), 0o644)
++					}
++				}
+ 				if outcome.Verdict != fuzz.Finding {
+ 					continue
+ 				}
+diff --git a/internal/fuzz/run.go b/internal/fuzz/run.go
+index 5c52678..ad2c77a 100644
+--- a/internal/fuzz/run.go
++++ b/internal/fuzz/run.go
+@@ -26,12 +26,19 @@ type Checkout struct {
+ 	directory string
+ 	adamic    string
+ 	runtime   []string
++
++	// release is the runtime compiled as a user's build is (no sanitizers, -O2), where the size-class
++	// allocator runs: review r2's addition.
++	release []string
+ }
+ 
+ // flags are native.Build's for a sanitized build, what the oracle compiles with. They're this tree's,
+ // even for a checkout of another commit: the C and the runtime are the checkout's, the flags aren't.
+ var flags = native.Flags(native.Options{Sanitize: true})
+ 
++// releaseFlags are a user's build's.
++var releaseFlags = native.Flags(native.Options{})
++
+ // Prepare builds a checkout's adamic command and compiles its runtime into directory. Compiling the
+ // runtime once, not once per program, is most of what makes fuzzing fast: a program is then one
+ // small C file.
+@@ -60,6 +67,12 @@ func Prepare(root string, directory string) (*Checkout, error) {
+ 			return nil, fmt.Errorf("fuzz: compiling the runtime: %w\n%s", err, output)
+ 		}
+ 		checkout.runtime = append(checkout.runtime, object)
++		releaseObject := filepath.Join(directory, strings.TrimSuffix(filepath.Base(source), ".c")+".release.o")
++		releaseArguments := append(append([]string{}, releaseFlags...), "-c", source, "-o", releaseObject)
++		if output, err := exec.Command("clang", releaseArguments...).CombinedOutput(); err != nil {
++			return nil, fmt.Errorf("fuzz: compiling the runtime for release: %w\n%s", err, output)
++		}
++		checkout.release = append(checkout.release, releaseObject)
+ 	}
+ 	return checkout, nil
+ }
+@@ -102,6 +115,8 @@ type Outcome struct {
+ 	Node    Run
+ 	Native  Run
+ 	Backend Run
++	// Release is the native program built as a user's build is: review r2's addition.
++	Release Run
+ }
+ 
+ // Try runs a program's source three ways in a directory of its own, the way the oracle does.
+@@ -140,12 +155,20 @@ func (c *Checkout) Try(source string, directory string) Outcome {
+ 		return Outcome{Verdict: Finding, Key: key, Detail: firstLines(string(output), 12)}
+ 	}
+ 
++	released := filepath.Join(directory, "release")
++	releaseArguments := append(append([]string{}, releaseFlags...), "-I", filepath.Join(c.Root, "internal", "native", "runtime"), "-o", released, filepath.Join(directory, "main.c"))
++	releaseArguments = append(append(releaseArguments, c.release...), "-lm")
++	if output, err := exec.Command("clang", releaseArguments...).CombinedOutput(); err != nil {
++		return Outcome{Verdict: Finding, Key: "clang refused the C for release", Detail: firstLines(string(output), 12)}
++	}
++
+ 	oracle := filepath.Join(c.Root, "oracle", "node.mjs")
+ 	outcome := Outcome{
+ 		Node:    execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, path),
+ 		Native:  execute(directory, []string{"ASAN_OPTIONS=detect_leaks=0"}, 20*time.Second, binary),
+ 		Backend: execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, filepath.Join(directory, "program.mjs")),
+ 	}
++	outcome.Release = execute(directory, nil, 20*time.Second, released)
+ 	return c.judge(outcome, binary, directory)
+ }
+ 
+@@ -181,6 +204,13 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
+ 		outcome.Verdict, outcome.Key, outcome.Detail = Finding, "sanitizer: "+kind, firstLines(string(outcome.Native.Stderr), 20)
+ 		return outcome
+ 	}
++	if releaseDifference := difference(outcome.Native, outcome.Release); releaseDifference != "" && !outcome.Native.TimedOut {
++		outcome.Verdict, outcome.Key = Finding, "release build "+releaseDifference+" from the sanitized one"
++		outcome.Detail = fmt.Sprintf("native:  exit %d, stdout %q, stderr %q\nrelease: exit %d, stdout %q, stderr %q",
++			outcome.Native.ExitCode, tail(outcome.Native.Stdout), outcome.Native.Stderr,
++			outcome.Release.ExitCode, tail(outcome.Release.Stdout), outcome.Release.Stderr)
++		return outcome
++	}
+ 	var differences []string
+ 	nativeDifference := difference(outcome.Node, outcome.Native)
+ 	backendDifference := difference(outcome.Node, outcome.Backend)
+diff --git a/internal/fuzz/widen.go b/internal/fuzz/widen.go
+index 544bca1..5bfe794 100644
+--- a/internal/fuzz/widen.go
++++ b/internal/fuzz/widen.go
+@@ -123,7 +123,7 @@ func (g *generator) sortChanging(array variable) *Statement {
+ }
+ 
+ // Link is a linked list's node, for ?. chains: a chain may end anywhere.
+-const linkDeclaration = "interface Link {\n\tvalue: number;\n\tlabel: string;\n\tnext: Link | undefined;\n}"
++const linkDeclaration = "interface Link {\n\tvalue: number;\n\tlabel: string;\n\treadonly next: Link | undefined;\n}"
+ 
+ // chainRead is a number or a string read through ?. at some depth, with ?? for where it ends.
+ func (g *generator) chainRead(t Type) *Expression {

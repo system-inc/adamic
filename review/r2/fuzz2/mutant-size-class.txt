@@ -1,0 +1,209 @@
+seed 400003: finding release build exit code differs from the sanitized one
+seed 400003:
+  native:  exit 0, stdout "1e+21\n0|世界-1\n0\n10 pad \n\n0\nc\nb12\n0|世界-1\n1\n100\n1 1e+21\n5  pad \nb=-1\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400000: finding release build exit code differs from the sanitized one
+seed 400000:
+  native:  exit 0, stdout "0\n0\nb<-3 b0.0000000\na,b\n0\n10\n10\n10\n10\n<1.5\n10\nHELLO|true\n\n\n10\n118.456\n10\n0\n0\nca\nb\ntrue\n1\n2.414213562373095\nfalse\nb\n0\nNaN\n pad \n10\n2 79\n0.4142135623730951 �b\nc=-1\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400002: finding release build exit code differs from the sanitized one
+seed 400002:
+  native:  exit 0, stdout "aN\nNaN\n��\n\nNaN\nNaN\nNaN\nNaN\n221325.0|false\nNaN\nﬀ\nNaN\n�\n-1,10,10,10\nNaN\nǅ\n10,100\nﬀ\nﬀ�\nß\n1\n276681\n55356 \n8 NaN\n-1e+21 1e+21\n-1e+21 1e+21\n-1e+21 1e+21\n-1e+21 1e+21\n-55356 55356\n-55356 55356\n-55356 55356\n-55356 55356\n-55356 55356\n-55356 55356\n-55356 55356\n-55356 55356\n-55356 55356\n-55356 55356\n-55356 55356\n-55356 55356\n-1e+21 1e+21\n-1e+21 1e+21\n-1e+21 1e+21\n-1e+21 1e+21\n1 b\na=-Infinity\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400001: finding release build exit code differs from the sanitized one
+seed 400001:
+  native:  exit 0, stdout "\n0\n0\n0\n0\n0\n0\nabababae\n0\nabababa.\nxy\n1.1000\n1.1000\n1.1000\n1.1000\n1.1000\n1.1000\n1.1000\n1.1000\n1.1000\n0\nabababae\n0\n0\nabababae\n0\nHELLO\n1.1\n pad 10\n\n0\nhello\nfalse\n-3,-3,-1,-3,-1,-3,-1\n1\nNaN\n\n0\n0\n0\n0\n0\n0\n6 1551.9984\nb=NaN\nk0=1.1\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400006: finding release build exit code differs from the sanitized one
+seed 400006:
+  native:  exit 0, stdout "0.50000000\nxyxy\nxyxy\n0\n🌍b\n🌍b\n🌍b\nhello\n4294967295\n🌍b1\n123.456,123.456\n0\n\n232830643708.07974\n101\n0\n4294967295\ntrue\n1e+21\nn=1e+21\n\n1 232830643708.07974\n123.456 hello\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400004: finding release build exit code differs from the sanitized one
+seed 400004:
+  native:  exit 0, stdout "b|true\n44\n44\n44\n0\nǅ0000\n2,1\n4\nc\na\ntrue\n\n1\n44\n2 54\n8589934634 10\na=0\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400005: finding release build exit code differs from the sanitized one
+seed 400005:
+  native:  exit 0, stdout "n=2>\nß0\n3\n3\nCA,Ba,b\nCA,Ba,b\n5\nCA,Ba,b\n\n0\nCa,b6\n255\nfalse\n-1\n0\n0\n-2\nCa,b\n1 3\n3 ǅ\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400007: finding release build exit code differs from the sanitized one
+seed 400007:
+  native:  exit 0, stdout ".\n1477.8918800354004\n3.5\n-3\n0\nc\n0\nfalse\n0\n10\nc\n0 0\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400008: finding release build exit code differs from the sanitized one
+seed 400008:
+  native:  exit 0, stdout "0\néc\nc\n4294967295\né\n1e+21,0\n7\nc\ntrue\n1,3,7\n1\n7\néc\nn=4294967301\né\n8.000000e+0\n1 8\nc=2\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400009: finding release build exit code differs from the sanitized one
+seed 400009:
+  native:  exit 0, stdout "FF|false1010\n10\nFF|false1010\n10\nb\n10\nb\n10\nb\n10\n0\nxy\n-1\nb\n1.5,4294967295\n1\n1010é\n10\n2,-0.0001,0.1\n0\nNaN\nfalse\n0 0\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400010: finding release build exit code differs from the sanitized one
+seed 400010:
+  native:  exit 0, stdout "a\nNaN\n2\nxy-NaN\n1e+21,-1\n0\n\n10,a�\n255\n255\nfalse\n1\n779\n5 NaN\nb=8589934845\nk2=779\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400011: finding release build exit code differs from the sanitized one
+seed 400011:
+  native:  exit 0, stdout "xyc\na�3..5\na�3..5\n0\n0\n�\n0é3.5\n1é3.5\n2é3.5\n0é3.5\n1é3.5\n2é3.5\n pad \n-0.00009999999999976694\né\n4294967295,3\n0\nc\ntrue\n�\n3.5\ntrue\n0\n1e+21\ntrue\nfalse\n0 0\n255 é\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400012: finding release build exit code differs from the sanitized one
+seed 400012:
+  native:  exit 0, stdout "<126.456 \n🌍🌍🌍🌍\n20\n20\n20\n20\n1é|false\né\n1é|false\né\n1é|false\né\nbb\n1é|false\n\n\nba\n24\nNaN\né\n100,10\n-1\ncaaaaaaaaaaaaaa\n3\nbb\n🌍,�\n0\n126.456\n-1\n4 24\nNaN 24\nNaN 24\n10 a,b\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400015: finding release build exit code differs from the sanitized one
+seed 400015:
+  native:  exit 70, stdout "", stderr "adamic: panic: index NaN is outside an array of length 2\n"
+  release: exit -1, stdout "", stderr ""
+seed 400014: finding release build exit code differs from the sanitized one
+seed 400014:
+  native:  exit 0, stdout "\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n pad \n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n pad \n22222\n22222\n22222\n22222\n22222\n22222\n22222\n22222\n pad \n10\n2.1\n2.333333333333333\n pad \n0.1,2\n0\n2 2p2a2d2 2\n123.456,2.25,2\ntrue\n0\n-3\n2 2.1\n0 3\n0 3\n0 3\n5 é\n0 3\n0 3\n5 é\n0 3\n0 3\n0 3\n0 3\n0 3\n0 3\n0 3\n5 �b\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400013: finding release build exit code differs from the sanitized one
+seed 400013:
+  native:  exit 0, stdout "b\nb\n pad \n0\n pad \n0\n0\n<1\nhello\n0\n pad \n98\n0\nc\nfalse\n1e+21\na,bxy\n2\n256\n1 0\n255 hello\n255 hello\n-1 hello\na=98\nb=3.1622776601683794e-11\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400016: finding release build exit code differs from the sanitized one
+seed 400016:
+  native:  exit 0, stdout "é世界23.456abababa\né23.456abababa\n100.00\n0\n2.0000\n0\n0\n0\n0\n21.1\na�\n\n0\n025llo\n125.456\n3.5\n2\n14.1\nfalse\n0 0\n7 世界\na=1e+21\nk0=7\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400017: finding release build exit code differs from the sanitized one
+seed 400017:
+  native:  exit 0, stdout "0\nhello\n0\nhello\n🌍🌍🌍\n0\nhello\n🌍🌍🌍\n0\nhello\n🌍🌍🌍\nhello\n�b\n0\nhello\nh\n0\nhello\n�b\n0\nhello\nh\n0\nhello\n�b\n0\n4294967295\nbİİ\n0.5,1.5,0,0,0\n0\n🌍\nhello1-123.456\n pad ,🌍b\n10NaNNaNNaNNaNNaN\n0\n137438953469\ntrue\n0 0\n0 b\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400019: finding release build exit code differs from the sanitized one
+seed 400019:
+  native:  exit 0, stdout "🌍|true\na\n0\nNaN\n0\n0.5\na\n\nNaN\n\né\n1\n2\n0\n4294967299\n0 0\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400018: finding release build exit code differs from the sanitized one
+seed 400018:
+  native:  exit 70, stdout "�b\n�b\na�\na�\n�b\n", stderr "adamic: panic: index NaN is outside an array of length 2\n"
+  release: exit -1, stdout "", stderr ""
+seed 400020: finding release build exit code differs from the sanitized one
+seed 400020:
+  native:  exit 70, stdout "3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\n3>\nc\n\n-0.0001\nNaN\n-0.0001,0.1,1,10,4294967295,4294967295,4294967295,4294967295\n0\nc\naa\n5\nİ\n0\n4294967295\n8 14.5\n", stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+  release: exit -1, stdout "", stderr ""
+seed 400022: finding release build exit code differs from the sanitized one
+seed 400022:
+  native:  exit 0, stdout "0\n-1.0\n0\n0\n6\n��b\n1.5\n0\nc\n-0.0001,5,2\n2,0.1,0.1\nxy,ǅ\n123.456,0.1,5\n0\n-1.0001\n0 0\n-1 -0.0001\n5 a\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400021: finding release build exit code differs from the sanitized one
+seed 400021:
+  native:  exit 70, stdout "c--\n0\nﬀ\n0\nhello\nhello\nhello\n0\nﬀ\n0.50.5<NaN \n0\nc0101010|true\nc0101010|true\nc0101010ababab0 \n0\n0.50.5<NaN \n3,-1.5\n0\nc0101010\n🌍,ǅ,-1\n🌍\n1\n-2.0000999999999998\nNaN\n0 0\n", stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+  release: exit -1, stdout "", stderr ""
+seed 400024: finding release build exit code differs from the sanitized one
+seed 400024:
+  native:  exit 0, stdout "b🌍\nc\n-1 \nc\n-1 \nc\n-1 \n0\nxy\n0.5\ncé0.50000\n10,3\n0\n1.234560e+2\n0.1,-1,255\n123.456\n1\n123.456\ntrue\n1 Infinity\n5 b\na=3\nk0=7\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400023: finding release build exit code differs from the sanitized one
+seed 400023:
+  native:  exit 0, stdout "🌍b\nNaNaNaN\n�B\n🌍\n-1\nNaNaNaN\n🌍B\n-1\nNaNaNaN\n-1\n🌍\n-1\nNaNaNaN\n-1\n\n0\n\n-1\n2a2\n-1\nxy\n0\n2.25\nhello\n-1,4\n1\n0hello\n0\n-1\nhello\n🌍\n1\n-248.9624\n3 2\n0 -1\n2 -1\n2 -1\n2 -1\n2 -1\n2 🌍b\n1e+21 �b\n4294967295 a,b\na=1\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400025: finding release build exit code differs from the sanitized one
+seed 400025:
+  native:  exit 0, stdout "世界\npad\npad\npad\npad\n世界\npad\npad\npad\npad\n世界\npad\npad\npad\npad\n世界\npad\npad\npad\npad\n10�b\n世界\npad\npad\npad\npad\n10\nc\n-0.0001\n6\nc\na,b\n7,1,2.25\n0\n0\n10�b\n8 NaN\n0.6 10\n0.5 10\n0.3 10\n10 -1\n255 é\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400027: finding release build exit code differs from the sanitized one
+seed 400027:
+  native:  exit 0, stdout "İ\n🌍\n-5.5-----İ\n🌍\nhello3.5\nhello2.253.5\nhello2.253.5\nhello2.252.253.5\nhello2.252.253.5\n\n🌍\n世界\nNaN\n0\nhello2.252.252.25\n0.5\n0\nc\nc\n-1\n1e+21\nİ\n1\n0.5\nfalse\n🌍\n世界\n1 NaN\n0 �\nc=46\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400029: finding release build exit code differs from the sanitized one
+seed 400029:
+  native:  exit 0, stdout "NaN\nxy\n10,100,120\n0\nc\n pad �\na,b\nfalse\n1e+21\n0\nNaN\nfalse\n0 0\n-1 b\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400026: finding release build exit code differs from the sanitized one
+seed 400026:
+  native:  exit 0, stdout "\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\n\n�b\nInfinity\na,b\n1\nb1c1\n-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1\nNaN\na,b\n pad \na�\n0\nInfinity\n1275245.912\n�b\n8 Infinity\n0 Infinity\n0 �\n-1 �\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400028: finding release build exit code differs from the sanitized one
+seed 400028:
+  native:  exit 0, stdout "hello\n<-0.0001>\na\nn=0 \nhello\n<-0.0001>\na\nn=0 \ne,ba\nhello\n<-0.0001>\na\nn=0 \nhello\n<-0.0001>\na\nn=0 \ne,ba\nhello\n<-0.0001>\na\nn=0 \nhello\n<-0.0001>\na\nn=0 \ne,ba\nhello\n<-0.0001>\na\nn=0 \nhello\n<-0.0001>\na\nn=0 \ne,ba\nxy\n<7>\nx\n-0.0001\nhello\n0.1,2\n0\nxy\ntrue\nfalse\n0.5\na\n0\n-2\n3 0\n7 3\n7 3\n7 2\n7 2\n7 1\n7 1\n7 0\n7 0\nNaN \n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400031: finding release build exit code differs from the sanitized one
+seed 400031:
+  native:  exit 0, stdout "0\n5\nn=NaN>\nb\nb\n5\n\n-1,0\n0\nc4294967295\n0\nb\n5\n256\n0\n510\nfalse\n2 105\n10 b\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400030: finding release build exit code differs from the sanitized one
+seed 400030:
+  native:  exit 0, stdout "0\n0\n0\n\nNaN-NaN1NaN>NaN\n🌍<255>\n<0 \nNaN-NaN1NaN>NaN\n🌍<255>\n<0 \nNaN-NaN1NaN>NaN\n🌍<255>\n<0 \n0\n0\n0\n0\n1\n1\n1\n1\n2\n2\n2\n2\n3\n3\n3\n3\n1.7782794100389228\na\n9,100\n0\nc世界世界世界世界\n-1>\n-0.0001,100,4294967295\n0\n21.33483823011677\n0\n-1>-1>\n-1>-1>\n2 NaN\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400033: finding release build exit code differs from the sanitized one
+seed 400033:
+  native:  exit 70, stdout "0\n", stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+  release: exit -1, stdout "", stderr ""
+seed 400034: finding release build exit code differs from the sanitized one
+seed 400034:
+  native:  exit 0, stdout " pad \n2\n-100\n pad \n2,-0.0001\n1\nc\n-0.0005\n\nfalse\n0\n1\n1 1\n0  pad \n-0.0005 3.5\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400032: finding release build exit code differs from the sanitized one
+seed 400032:
+  native:  exit 0, stdout "hello\nǅ|true\nǅ|true\nǅ|true\n<5\n pad \n-0.49992385929368666\n011\n0,0,0,-0.0001\n0\n0 - -0.0001\ntrue\n0.5\n0\n-0.49992385929368666\nx0 - 0 - 0 - -0.0001 - 0\n5.000000e-1\n3 4294967420.456\n-1 xy\n3 0.00007614070631336337\n2 0.00007614070631336337\n1 1e+21\n1 hello\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400035: finding release build exit code differs from the sanitized one
+seed 400035:
+  native:  exit 0, stdout "0.0\n\n\n\n\n\n\n3558.0179999999996\n�2.25\n-1,0,1.125,1.125,1.125,1.125,1.125,1.125,1.125,10\n177827.94100337636\nc\nb\nß pad \n1\n31254.912\n1 3.53\n-1 2.25\n1.125 -5.25\n-1 a�\nk1=0\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400037: finding release build exit code differs from the sanitized one
+seed 400037:
+  native:  exit 0, stdout "aa\naa\naa\naa\n0\ncé\naa\n0\n47.75\n0.1,10\n-15\nc\n-2\n4.5,0.5,1,-0.0001\n1\n59.75\ntrue\n|true|true世界世界世界\n0 0\n4294967295 �\nb=59.75\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400038: finding release build exit code differs from the sanitized one
+seed 400038:
+  native:  exit 0, stdout "b\n-1.0000\n-1.0000\n-1.0000\n�\n�\nn=2\n1\n0,0.1,-1\n4294967295\n0\nc\n世界�\n🌍,10\n0,0.1,-1\n0\n200\n4294967295\n858993459000\n858993459000,858993459000\n0 0\n10 世界\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400036: finding release build exit code differs from the sanitized one
+seed 400036:
+  native:  exit 0, stdout "0\n\n\n\n0\n\n1\n\n2\n\n3\n\na,b\n3.5\na,b\n3.5\na,b\n3.5\n0\n\n1\n\n2\n\n3\n\na,b\n3.5\na,b\n3.5\na,b\n3.5\na,b\n3.5\nn=100 \nn=0\nn=0\n-8\n4294967295\na,b\n-1,-1,97,NaN\n0\n123.45600000000000000\n1\nNaN\n100\n4294967295\n2\n1.6457513110645907\n世界\n8 -8\n4294967295 -1\na=0\nk1=2\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+seed 400039: finding release build exit code differs from the sanitized one
+seed 400039:
+  native:  exit 0, stdout "10\n10\n10\nİ\n10\n10\n10\n pad \n\n pad c🌍\n10\n10\n10\nİ\n10\n10\n10\n pad \n\n pad c🌍\n1e+21,4\na\n10\n10\n10\nİ\n10\n10\n10\n1\na\n10\n10\n10\nİ\n10\n10\n10\na\n10\n10\n10\nİ\n10\n10\n10\n11\n1e+21,4\na\n10\n10\n10\nİ\n10\n10\n10\n1\na\n10\n10\n10\nİ\n10\n10\n10\na\n10\n10\n10\nİ\n10\n10\n10\n11\na\n10\n10\n10\nİ\n10\n10\n10\na\n10\n10\n10\nİ\n10\n10\n10\n1\n10\n10\n10\n10\n10\n10\n-4\n100\nNaN,NaN\n0\nhello\n pad \n0.1\nfalse\nxy\n0\n4\n3\n8 -5\n2  pad \n-0.0001 a\n", stderr ""
+  release: exit -1, stdout "", stderr ""
+
+40 programs from seed 400000 in 23s on /tmp/adamic-gate/fa
+  agreed   0
+  finding  40
+  checked  0
+  not yet  0
+  invalid  0
+  unfit    0
+     40  finding: release build exit code differs from the sanitized one
+seed 400003: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400003.a
+seed 400000: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400000.a
+seed 400002: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400002.a
+seed 400001: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400001.a
+seed 400006: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400006.a
+seed 400004: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400004.a
+seed 400005: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400005.a
+seed 400007: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400007.a
+seed 400008: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400008.a
+seed 400009: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400009.a
+seed 400010: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400010.a
+seed 400011: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400011.a
+seed 400012: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400012.a
+seed 400015: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400015.a
+seed 400014: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400014.a
+seed 400013: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400013.a
+seed 400016: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400016.a
+seed 400017: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400017.a
+seed 400019: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400019.a
+seed 400018: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400018.a
+seed 400020: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400020.a
+seed 400022: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400022.a
+seed 400021: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400021.a
+seed 400024: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400024.a
+seed 400023: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400023.a
+seed 400025: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400025.a
+seed 400027: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400027.a
+seed 400029: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400029.a
+seed 400026: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400026.a
+seed 400028: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400028.a
+seed 400031: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400031.a
+seed 400030: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400030.a
+seed 400033: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400033.a
+seed 400034: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400034.a
+seed 400032: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400032.a
+seed 400035: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400035.a
+seed 400037: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400037.a
+seed 400038: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400038.a
+seed 400036: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400036.a
+seed 400039: release build exit code differs from the sanitized one -> /tmp/adamic-gate/fuzz-amut/findings/seed400039.a

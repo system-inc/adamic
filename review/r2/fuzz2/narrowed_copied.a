@@ -1,0 +1,17 @@
+// A narrowed variable a call put back to undefined, copied into a variable and stored in a field that
+// both hold undefined: JavaScript copies undefined, and nothing is wrong.
+interface Link {
+	readonly value: number;
+	readonly next: Link | undefined;
+}
+let chain: Link | undefined = { value: 1, next: undefined };
+function drop(): void {
+	chain = undefined;
+}
+drop();
+const walk: Link | undefined = chain;
+console.log(`copied ${walk === undefined}`);
+chain = { value: 2, next: undefined };
+drop();
+chain = { value: 3, next: chain };
+console.log(`stored ${chain.next === undefined}`);
