@@ -250,7 +250,16 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
-		return l.defined(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional}), nil
+		if !optional {
+			// A number | undefined field the checker narrowed is read as what it stores, then checked:
+			// read as a number, the undefined it may hold again would be NaN.
+			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+				if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored.IsMaybe() && stored.Present() == of {
+					of = stored
+				}
+			}
+		}
+		return l.checkNarrowed(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional}, l.declaredUndefined(node)), nil
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }
@@ -1168,7 +1177,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position.Type() != ir.Number {
 			return nil, l.notYet(node, "an array index that isn't a number")
 		}
-		return ir.ArrayIndex{Array: object, Index: position, Element: element}, nil
+		return l.checkNarrowed(node, ir.ArrayIndex{Array: object, Index: position, Element: element}, true), nil
 	}
 	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
 		return nil, l.notYet(node, describe(node))

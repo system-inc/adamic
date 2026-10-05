@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -15,27 +16,41 @@ import (
 //
 // Node throws a TypeError there, and native read through a null pointer; with a number | undefined,
 // Node computed with undefined (NaN) and native printed a number that was never there. So a read
-// the checker narrowed undefined out of is checked, the same in both backends.
+// the checker narrowed undefined out of is checked, the same in both backends, wherever it goes to
+// a place typed not to hold undefined. A variable, a field and an array element are all read so.
 
-// narrowedAway reports whether node, a variable or a field, reads a value whose declared type has
-// undefined in it while its type here doesn't.
-func (l *lowering) narrowedAway(node *ast.Node) bool {
+// declaredUndefined reports whether node, a variable or a field, is declared with undefined in its
+// type. An array element always may be undefined (noUncheckedIndexedAccess), and its caller says so.
+func (l *lowering) declaredUndefined(node *ast.Node) bool {
 	at := node
 	if node.Kind == ast.KindPropertyAccessExpression {
 		at = node.Name()
 	}
 	symbol := l.checker.GetSymbolAtLocation(at)
-	if symbol == nil {
-		return false
-	}
-	return l.includesUndefined(l.checker.GetTypeOfSymbol(symbol)) && !l.includesUndefined(l.checker.GetTypeAtLocation(node))
+	return symbol != nil && l.includesUndefined(l.checker.GetTypeOfSymbol(symbol))
 }
 
-// defined checks a reference the checker narrowed undefined out of. Read through a property next,
-// it panics with the TypeError JavaScript throws there, word for word; anywhere else, with Adamic's
-// own words, since JavaScript would go on with undefined in a place typed not to hold it.
-func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
-	if !value.Type().IsReference() || value.Type() == ir.Union || !l.narrowedAway(node) || comparedWithUndefined(node) {
+// checkNarrowed checks value, read at node, where the checker has narrowed undefined out of what's
+// declared to hold it (declared says it is). A number or a boolean that may be undefined as stage 0
+// holds it is unwrapped, checked (ir.Unwrap); a reference is checked as it is (ir.Defined). Read
+// through a property next, a reference panics with the TypeError JavaScript throws there, word for
+// word; anywhere else, with Adamic's own words, since JavaScript would go on with undefined in a
+// place typed not to hold it.
+func (l *lowering) checkNarrowed(node *ast.Node, value ir.Expression, declared bool) ir.Expression {
+	if !declared || l.mayHoldUndefined(node) {
+		return value
+	}
+	here := l.checker.GetTypeAtLocation(node)
+	if l.includesUndefined(here) {
+		return value
+	}
+	if value.Type().IsMaybe() {
+		if narrowed, isKnown := l.representation(here); isKnown && narrowed == value.Type().Present() {
+			return ir.Unwrap{Value: value}
+		}
+		return value
+	}
+	if !value.Type().IsReference() || value.Type() == ir.Union {
 		return value
 	}
 	message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
@@ -50,25 +65,60 @@ func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
 	return ir.Defined{Value: value, Message: message}
 }
 
-// comparedWithUndefined reports whether node is one side of === or !== with undefined on the other:
-// asking whether it's there is the one read that must see undefined as it is, with no check and no
-// unwrapping.
-func comparedWithUndefined(node *ast.Node) bool {
+// mayHoldUndefined reports whether the place node's value goes can hold undefined, so JavaScript
+// reading undefined there goes on without throwing and without a value of the wrong type: typeof's
+// operand, either side of a comparison with undefined, the left of ??, the receiver of ?., and a
+// value going straight into a place whose type has undefined in it (an argument, an array element,
+// an assignment, an initializer or a return of such a type). There the read is left as it is.
+func (l *lowering) mayHoldUndefined(node *ast.Node) bool {
 	parent := node.Parent
+	inner := node
 	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
-		node, parent = parent, parent.Parent
+		inner, parent = parent, parent.Parent
 	}
-	if parent == nil || parent.Kind != ast.KindBinaryExpression {
+	if parent != nil {
+		switch parent.Kind {
+		case ast.KindTypeOfExpression:
+			return true
+		case ast.KindPropertyAccessExpression:
+			access := parent.AsPropertyAccessExpression()
+			if access.Expression == inner && access.QuestionDotToken != nil {
+				return true
+			}
+		case ast.KindBinaryExpression:
+			binary := parent.AsBinaryExpression()
+			switch binary.OperatorToken.Kind {
+			case ast.KindQuestionQuestionToken:
+				if binary.Left == inner {
+					return true
+				}
+			case ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
+				other := binary.Right
+				if binary.Right == inner {
+					other = binary.Left
+				}
+				if other = ast.SkipParentheses(other); other.Kind == ast.KindIdentifier && other.Text() == "undefined" {
+					return true
+				}
+			}
+		}
+	}
+	// Where the value goes straight into a place of a type: an argument, an array element, an
+	// initializer, a return, the right of an assignment, an object's field. Not a branch of ?: or
+	// anything else the value only passes through, which is lowered as one type on both sides.
+	if parent == nil {
 		return false
 	}
-	binary := parent.AsBinaryExpression()
-	if operator := binary.OperatorToken.Kind; operator != ast.KindEqualsEqualsEqualsToken && operator != ast.KindExclamationEqualsEqualsToken {
+	switch parent.Kind {
+	case ast.KindCallExpression, ast.KindNewExpression, ast.KindArrayLiteralExpression, ast.KindVariableDeclaration,
+		ast.KindReturnStatement, ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
+	case ast.KindBinaryExpression:
+		if binary := parent.AsBinaryExpression(); binary.OperatorToken.Kind != ast.KindEqualsToken || binary.Right != inner {
+			return false
+		}
+	default:
 		return false
 	}
-	other := binary.Right
-	if binary.Right == node {
-		other = binary.Left
-	}
-	other = ast.SkipParentheses(other)
-	return other.Kind == ast.KindIdentifier && other.Text() == "undefined"
+	contextual := l.checker.GetContextualType(inner, checker.ContextFlagsNone)
+	return contextual != nil && l.includesUndefined(contextual)
 }

@@ -132,13 +132,8 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 				read = ir.Narrow{Value: read, To: narrowed}
 			}
 		}
-		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
-			// Where the checker has narrowed it to what it holds, it's read as that.
-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !comparedWithUndefined(node) {
-				read = ir.Unwrap{Value: read}
-			}
-		}
-		return l.defined(node, read), nil
+		// Where the checker has narrowed undefined away, it's read as what it holds, checked.
+		return l.checkNarrowed(node, read, l.declaredUndefined(node)), nil
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:

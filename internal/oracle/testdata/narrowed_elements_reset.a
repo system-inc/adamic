@@ -1,0 +1,11 @@
+// Reviewer R2, round three, i7/narrowed_other_slots.a: an array element narrowed by an index, put
+// back to undefined by a call, is checked like any narrowing a call undid: an inserted check.
+const slots: (number | undefined)[] = [4];
+function empty(): void {
+	slots[0] = undefined;
+}
+if (slots[0] !== undefined) {
+	empty();
+	const seen = slots[0];
+	console.log(`element ${seen}`);
+}

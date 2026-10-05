@@ -109,6 +109,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/narrowed_fields.a", true, false},
 	{"internal/oracle/testdata/narrowed_numbers.a", true, true},
 	{"internal/oracle/testdata/narrowed_compared.a", true, false},
+	{"internal/oracle/testdata/narrowed_field_numbers.a", true, true},
+	{"internal/oracle/testdata/narrowed_elements.a", true, false},
+	{"internal/oracle/testdata/narrowed_elements_reset.a", true, true},
+	{"internal/oracle/testdata/narrowed_into_undefined.a", true, false},
 	// The same sorts at the top level, where only the globals' release at exit lets the leak check see.
 	{"internal/oracle/testdata/sort_top_level.a", true, false},
 	{"internal/oracle/testdata/splices.a", true, false},
