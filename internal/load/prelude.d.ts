@@ -13,4 +13,12 @@ declare module 'adamic' {
 	export function readTextFile(path: string): { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string };
 	export function programArguments(): readonly string[];
 	export function writeTextFile(path: string, text: string): { readonly kind: 'Ok' } | { readonly kind: 'Error'; readonly message: string };
+	// The file system a walk needs: a directory's names in Node's order, and what a path names.
+	export function readDirectory(path: string): { readonly kind: 'Ok'; readonly names: readonly string[] } | { readonly kind: 'Error'; readonly message: string };
+	export function fileStatus(path: string): { readonly kind: 'Ok'; readonly type: 'file' | 'directory' | 'other'; readonly size: number; readonly symbolicLink: boolean } | { readonly kind: 'Error'; readonly message: string };
+
+	export interface WeakBrand {
+		readonly adamicWeak?: never;
+	}
+	export type Weak<Target extends object> = (Target & WeakBrand) | undefined;
 }

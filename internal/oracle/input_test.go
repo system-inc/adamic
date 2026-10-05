@@ -28,7 +28,8 @@ var inputFixtures = []struct {
 	unreadable bool
 
 	// writes gives the program, as its first argument, an empty directory of its own on every run, with
-	// a directory in it named locked that it may not write into. What each run leaves there, every
+	// a directory in it named locked that it may not write into, and unlisted and closed, which it may
+	// not list and may not enter. What each run leaves there, every
 	// file's name, bytes and permissions, must agree too.
 	writes bool
 }{
@@ -41,6 +42,7 @@ var inputFixtures = []struct {
 	}, false, false},
 	{"internal/oracle/testdata/read_arguments.a", []string{"reading/hello.txt", "reading/missing.txt", "reading"}, true, false},
 	{"internal/oracle/testdata/write_files.a", nil, false, true},
+	{"internal/oracle/testdata/walk.a", nil, false, true},
 }
 
 // inputRun is where and as whom one input fixture runs.
@@ -182,7 +184,8 @@ func TestInputAgreesWithNode(t *testing.T) {
 }
 
 // writable makes an empty directory a run of a writing fixture may write in, whoever it runs as, with
-// one directory in it, locked, that it may not.
+// one directory in it, locked, that it may not, two it may not list or enter, and a file whose name
+// isn't valid UTF-8.
 func writable(t *testing.T, shared string, name string) string {
 	t.Helper()
 	directory := filepath.Join(shared, name)
@@ -196,6 +199,21 @@ func writable(t *testing.T, shared string, name string) string {
 	if err := os.Mkdir(filepath.Join(directory, "locked"), 0o555); err != nil {
 		t.Fatal(err)
 	}
+	// A file whose name isn't valid UTF-8, which Node lists decoded, the bad byte as U+FFFD. Linux
+	// keeps any bytes; macOS's file system refuses such a name, so there it isn't made, and the case
+	// goes unasked.
+	_ = os.WriteFile(filepath.Join(directory, "bad\xff name"), nil, 0o644)
+	// And two a walk can't go into: unlisted can be passed through but not listed, and closed not
+	// even passed through. Mkdir's mode passes through the umask, so each is set whole.
+	for name, mode := range map[string]os.FileMode{"unlisted": 0o311, "closed": 0o000} {
+		path := filepath.Join(directory, name)
+		if err := os.Mkdir(path, 0o700); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Chmod(path, mode); err != nil {
+			t.Fatal(err)
+		}
+	}
 	return directory
 }
 
@@ -206,6 +224,11 @@ func snapshot(t *testing.T, directory string) map[string]string {
 	found := map[string]string{}
 	err := filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
+			// A directory that can't be listed (unlisted and closed, when the test isn't root) is
+			// recorded by its permissions, already, and not gone into.
+			if entry != nil && entry.IsDir() {
+				return filepath.SkipDir
+			}
 			return err
 		}
 		relative, err := filepath.Rel(directory, path)

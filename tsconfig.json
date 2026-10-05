@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"exactOptionalPropertyTypes": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"erasableSyntaxOnly": true,
+		"verbatimModuleSyntax": true,
+		"allowImportingTsExtensions": true,
+		"noEmit": true,
+		"module": "esnext",
+		"moduleDetection": "force",
+		"moduleResolution": "bundler",
+		"target": "es2024",
+		"lib": ["es2024"],
+		"types": []
+	},
+	"sourceExtensions": [".a"],
+	"files": ["internal/load/prelude.d.ts"],
+	"include": ["dedication", "internal/load/testdata", "internal/oracle/testdata", "stage1", "bench"]
+}

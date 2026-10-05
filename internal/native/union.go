@@ -15,6 +15,8 @@ func converted(from ir.Type, to ir.Type, value string) (string, bool) {
 		return value, false
 	case to.IsMaybe() && from == to.Present():
 		return maybe(to, value), false
+	case to == ir.Weak:
+		return fmt.Sprintf("adamic_weak_of(%s)", value), true
 	case to != ir.Union:
 		panic(fmt.Sprintf("native: no conversion from %d to %d", from, to))
 	case from == ir.Number:
