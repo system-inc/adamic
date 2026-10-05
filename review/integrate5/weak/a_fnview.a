@@ -1,0 +1,11 @@
+import type { Weak } from 'adamic';
+// A function value taking a Weak, called through a type that passes the target.
+interface Box {
+	readonly label: string;
+}
+function run(n: number): void {
+	const box: Box = { label: `b${n}` };
+	const f: (x: Box) => boolean = (x: Weak<Box>): boolean => x === box;
+	console.log(`${f(box)}`);
+}
+run(1);

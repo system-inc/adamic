@@ -1,0 +1,25 @@
+import type { Weak } from 'adamic';
+// A target freed, then many objects of the same size made right after: the weak must read
+// undefined, never one of the new objects at the old address.
+interface Box {
+	readonly label: string;
+}
+interface Holder {
+	kept: Weak<Box>;
+}
+function make(n: number): Holder {
+	const box: Box = { label: `t${n}` };
+	return { kept: box };
+}
+const h = make(1);
+const others: Box[] = [];
+for (let i = 0; i < 2000; i++) {
+	others.push({ label: `o${i}` });
+}
+let hits = 0;
+for (const o of others) {
+	if (h.kept === o) {
+		hits++;
+	}
+}
+console.log(`${h.kept?.label ?? 'gone'} ${hits}`);

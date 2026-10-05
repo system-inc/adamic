@@ -1,0 +1,19 @@
+import type { Weak } from 'adamic';
+// Written weakly through one view, compared through the other: no crash, a different answer.
+interface Box {
+	readonly label: string;
+}
+interface Strong {
+	v: Box;
+}
+interface Weakly {
+	v: Weak<Box>;
+}
+function run(n: number): void {
+	const box: Box = { label: `b${n}` };
+	const s: Strong = { v: box };
+	const w: Weakly = s;
+	w.v = box;
+	console.log(`${s.v === box}`);
+}
+run(1);

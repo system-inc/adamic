@@ -1,0 +1,12 @@
+import type { Weak } from 'adamic';
+// A function value returning the target, called through a type that returns a Weak.
+interface Box {
+	readonly label: string;
+}
+function run(n: number): void {
+	const box: Box = { label: `b${n}` };
+	const f: () => Weak<Box> = (): Box => box;
+	const got = f();
+	console.log(`${got === box}`);
+}
+run(1);

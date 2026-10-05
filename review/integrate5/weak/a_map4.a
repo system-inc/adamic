@@ -1,0 +1,11 @@
+import type { Weak } from 'adamic';
+interface Slots {
+	m: Weak<Map<string, number>>;
+}
+const m = new Map<string, number>();
+m.set(`k${1}`, 1);
+const s: Slots = { m };
+const mm = s.m;
+if (mm !== undefined) {
+	console.log(`${mm.has('k1')}`);
+}

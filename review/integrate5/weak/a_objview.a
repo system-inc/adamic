@@ -1,0 +1,20 @@
+import type { Weak } from 'adamic';
+// An object whose field is strong, seen as an object type whose field of the same name is Weak.
+interface Box {
+	readonly label: string;
+}
+interface Strong {
+	v: Box;
+}
+interface Weakly {
+	v: Weak<Box>;
+}
+function read(w: Weakly): string {
+	return w.v?.label ?? 'gone';
+}
+function run(n: number): void {
+	const box: Box = { label: `b${n}` };
+	const s: Strong = { v: box };
+	console.log(read(s));
+}
+run(1);

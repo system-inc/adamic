@@ -1,0 +1,14 @@
+import type { Weak } from 'adamic';
+// every with an inferred predicate narrows the array itself to Box & WeakBrand elements.
+interface Box {
+	readonly label: string;
+}
+function run(n: number): void {
+	const a: Box = { label: `a${n}` };
+	const seen: Weak<Box>[] = [a];
+	if (seen.every((x) => x !== undefined)) {
+		const first = seen[0];
+		console.log(`${first === a}`);
+	}
+}
+run(1);

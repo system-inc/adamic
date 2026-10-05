@@ -1,0 +1,17 @@
+import type { Weak } from 'adamic';
+// A Weak array filtered by an inferred predicate: the result's element type is Box & WeakBrand,
+// which reads as a plain Box.
+interface Box {
+	readonly label: string;
+}
+function run(n: number): void {
+	const a: Box = { label: `a${n}` };
+	const b: Box = { label: `b${n}` };
+	const seen: Weak<Box>[] = [a, undefined, b];
+	const present = seen.filter((x) => x !== undefined);
+	console.log(`${present.length}`);
+	for (const p of present) {
+		console.log(p.label);
+	}
+}
+run(1);

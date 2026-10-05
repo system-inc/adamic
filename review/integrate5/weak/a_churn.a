@@ -1,0 +1,53 @@
+import type { Weak } from 'adamic';
+// Handles made and dropped over and over, two slots to one target with one dropped, a handle
+// dropped while its target lives and then the target freed.
+interface Box {
+	readonly label: string;
+}
+interface Holder {
+	kept: Weak<Box>;
+}
+function churn(n: number): number {
+	let count = 0;
+	const targets: Box[] = [];
+	for (let i = 0; i < n; i++) {
+		targets.push({ label: `t${i}` });
+	}
+	for (let round = 0; round < 5; round++) {
+		const holders: Holder[] = [];
+		for (const t of targets) {
+			holders.push({ kept: t });
+			holders.push({ kept: t });
+		}
+		for (let i = 0; i < holders.length; i += 2) {
+			const x = holders[i];
+			if (x !== undefined) {
+				x.kept = undefined;
+			}
+		}
+		for (const h of holders) {
+			if (h.kept !== undefined) {
+				count++;
+			}
+		}
+	}
+	return count;
+}
+console.log(`${churn(100)}`);
+const keep: Box = { label: `k${1}` };
+const h1: Holder = { kept: keep };
+const h2: Holder = { kept: keep };
+h1.kept = undefined;
+function show(h: Holder): string {
+	return h.kept?.label ?? '-';
+}
+console.log(`${show(h2)} ${show(h1)}`);
+// The target freed after one of its two handles was dropped.
+function late(n: number): string {
+	const t: Box = { label: `l${n}` };
+	const a: Holder = { kept: t };
+	const b: Holder = { kept: t };
+	a.kept = undefined;
+	return show(b);
+}
+console.log(late(2));

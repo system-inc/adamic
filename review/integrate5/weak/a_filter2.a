@@ -1,0 +1,12 @@
+import type { Weak } from 'adamic';
+// The same filter, compared rather than read: no crash, a different answer.
+interface Box {
+	readonly label: string;
+}
+function run(n: number): void {
+	const a: Box = { label: `a${n}` };
+	const seen: Weak<Box>[] = [undefined, a];
+	const present = seen.filter((x) => x !== undefined);
+	console.log(`${present.length} ${present.indexOf(a)} ${present[0] === a}`);
+}
+run(1);

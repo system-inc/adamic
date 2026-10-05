@@ -1,0 +1,40 @@
+import type { Weak } from 'adamic';
+// A narrowed weak read kept in a local, then the target's last strong holder let go by a call.
+interface Box {
+	readonly label: string;
+}
+interface Holder {
+	kept: Weak<Box>;
+	strong: Box | undefined;
+}
+function drop(h: Holder): number {
+	h.strong = undefined;
+	return 1;
+}
+function run(n: number): string {
+	const h: Holder = { kept: undefined, strong: { label: `s${n}` } };
+	h.kept = h.strong;
+	const k = h.kept;
+	if (k !== undefined) {
+		const before = k.label;
+		drop(h);
+		return `${before}`;
+	}
+	return '-';
+}
+function run2(n: number): string {
+	const h: Holder = { kept: undefined, strong: { label: `s${n}` } };
+	h.kept = h.strong;
+	const local: Box | undefined = h.kept;
+	if (local !== undefined) {
+		drop(h);
+		return local.label;
+	}
+	return '-';
+}
+function run3(n: number): string {
+	const h: Holder = { kept: undefined, strong: { label: `s${n}` } };
+	h.kept = h.strong;
+	return `${h.kept?.label ?? '-'} ${drop(h)} ${h.kept?.label ?? 'gone'}`;
+}
+console.log(`${run(1)} ${run2(2)} ${run3(3)}`);

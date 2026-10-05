@@ -1,0 +1,19 @@
+import type { Weak } from 'adamic';
+// The other way: written weakly through one view, read strongly through the other.
+interface Box {
+	readonly label: string;
+}
+interface Strong {
+	v: Box;
+}
+interface Weakly {
+	v: Weak<Box>;
+}
+function run(n: number): void {
+	const box: Box = { label: `b${n}` };
+	const s: Strong = { v: box };
+	const w: Weakly = s;
+	w.v = box;
+	console.log(s.v.label);
+}
+run(1);
