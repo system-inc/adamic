@@ -97,6 +97,9 @@ static void free_one(void *value) {
 		}
 		break;
 	}
+	case adamic_kind_number:
+	case adamic_kind_boolean:
+		break;
 	case adamic_kind_map_iterator: {
 		// The iteration is over: the map may compact again.
 		adamic_map_iterator *iterator = value;

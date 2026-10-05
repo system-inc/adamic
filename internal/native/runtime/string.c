@@ -41,6 +41,17 @@ adamic_string *adamic_string_from_number(double value) {
 	return string;
 }
 
+// V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit): past it, every way of making
+// a string throws RangeError: Invalid string length, and so Adamic panics there too.
+#define MAX_UNITS 536870888.0
+
+void adamic_string_check_length(double units) {
+	if (units > MAX_UNITS) {
+		static const char message[] = "RangeError: Invalid string length";
+		adamic_panic(message, sizeof message - 1);
+	}
+}
+
 adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) {
 	size_t length = 0;
 	for (size_t index = 0; index < count; index++) {
@@ -49,6 +60,14 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 			adamic_panic(message, sizeof message - 1);
 		}
 		length += parts[index]->length;
+	}
+	// A string's UTF-16 units are never more than its bytes, so only a long one needs counting.
+	if ((double)length > MAX_UNITS) {
+		double units = 0;
+		for (size_t index = 0; index < count; index++) {
+			units += adamic_string_length(parts[index]);
+		}
+		adamic_string_check_length(units);
 	}
 	adamic_string *string = allocate(length);
 	char *cursor = (char *)string->bytes;
@@ -388,6 +407,15 @@ int adamic_string_compare(const adamic_string *left, const adamic_string *right)
 	}
 }
 
+// repeat_unchecked is count copies of string, count already a whole number in range.
+static adamic_string *repeat_unchecked(const adamic_string *string, double count) {
+	builder build = {NULL, 0, 0};
+	for (double index = 0; index < count; index++) {
+		builder_add(&build, string->bytes, string->length);
+	}
+	return builder_finish(&build);
+}
+
 adamic_string *adamic_string_repeat(const adamic_string *string, double count) {
 	count = isnan(count) ? 0 : trunc(count);
 	if (count < 0 || isinf(count)) {
@@ -397,11 +425,13 @@ adamic_string *adamic_string_repeat(const adamic_string *string, double count) {
 		int written = snprintf(message, sizeof message, "RangeError: Invalid count value: %.*s", (int)length, number);
 		adamic_panic(message, (size_t)written);
 	}
-	builder build = {NULL, 0, 0};
-	for (double index = 0; index < count; index++) {
-		builder_add(&build, string->bytes, string->length);
+	// Checked before any of it is built, as V8 does: an empty string repeats to itself however many
+	// times, and anything longer than V8's longest string is refused.
+	if (string->length == 0 || count == 0) {
+		return adamic_retain((adamic_string *)&adamic_string_empty);
 	}
-	return builder_finish(&build);
+	adamic_string_check_length(adamic_string_length(string) * count);
+	return repeat_unchecked(string, count);
 }
 
 adamic_string *adamic_string_pad(const adamic_string *string, double target, const adamic_string *fill, bool at_start) {
@@ -410,19 +440,23 @@ adamic_string *adamic_string_pad(const adamic_string *string, double target, con
 	if (target <= length || fill->length == 0) {
 		return adamic_retain((adamic_string *)string);
 	}
-	// The fill, repeated and cut to exactly the missing number of UTF-16 units.
+	adamic_string_check_length(target);
+	// The fill, repeated and cut to exactly the missing number of UTF-16 units: whole fills, then the
+	// start of one more, so nothing on the way is longer than the result.
 	double missing = target - length;
 	double fill_length = adamic_string_length(fill);
-	adamic_string *repeated = adamic_string_repeat(fill, ceil(missing / fill_length));
-	adamic_string *padding = adamic_string_slice(repeated, 0, missing, true);
-	adamic_release(repeated);
-	adamic_string *parts[2] = {padding, (adamic_string *)string};
+	double whole = floor(missing / fill_length);
+	adamic_string *repeated = repeat_unchecked(fill, whole);
+	adamic_string *rest = adamic_string_slice(fill, 0, missing - whole * fill_length, true);
+	adamic_string *parts[3] = {repeated, rest, (adamic_string *)string};
 	if (!at_start) {
 		parts[0] = (adamic_string *)string;
-		parts[1] = padding;
+		parts[1] = repeated;
+		parts[2] = rest;
 	}
-	adamic_string *padded = adamic_string_concat(2, parts);
-	adamic_release(padding);
+	adamic_string *padded = adamic_string_concat(3, parts);
+	adamic_release(repeated);
+	adamic_release(rest);
 	return padded;
 }
 

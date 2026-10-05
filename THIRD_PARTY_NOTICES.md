@@ -12,8 +12,15 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
-- In Adamic: number parsing (`runtime/parse.c`, after V8's src/numbers/conversions.cc) and exponentiation
-  (`runtime/number.c`, after V8's math::pow), ported so Adamic's answers match Node's to the bit.
+- In Adamic, ported so Adamic's answers match Node's to the bit:
+  - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
+  - exponentiation (`runtime/number.c`, after math::pow);
+  - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
+    notice is below);
+  - Math.hypot (`runtime/hypot.c`, after src/builtins/math.tq);
+  - exponential, precision and shortest digits (`runtime/dtoa.c`, after src/base/numbers and
+    src/numbers/conversions.cc);
+  - toString with a radix (`runtime/radix.c`, after src/numbers/conversions.cc).
 
 ````text
 Copyright 2006-2011, the V8 project authors. All rights reserved.
