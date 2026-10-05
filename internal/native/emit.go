@@ -553,9 +553,14 @@ func (e *emitter) value(expression ir.Expression) string {
 			field = fmt.Sprintf("((%s)%s)", cType(expression.Of), field)
 		}
 		if expression.Optional {
-			return fmt.Sprintf("(%s == NULL ? NULL : %s)", object, field)
+			field = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, field)
 		}
-		return field
+		// Read now, when JavaScript reads it: a call later in the statement may write the field. A
+		// reference is retained, so that write can't free it from under its reader.
+		if expression.Of.IsReference() {
+			return e.own(expression.Of, fmt.Sprintf("adamic_retain(%s)", field))
+		}
+		return e.snapshot(expression.Of, field)
 	case ir.Undefined:
 		return "NULL"
 	case ir.IsUndefined:
@@ -708,7 +713,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapHas:
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
-		return fmt.Sprintf("(adamic_map_get(%s, %s) != NULL)", object, borrowed(expression.KeyType, key))
+		return e.snapshot(ir.Boolean, fmt.Sprintf("(adamic_map_get(%s, %s) != NULL)", object, borrowed(expression.KeyType, key)))
 	case ir.MapDelete:
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
@@ -716,7 +721,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		e.line("bool %s = adamic_map_delete(%s, %s);", result, object, borrowed(expression.KeyType, key))
 		return result
 	case ir.MapSize:
-		return fmt.Sprintf("((double)%s->count)", e.value(expression.Map))
+		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->count", e.value(expression.Map)))
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
@@ -746,7 +751,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return array
 	case ir.Length:
-		return fmt.Sprintf("((double)%s->length)", e.value(expression.Array))
+		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->length", e.value(expression.Array)))
 	case ir.MathCall:
 		return e.mathCall(expression)
 	case ir.ToFixed:
@@ -1104,6 +1109,14 @@ func (e *emitter) conditional(conditional ir.Conditional) string {
 		e.owned = append(e.owned, result)
 	}
 	return result
+}
+
+// snapshot reads a value that something later in the statement could change (a field, a length, a
+// map's size) into a temporary, at the moment JavaScript reads it.
+func (e *emitter) snapshot(valueType ir.Type, value string) string {
+	name := e.temporary()
+	e.line("%s %s = %s;", cType(valueType), name, value)
+	return name
 }
 
 // own puts a reference the statement owns in a temporary, released when the statement ends.

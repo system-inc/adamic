@@ -270,6 +270,47 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value}}, nil
 }
 
+// updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
+// JavaScript evaluates the object once, reads the field, then evaluates the value: a variable may be
+// read twice, since nothing runs between the two reads, and anything else is held in a local of its
+// own for the statement, so make().count++ makes one object.
+func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
+	if err != nil {
+		return nil, err
+	}
+	if object.Type() != ir.Object {
+		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
+	}
+	of, err := l.typeOf(target)
+	if err != nil {
+		return nil, err
+	}
+	statements := []ir.Statement{}
+	if _, isRead := object.(ir.Read); !isRead {
+		held := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "object", Type: ir.Object, Function: l.functionIndex})
+		statements = append(statements, ir.Declare{Local: held, Value: object})
+		object = ir.Read{Local: held, Of: ir.Object}
+	}
+	value := ir.Expression(ir.NumberConstant{Value: 1})
+	if valueNode != nil {
+		if value, err = l.expression(valueNode); err != nil {
+			return nil, err
+		}
+	}
+	name := target.Name().Text()
+	updated, err := l.combine(node, operator, ir.Property{Object: object, Name: name, Of: of}, value)
+	if err != nil {
+		return nil, err
+	}
+	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated})
+	if len(statements) == 1 {
+		return statements, nil
+	}
+	return []ir.Statement{ir.Block{Body: statements}}, nil
+}
+
 func nodesOf(list *ast.NodeList) []*ast.Node {
 	if list == nil {
 		return nil

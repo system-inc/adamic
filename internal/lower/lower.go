@@ -527,9 +527,14 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	target := ast.SkipParentheses(binary.Left)
-	if target.Kind == ast.KindPropertyAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
+	if target.Kind == ast.KindPropertyAccessExpression {
+		if isCompound {
+			return l.updateProperty(node, target, operator, binary.Right)
+		}
 		return l.setProperty(target, binary.Right)
 	}
+	// array[index] += value never reaches here: the element may be missing, so the checker refuses it
+	// (noUncheckedIndexedAccess).
 	if target.Kind == ast.KindElementAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
 		return l.setIndex(target, binary.Right)
 	}
@@ -581,7 +586,8 @@ var compoundAssignments = map[ast.Kind]ast.Kind{
 	ast.KindAsteriskAsteriskEqualsToken: ast.KindAsteriskAsteriskToken,
 }
 
-// increment lowers ++ and -- on a number local, as a statement, where prefix and postfix agree.
+// increment lowers ++ and -- on a number local or field, as a statement, where prefix and postfix
+// agree.
 func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 	var operator ast.Kind
 	var operand *ast.Node
@@ -594,6 +600,13 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	operand = ast.SkipParentheses(operand)
+	if operand.Kind == ast.KindPropertyAccessExpression {
+		step := ast.KindPlusToken
+		if operator == ast.KindMinusMinusToken {
+			step = ast.KindMinusToken
+		}
+		return l.updateProperty(node, operand, step, nil)
+	}
 	local, isLocal := l.local(operand)
 	if !ast.IsIdentifier(operand) || !isLocal {
 		return nil, l.notYet(operand, "incrementing "+describe(operand))
