@@ -26,7 +26,7 @@ static adamic_string *text(const char *hex) {
 		sscanf(hex + index * 2, "%2x", &byte);
 		bytes[index] = (char)byte;
 	}
-	adamic_string piece = {{0, adamic_kind_string}, length, bytes, 0, NULL, NULL, 0};
+	adamic_string piece = {{0, adamic_kind_string, 0}, length, bytes, 0, NULL, NULL, 0};
 	adamic_string *string = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(bytes);
 	return string;
@@ -59,6 +59,10 @@ int main(void) {
 		if (strcmp(operation, "length") == 0) {
 			say_number(adamic_string_length(left));
 		} else if (strcmp(operation, "charCodeAt") == 0) {
+			say_number(adamic_string_char_code_at(left, first));
+		} else if (strcmp(operation, "codeCounted") == 0) {
+			// The length counted first, as a loop's condition does, so an ASCII string is read inline.
+			(void)adamic_string_length(left);
 			say_number(adamic_string_char_code_at(left, first));
 		} else if (strcmp(operation, "codePointAt") == 0) {
 			adamic_maybe_number point = adamic_string_code_point_at(left, first);
@@ -115,6 +119,7 @@ for (const line of require('node:fs').readFileSync(0, 'utf8').trim().split('\n')
 	switch (operation) {
 		case 'length': out.push(String(left.length)); break;
 		case 'charCodeAt': out.push(String(left.charCodeAt(first))); break;
+		case 'codeCounted': out.push(String(left.charCodeAt(first))); break;
 		case 'codePointAt': out.push(String(left.codePointAt(first))); break;
 		case 'slice': out.push(left.slice(first, second)); break;
 		case 'sliceFrom': out.push(left.slice(first)); break;
@@ -156,6 +161,7 @@ func TestStringsMatchJavaScript(t *testing.T) {
 		ask("points", left, "", 0, 0)
 		for _, first := range numbers {
 			ask("charCodeAt", left, "", first, 0)
+			ask("codeCounted", left, "", first, 0)
 			ask("codePointAt", left, "", first, 0)
 			ask("sliceFrom", left, "", first, 0)
 			ask("rejoin", left, "", first, 0)

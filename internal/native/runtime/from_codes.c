@@ -60,7 +60,7 @@ static void codes_point(codes *buffer, unsigned point) {
 }
 
 static adamic_string *codes_finish(codes *buffer) {
-	adamic_string piece = {{0, adamic_kind_string}, buffer->length, buffer->bytes == NULL ? "" : buffer->bytes, 0, NULL, NULL, 0};
+	adamic_string piece = {{0, adamic_kind_string, 0}, buffer->length, buffer->bytes == NULL ? "" : buffer->bytes, 0, NULL, NULL, 0};
 	adamic_string *string = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(buffer->bytes);
 	return string;

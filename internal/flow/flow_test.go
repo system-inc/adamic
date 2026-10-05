@@ -35,9 +35,11 @@ func programs(t *testing.T) []string {
 		paths = append(paths, matches...)
 	}
 	// A program that never ends on its own (stopped from outside by a signal, output_test.go) has no
-	// trace to walk.
+	// trace to walk. size_class_churn.a churns 675,000 values through the allocator, and its trace of
+	// every point its loops pass doesn't finish within the trace's five minutes even alone; its loops
+	// are shapes the other programs trace, and its size is what it's for.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a"
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))

@@ -89,6 +89,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, err
 	}
 	borrow(lowering.result)
+	counters(lowering.result)
 	return lowering.result, nil
 }
 

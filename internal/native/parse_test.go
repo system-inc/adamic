@@ -40,7 +40,7 @@ int main(void) {
 		for (size_t index = 0; index < size; index++) {
 			bytes[index] = (char)(nibble(line[17 + 2 * index]) * 16 + nibble(line[18 + 2 * index]));
 		}
-		adamic_string text = {{0, adamic_kind_string}, size, bytes, 0, NULL, NULL, 0};
+		adamic_string text = {{0, adamic_kind_string, 0}, size, bytes, 0, NULL, NULL, 0};
 		double result = line[0] == 'i' ? adamic_number_parse_int(&text, radix) : adamic_number_parse_float(&text);
 		free(bytes);
 		if (isnan(result)) {

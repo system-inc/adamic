@@ -2,6 +2,8 @@
 
 #include "adamic.h"
 
+#include <stdint.h>
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,19 +31,20 @@ size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX])
 	if (isinf(value)) {
 		return append(buffer, length, "Infinity");
 	}
-	// An integer in the safe range, up to 2^53 - 1, is its digits, exactly: every integer that size
-	// is a double, so no shorter string of digits reads back to it, and the shortest digits are all
-	// of them. Converted directly, it costs a division per digit where the shortest-digits search
-	// costs thousands of instructions. (Exact digits stay right through 2^54 + 4; at 2^54 + 8,
-	// JavaScript's shortest digits are 18014398509481990, where the exact ones end in 992.)
-	if (value <= 9007199254740991.0 && value == (double)(uint64_t)value) {
-		uint64_t integer = (uint64_t)value;
+	if (value < 9007199254740992.0 && value == (double)(uint64_t)value) {
+		// A whole number below 2^53: every integer there is a double, and so are its neighbours, so no
+		// shorter digits read back as it, and its shortest form is its own digits, written directly
+		// rather than searched for. 2^53 and past, 2^60 is 1152921504606847000, so those search. (Exact
+		// digits stay right through 2^54 + 4 and part from JavaScript's at 2^54 + 8, 18014398509481990;
+		// integer_format.a holds the edge, and room for 20 digits lets a limit moved past it fail
+		// there on its output, not on this buffer.)
 		char reversed[20];
 		int count = 0;
+		uint64_t whole = (uint64_t)value;
 		do {
-			reversed[count++] = (char)('0' + integer % 10);
-			integer /= 10;
-		} while (integer != 0);
+			reversed[count++] = (char)('0' + whole % 10);
+			whole /= 10;
+		} while (whole != 0);
 		while (count > 0) {
 			buffer[length++] = reversed[--count];
 		}
@@ -188,6 +191,6 @@ adamic_string *adamic_number_to_fixed(double value, double digits) {
 		}
 		result[written++] = digits_text[index];
 	}
-	adamic_string text = {{0, adamic_kind_string}, (size_t)written, result, 0, NULL, NULL, 0};
+	adamic_string text = {{0, adamic_kind_string, 0}, (size_t)written, result, 0, NULL, NULL, 0};
 	return adamic_string_concat(1, (adamic_string *const[]){&text});
 }
