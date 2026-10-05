@@ -123,11 +123,15 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	value, err := l.value(node)
-	if err == nil && (value.Type() == ir.Array || value.Type() == ir.Map) && ast.SkipParentheses(node).Kind != ast.KindArrayLiteralExpression {
-		// The checker lets an array of Node be seen as an array of Weak<Node> and back, but one
-		// holds targets and the other handles to them, so the same array can't be both.
-		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.keepsWeakly(contextual) != l.keepsWeakly(l.checker.GetTypeAtLocation(node)) {
-			return nil, l.notYet(node, "an array or map of "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))+" seen as one of "+l.checker.TypeToString(contextual)+" (one keeps its elements weakly, the other doesn't)")
+	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
+		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
+		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
+		// other keeps the target, so the same object, array or function can't be both. A literal is
+		// made as the type it's written into, so it never differs.
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if own := l.checker.GetTypeAtLocation(node); !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
+			}
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {
@@ -153,23 +157,99 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	return ir.WeakTarget{Value: value, To: to, Present: present}, nil
 }
 
-// keepsWeakly reports whether an array's elements or a map's values are Weak.
-func (l *lowering) keepsWeakly(proven *checker.Type) bool {
-	arguments := []*checker.Type{}
+// sameKeeping reports whether a value of type from, seen as type to, keeps everything inside it the
+// same way through both: every field to has, every element, map key and value, and every parameter
+// and result of a function, Weak in both or in neither, all the way down.
+func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+	from, to = l.present(from), l.present(to)
+	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
+		return true
+	}
+	visited[[2]*checker.Type{from, to}] = true
+	same := func(inside, viewed *checker.Type) bool {
+		fromKept, _ := l.kept(inside)
+		toKept, _ := l.kept(viewed)
+		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeeping(inside, viewed, visited)
+	}
+	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	switch {
-	case l.checker.IsArrayType(proven):
-		arguments = append(arguments, l.checker.GetElementTypeOfArrayType(proven))
-	case l.isLibraryType(proven, "Map", "ReadonlyMap"):
-		if both := l.checker.GetTypeArguments(proven); len(both) == 2 {
-			arguments = append(arguments, both[1])
+	case len(fromSignatures) > 0 && len(toSignatures) > 0:
+		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
+			if !same(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
+				return false
+			}
+		}
+		return same(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
+	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
+		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
+		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+			if !same(fromArguments[index], toArguments[index]) {
+				return false
+			}
+		}
+	default:
+		for _, viewed := range l.checker.GetPropertiesOfType(to) {
+			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
+				continue
+			}
+			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+				return false
+			}
 		}
 	}
-	for _, argument := range arguments {
-		if kept, _ := l.representation(argument); kept == ir.Weak {
-			return true
+	return true
+}
+
+// present is a type without undefined, and a Weak's narrowing without its brand: the one object,
+// array, map or function type it is, or nil when it's none or several.
+func (l *lowering) present(proven *checker.Type) *checker.Type {
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		var only *checker.Type
+		for _, member := range proven.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+				continue
+			}
+			if only != nil {
+				return nil
+			}
+			only = member
 		}
+		if only == nil {
+			return nil
+		}
+		proven = only
 	}
-	return false
+	if target := l.weakTarget(proven); target != nil {
+		proven = target
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 {
+		return nil
+	}
+	return proven
+}
+
+// kept is how an element or a map's value of a type is kept: as its representation, except that one
+// narrowed from a Weak (Node & WeakBrand, as filter(x => x !== undefined) or every leaves an array of
+// Weak<Node>) is still a Weak, a handle, since that's what the array holds.
+func (l *lowering) kept(proven *checker.Type) (ir.Type, bool) {
+	if l.weakTarget(proven) != nil {
+		return ir.Weak, true
+	}
+	return l.representation(proven)
+}
+
+// typeArguments is a generic type's arguments, Map<K, V>'s K and V, through a Weak's narrowing
+// (Map<K, V> & WeakBrand), or nil for a type that has none.
+func (l *lowering) typeArguments(proven *checker.Type) []*checker.Type {
+	if target := l.weakTarget(proven); target != nil {
+		proven = target
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+		return nil
+	}
+	return l.checker.GetTypeArguments(proven)
 }
 
 // weakTarget is the Target of Target & WeakBrand, the present half of a Weak<Target>, or nil for
@@ -225,11 +305,11 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
 			// Where the checker has narrowed it to what it holds, it's read as that.
-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() {
+			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !comparedWithUndefined(node) {
 				read = ir.Unwrap{Value: read}
 			}
 		}
-		return read, nil
+		return l.defined(node, read), nil
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
@@ -242,6 +322,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		binary := node.AsBinaryExpression()
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
+		}
+		if binary.OperatorToken.Kind == ast.KindInstanceOfKeyword {
+			if lowered, isCaught := l.caughtInstanceOfError(node); isCaught {
+				return lowered, nil
+			}
+			return nil, l.notYet(node, "instanceof, but on what a catch caught, against Error")
 		}
 		left, err := l.expression(binary.Left)
 		if err != nil {
@@ -621,7 +707,10 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 	index := len(l.result.Functions)
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "closure", Closure: true})
-	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index})
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
+	if l.instance != nil {
+		l.instance.templates = append(l.instance.templates, template{closure: index, proven: l.checker.GetTypeAtLocation(node), isClosure: true})
+	}
 	l.closures = append(l.closures, index)
 	err := l.lowerFunction(index, node, -1)
 	l.closures = l.closures[:len(l.closures)-1]

@@ -155,3 +155,8 @@ void adamic_weak_dropped(adamic_weak *handle) {
 		remove_entry(find(reveal(handle->target)));
 	}
 }
+
+bool adamic_weak_held(const void *target) {
+	// A program with no Weak has no table, and pays one comparison.
+	return table_count > 0 && find(target) != NULL;
+}

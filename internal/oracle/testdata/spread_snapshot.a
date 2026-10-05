@@ -1,0 +1,25 @@
+// { ...source, field: value } reads the source's fields when the spread is evaluated, before the
+// field's value: JavaScript's order. A field's expression that writes one of the source's fields
+// must not show in the result. Native once copied the source after the fields' values, and printed
+// the write.
+interface Point {
+	x: number;
+	y: number;
+	label: string;
+}
+
+function moveY(point: Point): number {
+	point.y = 99;
+	point.label = `moved ${point.x}`;
+	return point.x + 1;
+}
+
+const point: Point = { x: 0, y: 0, label: `start ${0}` };
+const moved = { ...point, x: moveY(point) };
+console.log(`${moved.x} ${moved.y} ${moved.label} | ${point.x} ${point.y} ${point.label}`);
+
+function shifted(source: Point): Point {
+	return { ...source, label: `${moveY(source)}` };
+}
+const again = shifted({ x: 5, y: 6, label: `fresh ${7}` });
+console.log(`${again.x} ${again.y} ${again.label}`);
