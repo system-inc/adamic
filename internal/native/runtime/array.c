@@ -302,7 +302,11 @@ adamic_array *adamic_array_splice(adamic_array *array, double start, double coun
 		array->capacity = new_length;
 	}
 	// The tail moves to make room (or close the gap), then the items, which the array takes, go in.
-	memmove(array->elements + from + item_count, array->elements + from + removed_count, after * sizeof *array->elements);
+	// An array that never held anything has no storage, and arithmetic on its null pointer is undefined
+	// even to move nothing, so nothing is moved unless there's a tail.
+	if (after > 0) {
+		memmove(array->elements + from + item_count, array->elements + from + removed_count, after * sizeof *array->elements);
+	}
 	if (item_count > 0) {
 		memcpy(array->elements + from, items, item_count * sizeof *items);
 	}
