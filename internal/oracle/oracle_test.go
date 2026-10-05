@@ -89,6 +89,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/map_iteration.a", true, false},
 	{"internal/oracle/testdata/sorts.a", true, false},
 	{"internal/oracle/testdata/sort_releases.a", true, false},
+	// The same sorts at the top level, where only the globals' release at exit lets the leak check see.
+	{"internal/oracle/testdata/sort_top_level.a", true, false},
 	{"internal/oracle/testdata/splices.a", true, false},
 	{"internal/oracle/testdata/fills.a", true, false},
 	{"internal/oracle/testdata/fill_length.a", true, false},

@@ -21,6 +21,7 @@ The conventions stage 0 uses today, chosen for being obviously right rather than
 | A parameter | the callee, which retains on entry and releases on every way out |
 | A return value | the caller, which receives it owned |
 | A field or element | the object or array that holds it; released when that's freed |
+| A module's top-level variable | the program; released when main finishes, the last declared first (modules in reverse of their evaluation order), so the leak check sees what it reached. Not on a panic, which stops where it stands |
 
 Counts are plain `size_t`, not atomic, because 0.1 is single-threaded. When concurrency lands (#p286ycm), a value shared across threads is one of the shareable, immutable kinds, and its count becomes atomic at the moment it's shared (Lean 4 does exactly this), so single-threaded code never pays for atomics.
 

@@ -1,7 +1,8 @@
 // Sorting references inside a function: the sort holds every element while it works and lets each
-// go as it writes them back. A variable at the top level is still held when the program ends, so the
-// leak check can't see what it holds; here the array dies with the function, and anything the sort
-// didn't let go of is a leak. The strings are built at runtime, since literals are immortal.
+// go as it writes them back. Here the array dies with the function, and anything the sort didn't let
+// go of is a leak. (A top-level variable was once held until the program ended, which hid this from
+// the leak check; globals are let go at exit now, and sort_top_level.a is the same sorts there.) The
+// strings are built at runtime, since literals are immortal.
 interface Task {
 	readonly name: string;
 	readonly priority: number;
