@@ -50,5 +50,6 @@ cohere checks and formats every Adamic program in this repository, `.ts` and `.a
 
 - Write code that reads like the code around it: plain Go, comments that say why, names spelled out in full.
 - Never overwrite a file wholesale; edit it. Never force-push, never rewrite history, never delete a branch you didn't make.
+- Shell state doesn't persist between Bash calls, so a variable set in one call is empty in the next. Set any variable in the same command that uses it, and write removals as `rm -f "${S:?}/name"`: an unset variable then stops the command instead of collapsing the path to `/`. Delete only named files under the scratch directory or the repository, never by a path that begins with a bare variable. `.claude/hooks/guard-removals.mjs` refuses a command that breaks this and says why, so no one has to press Deny.
 - Commit messages say what changed and why, in plain sentences. The first commit was `stuff`, after Ken; only the first one gets to be.
 - No em-dashes in docs, comments or commit messages.
