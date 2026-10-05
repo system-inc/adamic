@@ -19,10 +19,23 @@ type instance struct {
 	// thisLocals are the this of its constructor and methods, which every instantiation sharing it
 	// (Box<Tree> and Box<Listener> are both objects) has as its own type, for the cycle finder.
 	thisLocals []int
+
+	// templates are the instance's locals and function values with their types as the source writes
+	// them, so an instantiation that shares the instance notes each as its own type makes it.
+	templates []template
+}
+
+// template is a local, or a function value (closure set), and its type with type parameters left in.
+type template struct {
+	local, closure int
+	proven         *checker.Type
+	isClosure      bool
 }
 
 // instantiate lowers a class for the type arguments of a type of it, once per distinct set.
 func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, where *ast.Node) (*instance, error) {
+	// Box<T> inside Maker<Node> is a Box<Node>: what it is, for the cycle finder.
+	classType = l.concrete(classType)
 	clauses := declaration.AsClassDeclaration().HeritageClauses
 	for _, clause := range nodesOf(clauses) {
 		if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
@@ -52,10 +65,24 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		key += "," + typeName(argument)
 	}
 	key = l.program.Where(declaration) + ":" + key
+	mapper := l.typeMapperOf(declaration, classType)
+	l.instantiated = append(l.instantiated, classType)
 	if existing, isLowered := l.instances[key]; isLowered {
 		for _, this := range existing.thisLocals {
 			l.noteAlso(this, classType)
 		}
+		// The instance is shared, and so are its locals and function values: each is also what this
+		// instantiation makes it.
+		outerMapper := l.typeMapper
+		l.typeMapper = mapper
+		for _, shared := range existing.templates {
+			if shared.isClosure {
+				l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(shared.proven), function: shared.closure, node: l.closureNodeOf(shared.closure)})
+			} else {
+				l.noteAlso(shared.local, l.concrete(shared.proven))
+			}
+		}
+		l.typeMapper = outerMapper
 		return existing, nil
 	}
 
@@ -88,10 +115,10 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	// Lower with this instantiation's meaning of each type parameter, and locals of its own: the
 	// same parameter is a string here and may be a number in another instantiation.
 	outerSubstitution, outerLocals, outerInstance := l.substitution, l.locals, l.instance
-	outerClassType, outerClassNode := l.classType, l.classNode
+	outerClassType, outerClassNode, outerMapper := l.classType, l.classNode, l.typeMapper
 	l.substitution, l.instance = substitution, lowered
-	l.classType, l.classNode = classType, declaration.Name()
-	defer func() { l.classType, l.classNode = outerClassType, outerClassNode }()
+	l.classType, l.classNode, l.typeMapper = classType, declaration.Name(), mapper
+	defer func() { l.classType, l.classNode, l.typeMapper = outerClassType, outerClassNode, outerMapper }()
 	l.locals = map[*ast.Symbol]int{}
 	for symbol, local := range outerLocals {
 		if l.result.Locals[local].Global {

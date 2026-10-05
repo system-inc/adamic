@@ -12,6 +12,7 @@ You're working on Adamic: TypeScript whose types are true, compiled to native co
 - `internal/lower`: the checker's types to IR. `NotYet` means stage 0 hasn't learned it; `Refused` means 0.1 forbids it, with the fix. `refusals.go` is the up-front refusal pass.
 - `internal/native`: IR to C11 (`emit.go`) plus the runtime (`runtime/*.c`, embedded), compiled by clang with `-Wall -Wextra -Werror -pedantic`.
 - `internal/javascript`: the second backend, IR to JavaScript, carrying the same inserted checks as native.
+- `internal/flow`: a control-flow graph built from the IR, with single assignment lifted from cohere's high-level IR, for the analyses reuse in place and arenas need (#5jck546).
 - `internal/oracle`: the differential test. Every fixture runs three ways: its source on Node (the truth), native under ASan and UBSan, and the JavaScript backend on Node. stdout, stderr and the exit code must match byte for byte, and every program that finishes must leak nothing.
 - `cohere/`: a submodule (cohere, which carries typescript-go). Over HTTPS: `git config submodule.cohere.url https://github.com/system-inc/cohere.git && git submodule update --init --recursive --depth 1`.
 
@@ -50,5 +51,6 @@ cohere checks and formats every Adamic program in this repository, `.ts` and `.a
 
 - Write code that reads like the code around it: plain Go, comments that say why, names spelled out in full.
 - Never overwrite a file wholesale; edit it. Never force-push, never rewrite history, never delete a branch you didn't make.
+- Shell state doesn't persist between Bash calls, so a variable set in one call is empty in the next. Set any variable in the same command that uses it, and write removals as `rm -f "${S:?}/name"`: an unset variable then stops the command instead of collapsing the path to `/`. Delete only named files under the scratch directory or the repository, never by a path that begins with a bare variable. `.claude/hooks/guard-removals.mjs` refuses a command that breaks this and says why, so no one has to press Deny.
 - Commit messages say what changed and why, in plain sentences. The first commit was `stuff`, after Ken; only the first one gets to be.
 - No em-dashes in docs, comments or commit messages.

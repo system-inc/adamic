@@ -147,9 +147,9 @@ stage 0 can't lower a BinaryExpression with a value and a number yet        (Nod
 
 **Around it, until it closed:** `(set[member] ?? 0) === 1`. Nothing in the port needs it now.
 
-## 8. A tuple as a value (closed by this stream)
+## 8. A tuple as a value (closed by this stream, and on cloud/collections-fs)
 
-A tuple literal anywhere except directly inside `new Map([...])` is refused: returned, assigned, or as an element of a constant array.
+A tuple literal anywhere except directly inside `new Map([...])` was refused: returned, assigned, or as an element of a constant array. Stream C2 closed it: a tuple written out is a value wherever the checker types it a tuple, and `const [a, b] = tuple` (and `let`) destructures one, at a module's top level too.
 
 ```ts
 function cut(text: string): readonly [string, number] {
@@ -174,7 +174,9 @@ stage 0 can't lower a value of type [string, number] where an array goes yet
 
 The Go returns two results in several places: `strings.CutPrefix`'s `(after, found)`, and `(bool, Source)` from `Ignored` and `Excluded`. A tuple is how TypeScript says that.
 
-**Around it, until it closed:** named fields, `Cut { after, found }` and `Verdict { ignored, source }`. **Closed:** an array literal the checker types as a fixed-length tuple is an object of its elements, `"0"`, `"1"`, ..., as Map entries already were. `const [a, , c] = tuple` and `[a, b] = tuple` lower: the tuple whole first, then each name from its field, read as the element's type and fitted to the name's. Fixture: `tuple_values.a`. Still not lowered, and refused rather than read as missing fields: `.length` and an array's methods on a tuple, since a tuple isn't an array yet. Holes in a pattern (`[, b]`) crashed stage 0 on main, in `for...of` too: typescript-go's hole is a binding element with no name.
+**Around it, until it closed:** named fields. `Cut { after, found }` (strings.CutPrefix's own result names), and `Verdict { ignored, source }` (cohere's differential test names the pair `verdict`). While the cases were constants, a tree's entries were written `new Map<string, Entry>([...])`, the one place tuple literals lower. case.ts now builds the map with `set` as it reads them.
+
+**Closed** twice, on this branch and on cloud/collections-fs, and joined when main 4ff4657 was merged: this branch's lowering of a tuple literal and of `const [a, , c] = tuple` is kept, since it also fills a left-out optional element with undefined and lowers `[a, b] = tuple`, and main's `.length` of a fixed-length tuple and its JavaScript (a tuple written as an array) are kept with it. An array literal the checker types as a tuple is an object of its elements, `"0"`, `"1"`, ..., as Map entries already were; a destructuring takes the tuple whole first, then each name from its field, read as the element's type and fitted to the name's. Fixture: `tuple_values.a`. Still refused rather than read as missing fields: an array's methods on a tuple, and a tuple where an array goes, since a tuple isn't an array yet. Holes in a pattern (`[, b]`) crashed stage 0 on main, in `for...of` too: typescript-go's hole is a binding element with no name.
 
 ## 9. `return panic(...)` (closed by this stream)
 

@@ -1,19 +1,26 @@
 package oracle
 
 import (
+	"bufio"
 	"bytes"
+	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"runtime"
+	"strconv"
+	"syscall"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
 
 // The fixtures compare stdout and stderr each on its own, which can't see the order the two were
-// written in, or what happens when stdout has no reader. These run the same programs where those
-// show: both streams on one file, and stdout a pipe already closed. Native buffers stdout (adamic.c),
+// written in, or what happens when stdout has no reader, is stdin's prompt, or is stopped by a
+// signal. These run programs where those show: both streams on one file or one pipe, stdout a pipe
+// already closed, stdin answered only after the prompt, and a signal from outside. Native buffers stdout (adamic.c),
 // and these are what hold its flushing to Node's writing each line at once.
 
 // sanitized builds a fixture natively under the sanitizers, and its JavaScript beside it, returning
@@ -143,4 +150,150 @@ func firstDifference(left []byte, right []byte) int {
 		}
 	}
 	return min(len(left), len(right))
+}
+
+// onePipe runs a command with stdout and stderr on one pipe, and returns its exit code and what came
+// through it, in the order it came.
+func onePipe(t *testing.T, name string, arguments ...string) (int, []byte) {
+	t.Helper()
+	command := bounded(t, name, arguments...)
+	var both bytes.Buffer
+	// The same writer for both: os/exec gives them one pipe.
+	command.Stdout = &both
+	command.Stderr = &both
+	if runtime.GOOS == "linux" {
+		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
+	}
+	if err := command.Run(); err != nil && command.ProcessState == nil {
+		t.Fatal(err)
+	}
+	return command.ProcessState.ExitCode(), both.Bytes()
+}
+
+// A file written may be stdout or stderr themselves, so what was printed before it has to be out
+// first, as Node's is, or the file's text overtakes it.
+func TestFileWritesLandInNodesOrder(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range []string{
+		"internal/oracle/testdata/write_stdout_order.a",
+		"internal/oracle/testdata/write_stderr_order.a",
+	} {
+		t.Run(fixture, func(t *testing.T) {
+			t.Parallel()
+			path, binary, script := sanitized(t, fixture)
+			runner := filepath.Join(repository, "oracle", "node.mjs")
+			nodeExit, node := onePipe(t, "node", "--disable-warning=ExperimentalWarning", runner, path)
+			if nodeExit != 0 || !bytes.Equal(node, []byte("first\nsecond\nthird\n")) {
+				t.Fatalf("want Node's lines in the order written, got exit %d, %q", nodeExit, node)
+			}
+			for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
+				exitCode, landed := onePipe(t, other[0], other[1:]...)
+				if exitCode != nodeExit || !bytes.Equal(landed, node) {
+					t.Errorf("%s: exit %d, %q; Node: exit %d, %q", filepath.Base(other[len(other)-1]), exitCode, landed, nodeExit, node)
+				}
+			}
+		})
+	}
+}
+
+// A prompt, then a read of stdin: a driver waits to see the prompt before it answers, so the prompt
+// has to be out before the read waits. Each run is answered only once its first line has come, or
+// after ten seconds without it, which is the failure.
+func TestAPromptComesBeforeTheRead(t *testing.T) {
+	t.Parallel()
+	path, binary, script := sanitized(t, "internal/oracle/testdata/prompt_then_read.a")
+	runner := filepath.Join(repository, "oracle", "node.mjs")
+	converse := func(name string, arguments ...string) (bool, string) {
+		command := bounded(t, name, arguments...)
+		if runtime.GOOS == "linux" {
+			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
+		}
+		stdin, err := command.StdinPipe()
+		if err != nil {
+			t.Fatal(err)
+		}
+		stdout, err := command.StdoutPipe()
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := command.Start(); err != nil {
+			t.Fatal(err)
+		}
+		reader := bufio.NewReader(stdout)
+		first := make(chan string, 1)
+		go func() {
+			line, _ := reader.ReadString('\n')
+			first <- line
+		}()
+		prompted := false
+		var prompt string
+		select {
+		case prompt = <-first:
+			prompted = true
+		case <-time.After(10 * time.Second):
+		}
+		stdin.Write([]byte("yes\n"))
+		stdin.Close()
+		if !prompted {
+			prompt = <-first
+		}
+		rest, _ := io.ReadAll(reader)
+		command.Wait()
+		return prompted, prompt + string(rest)
+	}
+	nodePrompted, node := converse("node", "--disable-warning=ExperimentalWarning", runner, path)
+	if !nodePrompted || node != "ready\ngot yes\n" {
+		t.Fatalf("want Node to prompt before reading, then answer: prompted %t, %q", nodePrompted, node)
+	}
+	for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
+		prompted, said := converse(other[0], other[1:]...)
+		if !prompted || said != node {
+			t.Errorf("%s: prompted before the read %t, said %q; Node said %q", filepath.Base(other[len(other)-1]), prompted, said, node)
+		}
+	}
+}
+
+// A program stopped from outside by SIGTERM, SIGINT or SIGHUP: Node has written every line, and is
+// killed by the signal. Native must write out what its buffer holds and be killed by the same signal,
+// under the sanitizers too. Each run is stopped two seconds after it starts, which is long past the
+// fixture's one line: native's can't be watched for, since it's in the buffer until the signal.
+func TestASignalLeavesWhatWasPrinted(t *testing.T) {
+	t.Parallel()
+	for _, stop := range []syscall.Signal{syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP} {
+		t.Run(stop.String(), func(t *testing.T) {
+			t.Parallel()
+			path, binary, script := sanitized(t, "internal/oracle/testdata/killed_after_output.a")
+			runner := filepath.Join(repository, "oracle", "node.mjs")
+			stopped := func(name string, arguments ...string) (string, []byte) {
+				command := bounded(t, name, arguments...)
+				if runtime.GOOS == "linux" {
+					command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
+				}
+				var stdout, stderr bytes.Buffer
+				command.Stdout, command.Stderr = &stdout, &stderr
+				if err := command.Start(); err != nil {
+					t.Fatal(err)
+				}
+				time.Sleep(2 * time.Second)
+				command.Process.Signal(stop)
+				command.Wait()
+				status := command.ProcessState.Sys().(syscall.WaitStatus)
+				ended := fmt.Sprintf("exit %d", status.ExitStatus())
+				if status.Signaled() {
+					ended = "killed by " + status.Signal().String()
+				}
+				return ended + ", stderr " + strconv.Quote(stderr.String()), stdout.Bytes()
+			}
+			nodeEnded, node := stopped("node", "--disable-warning=ExperimentalWarning", runner, path)
+			if nodeEnded != "killed by "+stop.String()+`, stderr ""` || len(node) == 0 {
+				t.Fatalf("want Node killed by %s after its line, got %s, stdout %q", stop, nodeEnded, node)
+			}
+			for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
+				ended, printed := stopped(other[0], other[1:]...)
+				if ended != nodeEnded || !bytes.Equal(printed, node) {
+					t.Errorf("%s: %s, stdout %q; Node: %s, stdout %q", filepath.Base(other[len(other)-1]), ended, printed, nodeEnded, node)
+				}
+			}
+		})
+	}
 }

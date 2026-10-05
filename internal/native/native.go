@@ -56,6 +56,33 @@ type Options struct {
 	cpu string
 }
 
+// Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
+// with the same ones, so what it finds is what Build would.
+func Flags(options Options) []string {
+	// A program may declare a variable, a function or a parameter it never uses, or assign a variable
+	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
+	// no-self-assign), not a reason the C can't compile.
+	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
+	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
+	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
+	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
+	flags = append(flags, "-ffp-contract=off")
+	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
+	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
+	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
+	flags = append(flags, "-fno-optimize-sibling-calls")
+	if options.Count {
+		flags = append(flags, "-DADAMIC_COUNT")
+	}
+	if options.cpu != "" {
+		flags = append(flags, "-march="+options.cpu)
+	}
+	if options.Sanitize {
+		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
+	}
+	return append(flags, "-O2")
+}
+
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
 	directory, err := os.MkdirTemp("", "adamic-build-")
@@ -87,30 +114,7 @@ func Build(source string, output string, options Options) error {
 		}
 	}
 
-	// A program may declare a variable, a parameter or a function it never uses, as JavaScript allows,
-	// and a method need not read this; that's the linter's business (cohere's no-unused-vars), not a
-	// reason the C can't compile.
-	arguments := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter"}
-	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
-	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
-	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
-	arguments = append(arguments, "-ffp-contract=off")
-	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
-	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
-	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
-	arguments = append(arguments, "-fno-optimize-sibling-calls")
-	if options.Count {
-		arguments = append(arguments, "-DADAMIC_COUNT")
-	}
-	if options.cpu != "" {
-		arguments = append(arguments, "-march="+options.cpu)
-	}
-	if options.Sanitize {
-		arguments = append(arguments, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
-	} else {
-		arguments = append(arguments, "-O2")
-	}
-	arguments = append(arguments, "-o", output)
+	arguments := append(Flags(options), "-o", output)
 	arguments = append(arguments, units...)
 	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.

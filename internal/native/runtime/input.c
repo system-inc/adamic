@@ -130,6 +130,10 @@ static adamic_string *decode(const unsigned char *bytes, size_t length) {
 	return string;
 }
 
+adamic_string *adamic_decode_utf8(const unsigned char *bytes, size_t length) {
+	return decode(bytes, length);
+}
+
 static int argument_count;
 static char **argument_values;
 
@@ -256,6 +260,8 @@ static int read_all(int descriptor, unsigned char **bytes, size_t *length) {
 }
 
 adamic_object *adamic_read_text_file(const adamic_string *path) {
+	// What was printed comes first, as on Node: the file may be stdin, waiting on a prompt.
+	adamic_output_flush();
 	char *name = file_name(path);
 	if (name == NULL) {
 		return failure(path, 0, false);
@@ -314,6 +320,8 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 // adamic_write_text_file opens as Node's writeFileSync does (flag 'w', mode 0666 before the umask):
 // the file made if it isn't there, emptied if it is, and then the text written whole.
 adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text) {
+	// What was printed comes first, as on Node: the file may be stdout or stderr themselves.
+	adamic_output_flush();
 	char *name = file_name(path);
 	if (name == NULL) {
 		return failure(path, 0, true);
@@ -338,4 +346,8 @@ adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_st
 	adamic_object *result = adamic_object_new(&written_shape);
 	result->slots[0].reference = &ok_kind;
 	return result;
+}
+
+char *adamic_path_bytes(const adamic_string *path) {
+	return file_name(path);
 }

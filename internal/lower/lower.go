@@ -82,6 +82,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, lowering.unlowerable
 	}
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
+	if err := lowering.exceptions(); err != nil {
+		return nil, err
+	}
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
@@ -143,16 +146,22 @@ type lowering struct {
 	forwarders      map[int]int
 	forwarderValues []ir.Statement
 
-	// generics maps each generic module function's symbol to its declaration, and genericInstances
-	// each instantiation already lowered to its function (generic.go). genericDepth counts the
-	// instantiations being lowered inside one another.
 	// unsetUntil is where, in the constructor being lowered, its last assignment of a field without an
 	// initializer ends: before it, this is only for reading and writing fields (useOfThis).
 	unsetUntil int
 
+	// generics maps each generic module function's symbol to its declaration, and genericInstances
+	// each instantiation already lowered to its function (generic.go). genericDepth counts the
+	// instantiations being lowered inside one another.
 	generics         map[*ast.Symbol]*ast.Node
 	genericInstances map[string]int
 	genericDepth     int
+
+	// caught are the variables a catch binds, each always an Error; tries are the try statements
+	// lowered (exceptions.go).
+	caught        map[*ast.Symbol]bool
+	tries         []tryRecord
+	functionNodes map[int]*ast.Node
 
 	// initializing is the variables whose initializers are being lowered, by where each is declared.
 	initializing map[int]*ast.Node
@@ -165,6 +174,11 @@ type lowering struct {
 	closureRecords []closureRecord
 	classType      *checker.Type
 	classNode      *ast.Node
+
+	// typeMapper is what the type parameters of the instantiation being lowered, and of those it's
+	// inside, stand for; instantiated is every class type an instantiation was made for (instantiate.go).
+	typeMapper   *typeMapper
+	instantiated []*checker.Type
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
@@ -269,6 +283,10 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.functions = map[*ast.Symbol]int{}
 			}
 			l.functions[symbol] = len(l.result.Functions)
+			if l.functionNodes == nil {
+				l.functionNodes = map[int]*ast.Node{}
+			}
+			l.functionNodes[len(l.result.Functions)] = statement
 			l.result.Functions = append(l.result.Functions, ir.Function{Name: statement.Name().Text()})
 			declarations = append(declarations, statement)
 		}
@@ -334,11 +352,13 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
 		returns := l.checker.GetReturnTypeOfSignature(signature)
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
-		// result to hold, as one returning void hasn't.
-		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
+		// reason, a variable the checker narrowed to nothing, isn't one.
+		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && !l.isPanicCall(declaration.Body())
+		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
 			if !isKnown {
-				// An arrow function has no name to point at, so the refusal points at the arrow.
+				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()
 				if where == nil {
 					where = declaration
@@ -403,6 +423,15 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 // lowerBody lowers the body of the function at index, whose signature is written.
 func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted) error {
 	function := l.result.Functions[index]
+	if !function.Closure {
+		// A function declaration, a method or a constructor has its body lowered where a use of it is first met,
+		// a closure's body included, but it's declared at the top level and captures nothing from
+		// the closures being lowered there: a local of its own read in a closure of its own must not
+		// land in their environments.
+		outerClosures := l.closures
+		l.closures = nil
+		defer func() { l.closures = outerClosures }()
+	}
 	body := declaration.Body()
 	outer, outerThis, outerIndex := l.function, l.this, l.functionIndex
 	l.function, l.functionIndex = &function, index
@@ -525,6 +554,10 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 			return []ir.Statement{ir.Break{}}, nil
 		}
 		return []ir.Statement{ir.Continue{}}, nil
+	case ast.KindThrowStatement:
+		return l.throwStatement(node)
+	case ast.KindTryStatement:
+		return l.tryStatement(node)
 	}
 	return nil, l.notYet(node, describe(node))
 }
@@ -604,6 +637,7 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
 		name := declaration.Name()
 		if name.Kind == ast.KindArrayBindingPattern {
+			// const [a, b] = tuple, held as its type says (destructure).
 			destructured, err := l.destructure(declaration)
 			if err != nil {
 				return nil, err
@@ -690,7 +724,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
-	if !l.alwaysUndefined[symbol] {
+	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {
 			return 0, err
@@ -722,7 +756,10 @@ func (l *lowering) noteLocal(local int, proven *checker.Type, node *ast.Node) {
 	if l.localTypes == nil {
 		l.localTypes, l.localNodes = map[int]*checker.Type{}, map[int]*ast.Node{}
 	}
-	l.localTypes[local], l.localNodes[local] = proven, node
+	l.localTypes[local], l.localNodes[local] = l.concrete(proven), node
+	if l.instance != nil {
+		l.instance.templates = append(l.instance.templates, template{local: local, proven: proven})
+	}
 }
 
 // symbol is what a name refers to, the same whichever file names it: an import resolves to what it
@@ -807,6 +844,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	local, isLocal := l.local(target)
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
+	}
+	if l.caught[l.symbol(target)] {
+		return nil, l.notYet(target, "assigning to what a catch caught")
 	}
 	if l.alwaysUndefined[l.symbol(target)] {
 		// Its type is unknown, so anything could be written to it, and it holds only undefined.
