@@ -1,0 +1,17 @@
+interface Holder {
+  item: Holder | undefined;
+}
+
+function tie(holder: Holder): void {
+  const fresh: Holder = { item: undefined };
+  holder.item = fresh;
+  fresh.item = holder;
+}
+
+function build(): number {
+  const root: Holder = { item: undefined };
+  tie(root);
+  return root.item === undefined ? 0 : 1;
+}
+
+console.log(`${build()}`);

@@ -1,0 +1,19 @@
+interface Node {
+  readonly name: string;
+  readonly kids: Node[];
+}
+
+function build(): number {
+  const root: Node = { name: `root`, kids: [] };
+  const table = new Map<string, Node>();
+  table.set(`r`, root);
+  let found: Node = { name: `none`, kids: [] };
+  for (const [key, node] of table.entries()) {
+    found = node;
+  }
+  const child: Node = { name: `child`, kids: [found] };
+  root.kids.push(child);
+  return root.kids.length;
+}
+
+console.log(`${build()}`);

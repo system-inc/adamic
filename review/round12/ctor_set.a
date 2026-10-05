@@ -1,0 +1,18 @@
+class Node {
+  readonly members = new Set<Node>();
+  readonly parent: Node | undefined;
+  constructor(parent: Node | undefined) {
+    if (parent !== undefined) {
+      parent.members.add(this);
+    }
+    this.parent = parent;
+  }
+}
+
+function build(): number {
+  const root = new Node(undefined);
+  const child = new Node(root);
+  return root.members.size + (child.parent === undefined ? 0 : 1);
+}
+
+console.log(`${build()}`);

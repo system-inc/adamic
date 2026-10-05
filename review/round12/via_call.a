@@ -1,0 +1,18 @@
+// A child that holds its parent through a readonly field, made by a call; then the parent's mutable
+// child array takes the child. The readonly field isn't a slot, but it's an edge: parent -> children
+// -> child -> parent. Built inside a function, so a leak shows to LeakSanitizer.
+interface Node {
+	readonly name: string;
+	readonly parent: Node | undefined;
+	readonly children: Node[];
+}
+function makeChild(parent: Node, name: string): Node {
+	return { name, parent, children: [] };
+}
+function build(): string {
+	const root: Node = { name: `root${1}`, parent: undefined, children: [] };
+	const child = makeChild(root, `child${2}`);
+	root.children.push(child);
+	return `${root.children.length} ${child.parent?.name}`;
+}
+console.log(build());

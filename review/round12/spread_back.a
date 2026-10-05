@@ -1,0 +1,15 @@
+interface Node {
+  readonly name: string;
+  readonly kids: Node[];
+}
+
+function build(): number {
+  const root: Node = { name: `root`, kids: [] };
+  const holder = { node: root };
+  const copy = { ...holder };
+  const child: Node = { name: `child`, kids: [copy.node] };
+  root.kids.push(child);
+  return root.kids.length;
+}
+
+console.log(`${build()}`);

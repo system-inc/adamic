@@ -1,0 +1,17 @@
+interface Node {
+  readonly name: string;
+  readonly kids: Node[];
+}
+
+function build(): number {
+  const root: Node = { name: `root`, kids: [] };
+  const child: Node = { name: `child`, kids: [] };
+  root.kids.push(child);
+  const first = root.kids[0];
+  if (first !== undefined) {
+    first.kids.push(root);
+  }
+  return root.kids.length;
+}
+
+console.log(`${build()}`);

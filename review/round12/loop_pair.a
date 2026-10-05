@@ -1,0 +1,17 @@
+interface Node {
+  readonly name: string;
+  readonly kids: Node[];
+}
+
+function build(): number {
+  let previous: Node = { name: `start`, kids: [] };
+  for (let index = 0; index < 3; index++) {
+    const current: Node = { name: `n${index}`, kids: [] };
+    previous.kids.push(current);
+    current.kids.push(previous);
+    previous = current;
+  }
+  return previous.kids.length;
+}
+
+console.log(`${build()}`);

@@ -1,0 +1,29 @@
+class Left {
+  next: Left | Right | undefined = undefined;
+  readonly name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
+class Right {
+  next: Left | Right | undefined = undefined;
+  readonly name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
+function link(from: Left | Right, to: Left | Right): void {
+  from.next = to;
+}
+
+function build(): string {
+  const left = new Left(`left`);
+  const right = new Right(`right`);
+  link(left, right);
+  link(right, left);
+  return left.name + right.name;
+}
+
+console.log(build());

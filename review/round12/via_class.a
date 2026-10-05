@@ -1,0 +1,17 @@
+// The child made by new, its constructor keeping the parent it's given.
+class Node {
+	readonly name: string;
+	readonly parent: Node | undefined;
+	readonly children: Node[] = [];
+	constructor(name: string, parent: Node | undefined) {
+		this.name = name;
+		this.parent = parent;
+	}
+}
+function build(): string {
+	const root = new Node(`root${1}`, undefined);
+	const child = new Node(`child${2}`, root);
+	root.children.push(child);
+	return `${root.children.length} ${child.parent?.name}`;
+}
+console.log(build());

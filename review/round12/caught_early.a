@@ -1,0 +1,26 @@
+interface Node {
+  readonly name: string;
+  readonly kids: Node[];
+}
+
+function fail(node: Node): Node {
+  if (node.name.length > 0) {
+    throw new Error(`no ${node.name}`);
+  }
+  return node;
+}
+
+function build(): number {
+  const root: Node = { name: `root`, kids: [] };
+  let child: Node = { name: `child`, kids: [] };
+  try {
+    child.kids.push(root);
+    fail(child);
+    child = { name: `other`, kids: [] };
+  } catch (error) {
+    root.kids.push(child);
+  }
+  return root.kids.length;
+}
+
+console.log(`${build()}`);

@@ -1,0 +1,18 @@
+// The child reaches its parent through an array literal it holds, and through a Map.
+interface Node {
+	readonly name: string;
+	readonly links: readonly Node[];
+	readonly table: ReadonlyMap<string, Node>;
+	readonly children: Node[];
+}
+function build(): string {
+	const root: Node = { name: `root${1}`, links: [], table: new Map<string, Node>(), children: [] };
+	const child: Node = { name: `child${2}`, links: [root], table: new Map<string, Node>(), children: [] };
+	root.children.push(child);
+	const table = new Map<string, Node>();
+	table.set('up', root);
+	const other: Node = { name: `other${3}`, links: [], table, children: [] };
+	root.children.push(other);
+	return `${root.children.length} ${child.links.length}`;
+}
+console.log(build());

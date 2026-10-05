@@ -1,0 +1,13 @@
+// The same cycle, the child made by a literal in the same function.
+interface Node {
+	readonly name: string;
+	readonly parent: Node | undefined;
+	readonly children: Node[];
+}
+function build(): string {
+	const root: Node = { name: `root${1}`, parent: undefined, children: [] };
+	const child: Node = { name: `child${2}`, parent: root, children: [] };
+	root.children.push(child);
+	return `${root.children.length} ${child.parent?.name}`;
+}
+console.log(build());

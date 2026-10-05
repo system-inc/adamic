@@ -1,0 +1,14 @@
+diff --git a/internal/lower/cycles.go b/internal/lower/cycles.go
+index e54121a..60aa282 100644
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -311,9 +311,6 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
+ 		}
+ 	default:
+ 		for _, field := range f.fields(holder) {
+-			if l.checker.IsReadonlySymbol(field) {
+-				continue
+-			}
+ 			proven := l.checker.GetTypeOfSymbol(field)
+ 			if f.weak(proven) || !f.reaches(proven, cycleNode{proven: holder}) {
+ 				continue

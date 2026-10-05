@@ -1,0 +1,13 @@
+// The child reaches its parent through a closure it holds.
+interface Node {
+	readonly name: string;
+	readonly up: () => string;
+	readonly children: Node[];
+}
+function build(): string {
+	const root: Node = { name: `root${1}`, up: () => 'none', children: [] };
+	const child: Node = { name: `child${2}`, up: () => root.name, children: [] };
+	root.children.push(child);
+	return `${root.children.length} ${child.up()}`;
+}
+console.log(build());
