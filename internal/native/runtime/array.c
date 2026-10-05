@@ -60,9 +60,12 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 			size = strlen(bytes);
 			break;
 		case adamic_join_strings: {
+			// An undefined element (a string | undefined array's NULL) joins as nothing, as JavaScript's does.
 			const adamic_string *string = array->elements[index].reference;
-			bytes = string->bytes;
-			size = string->length;
+			if (string != NULL) {
+				bytes = string->bytes;
+				size = string->length;
+			}
 			break;
 		}
 		}
