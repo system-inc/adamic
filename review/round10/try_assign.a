@@ -1,0 +1,35 @@
+// A parameter reassigned only inside a try: borrowing must see the write, or the store releases a
+// reference the function never owned. And a variable assigned only inside a try, read as a counter's
+// bound, must not count as a constant.
+interface Box {
+	readonly label: string;
+}
+function relabel(box: Box, fail: boolean): string {
+	try {
+		box = { label: `new${box.label.length}` };
+		if (fail) {
+			throw new Error(`boom${1}`);
+		}
+	} catch (error) {
+		return `caught ${box.label}`;
+	}
+	return box.label;
+}
+function counted(): string {
+	let bound = 3;
+	try {
+		bound = 2.5;
+	} catch (error) {
+		bound = 1;
+	}
+	let sum = 0;
+	for (let index = 0; index < bound; index++) {
+		sum += index;
+	}
+	return `${sum}`;
+}
+const kept: Box = { label: `kept${1}` };
+console.log(relabel(kept, false));
+console.log(relabel(kept, true));
+console.log(`${kept.label}`);
+console.log(counted());

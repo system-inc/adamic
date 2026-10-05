@@ -1,0 +1,59 @@
+// Loop counters kept in an integer, at the edges the generated sweep doesn't reach.
+let bound = 4;
+const shrink = (): number => {
+	bound = 2.5;
+	return 0;
+};
+let sum = 0;
+for (let index = 0; index < bound; index++) {
+	sum += index + shrink();
+}
+console.log(`closure-written bound: ${sum}`);
+const items = [10, 20, 30];
+const seen: string[] = [];
+for (let index = -2; index < items.length; index++) {
+	seen.push(`${items[index] ?? 'u'}`);
+}
+console.log(`negative start: ${seen.join(',')}`);
+let product = 0;
+for (let index = 0.1 * 10; index <= 3; index++) {
+	product += index;
+}
+console.log(`folded start: ${product}`);
+let nested = 0;
+for (let outer = 0; outer < 4; outer++) {
+	for (let inner = 0; inner < outer; inner++) {
+		nested += inner * outer;
+	}
+}
+console.log(`nested: ${nested}`);
+const text: string[] = ['a', 'b', 'c', 'd', 'e'];
+let walked = '';
+for (let index = 0; index < text.length; index++) {
+	walked = `${walked}${text[index]}`;
+	text.pop();
+}
+console.log(`shrinking array: ${walked} ${text.length}`);
+const near = 9007199254740987;
+let steps = 0;
+let last = 0;
+for (let index = near; index < 9007199254740992; index++) {
+	steps++;
+	last = index;
+}
+console.log(`near 2^53: ${steps} ${last} ${last + 1} ${last + 2}`);
+let lastLe = 0;
+for (let index = near; index <= 9007199254740991; index++) {
+	lastLe = index;
+}
+console.log(`<= 2^53 - 1: ${lastLe}`);
+const keyed = new Map<number, string>();
+for (let index = 0; index < 3; index++) {
+	keyed.set(index, `v${index}`);
+}
+console.log(`keyed: ${keyed.get(1)} ${keyed.has(1.5)} ${1 / (0 - 0)}`);
+let inverse = '';
+for (let index = 0; index < 2; index++) {
+	inverse = `${inverse}${1 / index},`;
+}
+console.log(`inverse: ${inverse}`);
