@@ -1,0 +1,20 @@
+// ?? making a counted union (string | number, boolean | string) in a loop, so every box dies before the end.
+const nan = parseFloat("x");
+function label(text: string | undefined, count: number): string {
+	const either = text ?? count;
+	const other = text ?? nan;
+	return `${either} ${typeof either} ${either === other} ${other === other} ${(text ?? -0) === (text ?? 0)}`;
+}
+for (let round = 0; round < 3; round++) {
+	let made: string | undefined = `name${round}`;
+	if (round === 1) {
+		made = undefined;
+	}
+	console.log(label(made, round * 1.5));
+	let flag: boolean | undefined = round > 1;
+	if (made === undefined) {
+		flag = undefined;
+	}
+	const choice = flag ?? `no flag ${round}`;
+	console.log(`${choice} ${typeof choice}`);
+}

@@ -1,0 +1,13 @@
+// A Map's keys are compared by SameValueZero: every NaN is one key. On x86, 0/0 is a NaN with its sign
+// bit set (0xFFF8000000000000) and Number.NaN isn't; on arm64 both are 0x7FF8000000000000.
+const zero = parseFloat("0");
+const keys = new Map<number, string>();
+keys.set(zero / zero, "from 0/0");
+keys.set(NaN, "from NaN");
+keys.set(Infinity - Infinity, "from Infinity - Infinity");
+keys.set(Math.sqrt(-1), "from sqrt(-1)");
+console.log(`${keys.size} ${keys.get(NaN)} ${keys.get(zero / zero)} ${keys.has(-(zero / zero))}`);
+const list: number[] = [zero / zero, 1, NaN];
+console.log(`${list.includes(NaN)} ${list.indexOf(NaN)} ${list.includes(zero / zero)}`);
+const maybe: (number | undefined)[] = [zero / zero, undefined, NaN];
+console.log(`${maybe.includes(NaN)} ${maybe.includes(undefined)} ${maybe.indexOf(undefined)} ${maybe.join("|")}`);

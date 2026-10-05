@@ -1,0 +1,6 @@
+// Array.from({ length }) calls its callback with undefined for the value. Annotated as
+// number | undefined, that parameter is a packed slot, where undefined is a reserved NaN, not 0.
+const numbers = Array.from({ length: 3 }, (value: number | undefined, index: number) => (value === undefined ? `undefined at ${index}` : `${value} at ${index}`));
+for (const line of numbers) {
+	console.log(line);
+}

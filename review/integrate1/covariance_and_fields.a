@@ -1,0 +1,12 @@
+// Readonly covariance (a number[] read as (number | undefined)[]) and a class's optional fields.
+const plain: number[] = [parseFloat("x"), 2];
+const view: readonly (number | undefined)[] = plain;
+console.log(`${view.includes(undefined)} ${view.indexOf(undefined)} ${view.includes(NaN)} ${view.join(",")} ${view[0] === undefined}`);
+class Holder {
+	count?: number;
+	label: number | undefined = undefined;
+}
+const holder = new Holder();
+console.log(`${holder.count} ${holder.label} ${holder.count ?? -1} ${typeof holder.count}`);
+holder.count = parseFloat("x");
+console.log(`${holder.count} ${holder.count === undefined} ${Number.isNaN(holder.count)}`);
