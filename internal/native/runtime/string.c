@@ -418,9 +418,61 @@ adamic_string *adamic_string_pad(const adamic_string *string, double target, con
 	return padded;
 }
 
+// Searching by WTF-8 bytes finds exactly what searching by UTF-16 units does, with one exception: a
+// search that begins with a lone low surrogate or ends with a lone high one can match half of a
+// supplementary character, which UTF-16 sees and the bytes (four of them, whole) don't. Only those
+// searches go unit by unit.
+static bool halves_pairs(const adamic_string *search) {
+	units walk = units_start(search);
+	unsigned unit, first = 0, last = 0;
+	bool any = false;
+	while (units_next(&walk, &unit)) {
+		if (!any) {
+			first = unit;
+		}
+		last = unit;
+		any = true;
+	}
+	return any && ((first >= 0xdc00 && first <= 0xdfff) || (last >= 0xd800 && last <= 0xdbff));
+}
+
+// to_units is a string's UTF-16 code units, in a buffer the caller frees.
+static unsigned *to_units(const adamic_string *string, size_t *count) {
+	// A string's units are never more than its bytes.
+	unsigned *buffer = malloc((string->length + 1) * sizeof *buffer);
+	if (buffer == NULL) {
+		static const char message[] = "out of memory";
+		adamic_panic(message, sizeof message - 1);
+	}
+	units walk = units_start(string);
+	*count = 0;
+	while (units_next(&walk, &buffer[*count])) {
+		(*count)++;
+	}
+	return buffer;
+}
+
+// unit_index_of is the first UTF-16 index at or after from where search's units are, or -1.
+static double unit_index_of(const unsigned *haystack, size_t haystack_count, const unsigned *needle, size_t needle_count, size_t from) {
+	for (size_t at = from; at + needle_count <= haystack_count; at++) {
+		if (memcmp(haystack + at, needle, needle_count * sizeof *needle) == 0) {
+			return (double)at;
+		}
+	}
+	return -1;
+}
+
 double adamic_string_index_of(const adamic_string *string, const adamic_string *search) {
 	if (search->length == 0) {
 		return 0;
+	}
+	if (halves_pairs(search)) {
+		size_t haystack_count, needle_count;
+		unsigned *haystack = to_units(string, &haystack_count), *needle = to_units(search, &needle_count);
+		double found = unit_index_of(haystack, haystack_count, needle, needle_count, 0);
+		free(haystack);
+		free(needle);
+		return found;
 	}
 	for (size_t offset = 0; offset + search->length <= string->length;) {
 		if (memcmp(string->bytes + offset, search->bytes, search->length) == 0) {
@@ -432,11 +484,28 @@ double adamic_string_index_of(const adamic_string *string, const adamic_string *
 	return -1;
 }
 
+// affix reports whether search's units are string's first (at_start) or last ones, unit by unit.
+static bool affix(const adamic_string *string, const adamic_string *search, bool at_start) {
+	size_t haystack_count, needle_count;
+	unsigned *haystack = to_units(string, &haystack_count), *needle = to_units(search, &needle_count);
+	bool found = needle_count <= haystack_count &&
+		memcmp(haystack + (at_start ? 0 : haystack_count - needle_count), needle, needle_count * sizeof *needle) == 0;
+	free(haystack);
+	free(needle);
+	return found;
+}
+
 bool adamic_string_starts_with(const adamic_string *string, const adamic_string *search) {
+	if (halves_pairs(search)) {
+		return affix(string, search, true);
+	}
 	return search->length <= string->length && memcmp(string->bytes, search->bytes, search->length) == 0;
 }
 
 bool adamic_string_ends_with(const adamic_string *string, const adamic_string *search) {
+	if (halves_pairs(search)) {
+		return affix(string, search, false);
+	}
 	return search->length <= string->length && memcmp(string->bytes + string->length - search->length, search->bytes, search->length) == 0;
 }
 
@@ -461,6 +530,24 @@ adamic_array *adamic_string_split(const adamic_string *string, const adamic_stri
 			builder_unit(&build, unit);
 			adamic_array_push(parts, (adamic_value){.reference = builder_finish(&build)});
 		}
+		return parts;
+	}
+	if (halves_pairs(separator)) {
+		// Unit by unit, each part cut by UTF-16 index, so a half of a pair stays a lone surrogate.
+		size_t haystack_count, needle_count;
+		unsigned *haystack = to_units(string, &haystack_count), *needle = to_units(separator, &needle_count);
+		size_t from = 0;
+		for (;;) {
+			double found = unit_index_of(haystack, haystack_count, needle, needle_count, from);
+			double end = found < 0 ? (double)haystack_count : found;
+			adamic_array_push(parts, (adamic_value){.reference = adamic_string_slice(string, (double)from, end, true)});
+			if (found < 0) {
+				break;
+			}
+			from = (size_t)found + needle_count;
+		}
+		free(haystack);
+		free(needle);
 		return parts;
 	}
 	size_t start = 0;
