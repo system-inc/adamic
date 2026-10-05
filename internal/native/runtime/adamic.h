@@ -343,8 +343,22 @@ double adamic_math_tan(double x);
 double adamic_math_tanh(double x);
 double adamic_math_hypot(size_t count, const double *values);
 
+// adamic_number_to_exponential is value.toExponential(digits), and the shortest digits when there
+// are none; adamic_number_to_precision is value.toPrecision(digits), and String(value) when there
+// are none. Both are V8's (dtoa.c), and return a string the caller owns.
+adamic_string *adamic_number_to_exponential(double value, double digits, bool has_digits);
+adamic_string *adamic_number_to_precision(double value, double digits, bool has_digits);
+
 // adamic_number_to_fixed is value.toFixed(digits), and returns a string the caller owns.
 adamic_string *adamic_number_to_fixed(double value, double digits);
+
+// Input, opened in 0.2 (input.c). adamic_arguments_save keeps main's argc and argv;
+// adamic_program_arguments is programArguments(), a new array of the arguments after the program, and
+// adamic_read_text_file is readTextFile(path), { kind: 'Ok', text } or { kind: 'Error', message }. Both
+// return a reference the caller owns.
+void adamic_arguments_save(int count, char **values);
+adamic_array *adamic_program_arguments(void);
+adamic_object *adamic_read_text_file(const adamic_string *path);
 
 // adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
 _Noreturn void adamic_panic(const char *message, size_t length);

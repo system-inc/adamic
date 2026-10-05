@@ -1,0 +1,42 @@
+// readTextFile, each way it can end: a file read, decoded as Node decodes it, and each failure in
+// Adamic's own words. Paths are relative to this file's directory, where the oracle runs all three.
+import { readTextFile } from 'adamic';
+
+function show(path: string): void {
+	const result = readTextFile(path);
+	switch (result.kind) {
+		case 'Ok': {
+			const units: number[] = [];
+			for (let index = 0; index < result.text.length; index += 1) {
+				units.push(result.text.charCodeAt(index));
+			}
+			console.log(`ok ${result.text.length}: ${units.join(' ')}`);
+			console.log(result.text);
+			break;
+		}
+		case 'Error':
+			console.log(`error: ${result.message}`);
+			break;
+	}
+}
+
+show('reading/hello.txt');
+// A byte-order mark stays, as U+FEFF, at the start and inside.
+show('reading/bom.txt');
+show('reading/empty.txt');
+show('reading/nul.txt');
+// Cut off mid-character at the very end: one U+FFFD.
+show('reading/truncated.txt');
+// A lone surrogate names the file as U+FFFD, as Node encodes the path.
+show('reading/\uD800.txt');
+show('reading/missing.txt');
+show('reading');
+show('reading/hello.txt/inside');
+show('');
+// A NUL can't be in a file's name, and Node refuses the path before asking.
+show('reading/hello.txt\u0000ignored');
+
+// The result is a value like any other: kept, passed, compared.
+const again = readTextFile('reading/hello.txt');
+const lines = again.kind === 'Ok' ? again.text.split('\n') : ['none'];
+console.log(`${lines.length} pieces, first ${lines[0] ?? 'missing'}`);
