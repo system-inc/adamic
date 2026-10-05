@@ -207,6 +207,11 @@ struct adamic_string *adamic_array_join(const adamic_array *array, const struct 
 
 // These return a reference the caller owns.
 adamic_string *adamic_string_from_number(double value);
+
+// Number.parseInt(text, radix) and Number.parseFloat(text), as Node answers them (parse.c). A radix
+// of 0 is the one left out.
+double adamic_number_parse_int(const adamic_string *text, double radix);
+double adamic_number_parse_float(const adamic_string *text);
 adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]);
 
 // The strings every program has: "", and String(true) and String(false).

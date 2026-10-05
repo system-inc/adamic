@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"math"
 	"strconv"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -158,6 +159,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "Math."+name)
 	}
+	if l.isLibraryGlobal(access.Expression, "Number") {
+		if value, isConstant := numberConstants[name]; isConstant && name != "Infinity" {
+			return ir.NumberConstant{Value: value}, nil
+		}
+		return nil, l.notYet(node, "Number."+name)
+	}
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
@@ -211,10 +218,24 @@ var mathFunctions = map[string]int{
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	// The global parseInt and parseFloat are Number's, the same functions.
+	if l.isLibraryGlobal(callee, "parseInt") || l.isLibraryGlobal(callee, "parseFloat") {
+		return l.numberCall(node, callee.Text())
+	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return nil, false, nil
 	}
 	receiver, name := callee.AsPropertyAccessExpression().Expression, callee.Name().Text()
+	if l.isLibraryGlobal(receiver, "Number") {
+		return l.numberCall(node, name)
+	}
+	if receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); receiverType == ir.Number && name == "toString" && len(node.AsCallExpression().Arguments.Nodes) == 0 {
+		value, err := l.expression(receiver)
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.NumberToString{Value: value}, true, nil
+	}
 	isMath := l.isLibraryGlobal(receiver, "Math")
 	receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
 	isToFixed := name == "toFixed" && receiverType == ir.Number
@@ -281,6 +302,49 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		digits = arguments[0]
 	}
 	return ir.ToFixed{Value: value, Digits: digits}, true, nil
+}
+
+// numberFunctions are the functions of Number that 0.1 has (docs/0.1.md), with what each takes; the
+// last of parseInt's, the radix, may be left out.
+var numberFunctions = map[string][]ir.Type{
+	"parseInt": {ir.String, ir.Number}, "parseFloat": {ir.String},
+	"isNaN": {ir.Number}, "isFinite": {ir.Number}, "isInteger": {ir.Number}, "isSafeInteger": {ir.Number},
+}
+
+// numberCall lowers Number.parseInt, parseFloat, isNaN, isFinite, isInteger and isSafeInteger.
+func (l *lowering) numberCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	takes, isKnown := numberFunctions[name]
+	if !isKnown {
+		return nil, true, l.notYet(node, "Number."+name)
+	}
+	written := node.AsCallExpression().Arguments.Nodes
+	optional := 0
+	if name == "parseInt" {
+		optional = 1
+	}
+	if len(written) > len(takes) || len(written) < len(takes)-optional {
+		return nil, true, l.notYet(node, name+" with these arguments")
+	}
+	arguments := []ir.Expression{}
+	for index, argument := range written {
+		lowered, err := l.expression(argument)
+		if err != nil {
+			return nil, true, err
+		}
+		if lowered.Type() != takes[index] {
+			// Number.isNaN('x') is false in JavaScript, and a string there is a mistake 0.1 won't guess at.
+			return nil, true, l.notYet(argument, "a "+typeName(lowered.Type())+" argument to "+name)
+		}
+		arguments = append(arguments, lowered)
+	}
+	return ir.NumberCall{Function: name, Arguments: arguments}, true, nil
+}
+
+// numberConstants are Number's constants, and the globals NaN and Infinity.
+var numberConstants = map[string]float64{
+	"MAX_SAFE_INTEGER": 9007199254740991, "MIN_SAFE_INTEGER": -9007199254740991,
+	"EPSILON": 2.220446049250313e-16, "MAX_VALUE": math.MaxFloat64, "MIN_VALUE": math.SmallestNonzeroFloat64,
+	"POSITIVE_INFINITY": math.Inf(1), "NEGATIVE_INFINITY": math.Inf(-1), "NaN": math.NaN(), "Infinity": math.Inf(1),
 }
 
 // forOf lowers for (const element of array).

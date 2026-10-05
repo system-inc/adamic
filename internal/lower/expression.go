@@ -107,6 +107,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		if !isLocal && node.Text() == "undefined" {
 			return ir.Undefined{}, nil
 		}
+		if !isLocal && (l.isLibraryGlobal(node, "NaN") || l.isLibraryGlobal(node, "Infinity")) {
+			return ir.NumberConstant{Value: numberConstants[node.Text()]}, nil
+		}
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}

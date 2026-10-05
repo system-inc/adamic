@@ -1,0 +1,10 @@
+// Number's functions and constants, the global parseInt and parseFloat, NaN, Infinity, and toString.
+console.log(`${Number.parseInt('42px', 10)} ${parseInt('0x1F')} ${Number.parseInt('-0')} ${Number.parseInt('zz', 36)} ${parseInt('7', 99)}`);
+console.log(`${Number.parseFloat('3.14abc')} ${parseFloat('.5')} ${parseFloat('-Infinity!')} ${parseFloat('e5')}`);
+const missing = Number.parseInt('x', 10);
+console.log(`${Number.isNaN(missing)} ${Number.isNaN(0)} ${Number.isFinite(1 / 0)} ${Number.isFinite(-0)}`);
+console.log(`${Number.isInteger(5)} ${Number.isInteger(5.5)} ${Number.isInteger(1 / 0)} ${Number.isSafeInteger(2 ** 53)} ${Number.isSafeInteger(2 ** 53 - 1)}`);
+console.log(`${Number.MAX_SAFE_INTEGER} ${Number.MIN_SAFE_INTEGER} ${Number.EPSILON} ${Number.MAX_VALUE} ${Number.MIN_VALUE}`);
+console.log(`${NaN} ${-Infinity} ${Number.POSITIVE_INFINITY} ${Number.NEGATIVE_INFINITY} ${Number.NaN === Number.NaN}`);
+const value = 255;
+console.log(value.toString() + (0.1 + 0.2).toString());

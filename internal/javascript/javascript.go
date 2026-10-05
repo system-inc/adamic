@@ -391,6 +391,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value) + ".length"
 	case ir.MathCall:
 		return "Math." + expression.Function + "(" + e.values(expression.Arguments) + ")"
+	case ir.NumberCall:
+		return "Number." + expression.Function + "(" + e.values(expression.Arguments) + ")"
 	case ir.ToFixed:
 		return e.value(expression.Value) + ".toFixed(" + e.value(expression.Digits) + ")"
 	case ir.Undefined:

@@ -806,6 +806,29 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->length", e.value(expression.Array)))
 	case ir.MathCall:
 		return e.mathCall(expression)
+	case ir.NumberCall:
+		arguments := []string{}
+		for _, argument := range expression.Arguments {
+			arguments = append(arguments, e.value(argument))
+		}
+		switch expression.Function {
+		case "parseInt":
+			// A radix left out is undefined, which ToInt32 makes 0: detect it from the text.
+			radix := "0.0"
+			if len(arguments) == 2 {
+				radix = arguments[1]
+			}
+			return e.snapshot(ir.Number, fmt.Sprintf("adamic_number_parse_int(%s, %s)", arguments[0], radix))
+		case "parseFloat":
+			return e.snapshot(ir.Number, fmt.Sprintf("adamic_number_parse_float(%s)", arguments[0]))
+		case "isNaN":
+			return fmt.Sprintf("isnan(%s)", arguments[0])
+		case "isFinite":
+			return fmt.Sprintf("isfinite(%s)", arguments[0])
+		case "isInteger":
+			return fmt.Sprintf("(isfinite(%s) && trunc(%s) == %s)", arguments[0], arguments[0], arguments[0])
+		}
+		return fmt.Sprintf("(isfinite(%s) && trunc(%s) == %s && fabs(%s) <= 9007199254740991.0)", arguments[0], arguments[0], arguments[0], arguments[0])
 	case ir.ToFixed:
 		value := e.value(expression.Value)
 		digits := e.value(expression.Digits)

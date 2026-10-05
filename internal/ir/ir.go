@@ -176,6 +176,13 @@ type (
 		Arguments []Expression
 	}
 
+	// NumberCall is Number.<Function>(...): parseInt (text, and a radix perhaps left out), parseFloat
+	// (text), and isNaN, isFinite, isInteger and isSafeInteger (a number).
+	NumberCall struct {
+		Function  string
+		Arguments []Expression
+	}
+
 	// ToFixed is Value.toFixed(Digits).
 	ToFixed struct{ Value, Digits Expression }
 
@@ -400,24 +407,31 @@ func (p Property) Type() Type      { return p.Of }
 func (ArrayLiteral) Type() Type    { return Array }
 func (Length) Type() Type          { return Number }
 func (MathCall) Type() Type        { return Number }
-func (ToFixed) Type() Type         { return String }
-func (Undefined) Type() Type       { return Object }
-func (IsUndefined) Type() Type     { return Boolean }
-func (ArrayPush) Type() Type       { return Number }
-func (ArrayJoin) Type() Type       { return String }
-func (Unwrap) Type() Type          { return Number }
-func (MaybeNumberOf) Type() Type   { return MaybeNumber }
-func (c Coalesce) Type() Type      { return c.Of }
-func (StringLength) Type() Type    { return Number }
-func (CharCodeAt) Type() Type      { return Number }
-func (Trim) Type() Type            { return String }
-func (CodePoints) Type() Type      { return Array }
-func (StringIndex) Type() Type     { return String }
-func (MapEntries) Type() Type      { return Array }
-func (MakeClosure) Type() Type     { return Closure }
-func (CheckedCast) Type() Type     { return Object }
-func (c CallClosure) Type() Type   { return c.Returns }
-func (ArrayMap) Type() Type        { return Array }
+
+func (c NumberCall) Type() Type {
+	if c.Function == "parseInt" || c.Function == "parseFloat" {
+		return Number
+	}
+	return Boolean
+}
+func (ToFixed) Type() Type       { return String }
+func (Undefined) Type() Type     { return Object }
+func (IsUndefined) Type() Type   { return Boolean }
+func (ArrayPush) Type() Type     { return Number }
+func (ArrayJoin) Type() Type     { return String }
+func (Unwrap) Type() Type        { return Number }
+func (MaybeNumberOf) Type() Type { return MaybeNumber }
+func (c Coalesce) Type() Type    { return c.Of }
+func (StringLength) Type() Type  { return Number }
+func (CharCodeAt) Type() Type    { return Number }
+func (Trim) Type() Type          { return String }
+func (CodePoints) Type() Type    { return Array }
+func (StringIndex) Type() Type   { return String }
+func (MapEntries) Type() Type    { return Array }
+func (MakeClosure) Type() Type   { return Closure }
+func (CheckedCast) Type() Type   { return Object }
+func (c CallClosure) Type() Type { return c.Returns }
+func (ArrayMap) Type() Type      { return Array }
 
 func (v ArrayVisit) Type() Type {
 	switch v.Method {
