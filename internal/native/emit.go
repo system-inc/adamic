@@ -56,7 +56,7 @@ func C(program *ir.Program) string {
 		emitter.out.Reset()
 		bodies.WriteString("}\n\n")
 	}
-	bodies.WriteString("int main(void) {\n")
+	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_arguments_save(argc, argv);\n")
 	emitter.indent = 1
 	emitter.block(program.Main, nil)
 	bodies.WriteString(emitter.out.String())
@@ -797,6 +797,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		return result
 	case ir.MapSize:
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->count", e.value(expression.Map)))
+	case ir.ReadTextFile:
+		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
+	case ir.ProgramArguments:
+		return e.own(ir.Array, "adamic_program_arguments()")
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
