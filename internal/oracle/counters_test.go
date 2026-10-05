@@ -53,6 +53,8 @@ func TestLoopCountersAgreeWithNode(t *testing.T) {
 		{"values.length - 9007199254740991", 1 - two53, two32 + 1 - two53, true},
 		{"values.length + 9007199254740990", 0, 0, false}, {"text.length / 2", 0, 0, false},
 		{"values.length % 3", 0, 0, false},
+		{"9007199254740000 + values.length", 0, 0, false}, {"-9007199254740000 - values.length", 0, 0, false},
+		{"values.length * -2097152", -two53, 0, true}, {"values.length * 2097153", 0, 0, false},
 	}
 	// The updates, each with its step (0 for one the pass never takes) and its comparison.
 	type update struct {
@@ -62,7 +64,7 @@ func TestLoopCountersAgreeWithNode(t *testing.T) {
 	directions := []update{{"<", "NAME++", 1}, {"<=", "NAME += 1", 1}, {">", "NAME--", -1}, {">=", "NAME -= 1", -1}}
 	steps := []update{
 		{"<", "NAME += 2", 2}, {"<=", "NAME = NAME + 3", 3}, {">", "NAME -= 2", -2}, {">=", "NAME = NAME - 3", -3},
-		{"<", "NAME += 0", 0}, {"<", "NAME += 0.5", 0}, {">", "NAME -= -1", 0}, {"<", "NAME += 2 ** 1", 0},
+		{"<", "NAME += 0", 0}, {"<", "NAME += 0.5", 0}, {"<", "NAME += 1.5", 0}, {">", "NAME -= 1.5", 0}, {">", "NAME -= -1", 0}, {"<", "NAME += 2 ** 1", 0},
 		{"<", "NAME = 1 + NAME", 0}, {">", "NAME++", 1}, {"<", "NAME--", -1}, {">=", "NAME += 2", 2},
 	}
 	var source strings.Builder
