@@ -421,7 +421,8 @@ func (b *builder) try(at *ir.Statement, statement ir.Try) {
 	b.current = after
 }
 
-// CanThrow reports whether an instruction can throw: it calls a function a throw can leave. A throw
+// CanThrow reports whether an instruction can throw: it calls a function a throw can leave, directly,
+// through a function value when one in the program can throw, or as a sort's comparator. A throw
 // statement isn't one of these: it always throws, and its block goes straight to its handler.
 func CanThrow(program *ir.Program, instruction *Instruction) bool {
 	var node any = instruction.Expression
@@ -445,8 +446,19 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
-			if value.Type() == callType {
+			switch value.Type() {
+			case callType:
 				if program.Functions[int(value.FieldByName("Function").Int())].MayThrow {
+					throws = true
+				}
+			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType:
+				// A call through a function value, written out or made by the runtime's loop.
+				if program.ClosuresMayThrow {
+					throws = true
+				}
+			case arraySortType:
+				sort := value.Interface().(ir.ArraySort)
+				if (sort.Callback != nil && program.ClosuresMayThrow) || (sort.Callback == nil && program.Functions[sort.Comparator].MayThrow) {
 					throws = true
 				}
 			}
@@ -463,4 +475,12 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 	return throws
 }
 
-var callType = reflect.TypeOf(ir.Call{})
+var (
+	callType        = reflect.TypeOf(ir.Call{})
+	callClosureType = reflect.TypeOf(ir.CallClosure{})
+	arrayMapType    = reflect.TypeOf(ir.ArrayMap{})
+	arrayVisitType  = reflect.TypeOf(ir.ArrayVisit{})
+	arrayReduceType = reflect.TypeOf(ir.ArrayReduce{})
+	arrayFromType   = reflect.TypeOf(ir.ArrayFrom{})
+	arraySortType   = reflect.TypeOf(ir.ArraySort{})
+)

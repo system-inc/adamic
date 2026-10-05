@@ -21,7 +21,13 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	if from.First == ir.MaybeNumber {
 		undefined = fmt.Sprintf("{.number = %s}", slotted(ir.MaybeNumber, zero(ir.MaybeNumber)))
 	}
-	e.line("\tadamic_array_push(%s, %s->code(%s, (adamic_value[]){%s, {.number = (double)%s}}));", made, callback, callback, undefined, index)
+	e.indent++
+	element := e.temporary()
+	e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s, {.number = (double)%s}});", element, callback, callback, undefined, index)
+	// What's made so far is the statement's, let go with its temporaries.
+	e.closureThrown()
+	e.line("adamic_array_push(%s, %s);", made, element)
+	e.indent--
 	e.line("}")
 	return made
 }

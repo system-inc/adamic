@@ -22,6 +22,12 @@ type Program struct {
 
 	// Main is what the program does, in order.
 	Main []Statement
+
+	// ClosuresMayThrow says a function value somewhere in the program can throw. Which one a call
+	// through a function value reaches isn't known, so every such call can then throw: one written
+	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
+	// callers test for it after each.
+	ClosuresMayThrow bool
 }
 
 // Function is a function declaration.

@@ -604,7 +604,10 @@ func arraysTaken(program *ir.Program, node any) []int {
 		case ir.ArrayMap:
 			read, isRead := variableRead(expression.Array)
 			closure, isClosure := expression.Callback.(ir.MakeClosure)
-			if isRead && isClosure && len(program.Functions[closure.Function].Parameters) < 3 && sameSlots(expression.Element, expression.Result) {
+			// Not when the callback can throw: the loop that writes over the array in place (mapped)
+			// has no way out halfway, with some elements results and the rest not, so a callback that
+			// can throw gets the loop that makes a new array and tests for the throw after each call.
+			if isRead && isClosure && len(program.Functions[closure.Function].Parameters) < 3 && sameSlots(expression.Element, expression.Result) && !program.Functions[closure.Function].MayThrow {
 				sources = append(sources, read.Local)
 			}
 		case ir.ArrayLiteral:

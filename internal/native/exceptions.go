@@ -43,6 +43,9 @@ func (e *emitter) jumpThrown() {
 	}
 	e.releaseScopes(e.functionDepth)
 	switch {
+	case e.function.Closure:
+		// A function value returns a slot whatever its type; the caller tests the word before reading it.
+		e.line("return (adamic_value){.number = 0};")
 	case e.function.Returns == 0:
 		e.line("return;")
 	default:
@@ -51,10 +54,14 @@ func (e *emitter) jumpThrown() {
 }
 
 // checkThrown emits, after a call that can throw, the test of the pending word and, when it's set,
-// the release of every temporary the statement owns so far and the jump.
-func (e *emitter) checkThrown() {
+// the release of what holds names (what a loop around the call holds), then of every temporary the
+// statement owns so far, and the jump.
+func (e *emitter) checkThrown(holds ...string) {
 	e.line("if (adamic_thrown != NULL) {")
 	e.indent++
+	for _, hold := range holds {
+		e.line("adamic_release(%s);", hold)
+	}
 	for index := len(e.owned) - 1; index >= 0; index-- {
 		e.line("adamic_release(%s);", e.owned[index])
 	}
@@ -66,6 +73,15 @@ func (e *emitter) checkThrown() {
 	e.jumpThrown()
 	e.indent--
 	e.line("}")
+}
+
+// closureThrown is checkThrown after a call through a function value, written out or made by a loop
+// the emitter writes (map, the visits, reduce, Array.from), when a function value in the program can
+// throw: which one the call reaches isn't known. holds is what the loop holds across the call.
+func (e *emitter) closureThrown(holds ...string) {
+	if e.program.ClosuresMayThrow {
+		e.checkThrown(holds...)
+	}
 }
 
 // throwStatement emits throw: the error is the pending word's, and the jump is made.

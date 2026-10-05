@@ -813,10 +813,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
 		if expression.Returns == 0 {
 			e.line("%s;", call)
+			e.closureThrown()
 			return "0"
 		}
 		result := e.temporary()
 		e.line("adamic_value %s = %s;", result, call)
+		// A throw gives back a zero value, nothing to let go.
+		e.closureThrown()
 		if expression.Returns.IsReference() {
 			// A closure's result comes back owned.
 			return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))
@@ -839,7 +842,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
 		e.line("\t\tadamic_panic(message, sizeof message - 1);")
 		e.line("\t}")
-		e.line("\tadamic_array_push(%s, %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}));", mapped, callback, callback, source, index, index, source)
+		e.indent++
+		element := e.temporary()
+		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}});", element, callback, callback, source, index, index, source)
+		// What's mapped so far is the statement's, let go with its temporaries.
+		e.closureThrown()
+		e.line("adamic_array_push(%s, %s);", mapped, element)
+		e.indent--
 		e.line("}")
 		return mapped
 	case ir.ArrayVisit:
@@ -945,11 +954,17 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Element == ir.MaybeNumber {
 			sort = "adamic_array_sort_undefined_last"
 		}
+		// A comparator that throws stops the sort, which leaves the array as it was, as V8's does
+		// (sort.c), and the throw goes on from here.
 		if expression.Callback != nil {
 			e.line("%s(%s, adamic_compare_closure, %s);", sort, array, e.value(expression.Callback))
+			e.closureThrown()
 			return array
 		}
 		e.line("%s(%s, %s, NULL);", sort, array, e.comparator(expression))
+		if e.program.Functions[expression.Comparator].MayThrow {
+			e.checkThrown()
+		}
 		return array
 	case ir.CodePoints:
 		return e.own(ir.Array, fmt.Sprintf("adamic_string_code_points(%s)", e.value(expression.Value)))
@@ -1158,6 +1173,12 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	} else {
 		e.line("adamic_value %s = %s;", answer, call)
 	}
+	// The element held across the call is let go; what the visit made so far is the statement's.
+	if references {
+		e.closureThrown(element + ".reference")
+	} else {
+		e.closureThrown()
+	}
 	release := func() {
 		if references {
 			e.line("adamic_release(%s.reference);", element)
@@ -1240,6 +1261,12 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	}
 	e.line("adamic_value %s = %s->code(%s, (adamic_value[]){{.%s = %s}, %s, {.number = (double)%s}, {.reference = %s}});",
 		answer, callback, callback, member(reduce.Result), slotted(reduce.Result, accumulator), element, index, source)
+	// The element held across the call is let go; the accumulator is the statement's.
+	if reduce.Element.IsReference() {
+		e.closureThrown(element + ".reference")
+	} else {
+		e.closureThrown()
+	}
 	if reduce.Element.IsReference() {
 		e.line("adamic_release(%s.reference);", element)
 	}
