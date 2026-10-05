@@ -31,7 +31,7 @@ var fixtures = []struct {
 	{"internal/load/testdata/0.1/compile/01_hello.ts", true},
 	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true},
 	{"internal/load/testdata/0.1/compile/03_shapes.ts", true},
-	{"internal/load/testdata/0.1/compile/04_closures.ts", false},
+	{"internal/load/testdata/0.1/compile/04_closures.ts", true},
 	{"internal/load/testdata/0.1/compile/05_wordcount.ts", true},
 	{"internal/load/testdata/0.1/compile/06_stack.ts", true},
 	{"internal/load/testdata/0.1/compile/07_modules/main.ts", true},
@@ -53,6 +53,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/lone_surrogates.a", true},
 	{"internal/oracle/testdata/sorting.a", true},
 	{"internal/oracle/testdata/classes.a", true},
+	{"internal/oracle/testdata/closures.a", true},
+	// A local console is the program's, and lowering it as the prelude's would print what the program
+	// never asked to print.
+	{"internal/oracle/testdata/local_console.a", true},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

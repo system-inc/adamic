@@ -11,6 +11,7 @@ import (
 	"errors"
 	"fmt"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -52,7 +53,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	typeChecker, release := program.Checker(ctx, entry)
 	defer release()
 
-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1}
+	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
 	modules, err := lowering.moduleOrder(entry)
@@ -93,6 +94,11 @@ type lowering struct {
 
 	// this is the local this is in a method or constructor, or -1.
 	this int
+
+	// functionIndex is the function being lowered, -1 for the module's top level, and closures the
+	// closures being lowered, outermost first, each inside the one before.
+	functionIndex int
+	closures      []int
 
 	// classes maps each module class's symbol to its declaration, and instances each instantiation
 	// already lowered (class.go).
@@ -223,6 +229,9 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 			function.Returns = valueType
 		}
 	}
+	outerIndexForParameters := l.functionIndex
+	l.functionIndex = index
+	defer func() { l.functionIndex = outerIndexForParameters }()
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
 		if !ast.IsIdentifier(parameter.Name()) || declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
@@ -241,13 +250,33 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 	// The signature is written back before the body is lowered, so a recursive call inside it knows
 	// what the function returns.
 	l.result.Functions[index] = function
-	outer, outerThis := l.function, l.this
-	l.function, l.this = &function, this
-	lowered, err := l.statements(body.AsBlock().Statements.Nodes)
-	l.function, l.this = outer, outerThis
+	outer, outerThis, outerIndex := l.function, l.this, l.functionIndex
+	l.function, l.functionIndex = &function, index
+	if this >= 0 {
+		l.this = this
+	}
+	var lowered []ir.Statement
+	var err error
+	if body.Kind == ast.KindBlock {
+		lowered, err = l.statements(body.AsBlock().Statements.Nodes)
+	} else {
+		// An arrow function's expression body: its value is what it returns.
+		var value ir.Expression
+		if value, err = l.expression(body); err == nil {
+			if function.Returns == 0 {
+				lowered = []ir.Statement{ir.Evaluate{Value: value}}
+			} else {
+				lowered = []ir.Statement{ir.Return{Value: value}}
+			}
+		}
+	}
+	l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
 	if err != nil {
 		return err
 	}
+	// The environment may have grown while the body was lowered (captures are found as they're
+	// read), so it's taken from what's recorded, not from this copy.
+	function.Environment = l.result.Functions[index].Environment
 	function.Body = append(function.Body, lowered...)
 	l.result.Functions[index] = function
 	return nil
@@ -434,7 +463,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return local, nil
 	}
 	l.locals[symbol] = len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType})
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex})
 	return l.locals[symbol], nil
 }
 
@@ -451,11 +480,38 @@ func (l *lowering) symbol(node *ast.Node) *ast.Symbol {
 	return l.checker.GetExportSymbolOfSymbol(symbol)
 }
 
-// local finds the local an identifier refers to.
+// local finds the local an identifier refers to, and notes a capture if it belongs to another
+// function.
 func (l *lowering) local(identifier *ast.Node) (int, bool) {
 	symbol := l.symbol(identifier)
 	local, isLocal := l.locals[symbol]
+	if isLocal {
+		l.touch(local)
+	}
 	return local, isLocal
+}
+
+// touch notes that the function being lowered reads or writes a local. One declared in another
+// function, and not a global, is captured: it moves into a cell, and every closure being lowered
+// between its function and this one carries that cell in its environment.
+func (l *lowering) touch(local int) {
+	declared := l.result.Locals[local]
+	if declared.Global || declared.Function == l.functionIndex {
+		return
+	}
+	l.result.Locals[local].Captured = true
+	start := 0
+	for position, closure := range l.closures {
+		if closure == declared.Function {
+			start = position + 1
+		}
+	}
+	for _, closure := range l.closures[start:] {
+		function := &l.result.Functions[closure]
+		if !slices.Contains(function.Environment, local) {
+			function.Environment = append(function.Environment, local)
+		}
+	}
 }
 
 // assignment lowers =, and the compound assignments, to a local.
@@ -580,6 +636,11 @@ func (l *lowering) forStatement(node *ast.Node) ([]ir.Statement, error) {
 		block.Body = append(block.Body, initial...)
 	}
 	loop := ir.Loop{Condition: ir.BooleanConstant{Value: true}}
+	for _, statement := range block.Body {
+		if declared, isDeclare := statement.(ir.Declare); isDeclare && initializerIsLet(statement, node) {
+			loop.PerIteration = append(loop.PerIteration, declared.Local)
+		}
+	}
 	if statement.Condition != nil {
 		condition, err := l.condition(statement.Condition)
 		if err != nil {
@@ -695,4 +756,11 @@ func describe(node *ast.Node) string {
 		return "an " + name
 	}
 	return "a " + name
+}
+
+// initializerIsLet reports whether a for loop declares its variables with let, which JavaScript gives
+// a fresh binding each iteration (const can't change, so a copy would be the same).
+func initializerIsLet(_ ir.Statement, node *ast.Node) bool {
+	initializer := node.AsForStatement().Initializer
+	return initializer != nil && initializer.Kind == ast.KindVariableDeclarationList && initializer.Flags&ast.NodeFlagsLet != 0
 }

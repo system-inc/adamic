@@ -152,6 +152,11 @@ func (e *emitter) functionName(function int) string {
 
 func (e *emitter) signature(function int) string {
 	declared := e.program.Functions[function]
+	if declared.Closure {
+		// Every closure's code is called the same way (adamic_code): its arguments and result as
+		// adamic_value, whatever their types.
+		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments)", e.functionName(function))
+	}
 	returns := "void"
 	if declared.Returns != 0 {
 		returns = cType(declared.Returns)
@@ -172,10 +177,26 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.function = &function
 	e.functionDepth = len(e.scopes)
 	e.scopes = append(e.scopes, nil)
+	if function.Closure {
+		e.line("(void)self;")
+		e.line("(void)arguments;")
+		for index, parameter := range function.Parameters {
+			local := e.program.Locals[parameter]
+			value := fmt.Sprintf("arguments[%d].%s", index, member(local.Type))
+			if local.Type.IsReference() {
+				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
+			}
+			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
+		}
+	}
 	for _, parameter := range function.Parameters {
 		if e.program.Locals[parameter].Type.IsReference() {
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
+		}
+		if e.program.Locals[parameter].Captured {
+			// A closure captured this parameter: from here on it lives in a cell.
+			e.makeCell(parameter, e.localName(parameter), false)
 		}
 	}
 	for _, statement := range function.Body {
@@ -183,6 +204,9 @@ func (e *emitter) functionBody(function ir.Function) {
 	}
 	if function.Returns == 0 {
 		e.releaseScopes(e.functionDepth)
+		if function.Closure {
+			e.line("return (adamic_value){.number = 0};")
+		}
 	} else {
 		// The checker proved every path returns (noImplicitReturns), so this is never reached; C
 		// can't see that, and if it ever is reached it's a compiler bug, said out loud.
@@ -256,15 +280,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		if statement.Value != nil {
 			value = e.value(statement.Value)
 		}
-		switch {
-		case local.Global:
+		if local.Global {
 			e.store(statement.Local, value)
 			e.line("%s = true;", readyName(statement.Local))
-		case local.Type.IsReference():
-			e.line("%s %s = adamic_retain(%s);", cType(local.Type), e.localName(statement.Local), value)
-			e.hold(e.localName(statement.Local))
-		default:
-			e.line("%s %s = %s;", cType(local.Type), e.localName(statement.Local), value)
+		} else {
+			e.declareLocal(statement.Local, value, false)
 		}
 		e.end()
 	case ir.Assign:
@@ -342,6 +362,17 @@ func (e *emitter) statement(statement ir.Statement) {
 // since they may be the same string.
 func (e *emitter) store(local int, value string) {
 	name := e.localName(local)
+	if slot := e.cellSlot(local); slot != "" {
+		if !e.program.Locals[local].Type.IsReference() {
+			e.line("%s.%s = %s;", slot, member(e.program.Locals[local].Type), value)
+			return
+		}
+		old := e.temporary()
+		e.line("void *%s = %s.reference;", old, slot)
+		e.line("%s.reference = adamic_retain(%s);", slot, value)
+		e.line("adamic_release(%s);", old)
+		return
+	}
 	if !e.program.Locals[local].Type.IsReference() {
 		e.line("%s = %s;", name, value)
 		return
@@ -365,7 +396,11 @@ func (e *emitter) returnStatement(statement ir.Return) {
 	if statement.Value == nil {
 		e.end()
 		e.releaseScopes(e.functionDepth)
-		e.line("return;")
+		if e.function != nil && e.function.Closure {
+			e.line("return (adamic_value){.number = 0};")
+		} else {
+			e.line("return;")
+		}
 		return
 	}
 	value := e.value(statement.Value)
@@ -377,7 +412,11 @@ func (e *emitter) returnStatement(statement ir.Return) {
 	}
 	e.end()
 	e.releaseScopes(e.functionDepth)
-	e.line("return %s;", result)
+	if e.function != nil && e.function.Closure {
+		e.line("return (adamic_value){.%s = %s};", member(statement.Value.Type()), result)
+	} else {
+		e.line("return %s;", result)
+	}
 }
 
 // nested emits statements one level in, in a scope of their own.
@@ -420,6 +459,22 @@ func (e *emitter) loop(statement ir.Loop) {
 	e.out.WriteString(body)
 	if current.continued {
 		e.line("%s:;", current.label)
+	}
+	// Each iteration's let bindings are its own (ECMA-262, CreatePerIterationEnvironment): a captured
+	// one gets a fresh cell holding the current value before the update runs, so a closure made in
+	// this iteration keeps this iteration's.
+	for _, local := range statement.PerIteration {
+		if !e.program.Locals[local].Captured {
+			continue
+		}
+		cell := e.cellName(local)
+		fresh := e.temporary()
+		e.line("adamic_cell *%s = adamic_cell_new(%s->value, %s->references);", fresh, cell, cell)
+		e.line("if (%s->references) {", fresh)
+		e.line("\tadamic_retain(%s->value.reference);", fresh)
+		e.line("}")
+		e.line("adamic_release(%s);", cell)
+		e.line("%s = %s;", cell, fresh)
 	}
 	for _, update := range statement.Update {
 		e.statement(update)
@@ -509,6 +564,52 @@ func (e *emitter) value(expression ir.Expression) string {
 		value := e.value(expression.Value)
 		index := e.value(expression.Index)
 		return fmt.Sprintf("adamic_string_char_code_at(%s, %s)", value, index)
+	case ir.MakeClosure:
+		environment := e.program.Functions[expression.Function].Environment
+		closure := e.own(ir.Closure, fmt.Sprintf("adamic_closure_new(%s, %d)", e.functionName(expression.Function), len(environment)))
+		for index, local := range environment {
+			e.line("%s->cells[%d] = adamic_retain(%s);", closure, index, e.cellReference(local))
+		}
+		return closure
+	case ir.CallClosure:
+		closure := e.value(expression.Closure)
+		arguments := []string{}
+		for _, argument := range expression.Arguments {
+			arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), e.value(argument)))
+		}
+		packed := "NULL"
+		if len(arguments) > 0 {
+			packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
+		}
+		call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+		if expression.Returns == 0 {
+			e.line("%s;", call)
+			return "0"
+		}
+		result := e.temporary()
+		e.line("adamic_value %s = %s;", result, call)
+		if expression.Returns.IsReference() {
+			// A closure's result comes back owned.
+			return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))
+		}
+		return result + "." + member(expression.Returns)
+	case ir.ArrayMap:
+		source := e.temporary()
+		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
+		callback := e.value(expression.Callback)
+		mapped := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s->length, %t)", source, expression.Result.IsReference()))
+		count, index := e.temporary(), e.temporary()
+		// The length is read once, as JavaScript's map does; an array the callback shrinks is a
+		// panic here rather than JavaScript's holes, which 0.1 has no way to hold.
+		e.line("size_t %s = %s->length;", count, source)
+		e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
+		e.line("\tif (%s >= %s->length) {", index, source)
+		e.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
+		e.line("\t\tadamic_panic(message, sizeof message - 1);")
+		e.line("\t}")
+		e.line("\tadamic_array_push(%s, %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}));", mapped, callback, callback, source, index, index, source)
+		e.line("}")
+		return mapped
 	case ir.ArrayPop:
 		array := e.temporary()
 		e.line("adamic_array *%s = %s;", array, e.value(expression.Array))
@@ -767,27 +868,23 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.indent++
 	e.scopes = append(e.scopes, nil)
 	element := fmt.Sprintf("%s->elements[%s].%s", held, index, member(statement.Element))
-	name := e.localName(statement.Local)
 	if statement.Pattern != nil {
 		// Each name reads its field of the tuple, which the array holds while the body runs.
 		for _, binding := range statement.Pattern {
 			bound := e.program.Locals[binding.Local]
 			field := fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", element, cString(binding.Field), e.cache(), member(bound.Type))
 			if bound.Type.IsReference() {
-				e.line("%s %s = adamic_retain(%s);", cType(bound.Type), e.localName(binding.Local), field)
-				e.hold(e.localName(binding.Local))
-			} else {
-				e.line("%s %s = %s;", cType(bound.Type), e.localName(binding.Local), field)
+				field = fmt.Sprintf("(%s)%s", cType(bound.Type), field)
 			}
+			e.declareLocal(binding.Local, field, false)
 		}
 	} else if overString {
-		e.line("adamic_string *%s = adamic_string_slice_bytes(%s, %s, %s);", name, held, index, size)
-		e.hold(name)
-	} else if statement.Element.IsReference() {
-		e.line("%s %s = adamic_retain(%s);", cType(statement.Element), name, element)
-		e.hold(name)
+		e.declareLocal(statement.Local, fmt.Sprintf("adamic_string_slice_bytes(%s, %s, %s)", held, index, size), true)
 	} else {
-		e.line("%s %s = %s;", cType(statement.Element), name, element)
+		if statement.Element.IsReference() {
+			element = fmt.Sprintf("(%s)%s", cType(statement.Element), element)
+		}
+		e.declareLocal(statement.Local, element, false)
 	}
 	for _, inner := range statement.Body {
 		e.statement(inner)
@@ -861,6 +958,17 @@ func (e *emitter) switchStatement(statement ir.Switch) {
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
 	name := e.localName(read.Local)
+	if slot := e.cellSlot(read.Local); slot != "" {
+		// A captured variable may change under a call later in the statement (a closure that
+		// writes it), so, like a global, it's copied the moment JavaScript reads it.
+		value := slot + "." + member(read.Of)
+		if read.Of.IsReference() {
+			return e.own(read.Of, fmt.Sprintf("adamic_retain((%s)%s)", cType(read.Of), value))
+		}
+		snapshot := e.temporary()
+		e.line("%s %s = %s;", cType(read.Of), snapshot, value)
+		return snapshot
+	}
 	if !e.program.Locals[read.Local].Global {
 		return name
 	}
@@ -1026,6 +1134,8 @@ func cType(valueType ir.Type) string {
 		return "adamic_array *"
 	case ir.Map:
 		return "adamic_map *"
+	case ir.Closure:
+		return "adamic_closure *"
 	case ir.MaybeNumber:
 		return "adamic_maybe_number"
 	}
@@ -1187,4 +1297,64 @@ func (e *emitter) comparator(sort ir.ArraySort) string {
 		"static int %s(adamic_value left, adamic_value right) {\n\tdouble result = %s(%s);\n\treturn result < 0 ? -1 : result > 0 ? 1 : 0;\n}",
 		name, e.functionName(sort.Comparator), argument))
 	return name
+}
+
+// declareLocal declares a local with its first value. A reference is retained unless owned says the
+// value is already the local's. A captured local is declared straight into a cell.
+func (e *emitter) declareLocal(local int, value string, owned bool) {
+	declared := e.program.Locals[local]
+	if declared.Captured {
+		e.makeCell(local, value, owned)
+		return
+	}
+	name := e.localName(local)
+	if declared.Type.IsReference() {
+		if !owned {
+			value = "adamic_retain(" + value + ")"
+		}
+		e.line("%s %s = %s;", cType(declared.Type), name, value)
+		e.hold(name)
+		return
+	}
+	e.line("%s %s = %s;", cType(declared.Type), name, value)
+}
+
+// makeCell declares a captured local's cell, holding value (retained unless owned).
+func (e *emitter) makeCell(local int, value string, owned bool) {
+	declared := e.program.Locals[local]
+	if declared.Type.IsReference() && !owned {
+		value = "adamic_retain(" + value + ")"
+	}
+	cell := e.cellName(local)
+	e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", cell, member(declared.Type), value, declared.Type.IsReference())
+	e.hold(cell)
+}
+
+func (e *emitter) cellName(local int) string {
+	return e.localName(local) + "_cell"
+}
+
+// cellSlot is the adamic_value a captured local lives in, from the current function: a cell of its
+// environment, or a cell it declared. It's "" for a local that isn't in a cell.
+func (e *emitter) cellSlot(local int) string {
+	if reference := e.cellReference(local); reference != "" {
+		return reference + "->value"
+	}
+	return ""
+}
+
+// cellReference is the cell a captured local lives in, from the current function, or "".
+func (e *emitter) cellReference(local int) string {
+	declared := e.program.Locals[local]
+	if declared.Global || !declared.Captured {
+		return ""
+	}
+	if e.function != nil {
+		for index, captured := range e.function.Environment {
+			if captured == local {
+				return fmt.Sprintf("self->cells[%d]", index)
+			}
+		}
+	}
+	return e.cellName(local)
 }

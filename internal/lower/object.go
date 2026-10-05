@@ -206,7 +206,7 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		return ir.ArrayPop{Array: array, Element: element}, true, nil
 	}
-	if receiverType == ir.Array && (name == "push" || name == "join" || name == "slice" || name == "sort") {
+	if receiverType == ir.Array && (name == "push" || name == "join" || name == "slice" || name == "sort" || name == "map") {
 		return l.arrayMethod(node, receiver, name)
 	}
 	if receiverType == ir.Map && (name == "get" || name == "set" || name == "has" || name == "delete") {
@@ -390,6 +390,24 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	if name == "sort" {
 		return l.arraySort(node, array, element)
 	}
+	if name == "map" {
+		arguments := node.AsCallExpression().Arguments.Nodes
+		if len(arguments) != 1 {
+			return nil, true, l.notYet(node, "map with other than one callback")
+		}
+		callback, err := l.expression(arguments[0])
+		if err != nil {
+			return nil, true, err
+		}
+		if callback.Type() != ir.Closure {
+			return nil, true, l.notYet(arguments[0], "map with a callback that isn't a function")
+		}
+		result, err := l.elementType(node)
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result}, true, nil
+	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		lowered, err := l.expression(argument)
@@ -567,6 +585,7 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	if !isLocal {
 		return nil, l.notYet(property, "reading "+property.Name().Text())
 	}
+	l.touch(local)
 	of := l.result.Locals[local].Type
 	if of == ir.MaybeNumber {
 		return nil, l.notYet(property, "a field from a number | undefined variable")

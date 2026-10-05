@@ -97,17 +97,17 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		if member.Kind != ast.KindMethodDeclaration {
 			continue
 		}
-		this := l.thisLocal()
-		if err := l.lowerFunction(lowered.methods[member.Name().Text()], member, this); err != nil {
+		method := lowered.methods[member.Name().Text()]
+		if err := l.lowerFunction(method, member, l.thisLocal(method)); err != nil {
 			return nil, err
 		}
 	}
 	return lowered, nil
 }
 
-// thisLocal makes a fresh local for a method's this.
-func (l *lowering) thisLocal() int {
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object})
+// thisLocal makes a fresh local for the this of the method or constructor at owner.
+func (l *lowering) thisLocal(owner int) int {
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: owner})
 	return len(l.result.Locals) - 1
 }
 
@@ -115,7 +115,7 @@ func (l *lowering) thisLocal() int {
 // initializer (or its type's zero until the constructor body assigns it, which the checker requires),
 // then the constructor's body, which returns the object.
 func (l *lowering) constructor(index int, declaration *ast.Node) error {
-	this := l.thisLocal()
+	this := l.thisLocal(index)
 	fields := []ir.Field{}
 	for _, member := range declaration.Members() {
 		if member.Kind != ast.KindPropertyDeclaration {

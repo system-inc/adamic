@@ -80,6 +80,20 @@ static void free_one(void *value) {
 	case adamic_kind_map:
 		adamic_map_free_children(value, let_go);
 		break;
+	case adamic_kind_cell: {
+		adamic_cell *cell = value;
+		if (cell->references) {
+			let_go(cell->value.reference);
+		}
+		break;
+	}
+	case adamic_kind_closure: {
+		adamic_closure *closure = value;
+		for (size_t index = 0; index < closure->count; index++) {
+			let_go(closure->cells[index]);
+		}
+		break;
+	}
 	}
 	free(value);
 }

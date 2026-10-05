@@ -56,9 +56,6 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		source string
 		want   string
 	}{
-		// A local console is not the prelude's, and lowering it as console.log would print what the
-		// program never asked to print.
-		{"a local console", "const console = { log: (message: string): void => {} };\nconsole.log('x');\n", "main.a:1:24: stage 0 can't lower an ArrowFunction yet"},
 		{"a closure", "function outer(): number {\n\tfunction inner(): number {\n\t\treturn 1;\n\t}\n\treturn inner();\n}\nconsole.log(`${outer()}`);\n", "main.a:2:2: stage 0 can't lower a function inside a function (a closure) yet"},
 		{"a class inside a function", "function make(): number {\n\tclass Box {\n\t\treadonly size = 1;\n\t}\n\treturn 1;\n}\nconsole.log(`${make()}`);\n", "main.a:2:2: stage 0 can't lower a class inside a function yet"},
 		// array[index] is number | undefined, read with a bounds check stage 0 doesn't emit yet.

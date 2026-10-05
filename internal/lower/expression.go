@@ -38,8 +38,10 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap"):
 		return ir.Map, true
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
-		// A plain object. One with call signatures is a function, which stage 0 can't hold as a value.
 		return ir.Object, true
+	case flags&checker.TypeFlagsObject != 0:
+		// An object with call signatures is a function, held as a closure.
+		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		var shared ir.Type
 		for _, member := range proven.Types() {
@@ -150,7 +152,12 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		if l.this < 0 {
 			return nil, l.notYet(node, "this outside a method")
 		}
+		l.touch(l.this)
 		return ir.Read{Local: l.this, Of: ir.Object}, nil
+	case ast.KindArrowFunction:
+		return l.closure(node)
+	case ast.KindFunctionExpression:
+		return nil, l.notYet(node, "a function expression (an arrow function captures this as written)")
 	case ast.KindCallExpression:
 		if lowered, isBuiltin, err := l.builtin(node); isBuiltin {
 			return lowered, err
@@ -323,12 +330,15 @@ func typeName(valueType ir.Type) string {
 	return "value"
 }
 
-// call lowers a call to one of the module's functions.
+// call lowers a call to one of the module's functions, or to a function value.
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	function, isFunction := l.functions[l.symbol(callee)]
 	if !ast.IsIdentifier(callee) || !isFunction {
+		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
+			return l.callClosure(node)
+		}
 		return nil, l.notYet(node, "a call to "+describe(callee))
 	}
 	arguments := []ir.Expression{}
@@ -373,4 +383,41 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "?? whose sides have different types")
 	}
 	return ir.Coalesce{Value: value, Fallback: fallback, Of: present}, nil
+}
+
+// closure lowers an arrow function to a function of its own and the closure that captures it.
+func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
+	index := len(l.result.Functions)
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "closure", Closure: true})
+	l.closures = append(l.closures, index)
+	err := l.lowerFunction(index, node, -1)
+	l.closures = l.closures[:len(l.closures)-1]
+	if err != nil {
+		return nil, err
+	}
+	return ir.MakeClosure{Function: index}, nil
+}
+
+// callClosure lowers a call through a function value.
+func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+	closure, err := l.expression(node.AsCallExpression().Expression)
+	if err != nil {
+		return nil, err
+	}
+	arguments := []ir.Expression{}
+	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+		lowered, err := l.expression(argument)
+		if err != nil {
+			return nil, err
+		}
+		arguments = append(arguments, lowered)
+	}
+	var returns ir.Type
+	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
+		var isKnown bool
+		if returns, isKnown = l.representation(result); !isKnown {
+			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
+		}
+	}
+	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil
 }

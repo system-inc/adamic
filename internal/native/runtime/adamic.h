@@ -19,6 +19,8 @@ enum adamic_kind {
 	adamic_kind_object,
 	adamic_kind_array,
 	adamic_kind_map,
+	adamic_kind_cell,
+	adamic_kind_closure,
 };
 
 typedef struct adamic_heap {
@@ -46,6 +48,30 @@ typedef struct adamic_maybe_number {
 	bool present;
 	double number;
 } adamic_maybe_number;
+
+// adamic_cell holds a variable a closure captured, so the function that declared it and every
+// closure that captured it share one (closure.c). references says whether value is a reference.
+typedef struct adamic_cell {
+	adamic_heap heap;
+	bool references;
+	adamic_value value;
+} adamic_cell;
+
+adamic_cell *adamic_cell_new(adamic_value value, bool references);
+
+// adamic_closure is a function value: its code, and the cells it captured. Every closure is called
+// the same way, its arguments and its result as adamic_value, whatever its types.
+typedef struct adamic_closure adamic_closure;
+typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments);
+struct adamic_closure {
+	adamic_heap heap;
+	adamic_code code;
+	size_t count;
+	adamic_cell *cells[];
+};
+
+// adamic_closure_new makes a closure of count cells, for the caller to fill with references it gives.
+adamic_closure *adamic_closure_new(adamic_code code, size_t count);
 
 // adamic_string is an immutable string: UTF-8 bytes (string.c).
 typedef struct adamic_string {

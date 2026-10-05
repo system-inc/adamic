@@ -35,6 +35,11 @@ type Function struct {
 	Returns Type
 
 	Body []Statement
+
+	// Closure is a function value made where it's written (an arrow function), and Environment the
+	// captured variables it reaches through its cells, in order.
+	Closure     bool
+	Environment []int
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of
@@ -58,11 +63,14 @@ const (
 
 	// MaybeNumber is number | undefined: a number that may be missing, as Map.get gives it.
 	MaybeNumber
+
+	// Closure is a function value: code, and the variables it captured.
+	Closure
 )
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map
+	return t == String || t == Object || t == Array || t == Map || t == Closure
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -72,6 +80,12 @@ type Local struct {
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
+
+	// Function is the function that declares it, -1 for the module's top level.
+	Function int
+
+	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
+	Captured bool
 }
 
 // Expression is a value. Evaluating a String expression yields a reference its consumer owns: the
@@ -217,6 +231,25 @@ type (
 		Element Type
 	}
 
+	// MakeClosure makes a closure of a function, capturing the cells of its Environment.
+	MakeClosure struct{ Function int }
+
+	// CallClosure calls a function value. Returns is its result type, 0 for void.
+	CallClosure struct {
+		Closure   Expression
+		Arguments []Expression
+		Returns   Type
+	}
+
+	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
+	// element, its index and the array.
+	ArrayMap struct {
+		Array    Expression
+		Callback Expression
+		Element  Type
+		Result   Type
+	}
+
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
 	// are named "0" and "1".
 	MapEntries struct {
@@ -309,6 +342,9 @@ func (CharCodeAt) Type() Type      { return Number }
 func (Trim) Type() Type            { return String }
 func (CodePoints) Type() Type      { return Array }
 func (MapEntries) Type() Type      { return Array }
+func (MakeClosure) Type() Type     { return Closure }
+func (c CallClosure) Type() Type   { return c.Returns }
+func (ArrayMap) Type() Type        { return Array }
 
 func (p ArrayPop) Type() Type {
 	if p.Element == Number {
@@ -450,6 +486,10 @@ type (
 		Body       []Statement
 		Update     []Statement
 		CheckAfter bool
+
+		// PerIteration are the for (let ...) variables, each its own copy in every iteration, as
+		// JavaScript makes them: a closure made in one iteration keeps that iteration's value.
+		PerIteration []int
 	}
 
 	// Block is a scope: locals declared in it are released when it ends.
