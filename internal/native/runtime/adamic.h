@@ -347,6 +347,10 @@ double adamic_math_hypot(size_t count, const double *values);
 adamic_string *adamic_number_to_exponential(double value, double digits, bool has_digits);
 adamic_string *adamic_number_to_precision(double value, double digits, bool has_digits);
 
+// adamic_number_to_radix is value.toString(radix), V8's (radix.c), and returns a string the caller
+// owns.
+adamic_string *adamic_number_to_radix(double value, double radix);
+
 // adamic_number_to_fixed is value.toFixed(digits), and returns a string the caller owns.
 adamic_string *adamic_number_to_fixed(double value, double digits);
 

@@ -1111,10 +1111,16 @@ var cMath = map[string]string{
 	"round": "adamic_math_round", "sign": "adamic_math_sign", "pow": "adamic_power",
 }
 
-// numberFormat emits toExponential and toPrecision (runtime/dtoa.c), the receiver before the
-// argument, as JavaScript reads them.
+// numberFormat emits toExponential and toPrecision (runtime/dtoa.c) and toString with a radix
+// (runtime/radix.c), the receiver before the argument, as JavaScript reads them.
 func (e *emitter) numberFormat(format ir.NumberFormat) string {
 	value := e.value(format.Value)
+	if format.Method == "toString" {
+		if format.Argument == nil {
+			return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", value))
+		}
+		return e.own(ir.String, fmt.Sprintf("adamic_number_to_radix(%s, %s)", value, e.value(format.Argument)))
+	}
 	argument, hasArgument := "0.0", "false"
 	if format.Argument != nil {
 		argument, hasArgument = e.value(format.Argument), "true"

@@ -1,0 +1,6 @@
+// A radix of 37 is a RangeError in JavaScript, and a panic in Adamic, after what was printed
+// before it.
+
+for (let radix = 34; radix <= 40; radix += 1) {
+	console.log((1295).toString(radix));
+}
