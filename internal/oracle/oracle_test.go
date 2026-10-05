@@ -129,6 +129,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/interleaved.a", true, false},
 	{"internal/oracle/testdata/sets.a", true, false},
 	{"internal/oracle/testdata/maybe_collections.a", true, false},
+	// Tail calls keep their frames, so recursion runs out of stack as on Node (native.go).
+	{"internal/oracle/testdata/stack_tail_call.a", true, false},
+	{"internal/oracle/testdata/stack_forever.a", true, false},
+	{"internal/oracle/testdata/optional_strings.a", true, false},
+	{"internal/oracle/testdata/concat_too_long.a", true, false},
+	{"internal/oracle/testdata/replace_all_large.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
