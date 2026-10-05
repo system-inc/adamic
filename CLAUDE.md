@@ -39,6 +39,14 @@ Send test output to a log and read the log. Never pipe a test run into `head` or
 
 On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that job.
 
+## Adamic's own code passes Adamic's own gate
+
+cohere checks and formats every Adamic program in this repository, `.ts` and `.a` alike. `tsconfig.json` carries the same compiler options stage 0 sets in `internal/load/load.go` (keep the two identical), the prelude as the one global declaration file, and `"sourceExtensions": [".a"]`, which cohere's TypeScript reads and stock tools ignore. `CohereSettings.json` turns on `cohere:typescript` (soundness, style and correctness) and ignores the files that are wrong on purpose, for these reasons:
+
+- `internal/load/testdata/0.1/refuse/**`: docs/0.1.md's five refused programs, whose job is to be refused.
+- `stage1/**/gaps/**`: each stage-1 slice's smallest programs for what stage 0 can't hold yet, kept exactly as written so their gaps tests notice when a gap closes.
+- `review/**`: reviewers' probes, written to break things.
+
 ## Working here
 
 - Write code that reads like the code around it: plain Go, comments that say why, names spelled out in full.

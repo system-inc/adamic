@@ -966,17 +966,33 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, entry := range expression.Entries {
 			entries = append(entries, [2]string{e.value(entry[0]), e.value(entry[1])})
 		}
-		created := e.own(ir.Map, fmt.Sprintf("adamic_map_new(%t, %t)", expression.Key == ir.String, expression.Value.IsReference()))
+		var pairs string
+		if expression.Pairs != nil {
+			pairs = e.value(expression.Pairs)
+		}
+		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
 		for _, entry := range entries {
 			e.line("adamic_map_set(%s, %s, %s);", created, held(expression.Key, entry[0]), held(expression.Value, entry[1]))
 		}
+		if expression.Pairs != nil {
+			e.line("adamic_map_add_pairs(%s, %s);", created, pairs)
+		}
 		return created
+	case ir.MapKeys:
+		return e.own(ir.Array, fmt.Sprintf("adamic_map_keys(%s)", e.value(expression.Map)))
+	case ir.MapValues:
+		return e.own(ir.Array, fmt.Sprintf("adamic_map_values(%s)", e.value(expression.Map)))
+	case ir.MapClear:
+		e.line("adamic_map_clear(%s);", e.value(expression.Map))
+		return "0"
+	case ir.MapForEach:
+		return e.mapForEach(expression)
 	case ir.SetNew:
 		var values string
 		if expression.Values != nil {
 			values = e.value(expression.Values)
 		}
-		created := e.own(ir.Map, fmt.Sprintf("adamic_map_new(%t, false)", expression.Element == ir.String))
+		created := e.own(ir.Map, newMap(expression.Element, false))
 		if expression.Values != nil {
 			e.line("adamic_set_add_all(%s, %s);", created, values)
 		}
@@ -1020,6 +1036,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
 	case ir.ProgramArguments:
 		return e.own(ir.Array, "adamic_program_arguments()")
+	case ir.ReadDirectory:
+		return e.own(ir.Object, fmt.Sprintf("adamic_read_directory(%s)", e.value(expression.Path)))
+	case ir.FileStatus:
+		return e.own(ir.Object, fmt.Sprintf("adamic_file_status(%s)", e.value(expression.Path)))
 	case ir.WriteTextFile:
 		path := e.value(expression.Path)
 		text := e.value(expression.Text)
@@ -1211,6 +1231,56 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	e.indent--
 	e.line("}")
 	return result
+}
+
+// newMap makes a map, or a Set's map, for its keys: strings by their text, numbers by
+// SameValueZero, and anything else held by reference by its identity.
+func newMap(key ir.Type, referenceValues bool) string {
+	if key.IsReference() && key != ir.String {
+		return fmt.Sprintf("adamic_map_new_identity(%t)", referenceValues)
+	}
+	return fmt.Sprintf("adamic_map_new(%t, %t)", key == ir.String, referenceValues)
+}
+
+// mapForEach emits map.forEach and set.forEach as for...of's loop over the map, live as it is. The key
+// and value are held across each call, since the callback may delete their entry; a Set's callback
+// gets its element twice, as JavaScript gives it.
+func (e *emitter) mapForEach(visit ir.MapForEach) string {
+	collection := e.value(visit.Map)
+	callback := e.value(visit.Callback)
+	iterator, key, value, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
+	e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", iterator, collection)
+	e.line("adamic_value %s, %s;", key, value)
+	e.line("while (adamic_map_iterator_next(%s, &%s, &%s)) {", iterator, key, value)
+	e.indent++
+	hold := func(slot string, of ir.Type, how string) {
+		if of.IsReference() {
+			e.line("%s(%s.reference);", how, slot)
+		}
+	}
+	hold(key, visit.Key, "adamic_retain")
+	first := value
+	if visit.Set {
+		first = key
+	} else {
+		hold(value, visit.Value, "adamic_retain")
+	}
+	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, %s, {.reference = %s}})", callback, callback, first, key, collection)
+	if visit.Returns.IsReference() {
+		// A callback's result comes back owned, and forEach has no use for it.
+		e.line("adamic_value %s = %s;", answer, call)
+		e.line("adamic_release(%s.reference);", answer)
+	} else {
+		e.line("%s;", call)
+	}
+	if !visit.Set {
+		hold(value, visit.Value, "adamic_release")
+	}
+	hold(key, visit.Key, "adamic_release")
+	e.indent--
+	e.line("}")
+	e.line("adamic_release(%s);", iterator)
+	return "0"
 }
 
 // arrayReduce emits reduce as arrayVisit's loop, carrying what the callback last returned. The callee

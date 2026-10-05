@@ -97,6 +97,9 @@ func (l *lowering) hasProperty(node *ast.Node, name string) bool {
 }
 
 func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
+	if checker.IsTupleType(l.checker.GetTypeAtLocation(node)) {
+		return l.tupleLiteral(node)
+	}
 	element, err := l.elementType(node)
 	if err != nil {
 		return nil, err
@@ -104,25 +107,10 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	literal := ir.ArrayLiteral{Element: element}
 	items := node.AsArrayLiteralExpression().Elements.Nodes
 	if len(items) == 1 && items[0].Kind == ast.KindSpreadElement && !l.checker.IsArrayType(l.checker.GetTypeAtLocation(items[0].AsSpreadElement().Expression)) {
-		// [...text] is the text's code points.
-		spread, err := l.expression(items[0].AsSpreadElement().Expression)
-		if err != nil {
-			return nil, err
-		}
-		if spread.Type() == ir.String {
-			return ir.CodePoints{Value: spread}, nil
-		}
-		if spread.Type() == ir.Map && l.isSet(items[0].AsSpreadElement().Expression) {
-			return l.setValues(items[0].AsSpreadElement().Expression, spread)
-		}
-		if spread.Type() == ir.Map {
-			key, value, err := l.mapTypes(items[0].AsSpreadElement().Expression)
-			if err != nil {
-				return nil, err
-			}
-			return ir.MapEntries{Map: spread, KeyType: key, ValueType: value}, nil
-		}
-		return nil, l.notYet(items[0], "spreading a "+typeName(spread.Type())+" into an array")
+		// [...text] is the text's code points, [...set] its elements, [...map] its entries, and
+		// [...map.keys()] and the rest what they give (collections.go).
+		spread, _, err := l.iterated(items[0].AsSpreadElement().Expression)
+		return spread, err
 	}
 	spreads := false
 	for _, item := range items {
@@ -227,6 +215,10 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		return ir.StringLength{Value: object}, nil
 	case object.Type() == ir.Map && name == "size":
 		return ir.MapSize{Map: object}, nil
+	case object.Type() == ir.Object && name == "length" && checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)):
+		// A tuple is an object of fields "0", "1" and on, with no length to read; a fixed one's length
+		// is its type's, read here when nothing about reading the tuple itself could be seen.
+		return l.tupleLength(node, access.Expression)
 	case object.Type() == ir.Object:
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 			if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.Weak {
@@ -346,6 +338,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if receiverType == ir.Map && l.isSet(receiver) {
 		return l.setMethod(node, receiver, name)
+	}
+	if receiverType == ir.Map && (name == "clear" || name == "forEach") {
+		return l.clearOrVisit(node, receiver, name, false)
 	}
 	if receiverType == ir.Map && (name == "get" || name == "set" || name == "has" || name == "delete") {
 		return l.mapMethod(node, receiver, name)
@@ -535,7 +530,8 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			return nil, l.notYet(name, "destructuring a "+typeName(element))
 		}
 		for index, binding := range name.AsBindingPattern().Elements.Nodes {
-			if binding.Kind == ast.KindOmittedExpression {
+			// A hole, [, second], is a binding element with no name.
+			if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
 				continue
 			}
 			bound := binding.AsBindingElement()
@@ -580,7 +576,8 @@ func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *as
 			return nil, l.notYet(name, "destructuring more than a key and a value")
 		}
 		for index, binding := range elements {
-			if binding.Kind == ast.KindOmittedExpression {
+			// A hole, [, second], is a binding element with no name.
+			if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
 				continue
 			}
 			bound := binding.AsBindingElement()
@@ -915,8 +912,8 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	}
 	key, keyKnown := l.representation(arguments[0])
 	value, valueKnown := l.kept(arguments[1])
-	if !keyKnown || (key != ir.String && key != ir.Number) {
-		return 0, 0, l.notYet(node, "a Map whose keys aren't strings or numbers")
+	if !keyKnown || !keyable(key) {
+		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, objects, arrays, maps or functions")
 	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
 	if !valueKnown || slotless(value) {
@@ -949,9 +946,13 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	if created.Arguments == nil || len(created.Arguments.Nodes) == 0 {
 		return lowered, nil
 	}
+	if len(created.Arguments.Nodes) != 1 {
+		return nil, l.notYet(node, "new Map with more than one argument")
+	}
 	pairs := ast.SkipParentheses(created.Arguments.Nodes[0])
-	if len(created.Arguments.Nodes) != 1 || pairs.Kind != ast.KindArrayLiteralExpression {
-		return nil, l.notYet(node, "new Map from anything but pairs written out")
+	if !writtenOut(pairs) {
+		// Pairs from anywhere else: an array of them, another Map, its entries() (collections.go).
+		return l.newMapFrom(node, pairs, key, value)
 	}
 	for _, pair := range pairs.AsArrayLiteralExpression().Elements.Nodes {
 		pair = ast.SkipParentheses(pair)
@@ -975,6 +976,26 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		lowered.Entries = append(lowered.Entries, [2]ir.Expression{entryKey, entryValue})
 	}
 	return lowered, nil
+}
+
+// writtenOut reports whether a new Map's argument is its pairs written out: an array literal of
+// [key, value] literals, each set in order as written.
+func writtenOut(pairs *ast.Node) bool {
+	if pairs.Kind != ast.KindArrayLiteralExpression {
+		return false
+	}
+	for _, pair := range pairs.AsArrayLiteralExpression().Elements.Nodes {
+		pair = ast.SkipParentheses(pair)
+		if pair.Kind != ast.KindArrayLiteralExpression || len(pair.AsArrayLiteralExpression().Elements.Nodes) != 2 {
+			return false
+		}
+		for _, element := range pair.AsArrayLiteralExpression().Elements.Nodes {
+			if element.Kind == ast.KindSpreadElement || element.Kind == ast.KindOmittedExpression {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 // mapMethod lowers map.get, set, has and delete.
