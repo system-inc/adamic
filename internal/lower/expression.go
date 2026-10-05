@@ -42,7 +42,8 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Boolean, true
 	case flags&checker.TypeFlagsObject != 0 && l.checker.IsArrayType(proven):
 		return ir.Array, true
-	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap"):
+	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+		// A Set is held as a Map whose values aren't used (set.go).
 		return ir.Map, true
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
 		return ir.Object, true

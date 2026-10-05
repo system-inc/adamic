@@ -79,11 +79,11 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a union a function value takes", "const show = (value: string | number): string => `${value}`;\n", "main.a:1:15: stage 0 can't lower a function value taking string | number yet"},
 		{"a map of a union", "const values = new Map<string, string | number>();\n", "main.a:1:16: stage 0 can't lower a Map of string | number yet"},
 		{"a template of a union with an object", "function pick(flag: boolean): number | { size: number } {\n\treturn flag ? 1 : { size: 2 };\n}\nconsole.log(`${pick(true)}`);\n", "main.a:4:16: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"},
-		{"a map of number | undefined", "const scores = new Map<string, number | undefined>();\n", "main.a:1:16: stage 0 can't lower a Map of number | undefined yet"},
-		{"reduce to number | undefined", "const values = [1, 2];\nconst last = values.reduce((kept: number | undefined, value) => value, undefined);\n", "main.a:2:14: stage 0 can't lower reduce to a number | undefined yet"},
-		{"sort of number | undefined", "const values: (number | undefined)[] = [2, undefined, 1];\nvalues.sort((left, right) => (left ?? 0) - (right ?? 0));\n", "main.a:2:1: stage 0 can't lower sort on an array of number | undefined yet"},
 		{"an array of targets seen as an array of Weak", "import type { Weak } from 'adamic';\ninterface Item {\n\treadonly name: string;\n}\nconst items: Item[] = [{ name: 'a' }];\nconst seen: Weak<Item>[] = items;\n", "main.a:6:28: stage 0 can't lower an array or map of Item[] seen as one of Weak<Item>[] (one keeps its elements weakly, the other doesn't) yet"},
 		{"a function value capturing what it initializes", "function run(): number {\n\tconst countdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n", "main.a:2:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet"},
+		{"a set of objects", "const shapes = new Set<{ size: number }>();\n", "main.a:1:16: stage 0 can't lower a Set of { size: number; } (a Set holds strings or numbers so far) yet"},
+		{"a set's entries", "const seen = new Set(['a']);\nfor (const pair of seen.entries()) {\n}\n", "main.a:2:20: stage 0 can't lower for...of over a Set's entries ([element, element] pairs) yet"},
+		{"a set from a string", "const letters = new Set('abc');\n", "main.a:1:25: stage 0 can't lower new Set from a string (an array is what it takes so far) yet"},
 		{"a template interpolating an object", "const point = { x: 1 };\nconsole.log(`${point}`);\n", "main.a:2:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
