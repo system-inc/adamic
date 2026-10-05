@@ -36,8 +36,8 @@
 //     WorkingTree, which holds the entries the matcher looks at: ignore files, `.git` entries and
 //     symbolic links, keyed by their slash-separated path below the root. When Adamic can read files,
 //     a WorkingTree read from disk takes its place and nothing else changes.
-//   - 0.1 has no exceptions and no multiple results, so the Go's (value, error) is a Result, and its
-//     (bool, Source) a Verdict.
+//   - 0.1 has no exceptions, so the Go's (value, error) is a Result. Its other two results are tuples:
+//     (bool, Source) is a Verdict, and strings.CutPrefix's (after, found) is [after, found].
 //   - The Go's unexported fields are #private fields, and a Matcher's are written only while enter
 //     builds a new one, as the Go writes only its copy.
 
@@ -148,13 +148,9 @@ export class Source {
 	}
 }
 
-// A path's answer: whether it is ignored, and the rule that decided. The Go returns the two as
-// (bool, Source), and cohere's differential test names the pair verdict. Stage 0 does not lower a tuple as
-// a value yet (gap 8 in GAPS.md), so they are named fields here.
-export interface Verdict {
-	readonly ignored: boolean;
-	readonly source: Source;
-}
+// A path's answer: whether it is ignored, and the rule that decided, which the Go returns as
+// (bool, Source). cohere's differential test names the pair verdict.
+export type Verdict = readonly [boolean, Source];
 
 // gitignore.go: Source{}.
 function zeroSource(): Source {
@@ -189,11 +185,11 @@ class Rule {
 		}
 		let below = relativePath;
 		if (this.base !== '') {
-			const cut = cutPrefix(relativePath, this.base + '/');
-			if (!cut.found) {
+			const [after, ok] = cutPrefix(relativePath, this.base + '/');
+			if (!ok) {
 				return false;
 			}
-			below = cut.after;
+			below = after;
 		}
 		return this.glob.matches(below, true);
 	}
@@ -236,9 +232,9 @@ export class Matcher {
 	// and by which rule. A walk that entered one anyway gets the same answer for everything inside.
 	excluded(): Verdict {
 		if (this.#excludedBy === undefined) {
-			return { ignored: false, source: zeroSource() };
+			return [false, zeroSource()];
 		}
-		return { ignored: true, source: this.#excludedBy.source };
+		return [true, this.#excludedBy.source];
 	}
 
 	// gitignore.go: (*Matcher).Enter. It returns the matcher for relativeDirectory, which is this
@@ -254,12 +250,11 @@ export class Matcher {
 		if (relativeDirectory === this.#directory) {
 			return { kind: 'Ok', value: this };
 		}
-		let cut = cutPrefix(relativeDirectory, this.#directory);
+		let [remainder, below] = cutPrefix(relativeDirectory, this.#directory);
 		if (this.#directory !== '') {
-			cut = cutPrefix(cut.after, '/');
+			[remainder, below] = cutPrefix(remainder, '/');
 		}
-		const remainder = cut.after;
-		if (!cut.found || remainder === '') {
+		if (!below || remainder === '') {
 			return failure(`gitignore: ${relativeDirectory} is not below ${displayDirectory(this.#directory)}`);
 		}
 
@@ -312,13 +307,13 @@ export class Matcher {
 			);
 		}
 		if (this.#excludedBy !== undefined) {
-			return { ignored: true, source: this.#excludedBy.source };
+			return [true, this.#excludedBy.source];
 		}
 		const decided = this.decide(relativePath, base(relativePath), isDirectory, this.#files.length);
 		if (decided === undefined) {
-			return { ignored: false, source: zeroSource() };
+			return [false, zeroSource()];
 		}
-		return { ignored: !decided.negated, source: decided.source };
+		return [!decided.negated, decided.source];
 	}
 
 	// gitignore.go: (*Matcher).IgnoredPath. It is ignored for a path anywhere below this matcher's
@@ -400,9 +395,9 @@ export class Patterns {
 		const relativePath = cleanRelative(relativePathAsGiven);
 		const decided = lastMatching(this.#rules, relativePath, base(relativePath), isDirectory);
 		if (decided === undefined) {
-			return { ignored: false, source: zeroSource() };
+			return [false, zeroSource()];
 		}
-		return { ignored: !decided.negated, source: decided.source };
+		return [!decided.negated, decided.source];
 	}
 }
 
@@ -616,19 +611,12 @@ function displayDirectory(directory: string): string {
 	return directory;
 }
 
-// strings.CutPrefix's results: text without the prefix, and whether it had it. Stage 0 does not lower a
-// tuple as a value yet (gap 8 in GAPS.md), so the Go's two results are named fields.
-interface Cut {
-	readonly after: string;
-	readonly found: boolean;
-}
-
-// strings.CutPrefix.
-function cutPrefix(text: string, prefix: string): Cut {
+// strings.CutPrefix: text without the prefix, and whether it had it.
+function cutPrefix(text: string, prefix: string): readonly [string, boolean] {
 	if (text.startsWith(prefix)) {
-		return { after: text.slice(prefix.length), found: true };
+		return [text.slice(prefix.length), true];
 	}
-	return { after: text, found: false };
+	return [text, false];
 }
 
 // strings.TrimPrefix.

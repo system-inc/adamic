@@ -6,9 +6,11 @@ Each program here typechecks under stage 0's options and runs on Node 24.21.0 wi
 
 The programs are also in `gaps/`, and `gaps_test.go` holds them to this file. An open gap must still be refused with the words recorded here. A closed one must lower and print natively what it prints on Node, leaking nothing. So the stream that closes a gap sees this test fail, and the message tells it to mark the gap closed and undo the port's workaround.
 
-Three of the first eight closed when the language-gaps stream landed on main at 80c3098 (gaps 5, 6 and 7), and this stream then closed 3, 4 and 9 in stage 0 itself. Each time the port went back to writing those places as the Go does. Closed gaps stay below, marked so, and the record is whole.
+Every gap is closed. Gaps 5, 6 and 7 closed when the language-gaps stream landed on main at 80c3098, and this stream closed 1, 2, 3, 4, 8 and 9 in stage 0 itself, each with an oracle fixture and a mutant it catches. Each time the port went back to writing those places as the Go does, so it now reads side by side with the Go, with no workaround left. Closed gaps stay below, marked so, and the record is whole.
 
-## 1. `String.fromCharCode` and `String.fromCodePoint`
+Still open, found while closing these and not needed by the port: a spread argument in a call (`String.fromCharCode(...codes)`, `Math.max(...values)`), and `.length` or an array's methods on a tuple.
+
+## 1. `String.fromCharCode` and `String.fromCodePoint` (closed by this stream)
 
 Both are in docs/0.1.md's library.
 
@@ -22,9 +24,9 @@ stage 0 can't lower reading String yet        (Node prints h)
 
 `String.fromCodePoint(233)` is refused the same way.
 
-**Around it:** the port spells a string's UTF-8 as a byte string (bytes.ts, below), so it makes a character from a byte. It reads the character from a 256-character string constant, `'\x00\x01...\xff'`, by index. That lowers.
+**Around it, until it closed:** a 256-character string constant read by index. **Closed:** both lower, each argument a number evaluated in order (runtime/from_codes.c). `fromCharCode` is ToUint16 exactly; adjacent surrogates join into the character they make, as in JavaScript; `fromCodePoint` panics with V8's `RangeError: Invalid code point ...`. Fixtures: `from_codes.a` (a sweep of ToUint16's edges and code points against Node) and `from_code_point_fails.a`. A spread argument isn't lowered yet, as no call's is (below).
 
-## 2. The bitwise operators
+## 2. The bitwise operators (closed by this stream)
 
 All of them, though 0.1 has them with JavaScript's ToInt32 semantics: `>>`, `<<`, `>>>`, `&`, `|`, `^` and unary `~`.
 
@@ -38,7 +40,7 @@ stage 0 can't lower a BinaryExpression with a number and a number yet      (Node
 stage 0 can't lower a PrefixUnaryExpression on a number yet                 (for ~x)
 ```
 
-**Around it:** arithmetic. UTF-8's six-bit groups are `Math.floor(codePoint / 64 ** group) % 64` (bytes.ts, `sixBits`). The Go's case folding `character|0x20` becomes two ranges in `isLetter` and in the `xdigit` class (glob.ts). `100 << 20` becomes `100 * 1024 * 1024`. The `%q` escape's hex digits are `Math.floor(code / 16)` and `code % 16`.
+**Around it, until it closed:** arithmetic for every shift and mask. **Closed:** all seven, and the six compound assignments, through ToInt32 and ToUint32 exactly (runtime/bitwise.c), with no C conversion of an out-of-range value and no shift of a negative one. Lowering them first printed `true` for `200 >> 3`: `ir.Binary.Type` typed every operator it didn't list as a boolean. It now names both lists and panics as a compiler bug for an operator in neither. Fixture: `bitwise.a`, every pair of 36 edge values through all six binary operators against Node.
 
 ## 3. A call to a function or method declared later (closed by this stream)
 
@@ -145,7 +147,7 @@ stage 0 can't lower a BinaryExpression with a value and a number yet        (Nod
 
 **Around it, until it closed:** `(set[member] ?? 0) === 1`. Nothing in the port needs it now.
 
-## 8. A tuple as a value
+## 8. A tuple as a value (closed by this stream)
 
 A tuple literal anywhere except directly inside `new Map([...])` is refused: returned, assigned, or as an element of a constant array.
 
@@ -172,7 +174,7 @@ stage 0 can't lower a value of type [string, number] where an array goes yet
 
 The Go returns two results in several places: `strings.CutPrefix`'s `(after, found)`, and `(bool, Source)` from `Ignored` and `Excluded`. A tuple is how TypeScript says that.
 
-**Around it:** named fields. `Cut { after, found }` (strings.CutPrefix's own result names), and `Verdict { ignored, source }` (cohere's differential test names the pair `verdict`). While the cases were constants, a tree's entries were written `new Map<string, Entry>([...])`, the one place tuple literals lower. case.ts now builds the map with `set` as it reads them.
+**Around it, until it closed:** named fields, `Cut { after, found }` and `Verdict { ignored, source }`. **Closed:** an array literal the checker types as a fixed-length tuple is an object of its elements, `"0"`, `"1"`, ..., as Map entries already were. `const [a, , c] = tuple` and `[a, b] = tuple` lower: the tuple whole first, then each name from its field, read as the element's type and fitted to the name's. Fixture: `tuple_values.a`. Still not lowered, and refused rather than read as missing fields: `.length` and an array's methods on a tuple, since a tuple isn't an array yet. Holes in a pattern (`[, b]`) crashed stage 0 on main, in `for...of` too: typescript-go's hole is a binding element with no name.
 
 ## 9. `return panic(...)` (closed by this stream)
 

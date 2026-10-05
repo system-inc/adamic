@@ -28,7 +28,7 @@ var gaps = []struct {
 	{"gaps/5_array_from.ts", false, "", "4\n"},
 	{"gaps/6_boolean_element.ts", false, "", "true true true\n"},
 	{"gaps/7_maybe_number_compared.ts", false, "", "true\n"},
-	{"gaps/8_tuple_value.ts", true, "a value of type [string, number] where an array goes", "bc 1\n"},
+	{"gaps/8_tuple_value.ts", false, "", "bc 1\n"},
 	{"gaps/9_return_panic.ts", false, "", "1\n"},
 }
 
