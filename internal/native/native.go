@@ -89,7 +89,8 @@ func Build(source string, output string, options Options) error {
 	}
 	arguments = append(arguments, "-o", output)
 	arguments = append(arguments, units...)
-	// libm is part of libc on macOS, and a library of its own on Linux.
+	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
+	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
 	arguments = append(arguments, "-lm")
 	command := exec.Command("clang", arguments...)
 	if combined, err := command.CombinedOutput(); err != nil {

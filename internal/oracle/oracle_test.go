@@ -7,9 +7,11 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"syscall"
 	"testing"
 	"time"
@@ -84,6 +86,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/optional_numbers.a", true, false},
 	{"internal/oracle/testdata/map_iteration.a", true, false},
 	{"internal/oracle/testdata/sorts.a", true, false},
+	{"internal/oracle/testdata/sort_releases.a", true, false},
 	{"internal/oracle/testdata/splices.a", true, false},
 	{"internal/oracle/testdata/fills.a", true, false},
 	{"internal/oracle/testdata/fill_length.a", true, false},
@@ -99,7 +102,17 @@ type run struct {
 
 func execute(t *testing.T, name string, arguments ...string) run {
 	t.Helper()
+	return executeWith(t, nil, name, arguments...)
+}
+
+// executeWith runs a command with environment added to the test's own; a later value for the same
+// name wins, so a sanitizer setting here can't be overridden by one inherited from the shell.
+func executeWith(t *testing.T, environment []string, name string, arguments ...string) run {
+	t.Helper()
 	command := bounded(t, name, arguments...)
+	if environment != nil {
+		command.Env = append(os.Environ(), environment...)
+	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
@@ -153,20 +166,46 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 	return lower.Lower(context.Background(), program)
 }
 
-// natively builds a lowered program under the sanitizers and runs it.
-func natively(t *testing.T, program *ir.Program) run {
+// natively builds a lowered program under the sanitizers and runs it. It returns the binary too, so
+// the leak check on Linux can run the same one again.
+//
+// On Linux, ASan carries LeakSanitizer and runs it at exit by default. This run is the comparison, and
+// a program that panics exits 70 holding what it held, which isn't a leak, so leak detection is off
+// here and the leak check is a run of its own. macOS's ASan has no leak detection to turn off.
+func natively(t *testing.T, program *ir.Program) (run, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	return execute(t, binary)
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+	}
+	return executeWith(t, environment, binary), binary
 }
 
-// leaks builds a lowered program without sanitizers (they and macOS's leaks tool don't mix), runs it
-// under leaks --atExit, and returns its report when anything leaked. No garbage collector means every
-// reference the compiler hands out has to come back; this is where a missing release shows.
-func leaks(t *testing.T, program *ir.Program) string {
+// leaks returns a report of everything a finished program never let go of, or "" when it let go of
+// everything. No garbage collector means every reference the compiler hands out has to come back;
+// this is where a missing release shows. Only programs Node finishes with exit 0 are asked.
+//
+// macOS has the leaks tool; Linux has LeakSanitizer, part of ASan there, run on the sanitized binary
+// the comparison already built.
+func leaks(t *testing.T, program *ir.Program, sanitized string) string {
+	t.Helper()
+	switch runtime.GOOS {
+	case "darwin":
+		return leaksTool(t, program)
+	case "linux":
+		return leakSanitizer(t, sanitized)
+	}
+	t.Fatalf("no leak check for %s: the oracle knows macOS's leaks tool and Linux's LeakSanitizer", runtime.GOOS)
+	return ""
+}
+
+// leaksTool builds a lowered program without sanitizers (they and macOS's leaks tool don't mix), runs
+// it under leaks --atExit, and returns its report when anything leaked.
+func leaksTool(t *testing.T, program *ir.Program) string {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program")
 	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
@@ -177,6 +216,18 @@ func leaks(t *testing.T, program *ir.Program) string {
 		return ""
 	}
 	return string(report.stdout)
+}
+
+// leakSanitizer runs a sanitized binary again with leak detection on, and returns LeakSanitizer's
+// report when anything leaked. The program finished with exit 0 on the comparison run, so any other
+// exit here is the sanitizer's.
+func leakSanitizer(t *testing.T, binary string) string {
+	t.Helper()
+	report := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	if report.exitCode == 0 {
+		return ""
+	}
+	return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 }
 
 // disagreement says how two runs differ, or "" when they don't.
@@ -213,7 +264,8 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Lower: %v", err)
 			}
-			oracle, native, backend := onNode(t, path), natively(t, program), onJavaScriptBackend(t, program)
+			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
+			native, sanitized := natively(t, program)
 			if fixture.checked {
 				// The check fires, so the source on Node goes on where Adamic stops: hold native to the
 				// backend that carries the same check, and make sure the check really did fire.
@@ -239,7 +291,7 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			// A program that panicked stopped where it stood, as Node's does, so what it held then
 			// isn't a leak; every program that finishes must have let go of everything.
 			if oracle.exitCode == 0 {
-				if leaked := leaks(t, program); leaked != "" {
+				if leaked := leaks(t, program, sanitized); leaked != "" {
 					t.Errorf("leaks:\n%s", leaked)
 				}
 			}
@@ -260,7 +312,8 @@ func TestTheOracleCatchesOneByte(t *testing.T) {
 		t.Fatal(err)
 	}
 	program.Strings[0] += "!"
-	if difference := disagreement(onNode(t, path), natively(t, program)); difference != "stdout differs" {
+	native, _ := natively(t, program)
+	if difference := disagreement(onNode(t, path), native); difference != "stdout differs" {
 		t.Errorf("got %q, want the mutant caught as \"stdout differs\"", difference)
 	}
 }
