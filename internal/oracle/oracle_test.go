@@ -124,6 +124,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/exceptions_empty.a", true, false},
 	{"internal/oracle/testdata/panic_in_try.a", true, false},
 	{"internal/oracle/testdata/invariance_readonly.a", true, false},
+	{"internal/oracle/testdata/tuples_kept.a", true, false},
 	{"internal/oracle/testdata/maybe_booleans.a", true, false},
 	{"internal/oracle/testdata/maybe_boolean_panic.a", true, false},
 	{"internal/oracle/testdata/unions.a", true, false},

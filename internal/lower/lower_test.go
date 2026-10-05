@@ -327,3 +327,40 @@ console.log(pen.pet.name);
 		})
 	}
 }
+
+// A tuple is held as an object, so stage 0 can't see one as an array yet: at every place a tuple can
+// flow into an array slot, at any depth, it says so with the way around it, and never lowers the
+// object as an array (R's c3.a printed a pointer as the array's length).
+func TestATupleSeenAsAnArrayIsNotYet(t *testing.T) {
+	t.Parallel()
+	const seen = "seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet"
+	for _, probe := range []struct {
+		name   string
+		source string
+		want   string
+	}{
+		{"an initializer", "const pair: [number, number] = [3, 4];\nconst values: readonly number[] = pair;\n", "main.a:2:35: stage 0 can't lower a [number, number] " + seen},
+		{"a cast literal", "const values: readonly number[] = [3, 4] as [number, number];\n", "main.a:1:35: stage 0 can't lower a [number, number] " + seen},
+		{"an assignment", "const pair: [number, number] = [3, 4];\nlet values: readonly number[] = [];\nvalues = pair;\n", "main.a:3:10: stage 0 can't lower a [number, number] " + seen},
+		{"an argument", "function total(values: readonly number[]): number {\n\treturn values.length;\n}\nconst pair: [number, number] = [3, 4];\nconsole.log(`${total(pair)}`);\n", "main.a:5:22: stage 0 can't lower a [number, number] " + seen},
+		{"a return", "function widen(pair: [number, number]): readonly number[] {\n\treturn pair;\n}\n", "main.a:2:9: stage 0 can't lower a [number, number] " + seen},
+		{"a field", "const pair: [number, number] = [3, 4];\nconst held: { readonly values: readonly number[] } = { values: pair };\n", "main.a:2:64: stage 0 can't lower a [number, number] " + seen},
+		{"an element", "const pair: [number, number] = [3, 4];\nconst rows: (readonly number[])[] = [pair];\n", "main.a:2:38: stage 0 can't lower a [number, number] " + seen},
+		{"an arrow's body", "const make: () => readonly number[] = () => [3, 4] as [number, number];\n", "main.a:1:45: stage 0 can't lower a [number, number] " + seen},
+		{"a map's value", "const pair: [number, number] = [3, 4];\nconst rows = new Map<string, readonly number[]>();\nrows.set('a', pair);\n", "main.a:3:15: stage 0 can't lower a [number, number] " + seen},
+		{"a slot that may be undefined", "const pair: [number, number] = [3, 4];\nconst values: readonly number[] | undefined = pair;\n", "main.a:2:47: stage 0 can't lower a [number, number] " + seen},
+		{"an array of tuples seen as an array of arrays", "const pairs: [number, number][] = [[3, 4]];\nconst rows: readonly (readonly number[])[] = pairs;\n", "main.a:2:46: stage 0 can't lower a [number, number] " + seen},
+		{"a tuple field seen as an array field", "const held: { readonly values: [number, number] } = { values: [3, 4] };\nconst seen: { readonly values: readonly number[] } = held;\n", "main.a:2:54: stage 0 can't lower a [number, number] " + seen},
+		{"a function returning a tuple seen as returning an array", "const make = (): [number, number] => [3, 4];\nconst widened: () => readonly number[] = make;\n", "main.a:2:42: stage 0 can't lower a [number, number] " + seen},
+		{"an array method called on a tuple", "const pair: [string, string] = ['a', 'b'];\nconsole.log(pair.join('-'));\n", "main.a:2:13: stage 0 can't lower join on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made) yet"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
+				t.Errorf("got %v, want a not-yet ending %q", err, probe.want)
+			}
+		})
+	}
+}
