@@ -400,6 +400,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "Number." + expression.Function + "(" + e.values(expression.Arguments) + ")"
 	case ir.ToFixed:
 		return e.value(expression.Value) + ".toFixed(" + e.value(expression.Digits) + ")"
+	case ir.NumberFormat:
+		argument := ""
+		if expression.Argument != nil {
+			argument = e.value(expression.Argument)
+		}
+		return e.value(expression.Value) + "." + expression.Method + "(" + argument + ")"
 	case ir.Undefined:
 		return "undefined"
 	case ir.IsUndefined:

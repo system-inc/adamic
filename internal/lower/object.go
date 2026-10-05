@@ -256,6 +256,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		return ir.NumberToString{Value: value}, true, nil
 	}
+	if receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); receiverType == ir.Number && (name == "toExponential" || name == "toPrecision") {
+		return l.numberFormat(node, receiver, name)
+	}
 	isMath := l.isLibraryGlobal(receiver, "Math")
 	receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
 	isToFixed := name == "toFixed" && receiverType == ir.Number
@@ -325,6 +328,31 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		digits = arguments[0]
 	}
 	return ir.ToFixed{Value: value, Digits: digits}, true, nil
+}
+
+// numberFormat lowers value.toExponential(digits) and value.toPrecision(digits), the digits perhaps
+// left out: the receiver first, then the argument, as JavaScript evaluates them.
+func (l *lowering) numberFormat(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	value, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) > 1 {
+		return nil, true, l.notYet(node, name+" with more than one argument")
+	}
+	format := ir.NumberFormat{Method: name, Value: value}
+	if len(arguments) == 1 {
+		argument, err := l.expression(arguments[0])
+		if err != nil {
+			return nil, true, err
+		}
+		if argument.Type() != ir.Number {
+			return nil, true, l.notYet(arguments[0], "a "+typeName(argument.Type())+" argument to "+name)
+		}
+		format.Argument = argument
+	}
+	return format, true, nil
 }
 
 // numberFunctions are the functions of Number that 0.1 has (docs/0.1.md), with what each takes; the

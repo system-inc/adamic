@@ -341,6 +341,12 @@ double adamic_math_tan(double x);
 double adamic_math_tanh(double x);
 double adamic_math_hypot(size_t count, const double *values);
 
+// adamic_number_to_exponential is value.toExponential(digits), and the shortest digits when there
+// are none; adamic_number_to_precision is value.toPrecision(digits), and String(value) when there
+// are none. Both are V8's (dtoa.c), and return a string the caller owns.
+adamic_string *adamic_number_to_exponential(double value, double digits, bool has_digits);
+adamic_string *adamic_number_to_precision(double value, double digits, bool has_digits);
+
 // adamic_number_to_fixed is value.toFixed(digits), and returns a string the caller owns.
 adamic_string *adamic_number_to_fixed(double value, double digits);
 
