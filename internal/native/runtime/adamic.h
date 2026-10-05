@@ -5,6 +5,7 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 enum adamic_stream {
 	adamic_stdout = 1,
@@ -350,6 +351,19 @@ adamic_string *adamic_number_to_fixed(double value, double digits);
 
 // adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
 _Noreturn void adamic_panic(const char *message, size_t length);
+
+// ADAMIC_CHECK_STACK starts every function the compiler emits: past adamic_stack_limit, the stack is
+// nearly gone, and that's a panic, as Node's RangeError is, rather than a segfault (stack.c). The
+// stack grows down on every processor Adamic targets. __builtin_frame_address is the real frame even
+// when the address sanitizer keeps locals elsewhere.
+extern uintptr_t adamic_stack_limit;
+_Noreturn void adamic_stack_overflow(void);
+#define ADAMIC_CHECK_STACK() \
+	do { \
+		if ((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit) { \
+			adamic_stack_overflow(); \
+		} \
+	} while (0)
 
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.

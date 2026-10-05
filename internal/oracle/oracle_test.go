@@ -98,6 +98,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_limits.a", true, false},
 	{"internal/oracle/testdata/string_too_long.a", true, false},
 	{"internal/oracle/testdata/pad_too_long.a", true, false},
+	{"internal/oracle/testdata/stack_overflow.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
