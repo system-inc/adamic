@@ -60,6 +60,7 @@ static void free_one(void *value) {
 	adamic_heap *heap = value;
 	switch (heap->kind) {
 	case adamic_kind_string:
+		adamic_string_free_index(value);
 		break;
 	case adamic_kind_object: {
 		adamic_object *object = value;

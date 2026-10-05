@@ -100,6 +100,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/fill_length.a", true, false},
 	{"internal/oracle/testdata/array_from.a", true, false},
 	{"internal/oracle/testdata/array_from_length.a", true, false},
+	{"internal/oracle/testdata/array_from_undefined.a", true, false},
 	{"internal/oracle/testdata/maybe_booleans.a", true, false},
 	{"internal/oracle/testdata/maybe_boolean_panic.a", true, false},
 	{"internal/oracle/testdata/unions.a", true, false},
@@ -119,6 +120,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/write_after_shrink.a", true, true},
 	{"internal/oracle/testdata/normalize.a", true, false},
 	{"internal/oracle/testdata/normalize_form.a", true, false},
+	{"internal/oracle/testdata/string_positions.a", true, false},
 	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
@@ -127,6 +129,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/large_output.a", true, false},
 	{"internal/oracle/testdata/output_then_panic.a", true, false},
 	{"internal/oracle/testdata/interleaved.a", true, false},
+	// sin, cos and tan where reducing by pi / 2 cancels the most bits, as no sweep input does.
+	{"internal/oracle/testdata/trig_reduction.a", true, false},
 	{"internal/oracle/testdata/sets.a", true, false},
 	{"internal/oracle/testdata/maybe_collections.a", true, false},
 	// Tail calls keep their frames, so recursion runs out of stack as on Node (native.go).
@@ -135,6 +139,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/optional_strings.a", true, false},
 	{"internal/oracle/testdata/concat_too_long.a", true, false},
 	{"internal/oracle/testdata/replace_all_large.a", true, false},
+	// A run of marks longer than any the normalize sweep has, for canonical ordering.
+	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

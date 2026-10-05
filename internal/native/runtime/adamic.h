@@ -88,10 +88,15 @@ typedef struct adamic_string {
 	adamic_heap heap;
 	size_t length;
 	const char *bytes;
+	// units is the length in UTF-16 units plus one, once it's been asked for, and 0 until then; index is
+	// a long non-ASCII string's position index, once built (string_index.c). Both are caches, which
+	// every initializer that leaves them out leaves empty.
+	size_t units;
+	struct adamic_string_index *index;
 } adamic_string;
 
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
-#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text}
+#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, NULL}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 typedef struct adamic_shape {
@@ -328,6 +333,9 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
 adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
+// ADAMIC_STRING_MAX_UNITS is V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit).
+#define ADAMIC_STRING_MAX_UNITS 536870888
+
 // adamic_string_check_length panics, as V8 throws RangeError: Invalid string length, when a string
 // would be longer than V8's longest, in UTF-16 units.
 void adamic_string_check_length(double units);
@@ -343,6 +351,13 @@ adamic_string *adamic_string_to_lower(const adamic_string *string);
 // normalize (normalize.c): NFC, NFD, NFKC or NFKD as form names it, and a panic, as JavaScript's
 // RangeError, for any other form. It returns a string the caller owns.
 adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form);
+
+// adamic_string_units is a string's length in UTF-16 units, counted once. adamic_string_locate is
+// where a unit below that length is: the byte offset of the code point holding it, and whether the unit
+// is the low half of a surrogate pair there. Both take constant time amortized (string_index.c).
+size_t adamic_string_units(const adamic_string *string);
+size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low);
+void adamic_string_free_index(adamic_string *string);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
