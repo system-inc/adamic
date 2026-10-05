@@ -151,6 +151,11 @@ type lowering struct {
 	closureRecords []closureRecord
 	classType      *checker.Type
 	classNode      *ast.Node
+
+	// typeMapper is what the type parameters of the instantiation being lowered, and of those it's
+	// inside, stand for; instantiated is every class type an instantiation was made for (instantiate.go).
+	typeMapper   *typeMapper
+	instantiated []*checker.Type
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
@@ -588,7 +593,10 @@ func (l *lowering) noteLocal(local int, proven *checker.Type, node *ast.Node) {
 	if l.localTypes == nil {
 		l.localTypes, l.localNodes = map[int]*checker.Type{}, map[int]*ast.Node{}
 	}
-	l.localTypes[local], l.localNodes[local] = proven, node
+	l.localTypes[local], l.localNodes[local] = l.concrete(proven), node
+	if l.instance != nil {
+		l.instance.templates = append(l.instance.templates, template{local: local, proven: proven})
+	}
 }
 
 // symbol is what a name refers to, the same whichever file names it: an import resolves to what it

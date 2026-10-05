@@ -103,6 +103,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/array_from_undefined.a", true, false},
 	{"internal/oracle/testdata/weak_parent.a", true, false},
 	{"internal/oracle/testdata/doubly_linked.a", true, false},
+	{"internal/oracle/testdata/weak_narrowed.a", true, false},
 	{"internal/oracle/testdata/exceptions.a", true, false},
 	{"internal/oracle/testdata/exceptions_uncaught.a", true, false},
 	{"internal/oracle/testdata/exceptions_empty.a", true, false},
