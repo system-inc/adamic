@@ -47,11 +47,16 @@ type reusePlan struct {
 	// moves are, per statement, the variables whose one read there, as an argument a consumed
 	// parameter takes, moves their value out.
 	moves map[*ir.Statement]map[int]bool
+
+	// arrays are, per statement, the variables whose array there, when it's unique, is taken over:
+	// by a map that writes its results in place, or by a literal that spreads it first and appends
+	// the rest to it.
+	arrays map[*ir.Statement]map[int]bool
 }
 
 // planReuse makes the plan for a program.
 func planReuse(program *ir.Program) *reusePlan {
-	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}}
+	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}}
 	comparators := map[int]bool{}
 	walkExpressions(program, func(expression ir.Expression) {
 		if sort, ok := expression.(ir.ArraySort); ok {
@@ -80,6 +85,19 @@ func planReuse(program *ir.Program) *reusePlan {
 					plan.spreads[instruction.At] = map[int]bool{}
 				}
 				plan.spreads[instruction.At][source] = true
+				if program.Locals[source].Borrowed {
+					plan.consumed[source] = true
+				}
+			}
+			for _, source := range arraysTaken(program, evaluated(instruction)) {
+				if !plan.owned(program, each.index, comparators, instruction, each.live[instruction.Id], source, ir.Array) ||
+					readsOf(evaluated(instruction), source) != 1 {
+					continue
+				}
+				if plan.arrays[instruction.At] == nil {
+					plan.arrays[instruction.At] = map[int]bool{}
+				}
+				plan.arrays[instruction.At][source] = true
 				if program.Locals[source].Borrowed {
 					plan.consumed[source] = true
 				}
@@ -114,8 +132,18 @@ func planReuse(program *ir.Program) *reusePlan {
 
 // reusable reports whether a spread of source in an instruction may take over source's object.
 func (plan *reusePlan) reusable(program *ir.Program, function int, comparators map[int]bool, instruction *flow.Instruction, live map[flow.DeclarationId]bool, source int) bool {
+	if !plan.owned(program, function, comparators, instruction, live, source, ir.Object) {
+		return false
+	}
+	return plan.readOnlyInside(instruction, source)
+}
+
+// owned reports whether source is a variable of the type given that this function owns a count of
+// (a local, or a parameter that can be consumed), dead after the instruction or given a new value
+// by it.
+func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[int]bool, instruction *flow.Instruction, live map[flow.DeclarationId]bool, source int, valueType ir.Type) bool {
 	local := program.Locals[source]
-	if local.Global || local.Captured || local.Type != ir.Object {
+	if local.Global || local.Captured || local.Type != valueType {
 		return false
 	}
 	if local.Function != function {
@@ -129,11 +157,12 @@ func (plan *reusePlan) reusable(program *ir.Program, function int, comparators m
 			return false
 		}
 	}
-	if live[flow.DeclarationId(source+1)] && !defines(instruction, source) {
-		return false
-	}
-	// Every read of source in the instruction: the one spread, and field reads inside its literal,
-	// a replaced field read at most once.
+	return !live[flow.DeclarationId(source+1)] || defines(instruction, source)
+}
+
+// readOnlyInside reports whether, in an instruction, source is read only by one object spread and by
+// reads of its fields inside that literal, a replaced field read at most once.
+func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int) bool {
 	expression := evaluated(instruction)
 	spreads := 0
 	var literal *ir.ObjectLiteral
@@ -442,4 +471,100 @@ func (e *emitter) handOver(argument ir.Expression) string {
 		return value
 	}
 	return "adamic_retain(" + value + ")"
+}
+
+// arraysTaken is every variable whose array an expression could take over: the array a map maps,
+// when its callback is written there and takes no third argument (the array, which would see its
+// elements replaced as it went) and its results are held as the elements are; and the array a
+// literal spreads first.
+func arraysTaken(program *ir.Program, node any) []int {
+	var sources []int
+	walk(node, func(expression ir.Expression) {
+		switch expression := expression.(type) {
+		case ir.ArrayMap:
+			read, isRead := expression.Array.(ir.Read)
+			closure, isClosure := expression.Callback.(ir.MakeClosure)
+			if isRead && isClosure && len(program.Functions[closure.Function].Parameters) < 3 && sameSlots(expression.Element, expression.Result) {
+				sources = append(sources, read.Local)
+			}
+		case ir.ArrayLiteral:
+			if len(expression.Spread) > 0 && expression.Spread[0] {
+				if read, isRead := expression.Elements[0].(ir.Read); isRead {
+					sources = append(sources, read.Local)
+				}
+			}
+		}
+	})
+	return sources
+}
+
+// sameSlots reports whether values of two types sit in an array's slots alike: the same type, or
+// both references held as pointers.
+func sameSlots(left, right ir.Type) bool {
+	return left == right || lendable(left) && lendable(right)
+}
+
+// mapped emits a map the plan reuses: when its array is unique, each result is written over the
+// element it came from, in the array itself; otherwise a new array, as any map.
+func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
+	read, ok := expression.Array.(ir.Read)
+	if !ok || !e.reuse.arrays[e.at][read.Local] {
+		return "", false
+	}
+	source := e.localName(read.Local)
+	unique := e.temporary()
+	e.line("bool %s = %s->heap.references == 1;", unique, source)
+	callback := e.value(expression.Callback)
+	mapped := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(%s->length, %t))", unique, source, source, expression.Result.IsReference()))
+	count, index, result := e.temporary(), e.temporary(), e.temporary()
+	e.line("size_t %s = %s->length;", count, source)
+	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
+	e.line("\tif (%s >= %s->length) {", index, source)
+	e.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
+	e.line("\t\tadamic_panic(message, sizeof message - 1);")
+	e.line("\t}")
+	e.line("\tadamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}});", result, callback, callback, source, index, index, source)
+	e.line("\tif (%s) {", unique)
+	// The callback is done with the element it was handed: the result takes its place.
+	if expression.Element.IsReference() {
+		e.line("\t\tadamic_release(%s->elements[%s].reference);", source, index)
+	}
+	e.line("\t\t%s->elements[%s] = %s;", source, index, result)
+	e.line("\t} else {")
+	e.line("\t\tadamic_array_push(%s, %s);", mapped, result)
+	e.line("\t}")
+	e.line("}")
+	return mapped, true
+}
+
+// spreadArray emits an array literal the plan reuses, one that spreads a variable's array first:
+// when that array is unique, the literal is the array itself, the rest appended to it; otherwise a
+// new array, as any literal.
+func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
+	if len(literal.Spread) == 0 || !literal.Spread[0] {
+		return "", false
+	}
+	read, ok := literal.Elements[0].(ir.Read)
+	if !ok || !e.reuse.arrays[e.at][read.Local] {
+		return "", false
+	}
+	source := e.localName(read.Local)
+	unique := e.temporary()
+	e.line("bool %s = %s->heap.references == 1;", unique, source)
+	array := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(0, %t))", unique, source, literal.Element.IsReference()))
+	e.line("if (!%s) {", unique)
+	e.line("\tadamic_array_append(%s, %s);", array, source)
+	e.line("}")
+	for index, element := range literal.Elements[1:] {
+		value := e.value(element)
+		switch {
+		case literal.Spread[index+1]:
+			e.line("adamic_array_append(%s, %s);", array, value)
+		case literal.Element.IsReference():
+			e.line("adamic_array_push(%s, (adamic_value){.reference = adamic_retain(%s)});", array, value)
+		default:
+			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(literal.Element), slotted(literal.Element, value))
+		}
+	}
+	return array, true
 }

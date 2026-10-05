@@ -295,7 +295,9 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 	return array;
 }
 
-adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
+// splice_into is splice, the removed elements moving to removed, or let go when removed is NULL:
+// a splice whose result nothing uses (adamic_array_remove) allocates no array to hold them.
+static void splice_into(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, adamic_array **removed) {
 	// ECMAScript's relative start, clamped to the array; a count left out is everything after it, and
 	// a count given is clamped to what's there.
 	double length = (double)array->length;
@@ -307,13 +309,25 @@ adamic_array *adamic_array_splice(adamic_array *array, double start, double coun
 		removing = count < 0 ? 0 : (count > removing ? removing : count);
 	}
 	size_t from = (size_t)start, removed_count = (size_t)removing;
-	// The removed elements move to the result, their references with them.
-	adamic_array *removed = adamic_array_new(removed_count, array->references);
-	for (size_t index = 0; index < removed_count; index++) {
-		adamic_array_push(removed, array->elements[from + index]);
+	// The removed elements move to the result, their references with them, or are let go.
+	if (removed != NULL) {
+		*removed = adamic_array_new(removed_count, array->references);
+		for (size_t index = 0; index < removed_count; index++) {
+			adamic_array_push(*removed, array->elements[from + index]);
+		}
 	}
+	// Let go of after the array is whole again, below: releasing one may free what releases another.
 	size_t after = array->length - from - removed_count;
 	size_t new_length = array->length - removed_count + item_count;
+	adamic_value *dropped = NULL;
+	if (removed == NULL && array->references && removed_count > 0) {
+		dropped = malloc(removed_count * sizeof *dropped);
+		if (dropped == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		memcpy(dropped, array->elements + from, removed_count * sizeof *dropped);
+	}
 	if (new_length > array->capacity) {
 		adamic_value *grown = realloc(array->elements, new_length * sizeof *grown);
 		if (grown == NULL) {
@@ -329,7 +343,22 @@ adamic_array *adamic_array_splice(adamic_array *array, double start, double coun
 		memcpy(array->elements + from, items, item_count * sizeof *items);
 	}
 	array->length = new_length;
+	if (dropped != NULL) {
+		for (size_t index = 0; index < removed_count; index++) {
+			adamic_release(dropped[index].reference);
+		}
+		free(dropped);
+	}
+}
+
+adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
+	adamic_array *removed;
+	splice_into(array, start, count, has_count, item_count, items, &removed);
 	return removed;
+}
+
+void adamic_array_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
+	splice_into(array, start, count, has_count, item_count, items, NULL);
 }
 
 void adamic_array_append(adamic_array *array, const adamic_array *source) {

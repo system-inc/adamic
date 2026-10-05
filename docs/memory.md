@@ -66,7 +66,34 @@ Liveness is held the way the graph's edges are. `TestLivenessHoldsOnEveryPath` w
 
 **Found on the way:** the spread itself was miscompiled. Native copied the source's object after evaluating the fields' values, so `{ ...point, x: moveY(point) }` showed a write `moveY` made to `point.y`. Node prints `1 0 99`, native printed `1 99 99`. It's fixed, and `spread_snapshot.a` holds it.
 
-**Not yet:** a spread inside a closure is reused only when its source is the closure's own local. A closure's parameters stay owned, so they are never unique. Only spreads take over memory: an array built from a dying array of the same length (`map` over a uniquely held array, say) is the next place reuse can pay.
+**Reuse for arrays.** There are three more places a value is consumed to build one of its own kind. Each is taken over under the same rules: owned here, dead after the instruction, and read once in it.
+
+- **`map` writes in place.** `const ys = xs.map(f)`, when `xs` is unique, writes each result over the element it came from, in `xs` itself. That needs three more conditions: the callback is written right there, it takes no third argument (the array, which would see its elements replaced as the map went), and its results sit in the array's slots as the elements do.
+- **A spread first in an array literal is appended to.** `[...xs, more]`, when `xs` is unique, is `xs` with `more` appended. Lowering already requires the spread's elements to be the literal's.
+- **A discarded `splice` makes no array.** A `splice` whose result nothing uses lets go of what it removed instead of returning it (`adamic_array_remove`).
+
+`push`, `pop`, `fill` and `reverse` never copied to begin with: JavaScript mutates an array in place even when it's shared, so they had nothing to gain.
+
+**What the counts show.**
+
+- `normalize.a` makes 10 fewer allocations and its peak live falls from 16 to 11.
+- `sort_releases.a` makes 1 fewer, with its peak live from 13 to 11.
+- `splices.a` makes 2 fewer.
+- `reuse_arrays.a`, new, makes 78 against 84 with the array plan turned off.
+
+Releases rise where `map` writes in place. That's how the counter is wired, not more work: freeing an array lets go of its elements inside the runtime without calling `adamic_release`, so it isn't counted, and replacing elements in place calls it once each.
+
+The `trees` and `sort` benchmarks have none of these patterns, and their allocations didn't move. Since B's run, their retains have fallen from the earlier units: `trees` from 375,302,854 to 272,979,306, and `sort` from 6,002,000 to 2,000,004. `trees` allocates 68 million plain objects it never spreads, which is the arenas' work, below.
+
+**How it's held.** `reuse_arrays.a` puts each array reuse beside the cases where it would be seen. Mutants, each caught:
+
+- `map` reusing a shared array: stdout differs.
+- Ignoring liveness: stdout differs, in `reuse_arrays.a`, `reuse.a` and `maybe_number_slots.a`.
+- Ignoring a callback's third argument: stdout differs.
+- The spread reusing a shared array: stdout differs.
+- `adamic_array_remove` not letting go of what it removed: the leak check fails, in `reuse_arrays.a` and the existing `splices.a`.
+
+**Not yet:** a spread inside a closure is reused only when its source is the closure's own local. A closure's parameters stay owned, so they are never unique. `filter`, `slice` and `concat` of a dying array still allocate, and `sort` still sorts a copy even when its array is unique and no comparator can reach it.
 
 ## Borrowed parameters
 

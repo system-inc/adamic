@@ -334,6 +334,12 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.store(statement.Local, value)
 		e.end()
 	case ir.Evaluate:
+		if splice, isSplice := statement.Value.(ir.ArraySplice); isSplice {
+			// What a splice removes, nothing here uses: it's let go of, and no array is made for it.
+			e.line("adamic_array_remove(%s);", e.spliceArguments(splice))
+			e.end()
+			break
+		}
 		if call, isCall := statement.Value.(ir.Call); isCall && call.Returns == 0 {
 			e.line("%s(%s);", e.functionName(call.Function), strings.Join(e.arguments(call), ", "))
 		} else {
@@ -697,6 +703,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return e.snapshot(expression.Returns, unslotted(expression.Returns, result+"."+member(expression.Returns)))
 	case ir.ArrayMap:
+		if mapped, ok := e.mapped(expression); ok {
+			return mapped
+		}
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
 		callback := e.value(expression.Callback)
@@ -743,21 +752,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("adamic_array_fill(%s, %s, %s, %s, %t, %t);", array, borrowed(expression.Element, value), start, end, expression.Start != nil, expression.End != nil)
 		return array
 	case ir.ArraySplice:
-		array := e.value(expression.Array)
-		start := e.value(expression.Start)
-		count := "0.0"
-		if expression.Count != nil {
-			count = e.value(expression.Count)
-		}
-		items := []string{}
-		for _, item := range expression.Items {
-			items = append(items, held(expression.Element, e.value(item)))
-		}
-		packed := "NULL"
-		if len(items) > 0 {
-			packed = "(adamic_value[]){" + strings.Join(items, ", ") + "}"
-		}
-		return e.own(ir.Array, fmt.Sprintf("adamic_array_splice(%s, %s, %s, %t, %d, %s)", array, start, count, expression.Count != nil, len(items), packed))
+		return e.own(ir.Array, fmt.Sprintf("adamic_array_splice(%s)", e.spliceArguments(expression)))
 	case ir.ArrayFrom:
 		return e.arrayFrom(expression)
 	case ir.ArrayReverse:
@@ -904,6 +899,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
 	case ir.ArrayLiteral:
+		if spread, ok := e.spreadArray(expression); ok {
+			return spread
+		}
 		if expression.Spread != nil {
 			// A spread is iterated where it stands, before the elements after it are evaluated, so the
 			// array is made first (which nothing can see) and each element appended as it comes.
@@ -1920,4 +1918,23 @@ func (e *emitter) cellReference(local int) string {
 		}
 	}
 	return e.cellName(local)
+}
+
+// spliceArguments evaluates a splice's operands, in order, as the runtime's splice takes them.
+func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
+	array := e.value(splice.Array)
+	start := e.value(splice.Start)
+	count := "0.0"
+	if splice.Count != nil {
+		count = e.value(splice.Count)
+	}
+	items := []string{}
+	for _, item := range splice.Items {
+		items = append(items, held(splice.Element, e.value(item)))
+	}
+	packed := "NULL"
+	if len(items) > 0 {
+		packed = "(adamic_value[]){" + strings.Join(items, ", ") + "}"
+	}
+	return fmt.Sprintf("%s, %s, %s, %t, %d, %s", array, start, count, splice.Count != nil, len(items), packed)
 }

@@ -231,6 +231,9 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 // adamic_array_splice is array.splice(start, count, ...items): what's removed, in a new array the
 // caller owns. The items' references are the array's from then on.
 adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
+// adamic_array_remove is a splice whose result nothing uses: what it removes is let go of, and no
+// array is made to hold it.
+void adamic_array_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
 
 // adamic_array_append is a spread, [...source], into an array being made: each element pushed, a
 // reference retained.
