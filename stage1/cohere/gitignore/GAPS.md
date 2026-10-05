@@ -212,6 +212,18 @@ What lowered as written, and is worth saying so: discriminated unions narrowed b
 
 ## Performance, observed (not refusals)
 
+### At 15e0b5f, with shared slices, appends in place and indexOf in place
+
+Main 1d72913 merged. A slice of 64 bytes or more, and a quarter of its owner, reads its owner's bytes; `text += more` on a local appends in place when the local holds the only reference; `indexOf` from a position no longer slices (docs/memory.md, "Strings, specifically"). The same case set as below, best of seven at a load average under 1, all three outputs byte for byte the same:
+
+| | time | peak memory |
+|---|---|---|
+| Go cohere | 0.11 s | not measured apart from `go test` |
+| the native port | 0.252 s (was 0.295 s) | 10 MB |
+| Node running the port's source | 0.373 s | 95 MB |
+
+**Go cohere is now 2.3 times faster than the native port** (2.7 before this, 20 this morning). callgrind puts 2.34 billion instructions in the native run, down from 2.82 billion: `adamic_string_concat` is off the top of the profile and `adamic_string_slice` is down from 241 million to 177 million. What's on top now: `adamic_release` 20% (458 million, the same count as before, so it's the number of releases, not their cost, that a borrow inference would cut), malloc and free together 14%, and `adamic_string_join_halves` 3%, concat's scan of every byte for a surrogate pair's halves, which needs to look only where two pieces meet.
+
 ### At 7017551, with the glob reading bytes in place
 
 Main 4ddd17f merged, and the glob on `utf8Length` and `utf8At` instead of bytes.ts. The case set has grown, with reviewer R2's cases: 55 trees, 6,360 tree paths, 21 pattern lists and 1,825 globs, 14,963 answer lines. Timed best of seven on the same container at a load average under 1, with all three outputs byte for byte the same:
