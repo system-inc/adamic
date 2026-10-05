@@ -364,6 +364,35 @@ A weaker form of the recency mutant, which drops the escape but still re-closes 
 
 **Not covered yet.** Extending the holder proof across calls (`addChild(parent, child)` with `parent` made by the caller) isn't built: a parameter holder needs a fresh value. Nor are summaries that depend on their arguments. Writes in a closure see every captured variable as outside.
 
+### The holder proof across calls (designed, not built)
+
+`function addChild(parent: Node, child: Node): void { parent.nodes.push(child); }` is refused today: inside it, both the holder and the value are parameters, so neither proof holds, and a caller handing it a node it made learns nothing either, since every argument escapes into a call. Whether that push closes a cycle depends on what the caller passes, so the design is to judge it there.
+
+**Parameters as placeholders.** A function only ever called directly (by `ir.Call`, never as a sort comparator, and not a closure, whose calls the graph can't see) is interpreted with each reference parameter as a placeholder object `P(i)`, and each field `f` read from one as a second placeholder `D(i, f)`: what the caller's argument held there when the call began. A read one level further is outside. Placeholders are escaped from the start, so every judgment the function makes about itself stays exactly as conservative as it is now, with a parameter as outside. What changes is what the function's summary can say about them.
+
+**The summary becomes a transfer.** Besides what the function returns, it records, in terms of placeholders, the function's own fresh objects (confined ones by origin, as now) and outside:
+
+1. *Edges:* what the function stored into a placeholder's fields, elements or entries.
+2. *Leaks:* which placeholders it let escape for real: handed to a call that isn't summarized, stored in a global or a captured variable, thrown, or stored into outside or into something leaked. A placeholder that starts escaped is not a leak; only what the function does is.
+3. *Clobbers:* whether it called anything not summarized, which may write anything it can reach into the caller's arguments.
+4. *Deferred writes:* each write the function couldn't prove, with its holder and value.
+
+Its result may now name a placeholder too: `same(node)` returns the argument, precisely, rather than outside.
+
+**At a call site,** the caller replays the summary in its own state: each placeholder becomes the argument, or what the argument holds in that field; each fresh object is made anew, as now; outside stays outside. It adds the edges (a store into something exposed lets what's stored escape, as any store does), lets the leaked arguments escape, and, when the callee clobbers, marks its own placeholders as possibly holding outside. Arguments no longer escape just by being passed. Then it judges each deferred write against its state after the call: a write proven at this call site is done here; one that isn't is deferred again, into the caller's own summary, when the caller has placeholders, and is refused otherwise, naming the write in the callee and the call. A write is proven when every place it was deferred to proves it. A write in a function that never leaves (neither returns nor throws) stays refused.
+
+**Why it's sound.**
+
+- *Placeholders are outside for everything the function decides alone.* A placeholder is escaped, its fields read as `D` and, after any call that clobbers, as outside too. So a write the function proves without its callers is one it would prove with every parameter outside, which is what's proven today. Aliasing between parameters (`addChild(node, node)`) can't fool it: no judgment rests on two placeholders being different objects.
+- *The caller sees no less than happened.* Every effect the callee had on what the caller can reach goes through its arguments (edges, leaks) or through what's already escaped in the caller (a global, a captured variable), which the caller already reads as outside. A clobber can only reach the caller's arguments or escaped objects, and only the caller's own placeholders are read more precisely than outside, so those are what it marks.
+- *Judging after the call is conservative.* The abstract heap and the escaped set only grow, so if the value could reach the holder when the callee wrote, it still can in the state after the call. `D(i, f)` stands for what the argument held when the call began, which the state before the call has, and anything added since is in the edges replayed.
+- *Every way a function runs is a call site that judges it.* Writes are deferred only out of functions called by `ir.Call` alone. A function used as a sort comparator, or a closure, keeps its parameters outside and defers nothing. A function nobody calls never runs its writes.
+- *Summaries are found to a fixed point as before, deferred writes included.* Each is keyed by the write it came from, and its holder and value range over finite sets (origins, placeholders up to one field deep, outside), so the fixed point exists. When it's given up on, every function goes back to outside parameters and nothing is deferred.
+
+**What it should prove:** `addChild(node, parseItem())` from a function that made `node`; the same through a helper that calls `addChild` in turn (deferred twice); `addChild(root, new Node())` at the top level, where the value is fresh; and a helper that makes the child, adds it, and returns it.
+
+**What must stay refused, as probes:** `addChild(node, node)`; `addChild(node, wrapper)` where `wrapper` holds `node`; a parent the caller let escape into a global, given a child that reads it; a callee that stores the parent in a global before the caller writes into it; a callee that calls a closure which writes the parent; a callee that stores the parent into the child (`child.owner = parent`) and then pushes; a callee used as a sort comparator; a callee that pushes and then throws, with the write after the catch; a deferred write that's fine at one call site and not at another; a grandchild write two fields deep; and a callee that returns its argument, now named precisely, still refused when the caller writes it into itself. Each a program whose marked write closes a cycle, so LeakSanitizer sees it if accepted. Mutants: a placeholder that starts confined, replay without the edges, leaks not replayed, clobbers ignored, a comparator treated as a direct call, and a deferred write taken as proven without its call sites judging it.
+
 ## Exceptions, designed into counting
 
 `throw`, `try`, `catch` and `finally` are 0.2's (#zek5q21). Unwinding is where reference counting is hardest: every frame a throw leaves holds references (variables, a statement's temporaries, a loop's held array or map iterator), and each must be let go exactly once on the way out, or the program leaks or frees twice. This is the design; the first cut is below it.
