@@ -287,11 +287,15 @@ func (g *generator) function() *Statement {
 		declared = append(declared, parameter+": "+string(t))
 		g.declare(parameter, t, false)
 	}
+	// A function's body nests one loop less than the top level: functions call each other from inside
+	// loops, and the work multiplies.
+	g.loopDepth++
 	body := &Block{}
 	for range 1 + g.random.IntN(4) {
 		body.Statements = append(body.Statements, g.statement())
 	}
 	body.Statements = append(body.Statements, g.returnStatement())
+	g.loopDepth--
 	g.returns = ""
 	g.pop()
 	g.functions = append(g.functions, function{name: name, parameters: parameters, returns: returns})

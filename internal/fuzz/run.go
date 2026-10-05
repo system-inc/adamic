@@ -167,6 +167,11 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 	case outcome.Node.TimedOut:
 		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node never finished", ""
 		return outcome
+	case len(outcome.Node.Stdout) > 1<<20:
+		// A program that prints megabytes isn't one a person can read a difference in, and Node can
+		// fail writing that much to a pipe before it's read.
+		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node printed more than a megabyte", ""
+		return outcome
 	case javascriptError.Match(outcome.Node.Stderr):
 		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node threw", firstLines(string(outcome.Node.Stderr), 1)
 		return outcome
