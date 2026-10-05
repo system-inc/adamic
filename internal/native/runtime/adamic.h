@@ -23,6 +23,8 @@ enum adamic_kind {
 	adamic_kind_cell,
 	adamic_kind_closure,
 	adamic_kind_map_iterator,
+	adamic_kind_number,
+	adamic_kind_boolean,
 };
 
 typedef struct adamic_heap {
@@ -50,6 +52,12 @@ typedef struct adamic_maybe_number {
 	bool present;
 	double number;
 } adamic_maybe_number;
+
+// adamic_maybe_boolean is boolean | undefined: present, and the boolean when it is.
+typedef struct adamic_maybe_boolean {
+	bool present;
+	bool boolean;
+} adamic_maybe_boolean;
 
 // adamic_cell holds a variable a closure captured, so the function that declared it and every
 // closure that captured it share one (closure.c). references says whether value is a reference.
@@ -197,8 +205,13 @@ enum adamic_equality {
 	adamic_equal_booleans,
 	adamic_equal_strings,
 	adamic_equal_identity,
+	adamic_equal_maybe_numbers,
 };
 double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
+
+// adamic_array_from_length is the length Array.from({ length }) makes (array_from.c): ToLength of
+// the number, and a panic where JavaScript throws, past 2^32 - 1.
+size_t adamic_array_from_length(double length);
 
 // adamic_array_reverse reverses in place and is the array; adamic_array_concat makes a new array of
 // every array's elements in order, references retained.
@@ -234,6 +247,7 @@ enum adamic_join {
 	adamic_join_numbers = 1,
 	adamic_join_booleans,
 	adamic_join_strings,
+	adamic_join_maybe_numbers,
 };
 struct adamic_string *adamic_array_join(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind);
 
@@ -250,6 +264,23 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]);
 extern adamic_string adamic_string_empty;
 extern adamic_string adamic_string_true;
 extern adamic_string adamic_string_false;
+
+// String(undefined), and String(value) for number | undefined, a string the caller owns (maybe.c).
+// adamic_maybe_number_equal and adamic_maybe_boolean_equal are === on two pairs: both missing, or
+// both present and equal.
+extern adamic_string adamic_string_undefined;
+adamic_string *adamic_string_from_maybe_number(adamic_maybe_number value);
+bool adamic_maybe_number_equal(adamic_maybe_number left, adamic_maybe_number right);
+
+// adamic_maybe_number_pack makes number | undefined one double, for a field, an element, a cell or a
+// function value's argument or result: undefined is ADAMIC_UNDEFINED_BITS, a NaN no arithmetic
+// makes, and every other NaN is stored as the ordinary quiet NaN (JavaScript can't see a NaN's
+// payload), so nothing present is ever mistaken for undefined. adamic_maybe_number_unpack reads one
+// back.
+#define ADAMIC_UNDEFINED_BITS 0x7ff8000000000001u
+double adamic_maybe_number_pack(adamic_maybe_number value);
+adamic_maybe_number adamic_maybe_number_unpack(double packed);
+bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 double adamic_string_length(const adamic_string *string);
@@ -305,6 +336,41 @@ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
+
+// A union whose members are held differently (string | number) is one counted reference, its kind the
+// member it is (union.c): a string, object, array, map or closure is itself, undefined is NULL, a
+// number is boxed, and a boolean is one of two constant boxes.
+typedef struct adamic_number_box {
+	adamic_heap heap;
+	double number;
+} adamic_number_box;
+
+typedef struct adamic_boolean_box {
+	adamic_heap heap;
+	bool boolean;
+} adamic_boolean_box;
+
+extern adamic_boolean_box adamic_box_true;
+extern adamic_boolean_box adamic_box_false;
+
+// adamic_box_number boxes a number, a reference the caller owns.
+adamic_heap *adamic_box_number(double number);
+
+// adamic_union_equal is === on two unions: the same member, equal as that member is compared.
+bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
+
+// adamic_union_to_string is String(value) for a union of numbers, booleans, strings and undefined, a
+// string the caller owns.
+adamic_string *adamic_union_to_string(adamic_heap *value);
+
+// adamic_union_typeof is typeof value, a constant; the names typeof gives are these.
+adamic_string *adamic_union_typeof(const adamic_heap *value);
+extern adamic_string adamic_typeof_number;
+extern adamic_string adamic_typeof_string;
+extern adamic_string adamic_typeof_boolean;
+extern adamic_string adamic_typeof_undefined;
+extern adamic_string adamic_typeof_object;
+extern adamic_string adamic_typeof_function;
 
 // adamic_write_line writes a string and a newline, as console.log does with one string.
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string);
