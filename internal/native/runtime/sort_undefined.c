@@ -14,6 +14,11 @@ void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic
 	}
 	// The comparator may change the array it sorts; what it sorts is this copy, which nothing else sees.
 	adamic_array_sort(defined, compare, context);
+	if (adamic_thrown != NULL) {
+		// A comparator threw: nothing is written back, as V8 writes nothing back then.
+		adamic_release(defined);
+		return;
+	}
 	// Written back index by index, as adamic_array_sort does: past a length the comparator shrank, the
 	// array grows again.
 	adamic_value undefined = {.number = adamic_maybe_number_pack((adamic_maybe_number){false, 0.0})};

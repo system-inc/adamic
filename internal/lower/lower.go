@@ -137,9 +137,8 @@ type lowering struct {
 
 	// caught are the variables a catch binds, each always an Error; tries are the try statements
 	// lowered (exceptions.go).
-	caught        map[*ast.Symbol]bool
-	tries         []tryRecord
-	functionNodes map[int]*ast.Node
+	caught map[*ast.Symbol]bool
+	tries  []tryRecord
 
 	// initializing is the variables whose initializers are being lowered, by where each is declared.
 	initializing map[int]*ast.Node
@@ -252,10 +251,6 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.functions = map[*ast.Symbol]int{}
 			}
 			l.functions[symbol] = len(l.result.Functions)
-			if l.functionNodes == nil {
-				l.functionNodes = map[int]*ast.Node{}
-			}
-			l.functionNodes[len(l.result.Functions)] = statement
 			l.result.Functions = append(l.result.Functions, ir.Function{Name: statement.Name().Text()})
 			declarations = append(declarations, statement)
 		}
