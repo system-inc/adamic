@@ -115,8 +115,10 @@ const (
 	WriteField WriteKind = iota + 1
 	// WriteElement is an array's element: push, an index, splice's items, fill.
 	WriteElement
-	// WriteMapValue is map.set.
-	WriteMapValue
+	// WriteMapEntry is map.set: a key and a value.
+	WriteMapEntry
+	// WriteSetElement is set.add.
+	WriteSetElement
 	// WriteUnknown is an IR node this pass doesn't know, which may write anything anywhere: it keeps
 	// every slot refused.
 	WriteUnknown
@@ -920,12 +922,13 @@ func (a *analysis) value(expression ir.Expression) value {
 		if expression.Spread != nil {
 			copied = a.state.everything(a.value(expression.Spread))
 		}
-		fields := make([]value, len(expression.Fields))
-		for index, field := range expression.Fields {
+		all := append(append([]ir.Field{}, expression.Fields...), expression.Empty...)
+		fields := make([]value, len(all))
+		for index, field := range all {
 			fields[index] = a.value(field.Value)
 		}
 		made := a.fresh(anyField, copied)
-		for index, field := range expression.Fields {
+		for index, field := range all {
 			if !fields[index].empty() {
 				a.state.store(newestOf(made), field.Name, fields[index])
 			}
@@ -947,7 +950,28 @@ func (a *analysis) value(expression ir.Expression) value {
 			entries.merge(a.value(entry[0]))
 			entries.merge(a.value(entry[1]))
 		}
+		if expression.Pairs != nil {
+			// Each pair's key and value: a tuple's fields, or another map's entries.
+			pairs := a.state.load(a.value(expression.Pairs), elementKey)
+			entries.merge(pairs)
+			entries.merge(a.state.everything(pairs))
+		}
 		return a.fresh(elementKey, entries)
+	case ir.MapKeys:
+		return a.fresh(elementKey, a.state.load(a.value(expression.Map), elementKey))
+	case ir.MapValues:
+		return a.fresh(elementKey, a.state.load(a.value(expression.Map), elementKey))
+	case ir.MapClear:
+		a.value(expression.Map)
+		return value{}
+	case ir.MapForEach:
+		return a.call([]value{a.value(expression.Map), a.value(expression.Callback)}, 0)
+	case ir.ReadDirectory:
+		a.value(expression.Path)
+		return a.fresh(anyField, a.fresh(elementKey, value{}))
+	case ir.FileStatus:
+		a.value(expression.Path)
+		return a.fresh(anyField, value{})
 	case ir.SetNew:
 		return a.fresh(elementKey, a.state.load(a.value(expression.Values), elementKey))
 	case ir.SetValues:
@@ -1026,7 +1050,7 @@ func (a *analysis) value(expression ir.Expression) value {
 		holder := a.value(expression.Map)
 		held := a.value(expression.Key)
 		held.merge(a.value(expression.Value))
-		a.write(WriteMapValue, expression.Site, "", holder, held, elementKey)
+		a.write(WriteMapEntry, expression.Site, "", holder, held, elementKey)
 		return holder
 	case ir.MapHas:
 		a.value(expression.Map)
@@ -1040,16 +1064,10 @@ func (a *analysis) value(expression ir.Expression) value {
 		a.value(expression.Map)
 		return value{}
 	case ir.SetAdd:
-		set := a.value(expression.Set)
+		holder := a.value(expression.Set)
 		held := a.value(expression.Value)
-		if mutable(expression.Element) {
-			// A Set holds strings and numbers so far; one that holds objects needs its writes judged.
-			a.unknown(expression)
-		}
-		for o := range set.strong {
-			a.state.store(o, elementKey, held)
-		}
-		return set
+		a.write(WriteSetElement, expression.Site, "", holder, held, elementKey)
+		return holder
 	case ir.MakeClosure:
 		// What a function value holds is its cells, and what's in a cell has escaped.
 		return outsideValue()

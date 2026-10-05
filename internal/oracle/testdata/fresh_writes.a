@@ -108,3 +108,30 @@ function guarded(count: number): Node {
 	return node;
 }
 console.log(`${describe(guarded(1))} ${describe(guarded(2))}`);
+
+// A set whose elements and a map whose keys can reach back to them, given only fresh values.
+interface Step {
+	readonly name: string;
+	readonly next: Set<Step>;
+	readonly visits: Map<Step, number>;
+}
+function step(name: string): Step {
+	return { name, next: new Set<Step>(), visits: new Map<Step, number>() };
+}
+function plan(count: number): Step {
+	const start = step('start');
+	for (let index = 0; index < count; index += 1) {
+		start.next.add(step(`step${index}`));
+		start.visits.set(step(`visit${index}`), index);
+	}
+	return start;
+}
+const planned = plan(3);
+const names: string[] = [];
+for (const next of planned.next) {
+	names.push(next.name);
+}
+for (const [visited, times] of planned.visits) {
+	names.push(`${visited.name}x${times}`);
+}
+console.log(`${planned.name}: ${names.join(' ')}`);

@@ -57,7 +57,7 @@ func TestEveryWriteIsRecordedAndKnown(t *testing.T) {
 			if write.Kind == fresh.WriteUnknown {
 				t.Errorf("%s: %s", path, write.Why)
 			}
-			if write.Site == 0 {
+			if write.Site == 0 && write.Kind != fresh.WriteUnknown {
 				t.Errorf("%s: a write lowering didn't record, in function %d", path, write.Function)
 			}
 		}
