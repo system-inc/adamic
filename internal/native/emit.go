@@ -172,6 +172,11 @@ type emitter struct {
 	// ECMAScript's order, and each module's from the top.
 	initialized []int
 
+	// handlers are the tries open in the function being emitted, innermost last, and outerOwned what
+	// the statement owned outside each aside being emitted (exceptions.go).
+	handlers   []*handler
+	outerOwned [][]string
+
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.
 	function      *ir.Function
 	functionDepth int
@@ -366,6 +371,9 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.Evaluate:
 		if call, isCall := statement.Value.(ir.Call); isCall && call.Returns == 0 {
 			e.line("%s(%s);", e.functionName(call.Function), strings.Join(e.arguments(call), ", "))
+			if e.program.Functions[call.Function].MayThrow {
+				e.checkThrown()
+			}
 		} else {
 			// The value goes, but whatever making it did stays: a push's append is its effect.
 			e.line("(void)%s;", e.value(statement.Value))
@@ -422,13 +430,20 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.Switch:
 		e.switchStatement(statement)
 	case ir.Break:
+		// A try inside the loop or switch is left: its finally runs first.
+		e.finallies(e.innerHandlers(e.breakables[len(e.breakables)-1]))
 		e.releaseScopes(e.breakables[len(e.breakables)-1])
 		e.line("break;")
 	case ir.Continue:
 		current := e.loops[len(e.loops)-1]
 		current.continued = true
+		e.finallies(e.innerHandlers(current.depth))
 		e.releaseScopes(current.depth)
 		e.line("goto %s;", current.label)
+	case ir.Throw:
+		e.throwStatement(statement)
+	case ir.Try:
+		e.tryStatement(statement)
 	default:
 		// Lowering only produces statements this switch knows. Reaching this is a compiler bug.
 		panic(fmt.Sprintf("native: no C for %T", statement))
@@ -493,6 +508,7 @@ func (e *emitter) checkReady(local int) {
 func (e *emitter) returnStatement(statement ir.Return) {
 	if statement.Value == nil {
 		e.end()
+		e.finallies(0)
 		e.releaseScopes(e.functionDepth)
 		if e.function != nil && e.function.Closure {
 			e.line("return (adamic_value){.number = 0};")
@@ -509,6 +525,17 @@ func (e *emitter) returnStatement(statement ir.Return) {
 		e.line("%s %s = %s;", cType(statement.Value.Type()), result, value)
 	}
 	e.end()
+	if len(e.handlers) > 0 {
+		// Every finally open runs before the function returns. The result waits in a scope of its
+		// own, so a throw from a finally, which replaces the return, lets go of it.
+		held := []string{}
+		if statement.Value.Type().IsReference() {
+			held = append(held, result)
+		}
+		e.scopes = append(e.scopes, held)
+		e.finallies(0)
+		e.scopes = e.scopes[:len(e.scopes)-1]
+	}
 	e.releaseScopes(e.functionDepth)
 	if e.function != nil && e.function.Closure {
 		e.line("return (adamic_value){.%s = %s};", member(statement.Value.Type()), slotted(statement.Value.Type(), result))
@@ -614,11 +641,17 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Call:
 		arguments := e.arguments(expression)
 		call := fmt.Sprintf("%s(%s)", e.functionName(expression.Function), strings.Join(arguments, ", "))
+		var result string
 		if expression.Returns.IsReference() {
-			return e.own(expression.Returns, call)
+			result = e.own(expression.Returns, call)
+		} else {
+			result = e.temporary()
+			e.line("%s %s = %s;", cType(expression.Returns), result, call)
 		}
-		result := e.temporary()
-		e.line("%s %s = %s;", cType(expression.Returns), result, call)
+		if e.program.Functions[expression.Function].MayThrow {
+			// A throw left the call: the result is the zero value it returned, owned like any.
+			e.checkThrown()
+		}
 		return result
 	case ir.NumberToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", e.value(expression.Value)))
@@ -674,6 +707,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.maybeToString(expression.Value)
 	case ir.Box:
 		return e.box(expression.Value)
+	case ir.MakeError:
+		return e.own(ir.Object, fmt.Sprintf("adamic_error_new(%s)", e.value(expression.Message)))
 	case ir.WeakOf:
 		return e.own(ir.Weak, fmt.Sprintf("adamic_weak_of(%s)", e.value(expression.Value)))
 	case ir.WeakTarget:
@@ -1621,9 +1656,12 @@ func (e *emitter) arguments(call ir.Call) []string {
 func (e *emitter) aside(expression ir.Expression) (string, string, []string) {
 	savedOut, savedOwned := e.out, e.owned
 	e.out, e.owned = strings.Builder{}, nil
+	// A throw from inside lets go of what the statement owned before the aside too.
+	e.outerOwned = append(e.outerOwned, savedOwned)
 	e.indent++
 	value := e.value(expression)
 	e.indent--
+	e.outerOwned = e.outerOwned[:len(e.outerOwned)-1]
 	text, owned := e.out.String(), e.owned
 	e.out, e.owned = savedOut, savedOwned
 	return text, value, owned

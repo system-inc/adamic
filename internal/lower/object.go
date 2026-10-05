@@ -159,11 +159,15 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 			}
 		}
 	}
+	if target := l.weakTarget(arrayType); target != nil {
+		// A Weak<Node[]> narrowed to present is the array.
+		arrayType = target
+	}
 	if !l.checker.IsArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
-	valueType, isKnown := l.representation(element)
+	valueType, isKnown := l.kept(element)
 	if !isKnown || slotless(valueType) {
 		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
@@ -514,6 +518,11 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	if ast.IsIdentifier(name) {
 		if lowered.Local, err = l.declareLocal(name); err != nil {
 			return nil, err
+		}
+		if element == ir.Weak {
+			// An array of Weak<Node> narrowed to present (by filter) still holds handles, so the
+			// variable holds one too, and each read of it is the target.
+			l.result.Locals[lowered.Local].Type = ir.Weak
 		}
 	} else {
 		// for (const [a, b] of pairs): each name reads a field of the tuple, "0", "1", ...
@@ -897,12 +906,12 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
 func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
-	arguments := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(node))
+	arguments := l.typeArguments(l.checker.GetTypeAtLocation(node))
 	if len(arguments) != 2 {
 		return 0, 0, l.notYet(node, "a Map whose key and value types aren't known")
 	}
 	key, keyKnown := l.representation(arguments[0])
-	value, valueKnown := l.representation(arguments[1])
+	value, valueKnown := l.kept(arguments[1])
 	if !keyKnown || !keyable(key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, objects, arrays, maps or functions")
 	}
@@ -922,6 +931,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	}
 	if l.isLibraryGlobal(created.Expression, "Set") {
 		return l.newSet(node)
+	}
+	if l.isLibraryGlobal(created.Expression, "Error") {
+		return l.newError(node)
 	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {
 		return nil, l.notYet(node, "new "+describe(created.Expression))
@@ -1209,7 +1221,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, describe(node))
 	}
 	of, err := l.typeOf(node)
-	if elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(access.Expression)); err == nil {
+	if elements := l.typeArguments(l.checker.GetTypeAtLocation(access.Expression)); err == nil {
 		// What the tuple keeps there, not what the checker narrowed the read to: a Weak keeps a handle.
 		if position, convertErr := strconv.Atoi(index.Text()); convertErr == nil && position < len(elements) {
 			if declared, isKnown := l.representation(elements[position]); isKnown && declared == ir.Weak {

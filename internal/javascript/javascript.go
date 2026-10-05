@@ -255,6 +255,26 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("break;")
 	case ir.Continue:
 		e.line("break %s;", e.continues[len(e.continues)-1])
+	case ir.Throw:
+		e.line("throw %s;", e.value(statement.Value))
+	case ir.Try:
+		e.line("try {")
+		e.nested(statement.Body)
+		if statement.HasCatch {
+			caught := e.temporary()
+			e.line("} catch (%s) {", caught)
+			e.indent++
+			if statement.CatchLocal >= 0 {
+				e.declare(statement.CatchLocal, caught)
+			}
+			e.statements(statement.Catch)
+			e.indent--
+		}
+		if statement.HasFinally {
+			e.line("} finally {")
+			e.nested(statement.Finally)
+		}
+		e.line("}")
 	default:
 		panic(fmt.Sprintf("javascript: no JavaScript for %T", statement))
 	}
@@ -434,6 +454,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.Box:
 		return e.value(expression.Value)
+	case ir.MakeError:
+		return "new Error(" + e.value(expression.Message) + ")"
 	case ir.WeakOf:
 		// A plain reference: Node keeps what it points to as long as anything does, which is what the
 		// source on Node does too (docs/memory.md says where native differs).

@@ -40,6 +40,10 @@ type Function struct {
 	// captured variables it reaches through its cells, in order.
 	Closure     bool
 	Environment []int
+
+	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
+	// one after each call. Lowering works it out over the call graph once every function is lowered.
+	MayThrow bool
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of
@@ -296,6 +300,9 @@ type (
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
 	TypeOf struct{ Value Expression }
+
+	// MakeError is new Error(Message): an object with fields name ("Error") and message.
+	MakeError struct{ Message Expression }
 
 	// WeakOf is Value, a reference, kept weakly: the handle to it, made if it has none yet, or
 	// undefined when Value is.
@@ -635,6 +642,7 @@ func (n Narrow) Type() Type      { return n.To }
 func (TypeOf) Type() Type        { return String }
 func (UnionToString) Type() Type { return String }
 func (WeakOf) Type() Type        { return Weak }
+func (MakeError) Type() Type     { return Object }
 func (w WeakTarget) Type() Type  { return w.To }
 func (c Coalesce) Type() Type    { return c.Of }
 func (StringLength) Type() Type  { return Number }
@@ -867,6 +875,19 @@ type (
 
 	Break    struct{}
 	Continue struct{}
+
+	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
+	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
+	Throw struct{ Value Expression }
+
+	// Try runs Body; if a throw leaves it, Catch runs with the error in CatchLocal (-1 when the catch
+	// binds nothing). Finally runs after either, however they're left, and a throw neither caught nor
+	// thrown by Finally goes on after it. HasCatch and HasFinally say which clauses there are.
+	Try struct {
+		Body, Catch, Finally []Statement
+		CatchLocal           int
+		HasCatch, HasFinally bool
+	}
 )
 
 // Binding is one name in a destructuring pattern: the local it declares, and the field it reads.
@@ -896,3 +917,5 @@ func (ForOf) statement()       {}
 func (Switch) statement()      {}
 func (Break) statement()       {}
 func (Continue) statement()    {}
+func (Throw) statement()       {}
+func (Try) statement()         {}
