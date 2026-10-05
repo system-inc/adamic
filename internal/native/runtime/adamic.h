@@ -95,11 +95,17 @@ typedef struct adamic_string {
 	struct adamic_string_index *index;
 } adamic_string;
 
+// ADAMIC_LITERAL_INDEX marks a constant's index as not yet built: a constant lives as long as the
+// program, so a long one can have an index that does too (string_index.c). Only a constant of static
+// storage may carry it.
+extern char adamic_literal_mark;
+#define ADAMIC_LITERAL_INDEX ((struct adamic_string_index *)&adamic_literal_mark)
+
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
-#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, NULL}
+#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX}
 
 // ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
-#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string}, size, array, 0, NULL}
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string}, size, array, 0, ADAMIC_LITERAL_INDEX}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 typedef struct adamic_shape {
@@ -350,6 +356,10 @@ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic
 // is the low half of a surrogate pair there. Both take constant time amortized (string_index.c).
 size_t adamic_string_units(const adamic_string *string);
 size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low);
+
+// adamic_string_units_before is how many UTF-16 units come before a byte offset that starts a code
+// point: indexOf's answer, found through the index rather than by counting from the start.
+size_t adamic_string_units_before(const adamic_string *string, size_t offset);
 void adamic_string_free_index(adamic_string *string);
 
 // adamic_string_equal is ===.
