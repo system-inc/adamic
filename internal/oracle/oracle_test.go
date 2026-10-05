@@ -144,6 +144,21 @@ var fixtures = []struct {
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
 	{"internal/oracle/testdata/borrow_map_overwrite.a", true, false},
+	// A spread is read before its fields' values, as JavaScript reads it.
+	{"internal/oracle/testdata/spread_snapshot.a", true, false},
+	// Reuse in place: taken only where nothing can tell, and where something could, never.
+	{"internal/oracle/testdata/reuse.a", true, false},
+	// Reuse for arrays: a map in place, a spread appended to, a splice with nothing to return.
+	{"internal/oracle/testdata/reuse_arrays.a", true, false},
+	// Reviewer R's probes of integration 5, each a way reuse in place was once seen: a borrowed
+	// parameter moved on, a global moved out while another argument reads it, and a value a Weak
+	// reaches taken over, during the spread and after it.
+	{"internal/oracle/testdata/reuse_forward.a", true, false},
+	{"internal/oracle/testdata/reuse_global_sibling.a", true, false},
+	{"internal/oracle/testdata/reuse_weak_during_spread.a", true, false},
+	{"internal/oracle/testdata/reuse_weak_after_reuse.a", true, false},
+	// A read lent without a count, beside a call that reassigns what was read.
+	{"internal/oracle/testdata/lent_reads.a", true, false},
 	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).
 	{"internal/oracle/testdata/large_output.a", true, false},
 	{"internal/oracle/testdata/output_then_panic.a", true, false},

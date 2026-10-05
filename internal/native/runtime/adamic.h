@@ -274,6 +274,9 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 // adamic_array_splice is array.splice(start, count, ...items): what's removed, in a new array the
 // caller owns. The items' references are the array's from then on.
 adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
+// adamic_array_remove is a splice whose result nothing uses: what it removes is let go of, and no
+// array is made to hold it.
+void adamic_array_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
 
 // adamic_array_append is a spread, [...source], into an array being made: each element pushed, a
 // reference retained.
@@ -452,6 +455,9 @@ void *adamic_weak_target(const adamic_weak *handle);
 void *adamic_weak_target_present(const adamic_weak *handle);
 void adamic_weak_forget(void *target);
 void adamic_weak_dropped(adamic_weak *handle);
+// adamic_weak_held reports whether a Weak points at a value: reuse in place takes over only a value
+// nothing else can reach, and a Weak reaches without counting.
+bool adamic_weak_held(const void *target);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
 // rather than kill, as on Node.
