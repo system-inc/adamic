@@ -570,7 +570,13 @@ func (e *emitter) returnStatement(statement ir.Return) {
 	value := e.value(statement.Value)
 	result := e.temporary()
 	if statement.Value.Type().IsReference() {
-		e.line("%s %s = adamic_retain(%s);", cType(statement.Value.Type()), result, value)
+		held := statement.Value.Type()
+		if _, isUndefined := statement.Value.(ir.Undefined); isUndefined && e.function != nil && e.function.Returns.IsReference() {
+			// undefined is a null pointer of whatever reference the function returns, a string's
+			// among them, not the object pointer it's typed as alone.
+			held = e.function.Returns
+		}
+		e.line("%s %s = adamic_retain(%s);", cType(held), result, value)
 	} else {
 		e.line("%s %s = %s;", cType(statement.Value.Type()), result, value)
 	}

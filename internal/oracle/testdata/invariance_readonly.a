@@ -1,0 +1,42 @@
+// A mutable location is invariant in 0.1 and a readonly one covariant (adamic/invariant-mutable):
+// stage 0 refuses Dog[] seen as Animal[], but these views can't write, so they run, natively as on
+// Node. Every name is built by the program.
+
+interface Animal {
+	readonly name: string;
+}
+interface Dog extends Animal {
+	readonly bark: string;
+}
+interface Kennel {
+	readonly pet: Dog;
+	readonly litter: readonly Dog[];
+}
+interface Pen {
+	readonly pet: Animal;
+	readonly litter: readonly Animal[];
+}
+
+function names(animals: readonly Animal[]): string {
+	return animals.map((animal) => animal.name).join(', ');
+}
+
+function describe(pen: Pen): string {
+	return `${pen.pet.name} with ${names(pen.litter)}`;
+}
+
+const dogs: Dog[] = [];
+for (let index = 0; index < 3; index++) {
+	dogs.push({ name: `dog${index}`, bark: 'woof'.repeat(index + 1) });
+}
+const animals: readonly Animal[] = dogs;
+console.log(names(animals));
+dogs.push({ name: `dog${dogs.length}`, bark: 'arf' });
+console.log(`${animals.length} seen, the last ${animals[animals.length - 1]?.name ?? 'none'}`);
+
+const first = dogs[0] ?? { name: 'stray', bark: '' };
+const kennel: Kennel = { pet: first, litter: dogs };
+console.log(describe(kennel));
+for (const dog of kennel.litter) {
+	console.log(`${dog.name}: ${dog.bark}`);
+}
