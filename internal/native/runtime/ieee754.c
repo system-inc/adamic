@@ -24,8 +24,9 @@
 // named adamic_math_<name>, and the helpers are static and lose their leading underscores. V8's legacy
 // pow is left out: ** is adamic_power (number.c), V8's math::pow.
 //
-// C's libm is never called here except for sqrt and fabs, which are exact everywhere. libm and V8
-// disagree in the last bit for these functions, and Node is the truth (docs/0.1.md).
+// C's libm is called here only where V8's code calls the C library too: sqrt and fabs, and scalbn and
+// floor in kernel_rem_pio2. All four are exact everywhere. libm's own sin, exp and the rest are never
+// called: they and V8 disagree in the last bit, and Node is the truth (docs/0.1.md).
 
 #include "adamic.h"
 

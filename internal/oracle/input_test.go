@@ -26,15 +26,21 @@ var inputFixtures = []struct {
 	// unreadable adds, as the last argument, the path of a file the program may not read, made here
 	// since git can't keep a file's permissions.
 	unreadable bool
+
+	// writes gives the program, as its first argument, an empty directory of its own on every run, with
+	// a directory in it named locked that it may not write into. What each run leaves there, every
+	// file's name, bytes and permissions, must agree too.
+	writes bool
 }{
-	{"internal/oracle/testdata/read_files.a", nil, false},
-	{"internal/oracle/testdata/utf8_sweep.a", nil, false},
+	{"internal/oracle/testdata/read_files.a", nil, false, false},
+	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false},
 	{"internal/oracle/testdata/arguments.a", []string{
 		"plain", "", "with space", "héllo 🌍", "--flag=1",
 		// Invalid UTF-8, decoded as Node decodes argv: each bad sequence one U+FFFD.
 		"a\xffb", "\xe2\x82", "\xc0\x80", "\xed\xa0\x80", "\xf4\x90\x80\x80", "\xef\xbb\xbfmarked", "end \xf0\x9f\x8c",
-	}, false},
-	{"internal/oracle/testdata/read_arguments.a", []string{"reading/hello.txt", "reading/missing.txt", "reading"}, true},
+	}, false, false},
+	{"internal/oracle/testdata/read_arguments.a", []string{"reading/hello.txt", "reading/missing.txt", "reading"}, true, false},
+	{"internal/oracle/testdata/write_files.a", nil, false, true},
 }
 
 // inputRun is where and as whom one input fixture runs.
@@ -117,9 +123,41 @@ func TestInputAgreesWithNode(t *testing.T) {
 				}
 				how.arguments = append(append([]string{}, how.arguments...), unreadable)
 			}
-			oracle := onNodeWith(t, how, path)
-			backend := inputBackend(t, how, program, shared)
-			native, binary := inputNatively(t, how, program, shared)
+			// Each run gets its own directory to write in, when the fixture writes, so what each leaves
+			// there can be compared.
+			runs := 0
+			prepared := func() inputRun {
+				if !fixture.writes {
+					return how
+				}
+				runs++
+				written := writable(t, shared, fmt.Sprintf("run%d", runs))
+				return inputRun{directory: how.directory, arguments: append([]string{written}, how.arguments...), credential: how.credential}
+			}
+			collect := func(given inputRun) map[string]string {
+				if !fixture.writes {
+					return nil
+				}
+				return snapshot(t, given.arguments[0])
+			}
+			nodeRun := prepared()
+			oracle := onNodeWith(t, nodeRun, path)
+			backendRun := prepared()
+			backend := inputBackend(t, backendRun, program, shared)
+			nativeRun := prepared()
+			native, binary := inputNatively(t, nativeRun, program, shared)
+			if fixture.writes {
+				nodeLeft, backendLeft, nativeLeft := collect(nodeRun), collect(backendRun), collect(nativeRun)
+				if difference := filesDiffer(nodeLeft, nativeLeft); difference != "" {
+					t.Errorf("the files native wrote differ from Node's: %s", difference)
+				}
+				if difference := filesDiffer(nodeLeft, backendLeft); difference != "" {
+					t.Errorf("the files the JavaScript backend wrote differ from Node's: %s", difference)
+				}
+				if !bytes.Contains(oracle.stdout, []byte(": permission denied\n")) {
+					t.Errorf("want Node refused to write into the locked directory, got stdout %q", oracle.stdout)
+				}
+			}
 			if difference := disagreement(oracle, native); difference != "" {
 				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
@@ -136,11 +174,78 @@ func TestInputAgreesWithNode(t *testing.T) {
 				t.Errorf("want every input fixture to finish on Node, got exit %d, stderr %q", oracle.exitCode, oracle.stderr)
 				return
 			}
-			if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+			if leaked := inputLeaks(t, prepared(), program, binary); leaked != "" {
 				t.Errorf("leaks:\n%s", leaked)
 			}
 		})
 	}
+}
+
+// writable makes an empty directory a run of a writing fixture may write in, whoever it runs as, with
+// one directory in it, locked, that it may not.
+func writable(t *testing.T, shared string, name string) string {
+	t.Helper()
+	directory := filepath.Join(shared, name)
+	if err := os.Mkdir(directory, 0o777); err != nil {
+		t.Fatal(err)
+	}
+	// Mkdir's mode passes through the umask; this one is meant whole.
+	if err := os.Chmod(directory, 0o777); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Mkdir(filepath.Join(directory, "locked"), 0o555); err != nil {
+		t.Fatal(err)
+	}
+	return directory
+}
+
+// snapshot is what a directory holds, every file and directory under it by its path there, with its
+// permissions and, for a file, its bytes.
+func snapshot(t *testing.T, directory string) map[string]string {
+	t.Helper()
+	found := map[string]string{}
+	err := filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		relative, err := filepath.Rel(directory, path)
+		if err != nil {
+			return err
+		}
+		information, err := entry.Info()
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() {
+			found[relative] = fmt.Sprintf("directory %v", information.Mode().Perm())
+			return nil
+		}
+		contents, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		found[relative] = fmt.Sprintf("file %v %q", information.Mode().Perm(), contents)
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return found
+}
+
+// filesDiffer says how two snapshots differ, or "" when they don't.
+func filesDiffer(want map[string]string, got map[string]string) string {
+	for name, held := range want {
+		if got[name] != held {
+			return fmt.Sprintf("%s: want %.200s, got %.200s", name, held, got[name])
+		}
+	}
+	for name, held := range got {
+		if _, isWanted := want[name]; !isWanted {
+			return fmt.Sprintf("%s: not wanted, got %.200s", name, held)
+		}
+	}
+	return ""
 }
 
 // inputBackend runs a lowered program through the JavaScript backend, on Node.
