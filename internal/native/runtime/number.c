@@ -195,6 +195,6 @@ adamic_string *adamic_number_to_fixed(double value, double digits) {
 		}
 		result[written++] = digits_text[index];
 	}
-	adamic_string text = {{0, adamic_kind_string}, (size_t)written, result};
+	adamic_string text = {{0, adamic_kind_string}, (size_t)written, result, 0, NULL};
 	return adamic_string_concat(1, (adamic_string *const[]){&text});
 }

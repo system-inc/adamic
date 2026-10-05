@@ -119,6 +119,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/write_after_shrink.a", true, true},
 	{"internal/oracle/testdata/normalize.a", true, false},
 	{"internal/oracle/testdata/normalize_form.a", true, false},
+	{"internal/oracle/testdata/string_positions.a", true, false},
 	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},

@@ -21,6 +21,8 @@ static adamic_string *new_string(size_t length) {
 	adamic_string *string = adamic_allocate(sizeof *string + length, adamic_kind_string);
 	string->length = length;
 	string->bytes = (const char *)(string + 1);
+	string->units = 0;
+	string->index = NULL;
 	return string;
 }
 

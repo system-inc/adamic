@@ -26,7 +26,7 @@ static adamic_string *text(const char *hex) {
 		sscanf(hex + index * 2, "%2x", &byte);
 		bytes[index] = (char)byte;
 	}
-	adamic_string piece = {{0, adamic_kind_string}, length, bytes};
+	adamic_string piece = {{0, adamic_kind_string}, length, bytes, 0, NULL};
 	adamic_string *string = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(bytes);
 	return string;
