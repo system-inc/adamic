@@ -611,37 +611,37 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
 
-// onNode runs the port's source on Node, through the oracle's runner, asking it about the cases file.
-func onNode(t *testing.T, path string, casesPath string) run {
+// onNode runs a program's source on Node, through the oracle's runner, with its arguments.
+func onNode(t *testing.T, path string, arguments ...string) run {
 	t.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	return execute(t, nil, "node", "--disable-warning=ExperimentalWarning", runner, path, casesPath)
+	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, casesPath string) run {
+func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
 	t.Helper()
 	path := filepath.Join(t.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	return onNode(t, path, casesPath)
+	return onNode(t, path, arguments...)
 }
 
 // nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, casesPath string) run {
+func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
 	t.Helper()
-	result, _ := natively(t, program, casesPath)
+	result, _ := natively(t, program, arguments...)
 	return result
 }
 
 // natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
 // returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
 // its own run.
-func natively(t *testing.T, program *ir.Program, casesPath string) (run, string) {
+func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "port")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
@@ -651,13 +651,13 @@ func natively(t *testing.T, program *ir.Program, casesPath string) (run, string)
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	return execute(t, environment, binary, casesPath), binary
+	return execute(t, environment, binary, arguments...), binary
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, casesPath string) string {
+func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
@@ -665,13 +665,13 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, casesPath string
 		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
 			t.Fatal(err)
 		}
-		report := execute(t, nil, "leaks", "--atExit", "--", binary, casesPath)
+		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return string(report.stdout)
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, casesPath)
+		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
 		if report.exitCode == 0 {
 			return ""
 		}

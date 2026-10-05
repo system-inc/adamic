@@ -2,7 +2,9 @@
 
 The port beside this file is cohere's `internal/gitignore` (gitignore.go and glob.go) written as 0.1 Adamic. Every place stage 0 refused it is below, as the smallest program that shows it, stage 0's own message, and the way the port went around it. Each workaround is marked in the port with its gap number, so when a gap closes, the place to undo it can be found with `grep -n "gap N" *.ts`.
 
-Each program here typechecks under stage 0's options and runs on Node 24.21.0 with the output shown; stage 0 (main at 7055396) refuses it with `NotYet` at the place shown. None of them reached clang, and none compiled wrong.
+Each program here typechecks under stage 0's options and runs on Node 24.21.0 with the output shown. Stage 0 refuses it with `NotYet` at the place shown: first at main 7055396, and checked again at 80c3098. None of them reached clang, and none compiled wrong.
+
+The programs are also in `gaps/`, and `gaps_test.go` holds them to this file. An open gap must still be refused with the words recorded here. A closed one must lower and print natively what it prints on Node, leaking nothing. So the stream that closes a gap sees this test fail, and the message tells it to mark the gap closed and undo the port's workaround.
 
 Three of the first eight closed when the language-gaps stream landed on main at 80c3098 (gaps 5, 6 and 7), and the port went back to writing those places as the Go does. They stay below, marked closed, so the record is whole. The other five are open, and so is gap 9, found when the driver began reading its cases.
 
