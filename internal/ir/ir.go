@@ -40,6 +40,10 @@ type Function struct {
 	// captured variables it reaches through its cells, in order.
 	Closure     bool
 	Environment []int
+
+	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
+	// one after each call. Lowering works it out over the call graph once every function is lowered.
+	MayThrow bool
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of
@@ -58,7 +62,8 @@ const (
 	// Array is an array; its element type travels on the expressions and statements that read it.
 	Array
 
-	// Map is a Map; its key and value types travel on the expressions that read it.
+	// Map is a Map; its key and value types travel on the expressions that read it. A Set is one too,
+	// its values unused: the same order, keys and iteration (lower/set.go).
 	Map
 
 	// MaybeNumber is number | undefined: a number that may be missing, as Map.get gives it.
@@ -75,6 +80,12 @@ const (
 	// Tree): one counted reference, which says at runtime which member it is. A number is boxed to
 	// be one, a boolean is one of two constant boxes, and undefined is a null reference.
 	Union
+
+	// Weak is where a Weak<Target> is kept (docs/memory.md): a reference that doesn't count, held as
+	// a counted handle the target is found through, which says undefined once the target is freed.
+	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
+	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
+	Weak
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -107,7 +118,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -188,9 +199,21 @@ type (
 
 	// ObjectLiteral makes an object. With Spread, it's { ...Spread, fields }: a copy of Spread's
 	// object, whatever its shape, with Fields replaced (each one a field Spread's type has).
+	//
+	// SpreadMaybeUndefined says Spread may be undefined, and then JavaScript's { ...undefined } is
+	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
+	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
-		Spread Expression
-		Fields []Field
+		Spread               Expression
+		Fields               []Field
+		SpreadMaybeUndefined bool
+		Empty                []Field
+
+		// Tuple is a tuple written out, [key, value]: natively an object whose fields are named "0",
+		// "1" and on, as every tuple is, and in JavaScript an array, as the source's is. (What 0.2
+		// lowers reads a tuple only by its fields, which an object answers the same way, new Map's
+		// pairs included: ECMA-262 reads each by "0" and "1".)
+		Tuple bool
 	}
 
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
@@ -200,6 +223,10 @@ type (
 		Name     string
 		Of       Type
 		Optional bool
+		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
+		// otherwise: the constructor's object has the class's layout, so the field's place in it is
+		// known, for an object that has that layout.
+		Class int
 	}
 
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
@@ -252,8 +279,18 @@ type (
 		Element Type
 	}
 
-	// Unwrap is a Maybe pair the checker has proven present (narrowed), as what it holds.
+	// Unwrap is a Maybe pair the checker has proven present (narrowed), as what it holds. A narrowing
+	// outlives a call that assigns the variable again (the checker doesn't look inside the call), so
+	// it's checked, in both backends: undefined there panics.
 	Unwrap struct{ Value Expression }
+
+	// Defined is a reference the checker narrowed undefined out of, checked for the same reason as
+	// Unwrap: undefined there panics with Message. Where the value is about to be read through a
+	// property, Message is the TypeError JavaScript throws there, so the check is what Node does.
+	Defined struct {
+		Value   Expression
+		Message string
+	}
 
 	// MaybeOf is a number or a boolean where Of, its Maybe pair, goes: Value, present, or undefined
 	// when Value is nil.
@@ -279,6 +316,22 @@ type (
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
 	TypeOf struct{ Value Expression }
+
+	// MakeError is new Error(Message): an object with fields name ("Error") and message.
+	MakeError struct{ Message Expression }
+
+	// WeakOf is Value, a reference, kept weakly: the handle to it, made if it has none yet, or
+	// undefined when Value is.
+	WeakOf struct{ Value Expression }
+
+	// WeakTarget is what a Weak value points to, as To: undefined once the target is freed. Present
+	// is a read the checker narrowed to present, which panics natively if the target was freed since
+	// (JavaScript would still have it; docs/memory.md).
+	WeakTarget struct {
+		Value   Expression
+		To      Type
+		Present bool
+	}
 
 	// UnionToString is String(Value) for a Union whose members are numbers, booleans, strings and
 	// undefined, each written as String() writes it.
@@ -360,10 +413,11 @@ type (
 
 	// ArrayFrom is Array.from({ length: Length }, Callback): a new array of Length elements (ToLength,
 	// and more than 2^32 - 1 panics as JavaScript throws), each the callback's result called with
-	// undefined and its index, in order.
+	// undefined and its index, in order. First is the type of the callback's first parameter, which
+	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {
 		Length, Callback Expression
-		Element          Type
+		Element, First   Type
 	}
 
 	// ArrayReverse is array.reverse(): in place, and the array.
@@ -453,6 +507,33 @@ type (
 	MapNew struct {
 		Key, Value Type
 		Entries    [][2]Expression
+
+		// Pairs, when it's set, is an array of [key, value] tuples the map is made from instead, each
+		// set in order: new Map(pairs), or new Map(otherMap) through its entries.
+		Pairs Expression
+	}
+
+	// MapKeys and MapValues are [...map.keys()] and [...map.values()]: new arrays, in insertion order.
+	MapKeys struct {
+		Map Expression
+		Key Type
+	}
+	MapValues struct {
+		Map   Expression
+		Value Type
+	}
+
+	// MapClear is map.clear() and set.clear(), which is void.
+	MapClear struct{ Map Expression }
+
+	// MapForEach is map.forEach(Callback), called with each value, its key and the map, and
+	// set.forEach(Callback) (Set), with each element twice and the set, in insertion order and live as
+	// for...of is. Returns is what the callback returns, 0 for nothing; forEach itself is void.
+	MapForEach struct {
+		Map, Callback Expression
+		Key, Value    Type
+		Set           bool
+		Returns       Type
 	}
 
 	// MapGet is map.get(Key): the value, or undefined (a null reference, or a Maybe pair).
@@ -479,6 +560,25 @@ type (
 		KeyType  Type
 	}
 
+	// SetNew is new Set(), or new Set(Values), an array of the elements, each added in order.
+	SetNew struct {
+		Element Type
+		Values  Expression
+	}
+
+	// SetAdd is set.add(Value), which is the set. An element it already has keeps its place. has,
+	// delete and size are a Map's (MapHas, MapDelete, MapSize).
+	SetAdd struct {
+		Set, Value Expression
+		Element    Type
+	}
+
+	// SetValues is [...set]: a new array of its elements, in order.
+	SetValues struct {
+		Set     Expression
+		Element Type
+	}
+
 	// MapSize is map.size.
 	MapSize struct{ Map Expression }
 
@@ -497,6 +597,21 @@ type (
 	// ProgramArguments is programArguments() from 'adamic': a new array of the arguments after the
 	// program, as process.argv.slice(2) is.
 	ProgramArguments struct{}
+
+	// WriteTextFile is writeTextFile(Path, Text) from 'adamic': the file made or emptied, then Text
+	// written as UTF-8 the way Node's writeFileSync(path, text) writes it (a lone surrogate as U+FFFD),
+	// in { kind: 'Ok' }, or what went wrong in { kind: 'Error', message }.
+	WriteTextFile struct{ Path, Text Expression }
+
+	// ReadDirectory is readDirectory(Path) from 'adamic': { kind: 'Ok', names }, the names as Node's
+	// readdirSync gives them on the same machine (sorted by their bytes, without . and ..), or
+	// { kind: 'Error', message }.
+	ReadDirectory struct{ Path Expression }
+
+	// FileStatus is fileStatus(Path) from 'adamic': { kind: 'Ok', type, size, symbolicLink }, the type
+	// and size of what Path names, a symbolic link followed, and whether Path is itself one, or
+	// { kind: 'Error', message }.
+	FileStatus struct{ Path Expression }
 )
 
 // Field is one field of an object literal.
@@ -536,12 +651,16 @@ func (IsUndefined) Type() Type   { return Boolean }
 func (ArrayPush) Type() Type     { return Number }
 func (ArrayJoin) Type() Type     { return String }
 func (u Unwrap) Type() Type      { return u.Value.Type().Present() }
+func (d Defined) Type() Type     { return d.Value.Type() }
 func (m MaybeOf) Type() Type     { return m.Of }
 func (MaybeToString) Type() Type { return String }
 func (Box) Type() Type           { return Union }
 func (n Narrow) Type() Type      { return n.To }
 func (TypeOf) Type() Type        { return String }
 func (UnionToString) Type() Type { return String }
+func (WeakOf) Type() Type        { return Weak }
+func (MakeError) Type() Type     { return Object }
+func (w WeakTarget) Type() Type  { return w.To }
 func (c Coalesce) Type() Type    { return c.Of }
 func (StringLength) Type() Type  { return Number }
 func (CharCodeAt) Type() Type    { return Number }
@@ -601,12 +720,22 @@ func (c StringCall) Type() Type {
 }
 func (ReadTextFile) Type() Type     { return Object }
 func (ProgramArguments) Type() Type { return Array }
+func (WriteTextFile) Type() Type    { return Object }
+func (ReadDirectory) Type() Type    { return Object }
+func (FileStatus) Type() Type       { return Object }
 
-func (MapNew) Type() Type    { return Map }
-func (MapSet) Type() Type    { return Map }
-func (MapHas) Type() Type    { return Boolean }
-func (MapDelete) Type() Type { return Boolean }
-func (MapSize) Type() Type   { return Number }
+func (MapNew) Type() Type     { return Map }
+func (MapKeys) Type() Type    { return Array }
+func (MapValues) Type() Type  { return Array }
+func (MapClear) Type() Type   { return 0 }
+func (MapForEach) Type() Type { return 0 }
+func (SetNew) Type() Type     { return Map }
+func (SetAdd) Type() Type     { return Map }
+func (SetValues) Type() Type  { return Array }
+func (MapSet) Type() Type     { return Map }
+func (MapHas) Type() Type     { return Boolean }
+func (MapDelete) Type() Type  { return Boolean }
+func (MapSize) Type() Type    { return Number }
 
 func (g MapGet) Type() Type { return Maybe(g.ValueType) }
 
@@ -703,6 +832,8 @@ type (
 		Object Expression
 		Name   string
 		Value  Expression
+		// Class is as Property's.
+		Class int
 	}
 
 	// Return leaves the function, with Value unless it returns void.
@@ -761,6 +892,19 @@ type (
 
 	Break    struct{}
 	Continue struct{}
+
+	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
+	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
+	Throw struct{ Value Expression }
+
+	// Try runs Body; if a throw leaves it, Catch runs with the error in CatchLocal (-1 when the catch
+	// binds nothing). Finally runs after either, however they're left, and a throw neither caught nor
+	// thrown by Finally goes on after it. HasCatch and HasFinally say which clauses there are.
+	Try struct {
+		Body, Catch, Finally []Statement
+		CatchLocal           int
+		HasCatch, HasFinally bool
+	}
 )
 
 // Binding is one name in a destructuring pattern: the local it declares, and the field it reads.
@@ -790,3 +934,5 @@ func (ForOf) statement()       {}
 func (Switch) statement()      {}
 func (Break) statement()       {}
 func (Continue) statement()    {}
+func (Throw) statement()       {}
+func (Try) statement()         {}

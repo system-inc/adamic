@@ -48,16 +48,30 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, l.notYet(arguments[1], "Array.from with a callback that isn't an arrow function written in place")
 	}
 	if parameters := callback.Parameters(); len(parameters) > 0 && ast.IsIdentifier(parameters[0].Name()) {
-		if received := l.checker.GetTypeAtLocation(parameters[0].Name()); received.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsUndefined) != 0 {
+		received := l.checker.GetTypeAtLocation(parameters[0].Name())
+		switch {
+		case received.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsUndefined) != 0:
 			if l.alwaysUndefined == nil {
 				l.alwaysUndefined = map[*ast.Symbol]bool{}
 			}
 			l.alwaysUndefined[l.symbol(parameters[0].Name())] = true
+		case !l.includesUndefined(received):
+			// The checker reads { length } as an array-like of whatever the parameter says, but
+			// it has no elements: the parameter is undefined every time, whatever its type claims.
+			return nil, true, &Refused{Where: l.program.Where(parameters[0]), What: "a first Array.from parameter typed " + l.checker.TypeToString(received) + ", which is undefined every time", Fix: "name it _ and leave it untyped, (_, index) => ..., or type it undefined (the type would be a lie the checker can't see)"}
 		}
 	}
 	mapped, err := l.expression(callback)
 	if err != nil {
 		return nil, true, err
 	}
-	return ir.ArrayFrom{Length: length, Callback: mapped, Element: element}, true, nil
+	// What the callback receives first is undefined, held as its first parameter holds undefined: a
+	// null reference, or number | undefined's packed word.
+	var first ir.Type
+	if closure, isClosure := mapped.(ir.MakeClosure); isClosure {
+		if parameters := l.result.Functions[closure.Function].Parameters; len(parameters) > 0 {
+			first = l.result.Locals[parameters[0]].Type
+		}
+	}
+	return ir.ArrayFrom{Length: length, Callback: mapped, Element: element, First: first}, true, nil
 }

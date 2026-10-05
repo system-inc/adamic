@@ -26,6 +26,8 @@ static adamic_string *allocate(size_t length) {
 	adamic_string *string = adamic_allocate(sizeof *string + length, adamic_kind_string);
 	string->length = length;
 	string->bytes = (const char *)(string + 1);
+	string->units = 0;
+	string->index = NULL;
 	return string;
 }
 
@@ -43,10 +45,8 @@ adamic_string *adamic_string_from_number(double value) {
 
 // V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit): past it, every way of making
 // a string throws RangeError: Invalid string length, and so Adamic panics there too.
-#define MAX_UNITS 536870888.0
-
 void adamic_string_check_length(double units) {
-	if (units > MAX_UNITS) {
+	if (units > ADAMIC_STRING_MAX_UNITS) {
 		static const char message[] = "RangeError: Invalid string length";
 		adamic_panic(message, sizeof message - 1);
 	}
@@ -62,7 +62,7 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 		length += parts[index]->length;
 	}
 	// A string's UTF-16 units are never more than its bytes, so only a long one needs counting.
-	if ((double)length > MAX_UNITS) {
+	if (length > ADAMIC_STRING_MAX_UNITS) {
 		double units = 0;
 		for (size_t index = 0; index < count; index++) {
 			units += adamic_string_length(parts[index]);
@@ -143,42 +143,29 @@ static unsigned decode(const unsigned char *bytes, size_t size) {
 }
 
 double adamic_string_length(const adamic_string *string) {
-	size_t units = 0;
-	for (size_t offset = 0; offset < string->length;) {
-		size_t size = sequence((unsigned char)string->bytes[offset]);
-		units += size == 4 ? 2 : 1;
-		offset += size;
+	return (double)adamic_string_units(string);
+}
+
+// unit_at is the UTF-16 unit at an index below the length: a code point of the BMP or a lone
+// surrogate, or one half of a pair.
+static unsigned unit_at(const adamic_string *string, size_t index) {
+	bool low;
+	size_t offset = adamic_string_locate(string, index, &low);
+	size_t size = sequence((unsigned char)string->bytes[offset]);
+	unsigned point = decode((const unsigned char *)string->bytes + offset, size);
+	if (size == 4) {
+		return low ? 0xdc00 + ((point - 0x10000) & 0x3ff) : 0xd800 + ((point - 0x10000) >> 10);
 	}
-	return (double)units;
+	return point;
 }
 
 double adamic_string_char_code_at(const adamic_string *string, double position) {
 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
 	position = isnan(position) ? 0 : trunc(position);
-	if (position < 0) {
+	if (position < 0 || position >= (double)adamic_string_units(string)) {
 		return NAN;
 	}
-	size_t unit = 0;
-	for (size_t offset = 0; offset < string->length;) {
-		size_t size = sequence((unsigned char)string->bytes[offset]);
-		unsigned point = decode((const unsigned char *)string->bytes + offset, size);
-		if (size == 4) {
-			if ((double)unit == position) {
-				return (double)(0xd800 + ((point - 0x10000) >> 10));
-			}
-			if ((double)(unit + 1) == position) {
-				return (double)(0xdc00 + ((point - 0x10000) & 0x3ff));
-			}
-			unit += 2;
-		} else {
-			if ((double)unit == position) {
-				return (double)point;
-			}
-			unit++;
-		}
-		offset += size;
-	}
-	return NAN;
+	return (double)unit_at(string, (size_t)position);
 }
 
 // is_space is JavaScript's WhiteSpace and LineTerminator, which trim removes (ECMA-262).
@@ -215,7 +202,7 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 		}
 		end = lead;
 	}
-	adamic_string piece = {{0, adamic_kind_string}, end - start, string->bytes + start};
+	adamic_string piece = {{0, adamic_kind_string}, end - start, string->bytes + start, 0, NULL};
 	return adamic_string_concat(1, (adamic_string *const[]){&piece});
 }
 
@@ -224,7 +211,7 @@ size_t adamic_string_next(const adamic_string *string, size_t offset) {
 }
 
 adamic_string *adamic_string_slice_bytes(const adamic_string *string, size_t offset, size_t size) {
-	adamic_string piece = {{0, adamic_kind_string}, size, string->bytes + offset};
+	adamic_string piece = {{0, adamic_kind_string}, size, string->bytes + offset, 0, NULL};
 	return adamic_string_concat(1, (adamic_string *const[]){&piece});
 }
 
@@ -315,7 +302,7 @@ static void builder_unit(builder *build, unsigned unit) {
 }
 
 static adamic_string *builder_finish(builder *build) {
-	adamic_string piece = {{0, adamic_kind_string}, build->length, build->bytes};
+	adamic_string piece = {{0, adamic_kind_string}, build->length, build->bytes, 0, NULL};
 	adamic_string *string = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(build->bytes);
 	return string;
@@ -336,22 +323,25 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	double from = clamp_index(start, length);
 	double to = has_end ? clamp_index(end, length) : length;
 	builder build = {NULL, 0, 0};
-	units walk = units_start(string);
-	unsigned unit;
-	double position = 0;
-	while (position < to && units_next(&walk, &unit)) {
-		if (position >= from) {
-			// A whole supplementary character is copied as its four bytes; half of one becomes a
-			// lone surrogate.
-			if (walk.second && position + 1 < to && position >= from) {
-				builder_add(&build, string->bytes + walk.offset, walk.size);
-				units_next(&walk, &unit);
-				position += 2;
-				continue;
-			}
-			builder_unit(&build, unit);
+	if (from < to) {
+		// Whole code points are copied as their bytes, in one piece. A slice that starts on the low
+		// half of a pair begins with that half, and one that ends between the halves ends with the
+		// high one, each a lone surrogate.
+		size_t first = (size_t)from, last = (size_t)to;
+		bool low;
+		size_t offset = adamic_string_locate(string, first, &low);
+		if (low) {
+			builder_unit(&build, unit_at(string, first));
+			offset += 4;
 		}
-		position++;
+		bool ends_low = false;
+		size_t stop = last < (size_t)length ? adamic_string_locate(string, last, &ends_low) : string->length;
+		if (stop > offset) {
+			builder_add(&build, string->bytes + offset, stop - offset);
+		}
+		if (ends_low) {
+			builder_unit(&build, unit_at(string, last - 1));
+		}
 	}
 	return builder_finish(&build);
 }
@@ -369,25 +359,16 @@ adamic_string *adamic_string_at(const adamic_string *string, double index) {
 adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position) {
 	position = isnan(position) ? 0 : trunc(position);
 	adamic_maybe_number missing = {false, 0};
-	if (position < 0) {
+	if (position < 0 || position >= (double)adamic_string_units(string)) {
 		return missing;
 	}
-	units walk = units_start(string);
-	unsigned unit;
-	double index = 0;
-	while (units_next(&walk, &unit)) {
-		if (index == position) {
-			if (walk.second) {
-				// The high half of a pair: the whole code point.
-				adamic_maybe_number found = {true, (double)decode((const unsigned char *)string->bytes + walk.offset, walk.size)};
-				return found;
-			}
-			adamic_maybe_number found = {true, (double)unit};
-			return found;
-		}
-		index++;
-	}
-	return missing;
+	// At the high half of a pair, the whole code point; anywhere else, the unit.
+	bool low;
+	size_t offset = adamic_string_locate(string, (size_t)position, &low);
+	size_t size = sequence((unsigned char)string->bytes[offset]);
+	unsigned point = low || size != 4 ? unit_at(string, (size_t)position) : decode((const unsigned char *)string->bytes + offset, size);
+	adamic_maybe_number found = {true, (double)point};
+	return found;
 }
 
 int adamic_string_compare(const adamic_string *left, const adamic_string *right) {
@@ -518,8 +499,7 @@ double adamic_string_index_of(const adamic_string *string, const adamic_string *
 	}
 	for (size_t offset = 0; offset + search->length <= string->length;) {
 		if (memcmp(string->bytes + offset, search->bytes, search->length) == 0) {
-			adamic_string prefix = {{0, adamic_kind_string}, offset, string->bytes};
-			return adamic_string_length(&prefix);
+			return (double)adamic_string_units_before(string, offset);
 		}
 		offset += sequence((unsigned char)string->bytes[offset]);
 	}
@@ -584,10 +564,22 @@ static adamic_string *pieces_join(pieces *list) {
 	return joined;
 }
 
+// units_piece is the string of the UTF-16 units from one index up to another, made from the units
+// already in hand, so it costs what it holds: slicing the string itself would walk it from the
+// start each time, and replaceAll, which cuts a piece per match, would be quadratic. The halves of a
+// pair that both fall inside are glued back into one character by the builder's finish.
+static adamic_string *units_piece(const unsigned *units, size_t from, size_t to) {
+	builder build = {NULL, 0, 0};
+	for (size_t index = from; index < to; index++) {
+		builder_unit(&build, units[index]);
+	}
+	return builder_finish(&build);
+}
+
 // substitution is ECMAScript's GetSubstitution for a match of a string pattern, from start to end
 // in UTF-16 units: $$ is $, $& the match, $` what precedes it and $' what follows. A string pattern
 // has no groups, so $1 and $< are themselves, like every other character.
-static adamic_string *substitution(const adamic_string *string, const adamic_string *replacement, double start, double end, double length) {
+static adamic_string *substitution(const unsigned *units, const adamic_string *replacement, size_t start, size_t end, size_t length) {
 	if (memchr(replacement->bytes, '$', replacement->length) == NULL) {
 		return adamic_retain((adamic_string *)replacement);
 	}
@@ -603,13 +595,13 @@ static adamic_string *substitution(const adamic_string *string, const adamic_str
 			expanded = adamic_string_slice_bytes(replacement, at, 1);
 			break;
 		case '&':
-			expanded = adamic_string_slice(string, start, end, true);
+			expanded = units_piece(units, start, end);
 			break;
 		case '`':
-			expanded = adamic_string_slice(string, 0, start, true);
+			expanded = units_piece(units, 0, start);
 			break;
 		case '\'':
-			expanded = adamic_string_slice(string, end, length, true);
+			expanded = units_piece(units, end, length);
 			break;
 		}
 		if (expanded == NULL) {
@@ -630,11 +622,11 @@ adamic_string *adamic_string_replace(const adamic_string *string, const adamic_s
 	size_t haystack_count, needle_count;
 	unsigned *haystack = to_units(string, &haystack_count), *needle = to_units(search, &needle_count);
 	pieces list = {NULL, 0, 0};
-	double kept = 0;
+	size_t kept = 0;
 	for (double found = unit_index_of(haystack, haystack_count, needle, needle_count, 0); found >= 0;) {
-		double end = found + (double)needle_count;
-		pieces_add(&list, adamic_string_slice(string, kept, found, true));
-		pieces_add(&list, substitution(string, replacement, found, end, (double)haystack_count));
+		size_t end = (size_t)found + needle_count;
+		pieces_add(&list, units_piece(haystack, kept, (size_t)found));
+		pieces_add(&list, substitution(haystack, replacement, (size_t)found, end, haystack_count));
 		kept = end;
 		if (!all) {
 			break;
@@ -643,7 +635,7 @@ adamic_string *adamic_string_replace(const adamic_string *string, const adamic_s
 		size_t next = (size_t)found + (needle_count == 0 ? 1 : needle_count);
 		found = next > haystack_count ? -1 : unit_index_of(haystack, haystack_count, needle, needle_count, next);
 	}
-	pieces_add(&list, adamic_string_slice(string, kept, (double)haystack_count, true));
+	pieces_add(&list, units_piece(haystack, kept, haystack_count));
 	free(haystack);
 	free(needle);
 	return pieces_join(&list);

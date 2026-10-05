@@ -12,6 +12,7 @@ You're working on Adamic: TypeScript whose types are true, compiled to native co
 - `internal/lower`: the checker's types to IR. `NotYet` means stage 0 hasn't learned it; `Refused` means 0.1 forbids it, with the fix. `refusals.go` is the up-front refusal pass.
 - `internal/native`: IR to C11 (`emit.go`) plus the runtime (`runtime/*.c`, embedded), compiled by clang with `-Wall -Wextra -Werror -pedantic`.
 - `internal/javascript`: the second backend, IR to JavaScript, carrying the same inserted checks as native.
+- `internal/flow`: a control-flow graph built from the IR, with single assignment lifted from cohere's high-level IR, for the analyses reuse in place and arenas need (#5jck546).
 - `internal/oracle`: the differential test. Every fixture runs three ways: its source on Node (the truth), native under ASan and UBSan, and the JavaScript backend on Node. stdout, stderr and the exit code must match byte for byte, and every program that finishes must leak nothing.
 - `cohere/`: a submodule (cohere, which carries typescript-go). Over HTTPS: `git config submodule.cohere.url https://github.com/system-inc/cohere.git && git submodule update --init --recursive --depth 1`.
 
@@ -29,16 +30,27 @@ You're working on Adamic: TypeScript whose types are true, compiled to native co
 ```
 gofmt -l cmd internal
 go vet ./...
-go test -count=1 ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
+go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
 ```
+
+On a 4-core cloud machine the oracle alone takes four to six minutes, close to Go's default ten-minute timeout, hence `-timeout 30m`. The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable (for example /tmp/adamic-gate, mode 1777) and Node must not live under /root. A new fixture needs its row in internal/oracle/counts.md: `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`.
 
 Send test output to a log and read the log. Never pipe a test run into `head` or `tail`: it kills the run mid-way and can orphan the fixtures' processes. Tests are parallel by default; a test that can't be says why in a "Not parallel:" comment.
 
 On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that job.
 
+## Adamic's own code passes Adamic's own gate
+
+cohere checks and formats every Adamic program in this repository, `.ts` and `.a` alike. `tsconfig.json` carries the same compiler options stage 0 sets in `internal/load/load.go` (keep the two identical), the prelude as the one global declaration file, and `"sourceExtensions": [".a"]`, which cohere's TypeScript reads and stock tools ignore. `CohereSettings.json` turns on `cohere:typescript` (soundness, style and correctness) and ignores the files that are wrong on purpose, for these reasons:
+
+- `internal/load/testdata/0.1/refuse/**`: docs/0.1.md's five refused programs, whose job is to be refused.
+- `stage1/**/gaps/**`: each stage-1 slice's smallest programs for what stage 0 can't hold yet, kept exactly as written so their gaps tests notice when a gap closes.
+- `review/**`: reviewers' probes, written to break things.
+
 ## Working here
 
 - Write code that reads like the code around it: plain Go, comments that say why, names spelled out in full.
 - Never overwrite a file wholesale; edit it. Never force-push, never rewrite history, never delete a branch you didn't make.
+- Shell state doesn't persist between Bash calls, so a variable set in one call is empty in the next. Set any variable in the same command that uses it, and write removals as `rm -f "${S:?}/name"`: an unset variable then stops the command instead of collapsing the path to `/`. Delete only named files under the scratch directory or the repository, never by a path that begins with a bare variable. `.claude/hooks/guard-removals.mjs` refuses a command that breaks this and says why, so no one has to press Deny.
 - Commit messages say what changed and why, in plain sentences. The first commit was `stuff`, after Ken; only the first one gets to be.
 - No em-dashes in docs, comments or commit messages.

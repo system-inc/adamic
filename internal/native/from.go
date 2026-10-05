@@ -16,7 +16,12 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	e.line("size_t %s = adamic_array_from_length(%s);", count, length)
 	made := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s, %t)", count, from.Element.IsReference()))
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
-	e.line("\tadamic_array_push(%s, %s->code(%s, (adamic_value[]){{.reference = NULL}, {.number = (double)%s}}));", made, callback, callback, index)
+	// Undefined as the first parameter holds it: a null reference, or a packed word.
+	undefined := "{.reference = NULL}"
+	if from.First == ir.MaybeNumber {
+		undefined = fmt.Sprintf("{.number = %s}", slotted(ir.MaybeNumber, zero(ir.MaybeNumber)))
+	}
+	e.line("\tadamic_array_push(%s, %s->code(%s, (adamic_value[]){%s, {.number = (double)%s}}));", made, callback, callback, undefined, index)
 	e.line("}")
 	return made
 }

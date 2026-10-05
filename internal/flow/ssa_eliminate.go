@@ -1,0 +1,129 @@
+// Redundant phi elimination.
+//
+// A phi is redundant when it is not actually a merge: every operand is the same value, or every
+// operand is either the same value or the phi's own result. The second case is what a loop produces
+// when the body does not reassign the variable - the back edge feeds the phi its own output - and it
+// is the reason this cannot be a simple "are all operands equal" test.
+//
+// # Why this is here rather than left to the next agent
+//
+// Braun's construction places a phi whenever a lookup crosses a join, before it knows whether the
+// operands will agree. On a loop it must: the header's phi is minted before the back edge's value
+// exists. So the construction cannot avoid producing redundant phis, and a redundant phi is not
+// cosmetic - it is a value that appears to have several reaching definitions when it has one, which
+// is precisely the fact every pass above this will key on. Shipping construction without it would
+// mean every consumer re-deriving "is this phi real".
+//
+// Removal cascades: deleting one phi can make another redundant, since a phi's operand may be the
+// removed phi's result. So this iterates to a fixed point rather than making one pass.
+//
+// Upstream's equivalent is `eliminate_redundant_phi.rs`, 177 lines.
+//
+// Lifted from cohere's ssa_eliminate.go (high_level_intermediate_representation at 715ba94). Adamic:
+// the one change is that a function here has no Returns place to rewrite.
+package flow
+
+// EliminateRedundantPhis removes phis that are not merges, rewriting every reference to a removed
+// phi's result to the value it collapsed to.
+//
+// Runs to a fixed point.
+func EliminateRedundantPhis(function *Function) {
+	if function == nil {
+		return
+	}
+
+	for {
+		// rewrites maps a removed phi's result to what it collapsed to.
+		rewrites := map[IdentifierId]IdentifierId{}
+
+		for _, block := range function.Blocks {
+			kept := block.Phis[:0]
+			for _, phi := range block.Phis {
+				if collapsed, redundant := redundantPhiValue(phi); redundant {
+					rewrites[phi.Place.Identifier] = collapsed
+					continue
+				}
+				kept = append(kept, phi)
+			}
+			block.Phis = kept
+		}
+
+		if len(rewrites) == 0 {
+			return
+		}
+
+		// A removed phi may collapse to another removed phi's result, so chase each chain to its
+		// end before rewriting. The chain is acyclic because a phi only collapses to a value that
+		// is not itself.
+		resolve := func(id IdentifierId) IdentifierId {
+			seen := 0
+			for {
+				next, ok := rewrites[id]
+				if !ok {
+					return id
+				}
+				id = next
+				seen++
+				if seen > len(rewrites) {
+					// Defensive: a cycle cannot arise from the redundancy test above, but a caller
+					// that hand-built phis could create one, and looping forever is the worst
+					// possible response.
+					return id
+				}
+			}
+		}
+
+		applyRewrites(function, resolve)
+	}
+}
+
+// redundantPhiValue reports the single value a phi collapses to, if it collapses at all.
+//
+// The rule, which is upstream's: ignoring operands that are the phi's own result, if every
+// remaining operand names one value, the phi is that value. A phi with no operands other than
+// itself cannot arise from a reachable block and is treated as not redundant so it stays visible.
+func redundantPhiValue(phi *Phi) (IdentifierId, bool) {
+	var candidate IdentifierId
+	found := false
+	for _, operand := range phi.Operands {
+		if operand.Identifier == phi.Place.Identifier {
+			continue
+		}
+		if !found {
+			candidate = operand.Identifier
+			found = true
+			continue
+		}
+		if operand.Identifier != candidate {
+			return 0, false
+		}
+	}
+	if !found {
+		return 0, false
+	}
+	return candidate, true
+}
+
+// applyRewrites rewrites every place in the function through resolve.
+func applyRewrites(function *Function, resolve func(IdentifierId) IdentifierId) {
+	for _, block := range function.Blocks {
+		for _, phi := range block.Phis {
+			phi.Place.Identifier = resolve(phi.Place.Identifier)
+			for predecessorId, operand := range phi.Operands {
+				operand.Identifier = resolve(operand.Identifier)
+				phi.Operands[predecessorId] = operand
+			}
+		}
+		for _, instructionId := range block.Instructions {
+			EachInstructionPlacePointer(function.Instructions[instructionId], func(place *Place, role PlaceRole) {
+				place.Identifier = resolve(place.Identifier)
+			})
+		}
+		EachTerminalPlacePointer(block.Terminal, func(place *Place, role PlaceRole) {
+			place.Identifier = resolve(place.Identifier)
+		})
+	}
+	for index := range function.Params {
+		function.Params[index].Identifier = resolve(function.Params[index].Identifier)
+	}
+}

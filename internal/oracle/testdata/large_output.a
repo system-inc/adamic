@@ -1,0 +1,16 @@
+// Output larger than native's 64 KiB stdout buffer, many times over: lines of every length, lone
+// surrogates (each written as three bytes of U+FFFD) falling across the buffer's edges, a line longer
+// than the whole buffer, and empty lines. Byte for byte what Node writes.
+for (let line = 0; line < 30000; line += 1) {
+	if (line % 7 === 0) {
+		console.log(`${line} a\uD800b ${'x'.repeat(line % 50)}\uDFFF`);
+	} else if (line % 13 === 0) {
+		console.log('');
+	} else {
+		console.log(`${line} ${'y'.repeat(line % 97)}`);
+	}
+}
+console.log('z'.repeat(100000));
+console.log('\uDFFF'.repeat(30000));
+console.error('stderr, unbuffered');
+console.log('after');

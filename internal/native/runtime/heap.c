@@ -60,6 +60,7 @@ static void free_one(void *value) {
 	adamic_heap *heap = value;
 	switch (heap->kind) {
 	case adamic_kind_string:
+		adamic_string_free_index(value);
 		break;
 	case adamic_kind_object: {
 		adamic_object *object = value;
@@ -100,6 +101,9 @@ static void free_one(void *value) {
 	case adamic_kind_number:
 	case adamic_kind_boolean:
 		break;
+	case adamic_kind_weak:
+		adamic_weak_dropped(value);
+		break;
 	case adamic_kind_map_iterator: {
 		// The iteration is over: the map may compact again.
 		adamic_map_iterator *iterator = value;
@@ -108,6 +112,8 @@ static void free_one(void *value) {
 		break;
 	}
 	}
+	// Anything weak that pointed here now points at nothing.
+	adamic_weak_forget(value);
 	free(value);
 	ADAMIC_COUNT_FREE();
 }

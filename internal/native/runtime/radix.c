@@ -131,7 +131,7 @@ static const char *double_to_radix(double value, int radix, char buffer[radix_bu
 }
 
 static adamic_string *radix_result(const char *text, size_t length) {
-	adamic_string result = {{0, adamic_kind_string}, length, text};
+	adamic_string result = {{0, adamic_kind_string}, length, text, 0, NULL};
 	return adamic_string_concat(1, (adamic_string *const[]){&result});
 }
 

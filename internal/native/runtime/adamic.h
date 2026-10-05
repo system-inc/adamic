@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <math.h>
+
 enum adamic_stream {
 	adamic_stdout = 1,
 	adamic_stderr = 2,
@@ -25,6 +27,7 @@ enum adamic_kind {
 	adamic_kind_map_iterator,
 	adamic_kind_number,
 	adamic_kind_boolean,
+	adamic_kind_weak,
 };
 
 typedef struct adamic_heap {
@@ -88,10 +91,24 @@ typedef struct adamic_string {
 	adamic_heap heap;
 	size_t length;
 	const char *bytes;
+	// units is the length in UTF-16 units plus one, once it's been asked for, and 0 until then; index is
+	// a long non-ASCII string's position index, once built (string_index.c). Both are caches, which
+	// every initializer that leaves them out leaves empty.
+	size_t units;
+	struct adamic_string_index *index;
 } adamic_string;
 
+// ADAMIC_LITERAL_INDEX marks a constant's index as not yet built: a constant lives as long as the
+// program, so a long one can have an index that does too (string_index.c). Only a constant of static
+// storage may carry it.
+extern char adamic_literal_mark;
+#define ADAMIC_LITERAL_INDEX ((struct adamic_string_index *)&adamic_literal_mark)
+
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
-#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text}
+#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX}
+
+// ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string}, size, array, 0, ADAMIC_LITERAL_INDEX}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 typedef struct adamic_shape {
@@ -122,8 +139,16 @@ adamic_object *adamic_object_new(const adamic_shape *shape);
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
 
-// adamic_object_field finds a field by name. The checker proved the field is there.
-adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+// adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
+// the program last saw the same shape, the field is where it was then, which is inline, since it's
+// what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
+adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (cache->shape == object->shape) {
+		return &((adamic_object *)object)->slots[cache->index];
+	}
+	return adamic_object_find(object, name, cache);
+}
 
 // adamic_array is an array (array.c). references says whether its elements are references.
 typedef struct adamic_array {
@@ -155,6 +180,9 @@ typedef struct adamic_map {
 	size_t bucket_count;
 	size_t *buckets;
 	bool string_keys;
+	// reference_keys is keys that are counted references: strings, compared by their text, or, when
+	// string_keys isn't set, objects, arrays, maps and functions, compared by identity, as === does.
+	bool reference_keys;
 	bool reference_values;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
@@ -177,6 +205,23 @@ bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value 
 
 adamic_map *adamic_map_new(bool string_keys, bool reference_values);
 
+// adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
+// key, found by identity (map.c).
+adamic_map *adamic_map_new_identity(bool reference_values);
+
+// adamic_map_clear is map.clear() and set.clear(): every entry deleted, as if one by one, so an
+// iteration open over it goes on with whatever is added after.
+void adamic_map_clear(adamic_map *map);
+
+// adamic_map_keys and adamic_map_values are [...map.keys()] and [...map.values()]: new arrays the
+// caller owns, in insertion order.
+adamic_array *adamic_map_keys(const adamic_map *map);
+
+// adamic_map_add_pairs sets each [key, value] tuple of an array in a map, in order: new Map(pairs).
+// The map takes its own references.
+void adamic_map_add_pairs(adamic_map *map, const adamic_array *pairs);
+adamic_array *adamic_map_values(const adamic_map *map);
+
 // adamic_map_get is the value's slot, or NULL when the key isn't there.
 adamic_value *adamic_map_get(const adamic_map *map, adamic_value key);
 
@@ -185,11 +230,34 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value);
 
 bool adamic_map_delete(adamic_map *map, adamic_value key);
 
+// A Set is a map whose values aren't used (set.c). adamic_set_add_all adds an array's elements in
+// order, new Set(array), each reference retained; adamic_set_values is [...set], a new array the caller
+// owns.
+void adamic_set_add_all(adamic_map *set, const adamic_array *values);
+adamic_array *adamic_set_values(const adamic_map *set);
+
 // adamic_map_free_children lets go of what a map holds, for the heap's freeing.
 void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 
 // adamic_array_at is array[index]: the element's slot, or NULL (undefined) when there isn't one.
-adamic_value *adamic_array_at(const adamic_array *array, double index);
+// It's inline, since a loop over an array reads through it every pass. An array index is an integer
+// from 0 up to the length; anything else (negative, a fraction, NaN, past the end) is a property the
+// array doesn't have, which reads as undefined.
+//
+// Past the bounds check, 0 <= index < length, so (size_t)index is defined and, back as a double, is
+// trunc(index) exactly (below 2^53 the conversion is exact, and from there every double is whole), so
+// a fraction is caught without calling trunc, which on x86-64 without SSE4.1 is a call into libm on
+// every read. -0 is index 0, as JavaScript reads it.
+static inline adamic_value *adamic_array_at(const adamic_array *array, double index) {
+	if (!(index >= 0) || index >= (double)array->length) {
+		return NULL;
+	}
+	size_t whole = (size_t)index;
+	if ((double)whole != index) {
+		return NULL;
+	}
+	return &array->elements[whole];
+}
 
 // adamic_array_set is array[index] = value, which takes the value; it panics at an index the array
 // doesn't have.
@@ -226,6 +294,9 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 // adamic_array_splice is array.splice(start, count, ...items): what's removed, in a new array the
 // caller owns. The items' references are the array's from then on.
 adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
+// adamic_array_remove is a splice whose result nothing uses: what it removes is let go of, and no
+// array is made to hold it.
+void adamic_array_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
 
 // adamic_array_append is a spread, [...source], into an array being made: each element pushed, a
 // reference retained.
@@ -238,6 +309,12 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
+// adamic_timsort sorts count values in place by V8's algorithm (sort.c).
+void adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_value, adamic_value, void *), void *context);
+
+// adamic_array_sort_undefined_last sorts an array of number | undefined as JavaScript does: every
+// undefined goes to the end, never passed to the comparator (sort_undefined.c).
+void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 
 // adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);
@@ -318,6 +395,9 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
 adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
+// ADAMIC_STRING_MAX_UNITS is V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit).
+#define ADAMIC_STRING_MAX_UNITS 536870888
+
 // adamic_string_check_length panics, as V8 throws RangeError: Invalid string length, when a string
 // would be longer than V8's longest, in UTF-16 units.
 void adamic_string_check_length(double units);
@@ -333,6 +413,17 @@ adamic_string *adamic_string_to_lower(const adamic_string *string);
 // normalize (normalize.c): NFC, NFD, NFKC or NFKD as form names it, and a panic, as JavaScript's
 // RangeError, for any other form. It returns a string the caller owns.
 adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form);
+
+// adamic_string_units is a string's length in UTF-16 units, counted once. adamic_string_locate is
+// where a unit below that length is: the byte offset of the code point holding it, and whether the unit
+// is the low half of a surrogate pair there. Both take constant time amortized (string_index.c).
+size_t adamic_string_units(const adamic_string *string);
+size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low);
+
+// adamic_string_units_before is how many UTF-16 units come before a byte offset that starts a code
+// point: indexOf's answer, found through the index rather than by counting from the start.
+size_t adamic_string_units_before(const adamic_string *string, size_t offset);
+void adamic_string_free_index(adamic_string *string);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
@@ -372,7 +463,39 @@ extern adamic_string adamic_typeof_undefined;
 extern adamic_string adamic_typeof_object;
 extern adamic_string adamic_typeof_function;
 
-// adamic_write_line writes a string and a newline, as console.log does with one string.
+// adamic_weak is the handle a Weak<Target> slot holds (weak.c): counted itself, it doesn't count its
+// target, and it says NULL once the target is freed. adamic_weak_of is the target's handle, retained
+// for the caller (NULL for NULL); adamic_weak_target is what a handle points to, and
+// adamic_weak_target_present the same where the checker proved it present, panicking if it was freed.
+// The heap tells weak.c when a target is freed (adamic_weak_forget) and when a handle is
+// (adamic_weak_dropped).
+typedef struct adamic_weak adamic_weak;
+adamic_weak *adamic_weak_of(void *target);
+void *adamic_weak_target(const adamic_weak *handle);
+void *adamic_weak_target_present(const adamic_weak *handle);
+void adamic_weak_forget(void *target);
+void adamic_weak_dropped(adamic_weak *handle);
+// adamic_weak_held reports whether a Weak points at a value: reuse in place takes over only a value
+// nothing else can reach, and a Weak reaches without counting.
+bool adamic_weak_held(const void *target);
+
+// adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
+// every call that can throw, and taken by the catch that lands it. adamic_error_new is new
+// Error(message), and adamic_uncaught the panic of an error nothing caught.
+extern adamic_object *adamic_thrown;
+adamic_object *adamic_error_new(adamic_string *message);
+_Noreturn void adamic_uncaught(void);
+
+// adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
+// rather than kill, as on Node.
+void adamic_start(int count, char **values);
+
+// adamic_output_flush writes out what stdout's buffer holds, before a file is read or written: the
+// file may be stdout itself, or stdin waiting on a prompt just printed (adamic.c).
+void adamic_output_flush(void);
+
+// adamic_write_line writes a string and a newline, as console.log does with one string. Stdout is
+// buffered, and flushed wherever Node's writing it at once could be told apart (adamic.c).
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string);
 
 // ADAMIC_NUMBER_FORMAT_MAX holds the longest number text, "-1.2345678901234567e-308", with room.
@@ -416,6 +539,10 @@ double adamic_math_tan(double x);
 double adamic_math_tanh(double x);
 double adamic_math_hypot(size_t count, const double *values);
 
+// adamic_number_shortest_digits is V8's shortest digits for a positive, finite value (dtoa.c), as
+// Number::toString writes them: value is 0.d1d2d3... times 10^point, and it returns how many.
+int adamic_number_shortest_digits(double value, char digits[18], int *point);
+
 // adamic_number_to_exponential is value.toExponential(digits), and the shortest digits when there
 // are none; adamic_number_to_precision is value.toPrecision(digits), and String(value) when there
 // are none. Both are V8's (dtoa.c), and return a string the caller owns.
@@ -436,6 +563,23 @@ adamic_string *adamic_number_to_fixed(double value, double digits);
 void adamic_arguments_save(int count, char **values);
 adamic_array *adamic_program_arguments(void);
 adamic_object *adamic_read_text_file(const adamic_string *path);
+
+// adamic_decode_utf8 makes a string of bytes decoded as Node decodes them, WHATWG UTF-8 with U+FFFD
+// for each invalid sequence, and adamic_path_bytes is a path as the terminated bytes Node names a file
+// by, a lone surrogate as U+FFFD, or NULL when it holds a NUL, which names no file; the caller frees it
+// (input.c).
+adamic_string *adamic_decode_utf8(const unsigned char *bytes, size_t length);
+char *adamic_path_bytes(const adamic_string *path);
+
+// adamic_read_directory is readDirectory(path), { kind: 'Ok', names } with the names in Node's order,
+// and adamic_file_status is fileStatus(path), { kind: 'Ok', type, size, symbolicLink }, each or
+// { kind: 'Error', message } (directory.c). Both return a reference the caller owns.
+adamic_object *adamic_read_directory(const adamic_string *path);
+adamic_object *adamic_file_status(const adamic_string *path);
+
+// adamic_write_text_file is writeTextFile(path, text) (input.c): { kind: 'Ok' } or { kind: 'Error',
+// message }, a reference the caller owns.
+adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text);
 
 // adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
 _Noreturn void adamic_panic(const char *message, size_t length);

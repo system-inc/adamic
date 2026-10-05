@@ -889,6 +889,16 @@ static void double_to_ascii(double v, enum bignum_dtoa_mode mode, int requested_
 	bignum_dtoa(v, mode, requested_digits, buffer, length, point);
 }
 
+// adamic_number_shortest_digits is DoubleToAscii in its shortest mode, what V8's DoubleToCString
+// (Number::toString) takes its digits from: the fewest digits that read back as value, the closest
+// of those. value is positive and finite; digits holds at most 17 and a terminating NUL, and value
+// is 0.d1d2d3... times 10^point.
+int adamic_number_shortest_digits(double value, char digits[18], int *point) {
+	int length = 0;
+	double_to_ascii(value, bignum_dtoa_shortest, 0, digits, &length, point);
+	return length;
+}
+
 // ---- src/numbers/conversions.cc
 
 // The longest text either function writes: a sign, 101 digits, a point, and "e+308" or so, with
@@ -1023,7 +1033,7 @@ static int double_to_precision(double value, int p, char *buffer) {
 // (NaN).toExponential(1000) is ("NaN", not a RangeError).
 
 static adamic_string *conversion_result(const char *text, int length) {
-	adamic_string result = {{0, adamic_kind_string}, (size_t)length, text};
+	adamic_string result = {{0, adamic_kind_string}, (size_t)length, text, 0, NULL};
 	return adamic_string_concat(1, (adamic_string *const[]){&result});
 }
 
