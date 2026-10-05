@@ -53,9 +53,8 @@ export const IgnoreFileName = '.gitignore';
 export const ExcludeFile = '.git/info/exclude';
 
 // gitignore.go: maximumFileSize, the largest ignore file read. Git skips one past 100 MiB with a warning;
-// here it is refused, since skipping it would leave every pattern in it unapplied without a word. The Go
-// writes it 100 << 20; stage 0 does not lower the bitwise operators yet (gap 2 in GAPS.md).
-const maximumFileSize = 100 * 1024 * 1024;
+// here it is refused, since skipping it would leave every pattern in it unapplied without a word.
+const maximumFileSize = 100 << 20;
 
 // gitignore.go: ErrNestedRepository's text. An error carrying it is a refusal to enter a directory that
 // is a repository of its own: its ignore files govern it, through its own newMatcher, and the parent's
@@ -685,8 +684,7 @@ function quote(text: string): string {
 				break;
 			default:
 				if (code < 0x20 || code === 0x7f) {
-					// code >> 4 and code & 0xf, in arithmetic (gap 2 in GAPS.md).
-					quoted += '\\x' + hexDigit(Math.floor(code / 16)) + hexDigit(code % 16);
+					quoted += '\\x' + hexDigit(code >> 4) + hexDigit(code & 0xf);
 				} else {
 					quoted += character;
 				}

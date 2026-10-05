@@ -379,7 +379,7 @@ function addClass(members: boolean[], name: string): boolean {
 			inClass = (character) => character >= 0x41 && character <= 0x5a;
 			break;
 		case 'xdigit':
-			inClass = (character) => isDigit(character) || (character >= 0x41 && character <= 0x46) || (character >= 0x61 && character <= 0x66);
+			inClass = (character) => isDigit(character) || ((character | 0x20) >= 0x61 && (character | 0x20) <= 0x66);
 			break;
 		default:
 			return false;
@@ -392,11 +392,9 @@ function addClass(members: boolean[], name: string): boolean {
 	return true;
 }
 
-// glob.go: isLetter and isDigit, over a byte's value. The Go folds case with character|0x20; stage 0 does
-// not lower the bitwise operators yet (gap 2 in GAPS.md), so here, as for the xdigit class in addClass,
-// each case is its own range.
+// glob.go: isLetter and isDigit, over a byte's value.
 function isLetter(character: number): boolean {
-	return (character >= 0x41 && character <= 0x5a) || (character >= 0x61 && character <= 0x7a);
+	return (character | 0x20) >= 0x61 && (character | 0x20) <= 0x7a;
 }
 
 function isDigit(character: number): boolean {
