@@ -68,3 +68,23 @@ function lookup(key: string): string {
 console.log(`${lookup('a')} ${lookup('a')} ${lookup('b')} ${built}`);
 const flag = built > 1 ? lookup('c') : `${built}`.repeat(3);
 console.log(`${flag} ${built > 5 || lookup('d').length > 2} ${built}`);
+
+// The same, for variables a function declares and a closure captures, which live in cells rather
+// than as globals: what was read before the closure ran is what's used.
+function captured(): string {
+	let word = 'abc'.repeat(2);
+	let items = ['p'.repeat(2), 'q'.repeat(2)];
+	let count = 1;
+	const swap = (): number => {
+		word = 'z';
+		items = [];
+		count = 100;
+		return 1;
+	};
+	const first = `${word.slice(swap())} ${word}`;
+	const second = `${items.join(swap() > 0 ? '+' : '-')} ${items.length}`;
+	count = 1;
+	const third = `${count + swap()} ${count}`;
+	return `${first} ${second} ${third}`;
+}
+console.log(captured());
