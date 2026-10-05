@@ -92,9 +92,9 @@ type run struct {
 //
 // The questions: cohere's documented semantics, its refusals, generated trees from cohere's own
 // generator (COHERE_GITIGNORE_GENERATED of them, 40 by default), this repository and cohere's checkout
-// as real trees, and,
-// when COHERE_GIT_SOURCE names a git source checkout as it does for cohere, git's t0008 check-ignore
-// corpus and t3070 wildmatch corpus.
+// as real trees, each asked path by path and again as cohere's walk asks it, pattern lists, and, when
+// COHERE_GIT_SOURCE names a git source checkout as it does for cohere, git's t0008 check-ignore corpus
+// and t3070 wildmatch corpus.
 func TestThePortAnswersAsGoCohereAndGitDo(t *testing.T) {
 	t.Parallel()
 	asked := askedCases(t)
@@ -134,15 +134,14 @@ func TestThePortAnswersAsGoCohereAndGitDo(t *testing.T) {
 		for _, difference := range agreement.differences {
 			t.Error(difference)
 		}
-		compared, ignored, reincluded, scripted, globsAsserted := agreement.compared, agreement.ignored, agreement.reincluded, agreement.scripted, agreement.globs
 		// Trees whose rules decided nothing would agree with git without testing the port.
-		if compared == 0 || ignored == 0 || reincluded == 0 {
-			t.Errorf("git was asked too little: %d paths compared, %d ignored, %d re-included", compared, ignored, reincluded)
+		if agreement.compared == 0 || agreement.ignored == 0 || agreement.reincluded == 0 {
+			t.Errorf("git was asked too little: %d paths compared, %d ignored, %d re-included", agreement.compared, agreement.ignored, agreement.reincluded)
 		}
 		t.Logf("%d trees, %d pattern lists, %d globs: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend",
 			len(asked.Trees), len(asked.Patterns), len(asked.Globs))
 		t.Logf("git: %d paths compared (%d ignored, %d re-included by a negation; %d of them as git's t0008 states), %d globs as git's corpus and cohere's rules state",
-			compared, ignored, reincluded, scripted, globsAsserted)
+			agreement.compared, agreement.ignored, agreement.reincluded, agreement.scripted, agreement.globs)
 		if gitSource() == "" {
 			t.Logf("not asked: git's t0008 and t3070 corpora, since COHERE_GIT_SOURCE names no git source checkout")
 		}

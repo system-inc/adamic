@@ -666,6 +666,7 @@ function quote(text: string): string {
 				break;
 			default:
 				if (code < 0x20 || code === 0x7f) {
+					// code >> 4 and code & 0xf, in arithmetic (gap 2 in GAPS.md).
 					quoted += '\\x' + hexDigit(Math.floor(code / 16)) + hexDigit(code % 16);
 				} else {
 					quoted += character;

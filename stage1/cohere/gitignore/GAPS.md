@@ -172,7 +172,7 @@ stage 0 can't lower a value of type [string, number] where an array goes yet
 
 The Go returns two results in several places: `strings.CutPrefix`'s `(after, found)`, and `(bool, Source)` from `Ignored` and `Excluded`. A tuple is how TypeScript says that.
 
-**Around it:** named fields. `Cut { after, found }` (strings.CutPrefix's own result names), and `Verdict { ignored, source }` (cohere's differential test names the pair `verdict`). The cases hold a tree's entries as a `ReadonlyMap` written `new Map<string, Entry>([...])`, the one place tuple literals lower.
+**Around it:** named fields. `Cut { after, found }` (strings.CutPrefix's own result names), and `Verdict { ignored, source }` (cohere's differential test names the pair `verdict`). While the cases were constants, a tree's entries were written `new Map<string, Entry>([...])`, the one place tuple literals lower. case.ts now builds the map with `set` as it reads them.
 
 ## 9. `return panic(...)`
 
@@ -206,14 +206,14 @@ A Go string is its bytes, and git matches bytes: `?` against `é` is false, beca
 
 ## What lowered as written
 
-What lowered as written, and is worth saying so: discriminated unions narrowed by `switch` (the Go's token is one), classes with `#private` fields written only while `enter` builds a new matcher, a generic `Result<Value>` union for the Go's `(value, error)`, `?? panic(...)` for every index the Go would bounds-check, closures assigned in a `switch`, `for...of` over strings by code point, a `Map` of a discriminated union, and string `switch` throughout the glob compiler.
+What lowered as written, and is worth saying so: discriminated unions narrowed by `switch` (the Go's token is one), classes with `#private` fields written only while `enter` builds a new matcher, a generic `Result<Value>` union for the Go's `(value, error)`, `?? panic(...)` for every index the Go would bounds-check, closures assigned in a `switch`, `for...of` over strings by code point, a `Map` of a discriminated union, string `switch` throughout the glob compiler, a `Map<string, Matcher>` of entered directories for the walk, and the driver's parser over `readTextFile`'s text (`split`, `for...of` by code point, a union-typed `let` for the section it's in).
 
 ## Performance, observed (not refusals)
 
 These lowered and answered correctly, but they're the numbers to beat on the way to "faster and leaner than Go cohere". All measured on this Linux container, x86-64, with the test's case set, which includes cohere's own checkout as a real tree: 50 trees, about 6,200 tree paths, 21 pattern lists and 421 globs, and output identical on every side.
 
 - **Go cohere is 20 times faster than the native port.** The same 50 trees, pattern lists and globs, answered byte for byte the same, take Go cohere 0.10 s (the whole `go test` of cohere_side_test.go's answer step, reading the trees' ignore files from disk and its cases as JSON). The native port takes 2.1 s, and Node 0.62 s. The rest of this section is where the native time goes.
-- **Native is 3.5 to 5 times slower than Node.** With the cases compiled in as constants, the unsanitized `-O2` binary ran in 2.06 s and Node in 0.42 s. Read from a 447 KB cases file, it is 2.09 s and 0.59 s. Under callgrind, 42% of the native run's instructions are in `adamic_string_length` and 39% in `adamic_string_char_code_at` (internal/native/runtime/string.c). Each of them walks the string's UTF-8 from its first byte. So `text.length`, `text.charCodeAt(index)` and `text[index]` cost the length of the string, and a loop over a string's indexes is quadratic. The glob reads its pattern and its text that way, as the Go does. That's natural code, and every 0.1 program that reads a string by index pays the same. docs/memory.md already names the fix: an ASCII-only flag, so the common case is a load. Smallest program that shows the shape:
+- **Native is 3.5 to 5 times slower than Node.** With the cases compiled in as constants, the unsanitized `-O2` binary ran in 2.06 s and Node in 0.42 s. Read from a 447 KB cases file, it is 2.09 s and 0.59 s. Under callgrind (run on the constants build), 42% of the native run's instructions are in `adamic_string_length` and 39% in `adamic_string_char_code_at` (internal/native/runtime/string.c). Each of them walks the string's UTF-8 from its first byte. So `text.length`, `text.charCodeAt(index)` and `text[index]` cost the length of the string, and a loop over a string's indexes is quadratic. The glob reads its pattern and its text that way, as the Go does. That's natural code, and every 0.1 program that reads a string by index pays the same. docs/memory.md already names the fix: an ASCII-only flag, so the common case is a load. Smallest program that shows the shape:
 
   ```ts
   const text = 'a'.repeat(100000);

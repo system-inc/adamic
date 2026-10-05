@@ -38,8 +38,8 @@ type Token =
 	| { readonly kind: 'directoriesToken' }; // `**/` as a segment: nothing, or any run that ends in `/`
 
 // glob.go: isLetter and isDigit, over a byte's value. The Go folds case with character|0x20; stage 0 does
-// not lower the bitwise operators yet (gap 2 in GAPS.md), so here, as for xdigit above, each case is its
-// own range.
+// not lower the bitwise operators yet (gap 2 in GAPS.md), so here, as for the xdigit class in addClass,
+// each case is its own range.
 function isLetter(character: number): boolean {
 	return (character >= 0x41 && character <= 0x5a) || (character >= 0x61 && character <= 0x7a);
 }
