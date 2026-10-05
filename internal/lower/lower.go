@@ -278,6 +278,15 @@ func (l *lowering) functionBody(declaration *ast.Node) error {
 // appends functions, and a pointer into the slice would be left pointing at the old one.
 func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {
 	function := l.result.Functions[index]
+	if !function.Closure {
+		// A function declaration, a method or a constructor is lowered where a use of it is first met,
+		// a closure's body included, but it's declared at the top level and captures nothing from
+		// the closures being lowered there: a local of its own read in a closure of its own must not
+		// land in their environments.
+		outerClosures := l.closures
+		l.closures = nil
+		defer func() { l.closures = outerClosures }()
+	}
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
@@ -288,7 +297,12 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		if returns.Flags()&checker.TypeFlagsVoid == 0 {
 			valueType, isKnown := l.representation(returns)
 			if !isKnown {
-				return l.notYet(declaration.Name(), "a function returning "+l.checker.TypeToString(returns))
+				// An arrow function has no name to point at, so it's pointed at whole.
+				where := declaration.Name()
+				if where == nil {
+					where = declaration
+				}
+				return l.notYet(where, "a function returning "+l.checker.TypeToString(returns))
 			}
 			function.Returns = valueType
 		}

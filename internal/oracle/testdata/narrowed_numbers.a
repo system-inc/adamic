@@ -1,0 +1,12 @@
+// A number | undefined narrowed to number, put back to undefined by a call: JavaScript goes on with
+// undefined (undefined + 1 is NaN) in a place typed number, and native printed a number that was never
+// there, a silent miscompile. Both backends now stop there: an inserted check. Found by adamic-fuzz.
+let count: number | undefined = 1;
+function drop(): void {
+	count = undefined;
+}
+if (count !== undefined) {
+	console.log(`${count + 1}`);
+	drop();
+	console.log(`${count + 1}`);
+}

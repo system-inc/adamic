@@ -1,0 +1,12 @@
+// A global moved into a consumed parameter (tree = insert(tree, ...)) and read by a later argument of
+// the same call: touches checks only the callee. UBSan null dereference at object.c:27; -O2 segfaults.
+type Tree = { value: number; label: string };
+let tree: Tree = { value: 1, label: `tree${1}` };
+function size(): number {
+	return tree.value;
+}
+function insert(node: Tree, extra: number): Tree {
+	return { ...node, value: node.value + extra };
+}
+tree = insert(tree, size());
+console.log(`${tree.value} ${tree.label}`);

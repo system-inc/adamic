@@ -37,7 +37,79 @@ The counts are what let Adamic mutate in place without anyone seeing:
 - `push` on an array with count 1 grows it in place, and on a shared one copies first.
 - **Identity is never observable through reuse.** Reuse happens only when nothing else holds the old value, so nothing can compare against it. Program 9 in docs/0.1.md pins this: while `before` still holds the old tree, the path is copied and the shared subtree stays shared.
 
-Stage 0 doesn't reuse anything yet. It retains and releases on every assignment, the simple baseline. Reuse is added against that baseline, counted (retains and releases per fixture) and timed, and the oracle and the leak check keep it honest.
+**What's built (#6zt3jmn).** In stage 0, the one place a value is consumed to build one of its own shape is the spread: `{ ...source, field: value }` always has the source's shape. When the source's count is exactly 1, the spread takes over its object: the literal's fields are written over its own, and nothing is allocated or freed. Uniqueness is checked at runtime, as Perceus does. What the compiler proves (`internal/native/reuse.go`) is that taking the object can't be seen:
+
+- **The source is owned here.** It's a local, or a consumed parameter. A borrowed parameter's count is its caller's, so a count of 1 there means the caller still holds it, and it's never reused.
+- **The source is dead.** Liveness over `internal/flow`'s graph says it isn't read after the instruction, or the instruction gives its variable a new value.
+- **Nothing else reads it.** In that instruction, the source is read only by the spread and by reads of its fields inside the literal, and each field the literal replaces is read at most once. While the fields' values are evaluated, nothing but the literal can reach the object, so nothing can change it, and JavaScript's order (the spread's fields read first) holds without a copy.
+- **A replaced field moves out.** Its one read moves the value out instead of retaining it. That's what lets `insert(tree.left, value)` find the next node unique too.
+
+A parameter that's such a source is **consumed**, not borrowed. Its caller hands over a reference: a statement's temporary as it is, anything else retained. The callee releases it on every way out but the one where its memory became the result.
+
+An argument a consumed parameter takes is **moved** when nothing reads its variable after the call. For a local, that means it's dead there. For a global, the statement must be assigning it anew, and nothing the call can reach may read or write it or call a function value. That's program 9's `tree = insert(tree, value)`.
+
+**What the counts show.**
+
+- **`09_tree.ts`:** allocations and frees fell from 33 to 19, and retains from 199 to 161. Its first nine inserts rebuild their path in place. The tenth runs while `before` holds the root, so its path is copied and the right subtree stays shared: "right subtree shared: true" still prints, held by the oracle.
+- **`reuse.a`:** 86 allocations fall to 77 (5 in a loop that reuses one object every pass, 4 down a uniquely held list), measured against the same build with the plan turned off.
+- **Nothing else moved.** The other spreads in the fixtures are of globals, or of values still live.
+
+**How it's held.** `reuse.a` is a case for every way taking an object could be seen: its source read after, held by someone else, its replaced field read twice, and a moved global read by the callee. Beside those are cases where it's taken and mustn't change what prints. Mutants, against the whole oracle:
+
+- **Reusing a shared object** (the count check dropped): stdout differs.
+- **Ignoring liveness:** stdout differs, in `reuse.a` and in the existing `maybe_number_slots.a`.
+- **Moving a replaced field read twice:** UBSan reports a null dereference.
+- **Moving a global the callee reads:** UBSan reports a null dereference.
+- **Moving a field out of a shared object:** stdout differs.
+
+Liveness is held the way the graph's edges are. `TestLivenessHoldsOnEveryPath` walks every call's points backward, and wherever the next thing to touch a variable is a read, liveness must say it's live: 3,417,833 checks over every program. Liveness that doesn't flow back around a loop failed 1,147,791 of them, in 36 programs.
+
+**Three holes, found in review (integration 5), and closed.** Reviewer R's probes are now oracle fixtures (`reuse_*.a`):
+
+- **A borrowed parameter was moved.** `forward(point) { return bump(point) }` moved `point` into `bump`'s consumed parameter, but `point`'s count was the caller's. `bump` saw a count of 1 and reused the caller's object, then freed it. A move now hands over only a count the function owns.
+- **A moved global was read by a sibling argument.** In `tree = insert(tree, size())`, `size()` read `tree` after it was moved out (nulled). The check looked only inside the callee. It now looks at every call in the statement.
+- **A `Weak` was ignored.** A `Weak` reaches its target without counting, so a count of 1 doesn't mean nothing else can reach it. The `Weak`'s holder could write the object while it was being taken over, and find the new object in the old one's place after. Reuse now also requires that no `Weak` points at the value (`adamic_weak_held`, one comparison in a program with no `Weak`).
+
+Each has a mutant that puts the old behavior back:
+
+| Mutant | Caught by |
+|---|---|
+| A borrowed parameter moved | ASan, in `reuse_forward.a` |
+| Only the callee checked before moving a global | UBSan null dereference, in `reuse_global_sibling.a` |
+| Weak handles ignored | stdout differs, in both `Weak` fixtures |
+
+**Found on the way:** the spread itself was miscompiled. Native copied the source's object after evaluating the fields' values, so `{ ...point, x: moveY(point) }` showed a write `moveY` made to `point.y`. Node prints `1 0 99`, native printed `1 99 99`. It's fixed, and `spread_snapshot.a` holds it.
+
+**Reuse for arrays.** There are three more places a value is consumed to build one of its own kind. Each is taken over under the same rules: owned here, dead after the instruction, and read once in it.
+
+- **`map` writes in place.** `const ys = xs.map(f)`, when `xs` is unique, writes each result over the element it came from, in `xs` itself. That needs three more conditions: the callback is written right there, it takes no third argument (the array, which would see its elements replaced as the map went), and its results sit in the array's slots as the elements do.
+- **A spread first in an array literal is appended to.** `[...xs, more]`, when `xs` is unique, is `xs` with `more` appended. Lowering already requires the spread's elements to be the literal's.
+- **A discarded `splice` makes no array.** A `splice` whose result nothing uses lets go of what it removed instead of returning it (`adamic_array_remove`).
+
+`push`, `pop`, `fill` and `reverse` never copied to begin with: JavaScript mutates an array in place even when it's shared, so they had nothing to gain.
+
+**What the counts show.**
+
+- `normalize.a` makes 10 fewer allocations and its peak live falls from 16 to 11.
+- `sort_releases.a` makes 1 fewer, with its peak live from 13 to 11.
+- `splices.a` makes 2 fewer.
+- `reuse_arrays.a`, new, makes 78 against 84 with the array plan turned off.
+
+Releases rise where `map` writes in place. That's how the counter is wired, not more work: freeing an array lets go of its elements inside the runtime without calling `adamic_release`, so it isn't counted, and replacing elements in place calls it once each.
+
+The `trees` and `sort` benchmarks have none of these patterns, and their allocations didn't move. Since B's run, their retains have fallen from the earlier units: `trees` from 375,302,854 to 272,979,306, and `sort` from 6,002,000 to 2,000,004. `trees` allocates 68 million plain objects it never spreads, which is the arenas' work, below.
+
+**How it's held.** `reuse_arrays.a` puts each array reuse beside the cases where it would be seen. Mutants, each caught:
+
+- `map` reusing a shared array: stdout differs.
+- Ignoring liveness: stdout differs, in `reuse_arrays.a`, `reuse.a` and `maybe_number_slots.a`.
+- Ignoring a callback's third argument: stdout differs.
+- The spread reusing a shared array: stdout differs.
+- `adamic_array_remove` not letting go of what it removed: the leak check fails, in `reuse_arrays.a` and the existing `splices.a`.
+
+**Not yet:** a spread inside a closure is reused only when its source is the closure's own local. A closure's parameters stay owned, so they are never unique. `filter`, `slice` and `concat` of a dying array still allocate, and `sort` still sorts a copy even when its array is unique and no comparator can reach it.
+
+**A spread of a value that may be undefined** (reviewer R, round 8b, older than reuse). JavaScript's `{ ...undefined }` is `{}`, but natively the copy read the NULL source's shape, and once spreads became reuse sources the uniqueness check read its count first. Now, where the checker says the source may be undefined, lowering records the source type's fields the literal doesn't give (`ObjectLiteral.Empty`). For a NULL source the emitter makes a new object with those fields, each set to undefined (NULL for a reference, the packed undefined for a number), and writes the literal's own fields into it. Every read Adamic has then gives what JavaScript reads from `{}`. Reuse checks for NULL before it looks at the count. A boolean or `Weak` field the literal doesn't give says NotYet, since neither has an undefined of its own in a slot. `spread_undefined.a` covers it, reused and copied, with fields and without, and spread again. Three mutants, each caught there: the copy without the NULL path (UBSan), the reuse check without it (UBSan), and the empty object's number fields left 0 (no sanitizer fires; stdout differs, `0 0` for `0 none`).
 
 ## Borrowed parameters
 
@@ -100,6 +172,30 @@ Both are oracle fixtures: `borrow_reassigned.a` and `borrow_map_overwrite.a`. Th
 - **The same, with that guard removed:** ASan caught a heap-use-after-free in `borrow_reassigned.a`, where `framed` read the string `louder`'s store had freed. `functions.a` failed too, on the leak check, where a reassigned parameter's new value was never let go.
 - **Borrowing closures' parameters:** ASan caught a heap-use-after-free in `borrow_map_overwrite.a`'s callback, which read the `name` the overwrite had freed. Nothing else failed.
 
+### Lent reads: borrowing extended to what a statement reads
+
+A reference read from a place a call could write (a global, a captured variable, a field) is retained the moment JavaScript reads it. Something later in the statement might write that place and free the value before it's used. B measured the cost in the tokenizer benchmark: every `text.charCodeAt(position)` of the global `text` was a retain and a release.
+
+The count buys nothing when nothing can run between the read and its use. So a read is **lent**, taken without a count (`internal/native/borrow.go`), when both of these hold:
+
+- It's a direct operand of a **consumer**: an operation done with its operands once it's evaluated, whose result is a number, a boolean, a new value, or one holding its own count. A conditional, `??` or a cast hands its operand on as its own value, so it isn't one.
+- Every operand of that consumer is **pure**: it writes no variable, field, element or map, calls no code, and frees nothing. That's a fixed list of the IR's operations. Anything off the list, including an operation added later, isn't pure.
+
+Purity is the proof here, not the alias graph. A global or a captured variable isn't a value in the flow graph, so its range says nothing about it. One more thing makes the proof hold in C: a consumer's result is often a C expression its parent evaluates later, possibly after a sibling's call. So a consumer that lent a read has its result pinned to a temporary right after its operands, where JavaScript evaluates it.
+
+**What the counts show.**
+
+- The tokenizer benchmark's retains fell from 10,048,047 to 2,407,586, and its releases by the same 7,640,461. Allocations are unchanged.
+- In the oracle's table, 63 rows moved, all retains and releases. Every row fell by equal amounts except the three fixtures that panic (`08_results.ts`, `writes_past_end.a`, `maybe_boolean_panic.a`). Those are counted where they stopped, and the release that would have matched a skipped retain comes after the panic.
+
+**Time didn't move much.** On `go run ./bench -only tokenizer -rounds 7` in the noisy cloud container (load around 2), the best native run went from 0.867 s to 0.824 s, against Node's 0.27 s. A non-atomic retain and release is cheap, and the tokenizer's time is elsewhere. Also, the benchmark's text is degenerate: Node and native both print 1 identifier and 597,482 numbers, so its identifier path barely runs.
+
+**How it's held.** `lent_reads.a` puts a call that reassigns what's read beside the read, or beside its consumer: a global, a field and a captured variable. The strings are built at runtime and held only by what's reassigned. Mutants, each caught by an ASan heap-use-after-free:
+
+- A call counted as pure: in `lent_reads.a`, and in the existing `read_order.a` and `adversarial_order.a`.
+- A closure call counted as pure: in `lent_reads.a` and `adversarial_order.a`.
+- A consumer's result not pinned: in `lent_reads.a`.
+
 ### Where it goes next: reuse in place pulls the other way
 
 Perceus needs the callee to **own** what it reuses. `insert` in program 9 can rewrite `{ ...tree, left }` in place only if it holds the only count on `tree`, and under the rule above `tree` is borrowed, because `insert` never reassigns it. Lean 4's rule is the one to grow into. A parameter is owned when the body consumes it (reuses its memory, or passes it to an owned parameter), and borrowed otherwise. That's computed to a fixpoint over the call graph, and a call that passes a borrowed value to an owned parameter retains at the call. With reuse, the counts table will show both directions at once. Retains come back on the parameters reuse needs, and allocations and frees fall where reuse fires. That's why the table has both kinds of column.
@@ -120,7 +216,89 @@ What it has that Adamic will need: a control-flow graph with single assignment, 
 
 **Recommendation: lift its passes onto Adamic's IR. Don't build the HIR.** Adamic keeps one lowering, from the checked AST to its typed IR. When a pass needs control flow, Adamic builds a graph from its own IR, which is already structured (`If`, `Loop`, `ForOf`, `Switch`, `Break`, `Continue`, `Return`), so the blocks fall out mechanically. Then cohere's single-assignment construction and its aliasing and ranges machinery get lifted onto that graph. React's signature table is replaced by facts the IR already carries. Every runtime operation is its own IR node with one known effect, written down once. Every direct call names its function, whose summary is computed from its body. Only a call through a closure value falls back to the conservative default. Borrowed parameters, as designed above, need none of this: they land on today's tree IR. The decision starts to cost something at Perceus.
 
-That recommendation comes from reading, not from measuring. What would settle it is lifting `ssa.go`'s `Construct` onto a graph built from Adamic's IR, and counting how much of it carries over unchanged.
+That recommendation came from reading, not from measuring. What would settle it was lifting `ssa.go`'s `Construct` onto a graph built from Adamic's IR, and counting how much of it carries over unchanged. Kirk decided for lifting, and that has now been done and measured.
+
+### The lift, measured
+
+`internal/flow` is the graph. `Build` makes one per IR function and one for the top level. Each instruction points back at the IR statement or condition it came from and lists the locals it reads and the one it writes. That's all single assignment needs, and evaluation order stays decided in one place. Globals and captured variables aren't values in the graph: any call may write a global, and any closure holding a cell may write a captured variable. cohere leaves its `LoadGlobal` unrenamed for the same reason.
+
+cohere's `ssa.go`, `ssa_eliminate.go`, `ssa_verify.go` and `graph.go` (at 715ba94) were copied in and then edited only where Adamic's graph differs. Counted line by line against the originals (`difflib`, comments and blank lines apart):
+
+| File | Code lines kept | Removed or changed | New | Comments kept |
+|---|---:|---:|---:|---:|
+| `ssa.go` (`Construct`) | 182 of 226 | 44 | 3 | 123 of 235 |
+| `ssa_eliminate.go` | 81 of 82 | 1 | 0 | 36 of 37 |
+| `ssa_verify.go` | 222 of 229 | 7 | 2 | 70 of 91 |
+| `graph.go` | 108 of 188 | 80 | 2 | 34 of 62 |
+| **All four** | **593 of 725 (82%)** | **132** | **7** | **263 of 425 (62%)** |
+
+What the 132 were:
+
+- 57 are cohere's evaluation order. It's deferred, not incompatible: nothing lifted reads it yet, and mutable ranges will bring it back.
+- About 20 are structural fallthroughs, which Adamic's terminals don't have. Removing them keeps the order a reverse postorder, which is what single assignment needs. Ranges will want cohere's loop-body-first order back, and a fallthrough on `If` with it.
+- 17 rename the `Returns` place. An Adamic return's value is read by an instruction instead.
+- About 15 handle context stores. A captured variable isn't in the graph at all.
+- 7 copy a place's effect, reactivity and source range, which an Adamic place doesn't carry.
+- The rest recurse into nested functions. An Adamic closure is its own IR function, with its own graph.
+
+The algorithms themselves came over unchanged: Braun's lookup, sealing and incomplete phis, redundant-phi elimination to a fixed point, and the dominance verifier. What Adamic wrote is the graph (`flow.go`, 235 lines) and the builder from its IR (`build.go`, 280 lines). The answer to #5jck546 holds up: the passes lift, and the part that's Adamic's own is the part that should be, the graph made from the IR that carries the proven types.
+
+**How it's held.** `TestEveryFunctionIsInSingleAssignment` builds and constructs every function of every oracle program, plus `internal/flow/testdata/joins.a` (every shape of join). That's 217 functions, 52 phis and 640 uses. Three checks run on each, and none of them is built from the construction:
+
+- cohere's verifier: every value is defined once, and every use is dominated by its definition.
+- Reaching definitions, computed the textbook way over the graph before construction. A use that one definition reaches must name that definition's value. A use that several reach must name a phi whose operands come to exactly those definitions.
+- A count of the IR's reads made by `fmt`'s `%#v` rather than by `Build`'s walk, so a read the builder drops shows up.
+
+Three mutants, each caught by the check aimed at it:
+
+- A loop header that skips its incomplete phi failed reaching definitions 127 times and the verifier never. The first predecessor dominates the header, so dominance alone can't see a loop-carried value lost.
+- Collapsing every phi failed the verifier 17 times and reaching definitions 140 times.
+- A builder walk that misses reads inside slices failed the read count 76 times.
+
+**The graph's shape is held too.** Reaching definitions runs over the graph `Build` made, so a wrong edge (a `break`, a `continue` or a case test going to the wrong block) would fool it. `TestEveryPathNodeTakesIsInTheGraph` holds the edges to what runs. The JavaScript backend can mark every point the graph has an instruction for (`javascript.Options`, which adds nothing unless asked: the default output was compared byte for byte on all 59 programs). Each program runs on Node with the marks, and every call's sequence of points must walk its graph: next in the block, or first in a block the terminal reaches through blocks that run nothing. A program that finishes must end every call at a return. Over 63 programs, 158,821 points were walked (86 programs and 3,173,486 points since main's new fixtures). Mutants, each failing this test and none failing the single-assignment test:
+
+- A loop's `continue` sent to the loop's exit failed 4 programs.
+- A loop's `break` sent to its update failed 1.
+- A for...of's `continue` sent to its exit failed 3.
+- A case test sent to the wrong case's body failed 5.
+
+A switch case falling through into the next case's body is not a mutant at all. Every 0.1 case ends in `break` or `return`, so that edge would leave a block nothing reaches, and the live graph doesn't change.
+
+### Mutable ranges and aliasing, lifted and measured
+
+The second lift brings over cohere's alias graph and mutable ranges, React's `InferMutationAliasingRanges`, with evaluation order back to number them. Counted the same way against cohere's files at 715ba94 (code lines; the first three rows are this lift):
+
+| File | Kept | Removed or changed | New |
+|---|---:|---:|---:|
+| `ranges.go` (alias graph, `mutate`, both halves) | 682 of 809 (84%) | 127 | 0 |
+| `graph.go` (with evaluation order back) | 132 of 188 (70%) | 56 | 2 |
+| `effects.go` (the effect types) | 120 of 944 (13%) | 824 | 0 |
+| `ssa.go`, `ssa_eliminate.go`, `ssa_verify.go` (the first lift) | 485 of 537 | 52 | 5 |
+
+- **`ranges.go`:** the 127 are 79 for `MutationSites`, which counts HIR instruction shapes, 10 for nested functions, 9 for `StoreContext`, 14 for React's frozen parameters plus the context and `Returns` places, 11 for React's frozen closures, and 5 for the return terminal. The alias graph, the `mutate` worklist and both halves of the pass came over unchanged.
+- **Evaluation order:** 23 of the 57 lines came back unchanged. The other 34 are two lines for each of the 17 terminal kinds Adamic doesn't have.
+- **`effects.go`:** only the types came over, on purpose. What makes effects in cohere (React's signature table keyed by the callee's name, and the HIR instruction switch, 824 lines) is replaced by Adamic's own `infer.go`, 341 lines. Every runtime operation is its own IR node there, so `push`, `set` and `splice` say exactly what they write. A call (a function, a closure, a runtime loop calling back) does what cohere assumes of an unknown one. It also mutates every value that has escaped this function: a parameter, a value from a global or captured variable, a call's result, or anything handed to a call or stored into an escaped value. Strings, numbers and booleans are created primitive and take part in nothing.
+- **One adaptation:** a value read out of a container goes through a temporary that `infer.go` mints and creates from the container. Adamic's graph has no temporaries of its own, and only `CreateFrom` carries a mutation back to the container transitively.
+- **Inert for now:** cohere's freeze machinery came over unchanged, but nothing emits a `Freeze` yet. Adamic's `readonly` types could: a value the checker proved readonly can't be mutated, which is the fact a freeze states.
+
+**How it's held: the check runs against what Node does.** `TestEveryMutationIsInItsRange` runs every program on Node with every point marked. Before each point, every tracked variable's object is printed whole (every field, element and map entry it reaches). A variable that holds the same object as at the previous point, which now prints differently, was mutated by the instruction there. The value that variable held there must have a range containing that instruction. That holds the alias graph to the truth: a mutation through a value it didn't know aliased lands outside a range. Over 86 programs, 29,341 mutations were checked. None fell outside its range, none was on a range the pass left unset, and no range was invalid.
+
+`internal/flow/testdata/mutations.a` exercises every way one value can be mutated through another: through a field, an element, a for...of element, a map value, either side of a conditional, a container holding it, a callee, and `push`. Writing it found a real error: a value read out of `holder ?? {...}` was aliased to the container non-transitively, so `counter`, which the container held, didn't have the write in its range. The temporary above is the fix.
+
+Six mutants, each caught:
+
+| Mutant | Mutations outside a range |
+|---|---:|
+| A write into a container doesn't mutate it | 29,249, in 10 programs |
+| A read of a variable isn't the same object | 29,277, in 11 |
+| A call doesn't mutate escaped values | 20, in 3 |
+| `mutate` doesn't travel back to what a value was created from | 7, in `mutations.a` |
+| A for...of element isn't part of what the loop iterates | 3 |
+| The mixed read above goes back to an `Alias` | 3 |
+
+The last three were caught only once `mutations.a` existed. Before it, no program mutated through those paths in a function whose values nothing else reached.
+
+**Not covered:** the check sees mutations of tracked variables only. Globals and captured variables aren't values in the graph, and a variable a call reaches only through one isn't checked at that call. The check also counts a change in anything a variable's object reaches, which is exactly what a transitive range claims and more than a direct one does. A direct range that's too short for a mutation it only reaches indirectly would show up here as a failure, not a pass, so the check errs toward failing.
 
 ## Cycles: found by the compiler, broken by Weak
 
@@ -195,9 +373,64 @@ Measured, on a shared 4-vCPU cloud container (Intel Xeon @ 2.80GHz, load about 1
 
 `throw new Error(message)`, a caught error thrown again, and `try` with `catch`, `finally` or both, wherever statements go (functions, methods, constructors and the top level). A `catch` may leave its binding out. Still NotYet: a function value (an arrow function) that can throw, since the runtime calls them from inside its own loops (`map`, `sort`) where a throw would have to unwind C it doesn't own; and `return`, `break` or `continue` inside a `finally`, which in JavaScript overrides what the `try` was doing.
 
+### Exceptions in the graph
+
+The analyses that move and reuse values (`internal/flow`, and reuse in place on it) must see every way a statement can end, a throw included, or they prove a value dead that a `catch` still reads. Reviewer R's round 7 found the graph had no edges for exceptions at all: on the integration that brought `try` in, any program with `try` or `throw` failed to compile (`flow: no graph for ir.Try`).
+
+- **The edges.** An instruction with a call to a function that can throw (`ir.Function.MayThrow`) ends its block with a `MayThrow` terminal: one edge to what follows, one to the handler. `throw` goes to the handler. The handler is the innermost `catch`, or, without one, the `finally`, or, with no `try` around it, a block ending in `Throw`, the function's exceptional exit, which a trace counts as leaving as `Return` does. A `finally` ends in a `Choose` over every way into it can go on: after the `try`, the next handler out (when a throw is being carried through it), and each `return`, `break` or `continue` routed through it. Liveness then sees that a `catch` still reads what is live there.
+- **What reuse learned.** A variable that a statement assigns is only overwritten (and its old value dead) when the statement can't throw; one that can throw leaves the old value for whoever takes the throw. A global is never moved into a call in a statement that can throw: a catch, in this function or a caller, may read it and find it NULL. And a temporary handed to a consumed parameter stays the statement's own to let go until every argument is evaluated, since an argument after it can throw and then the call is never made.
+- **How it's held.** The trace check's runtime stops at a panic (a Node panic is a throw a catch could take, so the trace after it isn't native's), and the graph's paths must include every path Node took through `try`, `catch` and `finally`. R's probe `move_throw.a` is a fixture: a global moved into a call that throws, a local the catch reads, a spread whose field throws, a dead-looking local the catch reads, and a field taken out of a reused spread before a later field throws. The mutant that drops the `MayThrow` edges fails it under UBSan (a NULL read in the catch) and fails `internal/flow`'s own tests.
+
+**When regions meet exceptions (R, round 8; regions aren't on this branch yet).** A statement with a region that a throw leaves must end the region on its cleanup path, the same way it lets go of its temporaries in `checkThrown`, or the region's blocks and the heap values its objects hold leak. When the two merge, that's a fixture (a fresh call that throws mid-statement, inside a `try` and out of a function) and a mutant that leaves the region open on the throw path, caught by the leak check.
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
+
+### The design (#272q6cv, on paper)
+
+Status: **designed October 5, 2026, by stream A2; not built.** The benchmark it answers is `bench/trees.ts`. It makes 68,332,244 objects, each its own `malloc` and `free`. Node and Bun bump-allocate them in a young generation and drop each dead tree at once. Reuse in place can't help: nothing there is consumed to build its own shape.
+
+**What lives in a region.** A region is scoped to one statement, alive while it runs and freed when it ends. It holds the values the statement creates, directly or through calls, that are dead when it ends. In `total += check(build(depth))`, every node `build` makes is read by `check`, which keeps none of them, and nothing holds the tree after the statement. All of them can be allocated in the statement's region and freed with it: no `free` per node, no count reaching zero node by node.
+
+**Which values those are: three facts, two of them interprocedural.**
+
+1. **Where a function's result comes from.** A function's allocation site is **returned-only** when what it makes flows only into the function's return value, or into fields and elements of other returned-only values. That's a question about the alias graph (`internal/flow`): every edge out of the site's value is an `Assign` or `Capture` into the return, or into another returned-only value. A function whose returned value comes only from returned-only sites, and from calls to such functions, **returns fresh**. In `build`, both object literals are returned-only, and its recursive calls feed its return, so `build` returns fresh. That's a fixed point over the call graph, recursion included.
+2. **Whether a parameter escapes.** A parameter escapes when its value can be stored where it outlives the call: a global, a captured variable, a field or element of anything not itself made in the call, the return value, or a callee's escaping parameter. `check` only reads its parameter's fields and returns a number, so its parameter doesn't escape. This is the escape the effect inference already tracks (`infer.go`'s escaped set), refined from "handed to any call escapes" to "handed to a callee whose parameter escapes".
+3. **Whether the statement's fresh values die with it.** Liveness (`flow.LiveOut`) says nothing reads the variable they're in after the statement. The alias graph says they're never stored into an escaped value. A fresh value passed to a call reaches only that call's non-escaping parameters.
+
+**How a region reaches the allocations: as a parameter, not a global.** Which region a value belongs to is a property of the call, not of the allocation site, so the region is passed explicitly, as in Tofte and Talpin's region inference.
+
+- A function that returns fresh takes a hidden `adamic_region *` parameter.
+- Its returned-only sites allocate from that region, or from the heap when it's `NULL`.
+- Its calls that feed its return pass the region on. Every other call passes `NULL`.
+
+A "current region" global would be simpler and wrong. A function called during the statement for another reason, say one that stores a fresh object into a global, would allocate it in the region, and it would dangle once the region ended.
+
+**Counting in a region.** A value made in a region is immortal while it lives: its count is 0, so retain and release skip it, as they do the program's constants. That's already how the runtime treats a constant, so no runtime path learns anything new. When the statement ends, the region walks its values and releases what they hold outside the region (a heap string in a field, say), then frees its blocks in one go. A region value's reference to another region value is a release of an immortal, which costs nothing.
+
+**What could go wrong, and what catches it.** The one failure is a region value still reachable after its region ends: an escape the analysis missed. In the sanitized build the region's blocks are real `malloc` blocks, freed at the statement's end, so a dangling read is an ASan use-after-free on the oracle's run. The mutants this must be held by:
+
+- A region for a statement whose fresh value is assigned to a variable live after it.
+- A callee whose parameter does escape (stores it into a global) treated as non-escaping.
+- A returned-only site whose value is also stored into a field of a parameter.
+- The region passed down to a call that doesn't feed the return.
+
+Each needs a fixture that builds its strings and objects at runtime. Each must fail on ASan or the leak check, and nothing else.
+
+**What the counts table should show.** A new column, **in regions**: values made in a region and let go with it, not freed one by one. `allocations` stays every value made, `frees` becomes the values freed one at a time, and a finished program satisfies allocations = frees + in regions. For `trees`:
+
+- **In regions:** the nodes of every `check(build(depth))`, 66,759,382. That's 68,332,244 less the stretch tree (2^20 - 1 = 1,048,575 nodes) and the long-lived tree (2^19 - 1 = 524,287), which globals hold.
+- **Frees:** 1,572,862, those two trees.
+- **Retains and releases:** unchanged as calls. On a region value they cost a branch and touch no count. Removing the calls for values statically known to be in a region is a later step.
+- **Peak live:** unchanged. A region frees at the statement's end, which is when each of those trees died anyway.
+
+**What it leaves for later.**
+
+- A region per loop iteration, per function call (a value made and dropped inside one call), and per request (stage 1's cohere, a file at a time).
+- Arrays in regions. Their element buffers grow by `realloc`, which a bump allocator can't do in place.
+- Not emitting retains and releases on values statically known to be in a region.
+
 
 ## Strings, specifically
 
