@@ -45,7 +45,8 @@ its own `parent` to the root. That's a cycle, root to kids to child to root, wit
 
 `ctor_wrapped.a` is the same hole with `this` wrapped in a literal (`parent.links.push({ owner: this })`). It
 also compiles on B3 and leaks 240 bytes in 6 allocations, all indirect. `ctor_set.a` is the Set version
-(`parent.members.add(this)`), and it compiles on B3 too.
+(`parent.members.add(this)`). It compiles on B3 and leaks 560 bytes in 6 allocations, all indirect. Node, -O2
+and the JavaScript backend all print `2` with exit 0.
 
 **Why it gets through.** Each half is judged correctly on its own terms, but nobody judges the second half:
 
