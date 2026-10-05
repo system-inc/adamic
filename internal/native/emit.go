@@ -1079,17 +1079,16 @@ func equality(element ir.Type) string {
 // objectLiteral makes an object. Its fields' values are evaluated in order first; making the object
 // itself can't be observed, so it may come after them.
 func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
-	source := ""
 	if literal.Spread != nil {
-		source = e.value(literal.Spread)
-	}
-	values := make([]string, 0, len(literal.Fields))
-	for _, field := range literal.Fields {
-		values = append(values, e.value(field.Value))
-	}
-	if literal.Spread != nil {
-		// A copy of the source's object, whatever its shape, with the named fields replaced.
-		object := e.own(ir.Object, fmt.Sprintf("adamic_object_copy(%s)", source))
+		// A copy of the source's object, whatever its shape, with the named fields replaced. The copy
+		// is made the moment the spread is evaluated, before any field's value: JavaScript reads the
+		// spread's fields first, so a field's expression that writes one of them (a call that sets
+		// it) must not show in the result.
+		object := e.own(ir.Object, fmt.Sprintf("adamic_object_copy(%s)", e.value(literal.Spread)))
+		values := make([]string, 0, len(literal.Fields))
+		for _, field := range literal.Fields {
+			values = append(values, e.value(field.Value))
+		}
 		for index, field := range literal.Fields {
 			slot := e.temporary()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
@@ -1101,6 +1100,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			}
 		}
 		return object
+	}
+	values := make([]string, 0, len(literal.Fields))
+	for _, field := range literal.Fields {
+		values = append(values, e.value(field.Value))
 	}
 	object := e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.shape(literal.Fields)))
 	for index, field := range literal.Fields {
