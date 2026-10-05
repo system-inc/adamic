@@ -3,7 +3,9 @@ package fuzz
 import (
 	"fmt"
 	"math/rand/v2"
+	"regexp"
 	"strings"
+	"unicode"
 )
 
 // Generate makes the program a seed names. The same seed always makes the same program, so every
@@ -290,6 +292,10 @@ func (g *generator) declaration(t Type, global bool) *Statement {
 	if t == String {
 		initial = g.bounded(initial)
 	}
+	if t == Boolean && isConstant(initial) {
+		// let flag: boolean = false is narrowed to false, and if (flag) rules its branch out.
+		initial = g.comparison()
+	}
 	keyword := "let"
 	if t == NumberArray || t == StringArray {
 		keyword = "const"
@@ -417,14 +423,19 @@ func (g *generator) statement() *Statement {
 	return g.mutation()
 }
 
-// condition is an if's condition, never a literal: the checker treats the branch a literal rules out
-// as unreachable, and narrows strangely inside it.
+// condition is an if's condition, never a constant: the checker treats the branch a constant rules
+// out as unreachable (((false || true) && true) too, seed 200129), and narrows strangely inside it.
 func (g *generator) condition() *Expression {
 	for range 4 {
-		if condition := g.expression(Boolean, 2); !isLiteral(condition) {
+		if condition := g.expression(Boolean, 2); !isConstant(condition) {
 			return condition
 		}
 	}
+	return g.comparison()
+}
+
+// comparison is a boolean the checker can't know: a field compared with a literal.
+func (g *generator) comparison() *Expression {
 	return compose(Boolean, "(holder.value < @e)", g.literal(Number))
 }
 
@@ -602,6 +613,39 @@ func isLiteral(e *Expression) bool {
 	return strings.HasPrefix(value, "'") || strings.HasPrefix(value, "-") || (value[0] >= '0' && value[0] <= '9') || value == "true" || value == "false"
 }
 
+// isConstant says whether an expression reads no variable and calls nothing: all literals and
+// operators, so the checker knows its value or at least its literal type. Two compared ('İ' !==
+// `<${5}`, seed 200334) are "no overlap", and a branch a constant condition rules out is unreachable.
+var templateText = regexp.MustCompile("`[^`$]*\\$\\{|\\}[^`$]*`|\\}[^`$]*\\$\\{|`[^`$]*`")
+
+var numberLiteral = regexp.MustCompile(`[0-9]+(\.[0-9]+)?(e[+-]?[0-9]+)?`)
+
+func isConstant(e *Expression) bool {
+	for _, part := range e.Parts {
+		if part.Expression != nil {
+			if !isConstant(part.Expression) {
+				return false
+			}
+			continue
+		}
+		if strings.HasPrefix(part.Text, "'") {
+			// A string literal's contents are its own business.
+			continue
+		}
+		// So is the text of a template: `n=${ and } ` hold no names.
+		text := templateText.ReplaceAllString(part.Text, "")
+		// Number literals (1e21 among them) and true and false aside, a letter is a name: a variable, a
+		// field, a method, a function.
+		text = numberLiteral.ReplaceAllString(strings.NewReplacer("true", "", "false", "").Replace(text), "")
+		for _, character := range text {
+			if character == '_' || unicode.IsLetter(character) {
+				return false
+			}
+		}
+	}
+	return true
+}
+
 // call calls a function with side effects that returns t, or any function when t is Other.
 func (g *generator) call(t Type) *Expression {
 	var candidates []function
@@ -703,7 +747,7 @@ func (g *generator) number(depth int) *Expression {
 	case 14:
 		return compose(Number, g.pick("Math.max", "Math.min")+"(@e, @e)", g.expression(Number, next), g.expression(Number, next))
 	case 15:
-		return compose(Number, "(@e ? @e : @e)", g.expression(Boolean, next), g.expression(Number, next), g.expression(Number, next))
+		return compose(Number, "(@e ? @e : @e)", g.condition(), g.expression(Number, next), g.expression(Number, next))
 	case 16:
 		if !g.allowed("array-methods") {
 			return g.leaf(Number)
@@ -802,7 +846,7 @@ func (g *generator) string(depth int) *Expression {
 		}
 		return compose(String, "(@e[@e] ?? @e)", g.expression(String, next), g.expression(Number, next), g.literal(String))
 	case 17:
-		return compose(String, "(@e ? @e : @e)", g.expression(Boolean, next), g.expression(String, next), g.expression(String, next))
+		return compose(String, "(@e ? @e : @e)", g.condition(), g.expression(String, next), g.expression(String, next))
 	case 18:
 		if !g.allowed("number-tostring") {
 			return g.leaf(String)
@@ -832,18 +876,27 @@ func (g *generator) boolean(depth int) *Expression {
 	switch g.random.IntN(14) {
 	case 0, 1, 2:
 		left, right := g.expression(Number, next), g.expression(Number, next)
-		if isLiteral(left) && isLiteral(right) {
+		if isConstant(left) && isConstant(right) {
 			left = g.leafVariable(Number, left)
 		}
 		return compose(Boolean, "(@e "+g.pick("<", "<=", ">", ">=", "===", "!==")+" @e)", left, right)
 	case 3, 4:
 		left, right := g.expression(String, next), g.expression(String, next)
-		if isLiteral(left) && isLiteral(right) {
+		if isConstant(left) && isConstant(right) {
 			left = g.leafVariable(String, left)
 		}
 		return compose(Boolean, "(@e "+g.pick("<", ">=", "===", "!==")+" @e)", left, right)
 	case 5:
-		return compose(Boolean, "(@e "+g.pick("&&", "||")+" @e)", g.expression(Boolean, next), g.expression(Boolean, next))
+		// Neither side constant: (flag && false) has the type false, and the branch it rules out is
+		// unreachable to the checker (seed 200605).
+		left, right := g.expression(Boolean, next), g.expression(Boolean, next)
+		if isConstant(left) {
+			left = g.comparison()
+		}
+		if isConstant(right) {
+			right = g.comparison()
+		}
+		return compose(Boolean, "(@e "+g.pick("&&", "||")+" @e)", left, right)
 	case 6:
 		return compose(Boolean, "!@e", g.expression(Boolean, next))
 	case 7:
