@@ -64,7 +64,15 @@ var adamicPieces = []string{
 	"{", "}", "[", "]", ",", ",", ":", ";", "!", "&", "|", "~", ">", "?", ".",
 	"+", "-", "*", "/", "//", "*/", "\\",
 	" ", " ", " ", " ", "  ", "\t", "\n", "\r\n", "\f",
-	"\u00e9", "\u4e16", "\U0001f600", "\u2028", "\u00a0",
+	"\u00e9", "\u4e16", "\U0001f600", "\u2028", "\u2029", "\u00a0", "\u007f", "\u001f",
+}
+
+// adamicEdgeValues don't rest on the generator's draw: a '#' before the line terminators isHex would
+// stop at (the tokenizer makes each such '#' a token of its own first), and DEL and U+001F, the edges
+// of what the output escapes, in a word, a string and a comment.
+var adamicEdgeValues = []string{
+	"#\u2028a #\u2029b #\u0085c",
+	"a\u007fb \"\u007f\" /*\u007f*/ a\u001fb \"\u001f\" /*\u001f*/",
 }
 
 // TestAdamicPortCases writes the cases file and Go cohere's answers.
@@ -87,6 +95,7 @@ func TestAdamicPortCases(t *testing.T) {
 		texts = append(texts, fixture.text)
 	}
 	texts = append(texts, adamicShapeAndRefusalValues...)
+	texts = append(texts, adamicEdgeValues...)
 	random := rand.New(rand.NewSource(request.Seed))
 	for range request.Generated {
 		var builder strings.Builder

@@ -170,6 +170,38 @@ var mutants = []mutant{
 		from: "\t\tcase 0xfeff:\n",
 		to:   "",
 	},
+	// U+2029, the paragraph separator, is no longer whitespace. Reviewer R2 found it survived while the
+	// generated pieces held U+2028 but not U+2029.
+	{
+		name: "U+2029 not whitespace",
+		file: "whitespace.ts",
+		from: "\t\tcase 0x2029:\n",
+		to:   "",
+	},
+	// U+2000, the en quad, is no longer whitespace: the range starts one late. It survived while the
+	// pieces held only U+2003 and U+200A of the range.
+	{
+		name: "U+2000 not whitespace",
+		file: "whitespace.ts",
+		from: "return unit >= 0x2000 && unit <= 0x200a;",
+		to:   "return unit >= 0x2001 && unit <= 0x200a;",
+	},
+	// The driver writes DEL as itself, where Go cohere's side escapes it. It survived while no piece
+	// held DEL.
+	{
+		name: "DEL written unescaped",
+		file: "main.ts",
+		from: "if (unit < 0x20 || unit === 0x7f) {",
+		to:   "if (unit < 0x20) {",
+	},
+	// The driver writes U+001F as itself, the last control character, where Go cohere's side escapes
+	// it. It survived while no piece held U+001F.
+	{
+		name: "U+001F written unescaped",
+		file: "main.ts",
+		from: "if (unit < 0x20 || unit === 0x7f) {",
+		to:   "if (unit < 0x1f || unit === 0x7f) {",
+	},
 	// trim keeps trailing whitespace.
 	{
 		name: "trim as trimStart",

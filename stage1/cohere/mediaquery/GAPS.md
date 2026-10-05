@@ -170,6 +170,10 @@ Under callgrind, on 20,000 ASCII cases, the native run's instructions are alloca
 
 The driver's printing, which is not the parser, cost more than the parse at first: `quote` read every string unit by unit and appended one at a time (the second shape). It now copies the runs between escapes whole. Even so, writing the trees takes the full run to 4.7 s natively and 2.4 s on Node, and 10% of the native run is converting integers to strings through `snprintf` (`adamic_number_format`), which an integer fast path would remove.
 
+## What the cases reach, and a review that found where they didn't
+
+Reviewer R2 found the generator's pieces held 15 of JavaScript's 25 whitespace characters (of U+2000 to U+200A only U+2003 and U+200A, and U+2028 but not U+2029), and neither DEL nor U+001F, the edges of what the output escapes. So four mutants survived, and with the pieces as they were, each still survives: U+2029 dropped from `isWhitespace`, its U+2000 to U+200A range starting at U+2001, and the driver's quote writing DEL or U+001F as itself. The cohere side now names all 25 (`adamicWhitespace`), the near misses (U+0085, which Go's unicode.IsSpace takes, U+200B, and U+180E, whitespace before Unicode 6.3) and DEL and U+001F, puts every one among the pieces, and writes one fixed case for each, `_screen_and_(_min-width_:_1px_)_,_print_` with the character for every `_`, so that none rests on the generator's draw. All four mutants are in the test and caught, natively and on Node, by those fixed cases. The values slice's driver quotes the same way and had the same blind spot; it has the same two quoting mutants, caught the same way.
+
 ## Not covered
 
 - Real CSS. cohere's oracle test walks `.css` corpora with postcss to find real `@media` params; this container has none, and the port's cases are cohere's fixtures and generated params. A corpus would be a third source of cases, held the same way.

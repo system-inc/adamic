@@ -111,7 +111,10 @@ function rNoFollow(word: string): boolean {
 	return !(word.startsWith('#') && alphaNum(word.charCodeAt(1)));
 }
 
-// parser.go: isHex, /^#(.+)/: '#' and at least one character that is not a line terminator.
+// parser.go: isHex, /^#(.+)/: '#' and at least one character that is not a line terminator. The
+// terminator test can't be reached: the tokenizer starts a word with '#' only when an ASCII letter or
+// digit follows it, and makes any other '#' a token of its own, which splitWord never joins to what
+// follows. A mutant without it agrees with the library on every case, so the test has none.
 function isHex(value: string): boolean {
 	const second = value.charCodeAt(1);
 	return value.startsWith('#') && value.length > 1 && second !== 0x0a && second !== 0x0d && second !== 0x2028 && second !== 0x2029;

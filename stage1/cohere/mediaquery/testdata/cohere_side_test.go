@@ -45,17 +45,32 @@ var adamicGoldenAndRefusalParams = []string{
 	"  url (a(b)",
 }
 
+// adamicWhitespace is JavaScript's whitespace, all 25 characters: what \s matches and trim strips
+// (ECMAScript WhiteSpace and LineTerminator), and what the port's isWhitespace and stage 0's trim must
+// each agree on. Reviewer R2 found the pieces held 15 of them, so a mutant that forgot U+2029, or
+// U+2000, survived.
+var adamicWhitespace = []string{
+	"\t", "\n", "\v", "\f", "\r", " ", "\u00a0", "\u1680",
+	"\u2000", "\u2001", "\u2002", "\u2003", "\u2004", "\u2005", "\u2006", "\u2007", "\u2008", "\u2009", "\u200a",
+	"\u2028", "\u2029", "\u202f", "\u205f", "\u3000", "\ufeff",
+}
+
+// adamicNotWhitespace are characters near JavaScript's whitespace that aren't in it: Go's
+// unicode.IsSpace takes U+0085, U+200B is a zero-width space, and U+180E was whitespace in Unicode
+// before 6.3. DEL and U+001F are the edges of what the output escapes.
+var adamicNotWhitespace = []string{"\u0085", "\u200b", "\u180e", "\u007f", "\u001f"}
+
 // adamicPieces are what generated params are made of: the words, punctuation and whitespace the parser
-// decides on, and characters whose UTF-16 length differs from their UTF-8 length.
-var adamicPieces = []string{
+// decides on, and characters whose UTF-16 length differs from their UTF-8 length. Every character of
+// adamicWhitespace and adamicNotWhitespace is among them too.
+var adamicPieces = append(append([]string{
 	"screen", "print", "all", "and", "not", "only", "AND", "url", "URL", "url(", "url (", "x.css",
 	"(", "(", ")", ")", "{", "}", "#{", "$query", ",", ",", ":", ": ", "'", "\"", "\\", ";",
-	" ", " ", " ", "  ", "\t", "\n", "\r\n", "\v", "\f",
-	"\u00a0", "\u1680", "\u2003", "\u200a", "\u2028", "\u202f", "\u205f", "\u3000", "\ufeff", "\u0085", "\u200b",
+	" ", " ", " ", "  ", "\r\n",
 	"min-width", "max-width", "color", "100px", "1em", "2", "-webkit-min-device-pixel-ratio",
 	"--custom", "calc(1px + 2em)", "var(--bp)", "<=", ">", "=", "/*", "*/", "a", "b",
 	"\u00e9", "\u4e16", "\U0001f600", "\U0001d11e",
-}
+}, adamicWhitespace...), adamicNotWhitespace...)
 
 // TestAdamicPortCases writes the cases file and Go cohere's answers.
 func TestAdamicPortCases(t *testing.T) {
@@ -77,6 +92,13 @@ func TestAdamicPortCases(t *testing.T) {
 		params = append(params, fixture.params)
 	}
 	params = append(params, adamicGoldenAndRefusalParams...)
+	// One case for each character of adamicWhitespace and adamicNotWhitespace, wherever the parser
+	// trims, splits or tests for whitespace: around a query, between a type and a keyword, inside a
+	// feature, around its colon and its value, and around a comma. These don't rest on the generator's
+	// draw.
+	for _, character := range append(append([]string{}, adamicWhitespace...), adamicNotWhitespace...) {
+		params = append(params, strings.ReplaceAll("_screen_and_(_min-width_:_1px_)_,_print_", "_", character))
+	}
 	random := rand.New(rand.NewSource(request.Seed))
 	for range request.Generated {
 		var builder strings.Builder

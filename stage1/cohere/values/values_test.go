@@ -178,6 +178,20 @@ var mutants = []mutant{
 		from: "node = newNumber(replaceFirst(value, unit), nodeSource, nodeSourceIndex, unit);",
 		to:   "node = newNumber(value.slice(0, value.length - unit.length), nodeSource, nodeSourceIndex, unit);",
 	},
+	// The driver writes DEL as itself, where Go cohere's side escapes it.
+	{
+		name: "DEL written unescaped",
+		file: "main.ts",
+		from: "if (unit < 0x20 || unit === 0x7f) {",
+		to:   "if (unit < 0x20) {",
+	},
+	// The driver writes U+001F as itself, the last control character, where Go cohere's side escapes it.
+	{
+		name: "U+001F written unescaped",
+		file: "main.ts",
+		from: "if (unit < 0x20 || unit === 0x7f) {",
+		to:   "if (unit < 0x1f || unit === 0x7f) {",
+	},
 	// '?' is no longer part of a unicode range.
 	{
 		name: "? not in a unicode range",
