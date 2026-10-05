@@ -158,6 +158,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/optional_strings.a", true, false},
 	{"internal/oracle/testdata/concat_too_long.a", true, false},
 	{"internal/oracle/testdata/replace_all_large.a", true, false},
+	// A file read or written after console.log: what was printed is out first. output_test.go also runs
+	// these with both streams on one pipe and stdin answered after the prompt; killed_after_output.a
+	// is only there, since it runs until a signal stops it.
+	{"internal/oracle/testdata/write_stdout_order.a", true, false},
+	{"internal/oracle/testdata/write_stderr_order.a", true, false},
+	{"internal/oracle/testdata/prompt_then_read.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
