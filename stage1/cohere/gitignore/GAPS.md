@@ -212,6 +212,18 @@ What lowered as written, and is worth saying so: discriminated unions narrowed b
 
 ## Performance, observed (not refusals)
 
+### At 7017551, with the glob reading bytes in place
+
+Main 4ddd17f merged, and the glob on `utf8Length` and `utf8At` instead of bytes.ts. The case set has grown, with reviewer R2's cases: 55 trees, 6,360 tree paths, 21 pattern lists and 1,825 globs, 14,963 answer lines. Timed best of seven on the same container at a load average under 1, with all three outputs byte for byte the same:
+
+| | time | peak memory |
+|---|---|---|
+| Go cohere (as below) | 0.11 s | not measured apart from `go test` |
+| the native port (`adamic build`, `-O2`, reading the cases file) | 0.295 s | 10 MB |
+| Node running the port's source | 0.370 s | 95 MB |
+
+**Go cohere is now 2.7 times faster than the native port, where it was 6.6 times faster.** The native port beats Node by a quarter, in a ninth of its memory. callgrind puts 2.8 billion instructions in the native run, down from 7.4 billion, and none of the top of the profile is reading bytes any more. It's allocation now: `adamic_release` 16%, `adamic_string_concat` 11%, `adamic_string_slice` 9%, and malloc and free together 19%. Those are the walk's and the matcher's path strings, built by `+` and `slice` and released one by one, where the Go slices a string without copying it. A slice that shares its parent's bytes would close most of what's left. Also observed, and not in this case set's time: `text += character` in a loop is quadratic natively (each `+=` copies), where it is linear on Node; the case parser's `unescape` hit it on a 100 MiB file and now joins slices instead.
+
 ### On merged main at ddfed83, with every gap closed
 
 Main now carries stream C's constant-time string index (integrate-2), and the port no longer works around anything. The test's case set (53 trees, 6,318 tree paths each asked twice, by path and by walk, 21 pattern lists and 421 globs; 13,464 answer lines) was timed best of seven on the same 4-vCPU container, at a load average under 1, with all three outputs byte for byte the same:
