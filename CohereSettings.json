@@ -1,4 +1,27 @@
 {
     "extends": ["cohere:typescript"],
-    "ignorePatterns": ["internal/load/testdata/0.1/refuse/**", "stage1/**/gaps/**", "review/**"]
+    "ignorePatterns": ["internal/load/testdata/0.1/refuse/**", "stage1/**/gaps/**", "review/**"],
+    "overrides": [
+        {
+            "files": [
+                "internal/oracle/testdata/**"
+            ],
+            "reason": "The oracle's fixtures write these on purpose, to hold native code to what Node does where a program does them: a value compared with itself and with NaN (NaN !== NaN), a value assigned to itself, and a loop whose body always leaves it.",
+            "rules": {
+                "no-self-compare": "off",
+                "use-isnan": "off",
+                "no-self-assign": "off",
+                "no-unreachable-loop": "off"
+            }
+        },
+        {
+            "files": [
+                "internal/oracle/testdata/objects.a"
+            ],
+            "reason": "objects.a tests a switch on a union that names some members and leaves the rest to default, and one that names only some and falls out the bottom for the rest, as JavaScript allows.",
+            "rules": {
+                "@typescript-eslint/switch-exhaustiveness-check": "off"
+            }
+        }
+    ]
 }

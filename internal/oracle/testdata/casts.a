@@ -23,5 +23,6 @@ interface Named {
 	readonly name: string;
 }
 
+// cohere-disable-next-line adamic/no-unchecked-cast -- an upcast 0.1 allows, which this fixture tests: the literal has every field Named has, so the cast trusts nothing.
 const named = { name: 'Ken', age: 83 } as Named;
 console.log(named.name);

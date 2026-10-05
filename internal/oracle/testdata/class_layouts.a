@@ -36,7 +36,9 @@ second.label += '!';
 console.log(`${describe(first)} ${describe(second)} ${first.move(5)} ${describe(first)}`);
 
 // Literals with the class's type, fields in other orders and with fewer slots before them.
+// cohere-disable-next-line adamic/nominal-class -- on purpose: tsc and stage 0 let an object literal stand where the class is expected, and this fixture proves the emitter's shape check reads its fields by name.
 const literal: Point = { x: 7, y: 8, label: 'literal', tags: ['t'], next: first, move: (by: number) => by };
+// cohere-disable-next-line adamic/nominal-class -- the same, fields in another order.
 const reordered: Point = { next: undefined, tags: [], label: 'reordered', x: -1, y: -2, move: (by: number) => -by };
 console.log(`${describe(literal)} ${describe(reordered)}`);
 literal.x += 10;
