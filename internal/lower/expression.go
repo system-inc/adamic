@@ -21,6 +21,11 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	flags := proven.Flags()
+	if flags&checker.TypeFlagsTypeParameter != 0 {
+		// Inside a generic class, a type parameter is what this instantiation made it.
+		substituted, isKnown := l.substitution[proven]
+		return substituted, isKnown
+	}
 	switch {
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
@@ -141,11 +146,16 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
 		return l.newExpression(node)
+	case ast.KindThisKeyword:
+		if l.this < 0 {
+			return nil, l.notYet(node, "this outside a method")
+		}
+		return ir.Read{Local: l.this, Of: ir.Object}, nil
 	case ast.KindCallExpression:
 		if lowered, isBuiltin, err := l.builtin(node); isBuiltin {
 			return lowered, err
 		}
-		call, err := l.call(node)
+		call, err := l.callOrMethod(node)
 		if err != nil {
 			return nil, err
 		}

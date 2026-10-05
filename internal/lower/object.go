@@ -195,6 +195,17 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	isMath := l.isLibraryGlobal(receiver, "Math")
 	receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
 	isToFixed := name == "toFixed" && receiverType == ir.Number
+	if receiverType == ir.Array && name == "pop" && len(node.AsCallExpression().Arguments.Nodes) == 0 {
+		element, err := l.elementType(receiver)
+		if err != nil {
+			return nil, true, err
+		}
+		array, err := l.expression(receiver)
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.ArrayPop{Array: array, Element: element}, true, nil
+	}
 	if receiverType == ir.Array && (name == "push" || name == "join" || name == "slice" || name == "sort") {
 		return l.arrayMethod(node, receiver, name)
 	}
@@ -441,6 +452,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	created := node.AsNewExpression()
+	if declaration, isClass := l.classes[l.symbol(ast.SkipParentheses(created.Expression))]; isClass {
+		return l.construct(node, declaration)
+	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {
 		return nil, l.notYet(node, "new "+describe(created.Expression))
 	}

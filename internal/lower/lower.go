@@ -52,7 +52,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	typeChecker, release := program.Checker(ctx, entry)
 	defer release()
 
-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}}
+	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1}
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
 	modules, err := lowering.moduleOrder(entry)
@@ -90,6 +90,20 @@ type lowering struct {
 
 	// function is the function being lowered, or nil for the module's top level.
 	function *ir.Function
+
+	// this is the local this is in a method or constructor, or -1.
+	this int
+
+	// classes maps each module class's symbol to its declaration, and instances each instantiation
+	// already lowered (class.go).
+	classes   map[*ast.Symbol]*ast.Node
+	instances map[string]*instance
+
+	// instance is the class instantiation being lowered, if any.
+	instance *instance
+
+	// substitution is what each type parameter stands for in the instantiation being lowered.
+	substitution map[*checker.Type]ir.Type
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
@@ -159,6 +173,11 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 					l.result.Locals[local].Global = true
 				}
 			}
+		case ast.KindClassDeclaration:
+			if l.classes == nil {
+				l.classes = map[*ast.Symbol]*ast.Node{}
+			}
+			l.classes[l.symbol(statement.Name())] = statement
 		case ast.KindFunctionDeclaration:
 			symbol := l.symbol(statement.Name())
 			if l.functions == nil {
@@ -177,17 +196,32 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 	return nil
 }
 
-// functionBody lowers a function declaration's parameters and body.
+// functionBody lowers a module function declaration's parameters and body.
 func (l *lowering) functionBody(declaration *ast.Node) error {
-	function := &l.result.Functions[l.functions[l.symbol(declaration.Name())]]
-	signature := l.checker.GetSignatureFromDeclaration(declaration)
-	returns := l.checker.GetReturnTypeOfSignature(signature)
-	if returns.Flags()&checker.TypeFlagsVoid == 0 {
-		valueType, isKnown := l.representation(returns)
-		if !isKnown {
-			return l.notYet(declaration.Name(), "a function returning "+l.checker.TypeToString(returns))
+	return l.lowerFunction(l.functions[l.symbol(declaration.Name())], declaration, -1)
+}
+
+// lowerFunction lowers a function-like declaration into the function at index. this, when not -1,
+// is the local a method's or constructor's this is, passed first.
+//
+// It works on a copy and writes it back by index: lowering a body can instantiate a class, which
+// appends functions, and a pointer into the slice would be left pointing at the old one.
+func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {
+	function := l.result.Functions[index]
+	if this >= 0 && declaration.Kind != ast.KindConstructor {
+		// A method receives this; a constructor makes it.
+		function.Parameters = append(function.Parameters, this)
+	}
+	if declaration.Kind != ast.KindConstructor {
+		signature := l.checker.GetSignatureFromDeclaration(declaration)
+		returns := l.checker.GetReturnTypeOfSignature(signature)
+		if returns.Flags()&checker.TypeFlagsVoid == 0 {
+			valueType, isKnown := l.representation(returns)
+			if !isKnown {
+				return l.notYet(declaration.Name(), "a function returning "+l.checker.TypeToString(returns))
+			}
+			function.Returns = valueType
 		}
-		function.Returns = valueType
 	}
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
@@ -204,17 +238,20 @@ func (l *lowering) functionBody(declaration *ast.Node) error {
 	if body == nil {
 		return l.notYet(declaration, "a function without a body")
 	}
-	outer := l.function
-	l.function = function
+	// The signature is written back before the body is lowered, so a recursive call inside it knows
+	// what the function returns.
+	l.result.Functions[index] = function
+	outer, outerThis := l.function, l.this
+	l.function, l.this = &function, this
 	lowered, err := l.statements(body.AsBlock().Statements.Nodes)
-	l.function = outer
+	l.function, l.this = outer, outerThis
 	if err != nil {
 		return err
 	}
-	function.Body = lowered
+	function.Body = append(function.Body, lowered...)
+	l.result.Functions[index] = function
 	return nil
 }
-
 func (l *lowering) notYet(node *ast.Node, what string) error {
 	return &NotYet{Where: l.program.Where(node), What: what}
 }
@@ -249,6 +286,12 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 			return nil, l.notYet(node, "a function inside a function (a closure)")
 		}
 		// Lowered already, by declareModule.
+		return nil, nil
+	case ast.KindClassDeclaration:
+		if l.function != nil {
+			return nil, l.notYet(node, "a class inside a function")
+		}
+		// Lowered at each instantiation, by instantiate.
 		return nil, nil
 	case ast.KindReturnStatement:
 		return l.returnStatement(node)
@@ -316,7 +359,7 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 			return []ir.Statement{ir.Evaluate{Value: lowered}}, nil
 		}
 		// A call for its effects, void or not.
-		call, err := l.call(expression)
+		call, err := l.callOrMethod(expression)
 		if err != nil {
 			return nil, err
 		}
@@ -423,6 +466,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	target := ast.SkipParentheses(binary.Left)
+	if target.Kind == ast.KindPropertyAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
+		return l.setProperty(target, binary.Right)
+	}
 	local, isLocal := l.local(target)
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))

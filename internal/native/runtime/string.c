@@ -77,6 +77,10 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 }
 
 int adamic_string_equal(const adamic_string *left, const adamic_string *right) {
+	// Either may be undefined (a string | undefined): undefined is equal only to itself.
+	if (left == NULL || right == NULL) {
+		return left == right;
+	}
 	return left->length == right->length && (left->length == 0 || memcmp(left->bytes, right->bytes, left->length) == 0);
 }
 

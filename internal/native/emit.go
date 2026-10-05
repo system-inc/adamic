@@ -285,6 +285,21 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.end()
 	case ir.Return:
 		e.returnStatement(statement)
+	case ir.SetProperty:
+		object := e.value(statement.Object)
+		value := e.value(statement.Value)
+		slot := e.temporary()
+		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(statement.Name), e.cache())
+		if statement.Value.Type().IsReference() {
+			// The new reference is taken before the old is let go: they may be the same.
+			old := e.temporary()
+			e.line("void *%s = %s->reference;", old, slot)
+			e.line("%s->reference = adamic_retain(%s);", slot, value)
+			e.line("adamic_release(%s);", old)
+		} else {
+			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), value)
+		}
+		e.end()
 	case ir.Panic:
 		// The program ends here, so nothing it holds needs letting go.
 		message := e.value(statement.Message)
@@ -469,6 +484,10 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Property:
 		object := e.value(expression.Object)
 		field := fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", object, cString(expression.Name), e.cache(), member(expression.Of))
+		if expression.Of.IsReference() {
+			// A field holds a reference as void *; read through the type the checker proved.
+			field = fmt.Sprintf("((%s)%s)", cType(expression.Of), field)
+		}
 		if expression.Optional {
 			return fmt.Sprintf("(%s == NULL ? NULL : %s)", object, field)
 		}
@@ -490,6 +509,16 @@ func (e *emitter) value(expression ir.Expression) string {
 		value := e.value(expression.Value)
 		index := e.value(expression.Index)
 		return fmt.Sprintf("adamic_string_char_code_at(%s, %s)", value, index)
+	case ir.ArrayPop:
+		array := e.temporary()
+		e.line("adamic_array *%s = %s;", array, e.value(expression.Array))
+		if expression.Element == ir.Number {
+			result := e.temporary()
+			e.line("adamic_maybe_number %s = %s->length == 0 ? (adamic_maybe_number){false, 0.0} : (adamic_maybe_number){true, %s->elements[--%s->length].number};", result, array, array, array)
+			return result
+		}
+		// The array's reference to the element becomes the statement's.
+		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s->elements[--%s->length].%s", array, array, array, member(expression.Element)))
 	case ir.MapEntries:
 		pair := e.shapeOf([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType})
 		return e.own(ir.Array, fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair))

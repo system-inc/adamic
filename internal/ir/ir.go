@@ -210,6 +210,13 @@ type (
 	// CodePoints is [...string]: an array of its code points, each a string.
 	CodePoints struct{ Value Expression }
 
+	// ArrayPop is array.pop(): the last element, removed, or undefined when there's none (a null
+	// reference, or a MaybeNumber).
+	ArrayPop struct {
+		Array   Expression
+		Element Type
+	}
+
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
 	// are named "0" and "1".
 	MapEntries struct {
@@ -302,8 +309,15 @@ func (CharCodeAt) Type() Type      { return Number }
 func (Trim) Type() Type            { return String }
 func (CodePoints) Type() Type      { return Array }
 func (MapEntries) Type() Type      { return Array }
-func (ArraySlice) Type() Type      { return Array }
-func (ArraySort) Type() Type       { return Array }
+
+func (p ArrayPop) Type() Type {
+	if p.Element == Number {
+		return MaybeNumber
+	}
+	return p.Element
+}
+func (ArraySlice) Type() Type { return Array }
+func (ArraySort) Type() Type  { return Array }
 
 func (c StringCall) Type() Type {
 	switch c.Method {
@@ -412,6 +426,13 @@ type (
 	// Panic is the prelude's panic(message): write "adamic: panic: <message>" and exit 70.
 	Panic struct{ Message Expression }
 
+	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
+	SetProperty struct {
+		Object Expression
+		Name   string
+		Value  Expression
+	}
+
 	// Return leaves the function, with Value unless it returns void.
 	Return struct{ Value Expression }
 
@@ -473,16 +494,17 @@ type Case struct {
 	Body  []Statement
 }
 
-func (WriteLine) statement() {}
-func (Declare) statement()   {}
-func (Assign) statement()    {}
-func (Evaluate) statement()  {}
-func (Panic) statement()     {}
-func (Return) statement()    {}
-func (If) statement()        {}
-func (Loop) statement()      {}
-func (Block) statement()     {}
-func (ForOf) statement()     {}
-func (Switch) statement()    {}
-func (Break) statement()     {}
-func (Continue) statement()  {}
+func (WriteLine) statement()   {}
+func (Declare) statement()     {}
+func (Assign) statement()      {}
+func (Evaluate) statement()    {}
+func (Panic) statement()       {}
+func (SetProperty) statement() {}
+func (Return) statement()      {}
+func (If) statement()          {}
+func (Loop) statement()        {}
+func (Block) statement()       {}
+func (ForOf) statement()       {}
+func (Switch) statement()      {}
+func (Break) statement()       {}
+func (Continue) statement()    {}
