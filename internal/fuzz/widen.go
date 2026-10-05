@@ -123,7 +123,7 @@ func (g *generator) sortChanging(array variable) *Statement {
 }
 
 // Link is a linked list's node, for ?. chains: a chain may end anywhere.
-const linkDeclaration = "interface Link {\n\tvalue: number;\n\tlabel: string;\n\tnext: Link | undefined;\n}"
+const linkDeclaration = "interface Link {\n\tvalue: number;\n\tlabel: string;\n\treadonly next: Link | undefined;\n}"
 
 // chainRead is a number or a string read through ?. at some depth, with ?? for where it ends.
 func (g *generator) chainRead(t Type) *Expression {
