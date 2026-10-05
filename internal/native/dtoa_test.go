@@ -65,7 +65,11 @@ func dtoaValues(random *rand.Rand, count int) []float64 {
 		math.MaxFloat64, 1, 2.5, 0.5, 1.5, 0.125, 0.375, 1.25, 12.5, 125, 1e21, 1e-7, 1e-6, 123.456, 0.1, 0.2, 0.3,
 		1.005, 1.45, 8.345, 9.5, 99.5, 999.5, 9.95, 0.95, 0.000095, 9.999999999999999e22, 1e23, 5e-324, 2.225e-308,
 		4503599627370496, 9007199254740992, 9007199254740993, 1.7976931348623157e308, 26.568583470577035, math.Pi, math.E,
-		1e100, 1e-100, 123456789012345680000, 0.000001234, 1234.5678, 5, 50, 55, 0.05, 0.55, 0.555, 1.0000000000000002}
+		1e100, 1e-100, 123456789012345680000, 0.000001234, 1234.5678, 5, 50, 55, 0.05, 0.55, 0.555, 1.0000000000000002,
+		// Exact ties for the shortest digits, which round half to even there: 2^-25 is 2.9802322387695312e-8,
+		// not ...313. Of every odd multiple below 8 of every power of two, only these four are ties, and
+		// the random values found just one more (1.7860489244912068e15).
+		math.Ldexp(1, -25), math.Ldexp(3, -24), math.Ldexp(5, -23), math.Ldexp(7, -23), 1.7860489244912068e15}
 	for exponent := -30; exponent <= 30; exponent++ {
 		values = append(values, math.Pow(10, float64(exponent)), 5*math.Pow(10, float64(exponent)), 9.5*math.Pow(10, float64(exponent)))
 	}
