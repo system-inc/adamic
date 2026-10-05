@@ -446,6 +446,10 @@ double adamic_math_tan(double x);
 double adamic_math_tanh(double x);
 double adamic_math_hypot(size_t count, const double *values);
 
+// adamic_number_shortest_digits is V8's shortest digits for a positive, finite value (dtoa.c), as
+// Number::toString writes them: value is 0.d1d2d3... times 10^point, and it returns how many.
+int adamic_number_shortest_digits(double value, char digits[18], int *point);
+
 // adamic_number_to_exponential is value.toExponential(digits), and the shortest digits when there
 // are none; adamic_number_to_precision is value.toPrecision(digits), and String(value) when there
 // are none. Both are V8's (dtoa.c), and return a string the caller owns.

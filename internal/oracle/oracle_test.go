@@ -135,6 +135,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/maybe_collections.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
+	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
+	// read back (reviewer R, from the first night's number.c).
+	{"internal/oracle/testdata/power_of_two_string.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
