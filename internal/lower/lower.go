@@ -80,6 +80,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
+	if err := lowering.exceptions(); err != nil {
+		return nil, err
+	}
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
@@ -130,6 +133,12 @@ type lowering struct {
 	// their type: the first of an Array.from callback's (from.go). Each is a reference that's always
 	// missing.
 	alwaysUndefined map[*ast.Symbol]bool
+
+	// caught are the variables a catch binds, each always an Error; tries are the try statements
+	// lowered (exceptions.go).
+	caught        map[*ast.Symbol]bool
+	tries         []tryRecord
+	functionNodes map[int]*ast.Node
 
 	// initializing is the variables whose initializers are being lowered, by where each is declared.
 	initializing map[int]*ast.Node
@@ -222,6 +231,10 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.functions = map[*ast.Symbol]int{}
 			}
 			l.functions[symbol] = len(l.result.Functions)
+			if l.functionNodes == nil {
+				l.functionNodes = map[int]*ast.Node{}
+			}
+			l.functionNodes[len(l.result.Functions)] = statement
 			l.result.Functions = append(l.result.Functions, ir.Function{Name: statement.Name().Text()})
 			declarations = append(declarations, statement)
 		}
@@ -433,6 +446,10 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 			return []ir.Statement{ir.Break{}}, nil
 		}
 		return []ir.Statement{ir.Continue{}}, nil
+	case ast.KindThrowStatement:
+		return l.throwStatement(node)
+	case ast.KindTryStatement:
+		return l.tryStatement(node)
 	}
 	return nil, l.notYet(node, describe(node))
 }
@@ -539,7 +556,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
-	if !l.alwaysUndefined[symbol] {
+	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {
 			return 0, err
@@ -653,6 +670,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	local, isLocal := l.local(target)
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
+	}
+	if l.caught[l.symbol(target)] {
+		return nil, l.notYet(target, "assigning to what a catch caught")
 	}
 	if l.alwaysUndefined[l.symbol(target)] {
 		// Its type is unknown, so anything could be written to it, and it holds only undefined.

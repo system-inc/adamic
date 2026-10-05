@@ -27,6 +27,7 @@ import (
 type closureRecord struct {
 	proven   *checker.Type
 	function int
+	node     *ast.Node
 }
 
 // cycleNode is one thing reaching is followed through: a type, or the cell of a captured local.

@@ -925,6 +925,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	if l.isLibraryGlobal(created.Expression, "Set") {
 		return l.newSet(node)
 	}
+	if l.isLibraryGlobal(created.Expression, "Error") {
+		return l.newError(node)
+	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {
 		return nil, l.notYet(node, "new "+describe(created.Expression))
 	}

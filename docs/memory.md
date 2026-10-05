@@ -140,6 +140,44 @@ What stage 0 does (`internal/lower/cycles.go`):
 
 **Where native and Node differ, by design:** a `Weak` read after its target's last strong holder let go is `undefined` natively, while on Node the collector keeps the target as long as the `Weak` points at it. A read the checker had narrowed to present panics natively instead of reading freed memory. Programs that read a `Weak` only while its target is held strongly (a child's parent, while the tree is held) mean the same on both; the oracle's fixtures are such programs, and `internal/oracle/weak_test.go` pins the difference itself.
 
+## Exceptions, designed into counting
+
+`throw`, `try`, `catch` and `finally` are 0.2's (#zek5q21). Unwinding is where reference counting is hardest: every frame a throw leaves holds references (variables, a statement's temporaries, a loop's held array or map iterator), and each must be let go exactly once on the way out, or the program leaks or frees twice. This is the design; the first cut is below it.
+
+### What a thrown value is
+
+JavaScript throws any value. Adamic, for now, throws only an `Error`: `throw new Error(message)`, or the error a `catch` caught, thrown again. Anything else is refused, with the fix `throw new Error(String(value))`. The reason is the catch side: what a `catch` binds is `unknown`, and holding any value there means a value of every kind at once, which 0.2 doesn't have yet. An `Error` is an object like any other, with two fields, `name` and `message`, counted like any object; `stack` isn't there, since its text is the engine's and differs between runs. A `catch (error)` narrows it with `error instanceof Error`, and then reads `error.message` and `error.name`. `TypeError` and the rest wait for library failures to be catchable (below), and subclasses of `Error` for class inheritance.
+
+### Two ways to unwind, measured
+
+1. **Cleanup paths.** One pending-exception word in the runtime. `throw` sets it and jumps to its frame's handler: the innermost `try` around it in the same function (letting go of what every scope between holds, and the statement's temporaries), or, with none, the function's way out, which lets go of everything the frame holds and returns a zero value. After every call to a function that can throw, one test of the word, and the same jump. Which functions can throw is known from the call graph, so a function that can't pays nothing, and a program without `throw` is the code it was. `finally` is emitted at every way out of its `try`: falling through, `return`, `break`, `continue` and a throw, as the emitter already emits releases at every way out of a scope.
+2. **`setjmp` and a cleanup stack.** Each `try` is a `setjmp`, and a throw is a `longjmp` to the innermost one. Since `longjmp` skips the frames between, each of those frames must have put every reference it owns on a runtime cleanup stack as it took it, and taken it off as it let go, so the throw can release what's on the stack above the `try`'s mark. A call costs nothing, but every owned reference in any function a throw might pass through costs a push and a pop, and every `try` entered costs a `setjmp`.
+
+Measured, on a shared 4-vCPU cloud container (Intel Xeon @ 2.80GHz, load about 1, clang 18.1.3 `-O2`, best of 7 interleaved rounds; noisy, so under about 5% means little):
+
+- **In the mechanisms alone** (`bench/unwinding/unwinding.c`, plain C, every frame able to be thrown through, 4,000 rounds of a recursion 14 deep):
+
+  | Workload | no exceptions | cleanup paths | `setjmp` and a cleanup stack |
+  |---|---|---|---|
+  | trees, allocating (as `trees.ts`) | 2.492 s | 2.520 s (+1%) | 2.668 s (+7%) |
+  | calls, no allocation, tiny frames | 0.258 s | 0.302 s (+17%) | 0.289 s (+12%) |
+
+  Throwing from the deepest frame every 64th round costs neither anything measurable. On tiny frames the cleanup stack's push and pop is cheaper than a test after each of two calls; once a frame does real work, both vanish into it, the cleanup paths more completely.
+- **In what Adamic emits**, with every function marked as one a throw can leave, so every call is followed by its test (a local build, not committed): `trees` 4.211 s against 3.966 s with the tests, `nbody` 1.083 against 1.074, `spectral_norm` 0.462 against 0.469, `sort` 0.464 against 0.483, `word_count` 0.233 against 0.226. Every difference is inside the noise, either way.
+
+**Decided: cleanup paths.** In real code their cost didn't show at all, and only a function a throw can leave pays it; a program with no `throw` is the code it was. They keep the C structured, so clang optimizes it and the sanitizers see every release, where a `longjmp` skips past frames the count then has to be told about, and past the runtime's own loops (`sort`, a map's iteration) holding references of their own. The cleanup stack won one microbenchmark, on frames that do nothing but call; if real code ever shows the test, the call graph is the place to shave it (a callee that can't throw needs none).
+
+### Staying byte for byte with Node
+
+- **Uncaught.** An error no `catch` takes ends the program as a panic: `adamic: panic: ` and `String(error)` (`Error: boom`, or `Error` when the message is empty), exit 70, everything written to stdout before it flushed first. That's what the oracle's runner already makes of an uncaught throw on Node, so the native binary, the JavaScript backend and the source agree byte for byte. A `finally` runs on the way out, on both sides, before the panic is written.
+- **The JavaScript backend** emits JavaScript's own `try`, `catch`, `finally`, `throw` and `new Error`.
+- **A panic is never caught.** `panic`, and every check the compiler inserts, ends the program where it stands. On Node the oracle's runtime throws to stop the program, which a `catch` in the source could take; so `panic` there writes its line at once, then silences everything the program writes after it and makes the exit 70, so a `catch` or `finally` that runs after a panic on Node can't be seen, as it never runs natively.
+- **Library failures are panics, for now.** In JavaScript, `'x'.repeat(-1)` throws a `RangeError` a `catch` can take; natively it panics, with the same text. Until the runtime raises those through the same pending word as `RangeError` objects (the next step), a `try` that can reach one whose argument isn't a constant that can't fail (`repeat`, `toFixed`, `toPrecision`, `toExponential`, `toString(radix)`, `normalize`, `new Array(length)`, `Array.from({ length })`) says NotYet. Running out of stack, a string past the length limit, and the temporal dead zone throw from nearly anywhere; inside a `try` they stay panics natively while Node could catch them, which is noted here and not refused.
+
+### The first cut
+
+`throw new Error(message)`, a caught error thrown again, and `try` with `catch`, `finally` or both, wherever statements go (functions, methods, constructors and the top level). A `catch` may leave its binding out. Still NotYet: a function value (an arrow function) that can throw, since the runtime calls them from inside its own loops (`map`, `sort`) where a throw would have to unwind C it doesn't own; and `return`, `break` or `continue` inside a `finally`, which in JavaScript overrides what the `try` was doing.
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.

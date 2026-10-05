@@ -243,6 +243,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
 		}
+		if binary.OperatorToken.Kind == ast.KindInstanceOfKeyword {
+			if lowered, isCaught := l.caughtInstanceOfError(node); isCaught {
+				return lowered, nil
+			}
+			return nil, l.notYet(node, "instanceof, but on what a catch caught, against Error")
+		}
 		left, err := l.expression(binary.Left)
 		if err != nil {
 			return nil, err
@@ -621,7 +627,7 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 	index := len(l.result.Functions)
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "closure", Closure: true})
-	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index})
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node})
 	l.closures = append(l.closures, index)
 	err := l.lowerFunction(index, node, -1)
 	l.closures = l.closures[:len(l.closures)-1]
