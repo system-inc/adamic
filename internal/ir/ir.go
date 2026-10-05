@@ -263,8 +263,18 @@ type (
 		Element Type
 	}
 
-	// Unwrap is a Maybe pair the checker has proven present (narrowed), as what it holds.
+	// Unwrap is a Maybe pair the checker has proven present (narrowed), as what it holds. A narrowing
+	// outlives a call that assigns the variable again (the checker doesn't look inside the call), so
+	// it's checked, in both backends: undefined there panics.
 	Unwrap struct{ Value Expression }
+
+	// Defined is a reference the checker narrowed undefined out of, checked for the same reason as
+	// Unwrap: undefined there panics with Message. Where the value is about to be read through a
+	// property, Message is the TypeError JavaScript throws there, so the check is what Node does.
+	Defined struct {
+		Value   Expression
+		Message string
+	}
 
 	// MaybeOf is a number or a boolean where Of, its Maybe pair, goes: Value, present, or undefined
 	// when Value is nil.
@@ -585,6 +595,7 @@ func (IsUndefined) Type() Type   { return Boolean }
 func (ArrayPush) Type() Type     { return Number }
 func (ArrayJoin) Type() Type     { return String }
 func (u Unwrap) Type() Type      { return u.Value.Type().Present() }
+func (d Defined) Type() Type     { return d.Value.Type() }
 func (m MaybeOf) Type() Type     { return m.Of }
 func (MaybeToString) Type() Type { return String }
 func (Box) Type() Type           { return Union }

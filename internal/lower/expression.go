@@ -225,11 +225,11 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
 			// Where the checker has narrowed it to what it holds, it's read as that.
-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() {
+			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !comparedWithUndefined(node) {
 				read = ir.Unwrap{Value: read}
 			}
 		}
-		return read, nil
+		return l.defined(node, read), nil
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:

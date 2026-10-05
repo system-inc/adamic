@@ -1,0 +1,10 @@
+// findIndex, like find, calls its callback with undefined at an index the callback took away: an
+// inserted check, the same in both backends.
+const others: number[] = [4, 5, 6];
+console.log(`${others.findIndex((item) => item === 5)}`);
+const at = others.findIndex((item) => {
+	console.log(`${item}`);
+	others.pop();
+	return item > 5;
+});
+console.log(`${at}`);
