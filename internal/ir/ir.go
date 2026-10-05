@@ -151,7 +151,8 @@ type (
 		Fields []Field
 	}
 
-	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is.
+	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
+	// number field read that way is number | undefined.
 	Property struct {
 		Object   Expression
 		Name     string
@@ -403,10 +404,15 @@ func (BooleanToString) Type() Type { return String }
 func (Concat) Type() Type          { return String }
 func (c Conditional) Type() Type   { return c.WhenTrue.Type() }
 func (ObjectLiteral) Type() Type   { return Object }
-func (p Property) Type() Type      { return p.Of }
-func (ArrayLiteral) Type() Type    { return Array }
-func (Length) Type() Type          { return Number }
-func (MathCall) Type() Type        { return Number }
+func (p Property) Type() Type {
+	if p.Optional && p.Of == Number {
+		return MaybeNumber
+	}
+	return p.Of
+}
+func (ArrayLiteral) Type() Type { return Array }
+func (Length) Type() Type       { return Number }
+func (MathCall) Type() Type     { return Number }
 
 func (c NumberCall) Type() Type {
 	if c.Function == "parseInt" || c.Function == "parseFloat" {

@@ -552,6 +552,9 @@ func (e *emitter) value(expression ir.Expression) string {
 			// A field holds a reference as void *; read through the type the checker proved.
 			field = fmt.Sprintf("((%s)%s)", cType(expression.Of), field)
 		}
+		if expression.Optional && expression.Of == ir.Number {
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? (adamic_maybe_number){false, 0.0} : (adamic_maybe_number){true, %s})", object, field))
+		}
 		if expression.Optional {
 			field = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, field)
 		}

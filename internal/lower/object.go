@@ -186,7 +186,15 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		optional := access.QuestionDotToken != nil
-		if of == ir.MaybeNumber && !optional {
+		if of == ir.MaybeNumber && optional {
+			// box?.size is number | undefined because box may be; the field itself is what's stored.
+			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+				if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == ir.Number {
+					return ir.Property{Object: object, Name: name, Of: ir.Number, Optional: true}, nil
+				}
+			}
+		}
+		if of == ir.MaybeNumber {
 			return nil, l.notYet(node, "a field of type number | undefined")
 		}
 		if optional && !of.IsReference() {
