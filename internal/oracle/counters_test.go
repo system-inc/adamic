@@ -182,6 +182,38 @@ function report(name: string, seen: number, sum: number, sign: number, last: num
 		expected[name] = special.integer
 	}
 
+	// Loops in a kept counter's body that read it, for their start or their bound, in the range it
+	// holds there; -I is -0 when I is 0, and a product's sign is refused the same way.
+	nested := []struct {
+		outer, inner         string
+		outerKept, innerKept bool
+	}{
+		{"let I = 0; I < values.length; I++", "let J = I + 1; J < values.length; J++", true, true},
+		{"let I = 0; I < values.length; I++", "let J = I; J >= 0; J--", true, true},
+		{"let I = 0; I < values.length; I++", "let J = -I; J < 3; J++", true, false},
+		{"let I = 0; I < values.length; I++", "let J = I * 2; J < 9; J++", true, false},
+		{"let I = 0; I < values.length; I++", "let J = 0; J < I; J++", true, true},
+		{"let I = 0; I < values.length; I++", "let J = 0; J <= I * 3 - 1; J += 2", true, true},
+		{"let I = 9007199254740989; I < 9007199254740992; I++", "let J = I; J <= I + 1; J++", true, false},
+		{"let I = 9007199254740989; I < 9007199254740992; I++", "let J = I; J < I + 1; J++", true, true},
+		{"let I = 9007199254740989; I <= 9007199254740991; I += 1", "let J = I + 1; J < 9007199254740992; J++", true, true},
+		{"let I = 0; I < 3; I += 0.5", "let J = I + 1; J < 5; J++", false, false},
+		{"let I = values.length; I > 0; I--", "let J = I - 1; J >= 0; J -= 2", true, true},
+		{"let I = 5; I < 3; I++", "let J = I; J < 9; J++", true, false},
+	}
+	for _, each := range nested {
+		cases++
+		name := fmt.Sprintf("c%d", cases)
+		inner := name + "j"
+		header := strings.ReplaceAll(each.inner, "J", inner)
+		header = strings.ReplaceAll(header, "I", name)
+		extra := fmt.Sprintf("\t\tfor (%s) {\n\t\t\tsign += 1 / %s;\n\t\t\tsum += %s + (values[%s] ?? 0.25);\n"+
+			"\t\t\tseen += 1;\n\t\t\tif (seen >= 6) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n", header, inner, inner, inner)
+		loop(name, strings.ReplaceAll(each.outer, "I", name), extra)
+		expected[name] = each.outerKept
+		expected[inner] = each.innerKept
+	}
+
 	path := filepath.Join(t.TempDir(), "counters.ts")
 	if err := os.WriteFile(path, []byte(source.String()), 0o644); err != nil {
 		t.Fatal(err)
