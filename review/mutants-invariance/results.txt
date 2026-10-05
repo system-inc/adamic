@@ -15,3 +15,4 @@ m14_can_write_always: branch tests CATCH; probes changed 0
 m15_can_write_readonly_nested: branch tests pass; probes changed 0
 m16_can_write_container_elements: branch tests pass; probes changed 0
 m17_source_parameter_ignored: branch tests CATCH; probes changed 0
+m18_intersection_members_ignored: branch tests CATCH; probes changed 1 (b35_weak.a)
