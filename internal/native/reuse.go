@@ -496,7 +496,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 		if field.Value.Type().IsReference() {
 			// A field moved out of a unique object left NULL behind, and releasing that is nothing.
 			e.line("adamic_release(%s->reference);", slot)
-			e.line("%s->reference = %s;", slot, retained(values[index]))
+			e.line("%s->reference = %s;", slot, e.kept(values[index]))
 		} else {
 			e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 		}

@@ -528,6 +528,28 @@ Two mutants:
 | Any C containing `NULL` taken for the constant | changes no fixture's C: no value that reaches `retained` contains `NULL` but the constant, so it proves nothing |
 | Any cast pointer, `((T *)(name))`, taken for the constant | changes only `unions.a`, where a string or object boxed into a union loses its retain: ASan heap-use-after-free |
 
+### Moving a statement's temporary into what keeps it
+
+With regions uncounted and `undefined` free, what was left on `trees` was the heap version of `build`, for the two long-lived trees. Measured first: 3,145,722 of the 3,145,726 retains were its own. Each inner node retained its two children's call results into its fields and itself into its return, three retains, then let go of the three temporaries when the statement ended, three releases. Each leaf did it once, for its return. 786,430 inner nodes times 3 plus 786,432 leaves is exactly that.
+
+A temporary the statement owns, handed to a place that keeps it, is now moved there with its count (`kept` in `emit.go`): no retain, and the statement doesn't let go of it at its end. Only two places qualify, because they can't let go of what they hold before the statement ends:
+
+- **A field of an object literal**, which the statement made and owns. This covers a spread, reused or copied, too.
+- **What a function returns.**
+
+A variable or a global doesn't qualify. A call later in the same statement could assign it, letting go of the value while the statement still reads it.
+
+On `trees`, counted: retains 3,145,726 to 4, releases 3,145,768 to 46, the same 3,145,722 off each. Allocations, frees and peak didn't move. In the oracle's table 63 rows moved, every one by equal retains and releases, 1,001,548 of each in all.
+
+Time, `go run ./bench -only trees -rounds 5`, best of 5 at load about 3: native 1.512 s, Node 1.518 s, **1.00x Node**, at a third of Node's memory (98.0 MB against 300.9). Interleaved against the commit before this one: 1.625 s to 1.559 s.
+
+Two mutants, each run against the whole oracle and each caught by ASan alone:
+
+| Mutant | Caught by |
+|---|---|
+| A value the statement doesn't own is moved too, so nothing retains it | heap-use-after-free, in 28 fixtures |
+| An owned temporary is moved but still let go of at the statement's end | heap-use-after-free, in 63 fixtures |
+
 ## Strings, specifically
 
 UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.

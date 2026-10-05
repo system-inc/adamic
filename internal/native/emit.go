@@ -3,6 +3,7 @@ package native
 import (
 	"fmt"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -603,7 +604,7 @@ func (e *emitter) returnStatement(statement ir.Return) {
 	}
 	result := e.temporary()
 	if statement.Value.Type().IsReference() && !e.regionValues[value] {
-		e.line("%s %s = %s;", cType(statement.Value.Type()), result, retained(value))
+		e.line("%s %s = %s;", cType(statement.Value.Type()), result, e.kept(value))
 	} else {
 		e.line("%s %s = %s;", cType(statement.Value.Type()), result, value)
 	}
@@ -1409,7 +1410,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
-				e.line("%s->reference = %s;", slot, retained(values[index]))
+				e.line("%s->reference = %s;", slot, e.kept(values[index]))
 			} else {
 				e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 			}
@@ -1442,7 +1443,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			continue
 		}
 		if field.Value.Type().IsReference() {
-			value = retained(value)
+			value = e.kept(value)
 		}
 		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 	}
@@ -1909,6 +1910,19 @@ func retained(value string) string {
 // constantUndefined matches C that is the null pointer constant, as Undefined and a missing argument
 // are emitted: NULL, perhaps parenthesized and cast to a pointer type.
 var constantUndefined = regexp.MustCompile(`^\(*(\([a-z_]+ \*\)\(*)?NULL\)*$`)
+
+// kept is a reference handed to a place that holds it past the statement's end and can't let go of
+// it before: a field of an object the statement made, or what a function returns. A temporary the
+// statement owns is moved there, its count with it, and isn't let go of when the statement ends;
+// anything else is retained. A variable isn't such a place: a call later in the statement could
+// assign it, and let go of the value while the statement still reads it.
+func (e *emitter) kept(value string) string {
+	if index := slices.Index(e.owned, value); index >= 0 {
+		e.owned = slices.Delete(e.owned, index, index+1)
+		return value
+	}
+	return retained(value)
+}
 
 // own puts a reference the statement owns in a temporary, released when the statement ends.
 func (e *emitter) own(valueType ir.Type, value string) string {
