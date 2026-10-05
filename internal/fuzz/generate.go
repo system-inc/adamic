@@ -37,6 +37,16 @@ var Features = []string{
 	"array-methods",    // reverse, concat, reduce, filter, find, findIndex, some, every
 	"sort-callback",    // sort with an arrow function as the comparator
 	"map-iteration",    // for...of over a Map
+	"closures-deep",    // closures pushed to a global array from anywhere, capturing cells, and called later
+	"map-mutation",     // for...of over a Map, its keys or its values, while the body sets and deletes
+	"splice",           // list.splice(start, count, ...items)
+	"sort-mutating",    // sort with a comparator that writes, to the array it's sorting too
+	"surrogates",       // strings with a surrogate pair's halves, apart and rejoined
+	"case-mapping",     // toUpperCase and toLowerCase
+	"defaults",         // default parameters, which may call functions, left out by some calls
+	"optional-chains",  // ?. and ?? through a linked list that may end anywhere
+	"number-formats",   // toExponential and toPrecision
+	"array-from",       // Array.from({ length }, callback)
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -71,6 +81,9 @@ type generator struct {
 	// statements counts what's been generated, against a budget, so a program stays a size a person
 	// can read once it's shrunk.
 	statements int
+	// inClosure counts the closures being generated around this point: one pushed to pending must
+	// never run pending, or it would call itself.
+	inClosure int
 }
 
 // function is a callable the generator made: a name, its parameter types, and what it returns.
@@ -78,6 +91,8 @@ type function struct {
 	name       string
 	parameters []Type
 	returns    Type
+	// required is how many of the parameters a call must pass; the rest have defaults.
+	required int
 }
 
 // variable is a name in scope, or a field reached through one.
@@ -176,13 +191,23 @@ func (g *generator) program() *Program {
 	}
 	add(statement("const table = new Map<string, number>();"))
 	g.declare("table", NumberMap, false)
+	if g.allowed("closures-deep") {
+		add(statement("const " + pendingClosures + ": (() => number)[] = [];"))
+	}
+	if g.allowed("optional-chains") {
+		add(statement(linkDeclaration))
+		add(statement("let chain: Link | undefined = { value: @e, label: @e, next: undefined };", g.literal(Number), g.literal(String)))
+		// Read through a call, the chain is Link | undefined wherever it's read: the checker narrows a
+		// variable it can see assigned, and stage 0 lowers ?. only where undefined is really possible.
+		add(statement("function head(): Link | undefined @b", &Block{Statements: []*Statement{statement("return chain;")}}))
+	}
 	add(statement("let captured = @e;", g.literal(Number)))
 	g.declare("captured", Number, true)
 	add(statement("const capture = (step: number): number => @b;", &Block{Statements: []*Statement{
 		statement("captured += step;"),
 		statement("return captured;"),
 	}}))
-	g.functions = append(g.functions, function{name: "capture", parameters: []Type{Number}, returns: Number})
+	g.functions = append(g.functions, function{name: "capture", parameters: []Type{Number}, returns: Number, required: 1})
 	add(statement("function makeTally(start: number): (step: number) => number @b", &Block{Statements: []*Statement{
 		statement("let total = start;"),
 		statement("return (step) => @b;", &Block{Statements: []*Statement{
@@ -192,8 +217,8 @@ func (g *generator) program() *Program {
 	}}))
 	tally := g.name("tally")
 	add(statement("const "+tally+" = makeTally(@e);", g.literal(Number)))
-	g.functions = append(g.functions, function{name: tally, parameters: []Type{Number}, returns: Number})
-	g.functions = append(g.functions, function{name: "counter.bump", parameters: []Type{Number}, returns: Number})
+	g.functions = append(g.functions, function{name: tally, parameters: []Type{Number}, returns: Number, required: 1})
+	g.functions = append(g.functions, function{name: "counter.bump", parameters: []Type{Number}, returns: Number, required: 1})
 
 	for range 2 + g.random.IntN(4) {
 		add(g.function())
@@ -212,6 +237,20 @@ func (g *generator) program() *Program {
 	}
 	for _, shown := range everything {
 		add(statement("console.log(@e);", shown))
+	}
+	if g.allowed("closures-deep") {
+		add(statement("console.log(`${"+pendingClosures+".length} ${@e}`);", g.runPending()))
+	}
+	if g.allowed("optional-chains") {
+		add(statement("@b", &Block{Statements: []*Statement{
+			statement("let walk: Link | undefined = chain;"),
+			statement("let steps = 0;"),
+			statement("while (walk !== undefined && steps < 40) @b", &Block{Statements: []*Statement{
+				statement("console.log(`${walk.value} ${walk.label}`);"),
+				statement("walk = walk.next;"),
+				statement("steps++;"),
+			}}),
+		}}))
 	}
 	if g.allowed("map-iteration") {
 		add(statement("for (const [key, value] of table) @b", &Block{Statements: []*Statement{
@@ -287,6 +326,14 @@ func (g *generator) function() *Statement {
 		declared = append(declared, parameter+": "+string(t))
 		g.declare(parameter, t, false)
 	}
+	required := len(parameters)
+	if g.allowed("defaults") {
+		for range g.random.IntN(3) {
+			written, t := g.defaultParameter()
+			parameters = append(parameters, t)
+			declared = append(declared, written)
+		}
+	}
 	// A function's body nests one loop less than the top level: functions call each other from inside
 	// loops, and the work multiplies.
 	g.loopDepth++
@@ -298,7 +345,7 @@ func (g *generator) function() *Statement {
 	g.loopDepth--
 	g.returns = ""
 	g.pop()
-	g.functions = append(g.functions, function{name: name, parameters: parameters, returns: returns})
+	g.functions = append(g.functions, function{name: name, parameters: parameters, returns: returns, required: required})
 	return statement("function "+name+"("+strings.Join(declared, ", ")+"): "+string(returns)+" @b", body)
 }
 
@@ -306,6 +353,11 @@ func (g *generator) function() *Statement {
 func (g *generator) statement() *Statement {
 	g.statements++
 	nested := g.loopDepth < 2 && g.statements < 60
+	if g.chance(1, 4) {
+		if widened := g.widenedStatement(nested); widened != nil {
+			return widened
+		}
+	}
 	switch roll := g.random.IntN(20); {
 	case roll < 6:
 		return g.mutation()
@@ -314,7 +366,7 @@ func (g *generator) statement() *Statement {
 	case roll < 11:
 		return g.declaration([]Type{Number, String, Boolean, NumberArray}[g.random.IntN(4)], false)
 	case roll < 13 && nested:
-		return statement("if (@e) @b else @b", g.expression(Boolean, 2), g.block(1+g.random.IntN(2)), g.block(g.random.IntN(2)))
+		return statement("if (@e) @b else @b", g.condition(), g.block(1+g.random.IntN(2)), g.block(g.random.IntN(2)))
 	case roll < 15 && nested:
 		index := g.name("index")
 		g.loopDepth++
@@ -357,12 +409,23 @@ func (g *generator) statement() *Statement {
 	case roll < 19 && g.returns != "":
 		// An early return, behind a condition so what follows can still run; from inside a loop too,
 		// which has to let go of what the loop held.
-		return statement("if (@e) @b", g.expression(Boolean, 2), &Block{Statements: []*Statement{g.returnStatement()}})
+		return statement("if (@e) @b", g.condition(), &Block{Statements: []*Statement{g.returnStatement()}})
 	}
 	if call := g.call(Other); call != nil {
 		return statement("@e;", call)
 	}
 	return g.mutation()
+}
+
+// condition is an if's condition, never a literal: the checker treats the branch a literal rules out
+// as unreachable, and narrows strangely inside it.
+func (g *generator) condition() *Expression {
+	for range 4 {
+		if condition := g.expression(Boolean, 2); !isLiteral(condition) {
+			return condition
+		}
+	}
+	return compose(Boolean, "(holder.value < @e)", g.literal(Number))
 }
 
 // returnStatement returns a value of the type the function being generated returns.
@@ -425,6 +488,9 @@ func (g *generator) mutation() *Statement {
 			if len(arrays) > 0 {
 				array := arrays[g.random.IntN(len(arrays))]
 				element := map[Type]Type{NumberArray: Number, StringArray: String}[array.t]
+				if g.allowed("splice") && g.chance(1, 6) {
+					return g.splice(array)
+				}
 				switch g.random.IntN(6) {
 				case 0:
 					return statement(array.name + ".pop();")
@@ -455,6 +521,9 @@ func (g *generator) mutation() *Statement {
 				}})
 			}
 		case 7:
+			if g.allowed("optional-chains") && g.chance(1, 3) {
+				return g.chainWrite()
+			}
 			if g.chance(1, 3) {
 				return statement("table.delete(@e);", g.key())
 			}
@@ -502,6 +571,9 @@ func (g *generator) literal(t Type) *Expression {
 	case Number:
 		return text(Number, g.pick("0", "1", "2", "3", "5", "7", "10", "100", "-1", "-3", "0.5", "0.1", "1.5", "2.25", "255", "4294967295", "1e21", "-0.0001", "123.456"))
 	case String:
+		if g.allowed("surrogates") && g.chance(1, 4) {
+			return text(String, g.pick("'\\uD83C'", "'\\uDF0D'", "'a\\uD83C'", "'\\uDF0Db'", "'🌍b'", "'ß'", "'İ'", "'ǅ'", "'ﬀ'"))
+		}
 		return text(String, g.pick("''", "'a'", "'b'", "'xy'", "'hello'", "'a,b'", "' pad '", "'é'", "'世界'", "'🌍'", "'10'", "'3.5'"))
 	case Boolean:
 		return text(Boolean, g.pick("true", "false"))
@@ -540,7 +612,11 @@ func (g *generator) call(t Type) *Expression {
 	chosen := candidates[g.random.IntN(len(candidates))]
 	format := chosen.name + "("
 	var arguments []*Expression
-	for index, parameter := range chosen.parameters {
+	passed := chosen.parameters
+	if chosen.required < len(passed) {
+		passed = passed[:chosen.required+g.random.IntN(len(passed)-chosen.required+1)]
+	}
+	for index, parameter := range passed {
 		if index > 0 {
 			format += ", "
 		}
@@ -560,6 +636,11 @@ func (g *generator) expression(t Type, depth int) *Expression {
 	if g.chance(1, 4) {
 		if call := g.call(t); call != nil {
 			return call
+		}
+	}
+	if g.chance(1, 6) {
+		if widened := g.widenedExpression(t, depth); widened != nil {
+			return widened
 		}
 	}
 	switch t {

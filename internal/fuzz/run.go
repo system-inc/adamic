@@ -86,8 +86,8 @@ const (
 	// Checked: native and the JavaScript backend stopped at the same inserted check where the source
 	// on Node runs on. That's Adamic meaning what it says, not a bug.
 	Checked Verdict = "checked"
-	// Unfit: the program misbehaved on Node itself (a JavaScript exception, or no end), which is the
-	// generator's fault.
+	// Unfit: the program misbehaved on Node itself (it never ended, or printed megabytes), which is
+	// the generator's fault.
 	Unfit Verdict = "unfit"
 	// Finding: a disagreement, a sanitizer report, a leak, a compiler crash, or C that clang refused.
 	Finding Verdict = "finding"
@@ -172,9 +172,6 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 		// fail writing that much to a pipe before it's read.
 		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node printed more than a megabyte", ""
 		return outcome
-	case javascriptError.Match(outcome.Node.Stderr):
-		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node threw", firstLines(string(outcome.Node.Stderr), 1)
-		return outcome
 	}
 	if match := sanitizerReport.FindSubmatch(outcome.Native.Stderr); match != nil {
 		kind := string(match[1])
@@ -187,6 +184,13 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 	var differences []string
 	nativeDifference := difference(outcome.Node, outcome.Native)
 	backendDifference := difference(outcome.Node, outcome.Backend)
+	if javascriptError.Match(outcome.Node.Stderr) {
+		// Node threw where the library throws (repeat(-1)), or where the checker's types were wrong (a
+		// narrowing a call undid). Adamic panics there too, and the oracle holds it to stdout and the
+		// exit code, not to V8's words (docs/0.1.md).
+		nativeDifference = differenceBesidesStderr(outcome.Node, outcome.Native)
+		backendDifference = differenceBesidesStderr(outcome.Node, outcome.Backend)
+	}
 	if nativeDifference != "" && backendDifference != "" && difference(outcome.Backend, outcome.Native) == "" && outcome.Native.ExitCode == 70 {
 		// Both of Adamic's backends stopped at the same place, where Node didn't stop: an inserted
 		// check, as long as what was printed before it is what Node printed.
@@ -244,6 +248,12 @@ func compilerRefusal(lowered Run) Outcome {
 		return Outcome{Verdict: Invalid, Key: "checker", Detail: firstLines(stderr, 4)}
 	}
 	return Outcome{Verdict: Finding, Key: "compiler failed", Detail: firstLines(stderr, 20)}
+}
+
+// differenceBesidesStderr is difference, without comparing what was written to stderr.
+func differenceBesidesStderr(expected Run, actual Run) string {
+	actual.Stderr = expected.Stderr
+	return difference(expected, actual)
 }
 
 func difference(expected Run, actual Run) string {
