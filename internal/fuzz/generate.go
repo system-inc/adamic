@@ -49,6 +49,7 @@ var Features = []string{
 	"optional-chains",  // ?. and ?? through a linked list that may end anywhere
 	"number-formats",   // toExponential and toPrecision
 	"array-from",       // Array.from({ length }, callback)
+	"long-inputs",      // an array past 64 for TimSort's galloping, a string past 64 bytes for its index
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -193,6 +194,9 @@ func (g *generator) program() *Program {
 	}
 	add(statement("const table = new Map<string, number>();"))
 	g.declare("table", NumberMap, false)
+	if g.allowed("long-inputs") {
+		g.declareLong(add)
+	}
 	if g.allowed("closures-deep") {
 		add(statement("const " + pendingClosures + ": (() => number)[] = [];"))
 	}
@@ -359,6 +363,9 @@ func (g *generator) function() *Statement {
 func (g *generator) statement() *Statement {
 	g.statements++
 	nested := g.loopDepth < 2 && g.statements < 60
+	if g.allowed("long-inputs") && g.chance(1, 10) {
+		return g.longStatement()
+	}
 	if g.chance(1, 4) {
 		if widened := g.widenedStatement(nested); widened != nil {
 			return widened
