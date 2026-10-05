@@ -1,0 +1,60 @@
+// The spread's source read again on only one later path: after a switch's default, around a
+// continue, past a break, on a do-while's next iteration and a while's condition.
+type Point = { x: number; name: string };
+function viaSwitch(kind: number): string {
+	const point: Point = { x: 1, name: `s${kind}` };
+	let out = '';
+	switch (kind) {
+		case 1: {
+			const moved = { ...point, x: 2 };
+			out = `${moved.x}`;
+			break;
+		}
+		default: {
+			out = 'default';
+		}
+	}
+	return `${out} ${point.x}`;
+}
+function viaContinue(): string {
+	let point: Point = { x: 0, name: `c${0}` };
+	const seen: string[] = [];
+	for (let round = 0; round < 4; round++) {
+		const moved = { ...point, x: round };
+		seen.push(`${moved.x}`);
+		if (round % 2 === 0) {
+			continue;
+		}
+		point = moved;
+	}
+	return `${seen.join(',')} ${point.x}`;
+}
+function viaBreak(): string {
+	const point: Point = { x: 5, name: `b${5}` };
+	let found = '';
+	for (let round = 0; round < 3; round++) {
+		const moved = { ...point, x: round };
+		if (round === 1) {
+			found = `${moved.x}`;
+			break;
+		}
+	}
+	return `${found} ${point.x}`;
+}
+function viaDoWhile(): string {
+	let point: Point = { x: 1, name: `d${1}` };
+	let total = 0;
+	do {
+		const moved = { ...point, x: point.x * 2 };
+		total += moved.x;
+		if (total > 20) {
+			point = moved;
+		}
+	} while (point.x < 10 && total < 100);
+	return `${total} ${point.x}`;
+}
+console.log(viaSwitch(1));
+console.log(viaSwitch(2));
+console.log(viaContinue());
+console.log(viaBreak());
+console.log(viaDoWhile());
