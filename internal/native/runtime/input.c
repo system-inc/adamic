@@ -278,7 +278,7 @@ adamic_object *adamic_read_text_file(const adamic_string *path) {
 	// 536,870,887 bytes reads), and readTextFile answers that as a failure. So here too.
 	if (length >= ADAMIC_STRING_MAX_UNITS) {
 		free(bytes);
-		return failure(path, 0);
+		return failure(path, 0, false);
 	}
 	adamic_string *text = decode(bytes, length);
 	free(bytes);
