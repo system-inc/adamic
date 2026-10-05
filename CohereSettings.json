@@ -6,12 +6,23 @@
             "files": [
                 "internal/oracle/testdata/**"
             ],
-            "reason": "The oracle's fixtures write these on purpose, to hold native code to what Node does where a program does them: a value compared with itself and with NaN (NaN !== NaN), a value assigned to itself, and a loop whose body always leaves it.",
+            "reason": "The oracle's fixtures write these on purpose, to hold native code to what Node does where a program does them: a value compared with itself and with NaN (NaN !== NaN), a value assigned to itself, a loop whose body always leaves it, and a finally that throws over what its try threw or returned.",
             "rules": {
                 "no-self-compare": "off",
                 "use-isnan": "off",
                 "no-self-assign": "off",
-                "no-unreachable-loop": "off"
+                "no-unreachable-loop": "off",
+                "no-unsafe-finally": "off"
+            }
+        },
+        {
+            "files": [
+                "internal/oracle/testdata/unused_parameters.a",
+                "internal/oracle/testdata/local_console.a"
+            ],
+            "reason": "These two hold names nothing reads on purpose: unused_parameters.a parameters, which clang once refused under -Werror, and local_console.a a console whose log ignores its message, so the program prints nothing.",
+            "rules": {
+                "@typescript-eslint/no-unused-vars": "off"
             }
         },
         {
