@@ -21,6 +21,8 @@ static adamic_string *new_string(size_t length) {
 	adamic_string *string = adamic_allocate(sizeof *string + length, adamic_kind_string);
 	string->length = length;
 	string->bytes = (const char *)(string + 1);
+	string->units = 0;
+	string->index = NULL;
 	return string;
 }
 
@@ -261,9 +263,17 @@ adamic_object *adamic_read_text_file(const adamic_string *path) {
 	if (error != 0) {
 		return failure(path, error);
 	}
+	// Node's readFileSync throws ERR_STRING_TOO_LONG for a file of V8's longest string in bytes or
+	// more, whatever they decode to (536,870,888 bytes of é, half as many units, fails too, and
+	// 536,870,887 bytes reads), and readTextFile answers that as a failure. So here too.
+	if (length >= ADAMIC_STRING_MAX_UNITS) {
+		free(bytes);
+		return failure(path, 0);
+	}
+	adamic_string *text = decode(bytes, length);
+	free(bytes);
 	adamic_object *result = adamic_object_new(&ok_shape);
 	result->slots[0].reference = &ok_kind;
-	result->slots[1].reference = decode(bytes, length);
-	free(bytes);
+	result->slots[1].reference = text;
 	return result;
 }
