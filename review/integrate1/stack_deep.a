@@ -1,0 +1,12 @@
+// Small frames: native gets deeper than Node. Node panics at sum(10000); native prints 50005000 and
+// 5000050000 first.
+function sum(n: number): number {
+	if (n === 0) {
+		return 0;
+	}
+	return n + sum(n - 1);
+}
+console.log(`${sum(10000)}`);
+console.log(`${sum(100000)}`);
+console.log(`${sum(1000000)}`);
+console.log('end');

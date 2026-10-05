@@ -1,0 +1,6 @@
+// padStart with an undefined fill pads with spaces in Node; natively it dereferences NULL (string.c:440).
+// Older than integrate-1.
+function pad(fill?: string): string {
+	return 'x'.padStart(3, fill);
+}
+console.log(pad());

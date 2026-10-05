@@ -1,0 +1,21 @@
+// Heavy frames under ulimit -s 1024: native panics shallower than Node (Node prints 52001 and 156001).
+function heavy(n: number, s: string): number {
+	if (n === 0) {
+		return s.length;
+	}
+	const a = `${s}a`;
+	const b = `${a}b`;
+	const c = `${b}c`;
+	const d = `${c}d`;
+	const e = `${d}e`;
+	const f = `${e}f`;
+	const g = `${f}g`;
+	const h = `${g}h`;
+	const values = [a.length, b.length, c.length, d.length, e.length, f.length, g.length, h.length];
+	return values.length + heavy(n - 1, s) + a.length + b.length + c.length + d.length + e.length + f.length + g.length + h.length;
+}
+console.log(`${heavy(1000, 'x')}`);
+console.log(`${heavy(3000, 'x')}`);
+console.log(`${heavy(6000, 'x')}`);
+console.log(`${heavy(9000, 'x')}`);
+console.log('end');

@@ -1,0 +1,10 @@
+// Run with three arguments of 120 KB each: the stack limit is measured below argv and the environment,
+// so native segfaults (exit 139) where Node panics (exit 70).
+function sum(n: number): number {
+	if (n === 0) {
+		return 0;
+	}
+	return n + sum(n - 1);
+}
+console.log('start');
+console.log(`${sum(1e9)}`);

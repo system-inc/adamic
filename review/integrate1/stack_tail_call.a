@@ -1,0 +1,11 @@
+// A self tail call: clang turns it into a loop at -O1 and -O2, the frame address never moves, and the
+// stack check never fires. Node panics (Maximum call stack size exceeded, exit 70); native prints 0, 0, end.
+function count(n: number): number {
+	if (n === 0) {
+		return 0;
+	}
+	return count(n - 1);
+}
+console.log(`${count(100000)}`);
+console.log(`${count(1e9)}`);
+console.log('end');

@@ -1,0 +1,5 @@
+// normalize(form) with form undefined is NFC in Node; natively it dereferences NULL (normalize.c:239).
+function pick(form?: string): number {
+	return 'e\u0301'.normalize(form).length;
+}
+console.log(`${pick()}`);

@@ -1,0 +1,6 @@
+// Recursion with no end, in tail position: Node panics at once; native -O2 runs forever.
+function loop(n: number): number {
+	return loop(n + 1);
+}
+console.log('start');
+console.log(`${loop(0)}`);
