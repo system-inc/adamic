@@ -95,6 +95,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/fills.a", true, false},
 	{"internal/oracle/testdata/fill_length.a", true, false},
 	{"internal/oracle/testdata/case_mapping.a", true, false},
+	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).
+	{"internal/oracle/testdata/large_output.a", true, false},
+	{"internal/oracle/testdata/output_then_panic.a", true, false},
+	{"internal/oracle/testdata/interleaved.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

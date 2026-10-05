@@ -297,7 +297,12 @@ adamic_string *adamic_string_to_lower(const adamic_string *string);
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
 
-// adamic_write_line writes a string and a newline, as console.log does with one string.
+// adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
+// rather than kill, as on Node.
+void adamic_start(int count, char **values);
+
+// adamic_write_line writes a string and a newline, as console.log does with one string. Stdout is
+// buffered, and flushed wherever Node's writing it at once could be told apart (adamic.c).
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string);
 
 // ADAMIC_NUMBER_FORMAT_MAX holds the longest number text, "-1.2345678901234567e-308", with room.

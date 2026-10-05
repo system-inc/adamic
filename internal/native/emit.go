@@ -56,7 +56,7 @@ func C(program *ir.Program) string {
 		emitter.out.Reset()
 		bodies.WriteString("}\n\n")
 	}
-	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_arguments_save(argc, argv);\n")
+	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n")
 	emitter.indent = 1
 	emitter.block(program.Main, nil)
 	bodies.WriteString(emitter.out.String())
