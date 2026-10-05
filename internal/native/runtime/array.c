@@ -99,7 +99,7 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 			length += size;
 		}
 	}
-	adamic_string piece = {{0, adamic_kind_string}, length, buffer, 0, NULL};
+	adamic_string piece = {{0, adamic_kind_string, 0}, length, buffer, 0, NULL};
 	adamic_string *joined = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(buffer);
 	return joined;

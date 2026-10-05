@@ -54,6 +54,10 @@ type Options struct {
 	// cpu, for tests, compiles for a particular processor (-march), so a test on an x86 machine can
 	// see what fused multiply-adds would do, as on arm64.
 	cpu string
+
+	// slabs, for tests, keeps the size-class allocator on in a sanitized build (heap.c), where every
+	// value otherwise comes from malloc, to show a use after a free is still caught with it on.
+	slabs bool
 }
 
 // Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
@@ -73,6 +77,9 @@ func Flags(options Options) []string {
 	flags = append(flags, "-fno-optimize-sibling-calls")
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
+	}
+	if options.slabs {
+		flags = append(flags, "-DADAMIC_SLABS")
 	}
 	if options.cpu != "" {
 		flags = append(flags, "-march="+options.cpu)
