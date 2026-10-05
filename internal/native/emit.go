@@ -1221,10 +1221,30 @@ func (e *emitter) read(read ir.Read) string {
 	return snapshot
 }
 
+// arguments evaluates a call's arguments in order, each fitted to its parameter: a number or undefined
+// made number | undefined's two words. An optional parameter the call leaves out gets undefined. This
+// is done here, not in lowering, since only here is every function's signature known: lowering may
+// meet a call before the function it calls.
 func (e *emitter) arguments(call ir.Call) []string {
-	arguments := make([]string, 0, len(call.Arguments))
-	for _, argument := range call.Arguments {
-		arguments = append(arguments, e.value(argument))
+	parameters := e.program.Functions[call.Function].Parameters
+	arguments := make([]string, 0, len(parameters))
+	for index, argument := range call.Arguments {
+		value := e.value(argument)
+		if index < len(parameters) && e.program.Locals[parameters[index]].Type == ir.MaybeNumber {
+			if _, isUndefined := argument.(ir.Undefined); isUndefined {
+				value = zero(ir.MaybeNumber)
+			} else if argument.Type() == ir.Number {
+				value = fmt.Sprintf("((adamic_maybe_number){true, %s})", value)
+			}
+		}
+		arguments = append(arguments, value)
+	}
+	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
+		if e.program.Locals[parameter].Type == ir.MaybeNumber {
+			arguments = append(arguments, zero(ir.MaybeNumber))
+		} else {
+			arguments = append(arguments, "NULL")
+		}
 	}
 	return arguments
 }

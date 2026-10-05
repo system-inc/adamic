@@ -243,19 +243,40 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 	outerIndexForParameters := l.functionIndex
 	l.functionIndex = index
 	defer func() { l.functionIndex = outerIndexForParameters }()
+	// A parameter with a default arrives as what may be missing, and the body begins by declaring the
+	// parameter itself: the argument, or the default when it's undefined, as JavaScript decides.
+	type defaulted struct {
+		local, incoming int
+		initializer     *ast.Node
+	}
+	defaults := []defaulted{}
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
-		if !ast.IsIdentifier(parameter.Name()) || declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
+		if !ast.IsIdentifier(parameter.Name()) || declared.DotDotDotToken != nil {
 			return l.notYet(parameter, "a parameter that isn't a plain name")
 		}
 		local, err := l.declareLocal(parameter.Name())
 		if err != nil {
 			return err
 		}
-		if function.Closure && l.result.Locals[local].Type == ir.MaybeNumber {
-			return l.notYet(parameter, "a function value taking number | undefined")
+		if function.Closure && (l.result.Locals[local].Type == ir.MaybeNumber || declared.Initializer != nil || declared.QuestionToken != nil) {
+			// A function value is called with the arguments its caller has, and no more.
+			return l.notYet(parameter, "a function value with an optional parameter")
 		}
-		function.Parameters = append(function.Parameters, local)
+		if declared.Initializer == nil {
+			function.Parameters = append(function.Parameters, local)
+			continue
+		}
+		missing := l.result.Locals[local].Type
+		if missing == ir.Number {
+			missing = ir.MaybeNumber
+		} else if !missing.IsReference() {
+			return l.notYet(parameter, "a default for a "+typeName(missing)+" parameter")
+		}
+		incoming := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: parameter.Name().Text(), Type: missing, Function: index})
+		function.Parameters = append(function.Parameters, incoming)
+		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
 	if function.Closure && function.Returns == ir.MaybeNumber {
 		// A function value's arguments and result are each one adamic_value, and number | undefined
@@ -274,8 +295,26 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 	if this >= 0 {
 		l.this = this
 	}
-	var lowered []ir.Statement
+	// Defaults run before the body, in order, after a constructor's fields, as JavaScript runs them.
+	var prologue, lowered []ir.Statement
 	var err error
+	for _, parameter := range defaults {
+		var fallback ir.Expression
+		if fallback, err = l.expression(parameter.initializer); err != nil {
+			break
+		}
+		of := l.result.Locals[parameter.local].Type
+		if fallback.Type() != of {
+			err = l.notYet(parameter.initializer, "a default of another type than its parameter")
+			break
+		}
+		incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
+		prologue = append(prologue, ir.Declare{Local: parameter.local, Value: ir.Coalesce{Value: incoming, Fallback: fallback, Of: of}})
+	}
+	if err != nil {
+		l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
+		return err
+	}
 	if body.Kind == ast.KindBlock {
 		lowered, err = l.statements(body.AsBlock().Statements.Nodes)
 	} else if function.Returns == 0 {
@@ -295,6 +334,7 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 	// The environment may have grown while the body was lowered (captures are found as they're
 	// read), so it's taken from what's recorded, not from this copy.
 	function.Environment = l.result.Functions[index].Environment
+	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
 	l.result.Functions[index] = function
 	return nil
