@@ -1,0 +1,6 @@
+// The same with a number: a dead zone read must not quietly be 0.
+console.log(`twice ${twice()}`);
+const base = Math.sqrt(16);
+function twice(): number {
+	return base * 2;
+}

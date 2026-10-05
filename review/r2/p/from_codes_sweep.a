@@ -1,0 +1,18 @@
+// fromCharCode and fromCodePoint: ToUint16's wrap, halves that meet across arguments and across
+// concatenation, and indexing into what they make.
+const high = String.fromCharCode(0xd83c);
+const low = String.fromCharCode(0xdf0d);
+const joined = high + low;
+console.log(`${joined} ${joined.length} ${joined.codePointAt(0) ?? -1} ${joined === '🌍'}`);
+console.log(String.fromCharCode(0xd83c, 0xdf0d, 65 + 65536, -1, 1.9, 0 / 0, 1e21, 0x10000 + 0x41));
+const spelled = String.fromCodePoint(0x1f30d, 0x41, 0xd800, 0xdc00, 0x10ffff, -0);
+console.log(`${spelled.length} ${spelled.charCodeAt(2)} ${spelled.charCodeAt(3)} ${spelled.codePointAt(3) ?? -1} ${spelled.codePointAt(6) ?? -1}`);
+let built = '';
+for (let unit = 0xd800; unit < 0xd810; unit += 1) {
+	built += String.fromCharCode(unit) + String.fromCharCode(unit + 0x400) + String.fromCharCode(0x41 + (unit & 7));
+}
+let sum = 0;
+for (let index = 0; index < built.length; index += 1) {
+	sum = (sum * 31 + built.charCodeAt(index)) % 1000000007;
+}
+console.log(`${built.length} ${sum} ${[...built].length} ${String.fromCharCode()} ${String.fromCodePoint().length}`);

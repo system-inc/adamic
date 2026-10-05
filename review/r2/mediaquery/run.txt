@@ -1,0 +1,103 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    mediaquery_test.go:52: Go cohere without the fix to parsers.go answers 8 cases differently; the port is held to the fixed Go
+    mediaquery_test.go:52: seed 20261005, 4000 generated params
+=== RUN   TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== PAUSE TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_R2_U+2029_not_whitespace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_R2_U+2029_not_whitespace
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_R2_U+2000_not_whitespace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_R2_U+2000_not_whitespace
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_R2_DEL_written_as_itself
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_R2_DEL_written_as_itself
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_R2_U+001F_written_as_itself
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_R2_U+001F_written_as_itself
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_R2_the_last_word_after_a_media_type_typed_a_keyword
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_R2_the_last_word_after_a_media_type_typed_a_keyword
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_R2_the_third_of_four_words_typed_a_media_type
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_R2_the_third_of_four_words_typed_a_media_type
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_R2_a_curly_brace_not_entering_a_level
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_R2_a_curly_brace_not_entering_a_level
+=== CONT  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_R2_U+2029_not_whitespace
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_R2_the_last_word_after_a_media_type_typed_a_keyword
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type
+    mediaquery_test.go:131: natively, caught: line 231: "    media-type \"b\" @3 before=\"\" after=\"\"", Go cohere "    keyword \"b\" @3 before=\"\" after=\"\""
+    mediaquery_test.go:131: on Node, caught: line 231: "    media-type \"b\" @3 before=\"\" after=\"\"", Go cohere "    keyword \"b\" @3 before=\"\" after=\"\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_R2_U+2029_not_whitespace
+    mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it
+    mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_R2_the_last_word_after_a_media_type_typed_a_keyword
+    mediaquery_test.go:131: natively, caught: line 431: "    keyword \"b\" @6 before=\" \" after=\"\"", Go cohere "    media-feature-expression \"b\" @6 before=\" \" after=\"\""
+    mediaquery_test.go:131: on Node, caught: line 431: "    keyword \"b\" @6 before=\" \" after=\"\"", Go cohere "    media-feature-expression \"b\" @6 before=\" \" after=\"\""
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+    mediaquery_test.go:94: set ADAMIC_MEDIA_QUERY_LIBRARY to a directory where `npm install postcss-media-query-parser@0.2.3` ran, to compare with the library itself
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_R2_DEL_written_as_itself
+=== NAME  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+    mediaquery_test.go:83: 4103 cases (3961 parsed, 142 refused; 3471 nodes left of undecided type): every tree the same from Go cohere, the port natively, on Node and through the JavaScript backend
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_R2_U+001F_written_as_itself
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+    mediaquery_test.go:131: natively, caught: line 470: "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=1", Go cohere "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=3"
+    mediaquery_test.go:131: on Node, caught: line 470: "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=1", Go cohere "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=3"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_R2_a_curly_brace_not_entering_a_level
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+    mediaquery_test.go:131: natively, caught: line 9: "      value \"768px\" @22 before=\" \" after=\"\"", Go cohere "      value \"768px\" @23 before=\" \" after=\"\""
+    mediaquery_test.go:131: on Node, caught: line 9: "      value \"768px\" @22 before=\" \" after=\"\"", Go cohere "      value \"768px\" @23 before=\" \" after=\"\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_R2_DEL_written_as_itself
+    mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it
+    mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_R2_the_third_of_four_words_typed_a_media_type
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_R2_U+001F_written_as_itself
+    mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it
+    mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_R2_a_curly_brace_not_entering_a_level
+    mediaquery_test.go:131: natively, caught: line 441: "  media-query \"#{$query} and (color)\" @0 before=\"\" after=\"\" nodes=0", Go cohere "  media-query \"#{$query} and (color)\" @0 before=\"\" after=\"\" nodes=3"
+    mediaquery_test.go:131: on Node, caught: line 441: "  media-query \"#{$query} and (color)\" @0 before=\"\" after=\"\" nodes=0", Go cohere "  media-query \"#{$query} and (color)\" @0 before=\"\" after=\"\" nodes=3"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_R2_U+2000_not_whitespace
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+    mediaquery_test.go:131: natively, caught: line 128: "  media-query \"screen \" @0 before=\"\" after=\" \" nodes=1", Go cohere "  media-query \"screen\" @0 before=\"\" after=\" \" nodes=1"
+    mediaquery_test.go:131: on Node, caught: line 128: "  media-query \"screen \" @0 before=\"\" after=\" \" nodes=1", Go cohere "  media-query \"screen\" @0 before=\"\" after=\" \" nodes=1"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_R2_the_third_of_four_words_typed_a_media_type
+    mediaquery_test.go:131: natively, caught: line 409: "    media-type \"c\" @4 before=\" \" after=\" \"", Go cohere "    keyword \"c\" @4 before=\" \" after=\" \""
+    mediaquery_test.go:131: on Node, caught: line 409: "    media-type \"c\" @4 before=\" \" after=\" \"", Go cohere "    keyword \"c\" @4 before=\" \" after=\" \""
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+    mediaquery_test.go:131: natively, caught: line 611: "media-query-list \"screen\" @0 before=\"\" after=\"\" nodes=1", Go cohere "media-query-list \"screen\" @1 before=\"\ufeff\" after=\"\" nodes=1"
+    mediaquery_test.go:131: on Node, caught: line 611: "media-query-list \"screen\" @0 before=\"\" after=\"\" nodes=1", Go cohere "media-query-list \"screen\" @1 before=\"\ufeff\" after=\"\" nodes=1"
+=== NAME  TestThePortParsesAsGoCohereDoes/catches_R2_U+2000_not_whitespace
+    mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it
+    mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it
+--- FAIL: TestThePortParsesAsGoCohereDoes (1.88s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type (6.53s)
+    --- FAIL: TestThePortParsesAsGoCohereDoes/catches_R2_U+2029_not_whitespace (6.69s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_R2_the_last_word_after_a_media_type_typed_a_keyword (7.10s)
+    --- SKIP: TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser (0.00s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere (7.62s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string (6.81s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon (7.06s)
+    --- FAIL: TestThePortParsesAsGoCohereDoes/catches_R2_DEL_written_as_itself (6.69s)
+    --- FAIL: TestThePortParsesAsGoCohereDoes/catches_R2_U+001F_written_as_itself (6.75s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_R2_a_curly_brace_not_entering_a_level (6.82s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart (6.89s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_R2_the_third_of_four_words_typed_a_media_type (6.87s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace (6.94s)
+    --- FAIL: TestThePortParsesAsGoCohereDoes/catches_R2_U+2000_not_whitespace (6.66s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/mediaquery	28.707s
+FAIL

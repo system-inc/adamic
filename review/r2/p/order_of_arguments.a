@@ -1,0 +1,18 @@
+// Arguments with effects, in fromCharCode, fromCodePoint and the bitwise operators: JavaScript
+// evaluates left to right.
+let counter = 64;
+const next = (): number => {
+	counter += 1;
+	return counter;
+};
+console.log(String.fromCharCode(next(), next(), next()));
+console.log(String.fromCodePoint(next(), next()));
+console.log(`${next() << next()} ${next() - next()} ${next() | (next() << 8)} ${next() >>> next()}`);
+let bits = 1;
+bits <<= 4;
+bits |= 3;
+bits ^= 0xff;
+bits >>= 1;
+bits >>>= 0;
+bits &= ~2;
+console.log(`${bits} ${counter}`);

@@ -1,0 +1,18 @@
+// Every bitwise operator over edge values: ToInt32 and ToUint32 at ±2^31, ±2^32, ±2^53, beyond, NaN,
+// the infinities, -0 and fractions, and shift counts past 31 and negative.
+const values: number[] = [
+	0, -0, 1, -1, 0.5, -0.5, 1.9999, -1.9999, 31, 32, 33, -31, -32, 255, 256, 65535, 65536,
+	2147483647, 2147483648, -2147483648, -2147483649, 4294967295, 4294967296, 4294967297, -4294967296,
+	9007199254740991, 9007199254740992, -9007199254740993, 1e21, -1e21, 1.7976931348623157e308, 5e-324,
+	0 / 0, 1 / 0, -1 / 0, 123456789.987, -987654321.123, 3000000000.5, -3000000000.5,
+];
+let lines = 0;
+for (const left of values) {
+	const row: string[] = [`${~left}`];
+	for (const right of values) {
+		row.push(`${left & right} ${left | right} ${left ^ right} ${left << right} ${left >> right} ${left >>> right}`);
+	}
+	console.log(row.join(';'));
+	lines += 1;
+}
+console.log(`${lines} ${1 / (-0 | 0)} ${1 / (-0 >> 0)} ${1 / (-0 >>> 0)} ${1 / ~~-0}`);

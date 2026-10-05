@@ -1,0 +1,12 @@
+// A tuple flows into a readonly array of its elements' union, as the checker allows.
+function total(values: readonly number[]): number {
+	let sum = 0;
+	for (const value of values) {
+		sum += value;
+	}
+	return sum + values.length * 1000;
+}
+const pair: [number, number] = [3, 4];
+console.log(`${total(pair)}`);
+const widened: readonly number[] = pair;
+console.log(`${widened.length} ${widened.join(',')} ${widened[1] ?? -1}`);

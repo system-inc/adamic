@@ -1,0 +1,16 @@
+// A constructor calling a method declared above it (main's order), which reads a field the constructor hasn't set
+// yet: on Node the field is undefined there, and reading its length throws.
+class Label {
+	readonly size: number;
+	readonly text: string;
+
+	measure(): number {
+		return this.text.length;
+	}
+
+	constructor(text: string) {
+		this.size = this.measure();
+		this.text = text;
+	}
+}
+console.log(`${new Label(['a', 'b'].join('')).size}`);

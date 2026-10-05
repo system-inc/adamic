@@ -1,0 +1,14 @@
+// A function that never returns, used where a value is wanted: the ?? panic pattern, through a helper.
+import { panic } from 'adamic';
+
+function fail(why: string): never {
+	return panic(why);
+}
+const ages = new Map<string, number>([['Kirk', 42]]);
+const kirk = ages.get('Kirk') ?? fail('no age for Kirk');
+console.log(`Kirk ${kirk}`);
+const names = new Map<string, string>([['a', 'Ahra']]);
+const name = names.get('a') ?? fail('no name');
+console.log(`name ${name}`);
+const ahra = ages.get('Ahra') ?? fail('no age for Ahra');
+console.log(`Ahra ${ahra}`);

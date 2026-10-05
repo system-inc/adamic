@@ -1,0 +1,6 @@
+// A function imported from another module, passed as a value.
+import { triple } from './helpers.a';
+
+console.log([1, 2, 3].map(triple).join(','));
+const apply = (to: number, how: (value: number) => number): number => how(to);
+console.log(`${apply(7, triple)}`);

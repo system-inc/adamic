@@ -1,0 +1,16 @@
+// The same with a number field read before it's set: on Node it's undefined, and undefined * 2 is NaN,
+// so the program finishes and prints NaN.
+class Scaled {
+	readonly doubled: number;
+	readonly base: number;
+
+	constructor(base: number) {
+		this.doubled = this.twice();
+		this.base = base;
+	}
+
+	twice(): number {
+		return this.base * 2;
+	}
+}
+console.log(`${new Scaled(21).doubled}`);

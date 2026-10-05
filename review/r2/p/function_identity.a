@@ -1,0 +1,7 @@
+// A declared function read as a value twice is the same function in JavaScript.
+function double(value: number): number {
+	return value * 2;
+}
+const first = double;
+const second = double;
+console.log(`${first === second} ${[1, 2, 3].map(double).join(',')} ${first(5)}`);

@@ -1,0 +1,4 @@
+// A tuple read as an array, asking only its length: no element is touched.
+const pair: [number, number] = [3, 4];
+const measure = (values: readonly number[]): number => values.length;
+console.log(`length ${measure(pair)}`);

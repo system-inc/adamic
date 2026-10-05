@@ -1,0 +1,26 @@
+// Tuples as values: swapped by destructuring assignment, returned, held in maps and arrays, sorted,
+// with a string | number element boxed, an optional element, and names built at run time.
+function divide(numerator: number, denominator: number): [number, number] {
+	return [Math.floor(numerator / denominator), numerator % denominator];
+}
+let left = 'l'.repeat(2);
+let right = 'r'.repeat(3);
+[left, right] = [right, left];
+console.log(`${left} ${right}`);
+let [quotient, remainder] = divide(17, 5);
+console.log(`${quotient} ${remainder}`);
+[quotient, remainder] = [remainder, quotient];
+console.log(`${quotient} ${remainder}`);
+const pairs: [string, number][] = [['b'.repeat(2), 2], ['a', 1], ['c', 0]];
+pairs.sort((first, second) => first[1] - second[1]);
+for (const [key, value] of pairs) {
+	console.log(`${key}=${value}`);
+}
+const byName = new Map<string, readonly [number, string]>();
+byName.set('x', [1, 'one'.toUpperCase()]);
+const found = byName.get('x');
+console.log(found === undefined ? 'missing' : `${found[0]} ${found[1]}`);
+const optional: [number, string?] = [5];
+console.log(`${optional[1] ?? 'none'}`);
+const [, second] = divide(9, 2);
+console.log(`${second}`);

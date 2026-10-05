@@ -1,0 +1,9 @@
+// A tuple handed on where an array is expected, through a function value and an array's element,
+// where the C types are one word for both and clang can't object.
+const pair: [number, number] = [3, 4];
+const measure = (values: readonly number[]): string => `${values.length} ${values.join(',')}`;
+console.log(measure(pair));
+const rows: (readonly number[])[] = [[1, 2, 3], pair];
+for (const row of rows) {
+	console.log(`row ${row.length} ${row[0] ?? -1}`);
+}

@@ -1,0 +1,44 @@
+	// Stream R2's mutants: each a wrong port, inserted into the mutants list above to see whether the
+	// test can tell. review/r2/mediaquery/apply.py puts them in place for a run.
+	{
+		name: "R2 U+2029 not whitespace",
+		file: "whitespace.ts",
+		from: "\t\tcase 0x2029:\n",
+		to:   "",
+	},
+	{
+		name: "R2 U+2000 not whitespace",
+		file: "whitespace.ts",
+		from: "return unit >= 0x2000 && unit <= 0x200a;",
+		to:   "return unit >= 0x2001 && unit <= 0x200a;",
+	},
+	{
+		name: "R2 DEL written as itself",
+		file: "main.ts",
+		from: "if (unit < 0x20 || unit === 0x7f) {",
+		to:   "if (unit < 0x20) {",
+	},
+	{
+		name: "R2 U+001F written as itself",
+		file: "main.ts",
+		from: "if (unit < 0x20 || unit === 0x7f) {",
+		to:   "if (unit < 0x1f || unit === 0x7f) {",
+	},
+	{
+		name: "R2 the last word after a media type typed a keyword",
+		file: "parsers.ts",
+		from: "current.type = 'media-feature-expression';\n\t\t\t\t\t} else if",
+		to:   "current.type = 'keyword';\n\t\t\t\t\t} else if",
+	},
+	{
+		name: "R2 the third of four words typed a media type",
+		file: "parsers.ts",
+		from: "nodeAt(result, i + 2).type = 'keyword';",
+		to:   "nodeAt(result, i + 2).type = 'media-type';",
+	},
+	{
+		name: "R2 a curly brace not entering a level",
+		file: "parsers.ts",
+		from: "if (character === '{' || character === '(') {",
+		to:   "if (character === '(') {",
+	},

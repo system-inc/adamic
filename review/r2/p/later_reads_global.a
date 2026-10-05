@@ -1,0 +1,7 @@
+// A function declared below its call, called before the module-level const it reads is initialized:
+// JavaScript hoists the function, and the const is still in its dead zone.
+console.log(`length ${describe()}`);
+const greeting = ['h', 'i'].join('');
+function describe(): number {
+	return greeting.length;
+}
