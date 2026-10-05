@@ -1,0 +1,11 @@
+type Tree = { value: number; label: string };
+function make(depth: number): Tree | undefined {
+	return depth > 0 ? { value: depth, label: `t${depth}` } : undefined;
+}
+function spreadMaybe(depth: number): string {
+	const maybe = make(depth);
+	const spread = { ...maybe };
+	return `${depth} ${spread.value ?? `none`}`;
+}
+console.log(spreadMaybe(2));
+console.log(spreadMaybe(0));

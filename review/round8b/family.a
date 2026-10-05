@@ -1,0 +1,93 @@
+// Perceus meets exceptions: a throw between a move and its use, mid-spread, out of a callee that
+// reused its parameter, a finally that reads a moved value, a global moved in a statement that can
+// throw, and a loop whose next round reads what a throwing round moved.
+type Tree = { value: number; label: string };
+let tree: Tree = { value: 1, label: `tree${1}` };
+function fail(when: boolean): number {
+	if (when) {
+		throw new Error(`failed${1}`);
+	}
+	return 1;
+}
+function reuseThenThrow(node: Tree, when: boolean): Tree {
+	const next = { ...node, value: node.value + 1 };
+	if (when) {
+		throw new Error(`after reuse ${next.value}`);
+	}
+	return next;
+}
+function insert(node: Tree, extra: number): Tree {
+	return { ...node, value: node.value + extra };
+}
+function calleeReused(): string {
+	let local: Tree = { value: 10, label: `local${10}` };
+	try {
+		local = reuseThenThrow(local, true);
+	} catch (error) {
+		return `callee: ${error instanceof Error ? error.message : ''} ${local.value} ${local.label}`;
+	}
+	return 'no';
+}
+function finallyReads(): string {
+	let local: Tree = { value: 20, label: `local${20}` };
+	let out = '';
+	try {
+		try {
+			local = insert(local, fail(true));
+		} finally {
+			out = `finally ${local.value} ${local.label}`;
+		}
+	} catch (error) {
+		out = `${out} | caught`;
+	}
+	return out;
+}
+function midSpread(): string {
+	let item: Tree = { value: 30, label: `item${30}` };
+	try {
+		item = { ...item, label: `${item.label}-${fail(true)}`, value: item.value + 1 };
+	} catch (error) {
+		return `spread: ${item.value} ${item.label}`;
+	}
+	return 'no';
+}
+function globalMoved(): string {
+	try {
+		tree = insert(tree, fail(true));
+	} catch (error) {
+		return `global: ${tree.value} ${tree.label}`;
+	}
+	return 'no';
+}
+function loopRetry(): string {
+	let node: Tree = { value: 0, label: `n${0}` };
+	const log: string[] = [];
+	for (let round = 0; round < 4; round++) {
+		try {
+			node = reuseThenThrow(node, round % 2 === 0);
+			log.push(`ok${node.value}`);
+		} catch (error) {
+			log.push(`caught${node.value}${node.label}`);
+		}
+	}
+	return log.join(',');
+}
+function rethrowMoved(): string {
+	let local: Tree = { value: 40, label: `local${40}` };
+	try {
+		try {
+			local = reuseThenThrow(local, true);
+		} catch (error) {
+			throw new Error(`again ${local.label}`);
+		}
+	} catch (error) {
+		return `${error instanceof Error ? error.message : ''} ${local.value}`;
+	}
+	return 'no';
+}
+console.log(calleeReused());
+console.log(finallyReads());
+console.log(midSpread());
+console.log(globalMoved());
+console.log(loopRetry());
+console.log(rethrowMoved());

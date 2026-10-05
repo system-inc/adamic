@@ -1,0 +1,15 @@
+// A global narrowed, then put back to undefined by a call, then moved into a consumed parameter:
+// the read is an ir.Defined that reuse looks through, and here it fires.
+type Tree = { value: number; label: string };
+let tree: Tree | undefined = { value: 1, label: `tree${1}` };
+function drop(): void {
+	tree = undefined;
+}
+function insert(node: Tree, extra: number): Tree {
+	return { ...node, value: node.value + extra };
+}
+if (tree !== undefined) {
+	drop();
+	tree = insert(tree, 1);
+	console.log(`${tree.value}`);
+}

@@ -1,0 +1,19 @@
+// The same narrowing check, inside a try: Node's TypeError is caught; natively the check panics.
+type Tree = { value: number; label: string };
+let tree: Tree | undefined = { value: 1, label: `tree${1}` };
+function drop(): void {
+	tree = undefined;
+}
+function insert(node: Tree, extra: number): Tree {
+	return { ...node, value: node.value + extra };
+}
+if (tree !== undefined) {
+	drop();
+	try {
+		tree = insert(tree, 1);
+		console.log(`${tree.value}`);
+	} catch (error) {
+		console.log(`caught ${error instanceof Error ? error.message : ''}`);
+	}
+}
+console.log('after');

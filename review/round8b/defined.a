@@ -1,0 +1,40 @@
+// The check reuse looks through (ir.Defined) can't fire on a reuse source: only a call can put
+// undefined back after a narrowing, and no call can write a local that no closure captures. Each case
+// below narrows a reuse source and then spreads it, or spreads a value that is undefined.
+type Tree = { value: number; label: string };
+function make(depth: number): Tree | undefined {
+	return depth > 0 ? { value: depth, label: `t${depth}` } : undefined;
+}
+function touch(): number {
+	return 1;
+}
+function narrowedThenCall(depth: number): string {
+	let local = make(depth);
+	if (local === undefined) {
+		return 'none';
+	}
+	touch();
+	const next = { ...local, value: local.value + 1 };
+	return `${next.value} ${next.label}`;
+}
+function spreadMaybe(depth: number): string {
+	const maybe = make(depth);
+	const spread = { ...maybe };
+	return `${depth} ${spread.value ?? 'none'}`;
+}
+function narrowedParameter(node: Tree | undefined): string {
+	if (node === undefined) {
+		return 'none';
+	}
+	touch();
+	const next = { ...node, value: node.value * 2 };
+	return `${next.value}`;
+}
+console.log(narrowedThenCall(3));
+console.log(narrowedThenCall(0));
+console.log(spreadMaybe(2));
+
+let reused = make(5);
+console.log(narrowedParameter(reused));
+reused = undefined;
+console.log(narrowedParameter(reused));
