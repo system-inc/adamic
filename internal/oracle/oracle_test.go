@@ -122,10 +122,17 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/write_after_shrink.a", true, true},
 	{"internal/oracle/testdata/normalize.a", true, false},
 	{"internal/oracle/testdata/normalize_form.a", true, false},
+	{"internal/oracle/testdata/string_positions.a", true, false},
 	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
 	{"internal/oracle/testdata/borrow_map_overwrite.a", true, false},
+	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).
+	{"internal/oracle/testdata/large_output.a", true, false},
+	{"internal/oracle/testdata/output_then_panic.a", true, false},
+	{"internal/oracle/testdata/interleaved.a", true, false},
+	// sin, cos and tan where reducing by pi / 2 cancels the most bits, as no sweep input does.
+	{"internal/oracle/testdata/trig_reduction.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

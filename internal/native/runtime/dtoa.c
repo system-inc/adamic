@@ -1023,7 +1023,7 @@ static int double_to_precision(double value, int p, char *buffer) {
 // (NaN).toExponential(1000) is ("NaN", not a RangeError).
 
 static adamic_string *conversion_result(const char *text, int length) {
-	adamic_string result = {{0, adamic_kind_string}, (size_t)length, text};
+	adamic_string result = {{0, adamic_kind_string}, (size_t)length, text, 0, NULL};
 	return adamic_string_concat(1, (adamic_string *const[]){&result});
 }
 
