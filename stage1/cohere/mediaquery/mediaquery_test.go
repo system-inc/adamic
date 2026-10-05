@@ -155,6 +155,14 @@ var mutants = []mutant{
 		from: "(i === 0 || stringNormalized[i - 1] !== '\\\\')",
 		to:   "(i === 0 || stringNormalized[i - 1] !== '\\\\' || true)",
 	},
+	// Reviewer R's round six: a closing quote ends a string whatever quote opened it, so in
+	// ({'a"b'}:x) the double quote closes the single-quoted string and the colon after it splits nothing.
+	{
+		name: "any closing quote ending a string",
+		file: "parsers.ts",
+		from: "current.mode === 'string' && current.character === character &&",
+		to:   "current.mode === 'string' &&",
+	},
 	// What follows an expression is typed a media type, where the library says only `and` can.
 	{
 		name: "the word after an expression typed as a media type",

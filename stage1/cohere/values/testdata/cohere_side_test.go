@@ -67,10 +67,28 @@ var adamicPieces = []string{
 	"\u00e9", "\u4e16", "\U0001f600", "\u2028", "\u2029", "\u00a0", "\u007f", "\u001f",
 }
 
+// adamicClassEdgePieces start at every edge of every character class the tokenizer and parser test,
+// and just outside it, and spell every keyword they compare in both cases (reviewer R, round six): '#'
+// before a digit, a letter of either case or a character next to them (alphaNum, rNoFollow), colors of
+// every length with digits and letters at both ends (isColor), unicode ranges at each edge of theirs,
+// exponents at both digits, every character that ends a word and its ASCII neighbours, and calc and
+// url in three cases each.
+var adamicClassEdgePieces = []string{
+	"#0", "#9", "#a", "#z", "#A", "#Z", "#/", "#:", "#`", "#{", "#@", "#[", "#_", "#999", "#000", "#fff", "#FFF",
+	"#09af", "#09AF", "#abcdef09", "#ABCDEF90", "#12345", "#1234567", "#123459", "#g", "#G",
+	"u+0", "u+9", "u+a", "u+f", "u+A", "u+F", "u+g", "u+G", "u+?", "u+-", "U+0-9", "u+99",
+	"0", "9", "e0", "e9", "1e+0", "1e-9", "1E+9", "9.0e-9", "0e", "9E",
+	"=", "<", "^", "$", "%", "a=b", "x<y", "@0", "@z",
+	"calc", "CALC", "Calc", "url", "URL", "Url", "calc(1 -2)", "CALC(1 -2)", "Calc(-1 + 2)", "url(a b)", "URL(a b)", "Url(//x)", "URL(//x)",
+	"--", "-", "---", "-- ",
+}
+
 // adamicEdgeValues don't rest on the generator's draw: a '#' before the line terminators isHex would
-// stop at (the tokenizer makes each such '#' a token of its own first), and DEL and U+001F, the edges
-// of what the output escapes, in a word, a string and a comment.
+// stop at (the tokenizer makes each such '#' a token of its own first); DEL and U+001F, the edges of
+// what the output escapes, in a word, a string and a comment; and reviewer R's round six, each value
+// one that catches a plausible bug at the edge of a character class or in a keyword's case.
 var adamicEdgeValues = []string{
+	"#999", "#z1", "#Z1", "#_a", "a=b", "CALC(1 -2)", "URL(a b)", "Url(//x)", "u+99", "--",
 	"#\u2028a #\u2029b #\u0085c",
 	"a\u007fb \"\u007f\" /*\u007f*/ a\u001fb \"\u001f\" /*\u001f*/",
 }
@@ -100,7 +118,11 @@ func TestAdamicPortCases(t *testing.T) {
 	for range request.Generated {
 		var builder strings.Builder
 		for range random.Intn(16) {
-			builder.WriteString(adamicPieces[random.Intn(len(adamicPieces))])
+			if random.Intn(4) == 0 {
+				builder.WriteString(adamicClassEdgePieces[random.Intn(len(adamicClassEdgePieces))])
+			} else {
+				builder.WriteString(adamicPieces[random.Intn(len(adamicPieces))])
+			}
 		}
 		texts = append(texts, builder.String())
 	}

@@ -43,6 +43,8 @@ var adamicGoldenAndRefusalParams = []string{
 	"screen and (color}",
 	"url(",
 	"  url (a(b)",
+	// Reviewer R, round six: a string closed only by the quote that opened it.
+	"({'a\"b'}:x)",
 }
 
 // adamicWhitespace is JavaScript's whitespace, all 25 characters: what \s matches and trim strips
@@ -70,6 +72,12 @@ var adamicPieces = append(append([]string{
 	"min-width", "max-width", "color", "100px", "1em", "2", "-webkit-min-device-pixel-ratio",
 	"--custom", "calc(1px + 2em)", "var(--bp)", "<=", ">", "=", "/*", "*/", "a", "b",
 	"\u00e9", "\u4e16", "\U0001f600", "\U0001d11e",
+	// Every keyword the parser compares, in three cases (reviewer R, round six), and strings holding the
+	// other quote, which only a string closed by its own quote keeps.
+	// A string holding the other quote reaches the feature parser only inside parentheses, before a
+	// colon, so the pieces carry that shape too.
+	"not", "NOT", "Not", "only", "ONLY", "Only", "And", "url(", "URL(", "Url(", "{'a\"b'}", "{\"a'b\"}",
+	"({'a\"b'}:", "({\"a'b\"}:", "{'\"'}:", "{\"'\"}:",
 }, adamicWhitespace...), adamicNotWhitespace...)
 
 // TestAdamicPortCases writes the cases file and Go cohere's answers.

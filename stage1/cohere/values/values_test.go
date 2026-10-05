@@ -192,6 +192,83 @@ var mutants = []mutant{
 		from: "if (unit < 0x20 || unit === 0x7f) {",
 		to:   "if (unit < 0x1f || unit === 0x7f) {",
 	},
+	// Reviewer R's round six: a `#` before a 9 tokenized alone, so #999 is `#` and the number 999.
+	{
+		name: "alphaNum's digits stopping at 8",
+		file: "tokenize.ts",
+		from: "return (code >= 0x61 && code <= 0x7a) || (code >= 0x41 && code <= 0x5a) || (code >= 0x30 && code <= 0x39);",
+		to:   "return (code >= 0x61 && code <= 0x7a) || (code >= 0x41 && code <= 0x5a) || (code >= 0x30 && code <= 0x38);",
+	},
+	// Reviewer R's round six: #999 not a color.
+	{
+		name: "isColor's digits stopping at 8",
+		file: "parser.ts",
+		from: "if (!((unit >= 0x30 && unit <= 0x39) || (unit >= 0x61 && unit <= 0x66) || (unit >= 0x41 && unit <= 0x46))) {",
+		to:   "if (!((unit >= 0x30 && unit <= 0x38) || (unit >= 0x61 && unit <= 0x66) || (unit >= 0x41 && unit <= 0x46))) {",
+	},
+	// Reviewer R's round six: #z1 split into `#` and z1.
+	{
+		name: "alphaNum's lowercase stopping at y",
+		file: "tokenize.ts",
+		from: "return (code >= 0x61 && code <= 0x7a) || (code >= 0x41 && code <= 0x5a) || (code >= 0x30 && code <= 0x39);",
+		to:   "return (code >= 0x61 && code <= 0x79) || (code >= 0x41 && code <= 0x5a) || (code >= 0x30 && code <= 0x39);",
+	},
+	// Reviewer R's round six: #Z1 split into `#` and Z1.
+	{
+		name: "alphaNum's uppercase stopping at Y",
+		file: "tokenize.ts",
+		from: "return (code >= 0x61 && code <= 0x7a) || (code >= 0x41 && code <= 0x5a) || (code >= 0x30 && code <= 0x39);",
+		to:   "return (code >= 0x61 && code <= 0x7a) || (code >= 0x41 && code <= 0x59) || (code >= 0x30 && code <= 0x39);",
+	},
+	// Reviewer R's round six: #_a one word, where upstream makes `#` and _a.
+	{
+		name: "alphaNum taking _",
+		file: "tokenize.ts",
+		from: "return (code >= 0x61 && code <= 0x7a) || (code >= 0x41 && code <= 0x5a) || (code >= 0x30 && code <= 0x39);",
+		to:   "return (code >= 0x61 && code <= 0x7a) || (code >= 0x41 && code <= 0x5a) || (code >= 0x30 && code <= 0x39) || code === 0x5f;",
+	},
+	// Reviewer R's round six: a=b two words.
+	{
+		name: "a word ending at =",
+		file: "tokenize.ts",
+		from: "function wordEnd(css: string, index: number): boolean {\n\tswitch (css.charCodeAt(index)) {\n",
+		to:   "function wordEnd(css: string, index: number): boolean {\n\tswitch (css.charCodeAt(index)) {\n\t\tcase 0x3d:\n",
+	},
+	// Reviewer R's round six: CALC(1 -2) parsed, where upstream refuses it.
+	{
+		name: "the strict calc check ignoring case",
+		file: "parser.ts",
+		from: "this.#current.value === 'calc'",
+		to:   "this.#current.value.toLowerCase() === 'calc'",
+	},
+	// Reviewer R's round six: URL(a b) one word in strict mode, where upstream makes two.
+	{
+		name: "the url argument check ignoring case",
+		file: "parser.ts",
+		from: "\t\t\tthis.#current.value === 'url' &&",
+		to:   "\t\t\tthis.#current.value.toLowerCase() === 'url' &&",
+	},
+	// Reviewer R's round six: Url(//x) in loose mode parsed, where upstream reads // as a comment and refuses it.
+	{
+		name: "the tokenizer's url argument ignoring case",
+		file: "tokenize.ts",
+		from: "previous.value === 'url';",
+		to:   "previous.value.toLowerCase() === 'url';",
+	},
+	// Reviewer R's round six: u+99 split into u+9 and 9.
+	{
+		name: "unicodeRange's digits stopping at 8",
+		file: "tokenize.ts",
+		from: "return (code >= 0x61 && code <= 0x66) || (code >= 0x41 && code <= 0x46) || (code >= 0x30 && code <= 0x39) || code === 0x3f || code === minus;",
+		to:   "return (code >= 0x61 && code <= 0x66) || (code >= 0x41 && code <= 0x46) || (code >= 0x30 && code <= 0x38) || code === 0x3f || code === minus;",
+	},
+	// Reviewer R's round six: -- alone an operator, where upstream makes it a word.
+	{
+		name: "-- a word only before more text",
+		file: "tokenize.ts",
+		from: "if (code === minus && nextChar === minus) {",
+		to:   "if (code === minus && nextChar === minus && pos + 2 < length) {",
+	},
 	// '?' is no longer part of a unicode range.
 	{
 		name: "? not in a unicode range",
