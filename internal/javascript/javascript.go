@@ -32,6 +32,8 @@ func JavaScript(program *ir.Program) string {
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
+	// A Map's forEach gives value, key and the map; a Set's gives its element twice and the set.
+	builder.WriteString("const adamicCollectionVisit = (collection, callback) => collection.forEach((value, key, all) => adamicCall(callback, [value, key, all]));\n")
 	builder.WriteString("const adamicFrom = (length, callback) => Array.from({ length }, (element, index) => adamicCall(callback, [element, index]));\n")
 	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
@@ -373,6 +375,13 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Conditional:
 		return "(" + e.value(expression.Condition) + " ? " + e.value(expression.WhenTrue) + " : " + e.value(expression.WhenNot) + ")"
 	case ir.ObjectLiteral:
+		if expression.Tuple {
+			elements := []string{}
+			for _, field := range expression.Fields {
+				elements = append(elements, e.value(field.Value))
+			}
+			return "[" + strings.Join(elements, ", ") + "]"
+		}
 		fields := []string{}
 		if expression.Spread != nil {
 			fields = append(fields, "..."+e.value(expression.Spread))
@@ -511,7 +520,18 @@ func (e *emitter) value(expression ir.Expression) string {
 		for _, entry := range expression.Entries {
 			entries = append(entries, "["+e.value(entry[0])+", "+e.value(entry[1])+"]")
 		}
+		if expression.Pairs != nil {
+			return "new Map(" + e.value(expression.Pairs) + ")"
+		}
 		return "new Map([" + strings.Join(entries, ", ") + "])"
+	case ir.MapKeys:
+		return "[..." + e.value(expression.Map) + ".keys()]"
+	case ir.MapValues:
+		return "[..." + e.value(expression.Map) + ".values()]"
+	case ir.MapClear:
+		return e.value(expression.Map) + ".clear()"
+	case ir.MapForEach:
+		return "adamicCollectionVisit(" + e.value(expression.Map) + ", " + e.value(expression.Callback) + ")"
 	case ir.MapGet:
 		return e.value(expression.Map) + ".get(" + e.value(expression.Key) + ")"
 	case ir.MapSet:

@@ -192,6 +192,12 @@ type (
 	ObjectLiteral struct {
 		Spread Expression
 		Fields []Field
+
+		// Tuple is a tuple written out, [key, value]: natively an object whose fields are named "0",
+		// "1" and on, as every tuple is, and in JavaScript an array, as the source's is. (What 0.2
+		// lowers reads a tuple only by its fields, which an object answers the same way, new Map's
+		// pairs included: ECMA-262 reads each by "0" and "1".)
+		Tuple bool
 	}
 
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
@@ -455,6 +461,33 @@ type (
 	MapNew struct {
 		Key, Value Type
 		Entries    [][2]Expression
+
+		// Pairs, when it's set, is an array of [key, value] tuples the map is made from instead, each
+		// set in order: new Map(pairs), or new Map(otherMap) through its entries.
+		Pairs Expression
+	}
+
+	// MapKeys and MapValues are [...map.keys()] and [...map.values()]: new arrays, in insertion order.
+	MapKeys struct {
+		Map Expression
+		Key Type
+	}
+	MapValues struct {
+		Map   Expression
+		Value Type
+	}
+
+	// MapClear is map.clear() and set.clear(), which is void.
+	MapClear struct{ Map Expression }
+
+	// MapForEach is map.forEach(Callback), called with each value, its key and the map, and
+	// set.forEach(Callback) (Set), with each element twice and the set, in insertion order and live as
+	// for...of is. Returns is what the callback returns, 0 for nothing; forEach itself is void.
+	MapForEach struct {
+		Map, Callback Expression
+		Key, Value    Type
+		Set           bool
+		Returns       Type
 	}
 
 	// MapGet is map.get(Key): the value, or undefined (a null reference, or a Maybe pair).
@@ -629,14 +662,18 @@ func (ReadTextFile) Type() Type     { return Object }
 func (ProgramArguments) Type() Type { return Array }
 func (WriteTextFile) Type() Type    { return Object }
 
-func (MapNew) Type() Type    { return Map }
-func (SetNew) Type() Type    { return Map }
-func (SetAdd) Type() Type    { return Map }
-func (SetValues) Type() Type { return Array }
-func (MapSet) Type() Type    { return Map }
-func (MapHas) Type() Type    { return Boolean }
-func (MapDelete) Type() Type { return Boolean }
-func (MapSize) Type() Type   { return Number }
+func (MapNew) Type() Type     { return Map }
+func (MapKeys) Type() Type    { return Array }
+func (MapValues) Type() Type  { return Array }
+func (MapClear) Type() Type   { return 0 }
+func (MapForEach) Type() Type { return 0 }
+func (SetNew) Type() Type     { return Map }
+func (SetAdd) Type() Type     { return Map }
+func (SetValues) Type() Type  { return Array }
+func (MapSet) Type() Type     { return Map }
+func (MapHas) Type() Type     { return Boolean }
+func (MapDelete) Type() Type  { return Boolean }
+func (MapSize) Type() Type    { return Number }
 
 func (g MapGet) Type() Type { return Maybe(g.ValueType) }
 

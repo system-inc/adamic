@@ -79,9 +79,9 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a union a function value takes", "const show = (value: string | number): string => `${value}`;\n", "main.a:1:15: stage 0 can't lower a function value taking string | number yet"},
 		{"a map of a union", "const values = new Map<string, string | number>();\n", "main.a:1:16: stage 0 can't lower a Map of string | number yet"},
 		{"a template of a union with an object", "function pick(flag: boolean): number | { size: number } {\n\treturn flag ? 1 : { size: 2 };\n}\nconsole.log(`${pick(true)}`);\n", "main.a:4:16: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"},
-		{"a set of objects", "const shapes = new Set<{ size: number }>();\n", "main.a:1:16: stage 0 can't lower a Set of { size: number; } (a Set holds strings or numbers so far) yet"},
-		{"a set's entries", "const seen = new Set(['a']);\nfor (const pair of seen.entries()) {\n}\n", "main.a:2:20: stage 0 can't lower for...of over a Set's entries ([element, element] pairs) yet"},
-		{"a set from a string", "const letters = new Set('abc');\n", "main.a:1:25: stage 0 can't lower new Set from a string (an array is what it takes so far) yet"},
+		{"a set of booleans", "const answers = new Set<boolean>();\n", "main.a:1:17: stage 0 can't lower a Set of boolean (a Set holds strings, numbers, objects, arrays, maps or functions so far) yet"},
+		{"a set's entries spread", "const seen = new Set(['a']);\nconst pairs = [...seen.entries()];\n", "main.a:2:19: stage 0 can't lower a Set's entries ([element, element] pairs) outside a for...of yet"},
+		{"a map keyed by booleans", "const answers = new Map<boolean, string>();\n", "main.a:1:17: stage 0 can't lower a Map whose keys aren't strings, numbers, objects, arrays, maps or functions yet"},
 		{"a template interpolating an object", "const point = { x: 1 };\nconsole.log(`${point}`);\n", "main.a:2:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

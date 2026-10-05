@@ -160,6 +160,9 @@ typedef struct adamic_map {
 	size_t bucket_count;
 	size_t *buckets;
 	bool string_keys;
+	// reference_keys is keys that are counted references: strings, compared by their text, or, when
+	// string_keys isn't set, objects, arrays, maps and functions, compared by identity, as === does.
+	bool reference_keys;
 	bool reference_values;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
@@ -181,6 +184,23 @@ adamic_map_iterator *adamic_map_iterate(adamic_map *map);
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
 
 adamic_map *adamic_map_new(bool string_keys, bool reference_values);
+
+// adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
+// key, found by identity (map.c).
+adamic_map *adamic_map_new_identity(bool reference_values);
+
+// adamic_map_clear is map.clear() and set.clear(): every entry deleted, as if one by one, so an
+// iteration open over it goes on with whatever is added after.
+void adamic_map_clear(adamic_map *map);
+
+// adamic_map_keys and adamic_map_values are [...map.keys()] and [...map.values()]: new arrays the
+// caller owns, in insertion order.
+adamic_array *adamic_map_keys(const adamic_map *map);
+
+// adamic_map_add_pairs sets each [key, value] tuple of an array in a map, in order: new Map(pairs).
+// The map takes its own references.
+void adamic_map_add_pairs(adamic_map *map, const adamic_array *pairs);
+adamic_array *adamic_map_values(const adamic_map *map);
 
 // adamic_map_get is the value's slot, or NULL when the key isn't there.
 adamic_value *adamic_map_get(const adamic_map *map, adamic_value key);

@@ -1,5 +1,6 @@
 // map.c: Map, as JavaScript has it. Entries keep insertion order in one array, and a hash index
-// finds them. Keys compare with SameValueZero: NaN equals NaN, and +0 equals -0. Deleting leaves a
+// finds them. Keys compare with SameValueZero: NaN equals NaN, +0 equals -0, and an object, an array,
+// a map or a function is its own key, found by identity. Deleting leaves a
 // tombstone, and while an iteration is open a full map grows rather than compacting them away, so
 // the iteration keeps its place; entries added during it are visited, and deleted ones aren't, as
 // ECMA-262 requires.
@@ -29,8 +30,15 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->bucket_count = 0;
 	map->buckets = NULL;
 	map->string_keys = string_keys;
+	map->reference_keys = string_keys;
 	map->reference_values = reference_values;
 	map->iterating = 0;
+	return map;
+}
+
+adamic_map *adamic_map_new_identity(bool reference_values) {
+	adamic_map *map = adamic_map_new(false, reference_values);
+	map->reference_keys = true;
 	return map;
 }
 
@@ -42,6 +50,11 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 			hash = (hash ^ (unsigned char)string->bytes[index]) * 1099511628211ull;
 		}
 		return hash;
+	}
+	if (map->reference_keys) {
+		// By identity: the address, its low bits (alignment, always zero) mixed up into the rest.
+		uint64_t bits = (uint64_t)(uintptr_t)key.reference;
+		return (bits ^ (bits >> 4) ^ (bits >> 29)) * 1099511628211ull;
 	}
 	double number = key.number;
 	if (number == 0) {
@@ -58,6 +71,9 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 static bool same_key(const adamic_map *map, adamic_value left, adamic_value right) {
 	if (map->string_keys) {
 		return adamic_string_equal(left.reference, right.reference);
+	}
+	if (map->reference_keys) {
+		return left.reference == right.reference;
 	}
 	return left.number == right.number || (isnan(left.number) && isnan(right.number));
 }
@@ -134,7 +150,7 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 	size_t index = find(map, key);
 	if (index != SIZE_MAX) {
 		// The key it already has stays; the one passed in is let go, and so is the old value.
-		if (map->string_keys) {
+		if (map->reference_keys) {
 			adamic_release(key.reference);
 		}
 		if (map->reference_values) {
@@ -150,7 +166,7 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 		rebuild(map, needed == 0 ? 8 : needed);
 	}
 	adamic_map_entry *entry = &map->entries[map->used];
-	if (!map->string_keys && key.number == 0) {
+	if (!map->reference_keys && key.number == 0) {
 		// Map.prototype.set stores -0 as +0 (ECMA-262), so iterating gives back +0: 1 / key is Infinity.
 		key.number = 0;
 	}
@@ -174,7 +190,7 @@ bool adamic_map_delete(adamic_map *map, adamic_value key) {
 	}
 	adamic_map_entry *entry = &map->entries[index];
 	entry->deleted = true;
-	if (map->string_keys) {
+	if (map->reference_keys) {
 		adamic_release(entry->key.reference);
 	}
 	if (map->reference_values) {
@@ -189,7 +205,7 @@ void adamic_map_free_children(adamic_map *map, void (*let_go)(void *)) {
 		if (map->entries[index].deleted) {
 			continue;
 		}
-		if (map->string_keys) {
+		if (map->reference_keys) {
 			let_go(map->entries[index].key.reference);
 		}
 		if (map->reference_values) {
@@ -232,7 +248,7 @@ adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair
 		adamic_object *tuple = adamic_object_new(pair);
 		tuple->slots[0] = entry->key;
 		tuple->slots[1] = entry->value;
-		if (map->string_keys) {
+		if (map->reference_keys) {
 			adamic_retain(entry->key.reference);
 		}
 		if (map->reference_values) {
@@ -241,4 +257,71 @@ adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair
 		adamic_array_push(entries, (adamic_value){.reference = tuple});
 	}
 	return entries;
+}
+
+void adamic_map_clear(adamic_map *map) {
+	for (size_t index = 0; index < map->used; index++) {
+		adamic_map_entry *entry = &map->entries[index];
+		if (entry->deleted) {
+			continue;
+		}
+		entry->deleted = true;
+		if (map->reference_keys) {
+			adamic_release(entry->key.reference);
+		}
+		if (map->reference_values) {
+			adamic_release(entry->value.reference);
+		}
+	}
+	map->count = 0;
+	if (map->iterating == 0) {
+		// Nothing holds a place in the entries, so they and the index start over.
+		map->used = 0;
+		if (map->buckets != NULL) {
+			memset(map->buckets, 0, map->bucket_count * sizeof *map->buckets);
+		}
+	}
+}
+
+// listed is an array of every live entry's key, or every value, in insertion order, each reference
+// retained for the array.
+static adamic_array *listed(const adamic_map *map, bool keys) {
+	bool references = keys ? map->reference_keys : map->reference_values;
+	adamic_array *array = adamic_array_new(map->count, references);
+	for (size_t index = 0; index < map->used; index++) {
+		const adamic_map_entry *entry = &map->entries[index];
+		if (entry->deleted) {
+			continue;
+		}
+		adamic_value value = keys ? entry->key : entry->value;
+		if (references) {
+			adamic_retain(value.reference);
+		}
+		adamic_array_push(array, value);
+	}
+	return array;
+}
+
+adamic_array *adamic_map_keys(const adamic_map *map) {
+	return listed(map, true);
+}
+
+adamic_array *adamic_map_values(const adamic_map *map) {
+	return listed(map, false);
+}
+
+void adamic_map_add_pairs(adamic_map *map, const adamic_array *pairs) {
+	static adamic_slot_cache key_cache, value_cache;
+	for (size_t index = 0; index < pairs->length; index++) {
+		const adamic_object *pair = pairs->elements[index].reference;
+		adamic_value key = *adamic_object_field(pair, "0", &key_cache);
+		adamic_value value = *adamic_object_field(pair, "1", &value_cache);
+		if (map->reference_keys) {
+			adamic_retain(key.reference);
+		}
+		if (map->reference_values) {
+			adamic_retain(value.reference);
+		}
+		adamic_map_set(map, key, value);
+	}
 }

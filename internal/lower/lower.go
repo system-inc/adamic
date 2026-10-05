@@ -188,6 +188,20 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				continue // statements() refuses var where it stands
 			}
 			for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
+				// A module's const [a, b] = tuple declares globals too, each name its own.
+				if declaration.Name().Kind == ast.KindArrayBindingPattern {
+					for _, binding := range declaration.Name().AsBindingPattern().Elements.Nodes {
+						if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil || !ast.IsIdentifier(binding.Name()) {
+							continue
+						}
+						local, err := l.declareLocal(binding.Name())
+						if err != nil {
+							return err
+						}
+						l.result.Locals[local].Global = true
+					}
+					continue
+				}
 				if ast.IsIdentifier(declaration.Name()) {
 					local, err := l.declareLocal(declaration.Name())
 					if err != nil {
@@ -493,6 +507,15 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 	statements := []ir.Statement{}
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
 		name := declaration.Name()
+		if name.Kind == ast.KindArrayBindingPattern {
+			// const [a, b] = tuple (collections.go).
+			destructured, err := l.destructure(name, declaration.AsVariableDeclaration().Initializer)
+			if err != nil {
+				return nil, err
+			}
+			statements = append(statements, destructured...)
+			continue
+		}
 		if !ast.IsIdentifier(name) {
 			return nil, l.notYet(name, "a destructuring declaration")
 		}
