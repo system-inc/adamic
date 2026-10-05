@@ -1,0 +1,9 @@
+// The right side runs before an array write is checked, as JavaScript evaluates it: shrink pops, and
+// then index 2 is past the end, which Adamic refuses where JavaScript would grow the array.
+const list = [1, 2, 3];
+function shrink(): number {
+	list.pop();
+	return 9;
+}
+list[2] = shrink();
+console.log(list.join(','));

@@ -150,6 +150,10 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 		rebuild(map, needed == 0 ? 8 : needed);
 	}
 	adamic_map_entry *entry = &map->entries[map->used];
+	if (!map->string_keys && key.number == 0) {
+		// Map.prototype.set stores -0 as +0 (ECMA-262), so iterating gives back +0: 1 / key is Infinity.
+		key.number = 0;
+	}
 	entry->key = key;
 	entry->value = value;
 	entry->deleted = false;
