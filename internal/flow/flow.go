@@ -96,9 +96,14 @@ type Phi struct {
 type Instruction struct {
 	Id InstructionId
 
-	// Statement is the IR statement this came from. Expression, when set, is the part of it this
-	// instruction evaluates: a condition, a for...of's iterable, a switch's value or one case test.
-	Statement  ir.Statement
+	// At is the IR statement this came from, where it stands in its slice, and Part which piece of it
+	// this is: 0 for the statement itself (or its condition, a for...of's iterable, a switch's value),
+	// 1 for a for...of binding its next element, and 1, 2 and on for a switch's case tests in order.
+	// The pair names the same point the JavaScript backend's trace marks (javascript.Options.Mark).
+	At   *ir.Statement
+	Part int
+
+	// Expression, when set, is what this instruction evaluates.
 	Expression ir.Expression
 
 	// Uses are the tracked locals read, each once per read, in the order the IR holds them. Nothing

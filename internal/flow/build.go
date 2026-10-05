@@ -74,9 +74,9 @@ func (b *builder) place(local int) Place {
 	return Place{Identifier: identifier}
 }
 
-// emit adds an instruction to the current block.
-func (b *builder) emit(statement ir.Statement, expression ir.Expression, uses []Place, defines []Place) {
-	b.function.AddInstruction(b.current, &Instruction{Statement: statement, Expression: expression, Uses: uses, Defines: defines})
+// emit adds an instruction to the current block: part of the statement at at (see Instruction.Part).
+func (b *builder) emit(at *ir.Statement, part int, expression ir.Expression, uses []Place, defines []Place) {
+	b.function.AddInstruction(b.current, &Instruction{At: at, Part: part, Expression: expression, Uses: uses, Defines: defines})
 }
 
 // terminate ends the current block and starts a new one with no way in yet: what follows a return,
@@ -92,36 +92,38 @@ func (b *builder) enter(block *BasicBlock) {
 	b.current = block
 }
 
+// statements builds each statement where it stands in its slice, so an instruction can name it by
+// address: the same address the JavaScript backend's trace names it by.
 func (b *builder) statements(statements []ir.Statement) {
-	for _, statement := range statements {
-		b.statement(statement)
+	for index := range statements {
+		b.statement(&statements[index])
 	}
 }
 
-func (b *builder) statement(statement ir.Statement) {
-	switch statement := statement.(type) {
+func (b *builder) statement(at *ir.Statement) {
+	switch statement := (*at).(type) {
 	case ir.WriteLine:
-		b.emit(statement, statement.Value, b.uses(statement.Value), nil)
+		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
 	case ir.Evaluate:
-		b.emit(statement, statement.Value, b.uses(statement.Value), nil)
+		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
 	case ir.SetIndex:
-		b.emit(statement, nil, b.uses(statement), nil)
+		b.emit(at, 0, nil, b.uses(statement), nil)
 	case ir.SetProperty:
-		b.emit(statement, nil, b.uses(statement), nil)
+		b.emit(at, 0, nil, b.uses(statement), nil)
 	case ir.Declare:
-		b.emit(statement, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
+		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Assign:
-		b.emit(statement, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
+		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Return:
-		b.emit(statement, statement.Value, b.uses(statement.Value), nil)
+		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
 		b.terminate(&Return{})
 	case ir.Panic:
-		b.emit(statement, statement.Message, b.uses(statement.Message), nil)
+		b.emit(at, 0, statement.Message, b.uses(statement.Message), nil)
 		b.terminate(&Unreachable{})
 	case ir.Block:
 		b.statements(statement.Body)
 	case ir.If:
-		b.emit(statement, statement.Condition, b.uses(statement.Condition), nil)
+		b.emit(at, 0, statement.Condition, b.uses(statement.Condition), nil)
 		consequent, alternate, after := b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock()
 		b.current.Terminal = &If{Consequent: consequent.Id, Alternate: alternate.Id}
 		b.current = consequent
@@ -131,11 +133,11 @@ func (b *builder) statement(statement ir.Statement) {
 		b.statements(statement.Else)
 		b.enter(after)
 	case ir.Loop:
-		b.loop(statement)
+		b.loop(at, statement)
 	case ir.ForOf:
-		b.forOf(statement)
+		b.forOf(at, statement)
 	case ir.Switch:
-		b.switchStatement(statement)
+		b.switchStatement(at, statement)
 	case ir.Break:
 		b.terminate(&Goto{Block: b.jumps[len(b.jumps)-1].breakTo})
 	case ir.Continue:
@@ -155,7 +157,7 @@ func (b *builder) statement(statement ir.Statement) {
 
 // loop lays out every loop: the test before the body (for, while) or after it (do...while), the
 // update after the body, and continue going to the update.
-func (b *builder) loop(statement ir.Loop) {
+func (b *builder) loop(at *ir.Statement, statement ir.Loop) {
 	test, body, update, after := b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock()
 	if statement.CheckAfter {
 		b.enter(body)
@@ -172,7 +174,7 @@ func (b *builder) loop(statement ir.Loop) {
 	if statement.Condition == nil {
 		b.current.Terminal = &Goto{Block: body.Id}
 	} else {
-		b.emit(statement, statement.Condition, b.uses(statement.Condition), nil)
+		b.emit(at, 0, statement.Condition, b.uses(statement.Condition), nil)
 		b.current.Terminal = &If{Consequent: body.Id, Alternate: after.Id}
 	}
 	b.current = after
@@ -180,8 +182,8 @@ func (b *builder) loop(statement ir.Loop) {
 
 // forOf evaluates the iterable once, then at the head of each pass either binds the next element
 // and runs the body, or leaves. continue goes back to the head.
-func (b *builder) forOf(statement ir.ForOf) {
-	b.emit(statement, statement.Iterable, b.uses(statement.Iterable), nil)
+func (b *builder) forOf(at *ir.Statement, statement ir.ForOf) {
+	b.emit(at, 0, statement.Iterable, b.uses(statement.Iterable), nil)
 	head, body, after := b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock()
 	b.enter(head)
 	head.Terminal = &If{Consequent: body.Id, Alternate: after.Id}
@@ -194,7 +196,7 @@ func (b *builder) forOf(statement ir.ForOf) {
 	} else {
 		defines = b.defines(statement.Local)
 	}
-	b.emit(statement, nil, nil, defines)
+	b.emit(at, 1, nil, nil, defines)
 	b.jumps = append(b.jumps, jump{breakTo: after.Id, continueTo: head.Id})
 	b.statements(statement.Body)
 	b.jumps = b.jumps[:len(b.jumps)-1]
@@ -205,16 +207,18 @@ func (b *builder) forOf(statement ir.ForOf) {
 // switchStatement evaluates the value, then each case's tests in order until one matches, and runs
 // that case's body, or the default's when none does. 0.1 has no fallthrough: every body ends by
 // leaving the switch.
-func (b *builder) switchStatement(statement ir.Switch) {
-	b.emit(statement, statement.Value, b.uses(statement.Value), nil)
+func (b *builder) switchStatement(at *ir.Statement, statement ir.Switch) {
+	b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
 	after := b.function.NewBlock()
 	b.jumps = append(b.jumps, jump{breakTo: after.Id})
 	bodies := make([]*BasicBlock, len(statement.Cases))
+	part := 0
 	for index, switchCase := range statement.Cases {
 		bodies[index] = b.function.NewBlock()
 		for _, test := range switchCase.Tests {
 			next := b.function.NewBlock()
-			b.emit(statement, test, b.uses(test), nil)
+			part++
+			b.emit(at, part, test, b.uses(test), nil)
 			b.current.Terminal = &If{Consequent: bodies[index].Id, Alternate: next.Id}
 			b.current = next
 		}

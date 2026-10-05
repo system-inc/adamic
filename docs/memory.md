@@ -159,7 +159,14 @@ Three mutants, each caught by the check aimed at it:
 - Collapsing every phi failed the verifier 17 times and reaching definitions 140 times.
 - A builder walk that misses reads inside slices failed the read count 76 times.
 
-**What isn't held yet: the graph's shape.** Nothing checks where a `break`, a `continue` or a switch's fallthrough to its default actually goes, except reading `build.go`. Reaching definitions runs over the same graph, so it would agree with a wrong edge. Nothing feeds code generation from this graph yet. The first analysis that does has to bring a check that executes the graph against the program: walk the blocks with the values the native binary computes, and compare.
+**The graph's shape is held too.** Reaching definitions runs over the graph `Build` made, so a wrong edge (a `break`, a `continue` or a case test going to the wrong block) would fool it. `TestEveryPathNodeTakesIsInTheGraph` holds the edges to what runs. The JavaScript backend can mark every point the graph has an instruction for (`javascript.Options`, which adds nothing unless asked: the default output was compared byte for byte on all 59 programs). Each program runs on Node with the marks, and every call's sequence of points must walk its graph: next in the block, or first in a block the terminal reaches through blocks that run nothing. A program that finishes must end every call at a return. Over 63 programs, 158,821 points were walked. Mutants, each failing this test and none failing the single-assignment test:
+
+- A loop's `continue` sent to the loop's exit failed 4 programs.
+- A loop's `break` sent to its update failed 1.
+- A for...of's `continue` sent to its exit failed 3.
+- A case test sent to the wrong case's body failed 5.
+
+A switch case falling through into the next case's body is not a mutant at all. Every 0.1 case ends in `break` or `return`, so that edge would leave a block nothing reaches, and the live graph doesn't change.
 
 ## Cycles: the open question
 
