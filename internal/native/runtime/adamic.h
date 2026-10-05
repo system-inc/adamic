@@ -208,9 +208,12 @@ adamic_array *adamic_array_reverse(adamic_array *array);
 void adamic_array_append(adamic_array *array, const adamic_array *source);
 adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
 
-// adamic_array_slice is array.slice(start, end); adamic_array_sort sorts in place, stably.
+// adamic_array_slice is array.slice(start, end); adamic_array_sort sorts in place, stably, by a
+// comparator that gives -1, 0 or 1 and is passed context. adamic_compare_closure is that comparator for
+// a function value, the context.
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
-void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value));
+void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
+int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
 
 // adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);

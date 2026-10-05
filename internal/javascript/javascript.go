@@ -27,7 +27,8 @@ func JavaScript(program *ir.Program) string {
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
-	builder.WriteString("const adamicReduce = (array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
+	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
+	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
@@ -483,6 +484,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ArraySlice:
 		return e.value(expression.Array) + ".slice(" + e.values(expression.Arguments) + ")"
 	case ir.ArraySort:
+		if expression.Callback != nil {
+			return "adamicSort(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
+		}
 		return e.value(expression.Array) + ".sort(" + functionName(e.program, expression.Comparator) + ")"
 	}
 	panic(fmt.Sprintf("javascript: no JavaScript for %T", expression))

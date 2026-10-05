@@ -708,7 +708,11 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.own(ir.Array, fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t)", array, arguments[0], arguments[1], len(expression.Arguments) == 2))
 	case ir.ArraySort:
 		array := e.value(expression.Array)
-		e.line("adamic_array_sort(%s, %s);", array, e.comparator(expression))
+		if expression.Callback != nil {
+			e.line("adamic_array_sort(%s, adamic_compare_closure, %s);", array, e.value(expression.Callback))
+			return array
+		}
+		e.line("adamic_array_sort(%s, %s, NULL);", array, e.comparator(expression))
 		return array
 	case ir.CodePoints:
 		return e.own(ir.Array, fmt.Sprintf("adamic_string_code_points(%s)", e.value(expression.Value)))
@@ -1628,7 +1632,7 @@ func (e *emitter) comparator(sort ir.ArraySort) string {
 	name := fmt.Sprintf("adamic_compare_%d", e.temporaries)
 	argument := "left." + member(sort.Element) + ", right." + member(sort.Element)
 	e.declarations = append(e.declarations, fmt.Sprintf(
-		"static int %s(adamic_value left, adamic_value right) {\n\tdouble result = %s(%s);\n\treturn result < 0 ? -1 : result > 0 ? 1 : 0;\n}",
+		"static int %s(adamic_value left, adamic_value right, void *context) {\n\t(void)context;\n\tdouble result = %s(%s);\n\treturn result < 0 ? -1 : result > 0 ? 1 : 0;\n}",
 		name, e.functionName(sort.Comparator), argument))
 	return name
 }

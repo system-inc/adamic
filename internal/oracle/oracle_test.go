@@ -83,6 +83,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/number_parsing.a", true, false},
 	{"internal/oracle/testdata/optional_numbers.a", true, false},
 	{"internal/oracle/testdata/map_iteration.a", true, false},
+	{"internal/oracle/testdata/sorts.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

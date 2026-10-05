@@ -936,7 +936,19 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 	comparator := ast.SkipParentheses(arguments[0])
 	function, isFunction := l.functions[l.symbol(comparator)]
 	if !ast.IsIdentifier(comparator) || !isFunction {
-		return nil, true, l.notYet(comparator, "a comparator that isn't one of the module's functions by name")
+		// A function value: an arrow, or a variable holding one.
+		callback, err := l.expression(comparator)
+		if err != nil {
+			return nil, true, err
+		}
+		signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(comparator), checker.SignatureKindCall)
+		if callback.Type() != ir.Closure || len(signatures) != 1 {
+			return nil, true, l.notYet(comparator, "a comparator that isn't a function")
+		}
+		if returns, _ := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0])); returns != ir.Number {
+			return nil, true, l.notYet(comparator, "a comparator that doesn't return a number")
+		}
+		return ir.ArraySort{Array: array, Callback: callback, Element: element}, true, nil
 	}
 	declared := l.result.Functions[function]
 	if declared.Returns != ir.Number || len(declared.Parameters) != 2 || l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element {

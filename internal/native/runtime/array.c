@@ -116,17 +116,27 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 	return sliced;
 }
 
-// adamic_array_sort sorts in place, stably (ECMA-262 requires it since 2019), by merging. compare is
-// the program's comparator through an adapter that gives -1, 0 or 1, NaN read as 0.
-void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value)) {
+// adamic_array_sort sorts stably (ECMA-262 requires it since 2019), by merging. compare is the
+// program's comparator through an adapter that gives -1, 0 or 1, NaN read as 0, with context passed
+// through. Like V8, it sorts a copy of the elements (each reference held) and writes the result back
+// by index, so a comparator that changes the array can't pull memory out from under the sort.
+void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context) {
 	size_t length = array->length;
 	if (length < 2) {
 		return;
 	}
+	adamic_value *work = malloc(length * sizeof *work);
 	adamic_value *scratch = malloc(length * sizeof *scratch);
-	if (scratch == NULL) {
+	if (work == NULL || scratch == NULL) {
 		static const char message[] = "out of memory";
 		adamic_panic(message, sizeof message - 1);
+	}
+	bool references = array->references;
+	for (size_t index = 0; index < length; index++) {
+		work[index] = array->elements[index];
+		if (references) {
+			adamic_retain(work[index].reference);
+		}
 	}
 	for (size_t width = 1; width < length; width *= 2) {
 		for (size_t left = 0; left < length; left += 2 * width) {
@@ -136,22 +146,43 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 			while (from_left < middle && from_right < right) {
 				// Take from the right only when it's strictly smaller: that keeps equal elements in
 				// their original order.
-				if (compare(array->elements[from_right], array->elements[from_left]) < 0) {
-					scratch[out++] = array->elements[from_right++];
+				if (compare(work[from_right], work[from_left], context) < 0) {
+					scratch[out++] = work[from_right++];
 				} else {
-					scratch[out++] = array->elements[from_left++];
+					scratch[out++] = work[from_left++];
 				}
 			}
 			while (from_left < middle) {
-				scratch[out++] = array->elements[from_left++];
+				scratch[out++] = work[from_left++];
 			}
 			while (from_right < right) {
-				scratch[out++] = array->elements[from_right++];
+				scratch[out++] = work[from_right++];
 			}
 		}
-		memcpy(array->elements, scratch, length * sizeof *scratch);
+		memcpy(work, scratch, length * sizeof *scratch);
+	}
+	// Written back as V8 does, index by index: each held reference becomes the array's, and what it
+	// held there is let go. Past a length the comparator shrank, the array grows again.
+	for (size_t index = 0; index < length; index++) {
+		if (index < array->length) {
+			adamic_value old = array->elements[index];
+			array->elements[index] = work[index];
+			if (references) {
+				adamic_release(old.reference);
+			}
+		} else {
+			adamic_array_push(array, work[index]);
+		}
 	}
 	free(scratch);
+	free(work);
+}
+
+int adamic_compare_closure(adamic_value left, adamic_value right, void *context) {
+	// JavaScript reads the comparator's result by its sign, and NaN as 0.
+	adamic_closure *compare = context;
+	double result = compare->code(compare, (adamic_value[]){left, right}).number;
+	return result < 0 ? -1 : result > 0 ? 1 : 0;
 }
 
 adamic_value *adamic_array_at(const adamic_array *array, double index) {

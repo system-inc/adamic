@@ -341,11 +341,12 @@ type (
 		Arguments []Expression
 	}
 
-	// ArraySort is array.sort(comparator), the comparator one of the module's functions; it sorts
-	// in place, stably, and is the array.
+	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
+	// value (Callback, when it isn't nil). It sorts in place, stably, and is the array.
 	ArraySort struct {
 		Array      Expression
 		Comparator int
+		Callback   Expression
 		Element    Type
 	}
 
