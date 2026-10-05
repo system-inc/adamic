@@ -98,6 +98,9 @@ typedef struct adamic_string {
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
 #define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, NULL}
 
+// ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string}, size, array, 0, NULL}
+
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 typedef struct adamic_shape {
 	size_t count;
