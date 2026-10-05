@@ -25,7 +25,8 @@ const countsHeader = `# Counts
 Every oracle fixture, input fixtures included, built counted (` + "`adamic build --count`" + `, runtime/count.h) and run once. Counts are deterministic, so a
 change to how Adamic counts references shows here as a change of numbers, in review. Allocations and frees are heap values (strings,
 objects, arrays, maps, cells, closures); retains and releases are calls to adamic_retain and adamic_release; peak is the most heap
-values live at once. A fixture that panics is counted where it stopped. Every run has an 8 MiB stack (ulimit -s 8192), since a
+values live at once. A fixture that panics is counted where it stopped; an input fixture runs as TestInputAgreesWithNode runs it, a
+directory of its own to write in included, and must finish. Every run has an 8 MiB stack (ulimit -s 8192), since a
 fixture that recurses until it runs out (stack_overflow.a) is counted at the depth it reached, and that moves with the stack's
 size. This is the baseline borrow inference and reuse in place are measured against (docs/memory.md).
 
@@ -48,9 +49,10 @@ func pinnedStack(name string, arguments ...string) (string, []string) {
 }
 
 // counted builds a lowered fixture counted, runs it, and returns its row of the table. An input
-// fixture runs as TestInputAgreesWithNode runs it: from its own directory, with its arguments, and as
-// nobody when the test is root.
-func counted(t *testing.T, path string, input bool, arguments []string, unreadable bool) string {
+// fixture runs as TestInputAgreesWithNode runs it: from its own directory, with its arguments, a
+// directory of its own to write in when it writes, and as nobody when the test is root. It must
+// finish, as it must there, so its row counts the whole program and not where it stopped.
+func counted(t *testing.T, path string, input bool, arguments []string, unreadable bool, writes bool) string {
 	t.Helper()
 	absolute, err := filepath.Abs(filepath.Join(repository, path))
 	if err != nil {
@@ -74,12 +76,18 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 			}
 			how.arguments = append(append([]string{}, how.arguments...), path)
 		}
+		if writes {
+			how.arguments = append([]string{writable(t, shared, "counted")}, how.arguments...)
+		}
 		binary := filepath.Join(shared, "program")
 		if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
 			t.Fatal(err)
 		}
 		name, pinned := pinnedStack(binary, how.arguments...)
 		result = executeInput(t, how, nil, name, pinned...)
+		if result.exitCode != 0 {
+			t.Fatalf("want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit %d, stderr %q", result.exitCode, result.stderr)
+		}
 	} else {
 		binary := filepath.Join(t.TempDir(), "program")
 		if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
@@ -107,7 +115,7 @@ func TestCountsAreRecorded(t *testing.T) {
 			}
 			t.Run(fixture.path, func(t *testing.T) {
 				t.Parallel()
-				row := counted(t, fixture.path, false, nil, false)
+				row := counted(t, fixture.path, false, nil, false, false)
 				lock.Lock()
 				rows[index] = row
 				lock.Unlock()
@@ -116,7 +124,7 @@ func TestCountsAreRecorded(t *testing.T) {
 		for index, fixture := range inputFixtures {
 			t.Run(fixture.path, func(t *testing.T) {
 				t.Parallel()
-				row := counted(t, fixture.path, true, fixture.arguments, fixture.unreadable)
+				row := counted(t, fixture.path, true, fixture.arguments, fixture.unreadable, fixture.writes)
 				lock.Lock()
 				rows[len(fixtures)+index] = row
 				lock.Unlock()

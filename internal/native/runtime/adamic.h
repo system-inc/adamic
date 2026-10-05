@@ -183,6 +183,9 @@ typedef struct adamic_map {
 	// reference_keys is keys that are counted references: strings, compared by their text, or, when
 	// string_keys isn't set, objects, arrays, maps and functions, compared by identity, as === does.
 	bool reference_keys;
+	// boolean_keys is keys that are booleans, compared and hashed as booleans: a boolean set in an
+	// adamic_value leaves the rest of its bytes unspecified, so it's never read as a number.
+	bool boolean_keys;
 	bool reference_values;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
@@ -208,6 +211,9 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values);
 // adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
 // key, found by identity (map.c).
 adamic_map *adamic_map_new_identity(bool reference_values);
+
+// adamic_map_new_booleans is a map whose keys are booleans: true and false, two keys at most.
+adamic_map *adamic_map_new_booleans(bool reference_values);
 
 // adamic_map_clear is map.clear() and set.clear(): every entry deleted, as if one by one, so an
 // iteration open over it goes on with whatever is added after.
