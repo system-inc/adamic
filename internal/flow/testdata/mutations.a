@@ -79,5 +79,23 @@ function throughPush(): number {
 	return (counters[0] ?? { count: 0 }).count;
 }
 
+interface Owner {
+	readonly counter: Counter;
+}
+
+// A write through one parameter that another reaches: an Owner holding the Counter it's handed with.
+// Nothing else mutates owner, so only the alias graph's treatment of escaped values can put the
+// write in its range.
+function throughAnotherParameter(counter: Counter, owner: Owner): number {
+	const before = owner.counter.count;
+	counter.count = before + 5;
+	return owner.counter.count;
+}
+
+function sharedOwner(): number {
+	const counter: Counter = { count: 1 };
+	return throughAnotherParameter(counter, { counter });
+}
+
 console.log(`${throughField()} ${throughElement()} ${throughLoop()} ${throughMap()}`);
-console.log(`${throughConditional(true)} ${throughConditional(false)} ${throughHolder()} ${throughCall()} ${throughPush()}`);
+console.log(`${throughConditional(true)} ${throughConditional(false)} ${throughHolder()} ${throughCall()} ${throughPush()} ${sharedOwner()}`);

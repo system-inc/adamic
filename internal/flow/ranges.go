@@ -480,6 +480,22 @@ func InferMutableRangesWithEffects(function *Function, effects *AliasingEffects)
 		}
 	}
 
+	// Adamic: a parameter is defined on entry, before the first instruction, not where it's first
+	// read, which is where the operand loop above opens a range nothing defines. A parameter
+	// mutated before its first read (through another that reaches it: this.list and a node of it,
+	// say) would otherwise be mutated outside its range. So a parameter's range starts at the
+	// function's first instruction, and one nothing widened is that instruction alone: a parameter
+	// always has a range, so a mutation the graph missed is outside it rather than on a range the
+	// pass declined to set.
+	for _, parameter := range function.Params {
+		existing := result.Get(parameter.Identifier)
+		if existing.End == 0 {
+			existing.End = 2
+		}
+		existing.Start = 1
+		result.set(parameter.Identifier, existing)
+	}
+
 	return result
 }
 

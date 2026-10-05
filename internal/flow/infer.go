@@ -224,6 +224,9 @@ func (n *inference) store(container shape, value shape) {
 	}
 	if container.unknown || anyEscaped(n.escaped, container.roots()) {
 		n.escape(value)
+		// An escaped container may be reachable from any other escaped value (two parameters may
+		// be the same object, or one may hold the other), so writing into it may change them all.
+		n.mutateEscaped()
 	}
 }
 
@@ -234,6 +237,16 @@ func (n *inference) call(operands []shape) shape {
 	for _, operand := range operands {
 		n.escape(operand)
 	}
+	n.mutateEscaped()
+	for _, operand := range operands {
+		result.same = append(result.same, operand.roots()...)
+	}
+	return result
+}
+
+// mutateEscaped mutates, conditionally and transitively, every escaped value that reaches here: what
+// a call can reach, or what a write into an escaped value may change.
+func (n *inference) mutateEscaped() {
 	// In a fixed order, since an effect's position is the alias graph's time.
 	variables := make([]DeclarationId, 0, len(n.current))
 	for variable := range n.current {
@@ -246,10 +259,6 @@ func (n *inference) call(operands []shape) shape {
 			n.list = append(n.list, mutate(AliasingEffectMutateTransitiveConditionally, Place{Identifier: value}))
 		}
 	}
-	for _, operand := range operands {
-		result.same = append(result.same, operand.roots()...)
-	}
-	return result
 }
 
 func (n *inference) escape(value shape) {
