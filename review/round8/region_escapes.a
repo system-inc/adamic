@@ -1,0 +1,63 @@
+// Ways a value made in a statement's region could outlive it that regions.a doesn't try. Each kept
+// value is read after its statement, so a region freed under it is an ASan use after free.
+interface Node {
+	readonly label: string;
+	readonly left: Node | undefined;
+	readonly right: Node | undefined;
+}
+function build(depth: number): Node {
+	if (depth === 0) {
+		return { label: `leaf${depth}`, left: undefined, right: undefined };
+	}
+	return { label: `node${depth}`, left: build(depth - 1), right: build(depth - 1) };
+}
+const kept: Node[] = [];
+const table = new Map<string, Node>();
+let keptLabel = '';
+let keptNode: Node | undefined = undefined;
+function keptNodeLabel(): string {
+	return keptNode?.label ?? '-';
+}
+function leftOf(node: Node): Node | undefined {
+	return node.left;
+}
+function push(node: Node): number {
+	kept.push(node);
+	return 1;
+}
+function store(node: Node): number {
+	table.set(`k${kept.length}`, node);
+	return 2;
+}
+function viaClosure(node: Node): number {
+	const remember = (inner: Node): number => {
+		keptNode = inner;
+		return 3;
+	};
+	return remember(node);
+}
+function either(node: Node): number {
+	keptNode = node.left ?? node;
+	return 4;
+}
+function choose(node: Node, flag: boolean): number {
+	keptNode = flag ? node.right : undefined;
+	return 5;
+}
+function inner(node: Node | undefined): number {
+	if (node !== undefined) {
+		kept.push(node);
+	}
+	return 6;
+}
+function outer(node: Node): number {
+	return inner(node.left) + (node.label.length > 100 ? 1 : 0);
+}
+function trimmed(node: Node): number {
+	keptLabel = node.label.trim();
+	return 7;
+}
+console.log(`${leftOf(build(2))?.label}`);
+console.log(`${push(build(2))} ${store(build(2))} ${viaClosure(build(2))} ${either(build(2))} ${choose(build(2), true)} ${outer(build(2))} ${trimmed(build(2))}`);
+console.log(`${kept.map((node) => `${node.label}:${node.left?.label ?? '-'}`).join(',')}`);
+console.log(`${table.get('k1')?.label} ${table.get('k1')?.left?.label} ${keptNodeLabel()} ${keptLabel}`);
