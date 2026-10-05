@@ -202,6 +202,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
+	// and a counted loop inside one.
+	{"internal/oracle/testdata/try_assignments.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
