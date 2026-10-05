@@ -3,6 +3,7 @@ package flow
 import (
 	"fmt"
 	"reflect"
+	"slices"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -53,6 +54,23 @@ type builder struct {
 	// jumps holds, innermost last, where break and continue go from each open loop or switch. A
 	// switch has no continue target (InvalidBlock): a continue inside one belongs to a loop outside.
 	jumps []jump
+
+	// throwTo holds, innermost last, where a throw goes from here: a catch, a finally, or (when it's
+	// empty) the block that throws out of the function, thrown, made when first needed.
+	throwTo []BlockId
+	thrown  *BasicBlock
+
+	// attempts holds, innermost last, each try whose body or catch is being built: a jump out of one
+	// with a finally goes through that finally first.
+	attempts []*attempt
+}
+
+// attempt is an open try: its finally, if it has one, where that finally may go on to, and how many
+// jumps were open when it began (a break or continue to one of those leaves it).
+type attempt struct {
+	finally   *BasicBlock
+	exits     []BlockId
+	jumpDepth int
 }
 
 type jump struct {
@@ -76,8 +94,51 @@ func (b *builder) place(local int) Place {
 }
 
 // emit adds an instruction to the current block: part of the statement at at (see Instruction.Part).
+// One that can throw ends its block, which goes on to the next or to wherever a throw goes from here.
 func (b *builder) emit(at *ir.Statement, part int, expression ir.Expression, uses []Place, defines []Place) {
-	b.function.AddInstruction(b.current, &Instruction{At: at, Part: part, Expression: expression, Uses: uses, Defines: defines})
+	instruction := &Instruction{At: at, Part: part, Expression: expression, Uses: uses, Defines: defines}
+	b.function.AddInstruction(b.current, instruction)
+	if CanThrow(b.program, instruction) {
+		next := b.function.NewBlock()
+		b.current.Terminal = &MayThrow{Next: next.Id, Handler: b.throwTarget()}
+		b.current = next
+	}
+}
+
+// throwTarget is where a throw goes from here.
+func (b *builder) throwTarget() BlockId {
+	if len(b.throwTo) > 0 {
+		return b.throwTo[len(b.throwTo)-1]
+	}
+	if b.thrown == nil {
+		b.thrown = b.function.NewBlock()
+		b.thrown.Terminal = &Throw{}
+	}
+	return b.thrown.Id
+}
+
+// route is where a jump to target goes first when it leaves every try from the one at index on: the
+// innermost finally among them, each of which is told to go on to the next one out, and the
+// outermost to target.
+func (b *builder) route(target BlockId, index int) BlockId {
+	next := target
+	for ; index < len(b.attempts); index++ {
+		if attempt := b.attempts[index]; attempt.finally != nil {
+			attempt.exits = append(attempt.exits, next)
+			next = attempt.finally.Id
+		}
+	}
+	return next
+}
+
+// leaving is the index of the first open try a jump to the jump at depth leaves.
+func (b *builder) leaving(depth int) int {
+	for index, attempt := range b.attempts {
+		if attempt.jumpDepth > depth {
+			return index
+		}
+	}
+	return len(b.attempts)
 }
 
 // terminate ends the current block and starts a new one with no way in yet: what follows a return,
@@ -117,7 +178,14 @@ func (b *builder) statement(at *ir.Statement) {
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Return:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
-		b.terminate(&Return{})
+		if len(b.attempts) == 0 {
+			b.terminate(&Return{})
+			break
+		}
+		// Through every finally around it, then out.
+		out := b.function.NewBlock()
+		out.Terminal = &Return{}
+		b.terminate(&Goto{Block: b.route(out.Id, 0)})
 	case ir.Panic:
 		b.emit(at, 0, statement.Message, b.uses(statement.Message), nil)
 		b.terminate(&Unreachable{})
@@ -140,15 +208,21 @@ func (b *builder) statement(at *ir.Statement) {
 	case ir.Switch:
 		b.switchStatement(at, statement)
 	case ir.Break:
-		b.terminate(&Goto{Block: b.jumps[len(b.jumps)-1].breakTo})
+		depth := len(b.jumps) - 1
+		b.terminate(&Goto{Block: b.route(b.jumps[depth].breakTo, b.leaving(depth))})
 	case ir.Continue:
 		for index := len(b.jumps) - 1; index >= 0; index-- {
 			if b.jumps[index].continueTo != InvalidBlock {
-				b.terminate(&Goto{Block: b.jumps[index].continueTo})
+				b.terminate(&Goto{Block: b.route(b.jumps[index].continueTo, b.leaving(index))})
 				return
 			}
 		}
 		panic("flow: a continue outside every loop")
+	case ir.Throw:
+		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
+		b.terminate(&Goto{Block: b.throwTarget()})
+	case ir.Try:
+		b.try(at, statement)
 	default:
 		// Lowering only produces statements this switch knows. A new one has to be taught here, or
 		// every analysis over the graph would miss what it reads and writes.
@@ -283,3 +357,110 @@ func (b *builder) uses(node any) []Place {
 }
 
 var readType = reflect.TypeOf(ir.Read{})
+
+// try lays out a try: a throw in its body goes to its catch, or to its finally when it has none; one
+// in its catch goes to its finally, or on out; one in its finally goes on out. The catch begins by
+// taking the error (part 1). The finally is entered from every way out of the try, and its end goes
+// on to wherever any of them was going: after the try, a rethrow out, or a jump or return that left
+// it. That's more paths than run, which only makes more live, never less.
+func (b *builder) try(at *ir.Statement, statement ir.Try) {
+	outerThrow := b.throwTarget()
+	after := b.function.NewBlock()
+	attempt := &attempt{jumpDepth: len(b.jumps)}
+	if statement.HasFinally {
+		attempt.finally = b.function.NewBlock()
+		attempt.exits = []BlockId{after.Id, outerThrow}
+	}
+	// ended is where the body and the catch go when they finish.
+	ended := after
+	if attempt.finally != nil {
+		ended = attempt.finally
+	}
+	var catch *BasicBlock
+	bodyThrow := outerThrow
+	switch {
+	case statement.HasCatch:
+		catch = b.function.NewBlock()
+		bodyThrow = catch.Id
+	case attempt.finally != nil:
+		bodyThrow = attempt.finally.Id
+	}
+	b.attempts = append(b.attempts, attempt)
+	b.throwTo = append(b.throwTo, bodyThrow)
+	b.statements(statement.Body)
+	b.throwTo = b.throwTo[:len(b.throwTo)-1]
+	b.enter(ended)
+	if catch != nil {
+		b.current = catch
+		catchThrow := outerThrow
+		if attempt.finally != nil {
+			catchThrow = attempt.finally.Id
+		}
+		b.throwTo = append(b.throwTo, catchThrow)
+		var defines []Place
+		if statement.CatchLocal >= 0 {
+			defines = b.defines(statement.CatchLocal)
+		}
+		b.emit(at, 1, nil, nil, defines)
+		b.statements(statement.Catch)
+		b.throwTo = b.throwTo[:len(b.throwTo)-1]
+		b.enter(ended)
+	}
+	b.attempts = b.attempts[:len(b.attempts)-1]
+	if attempt.finally != nil {
+		b.current = attempt.finally
+		b.statements(statement.Finally)
+		exits := []BlockId{}
+		for _, exit := range attempt.exits {
+			if !slices.Contains(exits, exit) {
+				exits = append(exits, exit)
+			}
+		}
+		b.current.Terminal = &Choose{Blocks: exits}
+	}
+	b.current = after
+}
+
+// CanThrow reports whether an instruction can throw: it calls a function a throw can leave. A throw
+// statement isn't one of these: it always throws, and its block goes straight to its handler.
+func CanThrow(program *ir.Program, instruction *Instruction) bool {
+	var node any = instruction.Expression
+	if instruction.Expression == nil {
+		switch statement := (*instruction.At).(type) {
+		case ir.SetIndex, ir.SetProperty:
+			node = statement
+		default:
+			return false
+		}
+	}
+	if _, isThrow := (*instruction.At).(ir.Throw); isThrow {
+		return false
+	}
+	throws := false
+	var walk func(value reflect.Value)
+	walk = func(value reflect.Value) {
+		switch value.Kind() {
+		case reflect.Interface, reflect.Pointer:
+			if !value.IsNil() {
+				walk(value.Elem())
+			}
+		case reflect.Struct:
+			if value.Type() == callType {
+				if program.Functions[int(value.FieldByName("Function").Int())].MayThrow {
+					throws = true
+				}
+			}
+			for index := 0; index < value.NumField(); index++ {
+				walk(value.Field(index))
+			}
+		case reflect.Slice, reflect.Array:
+			for index := 0; index < value.Len(); index++ {
+				walk(value.Index(index))
+			}
+		}
+	}
+	walk(reflect.ValueOf(node))
+	return throws
+}
+
+var callType = reflect.TypeOf(ir.Call{})

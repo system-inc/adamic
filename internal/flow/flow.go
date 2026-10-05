@@ -170,12 +170,33 @@ type (
 
 	// Unreachable ends a path that never continues: a panic.
 	Unreachable struct{ Order EvaluationOrder }
+
+	// MayThrow ends a block whose last instruction can throw (a throw statement aside, which goes
+	// straight to its handler): control goes on at Next, or, when it throws, at Handler, the catch or
+	// finally around it, or the block that throws out of the function.
+	MayThrow struct {
+		Next, Handler BlockId
+		Order         EvaluationOrder
+	}
+
+	// Throw leaves the function by an exception: its caller's handler takes it.
+	Throw struct{ Order EvaluationOrder }
+
+	// Choose goes on at any of Blocks: the end of a finally, which goes on wherever whatever entered
+	// it was going (after the try, a rethrow, a break, a continue, a return).
+	Choose struct {
+		Blocks []BlockId
+		Order  EvaluationOrder
+	}
 )
 
 func (*Goto) terminal()        {}
 func (*If) terminal()          {}
 func (*Return) terminal()      {}
 func (*Unreachable) terminal() {}
+func (*MayThrow) terminal()    {}
+func (*Throw) terminal()       {}
+func (*Choose) terminal()      {}
 
 // NewFunction makes an empty function ready to build.
 func NewFunction(name string) *Function {
@@ -250,7 +271,14 @@ func EachSuccessor(terminal Terminal, visit func(block BlockId)) {
 	case *If:
 		visit(terminal.Consequent)
 		visit(terminal.Alternate)
-	case *Return, *Unreachable:
+	case *MayThrow:
+		visit(terminal.Next)
+		visit(terminal.Handler)
+	case *Choose:
+		for _, block := range terminal.Blocks {
+			visit(block)
+		}
+	case *Return, *Unreachable, *Throw:
 	default:
 		panic(fmt.Sprintf("flow: no successors known for %T", terminal))
 	}
@@ -266,6 +294,12 @@ func TerminalOrder(terminal Terminal) EvaluationOrder {
 	case *Return:
 		return terminal.Order
 	case *Unreachable:
+		return terminal.Order
+	case *MayThrow:
+		return terminal.Order
+	case *Throw:
+		return terminal.Order
+	case *Choose:
 		return terminal.Order
 	}
 	return 0

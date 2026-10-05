@@ -756,10 +756,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("(%s).%s", value, member(expression.Type()))
 	case ir.Defined:
 		value := e.value(expression.Value)
-		e.line("if (%s == NULL) {", value)
-		e.line("\tstatic const char message[] = %s;", cString(expression.Message))
-		e.line("\tadamic_panic(message, sizeof message - 1);")
-		e.line("}")
+		e.checkDefined(value, expression.Message)
 		return value
 	case ir.MaybeOf:
 		if expression.Value == nil {
@@ -1628,9 +1625,13 @@ func (e *emitter) read(read ir.Read) string {
 func (e *emitter) arguments(call ir.Call) []string {
 	parameters := e.program.Functions[call.Function].Parameters
 	arguments := make([]string, 0, len(parameters))
+	handed := []string{}
+	defer func() { e.handedOver(handed) }()
 	for index, argument := range call.Arguments {
 		if index < len(parameters) && e.reuse.consumed[parameters[index]] {
-			arguments = append(arguments, e.handOver(argument))
+			value := e.handOver(argument)
+			handed = append(handed, value)
+			arguments = append(arguments, value)
 			continue
 		}
 		value := e.value(argument)

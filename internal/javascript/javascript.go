@@ -233,7 +233,7 @@ func (e *emitter) declare(local int, value string) {
 
 func (e *emitter) statement(at *ir.Statement) {
 	switch (*at).(type) {
-	case ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue:
+	case ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try:
 		// Marked inside, where their parts run, or not at all: a block, a break and a continue run
 		// nothing of their own.
 	default:
@@ -341,6 +341,8 @@ func (e *emitter) statement(at *ir.Statement) {
 			caught := e.temporary()
 			e.line("} catch (%s) {", caught)
 			e.indent++
+			// Part 1 of a try is its catch taking the error (flow.Instruction.Part).
+			e.markLine(at, 1)
 			if statement.CatchLocal >= 0 {
 				e.declare(statement.CatchLocal, caught)
 			}

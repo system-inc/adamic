@@ -202,5 +202,11 @@ func setTerminalOrder(terminal Terminal, order EvaluationOrder) {
 		t.Order = order
 	case *If:
 		t.Order = order
+	case *MayThrow:
+		t.Order = order
+	case *Throw:
+		t.Order = order
+	case *Choose:
+		t.Order = order
 	}
 }
