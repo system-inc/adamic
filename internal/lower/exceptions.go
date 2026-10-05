@@ -1,0 +1,324 @@
+package lower
+
+import (
+	"math"
+	"reflect"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// Exceptions (docs/memory.md, "Exceptions, designed into counting"): throw new Error(message), a
+// caught error thrown again, and try with catch, finally or both. What's thrown is only ever an
+// Error, made by new Error or caught, since a catch binds unknown and 0.2 has no value of every kind.
+
+// tryRecord is a try statement lowered, for the checks made once every function is: where it is,
+// and its body.
+type tryRecord struct {
+	node *ast.Node
+	body []ir.Statement
+}
+
+// throwStatement lowers throw.
+func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
+	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
+	isNewError := thrown.Kind == ast.KindNewExpression && l.isLibraryGlobal(thrown.AsNewExpression().Expression, "Error")
+	isCaught := ast.IsIdentifier(thrown) && l.caught[l.symbol(thrown)]
+	if !isNewError && !isCaught {
+		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
+			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
+		}
+		return nil, &Refused{Where: l.program.Where(thrown), What: "throwing a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)), Fix: "throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"}
+	}
+	value, err := l.expression(thrown)
+	if err != nil {
+		return nil, err
+	}
+	return []ir.Statement{ir.Throw{Value: value}}, nil
+}
+
+// newError lowers new Error(message), and new Error().
+func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
+	created := node.AsNewExpression()
+	message := ir.Expression(ir.StringConstant{Index: l.constant("")})
+	if created.Arguments != nil && len(created.Arguments.Nodes) > 0 {
+		if len(created.Arguments.Nodes) > 1 {
+			return nil, l.notYet(node, "new Error with options")
+		}
+		var err error
+		if message, err = l.expression(created.Arguments.Nodes[0]); err != nil {
+			return nil, err
+		}
+		if message.Type() != ir.String {
+			return nil, l.notYet(node, "new Error with a message that isn't a string")
+		}
+	}
+	return ir.MakeError{Message: message}, nil
+}
+
+// tryStatement lowers try, with catch, finally or both.
+func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
+	statement := node.AsTryStatement()
+	lowered := ir.Try{CatchLocal: -1}
+	var err error
+	if lowered.Body, err = l.statements(statement.TryBlock.AsBlock().Statements.Nodes); err != nil {
+		return nil, err
+	}
+	l.tries = append(l.tries, tryRecord{node: node, body: lowered.Body})
+	if clause := statement.CatchClause; clause != nil {
+		lowered.HasCatch = true
+		if declaration := clause.AsCatchClause().VariableDeclaration; declaration != nil {
+			name := declaration.Name()
+			if !ast.IsIdentifier(name) {
+				return nil, l.notYet(name, "a catch that destructures what it caught")
+			}
+			if l.caught == nil {
+				l.caught = map[*ast.Symbol]bool{}
+			}
+			l.caught[l.symbol(name)] = true
+			if lowered.CatchLocal, err = l.declareLocal(name); err != nil {
+				return nil, err
+			}
+		}
+		if lowered.Catch, err = l.statements(clause.AsCatchClause().Block.AsBlock().Statements.Nodes); err != nil {
+			return nil, err
+		}
+	}
+	if block := statement.FinallyBlock; block != nil {
+		lowered.HasFinally = true
+		if leaving := leavesFinally(block); leaving != nil {
+			// JavaScript lets these override whatever the try was doing, a throw or a return included.
+			return nil, l.notYet(leaving, describe(leaving)+" that leaves a finally")
+		}
+		if lowered.Finally, err = l.statements(block.AsBlock().Statements.Nodes); err != nil {
+			return nil, err
+		}
+	}
+	return []ir.Statement{lowered}, nil
+}
+
+// leavesFinally finds a return, or a break or continue out of the finally block, in it.
+func leavesFinally(block *ast.Node) *ast.Node {
+	var found *ast.Node
+	var visit func(node *ast.Node, loops int) bool
+	visit = func(node *ast.Node, loops int) bool {
+		if found != nil || ast.IsFunctionLike(node) {
+			return found != nil
+		}
+		switch node.Kind {
+		case ast.KindReturnStatement:
+			found = node
+			return true
+		case ast.KindBreakStatement, ast.KindContinueStatement:
+			if loops == 0 {
+				found = node
+				return true
+			}
+		case ast.KindForStatement, ast.KindForOfStatement, ast.KindWhileStatement, ast.KindDoStatement, ast.KindSwitchStatement:
+			loops++
+		}
+		return node.ForEachChild(func(child *ast.Node) bool { return visit(child, loops) })
+	}
+	block.ForEachChild(func(child *ast.Node) bool { return visit(child, 0) })
+	return found
+}
+
+// caughtInstanceOfError lowers error instanceof Error on what a catch took, which is always an Error.
+func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
+	binary := node.AsBinaryExpression()
+	left := ast.SkipParentheses(binary.Left)
+	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] || !l.isLibraryGlobal(binary.Right, "Error") {
+		return nil, false
+	}
+	l.local(left)
+	return ir.BooleanConstant{Value: true}, true
+}
+
+// exceptions works out which functions a throw can leave, once every function is lowered, and
+// refuses what the first cut can't do yet: a function value that can throw, and a try that can reach
+// a library call whose failure is a panic natively but a throw on Node.
+func (l *lowering) exceptions() error {
+	functions := l.result.Functions
+	for changed := true; changed; {
+		changed = false
+		for index := range functions {
+			if !functions[index].MayThrow && l.throwsOut(functions[index].Body) {
+				functions[index].MayThrow = true
+				changed = true
+			}
+		}
+	}
+	for _, closure := range l.closureRecords {
+		if functions[closure.function].MayThrow {
+			return l.notYet(closure.node, "a function value that can throw (the runtime calls them from its own loops, which a throw would have to leave)")
+		}
+	}
+	bodies := [][]ir.Statement{l.result.Main}
+	for index := range functions {
+		bodies = append(bodies, functions[index].Body)
+	}
+	for _, body := range bodies {
+		var throwing *ir.ArraySort
+		walk(body, func(node any) bool {
+			if sort, isSort := node.(ir.ArraySort); isSort && sort.Callback == nil && functions[sort.Comparator].MayThrow {
+				throwing = &sort
+			}
+			return throwing == nil
+		})
+		if throwing != nil {
+			return l.notYet(l.functionNodes[throwing.Comparator], "a sort comparator that can throw (the runtime's sort calls it, which a throw would have to leave)")
+		}
+	}
+	for _, record := range l.tries {
+		if failing := l.libraryFailure(record.body, map[int]bool{}); failing != "" {
+			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
+		}
+	}
+	return nil
+}
+
+// throwsOut reports whether a throw can leave statements: a throw, or a call to a function that can
+// throw, that isn't inside a try's body with a catch.
+func (l *lowering) throwsOut(statements []ir.Statement) bool {
+	found := false
+	walk(statements, func(node any) bool {
+		switch node := node.(type) {
+		case ir.Try:
+			if node.HasCatch {
+				// The body's throws are caught; the catch's and the finally's aren't.
+				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
+				return false
+			}
+		case ir.Throw:
+			found = true
+		case ir.Call:
+			if l.result.Functions[node.Function].MayThrow {
+				found = true
+			}
+		}
+		return !found
+	})
+	return found
+}
+
+// libraryFailure names the first library call statements can reach, directly or through the
+// functions they call, that throws in JavaScript for some argument and isn't given a constant that
+// can't fail, or returns "".
+func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]bool) string {
+	failing := ""
+	callsClosures := false
+	walk(statements, func(node any) bool {
+		switch node := node.(type) {
+		case ir.Call:
+			if !visited[node.Function] {
+				visited[node.Function] = true
+				failing = l.libraryFailure(l.result.Functions[node.Function].Body, visited)
+			}
+		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce:
+			callsClosures = true
+		case ir.ArraySort:
+			if node.Callback != nil {
+				callsClosures = true
+			} else if !visited[node.Comparator] {
+				visited[node.Comparator] = true
+				failing = l.libraryFailure(l.result.Functions[node.Comparator].Body, visited)
+			}
+		case ir.StringCall:
+			switch {
+			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
+				failing = "repeat"
+			case node.Method == "normalize" && len(node.Arguments) > 0 && !isNormalizationForm(node.Arguments[0], l.result.Strings):
+				failing = "normalize"
+			}
+		case ir.ToFixed:
+			if !constantWithin(node.Digits, 0, 100) {
+				failing = "toFixed"
+			}
+		case ir.NumberFormat:
+			if bounds := formatArguments[node.Method]; node.Argument != nil && !constantWithin(node.Argument, bounds[0], bounds[1]) {
+				failing = node.Method
+			}
+		case ir.ArrayFill:
+			if node.Array == nil && !constantWithin(node.Length, 0, 4294967295) {
+				failing = "new Array(length)"
+			}
+		case ir.ArrayFrom:
+			callsClosures = true
+			if !constantWithin(node.Length, math.Inf(-1), 4294967295) {
+				failing = "Array.from({ length })"
+			}
+		}
+		return failing == ""
+	})
+	if failing == "" && callsClosures {
+		// What a function value does is any function value's: each of them is reached.
+		for _, closure := range l.closureRecords {
+			if !visited[closure.function] {
+				visited[closure.function] = true
+				if failing = l.libraryFailure(l.result.Functions[closure.function].Body, visited); failing != "" {
+					break
+				}
+			}
+		}
+	}
+	return failing
+}
+
+// formatArguments are the arguments each number format takes without throwing.
+var formatArguments = map[string][2]float64{"toExponential": {0, 100}, "toPrecision": {1, 100}, "toString": {2, 36}}
+
+// constantWithin reports whether a value is a constant integer from low to high, which a call taking
+// it can't fail on.
+func constantWithin(value ir.Expression, low float64, high float64) bool {
+	constant, isConstant := value.(ir.NumberConstant)
+	return isConstant && constant.Value >= low && constant.Value <= high && (high == math.MaxFloat64 || constant.Value == math.Trunc(constant.Value)) && !math.IsInf(constant.Value, 0)
+}
+
+func isNormalizationForm(value ir.Expression, strings []string) bool {
+	constant, isConstant := value.(ir.StringConstant)
+	if !isConstant {
+		return false
+	}
+	switch strings[constant.Index] {
+	case "NFC", "NFD", "NFKC", "NFKD":
+		return true
+	}
+	return false
+}
+
+// walk visits every IR statement and expression in a value, depth first, while visit says to go on
+// into each. It doesn't go into a function's body: a call is visited as a call.
+func walk(value any, visit func(node any) bool) {
+	walkValue(reflect.ValueOf(value), visit)
+}
+
+var (
+	expressionType = reflect.TypeOf((*ir.Expression)(nil)).Elem()
+	statementType  = reflect.TypeOf((*ir.Statement)(nil)).Elem()
+)
+
+func walkValue(value reflect.Value, visit func(node any) bool) {
+	switch value.Kind() {
+	case reflect.Interface:
+		if !value.IsNil() {
+			walkValue(value.Elem(), visit)
+		}
+	case reflect.Slice:
+		for index := 0; index < value.Len(); index++ {
+			walkValue(value.Index(index), visit)
+		}
+	case reflect.Array:
+		for index := 0; index < value.Len(); index++ {
+			walkValue(value.Index(index), visit)
+		}
+	case reflect.Struct:
+		if value.Type().Implements(expressionType) || value.Type().Implements(statementType) {
+			if !visit(value.Interface()) {
+				return
+			}
+		}
+		for index := 0; index < value.NumField(); index++ {
+			walkValue(value.Field(index), visit)
+		}
+	}
+}

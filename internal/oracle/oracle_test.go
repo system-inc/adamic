@@ -93,6 +93,21 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/map_iteration.a", true, false},
 	{"internal/oracle/testdata/sorts.a", true, false},
 	{"internal/oracle/testdata/sort_releases.a", true, false},
+	{"internal/oracle/testdata/timsort.a", true, false},
+	{"internal/oracle/testdata/unused_parameters.a", true, false},
+	{"internal/oracle/testdata/map_shrinks.a", true, true},
+	{"internal/oracle/testdata/find_shrinks.a", true, true},
+	{"internal/oracle/testdata/find_index_shrinks.a", true, true},
+	{"internal/oracle/testdata/self_assignments.a", true, false},
+	{"internal/oracle/testdata/method_closures.a", true, false},
+	{"internal/oracle/testdata/splice_empty.a", true, false},
+	// A narrowing outlives a call that assigns the variable again: what was narrowed away is checked.
+	{"internal/oracle/testdata/narrowed_reads.a", true, false},
+	{"internal/oracle/testdata/narrowed_writes.a", true, false},
+	{"internal/oracle/testdata/narrowed_methods.a", true, false},
+	{"internal/oracle/testdata/narrowed_fields.a", true, false},
+	{"internal/oracle/testdata/narrowed_numbers.a", true, true},
+	{"internal/oracle/testdata/narrowed_compared.a", true, false},
 	// The same sorts at the top level, where only the globals' release at exit lets the leak check see.
 	{"internal/oracle/testdata/sort_top_level.a", true, false},
 	{"internal/oracle/testdata/splices.a", true, false},
@@ -103,6 +118,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/array_from_undefined.a", true, false},
 	{"internal/oracle/testdata/weak_parent.a", true, false},
 	{"internal/oracle/testdata/doubly_linked.a", true, false},
+	{"internal/oracle/testdata/weak_narrowed.a", true, false},
+	{"internal/oracle/testdata/exceptions.a", true, false},
+	{"internal/oracle/testdata/exceptions_uncaught.a", true, false},
+	{"internal/oracle/testdata/exceptions_empty.a", true, false},
+	{"internal/oracle/testdata/panic_in_try.a", true, false},
 	{"internal/oracle/testdata/maybe_booleans.a", true, false},
 	{"internal/oracle/testdata/maybe_boolean_panic.a", true, false},
 	{"internal/oracle/testdata/unions.a", true, false},
@@ -129,6 +149,26 @@ var fixtures = []struct {
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
 	{"internal/oracle/testdata/borrow_map_overwrite.a", true, false},
+	// A spread is read before its fields' values, as JavaScript reads it.
+	{"internal/oracle/testdata/spread_snapshot.a", true, false},
+	// Reuse in place: taken only where nothing can tell, and where something could, never.
+	{"internal/oracle/testdata/reuse.a", true, false},
+	// Reuse for arrays: a map in place, a spread appended to, a splice with nothing to return.
+	{"internal/oracle/testdata/reuse_arrays.a", true, false},
+	// Reviewer R's probes of integration 5, each a way reuse in place was once seen: a borrowed
+	// parameter moved on, a global moved out while another argument reads it, and a value a Weak
+	// reaches taken over, during the spread and after it.
+	{"internal/oracle/testdata/reuse_forward.a", true, false},
+	{"internal/oracle/testdata/reuse_global_sibling.a", true, false},
+	{"internal/oracle/testdata/reuse_weak_during_spread.a", true, false},
+	{"internal/oracle/testdata/reuse_weak_after_reuse.a", true, false},
+	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
+	// was moved or spread.
+	{"internal/oracle/testdata/move_throw.a", true, false},
+	// Reviewer R's round 8b: a spread of a value that may be undefined is {} with the literal's fields.
+	{"internal/oracle/testdata/spread_undefined.a", true, false},
+	// A read lent without a count, beside a call that reassigns what was read.
+	{"internal/oracle/testdata/lent_reads.a", true, false},
 	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).
 	{"internal/oracle/testdata/large_output.a", true, false},
 	{"internal/oracle/testdata/output_then_panic.a", true, false},
@@ -143,11 +183,23 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/optional_strings.a", true, false},
 	{"internal/oracle/testdata/concat_too_long.a", true, false},
 	{"internal/oracle/testdata/replace_all_large.a", true, false},
+	// A file read or written after console.log: what was printed is out first. output_test.go also runs
+	// these with both streams on one pipe and stdin answered after the prompt; killed_after_output.a
+	// is only there, since it runs until a signal stops it.
+	{"internal/oracle/testdata/write_stdout_order.a", true, false},
+	{"internal/oracle/testdata/write_stderr_order.a", true, false},
+	{"internal/oracle/testdata/prompt_then_read.a", true, false},
+	{"internal/oracle/testdata/collections.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
 	// read back (reviewer R, from the first night's number.c).
 	{"internal/oracle/testdata/power_of_two_string.a", true, false},
+	// Reuse meeting exceptions, narrowing and lending (integration 7): a throw after a move, a narrowed
+	// field emptied in place, and a lent global moved under its borrower.
+	{"internal/oracle/testdata/reuse_throw.a", true, false},
+	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
+	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

@@ -1,0 +1,184 @@
+// throw, try, catch and finally, with every reference a frame holds let go on every way out: the
+// program finishes, so the leak check holds it to that.
+function parse(text: string): number {
+	const trimmed = `${text}`.trim();
+	if (trimmed.length === 0) {
+		throw new Error(`empty input after trimming '${text}'`);
+	}
+	let value = 0;
+	for (const character of trimmed) {
+		const digit = character.charCodeAt(0) - 48;
+		if (digit < 0 || digit > 9) {
+			throw new Error(`'${character}' in '${trimmed}' is not a digit`);
+		}
+		value = value * 10 + digit;
+	}
+	return value;
+}
+
+function describe(text: string): string {
+	try {
+		return `ok ${parse(text)}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.name}: ${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+for (const input of ['42', '  7 ', '', '12a', 'x'.repeat(3)]) {
+	console.log(describe(input));
+}
+
+// Through several frames, each holding strings and arrays of its own, and temporaries mid-statement.
+function deep(depth: number, trail: string[]): string {
+	const here = `level ${depth}`;
+	trail.push(here);
+	if (depth === 0) {
+		throw new Error(`bottom reached by ${trail.join(' > ')}`);
+	}
+	return `${here}/` + deep(depth - 1, trail) + '/never';
+}
+try {
+	console.log(deep(4, []));
+} catch (error) {
+	console.log(error instanceof Error ? error.message : '?');
+}
+
+// Out of loops holding what they iterate: an array, a string's code points, and a map.
+function find(words: readonly string[], counts: Map<string, number>, wanted: string): number {
+	for (const word of words) {
+		for (const character of word) {
+			if (character === '!') {
+				throw new Error(`a '!' in ${word}`);
+			}
+		}
+		for (const [key, value] of counts) {
+			if (key === wanted && value > 1) {
+				throw new Error(`${key} is counted ${value} times`);
+			}
+		}
+	}
+	return words.length;
+}
+const counts = new Map<string, number>([['a', 1], ['b', 2]]);
+for (const search of [['one', 'two'], ['one', 'tw!o'], ['x']]) {
+	try {
+		console.log(`found ${find(search, counts, search.length > 1 ? 'a' : 'b')}`);
+	} catch (error) {
+		console.log(`stopped: ${error instanceof Error ? error.message : '?'}`);
+	}
+}
+
+// finally on every way out: falling through, a throw, return, break and continue.
+const log: string[] = [];
+function steps(mode: string): string {
+	try {
+		log.push(`try ${mode}`);
+		if (mode === 'throw') {
+			throw new Error('thrown');
+		}
+		if (mode === 'return') {
+			return `returned ${mode.toUpperCase()}`;
+		}
+		log.push('fell through');
+	} catch (error) {
+		log.push(`caught ${error instanceof Error ? error.message : '?'}`);
+	} finally {
+		log.push(`finally ${mode}`);
+	}
+	return 'end';
+}
+for (const mode of ['plain', 'throw', 'return']) {
+	console.log(steps(mode));
+}
+for (let round = 0; round < 4; round += 1) {
+	try {
+		if (round === 1) {
+			continue;
+		}
+		if (round === 3) {
+			break;
+		}
+		log.push(`round ${round}`);
+	} finally {
+		log.push(`finally round ${round}`);
+	}
+}
+console.log(log.join(', '));
+
+// A catch that throws again, through a finally, to a catch outside; and a finally whose throw
+// replaces the error on its way out, and a return.
+function rethrow(text: string): string {
+	try {
+		try {
+			return `${parse(text)}`;
+		} catch (error) {
+			if (error instanceof Error) {
+				throw error;
+			}
+			return 'never';
+		} finally {
+			console.log(`inner finally for '${text}'`);
+		}
+	} catch (error) {
+		return `outer caught ${error instanceof Error ? error.message : '?'}`;
+	}
+}
+console.log(rethrow('9'));
+console.log(rethrow('9?'));
+
+function replaced(fail: boolean): string {
+	const kept = 'kept'.repeat(2);
+	try {
+		if (fail) {
+			throw new Error('first');
+		}
+		return `${kept} result`;
+	} finally {
+		if (kept.length > 0) {
+			throw new Error(`replaced ${fail ? 'a throw' : 'a return'}`);
+		}
+	}
+}
+for (const fail of [true, false]) {
+	try {
+		console.log(replaced(fail));
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : '?');
+	}
+}
+
+// A constructor and a method that throw, a catch that binds nothing, and an Error made and kept.
+class Account {
+	readonly owner: string;
+	balance: number;
+	constructor(owner: string, balance: number) {
+		if (balance < 0) {
+			throw new Error(`${owner} can't open with ${balance}`);
+		}
+		this.owner = `${owner}`;
+		this.balance = balance;
+	}
+	withdraw(amount: number): number {
+		if (amount > this.balance) {
+			throw new Error(`${this.owner} has only ${this.balance}`);
+		}
+		this.balance -= amount;
+		return this.balance;
+	}
+}
+try {
+	const account = new Account('Ken', 10);
+	console.log(`${account.withdraw(3)}`);
+	console.log(`${account.withdraw(30)}`);
+} catch (error) {
+	console.log(error instanceof Error ? error.message : '?');
+}
+try {
+	new Account('Dennis', -1).withdraw(1);
+} catch {
+	console.log('could not open');
+}
+const kept = new Error('made, never thrown');
+console.log(`${kept.name} ${kept.message}`);

@@ -8,6 +8,7 @@
 
 #include <errno.h>
 #include <signal.h>
+#include <stdatomic.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -33,9 +34,11 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 // lands or what else lands there. Node writes each console.log at once, to a file, a terminal or (on
 // Linux) a pipe. Stdout here is held in a buffer instead, since a call to write per line costs more
 // than the line, and the buffer goes out at every point the difference could be seen: before anything
-// is written to stderr (which may be the same file), before a panic's message, at exit, when it's
-// full, and after every line when stdout is a terminal, where a person is watching. What a reader of
-// a pipe sees is the same bytes, in larger pieces.
+// is written to stderr (which may be the same file), before a file is read or written (which may be
+// stdout itself, or stdin waiting on what was just printed), before a panic's message, at exit, when
+// it's full, after every line when stdout is a terminal, where a person is watching, and when SIGTERM,
+// SIGINT or SIGHUP stops the program. What a reader of a pipe sees is the same bytes, in larger pieces.
+// SIGKILL can't be caught, and what's in the buffer then is lost, as nothing Node holds would be.
 //
 // When a write fails (a pipe whose reader is gone, say), the program goes on as it does on Node,
 // where the stream's error arrives only once the program's own code has run: what it writes there
@@ -43,6 +46,11 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 // runtime makes it.
 static char output[1 << 16];
 static size_t output_used;
+
+// output_whole is where the buffer's last whole line ends: what a signal's handler writes out, so it
+// writes whole lines, as Node would have. It's set after the line's bytes are in, with a fence between,
+// so the handler never sees it ahead of them.
+static volatile size_t output_whole;
 
 // output_mode is 0 until the first line, then 1 for a buffer, or 2 for a line at a time (a terminal).
 static int output_mode;
@@ -57,6 +65,8 @@ static void output_failed(enum adamic_stream stream) {
 static void flush(void) {
 	if (output_used > 0) {
 		size_t used = output_used;
+		output_whole = 0;
+		atomic_signal_fence(memory_order_seq_cst);
 		output_used = 0;
 		if (!broken[adamic_stdout] && write_all(adamic_stdout, output, used) != 0) {
 			output_failed(adamic_stdout);
@@ -88,6 +98,37 @@ static void buffer(const char *bytes, size_t length) {
 	output_used += length;
 }
 
+void adamic_output_flush(void) {
+	flush();
+}
+
+// stopped is the handler for SIGTERM, SIGINT and SIGHUP: the buffer's whole lines go out, and the
+// signal is raised again with its default action, so the program ends the way Node's does, killed by
+// it. write is async-signal-safe. A signal arriving inside flush finds the buffer already emptied, and
+// what that write hadn't finished is lost.
+static void stopped(int signal_number) {
+	size_t whole = output_whole;
+	if (whole > 0 && !broken[adamic_stdout]) {
+		(void)write_all(adamic_stdout, output, whole);
+	}
+	signal(signal_number, SIG_DFL);
+	raise(signal_number);
+}
+
+// stop_with installs stopped for a signal, unless whoever started the program ignored it (a
+// background job's SIGINT), which stays ignored, as it does for Node.
+static void stop_with(int signal_number) {
+	struct sigaction current;
+	if (sigaction(signal_number, NULL, &current) != 0 || current.sa_handler == SIG_IGN) {
+		return;
+	}
+	struct sigaction handler;
+	memset(&handler, 0, sizeof handler);
+	handler.sa_handler = stopped;
+	sigemptyset(&handler.sa_mask);
+	sigaction(signal_number, &handler, NULL);
+}
+
 // put writes bytes to stdout's buffer, or straight to stderr.
 static void put(enum adamic_stream stream, const char *bytes, size_t length) {
 	if (stream == adamic_stdout) {
@@ -116,6 +157,9 @@ void adamic_start(int count, char **values) {
 	adamic_arguments_save(count, values);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
 	signal(SIGPIPE, SIG_IGN);
+	stop_with(SIGTERM);
+	stop_with(SIGINT);
+	stop_with(SIGHUP);
 }
 
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
@@ -129,6 +173,10 @@ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
 	}
 	write_text(stream, string->bytes, string->length);
 	put(stream, "\n", 1);
+	if (stream == adamic_stdout) {
+		atomic_signal_fence(memory_order_seq_cst);
+		output_whole = output_used;
+	}
 	if (stream == adamic_stdout && output_mode == 2) {
 		flush();
 	}
