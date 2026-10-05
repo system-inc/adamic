@@ -135,7 +135,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	valueType, isKnown := l.representation(element)
-	if !isKnown || valueType == ir.MaybeNumber {
+	if !isKnown || valueType.IsMaybe() {
 		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
 	}
@@ -188,16 +188,16 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		optional := access.QuestionDotToken != nil
-		if of == ir.MaybeNumber && optional {
+		if of.IsMaybe() && optional {
 			// box?.size is number | undefined because box may be; the field itself is what's stored.
 			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
-				if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == ir.Number {
-					return ir.Property{Object: object, Name: name, Of: ir.Number, Optional: true}, nil
+				if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == of.Present() {
+					return ir.Property{Object: object, Name: name, Of: stored, Optional: true}, nil
 				}
 			}
 		}
-		if of == ir.MaybeNumber {
-			return nil, l.notYet(node, "a field of type number | undefined")
+		if of.IsMaybe() {
+			return nil, l.notYet(node, "a field of type "+typeName(of))
 		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
@@ -444,8 +444,8 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-			if l.result.Locals[local].Type == ir.MaybeNumber {
-				return nil, l.notYet(binding, "a tuple element of type number | undefined")
+			if of := l.result.Locals[local].Type; of.IsMaybe() {
+				return nil, l.notYet(binding, "a tuple element of type "+typeName(of))
 			}
 			lowered.Pattern = append(lowered.Pattern, ir.Binding{Local: local, Field: strconv.Itoa(index)})
 		}
@@ -636,9 +636,6 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		if len(arguments) != 1 || arguments[0].Type() != ir.Number {
 			return nil, true, l.notYet(node, "at with other than one number")
 		}
-		if element == ir.Boolean {
-			return nil, true, l.notYet(node, "at on an array of booleans (boolean | undefined)")
-		}
 		return ir.ArrayIndex{Array: array, Index: arguments[0], Element: element, Relative: true}, true, nil
 	case "reverse":
 		return ir.ArrayReverse{Array: array}, true, nil
@@ -766,9 +763,6 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	if name != "forEach" && returns != ir.Boolean {
 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
 	}
-	if name == "find" && element == ir.Boolean {
-		return nil, true, l.notYet(node, "find in an array of booleans (boolean | undefined)")
-	}
 	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns}, true, nil
 }
 
@@ -797,7 +791,7 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if err != nil {
 		return nil, true, err
 	}
-	if result != initial.Type() || result == ir.MaybeNumber {
+	if result != initial.Type() || result.IsMaybe() {
 		return nil, true, l.notYet(node, "reduce to a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 	}
 	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result}, true, nil
@@ -814,7 +808,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	if !keyKnown || (key != ir.String && key != ir.Number) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings or numbers")
 	}
-	if !valueKnown || value == ir.MaybeNumber {
+	if !valueKnown || value.IsMaybe() {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
@@ -941,8 +935,8 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	}
 	l.touch(local)
 	of := l.result.Locals[local].Type
-	if of == ir.MaybeNumber {
-		return nil, l.notYet(property, "a field from a number | undefined variable")
+	if of.IsMaybe() {
+		return nil, l.notYet(property, "a field from a "+typeName(of)+" variable")
 	}
 	return ir.Read{Local: local, Of: of, Checked: l.checked(local)}, nil
 }
@@ -1062,9 +1056,6 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		if element == ir.Boolean {
-			return nil, l.notYet(node, "an index into an array of booleans (boolean | undefined)")
-		}
 		position, err := l.expression(access.ArgumentExpression)
 		if err != nil {
 			return nil, err
@@ -1081,8 +1072,8 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	if of == ir.MaybeNumber {
-		return nil, l.notYet(node, "a tuple element of type number | undefined")
+	if of.IsMaybe() {
+		return nil, l.notYet(node, "a tuple element of type "+typeName(of))
 	}
 	return ir.Property{Object: object, Name: index.Text(), Of: of}, nil
 }

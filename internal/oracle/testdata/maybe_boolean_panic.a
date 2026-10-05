@@ -1,0 +1,8 @@
+import { panic } from 'adamic';
+
+// boolean | undefined ?? panic: the panic is the missing case, and stops the program there.
+const answers = new Map<string, boolean>([['yes', true]]);
+const sure = answers.get('yes') ?? panic('no answer for yes');
+console.log(`${sure}`);
+const never = answers.get('perhaps') ?? panic('no answer for perhaps');
+console.log(`${never}`);

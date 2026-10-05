@@ -66,7 +66,39 @@ const (
 
 	// Closure is a function value: code, and the variables it captured.
 	Closure
+
+	// MaybeBoolean is boolean | undefined: a boolean that may be missing, as an array of booleans'
+	// element is.
+	MaybeBoolean
 )
+
+// Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
+// undefined are each a pair of present and the value, and a reference is itself, missing as null.
+func Maybe(t Type) Type {
+	switch t {
+	case Number:
+		return MaybeNumber
+	case Boolean:
+		return MaybeBoolean
+	}
+	return t
+}
+
+// IsMaybe reports whether a value of the type is one of Maybe's pairs.
+func (t Type) IsMaybe() bool {
+	return t == MaybeNumber || t == MaybeBoolean
+}
+
+// Present is the type a Maybe pair holds when it's present, and any other type itself.
+func (t Type) Present() Type {
+	switch t {
+	case MaybeNumber:
+		return Number
+	case MaybeBoolean:
+		return Boolean
+	}
+	return t
+}
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
@@ -201,12 +233,19 @@ type (
 		Element Type
 	}
 
-	// Unwrap is a MaybeNumber the checker has proven present (narrowed), as a Number.
+	// Unwrap is a Maybe pair the checker has proven present (narrowed), as what it holds.
 	Unwrap struct{ Value Expression }
 
-	// MaybeNumberOf is a number where number | undefined goes: Value, present, or undefined when
-	// Value is nil.
-	MaybeNumberOf struct{ Value Expression }
+	// MaybeOf is a number or a boolean where Of, its Maybe pair, goes: Value, present, or undefined
+	// when Value is nil.
+	MaybeOf struct {
+		Value Expression
+		Of    Type
+	}
+
+	// MaybeToString is String(Value) for a Maybe pair: what it holds, written as String() writes it,
+	// or "undefined".
+	MaybeToString struct{ Value Expression }
 
 	// Coalesce is Value ?? Fallback: Value when it's present, and otherwise Fallback, evaluated only
 	// then. With Panic set instead of Fallback, it's Value ?? panic(Panic).
@@ -251,7 +290,7 @@ type (
 	}
 
 	// ArrayIndex is array[index]: the element, or undefined when index isn't one of the array's (a
-	// null reference, or a MaybeNumber). Relative is array.at(index), where a negative index counts
+	// null reference, or a Maybe pair). Relative is array.at(index), where a negative index counts
 	// from the end and a fraction truncates.
 	ArrayIndex struct {
 		Array, Index Expression
@@ -313,7 +352,7 @@ type (
 	StringIndex struct{ Value, Index Expression }
 
 	// ArrayPop is array.pop(): the last element, removed, or undefined when there's none (a null
-	// reference, or a MaybeNumber).
+	// reference, or a Maybe pair).
 	ArrayPop struct {
 		Array   Expression
 		Element Type
@@ -379,7 +418,7 @@ type (
 		Entries    [][2]Expression
 	}
 
-	// MapGet is map.get(Key): the value, or undefined (a null reference, or a MaybeNumber).
+	// MapGet is map.get(Key): the value, or undefined (a null reference, or a Maybe pair).
 	MapGet struct {
 		Map, Key  Expression
 		KeyType   Type
@@ -429,8 +468,8 @@ func (Concat) Type() Type          { return String }
 func (c Conditional) Type() Type   { return c.WhenTrue.Type() }
 func (ObjectLiteral) Type() Type   { return Object }
 func (p Property) Type() Type {
-	if p.Optional && p.Of == Number {
-		return MaybeNumber
+	if p.Optional {
+		return Maybe(p.Of)
 	}
 	return p.Of
 }
@@ -449,8 +488,9 @@ func (Undefined) Type() Type     { return Object }
 func (IsUndefined) Type() Type   { return Boolean }
 func (ArrayPush) Type() Type     { return Number }
 func (ArrayJoin) Type() Type     { return String }
-func (Unwrap) Type() Type        { return Number }
-func (MaybeNumberOf) Type() Type { return MaybeNumber }
+func (u Unwrap) Type() Type      { return u.Value.Type().Present() }
+func (m MaybeOf) Type() Type     { return m.Of }
+func (MaybeToString) Type() Type { return String }
 func (c Coalesce) Type() Type    { return c.Of }
 func (StringLength) Type() Type  { return Number }
 func (CharCodeAt) Type() Type    { return Number }
@@ -472,28 +512,14 @@ func (v ArrayVisit) Type() Type {
 	case "findIndex":
 		return Number
 	case "find":
-		if v.Element == Number {
-			return MaybeNumber
-		}
-		return v.Element
+		return Maybe(v.Element)
 	}
 	return 0
 }
 
-func (i ArrayIndex) Type() Type {
-	if i.Element == Number {
-		return MaybeNumber
-	}
-	return i.Element
-}
-
-func (p ArrayPop) Type() Type {
-	if p.Element == Number {
-		return MaybeNumber
-	}
-	return p.Element
-}
-func (ArraySlice) Type() Type { return Array }
+func (i ArrayIndex) Type() Type { return Maybe(i.Element) }
+func (p ArrayPop) Type() Type   { return Maybe(p.Element) }
+func (ArraySlice) Type() Type   { return Array }
 
 func (s ArraySearch) Type() Type {
 	if s.Includes {
@@ -528,12 +554,7 @@ func (MapHas) Type() Type    { return Boolean }
 func (MapDelete) Type() Type { return Boolean }
 func (MapSize) Type() Type   { return Number }
 
-func (g MapGet) Type() Type {
-	if g.ValueType == Number {
-		return MaybeNumber
-	}
-	return g.ValueType
-}
+func (g MapGet) Type() Type { return Maybe(g.ValueType) }
 
 func (r Read) Type() Type { return r.Of }
 func (c Call) Type() Type { return c.Returns }

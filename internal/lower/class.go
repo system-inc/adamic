@@ -266,8 +266,8 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
-	if value.Type() == ir.MaybeNumber {
-		return nil, l.notYet(target, "storing number | undefined in a field")
+	if value.Type().IsMaybe() {
+		return nil, l.notYet(target, "storing "+typeName(value.Type())+" in a field")
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
 	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value}}, nil
@@ -303,7 +303,11 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 		}
 	}
 	name := target.Name().Text()
-	updated, err := l.combine(node, operator, ir.Property{Object: object, Name: name, Of: of}, value)
+	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of})
+	if operator == ast.KindPlusToken && valueNode != nil {
+		current, value = l.spelled(target, current), l.spelled(valueNode, value)
+	}
+	updated, err := l.combine(node, operator, current, value)
 	if err != nil {
 		return nil, err
 	}

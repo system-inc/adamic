@@ -264,7 +264,7 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		if err != nil {
 			return err
 		}
-		if function.Closure && (l.result.Locals[local].Type == ir.MaybeNumber || declared.Initializer != nil || declared.QuestionToken != nil) {
+		if function.Closure && (l.result.Locals[local].Type.IsMaybe() || declared.Initializer != nil || declared.QuestionToken != nil) {
 			// A function value is called with the arguments its caller has, and no more.
 			return l.notYet(parameter, "a function value with an optional parameter")
 		}
@@ -272,10 +272,8 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 			function.Parameters = append(function.Parameters, local)
 			continue
 		}
-		missing := l.result.Locals[local].Type
-		if missing == ir.Number {
-			missing = ir.MaybeNumber
-		} else if !missing.IsReference() {
+		missing := ir.Maybe(l.result.Locals[local].Type)
+		if !missing.IsMaybe() && !missing.IsReference() {
 			return l.notYet(parameter, "a default for a "+typeName(missing)+" parameter")
 		}
 		incoming := len(l.result.Locals)
@@ -283,10 +281,10 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		function.Parameters = append(function.Parameters, incoming)
 		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
-	if function.Closure && function.Returns == ir.MaybeNumber {
+	if function.Closure && function.Returns.IsMaybe() {
 		// A function value's arguments and result are each one adamic_value, and number | undefined
 		// needs two words.
-		return l.notYet(declaration, "a function value returning number | undefined")
+		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
 	}
 	body := declaration.Body()
 	if body == nil {
@@ -553,10 +551,10 @@ func (l *lowering) local(identifier *ast.Node) (int, bool) {
 	local, isLocal := l.locals[symbol]
 	if isLocal {
 		l.touch(local)
-		if declared := l.result.Locals[local]; declared.Captured && declared.Type == ir.MaybeNumber && l.unlowerable == nil {
+		if declared := l.result.Locals[local]; declared.Captured && declared.Type.IsMaybe() && l.unlowerable == nil {
 			// A cell holds one adamic_value, and number | undefined needs two words. Lower says so once
 			// it's done, since the capture is found here, where nothing can return an error.
-			l.unlowerable = l.notYet(identifier, "a number | undefined variable a function value captures")
+			l.unlowerable = l.notYet(identifier, "a "+typeName(declared.Type)+" variable a function value captures")
 		}
 	}
 	return local, isLocal
@@ -617,7 +615,10 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, err
 	}
 	if isCompound {
-		current := ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}
+		current := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
+		if operator == ast.KindPlusToken {
+			current, value = l.spelled(target, current), l.spelled(binary.Right, value)
+		}
 		if value, err = l.combine(node, operator, current, value); err != nil {
 			return nil, err
 		}

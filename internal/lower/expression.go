@@ -57,9 +57,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			shared = memberType
 		}
 		if shared != 0 && !shared.IsReference() && l.includesUndefined(proven) {
-			// number | undefined is a present-and-value pair; boolean | undefined is not yet.
-			if shared == ir.Number {
-				return ir.MaybeNumber, true
+			// number | undefined and boolean | undefined are each a present-and-value pair.
+			if maybe := ir.Maybe(shared); maybe.IsMaybe() {
+				return maybe, true
 			}
 			return 0, false
 		}
@@ -84,6 +84,9 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 }
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsUnion == 0 {
+		return proven.Flags()&checker.TypeFlagsUndefined != 0
+	}
 	for _, member := range proven.Types() {
 		if member.Flags()&checker.TypeFlagsUndefined != 0 {
 			return true
@@ -114,9 +117,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
 		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
-		if l.result.Locals[local].Type == ir.MaybeNumber {
-			// Where the checker has narrowed it to number, it's read as one.
-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == ir.Number {
+		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
+			// Where the checker has narrowed it to what it holds, it's read as that.
+			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() {
 				read = ir.Unwrap{Value: read}
 			}
 		}
@@ -135,6 +138,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		right, err := l.expression(binary.Right)
 		if err != nil {
 			return nil, err
+		}
+		if binary.OperatorToken.Kind == ast.KindPlusToken {
+			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
 		return l.combine(node, binary.OperatorToken.Kind, left, right)
 	case ast.KindTemplateExpression:
@@ -185,17 +191,18 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	return nil, l.notYet(node, describe(node))
 }
 
-// fit makes a value fit where a value of type to goes: a number, or undefined, where number |
-// undefined goes, since that is two words and they are one. Anything else is left as it is.
+// fit makes a value fit where a value of type to goes: a number or a boolean, or undefined, where
+// number | undefined or boolean | undefined goes, since that is two words and they are one. Anything
+// else is left as it is.
 func fit(value ir.Expression, to ir.Type) ir.Expression {
-	if to != ir.MaybeNumber || value == nil {
+	if !to.IsMaybe() || value == nil {
 		return value
 	}
-	if value.Type() == ir.Number {
-		return ir.MaybeNumberOf{Value: value}
+	if value.Type() == to.Present() {
+		return ir.MaybeOf{Value: value, Of: to}
 	}
 	if _, isUndefined := value.(ir.Undefined); isUndefined {
-		return ir.MaybeNumberOf{}
+		return ir.MaybeOf{Of: to}
 	}
 	return value
 }
@@ -269,7 +276,12 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				value = right
 			}
-			if !value.Type().IsReference() && value.Type() != ir.MaybeNumber {
+			if pair := ir.Maybe(value.Type()); pair.IsMaybe() {
+				// A number or a boolean the checker narrowed to present: still evaluated, and never
+				// undefined.
+				value = fit(value, pair)
+			}
+			if !value.Type().IsReference() && !value.Type().IsMaybe() {
 				return nil, l.notYet(node, "comparing a "+typeName(value.Type())+" with undefined")
 			}
 			test := ir.Expression(ir.IsUndefined{Value: value})
@@ -277,6 +289,14 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
 			return test, nil
+		}
+	}
+	if (operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken) && left.Type() != right.Type() {
+		// A pair against what it holds, or against another pair: each made a pair, and compared as one.
+		if pair := left.Type(); pair.IsMaybe() && right.Type() == pair.Present() {
+			right = fit(right, pair)
+		} else if pair := right.Type(); pair.IsMaybe() && left.Type() == pair.Present() {
+			left = fit(left, pair)
 		}
 	}
 	if (operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken) && left.Type() == right.Type() {
@@ -296,6 +316,15 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
 }
 
+// spelled is a string as + and a template write it: one that may be missing (a null reference) is
+// written "undefined", as JavaScript writes it.
+func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
+	if value.Type() != ir.String || !l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+		return value
+	}
+	return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}
+}
+
 // template lowers a template literal to a Concat, writing each value as String() would.
 func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 	template := node.AsTemplateExpression()
@@ -313,6 +342,14 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 			value = ir.NumberToString{Value: value}
 		case ir.Boolean:
 			value = ir.BooleanToString{Value: value}
+		case ir.MaybeNumber, ir.MaybeBoolean:
+			value = ir.MaybeToString{Value: value}
+		case ir.String:
+			value = l.spelled(span.AsTemplateSpan().Expression, value)
+		default:
+			// JavaScript writes an object as "[object Object]", an array as its join, and a function as
+			// its source; 0.1 has no use for any of it.
+			return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
 		}
 		parts = append(parts, value)
 		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {
@@ -337,6 +374,12 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	if whenTrue.Type() != whenNot.Type() {
+		// flag ? 1 : undefined is number | undefined: each branch made the pair.
+		if of, err := l.typeOf(node); err == nil && of.IsMaybe() {
+			whenTrue, whenNot = fit(whenTrue, of), fit(whenNot, of)
+		}
+	}
+	if whenTrue.Type() != whenNot.Type() {
 		return nil, l.notYet(node, "a conditional whose branches have different types")
 	}
 	return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: whenNot}, nil
@@ -350,6 +393,10 @@ func typeName(valueType ir.Type) string {
 		return "boolean"
 	case ir.String:
 		return "string"
+	case ir.MaybeNumber:
+		return "number | undefined"
+	case ir.MaybeBoolean:
+		return "boolean | undefined"
 	}
 	return "value"
 }
@@ -385,8 +432,8 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	present := value.Type()
-	if present == ir.MaybeNumber {
-		present = ir.Number
+	if present.IsMaybe() {
+		present = present.Present()
 	} else if !present.IsReference() {
 		// A value that can't be missing: ?? never runs its right side.
 		return value, nil
@@ -444,12 +491,12 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	for _, argument := range arguments {
-		if argument.Type() == ir.MaybeNumber {
-			return nil, l.notYet(node, "passing number | undefined to a function value")
+		if argument.Type().IsMaybe() {
+			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
 		}
 	}
-	if returns == ir.MaybeNumber {
-		return nil, l.notYet(node, "a function value returning number | undefined")
+	if returns.IsMaybe() {
+		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil
 }

@@ -552,8 +552,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			// A field holds a reference as void *; read through the type the checker proved.
 			field = fmt.Sprintf("((%s)%s)", cType(expression.Of), field)
 		}
-		if expression.Optional && expression.Of == ir.Number {
-			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? (adamic_maybe_number){false, 0.0} : (adamic_maybe_number){true, %s})", object, field))
+		if expression.Optional && expression.Type().IsMaybe() {
+			return e.snapshot(expression.Type(), fmt.Sprintf("(%s == NULL ? %s : %s)", object, zero(expression.Type()), maybe(expression.Type(), field)))
 		}
 		if expression.Optional {
 			field = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, field)
@@ -567,17 +567,19 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Undefined:
 		return "NULL"
 	case ir.IsUndefined:
-		if expression.Value.Type() == ir.MaybeNumber {
+		if expression.Value.Type().IsMaybe() {
 			return fmt.Sprintf("(!(%s).present)", e.value(expression.Value))
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.Unwrap:
-		return fmt.Sprintf("(%s).number", e.value(expression.Value))
-	case ir.MaybeNumberOf:
+		return fmt.Sprintf("(%s).%s", e.value(expression.Value), member(expression.Type()))
+	case ir.MaybeOf:
 		if expression.Value == nil {
-			return zero(ir.MaybeNumber)
+			return zero(expression.Of)
 		}
-		return fmt.Sprintf("((adamic_maybe_number){true, %s})", e.value(expression.Value))
+		return maybe(expression.Of, e.value(expression.Value))
+	case ir.MaybeToString:
+		return e.maybeToString(expression.Value)
 	case ir.Coalesce:
 		return e.coalesce(expression)
 	case ir.StringLength:
@@ -714,20 +716,16 @@ func (e *emitter) value(expression ir.Expression) string {
 			lookup = "adamic_array_at_relative"
 		}
 		e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
-		if expression.Element == ir.Number {
-			result := e.temporary()
-			e.line("adamic_maybe_number %s = %s == NULL ? (adamic_maybe_number){false, 0.0} : (adamic_maybe_number){true, %s->number};", result, slot, slot)
-			return result
+		if expression.Type().IsMaybe() {
+			return e.snapshot(expression.Type(), maybeSlot(expression.Type(), slot))
 		}
 		// Retained, so a write later in the statement can't free it from under its reader.
 		return e.own(expression.Element, fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s->reference)", slot, cType(expression.Element), slot))
 	case ir.ArrayPop:
 		array := e.temporary()
 		e.line("adamic_array *%s = %s;", array, e.value(expression.Array))
-		if expression.Element == ir.Number {
-			result := e.temporary()
-			e.line("adamic_maybe_number %s = %s->length == 0 ? (adamic_maybe_number){false, 0.0} : (adamic_maybe_number){true, %s->elements[--%s->length].number};", result, array, array, array)
-			return result
+		if expression.Type().IsMaybe() {
+			return e.snapshot(expression.Type(), fmt.Sprintf("%s->length == 0 ? %s : %s", array, zero(expression.Type()), maybe(expression.Type(), fmt.Sprintf("%s->elements[--%s->length].%s", array, array, member(expression.Element)))))
 		}
 		// The array's reference to the element becomes the statement's.
 		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s->elements[--%s->length].%s", array, array, array, member(expression.Element)))
@@ -774,10 +772,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		key := e.value(expression.Key)
 		slot := e.temporary()
 		e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
-		if expression.ValueType == ir.Number {
-			result := e.temporary()
-			e.line("adamic_maybe_number %s = %s == NULL ? (adamic_maybe_number){false, 0.0} : (adamic_maybe_number){true, %s->number};", result, slot, slot)
-			return result
+		if expression.Type().IsMaybe() {
+			return e.snapshot(expression.Type(), maybeSlot(expression.Type(), slot))
 		}
 		// Retained, so a set later in the same statement can't free it from under its reader.
 		return e.own(expression.ValueType, fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->%s)", slot, slot, member(expression.ValueType)))
@@ -897,8 +893,8 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	case "findIndex":
 		result = e.snapshot(ir.Number, "-1.0")
 	case "find":
-		if visit.Element == ir.Number {
-			result = e.snapshot(ir.MaybeNumber, zero(ir.MaybeNumber))
+		if visit.Type().IsMaybe() {
+			result = e.snapshot(visit.Type(), zero(visit.Type()))
 		} else {
 			result = e.own(visit.Element, "NULL")
 		}
@@ -942,8 +938,8 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("}")
 	case "find":
 		e.line("if (%s.boolean) {", answer)
-		if visit.Element == ir.Number {
-			e.line("\t%s = (adamic_maybe_number){true, %s.number};", result, element)
+		if visit.Type().IsMaybe() {
+			e.line("\t%s = %s;", result, maybe(visit.Type(), element+"."+member(visit.Element)))
 		} else {
 			e.line("\t%s = %s.reference;", result, element)
 		}
@@ -1347,18 +1343,19 @@ func (e *emitter) arguments(call ir.Call) []string {
 	arguments := make([]string, 0, len(parameters))
 	for index, argument := range call.Arguments {
 		value := e.value(argument)
-		if index < len(parameters) && e.program.Locals[parameters[index]].Type == ir.MaybeNumber {
+		if index < len(parameters) && e.program.Locals[parameters[index]].Type.IsMaybe() {
+			of := e.program.Locals[parameters[index]].Type
 			if _, isUndefined := argument.(ir.Undefined); isUndefined {
-				value = zero(ir.MaybeNumber)
-			} else if argument.Type() == ir.Number {
-				value = fmt.Sprintf("((adamic_maybe_number){true, %s})", value)
+				value = zero(of)
+			} else if argument.Type() == of.Present() {
+				value = maybe(of, value)
 			}
 		}
 		arguments = append(arguments, value)
 	}
 	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
-		if e.program.Locals[parameter].Type == ir.MaybeNumber {
-			arguments = append(arguments, zero(ir.MaybeNumber))
+		if of := e.program.Locals[parameter].Type; of.IsMaybe() {
+			arguments = append(arguments, zero(of))
 		} else {
 			arguments = append(arguments, "NULL")
 		}
@@ -1479,6 +1476,8 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 		return fmt.Sprintf("adamic_string_equal(%s, %s)", left, right)
 	case operandType == ir.String && operator == ir.NotEqual:
 		return fmt.Sprintf("(!adamic_string_equal(%s, %s))", left, right)
+	case operandType.IsMaybe() && (operator == ir.Equal || operator == ir.NotEqual):
+		return pairEquality(operator, operandType, left, right)
 	}
 	return fmt.Sprintf("(%s %s %s)", left, cOperators[operator], right)
 }
@@ -1521,6 +1520,8 @@ func cType(valueType ir.Type) string {
 		return "adamic_closure *"
 	case ir.MaybeNumber:
 		return "adamic_maybe_number"
+	case ir.MaybeBoolean:
+		return "adamic_maybe_boolean"
 	}
 	return "adamic_string *"
 }
@@ -1548,6 +1549,8 @@ func zero(valueType ir.Type) string {
 		return "&adamic_string_empty"
 	case ir.MaybeNumber:
 		return "(adamic_maybe_number){false, 0.0}"
+	case ir.MaybeBoolean:
+		return "(adamic_maybe_boolean){false, false}"
 	}
 	return "NULL"
 }
@@ -1584,8 +1587,8 @@ func borrowed(valueType ir.Type, value string) string {
 func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	value := e.value(coalesce.Value)
 	present, unwrapped := value+" != NULL", value
-	if coalesce.Value.Type() == ir.MaybeNumber {
-		present, unwrapped = value+".present", value+".number"
+	if coalesce.Value.Type().IsMaybe() {
+		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
 	}
 	if coalesce.Panic != nil {
 		text, message, _ := e.aside(coalesce.Panic)

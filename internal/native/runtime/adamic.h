@@ -50,6 +50,12 @@ typedef struct adamic_maybe_number {
 	double number;
 } adamic_maybe_number;
 
+// adamic_maybe_boolean is boolean | undefined: present, and the boolean when it is.
+typedef struct adamic_maybe_boolean {
+	bool present;
+	bool boolean;
+} adamic_maybe_boolean;
+
 // adamic_cell holds a variable a closure captured, so the function that declared it and every
 // closure that captured it share one (closure.c). references says whether value is a reference.
 typedef struct adamic_cell {
@@ -253,6 +259,14 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]);
 extern adamic_string adamic_string_empty;
 extern adamic_string adamic_string_true;
 extern adamic_string adamic_string_false;
+
+// String(undefined), and String(value) for number | undefined, a string the caller owns (maybe.c).
+// adamic_maybe_number_equal and adamic_maybe_boolean_equal are === on two pairs: both missing, or
+// both present and equal.
+extern adamic_string adamic_string_undefined;
+adamic_string *adamic_string_from_maybe_number(adamic_maybe_number value);
+bool adamic_maybe_number_equal(adamic_maybe_number left, adamic_maybe_number right);
+bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 double adamic_string_length(const adamic_string *string);

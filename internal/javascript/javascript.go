@@ -407,11 +407,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(" + e.value(expression.Value) + " === undefined)"
 	case ir.Unwrap:
 		return e.value(expression.Value)
-	case ir.MaybeNumberOf:
+	case ir.MaybeOf:
 		if expression.Value == nil {
 			return "undefined"
 		}
 		return e.value(expression.Value)
+	case ir.MaybeToString:
+		return "String(" + e.value(expression.Value) + ")"
 	case ir.Coalesce:
 		if expression.Panic != nil {
 			return "(" + e.value(expression.Value) + " ?? panic(" + e.value(expression.Panic) + "))"
