@@ -30,6 +30,9 @@ import (
 // write what the source can't read.
 type widening struct {
 	source, target *checker.Type
+
+	// readonlyField names a readonly field seen as a writable one, when that's the slot.
+	readonlyField string
 }
 
 // widened finds the first mutable slot at which a value of type from, seen as type to, could be
@@ -102,6 +105,13 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 			continue
 		}
 		source, target := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)
+		if !l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside) {
+			// tsc ignores readonly when it relates properties, so a readonly field, which may hold
+			// something narrower than its type says (it's covariant), can be seen as a writable one,
+			// and the wider type written into it. Only the identical type, which this walk never
+			// enters, is the same field.
+			return &widening{source: source, target: target, readonlyField: viewed.Name}
+		}
 		if !l.checker.IsReadonlySymbol(viewed) && !l.checker.IsTypeAssignableTo(target, source) {
 			return &widening{source: source, target: target}
 		}
@@ -296,6 +306,10 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	}
 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+	if found.readonlyField != "" {
+		what = "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", whose readonly field " + found.readonlyField + " becomes writable: a readonly field may hold something narrower than " + l.checker.TypeToString(found.source) + ", which a write of " + l.checker.TypeToString(found.target) + " would replace"
+		fix = "keep " + found.readonlyField + " readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+	}
 	if found.target.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		what = "a value of type " + l.checker.TypeToString(found.source) + " seen as " + l.checker.TypeToString(found.target) + ", a type parameter whose constraint " + l.checker.TypeToString(l.checker.GetBaseConstraintOfType(found.target)) + " can be written, so it can write what " + l.checker.TypeToString(found.source) + " can't hold"
 		fix = "take it as " + l.checker.TypeToString(found.source) + ", or constrain " + l.checker.TypeToString(found.target) + " to something readonly, which can't write (adamic/invariant-mutable)"

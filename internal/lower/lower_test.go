@@ -248,6 +248,37 @@ const strong: Strong = { v: { name: 'Rex' } };
 const weakly: Weakly = strong;
 weakly.v = undefined;
 `, "main.a:18:24: Adamic 0.1 refuses a value of type Strong seen as Weakly, which can write Weak<Animal> where Animal is read"},
+		{"a readonly field turned back into a writable one", `const kennel: { pet: Dog } = { pet: { name: 'Rex', bark: 'woof' } };
+const view: { readonly pet: Animal } = kennel;
+const pen: { pet: Animal } = view;
+pen.pet = { name: 'Tom' };
+`, "main.a:13:30: Adamic 0.1 refuses a value of type { readonly pet: Animal; } seen as { pet: Animal; }, whose readonly field pet becomes writable: a readonly field may hold something narrower than Animal, which a write of Animal would replace; keep pet readonly in the type it's seen as"},
+		{"a readonly field made writable by a mapped type", `type Writable<T> = { -readonly [K in keyof T]: T[K] };
+interface View {
+	readonly pet: Animal;
+}
+function open(view: View): Writable<View> {
+	return view;
+}
+`, "main.a:16:9: Adamic 0.1 refuses a value of type View seen as Writable<View>, whose readonly field pet becomes writable"},
+		{"a readonly array field turned writable", `function open(view: { readonly pets: readonly Animal[] }): { pets: readonly Animal[] } {
+	return view;
+}
+`, "main.a:12:9: Adamic 0.1 refuses a value of type { readonly pets: readonly Animal[]; } seen as { pets: readonly Animal[]; }, whose readonly field pets becomes writable"},
+		{"a readonly field turned writable inside a readonly array", `interface Held {
+	readonly pet: Animal;
+}
+interface Open {
+	pet: Animal;
+}
+function open(held: readonly Held[]): readonly Open[] {
+	return held;
+}
+`, "main.a:18:9: Adamic 0.1 refuses a value of type readonly Held[] seen as readonly Open[], whose readonly field pet becomes writable"},
+		{"a readonly field of a primitive turned writable", `function open(view: { readonly name: string }): { name: string } {
+	return view;
+}
+`, "main.a:12:9: Adamic 0.1 refuses a value of type { readonly name: string; } seen as { name: string; }, whose readonly field name becomes writable"},
 		{"an intersection's array seen as a plain array", `function tagged(dogs: Dog[] & Tag): number {
 	const animals: Animal[] = dogs;
 	return animals.push({ name: 'Tom' });
@@ -310,6 +341,27 @@ console.log(pen.pet.name);
 	const animals: readonly Animal[] & Tag = dogs;
 	return animals.length;
 }
+`},
+		{"a readonly field seen as a readonly field", `const view: { readonly pet: Animal } = { pet: { name: 'Rex' } };
+const same: { readonly pet: Animal } = view;
+console.log(same.pet.name);
+`},
+		{"a writable field seen as a readonly one", `const pen: { pet: Animal } = { pet: { name: 'Rex' } };
+const view: { readonly pet: Animal } = pen;
+console.log(view.pet.name);
+`},
+		{"a readonly field seen as its own type", `interface View {
+	readonly pet: Animal;
+}
+function keep(view: View): View {
+	const same: View = view;
+	return same;
+}
+`},
+		{"a readonly field copied into a writable one", `const view: { readonly pet: Animal } = { pet: { name: 'Rex' } };
+const pen: { pet: Animal } = { pet: view.pet };
+pen.pet = { name: 'Tom' };
+console.log(view.pet.name);
 `},
 		{"an intersection seen as itself", `function tagged(dogs: Dog[] & Tag): number {
 	const same: Dog[] & Tag = dogs;
