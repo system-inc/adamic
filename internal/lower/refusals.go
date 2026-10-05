@@ -15,8 +15,6 @@ type refusal struct {
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
-	ast.KindTryStatement:      {"try", "return an error as a value, a union the caller narrows; a broken invariant is panic('why')"},
-	ast.KindThrowStatement:    {"throw", "return an error as a value, or panic('why') for a broken invariant"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindGetAccessor:       {"a getter", "write a method: in 0.1 reading a property is just a read"},

@@ -459,6 +459,13 @@ void adamic_weak_dropped(adamic_weak *handle);
 // nothing else can reach, and a Weak reaches without counting.
 bool adamic_weak_held(const void *target);
 
+// adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
+// every call that can throw, and taken by the catch that lands it. adamic_error_new is new
+// Error(message), and adamic_uncaught the panic of an error nothing caught.
+extern adamic_object *adamic_thrown;
+adamic_object *adamic_error_new(adamic_string *message);
+_Noreturn void adamic_uncaught(void);
+
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
 // rather than kill, as on Node.
 void adamic_start(int count, char **values);
