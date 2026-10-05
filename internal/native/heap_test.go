@@ -3,6 +3,7 @@ package native
 import (
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -55,4 +56,67 @@ int main(int count, char **arguments) {
 			}
 		}
 	}
+}
+
+// The size classes share their chunks: memory one class emptied is carved by the next, so a program
+// that builds its values at one size, then another, peaks at what it holds at once (reviewer R2's
+// finding, review/r2/alloc/, was five times main's peak when each class kept its own). The harness
+// builds generations of strings through the runtime at sizes across every class, down and up again,
+// and a control builds the same generations at one size; both are release builds, where the classes
+// are on, and the churn's peak resident set must stay near the control's.
+func TestSizeClassesShareTheirChunks(t *testing.T) {
+	t.Parallel()
+	const harness = `#include "adamic.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/resource.h>
+
+static adamic_string *items[20000];
+
+int main(int count, char **arguments) {
+	(void)count;
+	bool churn = strcmp(arguments[1], "churn") == 0;
+	static const size_t lengths[] = {8, 40, 72, 104, 136, 168, 200, 168, 136, 104, 72, 40, 8, 200, 8};
+	for (size_t round = 0; round < sizeof lengths / sizeof lengths[0]; round++) {
+		size_t length = churn ? lengths[round] : 200;
+		for (size_t index = 0; index < 20000; index++) {
+			items[index] = adamic_string_allocate(length);
+			memset((char *)items[index]->bytes, 'a' + (int)(index % 26), length);
+		}
+		for (size_t index = 0; index < 20000; index++) {
+			if (items[index]->bytes[length - 1] != 'a' + (int)(index % 26)) {
+				puts("corrupt");
+				return 1;
+			}
+			adamic_release(items[index]);
+		}
+	}
+	struct rusage usage;
+	getrusage(RUSAGE_SELF, &usage);
+	printf("%ld\n", usage.ru_maxrss);
+	return 0;
+}
+`
+	binary := filepath.Join(t.TempDir(), "harness")
+	if err := Build(harness, binary, Options{}); err != nil {
+		t.Fatal(err)
+	}
+	peak := func(mode string) int {
+		output, err := exec.Command(binary, mode).CombinedOutput()
+		if err != nil {
+			t.Fatalf("%s: %v\n%s", mode, err, output)
+		}
+		kilobytes, err := strconv.Atoi(strings.TrimSpace(string(output)))
+		if err != nil {
+			t.Fatalf("%s: %q", mode, output)
+		}
+		return kilobytes
+	}
+	control, churn := peak("control"), peak("churn")
+	// Fifteen generations at up to fourteen sizes: kept apart, they'd peak several times the control.
+	if churn > control*3/2 {
+		t.Errorf("the churn through every class peaked at %d KB, the same churn at one size at %d KB: the classes aren't sharing their chunks", churn, control)
+	}
+	t.Logf("peak %d KB through every class, %d KB at one size", churn, control)
 }

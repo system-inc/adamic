@@ -6,12 +6,14 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-// Small heap values come from size classes, 16 bytes apart up to 256: each class keeps a list of its
-// free slots, threaded through them, and takes a chunk of slots at a time from malloc when the list is
-// empty. Allocating is taking the list's first slot and freeing is putting a slot back on its class's
-// list, a few instructions each; a value's class is in its header, since a string's length can shrink
-// after it's made. A larger value comes from malloc. Chunks are kept for the program's life, so its
-// memory is its peak, as a free list's always is.
+// Small heap values come from size classes, 16 bytes apart up to 256, carved from 64 KB chunks: each
+// chunk holds one class's slots, its freed ones on a list threaded through them, and each class keeps
+// a list of the chunks it can take a slot from. Allocating is taking a slot and freeing is putting it
+// back on its chunk's list, a few instructions each; a value's class is in its header, since a
+// string's length can shrink after it's made. A larger value comes from malloc. A chunk that empties
+// goes to spares any class can carve, so memory one class used can serve another: a program that
+// builds its values at one size, then another, peaks at what it holds at once, not at the sum of
+// every size's peak.
 //
 // Under the address sanitizer every value comes from malloc and goes back to free, so ASan sees each
 // use after a free and LeakSanitizer each value never freed, as the oracle needs. ADAMIC_SLABS turns
@@ -48,26 +50,138 @@
 #define CLASSES 16
 #define CHUNK 65536
 
-// A free slot holds the next free slot of its class.
+
+// A free slot holds the next free slot of its chunk.
 typedef struct free_slot {
 	struct free_slot *next;
 } free_slot;
 
-static free_slot *free_slots[CLASSES];
+// A chunk is 64 KB from malloc, numbered in the order chunks are made; a value's header holds its
+// chunk's number (adamic_heap.slab), so a slot finds its chunk with one load. A chunk starts with
+// this, and its slots of one class follow.
+typedef struct chunk {
+	// The class's chunks with a slot to give, which this is on when listed.
+	struct chunk *previous;
+	struct chunk *next;
+	bool listed;
+	// Slots freed and not yet taken again, and those never taken yet, from fresh to end.
+	free_slot *free;
+	char *fresh;
+	char *end;
+	size_t live;
+	size_t class;
+	uint32_t number;
+} chunk;
 
-// refill gives a class a chunk's worth of free slots.
-static void refill(size_t class) {
-	size_t size = (class + 1) * GRANULE;
-	char *chunk = malloc(CHUNK);
-	if (chunk == NULL) {
-		static const char message[] = "out of memory";
-		adamic_panic(message, sizeof message - 1);
+#define FIRST_SLOT ((sizeof(chunk) + GRANULE - 1) / GRANULE * GRANULE)
+
+static chunk *giving[CLASSES];
+static chunk *spares;
+static chunk **chunks;
+static size_t chunk_count;
+static size_t chunk_capacity;
+
+static void list_chunk(chunk *each) {
+	each->previous = NULL;
+	each->next = giving[each->class];
+	if (each->next != NULL) {
+		each->next->previous = each;
 	}
-	for (size_t offset = CHUNK / size * size; offset >= size; offset -= size) {
-		free_slot *slot = (free_slot *)(chunk + offset - size);
-		slot->next = free_slots[class];
-		free_slots[class] = slot;
-		POISON(slot, size);
+	giving[each->class] = each;
+	each->listed = true;
+}
+
+static void unlist_chunk(chunk *each) {
+	if (each->previous != NULL) {
+		each->previous->next = each->next;
+	} else {
+		giving[each->class] = each->next;
+	}
+	if (each->next != NULL) {
+		each->next->previous = each->previous;
+	}
+	each->listed = false;
+}
+
+// new_chunk gives a class a chunk: a spare one, whatever class it held, or a new one from malloc.
+static chunk *new_chunk(size_t class) {
+	chunk *each = spares;
+	if (each != NULL) {
+		spares = each->next;
+	} else {
+		if (chunk_count == chunk_capacity) {
+			chunk_capacity = chunk_capacity == 0 ? 64 : chunk_capacity * 2;
+			chunk **grown = realloc(chunks, chunk_capacity * sizeof *grown);
+			if (grown == NULL || chunk_count >= UINT32_MAX) {
+				static const char message[] = "out of memory";
+				adamic_panic(message, sizeof message - 1);
+			}
+			chunks = grown;
+		}
+		each = malloc(CHUNK);
+		if (each == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		each->number = (uint32_t)chunk_count;
+		chunks[chunk_count++] = each;
+	}
+	each->free = NULL;
+	each->fresh = (char *)each + FIRST_SLOT;
+	each->end = (char *)each + CHUNK;
+	each->live = 0;
+	each->class = class;
+	POISON(each->fresh, (size_t)(each->end - each->fresh));
+	list_chunk(each);
+	return each;
+}
+
+static void *take(size_t class, uint32_t *number) {
+	size_t size = (class + 1) * GRANULE;
+	chunk *each = giving[class];
+	if (each == NULL) {
+		each = new_chunk(class);
+	}
+	void *slot;
+	if (each->free != NULL) {
+		slot = each->free;
+		UNPOISON(slot, size);
+		each->free = ((free_slot *)slot)->next;
+	} else {
+		slot = each->fresh;
+		each->fresh += size;
+		UNPOISON(slot, size);
+	}
+	each->live++;
+	*number = each->number;
+	if (each->free == NULL && each->fresh + size > each->end) {
+		// Full: off the list until a slot comes back.
+		unlist_chunk(each);
+	}
+	return slot;
+}
+
+static void give(void *slot, uint32_t number) {
+	chunk *each = chunks[number];
+	size_t class = each->class;
+	size_t size = (class + 1) * GRANULE;
+	((free_slot *)slot)->next = each->free;
+	each->free = slot;
+	// The whole slot, the link too, so a use after the free is caught where there's a sanitizer, even a
+	// retain or release, which touches the first word; take unpoisons a slot before reading its link.
+	POISON(slot, size);
+	each->live--;
+	if (!each->listed) {
+		list_chunk(each);
+	}
+	if (each->live == 0 && !(giving[class] == each && each->next == NULL)) {
+		// Empty, and not the only chunk its class has to give from (which stays, so a class that takes
+		// and gives back one value at a time doesn't trade a chunk back and forth): to the spares, which
+		// any class can carve. Chunks are kept for the program's life, as malloc keeps what it's given
+		// back, but shared: a program peaks at the chunks it holds at once, not at every class's peak.
+		unlist_chunk(each);
+		each->next = spares;
+		spares = each;
 	}
 }
 
@@ -75,15 +189,9 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 	adamic_heap *heap;
 	uint32_t slab = 0;
 	if (SLABS && size <= CLASSES * GRANULE) {
-		size_t class = (size - 1) / GRANULE;
-		if (free_slots[class] == NULL) {
-			refill(class);
-		}
-		free_slot *slot = free_slots[class];
-		UNPOISON(slot, (class + 1) * GRANULE);
-		free_slots[class] = slot->next;
-		heap = (adamic_heap *)slot;
-		slab = (uint32_t)class + 1;
+		uint32_t number;
+		heap = take((size - 1) / GRANULE, &number);
+		slab = number + 1;
 	} else {
 		heap = malloc(size);
 		if (heap == NULL) {
@@ -98,19 +206,13 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 	return heap;
 }
 
-// deallocate gives a value's memory back: to its class's free list, or to free.
+// deallocate gives a value's memory back: to its chunk, or to free.
 static void deallocate(adamic_heap *heap) {
 	if (heap->slab == 0) {
 		free(heap);
 		return;
 	}
-	size_t class = heap->slab - 1;
-	free_slot *slot = (free_slot *)heap;
-	slot->next = free_slots[class];
-	free_slots[class] = slot;
-	// The whole slot, the link too, so a use after the free is caught where there's a sanitizer, even a
-	// retain or release, which touches the first word; allocate unpoisons a slot before reading its link.
-	POISON(slot, (class + 1) * GRANULE);
+	give(heap, heap->slab - 1);
 }
 
 void *adamic_retain(void *value) {

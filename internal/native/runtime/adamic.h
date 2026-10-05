@@ -33,8 +33,8 @@ enum adamic_kind {
 typedef struct adamic_heap {
 	size_t references;
 	enum adamic_kind kind;
-	// slab is the size class the value's memory came from, plus one, or 0 for memory from malloc and
-	// for a value never freed (heap.c). It fills what was padding.
+	// slab is the number of the chunk the value's memory came from, plus one, or 0 for memory from
+	// malloc and for a value never freed (heap.c). It fills what was padding.
 	uint32_t slab;
 } adamic_heap;
 
@@ -251,6 +251,15 @@ void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 // trunc(index) exactly (below 2^53 the conversion is exact, and from there every double is whole), so
 // a fraction is caught without calling trunc, which on x86-64 without SSE4.1 is a call into libm on
 // every read. -0 is index 0, as JavaScript reads it.
+// adamic_array_at_integer is array[index] for an index that's a whole number already, a loop counter
+// kept in an integer (lower/counters.go): the same answer, with only the bounds to check.
+static inline adamic_value *adamic_array_at_integer(const adamic_array *array, int64_t index) {
+	if (index < 0 || (uint64_t)index >= array->length) {
+		return NULL;
+	}
+	return &array->elements[index];
+}
+
 static inline adamic_value *adamic_array_at(const adamic_array *array, double index) {
 	if (!(index >= 0) || index >= (double)array->length) {
 		return NULL;
