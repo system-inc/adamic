@@ -74,7 +74,7 @@ static adamic_string *make(size_t count, size_t shift) {
 	for (size_t index = 0; index < count; index++) {
 		state = (state * 25173 + 13849) % 65536;
 		char bytes[4];
-		adamic_string piece = {{0, adamic_kind_string}, encode(pattern[(state >> 8) % PATTERN_LENGTH], bytes), bytes, 0, NULL};
+		adamic_string piece = {{0, adamic_kind_string}, encode(pattern[(state >> 8) % PATTERN_LENGTH], bytes), bytes, 0, NULL, NULL, 0};
 		adamic_string *longer = adamic_string_concat(2, (adamic_string *const[]){result, &piece});
 		adamic_release(result);
 		result = longer;
