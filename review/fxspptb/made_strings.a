@@ -1,0 +1,22 @@
+// Case mapping on strings the program makes (string literals are immortal, so they prove nothing
+// about ownership), inside a function so every one dies before the program ends and a leak would show.
+function shout(parts: string[]): string {
+	let joined = "";
+	for (const part of parts) {
+		joined = joined + part;
+	}
+	const upper = (joined + "ß").toUpperCase();
+	const lower = (upper + "Σ").toLowerCase();
+	return `${upper.length} ${lower} ${(lower + joined).toUpperCase().toLowerCase()}`;
+}
+function measure(count: number): string {
+	let total = 0;
+	for (let index = 1; index <= count; index++) {
+		total = total + Math.hypot(index, Math.sin(index), Math.log(index)) + Math.atan2(index, count);
+	}
+	return `${total} ${(1 / 3).toPrecision(20)} ${(total * 1e30).toExponential()}`;
+}
+for (let round = 0; round < 3; round++) {
+	console.log(shout(["ΟΔΟΣ", " ", `${round}`, "straße", "İ"]));
+	console.log(measure(round * 10 + 5));
+}

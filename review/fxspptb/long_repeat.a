@@ -1,0 +1,3 @@
+// The same limit with no case mapping in it: repeat (older than today's merges) past 2^29 - 24 units.
+const long = "x".repeat(600000000);
+console.log(`${long.length}`);

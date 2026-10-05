@@ -1,0 +1,17 @@
+// Math functions of more than one argument evaluate their arguments left to right.
+let trace = "";
+function note(label: string, value: number): number {
+	trace = trace + label;
+	return value;
+}
+console.log(`${Math.atan2(note("a", 1), note("b", 2))}`);
+console.log(trace);
+trace = "";
+console.log(`${Math.hypot(note("a", 3), note("b", 4), note("c", 12))}`);
+console.log(trace);
+trace = "";
+console.log(`${Math.pow(note("a", 2), note("b", 10))}`);
+console.log(trace);
+trace = "";
+console.log(`${Math.max(note("a", 2), note("b", 10), note("c", 5))}`);
+console.log(trace);

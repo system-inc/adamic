@@ -1,0 +1,7 @@
+// toUpperCase can make a string longer than its receiver: ß is SS. 300,000,000 of them is a string
+// V8 can hold (2^29 - 24 UTF-16 units is its longest), and its uppercase, 600,000,000 units, is not:
+// Node throws RangeError: Invalid string length, which is a panic to Adamic.
+const sharp = "ß".repeat(300000000);
+console.log(`${sharp.length}`);
+const upper = sharp.toUpperCase();
+console.log(`${upper.length}`);

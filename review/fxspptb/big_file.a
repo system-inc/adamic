@@ -1,0 +1,10 @@
+// readTextFile on a file past V8's longest string (2^29 - 24 UTF-16 units, about 512 MiB). Node's
+// readFileSync(path, 'utf8') can't make the string and throws ERR_STRING_TOO_LONG, which adamic.mjs
+// turns into { kind: 'Error', message: 'cannot read <path>: failed' }. Run it with the path of a
+// sparse file of 600 MiB: truncate -s 600M big.txt.
+import { programArguments, readTextFile } from 'adamic';
+
+for (const path of programArguments()) {
+	const result = readTextFile(path);
+	console.log(result.kind === 'Ok' ? `${path}: Ok, ${result.text.length} code units` : result.message);
+}
