@@ -142,10 +142,6 @@ static unsigned decode(const unsigned char *bytes, size_t size) {
 	return ((unsigned)(bytes[0] & 0x07) << 18) | ((unsigned)(bytes[1] & 0x3f) << 12) | ((unsigned)(bytes[2] & 0x3f) << 6) | (bytes[3] & 0x3f);
 }
 
-double adamic_string_length(const adamic_string *string) {
-	return (double)adamic_string_units(string);
-}
-
 // unit_at is the UTF-16 unit at an index below the length: a code point of the BMP or a lone
 // surrogate, or one half of a pair.
 static unsigned unit_at(const adamic_string *string, size_t index) {
@@ -159,7 +155,7 @@ static unsigned unit_at(const adamic_string *string, size_t index) {
 	return point;
 }
 
-double adamic_string_char_code_at(const adamic_string *string, double position) {
+double adamic_string_char_code(const adamic_string *string, double position) {
 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
 	position = isnan(position) ? 0 : trunc(position);
 	if (position < 0 || position >= (double)adamic_string_units(string)) {

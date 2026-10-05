@@ -337,8 +337,23 @@ adamic_maybe_number adamic_maybe_number_unpack(double packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
-double adamic_string_length(const adamic_string *string);
-double adamic_string_char_code_at(const adamic_string *string, double position);
+//
+// length is the count of units, once it's been made, inline; and charCodeAt of an ASCII string (its
+// units are its bytes) at an index inside it is that byte, inline, which is what a scanner's loop
+// does. NaN, a negative, past the end, a non-ASCII string (through its index, string_index.c) and a
+// length not yet counted go to adamic_string_char_code, out of line. A position from 0 up to the
+// length truncates to its index as (size_t) does.
+size_t adamic_string_units(const adamic_string *string);
+double adamic_string_char_code(const adamic_string *string, double position);
+static inline double adamic_string_length(const adamic_string *string) {
+	return string->units != 0 ? (double)(string->units - 1) : (double)adamic_string_units(string);
+}
+static inline double adamic_string_char_code_at(const adamic_string *string, double position) {
+	if (string->units == string->length + 1 && position >= 0 && position < (double)string->length) {
+		return (double)(unsigned char)string->bytes[(size_t)position];
+	}
+	return adamic_string_char_code(string, position);
+}
 adamic_string *adamic_string_trim(adamic_string *string);
 
 // for...of over a string walks code points: adamic_string_next is the byte size of the one at offset,
