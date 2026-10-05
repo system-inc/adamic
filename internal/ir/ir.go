@@ -148,7 +148,7 @@ type Local struct {
 
 	// Counter is a for loop's counter proven to hold only whole numbers no larger than 2^53, each a
 	// double exactly, so the native backend keeps it in an integer and reads it as the same double
-	// (internal/lower/counters.go). Only the loop's update ever writes it.
+	// (internal/lower/counters.go). Only the loop's update ever writes it, by a whole constant step.
 	Counter bool
 }
 

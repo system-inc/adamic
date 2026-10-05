@@ -426,12 +426,18 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.end()
 	case ir.Assign:
 		if e.program.Locals[statement.Local].Counter {
-			// The loop's update, counter + 1, is the only write a counter has (lower/counters.go).
+			// The loop's update, counter + step or counter - step, is the only write a counter has, and
+			// its step a whole constant within 2^53 (lower/counters.go), which the cast keeps exactly.
 			sum, isSum := statement.Value.(ir.Binary)
-			if one, isOne := sum.Right.(ir.NumberConstant); !isSum || sum.Operator != ir.Add || !isOne || one.Value != 1 {
-				panic(fmt.Sprintf("native: compiler bug: counter %s written other than by + 1", e.program.Locals[statement.Local].Name))
+			read, isRead := sum.Left.(ir.Read)
+			if !isSum || (sum.Operator != ir.Add && sum.Operator != ir.Subtract) || !isRead || read.Local != statement.Local {
+				panic(fmt.Sprintf("native: compiler bug: counter %s written other than by a step", e.program.Locals[statement.Local].Name))
 			}
-			e.line("%s += 1;", e.localName(statement.Local))
+			operator := "+="
+			if sum.Operator == ir.Subtract {
+				operator = "-="
+			}
+			e.line("%s %s (int64_t)(%s);", e.localName(statement.Local), operator, e.value(sum.Right))
 			return
 		}
 		value := e.value(statement.Value)
