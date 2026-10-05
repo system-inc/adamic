@@ -93,6 +93,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/map_iteration.a", true, false},
 	{"internal/oracle/testdata/sorts.a", true, false},
 	{"internal/oracle/testdata/sort_releases.a", true, false},
+	// The same sorts at the top level, where only the globals' release at exit lets the leak check see.
+	{"internal/oracle/testdata/sort_top_level.a", true, false},
 	{"internal/oracle/testdata/splices.a", true, false},
 	{"internal/oracle/testdata/fills.a", true, false},
 	{"internal/oracle/testdata/fill_length.a", true, false},
@@ -117,6 +119,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/write_after_shrink.a", true, true},
 	{"internal/oracle/testdata/normalize.a", true, false},
 	{"internal/oracle/testdata/normalize_form.a", true, false},
+	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands
+	// an element it may overwrite. Each breaks under ASan if it's borrowed.
+	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
+	{"internal/oracle/testdata/borrow_map_overwrite.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

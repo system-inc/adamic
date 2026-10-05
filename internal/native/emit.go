@@ -59,6 +59,7 @@ func C(program *ir.Program) string {
 	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_arguments_save(argc, argv);\n")
 	emitter.indent = 1
 	emitter.block(program.Main, nil)
+	emitter.releaseGlobals()
 	bodies.WriteString(emitter.out.String())
 	bodies.WriteString("\treturn 0;\n}\n")
 
@@ -107,6 +108,10 @@ type emitter struct {
 
 	// shapes names each object layout already declared, by its fields.
 	shapes map[string]string
+
+	// initialized is every global main declares, in the order their declarations run: modules in
+	// ECMAScript's order, and each module's from the top.
+	initialized []int
 
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.
 	function      *ir.Function
@@ -192,7 +197,8 @@ func (e *emitter) functionBody(function ir.Function) {
 		}
 	}
 	for _, parameter := range function.Parameters {
-		if e.program.Locals[parameter].Type.IsReference() {
+		// A borrowed parameter is its caller's, kept alive for the whole call.
+		if e.program.Locals[parameter].Type.IsReference() && !e.program.Locals[parameter].Borrowed {
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
 		}
@@ -285,6 +291,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		if local.Global {
 			e.store(statement.Local, value)
 			e.line("%s = true;", readyName(statement.Local))
+			e.initialized = append(e.initialized, statement.Local)
 		} else {
 			e.declareLocal(statement.Local, value, false)
 		}
@@ -372,6 +379,11 @@ func (e *emitter) statement(statement ir.Statement) {
 // store gives a local a value; a string's new reference is taken before the old one is let go,
 // since they may be the same string.
 func (e *emitter) store(local int, value string) {
+	if e.program.Locals[local].Borrowed {
+		// Storing would release the old value, which is the caller's. Lowering never borrows a
+		// parameter anything assigns, so reaching this is a compiler bug, said out loud.
+		panic(fmt.Sprintf("native: a store into the borrowed parameter %s", e.program.Locals[local].Name))
+	}
 	name := e.localName(local)
 	if slot := e.cellSlot(local); slot != "" {
 		if !e.program.Locals[local].Type.IsReference() {
@@ -392,6 +404,18 @@ func (e *emitter) store(local int, value string) {
 	e.line("%s %s = %s;", cType(e.program.Locals[local].Type), old, name)
 	e.line("%s = adamic_retain(%s);", name, value)
 	e.line("adamic_release(%s);", old)
+}
+
+// releaseGlobals lets go of every global main declared, the last declared first, once main has run
+// to its end. Nothing reads them after that, and a program that let go of everything is one the leak
+// check can hold to account: a reference still held at exit hides whatever it reaches. A panic exits
+// where it stands, as Node does, and never gets here.
+func (e *emitter) releaseGlobals() {
+	for index := len(e.initialized) - 1; index >= 0; index-- {
+		if e.program.Locals[e.initialized[index]].Type.IsReference() {
+			e.line("adamic_release(%s);", e.localName(e.initialized[index]))
+		}
+	}
 }
 
 // checkReady panics as JavaScript throws when a global is touched before its declaration has run.
