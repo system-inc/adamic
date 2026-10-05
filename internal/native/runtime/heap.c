@@ -1,6 +1,7 @@
 // heap.c: allocation, counting and freeing for every heap value (docs/memory.md).
 
 #include "adamic.h"
+#include "count.h"
 
 #include <stdlib.h>
 
@@ -12,10 +13,12 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 	}
 	heap->references = 1;
 	heap->kind = kind;
+	ADAMIC_COUNT_ALLOCATION();
 	return heap;
 }
 
 void *adamic_retain(void *value) {
+	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
 	if (heap != NULL && heap->references != 0) {
 		heap->references++;
@@ -103,9 +106,11 @@ static void free_one(void *value) {
 	}
 	}
 	free(value);
+	ADAMIC_COUNT_FREE();
 }
 
 void adamic_release(void *value) {
+	ADAMIC_COUNT_RELEASE();
 	let_go(value);
 	if (draining) {
 		// An outer release is already working through the list.

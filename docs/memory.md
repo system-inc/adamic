@@ -64,4 +64,4 @@ UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, index
 
 - Every native fixture runs under ASan and UBSan (use-after-free, overflow, undefined behavior) and, separately, under `leaks --atExit` (anything never freed). A mutant that drops releases is caught by the leak check (`2a2e30b`).
 - Every change to counting or reuse is checked by the oracle against Node, byte for byte.
-- Retains and releases per fixture get counted before reuse is added, so its effect is a number, not a feeling.
+- Retains and releases per fixture are counted (`adamic build --count`), and every oracle fixture's counts are checked in as `internal/oracle/counts.md`. A change that moves them fails the gate until the table is updated, so its effect shows in review as a diff of numbers, not a feeling.
