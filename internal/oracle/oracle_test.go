@@ -95,6 +95,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/fills.a", true, false},
 	{"internal/oracle/testdata/fill_length.a", true, false},
 	{"internal/oracle/testdata/case_mapping.a", true, false},
+	// sin, cos and tan where reducing by pi / 2 cancels the most bits, as no sweep input does.
+	{"internal/oracle/testdata/trig_reduction.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
