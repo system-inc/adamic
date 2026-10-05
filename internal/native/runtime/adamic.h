@@ -22,6 +22,8 @@ enum adamic_kind {
 	adamic_kind_cell,
 	adamic_kind_closure,
 	adamic_kind_map_iterator,
+	adamic_kind_number,
+	adamic_kind_boolean,
 };
 
 typedef struct adamic_heap {
@@ -314,6 +316,41 @@ adamic_string *adamic_string_to_lower(const adamic_string *string);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
+
+// A union whose members are held differently (string | number) is one counted reference, its kind the
+// member it is (union.c): a string, object, array, map or closure is itself, undefined is NULL, a
+// number is boxed, and a boolean is one of two constant boxes.
+typedef struct adamic_number_box {
+	adamic_heap heap;
+	double number;
+} adamic_number_box;
+
+typedef struct adamic_boolean_box {
+	adamic_heap heap;
+	bool boolean;
+} adamic_boolean_box;
+
+extern adamic_boolean_box adamic_box_true;
+extern adamic_boolean_box adamic_box_false;
+
+// adamic_box_number boxes a number, a reference the caller owns.
+adamic_heap *adamic_box_number(double number);
+
+// adamic_union_equal is === on two unions: the same member, equal as that member is compared.
+bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
+
+// adamic_union_to_string is String(value) for a union of numbers, booleans, strings and undefined, a
+// string the caller owns.
+adamic_string *adamic_union_to_string(adamic_heap *value);
+
+// adamic_union_typeof is typeof value, a constant; the names typeof gives are these.
+adamic_string *adamic_union_typeof(const adamic_heap *value);
+extern adamic_string adamic_typeof_number;
+extern adamic_string adamic_typeof_string;
+extern adamic_string adamic_typeof_boolean;
+extern adamic_string adamic_typeof_undefined;
+extern adamic_string adamic_typeof_object;
+extern adamic_string adamic_typeof_function;
 
 // adamic_write_line writes a string and a newline, as console.log does with one string.
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string);

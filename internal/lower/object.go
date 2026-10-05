@@ -46,6 +46,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, name.Text()) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
+			if slotless(value.Type()) {
+				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
+			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: name.Text(), Value: value})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
@@ -135,7 +138,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	valueType, isKnown := l.representation(element)
-	if !isKnown || valueType.IsMaybe() {
+	if !isKnown || slotless(valueType) {
 		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
 	}
@@ -196,8 +199,8 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if of.IsMaybe() {
-			return nil, l.notYet(node, "a field of type "+typeName(of))
+		if slotless(of) {
+			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
@@ -444,7 +447,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-			if of := l.result.Locals[local].Type; of.IsMaybe() {
+			if of := l.result.Locals[local].Type; slotless(of) {
 				return nil, l.notYet(binding, "a tuple element of type "+typeName(of))
 			}
 			lowered.Pattern = append(lowered.Pattern, ir.Binding{Local: local, Field: strconv.Itoa(index)})
@@ -791,7 +794,7 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if err != nil {
 		return nil, true, err
 	}
-	if result != initial.Type() || result.IsMaybe() {
+	if result != initial.Type() || slotless(result) {
 		return nil, true, l.notYet(node, "reduce to a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 	}
 	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result}, true, nil
@@ -808,7 +811,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	if !keyKnown || (key != ir.String && key != ir.Number) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings or numbers")
 	}
-	if !valueKnown || value.IsMaybe() {
+	if !valueKnown || slotless(value) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
@@ -935,7 +938,7 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	}
 	l.touch(local)
 	of := l.result.Locals[local].Type
-	if of.IsMaybe() {
+	if slotless(of) {
 		return nil, l.notYet(property, "a field from a "+typeName(of)+" variable")
 	}
 	return ir.Read{Local: local, Of: of, Checked: l.checked(local)}, nil
@@ -1072,7 +1075,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	if of.IsMaybe() {
+	if slotless(of) {
 		return nil, l.notYet(node, "a tuple element of type "+typeName(of))
 	}
 	return ir.Property{Object: object, Name: index.Text(), Of: of}, nil

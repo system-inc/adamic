@@ -96,6 +96,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/array_from_length.a", true, false},
 	{"internal/oracle/testdata/maybe_booleans.a", true, false},
 	{"internal/oracle/testdata/maybe_boolean_panic.a", true, false},
+	{"internal/oracle/testdata/unions.a", true, false},
 	{"internal/oracle/testdata/case_mapping.a", true, false},
 }
 

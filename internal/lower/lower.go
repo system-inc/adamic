@@ -264,9 +264,13 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		if err != nil {
 			return err
 		}
-		if function.Closure && (l.result.Locals[local].Type.IsMaybe() || declared.Initializer != nil || declared.QuestionToken != nil) {
+		if function.Closure && (declared.Initializer != nil || declared.QuestionToken != nil) {
 			// A function value is called with the arguments its caller has, and no more.
 			return l.notYet(parameter, "a function value with an optional parameter")
+		}
+		if function.Closure && slotless(l.result.Locals[local].Type) {
+			// Its arguments are each one adamic_value.
+			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
 		}
 		if declared.Initializer == nil {
 			function.Parameters = append(function.Parameters, local)
@@ -281,7 +285,7 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		function.Parameters = append(function.Parameters, incoming)
 		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
-	if function.Closure && function.Returns.IsMaybe() {
+	if function.Closure && slotless(function.Returns) {
 		// A function value's arguments and result are each one adamic_value, and number | undefined
 		// needs two words.
 		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
@@ -307,7 +311,7 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 			break
 		}
 		of := l.result.Locals[parameter.local].Type
-		if fallback.Type() != of {
+		if fallback = fit(fallback, of); fallback.Type() != of {
 			err = l.notYet(parameter.initializer, "a default of another type than its parameter")
 			break
 		}
@@ -551,7 +555,7 @@ func (l *lowering) local(identifier *ast.Node) (int, bool) {
 	local, isLocal := l.locals[symbol]
 	if isLocal {
 		l.touch(local)
-		if declared := l.result.Locals[local]; declared.Captured && declared.Type.IsMaybe() && l.unlowerable == nil {
+		if declared := l.result.Locals[local]; declared.Captured && slotless(declared.Type) && l.unlowerable == nil {
 			// A cell holds one adamic_value, and number | undefined needs two words. Lower says so once
 			// it's done, since the capture is found here, where nothing can return an error.
 			l.unlowerable = l.notYet(identifier, "a "+typeName(declared.Type)+" variable a function value captures")

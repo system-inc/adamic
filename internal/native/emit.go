@@ -580,6 +580,14 @@ func (e *emitter) value(expression ir.Expression) string {
 		return maybe(expression.Of, e.value(expression.Value))
 	case ir.MaybeToString:
 		return e.maybeToString(expression.Value)
+	case ir.Box:
+		return e.box(expression.Value)
+	case ir.Narrow:
+		return e.narrow(expression)
+	case ir.TypeOf:
+		return e.typeOf(expression.Value)
+	case ir.UnionToString:
+		return e.own(ir.String, fmt.Sprintf("adamic_union_to_string(%s)", e.value(expression.Value)))
 	case ir.Coalesce:
 		return e.coalesce(expression)
 	case ir.StringLength:
@@ -1351,6 +1359,15 @@ func (e *emitter) arguments(call ir.Call) []string {
 				value = maybe(of, value)
 			}
 		}
+		if index < len(parameters) && e.program.Locals[parameters[index]].Type == ir.Union && argument.Type() != ir.Union {
+			// A number, a boolean or a reference where a union goes, boxed here, where the signature
+			// is known.
+			boxed, fresh := converted(argument.Type(), ir.Union, value)
+			if fresh {
+				boxed = e.own(ir.Union, boxed)
+			}
+			value = boxed
+		}
 		arguments = append(arguments, value)
 	}
 	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
@@ -1478,6 +1495,10 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 		return fmt.Sprintf("(!adamic_string_equal(%s, %s))", left, right)
 	case operandType.IsMaybe() && (operator == ir.Equal || operator == ir.NotEqual):
 		return pairEquality(operator, operandType, left, right)
+	case operandType == ir.Union && operator == ir.Equal:
+		return fmt.Sprintf("adamic_union_equal(%s, %s)", left, right)
+	case operandType == ir.Union && operator == ir.NotEqual:
+		return fmt.Sprintf("(!adamic_union_equal(%s, %s))", left, right)
 	}
 	return fmt.Sprintf("(%s %s %s)", left, cOperators[operator], right)
 }
@@ -1522,6 +1543,8 @@ func cType(valueType ir.Type) string {
 		return "adamic_maybe_number"
 	case ir.MaybeBoolean:
 		return "adamic_maybe_boolean"
+	case ir.Union:
+		return "adamic_heap *"
 	}
 	return "adamic_string *"
 }
@@ -1590,19 +1613,24 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	if coalesce.Value.Type().IsMaybe() {
 		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
 	}
+	// What's present is made what ?? makes: text ?? count boxes a present number into the union.
+	unwrapped, fresh := converted(coalesce.Value.Type().Present(), coalesce.Of, unwrapped)
 	if coalesce.Panic != nil {
 		text, message, _ := e.aside(coalesce.Panic)
 		e.line("if (!(%s)) {", present)
 		e.out.WriteString(text)
 		e.line("\tadamic_panic((%s)->bytes, (%s)->length);", message, message)
 		e.line("}")
+		if fresh {
+			return e.own(coalesce.Of, unwrapped)
+		}
 		return unwrapped
 	}
 	text, fallback, owned := e.aside(coalesce.Fallback)
 	result := e.temporary()
 	e.line("%s %s;", cType(coalesce.Of), result)
 	e.line("if (%s) {", present)
-	if coalesce.Of.IsReference() {
+	if coalesce.Of.IsReference() && !fresh {
 		e.line("\t%s = adamic_retain(%s);", result, unwrapped)
 	} else {
 		e.line("\t%s = %s;", result, unwrapped)

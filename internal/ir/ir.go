@@ -70,6 +70,11 @@ const (
 	// MaybeBoolean is boolean | undefined: a boolean that may be missing, as an array of booleans'
 	// element is.
 	MaybeBoolean
+
+	// Union is a value of a union whose members are held differently (string | number, number |
+	// Tree): one counted reference, which says at runtime which member it is. A number is boxed to
+	// be one, a boolean is one of two constant boxes, and undefined is a null reference.
+	Union
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -102,7 +107,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -246,6 +251,24 @@ type (
 	// MaybeToString is String(Value) for a Maybe pair: what it holds, written as String() writes it,
 	// or "undefined".
 	MaybeToString struct{ Value Expression }
+
+	// Box is Value where a Union goes: a number boxed, a boolean as its box, a reference as itself.
+	Box struct{ Value Expression }
+
+	// Narrow is a Union the checker has proven to be one member (by typeof, ===, or assignment), as
+	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
+	// undefined).
+	Narrow struct {
+		Value Expression
+		To    Type
+	}
+
+	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
+	TypeOf struct{ Value Expression }
+
+	// UnionToString is String(Value) for a Union whose members are numbers, booleans, strings and
+	// undefined, each written as String() writes it.
+	UnionToString struct{ Value Expression }
 
 	// Coalesce is Value ?? Fallback: Value when it's present, and otherwise Fallback, evaluated only
 	// then. With Panic set instead of Fallback, it's Value ?? panic(Panic).
@@ -491,6 +514,10 @@ func (ArrayJoin) Type() Type     { return String }
 func (u Unwrap) Type() Type      { return u.Value.Type().Present() }
 func (m MaybeOf) Type() Type     { return m.Of }
 func (MaybeToString) Type() Type { return String }
+func (Box) Type() Type           { return Union }
+func (n Narrow) Type() Type      { return n.To }
+func (TypeOf) Type() Type        { return String }
+func (UnionToString) Type() Type { return String }
 func (c Coalesce) Type() Type    { return c.Of }
 func (StringLength) Type() Type  { return Number }
 func (CharCodeAt) Type() Type    { return Number }

@@ -44,6 +44,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		var shared ir.Type
+		mixed := false
 		for _, member := range proven.Types() {
 			if member.Flags()&checker.TypeFlagsUndefined != 0 {
 				// undefined joins a union of references as a null pointer; it's checked below that
@@ -51,10 +52,17 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				continue
 			}
 			memberType, isKnown := l.representation(member)
-			if !isKnown || (shared != 0 && memberType != shared) {
+			if !isKnown {
 				return 0, false
 			}
+			if shared != 0 && memberType != shared {
+				mixed = true
+			}
 			shared = memberType
+		}
+		if mixed {
+			// Members held differently (string | number) are one Union, which holds undefined too.
+			return ir.Union, true
 		}
 		if shared != 0 && !shared.IsReference() && l.includesUndefined(proven) {
 			// number | undefined and boolean | undefined are each a present-and-value pair.
@@ -117,6 +125,12 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
 		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
+		if l.result.Locals[local].Type == ir.Union {
+			// Where the checker has narrowed it to fewer members held one way, it's read as that.
+			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union {
+				read = ir.Narrow{Value: read, To: narrowed}
+			}
+		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
 			// Where the checker has narrowed it to what it holds, it's read as that.
 			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() {
@@ -126,6 +140,12 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return read, nil
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
+	case ast.KindTypeOfExpression:
+		operand, err := l.expression(node.AsTypeOfExpression().Expression)
+		if err != nil {
+			return nil, err
+		}
+		return ir.TypeOf{Value: operand}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
@@ -195,6 +215,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 // number | undefined or boolean | undefined goes, since that is two words and they are one. Anything
 // else is left as it is.
 func fit(value ir.Expression, to ir.Type) ir.Expression {
+	if to == ir.Union && value != nil && value.Type() != ir.Union {
+		return ir.Box{Value: value}
+	}
 	if !to.IsMaybe() || value == nil {
 		return value
 	}
@@ -297,6 +320,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			right = fit(right, pair)
 		} else if pair := right.Type(); pair.IsMaybe() && left.Type() == pair.Present() {
 			left = fit(left, pair)
+		} else if left.Type() == ir.Union || right.Type() == ir.Union {
+			// A union against anything: both as unions, compared by member and value.
+			left, right = fit(left, ir.Union), fit(right, ir.Union)
 		}
 	}
 	if (operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken) && left.Type() == right.Type() {
@@ -344,6 +370,11 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 			value = ir.BooleanToString{Value: value}
 		case ir.MaybeNumber, ir.MaybeBoolean:
 			value = ir.MaybeToString{Value: value}
+		case ir.Union:
+			if !l.writable(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression)) {
+				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
+			}
+			value = ir.UnionToString{Value: value}
 		case ir.String:
 			value = l.spelled(span.AsTemplateSpan().Expression, value)
 		default:
@@ -374,8 +405,9 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	if whenTrue.Type() != whenNot.Type() {
-		// flag ? 1 : undefined is number | undefined: each branch made the pair.
-		if of, err := l.typeOf(node); err == nil && of.IsMaybe() {
+		// flag ? 1 : undefined is number | undefined, and flag ? 1 : 'one' a union: each branch made
+		// one.
+		if of, err := l.typeOf(node); err == nil && (of.IsMaybe() || of == ir.Union) {
 			whenTrue, whenNot = fit(whenTrue, of), fit(whenNot, of)
 		}
 	}
@@ -397,8 +429,37 @@ func typeName(valueType ir.Type) string {
 		return "number | undefined"
 	case ir.MaybeBoolean:
 		return "boolean | undefined"
+	case ir.Union:
+		return "union of differently held members"
 	}
 	return "value"
+}
+
+// writable reports whether every member of a union is one a template writes: a number, a boolean, a
+// string or undefined.
+func (l *lowering) writable(proven *checker.Type) bool {
+	members := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+			continue
+		}
+		memberType, isKnown := l.representation(member)
+		if !isKnown || (memberType != ir.Number && memberType != ir.Boolean && memberType != ir.String) {
+			return false
+		}
+	}
+	return true
+}
+
+// slotless reports whether a value of the type can't yet be held in one word: a field, an element, a
+// map's value, a cell, or a function value's argument or result. A Maybe pair is two words, and a
+// Union has to be boxed on its way in, which stage 0 does only where a variable, a parameter or a
+// result takes one.
+func slotless(valueType ir.Type) bool {
+	return valueType.IsMaybe() || valueType == ir.Union
 }
 
 // call lowers a call to one of the module's functions, or to a function value.
@@ -431,12 +492,15 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	present := value.Type()
-	if present.IsMaybe() {
-		present = present.Present()
-	} else if !present.IsReference() {
+	// What ?? makes is the checker's: the left side's present members and the right side's, which
+	// may be held differently (text ?? count is string | number, a Union).
+	of, err := l.typeOf(node)
+	if err != nil {
+		return nil, err
+	}
+	if present := value.Type(); !present.IsMaybe() && !present.IsReference() {
 		// A value that can't be missing: ?? never runs its right side.
-		return value, nil
+		return fit(value, of), nil
 	}
 	right := ast.SkipParentheses(binary.Right)
 	if right.Kind == ast.KindCallExpression && l.isPreludeFunction(right.AsCallExpression().Expression, "panic") && len(right.AsCallExpression().Arguments.Nodes) == 1 {
@@ -444,16 +508,17 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		return ir.Coalesce{Value: value, Panic: message, Of: present}, nil
+		return ir.Coalesce{Value: value, Panic: message, Of: of}, nil
 	}
 	fallback, err := l.expression(binary.Right)
 	if err != nil {
 		return nil, err
 	}
-	if fallback.Type() != present {
+	fallback = fit(fallback, of)
+	if _, isUndefined := fallback.(ir.Undefined); fallback.Type() != of && !(isUndefined && of.IsReference()) {
 		return nil, l.notYet(node, "?? whose sides have different types")
 	}
-	return ir.Coalesce{Value: value, Fallback: fallback, Of: present}, nil
+	return ir.Coalesce{Value: value, Fallback: fallback, Of: of}, nil
 }
 
 // closure lowers an arrow function to a function of its own and the closure that captures it.
@@ -491,11 +556,11 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	for _, argument := range arguments {
-		if argument.Type().IsMaybe() {
+		if slotless(argument.Type()) {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
 		}
 	}
-	if returns.IsMaybe() {
+	if slotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil

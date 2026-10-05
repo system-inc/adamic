@@ -132,6 +132,9 @@ func (l *lowering) constructor(index int, declaration *ast.Node) error {
 		if err != nil {
 			return err
 		}
+		if slotless(of) {
+			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
+		}
 		var value ir.Expression
 		if property.Initializer != nil {
 			if containsThis(property.Initializer) {
@@ -266,8 +269,8 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
-	if value.Type().IsMaybe() {
-		return nil, l.notYet(target, "storing "+typeName(value.Type())+" in a field")
+	if of, err := l.typeOf(target); err != nil || slotless(of) || slotless(value.Type()) {
+		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
 	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value}}, nil
