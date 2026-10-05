@@ -317,6 +317,30 @@ double adamic_math_sign(double value);
 double adamic_math_max(double left, double right);
 double adamic_math_min(double left, double right);
 
+// The rest of JavaScript's Math, V8's port of fdlibm bit for bit (ieee754.c), and Math.hypot, V8's
+// MathHypot builtin (hypot.c), over count values.
+double adamic_math_acos(double x);
+double adamic_math_acosh(double x);
+double adamic_math_asin(double x);
+double adamic_math_asinh(double x);
+double adamic_math_atan(double x);
+double adamic_math_atan2(double y, double x);
+double adamic_math_atanh(double x);
+double adamic_math_cbrt(double x);
+double adamic_math_cos(double x);
+double adamic_math_cosh(double x);
+double adamic_math_exp(double x);
+double adamic_math_expm1(double x);
+double adamic_math_log(double x);
+double adamic_math_log1p(double x);
+double adamic_math_log2(double x);
+double adamic_math_log10(double x);
+double adamic_math_sin(double x);
+double adamic_math_sinh(double x);
+double adamic_math_tan(double x);
+double adamic_math_tanh(double x);
+double adamic_math_hypot(size_t count, const double *values);
+
 // adamic_number_to_fixed is value.toFixed(digits), and returns a string the caller owns.
 adamic_string *adamic_number_to_fixed(double value, double digits);
 

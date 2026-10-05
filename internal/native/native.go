@@ -46,6 +46,10 @@ func cString(value string) string {
 type Options struct {
 	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
 	Sanitize bool
+
+	// cpu, for tests, compiles for a particular processor (-march), so a test on an x86 machine can
+	// see what fused multiply-adds would do, as on arm64.
+	cpu string
 }
 
 // Build compiles C source and the runtime into a native binary at output.
@@ -82,6 +86,13 @@ func Build(source string, output string, options Options) error {
 	// A program may declare a variable or a function it never uses, as JavaScript allows; that's the
 	// linter's business (cohere's no-unused-vars), not a reason the C can't compile.
 	arguments := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function"}
+	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
+	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
+	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
+	arguments = append(arguments, "-ffp-contract=off")
+	if options.cpu != "" {
+		arguments = append(arguments, "-march="+options.cpu)
+	}
 	if options.Sanitize {
 		arguments = append(arguments, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
 	} else {
