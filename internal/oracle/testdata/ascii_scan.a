@@ -20,3 +20,11 @@ const edges = [0, -0, 0.5, 1.9999, -0.5, -1, source.length - 0.5, source.length,
 console.log(edges.map((position) => `${source.charCodeAt(position)}`).join(' '));
 const empty = ''.slice(0);
 console.log(`${empty.length} ${empty.charCodeAt(0)} ${empty.charCodeAt(NaN)}`);
+
+// A string that isn't ASCII, counted the same way, is read through its index, never as bytes.
+const accented = `café ${'é'.repeat(3)} 🌍!`;
+const codes: number[] = [];
+for (let position = 0; position < accented.length; position += 1) {
+	codes.push(accented.charCodeAt(position));
+}
+console.log(`${accented.length} ${codes.join(',')}`);
