@@ -74,8 +74,16 @@ confined, stays proven, since the holder is fresh. With that change:
 - `via_class.a` is still refused as before.
 
 The patch is `review/round12/readonly-fields.patch`. Its refusal text still says "a mutable field" for a
-readonly one, which would need its own wording. Whether the patch costs any existing fixture is still being run (lower
-and oracle packages); this report will say when it's back.
+readonly one, which would need its own wording. With the patch on B3:
+
+- `go test ./internal/lower` passes.
+- `go test -timeout 30m ./internal/oracle` passes every fixture except the six input fixtures
+  (`read_files.a`, `walk.a`, `write_files.a`, `read_arguments.a`, `arguments.a`, `utf8_sweep.a`).
+  - All 12 of those failures, in TestInputAgreesWithNode and TestCountsAreRecorded, are
+    `fork/exec /opt/node24/bin/node: permission denied`. That's the input tests dropping to uid 65534 in my
+    worktree, the environmental failure from earlier rounds. It isn't the patch.
+- So no existing program relied on a readonly field closing a cycle. That includes `fresh_parser.a`,
+  `fresh_writes.a` and the 22 refusal probes.
 
 The mutant is the patch run backwards: without it, the three constructor probes compile and leak; with it,
 they're refused. A probe that doesn't run a constructor (`via_*.a`, `param_object.a`) is refused either way,
