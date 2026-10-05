@@ -182,7 +182,7 @@ func (e *emitter) functionBody(function ir.Function) {
 		e.line("(void)arguments;")
 		for index, parameter := range function.Parameters {
 			local := e.program.Locals[parameter]
-			value := fmt.Sprintf("arguments[%d].%s", index, member(local.Type))
+			value := unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index, member(local.Type)))
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
@@ -312,7 +312,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		if statement.Element.IsReference() {
 			value = "adamic_retain(" + value + ")"
 		}
-		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), value)
+		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
 	case ir.SetProperty:
 		object := e.value(statement.Object)
@@ -326,7 +326,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("%s->reference = adamic_retain(%s);", slot, value)
 			e.line("adamic_release(%s);", old)
 		} else {
-			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), value)
+			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
 		e.end()
 	case ir.Panic:
@@ -373,7 +373,7 @@ func (e *emitter) store(local int, value string) {
 	name := e.localName(local)
 	if slot := e.cellSlot(local); slot != "" {
 		if !e.program.Locals[local].Type.IsReference() {
-			e.line("%s.%s = %s;", slot, member(e.program.Locals[local].Type), value)
+			e.line("%s.%s = %s;", slot, member(e.program.Locals[local].Type), slotted(e.program.Locals[local].Type, value))
 			return
 		}
 		old := e.temporary()
@@ -422,7 +422,7 @@ func (e *emitter) returnStatement(statement ir.Return) {
 	e.end()
 	e.releaseScopes(e.functionDepth)
 	if e.function != nil && e.function.Closure {
-		e.line("return (adamic_value){.%s = %s};", member(statement.Value.Type()), result)
+		e.line("return (adamic_value){.%s = %s};", member(statement.Value.Type()), slotted(statement.Value.Type(), result))
 	} else {
 		e.line("return %s;", result)
 	}
@@ -547,7 +547,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.objectLiteral(expression)
 	case ir.Property:
 		object := e.value(expression.Object)
-		field := fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", object, cString(expression.Name), e.cache(), member(expression.Of))
+		field := unslotted(expression.Of, fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", object, cString(expression.Name), e.cache(), member(expression.Of)))
+		if expression.Of == ir.MaybeNumber && expression.Optional {
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : %s)", object, zero(ir.MaybeNumber), field))
+		}
 		if expression.Of.IsReference() {
 			// A field holds a reference as void *; read through the type the checker proved.
 			field = fmt.Sprintf("((%s)%s)", cType(expression.Of), field)
@@ -607,7 +610,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		closure := e.value(expression.Closure)
 		arguments := []string{}
 		for _, argument := range expression.Arguments {
-			arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), e.value(argument)))
+			arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
 		}
 		packed := "NULL"
 		if len(arguments) > 0 {
@@ -624,7 +627,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			// A closure's result comes back owned.
 			return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))
 		}
-		return result + "." + member(expression.Returns)
+		return e.snapshot(expression.Returns, unslotted(expression.Returns, result+"."+member(expression.Returns)))
 	case ir.ArrayMap:
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
@@ -725,7 +728,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
 		if expression.Type().IsMaybe() {
-			return e.snapshot(expression.Type(), maybeSlot(expression.Type(), slot))
+			return e.snapshot(expression.Type(), maybeSlot(expression.Element, slot))
 		}
 		// Retained, so a write later in the statement can't free it from under its reader.
 		return e.own(expression.Element, fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s->reference)", slot, cType(expression.Element), slot))
@@ -733,7 +736,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		array := e.temporary()
 		e.line("adamic_array *%s = %s;", array, e.value(expression.Array))
 		if expression.Type().IsMaybe() {
-			return e.snapshot(expression.Type(), fmt.Sprintf("%s->length == 0 ? %s : %s", array, zero(expression.Type()), maybe(expression.Type(), fmt.Sprintf("%s->elements[--%s->length].%s", array, array, member(expression.Element)))))
+			popped := fmt.Sprintf("%s->elements[--%s->length].%s", array, array, member(expression.Element))
+			if expression.Element == ir.MaybeNumber {
+				popped = unslotted(ir.MaybeNumber, popped)
+			} else {
+				popped = maybe(expression.Type(), popped)
+			}
+			return e.snapshot(expression.Type(), fmt.Sprintf("%s->length == 0 ? %s : %s", array, zero(expression.Type()), popped))
 		}
 		// The array's reference to the element becomes the statement's.
 		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s->elements[--%s->length].%s", array, array, array, member(expression.Element)))
@@ -781,7 +790,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		slot := e.temporary()
 		e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
 		if expression.Type().IsMaybe() {
-			return e.snapshot(expression.Type(), maybeSlot(expression.Type(), slot))
+			return e.snapshot(expression.Type(), maybeSlot(expression.ValueType, slot))
 		}
 		// Retained, so a set later in the same statement can't free it from under its reader.
 		return e.own(expression.ValueType, fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->%s)", slot, slot, member(expression.ValueType)))
@@ -814,7 +823,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			value = "adamic_retain(" + value + ")"
 		}
 		// The append happens here, in JavaScript's order, and the new length is the value.
-		e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), value)
+		e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
 		length := e.temporary()
 		e.line("double %s = (double)%s->length;", length, array)
 		return length
@@ -835,7 +844,7 @@ func (e *emitter) value(expression ir.Expression) string {
 				case expression.Element.IsReference():
 					e.line("adamic_array_push(%s, (adamic_value){.reference = adamic_retain(%s)});", array, value)
 				default:
-					e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), value)
+					e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
 				}
 			}
 			return array
@@ -849,7 +858,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			if expression.Element.IsReference() {
 				element = "adamic_retain(" + element + ")"
 			}
-			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), element)
+			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, element))
 		}
 		return array
 	case ir.Length:
@@ -953,7 +962,13 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	case "find":
 		e.line("if (%s.boolean) {", answer)
 		if visit.Type().IsMaybe() {
-			e.line("\t%s = %s;", result, maybe(visit.Type(), element+"."+member(visit.Element)))
+			found := element + "." + member(visit.Element)
+			if visit.Element == ir.MaybeNumber {
+				found = unslotted(ir.MaybeNumber, found)
+			} else {
+				found = maybe(visit.Type(), found)
+			}
+			e.line("\t%s = %s;", result, found)
 		} else {
 			e.line("\t%s = %s.reference;", result, element)
 		}
@@ -1029,6 +1044,8 @@ func equality(element ir.Type) string {
 		return "adamic_equal_booleans"
 	case ir.String:
 		return "adamic_equal_strings"
+	case ir.MaybeNumber:
+		return "adamic_equal_maybe_numbers"
 	}
 	return "adamic_equal_identity"
 }
@@ -1054,7 +1071,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 				e.line("adamic_release(%s->reference);", slot)
 				e.line("%s->reference = adamic_retain(%s);", slot, values[index])
 			} else {
-				e.line("%s->%s = %s;", slot, member(field.Value.Type()), values[index])
+				e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 			}
 		}
 		return object
@@ -1065,7 +1082,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		if field.Value.Type().IsReference() {
 			value = "adamic_retain(" + value + ")"
 		}
-		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), value)
+		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 	}
 	return object
 }
@@ -1220,7 +1237,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.line("{")
 	e.indent++
 	e.scopes = append(e.scopes, nil)
-	element := fmt.Sprintf("%s->elements[%s].%s", held, index, member(statement.Element))
+	element := unslotted(statement.Element, fmt.Sprintf("%s->elements[%s].%s", held, index, member(statement.Element)))
 	// bindEntry declares a local from the step's key or value, retained, since the body may delete
 	// the entry.
 	bindEntry := func(local int, slot string, of ir.Type) {
@@ -1249,7 +1266,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 		// Each name reads its field of the tuple, which the array holds while the body runs.
 		for _, binding := range statement.Pattern {
 			bound := e.program.Locals[binding.Local]
-			field := fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", element, cString(binding.Field), e.cache(), member(bound.Type))
+			field := unslotted(bound.Type, fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", element, cString(binding.Field), e.cache(), member(bound.Type)))
 			if bound.Type.IsReference() {
 				field = fmt.Sprintf("(%s)%s", cType(bound.Type), field)
 			}
@@ -1338,7 +1355,7 @@ func (e *emitter) read(read ir.Read) string {
 	if slot := e.cellSlot(read.Local); slot != "" {
 		// A captured variable may change under a call later in the statement (a closure that
 		// writes it), so, like a global, it's copied the moment JavaScript reads it.
-		value := slot + "." + member(read.Of)
+		value := unslotted(read.Of, slot+"."+member(read.Of))
 		if read.Of.IsReference() {
 			return e.own(read.Of, fmt.Sprintf("adamic_retain((%s)%s)", cType(read.Of), value))
 		}
@@ -1570,7 +1587,7 @@ func cType(valueType ir.Type) string {
 // member is the adamic_value member that holds a value of the type.
 func member(valueType ir.Type) string {
 	switch valueType {
-	case ir.Number:
+	case ir.Number, ir.MaybeNumber:
 		return "number"
 	case ir.Boolean:
 		return "boolean"
@@ -1615,12 +1632,12 @@ func held(valueType ir.Type, value string) string {
 	if valueType.IsReference() {
 		return fmt.Sprintf("(adamic_value){.reference = adamic_retain(%s)}", value)
 	}
-	return fmt.Sprintf("(adamic_value){.%s = %s}", member(valueType), value)
+	return fmt.Sprintf("(adamic_value){.%s = %s}", member(valueType), slotted(valueType, value))
 }
 
 // borrowed is a value as an adamic_value the receiver only looks at.
 func borrowed(valueType ir.Type, value string) string {
-	return fmt.Sprintf("(adamic_value){.%s = %s}", member(valueType), value)
+	return fmt.Sprintf("(adamic_value){.%s = %s}", member(valueType), slotted(valueType, value))
 }
 
 // coalesce emits value ?? fallback, the fallback evaluated only when the value is missing, and
@@ -1679,6 +1696,8 @@ func joinKind(element ir.Type) string {
 		return "adamic_join_numbers"
 	case ir.Boolean:
 		return "adamic_join_booleans"
+	case ir.MaybeNumber:
+		return "adamic_join_maybe_numbers"
 	}
 	return "adamic_join_strings"
 }
@@ -1770,7 +1789,7 @@ func (e *emitter) makeCell(local int, value string, owned bool) {
 		value = "adamic_retain(" + value + ")"
 	}
 	cell := e.cellName(local)
-	e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", cell, member(declared.Type), value, declared.Type.IsReference())
+	e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", cell, member(declared.Type), slotted(declared.Type, value), declared.Type.IsReference())
 	e.hold(cell)
 }
 

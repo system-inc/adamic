@@ -46,6 +46,10 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, name.Text()) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
+			if declared := l.declaredField(node, name.Text()); declared == ir.MaybeNumber {
+				// Where the field is number | undefined, what it's given is packed as one.
+				value = fit(value, declared)
+			}
 			if slotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
@@ -55,6 +59,30 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	return literal, nil
+}
+
+// typeOfSymbol is what's left at runtime of a symbol's declared type, or NotYet at node.
+func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, error) {
+	declared := l.checker.GetTypeOfSymbol(symbol)
+	if valueType, isKnown := l.representation(declared); isKnown {
+		return valueType, nil
+	}
+	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(declared))
+}
+
+// declaredField is the representation of a field as the type an object literal is written into
+// declares it, or 0 when there is no such type to say.
+func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
+	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	if contextual == nil {
+		return 0
+	}
+	field := l.checker.GetPropertyOfType(contextual, name)
+	if field == nil {
+		return 0
+	}
+	declared, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+	return declared
 }
 
 // hasProperty reports whether a value's type has a field of that name.
@@ -113,6 +141,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(item, "spreading an array of other elements")
 			}
 			spreads = true
+		} else {
+			// An element of number | undefined is a packed word: a number or undefined is made one.
+			value = fit(value, element)
 		}
 		literal.Elements = append(literal.Elements, value)
 		literal.Spread = append(literal.Spread, spread)
@@ -187,6 +218,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		return ir.MapSize{Map: object}, nil
 	case object.Type() == ir.Object:
 		of, err := l.typeOf(node)
+		if err != nil && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+			// Narrowed to undefined (just assigned it): read as the field is declared.
+			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+				of, err = l.typeOfSymbol(node, field)
+			}
+		}
 		if err != nil {
 			return nil, err
 		}
@@ -201,6 +238,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		if slotless(of) {
 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
+		}
+		if of == ir.MaybeNumber {
+			// number | undefined, whether the field holds it or ?. makes it: the packed word, or
+			// undefined when the object is.
+			return ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional}, nil
 		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
@@ -655,14 +697,14 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		if len(arguments) != 1 {
 			return nil, true, l.notYet(node, "push with other than one value")
 		}
-		return ir.ArrayPush{Array: array, Value: arguments[0], Element: element}, true, nil
+		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element}, true, nil
 	}
 	switch name {
 	case "includes", "indexOf":
 		if len(arguments) != 1 {
 			return nil, true, l.notYet(node, name+" with a starting index")
 		}
-		if arguments[0].Type() != element {
+		if arguments[0] = fit(arguments[0], element); arguments[0].Type() != element {
 			return nil, true, l.notYet(node, name+" with a value of another type than the elements")
 		}
 		return ir.ArraySearch{Array: array, Value: arguments[0], Element: element, Includes: name == "includes"}, true, nil
@@ -674,6 +716,9 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	case "reverse":
 		return ir.ArrayReverse{Array: array}, true, nil
 	case "fill":
+		if len(arguments) > 0 {
+			arguments[0] = fit(arguments[0], element)
+		}
 		if len(arguments) == 0 || len(arguments) > 3 || arguments[0].Type() != element {
 			return nil, true, l.notYet(node, "fill with other than a value of the elements' type")
 		}
@@ -697,7 +742,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		if len(arguments) > 1 {
 			splice.Count = arguments[1]
 			for _, item := range arguments[2:] {
-				if item.Type() != element {
+				if item = fit(item, element); item.Type() != element {
 					return nil, true, l.notYet(node, "splice inserting a value of another type than the elements")
 				}
 				splice.Items = append(splice.Items, item)
@@ -715,7 +760,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		}
 		return ir.ArrayConcat{Array: array, Others: arguments}, true, nil
 	}
-	if element != ir.Number && element != ir.Boolean && element != ir.String {
+	if element != ir.Number && element != ir.Boolean && element != ir.String && element != ir.MaybeNumber {
 		// JavaScript writes an object as "[object Object]", a function as its source, and an array as
 		// its own join, flattened; 0.1 has no use for any of that.
 		return nil, true, l.notYet(node, "join on an array of objects, arrays, maps or functions")
@@ -759,7 +804,7 @@ func (l *lowering) newArrayFilled(node *ast.Node, created *ast.Node) (ir.Express
 	if err != nil {
 		return nil, true, err
 	}
-	if length.Type() != ir.Number || value.Type() != element {
+	if value = fit(value, element); length.Type() != ir.Number || value.Type() != element {
 		return nil, true, l.notYet(node, "new Array(length).fill(value) with a length that isn't a number or a value of another type")
 	}
 	return ir.ArrayFill{Length: length, Value: value, Element: element}, true, nil
@@ -825,7 +870,7 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if err != nil {
 		return nil, true, err
 	}
-	if result != initial.Type() || slotless(result) {
+	if result != initial.Type() || slotless(result) || result == ir.MaybeNumber {
 		return nil, true, l.notYet(node, "reduce to a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 	}
 	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result}, true, nil
@@ -842,7 +887,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	if !keyKnown || (key != ir.String && key != ir.Number) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings or numbers")
 	}
-	if !valueKnown || slotless(value) {
+	if !valueKnown || slotless(value) || value == ir.MaybeNumber {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
@@ -1039,6 +1084,10 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 // strings), and stage 0 takes one of the module's functions by name.
 func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
+	if element == ir.MaybeNumber {
+		// JavaScript sorts undefined to the end without ever passing it to the comparator.
+		return nil, true, l.notYet(node, "sort on an array of number | undefined")
+	}
 	if len(arguments) == 0 {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "sort without a comparator", Fix: "pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"}
 	}
@@ -1137,5 +1186,5 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 	if err != nil {
 		return nil, err
 	}
-	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: value, Element: element}}, nil
+	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element}}, nil
 }

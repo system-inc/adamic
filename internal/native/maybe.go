@@ -15,10 +15,17 @@ func maybe(of ir.Type, value string) string {
 	return fmt.Sprintf("((%s){true, %s})", cType(of), value)
 }
 
-// maybeSlot is the Maybe pair for an element's slot that may be NULL (missing), holding what the
-// slot's present type is.
-func maybeSlot(of ir.Type, slot string) string {
-	return fmt.Sprintf("%s == NULL ? %s : %s", slot, zero(of), maybe(of, slot+"->"+member(of.Present())))
+// maybeSlot is the Maybe pair for an element's slot that may be NULL (missing), holding a value of
+// the element's type: a number or a boolean, or number | undefined, packed.
+func maybeSlot(element ir.Type, slot string) string {
+	of := ir.Maybe(element)
+	held := slot + "->" + member(element)
+	if element == ir.MaybeNumber {
+		held = unslotted(element, held)
+	} else {
+		held = maybe(of, held)
+	}
+	return fmt.Sprintf("%s == NULL ? %s : %s", slot, zero(of), held)
 }
 
 // maybeToString is String(value) for a Maybe pair: what it holds, written as String() writes it, or

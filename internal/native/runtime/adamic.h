@@ -204,6 +204,7 @@ enum adamic_equality {
 	adamic_equal_booleans,
 	adamic_equal_strings,
 	adamic_equal_identity,
+	adamic_equal_maybe_numbers,
 };
 double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
 
@@ -245,6 +246,7 @@ enum adamic_join {
 	adamic_join_numbers = 1,
 	adamic_join_booleans,
 	adamic_join_strings,
+	adamic_join_maybe_numbers,
 };
 struct adamic_string *adamic_array_join(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind);
 
@@ -268,6 +270,15 @@ extern adamic_string adamic_string_false;
 extern adamic_string adamic_string_undefined;
 adamic_string *adamic_string_from_maybe_number(adamic_maybe_number value);
 bool adamic_maybe_number_equal(adamic_maybe_number left, adamic_maybe_number right);
+
+// adamic_maybe_number_pack makes number | undefined one double, for a field, an element, a cell or a
+// function value's argument or result: undefined is ADAMIC_UNDEFINED_BITS, a NaN no arithmetic
+// makes, and every other NaN is stored as the ordinary quiet NaN (JavaScript can't see a NaN's
+// payload), so nothing present is ever mistaken for undefined. adamic_maybe_number_unpack reads one
+// back.
+#define ADAMIC_UNDEFINED_BITS 0x7ff8000000000001u
+double adamic_maybe_number_pack(adamic_maybe_number value);
+adamic_maybe_number adamic_maybe_number_unpack(double packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.

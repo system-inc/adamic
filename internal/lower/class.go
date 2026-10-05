@@ -143,6 +143,7 @@ func (l *lowering) constructor(index int, declaration *ast.Node) error {
 			if value, err = l.expression(property.Initializer); err != nil {
 				return err
 			}
+			value = fit(value, of)
 		} else {
 			value = zeroValue(of)
 		}
@@ -175,6 +176,9 @@ func zeroValue(of ir.Type) ir.Expression {
 		return ir.NumberConstant{}
 	case ir.Boolean:
 		return ir.BooleanConstant{}
+	case ir.MaybeNumber:
+		// A field of number | undefined left without a value is undefined, as JavaScript leaves it.
+		return ir.MaybeOf{Of: ir.MaybeNumber}
 	}
 	return ir.Undefined{}
 }
@@ -269,9 +273,12 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
-	if of, err := l.typeOf(target); err != nil || slotless(of) || slotless(value.Type()) {
+	of, err := l.typeOf(target)
+	if err != nil || slotless(of) || slotless(value.Type()) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
+	// A field of number | undefined is given a packed word, whatever it's assigned.
+	value = fit(value, of)
 	// A #private field is stored under its name, # and all, which nothing else can spell.
 	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value}}, nil
 }

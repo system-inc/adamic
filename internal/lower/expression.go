@@ -455,11 +455,12 @@ func (l *lowering) writable(proven *checker.Type) bool {
 }
 
 // slotless reports whether a value of the type can't yet be held in one word: a field, an element, a
-// map's value, a cell, or a function value's argument or result. A Maybe pair is two words, and a
+// map's value, a cell, or a function value's argument or result. number | undefined is packed into
+// one (a reserved NaN is undefined); boolean | undefined is two words that aren't packed yet, and a
 // Union has to be boxed on its way in, which stage 0 does only where a variable, a parameter or a
 // result takes one.
 func slotless(valueType ir.Type) bool {
-	return valueType.IsMaybe() || valueType == ir.Union
+	return valueType == ir.MaybeBoolean || valueType == ir.Union
 }
 
 // call lowers a call to one of the module's functions, or to a function value.
@@ -553,6 +554,17 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
+		}
+	}
+	// Each argument is made what the function value takes: a number or undefined where it takes
+	// number | undefined is packed as one.
+	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
+		for index, parameter := range signatures[0].Parameters() {
+			if index < len(arguments) {
+				if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {
+					arguments[index] = fit(arguments[index], takes)
+				}
+			}
 		}
 	}
 	for _, argument := range arguments {
