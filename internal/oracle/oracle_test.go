@@ -129,6 +129,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/spread_snapshot.a", true, false},
 	// Reuse in place: taken only where nothing can tell, and where something could, never.
 	{"internal/oracle/testdata/reuse.a", true, false},
+	// A read lent without a count, beside a call that reassigns what was read.
+	{"internal/oracle/testdata/lent_reads.a", true, false},
 	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).
 	{"internal/oracle/testdata/large_output.a", true, false},
 	{"internal/oracle/testdata/output_then_panic.a", true, false},

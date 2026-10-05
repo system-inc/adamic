@@ -93,6 +93,16 @@ type emitter struct {
 	at     *ir.Statement
 	taking *taking
 
+	// depth is how deep value is in the expression being emitted, lendAt the depth whose reads a
+	// consumer lends without a count, lendable whether the expression being evaluated is one of
+	// them, self whether its own value was lent, and lent whether one of the current expression's
+	// operands was (borrow.go).
+	depth    int
+	lendAt   int
+	lendable bool
+	self     bool
+	lent     bool
+
 	// temporaries counts the C temporaries made so far, for unique names.
 	temporaries int
 
@@ -542,7 +552,7 @@ func (e *emitter) loop(statement ir.Loop) {
 
 // value emits what an expression needs evaluated first, in JavaScript's order, and returns a C
 // expression that stays valid to the end of the statement.
-func (e *emitter) value(expression ir.Expression) string {
+func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
@@ -594,6 +604,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		if taken, ok := e.take(expression); ok {
 			return taken
 		}
+		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
 		field := unslotted(expression.Of, fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", object, cString(expression.Name), e.cache(), member(expression.Of)))
 		if expression.Of == ir.MaybeNumber && expression.Optional {
@@ -610,7 +621,12 @@ func (e *emitter) value(expression ir.Expression) string {
 			field = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, field)
 		}
 		// Read now, when JavaScript reads it: a call later in the statement may write the field. A
-		// reference is retained, so that write can't free it from under its reader.
+		// reference is retained, so that write can't free it from under its reader, unless nothing
+		// can run before it's used (borrow.go).
+		if lent {
+			e.self = true
+			return e.snapshot(expression.Of, field)
+		}
 		if expression.Of.IsReference() {
 			return e.own(expression.Of, fmt.Sprintf("adamic_retain(%s)", field))
 		}
@@ -1416,10 +1432,16 @@ func (e *emitter) switchStatement(statement ir.Switch) {
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
 	name := e.localName(read.Local)
+	// A reference its consumer lends needs no count: nothing can run before it's used (borrow.go).
+	lent := e.lendable && lendable(read.Of)
 	if slot := e.cellSlot(read.Local); slot != "" {
 		// A captured variable may change under a call later in the statement (a closure that
 		// writes it), so, like a global, it's copied the moment JavaScript reads it.
 		value := unslotted(read.Of, slot+"."+member(read.Of))
+		if lent {
+			e.self = true
+			return e.snapshot(read.Of, fmt.Sprintf("(%s)%s", cType(read.Of), value))
+		}
 		if read.Of.IsReference() {
 			return e.own(read.Of, fmt.Sprintf("adamic_retain((%s)%s)", cType(read.Of), value))
 		}
@@ -1432,6 +1454,10 @@ func (e *emitter) read(read ir.Read) string {
 	}
 	if read.Checked {
 		e.checkReady(read.Local)
+	}
+	if lent {
+		e.self = true
+		return e.snapshot(read.Of, name)
 	}
 	if read.Of.IsReference() {
 		return e.own(read.Of, fmt.Sprintf("adamic_retain(%s)", name))
