@@ -1,0 +1,67 @@
+// TimSort against V8's: arrays of every length to 300 and some long ones (runs, galloping, merges at
+// every level), sorted by a consistent comparator, by one that answers at random, by one that answers
+// NaN for some pairs, and by one that changes the array it sorts. Each sort folds the order of the
+// comparator's calls and the result into a hash: the same algorithm makes the same calls.
+let seed = 12345;
+function random(): number {
+	seed = (seed * 1103515245 + 12345) % 2147483648;
+	return seed / 2147483648;
+}
+function make(length: number, kind: number): number[] {
+	const made: number[] = [];
+	for (let index = 0; index < length; index += 1) {
+		if (kind === 0) {
+			made.push(Math.floor(random() * 50));
+		} else if (kind === 1) {
+			made.push(index % 7 === 0 ? Math.floor(random() * 1000) : index);
+		} else if (kind === 2) {
+			made.push(length - index + (index % 3));
+		} else {
+			made.push(Math.floor(index / 16) % 2 === 0 ? index : 1000 - index);
+		}
+	}
+	return made;
+}
+let lines = 0;
+const lengths: number[] = [];
+for (let length = 0; length <= 300; length += 1) {
+	lengths.push(length);
+}
+for (const long of [511, 1024, 2049, 5000]) {
+	lengths.push(long);
+}
+for (const length of lengths) {
+	const summary: string[] = [];
+	for (let kind = 0; kind < 4; kind += 1) {
+		for (let how = 0; how < 4; how += 1) {
+			const values = make(length, kind);
+			let hash = 0;
+			let calls = 0;
+			values.sort((left, right) => {
+				calls += 1;
+				hash = (hash * 31 + left * 7 + right) % 1000000007;
+				if (how === 0) {
+					return left - right;
+				}
+				if (how === 1) {
+					return random() < 0.5 ? -1 : 1;
+				}
+				if (how === 2) {
+					return (left + right) % 5 === 0 ? 0 / 0 : left - right;
+				}
+				if (calls % 97 === 0 && values.length > 1) {
+					values.pop();
+				}
+				return right - left;
+			});
+			let result = 0;
+			for (const value of values) {
+				result = (result * 31 + value) % 1000000007;
+			}
+			summary.push(`${calls}/${hash}/${result}/${values.length}`);
+		}
+	}
+	console.log(`${length} ${summary.join(' ')}`);
+	lines += 1;
+}
+console.log(`${lines} lengths`);

@@ -1,0 +1,11 @@
+// The narrowing a call undoes, in the other slots that hold number | undefined or boolean | undefined:
+// an array element narrowed by a literal index (a boolean | undefined field is NotYet).
+const slots: (number | undefined)[] = [4];
+function empty(): void {
+	slots[0] = undefined;
+}
+if (slots[0] !== undefined) {
+	empty();
+	const seen = slots[0];
+	console.log(`element ${seen}`);
+}

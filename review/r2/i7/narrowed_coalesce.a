@@ -1,0 +1,18 @@
+// ?? and ?. on a narrowing a call undid.
+interface Link {
+	readonly value: number;
+}
+let chain: Link | undefined = { value: 1 };
+function drop(): void {
+	chain = undefined;
+}
+if (chain !== undefined) {
+	drop();
+	const fallback = chain ?? { value: 99 };
+	console.log(`coalesced ${fallback.value}`);
+}
+chain = { value: 2 };
+if (chain !== undefined) {
+	drop();
+	console.log(`optional ${chain?.value ?? -1}`);
+}

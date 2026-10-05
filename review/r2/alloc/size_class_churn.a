@@ -1,0 +1,18 @@
+// Allocation churn through every size class in turn: a generation of strings, objects and arrays is
+// built at one size, checked, and let go before the next size's. With free lists per class that never
+// give memory back, each class keeps its own peak.
+interface Cell {
+	readonly label: string;
+	readonly weight: number;
+}
+let checksum = 0;
+for (let size = 1; size <= 300; size += 13) {
+	const generation: Cell[] = [];
+	for (let index = 0; index < 20000; index += 1) {
+		generation.push({ label: 'x'.repeat(size) + `${index % 10}`, weight: index });
+	}
+	for (const cell of generation) {
+		checksum = (checksum * 31 + cell.label.length + cell.label.charCodeAt(size) + cell.weight) % 1000000007;
+	}
+	console.log(`size ${size}: ${generation.length} cells, checksum ${checksum}`);
+}

@@ -1,0 +1,6 @@
+// An array element narrowed by a literal index, with no call in between: the checker says number.
+const slots: (number | undefined)[] = [4];
+if (slots[0] !== undefined) {
+	const seen = slots[0];
+	console.log(`element ${seen + 1}`);
+}

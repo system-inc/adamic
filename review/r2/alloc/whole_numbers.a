@@ -1,0 +1,16 @@
+// Whole numbers written by the new direct path, at its edges: every power of ten and of two up to
+// 2^54, their neighbours, negatives, and values just past 2^53 that must still be searched.
+const lines: string[] = [];
+let power = 1;
+for (let exponent = 0; exponent <= 22; exponent += 1) {
+	lines.push(`${power} ${power - 1} ${power + 1} ${-power} ${power * 3}`);
+	power *= 10;
+}
+let two = 1;
+for (let exponent = 0; exponent <= 60; exponent += 1) {
+	lines.push(`${two} ${two - 1} ${two + 1} ${-two}`);
+	two *= 2;
+}
+lines.push(`${9007199254740991} ${9007199254740992} ${9007199254740993} ${9007199254740994} ${-9007199254740991}`);
+lines.push(`${4503599627370495.5} ${4503599627370496} ${0.5 + 2} ${1e21} ${123456789012345680000}`);
+console.log(lines.join('\n'));

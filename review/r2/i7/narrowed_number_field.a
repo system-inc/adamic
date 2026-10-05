@@ -1,0 +1,26 @@
+// A number | undefined field the checker narrowed, put back to undefined by a call: Node prints
+// undefined, and computes NaN.
+class Counter {
+	count: number | undefined = 5;
+}
+const counter = new Counter();
+function reset(): void {
+	counter.count = undefined;
+}
+if (counter.count !== undefined) {
+	reset();
+	console.log(`field ${counter.count}`);
+}
+counter.count = 6;
+if (counter.count !== undefined) {
+	reset();
+	console.log(`sum ${counter.count + 1}`);
+}
+let loose: number | undefined = 7;
+function clear(): void {
+	loose = undefined;
+}
+if (loose !== undefined) {
+	clear();
+	console.log(`local ${loose}`);
+}

@@ -1,0 +1,14 @@
+// A number | undefined field the checker narrowed to number, put back to undefined by a call, then
+// read: Node writes undefined, and compares it as undefined.
+class Counter {
+	count: number | undefined = 5;
+}
+const counter = new Counter();
+function reset(): void {
+	counter.count = undefined;
+}
+if (counter.count !== undefined) {
+	reset();
+	const seen = counter.count;
+	console.log(`field ${seen} ${Number.isNaN(seen)} ${seen > 0 ? 'positive' : 'not positive'}`);
+}
