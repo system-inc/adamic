@@ -221,6 +221,10 @@ func (l *lowering) isLibraryGlobal(node *ast.Node, name string) bool {
 var mathFunctions = map[string]int{
 	"abs": 1, "ceil": 1, "floor": 1, "round": 1, "trunc": 1, "sign": 1, "sqrt": 1,
 	"pow": 2, "max": -1, "min": -1,
+	// V8's fdlibm, ported bit for bit (runtime/ieee754.c), and its hypot (runtime/hypot.c).
+	"sin": 1, "cos": 1, "tan": 1, "asin": 1, "acos": 1, "atan": 1, "atan2": 2,
+	"sinh": 1, "cosh": 1, "tanh": 1, "asinh": 1, "acosh": 1, "atanh": 1,
+	"exp": 1, "expm1": 1, "log": 1, "log1p": 1, "log2": 1, "log10": 1, "cbrt": 1, "hypot": -1,
 }
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
