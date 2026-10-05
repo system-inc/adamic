@@ -473,8 +473,12 @@ func (g *generator) mutation() *Statement {
 			if targets := g.visible(String, true); len(targets) > 0 {
 				target := targets[g.random.IntN(len(targets))]
 				if g.chance(1, 2) && (!strings.Contains(target.name, ".") || g.allowed("field-updates")) {
-					// += with something short, so it grows by little each time.
-					return statement(target.name+" += @e;", g.short())
+					// += with something short, so it grows by little each time, and only below a length: a
+					// function called from loops runs it thousands of times, and a string of tens of
+					// thousands of units makes every later step over it slow.
+					return statement("if ("+target.name+".length < 200) @b", &Block{Statements: []*Statement{
+						statement(target.name+" += @e;", g.short()),
+					}})
 				}
 				return statement(target.name+" = @e;", g.bounded(g.expression(String, 2)))
 			}
