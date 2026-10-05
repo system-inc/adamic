@@ -80,6 +80,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
+	borrow(lowering.result)
 	return lowering.result, nil
 }
 
@@ -121,6 +122,11 @@ type lowering struct {
 
 	// unlowerable is the first construct found not lowerable somewhere that can't return an error.
 	unlowerable error
+
+	// alwaysUndefined are parameters that only ever receive undefined, whatever the checker calls
+	// their type: the first of an Array.from callback's (from.go). Each is a reference that's always
+	// missing.
+	alwaysUndefined map[*ast.Symbol]bool
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
@@ -273,18 +279,20 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		if err != nil {
 			return err
 		}
-		if function.Closure && (l.result.Locals[local].Type == ir.MaybeNumber || declared.Initializer != nil || declared.QuestionToken != nil) {
+		if function.Closure && (declared.Initializer != nil || declared.QuestionToken != nil) {
 			// A function value is called with the arguments its caller has, and no more.
 			return l.notYet(parameter, "a function value with an optional parameter")
+		}
+		if function.Closure && slotless(l.result.Locals[local].Type) {
+			// Its arguments are each one adamic_value.
+			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
 		}
 		if declared.Initializer == nil {
 			function.Parameters = append(function.Parameters, local)
 			continue
 		}
-		missing := l.result.Locals[local].Type
-		if missing == ir.Number {
-			missing = ir.MaybeNumber
-		} else if !missing.IsReference() {
+		missing := ir.Maybe(l.result.Locals[local].Type)
+		if !missing.IsMaybe() && !missing.IsReference() {
 			return l.notYet(parameter, "a default for a "+typeName(missing)+" parameter")
 		}
 		incoming := len(l.result.Locals)
@@ -292,10 +300,10 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		function.Parameters = append(function.Parameters, incoming)
 		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
-	if function.Closure && function.Returns == ir.MaybeNumber {
+	if function.Closure && slotless(function.Returns) {
 		// A function value's arguments and result are each one adamic_value, and number | undefined
 		// needs two words.
-		return l.notYet(declaration, "a function value returning number | undefined")
+		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
 	}
 	body := declaration.Body()
 	if body == nil {
@@ -318,7 +326,7 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 			break
 		}
 		of := l.result.Locals[parameter.local].Type
-		if fallback.Type() != of {
+		if fallback = fit(fallback, of); fallback.Type() != of {
 			err = l.notYet(parameter.initializer, "a default of another type than its parameter")
 			break
 		}
@@ -519,13 +527,16 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 
 // declareLocal makes a new local for a declared name, typed by what the checker proved for it.
 func (l *lowering) declareLocal(name *ast.Node) (int, error) {
-	valueType, err := l.typeOf(name)
-	if err != nil {
-		return 0, err
-	}
 	symbol := l.symbol(name)
 	if symbol == nil {
 		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
+	}
+	valueType := ir.Object
+	if !l.alwaysUndefined[symbol] {
+		var err error
+		if valueType, err = l.typeOf(name); err != nil {
+			return 0, err
+		}
 	}
 	if l.locals == nil {
 		l.locals = map[*ast.Symbol]int{}
@@ -559,10 +570,10 @@ func (l *lowering) local(identifier *ast.Node) (int, bool) {
 	local, isLocal := l.locals[symbol]
 	if isLocal {
 		l.touch(local)
-		if declared := l.result.Locals[local]; declared.Captured && declared.Type == ir.MaybeNumber && l.unlowerable == nil {
+		if declared := l.result.Locals[local]; declared.Captured && slotless(declared.Type) && l.unlowerable == nil {
 			// A cell holds one adamic_value, and number | undefined needs two words. Lower says so once
 			// it's done, since the capture is found here, where nothing can return an error.
-			l.unlowerable = l.notYet(identifier, "a number | undefined variable a function value captures")
+			l.unlowerable = l.notYet(identifier, "a "+typeName(declared.Type)+" variable a function value captures")
 		}
 	}
 	return local, isLocal
@@ -614,12 +625,19 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
 	}
+	if l.alwaysUndefined[l.symbol(target)] {
+		// Its type is unknown, so anything could be written to it, and it holds only undefined.
+		return nil, l.notYet(target, "assigning to a parameter that only ever receives undefined")
+	}
 	value, err := l.expression(binary.Right)
 	if err != nil {
 		return nil, err
 	}
 	if isCompound {
-		current := ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}
+		current := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
+		if operator == ast.KindPlusToken {
+			current, value = l.spelled(target, current), l.spelled(binary.Right, value)
+		}
 		if value, err = l.combine(node, operator, current, value); err != nil {
 			return nil, err
 		}

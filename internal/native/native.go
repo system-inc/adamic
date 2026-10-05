@@ -47,6 +47,10 @@ type Options struct {
 	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
 	Sanitize bool
 
+	// Count makes the binary count its allocations, frees, retains and releases, and write them to
+	// stderr as it exits (runtime/count.h). Only a counted build does; the counts table is made of them.
+	Count bool
+
 	// cpu, for tests, compiles for a particular processor (-march), so a test on an x86 machine can
 	// see what fused multiply-adds would do, as on arm64.
 	cpu string
@@ -63,6 +67,9 @@ func Flags(options Options) []string {
 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
 	flags = append(flags, "-ffp-contract=off")
+	if options.Count {
+		flags = append(flags, "-DADAMIC_COUNT")
+	}
 	if options.cpu != "" {
 		flags = append(flags, "-march="+options.cpu)
 	}
