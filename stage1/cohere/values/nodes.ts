@@ -13,6 +13,13 @@
 // others would otherwise be written. The other optional fields are plain values the shape ignores
 // where it leaves them out.
 //
+// A container's children are not a field of its node while the parse runs. The parser appends to them
+// long after it made the node (a func's arguments, a value's words), and a mutable list of nodes that
+// a node keeps could be made to hold that node itself, a cycle stage 0 refuses (adamic/cycle-capable;
+// "The cycle rule's cost" in GAPS.md). So a container has an id, the parser keeps each container's
+// children by it, and when the parse is done it builds the tree the library returns, a ValueTree, whose
+// lists are readonly.
+//
 // Not ported, as in the Go: parent, and everything functional (toString, clone, walk and the rest),
 // which the parser never calls.
 
@@ -58,7 +65,8 @@ export class ValueNode {
 	readonly value: string;
 	readonly source: Source | undefined;
 	readonly sourceIndex: number;
-	readonly nodes: ValueNode[] = [];
+	// The container's index in the parser's children, or -1 for a node that is not a container.
+	readonly id: number;
 	unbalanced = 0;
 	readonly unit: string;
 	readonly flag: boolean;
@@ -66,7 +74,7 @@ export class ValueNode {
 	isColor = false;
 
 	// flag is comment's inline and string's quoted, the one boolean each of them has.
-	constructor(type: string, shape: Shape, value: string, source: Source | undefined, sourceIndex: number, unit: string, flag: boolean) {
+	constructor(type: string, shape: Shape, value: string, source: Source | undefined, sourceIndex: number, unit: string, flag: boolean, id: number) {
 		this.type = type;
 		this.shape = shape;
 		this.value = value;
@@ -74,6 +82,18 @@ export class ValueNode {
 		this.sourceIndex = sourceIndex;
 		this.unit = unit;
 		this.flag = flag;
+		this.id = id;
+	}
+}
+
+// A node with its children: the tree a parse returns.
+export class ValueTree {
+	readonly node: ValueNode;
+	readonly nodes: readonly ValueTree[];
+
+	constructor(node: ValueNode, nodes: readonly ValueTree[]) {
+		this.node = node;
+		this.nodes = nodes;
 	}
 }
 
@@ -110,24 +130,24 @@ export function hasNodes(shape: Shape): boolean {
 }
 
 // nodes.go: newRoot, Container with type 'root'.
-export function newRoot(): ValueNode {
-	return new ValueNode('root', 'root', '', undefined, 0, '', false);
+export function newRoot(id: number): ValueNode {
+	return new ValueNode('root', 'root', '', undefined, 0, '', false, id);
 }
 
 // nodes.go: newValue, Container with type 'value' and unbalanced 0.
-export function newValue(): ValueNode {
-	return new ValueNode('value', 'value', '', undefined, 0, '', false);
+export function newValue(id: number): ValueNode {
+	return new ValueNode('value', 'value', '', undefined, 0, '', false, id);
 }
 
 // nodes.go: leaf, the Node subclasses that take { value, source, sourceIndex }: colon, comma, operator,
 // unicode-range and word.
 export function leaf(type: string, value: string, source: Source, sourceIndex: number): ValueNode {
-	return new ValueNode(type, 'leaf', value, source, sourceIndex, '', false);
+	return new ValueNode(type, 'leaf', value, source, sourceIndex, '', false, -1);
 }
 
 // The word splitWord builds, which sets isHex and isColor on it.
 export function newWord(value: string, source: Source, sourceIndex: number, isHex: boolean, isColor: boolean): ValueNode {
-	const node = new ValueNode('word', 'word', value, source, sourceIndex, '', false);
+	const node = new ValueNode('word', 'word', value, source, sourceIndex, '', false, -1);
 	node.isHex = isHex;
 	node.isColor = isColor;
 	return node;
@@ -135,33 +155,33 @@ export function newWord(value: string, source: Source, sourceIndex: number, isHe
 
 // nodes.go: newParen, Node with type 'paren' and parenType "".
 export function newParen(value: string, source: Source, sourceIndex: number): ValueNode {
-	return new ValueNode('paren', 'paren', value, source, sourceIndex, '', false);
+	return new ValueNode('paren', 'paren', value, source, sourceIndex, '', false, -1);
 }
 
 // nodes.go: newComment, Node with type 'comment' and inline from its options.
 export function newComment(value: string, inline: boolean, source: Source, sourceIndex: number): ValueNode {
-	return new ValueNode('comment', 'comment', value, source, sourceIndex, '', inline);
+	return new ValueNode('comment', 'comment', value, source, sourceIndex, '', inline, -1);
 }
 
 // nodes.go: newAtWord, Container with type 'atword'.
-export function newAtWord(value: string, source: Source, sourceIndex: number): ValueNode {
-	return new ValueNode('atword', 'atword', value, source, sourceIndex, '', false);
+export function newAtWord(value: string, source: Source, sourceIndex: number, id: number): ValueNode {
+	return new ValueNode('atword', 'atword', value, source, sourceIndex, '', false, id);
 }
 
 // nodes.go: newNumber, Node with type 'number' and unit from its options, or "".
 export function newNumber(value: string, source: Source, sourceIndex: number, unit: string): ValueNode {
-	return new ValueNode('number', 'number', value, source, sourceIndex, unit, false);
+	return new ValueNode('number', 'number', value, source, sourceIndex, unit, false, -1);
 }
 
 // nodes.go: newFunc, Container with type 'func', unbalanced starting at -1 so the parser knows no parens
 // have been added yet.
-export function newFunc(value: string, source: Source, sourceIndex: number): ValueNode {
-	const node = new ValueNode('func', 'func', value, source, sourceIndex, '', false);
+export function newFunc(value: string, source: Source, sourceIndex: number, id: number): ValueNode {
+	const node = new ValueNode('func', 'func', value, source, sourceIndex, '', false, id);
 	node.unbalanced = -1;
 	return node;
 }
 
 // nodes.go: newString, Node with type 'string' and quoted from its options.
 export function newString(value: string, source: Source, sourceIndex: number, quoted: boolean): ValueNode {
-	return new ValueNode('string', 'string', value, source, sourceIndex, '', quoted);
+	return new ValueNode('string', 'string', value, source, sourceIndex, '', quoted, -1);
 }

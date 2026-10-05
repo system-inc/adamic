@@ -32,10 +32,11 @@ import {
 	Position,
 	Source,
 	type ValueNode,
+	ValueTree,
 } from './nodes.ts';
 
 // What a parse gives: the Root, or upstream's String(error) for what it threw.
-export type Parsed = { readonly kind: 'Ok'; readonly root: ValueNode } | { readonly kind: 'Error'; readonly message: string };
+export type Parsed = { readonly kind: 'Ok'; readonly root: ValueTree } | { readonly kind: 'Error'; readonly message: string };
 
 // parser.go: tokenSource, the { start, end } most node kinds take straight from their token.
 function tokenSource(token: Token): Source {
@@ -141,6 +142,11 @@ function replaceFirst(value: string, search: string): string {
 	return found === -1 ? value : value.slice(0, found) + value.slice(found + search.length);
 }
 
+// A leaf's children in its tree. tree() starts from it and replaces it for a container, where it would
+// write `children ?? []`, since stage 0 doesn't lower an empty array literal as a default yet (gap 5 in
+// GAPS.md).
+const noChildren: readonly ValueTree[] = [];
+
 // parser.go: parser.
 export class Parser {
 	// cache needs to be an array for values with more than 1 level of function nesting
@@ -151,6 +157,9 @@ export class Parser {
 	// matters lives on the Value and FunctionNode nodes.
 	readonly #root: ValueNode;
 	#current: ValueNode;
+	// Each container's children, by its id: the Go's Container nodes field, kept here while the parse
+	// runs (nodes.ts says why).
+	readonly #children: ValueNode[][] = [];
 	readonly #tokens: readonly Token[];
 	#spaces = '';
 	// What upstream threw, as String(error), or '' while nothing has.
@@ -160,11 +169,13 @@ export class Parser {
 	// throw needn't come out of a constructor (values.ts).
 	constructor(loose: boolean, tokens: readonly Token[]) {
 		this.#loose = loose;
-		this.#root = newRoot();
+		this.#children.push([]);
+		this.#root = newRoot(0);
 
-		const value = newValue();
+		this.#children.push([]);
+		const value = newValue(1);
 
-		this.#root.nodes.push(value);
+		(this.#children[0] ?? panic('the root has children')).push(value);
 
 		this.#current = value;
 		this.#tokens = tokens;
@@ -200,9 +211,20 @@ export class Parser {
 		this.#thrown = `TypeError: Cannot read properties of undefined (reading '${key}')`;
 	}
 
+	// A container's children, as the Go's nodes field holds them.
+	private childrenOf(container: ValueNode): ValueNode[] {
+		return this.#children[container.id] ?? panic(`no children for a ${container.type}`);
+	}
+
+	// A new container's id, with no children yet.
+	private nextId(): number {
+		this.#children.push([]);
+		return this.#children.length - 1;
+	}
+
 	// parser.go: last, Container's `get last`: the current node's last child, or undefined.
 	private last(): ValueNode | undefined {
-		return this.#current.nodes.at(-1);
+		return this.childrenOf(this.#current).at(-1);
 	}
 
 	// parser.go: newNode.
@@ -212,7 +234,7 @@ export class Parser {
 			this.#spaces = '';
 		}
 
-		this.#current.nodes.push(node);
+		this.childrenOf(this.#current).push(node);
 	}
 
 	// parser.go: colon.
@@ -349,7 +371,7 @@ export class Parser {
 			const nodeSourceIndex = currToken.index + ind;
 
 			if (hasAt.includes(ind)) {
-				node = newAtWord(value.slice(1), nodeSource, nodeSourceIndex);
+				node = newAtWord(value.slice(1), nodeSource, nodeSourceIndex, this.nextId());
 			} else if (rNumber(currToken.value) >= 0) {
 				const matched = rNumber(value);
 				const unit = matched >= 0 ? value.slice(matched) : value;
@@ -357,7 +379,7 @@ export class Parser {
 				// value.replace(unit, ''): the first occurrence, which is not always the suffix.
 				node = newNumber(replaceFirst(value, unit), nodeSource, nodeSourceIndex, unit);
 			} else if (nextToken !== undefined && nextToken.kind === '(') {
-				node = newFunc(value, nodeSource, nodeSourceIndex);
+				node = newFunc(value, nodeSource, nodeSourceIndex, this.nextId());
 				this.#cache.push(this.#current);
 			} else {
 				node = newWord(value, nodeSource, nodeSourceIndex, isHex(value), isColor(value));
@@ -445,7 +467,7 @@ export class Parser {
 				}
 			} else {
 				const currentLast = this.last();
-				if (this.#current.nodes.length === 0 || (currentLast !== undefined && currentLast.type === 'operator')) {
+				if (this.childrenOf(this.#current).length === 0 || (currentLast !== undefined && currentLast.type === 'operator')) {
 					const next = this.nextToken();
 					if (next === undefined) {
 						this.typeError('0');
@@ -606,6 +628,15 @@ export class Parser {
 		}
 	}
 
+	// The tree of a node and everything under it, as the library returns it.
+	private tree(node: ValueNode): ValueTree {
+		let nodes: readonly ValueTree[] = noChildren;
+		if (node.id >= 0) {
+			nodes = this.childrenOf(node).map((child) => this.tree(child));
+		}
+		return new ValueTree(node, nodes);
+	}
+
 	// parser.go: loop.
 	private loop(): Parsed {
 		while (this.#position < this.#tokens.length) {
@@ -626,7 +657,7 @@ export class Parser {
 
 		this.#spaces = '';
 
-		return { kind: 'Ok', root: this.#root };
+		return { kind: 'Ok', root: this.tree(this.#root) };
 	}
 
 	// parser.go: parse.

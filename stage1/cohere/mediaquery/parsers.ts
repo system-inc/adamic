@@ -13,6 +13,8 @@
 //     The messages are the Go's.
 //   - The declarations come callee first, as the gitignore port's do: stage 0 takes a call to a function
 //     declared further down for a void one (gitignore's GAPS.md, gap 3).
+//   - The lists of nodes are readonly and grow by copying (appended), where the Go appends to a slice:
+//     a node keeps its children's list, so a mutable one could be made to hold its own node.
 //   - The Go's (int, string) from matchUrlStart is a UrlStart, since stage 0 doesn't lower a tuple as a
 //     value yet (gitignore's GAPS.md, gap 8).
 
@@ -38,6 +40,14 @@ function nodeAt(list: readonly MediaNode[], index: number): MediaNode {
 	return list[index] ?? panic(`index out of range [${index}] with length ${list.length}`);
 }
 
+// appended is result.push(node) as a new list: the lists of nodes are readonly, since a node keeps its
+// children's list, and stage 0 refuses a mutable list of nodes that can reach a list like it, a cycle
+// reference counting couldn't free (adamic/cycle-capable; "The cycle rule's cost" in GAPS.md). Each
+// list holds a handful of nodes, so copying it costs little.
+function appended(list: readonly MediaNode[], node: MediaNode): readonly MediaNode[] {
+	return [...list, node];
+}
+
 function modeAt(list: readonly Mode[], index: number): Mode {
 	return list[index] ?? panic(`index out of range [${index}] with length ${list.length}`);
 }
@@ -61,9 +71,9 @@ interface Mode {
  * @return {Array} an array of Nodes, the first element being a media feature,
  *    the secont - its value (may be missing)
  */
-function parseMediaFeature(text: string, index: number): Result<MediaNode[]> {
+function parseMediaFeature(text: string, index: number): Result<readonly MediaNode[]> {
 	const modesEntered: Mode[] = [{ mode: 'normal', isCalculationEnabled: false, character: '' }];
-	const result: MediaNode[] = [];
+	let result: readonly MediaNode[] = [];
 	let lastModeIndex = 0;
 	let mediaFeature = '';
 	let colon: MediaNode | undefined = undefined;
@@ -131,29 +141,31 @@ function parseMediaFeature(text: string, index: number): Result<MediaNode[]> {
 	// Forming a media feature node
 	const mediaFeatureBefore = leadingWhitespace(mediaFeature);
 	const mediaFeatureAfter = trailingWhitespace(mediaFeature);
-	result.push(newNode(mediaFeatureAfter, mediaFeatureBefore, 'media-feature', trim(mediaFeature), mediaFeatureBefore.length + indexLocal));
+	result = appended(result, newNode(mediaFeatureAfter, mediaFeatureBefore, 'media-feature', trim(mediaFeature), mediaFeatureBefore.length + indexLocal));
 
 	if (colon !== undefined) {
 		colon.before = mediaFeatureAfter;
-		result.push(colon);
+		result = appended(result, colon);
 	}
 
 	if (mediaFeatureValue !== undefined) {
-		result.push(mediaFeatureValue);
+		result = appended(result, mediaFeatureValue);
 	}
 
 	return { kind: 'Ok', value: result };
 }
 
 // parsers.go: mediaQueryElement, the plain object parseMediaQuery builds an element in (resetNode's shape
-// plus the type, sourceIndex and nodes it may gain) before handing it to Node or Container.
+// plus the type and sourceIndex it may gain) before handing it to Node or Container. The nodes it may
+// gain are elementNodes in parseMediaQuery, not a field: with them this interface has every field a
+// MediaNode has, so a MediaNode can be seen as one, and a mutable nodes field could then be given the
+// node itself, a cycle stage 0 refuses (adamic/cycle-capable).
 interface MediaQueryElement {
 	before: string;
 	after: string;
 	value: string;
 	type: string;
 	sourceIndex: number;
-	nodes: MediaNode[] | undefined;
 }
 
 /**
@@ -166,8 +178,8 @@ interface MediaQueryElement {
  *
  * @return {Array} an array of Nodes and Containers
  */
-function parseMediaQuery(text: string, index: number): Result<MediaNode[]> {
-	const result: MediaNode[] = [];
+function parseMediaQuery(text: string, index: number): Result<readonly MediaNode[]> {
+	let result: readonly MediaNode[] = [];
 
 	// How many timies the parser entered parens/curly braces
 	let localLevel = 0;
@@ -175,9 +187,10 @@ function parseMediaQuery(text: string, index: number): Result<MediaNode[]> {
 	// ('element' hereafter) started
 	let insideSomeValue = false;
 
-	const resetNode = (): MediaQueryElement => ({ before: '', after: '', value: '', type: '', sourceIndex: 0, nodes: undefined });
+	const resetNode = (): MediaQueryElement => ({ before: '', after: '', value: '', type: '', sourceIndex: 0 });
 
 	let node = resetNode();
+	let elementNodes: readonly MediaNode[] | undefined = undefined;
 
 	for (let i = 0; i < text.length; i++) {
 		const character = text[i] ?? panic(`index ${i} out of range`);
@@ -225,14 +238,15 @@ function parseMediaQuery(text: string, index: number): Result<MediaNode[]> {
 				if (parsed.kind === 'Error') {
 					return parsed;
 				}
-				node.nodes = parsed.value;
+				elementNodes = parsed.value;
 			}
-			if (node.nodes !== undefined) {
-				result.push(newContainer(node.after, node.before, node.type, node.value, node.sourceIndex, node.nodes));
+			if (elementNodes !== undefined) {
+				result = appended(result, newContainer(node.after, node.before, node.type, node.value, node.sourceIndex, elementNodes));
 			} else {
-				result.push(newNode(node.after, node.before, node.type, node.value, node.sourceIndex));
+				result = appended(result, newNode(node.after, node.before, node.type, node.value, node.sourceIndex));
 			}
 			node = resetNode();
+			elementNodes = undefined;
 			insideSomeValue = false;
 		}
 	}
@@ -353,8 +367,8 @@ function matchUrlStart(text: string): UrlStart {
  *
  * @return {Array} an array of Nodes/Containers
  */
-export function parseMediaList(text: string): Result<MediaNode[]> {
-	const result: MediaNode[] = [];
+export function parseMediaList(text: string): Result<readonly MediaNode[]> {
+	let result: readonly MediaNode[] = [];
 	let interimIndex = 0;
 	let levelLocal = 0;
 
@@ -378,7 +392,7 @@ export function parseMediaList(text: string): Result<MediaNode[]> {
 			i++;
 		}
 		// result.unshift into an empty result.
-		result.push(newNode(leadingWhitespace(text.slice(i)), urlStart.before, 'url', trim(text.slice(0, i)), urlStart.before.length));
+		result = appended(result, newNode(leadingWhitespace(text.slice(i)), urlStart.before, 'url', trim(text.slice(0, i)), urlStart.before.length));
 		interimIndex = i;
 	}
 
@@ -402,7 +416,8 @@ export function parseMediaList(text: string): Result<MediaNode[]> {
 			if (parsed.kind === 'Error') {
 				return parsed;
 			}
-			result.push(
+			result = appended(
+				result,
 				newContainer(trailingWhitespace(mediaQueryString), spaceBefore, 'media-query', trim(mediaQueryString), interimIndex + spaceBefore.length, parsed.value),
 			);
 			interimIndex = i + 1;
@@ -415,7 +430,8 @@ export function parseMediaList(text: string): Result<MediaNode[]> {
 	if (parsed.kind === 'Error') {
 		return parsed;
 	}
-	result.push(
+	result = appended(
+		result,
 		newContainer(trailingWhitespace(mediaQueryString), spaceBefore, 'media-query', trim(mediaQueryString), interimIndex + spaceBefore.length, parsed.value),
 	);
 

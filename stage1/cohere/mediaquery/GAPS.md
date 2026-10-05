@@ -85,6 +85,39 @@ On a `string | undefined`, `text?.length` reads `stage 0 can't lower optional ch
 
 **Around it:** the driver's count mode (main.ts) narrows `parsed.value.nodes` into a local and tests it for undefined.
 
+## The cycle rule's cost
+
+Not a gap: a rule. When main brought the cycle finder (`internal/lower/cycles.go`, docs/memory.md "Cycles"), it refused this port as first written, twice, and it was right both times by its rule.
+
+- The parser built each list of nodes in a local `MediaNode[]` with `push`, and handed that same array to the container as its `nodes`. A mutable array of nodes that can reach an array like it can be made to hold its own container, so it's refused: `Adamic 0.1 refuses MediaNode[], an array whose elements can reach back to an array like it ... (adamic/cycle-capable)`. The lists are now `readonly MediaNode[]`, and `appended` (parsers.ts) grows one by copying, `[...list, node]`.
+- The Go's `mediaQueryElement` has exactly the fields a MediaNode has, so a MediaNode can be seen as one, and through the element's mutable `nodes` field it could be given itself. The element's nodes are now a local, `elementNodes`, reset with it.
+
+The first is the one worth a look. Building a tree bottom-up, a list filled and then handed to a node that keeps it as `readonly`, is how nearly every parser builds children, and the finder refuses it though nothing writes the list once it's handed over:
+
+```ts
+class TreeNode {
+	readonly name: string;
+	readonly nodes: readonly TreeNode[];
+	constructor(name: string, nodes: readonly TreeNode[]) {
+		this.name = name;
+		this.nodes = nodes;
+	}
+}
+function build(): TreeNode {
+	const children: TreeNode[] = [];
+	children.push(new TreeNode('a', []));
+	children.push(new TreeNode('b', []));
+	return new TreeNode('root', children);
+}
+console.log(`${build().nodes.length}`);
+```
+
+```
+Adamic 0.1 refuses TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free; declare the elements weak, Weak<TreeNode>[] (import type { Weak } from 'adamic'), ... or make it readonly TreeNode[] (adamic/cycle-capable)        (Node prints 2)
+```
+
+The finder works on types, so it can't see that `children` is never written after `new TreeNode('root', children)` takes it. Copying on every append (here) or keeping children outside the nodes until the end (the values slice) both work, and both cost what the mutable list didn't: here, about a tenth on the generated params (2.15 s before, 2.3 to 2.5 s after, the same run otherwise). A rule that let a local mutable array be handed to a `readonly` slot as its last use (the array moved, not shared) would accept this program and refuse `children.push(root)` after it. That's for @system_adamic to weigh; the port doesn't wait on it.
+
 ## The first slice's gaps, met again
 
 Two of gitignore's open gaps (stream P is closing them) shaped this port too, and are marked where they did:

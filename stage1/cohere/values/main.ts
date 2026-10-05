@@ -20,7 +20,7 @@
 
 import { panic, programArguments, readTextFile } from 'adamic';
 import { parse } from './values.ts';
-import { hasNodes, keysOf, type Position, type Source, type ValueNode } from './nodes.ts';
+import { hasNodes, keysOf, type Position, type Source, type ValueNode, type ValueTree } from './nodes.ts';
 
 const hexDigits = '0123456789abcdef';
 
@@ -106,24 +106,25 @@ function field(node: ValueNode, key: string): string {
 }
 
 // render writes a node and its children at depth.
-function render(node: ValueNode, depth: number, lines: string[]): void {
+function render(tree: ValueTree, depth: number, lines: string[]): void {
+	const node = tree.node;
 	let line = `${'  '.repeat(depth)}${node.type}`;
 	for (const key of keysOf(node.shape)) {
 		line += ` ${key}=${field(node, key)}`;
 	}
 	if (hasNodes(node.shape)) {
-		line += ` nodes=${node.nodes.length}`;
+		line += ` nodes=${tree.nodes.length}`;
 	}
 	lines.push(line);
-	for (const child of node.nodes) {
+	for (const child of tree.nodes) {
 		render(child, depth + 1, lines);
 	}
 }
 
 // count is how many nodes a tree holds, itself included.
-function count(node: ValueNode): number {
+function count(tree: ValueTree): number {
 	let total = 1;
-	for (const child of node.nodes) {
+	for (const child of tree.nodes) {
 		total += count(child);
 	}
 	return total;

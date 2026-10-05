@@ -2,7 +2,7 @@
 
 The port beside this file is cohere's `internal/format/css/values` (values.go, nodes.go, tokenize.go and parser.go), itself a port of postcss-values-parser 2.0.1, the parser Prettier's language-css hands every declaration value to, written as 0.1 Adamic. It is stage 1's third slice, after `stage1/cohere/gitignore` and `stage1/cohere/mediaquery`, whose GAPS.md files this one follows and refers to.
 
-Every place stage 0 refused the port is below, as the smallest program that shows it, stage 0's own message, and the way the port went around it. Each workaround is marked in the port with its gap number (`grep -n "gap N" *.ts`), and a workaround for another slice's gap names that slice's GAPS.md. Each program typechecks under stage 0's options and runs on Node 24.21.0 with the output shown. They were found at main 2385966.
+Every place stage 0 refused the port is below (gap 5 found at main 4ddd17f, the rest at 2385966), as the smallest program that shows it, stage 0's own message, and the way the port went around it. Each workaround is marked in the port with its gap number (`grep -n "gap N" *.ts`), and a workaround for another slice's gap names that slice's GAPS.md. Each program typechecks under stage 0's options and runs on Node 24.21.0 with the output shown.
 
 The programs are in `gaps/`, and `gaps_test.go` holds them to this file: an open gap must still be refused with the words recorded here, and a closed one must lower and print natively what it prints on Node, leaking nothing.
 
@@ -91,6 +91,29 @@ A `private step()` lowers.
 
 **Around it:** the parser's fields are `#private`, as the gitignore port's are, and its methods are `private`.
 
+## 5. An empty array literal as a default
+
+```ts
+function size(list: readonly string[] | undefined): number {
+	return (list ?? []).length;
+}
+console.log(`${size(['a'])} ${size(undefined)}`);
+```
+
+```
+stage 0 can't lower an array of never yet        (Node prints 1 0)
+```
+
+`(lists[1] ?? []).length` on a `string[][]` reads the same. The checker types the `[]` as `never[]` before the `??` widens it.
+
+**Around it:** `noChildren` (parser.ts), a `readonly ValueTree[]` constant a leaf's tree starts from, found when the cycle rule (below) moved the children out of the nodes.
+
+## The cycle rule's cost
+
+Not a gap: a rule, the one mediaquery's GAPS.md describes under the same heading, with its smallest program. Here it reshaped the parser. Upstream's Container has `nodes`, and the parser appends to it long after it made the node: a func gets its arguments, the value gets its words. A mutable `nodes` field, or a mutable field holding a `readonly` list, can be made to hold its own node, and is refused (adamic/cycle-capable). Copying on every append, as the media query port does, would be quadratic in a long value.
+
+So a container has an `id`, the parser keeps each container's children in `#children` by it, a `ValueNode[][]` (a ValueNode no longer reaches a list of nodes, so nothing there can close a cycle), and when the parse is done, `tree` builds the `ValueTree` the parse returns, whose lists are `readonly`. That's the arena docs/memory.md describes for stage 1, kept by hand: one parse's nodes live in one table until the parse ends. The timings didn't move (2.65 s before, 2.60 to 2.65 s after).
+
 ## The other slices' gaps, met again
 
 - **gitignore gap 3, a call to a function or method declared later**: the parser's methods are ordered callee first, so `parseTokens` and `loop` come last. The Go's order is the library's, which is the other way round.
@@ -122,7 +145,7 @@ Native is level with Go cohere here, where on the media query parser it was four
 Under callgrind, on 10,000 ASCII values, the native run is allocation and counting: `adamic_release` 23% of the instructions in itself (35% with what it calls), malloc and free about 23% between them, and `adamic_string_slice` and `adamic_string_concat` 16% and 10% with what they call. Beyond the media query slice's three shapes (`text[index]` allocating, `+=` copying, short non-ASCII strings walked from the start), two more show here:
 
 - **A field of an interface value is read through a call.** `adamic_object_field` (6%) finds a field of a structurally typed object through a one-entry shape cache, a call and a compare for every `token.kind` and `token.value`. A class's fields don't pay it. The parser reads its tokens' fields all the time; a Token class would avoid it, but a Token is what the Go and upstream have, an interface.
-- **Freeing a node releases each of its fields one call at a time.** A ValueNode has thirteen fields, and every parse frees the whole tree and every token when the case is done, all through `adamic_release` and its freeing list. An arena per parse (docs/memory.md, "Arenas") is the fix this was written for: one request, one file, freed at once.
+- **Freeing a node releases each of its fields one call at a time.** A ValueNode has twelve fields, and every parse frees the whole tree and every token when the case is done, all through `adamic_release` and its freeing list. An arena per parse (docs/memory.md, "Arenas") is the fix this was written for: one request, one file, freed at once.
 
 ## Not covered
 
