@@ -54,6 +54,10 @@ type Options struct {
 	// cpu, for tests, compiles for a particular processor (-march), so a test on an x86 machine can
 	// see what fused multiply-adds would do, as on arm64.
 	cpu string
+
+	// slabs, for tests, keeps the size-class allocator on in a sanitized build (heap.c), where every
+	// value otherwise comes from malloc, to show a use after a free is still caught with it on.
+	slabs bool
 }
 
 // Build compiles C source and the runtime into a native binary at output.
@@ -96,6 +100,9 @@ func Build(source string, output string, options Options) error {
 	arguments = append(arguments, "-ffp-contract=off")
 	if options.Count {
 		arguments = append(arguments, "-DADAMIC_COUNT")
+	}
+	if options.slabs {
+		arguments = append(arguments, "-DADAMIC_SLABS")
 	}
 	if options.cpu != "" {
 		arguments = append(arguments, "-march="+options.cpu)

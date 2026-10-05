@@ -32,6 +32,9 @@ enum adamic_kind {
 typedef struct adamic_heap {
 	size_t references;
 	enum adamic_kind kind;
+	// slab is the size class the value's memory came from, plus one, or 0 for memory from malloc and
+	// for a value never freed (heap.c). It fills what was padding.
+	uint32_t slab;
 } adamic_heap;
 
 // adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
@@ -104,10 +107,10 @@ extern char adamic_literal_mark;
 #define ADAMIC_LITERAL_INDEX ((struct adamic_string_index *)&adamic_literal_mark)
 
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
-#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX}
+#define ADAMIC_STRING(text) {{0, adamic_kind_string, 0}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX}
 
 // ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
-#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string}, size, array, 0, ADAMIC_LITERAL_INDEX}
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, array, 0, ADAMIC_LITERAL_INDEX}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 typedef struct adamic_shape {

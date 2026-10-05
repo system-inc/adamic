@@ -202,7 +202,7 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 		}
 		end = lead;
 	}
-	adamic_string piece = {{0, adamic_kind_string}, end - start, string->bytes + start, 0, NULL};
+	adamic_string piece = {{0, adamic_kind_string, 0}, end - start, string->bytes + start, 0, NULL};
 	return adamic_string_concat(1, (adamic_string *const[]){&piece});
 }
 
@@ -211,7 +211,7 @@ size_t adamic_string_next(const adamic_string *string, size_t offset) {
 }
 
 adamic_string *adamic_string_slice_bytes(const adamic_string *string, size_t offset, size_t size) {
-	adamic_string piece = {{0, adamic_kind_string}, size, string->bytes + offset, 0, NULL};
+	adamic_string piece = {{0, adamic_kind_string, 0}, size, string->bytes + offset, 0, NULL};
 	return adamic_string_concat(1, (adamic_string *const[]){&piece});
 }
 
@@ -302,7 +302,7 @@ static void builder_unit(builder *build, unsigned unit) {
 }
 
 static adamic_string *builder_finish(builder *build) {
-	adamic_string piece = {{0, adamic_kind_string}, build->length, build->bytes, 0, NULL};
+	adamic_string piece = {{0, adamic_kind_string, 0}, build->length, build->bytes, 0, NULL};
 	adamic_string *string = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(build->bytes);
 	return string;
