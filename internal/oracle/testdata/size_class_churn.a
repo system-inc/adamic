@@ -19,3 +19,18 @@ for (let size = 1; size <= 300; size += 13) {
 	}
 	console.log(`size ${size}: ${generation.length} cells, checksum ${checksum}`);
 }
+
+// Down through the sizes and up again, so chunks a larger class emptied are carved by smaller ones and
+// then a larger class takes from them again: a chunk must take on its new class whole.
+const sizes = [280, 200, 120, 40, 8, 1, 8, 40, 120, 200, 280, 3, 280];
+for (const size of sizes) {
+	const generation: Cell[] = [];
+	for (let index = 0; index < 3000; index += 1) {
+		generation.push({ label: 'y'.repeat(size) + `${index % 7}`, weight: index * 2 });
+	}
+	let total = 0;
+	for (const cell of generation) {
+		total += cell.label.length + cell.label.charCodeAt(size) + cell.weight;
+	}
+	console.log(`down and up ${size}: ${total}`);
+}
