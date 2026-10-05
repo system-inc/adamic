@@ -17,7 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-//go:embed runtime/adamic.c runtime/adamic.h
+//go:embed runtime/*.c runtime/*.h
 var runtime embed.FS
 
 // C is a program as one C translation unit, to be compiled with the runtime.
@@ -87,17 +87,26 @@ func Build(source string, output string, options Options) error {
 	}
 	defer os.RemoveAll(directory)
 
-	files := map[string]string{"main.c": source}
-	for _, name := range []string{"adamic.c", "adamic.h"} {
-		contents, err := runtime.ReadFile("runtime/" + name)
+	// The runtime is every file in runtime/, written beside the program and compiled with it.
+	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
+		return fmt.Errorf("native: %w", err)
+	}
+	units := []string{filepath.Join(directory, "main.c")}
+	entries, err := runtime.ReadDir("runtime")
+	if err != nil {
+		return fmt.Errorf("native: %w", err)
+	}
+	for _, entry := range entries {
+		contents, err := runtime.ReadFile("runtime/" + entry.Name())
 		if err != nil {
 			return fmt.Errorf("native: %w", err)
 		}
-		files[name] = string(contents)
-	}
-	for name, contents := range files {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(contents), 0o644); err != nil {
+		path := filepath.Join(directory, entry.Name())
+		if err := os.WriteFile(path, contents, 0o644); err != nil {
 			return fmt.Errorf("native: %w", err)
+		}
+		if strings.HasSuffix(entry.Name(), ".c") {
+			units = append(units, path)
 		}
 	}
 
@@ -107,7 +116,8 @@ func Build(source string, output string, options Options) error {
 	} else {
 		arguments = append(arguments, "-O2")
 	}
-	arguments = append(arguments, "-o", output, filepath.Join(directory, "main.c"), filepath.Join(directory, "adamic.c"))
+	arguments = append(arguments, "-o", output)
+	arguments = append(arguments, units...)
 	command := exec.Command("clang", arguments...)
 	if combined, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
