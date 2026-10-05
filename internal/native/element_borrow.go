@@ -178,6 +178,10 @@ func (e *emitter) borrowElement(declare ir.Declare) {
 		}
 		e.indent--
 		e.line("}")
+		if e.mostlyNull == nil {
+			e.mostlyNull = map[string]bool{}
+		}
+		e.mostlyNull[owner] = true
 		e.hold(owner)
 	}
 	e.end()

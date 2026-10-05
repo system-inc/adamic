@@ -172,6 +172,7 @@ type emitter struct {
 	// function's return allocates in its region.
 	regions            *regionPlan
 	elementBorrows     map[*ir.Statement]bool
+	mostlyNull         map[string]bool
 	functionIndex      int
 	inRegion           bool
 	regionValues       map[string]bool
@@ -360,6 +361,13 @@ func (e *emitter) block(statements []ir.Statement, after func()) {
 func (e *emitter) releaseScopes(depth int) {
 	for scope := len(e.scopes) - 1; scope >= depth; scope-- {
 		for index := len(e.scopes[scope]) - 1; index >= 0; index-- {
+			if e.mostlyNull[e.scopes[scope][index]] {
+				// Held only on the rare path (a fallback's owner): NULL, the common case, needs no call.
+				e.line("if (%s != NULL) {", e.scopes[scope][index])
+				e.line("\tadamic_release(%s);", e.scopes[scope][index])
+				e.line("}")
+				continue
+			}
 			e.line("adamic_release(%s);", e.scopes[scope][index])
 		}
 	}

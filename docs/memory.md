@@ -636,6 +636,8 @@ In `borrow_element.a`, probes 1 to 6 are refused. Probes 7 and 8 borrow, and are
 
 On `nbody`, counted: retains 22,000,050 to 7,000,019. Releases stayed at 22,000,054: the fallback's owner is let go of once per declaration, NULL every time here. No other row of the oracle's table moved, and the other benchmarks didn't either. Time, best of 5 interleaved against 4636a33 at load about 2.5: 0.235 s to 0.222 s, small enough that the noise could hide it. The release of an owner that is NULL is the next thing to take out of `nbody`'s loop.
 
+**The owner's release, only when it holds something.** The scope now lets go of a fallback's owner behind a test for NULL (`mostlyNull` in `emit.go`, read by `releaseScopes`, so the throw path does the same). `nbody`, counted: releases 22,000,054 to 7,000,023, now level with its 7,000,019 retains. In the oracle's table only `borrow_element.a` moved: releases 134 to 129, its five owners that stayed NULL. Time, best of 5 interleaved against 73bbae9 at load about 3: 0.237 s to 0.220 s, again inside what the noise could hide. Mutant: the test inverted (`== NULL`), so an owner holding a fallback is never let go of. Caught by the leak check on probe 9.
+
 ## Strings, specifically
 
 UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.
