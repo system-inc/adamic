@@ -24,12 +24,8 @@
 import { panic } from 'adamic';
 import { byteAt, utf8Bytes } from './bytes.ts';
 
-// glob.go: [256]bool, a set of bytes, and positionSet, a set over a glob's positions. Both are arrays of
-// numbers, a member 1 and anything else 0, where the Go's are booleans: stage 0 cannot yet index a
-// boolean[] (an element is boolean | undefined, gap 6 in GAPS.md), nor make one with Array.from (gap 5).
-// A member is read as (set[member] ?? 0) === 1, because comparing number | undefined with a number is
-// not lowered either (gap 7).
-type ByteSet = readonly number[];
+// glob.go: [256]bool, a set of bytes.
+type ByteSet = readonly boolean[];
 
 // glob.go: tokenKind and token. The Go's one struct, whose set is nil except on a setToken, is a
 // discriminated union here, so a set is there exactly when the kind says it is.
@@ -54,7 +50,7 @@ function isDigit(character: number): boolean {
 
 // glob.go: addClass. It adds a `[:name:]` class's bytes, reporting false for a name fnmatch does not
 // define. The Go's variable is named in, which is a keyword here.
-function addClass(members: number[], name: string): boolean {
+function addClass(members: boolean[], name: string): boolean {
 	let inClass: (character: number) => boolean;
 	switch (name) {
 		case 'alnum':
@@ -100,27 +96,28 @@ function addClass(members: number[], name: string): boolean {
 	}
 	for (let member = 0; member < 256; member++) {
 		if (inClass(member)) {
-			members[member] = 1;
+			members[member] = true;
 		}
 	}
 	return true;
 }
 
-// glob.go: positionSet, and its add, has and clear.
-function newPositionSet(size: number): number[] {
-	return new Array<number>(size).fill(0);
+// glob.go: positionSet, a set over a glob's positions, and its add, has and clear. The Go's is a bit set
+// of words; here it is an array of booleans.
+function newPositionSet(size: number): boolean[] {
+	return Array.from({ length: size }, () => false);
 }
 
-function addPosition(positions: number[], position: number): void {
-	positions[position] = 1;
+function addPosition(positions: boolean[], position: number): void {
+	positions[position] = true;
 }
 
-function hasPosition(positions: readonly number[], position: number): boolean {
-	return (positions[position] ?? 0) === 1;
+function hasPosition(positions: readonly boolean[], position: number): boolean {
+	return positions[position] === true;
 }
 
-function clearPositions(positions: number[]): void {
-	positions.fill(0);
+function clearPositions(positions: boolean[]): void {
+	positions.fill(false);
 }
 
 // glob.go: compileSet's results. The Go returns (set, end, ok); here undefined is not ok.
@@ -132,7 +129,7 @@ interface CompiledSet {
 // glob.go: compileSet. It reads the bracket expression that opens at start, returning its members and
 // the index of its closing `]`, or undefined for one that never closes or names an unknown class.
 function compileSet(pattern: string, start: number): CompiledSet | undefined {
-	const members = new Array<number>(256).fill(0);
+	const members = Array.from({ length: 256 }, () => false);
 	let index = start + 1;
 	let negated = false;
 	if (index < pattern.length && (byteAt(pattern, index) === '!' || byteAt(pattern, index) === '^')) {
@@ -159,7 +156,7 @@ function compileSet(pattern: string, start: number): CompiledSet | undefined {
 			if (index >= pattern.length) {
 				return undefined;
 			}
-			members[byteAt(pattern, index).charCodeAt(0)] = 1;
+			members[byteAt(pattern, index).charCodeAt(0)] = true;
 			rangeStart = byteAt(pattern, index).charCodeAt(0);
 		} else if (character === '-' && rangeStart >= 0 && index + 1 < pattern.length && byteAt(pattern, index + 1) !== ']') {
 			index++;
@@ -172,7 +169,7 @@ function compileSet(pattern: string, start: number): CompiledSet | undefined {
 				upper = byteAt(pattern, index);
 			}
 			for (let member = rangeStart; member <= upper.charCodeAt(0); member++) {
-				members[member] = 1;
+				members[member] = true;
 			}
 			rangeStart = -1;
 		} else if (character === '[' && index + 1 < pattern.length && byteAt(pattern, index + 1) === ':') {
@@ -183,7 +180,7 @@ function compileSet(pattern: string, start: number): CompiledSet | undefined {
 			closing += index + 2;
 			if (closing - 1 < index + 2 || byteAt(pattern, closing - 1) !== ':') {
 				// No `:]` before the next `]`, so this `[` is an ordinary member.
-				members['['.charCodeAt(0)] = 1;
+				members['['.charCodeAt(0)] = true;
 				rangeStart = '['.charCodeAt(0);
 			} else {
 				if (!addClass(members, pattern.slice(index + 2, closing - 1))) {
@@ -193,14 +190,14 @@ function compileSet(pattern: string, start: number): CompiledSet | undefined {
 				rangeStart = -1;
 			}
 		} else {
-			members[character.charCodeAt(0)] = 1;
+			members[character.charCodeAt(0)] = true;
 			rangeStart = character.charCodeAt(0);
 		}
 		index++;
 	}
 	if (negated) {
 		for (let member = 0; member < members.length; member++) {
-			members[member] = 1 - (members[member] ?? 0);
+			members[member] = members[member] !== true;
 		}
 	}
 	return { set: members, end: index };
@@ -227,7 +224,7 @@ export class Glob {
 
 	// glob.go: (*glob).reach, ahead of matches because of gap 3 in GAPS.md. It marks position, and every
 	// position after it that a token matching nothing passes straight on to.
-	reach(positions: number[], start: number): void {
+	reach(positions: boolean[], start: number): void {
 		let position = start;
 		for (;;) {
 			addPosition(positions, position);
@@ -298,7 +295,7 @@ export class Glob {
 						}
 						break;
 					case 'setToken':
-						if (reached && (tokenEntry.set[character.charCodeAt(0)] ?? 0) === 1 && !crossesNothing) {
+						if (reached && tokenEntry.set[character.charCodeAt(0)] === true && !crossesNothing) {
 							this.reach(nextPositions, position + 1);
 							advanced = true;
 						}

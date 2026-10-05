@@ -4,7 +4,7 @@ The port beside this file is cohere's `internal/gitignore` (gitignore.go and glo
 
 Each program here typechecks under stage 0's options and runs on Node 24.21.0 with the output shown; stage 0 (main at 7055396) refuses it with `NotYet` at the place shown. None of them reached clang, and none compiled wrong.
 
-Two of the eight are already being filled by another stream (`Array.from`, and `boolean | undefined`, gaps 5 and 6). The rest are new.
+Three of the eight closed when the language-gaps stream landed on main at 80c3098 (gaps 5, 6 and 7), and the port went back to writing those places as the Go does. They stay below, marked closed, so the record is whole. The other five are open.
 
 ## 1. `String.fromCharCode` and `String.fromCodePoint`
 
@@ -98,7 +98,7 @@ An arrow function in the same place lowers.
 
 **Around it:** the Go's `in = isLetter` (glob.go, addClass) is written `inClass = (character) => isLetter(character)`, and the same for `isDigit`.
 
-## 5. `Array.from` (being filled by the language-gaps stream)
+## 5. `Array.from` (closed at 80c3098)
 
 ```ts
 const members = Array.from({ length: 4 }, () => false);
@@ -109,9 +109,9 @@ console.log(`${members.length}`);
 stage 0 can't lower reading Array yet        (Node prints 4)
 ```
 
-**Around it:** `new Array<number>(256).fill(0)`, which lowers. It holds numbers because of gap 6.
+**Around it, until it closed:** `new Array<number>(256).fill(0)`, which lowered. It held numbers because of gap 6. The port now writes `Array.from({ length: 256 }, () => false)`.
 
-## 6. An element of a `boolean[]` (being filled by the language-gaps stream, as `boolean | undefined`)
+## 6. An element of a `boolean[]` (closed at 80c3098)
 
 The Go's sets are `[256]bool`, and its position sets are bit sets. The natural port is a `boolean[]`, and reading one is refused:
 
@@ -126,9 +126,9 @@ stage 0 can't lower an index into an array of booleans (boolean | undefined) yet
 
 Taken into a variable first, `const first = flags[0]`, it reads `stage 0 can't lower a value of type boolean | undefined yet`.
 
-**Around it:** the byte sets and the position sets are `number[]`, with 1 for a member and 0 for anything else (glob.ts, `ByteSet` and the position-set functions). That means the gap 7 workaround as well.
+**Around it, until it closed:** the byte sets and the position sets were `number[]`, with 1 for a member and 0 for anything else, which needed the gap 7 workaround as well. They are `boolean[]` again.
 
-## 7. Comparing `number | undefined` with a number
+## 7. Comparing `number | undefined` with a number (closed at 80c3098)
 
 ```ts
 const maybe: number | undefined = [1][0];
@@ -141,7 +141,7 @@ stage 0 can't lower a BinaryExpression with a value and a number yet        (Nod
 
 `string | undefined` against a string lowers (`words[0] === 'a'`). The number case does not.
 
-**Around it:** `(set[member] ?? 0) === 1`.
+**Around it, until it closed:** `(set[member] ?? 0) === 1`. Nothing in the port needs it now.
 
 ## 8. A tuple as a value
 
