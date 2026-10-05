@@ -81,6 +81,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/search_halves.a", true, false},
 	{"internal/oracle/testdata/strings_more.a", true, false},
 	{"internal/oracle/testdata/number_parsing.a", true, false},
+	// Every Math function ported from V8, printed in full, so a last bit that differs from Node shows.
+	{"internal/oracle/testdata/navigation.a", true, false},
 	{"internal/oracle/testdata/optional_numbers.a", true, false},
 	{"internal/oracle/testdata/map_iteration.a", true, false},
 	{"internal/oracle/testdata/sorts.a", true, false},
