@@ -99,6 +99,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_too_long.a", true, false},
 	{"internal/oracle/testdata/pad_too_long.a", true, false},
 	{"internal/oracle/testdata/stack_overflow.a", true, false},
+	{"internal/oracle/testdata/adversarial_order.a", true, false},
+	{"internal/oracle/testdata/adversarial_exits.a", true, false},
+	{"internal/oracle/testdata/adversarial_iteration.a", true, false},
+	{"internal/oracle/testdata/number_edges.a", true, false},
+	{"internal/oracle/testdata/long_chain.a", true, false},
+	{"internal/oracle/testdata/write_after_shrink.a", true, true},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
