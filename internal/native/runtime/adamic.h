@@ -286,6 +286,10 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
 adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
+// adamic_string_check_length panics, as V8 throws RangeError: Invalid string length, when a string
+// would be longer than V8's longest, in UTF-16 units.
+void adamic_string_check_length(double units);
+
 // adamic_string_allocate makes a string of length bytes for the caller to fill, references 1.
 adamic_string *adamic_string_allocate(size_t length);
 
