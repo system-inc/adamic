@@ -80,6 +80,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
+	if err := lowering.findCycles(modules); err != nil {
+		return nil, err
+	}
 	borrow(lowering.result)
 	return lowering.result, nil
 }
@@ -127,6 +130,18 @@ type lowering struct {
 	// their type: the first of an Array.from callback's (from.go). Each is a reference that's always
 	// missing.
 	alwaysUndefined map[*ast.Symbol]bool
+
+	// initializing is the variables whose initializers are being lowered, by where each is declared.
+	initializing map[int]*ast.Node
+
+	// For the cycle finder (cycles.go): the checker's type of each local, and where it's declared;
+	// every function value made, with its type; and the class type being instantiated, for this.
+	localTypes     map[int]*checker.Type
+	localAlso      map[int][]*checker.Type
+	localNodes     map[int]*ast.Node
+	closureRecords []closureRecord
+	classType      *checker.Type
+	classNode      *ast.Node
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
@@ -525,7 +540,13 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		}
 		var value ir.Expression
 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
-			if value, err = l.expression(initializer); err != nil {
+			if l.initializing == nil {
+				l.initializing = map[int]*ast.Node{}
+			}
+			l.initializing[local] = name
+			value, err = l.expression(initializer)
+			delete(l.initializing, local)
+			if err != nil {
 				return nil, err
 			}
 		}
@@ -556,7 +577,24 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	}
 	l.locals[symbol] = len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex})
+	l.noteLocal(l.locals[symbol], l.checker.GetTypeAtLocation(name), name)
 	return l.locals[symbol], nil
+}
+
+// noteAlso keeps another checker type a local has: a this shared by more than one instantiation.
+func (l *lowering) noteAlso(local int, proven *checker.Type) {
+	if l.localAlso == nil {
+		l.localAlso = map[int][]*checker.Type{}
+	}
+	l.localAlso[local] = append(l.localAlso[local], proven)
+}
+
+// noteLocal keeps a local's checker type and declaration for the cycle finder.
+func (l *lowering) noteLocal(local int, proven *checker.Type, node *ast.Node) {
+	if l.localTypes == nil {
+		l.localTypes, l.localNodes = map[int]*checker.Type{}, map[int]*ast.Node{}
+	}
+	l.localTypes[local], l.localNodes[local] = proven, node
 }
 
 // symbol is what a name refers to, the same whichever file names it: an import resolves to what it
@@ -597,6 +635,11 @@ func (l *lowering) touch(local int) {
 		return
 	}
 	l.result.Locals[local].Captured = true
+	if name, isInitializing := l.initializing[local]; isInitializing && l.unlowerable == nil {
+		// const f = () => f(): the function value is made before the variable's cell is, so it has
+		// nothing to capture yet.
+		l.unlowerable = l.notYet(name, "a function value that captures the variable its own initializer declares")
+	}
 	start := 0
 	for position, closure := range l.closures {
 		if closure == declared.Function {
