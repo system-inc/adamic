@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -332,4 +333,83 @@ func locate(graph *Function, instruction InstructionId) (*BasicBlock, int) {
 		}
 	}
 	panic(fmt.Sprintf("flow: instruction %d is in no block", instruction))
+}
+
+// Liveness holds on every path Node takes: wherever, in a call's sequence of points, the next thing
+// to touch a variable after an instruction is a read of it, the variable is live after that
+// instruction. Reuse in place takes a dead value's memory, so a variable called dead that is read
+// again is an object rewritten under a reader.
+func TestLivenessHoldsOnEveryPath(t *testing.T) {
+	t.Parallel()
+	checked := 0
+	var lock sync.Mutex
+	t.Run("programs", func(t *testing.T) {
+		for _, path := range programs(t) {
+			t.Run(path, func(t *testing.T) {
+				t.Parallel()
+				run := traced(t, path)
+				live := map[int]map[InstructionId]map[DeclarationId]bool{}
+				for function, graph := range run.graphs {
+					live[function] = LiveOut(graph)
+				}
+				count := 0
+				for _, sequence := range frames(run) {
+					graph := run.graphs[sequence.function]
+					// Backward: readNext says whether the next thing to touch a variable is a read.
+					readNext := map[DeclarationId]bool{}
+					for position := len(sequence.points) - 1; position >= 0; position-- {
+						id := sequence.points[position]
+						for variable, read := range readNext {
+							count++
+							if read && !live[sequence.function][id][variable] {
+								t.Errorf("function %d (%s): a variable (declaration %d) is read after instruction %d, where liveness says it's dead", sequence.function, graph.Name, variable, id)
+							}
+						}
+						instruction := graph.Instructions[id]
+						for _, define := range instruction.Defines {
+							readNext[graph.Identifiers[define.Identifier].Declaration] = false
+						}
+						for _, use := range instruction.Uses {
+							readNext[graph.Identifiers[use.Identifier].Declaration] = true
+						}
+					}
+				}
+				lock.Lock()
+				checked += count
+				lock.Unlock()
+			})
+		}
+	})
+	if checked == 0 {
+		t.Errorf("nothing was checked")
+	}
+	t.Logf("%d variable-and-point pairs checked", checked)
+}
+
+// sequence is one call's points, in the order they ran.
+type sequence struct {
+	function int
+	points   []InstructionId
+}
+
+// frames splits a trace into its calls' sequences.
+func frames(run run) []sequence {
+	var done []sequence
+	stack := []sequence{{function: -1}}
+	for _, event := range run.events {
+		switch {
+		case strings.HasPrefix(event, "enter "):
+			function, _ := strconv.Atoi(strings.TrimPrefix(event, "enter "))
+			stack = append(stack, sequence{function: function})
+		case strings.HasPrefix(event, "leave "):
+			done = append(done, stack[len(stack)-1])
+			stack = stack[:len(stack)-1]
+		default:
+			if index, err := strconv.Atoi(event); err == nil {
+				top := &stack[len(stack)-1]
+				top.points = append(top.points, run.marked[index].instruction)
+			}
+		}
+	}
+	return append(done, stack...)
 }

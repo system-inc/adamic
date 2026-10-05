@@ -125,6 +125,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/borrow_map_overwrite.a", true, false},
 	// A spread is read before its fields' values, as JavaScript reads it.
 	{"internal/oracle/testdata/spread_snapshot.a", true, false},
+	// Reuse in place: taken only where nothing can tell, and where something could, never.
+	{"internal/oracle/testdata/reuse.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
