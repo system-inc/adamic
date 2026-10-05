@@ -1,0 +1,50 @@
+// number | undefined, packed into one word, everywhere it crosses into code that reads a plain value:
+// searches, join, fill, Map values and their entries, reduce, sort, Array.from, closures' cells.
+const nan = 0 / 0;
+const values: (number | undefined)[] = [3, undefined, nan, -0, 1];
+console.log(`includes undefined ${values.includes(undefined)} NaN ${values.includes(nan)} 0 ${values.includes(0)}`);
+console.log(`indexOf undefined ${values.indexOf(undefined)} NaN ${values.indexOf(nan)} 0 ${values.indexOf(0)}`);
+const onlyNaN: (number | undefined)[] = [nan];
+console.log(`[NaN] includes undefined ${onlyNaN.includes(undefined)} indexOf ${onlyNaN.indexOf(undefined)}`);
+const onlyUndefined: (number | undefined)[] = [nan];
+onlyUndefined[0] = undefined;
+console.log(`[undefined] includes NaN ${onlyUndefined.includes(nan)} indexOf ${onlyUndefined.indexOf(nan)}`);
+console.log(`join [${values.join('|')}]`);
+const filled: (number | undefined)[] = [1, 2, 3];
+filled.fill(undefined);
+console.log(`fill [${filled.join(',')}] ${filled.includes(undefined)} ${filled[0] === undefined}`);
+
+const scores = new Map<string, number | undefined>([['a', undefined], ['b', nan], ['c', 2]]);
+scores.set('d', undefined);
+scores.set('e', -0);
+for (const [key, value] of scores) {
+	console.log(`${key} ${value} ${value === undefined} has ${scores.has(key)}`);
+}
+const entries = [...scores];
+const pair = entries[1];
+console.log(`entries ${entries.length} ${pair === undefined ? 'none' : `${pair[0]} ${pair[1]}`} ${scores.get('a')} ${scores.get('b')} ${scores.get('zz')}`);
+for (const value of scores.values()) {
+	console.log(`value ${value ?? 'missing'}`);
+}
+
+const total = values.reduce((sum: number | undefined, value) => (value === undefined || sum === undefined ? undefined : sum + value), 0);
+console.log(`reduce ${total}`);
+const firstMissing = values.reduce((found: number | undefined, value, index) => (found === undefined && value === undefined ? index : found), undefined);
+console.log(`first missing at ${firstMissing}`);
+
+const sorted: (number | undefined)[] = [5, undefined, nan, 1, undefined, 3, -0];
+sorted.sort((left, right) => (left ?? 0) - (right ?? 0));
+console.log(`sorted [${sorted.join(',')}]`);
+
+const made = Array.from({ length: 3 }, (first: number | undefined, index) => (first === undefined ? index * 10 : first));
+console.log(`from [${made.join(',')}]`);
+const holes = Array.from({ length: 3 }, (_, index) => (index === 1 ? undefined : index));
+console.log(`holes [${holes.join(',')}] ${holes.includes(undefined)} ${holes.indexOf(undefined)}`);
+
+let captured: number | undefined = undefined;
+const read = (): string => `${captured}`;
+console.log(read());
+captured = nan;
+console.log(read());
+captured = 4;
+console.log(read());

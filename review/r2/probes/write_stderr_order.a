@@ -1,0 +1,7 @@
+// writeTextFile to /dev/stderr after a console.log: with stdout and stderr on one pipe, Node's line is
+// already out when the file's text arrives.
+import { writeTextFile } from 'adamic';
+
+console.log('first');
+writeTextFile('/dev/stderr', 'second\n');
+console.log('third');

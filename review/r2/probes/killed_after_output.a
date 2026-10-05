@@ -1,0 +1,8 @@
+// A line, then work that never ends: what a reader holds when the program is stopped from outside
+// (timeout, Ctrl-C, a supervisor's SIGTERM).
+console.log('started, about to work for a long time');
+let spins = 0;
+while (spins >= 0) {
+	spins += 1;
+}
+console.log(`never ${spins}`);

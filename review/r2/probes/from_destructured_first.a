@@ -1,0 +1,4 @@
+// Array.from({ length }, callback) hands the callback undefined first, whatever its type says. Typed
+// string and destructured, the checker accepts it; on Node the destructuring throws.
+const lengths = Array.from({ length: 3 }, ({ length }: string, index) => length + index);
+console.log(lengths.join(' '));

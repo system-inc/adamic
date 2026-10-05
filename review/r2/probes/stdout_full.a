@@ -1,0 +1,11 @@
+// Run with stdout on /dev/full: every write to it fails with ENOSPC. What else the program does after
+// its first line (stderr, a file) shows whether it stopped there.
+import { writeTextFile } from 'adamic';
+
+console.log('to a full disk');
+console.error('stderr after the failed line');
+const written = writeTextFile('after.txt', 'written after the failed line\n');
+console.error(`writeTextFile: ${written.kind}`);
+for (let index = 0; index < 3; index += 1) {
+	console.error(`still running ${index}`);
+}

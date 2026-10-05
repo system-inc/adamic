@@ -1,0 +1,8 @@
+// new Set(array) and add with strings built at run time that are already there: each duplicate's
+// count has to come back, or the leak check sees it.
+const words = ['a'.repeat(2), 'aa', 'a'.repeat(2), `${'b'}${'b'}`, 'bb'];
+const unique = new Set<string>(words);
+unique.add('a'.repeat(2));
+unique.add(['b', 'b'].join(''));
+unique.delete('c'.repeat(1));
+console.log(`${unique.size} ${[...unique].join(',')}`);

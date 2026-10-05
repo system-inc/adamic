@@ -1,0 +1,79 @@
+// The constant-time string index, everywhere a string is made from another: a long non-ASCII string
+// built at run time (so it gets an index), read at every unit forward, backward and scattered, then
+// sliced, concatenated (including halves of a pair that join again), case-mapped, normalized, and
+// every result read the same ways. Two cursors interleaved on one string, and a string read before
+// and after it's used as a part. Each read folds into a checksum; Node's is the truth.
+function checksum(text: string): string {
+	let forward = 0;
+	for (let index = 0; index < text.length; index += 1) {
+		forward = (forward * 31 + text.charCodeAt(index) + (text.codePointAt(index) ?? 7)) % 1000000007;
+	}
+	let backward = 0;
+	for (let index = text.length - 1; index >= 0; index -= 1) {
+		backward = (backward * 37 + text.charCodeAt(index)) % 1000000007;
+	}
+	let scattered = 0;
+	for (let step = 0; step < text.length; step += 1) {
+		const index = (step * 7919) % text.length;
+		scattered = (scattered * 41 + text.charCodeAt(index) + (text[index] ?? '').length) % 1000000007;
+	}
+	let slices = 0;
+	for (let start = 0; start < text.length; start += 13) {
+		const piece = text.slice(start, start + 33);
+		slices = (slices * 43 + piece.length + piece.charCodeAt(piece.length - 1)) % 1000000007;
+	}
+	return `${text.length} ${forward} ${backward} ${scattered} ${slices}`;
+}
+
+const parts = ['a', 'é', '世', '🌍', 'ß', 'Σ', 'é', '\uD83D', '\uDE00', 'z'];
+let built = '';
+for (let index = 0; index < 400; index += 1) {
+	built += parts[(index * 7) % parts.length] ?? '';
+}
+console.log(`built ${checksum(built)}`);
+// Read built, then make strings from it, then read built again: its cursor and checkpoints are its own.
+const upper = built.toUpperCase();
+console.log(`upper ${checksum(upper)}`);
+const lower = upper.toLowerCase();
+console.log(`lower ${checksum(lower)}`);
+const nfc = built.normalize('NFC');
+const nfd = built.normalize('NFD');
+const nfkc = upper.normalize('NFKC');
+console.log(`nfc ${checksum(nfc)} nfd ${checksum(nfd)} nfkc ${checksum(nfkc)}`);
+console.log(`built again ${checksum(built)}`);
+for (let start = 0; start < 80; start += 1) {
+	const head = built.slice(0, start);
+	const tail = built.slice(start);
+	const joined = head + tail;
+	if (joined !== built || joined.length !== built.length) {
+		console.log(`rejoin differs at ${start}`);
+	}
+}
+let halves = 0;
+for (let start = 0; start + 70 < built.length; start += 3) {
+	const piece = built.slice(start, start + 70);
+	halves = (halves * 31 + piece.length + piece.charCodeAt(0) + piece.charCodeAt(69)) % 1000000007;
+	const twice = piece + piece;
+	halves = (halves * 31 + twice.length + twice.charCodeAt(69) + twice.charCodeAt(70) + (twice.codePointAt(69) ?? 1)) % 1000000007;
+}
+console.log(`halves ${halves}`);
+// Two cursors on one string, alternating near and far.
+let alternating = 0;
+for (let index = 0; index < built.length; index += 1) {
+	const far = built.length - 1 - index;
+	alternating = (alternating * 31 + built.charCodeAt(index) * 3 + built.charCodeAt(far)) % 1000000007;
+}
+console.log(`alternating ${alternating}`);
+const trimmed = `   ${built}   `.trim();
+console.log(`trimmed ${checksum(trimmed)} ${trimmed === built}`);
+const padded = built.padStart(built.length + 5, '🌍');
+console.log(`padded ${checksum(padded)}`);
+const repeated = built.slice(1, 50).repeat(9);
+console.log(`repeated ${checksum(repeated)}`);
+const words = built.split('ß');
+let wordSum = 0;
+for (const word of words) {
+	wordSum = (wordSum * 31 + word.length + word.charCodeAt(Math.floor(word.length / 2))) % 1000000007;
+}
+console.log(`split ${words.length} ${wordSum}`);
+console.log(`search ${built.indexOf('🌍z')} ${built.lastIndexOf('Σ')} ${built.at(-1)} ${built.at(-3)}`);

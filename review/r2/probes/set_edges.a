@@ -1,0 +1,45 @@
+// Sets: chained add on a new set, aliasing through add's result, SameValueZero, strings built at run
+// time against literals, live iteration with deletes and adds, spread, and a Set inside a Map.
+const nan = 0 / 0;
+const chained = new Set<string>().add(['a', 'b'].join('')).add('ab').add('c'.repeat(2));
+console.log(`${chained.size} ${[...chained].join(',')} ${chained.has('ab')} ${chained.has('cc')}`);
+const numbers = new Set<number>([-0, 0, nan, nan, 1]);
+const alias = numbers.add(2);
+console.log(`${alias === numbers} ${numbers.size} ${numbers.has(0)} ${numbers.has(-0)} ${numbers.has(nan)}`);
+for (const value of [...numbers]) {
+	console.log(`${value} ${1 / value}`);
+}
+const live = new Set<number>([1, 2, 3, 4]);
+let once = true;
+for (const value of live) {
+	if (value === 1 && once) {
+		once = false;
+		live.delete(2);
+		live.add(5);
+		live.delete(1);
+		live.add(1);
+	}
+	console.log(`visit ${value} size ${live.size}`);
+}
+const groups = new Map<string, Set<string>>();
+for (const word of 'one two three two one four'.split(' ')) {
+	const key = `${word.length}`;
+	const group = groups.get(key) ?? new Set<string>();
+	group.add(word.toUpperCase());
+	groups.set(key, group);
+}
+for (const [key, group] of groups) {
+	console.log(`${key}: ${[...group].join(' ')}`);
+}
+function collect(from: ReadonlySet<string>): string {
+	let out = '';
+	for (const value of from.values()) {
+		out += value;
+	}
+	return out;
+}
+console.log(collect(chained));
+const emptied = new Set<string>(['x'.repeat(3)]);
+emptied.delete('xxx');
+emptied.add('y'.repeat(2));
+console.log(`${emptied.size} ${[...emptied].join(',')}`);

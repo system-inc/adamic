@@ -1,0 +1,6 @@
+// A prompt, then a read of stdin: Node's prompt is out before the read waits.
+import { readTextFile } from 'adamic';
+
+console.log('ready');
+const answer = readTextFile('/dev/stdin');
+console.log(answer.kind === 'Ok' ? `got ${answer.text.trim()}` : answer.message);

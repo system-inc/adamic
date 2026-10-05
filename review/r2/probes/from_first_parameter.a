@@ -1,0 +1,9 @@
+// Array.from's callback, its first parameter typed every way that holds undefined.
+const strings = Array.from({ length: 2 }, (first: string | undefined, index) => `${first ?? 'none'}${index}`);
+console.log(strings.join(' '));
+const kept: (number | undefined)[] = [];
+const made = Array.from({ length: 3 }, (first: number | undefined, index) => {
+	kept.push(first);
+	return index;
+});
+console.log(`${made.join(' ')} kept ${kept.length} ${kept.includes(undefined)} [${kept.join(',')}]`);

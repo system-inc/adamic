@@ -1,0 +1,15 @@
+// Output, some to stdout and some to stderr, then a stack overflow inside a callback: everything
+// printed comes out in order before the panic's line.
+function deep(depth: number): number {
+	return depth === 0 ? 0 : 1 + deep(depth - 1) + deep(0);
+}
+
+console.log('before');
+console.error('to stderr');
+console.log('after');
+const counts = [3, 1, 2];
+counts.sort((left, right) => {
+	console.log(`compare ${left} ${right}`);
+	return left - right + deep(1e9);
+});
+console.log('never');

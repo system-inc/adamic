@@ -1,0 +1,18 @@
+// More than the buffer holds, then an inserted check firing inside a map callback.
+const lines: string[] = [];
+for (let index = 0; index < 3000; index += 1) {
+	lines.push(`line ${index} ${'x'.repeat(index % 40)}`);
+}
+for (const line of lines) {
+	console.log(line);
+}
+const values = [1, 2, 3];
+const doubled = values.map((value, index) => {
+	console.log(`visit ${index}`);
+	if (index === 1) {
+		console.error('about to write past the end');
+		values[5] = value;
+	}
+	return value * 2;
+});
+console.log(`${doubled.length}`);
