@@ -85,7 +85,56 @@ one map while deleting; -0 and NaN as keys; forEach's (value, key, map); identit
 one freed after delete with 200 allocations after; the map dying mid-loop, or reassigned in its own forEach;
 the table growing 200 entries mid-iteration; return from three nested iterations.
 
-## C2's file system (readDirectory, fileStatus)
+## C2's file system (readDirectory, fileStatus at d67e4c5; a sub-review, and the finding re-run by me)
 
-These landed on the branch after the sub-review above ran (c57f6f2, d67e4c5). They're under review now, and
-this section follows.
+### Finding
+
+**`fileStatus` doesn't flush buffered stdout before it stats, though readTextFile and writeTextFile do.**
+`adamic_file_status` in runtime/directory.c has no `adamic_output_flush()`; input.c has one at lines 262 and
+322. `adamic_read_directory` lacks it too, but nothing found shows that in a listing.
+
+`fs_flush.a` prints a line, then asks `fileStatus('/dev/stdout')`. With stdout redirected to a file:
+
+| Run | Output |
+|---|---|
+| Node and the JavaScript backend | `written before the status`, then `file 26 true` |
+| Native, sanitized and as built | `written before the status`, then `file 0 true` (re-run by me) |
+
+`fs_self_size.a` reads its own redirected stdout's size three times: Node prints 30, 45 and 64; native prints
+0, 44 and 44.
+
+Through a pipe all four agree (`other 0 true`). The oracle and input_test.go capture stdout through pipes, so
+the gate can't see this. output_test.go's TestOneFileHoldsNodesOrder already sends stdout to a file and is the
+place for a fixture.
+
+With the flush added to `adamic_file_status`, native matches Node; the sub-review tried this in a scratch
+copy.
+
+### What held
+
+All four runs agree, with no leak:
+
+- **Order.** Node 24 sorts `readdirSync` bytewise on Linux, and native does too. That covers mixed names, 300
+  files made in shuffled order then partly deleted and re-made, and 18 malformed UTF-8 names (sorted before
+  they're decoded).
+- **Names.** Dotfiles are in, `.` and `..` out. Newline names, 255-byte names and 63-emoji names all agree.
+- **fileStatus**, lstat then stat on both sides, on:
+  - a regular file, a directory, and a link to each;
+  - a link to a link, a broken link, a loop;
+  - a missing path, the empty path, and trailing-slash paths;
+  - a FIFO, a socket, /dev/null;
+  - a 300-byte component and a 5 GB sparse file.
+- **Permissions, as nobody.** Directory modes 0311, 0000 and 0644, and a file at 0000: each answer and message
+  agrees.
+- **Descriptors.** 5000 calls of each under `ulimit -n 256`, including injected mid-read EIO through an
+  LD_PRELOAD readdir shim (native only), leaked nothing.
+- **Mutants.** Ten against walk.a are caught: the sort removed, signed-char compares, the sort reversed,
+  closedir removed, names not freed, symbolicLink always false, links not followed, `.`/`..` kept, ENOTDIR
+  and EACCES mapped wrong. A strcasecmp mutant died to -Werror, so it doesn't count. No test distinguishes
+  the missing flush.
+
+### Not covered
+
+- Mid-read errors on Node's side.
+- macOS and other file systems.
+- Directories past about 300 entries.

@@ -1,0 +1,5 @@
+import { fileStatus } from 'adamic';
+
+console.log('written before the status');
+const status = fileStatus('/dev/stdout');
+console.log(status.kind === 'Ok' ? `${status.type} ${status.size} ${status.symbolicLink}` : status.message);

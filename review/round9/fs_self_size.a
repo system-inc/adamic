@@ -1,0 +1,12 @@
+import { fileStatus, programArguments, readDirectory, readTextFile } from 'adamic';
+
+const path = programArguments()[0] ?? '';
+console.log('first line, before any status');
+const status = fileStatus(path);
+console.log(status.kind === 'Ok' ? `status size ${status.size}` : status.message);
+const text = readTextFile(path);
+console.log(text.kind === 'Ok' ? `read ${text.text.length} code units` : text.message);
+const again = fileStatus(path);
+console.log(again.kind === 'Ok' ? `status size ${again.size}` : again.message);
+const listing = readDirectory(`${path}.d`);
+console.log(listing.kind === 'Ok' ? `listed ${listing.names.length}` : listing.message);
