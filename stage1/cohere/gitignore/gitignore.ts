@@ -40,8 +40,6 @@
 //     (bool, Source) a Verdict.
 //   - The Go's unexported fields are #private fields, and a Matcher's are written only while enter
 //     builds a new one, as the Go writes only its copy.
-//   - The declarations come callee first, not in the Go's order: stage 0 takes a call to a function or
-//     method declared further down for a void one (gap 3 in GAPS.md). Each still names its Go.
 
 import { panic } from 'adamic';
 import { compileGlob, Glob } from './glob.ts';
@@ -164,21 +162,6 @@ function zeroSource(): Source {
 	return new Source('', 0, '');
 }
 
-// strings.CutPrefix's results: text without the prefix, and whether it had it. Stage 0 does not lower a
-// tuple as a value yet (gap 8 in GAPS.md), so the Go's two results are named fields.
-interface Cut {
-	readonly after: string;
-	readonly found: boolean;
-}
-
-// strings.CutPrefix.
-function cutPrefix(text: string, prefix: string): Cut {
-	if (text.startsWith(prefix)) {
-		return { after: text.slice(prefix.length), found: true };
-	}
-	return { after: text, found: false };
-}
-
 // gitignore.go: rule, one compiled pattern line.
 //
 // anchored is a pattern matched against the path below base rather than against a base name. base is
@@ -215,205 +198,6 @@ class Rule {
 		}
 		return this.glob.matches(below, true);
 	}
-}
-
-// gitignore.go: lastMatching.
-function lastMatching(rules: readonly Rule[], relativePath: string, baseName: string, isDirectory: boolean): Rule | undefined {
-	for (let index = rules.length - 1; index >= 0; index--) {
-		const candidate = rules[index] ?? panic('gitignore: a rule index past the rules');
-		if (candidate.directoryOnly && !isDirectory) {
-			continue;
-		}
-		if (candidate.matches(relativePath, baseName)) {
-			return candidate;
-		}
-	}
-	return undefined;
-}
-
-// gitignore.go: readIgnoreFile. It returns a file's contents, or undefined when it does not exist. follow
-// says whether a symbolic link is read through: git follows one for info/exclude and not for a
-// `.gitignore` in the tree.
-function readIgnoreFile(tree: WorkingTree, relativeFile: string, follow: boolean): Result<string | undefined> {
-	const filePath = absolute(tree, relativeFile);
-	let info = lstat(tree, relativeFile);
-	if (info === undefined) {
-		return { kind: 'Ok', value: undefined };
-	}
-	if (info.kind === 'SymbolicLink') {
-		if (!follow) {
-			return failure(
-				`gitignore: ${filePath} is a symbolic link, which git does not follow inside a working tree, so its patterns would not apply; replace it with the file it points to`,
-			);
-		}
-		info = stat(tree, relativeFile);
-		if (info === undefined) {
-			return { kind: 'Ok', value: undefined };
-		}
-	}
-	if (info.kind !== 'File') {
-		return failure(`gitignore: ${filePath} is not a regular file, so it cannot be read as an ignore file`);
-	}
-	if (utf8Bytes(info.contents).length > maximumFileSize) {
-		return failure(
-			`gitignore: ${filePath} is larger than 100 MiB, which git skips with a warning, leaving its patterns unapplied; cohere refuses it rather than skip it`,
-		);
-	}
-	return { kind: 'Ok', value: info.contents };
-}
-
-// gitignore.go: byteOrderMark, which opens a file written by an editor that marks its encoding. The Go
-// sees its three bytes; a string sees one character.
-const byteOrderMark = '\uFEFF';
-
-// gitignore.go: trimTrailingSpaces. It drops the spaces ending a line, except those a backslash escapes.
-// Only spaces: a trailing tab is part of the pattern.
-function trimTrailingSpaces(line: string): string {
-	// spacesStart is where the current run of unescaped spaces began, or -1 outside one.
-	let spacesStart = -1;
-	for (let index = 0; index < line.length; index++) {
-		switch (line[index]) {
-			case ' ':
-				if (spacesStart < 0) {
-					spacesStart = index;
-				}
-				break;
-			case '\\':
-				// The escaped byte is kept whatever it is, a space included.
-				index++;
-				spacesStart = -1;
-				break;
-			default:
-				spacesStart = -1;
-				break;
-		}
-	}
-	if (spacesStart >= 0) {
-		return line.slice(0, spacesStart);
-	}
-	return line;
-}
-
-// strings.TrimPrefix.
-function trimPrefix(text: string, prefix: string): string {
-	return text.startsWith(prefix) ? text.slice(prefix.length) : text;
-}
-
-// gitignore.go: compileRule. It reads one pattern line: an optional `!`, the pattern, and an optional
-// trailing `/`.
-function compileRule(line: string, file: string, lineNumber: number, base: string): Rule {
-	let pattern = line;
-	let negated = false;
-	if (pattern.startsWith('!')) {
-		negated = true;
-		pattern = pattern.slice(1);
-	}
-	let directoryOnly = false;
-	if (pattern.endsWith('/')) {
-		directoryOnly = true;
-		pattern = pattern.slice(0, pattern.length - 1);
-	}
-
-	let sourcePattern = pattern;
-	if (negated) {
-		sourcePattern = '!' + sourcePattern;
-	}
-	if (directoryOnly) {
-		sourcePattern += '/';
-	}
-
-	const anchored = pattern.includes('/');
-	const glob = anchored ? compileGlob(trimPrefix(pattern, '/'), true) : compileGlob(pattern, false);
-	return new Rule(new Source(file, lineNumber, sourcePattern), negated, directoryOnly, anchored, base, glob);
-}
-
-// strings.TrimSuffix.
-function trimSuffix(text: string, suffix: string): string {
-	return suffix !== '' && text.endsWith(suffix) ? text.slice(0, text.length - suffix.length) : text;
-}
-
-// gitignore.go: parseRules. It compiles an ignore file's lines. file names it in every Source, and base
-// is the directory its anchored patterns are relative to.
-function parseRules(contentsAsRead: string, file: string, base: string): Result<readonly Rule[]> {
-	const contents = contentsAsRead.startsWith(byteOrderMark) ? contentsAsRead.slice(byteOrderMark.length) : contentsAsRead;
-	const rules: Rule[] = [];
-	const lines = contents.split('\n');
-	for (let index = 0; index < lines.length; index++) {
-		let line = trimSuffix(lines[index] ?? panic('gitignore: a line index past the lines'), '\r');
-		if (line === '' || line.startsWith('#')) {
-			continue;
-		}
-		if (line.includes('\u0000')) {
-			return failure(`gitignore: ${file}:${index + 1} holds a NUL byte, which no pattern can contain`);
-		}
-		line = trimTrailingSpaces(line);
-		rules.push(compileRule(line, file, index + 1, base));
-	}
-	return { kind: 'Ok', value: rules };
-}
-
-// gitignore.go: joinRelative.
-export function joinRelative(directory: string, name: string): string {
-	if (directory === '') {
-		return name;
-	}
-	return directory + '/' + name;
-}
-
-// gitignore.go: readTreeFile. It reads the `.gitignore` of directory, relative to the root, returning no
-// rules when it has none.
-function readTreeFile(tree: WorkingTree, directory: string): Result<readonly Rule[]> {
-	const relativeFile = joinRelative(directory, IgnoreFileName);
-	const contents = readIgnoreFile(tree, relativeFile, false);
-	if (contents.kind === 'Error') {
-		return contents;
-	}
-	if (contents.value === undefined) {
-		return { kind: 'Ok', value: [] };
-	}
-	return parseRules(contents.value, relativeFile, directory);
-}
-
-// gitignore.go: isCleanRelative. It reports whether a path is already what cleanRelative would make it:
-// slash separated, with no empty, `.` or `..` segment and no leading or trailing slash. The Go also
-// refuses a backslash on Windows, where it separates; Adamic's paths are slash separated everywhere.
-function isCleanRelative(relative: string): boolean {
-	if (relative === '') {
-		return true;
-	}
-	let start = 0;
-	for (let index = 0; index <= relative.length; index++) {
-		if (index < relative.length && relative[index] !== '/') {
-			continue;
-		}
-		const segment = relative.slice(start, index);
-		if (segment === '' || segment === '.' || segment === '..') {
-			return false;
-		}
-		start = index + 1;
-	}
-	return true;
-}
-
-// gitignore.go: cleanRelative. It normalizes a relative path to the slash form the matcher keys on, ""
-// for the root. A walk passes paths already in that form, which are returned as they are.
-function cleanRelative(relative: string): string {
-	if (isCleanRelative(relative)) {
-		return relative;
-	}
-	const cleaned = clean(relative);
-	if (cleaned === '.' || cleaned === '/') {
-		return '';
-	}
-	return trimPrefix(cleaned, '/');
-}
-
-// gitignore.go: displayDirectory.
-function displayDirectory(directory: string): string {
-	if (directory === '') {
-		return 'the repository root';
-	}
-	return directory;
 }
 
 // gitignore.go: Matcher. It is one directory's view of a repository's ignore rules: those of every
@@ -456,20 +240,6 @@ export class Matcher {
 			return { ignored: false, source: zeroSource() };
 		}
 		return { ignored: true, source: this.#excludedBy.source };
-	}
-
-	// gitignore.go: (*Matcher).decide, ahead of its callers because of gap 3 in GAPS.md. It is the rule that
-	// decides relativePath among the first fileCount tree files and info/exclude, or undefined: the deepest file
-	// first, the last line of each first, info/exclude last.
-	decide(relativePath: string, baseName: string, isDirectory: boolean, fileCount: number): Rule | undefined {
-		for (let fileIndex = fileCount - 1; fileIndex >= 0; fileIndex--) {
-			const rules = this.#files[fileIndex] ?? panic('gitignore: a file index past the files read');
-			const decided = lastMatching(rules, relativePath, baseName, isDirectory);
-			if (decided !== undefined) {
-				return decided;
-			}
-		}
-		return lastMatching(this.#exclude, relativePath, baseName, isDirectory);
 	}
 
 	// gitignore.go: (*Matcher).Enter. It returns the matcher for relativeDirectory, which is this
@@ -570,6 +340,20 @@ export class Matcher {
 		return { kind: 'Ok', value: scope.value.ignored(relativePath, isDirectory) };
 	}
 
+	// gitignore.go: (*Matcher).decide. It is the rule that decides relativePath among the first fileCount
+	// tree files and info/exclude, or undefined: the deepest file first, the last line of each first,
+	// info/exclude last.
+	decide(relativePath: string, baseName: string, isDirectory: boolean, fileCount: number): Rule | undefined {
+		for (let fileIndex = fileCount - 1; fileIndex >= 0; fileIndex--) {
+			const rules = this.#files[fileIndex] ?? panic('gitignore: a file index past the files read');
+			const decided = lastMatching(rules, relativePath, baseName, isDirectory);
+			if (decided !== undefined) {
+				return decided;
+			}
+		}
+		return lastMatching(this.#exclude, relativePath, baseName, isDirectory);
+	}
+
 }
 
 // gitignore.go: New. It reads a repository's root `.gitignore` and, when `.git` is a directory, its
@@ -621,6 +405,241 @@ export class Patterns {
 		}
 		return { ignored: !decided.negated, source: decided.source };
 	}
+}
+
+// gitignore.go: CompilePatterns. It reads lines as the lines of an ignore file named name, which is what
+// each Source reports. A line holding a newline or a NUL byte cannot be an ignore-file line and is
+// refused.
+export function compilePatterns(lines: readonly string[], name: string): Result<Patterns> {
+	const rules: Rule[] = [];
+	for (let index = 0; index < lines.length; index++) {
+		let line = lines[index] ?? panic('gitignore: a line index past the lines');
+		if (line.includes('\n') || line.includes('\u0000')) {
+			return failure(
+				`gitignore: ${name} entry ${index + 1}, ${quote(line)}, holds a newline or a NUL byte, which no ignore-file line can`,
+			);
+		}
+		line = trimSuffix(line, '\r');
+		if (line === '' || line.startsWith('#')) {
+			continue;
+		}
+		rules.push(compileRule(trimTrailingSpaces(line), name, index + 1, ''));
+	}
+	return { kind: 'Ok', value: new Patterns(rules) };
+}
+
+// gitignore.go: lastMatching.
+function lastMatching(rules: readonly Rule[], relativePath: string, baseName: string, isDirectory: boolean): Rule | undefined {
+	for (let index = rules.length - 1; index >= 0; index--) {
+		const candidate = rules[index] ?? panic('gitignore: a rule index past the rules');
+		if (candidate.directoryOnly && !isDirectory) {
+			continue;
+		}
+		if (candidate.matches(relativePath, baseName)) {
+			return candidate;
+		}
+	}
+	return undefined;
+}
+
+// gitignore.go: readTreeFile. It reads the `.gitignore` of directory, relative to the root, returning no
+// rules when it has none.
+function readTreeFile(tree: WorkingTree, directory: string): Result<readonly Rule[]> {
+	const relativeFile = joinRelative(directory, IgnoreFileName);
+	const contents = readIgnoreFile(tree, relativeFile, false);
+	if (contents.kind === 'Error') {
+		return contents;
+	}
+	if (contents.value === undefined) {
+		return { kind: 'Ok', value: [] };
+	}
+	return parseRules(contents.value, relativeFile, directory);
+}
+
+// gitignore.go: readIgnoreFile. It returns a file's contents, or undefined when it does not exist. follow
+// says whether a symbolic link is read through: git follows one for info/exclude and not for a
+// `.gitignore` in the tree.
+function readIgnoreFile(tree: WorkingTree, relativeFile: string, follow: boolean): Result<string | undefined> {
+	const filePath = absolute(tree, relativeFile);
+	let info = lstat(tree, relativeFile);
+	if (info === undefined) {
+		return { kind: 'Ok', value: undefined };
+	}
+	if (info.kind === 'SymbolicLink') {
+		if (!follow) {
+			return failure(
+				`gitignore: ${filePath} is a symbolic link, which git does not follow inside a working tree, so its patterns would not apply; replace it with the file it points to`,
+			);
+		}
+		info = stat(tree, relativeFile);
+		if (info === undefined) {
+			return { kind: 'Ok', value: undefined };
+		}
+	}
+	if (info.kind !== 'File') {
+		return failure(`gitignore: ${filePath} is not a regular file, so it cannot be read as an ignore file`);
+	}
+	if (utf8Bytes(info.contents).length > maximumFileSize) {
+		return failure(
+			`gitignore: ${filePath} is larger than 100 MiB, which git skips with a warning, leaving its patterns unapplied; cohere refuses it rather than skip it`,
+		);
+	}
+	return { kind: 'Ok', value: info.contents };
+}
+
+// gitignore.go: byteOrderMark, which opens a file written by an editor that marks its encoding. The Go
+// sees its three bytes; a string sees one character.
+const byteOrderMark = '\uFEFF';
+
+// gitignore.go: parseRules. It compiles an ignore file's lines. file names it in every Source, and base
+// is the directory its anchored patterns are relative to.
+function parseRules(contentsAsRead: string, file: string, base: string): Result<readonly Rule[]> {
+	const contents = contentsAsRead.startsWith(byteOrderMark) ? contentsAsRead.slice(byteOrderMark.length) : contentsAsRead;
+	const rules: Rule[] = [];
+	const lines = contents.split('\n');
+	for (let index = 0; index < lines.length; index++) {
+		let line = trimSuffix(lines[index] ?? panic('gitignore: a line index past the lines'), '\r');
+		if (line === '' || line.startsWith('#')) {
+			continue;
+		}
+		if (line.includes('\u0000')) {
+			return failure(`gitignore: ${file}:${index + 1} holds a NUL byte, which no pattern can contain`);
+		}
+		line = trimTrailingSpaces(line);
+		rules.push(compileRule(line, file, index + 1, base));
+	}
+	return { kind: 'Ok', value: rules };
+}
+
+// gitignore.go: trimTrailingSpaces. It drops the spaces ending a line, except those a backslash escapes.
+// Only spaces: a trailing tab is part of the pattern.
+function trimTrailingSpaces(line: string): string {
+	// spacesStart is where the current run of unescaped spaces began, or -1 outside one.
+	let spacesStart = -1;
+	for (let index = 0; index < line.length; index++) {
+		switch (line[index]) {
+			case ' ':
+				if (spacesStart < 0) {
+					spacesStart = index;
+				}
+				break;
+			case '\\':
+				// The escaped byte is kept whatever it is, a space included.
+				index++;
+				spacesStart = -1;
+				break;
+			default:
+				spacesStart = -1;
+				break;
+		}
+	}
+	if (spacesStart >= 0) {
+		return line.slice(0, spacesStart);
+	}
+	return line;
+}
+
+// gitignore.go: compileRule. It reads one pattern line: an optional `!`, the pattern, and an optional
+// trailing `/`.
+function compileRule(line: string, file: string, lineNumber: number, base: string): Rule {
+	let pattern = line;
+	let negated = false;
+	if (pattern.startsWith('!')) {
+		negated = true;
+		pattern = pattern.slice(1);
+	}
+	let directoryOnly = false;
+	if (pattern.endsWith('/')) {
+		directoryOnly = true;
+		pattern = pattern.slice(0, pattern.length - 1);
+	}
+
+	let sourcePattern = pattern;
+	if (negated) {
+		sourcePattern = '!' + sourcePattern;
+	}
+	if (directoryOnly) {
+		sourcePattern += '/';
+	}
+
+	const anchored = pattern.includes('/');
+	const glob = anchored ? compileGlob(trimPrefix(pattern, '/'), true) : compileGlob(pattern, false);
+	return new Rule(new Source(file, lineNumber, sourcePattern), negated, directoryOnly, anchored, base, glob);
+}
+
+// gitignore.go: cleanRelative. It normalizes a relative path to the slash form the matcher keys on, ""
+// for the root. A walk passes paths already in that form, which are returned as they are.
+function cleanRelative(relative: string): string {
+	if (isCleanRelative(relative)) {
+		return relative;
+	}
+	const cleaned = clean(relative);
+	if (cleaned === '.' || cleaned === '/') {
+		return '';
+	}
+	return trimPrefix(cleaned, '/');
+}
+
+// gitignore.go: isCleanRelative. It reports whether a path is already what cleanRelative would make it:
+// slash separated, with no empty, `.` or `..` segment and no leading or trailing slash. The Go also
+// refuses a backslash on Windows, where it separates; Adamic's paths are slash separated everywhere.
+function isCleanRelative(relative: string): boolean {
+	if (relative === '') {
+		return true;
+	}
+	let start = 0;
+	for (let index = 0; index <= relative.length; index++) {
+		if (index < relative.length && relative[index] !== '/') {
+			continue;
+		}
+		const segment = relative.slice(start, index);
+		if (segment === '' || segment === '.' || segment === '..') {
+			return false;
+		}
+		start = index + 1;
+	}
+	return true;
+}
+
+// gitignore.go: joinRelative.
+export function joinRelative(directory: string, name: string): string {
+	if (directory === '') {
+		return name;
+	}
+	return directory + '/' + name;
+}
+
+// gitignore.go: displayDirectory.
+function displayDirectory(directory: string): string {
+	if (directory === '') {
+		return 'the repository root';
+	}
+	return directory;
+}
+
+// strings.CutPrefix's results: text without the prefix, and whether it had it. Stage 0 does not lower a
+// tuple as a value yet (gap 8 in GAPS.md), so the Go's two results are named fields.
+interface Cut {
+	readonly after: string;
+	readonly found: boolean;
+}
+
+// strings.CutPrefix.
+function cutPrefix(text: string, prefix: string): Cut {
+	if (text.startsWith(prefix)) {
+		return { after: text.slice(prefix.length), found: true };
+	}
+	return { after: text, found: false };
+}
+
+// strings.TrimPrefix.
+function trimPrefix(text: string, prefix: string): string {
+	return text.startsWith(prefix) ? text.slice(prefix.length) : text;
+}
+
+// strings.TrimSuffix.
+function trimSuffix(text: string, suffix: string): string {
+	return suffix !== '' && text.endsWith(suffix) ? text.slice(0, text.length - suffix.length) : text;
 }
 
 // hexDigit is one lowercase hexadecimal digit.
@@ -675,25 +694,4 @@ function quote(text: string): string {
 		}
 	}
 	return quoted + '"';
-}
-
-// gitignore.go: CompilePatterns. It reads lines as the lines of an ignore file named name, which is what
-// each Source reports. A line holding a newline or a NUL byte cannot be an ignore-file line and is
-// refused.
-export function compilePatterns(lines: readonly string[], name: string): Result<Patterns> {
-	const rules: Rule[] = [];
-	for (let index = 0; index < lines.length; index++) {
-		let line = lines[index] ?? panic('gitignore: a line index past the lines');
-		if (line.includes('\n') || line.includes('\u0000')) {
-			return failure(
-				`gitignore: ${name} entry ${index + 1}, ${quote(line)}, holds a newline or a NUL byte, which no ignore-file line can`,
-			);
-		}
-		line = trimSuffix(line, '\r');
-		if (line === '' || line.startsWith('#')) {
-			continue;
-		}
-		rules.push(compileRule(trimTrailingSpaces(line), name, index + 1, ''));
-	}
-	return { kind: 'Ok', value: new Patterns(rules) };
 }

@@ -121,9 +121,7 @@ function entryOf(fields: readonly string[], lineNumber: number): Entry {
 		case 'Other':
 			return { kind: 'Other' };
 	}
-	// TypeScript would usually write return panic(...) here; stage 0 does not lower panic as a returned
-	// value yet (gap 9 in GAPS.md), and a call that never returns ends the function just as well.
-	panic(`cases: line ${lineNumber} has an entry of kind ${kind}`);
+	return panic(`cases: line ${lineNumber} has an entry of kind ${kind}`);
 }
 
 // parseCases reads a cases file. A file that doesn't follow the format is a fault in whatever wrote

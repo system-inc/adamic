@@ -6,7 +6,7 @@ Each program here typechecks under stage 0's options and runs on Node 24.21.0 wi
 
 The programs are also in `gaps/`, and `gaps_test.go` holds them to this file. An open gap must still be refused with the words recorded here. A closed one must lower and print natively what it prints on Node, leaking nothing. So the stream that closes a gap sees this test fail, and the message tells it to mark the gap closed and undo the port's workaround.
 
-Three of the first eight closed when the language-gaps stream landed on main at 80c3098 (gaps 5, 6 and 7), and the port went back to writing those places as the Go does. They stay below, marked closed, so the record is whole. The other five are open, and so is gap 9, found when the driver began reading its cases.
+Three of the first eight closed when the language-gaps stream landed on main at 80c3098 (gaps 5, 6 and 7), and this stream then closed 3, 4 and 9 in stage 0 itself. Each time the port went back to writing those places as the Go does. Closed gaps stay below, marked so, and the record is whole.
 
 ## 1. `String.fromCharCode` and `String.fromCodePoint`
 
@@ -40,7 +40,7 @@ stage 0 can't lower a PrefixUnaryExpression on a number yet                 (for
 
 **Around it:** arithmetic. UTF-8's six-bit groups are `Math.floor(codePoint / 64 ** group) % 64` (bytes.ts, `sixBits`). The Go's case folding `character|0x20` becomes two ranges in `isLetter` and in the `xdigit` class (glob.ts). `100 << 20` becomes `100 * 1024 * 1024`. The `%q` escape's hex digits are `Math.floor(code / 16)` and `code % 16`.
 
-## 3. A call to a function or method declared later
+## 3. A call to a function or method declared later (closed by this stream)
 
 This is the one that changed the port's shape most. A call to a function declared further down the module, or to a method declared further down the class, is lowered before the callee's body. Its return type isn't known yet, so the call is taken for a void one.
 
@@ -80,9 +80,9 @@ stage 0 can't lower a void call used as a value yet        (Node prints 3)
 
 The cause is in `declareModule` (internal/lower/lower.go): it records every function with an empty `ir.Function` and then lowers the bodies in source order, so a call reads `Returns` before the callee's body has set it. The checker already knows every declared return type, so the signature could be taken from it up front. That would also make mutual recursion possible, which no order can give today.
 
-**Around it:** every file of the port is ordered callee first. Each declaration still names the Go function it reads as, but the files no longer read top to bottom in the Go's order. `(*Matcher).decide` sits ahead of `enter`, and `(*glob).reach` ahead of `matches`.
+**Around it, until it closed:** every file of the port was ordered callee first, so the files no longer read top to bottom in the Go's order. **Closed:** `signature` (internal/lower/lower.go) now writes every function's and method's parameters and result from the checker before any body is lowered: `declareModule` signs every module function first, and `instantiate` every method before the constructor or any method body. Mutual recursion compiles. Fixture: `internal/oracle/testdata/declared_later.a`. The port is back in the Go's order.
 
-## 4. A declared function used as a value
+## 4. A declared function used as a value (closed by this stream)
 
 ```ts
 function isEven(value: number): boolean {
@@ -98,7 +98,7 @@ stage 0 can't lower reading isEven yet        (Node prints true)
 
 An arrow function in the same place lowers.
 
-**Around it:** the Go's `in = isLetter` (glob.go, addClass) is written `inClass = (character) => isLetter(character)`, and the same for `isDigit`.
+**Around it, until it closed:** `inClass = (character) => isLetter(character)` for the Go's `in = isLetter`. **Closed:** a module function read as a value lowers to a function value whose code forwards its arguments to the function (`functionValue`, internal/lower/expression.go), made once per function. One with an optional, default or rest parameter isn't made yet, since a function value is called with exactly the arguments its caller has. Fixture: `declared_later.a`. The port writes `inClass = isLetter` again.
 
 ## 5. `Array.from` (closed at 80c3098)
 
@@ -174,7 +174,7 @@ The Go returns two results in several places: `strings.CutPrefix`'s `(after, fou
 
 **Around it:** named fields. `Cut { after, found }` (strings.CutPrefix's own result names), and `Verdict { ignored, source }` (cohere's differential test names the pair `verdict`). While the cases were constants, a tree's entries were written `new Map<string, Entry>([...])`, the one place tuple literals lower. case.ts now builds the map with `set` as it reads them.
 
-## 9. `return panic(...)`
+## 9. `return panic(...)` (closed by this stream)
 
 Found when the driver began reading its cases at run time. `panic` returns `never`, so TypeScript writes the end of a function whose `switch` didn't return as `return panic(...)`. Stage 0 lowers `x ?? panic(...)`, and `panic(...)` as a statement, but not `panic(...)` as a returned value.
 
@@ -194,7 +194,7 @@ console.log(`${kindOf('one')}`);
 stage 0 can't lower reading panic yet        (Node prints 1)
 ```
 
-**Around it:** `panic(...)` as a statement (case.ts, `entryOf`). The checker accepts that, since nothing after a `never` call is reachable.
+**Around it, until it closed:** `panic(...)` as a statement. **Closed:** `return panic(...)` lowers as the panic itself, and so does an arrow whose body is `panic(...)`. A function whose result the checker types `never` has no result to hold, as one returning `void` hasn't; on main, an arrow returning `panic(...)` crashed stage 0 with a nil dereference, pointing a refusal at the name an arrow doesn't have. Fixtures: `return_panic.a` (where it doesn't run) and `return_panic_fires.a` (where it does).
 
 ## Not a stage 0 gap: input
 

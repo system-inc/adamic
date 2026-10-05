@@ -17,9 +17,6 @@
 // pattern and its text as byte strings (bytes.ts), one character per byte, and then reads exactly as
 // the Go does. Matching walks the text once while tracking every place in the pattern it could have
 // reached, so no pattern backtracks: `*a*a*a*a*b` against a long run of `a` costs one pass.
-//
-// The declarations come callee first, not in the Go's order: stage 0 takes a call to a function or method
-// declared further down for a void one (gap 3 in GAPS.md). Each still names the Go it reads as.
 
 import { panic } from 'adamic';
 import { byteAt, utf8Bytes } from './bytes.ts';
@@ -36,172 +33,6 @@ type Token =
 	| { readonly kind: 'starToken' } // `*`: any run, within one segment against a path
 	| { readonly kind: 'everythingToken' } // a trailing `**` segment: any run, slashes included
 	| { readonly kind: 'directoriesToken' }; // `**/` as a segment: nothing, or any run that ends in `/`
-
-// glob.go: isLetter and isDigit, over a byte's value. The Go folds case with character|0x20; stage 0 does
-// not lower the bitwise operators yet (gap 2 in GAPS.md), so here, as for the xdigit class in addClass,
-// each case is its own range.
-function isLetter(character: number): boolean {
-	return (character >= 0x41 && character <= 0x5a) || (character >= 0x61 && character <= 0x7a);
-}
-
-function isDigit(character: number): boolean {
-	return character >= 0x30 && character <= 0x39;
-}
-
-// glob.go: addClass. It adds a `[:name:]` class's bytes, reporting false for a name fnmatch does not
-// define. The Go's variable is named in, which is a keyword here.
-function addClass(members: boolean[], name: string): boolean {
-	let inClass: (character: number) => boolean;
-	switch (name) {
-		case 'alnum':
-			inClass = (character) => isLetter(character) || isDigit(character);
-			break;
-		case 'alpha':
-			// The Go assigns isLetter itself; stage 0 does not lower a declared function as a value yet
-			// (gap 4 in GAPS.md), so here, and for digit, an arrow calls it.
-			inClass = (character) => isLetter(character);
-			break;
-		case 'blank':
-			inClass = (character) => character === 0x20 || character === 0x09;
-			break;
-		case 'cntrl':
-			inClass = (character) => character < 0x20 || character === 0x7f;
-			break;
-		case 'digit':
-			inClass = (character) => isDigit(character);
-			break;
-		case 'graph':
-			inClass = (character) => character > 0x20 && character < 0x7f;
-			break;
-		case 'lower':
-			inClass = (character) => character >= 0x61 && character <= 0x7a;
-			break;
-		case 'print':
-			inClass = (character) => character >= 0x20 && character < 0x7f;
-			break;
-		case 'punct':
-			inClass = (character) => character > 0x20 && character < 0x7f && !isLetter(character) && !isDigit(character);
-			break;
-		case 'space':
-			inClass = (character) => character === 0x20 || character === 0x09 || character === 0x0a || character === 0x0d;
-			break;
-		case 'upper':
-			inClass = (character) => character >= 0x41 && character <= 0x5a;
-			break;
-		case 'xdigit':
-			inClass = (character) => isDigit(character) || (character >= 0x41 && character <= 0x46) || (character >= 0x61 && character <= 0x66);
-			break;
-		default:
-			return false;
-	}
-	for (let member = 0; member < 256; member++) {
-		if (inClass(member)) {
-			members[member] = true;
-		}
-	}
-	return true;
-}
-
-// glob.go: positionSet, a set over a glob's positions, and its add, has and clear. The Go's is a bit set
-// of words; here it is an array of booleans.
-function newPositionSet(size: number): boolean[] {
-	return Array.from({ length: size }, () => false);
-}
-
-function addPosition(positions: boolean[], position: number): void {
-	positions[position] = true;
-}
-
-function hasPosition(positions: readonly boolean[], position: number): boolean {
-	return positions[position] === true;
-}
-
-function clearPositions(positions: boolean[]): void {
-	positions.fill(false);
-}
-
-// glob.go: compileSet's results. The Go returns (set, end, ok); here undefined is not ok.
-interface CompiledSet {
-	readonly set: ByteSet;
-	readonly end: number;
-}
-
-// glob.go: compileSet. It reads the bracket expression that opens at start, returning its members and
-// the index of its closing `]`, or undefined for one that never closes or names an unknown class.
-function compileSet(pattern: string, start: number): CompiledSet | undefined {
-	const members = Array.from({ length: 256 }, () => false);
-	let index = start + 1;
-	let negated = false;
-	if (index < pattern.length && (byteAt(pattern, index) === '!' || byteAt(pattern, index) === '^')) {
-		negated = true;
-		index++;
-	}
-
-	// rangeStart is the byte a following `-` would extend, or -1 after a class or a range, which
-	// nothing extends.
-	let rangeStart = -1;
-	let first = true;
-	for (;;) {
-		if (index >= pattern.length) {
-			return undefined;
-		}
-		const character = byteAt(pattern, index);
-		if (character === ']' && !first) {
-			break;
-		}
-		first = false;
-
-		if (character === '\\') {
-			index++;
-			if (index >= pattern.length) {
-				return undefined;
-			}
-			members[byteAt(pattern, index).charCodeAt(0)] = true;
-			rangeStart = byteAt(pattern, index).charCodeAt(0);
-		} else if (character === '-' && rangeStart >= 0 && index + 1 < pattern.length && byteAt(pattern, index + 1) !== ']') {
-			index++;
-			let upper = byteAt(pattern, index);
-			if (upper === '\\') {
-				index++;
-				if (index >= pattern.length) {
-					return undefined;
-				}
-				upper = byteAt(pattern, index);
-			}
-			for (let member = rangeStart; member <= upper.charCodeAt(0); member++) {
-				members[member] = true;
-			}
-			rangeStart = -1;
-		} else if (character === '[' && index + 1 < pattern.length && byteAt(pattern, index + 1) === ':') {
-			let closing = pattern.slice(index + 2).indexOf(']');
-			if (closing < 0) {
-				return undefined;
-			}
-			closing += index + 2;
-			if (closing - 1 < index + 2 || byteAt(pattern, closing - 1) !== ':') {
-				// No `:]` before the next `]`, so this `[` is an ordinary member.
-				members['['.charCodeAt(0)] = true;
-				rangeStart = '['.charCodeAt(0);
-			} else {
-				if (!addClass(members, pattern.slice(index + 2, closing - 1))) {
-					return undefined;
-				}
-				index = closing;
-				rangeStart = -1;
-			}
-		} else {
-			members[character.charCodeAt(0)] = true;
-			rangeStart = character.charCodeAt(0);
-		}
-		index++;
-	}
-	if (negated) {
-		for (let member = 0; member < members.length; member++) {
-			members[member] = members[member] !== true;
-		}
-	}
-	return { set: members, end: index };
-}
 
 // glob.go: glob. never marks one that can match nothing (a set left open, an unknown class, a trailing
 // backslash); literal holds the text of one with no wildcard at all, so matching it is one comparison.
@@ -220,28 +51,6 @@ export class Glob {
 		this.isLiteral = isLiteral;
 		this.literal = literal;
 		this.isSuffix = isSuffix;
-	}
-
-	// glob.go: (*glob).reach, ahead of matches because of gap 3 in GAPS.md. It marks position, and every
-	// position after it that a token matching nothing passes straight on to.
-	reach(positions: boolean[], start: number): void {
-		let position = start;
-		for (;;) {
-			addPosition(positions, position);
-			const tokenEntry = this.tokens[position];
-			if (tokenEntry === undefined) {
-				return;
-			}
-			switch (tokenEntry.kind) {
-				case 'starToken':
-				case 'everythingToken':
-				case 'directoriesToken':
-					position++;
-					break;
-				default:
-					return;
-			}
-		}
 	}
 
 	// glob.go: (*glob).matches. It reports whether the glob matches all of text. path keeps `?`, `*` and
@@ -334,6 +143,28 @@ export class Glob {
 		return hasPosition(current, this.tokens.length);
 	}
 
+	// glob.go: (*glob).reach. It marks position, and every position after it that a token matching
+	// nothing passes straight on to.
+	reach(positions: boolean[], start: number): void {
+		let position = start;
+		for (;;) {
+			addPosition(positions, position);
+			const tokenEntry = this.tokens[position];
+			if (tokenEntry === undefined) {
+				return;
+			}
+			switch (tokenEntry.kind) {
+				case 'starToken':
+				case 'everythingToken':
+				case 'directoriesToken':
+					position++;
+					break;
+				default:
+					return;
+			}
+		}
+	}
+
 }
 
 // glob.go: glob{never: true}.
@@ -424,4 +255,168 @@ export function compileGlob(patternCharacters: string, path: boolean): Glob {
 		return new Glob(tokens, false, false, suffix, true);
 	}
 	return new Glob(tokens, false, false, '', false);
+}
+
+// glob.go: compileSet's results. The Go returns (set, end, ok); here undefined is not ok.
+interface CompiledSet {
+	readonly set: ByteSet;
+	readonly end: number;
+}
+
+// glob.go: compileSet. It reads the bracket expression that opens at start, returning its members and
+// the index of its closing `]`, or undefined for one that never closes or names an unknown class.
+function compileSet(pattern: string, start: number): CompiledSet | undefined {
+	const members = Array.from({ length: 256 }, () => false);
+	let index = start + 1;
+	let negated = false;
+	if (index < pattern.length && (byteAt(pattern, index) === '!' || byteAt(pattern, index) === '^')) {
+		negated = true;
+		index++;
+	}
+
+	// rangeStart is the byte a following `-` would extend, or -1 after a class or a range, which
+	// nothing extends.
+	let rangeStart = -1;
+	let first = true;
+	for (;;) {
+		if (index >= pattern.length) {
+			return undefined;
+		}
+		const character = byteAt(pattern, index);
+		if (character === ']' && !first) {
+			break;
+		}
+		first = false;
+
+		if (character === '\\') {
+			index++;
+			if (index >= pattern.length) {
+				return undefined;
+			}
+			members[byteAt(pattern, index).charCodeAt(0)] = true;
+			rangeStart = byteAt(pattern, index).charCodeAt(0);
+		} else if (character === '-' && rangeStart >= 0 && index + 1 < pattern.length && byteAt(pattern, index + 1) !== ']') {
+			index++;
+			let upper = byteAt(pattern, index);
+			if (upper === '\\') {
+				index++;
+				if (index >= pattern.length) {
+					return undefined;
+				}
+				upper = byteAt(pattern, index);
+			}
+			for (let member = rangeStart; member <= upper.charCodeAt(0); member++) {
+				members[member] = true;
+			}
+			rangeStart = -1;
+		} else if (character === '[' && index + 1 < pattern.length && byteAt(pattern, index + 1) === ':') {
+			let closing = pattern.slice(index + 2).indexOf(']');
+			if (closing < 0) {
+				return undefined;
+			}
+			closing += index + 2;
+			if (closing - 1 < index + 2 || byteAt(pattern, closing - 1) !== ':') {
+				// No `:]` before the next `]`, so this `[` is an ordinary member.
+				members['['.charCodeAt(0)] = true;
+				rangeStart = '['.charCodeAt(0);
+			} else {
+				if (!addClass(members, pattern.slice(index + 2, closing - 1))) {
+					return undefined;
+				}
+				index = closing;
+				rangeStart = -1;
+			}
+		} else {
+			members[character.charCodeAt(0)] = true;
+			rangeStart = character.charCodeAt(0);
+		}
+		index++;
+	}
+	if (negated) {
+		for (let member = 0; member < members.length; member++) {
+			members[member] = members[member] !== true;
+		}
+	}
+	return { set: members, end: index };
+}
+
+// glob.go: addClass. It adds a `[:name:]` class's bytes, reporting false for a name fnmatch does not
+// define. The Go's variable is named in, which is a keyword here.
+function addClass(members: boolean[], name: string): boolean {
+	let inClass: (character: number) => boolean;
+	switch (name) {
+		case 'alnum':
+			inClass = (character) => isLetter(character) || isDigit(character);
+			break;
+		case 'alpha':
+			inClass = isLetter;
+			break;
+		case 'blank':
+			inClass = (character) => character === 0x20 || character === 0x09;
+			break;
+		case 'cntrl':
+			inClass = (character) => character < 0x20 || character === 0x7f;
+			break;
+		case 'digit':
+			inClass = isDigit;
+			break;
+		case 'graph':
+			inClass = (character) => character > 0x20 && character < 0x7f;
+			break;
+		case 'lower':
+			inClass = (character) => character >= 0x61 && character <= 0x7a;
+			break;
+		case 'print':
+			inClass = (character) => character >= 0x20 && character < 0x7f;
+			break;
+		case 'punct':
+			inClass = (character) => character > 0x20 && character < 0x7f && !isLetter(character) && !isDigit(character);
+			break;
+		case 'space':
+			inClass = (character) => character === 0x20 || character === 0x09 || character === 0x0a || character === 0x0d;
+			break;
+		case 'upper':
+			inClass = (character) => character >= 0x41 && character <= 0x5a;
+			break;
+		case 'xdigit':
+			inClass = (character) => isDigit(character) || (character >= 0x41 && character <= 0x46) || (character >= 0x61 && character <= 0x66);
+			break;
+		default:
+			return false;
+	}
+	for (let member = 0; member < 256; member++) {
+		if (inClass(member)) {
+			members[member] = true;
+		}
+	}
+	return true;
+}
+
+// glob.go: isLetter and isDigit, over a byte's value. The Go folds case with character|0x20; stage 0 does
+// not lower the bitwise operators yet (gap 2 in GAPS.md), so here, as for the xdigit class in addClass,
+// each case is its own range.
+function isLetter(character: number): boolean {
+	return (character >= 0x41 && character <= 0x5a) || (character >= 0x61 && character <= 0x7a);
+}
+
+function isDigit(character: number): boolean {
+	return character >= 0x30 && character <= 0x39;
+}
+
+// glob.go: positionSet, a set over a glob's positions, and its add, has and clear. The Go's is a bit set
+// of words; here it is an array of booleans.
+function newPositionSet(size: number): boolean[] {
+	return Array.from({ length: size }, () => false);
+}
+
+function addPosition(positions: boolean[], position: number): void {
+	positions[position] = true;
+}
+
+function hasPosition(positions: readonly boolean[], position: number): boolean {
+	return positions[position] === true;
+}
+
+function clearPositions(positions: boolean[]): void {
+	positions.fill(false);
 }
