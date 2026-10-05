@@ -121,6 +121,20 @@ func TestAdamicOptionsAreOn(t *testing.T) {
 	}
 }
 
+// Every file is a module, as the oracle runs it, imports or not. As scripts, two files declaring one
+// name would share a global scope and collide (TS2451), and a local console would collide with the
+// prelude's.
+func TestEveryFileIsAModule(t *testing.T) {
+	t.Parallel()
+	paths := writeProgram(t,
+		[2]string{"first.a", "const name = 'first';\n"},
+		[2]string{"second.a", "const name = 'second';\nconst console = 'mine';\n"},
+	)
+	if _, err := Load(paths); err != nil {
+		t.Errorf("Load: %v", err)
+	}
+}
+
 func TestAdamicFilesImportEachOther(t *testing.T) {
 	t.Parallel()
 	paths := writeProgram(t,

@@ -18,6 +18,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/bundled"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/locale"
@@ -62,10 +63,13 @@ func compilerOptions() *core.CompilerOptions {
 		AllowImportingTsExtensions: core.TSTrue,
 		NoEmit:                     core.TSTrue,
 		Module:                     core.ModuleKindESNext,
-		ModuleResolution:           core.ModuleResolutionKindBundler,
-		Target:                     core.ScriptTargetES2024,
-		Lib:                        []string{"lib.es2024.d.ts"},
-		Types:                      []string{},
+		// Every Adamic file is a module, imports or not, as the oracle runs it. Without this, a file with
+		// no import is a script to the checker, and its top-level names collide with the prelude's.
+		ModuleDetection:  core.ModuleDetectionKindForce,
+		ModuleResolution: core.ModuleResolutionKindBundler,
+		Target:           core.ScriptTargetES2024,
+		Lib:              []string{"lib.es2024.d.ts"},
+		Types:            []string{},
 	}
 }
 
@@ -128,6 +132,35 @@ func Load(paths []string) (*Program, error) {
 		loaded.files = append(loaded.files, sourceFile)
 	}
 	return loaded, nil
+}
+
+// Files is the program's own source files, in the order Load was given them: no prelude, no lib.
+func (p *Program) Files() []*ast.SourceFile {
+	return p.files
+}
+
+// Checker returns the checker that owns a file, and the function that releases it.
+func (p *Program) Checker(ctx context.Context, sourceFile *ast.SourceFile) (*checker.Checker, func()) {
+	return p.compiler.GetTypeCheckerForFile(ctx, sourceFile)
+}
+
+// FileName is a source file's name as written: a .a file is named .a, never by the .a.ts the checker
+// knows it as.
+func (p *Program) FileName(sourceFile *ast.SourceFile) string {
+	return p.fs.displayName(sourceFile.FileName())
+}
+
+// Where is a node's position as people write it: file:line:column, the file named as written.
+func (p *Program) Where(node *ast.Node) string {
+	sourceFile := ast.GetSourceFileOfNode(node)
+	line, column := p.lineAndColumn(sourceFile, scanner.GetTokenPosOfNode(node, sourceFile, false))
+	return fmt.Sprintf("%s:%d:%d", p.fs.displayName(sourceFile.FileName()), line, column)
+}
+
+// IsPrelude reports whether a declaration comes from Adamic's prelude rather than from the program,
+// so a local named console is never mistaken for the real one.
+func IsPrelude(sourceFile *ast.SourceFile) bool {
+	return sourceFile != nil && sourceFile.FileName() == preludePath
 }
 
 // rootFileName is the name the checker knows a source file by, refusing anything that isn't Adamic.
