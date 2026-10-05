@@ -401,6 +401,10 @@ extern adamic_string adamic_typeof_function;
 // rather than kill, as on Node.
 void adamic_start(int count, char **values);
 
+// adamic_output_flush writes out what stdout's buffer holds, before a file is read or written: the
+// file may be stdout itself, or stdin waiting on a prompt just printed (adamic.c).
+void adamic_output_flush(void);
+
 // adamic_write_line writes a string and a newline, as console.log does with one string. Stdout is
 // buffered, and flushed wherever Node's writing it at once could be told apart (adamic.c).
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string);
