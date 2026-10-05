@@ -1,0 +1,7 @@
+// A method read as a value (const g = k.f): native panics "compiler bug", Node prints t1a1. Older than
+// integrate-1; it should be NotYet when compiled.
+class K { tag: string; constructor(t: string) { this.tag = t; } f(s: string): string { return `${this.tag}${s}`; } }
+const k = new K(`t${1}`);
+const xs: string[] = [`a${1}`];
+const g = k.f;
+console.log(xs.map((x) => k.f(x)).join());

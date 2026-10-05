@@ -1,0 +1,6 @@
+// A cycle held by a global: released at exit but left in its static, so LeakSanitizer still sees it
+// reachable and says nothing, where adamic build --count says allocations 3, frees 1.
+type N = { name: string; next: N | undefined };
+const a: N = { name: `a${1}`, next: undefined };
+a.next = a;
+console.log(a.name);
