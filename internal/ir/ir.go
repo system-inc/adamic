@@ -497,6 +497,11 @@ type (
 	// ProgramArguments is programArguments() from 'adamic': a new array of the arguments after the
 	// program, as process.argv.slice(2) is.
 	ProgramArguments struct{}
+
+	// WriteTextFile is writeTextFile(Path, Text) from 'adamic': the file made or emptied, then Text
+	// written as UTF-8 the way Node's writeFileSync(path, text) writes it (a lone surrogate as U+FFFD),
+	// in { kind: 'Ok' }, or what went wrong in { kind: 'Error', message }.
+	WriteTextFile struct{ Path, Text Expression }
 )
 
 // Field is one field of an object literal.
@@ -601,6 +606,7 @@ func (c StringCall) Type() Type {
 }
 func (ReadTextFile) Type() Type     { return Object }
 func (ProgramArguments) Type() Type { return Array }
+func (WriteTextFile) Type() Type    { return Object }
 
 func (MapNew) Type() Type    { return Map }
 func (MapSet) Type() Type    { return Map }

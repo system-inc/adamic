@@ -1,9 +1,9 @@
-// adamic.mjs: the Adamic runtime for the Node oracle: panic, and the input 0.2 opens.
+// adamic.mjs: the Adamic runtime for the Node oracle: panic, and the files and arguments 0.2 opens.
 //
 // A panic writes one line to stderr and exits 70. It sets process.exitCode rather than calling
 // process.exit, because stdout to a pipe is asynchronous on macOS and process.exit would drop what
 // the program already printed. 0.1 has no try, so nothing catches the throw.
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 class AdamicPanic extends Error {}
 
@@ -38,15 +38,28 @@ export function readTextFile(path) {
 	try {
 		return { kind: 'Ok', text: readFileSync(path, 'utf8') };
 	} catch (error) {
-		return { kind: 'Error', message: `cannot read ${path}: ${failure(error.code)}` };
+		return { kind: 'Error', message: `cannot read ${path}: ${failure(error.code, false)}` };
 	}
 }
 
-function failure(code) {
+// writeTextFile writes a file as Node's writeFileSync(path, text) does: made if it isn't there,
+// emptied if it is, the text as UTF-8 with a lone surrogate written as U+FFFD.
+export function writeTextFile(path, text) {
+	try {
+		writeFileSync(path, text);
+		return { kind: 'Ok' };
+	} catch (error) {
+		return { kind: 'Error', message: `cannot write ${path}: ${failure(error.code, true)}` };
+	}
+}
+
+// failure is the reason in Adamic's words. When a write can't find its path, what's missing is a
+// directory, not the file.
+function failure(code, writing) {
 	switch (code) {
 		case 'ENOENT':
 		case 'ENOTDIR':
-			return 'no such file';
+			return writing ? 'no such directory' : 'no such file';
 		case 'EACCES':
 		case 'EPERM':
 			return 'permission denied';

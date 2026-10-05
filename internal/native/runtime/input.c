@@ -1,4 +1,5 @@
-// input.c: what a program reads from outside, opened in 0.2: its arguments, and files.
+// input.c: what a program reads from outside, opened in 0.2, its arguments and files, and the one
+// way it writes back besides its output: writeTextFile.
 //
 // Both arrive as bytes, and a program sees strings, so both are decoded exactly as Node decodes them:
 // UTF-8 by the WHATWG decoder's rules, every invalid sequence one U+FFFD, and a byte-order mark kept
@@ -154,12 +155,15 @@ static const adamic_shape error_shape = {2, error_names, both_references};
 static adamic_string ok_kind = ADAMIC_STRING("Ok");
 static adamic_string error_kind = ADAMIC_STRING("Error");
 
-// failure is readTextFile's { kind: 'Error', message }, the message in Adamic's own words, the same
-// on every platform: "cannot read <path>: <reason>". The JavaScript runtime says the same
-// (oracle/adamic.mjs), from Node's error codes, which are these errno names.
-static adamic_object *failure(const adamic_string *path, int error) {
-	static adamic_string prefix = ADAMIC_STRING("cannot read ");
-	static adamic_string missing = ADAMIC_STRING(": no such file");
+// failure is readTextFile's and writeTextFile's { kind: 'Error', message }, the message in Adamic's
+// own words, the same on every platform: "cannot read <path>: <reason>", or "cannot write". The
+// JavaScript runtime says the same (oracle/adamic.mjs), from Node's error codes, which are these
+// errno names. What's missing when a write can't find its path is a directory, not the file.
+static adamic_object *failure(const adamic_string *path, int error, bool writing) {
+	static adamic_string read_prefix = ADAMIC_STRING("cannot read ");
+	static adamic_string write_prefix = ADAMIC_STRING("cannot write ");
+	static adamic_string missing_file = ADAMIC_STRING(": no such file");
+	static adamic_string missing_directory = ADAMIC_STRING(": no such directory");
 	static adamic_string denied = ADAMIC_STRING(": permission denied");
 	static adamic_string directory = ADAMIC_STRING(": is a directory");
 	static adamic_string failed = ADAMIC_STRING(": failed");
@@ -167,7 +171,7 @@ static adamic_object *failure(const adamic_string *path, int error) {
 	switch (error) {
 	case ENOENT:
 	case ENOTDIR:
-		reason = &missing;
+		reason = writing ? &missing_directory : &missing_file;
 		break;
 	case EACCES:
 	case EPERM:
@@ -179,31 +183,37 @@ static adamic_object *failure(const adamic_string *path, int error) {
 	}
 	adamic_object *result = adamic_object_new(&error_shape);
 	result->slots[0].reference = &error_kind;
-	result->slots[1].reference = adamic_string_concat(3, (adamic_string *const[]){&prefix, (adamic_string *)path, reason});
+	result->slots[1].reference = adamic_string_concat(3, (adamic_string *const[]){writing ? &write_prefix : &read_prefix, (adamic_string *)path, reason});
 	return result;
 }
 
-// file_name is a path as the bytes Node would name the file by, terminated: a lone surrogate, which
-// a string holds as WTF-8, becomes U+FFFD's bytes, as Node's own encoding to UTF-8 makes it. A path
-// holding a NUL can name no file, and Node refuses it before asking, so that's NULL here.
+// utf8 is a string's bytes as Node's encoding to UTF-8 makes them, terminated, in a buffer the
+// caller frees: a lone surrogate, which a string holds as WTF-8, becomes U+FFFD's bytes, the same
+// length.
+static char *utf8(const adamic_string *string) {
+	char *bytes = malloc(string->length + 1);
+	if (bytes == NULL) {
+		static const char message[] = "out of memory";
+		adamic_panic(message, sizeof message - 1);
+	}
+	memcpy(bytes, string->bytes, string->length);
+	for (size_t at = 0; at + 3 <= string->length; at++) {
+		if ((unsigned char)bytes[at] == 0xed && (unsigned char)bytes[at + 1] >= 0xa0) {
+			memcpy(bytes + at, "\xef\xbf\xbd", 3);
+			at += 2;
+		}
+	}
+	bytes[string->length] = '\0';
+	return bytes;
+}
+
+// file_name is a path as the bytes Node would name the file by. A path holding a NUL can name no
+// file, and Node refuses it before asking, so that's NULL here.
 static char *file_name(const adamic_string *path) {
 	if (memchr(path->bytes, 0, path->length) != NULL) {
 		return NULL;
 	}
-	char *name = malloc(path->length + 1);
-	if (name == NULL) {
-		static const char message[] = "out of memory";
-		adamic_panic(message, sizeof message - 1);
-	}
-	memcpy(name, path->bytes, path->length);
-	for (size_t at = 0; at + 3 <= path->length; at++) {
-		if ((unsigned char)name[at] == 0xed && (unsigned char)name[at + 1] >= 0xa0) {
-			memcpy(name + at, "\xef\xbf\xbd", 3);
-			at += 2;
-		}
-	}
-	name[path->length] = '\0';
-	return name;
+	return utf8(path);
 }
 
 // read_all reads every byte from a descriptor into a buffer the caller frees, through partial reads
@@ -246,7 +256,7 @@ static int read_all(int descriptor, unsigned char **bytes, size_t *length) {
 adamic_object *adamic_read_text_file(const adamic_string *path) {
 	char *name = file_name(path);
 	if (name == NULL) {
-		return failure(path, 0);
+		return failure(path, 0, false);
 	}
 	int descriptor;
 	do {
@@ -254,14 +264,14 @@ adamic_object *adamic_read_text_file(const adamic_string *path) {
 	} while (descriptor < 0 && errno == EINTR);
 	free(name);
 	if (descriptor < 0) {
-		return failure(path, errno);
+		return failure(path, errno, false);
 	}
 	unsigned char *bytes;
 	size_t length;
 	int error = read_all(descriptor, &bytes, &length);
 	close(descriptor);
 	if (error != 0) {
-		return failure(path, error);
+		return failure(path, error, false);
 	}
 	// Node's readFileSync throws ERR_STRING_TOO_LONG for a file of V8's longest string in bytes or
 	// more, whatever they decode to (536,870,888 bytes of é, half as many units, fails too, and
@@ -275,5 +285,55 @@ adamic_object *adamic_read_text_file(const adamic_string *path) {
 	adamic_object *result = adamic_object_new(&ok_shape);
 	result->slots[0].reference = &ok_kind;
 	result->slots[1].reference = text;
+	return result;
+}
+
+// The shape writeTextFile's success comes in.
+static const char *const written_names[] = {"kind"};
+static const adamic_shape written_shape = {1, written_names, both_references};
+
+// write_all writes every byte, through partial writes and interrupted calls, and returns 0 or the
+// errno that stopped it.
+static int write_all(int descriptor, const char *bytes, size_t length) {
+	while (length > 0) {
+		ssize_t written = write(descriptor, bytes, length);
+		if (written < 0) {
+			if (errno == EINTR) {
+				continue;
+			}
+			return errno;
+		}
+		bytes += written;
+		length -= (size_t)written;
+	}
+	return 0;
+}
+
+// adamic_write_text_file opens as Node's writeFileSync does (flag 'w', mode 0666 before the umask):
+// the file made if it isn't there, emptied if it is, and then the text written whole.
+adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text) {
+	char *name = file_name(path);
+	if (name == NULL) {
+		return failure(path, 0, true);
+	}
+	int descriptor;
+	do {
+		descriptor = open(name, O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC, 0666);
+	} while (descriptor < 0 && errno == EINTR);
+	free(name);
+	if (descriptor < 0) {
+		return failure(path, errno, true);
+	}
+	char *bytes = utf8(text);
+	int error = write_all(descriptor, bytes, text->length);
+	free(bytes);
+	if (close(descriptor) != 0 && error == 0 && errno != EINTR) {
+		error = errno;
+	}
+	if (error != 0) {
+		return failure(path, error, true);
+	}
+	adamic_object *result = adamic_object_new(&written_shape);
+	result->slots[0].reference = &ok_kind;
 	return result;
 }

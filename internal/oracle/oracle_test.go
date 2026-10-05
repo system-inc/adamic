@@ -124,6 +124,10 @@ var fixtures = []struct {
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
 	{"internal/oracle/testdata/borrow_map_overwrite.a", true, false},
+	// Output beyond native's stdout buffer, and the points where it must be flushed (adamic.c).
+	{"internal/oracle/testdata/large_output.a", true, false},
+	{"internal/oracle/testdata/output_then_panic.a", true, false},
+	{"internal/oracle/testdata/interleaved.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

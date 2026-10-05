@@ -387,7 +387,12 @@ extern adamic_string adamic_typeof_undefined;
 extern adamic_string adamic_typeof_object;
 extern adamic_string adamic_typeof_function;
 
-// adamic_write_line writes a string and a newline, as console.log does with one string.
+// adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
+// rather than kill, as on Node.
+void adamic_start(int count, char **values);
+
+// adamic_write_line writes a string and a newline, as console.log does with one string. Stdout is
+// buffered, and flushed wherever Node's writing it at once could be told apart (adamic.c).
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string);
 
 // ADAMIC_NUMBER_FORMAT_MAX holds the longest number text, "-1.2345678901234567e-308", with room.
@@ -451,6 +456,10 @@ adamic_string *adamic_number_to_fixed(double value, double digits);
 void adamic_arguments_save(int count, char **values);
 adamic_array *adamic_program_arguments(void);
 adamic_object *adamic_read_text_file(const adamic_string *path);
+
+// adamic_write_text_file is writeTextFile(path, text) (output.c): { kind: 'Ok' } or { kind: 'Error',
+// message }, a reference the caller owns.
+adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text);
 
 // adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
 _Noreturn void adamic_panic(const char *message, size_t length);
