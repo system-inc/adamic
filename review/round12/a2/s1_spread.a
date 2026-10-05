@@ -1,0 +1,55 @@
+// Spread of undefined in many positions.
+interface Leaf {
+	readonly n: number;
+	readonly name: string;
+}
+
+interface Point {
+	readonly x: number;
+	readonly label: string;
+	readonly tag?: number;
+	readonly leaf: Leaf | undefined;
+}
+
+interface Holder {
+	point: Point | undefined;
+}
+
+type Loose = { readonly x?: number; readonly label?: string; readonly tag?: number; readonly leaf?: Leaf | undefined };
+
+function make(depth: number): Point | undefined {
+	if (depth === 0) {
+		return undefined;
+	}
+	return { x: depth, label: `p${depth}`, tag: depth * 10, leaf: depth > 1 ? { n: depth, name: `leaf${depth}` } : undefined };
+}
+
+function show(name: string, p: Loose): void {
+	console.log(`${name}: x=${p.x ?? 'u'} label=${p.label ?? 'u'} tag=${p.tag ?? 'u'} leaf=${p.leaf === undefined ? 'u' : p.leaf.name}`);
+}
+
+for (let depth = 0; depth < 3; depth++) {
+	const u = make(depth);
+	show(`plain ${depth}`, { ...u });
+	show(`with x ${depth}`, { ...u, x: 7 });
+	show(`with label ${depth}`, { ...u, label: `L${depth}` });
+	show(`with leaf ${depth}`, { ...u, leaf: { n: 1, name: `made${depth}` } });
+	const holder: Holder = { point: u };
+	show(`field ${depth}`, { ...holder.point });
+	const leafCopy = { ...u?.leaf };
+	console.log(`leaf copy ${depth}: ${leafCopy.n ?? 'u'} ${leafCopy.name ?? 'u'}`);
+	const leafWith = { ...u?.leaf, name: `w${depth}` };
+	console.log(`leaf with ${depth}: ${leafWith.n ?? 'u'} ${leafWith.name}`);
+	// A reuse candidate: s dies at the spread, count 1 when defined.
+	let s = make(depth);
+	const r = { ...s, x: 99 };
+	s = undefined;
+	show(`reuse ${depth}`, r);
+	let t: Loose | undefined = make(depth);
+	for (let round = 0; round < 3; round++) {
+		t = { ...t, x: round, label: `r${round}` };
+	}
+	if (t !== undefined) {
+		show(`loop ${depth}`, t);
+	}
+}

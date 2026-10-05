@@ -1,0 +1,63 @@
+// Region statements in a finally that runs while an exception is on its way out, in a catch, and a
+// region statement that throws from inside a finally.
+interface Node {
+	readonly label: string;
+	readonly left: Node | undefined;
+	readonly right: Node | undefined;
+}
+
+let budget = -1;
+
+function build(depth: number): Node {
+	budget = budget - 1;
+	if (budget === 0) {
+		throw new Error(`spent at ${depth}`);
+	}
+	if (depth === 0) {
+		return { label: `leaf${depth}`, left: undefined, right: undefined };
+	}
+	return { label: `node${depth}`, left: build(depth - 1), right: build(depth - 1) };
+}
+
+function count(node: Node | undefined): number {
+	if (node === undefined) {
+		return 0;
+	}
+	return 1 + count(node.left) + count(node.right);
+}
+
+function attempt(spend: number, again: number): number {
+	let total = 0;
+	try {
+		budget = spend;
+		total += count(build(3));
+	} catch (error) {
+		budget = again;
+		total += count(build(2));
+		if (error instanceof Error) {
+			console.log(`caught ${error.message} then ${total}`);
+		}
+	} finally {
+		budget = again;
+		total += count(build(1));
+		console.log(`finally ${total}`);
+	}
+	return total;
+}
+
+const plans: [number, number][] = [
+	[-1, -1],
+	[5, -1],
+	[5, 3],
+	[-1, 2],
+	[2, 6],
+];
+for (const plan of plans) {
+	try {
+		console.log(`attempt ${plan[0]} ${plan[1]}: ${attempt(plan[0], plan[1])}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`attempt ${plan[0]} ${plan[1]} threw ${error.message}`);
+		}
+	}
+}

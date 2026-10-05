@@ -1,0 +1,14 @@
+class Point {
+	readonly x: number;
+	constructor(x: number) {
+		this.x = x;
+	}
+	describe(): string {
+		return `point${this.x}`;
+	}
+}
+function maybe(x: number): Point | undefined {
+	return x > 0 ? new Point(x) : undefined;
+}
+const p = maybe(1);
+console.log(p?.describe() ?? 'none');

@@ -1,0 +1,33 @@
+// Spread of a class instance that may be undefined, and of one holding a method and a heap string.
+class Point {
+	readonly x: number;
+	readonly name: string;
+	constructor(x: number) {
+		this.x = x;
+		this.name = `point${x}`;
+	}
+	describe(): string {
+		return `${this.name}@${this.x}`;
+	}
+}
+
+function maybe(x: number): Point | undefined {
+	return x > 0 ? new Point(x) : undefined;
+}
+
+type Shape = { readonly x?: number; readonly name?: string };
+
+function show(label: string, shape: Shape): void {
+	console.log(`${label}: ${shape.x ?? 'u'} ${shape.name ?? 'u'}`);
+}
+
+for (let x = 0; x < 3; x++) {
+	const p = maybe(x);
+	show(`plain ${x}`, { ...p });
+	show(`named ${x}`, { ...p, name: `n${x}` });
+	const q: Shape = { ...p, x: x * 2 };
+	show(`typed ${x}`, q);
+	if (p !== undefined) {
+		console.log(p.describe());
+	}
+}

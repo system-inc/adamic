@@ -1,0 +1,50 @@
+// A fresh function whose body has its own region statement, recursing, and throwing at depth.
+interface Node {
+	readonly label: string;
+	readonly size: number;
+	readonly left: Node | undefined;
+	readonly right: Node | undefined;
+}
+
+let budget = -1;
+
+function count(node: Node | undefined): number {
+	if (node === undefined) {
+		return 0;
+	}
+	return 1 + count(node.left) + count(node.right);
+}
+
+function build(depth: number): Node {
+	let size = 0;
+	if (depth > 0) {
+		size += count(build(depth - 1));
+	}
+	budget = budget - 1;
+	if (budget === 0) {
+		throw new Error(`spent at ${depth} size ${size}`);
+	}
+	if (depth === 0) {
+		return { label: `leaf${depth}`, size: size, left: undefined, right: undefined };
+	}
+	return { label: `node${depth}-${size}`, size: size, left: build(depth - 1), right: build(depth - 1) };
+}
+
+function measure(depth: number): number {
+	let total = 0;
+	total += count(build(depth));
+	return total;
+}
+
+for (let spend = 1; spend < 40; spend += 3) {
+	budget = spend;
+	try {
+		console.log(`spend ${spend}: ${measure(4)}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`spend ${spend}: ${error.message}`);
+		}
+	}
+}
+budget = -1;
+console.log(`last ${measure(5)}`);

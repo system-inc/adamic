@@ -1,0 +1,37 @@
+// An uncaught throw out of a region statement two calls down, after the region holds heap strings.
+interface Node {
+	readonly label: string;
+	readonly left: Node | undefined;
+}
+
+let budget = 7;
+
+function build(depth: number): Node {
+	budget = budget - 1;
+	if (budget === 0) {
+		throw new Error(`spent at ${depth}`);
+	}
+	if (depth === 0) {
+		return { label: `leaf${depth}`, left: undefined };
+	}
+	return { label: `node${depth}`, left: build(depth - 1) };
+}
+
+function count(node: Node | undefined): number {
+	return node === undefined ? 0 : 1 + count(node.left);
+}
+
+function middle(depth: number): number {
+	let total = 0;
+	total += count(build(depth));
+	total += count(build(depth));
+	return total;
+}
+
+function outer(depth: number): string {
+	const label = `outer${depth}`;
+	return `${label} ${middle(depth)}`;
+}
+
+console.log(outer(2));
+console.log(outer(3));

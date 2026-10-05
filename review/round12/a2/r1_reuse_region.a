@@ -1,0 +1,39 @@
+// A reused spread and a region in one statement; the region's value read into the spread's fields.
+interface Node {
+	readonly label: string;
+	readonly left: Node | undefined;
+}
+
+interface Tally {
+	readonly total: number;
+	readonly last: string;
+	readonly extra?: number;
+}
+
+function build(depth: number): Node {
+	if (depth === 0) {
+		return { label: `leaf${depth}`, left: undefined };
+	}
+	return { label: `node${depth}`, left: build(depth - 1) };
+}
+
+function count(node: Node | undefined): number {
+	return node === undefined ? 0 : 1 + count(node.left);
+}
+
+function name(node: Node): string {
+	return `${node.label}/${node.left === undefined ? '-' : node.left.label}`;
+}
+
+function bump(tally: Tally | undefined, depth: number): Tally {
+	return { ...tally, total: (tally?.total ?? 0) + count(build(depth)), last: name(build(depth)) };
+}
+
+let tally: Tally | undefined = undefined;
+for (let round = 0; round < 4; round++) {
+	let local: Tally | undefined = round > 0 ? bump(undefined, round) : undefined;
+	local = { ...local, total: (local?.total ?? 0) + count(build(round)), last: name(build(round + 1)) };
+	tally = bump(tally, round);
+	console.log(`local ${local.total} ${local.last}`);
+	console.log(`${tally.total} ${tally.last} ${tally.extra ?? 'u'}`);
+}

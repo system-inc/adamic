@@ -1,0 +1,68 @@
+// Fresh functions reached from a region statement and from elsewhere, and a consumer that looks at
+// counts: writes into the region object, reads heap values out of it and keeps them.
+interface Leaf {
+	readonly name: string;
+}
+
+interface Node {
+	label: string;
+	readonly leaf: Leaf;
+	readonly items: Leaf[];
+	readonly left: Node | undefined;
+}
+
+let keptLeaf: Leaf | undefined = undefined;
+let keptItem: Leaf | undefined = undefined;
+let keptLabel = '-';
+const seen = new Map<string, number>();
+const globalLeaf: Leaf = { name: `global${seen.size}` };
+
+function leafOf(index: number): Leaf {
+	return { name: `leaf${index}` };
+}
+
+function build(depth: number): Node {
+	if (depth === 0) {
+		return { label: `n${depth}`, leaf: leafOf(depth), items: [leafOf(depth + 100)], left: undefined };
+	}
+	// A fresh call in a position that isn't returned: on the heap, then held by a region literal.
+	const side = build(depth - 1);
+	return { label: `n${depth}-${side.label}`, leaf: leafOf(depth), items: [leafOf(depth + 100)], left: build(depth - 1) };
+}
+
+// Fresh only through another fresh function.
+function wrap(depth: number): Node {
+	return build(depth - 1);
+}
+
+function look(node: Node | undefined): number {
+	if (node === undefined) {
+		return 0;
+	}
+	// Written into the region object: the old label (a heap string) and a new one.
+	node.label = `${node.label}!`;
+	keptLabel = node.label + '';
+	keptItem = node.items[0];
+	const first = node.items.length > 0 ? 1 : 0;
+	seen.set(`${node.label.length}`, first);
+	return 1 + look(node.left) + (node.leaf.name.length > 0 ? 0 : 1);
+}
+
+function report(): string {
+	return `${keptLabel} ${keptItem?.name ?? '-'} ${keptLeaf?.name ?? '-'}`;
+}
+
+function keepLeaf(node: Node): number {
+	keptLeaf = node.leaf;
+	return 1;
+}
+
+let total = 0;
+for (let round = 0; round < 3; round++) {
+	total += look(build(round + 1));
+	console.log(`round ${round}: ${total} ${report()}`);
+}
+const kept = build(2);
+console.log(`kept ${kept.label} ${kept.left?.label ?? '-'} ${look(kept)} ${kept.label}`);
+total += keepLeaf(build(2)) + look(wrap(3));
+console.log(`leaf ${report()} ${total} ${seen.size} ${globalLeaf.name}`);

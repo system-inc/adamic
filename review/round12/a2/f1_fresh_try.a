@@ -1,0 +1,68 @@
+// A fresh function whose return sits in a try: its fields half made when a later one throws, the
+// catch returning another literal, and a finally that throws after the return value is made.
+interface Node {
+	readonly label: string;
+	readonly left: Node | undefined;
+	readonly right: Node | undefined;
+}
+
+let budget = -1;
+let finallyThrows = false;
+
+function leaf(depth: number): Node {
+	budget = budget - 1;
+	if (budget === 0) {
+		throw new Error(`leaf spent at ${depth}`);
+	}
+	return { label: `leaf${depth}`, left: undefined, right: undefined };
+}
+
+function build(depth: number): Node {
+	if (depth === 0) {
+		return leaf(depth);
+	}
+	try {
+		return { label: `node${depth}`, left: build(depth - 1), right: build(depth - 1) };
+	} catch (error) {
+		return { label: `caught${depth}`, left: leaf(depth + 10), right: undefined };
+	} finally {
+		if (finallyThrows && depth === 2) {
+			throw new Error(`finally at ${depth}`);
+		}
+	}
+}
+
+function count(node: Node | undefined): number {
+	if (node === undefined) {
+		return 0;
+	}
+	return 1 + count(node.left) + count(node.right) + (node.label.startsWith('caught') ? 100 : 0);
+}
+
+let kept: Node | undefined = undefined;
+
+function keep(node: Node): number {
+	kept = node;
+	return count(node);
+}
+
+function keptCount(): number {
+	return count(kept);
+}
+
+for (let spend = 1; spend < 12; spend += 2) {
+	for (let mode = 0; mode < 2; mode++) {
+		budget = spend;
+		finallyThrows = mode === 1;
+		let total = 0;
+		try {
+			total += count(build(3));
+			total += keep(build(2));
+			console.log(`spend ${spend} mode ${mode}: ${total} kept ${keptCount()}`);
+		} catch (error) {
+			if (error instanceof Error) {
+				console.log(`spend ${spend} mode ${mode}: ${error.message} at ${total} kept ${keptCount()}`);
+			}
+		}
+	}
+}
