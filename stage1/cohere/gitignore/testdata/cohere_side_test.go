@@ -286,6 +286,20 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 	adamicGitInit(t, bytesTree, "")
 	cases.Trees = append(cases.Trees, adamicDescribe(t, "bytes", bytesTree, []adamicQuery{{"é", false}, {"ab", false}, {"x", false}, {"名前.ü", false}, {"ü", false}}, "run"))
 
+	// Only spaces end a pattern: a trailing tab is part of it, as gitignore(5) and cohere say.
+	tabs := filepath.Join(scratch, "trailing-tabs")
+	writeTree(t, tabs, map[string]string{".gitignore": "tabbed\t\nspaced  \nboth \t\n", "tabbed\t": "", "tabbed": "", "spaced": "", "both \t": "", "both": ""})
+	adamicGitInit(t, tabs, "")
+	cases.Trees = append(cases.Trees, adamicDescribe(t, "trailing tabs", tabs, []adamicQuery{{"tabbed\t", false}, {"tabbed", false}, {"spaced", false}, {"both \t", false}, {"both", false}}, "run"))
+
+	// Paths as a caller may write them, before cleaning: IgnoredPath cleans each, as cohere does.
+	unclean := filepath.Join(scratch, "unclean")
+	writeTree(t, unclean, map[string]string{".gitignore": "*.log\n/rooted\nsub/*.tmp\n", "sub/.gitignore": "!keep.log\n", "sub/": ""})
+	cases.Trees = append(cases.Trees, adamicDescribe(t, "unclean paths", unclean, []adamicQuery{
+		{"./a.log", false}, {"sub//b.log", false}, {"sub/../c.log", false}, {"sub/./x.tmp", false}, {"./sub/keep.log", false},
+		{"sub/../rooted", false}, {"sub//rooted", false}, {"./sub", true},
+	}, ""))
+
 	// cohere's TestAnIgnoreFileThatCannotBeReadIsRefused: what cohere refuses, git has no word for.
 	link := filepath.Join(scratch, "link")
 	writeTree(t, link, map[string]string{"patterns": "x\n", "sub/": ""})
@@ -352,7 +366,8 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 	}
 	cases.Patterns = append(cases.Patterns,
 		adamicPatterns{Name: "house ignore", Lines: []string{"# generated", "*.generated.ts", "!keep.generated.ts", "vendor/", "", "/rooted\r"},
-			Queries: []adamicQuery{{"a/b.generated.ts", false}, {"keep.generated.ts", false}, {"vendor", true}, {"vendor", false}, {"rooted", false}, {"a/rooted", false}}},
+			Queries: []adamicQuery{{"a/b.generated.ts", false}, {"keep.generated.ts", false}, {"vendor", true}, {"vendor", false}, {"rooted", false}, {"a/rooted", false},
+				{"./a/b.generated.ts", false}, {"a//keep.generated.ts", false}, {"x/../keep.generated.ts", false}, {"vendor/", true}, {"./vendor", true}, {"a/../rooted", false}, {"a//rooted", false}}},
 		adamicPatterns{Name: "a newline", Lines: []string{"fine", "not\tfine\n"}},
 		adamicPatterns{Name: "a NUL byte", Lines: []string{"a\x00b"}},
 		adamicPatterns{Name: "quoted", Lines: []string{"\"q\" \\ \a\b\f\r\v\x01\x1f\x7f é 🌍\n"}},
@@ -388,6 +403,22 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 		{`foo\`, "foo", true, false}, {"*a*a*a*a*a*a*a*a*b", strings.Repeat("a", 200), true, false},
 	} {
 		cases.Globs = append(cases.Globs, adamicGlob{Pattern: documented.pattern, Text: documented.text, Path: documented.path, Expected: adamicBit(documented.want)})
+	}
+
+	// Every [:class:] fnmatch defines, against the bytes at each end of every class's ranges and just
+	// past them, as a path and as a base name; and escaped range ends.
+	classTexts := []string{"\x01", "\x08", "\t", "\n", "\v", "\r", "\x1f", " ", "!", "/", "0", "9", ":", "@", "A", "F", "G", "Z", "[", "`", "a", "f", "g", "z", "{", "~", "\x7f", "é"}
+	for _, class := range []string{"alnum", "alpha", "blank", "cntrl", "digit", "graph", "lower", "print", "punct", "space", "upper", "xdigit"} {
+		for _, text := range classTexts {
+			for _, path := range []bool{true, false} {
+				cases.Globs = append(cases.Globs, adamicGlob{Pattern: "[[:" + class + ":]]", Text: text, Path: path}, adamicGlob{Pattern: "[![:" + class + ":]]", Text: text, Path: path})
+			}
+		}
+	}
+	for _, pattern := range []string{`[a-\z]`, `[\a-c]`, `[a-\]]`, `[\]-a]`, `[!a-\z]`, `[\--\/]`} {
+		for _, text := range []string{"a", "m", "z", "\\", "]", "^", "-", ".", "/", "{"} {
+			cases.Globs = append(cases.Globs, adamicGlob{Pattern: pattern, Text: text, Path: false})
+		}
 	}
 
 	// cohere's TestGitWildmatchCorpus: t3070's case-sensitive columns, with and without WM_PATHNAME.

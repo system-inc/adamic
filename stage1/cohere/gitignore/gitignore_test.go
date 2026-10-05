@@ -290,6 +290,40 @@ var mutants = []mutant{
 		from: "'0123456789abcdef'",
 		to:   "'0123456789ABCDEF'",
 	},
+	// Reviewer R2's six wrong ports (review/r2/gitignore on claude/review-afternoon-merges-8la3q9), each
+	// of which this test once let through.
+	{
+		name: "R2 [[:upper:]] one letter short",
+		file: "glob.ts",
+		from: "inClass = (character) => character >= 0x41 && character <= 0x5a;",
+		to:   "inClass = (character) => character >= 0x41 && character <= 0x59;",
+	},
+	{
+		name: "R2 [[:xdigit:]] taking G",
+		file: "glob.ts",
+		from: "(character | 0x20) <= 0x66)",
+		to:   "(character | 0x20) <= 0x67)",
+	},
+	{
+		name: "R2 an escaped range end read as the backslash",
+		file: "glob.ts",
+		from: "\t\t\t\tupper = byteAt(pattern, index);\n",
+		to:   "\t\t\t\tupper = '\\\\';\n",
+	},
+	{
+		name: "R2 a trailing tab trimmed as a space",
+		file: "gitignore.ts",
+		from: "\t\t\tcase ' ':\n\t\t\t\tif (spacesStart < 0) {",
+		to:   "\t\t\tcase ' ':\n\t\t\tcase '\\t':\n\t\t\t\tif (spacesStart < 0) {",
+
+		seenByGit: true,
+	},
+	{
+		name: "R2 a path never cleaned",
+		file: "gitignore.ts",
+		from: "const cleaned = clean(relative);",
+		to:   "const cleaned = relative;",
+	},
 }
 
 // gitSource is the git checkout git's corpora are read from, as cohere's tests read them, or "".
