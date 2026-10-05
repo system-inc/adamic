@@ -13,7 +13,9 @@ import (
 // isn't readonly, an element of an array that isn't readonly, a map's value, a variable a function
 // value captures) is set to something that can reach back to what holds the slot. Whether it can is
 // visible in the types, so every such slot is found here, from the whole program, and each one is
-// refused unless it's declared Weak<Target>, which doesn't count.
+// refused unless it's declared Weak<Target>, which doesn't count. A map's key and a set's element are
+// slots too, now that they may be objects; neither can be declared weak, so one that can reach back
+// is refused with the fix of a ReadonlyMap or ReadonlySet.
 //
 // Reaching is followed through everything the checker knows a value can hold: an object's fields,
 // including the fields of every object type in the program that can be seen as it (a Dog seen as an
@@ -120,7 +122,7 @@ func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
 		}
 	case proven.Flags()&checker.TypeFlagsObject == 0 || f.isFunction(proven):
 		f.use(proven, where)
-	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap"):
+	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -176,7 +178,7 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 	if f.isFunction(proven) {
 		return
 	}
-	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap") {
+	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
 		}
@@ -227,8 +229,12 @@ func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 	return fields
 }
 
+// isFunction reports whether a type is a function's, or a class's own (typeof Tag, which new calls).
+// A class value holds its static fields, readonly in 0.1, and its prototype, which the checker shows
+// as a field of the instance type and isn't one a program can set; seen as an object, that prototype
+// read as a mutable field reaching back, and every class made with new was refused.
 func (f *cycleFinder) isFunction(proven *checker.Type) bool {
-	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0
+	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0
 }
 
 // weak reports whether a slot's type is a Weak<Target>, which holds nothing.
@@ -259,9 +265,25 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				}
 			}
 		}
-	case l.isLibraryType(holder, "ReadonlyMap"):
+	case l.isLibraryType(holder, "ReadonlyMap"), l.isLibraryType(holder, "ReadonlySet"):
+	case l.isLibraryType(holder, "Set"):
+		arguments := l.checker.GetTypeArguments(holder)
+		if len(arguments) == 1 && f.reaches(arguments[0], cycleNode{proven: holder}) {
+			return &Refused{
+				Where: l.program.Where(f.where[holder]),
+				What:  name + ", a set whose elements can reach back to a set like it: a cycle reference counting can't free",
+				Fix:   "make it a ReadonlySet, built whole when it's made (adamic/cycle-capable)",
+			}
+		}
 	case l.isLibraryType(holder, "Map"):
 		arguments := l.checker.GetTypeArguments(holder)
+		if len(arguments) == 2 && f.reaches(arguments[0], cycleNode{proven: holder}) {
+			return &Refused{
+				Where: l.program.Where(f.where[holder]),
+				What:  name + ", a map whose keys can reach back to a map like it: a cycle reference counting can't free",
+				Fix:   "make it a ReadonlyMap, built whole when it's made (adamic/cycle-capable)",
+			}
+		}
 		if len(arguments) == 2 && !f.weak(arguments[1]) && f.reaches(arguments[1], cycleNode{proven: holder}) {
 			return &Refused{
 				Where: l.program.Where(f.where[holder]),
@@ -348,7 +370,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 					queue = append(queue, cycleNode{cell: local + 1})
 				}
 			}
-		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap"):
+		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 			for _, argument := range f.l.checker.GetTypeArguments(proven) {
 				queue = append(queue, cycleNode{proven: argument})
 			}

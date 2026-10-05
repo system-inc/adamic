@@ -16,9 +16,13 @@
 uintptr_t adamic_stack_limit;
 
 // The stack assumed when the process's is unlimited, and the room kept below the limit for the frame
-// that finds it crossed and for the panic that follows. Sanitized frames are several times larger.
+// that finds it crossed and for the panic that follows, at most: sanitized frames are several times
+// larger. A small stack keeps an eighth of itself instead.
 #define ASSUMED_STACK ((uintptr_t)8 << 20)
 #define MARGIN ((uintptr_t)256 << 10)
+
+// The least Linux allows arguments and environment, whatever the stack (32 pages, ARG_MAX's floor).
+#define ARGUMENTS_FLOOR ((uintptr_t)128 << 10)
 
 __attribute__((constructor)) static void find_stack_limit(void) {
 	uintptr_t base = (uintptr_t)__builtin_frame_address(0);
@@ -32,12 +36,18 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 	// and a limit counted from it once sat below the stack's real end, so deep recursion crashed
 	// before the check fired. The system caps them at a quarter of the stack (Linux's execve allows
 	// arguments and environment a quarter of the stack's limit, and macOS's ARG_MAX of 1 MB is less
-	// than a quarter of its default 8 MB), so a quarter is kept back for them. Measuring where they
-	// really end would be closer, but then how deep a program gets would change with its environment,
-	// and this way it never does.
-	uintptr_t reserved = size / 4 + MARGIN;
-	// A stack too small to keep the reserve gets no check rather than one that fires at once.
-	adamic_stack_limit = size > 2 * reserved && base > size ? base - size + reserved : 0;
+	// than a quarter of its default 8 MB), so a quarter is kept back for them, and never less than
+	// the 128 KiB Linux allows them on a small stack. Measuring where they really end would be closer,
+	// but then how deep a program gets would change with its environment, and this way it never does.
+	//
+	// The margin shrinks with a small stack, so one of 1 MiB or 512 KiB still gets a limit: a fixed
+	// 256 KiB, with the quarter, once left nothing at 1 MiB, and recursion there crashed where Node
+	// panics. What's left to run in is then 5/8 of the stack, less on the smallest.
+	uintptr_t arguments = size / 4 > ARGUMENTS_FLOOR ? size / 4 : ARGUMENTS_FLOOR;
+	uintptr_t margin = size / 8 < MARGIN ? size / 8 : MARGIN;
+	uintptr_t reserved = arguments + margin;
+	// A stack too small to keep even that gets no check rather than one that fires at once.
+	adamic_stack_limit = size > reserved && base > size ? base - size + reserved : 0;
 }
 
 _Noreturn void adamic_stack_overflow(void) {
