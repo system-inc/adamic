@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <math.h>
+
 enum adamic_stream {
 	adamic_stdout = 1,
 	adamic_stderr = 2,
@@ -136,8 +138,16 @@ adamic_object *adamic_object_new(const adamic_shape *shape);
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
 
-// adamic_object_field finds a field by name. The checker proved the field is there.
-adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+// adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
+// the program last saw the same shape, the field is where it was then, which is inline, since it's
+// what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
+adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (cache->shape == object->shape) {
+		return &((adamic_object *)object)->slots[cache->index];
+	}
+	return adamic_object_find(object, name, cache);
+}
 
 // adamic_array is an array (array.c). references says whether its elements are references.
 typedef struct adamic_array {
@@ -203,7 +213,24 @@ bool adamic_map_delete(adamic_map *map, adamic_value key);
 void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 
 // adamic_array_at is array[index]: the element's slot, or NULL (undefined) when there isn't one.
-adamic_value *adamic_array_at(const adamic_array *array, double index);
+// It's inline, since a loop over an array reads through it every pass. An array index is an integer
+// from 0 up to the length; anything else (negative, a fraction, NaN, past the end) is a property the
+// array doesn't have, which reads as undefined.
+//
+// Past the bounds check, 0 <= index < length, so (size_t)index is defined and, back as a double, is
+// trunc(index) exactly (below 2^53 the conversion is exact, and from there every double is whole), so
+// a fraction is caught without calling trunc, which on x86-64 without SSE4.1 is a call into libm on
+// every read. -0 is index 0, as JavaScript reads it.
+static inline adamic_value *adamic_array_at(const adamic_array *array, double index) {
+	if (!(index >= 0) || index >= (double)array->length) {
+		return NULL;
+	}
+	size_t whole = (size_t)index;
+	if ((double)whole != index) {
+		return NULL;
+	}
+	return &array->elements[whole];
+}
 
 // adamic_array_set is array[index] = value, which takes the value; it panics at an index the array
 // doesn't have.
