@@ -101,6 +101,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/self_assignments.a", true, false},
 	{"internal/oracle/testdata/method_closures.a", true, false},
 	{"internal/oracle/testdata/splice_empty.a", true, false},
+	{"internal/oracle/testdata/powers_of_two.a", true, false},
 	// A narrowing outlives a call that assigns the variable again: what was narrowed away is checked.
 	{"internal/oracle/testdata/narrowed_reads.a", true, false},
 	{"internal/oracle/testdata/narrowed_writes.a", true, false},

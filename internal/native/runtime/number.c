@@ -5,33 +5,87 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // shortest_digits finds the fewest significant digits that read back as value (positive and
 // finite), and the decimal exponent of the first one: value is 0.d1d2d3... times 10^point.
 //
-// printf's %e rounds correctly, so its p-digit answer is the p-digit decimal closest to value, and
-// on an exact tie it takes the even one. The first p that round-trips through strtod is therefore
-// ECMAScript's choice: as few digits as possible, then the closest, then the even (ECMA-262,
-// Number::toString). That's plain rather than fast; the oracle's sweep is what says it's right, and
-// a faster algorithm has to pass the same sweep before it replaces this.
+// ECMAScript (Number::toString) wants as few digits as read back, then of those the closest, then
+// the even. printf's %e rounds correctly, so its p-digit answer is the closest p digits, ties to
+// even. When it reads back, nothing of p digits is closer, and it's the answer. When it doesn't,
+// another p-digit decimal still may: the one on value's other side, one unit away in the last digit.
+// That happens where the doubles' spacing changes, at a power of two, where the double below is
+// half as far as the double above (2 ** 89 is 6.189700196426902e+26, whose closest 16 digits read back
+// as the double below). That's plain rather than fast; the oracle's sweep is what says it's right,
+// and a faster algorithm has to pass the same sweep before it replaces this.
 static int shortest_digits(double value, char digits[18], int *point) {
 	char scientific[40];
+	int count = 0, exponent = 0;
 	for (int precision = 1; precision <= 17; precision++) {
 		snprintf(scientific, sizeof scientific, "%.*e", precision - 1, value);
+		count = 0;
+		const char *cursor = scientific;
+		digits[count++] = *cursor++;
+		if (*cursor == '.') {
+			cursor++;
+			while (*cursor != 'e') {
+				digits[count++] = *cursor++;
+			}
+		}
+		exponent = atoi(cursor + 1);
 		if (strtod(scientific, NULL) == value) {
 			break;
 		}
-	}
-	int count = 0;
-	const char *cursor = scientific;
-	digits[count++] = *cursor++;
-	if (*cursor == '.') {
-		cursor++;
-		while (*cursor != 'e') {
-			digits[count++] = *cursor++;
+		// The neighbor across value: up a unit in the last digit when the closest read back low, down
+		// a unit when it read back high, carrying or borrowing through the digits.
+		char neighbor[18];
+		int neighbor_exponent = exponent;
+		memcpy(neighbor, digits, (size_t)count);
+		if (strtod(scientific, NULL) < value) {
+			int at = count - 1;
+			while (at >= 0 && neighbor[at] == '9') {
+				neighbor[at--] = '0';
+			}
+			if (at < 0) {
+				// 9.99 up a unit is 10.0, written 1.00 a power of ten higher.
+				neighbor[0] = '1';
+				neighbor_exponent++;
+			} else {
+				neighbor[at]++;
+			}
+		} else {
+			int at = count - 1;
+			while (at >= 0 && neighbor[at] == '0') {
+				neighbor[at--] = '9';
+			}
+			neighbor[at]--;
+			if (neighbor[0] == '0') {
+				// Below a power of ten the p-digit decimals are ten times closer: the one under 1.00
+				// is 9.99 a power of ten lower.
+				memset(neighbor, '9', (size_t)count);
+				neighbor_exponent--;
+			}
+		}
+		char candidate[40];
+		int length = 0;
+		candidate[length++] = neighbor[0];
+		if (count > 1) {
+			candidate[length++] = '.';
+			memcpy(candidate + length, neighbor + 1, (size_t)count - 1);
+			length += count - 1;
+		}
+		snprintf(candidate + length, sizeof candidate - (size_t)length, "e%d", neighbor_exponent);
+		if (strtod(candidate, NULL) == value) {
+			memcpy(digits, neighbor, (size_t)count);
+			exponent = neighbor_exponent;
+			break;
 		}
 	}
-	*point = atoi(cursor + 1) + 1;
+	// Trailing zeros aren't digits of the shortest form: 1.00e6 is 1e6.
+	while (count > 1 && digits[count - 1] == '0') {
+		count--;
+	}
+	*point = exponent + 1;
 	return count;
 }
 
