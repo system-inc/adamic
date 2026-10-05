@@ -959,7 +959,6 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		if entryKey.Type() != key || entryValue.Type() != value {
 			return nil, l.notYet(pair, "a Map entry whose key or value is of another type than the Map's")
 		}
-		lowered.Entries = append(lowered.Entries, [2]ir.Expression{entryKey, entryValue})
 		lowered.Entries = append(lowered.Entries, [2]ir.Expression{entryKey, fit(entryValue, value)})
 	}
 	return lowered, nil
