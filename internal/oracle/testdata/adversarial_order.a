@@ -1,0 +1,90 @@
+// Adversarial reading, evaluation order: a callback or a call later in the statement reassigns the
+// variable an array, a string or an object came from, or a field already read. JavaScript holds what
+// it already read; so must Adamic, and nothing it holds may be freed from under it.
+let list = ['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2)];
+const mapped = list.map((item) => {
+	list = ['x'.repeat(2)];
+	return `${item}${list.length}`;
+});
+console.log(`${mapped.join(',')} ${list.join(',')}`);
+let other = ['a'.repeat(2), 'b'.repeat(2)];
+const kept = other.filter((item) => {
+	other = [];
+	return item.length === 2;
+});
+console.log(`${kept.join(',')} ${other.length}`);
+let numbers = [3, 1, 2];
+numbers.sort((left, right) => {
+	numbers = [];
+	return left - right;
+});
+let words = ['a'.repeat(2), 'b'.repeat(2)];
+const joined = words.reduce((sum, word) => {
+	words = ['q'];
+	return `${sum}${word}`;
+}, '');
+console.log(`${numbers.length} ${joined} ${words.join(',')}`);
+let text = 'hello'.repeat(2);
+const change = (): number => {
+	text = 'bye';
+	return 3;
+};
+console.log(`${text.slice(change())} ${text}`);
+let holder = { value: 'v'.repeat(3) };
+const swap = (): string => {
+	holder = { value: 'w' };
+	return '!';
+};
+console.log(`${holder.value}${swap()} ${holder.value}`);
+
+class Bag {
+	items: string[] = [];
+	name = 'bag'.repeat(2);
+	reset(): number {
+		this.items = ['fresh'.repeat(1)];
+		this.name = 'renamed';
+		return 1;
+	}
+	run(): string {
+		this.items.push('one'.repeat(2));
+		const before = `${this.name}:${this.reset()}:${this.name}`;
+		this.items.push(`${this.items.length}`);
+		return `${before} ${this.items.join(',')} ${this.items.length + this.reset()}`;
+	}
+}
+console.log(new Bag().run());
+
+const cache = new Map<string, string>();
+let built = 0;
+function build(key: string): string {
+	built += 1;
+	const value = `${key}!`.repeat(2);
+	cache.set(key, value);
+	return value;
+}
+function lookup(key: string): string {
+	return cache.get(key) ?? build(key);
+}
+console.log(`${lookup('a')} ${lookup('a')} ${lookup('b')} ${built}`);
+const flag = built > 1 ? lookup('c') : `${built}`.repeat(3);
+console.log(`${flag} ${built > 5 || lookup('d').length > 2} ${built}`);
+
+// The same, for variables a function declares and a closure captures, which live in cells rather
+// than as globals: what was read before the closure ran is what's used.
+function captured(): string {
+	let word = 'abc'.repeat(2);
+	let items = ['p'.repeat(2), 'q'.repeat(2)];
+	let count = 1;
+	const swap = (): number => {
+		word = 'z';
+		items = [];
+		count = 100;
+		return 1;
+	};
+	const first = `${word.slice(swap())} ${word}`;
+	const second = `${items.join(swap() > 0 ? '+' : '-')} ${items.length}`;
+	count = 1;
+	const third = `${count + swap()} ${count}`;
+	return `${first} ${second} ${third}`;
+}
+console.log(captured());

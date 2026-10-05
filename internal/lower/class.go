@@ -132,6 +132,9 @@ func (l *lowering) constructor(index int, declaration *ast.Node) error {
 		if err != nil {
 			return err
 		}
+		if slotless(of) {
+			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
+		}
 		var value ir.Expression
 		if property.Initializer != nil {
 			if containsThis(property.Initializer) {
@@ -140,6 +143,7 @@ func (l *lowering) constructor(index int, declaration *ast.Node) error {
 			if value, err = l.expression(property.Initializer); err != nil {
 				return err
 			}
+			value = fit(value, of)
 		} else {
 			value = zeroValue(of)
 		}
@@ -172,6 +176,9 @@ func zeroValue(of ir.Type) ir.Expression {
 		return ir.NumberConstant{}
 	case ir.Boolean:
 		return ir.BooleanConstant{}
+	case ir.MaybeNumber:
+		// A field of number | undefined left without a value is undefined, as JavaScript leaves it.
+		return ir.MaybeOf{Of: ir.MaybeNumber}
 	}
 	return ir.Undefined{}
 }
@@ -266,9 +273,12 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
-	if value.Type() == ir.MaybeNumber {
-		return nil, l.notYet(target, "storing number | undefined in a field")
+	of, err := l.typeOf(target)
+	if err != nil || slotless(of) || slotless(value.Type()) {
+		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
+	// A field of number | undefined is given a packed word, whatever it's assigned.
+	value = fit(value, of)
 	// A #private field is stored under its name, # and all, which nothing else can spell.
 	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value}}, nil
 }
@@ -303,7 +313,11 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 		}
 	}
 	name := target.Name().Text()
-	updated, err := l.combine(node, operator, ir.Property{Object: object, Name: name, Of: of}, value)
+	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of})
+	if operator == ast.KindPlusToken && valueNode != nil {
+		current, value = l.spelled(target, current), l.spelled(valueNode, value)
+	}
+	updated, err := l.combine(node, operator, current, value)
 	if err != nil {
 		return nil, err
 	}

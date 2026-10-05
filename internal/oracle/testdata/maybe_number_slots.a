@@ -1,0 +1,96 @@
+// number | undefined in a one-word slot: an object's field, a closure's captured variable, an array's
+// element, and a function value's argument and result. Natively one reserved NaN is undefined and
+// every other NaN is stored as the ordinary one, so NaN in all its forms and undefined must each read
+// back as themselves.
+function zero(): number {
+	return 0;
+}
+const infinite = 1 / zero();
+const values: (number | undefined)[] = [NaN, -NaN, zero() / zero(), infinite - infinite, Math.sqrt(-1), undefined, 1.5, -0, infinite];
+const names = ['NaN', '-NaN', '0/0', 'inf-inf', 'sqrt(-1)', 'undefined', '1.5', '-0', 'Infinity'];
+
+function show(value: number | undefined): string {
+	const nan = value !== undefined && Number.isNaN(value);
+	const text = value === undefined ? 'missing' : value.toString();
+	return `${nan}/${value === undefined}/${text}/${value}`;
+}
+
+// The array itself is the first slot: each element read back by index, at, for...of and find.
+for (let index = 0; index < values.length; index += 1) {
+	console.log(`element ${names[index] ?? '?'}: ${show(values[index])} ${show(values.at(index))}`);
+}
+let walked = '';
+for (const value of values) {
+	walked += `${value === undefined ? 'u' : Number.isNaN(value) ? 'n' : 'v'}`;
+}
+console.log(walked);
+console.log(`${values.indexOf(undefined)} ${values.includes(undefined)} ${values.indexOf(NaN)} ${values.includes(NaN)} ${values.includes(-0)} ${values.indexOf(1.5)}`);
+console.log(`${values.join('|')} ${values.length}`);
+console.log(`${show(values.find((value) => value === undefined))} ${values.findIndex((value) => value === undefined)}`);
+
+// Fields: written in a literal, assigned, and read back, with ?. too.
+interface Reading {
+	value: number | undefined;
+	readonly label: string;
+}
+for (let index = 0; index < values.length; index += 1) {
+	const reading: Reading = { value: values[index], label: names[index] ?? '?' };
+	const before = show(reading.value);
+	reading.value = undefined;
+	const cleared = show(reading.value);
+	reading.value = values[index];
+	const copy: Reading = { ...reading, label: 'copy' };
+	const readings: Reading[] = [copy];
+	console.log(`field ${reading.label}: ${before} ${cleared} ${show(reading.value)} ${show(copy.value)} ${show(readings[0]?.value)} ${show(readings[1]?.value)}`);
+}
+
+class Holder {
+	held: number | undefined;
+	constructor(first: number | undefined) {
+		this.held = first;
+	}
+}
+console.log(`class: ${show(new Holder(NaN).held)} ${show(new Holder(undefined).held)} ${show(new Holder(2).held)}`);
+
+// A closure's captured variable, written from inside and from outside.
+function capture(start: number | undefined): string {
+	let kept = start;
+	const read = (): string => show(kept);
+	const write = (next: number | undefined): void => {
+		kept = next;
+	};
+	const first = read();
+	write(undefined);
+	const second = read();
+	write(start);
+	const third = read();
+	kept = zero() / zero();
+	return `${first} ${second} ${third} ${read()}`;
+}
+for (let index = 0; index < values.length; index += 1) {
+	console.log(`cell ${names[index] ?? '?'}: ${capture(values[index])}`);
+}
+
+// A function value's argument and result.
+const pass = (value: number | undefined): number | undefined => value;
+const negate = (value: number | undefined): number | undefined => (value === undefined ? undefined : -value);
+for (let index = 0; index < values.length; index += 1) {
+	console.log(`function ${names[index] ?? '?'}: ${show(pass(values[index]))} ${show(negate(values[index]))}`);
+}
+const doubled = values.map((value) => (value === undefined ? undefined : value * 2));
+console.log(`${doubled.join(',')} ${doubled.filter((value) => value === undefined).length}`);
+const made = Array.from({ length: 3 }, (_, index) => (index === 1 ? undefined : index / zero()));
+console.log(`${made.join(',')} ${show(made[0])} ${show(made[1])} ${show(made[2])}`);
+
+// Pushed, set, filled, spliced and popped.
+const changing: (number | undefined)[] = [];
+changing.push(NaN);
+changing.push(undefined);
+changing.push(3);
+changing[2] = undefined;
+changing[0] = 4;
+console.log(`${changing.join(',')} ${show(changing.pop())} ${show(changing.pop())} ${show(changing.pop())} ${show(changing.pop())}`);
+const filled = new Array<number | undefined>(3).fill(undefined);
+filled.fill(NaN, 1, 2);
+const spliced = filled.splice(0, 1, undefined, 7);
+console.log(`${filled.join(',')} ${spliced.join(',')} ${show(spliced[0])} ${show(filled[2])}`);
