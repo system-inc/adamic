@@ -756,10 +756,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("(%s).%s", value, member(expression.Type()))
 	case ir.Defined:
 		value := e.value(expression.Value)
-		e.line("if (%s == NULL) {", value)
-		e.line("\tstatic const char message[] = %s;", cString(expression.Message))
-		e.line("\tadamic_panic(message, sizeof message - 1);")
-		e.line("}")
+		e.checkDefined(value, expression.Message)
 		return value
 	case ir.MaybeOf:
 		if expression.Value == nil {
@@ -1283,7 +1280,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		// is made the moment the spread is evaluated, before any field's value: JavaScript reads the
 		// spread's fields first, so a field's expression that writes one of them (a call that sets
 		// it) must not show in the result.
-		object := e.own(ir.Object, fmt.Sprintf("adamic_object_copy(%s)", e.value(literal.Spread)))
+		source := e.value(literal.Spread)
+		object := e.own(ir.Object, e.spreadCopy(literal, source))
+		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
 			values = append(values, e.value(field.Value))
@@ -1628,9 +1627,13 @@ func (e *emitter) read(read ir.Read) string {
 func (e *emitter) arguments(call ir.Call) []string {
 	parameters := e.program.Functions[call.Function].Parameters
 	arguments := make([]string, 0, len(parameters))
+	handed := []string{}
+	defer func() { e.handedOver(handed) }()
 	for index, argument := range call.Arguments {
 		if index < len(parameters) && e.reuse.consumed[parameters[index]] {
-			arguments = append(arguments, e.handOver(argument))
+			value := e.handOver(argument)
+			handed = append(handed, value)
+			arguments = append(arguments, value)
 			continue
 		}
 		value := e.value(argument)
