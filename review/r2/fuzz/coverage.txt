@@ -1,0 +1,50 @@
+     0 Map spread
+     0 Set
+     0 String.fromCharCode
+     0 bitwise operators (a first count of 7,400 matched type unions; none in the generator)
+     0 checked cast (as)
+     0 console.error
+     0 do...while
+     0 generics
+     0 instanceof
+     0 nested functions
+     0 normalize
+     0 panic
+     0 programArguments
+     0 readTextFile/writeTextFile
+     0 string | number unions
+     0 switch
+     0 tuples
+     0 typeof
+  1258 split
+  1779 trim
+  2716 array-write
+  3118 array-spread
+  3909 repeat
+  3957 padStart/padEnd
+  3978 number-tostring
+  3995 toFixed
+  4201 case-mapping
+  4206 number-formats
+  4337 array-from
+  4413 surrogates
+  4495 field-updates
+  4744 Map.get
+  5557 map-mutation
+  5789 break/continue
+  6001 sort-callback
+  6351 closures-deep
+  6562 splice
+  6593 string-search
+  6616 Math.round/trunc/sign
+  6715 Math.pow / **
+  6801 optional-chains
+  6888 number-functions
+  6903 string-index or array-index ([] ?? or .at)
+  6947 array-search
+  7095 defaults
+  7396 slice
+  7400 array-methods
+  7400 class
+  7400 map-iteration
+  7400 while

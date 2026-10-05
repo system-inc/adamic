@@ -1,0 +1,31 @@
+// Found by adamic-fuzz from seed 300010 (go run ./cmd/adamic-fuzz -seed 300010 -count 1), shrunk: native stdout differs.
+interface Holder {
+	value: number;
+	name: string;
+	list: number[];
+}
+class Counter {
+	bump(amount: number): number {
+		holder.name += '\uDF0D';
+		return 0;
+	}
+}
+const holder: Holder = { value: 0, name: ' pad ', list: [1, 123.456] };
+const counter = new Counter();
+let number3: number = 5;
+let captured = 5;
+function makeTally(start: number): (step: number) => number {
+	let total = start;
+	return (step) => {
+		total = total * 2 + step;
+		return total;
+	};
+}
+const tally5 = makeTally(2);
+if ((captured <= tally5((3 % number3)))) {
+	if ((0 > counter.bump(0))) {
+	} else {
+	}
+} else {
+}
+console.log(holder.name);

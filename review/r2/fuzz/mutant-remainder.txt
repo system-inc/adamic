@@ -1,0 +1,137 @@
+seed 300006: finding native stdout differs
+seed 300006:
+  node:    exit 0, stdout "\n0e+00e+0\n�\na,b\n0e+00e+0\n�\na,b\n0e+00e+0\n-748.5\n19.5\n19.5\n19.5\n19.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n5\n3.5-0.0001-0.0001-0.0001-0.0001\n0.5,2.25\n16\nc\n0e+00e+0\n0.5,16,3,3\nﬀ\na,b\n5\n18456651992889766000\n8 25.5\nb=18456651992889766000\nk0=4\nk1=4\nk2=4\nk3=4\n", stderr ""
+  native:  exit 0, stdout "+0\n�\na,b\n0e+00e+0\n�\na,b\n0e+00e+0\n-748.5\n19.5\n19.5\n19.5\n19.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n5\n3.5-0.0001-0.0001-0.0001-0.0001\n0.5,2.25\n16\nc\n0e+00e+0\n0.5,16,3,3\nﬀ\na,b\n6\n18456651992889766000\n8 25.5\nb=18456651992889766000\nk0=4\nk1=4\nk2=4\nk-1=4\nk-2=4\n", stderr ""
+  backend: exit 0, stdout "\n0e+00e+0\n�\na,b\n0e+00e+0\n�\na,b\n0e+00e+0\n-748.5\n19.5\n19.5\n19.5\n19.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n0e+00e+0\na,b\n0e+00e+0\na,b\n0e+00e+0\n37.5\na,b\n5\n3.5-0.0001-0.0001-0.0001-0.0001\n0.5,2.25\n16\nc\n0e+00e+0\n0.5,16,3,3\nﬀ\na,b\n5\n18456651992889766000\n8 25.5\nb=18456651992889766000\nk0=4\nk1=4\nk2=4\nk3=4\n", stderr ""
+seed 300009: finding native stdout differs
+seed 300009:
+  node:    exit 0, stdout "\n123.46\nc\n🌍\nhello\nhello\nhello\n\n\n\nhello\nhello\nhello\n\n\n\n4294967295\nhello\n-0.1,-255\n0\nc255255255255255255\nfalse\nhello\nhello\n🌍b,�\n2\n0\n-103.99999999976717\nhello\nhello\nhello\n\n\n\n1 -9349208944587717000\n255 4294967295\n255 4294967295\n255 4294967295\n255 4294967295\n255 4294967295\n0 ǅ\nb=-4294967295\nc=-3\nk3=-104\n", stderr ""
+  native:  exit 0, stdout "\n123.46\nc\n🌍\nhello\nhello\nhello\n\n\n\nhello\nhello\nhello\n\n\n\n4294967295\nhello\n-0.1,-255\n0\nc255255255255255255\nfalse\nhello\nhello\n🌍b,�\n2\n0\n-103.99999999976717\nhello\nhello\nhello\n\n\n\n1 -9349208944587717000\n255 4294967295\n255 4294967295\n255 4294967295\n255 4294967295\n255 4294967295\n0 ǅ\nb=-4294967295\nc=-3\nk-1=-104\n", stderr ""
+  backend: exit 0, stdout "\n123.46\nc\n🌍\nhello\nhello\nhello\n\n\n\nhello\nhello\nhello\n\n\n\n4294967295\nhello\n-0.1,-255\n0\nc255255255255255255\nfalse\nhello\nhello\n🌍b,�\n2\n0\n-103.99999999976717\nhello\nhello\nhello\n\n\n\n1 -9349208944587717000\n255 4294967295\n255 4294967295\n255 4294967295\n255 4294967295\n255 4294967295\n0 ǅ\nb=-4294967295\nc=-3\nk3=-104\n", stderr ""
+seed 300010: finding native stdout differs
+seed 300010:
+  node:    exit 0, stdout "b\na�a�aba apaaada a�a|true\na�a�aba apaaada a�a|true\n\n0\n pad ��\n1,123.456\n0\n pad � pad \n-3,5\n-2\n5\n100\n0\n5\n0\n-0.1,-0.1\n0 0\n0 🌍b\n1.5 a\n", stderr ""
+  native:  exit 0, stdout "b\na�a�aba apaaada a�a|true\na�a�aba apaaada a�a|true\n\n0\n pad �\n1,123.456\n0\n pad � pad \n-3,5\n-2\n5\n100\n0\n5\n0\n-0.1,-0.1\n4 NaN\n0 🌍b\n1.5 a\n", stderr ""
+  backend: exit 0, stdout "b\na�a�aba apaaada a�a|true\na�a�aba apaaada a�a|true\n\n0\n pad ��\n1,123.456\n0\n pad � pad \n-3,5\n-2\n5\n100\n0\n5\n0\n-0.1,-0.1\n0 0\n0 🌍b\n1.5 a\n", stderr ""
+seed 300017: finding native exit code differs
+seed 300017:
+  node:    exit 0, stdout "\nxy\n\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n<0>\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n<0>\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n<0>\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n<0>\n100\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n�b\n�b\n�b\n�b\n\nﬀ\n-24\nHELLO\n3\néé\nNaN,NaN,NaN,NaN,NaN,NaN,88,196,3514,28369,454597,NaN,NaN,909250,1818559,7274498,NaN,NaN,NaN,NaN,NaN,14548996\n0\nb\n-1,1e+21\nhelloﬀﬀﬀﬀ\n pad \nInfinity\n0\n62\n8 -24\n7 a\n", stderr ""
+  native:  exit 70, stdout "", stderr "adamic: panic: index -1 is outside an array of length 2\n"
+  backend: exit 0, stdout "\nxy\n\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n<0>\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n<0>\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n<0>\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n<0>\n100\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n�b\n�b\n�b\n�b\n\nﬀ\n-24\nHELLO\n3\néé\nNaN,NaN,NaN,NaN,NaN,NaN,88,196,3514,28369,454597,NaN,NaN,909250,1818559,7274498,NaN,NaN,NaN,NaN,NaN,14548996\n0\nb\n-1,1e+21\nhelloﬀﬀﬀﬀ\n pad \nInfinity\n0\n62\n8 -24\n7 a\n", stderr ""
+seed 300020: finding native stdout differs
+seed 300020:
+  node:    exit 0, stdout "0\na\nc-1-1-1-1-1-1\n-1.0\n0.00\n-1.0\n0.00\nn=0 \n-1.0\n-0.50\n-1.0\n-0.50\nn=0 \n-3\na\n7,0.5,0,0,-15,0,0,-29,0,-222\n-99\nc-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1\nß,b\n0,-1,0,-1,0,255,2.25,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12\n1\n-0.5\n-1\n0.5\n3 0\na=1.0000000000000002e-12\nk3=-0.00009999999999985624\n", stderr ""
+  native:  exit 0, stdout "50\na\nc-1-1-1-1-1-1\n-1.0\n0.00\n-1.0\n0.00\nn=0 \n-1.0\n-0.50\n-1.0\n-0.50\nn=0 \n-3\na\n7,0.5,0,0,-15,0,0,-29,0,-222\n-99\nc-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1\nß,b\n0,-1,0,-1,0,255,2.25,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12\n1\n-0.5\n-1\n0.5\n3 0\na=1.0000000000000002e-12\nk-1=1.437652080715779e-16\n", stderr ""
+  backend: exit 0, stdout "0\na\nc-1-1-1-1-1-1\n-1.0\n0.00\n-1.0\n0.00\nn=0 \n-1.0\n-0.50\n-1.0\n-0.50\nn=0 \n-3\na\n7,0.5,0,0,-15,0,0,-29,0,-222\n-99\nc-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1-1\nß,b\n0,-1,0,-1,0,255,2.25,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12,1.0000000000000002e-12\n1\n-0.5\n-1\n0.5\n3 0\na=1.0000000000000002e-12\nk3=-0.00009999999999985624\n", stderr ""
+seed 300021: finding native stdout differs
+seed 300021:
+  node:    exit 0, stdout "n=10 \n2.25\nn=10 \n2.25\nxy\nc\nc\nn=10 \n2.25\nn=10 \n2.25\nxy\nc\nc\n�\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n-1h-1e-1l-1l-1o-1\nn=10 \n-3\nn=10 \n-3\nxy\n-3\nn=10 \n-3\nn=10 \n-3\n🌍\n-3\nn=10 \n-3\nn=10 \n-3\n🌍\n<1.5>\n<1.5>\nNaN\nNaN\nNaN\n-0.0001\n🌍\n0.008100051840331779,-3,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN\n0\n3.5\n1\nİ,b\nhello\n121.456\n4\nNaN\n🌍\n8 NaN\n10 10\nk0=51\nk1=51\nk2=51\nk3=51\n", stderr ""
+  native:  exit 0, stdout "n=10 \n2.25\nn=10 \n2.25\nxy\nc\nc\nn=10 \n2.25\nn=10 \n2.25\nxy\nc\nc\n�\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n-1h-1e-1l-1l-1o-1\nn=10 \n-3\nn=10 \n-3\nxy\n-3\nn=10 \n-3\nn=10 \n-3\n🌍\n-3\nn=10 \n-3\nn=10 \n-3\n🌍\n<1.5>\n<1.5>\nNaN\nNaN\nNaN\n-0.0001\n🌍\n0.008100051840331779,-3,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN\n0\n3.5\n1\nİ,b\nhello\n121.456\n4\nNaN\n🌍\n8 NaN\n10 10\nk0=51\nk1=51\nk2=51\nk-1=51\n", stderr ""
+  backend: exit 0, stdout "n=10 \n2.25\nn=10 \n2.25\nxy\nc\nc\nn=10 \n2.25\nn=10 \n2.25\nxy\nc\nc\n�\nxy\nxy\nxy\nxy\nxy\nxy\nxy\n-1h-1e-1l-1l-1o-1\nn=10 \n-3\nn=10 \n-3\nxy\n-3\nn=10 \n-3\nn=10 \n-3\n🌍\n-3\nn=10 \n-3\nn=10 \n-3\n🌍\n<1.5>\n<1.5>\nNaN\nNaN\nNaN\n-0.0001\n🌍\n0.008100051840331779,-3,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN\n0\n3.5\n1\nİ,b\nhello\n121.456\n4\nNaN\n🌍\n8 NaN\n10 10\nk0=51\nk1=51\nk2=51\nk3=51\n", stderr ""
+seed 300022: finding native exit code differs
+seed 300022:
+  node:    exit 0, stdout "1eb\né\n0>\né\n0>\né\n0>\nn=0.5\n6.b\né\n0>\né\n0>\né\n0>\n1.b\né\n0>\né\n0>\né\n0>\n\n4294967295\n\n2.25,1e+21\n0\n10ßßßßßßßßß\n0.5\n102.22222222222223\n5\n0\n4.694747489916687e+147\n1e+21\n0 0\n255 a,b\n", stderr ""
+  native:  exit 70, stdout "1eb\né\n0>\n", stderr "adamic: panic: index -1 is outside an array of length 3\n"
+  backend: exit 0, stdout "1eb\né\n0>\né\n0>\né\n0>\nn=0.5\n6.b\né\n0>\né\n0>\né\n0>\n1.b\né\n0>\né\n0>\né\n0>\n\n4294967295\n\n2.25,1e+21\n0\n10ßßßßßßßßß\n0.5\n102.22222222222223\n5\n0\n4.694747489916687e+147\n1e+21\n0 0\n255 a,b\n", stderr ""
+seed 300034: finding native stdout differs
+seed 300034:
+  node:    exit 0, stdout "n=248.412 \n0\n0.5\n10\n-1,100,-4294968039.736\n0\nc\n10\nfalse\n3.5,a�\n1\n0.4119997024536133\n0 0\n4294967295 xy\nb=0.5\n", stderr ""
+  native:  exit 0, stdout "n=248.412 \n0\n0.5\n10\n-1,100,-4294968039.736\n0\nc\n10\nfalse\n3.5,a�\n1\n-0.08800029754638672\n0 0\n4294967295 xy\nb=0.5\n", stderr ""
+  backend: exit 0, stdout "n=248.412 \n0\n0.5\n10\n-1,100,-4294968039.736\n0\nc\n10\nfalse\n3.5,a�\n1\n0.4119997024536133\n0 0\n4294967295 xy\nb=0.5\n", stderr ""
+seed 300036: finding native stdout differs
+seed 300036:
+  node:    exit 0, stdout "10\n pad \n10\n5\n10\n-1,5\n0\nc\n2\n pad \n�,xy\n10\n0\n0\n4 -200\nk0=1\n", stderr ""
+  native:  exit 0, stdout "10\n pad \n10\n5\n10\n-1,5\n0\nc\n-1\n pad \n�,xy\n10\n0\n0\n4 -200\nk1=1\n", stderr ""
+  backend: exit 0, stdout "10\n pad \n10\n5\n10\n-1,5\n0\nc\n2\n pad \n�,xy\n10\n0\n0\n4 -200\nk0=1\n", stderr ""
+seed 300037: finding native stdout differs
+seed 300037:
+  node:    exit 0, stdout "3.5�b\n3e+0\n1e+21\n\n1.5\n\n3e+0\n1e+21\n\n23.5\n\n3e+0\n1e+21\n\n45.5\n\n3e+0\n1e+21\n\n133333333333333330000\n\n2.25\n4.5\n世\n,,hello,10\n0.5\n8.331925998972209e+27\n5\n1\n7.5\n3e+0\n1e+21\n\n8 54.5\nc=0\n", stderr ""
+  native:  exit 0, stdout "3.5�b\n3e+0\n1e+21\n\n-1.25\n\n3e+0\n1e+21\n\n20.75\n\n3e+0\n1e+21\n\n28.75\n\n3e+0\n1e+21\n\n3e+0\n1e+21\n133333333333333330000\n\n\n1.75\n世2.25\n,,hello,10\n0.5\n8.331925998972209e+27\n5\n1\n7.5\n3e+0\n1e+21\n\n3e+0\n1e+21\n8 44.75\nc=0\n", stderr ""
+  backend: exit 0, stdout "3.5�b\n3e+0\n1e+21\n\n1.5\n\n3e+0\n1e+21\n\n23.5\n\n3e+0\n1e+21\n\n45.5\n\n3e+0\n1e+21\n\n133333333333333330000\n\n2.25\n4.5\n世\n,,hello,10\n0.5\n8.331925998972209e+27\n5\n1\n7.5\n3e+0\n1e+21\n\n8 54.5\nc=0\n", stderr ""
+seed 300038: finding native exit code differs
+seed 300038:
+  node:    exit 0, stdout "1.0�İ<10 世界\nc\n0\nb3\n3.0�\n3\n3.0�\n\n0\nc\n-2\nİ0-1-1\n1\n10\ntrue\n0 0\n-1 b\n-1 b\n-0.0001 \nk3=3\n", stderr ""
+  native:  exit 70, stdout "", stderr "adamic: panic: index -1 is outside an array of length 2\n"
+  backend: exit 0, stdout "1.0�İ<10 世界\nc\n0\nb3\n3.0�\n3\n3.0�\n\n0\nc\n-2\nİ0-1-1\n1\n10\ntrue\n0 0\n-1 b\n-1 b\n-0.0001 \nk3=3\n", stderr ""
+seed 300040: finding native stdout differs
+seed 300040:
+  node:    exit 0, stdout " pad \n🌍\nNaN\n-0.0002\nNaN\n10\n0\nc0000000\n pad \n5\n\nǅ\n2\nInfinity\n5\nfalse\nfalse\n100\n4 NaN\n0 ﬀ\n0 Infinity\n4228250625 ﬀ\n0 ﬀ\n0 ﬀ\n65025 ﬀ\n7 hello\nk2=NaN\nk3=NaN\n", stderr ""
+  native:  exit 0, stdout " pad \n🌍\nNaN\n-0.0002\nNaN\n10\n0\nc0000000\n pad \n5\n\nǅ\n2\nInfinity\n5\nfalse\nfalse\n100\n4 NaN\n0 ﬀ\n0 Infinity\n4228250625 ﬀ\n0 ﬀ\n0 ﬀ\n65025 ﬀ\n7 hello\nk2=NaN\nk-1=NaN\n", stderr ""
+  backend: exit 0, stdout " pad \n🌍\nNaN\n-0.0002\nNaN\n10\n0\nc0000000\n pad \n5\n\nǅ\n2\nInfinity\n5\nfalse\nfalse\n100\n4 NaN\n0 ﬀ\n0 Infinity\n4228250625 ﬀ\n0 ﬀ\n0 ﬀ\n65025 ﬀ\n7 hello\nk2=NaN\nk3=NaN\n", stderr ""
+seed 300048: finding native exit code differs
+seed 300048:
+  node:    exit 0, stdout "82475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249\n�b\n\n0\n2.221993369946995e+158\n0\n6.622056275448188e+150\nn=10 \n10.5\nn=10 \n10.5\n5 NaN\n256.91200000000003 a\n1 🌍\n", stderr ""
+  native:  exit 70, stdout "\n0.0E+0\n�b\n�b\nn=10 \n10.5\nn=10 \n10.5\nNaN\nn=10 \n10.5\nn=10 \n10.5\nNaN\n", stderr "adamic: panic: index -2 is outside an array of length 6\n"
+  backend: exit 0, stdout "82475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249282475249\n�b\n\n0\n2.221993369946995e+158\n0\n6.622056275448188e+150\nn=10 \n10.5\nn=10 \n10.5\n5 NaN\n256.91200000000003 a\n1 🌍\n", stderr ""
+seed 300050: finding native stdout differs
+seed 300050:
+  node:    exit 0, stdout "\n3.5xy|false\nn=1\n3.5xyxy|false\nn=6\n\n3.5xyxyxy|false\nn=11\n3.5xyxyxyxy|false\nn=16\n3.5xyxyxyxy\n3.5xyxyxyxy\n3.5xyxyxyxyxy|false\nn=21\n3.5xyxyxyxyxyxy|false\nn=26\n11.1\n\n\n7\n3.5xyxyxyxyxyxyxy\n1.5\n0\nchellohellohellohellohellohello\n7\n1\nfalse\n5\n0\n102\n3.5xyxyxyxyxyxyxy|false\ntrue\n3.5xyxyxyxyxyxyxy\n3.5xyxyxyxyxyxyxy\n3.5xyxyxyxyxyxyxyxy|false\nn=31\n3.5xyxyxyxyxyxyxyxy\nchellohellohellohellohellohellohello\n7 18.25\n", stderr ""
+  native:  exit 0, stdout "\n3.5xy|false\nn=1\n3.5xyxy|false\nn=6\n\n3.5xyxyxy|false\nn=11\n3.5xyxyxyxy|false\nn=16\n3.5xyxyxyxy\n3.5xyxyxyxy\n3.5xyxyxyxyxy|false\nn=21\n3.5xyxyxyxyxyxy|false\nn=26\n11.1\n\n\n7\n3.5xyxyxyxyxyxyxy\n1.5\n0\nchellohellohellohellohellohello\n7\n1\nfalse\n5\n0\n-1\n3.5xyxyxyxyxyxyxy|false\ntrue\n3.5xyxyxyxyxyxyxy\n3.5xyxyxyxyxyxyxy\n3.5xyxyxyxyxyxyxyxy|false\nn=31\n3.5xyxyxyxyxyxyxyxy\nchellohellohellohellohellohellohello\n7 18.25\n", stderr ""
+  backend: exit 0, stdout "\n3.5xy|false\nn=1\n3.5xyxy|false\nn=6\n\n3.5xyxyxy|false\nn=11\n3.5xyxyxyxy|false\nn=16\n3.5xyxyxyxy\n3.5xyxyxyxy\n3.5xyxyxyxyxy|false\nn=21\n3.5xyxyxyxyxyxy|false\nn=26\n11.1\n\n\n7\n3.5xyxyxyxyxyxyxy\n1.5\n0\nchellohellohellohellohellohello\n7\n1\nfalse\n5\n0\n102\n3.5xyxyxyxyxyxyxy|false\ntrue\n3.5xyxyxyxyxyxyxy\n3.5xyxyxyxyxyxyxy\n3.5xyxyxyxyxyxyxyxy|false\nn=31\n3.5xyxyxyxyxyxyxyxy\nchellohellohellohellohellohellohello\n7 18.25\n", stderr ""
+seed 300052: finding native stdout differs
+seed 300052:
+  node:    exit 0, stdout "aNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNİİİİİİİNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN\n�\n-3,2.25,255\nb,ﬀ\n0\n1\n4.640001706038803e+21\n pad \n5,1.5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\n5 64\nk3=100\n", stderr ""
+  native:  exit 0, stdout "NNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNİİİİİİİNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN\n�\n-3,2.25,255\nb,ﬀ\n0\n1\n4.640001706038803e+21\n pad \n5,1.5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\n5 64\nk-1=100\n", stderr ""
+  backend: exit 0, stdout "aNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNİİİİİİİNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN\n�\n-3,2.25,255\nb,ﬀ\n0\n1\n4.640001706038803e+21\n pad \n5,1.5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\n5 64\nk3=100\n", stderr ""
+seed 300072: finding native exit code differs
+seed 300072:
+  node:    exit 0, stdout "0\n0\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\n3.5\nn=-1>\nn=-1>\nn=-1>\n05\n7.3\n3.5\nNaN\n🌍\n2.25\n0\nc\naa0\n4294967295\n0\n0\n-4.0001\nfalse\n05\n05\n6 17.3\nNaN 10\nNaN 10\n55356 a\nNaN 10\n0.1 é\n", stderr ""
+  native:  exit 70, stdout "0\n0\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\n3.5\nn=-1>\nn=-1>\nn=-1>\n05\n7.3\n3.5\nNaN\n🌍\n2.25\n0\nc\naa0\n4294967295\n0\n0\n-4.0001\nfalse\n05\n05\n", stderr "adamic: panic: index -1 is outside an array of length 4\n"
+  backend: exit 0, stdout "0\n0\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\nn=-1>\n3.5\nn=-1>\nn=-1>\nn=-1>\n05\n7.3\n3.5\nNaN\n🌍\n2.25\n0\nc\naa0\n4294967295\n0\n0\n-4.0001\nfalse\n05\n05\n6 17.3\nNaN 10\nNaN 10\n55356 a\nNaN 10\n0.1 é\n", stderr ""
+seed 300073: finding native stdout differs
+seed 300073:
+  node:    exit 0, stdout "a\n3.5NaNNaNNaNNaNNaN\na\n<NaN |false\n-3.5\n2\n<NaN |false\n-3.5\n2\nabß\n<NaN |false\n-3.5\n2\n<NaN |false\n-3.5\n2\nabß\n<NaN |false\n-3.5\n2\n<NaN |false\n-3.5\n2\nabß\n<NaN |false\n-3.5\n2\n<NaN |false\n-3.5\n2\nabß\n<NaN |false\n-3.5\n2\n1.5\n3.5NaNNaNNaNNaNNaNNaNNaN\n0\n0\nc\n100\na\n<NaN \n0\n6\nfalse\n<NaN |false\n-4.5\n2\nß\n1 255\n", stderr ""
+  native:  exit 0, stdout "a\n3.5NaNNaNNaNNaNNaNNaNNaN\na\n<NaN |false\n-3.0\n2\n<NaN |false\n-3.0\n2\nabß\n<NaN |false\n-3.0\n2\n<NaN |false\n-3.0\n2\nabß\n<NaN |false\n-3.0\n2\n<NaN |false\n-3.0\n2\nabß\n<NaN |false\n-3.0\n2\n<NaN |false\n-3.0\n2\nabß\n<NaN |false\n-3.0\n2\n2\n3.5NaNNaNNaNNaNNaNNaNNaNNaNNaN\n0\n0\nc\n100\na\n<NaN \n0\n6\nfalse\n<NaN |false\n-4.0\n2\nß\n1 255\n", stderr ""
+  backend: exit 0, stdout "a\n3.5NaNNaNNaNNaNNaN\na\n<NaN |false\n-3.5\n2\n<NaN |false\n-3.5\n2\nabß\n<NaN |false\n-3.5\n2\n<NaN |false\n-3.5\n2\nabß\n<NaN |false\n-3.5\n2\n<NaN |false\n-3.5\n2\nabß\n<NaN |false\n-3.5\n2\n<NaN |false\n-3.5\n2\nabß\n<NaN |false\n-3.5\n2\n1.5\n3.5NaNNaNNaNNaNNaNNaNNaN\n0\n0\nc\n100\na\n<NaN \n0\n6\nfalse\n<NaN |false\n-4.5\n2\nß\n1 255\n", stderr ""
+seed 300075: finding native stdout differs
+seed 300075:
+  node:    exit 0, stdout "🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n-16\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n-16\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n-16\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\n-\n1\n10é3é3é3é3é3é3é3é3ééééééééééé\n0.1,7\n0\nc\n0.5\n1,123.456\na,b\nxy\n3\n4\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n8 -16\n3 3.5\n-1 3.5\n3 🌍\n3 b\nk3=-1\nk0=0\nc=1\n", stderr ""
+  native:  exit 0, stdout "🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n-16\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n-16\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n-16\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\n-\n1\n10é3é3é3é3é3é3é3é3ééééééééééé\n0.1,7\n0\nc\n0.5\n1,123.456\na,b\nxy\n3\n4\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n8 -16\n3 3.5\n-1 3.5\n3 🌍\n3 b\nk-1=-1\nk0=0\nc=1\n", stderr ""
+  backend: exit 0, stdout "🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n-16\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n-16\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n-16\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\nb\n-1>\n-\n1\n10é3é3é3é3é3é3é3é3ééééééééééé\n0.1,7\n0\nc\n0.5\n1,123.456\na,b\nxy\n3\n4\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n🌍\n8 -16\n3 3.5\n-1 3.5\n3 🌍\n3 b\nk3=-1\nk0=0\nc=1\n", stderr ""
+seed 300078: finding native exit code differs
+seed 300078:
+  node:    exit 0, stdout "c\n0>\n0>\n0>\n-19\nSS\n-41\n-85\n-173\n-349\n\n3.5\nSS\n3\n�b7123.4560\n\n0\nc\nb,,🌍,3\n\n4294967295\n0\n-701\nǅbǅ3333\n-701\nfalse\n1 -1405\n1 🌍b\n7 xy\n", stderr ""
+  native:  exit 70, stdout "c\n0>\n0>\n0>\n-19\nSS\n", stderr "adamic: panic: index -1 is outside an array of length 2\n"
+  backend: exit 0, stdout "c\n0>\n0>\n0>\n-19\nSS\n-41\n-85\n-173\n-349\n\n3.5\nSS\n3\n�b7123.4560\n\n0\nc\nb,,🌍,3\n\n4294967295\n0\n-701\nǅbǅ3333\n-701\nfalse\n1 -1405\n1 🌍b\n7 xy\n", stderr ""
+seed 300092: finding native exit code differs
+seed 300092:
+  node:    exit 0, stdout "8 \naaabababababababababa\n1\n🌍\n1\nabbbbbbbbbbbbbbbbbbbbbbbb\n0\n0\nc\n🌍,xy,123.556,🌍\nb\n1\nabab\n0\n123.65599999999999\n10\n1 1\n1 é\n", stderr ""
+  native:  exit 70, stdout "8 \naaabababababababababa\n1\n🌍\n", stderr "adamic: panic: index -1 is outside an array of length 4\n"
+  backend: exit 0, stdout "8 \naaabababababababababa\n1\n🌍\n1\nabbbbbbbbbbbbbbbbbbbbbbbb\n0\n0\nc\n🌍,xy,123.556,🌍\nb\n1\nabab\n0\n123.65599999999999\n10\n1 1\n1 é\n", stderr ""
+seed 300098: finding native stdout differs
+seed 300098:
+  node:    exit 0, stdout "10\n10\n255,NaN\n3.5\n10\n\n3.5\n.N\n10\n255255255255255>|false\n10\n\n3.5\n.N\n10\n255255255255255>|false\n255\n pad \n1,-1,1,-1,1,-1,1,-3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\nNaN\nc\n3.5\n100,3,7\ntrue\n2\nNaN\n100,100\n255\n255255255255255\n8 NaN\n15 255\n15 255\nNaN 255\nNaN 255\n0 \nk3=-0.0001\nk1=-0.0001\n", stderr ""
+  native:  exit 0, stdout "10\n10\n255,NaN\n3.5\n10\n\n3.5\n.N\n10\n255255255255255>|false\n10\n\n3.5\n.N\n10\n255255255255255>|false\n255\n pad \n1,-1,1,-1,1,-1,1,-3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\nNaN\nc\n3.5\n100,3,7\ntrue\n2\nNaN\n100,100\n255\n255255255255255\n8 NaN\n15 255\n15 255\nNaN 255\nNaN 255\n0 \nk-1=-0.0001\nk1=-0.0001\n", stderr ""
+  backend: exit 0, stdout "10\n10\n255,NaN\n3.5\n10\n\n3.5\n.N\n10\n255255255255255>|false\n10\n\n3.5\n.N\n10\n255255255255255>|false\n255\n pad \n1,-1,1,-1,1,-1,1,-3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\nNaN\nc\n3.5\n100,3,7\ntrue\n2\nNaN\n100,100\n255\n255255255255255\n8 NaN\n15 255\n15 255\nNaN 255\nNaN 255\n0 \nk3=-0.0001\nk1=-0.0001\n", stderr ""
+
+100 programs from seed 300000 in 11m37s on /tmp/adamic-gate/fz
+  agreed   66
+  finding  21
+  checked  13
+  not yet  0
+  invalid  0
+  unfit    0
+     14  finding: native stdout differs
+     13  checked: inserted check
+      7  finding: native exit code differs
+seed 300017: native exit code differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300017.a
+seed 300010: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300010.a
+seed 300009: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300009.a
+seed 300021: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300021.a
+seed 300022: native exit code differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300022.a
+seed 300036: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300036.a
+seed 300006: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300006.a
+seed 300034: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300034.a
+seed 300020: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300020.a
+seed 300038: native exit code differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300038.a
+seed 300040: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300040.a
+seed 300037: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300037.a
+seed 300052: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300052.a
+seed 300048: native exit code differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300048.a
+seed 300073: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300073.a
+seed 300050: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300050.a
+seed 300075: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300075.a
+seed 300072: native exit code differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300072.a
+seed 300092: native exit code differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300092.a
+seed 300078: native exit code differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300078.a
+seed 300098: native stdout differs -> /tmp/adamic-gate/fuzz-mutant1/findings/seed300098.a

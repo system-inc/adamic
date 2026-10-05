@@ -1,0 +1,724 @@
+
+100 programs from seed 200000 in 42s on /tmp/adamic-gate/fz
+  agreed   76
+  finding  0
+  checked  24
+  not yet  0
+  invalid  0
+  unfit    0
+     24  checked: inserted check
+
+100 programs from seed 200100 in 41s on /tmp/adamic-gate/fz
+  agreed   86
+  finding  0
+  checked  13
+  not yet  0
+  invalid  1
+  unfit    0
+     13  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 200200 in 37s on /tmp/adamic-gate/fz
+  agreed   84
+  finding  0
+  checked  16
+  not yet  0
+  invalid  0
+  unfit    0
+     16  checked: inserted check
+
+100 programs from seed 200300 in 38s on /tmp/adamic-gate/fz
+  agreed   81
+  finding  0
+  checked  18
+  not yet  0
+  invalid  1
+  unfit    0
+     18  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 200400 in 37s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  15
+  not yet  0
+  invalid  0
+  unfit    0
+     15  checked: inserted check
+
+100 programs from seed 200500 in 38s on /tmp/adamic-gate/fz
+  agreed   81
+  finding  0
+  checked  18
+  not yet  1
+  invalid  0
+  unfit    0
+     18  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 200600 in 35s on /tmp/adamic-gate/fz
+  agreed   87
+  finding  0
+  checked  12
+  not yet  1
+  invalid  0
+  unfit    0
+     12  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 200700 in 36s on /tmp/adamic-gate/fz
+  agreed   87
+  finding  0
+  checked  13
+  not yet  0
+  invalid  0
+  unfit    0
+     13  checked: inserted check
+
+100 programs from seed 200800 in 38s on /tmp/adamic-gate/fz
+  agreed   88
+  finding  0
+  checked  12
+  not yet  0
+  invalid  0
+  unfit    0
+     12  checked: inserted check
+
+100 programs from seed 200900 in 37s on /tmp/adamic-gate/fz
+  agreed   80
+  finding  0
+  checked  18
+  not yet  1
+  invalid  1
+  unfit    0
+     18  checked: inserted check
+      1  invalid: checker
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 201000 in 36s on /tmp/adamic-gate/fz
+  agreed   83
+  finding  0
+  checked  16
+  not yet  1
+  invalid  0
+  unfit    0
+     16  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 201100 in 38s on /tmp/adamic-gate/fz
+  agreed   89
+  finding  0
+  checked  10
+  not yet  1
+  invalid  0
+  unfit    0
+     10  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 201200 in 38s on /tmp/adamic-gate/fz
+  agreed   76
+  finding  0
+  checked  24
+  not yet  0
+  invalid  0
+  unfit    0
+     24  checked: inserted check
+
+100 programs from seed 201300 in 38s on /tmp/adamic-gate/fz
+  agreed   86
+  finding  0
+  checked  13
+  not yet  0
+  invalid  1
+  unfit    0
+     13  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 201400 in 37s on /tmp/adamic-gate/fz
+  agreed   84
+  finding  0
+  checked  14
+  not yet  2
+  invalid  0
+  unfit    0
+     14  checked: inserted check
+      2  not yet: not yet: a function returning never yet
+
+100 programs from seed 201500 in 37s on /tmp/adamic-gate/fz
+  agreed   88
+  finding  0
+  checked  10
+  not yet  0
+  invalid  2
+  unfit    0
+     10  checked: inserted check
+      2  invalid: checker
+
+100 programs from seed 201600 in 35s on /tmp/adamic-gate/fz
+  agreed   88
+  finding  0
+  checked  12
+  not yet  0
+  invalid  0
+  unfit    0
+     12  checked: inserted check
+
+100 programs from seed 201700 in 39s on /tmp/adamic-gate/fz
+  agreed   82
+  finding  0
+  checked  16
+  not yet  0
+  invalid  2
+  unfit    0
+     16  checked: inserted check
+      2  invalid: checker
+
+100 programs from seed 201800 in 36s on /tmp/adamic-gate/fz
+  agreed   87
+  finding  0
+  checked  13
+  not yet  0
+  invalid  0
+  unfit    0
+     13  checked: inserted check
+
+100 programs from seed 201900 in 38s on /tmp/adamic-gate/fz
+  agreed   78
+  finding  0
+  checked  22
+  not yet  0
+  invalid  0
+  unfit    0
+     22  checked: inserted check
+
+100 programs from seed 202000 in 38s on /tmp/adamic-gate/fz
+  agreed   84
+  finding  0
+  checked  15
+  not yet  0
+  invalid  0
+  unfit    1
+     15  checked: inserted check
+      1  unfit: node printed more than a megabyte
+
+100 programs from seed 202100 in 37s on /tmp/adamic-gate/fz
+  agreed   82
+  finding  0
+  checked  18
+  not yet  0
+  invalid  0
+  unfit    0
+     18  checked: inserted check
+
+100 programs from seed 202200 in 39s on /tmp/adamic-gate/fz
+  agreed   79
+  finding  0
+  checked  19
+  not yet  0
+  invalid  1
+  unfit    1
+     19  checked: inserted check
+      1  invalid: checker
+      1  unfit: node printed more than a megabyte
+
+100 programs from seed 202300 in 41s on /tmp/adamic-gate/fz
+  agreed   80
+  finding  0
+  checked  18
+  not yet  1
+  invalid  1
+  unfit    0
+     18  checked: inserted check
+      1  invalid: checker
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 202400 in 41s on /tmp/adamic-gate/fz
+  agreed   75
+  finding  0
+  checked  24
+  not yet  1
+  invalid  0
+  unfit    0
+     24  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 202500 in 36s on /tmp/adamic-gate/fz
+  agreed   83
+  finding  0
+  checked  17
+  not yet  0
+  invalid  0
+  unfit    0
+     17  checked: inserted check
+
+100 programs from seed 202600 in 36s on /tmp/adamic-gate/fz
+  agreed   78
+  finding  0
+  checked  20
+  not yet  1
+  invalid  1
+  unfit    0
+     20  checked: inserted check
+      1  invalid: checker
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 202700 in 39s on /tmp/adamic-gate/fz
+  agreed   87
+  finding  0
+  checked  13
+  not yet  0
+  invalid  0
+  unfit    0
+     13  checked: inserted check
+
+100 programs from seed 202800 in 41s on /tmp/adamic-gate/fz
+  agreed   84
+  finding  0
+  checked  16
+  not yet  0
+  invalid  0
+  unfit    0
+     16  checked: inserted check
+
+100 programs from seed 202900 in 42s on /tmp/adamic-gate/fz
+  agreed   83
+  finding  0
+  checked  17
+  not yet  0
+  invalid  0
+  unfit    0
+     17  checked: inserted check
+
+100 programs from seed 203000 in 40s on /tmp/adamic-gate/fz
+  agreed   84
+  finding  0
+  checked  15
+  not yet  1
+  invalid  0
+  unfit    0
+     15  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 203100 in 39s on /tmp/adamic-gate/fz
+  agreed   82
+  finding  0
+  checked  17
+  not yet  0
+  invalid  1
+  unfit    0
+     17  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 203200 in 41s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  15
+  not yet  0
+  invalid  0
+  unfit    0
+     15  checked: inserted check
+
+100 programs from seed 203300 in 39s on /tmp/adamic-gate/fz
+  agreed   83
+  finding  0
+  checked  16
+  not yet  1
+  invalid  0
+  unfit    0
+     16  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 203400 in 40s on /tmp/adamic-gate/fz
+  agreed   84
+  finding  0
+  checked  15
+  not yet  0
+  invalid  1
+  unfit    0
+     15  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 203500 in 38s on /tmp/adamic-gate/fz
+  agreed   81
+  finding  0
+  checked  19
+  not yet  0
+  invalid  0
+  unfit    0
+     19  checked: inserted check
+
+100 programs from seed 203600 in 40s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  14
+  not yet  0
+  invalid  1
+  unfit    0
+     14  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 203700 in 38s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  14
+  not yet  1
+  invalid  0
+  unfit    0
+     14  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 203800 in 39s on /tmp/adamic-gate/fz
+  agreed   84
+  finding  0
+  checked  15
+  not yet  0
+  invalid  1
+  unfit    0
+     15  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 203900 in 40s on /tmp/adamic-gate/fz
+  agreed   83
+  finding  0
+  checked  16
+  not yet  0
+  invalid  1
+  unfit    0
+     16  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 204000 in 41s on /tmp/adamic-gate/fz
+  agreed   83
+  finding  0
+  checked  15
+  not yet  1
+  invalid  0
+  unfit    1
+     15  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+      1  unfit: node printed more than a megabyte
+
+100 programs from seed 204100 in 42s on /tmp/adamic-gate/fz
+  agreed   77
+  finding  0
+  checked  23
+  not yet  0
+  invalid  0
+  unfit    0
+     23  checked: inserted check
+
+100 programs from seed 204200 in 39s on /tmp/adamic-gate/fz
+  agreed   84
+  finding  0
+  checked  15
+  not yet  1
+  invalid  0
+  unfit    0
+     15  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 204300 in 39s on /tmp/adamic-gate/fz
+  agreed   94
+  finding  0
+  checked  5
+  not yet  1
+  invalid  0
+  unfit    0
+      5  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 204400 in 36s on /tmp/adamic-gate/fz
+  agreed   86
+  finding  0
+  checked  13
+  not yet  0
+  invalid  1
+  unfit    0
+     13  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 204500 in 40s on /tmp/adamic-gate/fz
+  agreed   86
+  finding  0
+  checked  13
+  not yet  0
+  invalid  1
+  unfit    0
+     13  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 204600 in 40s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  15
+  not yet  0
+  invalid  0
+  unfit    0
+     15  checked: inserted check
+
+100 programs from seed 204700 in 38s on /tmp/adamic-gate/fz
+  agreed   79
+  finding  0
+  checked  20
+  not yet  0
+  invalid  1
+  unfit    0
+     20  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 204800 in 41s on /tmp/adamic-gate/fz
+  agreed   83
+  finding  0
+  checked  15
+  not yet  1
+  invalid  1
+  unfit    0
+     15  checked: inserted check
+      1  invalid: checker
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 204900 in 39s on /tmp/adamic-gate/fz
+  agreed   78
+  finding  0
+  checked  21
+  not yet  0
+  invalid  0
+  unfit    1
+     21  checked: inserted check
+      1  unfit: node printed more than a megabyte
+
+100 programs from seed 205000 in 39s on /tmp/adamic-gate/fz
+  agreed   87
+  finding  0
+  checked  12
+  not yet  1
+  invalid  0
+  unfit    0
+     12  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 205100 in 40s on /tmp/adamic-gate/fz
+  agreed   82
+  finding  0
+  checked  18
+  not yet  0
+  invalid  0
+  unfit    0
+     18  checked: inserted check
+
+100 programs from seed 205200 in 36s on /tmp/adamic-gate/fz
+  agreed   89
+  finding  0
+  checked  10
+  not yet  0
+  invalid  1
+  unfit    0
+     10  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 205300 in 37s on /tmp/adamic-gate/fz
+  agreed   79
+  finding  0
+  checked  20
+  not yet  0
+  invalid  1
+  unfit    0
+     20  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 205400 in 38s on /tmp/adamic-gate/fz
+  agreed   82
+  finding  0
+  checked  16
+  not yet  1
+  invalid  0
+  unfit    1
+     16  checked: inserted check
+      1  unfit: node printed more than a megabyte
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 205500 in 36s on /tmp/adamic-gate/fz
+  agreed   79
+  finding  0
+  checked  20
+  not yet  1
+  invalid  0
+  unfit    0
+     20  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 205600 in 36s on /tmp/adamic-gate/fz
+  agreed   84
+  finding  0
+  checked  15
+  not yet  1
+  invalid  0
+  unfit    0
+     15  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 205700 in 38s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  14
+  not yet  1
+  invalid  0
+  unfit    0
+     14  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 205800 in 35s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  14
+  not yet  0
+  invalid  1
+  unfit    0
+     14  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 205900 in 38s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  13
+  not yet  0
+  invalid  2
+  unfit    0
+     13  checked: inserted check
+      2  invalid: checker
+
+100 programs from seed 206000 in 41s on /tmp/adamic-gate/fz
+  agreed   75
+  finding  0
+  checked  25
+  not yet  0
+  invalid  0
+  unfit    0
+     25  checked: inserted check
+
+100 programs from seed 206100 in 1m26s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  14
+  not yet  0
+  invalid  0
+  unfit    1
+     14  checked: inserted check
+      1  unfit: node never finished
+
+100 programs from seed 206200 in 36s on /tmp/adamic-gate/fz
+  agreed   79
+  finding  0
+  checked  20
+  not yet  0
+  invalid  1
+  unfit    0
+     20  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 206300 in 38s on /tmp/adamic-gate/fz
+  agreed   81
+  finding  0
+  checked  17
+  not yet  1
+  invalid  1
+  unfit    0
+     17  checked: inserted check
+      1  invalid: checker
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 206400 in 41s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  14
+  not yet  1
+  invalid  0
+  unfit    0
+     14  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 206500 in 37s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  14
+  not yet  0
+  invalid  1
+  unfit    0
+     14  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 206600 in 37s on /tmp/adamic-gate/fz
+  agreed   81
+  finding  0
+  checked  19
+  not yet  0
+  invalid  0
+  unfit    0
+     19  checked: inserted check
+
+100 programs from seed 206700 in 38s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  14
+  not yet  1
+  invalid  0
+  unfit    0
+     14  checked: inserted check
+      1  not yet: not yet: a function returning never yet
+
+100 programs from seed 206800 in 39s on /tmp/adamic-gate/fz
+  agreed   86
+  finding  0
+  checked  14
+  not yet  0
+  invalid  0
+  unfit    0
+     14  checked: inserted check
+
+100 programs from seed 206900 in 38s on /tmp/adamic-gate/fz
+  agreed   83
+  finding  0
+  checked  16
+  not yet  0
+  invalid  1
+  unfit    0
+     16  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 207000 in 39s on /tmp/adamic-gate/fz
+  agreed   87
+  finding  0
+  checked  12
+  not yet  0
+  invalid  1
+  unfit    0
+     12  checked: inserted check
+      1  invalid: checker
+
+100 programs from seed 207100 in 38s on /tmp/adamic-gate/fz
+  agreed   82
+  finding  0
+  checked  18
+  not yet  0
+  invalid  0
+  unfit    0
+     18  checked: inserted check
+
+100 programs from seed 207200 in 39s on /tmp/adamic-gate/fz
+  agreed   85
+  finding  0
+  checked  15
+  not yet  0
+  invalid  0
+  unfit    0
+     15  checked: inserted check
+
+100 programs from seed 207300 in 39s on /tmp/adamic-gate/fz
+  agreed   80
+  finding  0
+  checked  19
+  not yet  0
+  invalid  0
+  unfit    1
+     19  checked: inserted check
+      1  unfit: node printed more than a megabyte
