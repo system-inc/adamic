@@ -111,6 +111,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		if spread.Type() == ir.String {
 			return ir.CodePoints{Value: spread}, nil
 		}
+		if spread.Type() == ir.Map && l.isSet(items[0].AsSpreadElement().Expression) {
+			return l.setValues(items[0].AsSpreadElement().Expression, spread)
+		}
 		if spread.Type() == ir.Map {
 			key, value, err := l.mapTypes(items[0].AsSpreadElement().Expression)
 			if err != nil {
@@ -327,6 +330,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if _, isVisit := visits[name]; receiverType == ir.Array && (isVisit || arrayMethods[name]) {
 		return l.arrayMethod(node, receiver, name)
 	}
+	if receiverType == ir.Map && l.isSet(receiver) {
+		return l.setMethod(node, receiver, name)
+	}
 	if receiverType == ir.Map && (name == "get" || name == "set" || name == "has" || name == "delete") {
 		return l.mapMethod(node, receiver, name)
 	}
@@ -537,6 +543,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 // map.values() into one name. An entry as one name would be a tuple made each step, which stage 0
 // doesn't do yet.
 func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *ast.Node, part string, name *ast.Node) ([]ir.Statement, error) {
+	if l.isSet(iterated) {
+		return l.forOfSet(node, iterable, iterated, part, name)
+	}
 	key, value, err := l.mapTypes(iterated)
 	if err != nil {
 		return nil, err
@@ -871,7 +880,8 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if err != nil {
 		return nil, true, err
 	}
-	if result != initial.Type() || slotless(result) || result == ir.MaybeNumber {
+	initial = fit(initial, result)
+	if result != initial.Type() || slotless(result) {
 		return nil, true, l.notYet(node, "reduce to a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 	}
 	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result}, true, nil
@@ -888,7 +898,8 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	if !keyKnown || (key != ir.String && key != ir.Number) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings or numbers")
 	}
-	if !valueKnown || slotless(value) || value == ir.MaybeNumber {
+	// number | undefined is held in a value's one slot packed (native/slots.go).
+	if !valueKnown || slotless(value) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
@@ -900,6 +911,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	created := node.AsNewExpression()
 	if declaration, isClass := l.classes[l.symbol(ast.SkipParentheses(created.Expression))]; isClass {
 		return l.construct(node, declaration)
+	}
+	if l.isLibraryGlobal(created.Expression, "Set") {
+		return l.newSet(node)
 	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {
 		return nil, l.notYet(node, "new "+describe(created.Expression))
@@ -930,6 +944,11 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
+		// A number, or undefined, where number | undefined goes is made that pair.
+		entryValue = fit(entryValue, value)
+		if entryKey.Type() != key || entryValue.Type() != value {
+			return nil, l.notYet(pair, "a Map entry whose key or value is of another type than the Map's")
+		}
 		lowered.Entries = append(lowered.Entries, [2]ir.Expression{entryKey, entryValue})
 	}
 	return lowered, nil
@@ -956,6 +975,9 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	want := 1
 	if name == "set" {
 		want = 2
+	}
+	if name == "set" && len(arguments) == 2 {
+		arguments[1] = fit(arguments[1], value)
 	}
 	if len(arguments) != want || arguments[0].Type() != key || (name == "set" && arguments[1].Type() != value) {
 		return nil, true, l.notYet(node, "map."+name+" with arguments of other types")
@@ -1088,10 +1110,6 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 // strings), and stage 0 takes one of the module's functions by name.
 func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
-	if element == ir.MaybeNumber {
-		// JavaScript sorts undefined to the end without ever passing it to the comparator.
-		return nil, true, l.notYet(node, "sort on an array of number | undefined")
-	}
 	if len(arguments) == 0 {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "sort without a comparator", Fix: "pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"}
 	}

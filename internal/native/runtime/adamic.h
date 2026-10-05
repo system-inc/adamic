@@ -209,6 +209,12 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value);
 
 bool adamic_map_delete(adamic_map *map, adamic_value key);
 
+// A Set is a map whose values aren't used (set.c). adamic_set_add_all adds an array's elements in
+// order, new Set(array), each reference retained; adamic_set_values is [...set], a new array the caller
+// owns.
+void adamic_set_add_all(adamic_map *set, const adamic_array *values);
+adamic_array *adamic_set_values(const adamic_map *set);
+
 // adamic_map_free_children lets go of what a map holds, for the heap's freeing.
 void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 
@@ -279,6 +285,10 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
+
+// adamic_array_sort_undefined_last sorts an array of number | undefined as JavaScript does: every
+// undefined goes to the end, never passed to the comparator (sort_undefined.c).
+void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 
 // adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);
