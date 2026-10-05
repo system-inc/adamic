@@ -22,7 +22,7 @@ var gaps = []struct {
 	badC   string
 	stdout string
 }{
-	{path: "gaps/1_throwing_function_value.ts", notYet: "a function value that can throw (the runtime calls them from its own loops, which a throw would have to leave)", stdout: "too long: bb\n"},
+	{path: "gaps/1_throwing_function_value.ts", stdout: "too long: bb\n"},
 	{path: "gaps/2_error_made_elsewhere.ts", notYet: "throwing an Error that isn't made where it's thrown or caught by the catch around it", stdout: "Unexpected token at 3.\n"},
 }
 

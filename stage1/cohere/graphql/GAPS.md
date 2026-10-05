@@ -12,7 +12,9 @@ Ahra asked for a sixth slice that throws and catches, now that exceptions are on
 - **css/postcss** (runner-up): its parser panics and recovers too, but it is 2,328 lines with the SCSS dialect woven through, and it leans on the tokenizer the values slice has only part of.
 - **css/selector** (runner-up): it throws as well, but it matches with regular expressions, which 0.1 doesn't have.
 
-## 1. A function value that can throw
+## 1. A function value that can throw (closed by stream C2's 5af7bfb, in integration 10)
+
+Closed: function values may throw, and the program prints natively what it prints on Node. The port's workaround (grep 'gap 1') still stands; stream P2 undoes it.
 
 graphql-js's parser hands each of its list helpers (`any`, `many`, `optionalMany`, `delimitedMany`) the parse function for the list's items, and every parse function can throw. Stage 0 refuses any function value that can throw, though the runtime never calls this one; the program calls it itself:
 
