@@ -208,6 +208,12 @@ type (
 		Fields               []Field
 		SpreadMaybeUndefined bool
 		Empty                []Field
+
+		// Tuple is a tuple written out, [key, value]: natively an object whose fields are named "0",
+		// "1" and on, as every tuple is, and in JavaScript an array, as the source's is. (What 0.2
+		// lowers reads a tuple only by its fields, which an object answers the same way, new Map's
+		// pairs included: ECMA-262 reads each by "0" and "1".)
+		Tuple bool
 	}
 
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
@@ -501,6 +507,33 @@ type (
 	MapNew struct {
 		Key, Value Type
 		Entries    [][2]Expression
+
+		// Pairs, when it's set, is an array of [key, value] tuples the map is made from instead, each
+		// set in order: new Map(pairs), or new Map(otherMap) through its entries.
+		Pairs Expression
+	}
+
+	// MapKeys and MapValues are [...map.keys()] and [...map.values()]: new arrays, in insertion order.
+	MapKeys struct {
+		Map Expression
+		Key Type
+	}
+	MapValues struct {
+		Map   Expression
+		Value Type
+	}
+
+	// MapClear is map.clear() and set.clear(), which is void.
+	MapClear struct{ Map Expression }
+
+	// MapForEach is map.forEach(Callback), called with each value, its key and the map, and
+	// set.forEach(Callback) (Set), with each element twice and the set, in insertion order and live as
+	// for...of is. Returns is what the callback returns, 0 for nothing; forEach itself is void.
+	MapForEach struct {
+		Map, Callback Expression
+		Key, Value    Type
+		Set           bool
+		Returns       Type
 	}
 
 	// MapGet is map.get(Key): the value, or undefined (a null reference, or a Maybe pair).
@@ -569,6 +602,16 @@ type (
 	// written as UTF-8 the way Node's writeFileSync(path, text) writes it (a lone surrogate as U+FFFD),
 	// in { kind: 'Ok' }, or what went wrong in { kind: 'Error', message }.
 	WriteTextFile struct{ Path, Text Expression }
+
+	// ReadDirectory is readDirectory(Path) from 'adamic': { kind: 'Ok', names }, the names as Node's
+	// readdirSync gives them on the same machine (sorted by their bytes, without . and ..), or
+	// { kind: 'Error', message }.
+	ReadDirectory struct{ Path Expression }
+
+	// FileStatus is fileStatus(Path) from 'adamic': { kind: 'Ok', type, size, symbolicLink }, the type
+	// and size of what Path names, a symbolic link followed, and whether Path is itself one, or
+	// { kind: 'Error', message }.
+	FileStatus struct{ Path Expression }
 )
 
 // Field is one field of an object literal.
@@ -678,15 +721,21 @@ func (c StringCall) Type() Type {
 func (ReadTextFile) Type() Type     { return Object }
 func (ProgramArguments) Type() Type { return Array }
 func (WriteTextFile) Type() Type    { return Object }
+func (ReadDirectory) Type() Type    { return Object }
+func (FileStatus) Type() Type       { return Object }
 
-func (MapNew) Type() Type    { return Map }
-func (SetNew) Type() Type    { return Map }
-func (SetAdd) Type() Type    { return Map }
-func (SetValues) Type() Type { return Array }
-func (MapSet) Type() Type    { return Map }
-func (MapHas) Type() Type    { return Boolean }
-func (MapDelete) Type() Type { return Boolean }
-func (MapSize) Type() Type   { return Number }
+func (MapNew) Type() Type     { return Map }
+func (MapKeys) Type() Type    { return Array }
+func (MapValues) Type() Type  { return Array }
+func (MapClear) Type() Type   { return 0 }
+func (MapForEach) Type() Type { return 0 }
+func (SetNew) Type() Type     { return Map }
+func (SetAdd) Type() Type     { return Map }
+func (SetValues) Type() Type  { return Array }
+func (MapSet) Type() Type     { return Map }
+func (MapHas) Type() Type     { return Boolean }
+func (MapDelete) Type() Type  { return Boolean }
+func (MapSize) Type() Type    { return Number }
 
 func (g MapGet) Type() Type { return Maybe(g.ValueType) }
 
