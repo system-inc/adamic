@@ -56,7 +56,7 @@ func C(program *ir.Program) string {
 		emitter.out.Reset()
 		bodies.WriteString("}\n\n")
 	}
-	bodies.WriteString("int main(void) {\n")
+	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_arguments_save(argc, argv);\n")
 	emitter.indent = 1
 	emitter.block(program.Main, nil)
 	emitter.releaseGlobals()
@@ -815,6 +815,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		return result
 	case ir.MapSize:
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->count", e.value(expression.Map)))
+	case ir.ReadTextFile:
+		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
+	case ir.ProgramArguments:
+		return e.own(ir.Array, "adamic_program_arguments()")
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
@@ -891,6 +895,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		value := e.value(expression.Value)
 		digits := e.value(expression.Digits)
 		return e.own(ir.String, fmt.Sprintf("adamic_number_to_fixed(%s, %s)", value, digits))
+	case ir.NumberFormat:
+		return e.numberFormat(expression)
 	}
 	panic(fmt.Sprintf("native: no C for %T", expression))
 }
@@ -1125,6 +1131,18 @@ func (e *emitter) cache() string {
 var cMath = map[string]string{
 	"abs": "fabs", "ceil": "ceil", "floor": "floor", "trunc": "trunc", "sqrt": "sqrt",
 	"round": "adamic_math_round", "sign": "adamic_math_sign", "pow": "adamic_power",
+}
+
+// numberFormat emits toExponential and toPrecision (runtime/dtoa.c), the receiver before the
+// argument, as JavaScript reads them.
+func (e *emitter) numberFormat(format ir.NumberFormat) string {
+	value := e.value(format.Value)
+	argument, hasArgument := "0.0", "false"
+	if format.Argument != nil {
+		argument, hasArgument = e.value(format.Argument), "true"
+	}
+	function := map[string]string{"toExponential": "adamic_number_to_exponential", "toPrecision": "adamic_number_to_precision"}[format.Method]
+	return e.own(ir.String, fmt.Sprintf("%s(%s, %s, %s)", function, value, argument, hasArgument))
 }
 
 // cIeee754 are the Math functions ported from V8 (runtime/ieee754.c), each adamic_math_<name>. C's
