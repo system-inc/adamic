@@ -76,7 +76,7 @@ interface IgnoreLayer {
 
 // enumerate.go: (ignoreLayer).covers, whether the layer excludes a path relative to the walk root.
 function covers(layer: IgnoreLayer, relative: string, directory: boolean): boolean {
-	return layer.lines.ignored(relative, directory).ignored;
+	return layer.lines.ignored(relative, directory)[0];
 }
 
 // What a walk's callback returns: go on, skip this directory (filepath.SkipDir), or stop with an error.
@@ -239,7 +239,7 @@ export function nestedRepositoriesBelow(root: string): { readonly kind: 'Ok'; re
 			return skipDirectory;
 		}
 		const scope = scopeOf(scopes, relative);
-		if (scope.ignored(relative, true).ignored) {
+		if (scope.ignored(relative, true)[0]) {
 			return skipDirectory;
 		}
 		disk.load(`${relative}/.git`);
@@ -337,7 +337,7 @@ export function enumerate(root: string, resolution: Resolution, handles: (fileNa
 				return proceed;
 			}
 			const scope = scopeOf(scopes, relative);
-			if (scope.ignored(relative, true).ignored) {
+			if (scope.ignored(relative, true)[0]) {
 				count(GitignoreLayer);
 				return skipDirectory;
 			}
@@ -364,7 +364,7 @@ export function enumerate(root: string, resolution: Resolution, handles: (fileNa
 		enumeration.walked++;
 
 		const scope = scopeOf(scopes, relative);
-		if (scope.ignored(relative, false).ignored) {
+		if (scope.ignored(relative, false)[0]) {
 			count(GitignoreLayer);
 			return proceed;
 		}

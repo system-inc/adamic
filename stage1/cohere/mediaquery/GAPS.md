@@ -15,7 +15,7 @@ Chosen from cohere's internal packages for being self-contained and held by test
 - **lint/ecmascript/text** (runner-up): the edit distance and grapheme counting the lint rules use. Pure and small, but held only by unit tests, and too small to tell us much.
 - Looked at and left: format/yaml/cst returns iter.Seq; format/doc's string width matches emoji with regexp; the markdown entity tables are data, and constant data compiles slowly (gitignore's GAPS.md).
 
-## 1. A generic function isn't instantiated per call
+## 1. A generic function isn't instantiated per call (closed by the gitignore port's branch, claude/port-gitignore-adamic-1bstfd; this port's workaround still stands, to be undone)
 
 docs/0.1.md compiles generics by monomorphization, and generic classes are (`Box<string>` lowers). A generic function is lowered once, so a return or a parameter typed by its type parameter is refused.
 
@@ -45,7 +45,7 @@ A generic function that only reads an array's length (`function count<Item>(list
 
 **Around it:** the port checks the Go's in-range indexes with `list[index] ?? panic(...)` through one helper per element type, `nodeAt` and `modeAt` (parsers.ts), where one generic `element<Item>` would do.
 
-## 2. `return undefined` from a function returning `string | undefined` is bad C
+## 2. `return undefined` from a function returning `string | undefined` is bad C (closed by the gitignore port's branch, claude/port-gitignore-adamic-1bstfd; this port's workaround still stands, to be undone)
 
 This one isn't refused: stage 0 lowers it, and the C it writes returns an `adamic_object *` from a function declared to return `adamic_string *`. clang refuses it under `-Werror`, so it never runs, but it is the one thing stage 0 promises never to do: reach clang with C that's wrong.
 
@@ -66,7 +66,7 @@ The emitted function is `adamic_object * adamic_temporary_1 = adamic_retain(NULL
 
 **Around it:** the driver's `escapeOf` (main.ts) returns `''` for a character written as itself, where it would return undefined.
 
-## 3. `?.` on an array or a string
+## 3. `?.` on an array or a string (closed by the gitignore port's branch, claude/port-gitignore-adamic-1bstfd; this port's workaround still stands, to be undone)
 
 docs/0.1.md has `?.`. On an object it lowers; on an array or a string it's refused.
 

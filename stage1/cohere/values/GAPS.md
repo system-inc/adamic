@@ -6,7 +6,7 @@ Every place stage 0 refused the port is below (gap 5 found at main 4ddd17f, the 
 
 The programs are in `gaps/`, and `gaps_test.go` holds them to this file: an open gap must still be refused with the words recorded here, and a closed one must lower and print natively what it prints on Node, leaking nothing.
 
-## 1. `indexOf` from a position
+## 1. `indexOf` from a position (closed by the gitignore port's branch, claude/port-gitignore-adamic-1bstfd; this port's workaround still stands, to be undone)
 
 docs/0.1.md's library has `indexOf`. With one argument it lowers; with the position to search from, it's refused.
 

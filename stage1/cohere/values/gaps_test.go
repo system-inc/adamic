@@ -22,7 +22,7 @@ var gaps = []struct {
 	badC   string
 	stdout string
 }{
-	{path: "gaps/1_index_of_position.ts", notYet: "indexOf with these arguments", stdout: "3\n"},
+	{path: "gaps/1_index_of_position.ts", stdout: "3\n"},
 	{path: "gaps/2_boolean_or_undefined_field.ts", notYet: "a field of type boolean | undefined", stdout: "true\n"},
 	{path: "gaps/3_case_constant.ts", notYet: "a case that isn't a constant", stdout: "newline other\n"},
 	{path: "gaps/4_private_method.ts", notYet: "a method with a computed name", stdout: "2\n"},

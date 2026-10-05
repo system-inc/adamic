@@ -34,7 +34,7 @@ const repository = "../../.."
 var portFiles = []string{"golang.ts", "disk.ts", "enumerate.ts", "main.ts"}
 
 // gitignoreFiles are the gitignore slice's files the port imports, copied beside it as ../gitignore.
-var gitignoreFiles = []string{"bytes.ts", "path.ts", "glob.ts", "gitignore.ts"}
+var gitignoreFiles = []string{"path.ts", "glob.ts", "gitignore.ts"}
 
 // generatedSeed fixes the generated trees, so a failure names trees anyone can make again. Setting
 // COHERE_FORMATFILES_SEED asks for others, and COHERE_FORMATFILES_GENERATED for more or fewer of them.
