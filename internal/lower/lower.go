@@ -66,6 +66,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		}
 	}
 	for _, module := range modules {
+		lowering.findWritesElsewhere(module)
+	}
+	for _, module := range modules {
 		if err := lowering.declareModule(module.Statements.Nodes); err != nil {
 			return nil, err
 		}
@@ -91,6 +94,10 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
+	// writtenElsewhere holds every variable written inside a function other than its own
+	// (findWritesElsewhere): the only ones whose narrowing a call can undo.
+	writtenElsewhere map[*ast.Symbol]bool
+
 	program *load.Program
 	checker *checker.Checker
 	result  *ir.Program

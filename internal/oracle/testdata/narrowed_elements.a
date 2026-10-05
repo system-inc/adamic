@@ -1,0 +1,7 @@
+// Reviewer R2, round three, i7/narrowed_element_plain.a: an array element narrowed by an index, with
+// no call at all, was a number | undefined where a number goes, and reached clang as C it refused.
+const slots: (number | undefined)[] = [4];
+if (slots[0] !== undefined) {
+	const seen = slots[0];
+	console.log(`element ${seen + 1}`);
+}

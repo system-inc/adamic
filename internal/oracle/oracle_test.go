@@ -101,6 +101,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/self_assignments.a", true, false},
 	{"internal/oracle/testdata/method_closures.a", true, false},
 	{"internal/oracle/testdata/splice_empty.a", true, false},
+	{"internal/oracle/testdata/powers_of_two.a", true, false},
 	// A narrowing outlives a call that assigns the variable again: what was narrowed away is checked.
 	{"internal/oracle/testdata/narrowed_reads.a", true, false},
 	{"internal/oracle/testdata/narrowed_writes.a", true, false},
@@ -108,6 +109,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/narrowed_fields.a", true, false},
 	{"internal/oracle/testdata/narrowed_numbers.a", true, true},
 	{"internal/oracle/testdata/narrowed_compared.a", true, false},
+	{"internal/oracle/testdata/narrowed_field_numbers.a", true, true},
+	{"internal/oracle/testdata/narrowed_elements.a", true, false},
+	{"internal/oracle/testdata/narrowed_elements_reset.a", true, true},
+	{"internal/oracle/testdata/narrowed_into_undefined.a", true, false},
 	// The same sorts at the top level, where only the globals' release at exit lets the leak check see.
 	{"internal/oracle/testdata/sort_top_level.a", true, false},
 	{"internal/oracle/testdata/splices.a", true, false},

@@ -1,0 +1,16 @@
+// Reviewer R2, round three, i7/narrowed_field_silent.a: a number | undefined field the checker narrowed,
+// put back to undefined by a call. Native read the stored undefined as a number, NaN, and printed
+// 'field NaN true' where Node printed 'field undefined false': silent. It's read as what it stores
+// now, checked, an inserted check in both backends.
+class Counter {
+	count: number | undefined = 5;
+}
+const counter = new Counter();
+function reset(): void {
+	counter.count = undefined;
+}
+if (counter.count !== undefined) {
+	reset();
+	const seen = counter.count;
+	console.log(`field ${seen} ${Number.isNaN(seen)} ${seen > 0 ? 'positive' : 'not positive'}`);
+}

@@ -1,0 +1,11 @@
+// Every power of two a double holds, as text. At a power of two the double below is half as far as
+// the one above, so the shortest digits that read back may not be the closest of their length:
+// 2 ** 89 is 6.189700196426902e+26, where the closest 16 digits don't read back and their neighbor
+// across the value does. Native printed 17 digits for 46 of these. Found by adamic-fuzz (seed 102629,
+// a closure doubling a number).
+const lines: string[] = [];
+for (let exponent = -1074; exponent <= 1023; exponent++) {
+	const power = 2 ** exponent;
+	lines.push(`${exponent} ${power} ${-power} ${power * 3}`);
+}
+console.log(lines.join('\n'));

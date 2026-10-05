@@ -520,6 +520,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.IsUndefined:
 		return "(" + e.value(expression.Value) + " === undefined)"
 	case ir.Unwrap:
+		if !expression.Checked {
+			return e.value(expression.Value)
+		}
 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
 	case ir.Defined:
