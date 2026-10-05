@@ -11,33 +11,15 @@
 
 #include "adamic.h"
 
-#include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
 // allocate makes a string of length bytes, references 1, its bytes right after it in one block.
 static adamic_string *allocate(size_t length) {
-	adamic_string *string = malloc(sizeof *string + length);
-	if (string == NULL) {
-		static const char message[] = "out of memory";
-		adamic_panic(message, sizeof message - 1);
-	}
-	string->references = 1;
+	adamic_string *string = adamic_allocate(sizeof *string + length, adamic_kind_string);
 	string->length = length;
 	string->bytes = (const char *)(string + 1);
 	return string;
-}
-
-adamic_string *adamic_retain(adamic_string *string) {
-	if (string->references != 0) {
-		string->references++;
-	}
-	return string;
-}
-
-void adamic_release(adamic_string *string) {
-	if (string->references != 0 && --string->references == 0) {
-		free(string);
-	}
 }
 
 adamic_string *adamic_string_from_number(double value) {
