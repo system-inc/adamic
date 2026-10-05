@@ -1,0 +1,12 @@
+subject	probe/reports-on-directives
+source	const before = 1;\n// eslint-disable-next-line nexus/consistency-no-enum -- the fixture has to be a real enum.\nenum Suppressed {}\nenum Reported {}
+query	nexus/consistency-no-enum	18
+query	nexus/consistency-no-enum	110
+query	consistency-no-enum	110
+lineof	-1
+lineof	500
+source	enum Above {}\n/* eslint-disable nexus/consistency-no-enum */\nenum Below {}\n/* eslint-enable */\nx; // eslint-disable-line
+query	probe/reports-on-directives	78
+query	probe/ordinary-rule	78
+source	const s = "/* eslint-disable */"; const t = `${a /* eslint-disable-line x */} // no`; const r = /[/*] no/; a / b // eslint-disable-line -- why
+query	x	5
