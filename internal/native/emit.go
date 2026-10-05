@@ -678,6 +678,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		return array
 	case ir.CodePoints:
 		return e.own(ir.Array, fmt.Sprintf("adamic_string_code_points(%s)", e.value(expression.Value)))
+	case ir.StringIndex:
+		value := e.value(expression.Value)
+		index := e.value(expression.Index)
+		return e.own(ir.String, fmt.Sprintf("adamic_string_at(%s, %s)", value, index))
 	case ir.StringCall:
 		return e.stringCall(expression)
 	case ir.Trim:

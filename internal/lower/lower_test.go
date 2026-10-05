@@ -58,7 +58,7 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 	}{
 		{"a closure", "function outer(): number {\n\tfunction inner(): number {\n\t\treturn 1;\n\t}\n\treturn inner();\n}\nconsole.log(`${outer()}`);\n", "main.a:2:2: stage 0 can't lower a function inside a function (a closure) yet"},
 		{"a class inside a function", "function make(): number {\n\tclass Box {\n\t\treadonly size = 1;\n\t}\n\treturn 1;\n}\nconsole.log(`${make()}`);\n", "main.a:2:2: stage 0 can't lower a class inside a function yet"},
-		{"an index into a string", "console.log('abc'[0] ?? '');\n", "main.a:1:13: stage 0 can't lower an ElementAccessExpression yet"},
+		{"a default parameter", "function twice(value = 1): number {\n\treturn value * 2;\n}\nconsole.log(`${twice()}`);\n", "main.a:1:16: stage 0 can't lower a parameter that isn't a plain name yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

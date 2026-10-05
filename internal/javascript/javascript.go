@@ -407,6 +407,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "[..." + e.value(expression.Value) + "]"
 	case ir.ArrayIndex:
 		return e.value(expression.Array) + "[" + e.value(expression.Index) + "]"
+	case ir.StringIndex:
+		return e.value(expression.Value) + "[" + e.value(expression.Index) + "]"
 	case ir.CheckedCast:
 		return "adamicCast(" + e.value(expression.Value) + ", " + quote(expression.Field) + ", [" + e.values(expression.Allowed) + "], " + quote(expression.Message) + ")"
 	case ir.ArrayPop:

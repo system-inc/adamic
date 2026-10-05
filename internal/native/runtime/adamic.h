@@ -215,6 +215,10 @@ bool adamic_string_ends_with(const adamic_string *string, const adamic_string *s
 struct adamic_array *adamic_string_code_points(const adamic_string *string);
 struct adamic_array *adamic_string_split(const adamic_string *string, const adamic_string *separator);
 
+// adamic_string_at is string[index]: the UTF-16 code unit there, as a string the caller owns, or NULL
+// (undefined) where the string has no such index.
+adamic_string *adamic_string_at(const adamic_string *string, double index);
+
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
 

@@ -662,13 +662,24 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 	return ir.ArraySort{Array: array, Comparator: function, Element: element}, true, nil
 }
 
-// elementAccess lowers tuple[index] with a constant index: the tuple's field of that name.
+// elementAccess lowers array[index], string[index], and tuple[index] with a constant index: the
+// tuple's field of that name.
 func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
 	index := ast.SkipParentheses(access.ArgumentExpression)
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if object.Type() == ir.String {
+		position, err := l.expression(access.ArgumentExpression)
+		if err != nil {
+			return nil, err
+		}
+		if position.Type() != ir.Number {
+			return nil, l.notYet(node, "a string index that isn't a number")
+		}
+		return ir.StringIndex{Value: object, Index: position}, nil
 	}
 	if object.Type() == ir.Array {
 		element, err := l.elementType(access.Expression)

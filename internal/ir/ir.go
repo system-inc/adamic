@@ -242,6 +242,10 @@ type (
 		Element      Type
 	}
 
+	// StringIndex is string[index]: the UTF-16 code unit there, as a string, or undefined when index
+	// isn't one of the string's (a null reference).
+	StringIndex struct{ Value, Index Expression }
+
 	// ArrayPop is array.pop(): the last element, removed, or undefined when there's none (a null
 	// reference, or a MaybeNumber).
 	ArrayPop struct {
@@ -359,6 +363,7 @@ func (StringLength) Type() Type    { return Number }
 func (CharCodeAt) Type() Type      { return Number }
 func (Trim) Type() Type            { return String }
 func (CodePoints) Type() Type      { return Array }
+func (StringIndex) Type() Type     { return String }
 func (MapEntries) Type() Type      { return Array }
 func (MakeClosure) Type() Type     { return Closure }
 func (CheckedCast) Type() Type     { return Object }

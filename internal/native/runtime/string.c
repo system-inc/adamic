@@ -329,6 +329,16 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	return builder_finish(&build);
 }
 
+adamic_string *adamic_string_at(const adamic_string *string, double index) {
+	// As for an array: an index is an integer from 0 up to the length in UTF-16 units, and anything
+	// else (negative, a fraction, NaN, past the end) is a property the string doesn't have. Half of a
+	// supplementary character is a lone surrogate, as slice makes it.
+	if (!(index >= 0) || index != trunc(index) || index >= adamic_string_length(string)) {
+		return NULL;
+	}
+	return adamic_string_slice(string, index, index + 1, true);
+}
+
 adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position) {
 	position = isnan(position) ? 0 : trunc(position);
 	adamic_maybe_number missing = {false, 0};
