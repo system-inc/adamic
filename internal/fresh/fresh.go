@@ -52,7 +52,7 @@ import (
 // may keep them. Summaries are found to a fixed point over the call graph from "returns nothing",
 // recursion included, and fall back to "returns something outside" if that takes too long.
 func ProveWrites(program *ir.Program) []Write {
-	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}}
+	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program)}
 	functions := []int{}
 	for index := range program.Functions {
 		functions = append(functions, index)
@@ -104,6 +104,50 @@ func ProveWrites(program *ir.Program) []Write {
 	return writes
 }
 
+// directlyCalled is every function whose every call the graph sees as an ir.Call with its arguments:
+// not a closure (called through a function value), not a sort comparator (called by the runtime with
+// the array's elements), and with no reference parameter a closure captures (whose cell the summary
+// couldn't follow).
+func directlyCalled(program *ir.Program) map[int]bool {
+	direct := map[int]bool{}
+	for index, function := range program.Functions {
+		if function.Closure {
+			continue
+		}
+		direct[index] = true
+		for _, local := range function.Parameters {
+			if declared := program.Locals[local]; declared.Captured && mutable(declared.Type) {
+				delete(direct, index)
+			}
+		}
+	}
+	var walk func(node reflect.Value)
+	walk = func(node reflect.Value) {
+		switch node.Kind() {
+		case reflect.Interface, reflect.Pointer:
+			if !node.IsNil() {
+				walk(node.Elem())
+			}
+		case reflect.Struct:
+			if sorted, ok := node.Interface().(ir.ArraySort); ok && sorted.Callback == nil {
+				delete(direct, sorted.Comparator)
+			}
+			for index := 0; index < node.NumField(); index++ {
+				walk(node.Field(index))
+			}
+		case reflect.Slice, reflect.Array:
+			for index := 0; index < node.Len(); index++ {
+				walk(node.Index(index))
+			}
+		}
+	}
+	walk(reflect.ValueOf(program.Main))
+	for _, function := range program.Functions {
+		walk(reflect.ValueOf(function.Body))
+	}
+	return direct
+}
+
 // summaryRounds bounds the fixed point over summaries.
 const summaryRounds = 32
 
@@ -144,7 +188,8 @@ type Write struct {
 	Why string
 }
 
-// object is an abstract object: outside, or an allocation site's newest instance or older ones.
+// object is an abstract object: outside, an allocation site's newest instance or older ones, or,
+// below zero, a placeholder for what a parameter is or reaches (see analysis.placeholder).
 type object int32
 
 const outside object = 0
@@ -234,11 +279,18 @@ type state struct {
 	// heap is what each confined object's fields, elements and map entries may hold.
 	heap map[object]map[string]value
 
+	// escaped is what whoever is outside this call may hold: placeholders always are. leaked is what
+	// this function let escape itself, its caller's arguments among them, which its summary says.
 	escaped objects
+	leaked  objects
+
+	// clobbered is set once something this function can't see into has run (a call that isn't
+	// summarized), which may have written anything into its parameters.
+	clobbered bool
 }
 
 func newState() *state {
-	return &state{locals: map[int]value{}, heap: map[object]map[string]value{}, escaped: objects{}}
+	return &state{locals: map[int]value{}, heap: map[object]map[string]value{}, escaped: objects{}, leaked: objects{}}
 }
 
 func (s *state) copy() *state {
@@ -256,6 +308,10 @@ func (s *state) copy() *state {
 	for o := range s.escaped {
 		made.escaped[o] = true
 	}
+	for o := range s.leaked {
+		made.leaked[o] = true
+	}
+	made.clobbered = s.clobbered
 	return made
 }
 
@@ -279,6 +335,12 @@ func (s *state) join(other *state) bool {
 	for o := range other.escaped {
 		changed = s.escaped.add(o) || changed
 	}
+	for o := range other.leaked {
+		changed = s.leaked.add(o) || changed
+	}
+	if other.clobbered && !s.clobbered {
+		s.clobbered, changed = true, true
+	}
 	if changed {
 		s.closeEscapes()
 	}
@@ -298,22 +360,41 @@ func (s *state) store(o object, field string, held value) bool {
 	return changed
 }
 
-// escape marks every object a value holds, strongly or weakly, as escaped, and everything they hold.
+// escape marks every object a value holds, strongly or weakly, as escaped and leaked, and
+// everything they hold: this function let it go where it can't see.
 func (s *state) escape(held value) {
 	for o := range held.strong {
-		s.escapeObject(o)
+		s.escapeObject(o, true)
 	}
 	for o := range held.weak {
-		s.escapeObject(o)
+		s.escapeObject(o, true)
 	}
 }
 
-func (s *state) escapeObject(o object) {
+// expose marks a value as escaped but not leaked: stored into what a parameter reaches, which the
+// caller holds, and its summary says where.
+func (s *state) expose(held value) {
+	for o := range held.strong {
+		s.escapeObject(o, false)
+	}
+	for o := range held.weak {
+		s.escapeObject(o, false)
+	}
+}
+
+func (s *state) escapeObject(o object, leak bool) {
 	queue := []object{o}
 	for len(queue) > 0 {
 		next := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
-		if next == outside || !s.escaped.add(next) {
+		if next == outside {
+			continue
+		}
+		added := s.escaped.add(next)
+		if leak && s.leaked.add(next) {
+			added = true
+		}
+		if !added {
 			continue
 		}
 		for _, held := range s.heap[next] {
@@ -323,48 +404,46 @@ func (s *state) escapeObject(o object) {
 	}
 }
 
-// closeEscapes keeps what escaped objects hold escaped: a join or a merge by recency can give an
-// escaped object something that hadn't escaped yet.
+// closeEscapes keeps what escaped and leaked objects hold escaped and leaked: a join or a merge by
+// recency can give one something that hadn't been yet.
 func (s *state) closeEscapes() {
-	for _, o := range s.escaped.sorted() {
+	exposed := s.escaped.sorted()
+	for o := range s.heap {
+		if o < 0 && !s.escaped[o] {
+			exposed = append(exposed, o)
+		}
+	}
+	for _, o := range exposed {
 		for _, held := range s.heap[o] {
-			s.escape(held)
+			if s.leaked[o] {
+				s.escape(held)
+			} else {
+				s.expose(held)
+			}
 		}
 	}
 }
 
 // exposed reports whether whoever is outside may hold o.
 func (s *state) exposed(o object) bool {
-	return o == outside || s.escaped[o]
+	return o == outside || o < 0 || s.escaped[o]
 }
 
-// load is what a field of the objects a value holds strongly may hold.
-func (s *state) load(from value, field string) value {
-	var loaded value
-	for o := range from.strong {
-		if s.exposed(o) {
-			// Whoever is outside may have written anything outside there.
-			loaded.merge(outsideValue())
-		}
-		fields := s.heap[o]
-		loaded.merge(fields[field])
-		loaded.merge(fields[anyField])
+// storeInto is a store into o that lets what's stored escape as o has: leaked into what's leaked,
+// exposed into what a caller holds.
+func (s *state) storeInto(o object, field string, held value) bool {
+	if o == outside {
+		s.escape(held)
+		return false
 	}
-	return loaded
-}
-
-// everything is what any field, element or entry of the objects a value holds strongly may hold.
-func (s *state) everything(from value) value {
-	var loaded value
-	for o := range from.strong {
-		if s.exposed(o) {
-			loaded.merge(outsideValue())
-		}
-		for _, held := range s.heap[o] {
-			loaded.merge(held)
-		}
+	changed := s.store(o, field, held)
+	switch {
+	case s.leaked[o]:
+		s.escape(held)
+	case s.exposed(o):
+		s.expose(held)
 	}
-	return loaded
+	return changed
 }
 
 // reach is every object a value reaches through strong references alone.
@@ -387,10 +466,16 @@ func (s *state) reach(from value) objects {
 // closes reports whether writing held into holder may close a cycle: whether the value may reach,
 // strongly, an object the holder may be. Why says what was found when it may.
 func (s *state) closes(holder value, held value) (bool, string) {
+	return s.closesWith(holder, held, s.exposed)
+}
+
+// closesWith is closes, with what the value may reach outside judged by exposed: a write a call
+// replays is judged after it, and what the write itself let escape doesn't count against it.
+func (s *state) closesWith(holder value, held value, exposed func(object) bool) (bool, string) {
 	reached := s.reach(held)
 	reachesOutside := false
 	for o := range reached {
-		if s.exposed(o) {
+		if exposed(o) {
 			reachesOutside = true
 		}
 	}
@@ -441,6 +526,10 @@ func (s *state) recent(site int) {
 		delete(s.escaped, from)
 		s.escaped.add(to)
 	}
+	if s.leaked[from] {
+		delete(s.leaked, from)
+		s.leaked.add(to)
+	}
 	s.closeEscapes()
 }
 
@@ -451,8 +540,13 @@ type freshness struct {
 	origins   map[originKey]int
 	writes    map[writeKey]*Write
 
-	// top is set once summaries are given up on: every call's result is outside.
+	// top is set once summaries are given up on: every call's result is outside, every argument
+	// escapes, and nothing is deferred.
 	top bool
+
+	// direct is each function only ever called by ir.Call, with no parameter a closure captures:
+	// its parameters are placeholders, and what it can't prove is judged where it's called.
+	direct map[int]bool
 }
 
 // originKey is where an object was first made: a function, an instruction there, and which of the
@@ -502,17 +596,125 @@ type analysis struct {
 	// returns, and iterables those after it, each the iterable of a for...of.
 	returnedLocal int
 	iterables     map[*ir.Statement]int
+
+	// placeholders is set for a function in proof.direct: each parameter is a placeholder, and so is
+	// what each field read from one reaches. terms names each, by its object (below zero).
+	placeholders bool
+	terms        []term
+	termObjects  map[term]object
+
+	// deferred is each write this function couldn't prove that its callers will judge: the write, and
+	// the holder and value it may have, joined over every time it runs.
+	deferred map[writeKey]*deferral
+}
+
+// term is a placeholder: parameter param itself (level 0), what it holds in field (level 1), or
+// everything below that (level 2).
+type term struct {
+	param int
+	field string
+	level int
+}
+
+// deferral is a write left to the callers to judge, with what it writes into and what it writes.
+type deferral struct {
+	write          Write
+	holder, stored value
+}
+
+// placeholder is the object for a term, made the first time it's met.
+func (a *analysis) placeholder(t term) object {
+	if o, ok := a.termObjects[t]; ok {
+		return o
+	}
+	a.terms = append(a.terms, t)
+	o := object(-len(a.terms))
+	a.termObjects[t] = o
+	return o
+}
+
+// below is the placeholder for what a placeholder holds in a field: a parameter's field, then
+// everything below that.
+func (a *analysis) below(o object, field string) object {
+	t := a.termOf(o)
+	switch t.level {
+	case 0:
+		return a.placeholder(term{param: t.param, field: field, level: 1})
+	case 1:
+		return a.placeholder(term{param: t.param, field: t.field, level: 2})
+	}
+	return o
+}
+
+// termOf is a placeholder's term.
+func (a *analysis) termOf(o object) term {
+	return a.terms[-int(o)-1]
+}
+
+// load is what a field of the objects a value holds strongly may hold.
+func (a *analysis) load(from value, field string) value {
+	var loaded value
+	for o := range from.strong {
+		fields := a.state.heap[o]
+		loaded.merge(fields[field])
+		loaded.merge(fields[anyField])
+		switch {
+		case o < 0:
+			// What the argument holds there, or anything below it.
+			reached := a.below(o, field)
+			loaded.addStrong(reached)
+			loaded.addWeak(reached)
+			if a.state.clobbered {
+				loaded.merge(outsideValue())
+			}
+		case a.state.exposed(o):
+			// Whoever is outside may have written anything outside there.
+			loaded.merge(outsideValue())
+		}
+	}
+	return loaded
+}
+
+// everything is what any field, element or entry of the objects a value holds strongly may hold.
+func (a *analysis) everything(from value) value {
+	var loaded value
+	for o := range from.strong {
+		for _, held := range a.state.heap[o] {
+			loaded.merge(held)
+		}
+		switch {
+		case o < 0:
+			reached := a.below(o, anyField)
+			loaded.addStrong(reached)
+			loaded.addWeak(reached)
+			if a.state.clobbered {
+				loaded.merge(outsideValue())
+			}
+		case a.state.exposed(o):
+			loaded.merge(outsideValue())
+		}
+	}
+	return loaded
 }
 
 // analyze interprets a function to its fixed point, judges its writes, and returns its summary.
 func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
-	a := &analysis{proof: proof, function: function, graph: graph, sites: map[siteKey]int{}, sitesOf: map[flow.InstructionId][]int{}, iterables: map[*ir.Statement]int{}}
+	a := &analysis{proof: proof, function: function, graph: graph, sites: map[siteKey]int{}, sitesOf: map[flow.InstructionId][]int{}, iterables: map[*ir.Statement]int{}, termObjects: map[term]object{}, deferred: map[writeKey]*deferral{}}
 	a.returnedLocal = len(proof.program.Locals)
+	a.placeholders = function >= 0 && proof.direct[function] && !proof.top
 	entry := newState()
-	for _, parameter := range graph.Params {
-		local := int(graph.Identifiers[parameter.Identifier].Declaration) - 1
-		if mutable(proof.program.Locals[local].Type) {
-			entry.locals[local] = outsideValue()
+	if function >= 0 {
+		for index, local := range proof.program.Functions[function].Parameters {
+			declared := proof.program.Locals[local]
+			if !mutable(declared.Type) || declared.Captured {
+				continue
+			}
+			if a.placeholders {
+				parameter := a.placeholder(term{param: index})
+				entry.locals[local] = value{strong: objects{parameter: true}, weak: objects{parameter: true}}
+			} else {
+				entry.locals[local] = outsideValue()
+			}
 		}
 	}
 	in := map[flow.BlockId]*state{graph.Entry: entry}
@@ -551,12 +753,18 @@ func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
 			continue
 		}
 		_, after := a.block(block, in[block.Id])
-		if _, isReturn := block.Terminal.(*flow.Return); isReturn {
+		switch block.Terminal.(type) {
+		case *flow.Return, *flow.Throw:
+			// Leaving, either way: what it did on the way is its callers' to know.
 			exit.join(after)
 			exited = true
 		}
 	}
 	if function < 0 || !exited {
+		// Never leaving, its callers never judge what it deferred.
+		for key, deferred := range a.deferred {
+			a.proof.unproven(key, deferred.write, deferred.write.Why+", in a function that never returns or throws")
+		}
 		return nil
 	}
 	return a.summarize(exit)
@@ -622,7 +830,7 @@ func (a *analysis) run(id flow.InstructionId) {
 			a.state.locals[iterable] = a.value(statement.Iterable)
 			break
 		}
-		elements := a.state.load(a.state.locals[iterable], elementKey)
+		elements := a.load(a.state.locals[iterable], elementKey)
 		if statement.Pattern == nil {
 			a.define(statement.Local, elements)
 			break
@@ -630,7 +838,7 @@ func (a *analysis) run(id flow.InstructionId) {
 		for _, binding := range statement.Pattern {
 			// A pair a map gives, or a tuple of the array's: what the element holds there.
 			bound := elements.copy()
-			bound.merge(a.state.load(elements, binding.Field))
+			bound.merge(a.load(elements, binding.Field))
 			a.define(binding.Local, bound)
 		}
 	case ir.Try:
@@ -678,24 +886,52 @@ func (a *analysis) write(kind WriteKind, site int, name string, holder value, he
 	key := writeKey{function: a.function, instruction: a.instruction, ordinal: a.writeCount}
 	a.writeCount++
 	if a.judging {
-		recorded := a.proof.writes[key]
-		if recorded == nil {
-			recorded = &Write{Kind: kind, Site: site, Name: name, Function: a.function, Proven: true}
-			a.proof.writes[key] = recorded
-		}
-		if closes, why := a.state.closes(holder, held); closes && recorded.Proven {
-			recorded.Proven, recorded.Why = false, why
-		}
+		write := Write{Kind: kind, Site: site, Name: name, Function: a.function, Proven: true}
+		a.proof.record(key, write)
+		a.judge(key, write, holder, held, "", a.state.exposed)
 	}
 	for o := range holder.strong {
-		if o == outside {
-			a.state.escape(held)
-			continue
+		a.state.storeInto(o, field, held)
+	}
+}
+
+// judge decides a write here, or defers it to this function's callers: one this function can't
+// prove alone may be proven where it's called, with what the caller knows of its arguments.
+func (a *analysis) judge(key writeKey, write Write, holder value, held value, where string, exposed func(object) bool) {
+	closes, why := a.state.closesWith(holder, held, exposed)
+	if !closes {
+		return
+	}
+	if a.placeholders {
+		deferred := a.deferred[key]
+		if deferred == nil {
+			write.Why = why + where
+			deferred = &deferral{write: write}
+			a.deferred[key] = deferred
 		}
-		a.state.store(o, field, held)
-		if a.state.escaped[o] {
-			a.state.escape(held)
-		}
+		deferred.holder.merge(holder)
+		deferred.stored.merge(held)
+		return
+	}
+	a.proof.unproven(key, write, why+where)
+}
+
+// record notes a write the first time it's met in a round, proven until something says otherwise.
+func (proof *freshness) record(key writeKey, write Write) *Write {
+	recorded := proof.writes[key]
+	if recorded == nil {
+		recorded = &write
+		recorded.Proven, recorded.Why = true, ""
+		proof.writes[key] = recorded
+	}
+	return recorded
+}
+
+// unproven marks a write as one that may close a cycle, keeping the first reason found.
+func (proof *freshness) unproven(key writeKey, write Write, why string) {
+	recorded := proof.record(key, write)
+	if recorded.Proven {
+		recorded.Proven, recorded.Why = false, why
 	}
 }
 
@@ -751,6 +987,8 @@ func (a *analysis) call(operands []value, returns ir.Type) value {
 	for _, operand := range operands {
 		a.state.escape(operand)
 	}
+	// It may write anything it can reach into the parameters.
+	a.state.clobbered = true
 	if !mutable(returns) {
 		return value{}
 	}
@@ -920,7 +1158,7 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ObjectLiteral:
 		var copied value
 		if expression.Spread != nil {
-			copied = a.state.everything(a.value(expression.Spread))
+			copied = a.everything(a.value(expression.Spread))
 		}
 		all := append(append([]ir.Field{}, expression.Fields...), expression.Empty...)
 		fields := make([]value, len(all))
@@ -939,7 +1177,7 @@ func (a *analysis) value(expression ir.Expression) value {
 		for index, element := range expression.Elements {
 			held := a.value(element)
 			if index < len(expression.Spread) && expression.Spread[index] {
-				held = a.state.load(held, elementKey)
+				held = a.load(held, elementKey)
 			}
 			elements.merge(held)
 		}
@@ -952,15 +1190,15 @@ func (a *analysis) value(expression ir.Expression) value {
 		}
 		if expression.Pairs != nil {
 			// Each pair's key and value: a tuple's fields, or another map's entries.
-			pairs := a.state.load(a.value(expression.Pairs), elementKey)
+			pairs := a.load(a.value(expression.Pairs), elementKey)
 			entries.merge(pairs)
-			entries.merge(a.state.everything(pairs))
+			entries.merge(a.everything(pairs))
 		}
 		return a.fresh(elementKey, entries)
 	case ir.MapKeys:
-		return a.fresh(elementKey, a.state.load(a.value(expression.Map), elementKey))
+		return a.fresh(elementKey, a.load(a.value(expression.Map), elementKey))
 	case ir.MapValues:
-		return a.fresh(elementKey, a.state.load(a.value(expression.Map), elementKey))
+		return a.fresh(elementKey, a.load(a.value(expression.Map), elementKey))
 	case ir.MapClear:
 		a.value(expression.Map)
 		return value{}
@@ -973,33 +1211,33 @@ func (a *analysis) value(expression ir.Expression) value {
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})
 	case ir.SetNew:
-		return a.fresh(elementKey, a.state.load(a.value(expression.Values), elementKey))
+		return a.fresh(elementKey, a.load(a.value(expression.Values), elementKey))
 	case ir.SetValues:
-		return a.fresh(elementKey, a.state.load(a.value(expression.Set), elementKey))
+		return a.fresh(elementKey, a.load(a.value(expression.Set), elementKey))
 	case ir.MapEntries:
-		contents := a.state.load(a.value(expression.Map), elementKey)
+		contents := a.load(a.value(expression.Map), elementKey)
 		pairs := a.fresh(anyField, contents)
 		return a.fresh(elementKey, pairs)
 	case ir.ArraySlice:
-		elements := a.state.load(a.value(expression.Array), elementKey)
+		elements := a.load(a.value(expression.Array), elementKey)
 		for _, argument := range expression.Arguments {
 			a.value(argument)
 		}
 		return a.fresh(elementKey, elements)
 	case ir.ArrayConcat:
-		elements := a.state.load(a.value(expression.Array), elementKey)
+		elements := a.load(a.value(expression.Array), elementKey)
 		for _, other := range expression.Others {
-			elements.merge(a.state.load(a.value(other), elementKey))
+			elements.merge(a.load(a.value(other), elementKey))
 		}
 		return a.fresh(elementKey, elements)
 	case ir.Property:
-		return a.state.load(a.value(expression.Object), expression.Name)
+		return a.load(a.value(expression.Object), expression.Name)
 	case ir.ArrayIndex:
 		array := a.value(expression.Array)
 		a.value(expression.Index)
-		return a.state.load(array, elementKey)
+		return a.load(array, elementKey)
 	case ir.ArrayPop:
-		return a.state.load(a.value(expression.Array), elementKey)
+		return a.load(a.value(expression.Array), elementKey)
 	case ir.ArraySearch:
 		a.value(expression.Array)
 		a.value(expression.Value)
@@ -1037,7 +1275,7 @@ func (a *analysis) value(expression ir.Expression) value {
 		for _, item := range expression.Items {
 			items.merge(a.value(item))
 		}
-		removed := a.state.load(holder, elementKey)
+		removed := a.load(holder, elementKey)
 		if len(expression.Items) > 0 {
 			a.write(WriteElement, expression.Site, "", holder, items, elementKey)
 		}
@@ -1045,7 +1283,7 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.MapGet:
 		object := a.value(expression.Map)
 		a.value(expression.Key)
-		return a.state.load(object, elementKey)
+		return a.load(object, elementKey)
 	case ir.MapSet:
 		holder := a.value(expression.Map)
 		held := a.value(expression.Key)
@@ -1076,14 +1314,18 @@ func (a *analysis) value(expression ir.Expression) value {
 		for _, argument := range expression.Arguments {
 			operands = append(operands, a.value(argument))
 		}
-		a.call(operands, 0)
+		if a.proof.top {
+			return a.call(operands, expression.Returns)
+		}
+		if !a.proof.direct[expression.Function] {
+			// Its parameters are outside to it, so it may keep them anywhere.
+			a.call(operands, 0)
+		}
+		result := a.made(expression.Function, a.proof.summaries[expression.Function], operands)
 		if !mutable(expression.Returns) {
 			return value{}
 		}
-		if a.proof.top {
-			return outsideValue()
-		}
-		return a.made(a.proof.summaries[expression.Function])
+		return result
 	case ir.CallClosure:
 		operands := []value{a.value(expression.Closure)}
 		for _, argument := range expression.Arguments {
@@ -1155,9 +1397,11 @@ func newestOf(made value) object {
 	return outside
 }
 
-// made is a summarized call's result, made anew here: the summary's objects, each the newest
-// instance of this instruction's site for where it was first made.
-func (a *analysis) made(callee *summary) value {
+// made is a summarized call, replayed here: its fresh objects made anew, each the newest instance of
+// this instruction's site for where it was first made; what it stored into its parameters stored
+// into the arguments; what it let escape of them let escape; and the writes it left to its callers
+// judged with what's known here. Its result is what it returns.
+func (a *analysis) made(function int, callee *summary, arguments []value) value {
 	if callee == nil {
 		// Returns nothing yet, on the way to the fixed point.
 		return value{}
@@ -1165,6 +1409,12 @@ func (a *analysis) made(callee *summary) value {
 	instances := map[int]object{}
 	for _, origin := range callee.origins() {
 		instances[origin] = newest(a.site(origin))
+	}
+	// What had escaped before the call: while the callee runs, only code it can't see into could
+	// tie what it was given to what had, and then anything escaped counts.
+	before := objects{}
+	for o := range a.state.escaped {
+		before.add(o)
 	}
 	translate := func(held summaryValue) value {
 		var made value
@@ -1182,25 +1432,136 @@ func (a *analysis) made(callee *summary) value {
 				made.addWeak(instances[origin])
 			}
 		}
+		for _, t := range held.strongTerms {
+			argument := a.argument(t, arguments)
+			made.merge(argument)
+		}
+		for _, t := range held.weakTerms {
+			argument := a.argument(t, arguments)
+			for o := range argument.strong {
+				made.addWeak(o)
+			}
+			for o := range argument.weak {
+				made.addWeak(o)
+			}
+		}
 		return made
 	}
-	for _, origin := range callee.origins() {
-		for field, held := range callee.fields[origin] {
-			a.state.store(instances[origin], field, translate(held))
+	// Until nothing more is added: a store through one argument can change what another reaches,
+	// when the caller passed the same object for both.
+	for {
+		escaped, leaked := len(a.state.escaped), len(a.state.leaked)
+		changed := false
+		for _, origin := range callee.origins() {
+			for field, held := range callee.fields[origin] {
+				changed = a.state.storeInto(instances[origin], field, translate(held)) || changed
+			}
+		}
+		for _, t := range callee.edgeTerms() {
+			holders := translate(summaryValue{strongTerms: []term{t}})
+			for field, held := range callee.edges[t] {
+				stored := translate(held)
+				for _, o := range holders.strong.sorted() {
+					changed = a.state.storeInto(o, field, stored) || changed
+				}
+			}
+		}
+		for _, t := range callee.leaks {
+			a.state.escape(translate(summaryValue{strongTerms: []term{t}}))
+		}
+		if !changed && escaped == len(a.state.escaped) && leaked == len(a.state.leaked) {
+			break
+		}
+	}
+	if callee.clobbers {
+		a.state.clobbered = true
+	}
+	if a.judging {
+		where := ", where " + a.proof.functionName(function) + " is called from " + a.proof.functionName(a.function)
+		for _, key := range callee.deferredKeys() {
+			deferred := callee.deferred[key]
+			exposed := func(o object) bool {
+				return o == outside || o < 0 || before[o] || (callee.clobbers && a.state.exposed(o))
+			}
+			a.judge(key, deferred.write, translate(deferred.holder), translate(deferred.stored), where, exposed)
 		}
 	}
 	return translate(callee.result)
 }
 
-// summary is what a function returns: the confined objects its result reaches, by origin, with -1
-// for outside.
+// argument is what a placeholder of a callee's stands for here: the argument, or everything the
+// argument reaches through the field, strongly or weakly.
+func (a *analysis) argument(t term, arguments []value) value {
+	if t.param >= len(arguments) {
+		return outsideValue()
+	}
+	if t.level == 0 {
+		return arguments[t.param].copy()
+	}
+	var start value
+	if t.field == anyField {
+		start = a.everything(arguments[t.param])
+	} else {
+		start = a.load(arguments[t.param], t.field)
+	}
+	if t.level == 1 {
+		return start
+	}
+	start = a.everything(start)
+	var reached value
+	queue := append(start.strong.sorted(), start.weak.sorted()...)
+	visited := objects{}
+	for len(queue) > 0 {
+		o := queue[len(queue)-1]
+		queue = queue[:len(queue)-1]
+		if !visited.add(o) {
+			continue
+		}
+		reached.addStrong(o)
+		reached.addWeak(o)
+		switch {
+		case o < 0:
+			// One of this function's own placeholders: everything below it too.
+			queue = append(queue, a.below(a.below(o, anyField), anyField))
+		case a.state.exposed(o):
+			queue = append(queue, outside)
+		}
+		for _, held := range a.state.heap[o] {
+			queue = append(queue, held.strong.sorted()...)
+			queue = append(queue, held.weak.sorted()...)
+		}
+	}
+	return reached
+}
+
+func (proof *freshness) functionName(function int) string {
+	if function < 0 {
+		return "the top level"
+	}
+	return proof.program.Functions[function].Name
+}
+
+// summary is what a call does, from its caller's side: what it returns, and the fresh objects that
+// reaches, by origin (-1 is outside); what it stored into what its parameters reach (edges); which of
+// those it let escape (leaks); whether it ran anything it can't see into (clobbers); and the writes
+// it couldn't prove, left to its callers.
 type summary struct {
-	result summaryValue
-	fields map[int]map[string]summaryValue
+	result   summaryValue
+	fields   map[int]map[string]summaryValue
+	edges    map[term]map[string]summaryValue
+	leaks    []term
+	clobbers bool
+	deferred map[writeKey]summaryDeferral
 }
 
 type summaryValue struct {
-	strong, weak []int
+	strong, weak           []int
+	strongTerms, weakTerms []term
+}
+
+type summaryDeferral struct {
+	write          Write
+	holder, stored summaryValue
 }
 
 func (s *summary) origins() []int {
@@ -1219,6 +1580,15 @@ func (s *summary) origins() []int {
 			note(held)
 		}
 	}
+	for _, fields := range s.edges {
+		for _, held := range fields {
+			note(held)
+		}
+	}
+	for _, deferred := range s.deferred {
+		note(deferred.holder)
+		note(deferred.stored)
+	}
 	list := []int{}
 	for origin := range seen {
 		list = append(list, origin)
@@ -1227,22 +1597,72 @@ func (s *summary) origins() []int {
 	return list
 }
 
+func (s *summary) edgeTerms() []term {
+	list := []term{}
+	for t := range s.edges {
+		list = append(list, t)
+	}
+	sortTerms(list)
+	return list
+}
+
+func (s *summary) deferredKeys() []writeKey {
+	list := []writeKey{}
+	for key := range s.deferred {
+		list = append(list, key)
+	}
+	sortWriteKeys(list)
+	return list
+}
+
+func sortTerms(list []term) {
+	slices.SortFunc(list, func(a, b term) int {
+		if a.param != b.param {
+			return a.param - b.param
+		}
+		if a.level != b.level {
+			return a.level - b.level
+		}
+		return strings.Compare(a.field, b.field)
+	})
+}
+
+func sortWriteKeys(keys []writeKey) {
+	slices.SortFunc(keys, func(a, b writeKey) int {
+		if a.function != b.function {
+			return a.function - b.function
+		}
+		if a.instruction != b.instruction {
+			return int(a.instruction) - int(b.instruction)
+		}
+		return a.ordinal - b.ordinal
+	})
+}
+
 func (s *summary) String() string {
 	if s == nil {
 		return "nothing"
 	}
 	var text strings.Builder
-	fmt.Fprintf(&text, "%v", s.result)
-	for _, origin := range s.origins() {
-		fields := s.fields[origin]
+	fmt.Fprintf(&text, "%v clobbers=%v leaks=%v", s.result, s.clobbers, s.leaks)
+	fieldsOf := func(prefix string, fields map[string]summaryValue) {
 		names := []string{}
 		for name := range fields {
 			names = append(names, name)
 		}
 		sort.Strings(names)
 		for _, name := range names {
-			fmt.Fprintf(&text, " %d.%q=%v", origin, name, fields[name])
+			fmt.Fprintf(&text, " %s.%q=%v", prefix, name, fields[name])
 		}
+	}
+	for _, origin := range s.origins() {
+		fieldsOf(fmt.Sprint(origin), s.fields[origin])
+	}
+	for _, t := range s.edgeTerms() {
+		fieldsOf(fmt.Sprintf("%v", t), s.edges[t])
+	}
+	for _, key := range s.deferredKeys() {
+		fmt.Fprintf(&text, " deferred %v=%v,%v", key, s.deferred[key].holder, s.deferred[key].stored)
 	}
 	return text.String()
 }
@@ -1254,45 +1674,87 @@ func (s *summary) equal(other *summary) bool {
 	return s.String() == other.String()
 }
 
-// summarize is the function's summary from the state it exits in: each site's instances taken
-// together by where they were first made, escaped if either has.
+// summarize is the function's summary from the state it leaves in: each site's instances taken
+// together by where they were first made, leaked if either has, and each placeholder as its term.
 func (a *analysis) summarize(exit *state) *summary {
-	exposed := func(o object) bool {
+	leaked := func(o object) bool {
 		if o == outside {
 			return true
 		}
-		site := siteOf(o)
-		return exit.escaped[newest(site)] || exit.escaped[older(site)]
-	}
-	originOf := func(o object) int {
-		if exposed(o) {
-			return -1
+		if o < 0 {
+			return false
 		}
-		return a.siteOrigin[siteOf(o)]
+		site := siteOf(o)
+		return exit.leaked[newest(site)] || exit.leaked[older(site)]
 	}
 	collapse := func(held value) summaryValue {
 		strong, weak := map[int]bool{}, map[int]bool{}
+		made := summaryValue{}
 		for o := range held.strong {
-			strong[originOf(o)] = true
+			switch {
+			case o < 0:
+				made.strongTerms = append(made.strongTerms, a.termOf(o))
+			case leaked(o):
+				strong[-1] = true
+			default:
+				strong[a.siteOrigin[siteOf(o)]] = true
+			}
 		}
 		for o := range held.weak {
-			weak[originOf(o)] = true
+			switch {
+			case o < 0:
+				made.weakTerms = append(made.weakTerms, a.termOf(o))
+			case leaked(o):
+				weak[-1] = true
+			default:
+				weak[a.siteOrigin[siteOf(o)]] = true
+			}
 		}
-		return summaryValue{strong: sortedKeys(strong), weak: sortedKeys(weak)}
+		made.strong, made.weak = sortedKeys(strong), sortedKeys(weak)
+		sortTerms(made.strongTerms)
+		sortTerms(made.weakTerms)
+		return made
 	}
-	made := &summary{fields: map[int]map[string]summaryValue{}}
+	made := &summary{fields: map[int]map[string]summaryValue{}, edges: map[term]map[string]summaryValue{}, deferred: map[writeKey]summaryDeferral{}, clobbers: exit.clobbered}
 	returned := exit.locals[a.returnedLocal]
 	made.result = collapse(returned)
+	roots := []value{returned}
+	for o, fields := range exit.heap {
+		if o >= 0 {
+			continue
+		}
+		t := a.termOf(o)
+		made.edges[t] = map[string]summaryValue{}
+		for field, held := range fields {
+			made.edges[t][field] = collapse(held)
+			roots = append(roots, held)
+		}
+	}
+	for o := range exit.leaked {
+		if o < 0 {
+			made.leaks = append(made.leaks, a.termOf(o))
+		}
+	}
+	sortTerms(made.leaks)
+	for key, deferred := range a.deferred {
+		made.deferred[key] = summaryDeferral{write: deferred.write, holder: collapse(deferred.holder), stored: collapse(deferred.stored)}
+		roots = append(roots, deferred.holder, deferred.stored)
+	}
+	// The fresh objects any of that reaches, and what each holds.
 	gathered := map[int]map[string]value{}
-	queue := append(returned.strong.sorted(), returned.weak.sorted()...)
+	var queue []object
+	for _, root := range roots {
+		queue = append(queue, root.strong.sorted()...)
+		queue = append(queue, root.weak.sorted()...)
+	}
 	visited := objects{}
 	for len(queue) > 0 {
 		o := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
-		if exposed(o) || !visited.add(o) {
+		if o < 0 || leaked(o) || !visited.add(o) {
 			continue
 		}
-		origin := originOf(o)
+		origin := a.siteOrigin[siteOf(o)]
 		if gathered[origin] == nil {
 			gathered[origin] = map[string]value{}
 		}

@@ -1,0 +1,19 @@
+// A helper that pushes and then throws: its write happens though it never returns.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function addAndFail(parent: Node, child: Node): void {
+	parent.nodes.push(child); // closes the cycle
+	throw new Error(`failed ${parent.kind}`);
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	try {
+		addAndFail(node, node);
+	} catch (error) {
+		return node.nodes.length + (error instanceof Error ? error.message.length : 0);
+	}
+	return 0;
+}
+console.log(`${run(1)}`);

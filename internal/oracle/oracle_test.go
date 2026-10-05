@@ -122,6 +122,8 @@ var fixtures = []struct {
 	// parses, and every other kind of write it proves (fresh_test.go holds the probes it refuses).
 	{"internal/oracle/testdata/fresh_parser.a", true, false},
 	{"internal/oracle/testdata/fresh_writes.a", true, false},
+	// The holder proof across calls: a helper's push judged where it's called.
+	{"internal/oracle/testdata/fresh_calls.a", true, false},
 	{"internal/oracle/testdata/weak_narrowed.a", true, false},
 	{"internal/oracle/testdata/exceptions.a", true, false},
 	{"internal/oracle/testdata/exceptions_uncaught.a", true, false},
