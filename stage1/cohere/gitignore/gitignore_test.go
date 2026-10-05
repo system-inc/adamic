@@ -275,6 +275,15 @@ var mutants = []mutant{
 
 		seenByGit: true,
 	},
+	// A linked info/exclude is refused as a linked .gitignore is, though git follows it.
+	{
+		name: "a linked exclude file refused",
+		file: "gitignore.ts",
+		from: "if (!follow) {",
+		to:   "if (follow || !follow) {",
+
+		seenByGit: true,
+	},
 	// A refusal quotes its line with uppercase hexadecimal, where Go's %q writes lowercase.
 	{
 		name: "%q in uppercase hexadecimal",

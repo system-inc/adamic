@@ -296,6 +296,34 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 	nul := filepath.Join(scratch, "nul")
 	writeTree(t, nul, map[string]string{".gitignore": "a\x00b\n"})
 	cases.Trees = append(cases.Trees, adamicDescribe(t, "a NUL byte", nul, []adamicQuery{{"a", false}}, ""))
+	notRegular := filepath.Join(scratch, "not-regular")
+	writeTree(t, notRegular, map[string]string{"sub/.gitignore/": "", ".gitignore": "*.o\n"})
+	cases.Trees = append(cases.Trees, adamicDescribe(t, "an ignore file that is a directory", notRegular, []adamicQuery{{"x.o", false}, {"sub/x.o", false}}, ""))
+
+	// info/exclude lives outside the tree, so git follows a symbolic link to it, and cohere does too:
+	// one to a file beside it, and one to nothing, which is no exclude file at all.
+	linkedExclude := filepath.Join(scratch, "linked-exclude")
+	writeTree(t, linkedExclude, map[string]string{"a.tmp": "", "b.tmp": "", "keep.tmp": ""})
+	adamicGitInit(t, linkedExclude, "")
+	writeTree(t, linkedExclude, map[string]string{".git/exclude-patterns": "*.tmp\n!keep.tmp\n"})
+	if err := os.Remove(filepath.Join(linkedExclude, filepath.FromSlash(ExcludeFile))); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink("../exclude-patterns", filepath.Join(linkedExclude, filepath.FromSlash(ExcludeFile))); err != nil {
+		t.Fatal(err)
+	}
+	cases.Trees = append(cases.Trees, adamicDescribe(t, "a linked exclude file", linkedExclude, []adamicQuery{{"a.tmp", false}, {"b.tmp", false}, {"keep.tmp", false}}, "run"))
+	danglingExclude := filepath.Join(scratch, "dangling-exclude")
+	writeTree(t, danglingExclude, map[string]string{"a.tmp": "", ".gitignore": "b.*\n"})
+	adamicGitInit(t, danglingExclude, "")
+	if err := os.Remove(filepath.Join(danglingExclude, filepath.FromSlash(ExcludeFile))); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink("../no-such-file", filepath.Join(danglingExclude, filepath.FromSlash(ExcludeFile))); err != nil {
+		t.Fatal(err)
+	}
+	cases.Trees = append(cases.Trees, adamicDescribe(t, "an exclude file linked to nothing", danglingExclude, []adamicQuery{{"a.tmp", false}, {"b.tmp", false}}, "run"))
+
 	nested := filepath.Join(scratch, "nested")
 	writeTree(t, nested, map[string]string{"nested/.git/HEAD": "ref: refs/heads/main\n", ".gitignore": "*.o\n"})
 	cases.Trees = append(cases.Trees, adamicDescribe(t, "a nested repository", nested, []adamicQuery{{"x.o", false}, {"nested/x.o", false}}, ""))
@@ -504,6 +532,10 @@ func adamicDescribe(t *testing.T, name string, root string, queries []adamicQuer
 	visit("")
 	if info, err := os.Stat(filepath.Join(root, ".git")); err == nil && info.IsDir() {
 		add(ExcludeFile)
+		// A linked exclude file is read through its link, so what it points to is part of the tree too.
+		if target, err := os.Readlink(filepath.Join(root, filepath.FromSlash(ExcludeFile))); err == nil && !filepath.IsAbs(target) {
+			add(path.Clean(path.Join(path.Dir(ExcludeFile), filepath.ToSlash(target))))
+		}
 	}
 	sort.Slice(tree.Entries, func(left, right int) bool { return tree.Entries[left].Path < tree.Entries[right].Path })
 	return tree
