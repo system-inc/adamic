@@ -82,7 +82,7 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a union a function value takes", "const show = (value: string | number): string => `${value}`;\n", "main.a:1:15: stage 0 can't lower a function value taking string | number yet"},
 		{"a map of a union", "const values = new Map<string, string | number>();\n", "main.a:1:16: stage 0 can't lower a Map of string | number yet"},
 		{"a template of a union with an object", "function pick(flag: boolean): number | { size: number } {\n\treturn flag ? 1 : { size: 2 };\n}\nconsole.log(`${pick(true)}`);\n", "main.a:4:16: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"},
-		{"an array of targets seen as an array of Weak", "import type { Weak } from 'adamic';\ninterface Item {\n\treadonly name: string;\n}\nconst items: Item[] = [{ name: 'a' }];\nconst seen: Weak<Item>[] = items;\n", "main.a:6:28: stage 0 can't lower a Item[] seen as a Weak<Item>[] (one keeps something weakly that the other keeps strongly) yet"},
+		{"an array of targets seen as an array of Weak", "import type { Weak } from 'adamic';\ninterface Item {\n\treadonly name: string;\n}\nconst items: readonly Item[] = [{ name: 'a' }];\nconst seen: readonly Weak<Item>[] = items;\n", "main.a:6:37: stage 0 can't lower a readonly Item[] seen as a readonly Weak<Item>[] (one keeps something weakly that the other keeps strongly) yet"},
 		{"a function value capturing what it initializes", "function run(): number {\n\tconst countdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n", "main.a:2:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet"},
 		{"a set of objects", "const shapes = new Set<{ size: number }>();\n", "main.a:1:16: stage 0 can't lower a Set of { size: number; } (a Set holds strings or numbers so far) yet"},
 		{"a set's entries", "const seen = new Set(['a']);\nfor (const pair of seen.entries()) {\n}\n", "main.a:2:20: stage 0 can't lower for...of over a Set's entries ([element, element] pairs) yet"},
@@ -94,7 +94,7 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a sort comparator that can throw", "function compare(left: number, right: number): number {\n\tif (left === right) {\n\t\tthrow new Error('tie');\n\t}\n\treturn left - right;\n}\nconst values = [2, 1];\nvalues.sort(compare);\n", "main.a:1:1: stage 0 can't lower a sort comparator that can throw (the runtime's sort calls it, which a throw would have to leave) yet"},
 		{"rethrowing a stored Error", "const failure = new Error('stored');\nfunction stop(): void {\n\tthrow failure;\n}\nstop();\n", "main.a:3:8: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet"},
 		{"instanceof a class", "class Box {}\nconst box = new Box();\nconsole.log(`${box instanceof Box}`);\n", "main.a:3:16: stage 0 can't lower instanceof, but on what a catch caught, against Error yet"},
-		{"an object seen with a field weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\ninterface Strong {\n\tv: Box;\n}\ninterface Weakly {\n\tv: Weak<Box>;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst s: Strong = { v: box };\n\tconst w: Weakly = s;\n\tw.v = box;\n\tconsole.log(`${s.v === box}`);\n}\nrun(1);\n", "main.a:14:20: stage 0 can't lower a Strong seen as a Weakly (one keeps something weakly that the other keeps strongly) yet"},
+		{"an object seen with a field weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\ninterface Strong {\n\treadonly v: Box;\n}\ninterface Weakly {\n\treadonly v: Weak<Box>;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst s: Strong = { v: box };\n\tconst w: Weakly = s;\n\tconsole.log(`${s.v === box} ${w.v === box}`);\n}\nrun(1);\n", "main.a:14:20: stage 0 can't lower a Strong seen as a Weakly (one keeps something weakly that the other keeps strongly) yet"},
 		{"a function seen with a parameter weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst f: (x: Box) => boolean = (x: Weak<Box>): boolean => x === box;\n\tconsole.log(`${f(box)}`);\n}\nrun(1);\n", "main.a:7:33: stage 0 can't lower a (x: Weak<Box>) => boolean seen as a (x: Box) => boolean (one keeps something weakly that the other keeps strongly) yet"},
 		{"a function seen with a result weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst f: () => Weak<Box> = (): Box => box;\n\tconst got = f();\n\tconsole.log(`${got === box}`);\n}\nrun(1);\n", "main.a:7:29: stage 0 can't lower a () => Box seen as a () => Weak<Box> (one keeps something weakly that the other keeps strongly) yet"},
 		{"a spread seen with a field weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\ninterface Strong {\n\treadonly tag: string;\n\tv: Box;\n}\ninterface Weakly {\n\treadonly tag: string;\n\tv: Weak<Box>;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst s: Strong = { tag: 't', v: box };\n\tconst w: Weakly = { ...s, tag: 'w' };\n\tconsole.log(`${w.v === box}`);\n}\nrun(1);\n", "main.a:16:25: stage 0 can't lower a Strong seen as a Weakly (one keeps something weakly that the other keeps strongly) yet"},
@@ -153,6 +153,173 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
 				t.Errorf("got %v, want a refusal ending %q", err, probe.want)
+			}
+		})
+	}
+}
+
+// pets is the two types every invariance probe widens: a Dog is an Animal with more to read.
+const pets = `import type { Weak } from 'adamic';
+interface Animal {
+	readonly name: string;
+}
+interface Dog extends Animal {
+	readonly bark: string;
+}
+interface Tag {
+	readonly tag: string;
+}
+`
+
+// A mutable location is invariant in 0.1 (adamic/invariant-mutable): a value is refused where it's
+// seen through a type that can write what it can't hold, at any depth, through a type parameter's
+// constraint and through an intersection too. tsc accepts every one, and on Node each writes a cat
+// among the dogs.
+func TestAMutableLocationSeenWiderIsRefused(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name   string
+		source string
+		want   string
+	}{
+		{"an array seen as a wider array", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs;
+animals.push({ name: 'Tom' });
+`, "main.a:12:27: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly"},
+		{"a mutable field seen as a wider field", `interface Kennel {
+	pet: Dog;
+}
+interface Pen {
+	pet: Animal;
+}
+function swap(kennel: Kennel): void {
+	const pen: Pen = kennel;
+	pen.pet = { name: 'Tom' };
+}
+`, "main.a:18:19: Adamic 0.1 refuses a value of type Kennel seen as Pen, which can write Animal where Dog is read"},
+		{"a map's values seen wider, passed", `function add(animals: Map<string, Animal>): void {
+	animals.set('Tom', { name: 'Tom' });
+}
+add(new Map<string, Dog>());
+`, "main.a:14:5: Adamic 0.1 refuses a value of type Map<string, Dog> seen as Map<string, Animal>"},
+		{"a function seen as taking a narrower array", `const count: (dogs: Dog[]) => number = (animals: Animal[]): number => animals.push({ name: 'Tom' });
+`, "main.a:11:40: Adamic 0.1 refuses a value of type (animals: Animal[]) => number seen as (dogs: Dog[]) => number, which can write Animal where Dog is read"},
+		{"an array of arrays seen wider behind readonly", `function widen(packs: readonly Dog[][]): readonly Animal[][] {
+	return packs;
+}
+`, "main.a:12:9: Adamic 0.1 refuses a value of type readonly Dog[][] seen as readonly Animal[][], which can write Animal where Dog is read"},
+		{"a type parameter's constraint: a Narrow into a Pack slot", `function mix<Pack extends Animal[], Narrow extends Pack>(pack: Pack, narrow: Narrow): number {
+	const slot: Pack = narrow;
+	slot.push({ name: 'Tom' });
+	return pack.length;
+}
+`, "main.a:12:21: Adamic 0.1 refuses a value of type Narrow seen as Pack, a type parameter whose constraint Animal[] can be written, so it can write what Narrow can't hold; take it as Narrow, or constrain Pack to something readonly"},
+		{"a type parameter's constraint behind a readonly property", `interface Held<Pack> {
+	readonly pack: Pack;
+}
+function mix<Pack extends Animal[], Narrow extends Pack>(narrow: Narrow): number {
+	const held: Held<Pack> = { pack: narrow };
+	held.pack.push({ name: 'Tom' });
+	return held.pack.length;
+}
+`, "main.a:15:35: Adamic 0.1 refuses a value of type Narrow seen as Pack, a type parameter whose constraint Animal[] can be written"},
+		{"a type parameter whose constraint is narrower, seen as the wider array", `function widen<Pack extends Dog[]>(pack: Pack): Animal[] {
+	return pack;
+}
+`, "main.a:12:9: Adamic 0.1 refuses a value of type Pack seen as Animal[], which can write Animal where Dog is read"},
+		{"an intersection's array seen as an intersection's", `function tagged(dogs: Dog[] & Tag): number {
+	const animals: Animal[] & Tag = dogs;
+	return animals.push({ name: 'Tom' });
+}
+`, "main.a:12:34: Adamic 0.1 refuses a value of type Dog[] & Tag seen as Animal[] & Tag, which can write Animal where Dog is read"},
+		{"an array of targets seen as an array of Weak", `const items: Animal[] = [{ name: 'Rex' }];
+const seen: Weak<Animal>[] = items;
+`, "main.a:12:30: Adamic 0.1 refuses a value of type Animal[] seen as Weak<Animal>[], which can write Weak<Animal> where Animal is read"},
+		{"an object seen with a mutable field weak in one view only", `interface Strong {
+	v: Animal;
+}
+interface Weakly {
+	v: Weak<Animal>;
+}
+const strong: Strong = { v: { name: 'Rex' } };
+const weakly: Weakly = strong;
+weakly.v = undefined;
+`, "main.a:18:24: Adamic 0.1 refuses a value of type Strong seen as Weakly, which can write Weak<Animal> where Animal is read"},
+		{"an intersection's array seen as a plain array", `function tagged(dogs: Dog[] & Tag): number {
+	const animals: Animal[] = dogs;
+	return animals.push({ name: 'Tom' });
+}
+`, "main.a:12:28: Adamic 0.1 refuses a value of type Dog[] & Tag seen as Animal[], which can write Animal where Dog is read"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, pets+probe.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
+				t.Errorf("got %v, want a refusal starting %q", err, probe.want)
+			}
+		})
+	}
+}
+
+// Each refused shape's sound neighbor isn't refused: seen through something that can't write, or
+// only as itself. Stage 0 may not lower some of them yet (a value of a type parameter's type, an
+// intersection with an array), and that's a different promise from a refusal.
+func TestAViewThatCantWriteIsNotRefused(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name   string
+		source string
+	}{
+		{"an array seen as a readonly wider array", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: readonly Animal[] = dogs;
+console.log(` + "`${animals.length}`" + `);
+`},
+		{"a readonly field seen wider", `interface Kennel {
+	readonly pet: Dog;
+}
+interface Pen {
+	readonly pet: Animal;
+}
+const kennel: Kennel = { pet: { name: 'Rex', bark: 'woof' } };
+const pen: Pen = kennel;
+console.log(pen.pet.name);
+`},
+		{"a readonly constraint: a Narrow into a Pack slot", `function mix<Pack extends readonly Animal[], Narrow extends Pack>(pack: Pack, narrow: Narrow): number {
+	const slot: Pack = narrow;
+	return pack.length + slot.length;
+}
+`},
+		{"a type parameter as itself", `function keep<Pack extends Animal[]>(pack: Pack): Pack {
+	const slot: Pack = pack;
+	return slot;
+}
+`},
+		{"a type parameter narrowed from undefined, as itself", `function pick<Pack extends Animal[] | undefined>(pack: Pack): number {
+	if (pack !== undefined) {
+		const slot: Pack = pack;
+		return slot === undefined ? 0 : slot.length;
+	}
+	return 0;
+}
+`},
+		{"an intersection's array seen as a readonly array with the same tag", `function tagged(dogs: Dog[] & Tag): number {
+	const animals: readonly Animal[] & Tag = dogs;
+	return animals.length;
+}
+`},
+		{"an intersection seen as itself", `function tagged(dogs: Dog[] & Tag): number {
+	const same: Dog[] & Tag = dogs;
+	return same.length;
+}
+`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, pets+probe.source)
+			var refused *Refused
+			if errors.As(err, &refused) {
+				t.Errorf("refused a view that can't write: %v", err)
 			}
 		})
 	}

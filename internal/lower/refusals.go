@@ -72,6 +72,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		if err := l.refuseWidening(node); err != nil {
+			found = err
+			return true
+		}
 		node.ForEachChild(visit)
 		return false
 	}
