@@ -1,0 +1,13 @@
+// Eight combining marks after a base: seven U+0305 (class 230) then U+0323 (class 220), which canonical
+// ordering moves seven places, past every U+0305. The normalize sweep's strings are at most four
+// letters, so a reorder that gives up after six moves passes it and fails here.
+function units(text: string): string {
+	const codes: string[] = [];
+	for (let index = 0; index < text.length; index++) {
+		codes.push(text.charCodeAt(index).toString(16));
+	}
+	return codes.join(',');
+}
+const marks = `a${'̅'.repeat(7)}̣`;
+console.log(units(marks.normalize('NFD')));
+console.log(units(marks.normalize('NFC')));
