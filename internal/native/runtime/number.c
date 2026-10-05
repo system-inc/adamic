@@ -29,6 +29,24 @@ size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX])
 	if (isinf(value)) {
 		return append(buffer, length, "Infinity");
 	}
+	// An integer in the safe range, up to 2^53 - 1, is its digits, exactly: every integer that size
+	// is a double, so no shorter string of digits reads back to it, and the shortest digits are all
+	// of them. Converted directly, it costs a division per digit where the shortest-digits search
+	// costs thousands of instructions. (Exact digits stay right through 2^54 + 4; at 2^54 + 8,
+	// JavaScript's shortest digits are 18014398509481990, where the exact ones end in 992.)
+	if (value <= 9007199254740991.0 && value == (double)(uint64_t)value) {
+		uint64_t integer = (uint64_t)value;
+		char reversed[20];
+		int count = 0;
+		do {
+			reversed[count++] = (char)('0' + integer % 10);
+			integer /= 10;
+		} while (integer != 0);
+		while (count > 0) {
+			buffer[length++] = reversed[--count];
+		}
+		return length;
+	}
 
 	char digits[18];
 	int point;
