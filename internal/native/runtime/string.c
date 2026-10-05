@@ -29,6 +29,10 @@ static adamic_string *allocate(size_t length) {
 	return string;
 }
 
+adamic_string *adamic_string_allocate(size_t length) {
+	return allocate(length);
+}
+
 adamic_string *adamic_string_from_number(double value) {
 	char buffer[ADAMIC_NUMBER_FORMAT_MAX];
 	size_t length = adamic_number_format(value, buffer);

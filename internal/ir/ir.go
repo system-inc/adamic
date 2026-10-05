@@ -228,8 +228,8 @@ type (
 
 	// StringCall is one of a string's methods with JavaScript's meaning: slice, codePointAt,
 	// padStart, padEnd, repeat, indexOf, lastIndexOf, includes, startsWith, endsWith, split,
-	// trimStart, trimEnd, at (a string, or undefined: a null reference), and replace and replaceAll
-	// with a string pattern. Arguments are as written; lowering filled in any default.
+	// trimStart, trimEnd, at (a string, or undefined: a null reference), replace and replaceAll
+	// with a string pattern, and toUpperCase and toLowerCase. Arguments are as written; lowering filled in any default.
 	StringCall struct {
 		Method    string
 		Value     Expression
