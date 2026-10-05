@@ -31,7 +31,7 @@ import (
 const repository = "../../.."
 
 // portFiles are the port and its driver.
-var portFiles = []string{"bytes.ts", "path.ts", "glob.ts", "gitignore.ts", "case.ts", "main.ts"}
+var portFiles = []string{"path.ts", "glob.ts", "gitignore.ts", "case.ts", "main.ts"}
 
 // generatedSeed fixes the generated trees, so a failure names trees anyone can make again. Setting
 // COHERE_GITIGNORE_SEED, as for cohere's own differential, asks for others.
@@ -307,8 +307,8 @@ var mutants = []mutant{
 	{
 		name: "R2 an escaped range end read as the backslash",
 		file: "glob.ts",
-		from: "\t\t\t\tupper = byteAt(pattern, index);\n",
-		to:   "\t\t\t\tupper = '\\\\';\n",
+		from: "\t\t\t\tupper = utf8At(pattern, index);\n",
+		to:   "\t\t\t\tupper = 0x5c;\n",
 	},
 	{
 		name: "R2 a trailing tab trimmed as a space",
@@ -323,6 +323,12 @@ var mutants = []mutant{
 		file: "gitignore.ts",
 		from: "const cleaned = clean(relative);",
 		to:   "const cleaned = relative;",
+	},
+	{
+		name: "R2 the size limit one byte lower",
+		file: "gitignore.ts",
+		from: "if (utf8Length(info.contents) > maximumFileSize) {",
+		to:   "if (utf8Length(info.contents) >= maximumFileSize) {",
 	},
 }
 

@@ -168,6 +168,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/generic_functions.a", true, false},
 	{"internal/oracle/testdata/undefined_references.a", true, false},
 	{"internal/oracle/testdata/spread_calls.a", true, false},
+	// A string's UTF-8 read in place, and past its end.
+	{"internal/oracle/testdata/utf8_view.a", true, false},
+	{"internal/oracle/testdata/utf8_view_fails.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

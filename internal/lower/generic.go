@@ -17,7 +17,8 @@ const maximumGenericDepth = 32
 //
 // The checker resolves the call's signature with its type arguments substituted, but doesn't export
 // the mapping itself, so it's read back the way it was made: each declared parameter's type, and the
-// result's, against the resolved signature's, through arrays and tuples.
+// result's, against the resolved signature's, through arrays and tuples. A type parameter that can't
+// be read back that way is left unmapped, and the body says not yet wherever it needs to know it.
 func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (int, error) {
 	resolved := l.checker.GetResolvedSignature(call)
 	target := l.checker.GetSignatureFromDeclaration(declaration)
@@ -38,7 +39,11 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	for _, parameter := range declaration.TypeParameters() {
 		held, isKnown := substitution[l.checker.GetTypeAtLocation(parameter.Name())]
 		if !isKnown {
-			return 0, l.notYet(call, "a call to "+name+" whose type argument for "+parameter.Name().Text()+" stage 0 can't read from its parameters or result")
+			// Not read back (it stands only inside a union or an object, Result<Value>): left
+			// unmapped, so whatever in the body needs to know how it's held says not yet, there.
+			key += ",unread"
+			name += "_unread"
+			continue
 		}
 		key += "," + typeName(held)
 		name += "_" + typeName(held)

@@ -13,13 +13,13 @@
 //   - A set that never closes, or a class name fnmatch does not define, makes the pattern match nothing.
 //
 // Bytes, not UTF-16 code units, as git and the Go both match bytes: `?` against `é` is false, because
-// `é` is two bytes. A Go string is its bytes; an Adamic string is UTF-16, so the glob first spells its
-// pattern and its text as byte strings (bytes.ts), one character per byte, and then reads exactly as
-// the Go does. Matching walks the text once while tracking every place in the pattern it could have
-// reached, so no pattern backtracks: `*a*a*a*a*b` against a long run of `a` costs one pass.
+// `é` is two bytes. A Go string is its bytes, indexed as text[index]; an Adamic string's UTF-8 is read
+// the same way, in place, with utf8At and utf8Length from 'adamic', so the glob reads its pattern and
+// its text exactly as the Go does, a byte a number from 0 to 255. Matching walks the text once while
+// tracking every place in the pattern it could have reached, so no pattern backtracks: `*a*a*a*a*b`
+// against a long run of `a` costs one pass.
 
-import { panic } from 'adamic';
-import { byteAt, utf8Bytes } from './bytes.ts';
+import { panic, utf8At, utf8Length } from 'adamic';
 
 // glob.go: [256]bool, a set of bytes.
 type ByteSet = readonly boolean[];
@@ -27,7 +27,7 @@ type ByteSet = readonly boolean[];
 // glob.go: tokenKind and token. The Go's one struct, whose set is nil except on a setToken, is a
 // discriminated union here, so a set is there exactly when the kind says it is.
 type Token =
-	| { readonly kind: 'literalToken'; readonly literal: string } // one byte, itself
+	| { readonly kind: 'literalToken'; readonly literal: number } // one byte, itself
 	| { readonly kind: 'anyByteToken' } // `?`
 	| { readonly kind: 'setToken'; readonly set: ByteSet } // `[...]`
 	| { readonly kind: 'starToken' } // `*`: any run, within one segment against a path
@@ -35,17 +35,17 @@ type Token =
 	| { readonly kind: 'directoriesToken' }; // `**/` as a segment: nothing, or any run that ends in `/`
 
 // glob.go: glob. never marks one that can match nothing (a set left open, an unknown class, a trailing
-// backslash); literal holds the text of one with no wildcard at all, so matching it is one comparison.
+// backslash); literal holds the bytes of one with no wildcard at all, so matching it is one comparison.
 // isSuffix marks a base-name glob that is one `*` and then literal text, `*.log`: matching it is a
 // suffix comparison. It is the commonest shape after a plain name.
 export class Glob {
 	readonly tokens: readonly Token[];
 	readonly never: boolean;
 	readonly isLiteral: boolean;
-	readonly literal: string;
+	readonly literal: readonly number[];
 	readonly isSuffix: boolean;
 
-	constructor(tokens: readonly Token[], never: boolean, isLiteral: boolean, literal: string, isSuffix: boolean) {
+	constructor(tokens: readonly Token[], never: boolean, isLiteral: boolean, literal: readonly number[], isSuffix: boolean) {
 		this.tokens = tokens;
 		this.never = never;
 		this.isLiteral = isLiteral;
@@ -56,16 +56,16 @@ export class Glob {
 	// glob.go: (*glob).matches. It reports whether the glob matches all of text. path keeps `?`, `*` and
 	// sets out of `/`, as it does for a pattern matched against a path; the `**` tokens exist only in a
 	// glob compiled for a path.
-	matches(textCharacters: string, path: boolean): boolean {
+	matches(text: string, path: boolean): boolean {
 		if (this.never) {
 			return false;
 		}
-		const text = utf8Bytes(textCharacters);
+		const length = utf8Length(text);
 		if (this.isLiteral) {
-			return text === this.literal;
+			return length === this.literal.length && endsWith(text, length, this.literal);
 		}
 		if (this.isSuffix) {
-			return text.endsWith(this.literal);
+			return length >= this.literal.length && endsWith(text, length, this.literal);
 		}
 
 		// One place per position in the pattern, plus a second set for a directoriesToken that has
@@ -78,11 +78,11 @@ export class Glob {
 		let nextInside = newPositionSet(places);
 		this.reach(current, 0);
 
-		for (let textIndex = 0; textIndex < text.length; textIndex++) {
-			const character = byteAt(text, textIndex);
+		for (let textIndex = 0; textIndex < length; textIndex++) {
+			const character = utf8At(text, textIndex);
 			clearPositions(nextPositions);
 			clearPositions(nextInside);
-			const crossesNothing = path && character === '/';
+			const crossesNothing = path && character === 0x2f; // '/'
 			let advanced = false;
 			for (let position = 0; position < this.tokens.length; position++) {
 				const tokenEntry = this.tokens[position] ?? panic('glob: a position past the last token');
@@ -104,7 +104,7 @@ export class Glob {
 						}
 						break;
 					case 'setToken':
-						if (reached && tokenEntry.set[character.charCodeAt(0)] === true && !crossesNothing) {
+						if (reached && tokenEntry.set[character] === true && !crossesNothing) {
 							this.reach(nextPositions, position + 1);
 							advanced = true;
 						}
@@ -124,7 +124,7 @@ export class Glob {
 					case 'directoriesToken':
 						addPosition(nextInside, position);
 						advanced = true;
-						if (character === '/') {
+						if (character === 0x2f) {
 							this.reach(nextPositions, position + 1);
 						}
 						break;
@@ -167,37 +167,51 @@ export class Glob {
 
 }
 
+// endsWith reports whether text, length bytes, ends with bytes: the Go's strings.HasSuffix, and with
+// equal lengths its ==.
+function endsWith(text: string, length: number, bytes: readonly number[]): boolean {
+	const start = length - bytes.length;
+	for (let index = 0; index < bytes.length; index++) {
+		if (utf8At(text, start + index) !== bytes[index]) {
+			return false;
+		}
+	}
+	return true;
+}
+
 // glob.go: glob{never: true}.
 function neverGlob(): Glob {
-	return new Glob([], true, false, '', false);
+	return new Glob([], true, false, [], false);
 }
 
 // glob.go: compileGlob. It reads pattern. path says whether it will be matched against a path, which is
 // what gives `**` its meaning; against a base name every run of asterisks is one `*`.
-export function compileGlob(patternCharacters: string, path: boolean): Glob {
-	const pattern = utf8Bytes(patternCharacters);
+export function compileGlob(pattern: string, path: boolean): Glob {
+	const length = utf8Length(pattern);
 	const tokens: Token[] = [];
-	let literal = '';
+	const literal: number[] = [];
 	let isLiteral = true;
-	for (let index = 0; index < pattern.length; index++) {
-		const character = byteAt(pattern, index);
+	for (let index = 0; index < length; index++) {
+		const character = utf8At(pattern, index);
 		switch (character) {
-			case '\\': {
+			case 0x5c: {
+				// '\\'
 				index++;
-				if (index >= pattern.length) {
+				if (index >= length) {
 					return neverGlob();
 				}
-				tokens.push({ kind: 'literalToken', literal: byteAt(pattern, index) });
-				literal += byteAt(pattern, index);
+				tokens.push({ kind: 'literalToken', literal: utf8At(pattern, index) });
+				literal.push(utf8At(pattern, index));
 				continue;
 			}
 
-			case '?':
+			case 0x3f: // '?'
 				tokens.push({ kind: 'anyByteToken' });
 				break;
 
-			case '[': {
-				const compiledSet = compileSet(pattern, index);
+			case 0x5b: {
+				// '['
+				const compiledSet = compileSet(pattern, length, index);
 				if (compiledSet === undefined) {
 					return neverGlob();
 				}
@@ -206,18 +220,18 @@ export function compileGlob(patternCharacters: string, path: boolean): Glob {
 				break;
 			}
 
-			case '*': {
+			case 0x2a: {
+				// '*'
 				let runEnd = index;
-				while (runEnd + 1 < pattern.length && byteAt(pattern, runEnd + 1) === '*') {
+				while (runEnd + 1 < length && utf8At(pattern, runEnd + 1) === 0x2a) {
 					runEnd++;
 				}
 				let kind: 'starToken' | 'everythingToken' | 'directoriesToken' = 'starToken';
 				if (path && runEnd > index) {
-					const segmentStart = index === 0 || byteAt(pattern, index - 1) === '/';
-					const followedBySlash = runEnd + 1 < pattern.length && byteAt(pattern, runEnd + 1) === '/';
-					const followedByEscapedSlash =
-						runEnd + 2 < pattern.length && byteAt(pattern, runEnd + 1) === '\\' && byteAt(pattern, runEnd + 2) === '/';
-					if (segmentStart && runEnd + 1 === pattern.length) {
+					const segmentStart = index === 0 || utf8At(pattern, index - 1) === 0x2f;
+					const followedBySlash = runEnd + 1 < length && utf8At(pattern, runEnd + 1) === 0x2f;
+					const followedByEscapedSlash = runEnd + 2 < length && utf8At(pattern, runEnd + 1) === 0x5c && utf8At(pattern, runEnd + 2) === 0x2f;
+					if (segmentStart && runEnd + 1 === length) {
 						kind = 'everythingToken';
 					} else if (segmentStart && followedBySlash) {
 						// The segment's slash belongs to the token: zero directories consume nothing at all.
@@ -235,7 +249,7 @@ export function compileGlob(patternCharacters: string, path: boolean): Glob {
 
 			default:
 				tokens.push({ kind: 'literalToken', literal: character });
-				literal += character;
+				literal.push(character);
 				continue;
 		}
 		isLiteral = false;
@@ -245,16 +259,16 @@ export function compileGlob(patternCharacters: string, path: boolean): Glob {
 	}
 	const first = tokens[0];
 	if (!path && first !== undefined && first.kind === 'starToken') {
-		let suffix = '';
+		const suffix: number[] = [];
 		for (const rest of tokens.slice(1)) {
 			if (rest.kind !== 'literalToken') {
-				return new Glob(tokens, false, false, '', false);
+				return new Glob(tokens, false, false, [], false);
 			}
-			suffix += rest.literal;
+			suffix.push(rest.literal);
 		}
 		return new Glob(tokens, false, false, suffix, true);
 	}
-	return new Glob(tokens, false, false, '', false);
+	return new Glob(tokens, false, false, [], false);
 }
 
 // glob.go: compileSet's results. The Go returns (set, end, ok); here undefined is not ok.
@@ -263,13 +277,15 @@ interface CompiledSet {
 	readonly end: number;
 }
 
-// glob.go: compileSet. It reads the bracket expression that opens at start, returning its members and
-// the index of its closing `]`, or undefined for one that never closes or names an unknown class.
-function compileSet(pattern: string, start: number): CompiledSet | undefined {
+// glob.go: compileSet. It reads the bracket expression that opens at start in pattern, length bytes,
+// returning its members and the index of its closing `]`, or undefined for one that never closes or
+// names an unknown class.
+function compileSet(pattern: string, length: number, start: number): CompiledSet | undefined {
 	const members = Array.from({ length: 256 }, () => false);
 	let index = start + 1;
 	let negated = false;
-	if (index < pattern.length && (byteAt(pattern, index) === '!' || byteAt(pattern, index) === '^')) {
+	if (index < length && (utf8At(pattern, index) === 0x21 || utf8At(pattern, index) === 0x5e)) {
+		// '!' or '^'
 		negated = true;
 		index++;
 	}
@@ -279,56 +295,62 @@ function compileSet(pattern: string, start: number): CompiledSet | undefined {
 	let rangeStart = -1;
 	let first = true;
 	for (;;) {
-		if (index >= pattern.length) {
+		if (index >= length) {
 			return undefined;
 		}
-		const character = byteAt(pattern, index);
-		if (character === ']' && !first) {
+		const character = utf8At(pattern, index);
+		if (character === 0x5d && !first) {
+			// ']'
 			break;
 		}
 		first = false;
 
-		if (character === '\\') {
+		if (character === 0x5c) {
+			// '\\'
 			index++;
-			if (index >= pattern.length) {
+			if (index >= length) {
 				return undefined;
 			}
-			members[byteAt(pattern, index).charCodeAt(0)] = true;
-			rangeStart = byteAt(pattern, index).charCodeAt(0);
-		} else if (character === '-' && rangeStart >= 0 && index + 1 < pattern.length && byteAt(pattern, index + 1) !== ']') {
+			members[utf8At(pattern, index)] = true;
+			rangeStart = utf8At(pattern, index);
+		} else if (character === 0x2d && rangeStart >= 0 && index + 1 < length && utf8At(pattern, index + 1) !== 0x5d) {
+			// '-', not before ']'
 			index++;
-			let upper = byteAt(pattern, index);
-			if (upper === '\\') {
+			let upper = utf8At(pattern, index);
+			if (upper === 0x5c) {
 				index++;
-				if (index >= pattern.length) {
+				if (index >= length) {
 					return undefined;
 				}
-				upper = byteAt(pattern, index);
+				upper = utf8At(pattern, index);
 			}
-			for (let member = rangeStart; member <= upper.charCodeAt(0); member++) {
+			for (let member = rangeStart; member <= upper; member++) {
 				members[member] = true;
 			}
 			rangeStart = -1;
-		} else if (character === '[' && index + 1 < pattern.length && byteAt(pattern, index + 1) === ':') {
-			let closing = pattern.slice(index + 2).indexOf(']');
-			if (closing < 0) {
+		} else if (character === 0x5b && index + 1 < length && utf8At(pattern, index + 1) === 0x3a) {
+			// '[:'
+			let closing = index + 2;
+			while (closing < length && utf8At(pattern, closing) !== 0x5d) {
+				closing++;
+			}
+			if (closing >= length) {
 				return undefined;
 			}
-			closing += index + 2;
-			if (closing - 1 < index + 2 || byteAt(pattern, closing - 1) !== ':') {
+			if (closing - 1 < index + 2 || utf8At(pattern, closing - 1) !== 0x3a) {
 				// No `:]` before the next `]`, so this `[` is an ordinary member.
-				members['['.charCodeAt(0)] = true;
-				rangeStart = '['.charCodeAt(0);
+				members[0x5b] = true;
+				rangeStart = 0x5b;
 			} else {
-				if (!addClass(members, pattern.slice(index + 2, closing - 1))) {
+				if (!addClass(members, className(pattern, index + 2, closing - 1))) {
 					return undefined;
 				}
 				index = closing;
 				rangeStart = -1;
 			}
 		} else {
-			members[character.charCodeAt(0)] = true;
-			rangeStart = character.charCodeAt(0);
+			members[character] = true;
+			rangeStart = character;
 		}
 		index++;
 	}
@@ -338,6 +360,16 @@ function compileSet(pattern: string, start: number): CompiledSet | undefined {
 		}
 	}
 	return { set: members, end: index };
+}
+
+// className is the bytes from start to end of pattern as text: a class's name, which fnmatch's names
+// are ASCII, so each byte is its own character, and any other byte makes a name no class has.
+function className(pattern: string, start: number, end: number): string {
+	let name = '';
+	for (let index = start; index < end; index++) {
+		name += String.fromCharCode(utf8At(pattern, index));
+	}
+	return name;
 }
 
 // glob.go: addClass. It adds a `[:name:]` class's bytes, reporting false for a name fnmatch does not

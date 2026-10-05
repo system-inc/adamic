@@ -942,6 +942,11 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
 	case ir.ProgramArguments:
 		return e.own(ir.Array, "adamic_program_arguments()")
+	case ir.Utf8Length:
+		return fmt.Sprintf("adamic_utf8_length(%s)", e.value(expression.Text))
+	case ir.Utf8At:
+		text := e.value(expression.Text)
+		return e.snapshot(ir.Number, fmt.Sprintf("adamic_utf8_at(%s, %s)", text, e.value(expression.Index)))
 	case ir.WriteTextFile:
 		path := e.value(expression.Path)
 		text := e.value(expression.Text)

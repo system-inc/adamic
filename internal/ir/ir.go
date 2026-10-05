@@ -568,6 +568,11 @@ type (
 	// program, as process.argv.slice(2) is.
 	ProgramArguments struct{}
 
+	// Utf8Length is utf8Length(Text) from 'adamic', and Utf8At utf8At(Text, Index): the text's UTF-8,
+	// read in place.
+	Utf8Length struct{ Text Expression }
+	Utf8At     struct{ Text, Index Expression }
+
 	// WriteTextFile is writeTextFile(Path, Text) from 'adamic': the file made or emptied, then Text
 	// written as UTF-8 the way Node's writeFileSync(path, text) writes it (a lone surrogate as U+FFFD),
 	// in { kind: 'Ok' }, or what went wrong in { kind: 'Error', message }.
@@ -694,6 +699,8 @@ func (c StringCall) Type() Type {
 }
 func (ReadTextFile) Type() Type     { return Object }
 func (ProgramArguments) Type() Type { return Array }
+func (Utf8Length) Type() Type       { return Number }
+func (Utf8At) Type() Type           { return Number }
 func (WriteTextFile) Type() Type    { return Object }
 
 func (MapNew) Type() Type    { return Map }

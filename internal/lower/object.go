@@ -1312,11 +1312,13 @@ func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expressi
 // tupleType is the tuple type an array literal makes, from the checker or from where it's written
 // (return ['a', 1] in a function returning [string, number]), or nil when it makes an array.
 func (l *lowering) tupleType(node *ast.Node) *checker.Type {
-	if made := l.checker.GetTypeAtLocation(node); checker.IsTupleType(made) {
-		return made
-	}
+	// The tuple it's written into first: [5] written into [number, string?] is that tuple, with its
+	// second element undefined, though the literal's own type is [number].
 	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && checker.IsTupleType(contextual) {
 		return contextual
+	}
+	if made := l.checker.GetTypeAtLocation(node); checker.IsTupleType(made) {
+		return made
 	}
 	return nil
 }
@@ -1328,10 +1330,19 @@ func (l *lowering) tupleType(node *ast.Node) *checker.Type {
 func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Expression, error) {
 	items := node.AsArrayLiteralExpression().Elements.Nodes
 	elements := l.checker.GetTypeArguments(tuple)
-	if len(items) != len(elements) {
-		return nil, l.notYet(node, "a tuple literal with other than one value for each of its tuple's elements")
+	if len(items) > len(elements) {
+		return nil, l.notYet(node, "a tuple literal with more values than its tuple has elements")
 	}
 	literal := ir.ObjectLiteral{}
+	// An optional element left out is undefined, a field of its own, as tuple[index] reads it.
+	missing := []ir.Field{}
+	for index := len(items); index < len(elements); index++ {
+		of, isKnown := l.representation(elements[index])
+		if !isKnown || slotless(of) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
+			return nil, l.notYet(node, "a tuple literal leaving out an element of type "+l.checker.TypeToString(elements[index]))
+		}
+		missing = append(missing, ir.Field{Name: strconv.Itoa(index), Value: fit(ir.Undefined{}, of)})
+	}
 	for index, item := range items {
 		if item.Kind == ast.KindSpreadElement || item.Kind == ast.KindOmittedExpression {
 			return nil, l.notYet(item, describe(item)+" in a tuple literal")
@@ -1351,6 +1362,7 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 		}
 		literal.Fields = append(literal.Fields, ir.Field{Name: strconv.Itoa(index), Value: value})
 	}
+	literal.Fields = append(literal.Fields, missing...)
 	return literal, nil
 }
 
@@ -1407,4 +1419,77 @@ func (l *lowering) spreadNumbers(call *ast.Node) (ir.Expression, error) {
 		literal.Spread = append(literal.Spread, spread)
 	}
 	return literal, nil
+}
+
+// tupleWhereArrayGoes reports whether a value of type value, going where target is expected, carries a
+// tuple to where an array is: directly, as an array's elements, as a Map's keys or values, as a field
+// of an object, or as a function's result, or the other way round for a function's parameters (a
+// function taking arrays called with tuples). A tuple is held as an object of its elements, so array
+// code would read it as something it isn't; until a tuple can be one, it's refused there.
+func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type, depth int) bool {
+	if value == nil || target == nil || value == target || depth > 4 {
+		return false
+	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		// Into a union: fine if any member takes it as it is.
+		for _, member := range target.Types() {
+			if !l.tupleWhereArrayGoes(value, member, depth+1) {
+				return false
+			}
+		}
+		return true
+	}
+	if value.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range value.Types() {
+			if l.tupleWhereArrayGoes(member, target, depth+1) {
+				return true
+			}
+		}
+		return false
+	}
+	valueTuple, targetTuple := checker.IsTupleType(value), checker.IsTupleType(target)
+	switch {
+	case valueTuple && !targetTuple && l.checker.IsArrayType(target):
+		return true
+	case valueTuple && targetTuple:
+		return l.pairwiseTupleWhereArrayGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), depth)
+	case l.checker.IsArrayType(value) && l.checker.IsArrayType(target):
+		return l.pairwiseTupleWhereArrayGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), depth)
+	case l.isLibraryType(value, "Map", "ReadonlyMap") && l.isLibraryType(target, "Map", "ReadonlyMap"):
+		return l.pairwiseTupleWhereArrayGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), depth)
+	}
+	if value.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 {
+		return false
+	}
+	valueSignatures := l.checker.GetSignaturesOfType(value, checker.SignatureKindCall)
+	targetSignatures := l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
+	if len(valueSignatures) == 1 && len(targetSignatures) == 1 {
+		// A function: what it returns goes where the target's result goes, and what the target is
+		// called with goes to its parameters.
+		if l.tupleWhereArrayGoes(l.checker.GetReturnTypeOfSignature(valueSignatures[0]), l.checker.GetReturnTypeOfSignature(targetSignatures[0]), depth+1) {
+			return true
+		}
+		valueParameters, targetParameters := valueSignatures[0].Parameters(), targetSignatures[0].Parameters()
+		for index := range valueParameters {
+			if index < len(targetParameters) && l.tupleWhereArrayGoes(l.checker.GetTypeOfSymbol(targetParameters[index]), l.checker.GetTypeOfSymbol(valueParameters[index]), depth+1) {
+				return true
+			}
+		}
+		return false
+	}
+	for _, field := range l.checker.GetPropertiesOfType(target) {
+		if l.tupleWhereArrayGoes(l.checker.GetTypeOfPropertyOfType(value, field.Name), l.checker.GetTypeOfSymbol(field), depth+1) {
+			return true
+		}
+	}
+	return false
+}
+
+func (l *lowering) pairwiseTupleWhereArrayGoes(values []*checker.Type, targets []*checker.Type, depth int) bool {
+	for index := range values {
+		if index < len(targets) && l.tupleWhereArrayGoes(values[index], targets[index], depth+1) {
+			return true
+		}
+	}
+	return false
 }

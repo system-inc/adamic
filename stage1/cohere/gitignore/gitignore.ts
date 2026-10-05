@@ -41,10 +41,9 @@
 //   - The Go's unexported fields are #private fields, and a Matcher's are written only while enter
 //     builds a new one, as the Go writes only its copy.
 
-import { panic } from 'adamic';
+import { panic, utf8Length } from 'adamic';
 import { compileGlob, Glob } from './glob.ts';
 import { base, clean, dir } from './path.ts';
-import { utf8Bytes } from './bytes.ts';
 
 // gitignore.go: IgnoreFileName, the per-directory ignore file.
 export const IgnoreFileName = '.gitignore';
@@ -473,7 +472,7 @@ function readIgnoreFile(tree: WorkingTree, relativeFile: string, follow: boolean
 	if (info.kind !== 'File') {
 		return failure(`gitignore: ${filePath} is not a regular file, so it cannot be read as an ignore file`);
 	}
-	if (utf8Bytes(info.contents).length > maximumFileSize) {
+	if (utf8Length(info.contents) > maximumFileSize) {
 		return failure(
 			`gitignore: ${filePath} is larger than 100 MiB, which git skips with a warning, leaving its patterns unapplied; cohere refuses it rather than skip it`,
 		);

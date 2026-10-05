@@ -122,6 +122,11 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if skipped := ast.SkipParentheses(node); skipped.Kind != ast.KindSpreadElement {
+		if contextual := l.checker.GetContextualType(skipped, checker.ContextFlagsNone); contextual != nil && l.tupleWhereArrayGoes(l.checker.GetTypeAtLocation(skipped), contextual, 0) {
+			return nil, l.notYet(skipped, "a tuple where an array goes (as "+l.checker.TypeToString(contextual)+")")
+		}
+	}
 	value, err := l.value(node)
 	if err == nil && (value.Type() == ir.Array || value.Type() == ir.Map) && ast.SkipParentheses(node).Kind != ast.KindArrayLiteralExpression {
 		// The checker lets an array of Node be seen as an array of Weak<Node> and back, but one
@@ -278,6 +283,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindThisKeyword:
 		if l.this < 0 {
 			return nil, l.notYet(node, "this outside a method")
+		}
+		if err := l.useOfThis(node); err != nil {
+			return nil, err
 		}
 		l.touch(l.this)
 		return ir.Read{Local: l.this, Of: ir.Object}, nil
@@ -673,12 +681,13 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 }
 
 // functionValue lowers a module function read as a value rather than called: a function value whose
-// code forwards its arguments to the function, made once for each function read so. It takes exactly
+// code forwards its arguments to the function, made once for each function read so, before the
+// program runs. It takes exactly
 // the parameters the function declares, so one with a parameter that may be left out isn't made yet:
 // a function value is called with the arguments its caller has, and no more.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
-	if forwarder, isMade := l.forwarders[target]; isMade {
-		return ir.MakeClosure{Function: forwarder}, nil
+	if held, isMade := l.forwarders[target]; isMade {
+		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}
 	symbol := l.symbol(node)
 	for _, parameter := range symbol.Declarations[0].Parameters() {
@@ -711,11 +720,16 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		forwarder.Body = []ir.Statement{ir.Return{Value: call}}
 	}
 	l.result.Functions = append(l.result.Functions, forwarder)
+	// One function value for the function, made before anything runs and held by a global of its
+	// own, so reading the function twice gives the same value, === as JavaScript's.
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: callee.Name + "_value", Type: ir.Closure, Global: true, Function: -1})
+	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
 	if l.forwarders == nil {
 		l.forwarders = map[int]int{}
 	}
-	l.forwarders[target] = index
-	return ir.MakeClosure{Function: index}, nil
+	l.forwarders[target] = held
+	return ir.Read{Local: held, Of: ir.Closure}, nil
 }
 
 // optionalCall refuses a call in an optional chain, text?.toUpperCase() or run?.(): the receiver has

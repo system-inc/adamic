@@ -518,6 +518,12 @@ double adamic_math_hypot_of(const adamic_array *values);
 adamic_string *adamic_string_from_char_codes_of(const adamic_array *values);
 adamic_string *adamic_string_from_code_points_of(const adamic_array *values);
 
+// utf8Length(text) and utf8At(text, index) from 'adamic': the text's UTF-8, read in place, a lone
+// surrogate as U+FFFD's bytes as the WHATWG encoder writes it (utf8.c). utf8At panics where the index
+// isn't one of the text's bytes.
+double adamic_utf8_length(const adamic_string *text);
+double adamic_utf8_at(const adamic_string *text, double index);
+
 // JavaScript's bitwise operators on numbers, each through ToInt32 or ToUint32 exactly (bitwise.c).
 double adamic_bitwise_and(double left, double right);
 double adamic_bitwise_or(double left, double right);

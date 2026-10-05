@@ -102,3 +102,9 @@ let maybeCount: number | undefined = undefined;
 console.log(`${remainder} ${below} ${either} ${maybeCount ?? -1} ${typeof either}`);
 [, either] = swap(['word', 1]);
 console.log(`${either} ${typeof either}`);
+
+// An optional element left out of a literal is undefined, read through the tuple it's written into.
+const optional: [number, string?] = [5];
+const both: [number, string?] = [6, 'six'];
+const maybeCounts: [string, number?, number?] = ['m'];
+console.log(`${optional[0]} ${optional[1] ?? 'none'} ${both[1] ?? 'none'} ${maybeCounts[1] ?? -1} ${maybeCounts[2] ?? -2}`);

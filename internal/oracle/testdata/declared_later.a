@@ -48,6 +48,11 @@ console.log(words.join(' '));
 words.forEach(report);
 const transforms: ((word: string) => string)[] = [shout, shout];
 console.log(transforms.map((transform) => transform('twice')).join(' '));
+// The same function read twice is the same value, as in JavaScript.
+const firstShout = shout;
+const secondShout: (word: string) => string = shout;
+const shouts = [firstShout, isLongText];
+console.log(`${firstShout === secondShout} ${shouts.includes(shout)} ${shouts.indexOf(secondShout)} ${firstShout === isLongText}`);
 const test: (value: number) => boolean = isOdd;
 console.log(`${test(7)} ${test(10)}`);
 const compare: (left: string, right: string) => number = byLength;
@@ -70,6 +75,7 @@ class Walker<Item> {
 
 	constructor(items: Item[]) {
 		this.items = items;
+		this.steps = 0;
 		this.steps = this.start();
 	}
 
@@ -97,3 +103,7 @@ class Walker<Item> {
 
 console.log(new Walker<string>(['a', 'b', 'c']).describe());
 console.log(new Walker<number>([1, 2]).describe());
+
+function isLongText(word: string): string {
+	return word.length > 1 ? 'long' : 'short';
+}

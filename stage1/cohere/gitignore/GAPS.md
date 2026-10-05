@@ -8,7 +8,7 @@ The programs are also in `gaps/`, and `gaps_test.go` holds them to this file. An
 
 Every gap is closed. Gaps 5, 6 and 7 closed when the language-gaps stream landed on main at 80c3098, and this stream closed 1, 2, 3, 4, 8 and 9 in stage 0 itself, each with an oracle fixture and a mutant it catches. Each time the port went back to writing those places as the Go does, so it now reads side by side with the Go, with no workaround left. Closed gaps stay below, marked so, and the record is whole.
 
-Still open, found while closing these and not needed by the port: a spread argument in a call (`String.fromCharCode(...codes)`, `Math.max(...values)`), and `.length` or an array's methods on a tuple.
+Found while closing these, and closed since by this stream (with P2's list): generic functions, instantiated once per set of what their type arguments are held as; `return undefined` from a function returning `string | undefined` (or an array, a function, an object), which reached clang as bad C; `?.length` on an array or a string; and spread arguments to `Math.max`, `Math.min`, `Math.hypot`, `String.fromCharCode` and `String.fromCodePoint`. Still open, and refused rather than miscompiled: a call through `?.` (`text?.toUpperCase()` segfaulted natively on main), a spread argument to any other call, a generic function as a value, `.length` or an array's methods on a tuple, and a tuple where an array goes.
 
 ## 1. `String.fromCharCode` and `String.fromCodePoint` (closed by this stream)
 
@@ -202,9 +202,9 @@ stage 0 can't lower reading panic yet        (Node prints 1)
 
 When this port began, 0.1 had no input, so the Go's reads through `os` (`os.Lstat`, `os.Stat` and `os.ReadFile` of ignore files and `.git` entries) became reads of a `WorkingTree` the program is given, and the cases were constants. `readTextFile` and `programArguments` have since landed on main. The driver now reads its cases from the file its argument names (`main.ts`, and the format in `case.ts`), so the port compiles once, whatever it's asked. Reading a real tree also needs lstat, stat, symbolic links and directory listing, which 'adamic' doesn't have yet. When it does, a `WorkingTree` read from disk can take the in-memory one's place, and nothing else in the port changes.
 
-## Not a gap, a cost: bytes
+## Bytes, read in place
 
-A Go string is its bytes, and git matches bytes: `?` against `é` is false, because `é` is two bytes. 0.1's strings are UTF-16, and it has no byte array or encoder (no `Uint8Array`, no `TextEncoder`). So the glob spells its pattern and its text as byte strings, one character per byte (bytes.ts), and then reads as the Go does. The test's `bytes` tree holds this to git. The cost is a conversion of every non-ASCII text the glob matches; ASCII is its own byte string and isn't copied. A byte type, or `TextEncoder`, would remove the conversion.
+A Go string is its bytes, and git matches bytes: `?` against `é` is false, because `é` is two bytes. 0.1's strings are UTF-16 to a program. The port first spelled each pattern and each text as a "byte string", one character per byte (bytes.ts), which cost a conversion of every text the glob matched and was most of the distance to Go. Now `utf8Length(text)` and `utf8At(text, index)` from 'adamic' read a string's UTF-8 in place (runtime/utf8.c; docs/0.1.md's library), and the glob reads its pattern and its text byte by byte, as glob.go does; bytes.ts is gone. Natively nothing is copied, since a string is stored as UTF-8: a lone surrogate, stored as WTF-8, reads as U+FFFD's three bytes, as TextEncoder writes it, so both backends agree. Fixtures: `utf8_view.a` and `utf8_view_fails.a`. The test's `bytes` tree holds the glob's byte semantics to git.
 
 ## What lowered as written
 

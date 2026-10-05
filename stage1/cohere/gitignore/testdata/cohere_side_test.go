@@ -300,6 +300,12 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 		{"sub/../rooted", false}, {"sub//rooted", false}, {"./sub", true},
 	}, ""))
 
+	// An ignore file of exactly 100 MiB is read, as the Go reads one up to and including that size.
+	largest := filepath.Join(scratch, "largest")
+	contents := "big\n#" + strings.Repeat("x", 100<<20-len("big\n#")-1) + "\n"
+	writeTree(t, largest, map[string]string{".gitignore": contents, "big": "", "small": ""})
+	cases.Trees = append(cases.Trees, adamicDescribe(t, "an ignore file of exactly 100 MiB", largest, []adamicQuery{{"big", false}, {"small", false}}, ""))
+
 	// cohere's TestAnIgnoreFileThatCannotBeReadIsRefused: what cohere refuses, git has no word for.
 	link := filepath.Join(scratch, "link")
 	writeTree(t, link, map[string]string{"patterns": "x\n", "sub/": ""})

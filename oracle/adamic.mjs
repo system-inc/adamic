@@ -69,6 +69,27 @@ function failure(code, writing) {
 	return 'failed';
 }
 
+// utf8Length and utf8At are a string's UTF-8 as TextEncoder writes it, a lone surrogate as U+FFFD's
+// three bytes. The last string asked about is kept encoded, since a loop asks about one string byte
+// after byte. utf8At panics, in the native runtime's words (utf8.c), where the index isn't a byte.
+let utf8Text = '';
+let utf8Encoded = Buffer.alloc(0);
+
+export function utf8Length(text) {
+	return Buffer.byteLength(text, 'utf8');
+}
+
+export function utf8At(text, index) {
+	if (text !== utf8Text) {
+		utf8Text = text;
+		utf8Encoded = Buffer.from(text, 'utf8');
+	}
+	if (!(index >= 0 && index < utf8Encoded.length && index === Math.trunc(index))) {
+		panic(`RangeError: utf8At index ${index} is not a byte of a text of ${utf8Encoded.length} bytes`);
+	}
+	return utf8Encoded[index];
+}
+
 // programArguments is the arguments after the program, as process.argv.slice(2) is when Node runs the
 // program itself (node.mjs takes its own place out of argv first). A new array every call.
 export function programArguments() {

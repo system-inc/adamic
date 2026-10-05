@@ -81,6 +81,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
+	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
@@ -136,13 +137,19 @@ type lowering struct {
 	// index, each with what its body still needs (signature).
 	signed map[int]signed
 
-	// forwarders are the function values made for module functions read as values, by the function
-	// each forwards to (functionValue).
-	forwarders map[int]int
+	// forwarders are the globals holding the function values made for module functions read as values,
+	// by the function each forwards to, and forwarderValues the declarations that make them, which run
+	// before anything else (functionValue).
+	forwarders      map[int]int
+	forwarderValues []ir.Statement
 
 	// generics maps each generic module function's symbol to its declaration, and genericInstances
 	// each instantiation already lowered to its function (generic.go). genericDepth counts the
 	// instantiations being lowered inside one another.
+	// unsetUntil is where, in the constructor being lowered, its last assignment of a field without an
+	// initializer ends: before it, this is only for reading and writing fields (useOfThis).
+	unsetUntil int
+
 	generics         map[*ast.Symbol]*ast.Node
 	genericInstances map[string]int
 	genericDepth     int
