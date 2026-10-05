@@ -2,6 +2,8 @@
 
 #include "adamic.h"
 
+#include <stdint.h>
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -57,6 +59,22 @@ size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX])
 	}
 	if (isinf(value)) {
 		return append(buffer, length, "Infinity");
+	}
+	if (value < 9007199254740992.0 && value == (double)(uint64_t)value) {
+		// A whole number below 2^53: every integer there is a double, and so are its neighbours, so no
+		// shorter digits read back as it, and its shortest form is its own digits, written directly
+		// rather than searched for. 2^53 and past, 2^60 is 1152921504606847000, so those search.
+		char reversed[16];
+		int count = 0;
+		uint64_t whole = (uint64_t)value;
+		do {
+			reversed[count++] = (char)('0' + whole % 10);
+			whole /= 10;
+		} while (whole != 0);
+		while (count > 0) {
+			buffer[length++] = reversed[--count];
+		}
+		return length;
 	}
 
 	char digits[18];
