@@ -356,6 +356,15 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		e.end()
 	case ir.Assign:
+		if e.program.Locals[statement.Local].Counter {
+			// The loop's update, counter + 1, is the only write a counter has (lower/counters.go).
+			sum, isSum := statement.Value.(ir.Binary)
+			if one, isOne := sum.Right.(ir.NumberConstant); !isSum || sum.Operator != ir.Add || !isOne || one.Value != 1 {
+				panic(fmt.Sprintf("native: compiler bug: counter %s written other than by + 1", e.program.Locals[statement.Local].Name))
+			}
+			e.line("%s += 1;", e.localName(statement.Local))
+			return
+		}
 		value := e.value(statement.Value)
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
@@ -824,6 +833,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		lookup := "adamic_array_at"
 		if expression.Relative {
 			lookup = "adamic_array_at_relative"
+		} else if read, isRead := expression.Index.(ir.Read); isRead && e.program.Locals[read.Local].Counter {
+			// A counter is a whole number already: only the bounds are left to check.
+			lookup, index = "adamic_array_at_integer", e.localName(read.Local)
 		}
 		e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
 		if expression.Type().IsMaybe() {
@@ -1482,6 +1494,10 @@ func (e *emitter) switchStatement(statement ir.Switch) {
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
 	name := e.localName(read.Local)
+	if e.program.Locals[read.Local].Counter {
+		// Read as the double it stands for, which every value it can hold is exactly.
+		return "((double)" + name + ")"
+	}
 	if slot := e.cellSlot(read.Local); slot != "" {
 		// A captured variable may change under a call later in the statement (a closure that
 		// writes it), so, like a global, it's copied the moment JavaScript reads it.
@@ -1901,6 +1917,11 @@ func (e *emitter) comparator(sort ir.ArraySort) string {
 // value is already the local's. A captured local is declared straight into a cell.
 func (e *emitter) declareLocal(local int, value string, owned bool) {
 	declared := e.program.Locals[local]
+	if declared.Counter {
+		// A whole-number constant within 2^53, which an integer holds exactly (lower/counters.go).
+		e.line("int64_t %s = (int64_t)%s;", e.localName(local), value)
+		return
+	}
 	if declared.Captured {
 		e.makeCell(local, value, owned)
 		return
