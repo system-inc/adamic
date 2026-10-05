@@ -44,7 +44,7 @@ The reason the message gives is the runtime's own loops (`map`, `sort` and the r
 
 **Around it:** each list is its helper's loop, written where graphql-js calls the helper, and marked with the helper's name (`// optionalMany('(', parseVariableDefinition, ')')`). A dispatching method taking the item's kind in the function's place doesn't lower either, since it would call methods declared after it (gap 3 below, met again).
 
-## 2. Throwing an Error made in another function
+## 2. Throwing an Error made in another function (closed by stream P2)
 
 graphql-js's parser throws what `this.unexpected()` and `syntaxError()` return.
 
@@ -63,7 +63,9 @@ try {
 stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet        (Node prints Unexpected token at 3.)
 ```
 
-**Around it:** `syntaxError` and `unexpected` return the message, and each of the 35 places throws `new Error(...)` of it. Since 0.1 has no class inheritance, the error can't carry graphql-js's `locations` either; Prettier reads only the first location into its message, so the message is the whole of what the port needs.
+**Closed:** the refusal guards something real. A catch takes `instanceof Error` as true of what it caught, and a value only typed `Error` can be an object literal with a name and a message, of which `instanceof Error` is false on Node. So stage 0 now throws an Error it can see `new Error` made: there, in a `const`, on both sides of a conditional, caught by a catch, or returned by a module function or a method (imported or not) every return of which is one of those (internal/lower/exceptions.go, `madeError`). Anything else stays refused, now in the words "throwing an Error that it can't see new Error made". internal/oracle/testdata/exceptions_made_elsewhere.a holds what it takes, and a probe in internal/lower/lower_test.go holds the object literal refused. The mutant that trusts any call's result without looking at its returns lowers that probe to a program that prints "an Error" where Node prints "not an Error", and the probe catches it.
+
+**Around it, until it closed:** `syntaxError` and `unexpected` returned the message, and each of the 35 places threw `new Error(...)` of it. Now they return the Error, as graphql-js's do, and the places throw it. Since 0.1 has no class inheritance, the error can't carry graphql-js's `locations`; Prettier reads only the first location into its message, so the message is the whole of what the port needs.
 
 ## Cooking a string without `String.fromCodePoint`
 
@@ -82,7 +84,7 @@ A lone surrogate, which only an error message's slice through a surrogate pair m
 
 ## What lowered as written
 
-Every throw and the catch, on the first build. `throw new Error(...)` from 35 places, among them functions and methods with no other way out (`readString` ends in a throw), a ternary choosing which message to throw, and throws inside `switch` cases inside loops; the throw leaving through every method of the recursion, from as deep as 500 frames (the deep cases below), each frame holding arrays of node indexes, tokens and strings, with nothing leaked on any of the 3,426 texts, 1,374 of which throw; `catch (error)` narrowed with `instanceof Error` and read for its `message`; and the try's check that nothing it reaches is a library call that would throw on Node but panic natively, which the port passes with `toString(16)` (a constant radix) and `padStart` inside it.
+Every throw and the catch, on the first build. A throw from 35 places, among them functions and methods with no other way out (`readString` ends in a throw), a ternary choosing which message to throw, and throws inside `switch` cases inside loops; the throw leaving through every method of the recursion, from as deep as 500 frames (the deep cases below), each frame holding arrays of node indexes, tokens and strings, with nothing leaked on any of the 3,426 texts, 1,374 of which throw; `catch (error)` narrowed with `instanceof Error` and read for its `message`; and the try's check that nothing it reaches is a library call that would throw on Node but panic natively, which the port passes with `toString(16)` (a constant radix) and `padStart` inside it.
 
 Around the exceptions: a `switch` on character codes with cases falling through to one body and `continue` inside the `switch` reaching the loop around it; `charCodeAt` past the end giving NaN, which every comparison then rejects as graphql-js relies on; `codePointAt` past the end giving undefined; `do ... while` loops; nested ternaries; a string-literal union of 23 token kinds compared with `===` and switched on; a discriminated union of five object shapes as a field's value; `Number.MAX_SAFE_INTEGER`; and `slice` clamping an index past the end.
 

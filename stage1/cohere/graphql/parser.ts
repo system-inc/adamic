@@ -183,7 +183,7 @@ class Parser {
 			return token;
 		}
 
-		throw new Error(syntaxError(this.lexer.body, token.start, `Expected ${getTokenKindDesc(kind)}, found ${getTokenDesc(token)}.`));
+		throw syntaxError(this.lexer.body, token.start, `Expected ${getTokenKindDesc(kind)}, found ${getTokenDesc(token)}.`);
 	}
 
 	// expectOptionalToken: if the next token is of the given kind, return "true" after advancing the
@@ -204,7 +204,7 @@ class Parser {
 		if (token.kind === 'Name' && token.value === value) {
 			this.advanceLexer();
 		} else {
-			throw new Error(syntaxError(this.lexer.body, token.start, `Expected "${value}", found ${getTokenDesc(token)}.`));
+			throw syntaxError(this.lexer.body, token.start, `Expected "${value}", found ${getTokenDesc(token)}.`);
 		}
 	}
 
@@ -220,8 +220,8 @@ class Parser {
 	}
 
 	// unexpected is a helper function for creating an error when an unexpected lexed token is
-	// encountered: its message, which the caller throws (GAPS.md, gap 2).
-	unexpected(atToken: Token | undefined): string {
+	// encountered.
+	unexpected(atToken: Token | undefined): Error {
 		const token = atToken ?? this.lexer.token;
 		return syntaxError(this.lexer.body, token.start, `Unexpected ${getTokenDesc(token)}.`);
 	}
@@ -362,13 +362,13 @@ class Parser {
 					this.expectToken('$');
 					if (this.lexer.token.kind === 'Name') {
 						const variableName = this.lexer.token.value ?? '';
-						throw new Error(syntaxError(this.lexer.body, token.start, `Unexpected variable "$${variableName}" in constant value.`));
+						throw syntaxError(this.lexer.body, token.start, `Unexpected variable "$${variableName}" in constant value.`);
 					}
-					throw new Error(this.unexpected(token));
+					throw this.unexpected(token);
 				}
 				return this.parseVariable();
 			default:
-				throw new Error(this.unexpected(undefined));
+				throw this.unexpected(undefined);
 		}
 	}
 
@@ -422,7 +422,7 @@ class Parser {
 	// parseFragmentName parses FragmentName : Name but not `on`
 	parseFragmentName(): number {
 		if (this.lexer.token.value === 'on') {
-			throw new Error(this.unexpected(undefined));
+			throw this.unexpected(undefined);
 		}
 		return this.parseName();
 	}
@@ -579,7 +579,7 @@ class Parser {
 				return 'subscription';
 		}
 
-		throw new Error(this.unexpected(operationToken));
+		throw this.unexpected(operationToken);
 	}
 
 	// parseOperationDefinition parses
@@ -856,7 +856,7 @@ class Parser {
 			case 'true':
 			case 'false':
 			case 'null':
-				throw new Error(syntaxError(this.lexer.body, this.lexer.token.start, `${getTokenDesc(this.lexer.token)} is reserved and cannot be used for an enum value.`));
+				throw syntaxError(this.lexer.body, this.lexer.token.start, `${getTokenDesc(this.lexer.token)} is reserved and cannot be used for an enum value.`);
 		}
 		return this.parseName();
 	}
@@ -927,7 +927,7 @@ class Parser {
 		if (isDirectiveLocation(start.value ?? '')) {
 			return name;
 		}
-		throw new Error(this.unexpected(start));
+		throw this.unexpected(start);
 	}
 
 	// parseDirectiveDefinition parses
@@ -973,7 +973,7 @@ class Parser {
 		const directives = this.parseConstDirectives();
 		const operationTypes = this.parseOperationTypeDefinitions(false);
 		if (directives.kind === 'Undefined' && operationTypes.kind === 'Undefined') {
-			throw new Error(this.unexpected(undefined));
+			throw this.unexpected(undefined);
 		}
 		return this.node(start, 'SchemaExtension', [field('directives', directives), field('operationTypes', operationTypes)]);
 	}
@@ -989,7 +989,7 @@ class Parser {
 		const name = this.parseName();
 		const directives = this.parseConstDirectives();
 		if (directives.kind === 'Undefined') {
-			throw new Error(this.unexpected(undefined));
+			throw this.unexpected(undefined);
 		}
 		return this.node(start, 'ScalarTypeExtension', [child('name', name), field('directives', directives)]);
 	}
@@ -1009,7 +1009,7 @@ class Parser {
 		const directives = this.parseConstDirectives();
 		const fields = this.parseFieldsDefinition();
 		if (interfaces.kind === 'Undefined' && directives.kind === 'Undefined' && fields.kind === 'Undefined') {
-			throw new Error(this.unexpected(undefined));
+			throw this.unexpected(undefined);
 		}
 		return this.node(start, 'ObjectTypeExtension', [child('name', name), field('interfaces', interfaces), field('directives', directives), field('fields', fields)]);
 	}
@@ -1029,7 +1029,7 @@ class Parser {
 		const directives = this.parseConstDirectives();
 		const fields = this.parseFieldsDefinition();
 		if (interfaces.kind === 'Undefined' && directives.kind === 'Undefined' && fields.kind === 'Undefined') {
-			throw new Error(this.unexpected(undefined));
+			throw this.unexpected(undefined);
 		}
 		return this.node(start, 'InterfaceTypeExtension', [child('name', name), field('interfaces', interfaces), field('directives', directives), field('fields', fields)]);
 	}
@@ -1047,7 +1047,7 @@ class Parser {
 		const directives = this.parseConstDirectives();
 		const types = this.parseUnionMemberTypes();
 		if (directives.kind === 'Undefined' && types.kind === 'Undefined') {
-			throw new Error(this.unexpected(undefined));
+			throw this.unexpected(undefined);
 		}
 		return this.node(start, 'UnionTypeExtension', [child('name', name), field('directives', directives), field('types', types)]);
 	}
@@ -1065,7 +1065,7 @@ class Parser {
 		const directives = this.parseConstDirectives();
 		const values = this.parseEnumValuesDefinition();
 		if (directives.kind === 'Undefined' && values.kind === 'Undefined') {
-			throw new Error(this.unexpected(undefined));
+			throw this.unexpected(undefined);
 		}
 		return this.node(start, 'EnumTypeExtension', [child('name', name), field('directives', directives), field('values', values)]);
 	}
@@ -1083,7 +1083,7 @@ class Parser {
 		const directives = this.parseConstDirectives();
 		const fields = this.parseInputValueDefs('{', '}');
 		if (directives.kind === 'Undefined' && fields.kind === 'Undefined') {
-			throw new Error(this.unexpected(undefined));
+			throw this.unexpected(undefined);
 		}
 		return this.node(start, 'InputObjectTypeExtension', [child('name', name), field('directives', directives), field('fields', fields)]);
 	}
@@ -1096,7 +1096,7 @@ class Parser {
 		const name = this.parseName();
 		const directives = this.parseConstDirectives();
 		if (directives.kind === 'Undefined') {
-			throw new Error(this.unexpected(undefined));
+			throw this.unexpected(undefined);
 		}
 		return this.node(start, 'DirectiveExtension', [child('name', name), field('directives', directives)]);
 	}
@@ -1139,7 +1139,7 @@ class Parser {
 			}
 		}
 
-		throw new Error(this.unexpected(keywordToken));
+		throw this.unexpected(keywordToken);
 	}
 
 	// parseDefinition parses
@@ -1175,7 +1175,7 @@ class Parser {
 		const keywordToken = hasDescription ? this.lexer.lookahead() : this.lexer.token;
 
 		if (hasDescription && keywordToken.kind === '{') {
-			throw new Error(syntaxError(this.lexer.body, this.lexer.token.start, 'Unexpected description, descriptions are not supported on shorthand queries.'));
+			throw syntaxError(this.lexer.body, this.lexer.token.start, 'Unexpected description, descriptions are not supported on shorthand queries.');
 		}
 
 		if (keywordToken.kind === 'Name') {
@@ -1208,7 +1208,7 @@ class Parser {
 			}
 
 			if (hasDescription) {
-				throw new Error(syntaxError(this.lexer.body, this.lexer.token.start, 'Unexpected description, only GraphQL definitions support descriptions.'));
+				throw syntaxError(this.lexer.body, this.lexer.token.start, 'Unexpected description, only GraphQL definitions support descriptions.');
 			}
 
 			if (keywordToken.value === 'extend') {
@@ -1216,7 +1216,7 @@ class Parser {
 			}
 		}
 
-		throw new Error(this.unexpected(keywordToken));
+		throw this.unexpected(keywordToken);
 	}
 
 	// Implements the parsing rules in the Document section.

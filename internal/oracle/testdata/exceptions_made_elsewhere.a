@@ -1,0 +1,102 @@
+// An Error made by new Error somewhere other than the throw: returned by a function or a method, kept
+// in a const, chosen by a conditional, or caught and kept, then thrown, from as deep in a recursion as
+// the failure is, through finally blocks, with every frame's strings and arrays let go on the way out.
+
+function syntaxError(position: number, description: string): Error {
+	return new Error(`Syntax Error: ${description} (${position})`);
+}
+
+// A maker that calls itself: every return is still new Error's.
+function nested(depth: number, trail: string): Error {
+	return depth === 0 ? new Error(`bottom of ${trail}`) : nested(depth - 1, `${trail}>${depth}`);
+}
+
+class Reader {
+	readonly text: string;
+	position = 0;
+	readonly seen: string[] = [];
+
+	constructor(text: string) {
+		this.text = text;
+	}
+
+	unexpected(): Error {
+		const found = this.text[this.position] ?? '<EOF>';
+		return syntaxError(this.position, `Unexpected ${found}`);
+	}
+
+	value(): string {
+		const character = this.text[this.position] ?? '';
+		this.seen.push(`${character}@${this.position}`);
+		if (character === '[') {
+			this.position++;
+			const items: string[] = [];
+			while (this.text[this.position] !== ']') {
+				if (this.position >= this.text.length) {
+					throw this.unexpected();
+				}
+				items.push(this.value());
+			}
+			this.position++;
+			return `(${items.join(',')})`;
+		}
+		if (character >= 'a' && character <= 'z') {
+			this.position++;
+			return character.toUpperCase();
+		}
+		const failure = this.position === 0 ? syntaxError(0, 'nothing to read') : this.unexpected();
+		throw failure;
+	}
+}
+
+for (const text of ['[a[b c]d]', '[a[b', '[a?]', '', '[[[[x]]]]']) {
+	const reader = new Reader(text.split(' ').join(''));
+	try {
+		console.log(`${text}: ${reader.value()}`);
+	} catch (error) {
+		console.log(`${text}: ${error instanceof Error ? error.message : '?'} after ${reader.seen.length} reads`);
+	} finally {
+		reader.seen.push('done');
+	}
+}
+
+// A const made before the try, thrown inside it; a recursive maker's error; and a caught error kept
+// in a const and thrown again, to a catch outside, through a finally.
+const prepared = new Error(`prepared ${'once'.toUpperCase()}`);
+function stop(when: number): number {
+	if (when > 2) {
+		throw prepared;
+	}
+	if (when === 2) {
+		throw nested(3, 'the stack');
+	}
+	return when * 10;
+}
+for (const when of [1, 2, 3, 4]) {
+	try {
+		console.log(`${stop(when)}`);
+	} catch (error) {
+		console.log(`stopped: ${error instanceof Error ? `${error.name} ${error.message}` : '?'}`);
+	}
+}
+
+function retry(attempt: number): string {
+	try {
+		try {
+			return `${stop(attempt)}`;
+		} catch (error) {
+			if (error instanceof Error) {
+				const kept = error;
+				console.log(`kept ${kept.message.length} characters`);
+				throw kept;
+			}
+			return 'never';
+		} finally {
+			console.log(`attempt ${attempt} over`);
+		}
+	} catch (error) {
+		return `outer ${error instanceof Error ? error.message : '?'}`;
+	}
+}
+console.log(retry(1));
+console.log(retry(2));

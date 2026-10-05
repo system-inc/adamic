@@ -7,10 +7,10 @@
 // NaN past the end of the text fails every test the lexer makes, as in graphql-js.
 //
 // graphql-js throws a GraphQLError where lexing or parsing fails, and the Go panics with a
-// *SyntaxError that Parse recovers. Here each failure is `throw new Error(syntaxError(...))`, caught in
-// parser.ts's parse: syntaxError gives the message, since stage 0 throws only an Error made where it is
-// thrown (GAPS.md, gap 2). The message is Prettier's, GraphQLError's message and then its first
-// location, " (line:column)".
+// *SyntaxError that Parse recovers. Here each failure throws the Error syntaxError makes, caught in
+// parser.ts's parse. 0.1 has no class inheritance, so it is an Error, not a GraphQLError, and carries
+// only its message: Prettier's, GraphQLError's message and then its first location, " (line:column)",
+// which is all Prettier reads of it.
 //
 // Every string the lexer gives, a token's value or a message, is written in the test's output form,
 // `escaped` below, rather than as the text itself: a String token's \u escapes can't be cooked into
@@ -88,12 +88,12 @@ function getLocation(body: string, position: number): Location {
 	return { line, column: position + 1 - lastLineStart };
 }
 
-// syntaxError produces the message of a GraphQLError representing a syntax error, containing useful
-// descriptive information about the syntax error's position in the source, as Prettier reports it. The
-// description is in the output form already.
-export function syntaxError(body: string, position: number, description: string): string {
+// syntaxError produces a GraphQLError representing a syntax error, containing useful descriptive
+// information about the syntax error's position in the source, with its message as Prettier reports
+// it. The description is in the output form already.
+export function syntaxError(body: string, position: number, description: string): Error {
 	const location = getLocation(body, position);
-	return `Syntax Error: ${description} (${location.line}:${location.column})`;
+	return new Error(`Syntax Error: ${description} (${location.line}:${location.column})`);
 }
 
 export function isPunctuatorTokenKind(kind: TokenKind): boolean {
@@ -231,7 +231,7 @@ function readEscapedUnicodeVariableWidth(lexer: Lexer, position: number): Escape
 		}
 	}
 
-	throw new Error(syntaxError(body, position, `Invalid Unicode escape sequence: "${escaped(body.slice(position, position + size))}".`));
+	throw syntaxError(body, position, `Invalid Unicode escape sequence: "${escaped(body.slice(position, position + size))}".`);
 }
 
 function readEscapedUnicodeFixedWidth(lexer: Lexer, position: number): EscapeSequence {
@@ -257,7 +257,7 @@ function readEscapedUnicodeFixedWidth(lexer: Lexer, position: number): EscapeSeq
 		}
 	}
 
-	throw new Error(syntaxError(body, position, `Invalid Unicode escape sequence: "${escaped(body.slice(position, position + 6))}".`));
+	throw syntaxError(body, position, `Invalid Unicode escape sequence: "${escaped(body.slice(position, position + 6))}".`);
 }
 
 // readEscapedCharacter:
@@ -293,7 +293,7 @@ function readEscapedCharacter(lexer: Lexer, position: number): EscapeSequence {
 		case 0x0074: // t
 			return { value: written(0x0009), size: 2 };
 	}
-	throw new Error(syntaxError(body, position, `Invalid character escape sequence: "${escaped(body.slice(position, position + 2))}".`));
+	throw syntaxError(body, position, `Invalid character escape sequence: "${escaped(body.slice(position, position + 2))}".`);
 }
 
 // createToken creates a token with line and column location information.
@@ -338,7 +338,7 @@ function readComment(lexer: Lexer, start: number): Token {
 function readDigits(lexer: Lexer, start: number, firstCode: number): number {
 	const body = lexer.body;
 	if (!isDigit(firstCode)) {
-		throw new Error(syntaxError(body, start, `Invalid number, expected digit but got: ${printCodePointAt(lexer, start)}.`));
+		throw syntaxError(body, start, `Invalid number, expected digit but got: ${printCodePointAt(lexer, start)}.`);
 	}
 
 	let position = start + 1; // +1 to skip first firstCode
@@ -392,7 +392,7 @@ function readNumber(lexer: Lexer, start: number, firstCode: number): Token {
 		position++;
 		code = body.charCodeAt(position);
 		if (isDigit(code)) {
-			throw new Error(syntaxError(body, position, `Invalid number, unexpected digit after 0: ${printCodePointAt(lexer, position)}.`));
+			throw syntaxError(body, position, `Invalid number, unexpected digit after 0: ${printCodePointAt(lexer, position)}.`);
 		}
 	} else {
 		position = readDigits(lexer, position, code);
@@ -426,7 +426,7 @@ function readNumber(lexer: Lexer, start: number, firstCode: number): Token {
 
 	// Numbers cannot be followed by . or NameStart
 	if (code === 0x002e || isNameStart(code)) {
-		throw new Error(syntaxError(body, position, `Invalid number, expected digit but got: ${printCodePointAt(lexer, position)}.`));
+		throw syntaxError(body, position, `Invalid number, expected digit but got: ${printCodePointAt(lexer, position)}.`);
 	}
 
 	return createToken(lexer, isFloat ? 'Float' : 'Int', start, position, body.slice(start, position));
@@ -490,11 +490,11 @@ function readString(lexer: Lexer, start: number): Token {
 		} else if (isSupplementaryCodePoint(body, position)) {
 			position += 2;
 		} else {
-			throw new Error(syntaxError(body, position, `Invalid character within String: ${printCodePointAt(lexer, position)}.`));
+			throw syntaxError(body, position, `Invalid character within String: ${printCodePointAt(lexer, position)}.`);
 		}
 	}
 
-	throw new Error(syntaxError(body, position, 'Unterminated string.'));
+	throw syntaxError(body, position, 'Unterminated string.');
 }
 
 // readBlockString reads a block string token from the source file.
@@ -568,11 +568,11 @@ function readBlockString(lexer: Lexer, start: number): Token {
 		} else if (isSupplementaryCodePoint(body, position)) {
 			position += 2;
 		} else {
-			throw new Error(syntaxError(body, position, `Invalid character within String: ${printCodePointAt(lexer, position)}.`));
+			throw syntaxError(body, position, `Invalid character within String: ${printCodePointAt(lexer, position)}.`);
 		}
 	}
 
-	throw new Error(syntaxError(body, position, 'Unterminated string.'));
+	throw syntaxError(body, position, 'Unterminated string.');
 }
 
 // readName reads an alphanumeric + underscore name from the source.
@@ -676,10 +676,10 @@ function readNextToken(lexer: Lexer, start: number): Token {
 					return createToken(lexer, '...', position, position + 3, undefined);
 				}
 				if (nextCode === 0x002e) {
-					throw new Error(syntaxError(body, position, 'Unexpected "..", did you mean "..."?'));
+					throw syntaxError(body, position, 'Unexpected "..", did you mean "..."?');
 				} else if (isDigit(nextCode)) {
 					const digits = body.slice(position + 1, readDigits(lexer, position + 1, nextCode));
-					throw new Error(syntaxError(body, position, `Invalid number, expected digit before ".", did you mean "0.${digits}"?`));
+					throw syntaxError(body, position, `Invalid number, expected digit before ".", did you mean "0.${digits}"?`);
 				}
 				break;
 			}
@@ -717,16 +717,14 @@ function readNextToken(lexer: Lexer, start: number): Token {
 			return readName(lexer, position);
 		}
 
-		throw new Error(
-			syntaxError(
-				body,
-				position,
-				code === 0x0027
-					? 'Unexpected single quote character (\'), did you mean to use a double quote (")?'
-					: isUnicodeScalarValue(code) || isSupplementaryCodePoint(body, position)
-						? `Unexpected character: ${printCodePointAt(lexer, position)}.`
-						: `Invalid character: ${printCodePointAt(lexer, position)}.`,
-			),
+		throw syntaxError(
+			body,
+			position,
+			code === 0x0027
+				? 'Unexpected single quote character (\'), did you mean to use a double quote (")?'
+				: isUnicodeScalarValue(code) || isSupplementaryCodePoint(body, position)
+					? `Unexpected character: ${printCodePointAt(lexer, position)}.`
+					: `Invalid character: ${printCodePointAt(lexer, position)}.`,
 		);
 	}
 

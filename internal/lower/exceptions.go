@@ -10,7 +10,8 @@ import (
 
 // Exceptions (docs/memory.md, "Exceptions, designed into counting"): throw new Error(message), a
 // caught error thrown again, and try with catch, finally or both. What's thrown is only ever an
-// Error, made by new Error or caught, since a catch binds unknown and 0.2 has no value of every kind.
+// Error made by new Error, there or in a function that returns one, or caught, since a catch binds
+// unknown and 0.2 has no value of every kind.
 
 // tryRecord is a try statement lowered, for the checks made once every function is: where it is,
 // and its body.
@@ -22,11 +23,9 @@ type tryRecord struct {
 // throwStatement lowers throw.
 func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
-	isNewError := thrown.Kind == ast.KindNewExpression && l.isLibraryGlobal(thrown.AsNewExpression().Expression, "Error")
-	isCaught := ast.IsIdentifier(thrown) && l.caught[l.symbol(thrown)]
-	if !isNewError && !isCaught {
+	if !l.madeError(thrown, map[*ast.Node]bool{}) {
 		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
-			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
+			return nil, l.notYet(thrown, "throwing an Error that it can't see new Error made")
 		}
 		return nil, &Refused{Where: l.program.Where(thrown), What: "throwing a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)), Fix: "throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"}
 	}
@@ -35,6 +34,89 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 		return nil, err
 	}
 	return []ir.Statement{ir.Throw{Value: value}}, nil
+}
+
+// madeError reports whether an expression is sure to be an Error that new Error made, which is what
+// lets a catch take instanceof Error as true: new Error itself; what a catch caught; a const
+// initialized with one; either side of a conditional that both are; or a call to a module function
+// or a method every return of which is one. A value that is only typed Error isn't enough, since an
+// object literal with a name and a message is one too, and instanceof Error is false of it.
+//
+// visiting holds the functions being looked into, so a function returning its own call is judged by
+// its other returns.
+func (l *lowering) madeError(node *ast.Node, visiting map[*ast.Node]bool) bool {
+	node = ast.SkipParentheses(node)
+	switch node.Kind {
+	case ast.KindNewExpression:
+		return l.isLibraryGlobal(node.AsNewExpression().Expression, "Error")
+	case ast.KindIdentifier:
+		symbol := l.symbol(node)
+		if symbol == nil {
+			return false
+		}
+		if l.caught[symbol] {
+			return true
+		}
+		if len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindVariableDeclaration {
+			return false
+		}
+		declaration := symbol.Declarations[0]
+		initializer := declaration.AsVariableDeclaration().Initializer
+		isConst := declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0
+		return isConst && initializer != nil && l.madeError(initializer, visiting)
+	case ast.KindConditionalExpression:
+		conditional := node.AsConditionalExpression()
+		return l.madeError(conditional.WhenTrue, visiting) && l.madeError(conditional.WhenFalse, visiting)
+	case ast.KindCallExpression:
+		// An imported function is the function it imports.
+		symbol := l.symbol(ast.SkipParentheses(node.AsCallExpression().Expression))
+		if symbol == nil || len(symbol.Declarations) != 1 {
+			return false
+		}
+		declaration := symbol.Declarations[0]
+		if declaration.Kind != ast.KindFunctionDeclaration && declaration.Kind != ast.KindMethodDeclaration {
+			return false
+		}
+		if visiting[declaration] {
+			return true
+		}
+		body := declaration.Body()
+		if body == nil {
+			return false
+		}
+		visiting[declaration] = true
+		defer delete(visiting, declaration)
+		returns := returnsOf(body)
+		if len(returns) == 0 {
+			return false
+		}
+		for _, returned := range returns {
+			if returned == nil || !l.madeError(returned, visiting) {
+				return false
+			}
+		}
+		return true
+	}
+	return false
+}
+
+// returnsOf is what each return statement in a function's body returns (nil for a bare return), not
+// counting the functions inside it.
+func returnsOf(body *ast.Node) []*ast.Node {
+	var returns []*ast.Node
+	var visit func(node *ast.Node) bool
+	visit = func(node *ast.Node) bool {
+		if ast.IsFunctionLike(node) {
+			return false
+		}
+		if node.Kind == ast.KindReturnStatement {
+			returns = append(returns, node.AsReturnStatement().Expression)
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	body.ForEachChild(visit)
+	return returns
 }
 
 // newError lowers new Error(message), and new Error().

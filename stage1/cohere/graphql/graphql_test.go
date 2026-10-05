@@ -233,14 +233,14 @@ var mutants = []mutant{
 	{
 		name: "a leading zero's error at the number's start",
 		file: "lexer.ts",
-		from: "throw new Error(syntaxError(body, position, `Invalid number, unexpected digit after 0:",
-		to:   "throw new Error(syntaxError(body, start, `Invalid number, unexpected digit after 0:",
+		from: "throw syntaxError(body, position, `Invalid number, unexpected digit after 0:",
+		to:   "throw syntaxError(body, start, `Invalid number, unexpected digit after 0:",
 	},
 	// A throw not taken: an escape graphql-js refuses read as nothing, and the parse goes on.
 	{
 		name: "an invalid escape read as nothing",
 		file: "lexer.ts",
-		from: "\tthrow new Error(syntaxError(body, position, `Invalid character escape sequence: \"${escaped(body.slice(position, position + 2))}\".`));",
+		from: "\tthrow syntaxError(body, position, `Invalid character escape sequence: \"${escaped(body.slice(position, position + 2))}\".`);",
 		to:   "\treturn { value: '', size: 2 };",
 	},
 	// unexpected told which token to name, naming the current one instead (`extend thing X` names
