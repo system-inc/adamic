@@ -1648,6 +1648,10 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 		return e.own(ir.String, fmt.Sprintf("adamic_string_trim_sides(%s, %t, %t)", value, call.Method == "trimStart", call.Method == "trimEnd"))
 	case "at":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_at_relative(%s, %s)", value, arguments[0]))
+	case "toUpperCase":
+		return e.own(ir.String, fmt.Sprintf("adamic_string_to_upper(%s)", value))
+	case "toLowerCase":
+		return e.own(ir.String, fmt.Sprintf("adamic_string_to_lower(%s)", value))
 	case "replace", "replaceAll":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_replace(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "replaceAll"))
 	case "includes":

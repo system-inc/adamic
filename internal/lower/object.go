@@ -948,6 +948,8 @@ var stringMethods = map[string]struct {
 	"lastIndexOf": {[]ir.Type{ir.String}, 0},
 	"trimStart":   {nil, 0},
 	"trimEnd":     {nil, 0},
+	"toUpperCase": {nil, 0},
+	"toLowerCase": {nil, 0},
 	"at":          {[]ir.Type{ir.Number}, 0},
 	// A pattern that's a string, and a replacement that's a string: a regular expression or a
 	// function there isn't a string, and stays not yet.
