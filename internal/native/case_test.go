@@ -311,20 +311,26 @@ func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 // characters changed.
 func TestCaseTablesMatchNodesUnicode(t *testing.T) {
 	t.Parallel()
-	tables, err := runtime.ReadFile("runtime/case_tables.h")
-	if err != nil {
-		t.Fatal(err)
-	}
-	version := regexp.MustCompile(`#define CASE_UNICODE_VERSION "([0-9.]+)"`).FindSubmatch(tables)
-	if version == nil {
-		t.Fatal("case_tables.h names no Unicode version")
-	}
 	output, err := exec.Command("node", "--print", "process.versions.unicode").Output()
 	if err != nil {
 		t.Fatal(err)
 	}
-	// Node says 17.0 for Unicode 17.0.0.
-	if node := strings.TrimSpace(string(output)); !strings.HasPrefix(string(version[1]), node+".") && string(version[1]) != node {
-		t.Errorf("case_tables.h is Unicode %s and Node is Unicode %s: update case_generate.go and run go generate", version[1], node)
+	node := strings.TrimSpace(string(output))
+	for _, tables := range []struct{ file, define, generator string }{
+		{"case_tables.h", "CASE_UNICODE_VERSION", "case_generate.go"},
+		{"normalize_tables.h", "NORMALIZE_UNICODE_VERSION", "normalize_generate.go"},
+	} {
+		contents, err := runtime.ReadFile("runtime/" + tables.file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		version := regexp.MustCompile(`#define ` + tables.define + ` "([0-9.]+)"`).FindSubmatch(contents)
+		if version == nil {
+			t.Fatalf("%s names no Unicode version", tables.file)
+		}
+		// Node says 17.0 for Unicode 17.0.0.
+		if !strings.HasPrefix(string(version[1]), node+".") && string(version[1]) != node {
+			t.Errorf("%s is Unicode %s and Node is Unicode %s: update %s and run go generate", tables.file, version[1], node, tables.generator)
+		}
 	}
 }

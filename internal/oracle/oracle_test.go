@@ -105,6 +105,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/number_edges.a", true, false},
 	{"internal/oracle/testdata/long_chain.a", true, false},
 	{"internal/oracle/testdata/write_after_shrink.a", true, true},
+	{"internal/oracle/testdata/normalize.a", true, false},
+	{"internal/oracle/testdata/normalize_form.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

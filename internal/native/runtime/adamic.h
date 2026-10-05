@@ -299,6 +299,10 @@ adamic_string *adamic_string_allocate(size_t length);
 adamic_string *adamic_string_to_upper(const adamic_string *string);
 adamic_string *adamic_string_to_lower(const adamic_string *string);
 
+// normalize (normalize.c): NFC, NFD, NFKC or NFKD as form names it, and a panic, as JavaScript's
+// RangeError, for any other form. It returns a string the caller owns.
+adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form);
+
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
 
