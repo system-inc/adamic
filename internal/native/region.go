@@ -14,9 +14,10 @@ import (
 //
 //   - A function returns fresh when every value it returns is an object literal made in the return
 //     itself (no spread), undefined, or what a call to a function that returns fresh returns. Such a
-//     function takes a hidden region parameter: the literal its return makes is allocated in it, and
-//     the calls whose results become that literal's fields, or its return, are handed it on. Every
-//     other call it makes is handed NULL, the heap. That's Tofte and Talpin's region polymorphism:
+//     function has a second version taking a hidden region parameter: the literal its return makes
+//     is allocated in it, and the calls whose results become that literal's fields, or its return,
+//     are handed it on, to their own region versions. Every other call it makes is to a heap
+//     version. That's Tofte and Talpin's region polymorphism:
 //     which region a value lives in is the caller's to say, never a global's.
 //   - A parameter flows nowhere when nothing the function does with it, or with a value read out of
 //     it (a field, a field's field), lets it outlive the call: it's only read, tested, compared, and
@@ -251,16 +252,41 @@ func eachOperandOfStatement(statement ir.Statement, visit func(ir.Expression)) {
 	each(reflect.ValueOf(statement))
 }
 
+// regionVariants is the versions a function is emitted in: every function on the heap, and a
+// function that returns fresh again in a region. The region version is handed a region that is never
+// NULL, so it knows which of its values are in it, and holds those without counting (regionValue);
+// the heap version is the function as it was before regions.
+func (e *emitter) regionVariants(function int) []bool {
+	if e.regions.fresh[function] {
+		return []bool{false, true}
+	}
+	return []bool{false}
+}
+
+// regionFunctionName is the C name of a fresh function's region version.
+func (e *emitter) regionFunctionName(function int) string {
+	return e.functionName(function) + "_in"
+}
+
 // regionFor is the region a call to a function that takes one is handed: the one its parent said
-// (a statement's region, or the function's own), or the heap.
+// (a statement's region, or the function's own), or none, and then it's the heap version's call.
 func (e *emitter) regionFor(call ir.Call) string {
-	if !e.regions.fresh[call.Function] {
+	if !e.regions.fresh[call.Function] || e.depth != e.regionCallDepth {
 		return ""
 	}
-	if e.depth == e.regionCallDepth {
-		return e.regionCallArgument
+	return e.regionCallArgument
+}
+
+// regionValue puts an object made in a region in a temporary the statement doesn't own: immortal
+// until its region ends, it takes no retain and no release, held in a field or returned.
+func (e *emitter) regionValue(value string) string {
+	name := e.temporary()
+	e.line("adamic_object *%s = %s;", name, value)
+	if e.regionValues == nil {
+		e.regionValues = map[string]bool{}
 	}
-	return "NULL"
+	e.regionValues[name] = true
+	return name
 }
 
 // handRegion evaluates an expression with a region for it, when it's a call to a function that

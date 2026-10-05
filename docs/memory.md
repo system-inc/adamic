@@ -404,8 +404,36 @@ Freeing the blocks at the region's end is what poisons them: the blocks are ordi
 
 - A region per loop iteration, per function call (a value made and dropped inside one call), and per request (stage 1's cohere, a file at a time).
 - Arrays in regions. Their element buffers grow by `realloc`, which a bump allocator can't do in place.
-- Not emitting retains and releases on values statically known to be in a region.
 
+### Region values, uncounted
+
+A value in a region needs no count, but a fresh function can't know whether its caller handed it a region or the heap, so every retain and release on what it makes was still a call, a branch inside the runtime that did nothing. So a fresh function is now emitted twice (`region.go`, `regionVariants`):
+
+- **The heap version** is the function as it was before regions: plain `adamic_object_new`, its calls to the heap versions of other fresh functions. A call handed no region calls it.
+- **The region version** (`_in`) takes a region that is never NULL. Its returned literal is made there, and the calls feeding that literal, or its return, go to region versions in turn. So every one of those values is statically in the region. Each is held in a temporary the statement doesn't own (`regionValue`), so it takes no release at the statement's end, a field holding it is written without a retain, and returning it takes none. Anything else a region literal holds, such as a heap string, is still retained, and the region's end releases it.
+- **The statement that has a region** calls the region version with `&region`, and doesn't own what it returns either.
+
+Measured on `bench/trees.ts`, counted:
+
+| | allocations | frees | in regions | retains | releases | peak live |
+|---|---:|---:|---:|---:|---:|---:|
+| Before | 68,332,244 | 1,572,900 | 66,759,344 | 272,979,306 | 204,647,140 | 2,097,149 |
+| After | 68,332,244 | 1,572,900 | 66,759,344 | 139,810,138 | 71,128,452 | 2,097,149 |
+
+Retains and releases each fell by about 133 million. That's three of each per inner node (two fields and the return, against the two call results and the literal) and one per leaf (the return, against the literal), over the 66.8 million region nodes. Nothing else moved. What's left of the retains is mostly `retain(NULL)` for a leaf's two `undefined` fields, plus the long-lived trees, which are on the heap.
+
+Time, `go run ./bench -only trees -rounds 5`, best of 5 at load about 2.6: native 1.968 s against Node's 1.423 s, so **1.38x Node, down from 1.72x**. Interleaved against the previous commit's binary, best of 5: 2.504 s before, 2.004 s after. Memory is unchanged at 97.9 MB.
+
+In the oracle's table, only `regions.a` moved: retains 624 to 517, releases 708 to 596.
+
+Two mutants, each run against `regions.a` and each caught:
+
+| Mutant | Caught by |
+|---|---|
+| A heap call to a fresh function is taken as in a region (its result uncounted) | the leak check |
+| A region literal holds every field without a retain, its heap strings included | ASan heap-use-after-free, on a label string the region's end let go of |
+
+**Still left for later:** a retain of a constant `undefined`, which is never needed anywhere, not only in a region.
 
 ## Strings, specifically
 

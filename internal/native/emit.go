@@ -55,14 +55,18 @@ func C(program *ir.Program) string {
 	// Bodies first: the shapes and field caches they use are found while they're emitted.
 	bodies := strings.Builder{}
 	for index, function := range program.Functions {
-		fmt.Fprintf(&bodies, "static %s {\n", emitter.signature(index))
-		emitter.indent = 1
-		emitter.functionIndex = index
-		emitter.functionBody(function)
-		bodies.WriteString(emitter.out.String())
-		emitter.out.Reset()
-		bodies.WriteString("}\n\n")
+		for _, inRegion := range emitter.regionVariants(index) {
+			emitter.inRegion = inRegion
+			fmt.Fprintf(&bodies, "static %s {\n", emitter.signature(index))
+			emitter.indent = 1
+			emitter.functionIndex = index
+			emitter.functionBody(function)
+			bodies.WriteString(emitter.out.String())
+			emitter.out.Reset()
+			bodies.WriteString("}\n\n")
+		}
 	}
+	emitter.inRegion = false
 	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n")
 	emitter.indent = 1
 	emitter.block(program.Main, nil)
@@ -71,8 +75,12 @@ func C(program *ir.Program) string {
 	bodies.WriteString("\treturn 0;\n}\n")
 
 	for index := range program.Functions {
-		fmt.Fprintf(&builder, "static %s;\n", emitter.signature(index))
+		for _, inRegion := range emitter.regionVariants(index) {
+			emitter.inRegion = inRegion
+			fmt.Fprintf(&builder, "static %s;\n", emitter.signature(index))
+		}
 	}
+	emitter.inRegion = false
 	if len(program.Functions) > 0 {
 		builder.WriteString("\n")
 	}
@@ -154,12 +162,15 @@ type emitter struct {
 	taking *taking
 
 	// regions is where values are allocated in a statement's region (region.go). functionIndex is
-	// the function being emitted, statementRegion the C name of the region of the statement being
+	// the function being emitted, inRegion whether it's the version of a fresh function that makes
+	// its result in a region, regionValues the C names of values known to be in one, statementRegion the C name of the region of the statement being
 	// emitted, if it has one, regionCallDepth and regionCallArgument the depth of the call a parent
 	// hands a region and that region, and regionLiteralDepth the depth of the object literal a fresh
 	// function's return allocates in its region.
 	regions            *regionPlan
 	functionIndex      int
+	inRegion           bool
+	regionValues       map[string]bool
 	statementRegion    string
 	regionCallDepth    int
 	regionCallArgument string
@@ -256,9 +267,11 @@ func (e *emitter) signature(function int) string {
 		returns = cType(declared.Returns)
 	}
 	parameters := []string{}
-	if e.regions.fresh[function] {
-		// The region its returned object is made in, or NULL for the heap (region.go).
+	name := e.functionName(function)
+	if e.inRegion {
+		// The version that makes its result in the region it's handed, never NULL (region.go).
 		parameters = append(parameters, "adamic_region *region")
+		name = e.regionFunctionName(function)
 	}
 	for _, parameter := range declared.Parameters {
 		parameters = append(parameters, cType(e.program.Locals[parameter].Type)+" "+e.localName(parameter))
@@ -266,7 +279,7 @@ func (e *emitter) signature(function int) string {
 	if len(parameters) == 0 {
 		parameters = append(parameters, "void")
 	}
-	return fmt.Sprintf("%s %s(%s)", returns, e.functionName(function), strings.Join(parameters, ", "))
+	return fmt.Sprintf("%s %s(%s)", returns, name, strings.Join(parameters, ", "))
 }
 
 // functionBody emits a function's body. A string parameter is retained on entry and released on
@@ -556,7 +569,7 @@ func (e *emitter) returnStatement(statement ir.Return) {
 		return
 	}
 	value := ""
-	if e.function != nil && e.regions.fresh[e.functionIndex] {
+	if e.function != nil && e.inRegion {
 		// A function that returns fresh makes what it returns in the region it was handed (region.go).
 		if literal, isLiteral := statement.Value.(ir.ObjectLiteral); isLiteral && literal.Spread == nil {
 			e.regionLiteralDepth = e.depth + 1
@@ -567,7 +580,7 @@ func (e *emitter) returnStatement(statement ir.Return) {
 		value = e.value(statement.Value)
 	}
 	result := e.temporary()
-	if statement.Value.Type().IsReference() {
+	if statement.Value.Type().IsReference() && !e.regionValues[value] {
 		e.line("%s %s = adamic_retain(%s);", cType(statement.Value.Type()), result, value)
 	} else {
 		e.line("%s %s = %s;", cType(statement.Value.Type()), result, value)
@@ -680,6 +693,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		arguments := e.arguments(expression)
 		if region != "" {
 			arguments = append([]string{region}, arguments...)
+			// What it returns is in that region: no count to own (region.go).
+			return e.regionValue(fmt.Sprintf("%s(%s)", e.regionFunctionName(expression.Function), strings.Join(arguments, ", ")))
 		}
 		call := fmt.Sprintf("%s(%s)", e.functionName(expression.Function), strings.Join(arguments, ", "))
 		if expression.Returns.IsReference() {
@@ -1283,13 +1298,19 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			values = append(values, e.value(field.Value))
 		}
 	}
-	allocation := fmt.Sprintf("adamic_object_new(&%s)", e.shape(literal.Fields))
+	object := ""
 	if region {
-		allocation = fmt.Sprintf("adamic_object_new_in(region, &%s)", e.shape(literal.Fields))
+		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.shape(literal.Fields)))
+	} else {
+		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.shape(literal.Fields)))
 	}
-	object := e.own(ir.Object, allocation)
 	for index, field := range literal.Fields {
 		value := values[index]
+		if e.regionValues[value] {
+			// A value in the region is immortal while the region lives: held without a count.
+			e.line("%s->slots[%d].reference = %s;", object, index, value)
+			continue
+		}
 		if field.Value.Type().IsReference() {
 			value = "adamic_retain(" + value + ")"
 		}
