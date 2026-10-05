@@ -259,7 +259,7 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		return ir.NumberToString{Value: value}, true, nil
 	}
-	if receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); receiverType == ir.Number && (name == "toExponential" || name == "toPrecision") {
+	if receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); receiverType == ir.Number && (name == "toExponential" || name == "toPrecision" || name == "toString") {
 		return l.numberFormat(node, receiver, name)
 	}
 	isMath := l.isLibraryGlobal(receiver, "Math")
@@ -333,8 +333,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	return ir.ToFixed{Value: value, Digits: digits}, true, nil
 }
 
-// numberFormat lowers value.toExponential(digits) and value.toPrecision(digits), the digits perhaps
-// left out: the receiver first, then the argument, as JavaScript evaluates them.
+// numberFormat lowers value.toExponential(digits), value.toPrecision(digits) and
+// value.toString(radix), the argument perhaps left out: the receiver first, then the argument, as
+// JavaScript evaluates them.
 func (l *lowering) numberFormat(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
 	value, err := l.expression(receiver)
 	if err != nil {

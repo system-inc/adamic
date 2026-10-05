@@ -87,6 +87,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/navigation.a", true, false},
 	{"internal/oracle/testdata/number_formats.a", true, false},
 	{"internal/oracle/testdata/precision_range.a", true, false},
+	{"internal/oracle/testdata/radixes.a", true, false},
+	{"internal/oracle/testdata/radix_range.a", true, false},
 	{"internal/oracle/testdata/optional_numbers.a", true, false},
 	{"internal/oracle/testdata/map_iteration.a", true, false},
 	{"internal/oracle/testdata/sorts.a", true, false},

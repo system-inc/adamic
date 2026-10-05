@@ -187,9 +187,9 @@ type (
 	// ToFixed is Value.toFixed(Digits).
 	ToFixed struct{ Value, Digits Expression }
 
-	// NumberFormat is Value.toExponential(Argument) or Value.toPrecision(Argument), as Method says.
-	// Argument is nil when the call has none, which means something of its own to each (the
-	// shortest digits, and String(Value)).
+	// NumberFormat is Value.toExponential(Argument), Value.toPrecision(Argument) or
+	// Value.toString(Argument), the radix, as Method says. Argument is nil when the call has none,
+	// which means something of its own to each (the shortest digits, String(Value), and radix 10).
 	NumberFormat struct {
 		Method   string
 		Value    Expression
