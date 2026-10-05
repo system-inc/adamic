@@ -125,6 +125,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/closures_throw.a", true, false},
 	{"internal/oracle/testdata/closures_throw_uncaught.a", true, false},
 	{"internal/oracle/testdata/finally_leaves.a", true, false},
+	{"internal/oracle/testdata/reuse_foreach_global.a", true, false},
+	{"internal/oracle/testdata/param_assigned_in_try.a", true, false},
 	{"internal/oracle/testdata/panic_in_try.a", true, false},
 	{"internal/oracle/testdata/maybe_booleans.a", true, false},
 	{"internal/oracle/testdata/maybe_boolean_panic.a", true, false},
