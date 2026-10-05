@@ -305,6 +305,15 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.end()
 	case ir.Return:
 		e.returnStatement(statement)
+	case ir.SetIndex:
+		array := e.value(statement.Array)
+		index := e.value(statement.Index)
+		value := e.value(statement.Value)
+		if statement.Element.IsReference() {
+			value = "adamic_retain(" + value + ")"
+		}
+		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), value)
+		e.end()
 	case ir.SetProperty:
 		object := e.value(statement.Object)
 		value := e.value(statement.Value)
@@ -610,6 +619,22 @@ func (e *emitter) value(expression ir.Expression) string {
 		e.line("\tadamic_array_push(%s, %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}));", mapped, callback, callback, source, index, index, source)
 		e.line("}")
 		return mapped
+	case ir.CheckedCast:
+		object := e.temporary()
+		e.line("adamic_object *%s = %s;", object, e.value(expression.Value))
+		field := fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", object, cString(expression.Field), e.cache(), member(expression.FieldType))
+		if expression.FieldType.IsReference() {
+			field = fmt.Sprintf("((%s)%s)", cType(expression.FieldType), field)
+		}
+		tests := []string{}
+		for _, allowed := range expression.Allowed {
+			tests = append(tests, e.binary(ir.Equal, expression.FieldType, field, e.value(allowed)))
+		}
+		e.line("if (!(%s)) {", strings.Join(tests, " || "))
+		e.line("\tstatic const char message[] = %s;", cString(expression.Message))
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+		e.line("}")
+		return object
 	case ir.ArrayIndex:
 		array := e.value(expression.Array)
 		index := e.value(expression.Index)

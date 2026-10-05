@@ -696,3 +696,31 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	}
 	return ir.Property{Object: object, Name: index.Text(), Of: of}, nil
 }
+
+// setIndex lowers array[index] = value, as a statement.
+func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	access := target.AsElementAccessExpression()
+	array, err := l.expression(access.Expression)
+	if err != nil {
+		return nil, err
+	}
+	if array.Type() != ir.Array {
+		return nil, l.notYet(target, "assigning an element of a "+typeName(array.Type()))
+	}
+	element, err := l.elementType(access.Expression)
+	if err != nil {
+		return nil, err
+	}
+	index, err := l.expression(access.ArgumentExpression)
+	if err != nil {
+		return nil, err
+	}
+	if index.Type() != ir.Number {
+		return nil, l.notYet(target, "an array index that isn't a number")
+	}
+	value, err := l.expression(valueNode)
+	if err != nil {
+		return nil, err
+	}
+	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: value, Element: element}}, nil
+}

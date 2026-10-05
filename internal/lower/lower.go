@@ -530,6 +530,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if target.Kind == ast.KindPropertyAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
 		return l.setProperty(target, binary.Right)
 	}
+	if target.Kind == ast.KindElementAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
+		return l.setIndex(target, binary.Right)
+	}
 	local, isLocal := l.local(target)
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))

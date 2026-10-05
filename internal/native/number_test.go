@@ -2,13 +2,16 @@ package native
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"math"
 	"math/rand/v2"
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"testing"
+	"time"
 )
 
 // numberHarness formats doubles, given as hexadecimal bit patterns on stdin, one per line.
@@ -105,9 +108,18 @@ func TestNumbersFormatExactlyAsJavaScriptDoes(t *testing.T) {
 	t.Logf("%d values, %d mismatches", len(values), mismatches)
 }
 
+// runWithInput runs a command on input and returns its stdout. Like the oracle's, the command can't
+// outlive its test: a deadline, its own process group, and the group killed when either ends.
 func runWithInput(t *testing.T, input string, name string, arguments ...string) string {
 	t.Helper()
-	command := exec.Command(name, arguments...)
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	t.Cleanup(cancel)
+	command := exec.CommandContext(ctx, name, arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+	}
+	command.WaitDelay = 5 * time.Second
 	command.Stdin = strings.NewReader(input)
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout

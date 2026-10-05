@@ -3,6 +3,7 @@
 #include "adamic.h"
 
 #include <math.h>
+#include <stdio.h>
 
 #include <stdlib.h>
 #include <string.h>
@@ -160,4 +161,24 @@ adamic_value *adamic_array_at(const adamic_array *array, double index) {
 		return NULL;
 	}
 	return &array->elements[(size_t)index];
+}
+
+void adamic_array_set(adamic_array *array, double index, adamic_value value) {
+	// 0.1 writes only at an index the array has: JavaScript would grow the array, or leave a hole, and
+	// a hole is something 0.1 can't hold. push is how to append.
+	adamic_value *slot = adamic_array_at(array, index);
+	if (slot == NULL) {
+		char number[ADAMIC_NUMBER_FORMAT_MAX], length[ADAMIC_NUMBER_FORMAT_MAX], message[128];
+		size_t number_size = adamic_number_format(index, number);
+		size_t length_size = adamic_number_format((double)array->length, length);
+		int written = snprintf(message, sizeof message, "index %.*s is outside an array of length %.*s", (int)number_size, number, (int)length_size, length);
+		adamic_panic(message, (size_t)written);
+	}
+	if (array->references) {
+		void *old = slot->reference;
+		slot->reference = value.reference;
+		adamic_release(old);
+		return;
+	}
+	*slot = value;
 }

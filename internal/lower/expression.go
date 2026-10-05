@@ -156,6 +156,8 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return ir.Read{Local: l.this, Of: ir.Object}, nil
 	case ast.KindArrowFunction:
 		return l.closure(node)
+	case ast.KindAsExpression:
+		return l.cast(node)
 	case ast.KindFunctionExpression:
 		return nil, l.notYet(node, "a function expression (an arrow function captures this as written)")
 	case ast.KindCallExpression:

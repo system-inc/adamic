@@ -10,7 +10,9 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"syscall"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -28,38 +30,46 @@ const repository = "../.."
 var fixtures = []struct {
 	path   string
 	lowers bool
+
+	// checked is a program whose inserted check fires: there, Node running the source doesn't have
+	// the check, so the native binary is held to the JavaScript backend, which does.
+	checked bool
 }{
-	{"dedication/dedication.a", true},
-	{"internal/load/testdata/0.1/compile/01_hello.ts", true},
-	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true},
-	{"internal/load/testdata/0.1/compile/03_shapes.ts", true},
-	{"internal/load/testdata/0.1/compile/04_closures.ts", true},
-	{"internal/load/testdata/0.1/compile/05_wordcount.ts", true},
-	{"internal/load/testdata/0.1/compile/06_stack.ts", true},
-	{"internal/load/testdata/0.1/compile/07_modules/main.ts", true},
-	{"internal/load/testdata/0.1/compile/08_results.ts", true},
-	{"internal/load/testdata/0.1/compile/09_tree.ts", true},
-	{"internal/load/testdata/0.1/compile/10_unicode.ts", true},
-	{"internal/oracle/testdata/strings.a", true},
-	{"internal/oracle/testdata/numbers.a", true},
-	{"internal/oracle/testdata/loops.a", true},
-	{"internal/oracle/testdata/booleans.a", true},
-	{"internal/oracle/testdata/shadowing.a", true},
-	{"internal/oracle/testdata/functions.a", true},
-	{"internal/oracle/testdata/effects.a", true},
-	{"internal/oracle/testdata/dead_zone.a", true},
-	{"internal/oracle/testdata/objects.a", true},
-	{"internal/oracle/testdata/modules/main.a", true},
-	{"internal/oracle/testdata/panic.a", true},
-	{"internal/oracle/testdata/maps_and_text.a", true},
-	{"internal/oracle/testdata/lone_surrogates.a", true},
-	{"internal/oracle/testdata/sorting.a", true},
-	{"internal/oracle/testdata/classes.a", true},
-	{"internal/oracle/testdata/closures.a", true},
+	{"dedication/dedication.a", true, false},
+	{"internal/load/testdata/0.1/compile/01_hello.ts", true, false},
+	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true, false},
+	{"internal/load/testdata/0.1/compile/03_shapes.ts", true, false},
+	{"internal/load/testdata/0.1/compile/04_closures.ts", true, false},
+	{"internal/load/testdata/0.1/compile/05_wordcount.ts", true, false},
+	{"internal/load/testdata/0.1/compile/06_stack.ts", true, false},
+	{"internal/load/testdata/0.1/compile/07_modules/main.ts", true, false},
+	{"internal/load/testdata/0.1/compile/08_results.ts", true, false},
+	{"internal/load/testdata/0.1/compile/09_tree.ts", true, false},
+	{"internal/load/testdata/0.1/compile/10_unicode.ts", true, false},
+	{"internal/oracle/testdata/strings.a", true, false},
+	{"internal/oracle/testdata/numbers.a", true, false},
+	{"internal/oracle/testdata/loops.a", true, false},
+	{"internal/oracle/testdata/booleans.a", true, false},
+	{"internal/oracle/testdata/shadowing.a", true, false},
+	{"internal/oracle/testdata/functions.a", true, false},
+	{"internal/oracle/testdata/effects.a", true, false},
+	{"internal/oracle/testdata/dead_zone.a", true, false},
+	{"internal/oracle/testdata/objects.a", true, false},
+	{"internal/oracle/testdata/modules/main.a", true, false},
+	{"internal/oracle/testdata/panic.a", true, false},
+	{"internal/oracle/testdata/maps_and_text.a", true, false},
+	{"internal/oracle/testdata/lone_surrogates.a", true, false},
+	{"internal/oracle/testdata/sorting.a", true, false},
+	{"internal/oracle/testdata/classes.a", true, false},
+	{"internal/oracle/testdata/closures.a", true, false},
 	// A local console is the program's, and lowering it as the prelude's would print what the program
 	// never asked to print.
-	{"internal/oracle/testdata/local_console.a", true},
-	{"internal/oracle/testdata/indexing.a", true},
+	{"internal/oracle/testdata/local_console.a", true, false},
+	{"internal/oracle/testdata/indexing.a", true, false},
+	{"internal/oracle/testdata/writes.a", true, false},
+	{"internal/oracle/testdata/writes_past_end.a", true, true},
+	{"internal/oracle/testdata/casts.a", true, false},
+	{"internal/oracle/testdata/cast_fails.a", true, true},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
@@ -71,7 +81,7 @@ type run struct {
 
 func execute(t *testing.T, name string, arguments ...string) run {
 	t.Helper()
-	command := exec.Command(name, arguments...)
+	command := bounded(t, name, arguments...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
@@ -81,6 +91,22 @@ func execute(t *testing.T, name string, arguments ...string) run {
 		t.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+}
+
+// bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
+// its own, and when the deadline passes or the test ends, the whole group is killed. A fixture that
+// loops, or a child left with nowhere to write, is stopped instead of orphaned.
+func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	t.Cleanup(cancel)
+	command := exec.CommandContext(ctx, name, arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+	}
+	command.WaitDelay = 5 * time.Second
+	return command
 }
 
 // onNode runs a program's source on Node: the oracle.
@@ -170,6 +196,18 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				t.Fatalf("Lower: %v", err)
 			}
 			oracle, native, backend := onNode(t, path), natively(t, program), onJavaScriptBackend(t, program)
+			if fixture.checked {
+				// The check fires, so the source on Node goes on where Adamic stops: hold native to the
+				// backend that carries the same check, and make sure the check really did fire.
+				if difference := disagreement(backend, native); difference != "" {
+					t.Errorf("%s\nbackend: exit %d, stdout %q, stderr %q\nnative:  exit %d, stdout %q, stderr %q",
+						difference, backend.exitCode, backend.stdout, backend.stderr, native.exitCode, native.stdout, native.stderr)
+				}
+				if native.exitCode != 70 || oracle.exitCode == 70 {
+					t.Errorf("want the inserted check to fire natively (exit 70) where the source on Node runs on: native %d, Node %d", native.exitCode, oracle.exitCode)
+				}
+				return
+			}
 			if difference := disagreement(oracle, native); difference != "" {
 				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)

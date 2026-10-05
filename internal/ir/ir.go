@@ -224,6 +224,17 @@ type (
 	// CodePoints is [...string]: an array of its code points, each a string.
 	CodePoints struct{ Value Expression }
 
+	// CheckedCast is value as Member, where value is a discriminated union and Member some of its
+	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
+	// in both backends (docs/0.1.md, decision 5).
+	CheckedCast struct {
+		Value     Expression
+		Field     string
+		FieldType Type
+		Allowed   []Expression
+		Message   string
+	}
+
 	// ArrayIndex is array[index]: the element, or undefined when index isn't one of the array's (a
 	// null reference, or a MaybeNumber).
 	ArrayIndex struct {
@@ -350,6 +361,7 @@ func (Trim) Type() Type            { return String }
 func (CodePoints) Type() Type      { return Array }
 func (MapEntries) Type() Type      { return Array }
 func (MakeClosure) Type() Type     { return Closure }
+func (CheckedCast) Type() Type     { return Object }
 func (c CallClosure) Type() Type   { return c.Returns }
 func (ArrayMap) Type() Type        { return Array }
 
@@ -476,6 +488,13 @@ type (
 	// Panic is the prelude's panic(message): write "adamic: panic: <message>" and exit 70.
 	Panic struct{ Message Expression }
 
+	// SetIndex is array[index] = value, at an index the array has: anywhere else it panics, in both
+	// backends, where JavaScript would grow the array or leave a hole.
+	SetIndex struct {
+		Array, Index, Value Expression
+		Element             Type
+	}
+
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
 		Object Expression
@@ -554,6 +573,7 @@ func (Assign) statement()      {}
 func (Evaluate) statement()    {}
 func (Panic) statement()       {}
 func (SetProperty) statement() {}
+func (SetIndex) statement()    {}
 func (Return) statement()      {}
 func (If) statement()          {}
 func (Loop) statement()        {}
