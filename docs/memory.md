@@ -301,6 +301,51 @@ The decision this is heading toward, for Kirk's read and not yet made:
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
 
+### The design (#272q6cv, on paper)
+
+Status: **designed October 5, 2026, by stream A2; not built.** The benchmark it answers is `bench/trees.ts`. It makes 68,332,244 objects, each its own `malloc` and `free`. Node and Bun bump-allocate them in a young generation and drop each dead tree at once. Reuse in place can't help: nothing there is consumed to build its own shape.
+
+**What lives in a region.** A region is scoped to one statement, alive while it runs and freed when it ends. It holds the values the statement creates, directly or through calls, that are dead when it ends. In `total += check(build(depth))`, every node `build` makes is read by `check`, which keeps none of them, and nothing holds the tree after the statement. All of them can be allocated in the statement's region and freed with it: no `free` per node, no count reaching zero node by node.
+
+**Which values those are: three facts, two of them interprocedural.**
+
+1. **Where a function's result comes from.** A function's allocation site is **returned-only** when what it makes flows only into the function's return value, or into fields and elements of other returned-only values. That's a question about the alias graph (`internal/flow`): every edge out of the site's value is an `Assign` or `Capture` into the return, or into another returned-only value. A function whose returned value comes only from returned-only sites, and from calls to such functions, **returns fresh**. In `build`, both object literals are returned-only, and its recursive calls feed its return, so `build` returns fresh. That's a fixed point over the call graph, recursion included.
+2. **Whether a parameter escapes.** A parameter escapes when its value can be stored where it outlives the call: a global, a captured variable, a field or element of anything not itself made in the call, the return value, or a callee's escaping parameter. `check` only reads its parameter's fields and returns a number, so its parameter doesn't escape. This is the escape the effect inference already tracks (`infer.go`'s escaped set), refined from "handed to any call escapes" to "handed to a callee whose parameter escapes".
+3. **Whether the statement's fresh values die with it.** Liveness (`flow.LiveOut`) says nothing reads the variable they're in after the statement. The alias graph says they're never stored into an escaped value. A fresh value passed to a call reaches only that call's non-escaping parameters.
+
+**How a region reaches the allocations: as a parameter, not a global.** Which region a value belongs to is a property of the call, not of the allocation site, so the region is passed explicitly, as in Tofte and Talpin's region inference.
+
+- A function that returns fresh takes a hidden `adamic_region *` parameter.
+- Its returned-only sites allocate from that region, or from the heap when it's `NULL`.
+- Its calls that feed its return pass the region on. Every other call passes `NULL`.
+
+A "current region" global would be simpler and wrong. A function called during the statement for another reason, say one that stores a fresh object into a global, would allocate it in the region, and it would dangle once the region ended.
+
+**Counting in a region.** A value made in a region is immortal while it lives: its count is 0, so retain and release skip it, as they do the program's constants. That's already how the runtime treats a constant, so no runtime path learns anything new. When the statement ends, the region walks its values and releases what they hold outside the region (a heap string in a field, say), then frees its blocks in one go. A region value's reference to another region value is a release of an immortal, which costs nothing.
+
+**What could go wrong, and what catches it.** The one failure is a region value still reachable after its region ends: an escape the analysis missed. In the sanitized build the region's blocks are real `malloc` blocks, freed at the statement's end, so a dangling read is an ASan use-after-free on the oracle's run. The mutants this must be held by:
+
+- A region for a statement whose fresh value is assigned to a variable live after it.
+- A callee whose parameter does escape (stores it into a global) treated as non-escaping.
+- A returned-only site whose value is also stored into a field of a parameter.
+- The region passed down to a call that doesn't feed the return.
+
+Each needs a fixture that builds its strings and objects at runtime. Each must fail on ASan or the leak check, and nothing else.
+
+**What the counts table should show.** A new column, **in regions**: values made in a region and let go with it, not freed one by one. `allocations` stays every value made, `frees` becomes the values freed one at a time, and a finished program satisfies allocations = frees + in regions. For `trees`:
+
+- **In regions:** the nodes of every `check(build(depth))`, 66,759,382. That's 68,332,244 less the stretch tree (2^20 - 1 = 1,048,575 nodes) and the long-lived tree (2^19 - 1 = 524,287), which globals hold.
+- **Frees:** 1,572,862, those two trees.
+- **Retains and releases:** unchanged as calls. On a region value they cost a branch and touch no count. Removing the calls for values statically known to be in a region is a later step.
+- **Peak live:** unchanged. A region frees at the statement's end, which is when each of those trees died anyway.
+
+**What it leaves for later.**
+
+- A region per loop iteration, per function call (a value made and dropped inside one call), and per request (stage 1's cohere, a file at a time).
+- Arrays in regions. Their element buffers grow by `realloc`, which a bump allocator can't do in place.
+- Not emitting retains and releases on values statically known to be in a region.
+
+
 ## Strings, specifically
 
 UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.
