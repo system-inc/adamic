@@ -100,7 +100,7 @@ var ieee754Unary = []string{"sin", "cos", "tan", "asin", "acos", "atan", "sinh",
 // its comments give for each coefficient, which cost nothing to try), and the doubles at, just under
 // and just over it are tried, with both signs. Decimal thresholds (exp's overflow at
 // 709.78...) are found the same way, with their neighbors a few ulps out.
-func ieee754BranchPoints(t *testing.T) []float64 {
+func ieee754BranchPoints(t *testing.T, random *rand.Rand) []float64 {
 	source, err := runtime.ReadFile("runtime/ieee754.c")
 	if err != nil {
 		t.Fatal(err)
@@ -117,7 +117,13 @@ func ieee754BranchPoints(t *testing.T) []float64 {
 		// The comparisons are against a high word, mostly with the sign masked off, so it means the
 		// same as a magnitude; a few (log1p's 0xBFD2BEC4) keep the sign in it.
 		for _, high := range []uint32{word - 1, word, word + 1} {
-			for _, low := range []uint32{0, 1, 0x7FFFFFFF, 0xFFFFFFFF} {
+			// The edges of the high word, and a handful of low words between them: a branch that
+			// moves by one high word changes answers only somewhere in the doubles it moves.
+			lows := []uint32{0, 1, 0x7FFFFFFF, 0xFFFFFFFF}
+			for range 12 {
+				lows = append(lows, random.Uint32())
+			}
+			for _, low := range lows {
 				value := math.Float64frombits(uint64(high)<<32 | uint64(low))
 				values = append(values, value, -value)
 			}
@@ -173,7 +179,7 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 	t.Parallel()
 	random := rand.New(rand.NewPCG(1993, 2016))
 	specials := ieee754Specials()
-	values := append(append([]float64{}, specials...), ieee754BranchPoints(t)...)
+	values := append(append([]float64{}, specials...), ieee754BranchPoints(t, random)...)
 	for range 8000 {
 		// Any bits at all: every exponent, NaNs and subnormals included.
 		values = append(values, math.Float64frombits(random.Uint64()))
