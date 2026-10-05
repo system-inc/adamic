@@ -136,6 +136,13 @@ type lowering struct {
 	// forwarders are the function values made for module functions read as values, by the function
 	// each forwards to (functionValue).
 	forwarders map[int]int
+
+	// generics maps each generic module function's symbol to its declaration, and genericInstances
+	// each instantiation already lowered to its function (generic.go). genericDepth counts the
+	// instantiations being lowered inside one another.
+	generics         map[*ast.Symbol]*ast.Node
+	genericInstances map[string]int
+	genericDepth     int
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
@@ -228,6 +235,14 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			l.classes[l.symbol(statement.Name())] = statement
 		case ast.KindFunctionDeclaration:
 			symbol := l.symbol(statement.Name())
+			if len(statement.TypeParameters()) > 0 {
+				// A generic function is lowered once per instantiation, where it's called (generic.go).
+				if l.generics == nil {
+					l.generics = map[*ast.Symbol]*ast.Node{}
+				}
+				l.generics[symbol] = statement
+				continue
+			}
 			if l.functions == nil {
 				l.functions = map[*ast.Symbol]int{}
 			}
@@ -498,6 +513,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	expression = ast.SkipParentheses(expression)
 	switch expression.Kind {
 	case ast.KindCallExpression:
+		if err := l.optionalCall(expression); err != nil {
+			return nil, err
+		}
 		if l.isConsole(expression.AsCallExpression().Expression) {
 			statement, err := l.console(expression)
 			if err != nil {

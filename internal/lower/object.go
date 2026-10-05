@@ -232,9 +232,15 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if access.QuestionDotToken != nil && (object.Type() == ir.Array || object.Type() == ir.String) && name == "length" {
+		// words?.length and text?.length: undefined where the array or string is, a number | undefined.
+		if object.Type() == ir.Array {
+			return ir.Length{Array: object, Optional: true}, nil
+		}
+		return ir.StringLength{Value: object, Optional: true}, nil
+	}
 	if access.QuestionDotToken != nil && object.Type() != ir.Object {
-		// words[0]?.length is number | undefined, which a length read as a number can't hold.
-		return nil, l.notYet(node, "optional chaining on a "+typeName(object.Type()))
+		return nil, l.notYet(node, "optional chaining to ."+name+" on a "+typeName(object.Type()))
 	}
 	switch {
 	case object.Type() == ir.Array && name == "length":
@@ -380,8 +386,18 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, err
 		}
 	}
+	if isMath && (name == "max" || name == "min" || name == "hypot") && hasSpread(node) {
+		spread, err := l.spreadNumbers(node)
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.MathCall{Function: name, Spread: spread}, true, nil
+	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+		if argument.Kind == ast.KindSpreadElement {
+			return nil, true, l.notYet(argument, "a spread argument to "+name)
+		}
 		lowered, err := l.expression(argument)
 		if err != nil {
 			return nil, true, err
@@ -503,6 +519,11 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	}
 	// map.entries(), map.keys() and map.values() are the map itself, iterated for that part.
 	iterated, mapPart := statement.Expression, ""
+	if call := ast.SkipParentheses(iterated); call.Kind == ast.KindCallExpression {
+		if err := l.optionalCall(call); err != nil {
+			return nil, err
+		}
+	}
 	if call := ast.SkipParentheses(iterated); call.Kind == ast.KindCallExpression && len(call.AsCallExpression().Arguments.Nodes) == 0 {
 		if callee := ast.SkipParentheses(call.AsCallExpression().Expression); callee.Kind == ast.KindPropertyAccessExpression {
 			receiver := callee.AsPropertyAccessExpression().Expression
@@ -1242,6 +1263,14 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 // number, evaluated in order.
 func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expression, bool, error) {
 	lowered := ir.StringFromCodes{CodePoints: codePoints}
+	if hasSpread(node) {
+		spread, err := l.spreadNumbers(node)
+		if err != nil {
+			return nil, true, err
+		}
+		lowered.Spread = spread
+		return lowered, true, nil
+	}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		if argument.Kind == ast.KindSpreadElement {
 			return nil, true, l.notYet(argument, "a spread argument to String."+node.AsCallExpression().Expression.Name().Text())
@@ -1299,6 +1328,61 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 			}
 		}
 		literal.Fields = append(literal.Fields, ir.Field{Name: strconv.Itoa(index), Value: value})
+	}
+	return literal, nil
+}
+
+// hasSpread reports whether a call spreads an argument: Math.max(...values).
+func hasSpread(call *ast.Node) bool {
+	for _, argument := range call.AsCallExpression().Arguments.Nodes {
+		if argument.Kind == ast.KindSpreadElement {
+			return true
+		}
+	}
+	return false
+}
+
+// spreadNumbers lowers a call's arguments, some of them spread, as the array of numbers they spell,
+// evaluated in order, as [a, ...values, b] is.
+func (l *lowering) spreadNumbers(call *ast.Node) (ir.Expression, error) {
+	literal := ir.ArrayLiteral{Element: ir.Number}
+	for _, argument := range call.AsCallExpression().Arguments.Nodes {
+		spread := argument.Kind == ast.KindSpreadElement
+		item := argument
+		if spread {
+			item = ast.SkipParentheses(argument.AsSpreadElement().Expression)
+		}
+		if spread && item.Kind == ast.KindArrayLiteralExpression {
+			// ...[3, 4] is its elements, each an argument (the checker may type the literal a tuple).
+			for _, element := range item.AsArrayLiteralExpression().Elements.Nodes {
+				if element.Kind == ast.KindSpreadElement || element.Kind == ast.KindOmittedExpression {
+					return nil, l.notYet(element, describe(element)+" in an array spread into a call")
+				}
+				value, err := l.expression(element)
+				if err != nil {
+					return nil, err
+				}
+				if value.Type() != ir.Number {
+					return nil, l.notYet(element, "a "+typeName(value.Type())+" argument where numbers go")
+				}
+				literal.Elements = append(literal.Elements, value)
+				literal.Spread = append(literal.Spread, false)
+			}
+			continue
+		}
+		value, err := l.expression(item)
+		if err != nil {
+			return nil, err
+		}
+		if spread {
+			if element, err := l.elementType(item); err != nil || value.Type() != ir.Array || element != ir.Number {
+				return nil, l.notYet(argument, "spreading other than an array of numbers into a call")
+			}
+		} else if value.Type() != ir.Number {
+			return nil, l.notYet(argument, "a "+typeName(value.Type())+" argument where numbers go")
+		}
+		literal.Elements = append(literal.Elements, value)
+		literal.Spread = append(literal.Spread, spread)
 	}
 	return literal, nil
 }

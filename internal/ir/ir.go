@@ -214,19 +214,30 @@ type (
 	}
 
 	// Length is array.length.
-	Length struct{ Array Expression }
+	Length struct {
+		Array Expression
+
+		// Optional is array?.length: undefined, a number | undefined, where the array is.
+		Optional bool
+	}
 
 	// StringFromCodes is String.fromCharCode(...Codes), or String.fromCodePoint when CodePoints is
 	// set: a string of the UTF-16 units, or of the code points, the numbers name.
 	StringFromCodes struct {
 		Codes      []Expression
 		CodePoints bool
+
+		// Spread, when set, is the codes instead, as an array of numbers: fromCharCode(...codes).
+		Spread Expression
 	}
 
 	// MathCall is Math.<Function>(...), on numbers.
 	MathCall struct {
 		Function  string
 		Arguments []Expression
+
+		// Spread, when set, is the arguments instead, as an array of numbers: Math.max(...values).
+		Spread Expression
 	}
 
 	// NumberCall is Number.<Function>(...): parseInt (text, and a radix perhaps left out), parseFloat
@@ -249,8 +260,9 @@ type (
 	}
 
 	// Undefined is undefined where a reference goes: an object, an array or a string that may be
-	// missing (Tree | undefined), held as a null pointer.
-	Undefined struct{}
+	// missing (Tree | undefined), held as a null pointer. Of is the reference it stands in for, a
+	// string where a string | undefined is returned, and an object when it isn't set.
+	Undefined struct{ Of Type }
 
 	// IsUndefined is Value === undefined, for a reference that may be missing.
 	IsUndefined struct{ Value Expression }
@@ -304,7 +316,12 @@ type (
 	}
 
 	// StringLength is string.length, in UTF-16 code units.
-	StringLength struct{ Value Expression }
+	StringLength struct {
+		Value Expression
+
+		// Optional is text?.length: undefined, a number | undefined, where the string is.
+		Optional bool
+	}
 
 	// CharCodeAt is string.charCodeAt(Index): a UTF-16 code unit, or NaN.
 	CharCodeAt struct{ Value, Index Expression }
@@ -554,8 +571,13 @@ func (p Property) Type() Type {
 	}
 	return p.Of
 }
-func (ArrayLiteral) Type() Type    { return Array }
-func (Length) Type() Type          { return Number }
+func (ArrayLiteral) Type() Type { return Array }
+func (l Length) Type() Type {
+	if l.Optional {
+		return MaybeNumber
+	}
+	return Number
+}
 func (MathCall) Type() Type        { return Number }
 func (StringFromCodes) Type() Type { return String }
 
@@ -565,9 +587,14 @@ func (c NumberCall) Type() Type {
 	}
 	return Boolean
 }
-func (ToFixed) Type() Type       { return String }
-func (NumberFormat) Type() Type  { return String }
-func (Undefined) Type() Type     { return Object }
+func (ToFixed) Type() Type      { return String }
+func (NumberFormat) Type() Type { return String }
+func (u Undefined) Type() Type {
+	if u.Of != 0 {
+		return u.Of
+	}
+	return Object
+}
 func (IsUndefined) Type() Type   { return Boolean }
 func (ArrayPush) Type() Type     { return Number }
 func (ArrayJoin) Type() Type     { return String }
@@ -579,7 +606,12 @@ func (n Narrow) Type() Type      { return n.To }
 func (TypeOf) Type() Type        { return String }
 func (UnionToString) Type() Type { return String }
 func (c Coalesce) Type() Type    { return c.Of }
-func (StringLength) Type() Type  { return Number }
+func (l StringLength) Type() Type {
+	if l.Optional {
+		return MaybeNumber
+	}
+	return Number
+}
 func (CharCodeAt) Type() Type    { return Number }
 func (Trim) Type() Type          { return String }
 func (CodePoints) Type() Type    { return Array }

@@ -150,6 +150,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/bitwise.a", true, false},
 	// Tuples as values: returned, passed, held, destructured and read by index.
 	{"internal/oracle/testdata/tuple_values.a", true, false},
+	// Generic functions per instantiation, undefined where a reference goes, ?.length, and spread
+	// arguments.
+	{"internal/oracle/testdata/generic_functions.a", true, false},
+	{"internal/oracle/testdata/undefined_references.a", true, false},
+	{"internal/oracle/testdata/spread_calls.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

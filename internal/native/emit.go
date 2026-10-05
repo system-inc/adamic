@@ -622,6 +622,10 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Coalesce:
 		return e.coalesce(expression)
 	case ir.StringLength:
+		if expression.Optional {
+			text := e.value(expression.Value)
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, adamic_string_length(%s)})", text, zero(ir.MaybeNumber), text))
+		}
 		return fmt.Sprintf("adamic_string_length(%s)", e.value(expression.Value))
 	case ir.CharCodeAt:
 		value := e.value(expression.Value)
@@ -915,6 +919,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return array
 	case ir.Length:
+		if expression.Optional {
+			array := e.value(expression.Array)
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->length})", array, zero(ir.MaybeNumber), array))
+		}
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->length", e.value(expression.Array)))
 	case ir.MathCall:
 		return e.mathCall(expression)
@@ -922,6 +930,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		function := "adamic_string_from_char_codes"
 		if expression.CodePoints {
 			function = "adamic_string_from_code_points"
+		}
+		if expression.Spread != nil {
+			return e.own(ir.String, fmt.Sprintf("%s_of(%s)", function, e.value(expression.Spread)))
 		}
 		codes := make([]string, 0, len(expression.Codes))
 		for _, code := range expression.Codes {
@@ -1231,6 +1242,9 @@ var cIeee754 = map[string]bool{
 }
 
 func (e *emitter) mathCall(call ir.MathCall) string {
+	if call.Spread != nil {
+		return e.snapshot(ir.Number, fmt.Sprintf("adamic_math_%s_of(%s)", call.Function, e.value(call.Spread)))
+	}
 	arguments := make([]string, 0, len(call.Arguments))
 	for _, argument := range call.Arguments {
 		arguments = append(arguments, e.value(argument))

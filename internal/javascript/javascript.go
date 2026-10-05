@@ -398,16 +398,29 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "[" + strings.Join(elements, ", ") + "]"
 	case ir.Length:
+		if expression.Optional {
+			return e.value(expression.Array) + "?.length"
+		}
 		return e.value(expression.Array) + ".length"
 	case ir.StringLength:
+		if expression.Optional {
+			return e.value(expression.Value) + "?.length"
+		}
 		return e.value(expression.Value) + ".length"
 	case ir.MathCall:
+		if expression.Spread != nil {
+			return "Math." + expression.Function + "(..." + e.value(expression.Spread) + ")"
+		}
 		return "Math." + expression.Function + "(" + e.values(expression.Arguments) + ")"
 	case ir.StringFromCodes:
-		if expression.CodePoints {
-			return "String.fromCodePoint(" + e.values(expression.Codes) + ")"
+		codes := e.values(expression.Codes)
+		if expression.Spread != nil {
+			codes = "..." + e.value(expression.Spread)
 		}
-		return "String.fromCharCode(" + e.values(expression.Codes) + ")"
+		if expression.CodePoints {
+			return "String.fromCodePoint(" + codes + ")"
+		}
+		return "String.fromCharCode(" + codes + ")"
 	case ir.NumberCall:
 		return "Number." + expression.Function + "(" + e.values(expression.Arguments) + ")"
 	case ir.ToFixed:

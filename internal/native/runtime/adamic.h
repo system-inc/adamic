@@ -452,6 +452,14 @@ double adamic_math_hypot(size_t count, const double *values);
 adamic_string *adamic_number_to_exponential(double value, double digits, bool has_digits);
 adamic_string *adamic_number_to_precision(double value, double digits, bool has_digits);
 
+// Math.max, Math.min, Math.hypot, String.fromCharCode and String.fromCodePoint over arguments with a
+// spread among them, already evaluated in order into an array of numbers (spread.c).
+double adamic_math_max_of(const adamic_array *values);
+double adamic_math_min_of(const adamic_array *values);
+double adamic_math_hypot_of(const adamic_array *values);
+adamic_string *adamic_string_from_char_codes_of(const adamic_array *values);
+adamic_string *adamic_string_from_code_points_of(const adamic_array *values);
+
 // JavaScript's bitwise operators on numbers, each through ToInt32 or ToUint32 exactly (bitwise.c).
 double adamic_bitwise_and(double left, double right);
 double adamic_bitwise_or(double left, double right);

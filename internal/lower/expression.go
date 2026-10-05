@@ -125,6 +125,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
 			return l.functionValue(node, function)
 		}
+		if _, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+			return nil, l.notYet(node, "a generic function as a value")
+		}
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
@@ -194,6 +197,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	case ast.KindFunctionExpression:
 		return nil, l.notYet(node, "a function expression (an arrow function captures this as written)")
 	case ast.KindCallExpression:
+		if err := l.optionalCall(node); err != nil {
+			return nil, err
+		}
 		if lowered, isBuiltin, err := l.builtin(node); isBuiltin {
 			if err == nil && lowered.Type() == 0 {
 				// forEach is void; as a value it's undefined, which only places 0.1 refuses would use.
@@ -221,6 +227,11 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 func fit(value ir.Expression, to ir.Type) ir.Expression {
 	if to == ir.Union && value != nil && value.Type() != ir.Union {
 		return ir.Box{Value: value}
+	}
+	if _, isUndefined := value.(ir.Undefined); isUndefined && to.IsReference() && to != ir.Union {
+		// undefined going where a string, an array or a function may be missing is that reference,
+		// missing: typed as it, so the C holding it is.
+		return ir.Undefined{Of: to}
 	}
 	if !to.IsMaybe() || value == nil {
 		return value
@@ -426,7 +437,7 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 	if whenTrue.Type() != whenNot.Type() {
 		// flag ? 1 : undefined is number | undefined, and flag ? 1 : 'one' a union: each branch made
 		// one.
-		if of, err := l.typeOf(node); err == nil && (of.IsMaybe() || of == ir.Union) {
+		if of, err := l.typeOf(node); err == nil && (of.IsMaybe() || of == ir.Union || of.IsReference()) {
 			whenTrue, whenNot = fit(whenTrue, of), fit(whenNot, of)
 		}
 	}
@@ -486,6 +497,13 @@ func slotless(valueType ir.Type) bool {
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
+	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
+		instance, err := l.instantiateFunction(node, declaration)
+		if err != nil {
+			return nil, err
+		}
+		return l.callFunction(call, instance)
+	}
 	function, isFunction := l.functions[l.symbol(callee)]
 	if !ast.IsIdentifier(callee) || !isFunction {
 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
@@ -493,6 +511,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "a call to "+describe(callee))
 	}
+	return l.callFunction(call, function)
+}
+
+// callFunction lowers a call's arguments, in order, and the call to function.
+func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
 	arguments := []ir.Expression{}
 	for _, argument := range call.Arguments.Nodes {
 		lowered, err := l.expression(argument)
@@ -598,6 +621,16 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	}
 	l.forwarders[target] = index
 	return ir.MakeClosure{Function: index}, nil
+}
+
+// optionalCall refuses a call in an optional chain, text?.toUpperCase() or run?.(): the receiver has
+// to be evaluated once and tested before the call, which stage 0 doesn't lower yet. Lowered as a
+// plain call, it ran the method on undefined.
+func (l *lowering) optionalCall(call *ast.Node) error {
+	if call.Flags&ast.NodeFlagsOptionalChain != 0 {
+		return l.notYet(call, "a call through ?. (an optional call)")
+	}
+	return nil
 }
 
 // callClosure lowers a call through a function value.
