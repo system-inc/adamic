@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"slices"
+	"strconv"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -198,6 +199,20 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				continue // statements() refuses var where it stands
 			}
 			for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
+				if declaration.Name().Kind == ast.KindArrayBindingPattern {
+					// const [a, b] = tuple at the top level declares a and b as globals.
+					for _, binding := range declaration.Name().AsBindingPattern().Elements.Nodes {
+						if skipped(binding) || !ast.IsIdentifier(binding.Name()) {
+							continue
+						}
+						local, err := l.declareLocal(binding.Name())
+						if err != nil {
+							return err
+						}
+						l.result.Locals[local].Global = true
+					}
+					continue
+				}
 				if ast.IsIdentifier(declaration.Name()) {
 					local, err := l.declareLocal(declaration.Name())
 					if err != nil {
@@ -548,6 +563,14 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 	statements := []ir.Statement{}
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
 		name := declaration.Name()
+		if name.Kind == ast.KindArrayBindingPattern {
+			destructured, err := l.destructure(declaration)
+			if err != nil {
+				return nil, err
+			}
+			statements = append(statements, destructured...)
+			continue
+		}
 		if !ast.IsIdentifier(name) {
 			return nil, l.notYet(name, "a destructuring declaration")
 		}
@@ -562,6 +585,54 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			}
 		}
 		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
+	}
+	return statements, nil
+}
+
+// skipped reports whether an element of an array binding pattern is a hole, as in const [, b]: the
+// checker's tree has a binding element with no name there.
+func skipped(binding *ast.Node) bool {
+	return binding.Kind == ast.KindOmittedExpression || binding.Name() == nil
+}
+
+// destructure lowers const [a, b] = tuple: the tuple is held in a local of its own, and each name is
+// declared from its field, "0", "1", ..., in order. A name left out (const [, b]) reads nothing. A
+// pattern over an array rather than a tuple, a default, a rest element or a nested pattern is not
+// lowered yet.
+func (l *lowering) destructure(declaration *ast.Node) ([]ir.Statement, error) {
+	pattern := declaration.Name()
+	initializer := declaration.AsVariableDeclaration().Initializer
+	if initializer == nil || !checker.IsTupleType(l.checker.GetTypeAtLocation(initializer)) {
+		return nil, l.notYet(pattern, "destructuring other than a tuple")
+	}
+	value, err := l.expression(initializer)
+	if err != nil {
+		return nil, err
+	}
+	if value.Type() != ir.Object {
+		return nil, l.notYet(pattern, "destructuring a "+typeName(value.Type()))
+	}
+	elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(initializer))
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "tuple", Type: ir.Object, Function: l.functionIndex})
+	statements := []ir.Statement{ir.Declare{Local: held, Value: value}}
+	for index, binding := range pattern.AsBindingPattern().Elements.Nodes {
+		if skipped(binding) {
+			continue
+		}
+		bound := binding.AsBindingElement()
+		if !ast.IsIdentifier(binding.Name()) || bound.Initializer != nil || bound.DotDotDotToken != nil {
+			return nil, l.notYet(binding, "a destructured name that isn't plain")
+		}
+		local, err := l.declareLocal(binding.Name())
+		if err != nil {
+			return nil, err
+		}
+		field, err := l.tupleField(binding, held, elements, index, l.result.Locals[local].Type)
+		if err != nil {
+			return nil, err
+		}
+		statements = append(statements, ir.Declare{Local: local, Value: field})
 	}
 	return statements, nil
 }
@@ -662,6 +733,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if target.Kind == ast.KindElementAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
 		return l.setIndex(target, binary.Right)
 	}
+	if target.Kind == ast.KindArrayLiteralExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
+		return l.destructuringAssignment(target, binary.Right)
+	}
 	local, isLocal := l.local(target)
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
@@ -684,6 +758,60 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		}
 	}
 	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local)}}, nil
+}
+
+// tupleField reads element index of the tuple held in the local held, as the tuple's element type
+// holds it, and makes it what the name it goes to holds: a string element going to a string | number
+// name is boxed on the way.
+func (l *lowering) tupleField(where *ast.Node, held int, elements []*checker.Type, index int, to ir.Type) (ir.Expression, error) {
+	if index >= len(elements) {
+		return nil, l.notYet(where, "a name past its tuple's elements")
+	}
+	of, isKnown := l.representation(elements[index])
+	if !isKnown || slotless(of) {
+		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(elements[index]))
+	}
+	value := fit(ir.Expression(ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: strconv.Itoa(index), Of: of}), to)
+	if value.Type() != to {
+		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(elements[index])+" given to a "+typeName(to))
+	}
+	return value, nil
+}
+
+// destructuringAssignment lowers [a, b] = tuple: the tuple is evaluated whole and held, then each
+// name is assigned its field, in order, as JavaScript assigns them. A name left out ([, b]) is
+// skipped. Anything but plain names, or a value that isn't a tuple, is not lowered yet.
+func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if !checker.IsTupleType(l.checker.GetTypeAtLocation(valueNode)) {
+		return nil, l.notYet(pattern, "destructuring other than a tuple")
+	}
+	value, err := l.expression(valueNode)
+	if err != nil {
+		return nil, err
+	}
+	if value.Type() != ir.Object {
+		return nil, l.notYet(pattern, "destructuring a "+typeName(value.Type()))
+	}
+	elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(valueNode))
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "tuple", Type: ir.Object, Function: l.functionIndex})
+	statements := []ir.Statement{ir.Declare{Local: held, Value: value}}
+	for index, element := range pattern.AsArrayLiteralExpression().Elements.Nodes {
+		if element.Kind == ast.KindOmittedExpression {
+			continue
+		}
+		local, isLocal := l.local(element)
+		if !ast.IsIdentifier(element) || !isLocal || l.alwaysUndefined[l.symbol(element)] {
+			return nil, l.notYet(element, "assigning to "+describe(element)+" in a destructuring assignment")
+		}
+		field, err := l.tupleField(element, held, elements, index, l.result.Locals[local].Type)
+		if err != nil {
+			return nil, err
+		}
+		statements = append(statements, ir.Assign{Local: local, Value: field, Checked: l.checked(local)})
+	}
+	// The held tuple is the block's, released when it ends.
+	return []ir.Statement{ir.Block{Body: statements}}, nil
 }
 
 // checked reports whether touching a local must be checked against the temporal dead zone: a

@@ -144,6 +144,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/from_code_point_fails.a", true, false},
 	// &, |, ^, ~, <<, >> and >>>, swept over every pair of 36 edge values against Node.
 	{"internal/oracle/testdata/bitwise.a", true, false},
+	// Tuples as values: returned, passed, held, destructured and read by index.
+	{"internal/oracle/testdata/tuple_values.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

@@ -96,6 +96,9 @@ func (l *lowering) hasProperty(node *ast.Node, name string) bool {
 }
 
 func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
+	if tuple := l.tupleType(node); tuple != nil {
+		return l.tupleLiteral(node, tuple)
+	}
 	element, err := l.elementType(node)
 	if err != nil {
 		return nil, err
@@ -200,6 +203,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return ir.NumberConstant{Value: value}, nil
 		}
 		return nil, l.notYet(node, "Number."+name)
+	}
+	if receiver := l.checker.GetTypeAtLocation(access.Expression); checker.IsTupleType(receiver) || checker.IsTupleType(l.checker.GetNonNullableType(receiver)) {
+		// A tuple is held as an object of its elements, "0", "1", ..., read by index; its length and
+		// an array's methods aren't fields of it, and reading them as fields would find nothing.
+		return nil, l.notYet(node, "."+name+" on a tuple")
 	}
 	object, err := l.expression(access.Expression)
 	if err != nil {
@@ -513,7 +521,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			return nil, l.notYet(name, "destructuring a "+typeName(element))
 		}
 		for index, binding := range name.AsBindingPattern().Elements.Nodes {
-			if binding.Kind == ast.KindOmittedExpression {
+			if skipped(binding) {
 				continue
 			}
 			bound := binding.AsBindingElement()
@@ -555,7 +563,7 @@ func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *as
 			return nil, l.notYet(name, "destructuring more than a key and a value")
 		}
 		for index, binding := range elements {
-			if binding.Kind == ast.KindOmittedExpression {
+			if skipped(binding) {
 				continue
 			}
 			bound := binding.AsBindingElement()
@@ -1214,4 +1222,49 @@ func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expressi
 		lowered.Codes = append(lowered.Codes, value)
 	}
 	return lowered, true, nil
+}
+
+// tupleType is the tuple type an array literal makes, from the checker or from where it's written
+// (return ['a', 1] in a function returning [string, number]), or nil when it makes an array.
+func (l *lowering) tupleType(node *ast.Node) *checker.Type {
+	if made := l.checker.GetTypeAtLocation(node); checker.IsTupleType(made) {
+		return made
+	}
+	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && checker.IsTupleType(contextual) {
+		return contextual
+	}
+	return nil
+}
+
+// tupleLiteral lowers [a, b] where it makes a tuple: an object whose fields are named "0", "1", ...,
+// as a tuple's elements are read (elementAccess) and destructured (destructure, and for...of), each
+// made what its element's type holds. A literal with as many elements as its tuple has is lowered;
+// one leaving out an optional element, or spreading, is not yet.
+func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Expression, error) {
+	items := node.AsArrayLiteralExpression().Elements.Nodes
+	elements := l.checker.GetTypeArguments(tuple)
+	if len(items) != len(elements) {
+		return nil, l.notYet(node, "a tuple literal with other than one value for each of its tuple's elements")
+	}
+	literal := ir.ObjectLiteral{}
+	for index, item := range items {
+		if item.Kind == ast.KindSpreadElement || item.Kind == ast.KindOmittedExpression {
+			return nil, l.notYet(item, describe(item)+" in a tuple literal")
+		}
+		of, isKnown := l.representation(elements[index])
+		if !isKnown || slotless(of) {
+			return nil, l.notYet(item, "a tuple element of type "+l.checker.TypeToString(elements[index]))
+		}
+		value, err := l.expression(item)
+		if err != nil {
+			return nil, err
+		}
+		if value = fit(value, of); value.Type() != of {
+			if _, isUndefined := value.(ir.Undefined); !isUndefined || !of.IsReference() {
+				return nil, l.notYet(item, "a tuple element of another type than its tuple's")
+			}
+		}
+		literal.Fields = append(literal.Fields, ir.Field{Name: strconv.Itoa(index), Value: value})
+	}
+	return literal, nil
 }
