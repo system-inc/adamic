@@ -97,6 +97,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/find_shrinks.a", true, true},
 	{"internal/oracle/testdata/find_index_shrinks.a", true, true},
 	{"internal/oracle/testdata/self_assignments.a", true, false},
+	{"internal/oracle/testdata/method_closures.a", true, false},
 	{"internal/oracle/testdata/splices.a", true, false},
 	{"internal/oracle/testdata/fills.a", true, false},
 	{"internal/oracle/testdata/fill_length.a", true, false},

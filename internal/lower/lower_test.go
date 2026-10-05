@@ -66,6 +66,9 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a field of type number | undefined", "interface Spot {\n\tx: number | undefined;\n}\nconst spot: Spot = { x: 1 };\nconsole.log(`${spot.x ?? -1}`);\n", "main.a:5:16: stage 0 can't lower a field of type number | undefined yet"},
 		{"a captured number | undefined", "function run(): number {\n\tlet best: number | undefined;\n\tconst pick = (): void => {\n\t\tbest = 1;\n\t};\n\tpick();\n\treturn best ?? -1;\n}\nconsole.log(`${run()}`);\n", "main.a:4:3: stage 0 can't lower a number | undefined variable a function value captures yet"},
 		{"a rest parameter", "function sum(...values: number[]): number {\n\treturn values.length;\n}\nconsole.log(`${sum(1, 2)}`);\n", "main.a:1:14: stage 0 can't lower a parameter that isn't a plain name yet"},
+		// An arrow in a branch the checker knows is dead returns never, and has no name to point at:
+		// that was a nil dereference, a crash where a not-yet belongs (found by the fuzzer, seed 102).
+		{"an arrow returning never", "let flag: boolean = false;\nif (flag) {\n\tconsole.log([0].filter((item) => flag).join(','));\n}\n", "main.a:3:25: stage 0 can't lower a function returning never yet"},
 		{"a default for a boolean", "function greet(loud = false): string {\n\treturn loud ? 'HI' : 'hi';\n}\nconsole.log(greet());\n", "main.a:1:16: stage 0 can't lower a default for a boolean parameter yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
