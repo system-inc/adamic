@@ -435,3 +435,30 @@ adamic_array *adamic_string_code_points(const adamic_string *string) {
 	}
 	return array;
 }
+
+adamic_array *adamic_string_split(const adamic_string *string, const adamic_string *separator) {
+	adamic_array *parts = adamic_array_new(0, true);
+	if (separator->length == 0) {
+		// An empty separator splits into UTF-16 code units, an emoji into its two halves.
+		units walk = units_start(string);
+		unsigned unit;
+		while (units_next(&walk, &unit)) {
+			builder build = {NULL, 0, 0};
+			builder_unit(&build, unit);
+			adamic_array_push(parts, (adamic_value){.reference = builder_finish(&build)});
+		}
+		return parts;
+	}
+	size_t start = 0;
+	for (size_t at = 0; at + separator->length <= string->length;) {
+		if (memcmp(string->bytes + at, separator->bytes, separator->length) == 0) {
+			adamic_array_push(parts, (adamic_value){.reference = adamic_string_slice_bytes(string, start, at - start)});
+			at += separator->length;
+			start = at;
+		} else {
+			at += sequence((unsigned char)string->bytes[at]);
+		}
+	}
+	adamic_array_push(parts, (adamic_value){.reference = adamic_string_slice_bytes(string, start, string->length - start)});
+	return parts;
+}

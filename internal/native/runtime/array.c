@@ -2,6 +2,8 @@
 
 #include "adamic.h"
 
+#include <math.h>
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -88,4 +90,65 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 	adamic_string *joined = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(buffer);
 	return joined;
+}
+
+adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end) {
+	// ECMAScript's relative indexes: ToIntegerOrInfinity, negative from the end, clamped.
+	double length = (double)array->length;
+	start = isnan(start) ? 0 : trunc(start);
+	start = start < 0 ? (length + start < 0 ? 0 : length + start) : (start > length ? length : start);
+	if (has_end) {
+		end = isnan(end) ? 0 : trunc(end);
+		end = end < 0 ? (length + end < 0 ? 0 : length + end) : (end > length ? length : end);
+	} else {
+		end = length;
+	}
+	size_t from = (size_t)start, to = end > start ? (size_t)end : from;
+	adamic_array *sliced = adamic_array_new(to - from, array->references);
+	for (size_t index = from; index < to; index++) {
+		adamic_value value = array->elements[index];
+		if (array->references) {
+			adamic_retain(value.reference);
+		}
+		adamic_array_push(sliced, value);
+	}
+	return sliced;
+}
+
+// adamic_array_sort sorts in place, stably (ECMA-262 requires it since 2019), by merging. compare is
+// the program's comparator through an adapter that gives -1, 0 or 1, NaN read as 0.
+void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value)) {
+	size_t length = array->length;
+	if (length < 2) {
+		return;
+	}
+	adamic_value *scratch = malloc(length * sizeof *scratch);
+	if (scratch == NULL) {
+		static const char message[] = "out of memory";
+		adamic_panic(message, sizeof message - 1);
+	}
+	for (size_t width = 1; width < length; width *= 2) {
+		for (size_t left = 0; left < length; left += 2 * width) {
+			size_t middle = left + width < length ? left + width : length;
+			size_t right = left + 2 * width < length ? left + 2 * width : length;
+			size_t from_left = left, from_right = middle, out = left;
+			while (from_left < middle && from_right < right) {
+				// Take from the right only when it's strictly smaller: that keeps equal elements in
+				// their original order.
+				if (compare(array->elements[from_right], array->elements[from_left]) < 0) {
+					scratch[out++] = array->elements[from_right++];
+				} else {
+					scratch[out++] = array->elements[from_left++];
+				}
+			}
+			while (from_left < middle) {
+				scratch[out++] = array->elements[from_left++];
+			}
+			while (from_right < right) {
+				scratch[out++] = array->elements[from_right++];
+			}
+		}
+		memcpy(array->elements, scratch, length * sizeof *scratch);
+	}
+	free(scratch);
 }

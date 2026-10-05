@@ -210,6 +210,27 @@ type (
 	// CodePoints is [...string]: an array of its code points, each a string.
 	CodePoints struct{ Value Expression }
 
+	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
+	// are named "0" and "1".
+	MapEntries struct {
+		Map                Expression
+		KeyType, ValueType Type
+	}
+
+	// ArraySlice is array.slice(start, end), either argument perhaps left out.
+	ArraySlice struct {
+		Array     Expression
+		Arguments []Expression
+	}
+
+	// ArraySort is array.sort(comparator), the comparator one of the module's functions; it sorts
+	// in place, stably, and is the array.
+	ArraySort struct {
+		Array      Expression
+		Comparator int
+		Element    Type
+	}
+
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
 		Key, Value Type
@@ -280,6 +301,9 @@ func (StringLength) Type() Type    { return Number }
 func (CharCodeAt) Type() Type      { return Number }
 func (Trim) Type() Type            { return String }
 func (CodePoints) Type() Type      { return Array }
+func (MapEntries) Type() Type      { return Array }
+func (ArraySlice) Type() Type      { return Array }
+func (ArraySort) Type() Type       { return Array }
 
 func (c StringCall) Type() Type {
 	switch c.Method {
@@ -289,6 +313,8 @@ func (c StringCall) Type() Type {
 		return Number
 	case "includes", "startsWith", "endsWith":
 		return Boolean
+	case "split":
+		return Array
 	}
 	return String
 }
@@ -416,6 +442,10 @@ type (
 		Element  Type
 		Local    int
 		Body     []Statement
+
+		// Pattern, when set, destructures each element, a tuple, into locals: for (const [a, b] of
+		// pairs). Local is unused then.
+		Pattern []Binding
 	}
 
 	// Switch matches Value against each case's tests in order with ===, and runs the first match's
@@ -430,6 +460,12 @@ type (
 	Break    struct{}
 	Continue struct{}
 )
+
+// Binding is one name in a destructuring pattern: the local it declares, and the field it reads.
+type Binding struct {
+	Local int
+	Field string
+}
 
 // Case is one switch case: the constants it matches, and what it runs.
 type Case struct {

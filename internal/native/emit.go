@@ -62,17 +62,18 @@ func C(program *ir.Program) string {
 	bodies.WriteString(emitter.out.String())
 	bodies.WriteString("\treturn 0;\n}\n")
 
+	for index := range program.Functions {
+		fmt.Fprintf(&builder, "static %s;\n", emitter.signature(index))
+	}
+	if len(program.Functions) > 0 {
+		builder.WriteString("\n")
+	}
+	// After the prototypes: a sort's comparator adapter calls one of the program's functions.
 	for _, declaration := range emitter.declarations {
 		builder.WriteString(declaration)
 		builder.WriteString("\n")
 	}
 	if len(emitter.declarations) > 0 {
-		builder.WriteString("\n")
-	}
-	for index := range program.Functions {
-		fmt.Fprintf(&builder, "static %s;\n", emitter.signature(index))
-	}
-	if len(program.Functions) > 0 {
 		builder.WriteString("\n")
 	}
 	builder.WriteString(bodies.String())
@@ -489,6 +490,20 @@ func (e *emitter) value(expression ir.Expression) string {
 		value := e.value(expression.Value)
 		index := e.value(expression.Index)
 		return fmt.Sprintf("adamic_string_char_code_at(%s, %s)", value, index)
+	case ir.MapEntries:
+		pair := e.shapeOf([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType})
+		return e.own(ir.Array, fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair))
+	case ir.ArraySlice:
+		array := e.value(expression.Array)
+		arguments := []string{"0.0", "0.0"}
+		for index, argument := range expression.Arguments {
+			arguments[index] = e.value(argument)
+		}
+		return e.own(ir.Array, fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t)", array, arguments[0], arguments[1], len(expression.Arguments) == 2))
+	case ir.ArraySort:
+		array := e.value(expression.Array)
+		e.line("adamic_array_sort(%s, %s);", array, e.comparator(expression))
+		return array
 	case ir.CodePoints:
 		return e.own(ir.Array, fmt.Sprintf("adamic_string_code_points(%s)", e.value(expression.Value)))
 	case ir.StringCall:
@@ -612,13 +627,24 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	return object
 }
 
-// shape declares an object layout once, at file scope, and names it.
+// shape declares an object literal's layout once, at file scope, and names it.
 func (e *emitter) shape(fields []ir.Field) string {
-	names, references := []string{}, []string{}
+	names, types := []string{}, []ir.Type{}
 	for _, field := range fields {
-		names = append(names, cString(field.Name))
-		references = append(references, strconv.FormatBool(field.Value.Type().IsReference()))
+		names = append(names, field.Name)
+		types = append(types, field.Value.Type())
 	}
+	return e.shapeOf(names, types)
+}
+
+// shapeOf declares a layout by its field names and types.
+func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
+	names, references := []string{}, []string{}
+	for index, name := range fieldNames {
+		names = append(names, cString(name))
+		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
+	}
+	fields := fieldNames
 	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
 	if e.shapes == nil {
 		e.shapes = map[string]string{}
@@ -713,7 +739,19 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.scopes = append(e.scopes, nil)
 	element := fmt.Sprintf("%s->elements[%s].%s", held, index, member(statement.Element))
 	name := e.localName(statement.Local)
-	if overString {
+	if statement.Pattern != nil {
+		// Each name reads its field of the tuple, which the array holds while the body runs.
+		for _, binding := range statement.Pattern {
+			bound := e.program.Locals[binding.Local]
+			field := fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", element, cString(binding.Field), e.cache(), member(bound.Type))
+			if bound.Type.IsReference() {
+				e.line("%s %s = adamic_retain(%s);", cType(bound.Type), e.localName(binding.Local), field)
+				e.hold(e.localName(binding.Local))
+			} else {
+				e.line("%s %s = %s;", cType(bound.Type), e.localName(binding.Local), field)
+			}
+		}
+	} else if overString {
 		e.line("adamic_string *%s = adamic_string_slice_bytes(%s, %s, %s);", name, held, index, size)
 		e.hold(name)
 	} else if statement.Element.IsReference() {
@@ -1098,6 +1136,8 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 		return e.own(ir.String, fmt.Sprintf("adamic_string_pad(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "padStart"))
 	case "repeat":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_repeat(%s, %s)", value, arguments[0]))
+	case "split":
+		return e.own(ir.Array, fmt.Sprintf("adamic_string_split(%s, %s)", value, arguments[0]))
 	case "indexOf":
 		return fmt.Sprintf("adamic_string_index_of(%s, %s)", value, arguments[0])
 	case "includes":
@@ -1106,4 +1146,16 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 		return fmt.Sprintf("adamic_string_starts_with(%s, %s)", value, arguments[0])
 	}
 	return fmt.Sprintf("adamic_string_ends_with(%s, %s)", value, arguments[0])
+}
+
+// comparator declares, once per sort, an adapter from the runtime's comparison to the program's
+// comparator: JavaScript reads its result's sign, and NaN as 0.
+func (e *emitter) comparator(sort ir.ArraySort) string {
+	e.temporaries++
+	name := fmt.Sprintf("adamic_compare_%d", e.temporaries)
+	argument := "left." + member(sort.Element) + ", right." + member(sort.Element)
+	e.declarations = append(e.declarations, fmt.Sprintf(
+		"static int %s(adamic_value left, adamic_value right) {\n\tdouble result = %s(%s);\n\treturn result < 0 ? -1 : result > 0 ? 1 : 0;\n}",
+		name, e.functionName(sort.Comparator), argument))
+	return name
 }

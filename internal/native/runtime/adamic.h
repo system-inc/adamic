@@ -135,6 +135,13 @@ bool adamic_map_delete(adamic_map *map, adamic_value key);
 // adamic_map_free_children lets go of what a map holds, for the heap's freeing.
 void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 
+// adamic_array_slice is array.slice(start, end); adamic_array_sort sorts in place, stably.
+adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
+void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value));
+
+// adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
+adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);
+
 // adamic_array_join is array.join(separator), each element written as String() would.
 enum adamic_join {
 	adamic_join_numbers = 1,
@@ -173,6 +180,7 @@ double adamic_string_index_of(const adamic_string *string, const adamic_string *
 bool adamic_string_starts_with(const adamic_string *string, const adamic_string *search);
 bool adamic_string_ends_with(const adamic_string *string, const adamic_string *search);
 struct adamic_array *adamic_string_code_points(const adamic_string *string);
+struct adamic_array *adamic_string_split(const adamic_string *string, const adamic_string *separator);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);

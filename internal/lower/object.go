@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"strconv"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -76,6 +78,13 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		}
 		if spread.Type() == ir.String {
 			return ir.CodePoints{Value: spread}, nil
+		}
+		if spread.Type() == ir.Map {
+			key, value, err := l.mapTypes(items[0].AsSpreadElement().Expression)
+			if err != nil {
+				return nil, err
+			}
+			return ir.MapEntries{Map: spread, KeyType: key, ValueType: value}, nil
 		}
 		return nil, l.notYet(items[0], "spreading a "+typeName(spread.Type())+" into an array")
 	}
@@ -186,7 +195,7 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	isMath := l.isLibraryGlobal(receiver, "Math")
 	receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
 	isToFixed := name == "toFixed" && receiverType == ir.Number
-	if receiverType == ir.Array && (name == "push" || name == "join") {
+	if receiverType == ir.Array && (name == "push" || name == "join" || name == "slice" || name == "sort") {
 		return l.arrayMethod(node, receiver, name)
 	}
 	if receiverType == ir.Map && (name == "get" || name == "set" || name == "has" || name == "delete") {
@@ -251,8 +260,12 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(initializer, "a for...of that doesn't declare its variable with const or let")
 	}
 	declarations := initializer.AsVariableDeclarationList().Declarations.Nodes
-	if len(declarations) != 1 || !ast.IsIdentifier(declarations[0].Name()) {
-		return nil, l.notYet(initializer, "a destructuring for...of")
+	if len(declarations) != 1 {
+		return nil, l.notYet(initializer, "a for...of declaring more than one variable")
+	}
+	name := declarations[0].Name()
+	if !ast.IsIdentifier(name) && name.Kind != ast.KindArrayBindingPattern {
+		return nil, l.notYet(initializer, "a for...of destructuring an object")
 	}
 	iterable, err := l.expression(statement.Expression)
 	if err != nil {
@@ -270,15 +283,35 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	default:
 		return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
 	}
-	local, err := l.declareLocal(declarations[0].Name())
-	if err != nil {
+	lowered := ir.ForOf{Iterable: iterable, Element: element}
+	if ast.IsIdentifier(name) {
+		if lowered.Local, err = l.declareLocal(name); err != nil {
+			return nil, err
+		}
+	} else {
+		// for (const [a, b] of pairs): each name reads a field of the tuple, "0", "1", ...
+		if element != ir.Object {
+			return nil, l.notYet(name, "destructuring a "+typeName(element))
+		}
+		for index, binding := range name.AsBindingPattern().Elements.Nodes {
+			if binding.Kind == ast.KindOmittedExpression {
+				continue
+			}
+			bound := binding.AsBindingElement()
+			if !ast.IsIdentifier(binding.Name()) || bound.Initializer != nil || bound.DotDotDotToken != nil {
+				return nil, l.notYet(binding, "a destructured name that isn't plain")
+			}
+			local, err := l.declareLocal(binding.Name())
+			if err != nil {
+				return nil, err
+			}
+			lowered.Pattern = append(lowered.Pattern, ir.Binding{Local: local, Field: strconv.Itoa(index)})
+		}
+	}
+	if lowered.Body, err = l.statement(statement.Statement); err != nil {
 		return nil, err
 	}
-	body, err := l.statement(statement.Statement)
-	if err != nil {
-		return nil, err
-	}
-	return []ir.Statement{ir.ForOf{Iterable: iterable, Element: element, Local: local, Body: body}}, nil
+	return []ir.Statement{lowered}, nil
 }
 
 // switchStatement lowers switch, whose cases 0.1 requires to be constants.
@@ -343,6 +376,9 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	if err != nil {
 		return nil, true, err
 	}
+	if name == "sort" {
+		return l.arraySort(node, array, element)
+	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		lowered, err := l.expression(argument)
@@ -350,6 +386,17 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 			return nil, true, err
 		}
 		arguments = append(arguments, lowered)
+	}
+	if name == "slice" {
+		for _, argument := range arguments {
+			if argument.Type() != ir.Number {
+				return nil, true, l.notYet(node, "slice with an index that isn't a number")
+			}
+		}
+		if len(arguments) > 2 {
+			return nil, true, l.notYet(node, "slice with more than two arguments")
+		}
+		return ir.ArraySlice{Array: array, Arguments: arguments}, true, nil
 	}
 	if name == "push" {
 		if len(arguments) != 1 {
@@ -528,6 +575,7 @@ var stringMethods = map[string]struct {
 	"includes":    {[]ir.Type{ir.String}, 0},
 	"startsWith":  {[]ir.Type{ir.String}, 0},
 	"endsWith":    {[]ir.Type{ir.String}, 0},
+	"split":       {[]ir.Type{ir.String}, 0},
 }
 
 func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
@@ -560,4 +608,41 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 		arguments = append(arguments, ir.StringConstant{Index: l.constant(" ")})
 	}
 	return ir.StringCall{Method: name, Value: value, Arguments: arguments}, true, nil
+}
+
+// arraySort lowers array.sort(comparator). 0.1 requires the comparator (the default sorts numbers as
+// strings), and stage 0 takes one of the module's functions by name.
+func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) == 0 {
+		return nil, true, &Refused{Where: l.program.Where(node), What: "sort without a comparator", Fix: "pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"}
+	}
+	comparator := ast.SkipParentheses(arguments[0])
+	function, isFunction := l.functions[l.symbol(comparator)]
+	if !ast.IsIdentifier(comparator) || !isFunction {
+		return nil, true, l.notYet(comparator, "a comparator that isn't one of the module's functions by name")
+	}
+	declared := l.result.Functions[function]
+	if declared.Returns != ir.Number || len(declared.Parameters) != 2 || l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element {
+		return nil, true, l.notYet(comparator, "a comparator that doesn't take two elements and return a number")
+	}
+	return ir.ArraySort{Array: array, Comparator: function, Element: element}, true, nil
+}
+
+// elementAccess lowers tuple[index] with a constant index: the tuple's field of that name.
+func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
+	access := node.AsElementAccessExpression()
+	index := ast.SkipParentheses(access.ArgumentExpression)
+	object, err := l.expression(access.Expression)
+	if err != nil {
+		return nil, err
+	}
+	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+		return nil, l.notYet(node, describe(node))
+	}
+	of, err := l.typeOf(node)
+	if err != nil {
+		return nil, err
+	}
+	return ir.Property{Object: object, Name: index.Text(), Of: of}, nil
 }

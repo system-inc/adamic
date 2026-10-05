@@ -137,6 +137,8 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return l.arrayLiteral(node)
 	case ast.KindPropertyAccessExpression:
 		return l.property(node)
+	case ast.KindElementAccessExpression:
+		return l.elementAccess(node)
 	case ast.KindNewExpression:
 		return l.newExpression(node)
 	case ast.KindCallExpression:
