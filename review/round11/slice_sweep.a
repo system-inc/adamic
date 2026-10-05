@@ -1,0 +1,21 @@
+// Shared slices of a long string mixing ASCII, two-, three- and four-byte characters, cut at every
+// offset: each slice's own length, every unit, code points and searches, counted from its own bytes.
+let text = '';
+for (let index = 0; index < 60; index++) {
+	text = text + `a${index % 7}é€🌍`;
+}
+let total = 0;
+let codes = 0;
+let found = 0;
+for (let start = 0; start < 40; start++) {
+	const slice = text.slice(start, start + 200);
+	total += slice.length;
+	for (let position = 0; position < slice.length; position++) {
+		codes = (codes * 31 + slice.charCodeAt(position)) % 1000000007;
+	}
+	found += slice.indexOf('🌍a', start % 5) + (slice.codePointAt(start % 9) ?? -1);
+	const inner = slice.slice(3, 150);
+	total += inner.length;
+	found += inner.lastIndexOf('€') + inner.indexOf('3é');
+}
+console.log(`${total} ${codes} ${found}`);

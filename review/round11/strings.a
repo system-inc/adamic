@@ -1,0 +1,62 @@
+// Shared slices and appends in place, at the edges: a for...of over a string that its body appends
+// to, a shared slice outliving its parent, a slice of a slice, += on a string something else holds,
+// and surrogate halves meeting in an append.
+function long(seed: string, times: number): string {
+	let text = '';
+	for (let index = 0; index < times; index++) {
+		text = text + `${seed}${index % 10}`;
+	}
+	return text;
+}
+function iterateWhileAppending(): string {
+	let text = long('ab', 40);
+	let count = 0;
+	for (const character of text) {
+		text = text + character;
+		count++;
+	}
+	return `${count} ${text.length} ${text.slice(-12)}`;
+}
+function sliceOutlives(): string {
+	let parent = long('xyz', 40);
+	const kept = parent.slice(10, 100);
+	parent = `gone${parent.length}`;
+	return `${kept.length} ${kept.slice(0, 8)} ${kept.indexOf('xyz5', 3)} ${parent}`;
+}
+function sliceOfSlice(): string {
+	const parent = long('é🌍', 30);
+	const first = parent.slice(6, 120);
+	const second = first.slice(4, 80);
+	const third = second.trim().slice(2);
+	return `${first.length} ${second.length} ${third.length} ${second.charCodeAt(1)} ${third.codePointAt(0)} ${second.indexOf('🌍', 5)}`;
+}
+function appendShared(): string {
+	let text = long('q', 30);
+	const held: string[] = [text];
+	const keys = new Map<string, number>();
+	keys.set(text, 1);
+	const box = { label: text };
+	let alias = text;
+	text = text + 'TAIL';
+	text += 'MORE';
+	return `${held[0]?.length} ${keys.has(held[0] ?? '')} ${box.label.length} ${alias.length} ${text.length} ${text.slice(-8)}`;
+}
+function halves(): string {
+	let text = long('w', 30);
+	text = text + '\uD83C';
+	text = text + '\uDF0D';
+	return `${text.length} ${text.codePointAt(text.length - 2)} ${text.slice(-3)}`;
+}
+function sliceThenAppend(): string {
+	let text = long('m', 40);
+	const slice = text.slice(0, text.length - 4);
+	text = text + 'END';
+	const after = slice + '!';
+	return `${slice.length} ${text.length} ${after.slice(-5)} ${text.slice(-5)}`;
+}
+console.log(iterateWhileAppending());
+console.log(sliceOutlives());
+console.log(sliceOfSlice());
+console.log(appendShared());
+console.log(halves());
+console.log(sliceThenAppend());
