@@ -18,3 +18,4 @@ m17_source_parameter_ignored: branch tests CATCH; probes changed 0
 m18_intersection_members_ignored: branch tests CATCH; probes changed 1 (b35_weak.a)
 m19_same_container_always: branch tests pass; probes changed 0
 m20_maps_never_paired: branch tests CATCH; probes changed 2 (a14_fresh_new_map.a; b21_map.a)
+m21_sets_never_paired: branch tests pass; probes changed 1 (b22_set.a)
