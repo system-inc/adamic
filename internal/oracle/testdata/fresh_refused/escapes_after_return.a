@@ -1,0 +1,25 @@
+// A function that returns what it made, but lets it escape into a global in a finally on the way
+// out: its result isn't fresh.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+let saved: Node = { kind: 'empty', nodes: [] };
+function make(n: number): Node {
+	const node: Node = { kind: `made${n}`, nodes: [] };
+	try {
+		return node;
+	} finally {
+		saved = node;
+	}
+}
+function current(): Node {
+	return { kind: 'current', nodes: [saved] };
+}
+function run(n: number): number {
+	const node = make(n);
+	node.nodes.push(current()); // closes the cycle
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);
+saved = { kind: 'cleared', nodes: [] };

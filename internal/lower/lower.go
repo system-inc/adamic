@@ -156,6 +156,9 @@ type lowering struct {
 	// inside, stand for; instantiated is every class type an instantiation was made for (instantiate.go).
 	typeMapper   *typeMapper
 	instantiated []*checker.Type
+
+	// writeSites is every write into a slot lowering made, by its IR node's Site less one (fresh.go).
+	writeSites []writeSite
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,

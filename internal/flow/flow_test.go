@@ -12,8 +12,11 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
 )
+
+// Lower is lower.Lower, set by lower_test.go: lower depends on this package (the cycle finder's
+// proof of fresh writes is built on the graph), so only an external test can import it.
+var Lower func(context.Context, *load.Program) (*ir.Program, error)
 
 // programs is every program the oracle runs that lowers, plus this package's own: the graph is built
 // for each of their functions and their top level.
@@ -57,7 +60,7 @@ func lowered(t *testing.T, path string) *ir.Program {
 	if err != nil {
 		t.Fatalf("Load: %v", err)
 	}
-	result, err := lower.Lower(context.Background(), program)
+	result, err := Lower(context.Background(), program)
 	if err != nil {
 		t.Fatalf("Lower: %v", err)
 	}

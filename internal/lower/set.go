@@ -86,7 +86,7 @@ func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	}
 	switch name {
 	case "add":
-		return ir.SetAdd{Set: set, Value: value, Element: element}, true, nil
+		return ir.SetAdd{Set: set, Value: value, Element: element, Site: l.writeSite(receiver)}, true, nil
 	case "has":
 		return ir.MapHas{Map: set, Key: value, KeyType: element}, true, nil
 	}

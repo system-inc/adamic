@@ -1,0 +1,15 @@
+// A helper given a child that holds the parent.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function addChild(parent: Node, child: Node): void {
+	parent.nodes.push(child); // closes the cycle
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	const wrapper: Node = { kind: `w${n}`, nodes: [node] };
+	addChild(node, wrapper);
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);

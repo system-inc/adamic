@@ -292,6 +292,9 @@ type (
 		Array   Expression
 		Value   Expression
 		Element Type
+		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
+		// what it writes into), or 0 when nothing recorded one.
+		Site int
 	}
 
 	// Unwrap is a Maybe pair the checker has proven present (narrowed), as what it holds. A narrowing
@@ -417,6 +420,9 @@ type (
 		Array, Start, Count Expression
 		Items               []Expression
 		Element             Type
+		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
+		// what it writes into), or 0 when nothing recorded one.
+		Site int
 	}
 
 	// ArrayFill is array.fill(Value, Start, End), Start and End perhaps nil (left out); in place, and
@@ -424,6 +430,9 @@ type (
 	ArrayFill struct {
 		Array, Length, Value, Start, End Expression
 		Element                          Type
+		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
+		// what it writes into), or 0 when nothing recorded one.
+		Site int
 	}
 
 	// ArrayFrom is Array.from({ length: Length }, Callback): a new array of Length elements (ToLength,
@@ -563,6 +572,9 @@ type (
 		Map, Key, Value Expression
 		KeyType         Type
 		ValueType       Type
+		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
+		// what it writes into), or 0 when nothing recorded one.
+		Site int
 	}
 
 	// MapHas is map.has(Key), and MapDelete map.delete(Key).
@@ -586,6 +598,9 @@ type (
 	SetAdd struct {
 		Set, Value Expression
 		Element    Type
+		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
+		// what it writes into), or 0 when nothing recorded one.
+		Site int
 	}
 
 	// SetValues is [...set]: a new array of its elements, in order.
@@ -845,6 +860,9 @@ type (
 	SetIndex struct {
 		Array, Index, Value Expression
 		Element             Type
+		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
+		// what it writes into), or 0 when nothing recorded one.
+		Site int
 	}
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
@@ -854,6 +872,9 @@ type (
 		Value  Expression
 		// Class is as Property's.
 		Class int
+		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
+		// what it writes into), or 0 when nothing recorded one.
+		Site int
 	}
 
 	// Return leaves the function, with Value unless it returns void.

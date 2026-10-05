@@ -1,0 +1,17 @@
+// A helper that returns its argument, named precisely now, written into itself.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function addChild(parent: Node, child: Node): void {
+	parent.nodes.push(child); // closes the cycle
+}
+function same(node: Node): Node {
+	return node;
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	addChild(node, same(node));
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);

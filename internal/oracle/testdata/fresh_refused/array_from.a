@@ -1,0 +1,11 @@
+// Array.from's callback, a runtime callback the graph can't see into, returns the holder.
+interface Node {
+	readonly kind: string;
+	nodes: Node[];
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	node.nodes = Array.from({ length: 1 }, (_, index) => (index >= 0 ? node : node)); // closes the cycle
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);

@@ -323,7 +323,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value, Class: l.classOf(target)}}, nil
+	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
@@ -364,7 +364,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	if err != nil {
 		return nil, err
 	}
-	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target)})
+	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)})
 	if len(statements) == 1 {
 		return statements, nil
 	}

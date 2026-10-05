@@ -5,17 +5,18 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
 // The cycle finder (docs/memory.md). Reference counting can't free a cycle, and Adamic has no
-// collector, so a cycle must not be able to form. One forms only when a mutable slot (a field that
-// isn't readonly, an element of an array that isn't readonly, a map's value, a variable a function
-// value captures) is set to something that can reach back to what holds the slot. Whether it can is
-// visible in the types, so every such slot is found here, from the whole program, and each one is
-// refused unless it's declared Weak<Target>, which doesn't count. A map's key and a set's element are
-// slots too, now that they may be objects; neither can be declared weak, so one that can reach back
-// is refused with the fix of a ReadonlyMap or ReadonlySet.
+// collector, so a cycle must not be able to form. One forms only when a slot (a field, readonly or
+// not, since a constructor writes a readonly one, an element of an array that isn't readonly, a map's
+// value, a variable a function value captures) is set to something that can reach back to what
+// holds the slot. Whether it can is visible in the types, so every such slot is found here, from the
+// whole program, and each one is refused unless it's declared Weak<Target>, which doesn't count. A
+// map's key and a set's element are slots too, now that they may be objects; neither can be declared
+// weak, so one that can reach back is refused with the fix of a ReadonlyMap or ReadonlySet.
 //
 // Reaching is followed through everything the checker knows a value can hold: an object's fields,
 // including the fields of every object type in the program that can be seen as it (a Dog seen as an
@@ -49,9 +50,14 @@ type cycleFinder struct {
 	// some object type may really be. shaped are the literals' own types among them.
 	shapes []*checker.Type
 	shaped map[*checker.Type]bool
+
+	// writes is every write in the program, judged by the relaxation for fresh writes (fresh.go),
+	// worked out the first time a slot needs it.
+	writes []fresh.Write
 }
 
-// findCycles refuses the first cycle-capable slot that isn't declared Weak, or returns nil.
+// findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
+// proven not to close a cycle (fresh.go), or returns nil.
 func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
 	for _, module := range modules {
@@ -243,7 +249,8 @@ func (f *cycleFinder) weak(proven *checker.Type) bool {
 	return representation == ir.Weak
 }
 
-// slotsOf refuses the first of a type's mutable slots that can close a cycle.
+// slotsOf refuses the first of a type's mutable slots that can close a cycle, unless every write
+// into it is proven not to (fresh.go): then it stands, and a refusal names the write that isn't.
 func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 	l := f.l
 	if holder.Flags()&checker.TypeFlagsObject == 0 || f.isFunction(holder) {
@@ -256,48 +263,65 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			return nil
 		}
 		for _, element := range l.checker.GetTypeArguments(holder) {
-			if !f.weak(element) && f.reaches(element, cycleNode{proven: holder}) {
-				target := f.present(element)
-				return &Refused{
-					Where: l.program.Where(f.where[holder]),
-					What:  name + ", an array whose elements can reach back to an array like it: a cycle reference counting can't free",
-					Fix:   "declare the elements weak, Weak<" + target + ">[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly " + target + "[] (adamic/cycle-capable)",
-				}
+			if f.weak(element) || !f.reaches(element, cycleNode{proven: holder}) {
+				continue
+			}
+			write := f.unproven(fresh.WriteElement, holder, "")
+			if write == nil {
+				continue
+			}
+			target := f.present(element)
+			return &Refused{
+				Where: l.program.Where(f.where[holder]),
+				What:  name + ", an array whose elements can reach back to an array like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
+				Fix:   "declare the elements weak, Weak<" + target + ">[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly " + target + "[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)",
 			}
 		}
 	case l.isLibraryType(holder, "ReadonlyMap"), l.isLibraryType(holder, "ReadonlySet"):
 	case l.isLibraryType(holder, "Set"):
 		arguments := l.checker.GetTypeArguments(holder)
 		if len(arguments) == 1 && f.reaches(arguments[0], cycleNode{proven: holder}) {
-			return &Refused{
-				Where: l.program.Where(f.where[holder]),
-				What:  name + ", a set whose elements can reach back to a set like it: a cycle reference counting can't free",
-				Fix:   "make it a ReadonlySet, built whole when it's made (adamic/cycle-capable)",
+			if write := f.unproven(fresh.WriteSetElement, holder, ""); write != nil {
+				return &Refused{
+					Where: l.program.Where(f.where[holder]),
+					What:  name + ", a set whose elements can reach back to a set like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
+					Fix:   "make it a ReadonlySet, built whole when it's made; or add to such a set only values this function made, or only to one it made (adamic/cycle-capable)",
+				}
 			}
 		}
 	case l.isLibraryType(holder, "Map"):
 		arguments := l.checker.GetTypeArguments(holder)
 		if len(arguments) == 2 && f.reaches(arguments[0], cycleNode{proven: holder}) {
-			return &Refused{
-				Where: l.program.Where(f.where[holder]),
-				What:  name + ", a map whose keys can reach back to a map like it: a cycle reference counting can't free",
-				Fix:   "make it a ReadonlyMap, built whole when it's made (adamic/cycle-capable)",
+			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
+				return &Refused{
+					Where: l.program.Where(f.where[holder]),
+					What:  name + ", a map whose keys can reach back to a map like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
+					Fix:   "make it a ReadonlyMap, built whole when it's made; or set in such a map only keys this function made, or only in one it made (adamic/cycle-capable)",
+				}
 			}
 		}
 		if len(arguments) == 2 && !f.weak(arguments[1]) && f.reaches(arguments[1], cycleNode{proven: holder}) {
-			return &Refused{
-				Where: l.program.Where(f.where[holder]),
-				What:  name + ", a map whose values can reach back to a map like it: a cycle reference counting can't free",
-				Fix:   "declare the values weak, Map<" + l.checker.TypeToString(arguments[0]) + ", Weak<" + f.present(arguments[1]) + ">> (import type { Weak } from 'adamic'), or make it a ReadonlyMap (adamic/cycle-capable)",
+			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
+				return &Refused{
+					Where: l.program.Where(f.where[holder]),
+					What:  name + ", a map whose values can reach back to a map like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
+					Fix:   "declare the values weak, Map<" + l.checker.TypeToString(arguments[0]) + ", Weak<" + f.present(arguments[1]) + ">> (import type { Weak } from 'adamic'), or make it a ReadonlyMap; or set in such a map only values this function made, or only in one it made (adamic/cycle-capable)",
+				}
 			}
 		}
 	default:
 		for _, field := range f.fields(holder) {
-			if l.checker.IsReadonlySymbol(field) {
-				continue
-			}
+			// A readonly field is a slot too: a constructor writes it, after this may have been put
+			// somewhere (parent.kids.push(this)), and then that write can close a cycle. Every other
+			// way a readonly field gets its value (a literal, an initializer) makes the holder with it,
+			// and is no write at all.
+			readonly := l.checker.IsReadonlySymbol(field)
 			proven := l.checker.GetTypeOfSymbol(field)
 			if f.weak(proven) || !f.reaches(proven, cycleNode{proven: holder}) {
+				continue
+			}
+			write := f.unproven(fresh.WriteField, holder, field.Name)
+			if write == nil {
 				continue
 			}
 			where := f.where[holder]
@@ -305,10 +329,14 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				where = field.Declarations[0]
 			}
 			target := l.checker.TypeToString(proven)
+			kind, orReadonly := "a mutable field", "; or make it readonly"
+			if readonly {
+				kind, orReadonly = "a readonly field, which its constructor writes,", ""
+			}
 			return &Refused{
 				Where: l.program.Where(where),
-				What:  name + "." + field.Name + ", a mutable field of type " + target + ", which can reach back to the " + name + " holding it: a cycle reference counting can't free",
-				Fix:   "declare it " + field.Name + ": Weak<" + f.present(proven) + "> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly (adamic/cycle-capable)",
+				What:  name + "." + field.Name + ", " + kind + " of type " + target + ", which can reach back to the " + name + " holding it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
+				Fix:   "declare it " + field.Name + ": Weak<" + f.present(proven) + "> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed" + orReadonly + "; or write into it only values this function made, or only into what it made (adamic/cycle-capable)",
 			}
 		}
 	}
