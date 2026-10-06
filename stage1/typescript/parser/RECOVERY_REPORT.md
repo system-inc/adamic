@@ -344,3 +344,13 @@ was stopped with SIGQUIT after 155.786s; the stack is retained in
 validation/recovery-variable-focused.log. Expressing the identical list
 algorithm through existing first-order callbacks builds and passes normally.
 No compiler source was edited, and that stalled build is not a mutant kill.
+
+## Continued recovery: parameters and invalid types
+
+Parameter lists now recognize elements, insert commas and resynchronize
+against active contexts. Binding names reject reserved words with diagnostic
+1359; this parameters remain supported. Invalid type tokens create an empty
+TypeReference name with diagnostic 1110. Missing function bodies retain an
+empty Block with diagnostic 1144 where required. Focused comparison passes
+in 22.130s and cohere passes. The continuation advances to input 560,
+duplicating break, which requires a missing label Identifier.

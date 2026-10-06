@@ -509,8 +509,17 @@ export class Statements {
         if(this.parser.kind() === 'OpenBraceToken') {
             children.push(this.block());
         }
-        else {
+        else if(
+            this.parser.kind() === 'SemicolonToken' ||
+            this.parser.kind() === 'CloseBraceToken' ||
+            this.parser.kind() === 'EndOfFile' ||
+            (this.parser.scanner.flags & 1) !== 0
+        ) {
             this.semicolon();
+        }
+        else {
+            this.parser.errorAt(1144, this.parser.scanner.start, this.parser.scanner.pos, "'{' or ';' expected.");
+            children.push(this.make('Block', this.parser.scanner.fullStart));
         }
         this.parser.setIn(oldIn);
         this.parser.setAwait(oldAwait);

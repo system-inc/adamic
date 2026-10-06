@@ -342,7 +342,13 @@ export class Parser {
         }
         return this.make('Identifier', this.scanner.fullStart);
     }
-    identifier(): number {
+    identifier(allowReserved = true): number {
+        if(!allowReserved && reservedKinds.includes(this.kind())) {
+            return this.missingIdentifier(
+                1359,
+                `Identifier expected. '${tokenSpelling(this.kind())}' is a reserved word that cannot be used here.`,
+            );
+        }
         if(this.kind() !== 'Identifier' && this.kind() !== 'PrivateIdentifier' && !this.kind().endsWith('Keyword')) {
             return this.missingIdentifier(1003, 'Identifier expected.');
         }
@@ -734,7 +740,10 @@ export class Parser {
         }
         else if(this.kind() === 'TypeOfKeyword') {
             this.next();
-            const name = this.entityName();
+            const name =
+                this.kind() === 'Identifier' || this.kind().endsWith('Keyword')
+                    ? this.entityName()
+                    : this.missingIdentifier(1110, 'Type expected.');
             const children = [name];
             if(this.expressionDepth === 0) {
                 this.roots.push(name);
@@ -883,7 +892,10 @@ export class Parser {
             }
         }
         else {
-            const name = this.entityName();
+            const name =
+                this.kind() === 'Identifier' || this.kind().endsWith('Keyword')
+                    ? this.entityName()
+                    : this.missingIdentifier(1110, 'Type expected.');
             const children = [name];
             if(this.kind() === 'LessThanToken' && (this.scanner.flags & 1) === 0) {
                 for(const type of this.typeArguments()) {
@@ -1102,55 +1114,56 @@ export class Parser {
         return this.make('TypeLiteral', pos, members);
     }
     parameters(): number[] {
-        const result: number[] = [];
         if(!this.expect('OpenParenToken')) {
-            return result;
+            return [];
         }
-        while(this.kind() !== 'CloseParenToken' && this.kind() !== 'EndOfFile') {
-            const pos = this.scanner.fullStart;
-            const children: number[] = [];
-            while(this.kind() === 'AtToken') {
-                children.push(this.statements().decorator());
-            }
-            while(
-                this.kind() === 'PublicKeyword' ||
-                this.kind() === 'PrivateKeyword' ||
-                this.kind() === 'ProtectedKeyword' ||
-                this.kind() === 'ReadonlyKeyword' ||
-                this.kind() === 'OverrideKeyword'
-            ) {
-                if(!this.nextIdentifierSameLine()) {
-                    break;
-                }
-                children.push(this.token());
-            }
-            if(this.kind() === 'DotDotDotToken') {
-                children.push(this.token());
-            }
-            children.push(this.bindingName());
-            if(this.kind() === 'QuestionToken') {
-                children.push(this.token());
-            }
-            if(this.kind() === 'ColonToken') {
-                this.next();
-                children.push(this.type());
-            }
-            if(this.kind() === 'EqualsToken') {
-                this.next();
-                children.push(this.rootAssignment());
-            }
-            result.push(this.make('Parameter', pos, children));
-            if(this.kind() !== 'CommaToken') {
-                break;
-            }
-            this.next();
-        }
+        const result = this.delimitedList('parameters', () => this.parameter());
         this.expect('CloseParenToken');
         return result;
     }
+    parameter(): number {
+        const pos = this.scanner.fullStart;
+        const children: number[] = [];
+        while(this.kind() === 'AtToken') {
+            children.push(this.statements().decorator());
+        }
+        while(
+            this.kind() === 'PublicKeyword' ||
+            this.kind() === 'PrivateKeyword' ||
+            this.kind() === 'ProtectedKeyword' ||
+            this.kind() === 'ReadonlyKeyword' ||
+            this.kind() === 'OverrideKeyword'
+        ) {
+            if(!this.nextIdentifierSameLine()) {
+                break;
+            }
+            children.push(this.token());
+        }
+        if(this.kind() === 'DotDotDotToken') {
+            children.push(this.token());
+        }
+        const name = this.kind() === 'ThisKeyword' ? this.identifier() : this.bindingName();
+        const node = this.node(name);
+        if(node.pos === node.end && children.length === 0 && modifierKinds.includes(this.kind())) {
+            this.next();
+        }
+        children.push(name);
+        if(this.kind() === 'QuestionToken') {
+            children.push(this.token());
+        }
+        if(this.kind() === 'ColonToken') {
+            this.next();
+            children.push(this.type());
+        }
+        if(this.kind() === 'EqualsToken') {
+            this.next();
+            children.push(this.rootAssignment());
+        }
+        return this.make('Parameter', pos, children);
+    }
     bindingName(): number {
         if(this.kind() !== 'OpenBracketToken' && this.kind() !== 'OpenBraceToken') {
-            return this.identifier();
+            return this.identifier(false);
         }
         const pos = this.scanner.fullStart;
         const object = this.kind() === 'OpenBraceToken';
