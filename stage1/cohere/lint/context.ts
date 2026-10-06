@@ -99,9 +99,11 @@ export class RuleContext {
         this.scanner = scanner;
         this.settings = settings;
         this.selected = selected === '' ? 'all' : selected;
-        this.mode = mode === '' ? 'Always' : mode;
-        this.nullPolicy = this.mode === 'Always' ? (nullPolicy === '' ? 'Always' : nullPolicy) : 'Ignore';
-        this.allowCatch = allowCatch;
+        const decodedMode = settings.read('mode', mode);
+        this.mode = decodedMode === '' ? 'Always' : decodedMode;
+        const decodedNull = settings.read('null', nullPolicy);
+        this.nullPolicy = this.mode === 'Always' ? (decodedNull === '' ? 'Always' : decodedNull) : 'Ignore';
+        this.allowCatch = settings.read('allowemptycatch', allowCatch ? 'true' : 'false') === 'true';
         this.parents = parents;
         this.root = root;
     }
