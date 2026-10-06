@@ -370,6 +370,8 @@ requiring its keyword spelling/spacing suggestion algorithm.
 Identifier-expression diagnostics use Go's weighted edit distance, candidate
 length limits and lexical tie breaker, then its keyword-prefix spacing
 suggestion. Unicode case probes use scalar characters. Focused comparison
-passes in 23.029s and cohere passes. All remaining binder.ts edits pass in
+passes in 23.029s. The initial commit still had 28 cohere findings (ambiguous
+loop identifiers and a string template preference); the following correction
+renames the indices and uses a template, and passes cohere. All remaining binder.ts edits pass in
 the continuation, which checks 102 inputs before reaching input 699 in
 builder.ts: an indexed type cut after its bracket is recovered as an ArrayType.
