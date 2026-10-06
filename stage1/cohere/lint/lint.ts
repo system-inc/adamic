@@ -249,6 +249,7 @@ export class Linter {
             this.selected,
             this.settings,
         );
+        this.volume.prepare(this.root);
         this.walk(this.root, -1);
         this.findings.sort(compareFindings);
     }

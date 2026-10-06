@@ -1,7 +1,8 @@
 # Syntax-only lint slice
 
-Twenty rules from the pinned cohere submodule, using the existing Adamic
-TypeScript parser and scanner:
+Twenty baseline rules from the pinned cohere submodule, plus the frequency-ranked
+continuation in [VOLUME.md](VOLUME.md), using the existing Adamic TypeScript
+parser and scanner:
 
 | Rule | Visitor shape | Repair |
 | --- | --- | --- |
@@ -23,6 +24,16 @@ TypeScript parser and scanner:
 | `no-div-regex` | raw regex prefix | replace one character inside the finding |
 | `no-warning-comments` | comments, terms/location/decoration and self-directives | none |
 | `no-unneeded-ternary` | boolean branches, precedence, source-preserving inversion/default | rewrite whole expression |
+| `base/consistency-no-console` | unwrapped member receiver | none |
+| `nexus/consistency-require-type-suffix` | declarations and const-enum-shaped objects | none |
+| `adamic/no-type-predicate` | type predicate | none |
+| `no-plusplus` | update operators and optional for-incrementor exemption | none |
+| `@typescript-eslint/method-signature-style` | type-member signatures, overload groups, module ancestry | rewrite member, merge overloads, readonly suggestion; valid-source coverage |
+| `@typescript-eslint/no-wrapper-object-types` | type references with whole-file shadow guard | lowercase primitive except implements |
+| `@typescript-eslint/prefer-literal-enum-member` | enum initializer recursion with bitwise option | none |
+| `nexus/consistency-no-enum` | enum declaration name | none |
+| `no-negated-condition` | if and ternary conditions, else-if exemption | none |
+| `no-return-assign` | assignments, return/arrow ancestry, positional parentheses | none |
 
 
 The runner dispatches these listeners in one preorder traversal. Child
@@ -41,7 +52,8 @@ A manifest row is tab-separated:
 source-path    rule-or-all    mode    null-policy    allow-empty-catch    decoded-options-json    recovery
 ```
 
-All fields after the path are optional. Defaults are all twenty rules, `Always`,
+All fields after the path are optional. Defaults are all thirty implemented rules (method-signature-style has the
+explicit recovery limit in VOLUME.md), `Always`,
 `Always`, and false. Modes and null policies are cohere's decoded option values,
 not ESLint configuration syntax. `Smart` forces the null policy to `Ignore`.
 The driver is a corpus runner, not cohere's config, suppression, file-selection,

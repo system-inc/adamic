@@ -18,8 +18,8 @@ plus configurable Go regular expressions), `id-length` (1,849; Unicode grapheme
 segmentation and configurable regular expressions), and `consistent-return`
 (546; its missing-return judgment calls Cohere's control-flow graph). They are
 syntax-only, but need substantial dependencies beyond this rule slice. This
-selection includes the highest-frequency rule, `one-var`, and introduces its
-multiple-edit finding shape rather than restricting its fixes to one edit.
+selection targets the highest-frequency rule, `one-var`; its multiple-edit
+finding shape is required work, not implemented by the first batch.
 
 | Rule | Compiler | Repository | Total |
 | --- | ---: | ---: | ---: |
@@ -71,3 +71,126 @@ ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test ./stage1/co
 go test ./stage1/cohere/lint -run '^TestVolumeMutants$' -count=1 -v -timeout 30m > /workspace/scratch/lint-volume/batch1-mutants.log 2>&1
 /workspace/scratch/cohere --no-fix --no-cache stage1/cohere/lint/{lint,volume,volume_messages}.ts > /workspace/scratch/lint-volume/batch1-final-cohere.log 2>&1
 ```
+
+## Checkpoint 2: nine fully covered additions and one limited addition
+
+The request for twenty more rules is **not complete**. Delivered beyond the
+baseline twenty: type suffix, console, plusplus, type predicate, wrapper object
+types, literal enum members, no-enum, negated condition, and return assignment.
+Method-signature-style additionally handles valid sources, both styles,
+overload rewrites, module/`this` fix declines and readonly suggestions, but has
+the parser-recovery limit below. These are ten implementations, not ten fully
+verified rules. The other ten names in the selection table remain unimplemented:
+`one-var`, ambiguous identifiers, abbreviated identifiers, non-null assertions,
+enum initializers, long line comments, multiline arrows, prefer-destructuring,
+single-line JSDoc and shouting. Unimplemented work is not a language refusal.
+
+Final formatted-source comparison: 1,272 upstream source/rule/options
+combinations captured, 1,264 compared, eight separately bounded failure checks.
+Seven admitted malformed combinations are findings-only (five inherited
+no-div-regex cases and two bare-arrow method-signature styles). Supported
+fixtures and generated input produce **748,598 identical bytes**. The pinned
+compiler and all stage1 `.ts` sources are 165 files and produce **18,914,195
+identical bytes**. Total: **19,662,793 bytes**, Go versus the same source on Node
+and native with ASan/UBSan/leak checks. Proposed repairs, rejection records and
+converged fixed source are compared with Cohere's actual edit engine, not a
+second implementation used as its oracle.
+
+### Recovery dependency and gap evidence
+
+Four actual method-signature test sources, each in `method` and `property`:
+
+```ts
+interface I
+interface I { m(a: string): void;
+interface I { m<(a: string): void; }
+interface I { m<T(a: T): T; }
+```
+
+Go completes on every one. Its property-style output reports a method and
+proposed repair for the last three. Native and Node panic on missing body,
+stray angle and half generic. Missing closing brace runs past the two-second
+bound on both ports. The existing parser's `typeLiteral` loop has no EOF exit;
+`gaps/5_parser_recovery.ts` reduces it. This is a parser coverage defect, not an
+Adamic subset limitation. The eight combinations retain explicit log records
+and are excluded from the identical-byte total. Fixing the parser's missing-token
+recovery is a dependency for full method-signature fixture parity; no parser,
+compiler or runtime code is changed in this lint unit.
+
+A separate actual language gap: positioned `lastIndexOf`. The program in
+`gaps/4_last_index_position.ts` prints `1` on Node; native lowering refuses
+`lastIndexOf with these arguments`. The fixer uses a prefix slice with the
+supported one-argument search. The gap test requires both observations.
+
+### New semantic mutants
+
+All ten execute and give wrong answers on Node and sanitized native:
+
+| Family | Mutation | Comparison that catches it |
+| --- | --- | --- |
+| Type predicate | listen to NeverKeyword | missing finding/message/range |
+| Console member | invert receiver name | missing and spurious findings |
+| Update option | invert for-afterthought exemption | wrong loop update findings |
+| Method style | omit method listener | missing findings and fixed member rewrite |
+| Wrapper type | omit Number | missing finding and lowercase fixed output |
+| Enum literal option | invert allow-bitwise decision | wrong finding/message under decoded option |
+| Enum declaration | disable listener | missing name finding |
+| Negated condition | invert condition polarity | missing negated if/ternary findings |
+| Return assignment | invert parentheses option | wrong arrow/return findings |
+| Interface suffix | allow forbidden Type suffix | missing interface finding |
+
+The original 19 rule mutants and the two earlier performance mutants are also
+rerun by the full package (31 mutants total including this continuation). A discarded trial
+method-style mutant caused a fix loop and was not counted: its replacement
+omits a listener and is caught by wrong output. A discarded condition mutant
+was ineffective and was replaced by the polarity mutant. Formatting required
+shorter mutation anchors; this changes no mutant's semantic purpose.
+
+### Verification commands
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test ./stage1/cohere/lint -count=1 -v -timeout 30m > /workspace/scratch/lint-volume/batch2-full-package.log 2>&1
+go test ./internal/oracle -run '^(TestNativeAgreesWithNode|TestTheOracleCatchesOneByte)$/^internal$/^oracle$/^testdata$/^(strings|maps_and_text|indexing|visits|sorting)\.a$' -count=1 -v -timeout 10m > /workspace/scratch/lint-volume/batch2-filtered-oracle.log 2>&1
+go vet ./stage1/cohere/lint > /workspace/scratch/lint-volume/batch2-vet.log 2>&1
+/workspace/scratch/cohere --no-fix --no-cache stage1/cohere/lint/{lint,volume,volume_messages,settings}.ts stage1/cohere/lint/gaps/{4_last_index_position,5_parser_recovery}.ts > /workspace/scratch/lint-volume/batch2-final-cohere.log 2>&1
+```
+
+Full lint package: PASS, 591.243s, including all 31 mutants, byte comparisons,
+bounded parser failure checks and proving gap tests. Profiling artifact and
+historical snapshot jobs are opt-in and skipped; throughput is run separately.
+
+Filtered core oracle: PASS, 13.283s, five fixtures plus its one-byte negative
+control. Go vet: exit 0, no output. Cohere source/format gate: PASS, 276 rules,
+seven checked, 100% Adamic-ready (five of five selected files). The whole
+repository `go test ./...` gate is not claimed; validation is the full touched
+package and the exact filtered core oracle above.
+
+### Throughput
+
+Thirty implemented rules enabled, count-only mode, all 77 pinned compiler
+files, 14,866 findings identical in each run. Five interleaved fresh runs,
+including file reads, parsing, visiting, messages, findings and sorting; fixes
+are not applied in count-only mode.
+
+| Runner | Best seconds | Findings per second |
+| --- | ---: | ---: |
+| Go | 0.673702 | 22,066.14 |
+| Native Adamic release | 3.023437 | 4,916.92 |
+| Node running the same source | 1.599961 | 9,291.48 |
+
+Native takes 4.49 times Go's elapsed time and 1.89 times Node's for this work.
+This measures thirty implementations, including the valid-source method rule;
+it is not a same-rule-count comparison with the previous twenty-rule benchmark.
+Machine: x86_64 Linux 6.18.44, AMD EPYC 9V74 80-Core, `nproc` five, CPU quota
+four. Load before `1.49 1.20 0.99`, after `1.49 1.23 1.01`. Go 1.27.1,
+Node 24.19.0, clang 20.1.8; native is the normal unsanitized optimized build.
+
+```sh
+ADAMIC_LINT_BENCH=1 ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test ./stage1/cohere/lint -run '^TestThroughput$' -count=1 -v -timeout 20m > /workspace/scratch/lint-volume/batch2-throughput.log 2>&1
+```
+
+PASS, 36.075s. Every round's count is checked against Go. The full package's
+count-only mutant separately proves that a wrong count is caught even when
+ordinary findings/fixed output remains identical. Raw validation, core-oracle,
+source-gate and throughput output is in `volume_evidence/batch2-*.log`.
