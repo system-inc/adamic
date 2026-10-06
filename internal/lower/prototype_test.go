@@ -205,3 +205,32 @@ func TestIsPrototypeOfReadsExplainThePrototypeRefusal(t *testing.T) {
 		}
 	}
 }
+
+// An inherited library member is NotYet when Adamic will build it (a library method called but not
+// lowered yet, an inherited data property read as a field) and Refused only when it never will (the
+// prototype chain made observable, a method detached from its object).
+func TestInheritedLibraryMembersAreClassifiedNotYetOrRefused(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"const values = [1, 2]; const pairs = values.entries();",
+		"const text = 'abc'.anchor('x');",
+		"const { message } = new Error(`m${1}`);",
+	} {
+		_, err := lowerSource(t, source)
+		var notYet *NotYet
+		if !errors.As(err, &notYet) {
+			t.Errorf("%s: got %v, want NotYet", source, err)
+		}
+	}
+	for _, source := range []string{
+		"const value = {}; const detached = value.isPrototypeOf;",
+		"const value = {}; const made = value.constructor;",
+		"const value = {}; const { toString: detached } = value;",
+	} {
+		_, err := lowerSource(t, source)
+		var refused *Refused
+		if !errors.As(err, &refused) {
+			t.Errorf("%s: got %v, want Refused", source, err)
+		}
+	}
+}

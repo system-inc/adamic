@@ -307,7 +307,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 				return nil, l.notYet(binding, "destructuring a field the type doesn't name")
 			}
 			if l.inheritedLibrarySymbol(property) {
-				return nil, l.prototypeRead(binding, field)
+				return nil, l.prototypeRead(binding, field, property)
 			}
 			fieldType = l.checker.GetTypeOfSymbol(property)
 		}
