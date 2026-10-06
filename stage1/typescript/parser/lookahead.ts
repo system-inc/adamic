@@ -1,6 +1,6 @@
 // Speculation saves and restores scanner state without building a tree.
 import type { Scanner } from '../scanner/scanner.ts';
-import { precedence } from './grammar.ts';
+import { precedence, reservedKinds } from './grammar.ts';
 
 export interface ParserStateInterface {
     readonly pos: number;
@@ -25,6 +25,9 @@ class Speculation {
     readonly value: string;
     readonly flags: number;
     readonly errors: number;
+    braces = 0;
+    readonly templates: number[] = [];
+    previous = '';
     constructor(scanner: Scanner) {
         this.scanner = scanner;
         this.pos = scanner.pos;
@@ -34,6 +37,44 @@ class Speculation {
         this.value = scanner.value;
         this.flags = scanner.flags;
         this.errors = scanner.errors.length;
+    }
+    prepare(): void {
+        const current = kind(this.scanner);
+        if(
+            (current === 'SlashToken' || current === 'SlashEqualsToken') &&
+            (this.previous === 'EqualsToken' ||
+                this.previous === 'OpenParenToken' ||
+                this.previous === 'CommaToken' ||
+                this.previous === 'ColonToken' ||
+                this.previous === 'QuestionToken' ||
+                precedence(this.previous) >= 0)
+        ) {
+            this.scanner.rescanSlash();
+        }
+        if(
+            kind(this.scanner) === 'CloseBraceToken' &&
+            this.templates.length > 0 &&
+            this.templates[this.templates.length - 1] === this.braces
+        ) {
+            this.scanner.rescanTemplate();
+            if(kind(this.scanner) === 'TemplateTail') {
+                this.templates.pop();
+            }
+        }
+        if(kind(this.scanner) === 'TemplateHead') {
+            this.templates.push(this.braces);
+        }
+        if(kind(this.scanner) === 'OpenBraceToken') {
+            this.braces++;
+        }
+        if(kind(this.scanner) === 'CloseBraceToken') {
+            this.braces--;
+        }
+    }
+    next(): void {
+        this.previous = kind(this.scanner);
+        this.scanner.scan();
+        this.prepare();
     }
     restore(): void {
         this.scanner.pos = this.pos;
@@ -46,17 +87,28 @@ class Speculation {
     }
 }
 
+function optionalParameterAhead(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    state.next();
+    const after = kind(scanner);
+    state.restore();
+    return after === 'ColonToken' || after === 'CommaToken' || after === 'EqualsToken' || after === 'CloseParenToken';
+}
+
 export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
     const state = new Speculation(scanner);
     let result = false;
     if(kind(scanner) === 'AsyncKeyword') {
-        scanner.scan();
+        state.next();
         if((scanner.flags & 1) !== 0) {
             state.restore();
             return false;
         }
-        if(kind(scanner) === 'Identifier') {
-            scanner.scan();
+        if(
+            kind(scanner) === 'Identifier' ||
+            (kind(scanner).endsWith('Keyword') && !reservedKinds.includes(kind(scanner)))
+        ) {
+            state.next();
             result = kind(scanner) === 'EqualsGreaterThanToken' && (scanner.flags & 1) === 0;
             state.restore();
             return result;
@@ -71,7 +123,7 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             if(kind(scanner) === 'GreaterThanToken') {
                 depth--;
             }
-            scanner.scan();
+            state.next();
             if(depth === 0) {
                 break;
             }
@@ -91,13 +143,15 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             if(depth === 1 && kind(scanner) !== 'OpenParenToken') {
                 head++;
                 if(
-                    (head === 2 && (kind(scanner) === 'ColonToken' || kind(scanner) === 'QuestionToken')) ||
+                    (head === 2 &&
+                        (kind(scanner) === 'ColonToken' ||
+                            (kind(scanner) === 'QuestionToken' && optionalParameterAhead(scanner)))) ||
                     (head === 1 && kind(scanner) === 'DotDotDotToken')
                 ) {
                     typed = true;
                 }
             }
-            scanner.scan();
+            state.next();
             if(depth === 0) {
                 break;
             }
@@ -106,7 +160,7 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             result = true;
         }
         else if(kind(scanner) === 'ColonToken' && (allowReturn || typed)) {
-            scanner.scan();
+            state.next();
             let braces = 0;
             while(kind(scanner) !== 'EndOfFile' && kind(scanner) !== 'EqualsGreaterThanToken') {
                 if(kind(scanner) === 'SemicolonToken' && braces === 0) {
@@ -121,7 +175,7 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
                     }
                     braces--;
                 }
-                scanner.scan();
+                state.next();
             }
             result = kind(scanner) === 'EqualsGreaterThanToken';
         }
@@ -177,6 +231,12 @@ export function typeArgumentsAhead(scanner: Scanner): boolean {
             depth++;
         }
         if(kind(scanner) === 'GreaterThanToken') {
+            if(depth === 1) {
+                scanner.rescanGreater();
+                if(kind(scanner) !== 'GreaterThanToken') {
+                    break;
+                }
+            }
             depth--;
         }
         if(
@@ -188,7 +248,7 @@ export function typeArgumentsAhead(scanner: Scanner): boolean {
         ) {
             break;
         }
-        scanner.scan();
+        state.next();
         if(depth === 0) {
             closed = true;
             break;
@@ -212,6 +272,10 @@ export function typeArgumentsAhead(scanner: Scanner): boolean {
                     after === 'CommaToken' ||
                     after === 'EndOfFile' ||
                     after === 'DotToken' ||
+                    after === 'QuestionDotToken' ||
+                    after === 'QuestionToken' ||
+                    after === 'ColonToken' ||
+                    after === 'CloseBraceToken' ||
                     after === 'EqualsToken')));
     state.restore();
     return result;

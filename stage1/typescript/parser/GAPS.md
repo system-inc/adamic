@@ -133,3 +133,23 @@ types as well as type-query operands; these roots are retained.
 Only valid, diagnostic-free TS input is covered. The Go oracle rejects parse
 diagnostics; this slice does not promise recovery trees or diagnostic parity.
 JSX, decorators, JSDoc trees and non-UTF-8 source remain outside coverage.
+
+## Green step 5
+
+Adds an exhaustive 25 by 25 binary operator corpus, sixteen assignment forms,
+1,000 recursively generated expressions using seed 720, and targeted regressions.
+The 1,676 generated inputs produce 1,432,520 identical tree bytes. The original
+58 inputs still hold all three mutants, and the whole compiler corpus remains
+identical at 28,836,875 bytes. The additional bytes come from retaining raw text
+for no-substitution templates, which matters for tags and escaped spellings.
+
+Generated cases exercised ambiguities missing from the compiler corpus: regex
+and template rescans during arrow/type lookahead, parenthesized conditionals
+versus typed arrows, contextual arrow names, generic optional calls/tags,
+relational `>=` versus a closing generic `>`, omitted bindings, async parameter
+defaults, and `in` contexts. Go assigns `??` the same precedence as `||`; the
+operator-pair corpus caught the initial lower rank even though compiler sources
+never exposed the difference. Random nesting uses the first ten operators;
+all twenty-five operators are covered independently in the pair matrix.
+Every input must parse without a diagnostic in the Go oracle. Generated inputs
+are not filtered after comparison failures.

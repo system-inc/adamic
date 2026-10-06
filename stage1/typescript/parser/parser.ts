@@ -45,6 +45,9 @@ export class Parser {
         const id = this.make(this.kind(), this.scanner.fullStart);
         const node = this.node(id);
         node.text = this.scanner.value;
+        if(this.kind() === 'NoSubstitutionTemplateLiteral') {
+            node.raw = this.scanner.text.slice(this.scanner.start + 1, this.scanner.pos - 1);
+        }
         node.literalFlags =
             this.scanner.flags &
             (this.kind() === 'StringLiteral'
@@ -148,7 +151,7 @@ export class Parser {
                 return this.identifier();
             case 'OpenParenToken': {
                 this.next();
-                const expression = this.expression();
+                const expression = this.allowInExpression();
                 this.expect('CloseParenToken');
                 return this.make('ParenthesizedExpression', pos, [expression]);
             }
@@ -734,6 +737,12 @@ export class Parser {
             children.push(this.token());
             async = true;
         }
+        const previousAwait = this.awaitContext;
+        const previousYield = this.yieldContext;
+        this.awaitContext = async;
+        this.yieldContext = false;
+        const oldIn = this.disallowIn;
+        this.disallowIn = false;
         for(const parameter of this.typeParameters()) {
             children.push(parameter);
         }
@@ -751,11 +760,8 @@ export class Parser {
             children.push(this.returnType());
         }
         children.push(this.token());
-        const previousAwait = this.awaitContext;
-        const previousYield = this.yieldContext;
-        this.awaitContext = async;
-        this.yieldContext = false;
         children.push(this.kind() === 'OpenBraceToken' ? this.block() : this.assignment(allowReturn));
+        this.disallowIn = oldIn;
         this.awaitContext = previousAwait;
         this.yieldContext = previousYield;
         return this.make('ArrowFunction', pos, children);
@@ -800,6 +806,12 @@ export class Parser {
         if(this.kind() === 'Identifier' || this.kind().endsWith('Keyword')) {
             children.push(this.identifier());
         }
+        const oldAwait = this.awaitContext;
+        const oldYield = this.yieldContext;
+        this.awaitContext = async;
+        this.yieldContext = generator;
+        const oldIn = this.disallowIn;
+        this.disallowIn = false;
         for(const parameter of this.typeParameters()) {
             children.push(parameter);
         }
@@ -810,11 +822,8 @@ export class Parser {
             this.next();
             children.push(this.returnType());
         }
-        const oldAwait = this.awaitContext;
-        const oldYield = this.yieldContext;
-        this.awaitContext = async;
-        this.yieldContext = generator;
         children.push(this.block());
+        this.disallowIn = oldIn;
         this.awaitContext = oldAwait;
         this.yieldContext = oldYield;
         return this.make('FunctionExpression', pos, children);
@@ -938,6 +947,12 @@ export class Parser {
         if(this.kind() !== 'OpenParenToken' && this.kind() !== 'LessThanToken') {
             children.push(this.identifier());
         }
+        const oldAwait = this.awaitContext;
+        const oldYield = this.yieldContext;
+        this.awaitContext = async;
+        this.yieldContext = generator;
+        const oldIn = this.disallowIn;
+        this.disallowIn = false;
         for(const type of this.typeParameters()) {
             children.push(type);
         }
@@ -948,16 +963,13 @@ export class Parser {
             this.next();
             children.push(this.returnType());
         }
-        const oldAwait = this.awaitContext;
-        const oldYield = this.yieldContext;
-        this.awaitContext = async;
-        this.yieldContext = generator;
         if(this.kind() === 'OpenBraceToken') {
             children.push(this.block());
         }
         else {
             this.semicolon();
         }
+        this.disallowIn = oldIn;
         this.awaitContext = oldAwait;
         this.yieldContext = oldYield;
         return this.make('FunctionDeclaration', pos, children);
@@ -1438,11 +1450,13 @@ export class Parser {
         return this.make('SpreadElement', pos, [expression]);
     }
     arguments(): number[] {
+        const oldIn = this.disallowIn;
+        this.disallowIn = false;
         this.expect('OpenParenToken');
         const result: number[] = [];
         let trailing = false;
         while(this.kind() !== 'CloseParenToken') {
-            result.push(this.kind() === 'DotDotDotToken' ? this.spread() : this.assignment());
+            result.push(this.kind() === 'DotDotDotToken' ? this.spread() : this.allowInAssignment());
             trailing = this.kind() === 'CommaToken';
             if(!trailing) {
                 break;
@@ -1451,6 +1465,7 @@ export class Parser {
         }
         this.expect('CloseParenToken');
         this.lastTrailing = trailing;
+        this.disallowIn = oldIn;
         return result;
     }
     suffix(expression: number, allowCall: boolean): number {
@@ -1508,7 +1523,7 @@ export class Parser {
             }
             if(this.kind() === 'OpenBracketToken') {
                 this.next();
-                const argument = this.expression();
+                const argument = this.allowInExpression();
                 this.expect('CloseBracketToken');
                 const children = [left];
                 if(question >= 0) {
@@ -1542,7 +1557,7 @@ export class Parser {
                 for(const argument of args) {
                     children.push(argument);
                 }
-                const optional = question >= 0 || this.optionalChain(left);
+                const optional = question >= 0 || this.optionalChain(children[0] ?? panic('missing callee'));
                 left = this.make('CallExpression', pos, children);
                 this.node(left).optional = optional;
                 this.node(left).list = args.length;
@@ -1565,7 +1580,7 @@ export class Parser {
                     }
                 }
                 children.push(template);
-                const optional = question >= 0 || this.node(left).optional;
+                const optional = question >= 0 || this.optionalChain(children[0] ?? panic('missing tag'));
                 left = this.make('TaggedTemplateExpression', pos, children);
                 this.node(left).optional = optional;
                 continue;
@@ -1616,7 +1631,7 @@ export class Parser {
         const children = [this.templatePart()];
         while(true) {
             const spanPos = this.scanner.fullStart;
-            const expression = this.expression();
+            const expression = this.allowInExpression();
             if(this.kind() !== 'CloseBraceToken') {
                 panic('template missing closing brace');
             }
@@ -1675,6 +1690,12 @@ export class Parser {
     }
     methodBody(pos: number, prefix: readonly number[], kind: string, async: boolean, generator: boolean): number {
         const children = prefix.slice();
+        const oldAwait = this.awaitContext;
+        const oldYield = this.yieldContext;
+        this.awaitContext = async;
+        this.yieldContext = generator;
+        const oldIn = this.disallowIn;
+        this.disallowIn = false;
         for(const type of this.typeParameters()) {
             children.push(type);
         }
@@ -1685,16 +1706,13 @@ export class Parser {
             this.next();
             children.push(this.returnType());
         }
-        const oldAwait = this.awaitContext;
-        const oldYield = this.yieldContext;
-        this.awaitContext = async;
-        this.yieldContext = generator;
         if(this.kind() === 'OpenBraceToken') {
             children.push(this.block());
         }
         else {
             this.semicolon();
         }
+        this.disallowIn = oldIn;
         this.awaitContext = oldAwait;
         this.yieldContext = oldYield;
         return this.make(kind, pos, children);
@@ -1709,7 +1727,7 @@ export class Parser {
             const start = this.scanner.fullStart;
             if(this.kind() === 'DotDotDotToken') {
                 this.next();
-                const expression = this.assignment();
+                const expression = this.allowInAssignment();
                 properties.push(this.make('SpreadAssignment', start, [expression]));
             }
             else {
@@ -1719,6 +1737,9 @@ export class Parser {
                 if(
                     this.kind() === 'AsyncKeyword' &&
                     this.peek() !== 'ColonToken' &&
+                    this.peek() !== 'EqualsToken' &&
+                    this.peek() !== 'QuestionToken' &&
+                    this.peek() !== 'ExclamationToken' &&
                     this.peek() !== 'CommaToken' &&
                     this.peek() !== 'CloseBraceToken' &&
                     this.peek() !== 'OpenParenToken'
@@ -1729,6 +1750,9 @@ export class Parser {
                 if(
                     (this.kind() === 'GetKeyword' || this.kind() === 'SetKeyword') &&
                     this.peek() !== 'ColonToken' &&
+                    this.peek() !== 'EqualsToken' &&
+                    this.peek() !== 'QuestionToken' &&
+                    this.peek() !== 'ExclamationToken' &&
                     this.peek() !== 'CommaToken' &&
                     this.peek() !== 'OpenParenToken' &&
                     this.peek() !== 'CloseBraceToken'
@@ -1751,11 +1775,11 @@ export class Parser {
                     const assignment = this.kind() === 'ColonToken';
                     if(assignment) {
                         this.next();
-                        children.push(this.assignment());
+                        children.push(this.allowInAssignment());
                     }
                     else if(this.kind() === 'EqualsToken') {
                         children.push(this.token());
-                        children.push(this.assignment());
+                        children.push(this.allowInAssignment());
                     }
                     properties.push(
                         this.make(assignment ? 'PropertyAssignment' : 'ShorthandPropertyAssignment', start, children),
@@ -1896,7 +1920,7 @@ export class Parser {
         }
         if(operator === 'QuestionToken') {
             const question = this.token();
-            const yes = this.assignment(false);
+            const yes = this.allowInAssignment(false);
             if(this.kind() !== 'ColonToken') {
                 panic('conditional missing colon');
             }
@@ -1905,6 +1929,20 @@ export class Parser {
             left = this.make('ConditionalExpression', pos, [left, question, yes, colon, no]);
         }
         return left;
+    }
+    allowInAssignment(allowReturn = true): number {
+        const saved = this.disallowIn;
+        this.disallowIn = false;
+        const result = this.assignment(allowReturn);
+        this.disallowIn = saved;
+        return result;
+    }
+    allowInExpression(): number {
+        const saved = this.disallowIn;
+        this.disallowIn = false;
+        const result = this.expression();
+        this.disallowIn = saved;
+        return result;
     }
     expression(): number {
         const pos = this.scanner.fullStart;

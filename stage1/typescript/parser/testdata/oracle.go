@@ -7,6 +7,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/internal/ast"
 	"github.com/microsoft/TypeScript/tsc/internal/core"
 	"github.com/microsoft/TypeScript/tsc/internal/parser"
+	"github.com/microsoft/TypeScript/tsc/internal/scanner"
 	"os"
 	"strings"
 	"unicode/utf16"
@@ -39,7 +40,7 @@ func written(text string) string {
 }
 
 func kind(k ast.Kind) string { return strings.TrimPrefix(k.String(), "Kind") }
-func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool) int {
+func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool, source string) int {
 	text, operator, raw := "", "", ""
 	flags, list, trailing, multiline := ast.TokenFlags(0), -1, false, false
 	switch n.Kind {
@@ -53,6 +54,8 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool) int {
 		flags = n.TemplateLiteralLikeData().TemplateFlags
 		if n.Kind != ast.KindNoSubstitutionTemplateLiteral {
 			raw = n.RawText()
+		} else {
+			raw = source[scanner.SkipTrivia(source, n.Pos())+1 : n.End()-1]
 		}
 	case ast.KindPrefixUnaryExpression:
 		operator = kind(n.AsPrefixUnaryExpression().Operator)
@@ -88,7 +91,7 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool) int {
 		fmt.Fprintf(out, "%d %s %d %d %d %d %d %d %d\t%s\t%s\t%s\n", depth, kind(n.Kind), n.Pos(), n.End(), n.Flags&ast.NodeFlagsOptionalChain, flags, list, core.IfElse(trailing, 1, 0), core.IfElse(multiline, 1, 0), operator, written(text), written(raw))
 	}
 	count := 1
-	n.ForEachChild(func(child *ast.Node) bool { count += walk(out, child, depth+1, countOnly); return false })
+	n.ForEachChild(func(child *ast.Node) bool { count += walk(out, child, depth+1, countOnly, source); return false })
 	return count
 }
 func run(out *bufio.Writer, path string, countOnly bool) int {
@@ -98,8 +101,10 @@ func run(out *bufio.Writer, path string, countOnly bool) int {
 	}
 	f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/source.ts"}, string(text), core.ScriptKindTS)
 	if len(f.Diagnostics()) != 0 {
+		fmt.Fprintf(os.Stderr, "source: %q\n", text)
 		for _, d := range f.Diagnostics() {
 			fmt.Fprintf(os.Stderr, "parser diagnostic %s %d %d %d\n", path, d.Code(), d.Pos(), d.Len())
+
 		}
 		os.Exit(1)
 	}
@@ -110,7 +115,7 @@ func run(out *bufio.Writer, path string, countOnly bool) int {
 			if !countOnly {
 				fmt.Fprintln(out, "expression")
 			}
-			count += walk(out, n, 0, countOnly)
+			count += walk(out, n, 0, countOnly, string(text))
 			return false
 		}
 		n.ForEachChild(visit)

@@ -239,7 +239,8 @@ func TestExpressionsAgree(t *testing.T) {
 
 }
 
-func TestCompilerExpressionsAgree(t *testing.T) {
+func compilerManifest(t *testing.T) (string, int) {
+	t.Helper()
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
@@ -267,6 +268,11 @@ func TestCompilerExpressionsAgree(t *testing.T) {
 	if err := os.WriteFile(path, []byte(manifest.String()), 0644); err != nil {
 		t.Fatal(err)
 	}
+	return path, files
+}
+
+func TestCompilerExpressionsAgree(t *testing.T) {
+	path, files := compilerManifest(t)
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", path)
 	absolute, err := filepath.Abs(".")

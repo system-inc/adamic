@@ -2,7 +2,7 @@
 export function precedence(kind: string): number {
     switch(kind) {
         case 'QuestionQuestionToken':
-            return 4;
+            return 5;
         case 'BarBarToken':
             return 5;
         case 'AmpersandAmpersandToken':
