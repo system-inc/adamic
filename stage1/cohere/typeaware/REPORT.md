@@ -214,6 +214,9 @@ PASS, 15.942s; [node-oracle.log](validation/node-oracle.log).
 ```
 
 Zero findings, four of four Adamic-ready; [cohere.log](validation/cohere.log).
+Raw regression logs retain trailing tabs for empty canonical fields. The local
+validation attributes disable whitespace diagnostics on those data files only;
+source whitespace checks remain enabled.
 
 ## Limits
 
