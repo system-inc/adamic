@@ -57,11 +57,6 @@ type reusePlan struct {
 // planReuse makes the plan for a program.
 func planReuse(program *ir.Program) *reusePlan {
 	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}}
-	// Virtual targets may differ in consumption and escape. Keep counts until those
-	// summaries can be joined across every implementation.
-	if program.HasInheritance() {
-		return plan
-	}
 	comparators := map[int]bool{}
 	walkExpressions(program, func(expression ir.Expression) {
 		if sort, ok := expression.(ir.ArraySort); ok {
@@ -108,6 +103,29 @@ func planReuse(program *ir.Program) *reusePlan {
 				}
 			}
 		})
+	}
+	// Virtual implementations share an ownership convention. If one consumes a position,
+	// every implementation takes a count, including those that only read and then release it.
+	for changed := true; changed; {
+		changed = false
+		for signature, targets := range program.MethodTargets {
+			for position, parameter := range program.Functions[signature].Parameters {
+				consumed := plan.consumed[parameter]
+				for _, target := range targets {
+					consumed = consumed || plan.consumed[program.Functions[target].Parameters[position]]
+				}
+				if !consumed {
+					continue
+				}
+				for _, target := range append([]int{signature}, targets...) {
+					local := program.Functions[target].Parameters[position]
+					if !plan.consumed[local] {
+						plan.consumed[local] = true
+						changed = true
+					}
+				}
+			}
+		}
 	}
 	for _, each := range functions {
 		forEachInstruction(each.graph, func(instruction *flow.Instruction) {
@@ -246,8 +264,10 @@ func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instructio
 	walk(evaluated(instruction), func(expression ir.Expression) {
 		switch expression := expression.(type) {
 		case ir.Call:
-			if touches(program, expression.Function, read.Local, map[int]bool{}) {
-				reached = true
+			for _, target := range program.CallTargets(expression) {
+				if touches(program, target, read.Local, map[int]bool{}) {
+					reached = true
+				}
 			}
 		case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
 			reached = true
@@ -280,8 +300,10 @@ func touches(program *ir.Program, function int, global int, seen map[int]bool) b
 						found = true
 					}
 				case ir.Call:
-					if touches(program, expression.Function, global, seen) {
-						found = true
+					for _, target := range program.CallTargets(expression) {
+						if touches(program, target, global, seen) {
+							found = true
+						}
 					}
 				case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
 					found = true

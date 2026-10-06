@@ -498,8 +498,8 @@ func (e *emitter) statement(statement ir.Statement) {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = %s;", slot, retained(value))
-			e.line("adamic_release(%s);", old)
+			e.line("%s->reference = %s;", slot, e.kept(value))
+			e.line("if (%s != NULL) adamic_release(%s);", old, old)
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
@@ -659,6 +659,11 @@ func (e *emitter) returnStatement(statement ir.Return) {
 			e.regionLiteralDepth = e.depth + 1
 		}
 		value = e.handRegion(statement.Value, "region")
+		if read, ok := statement.Value.(ir.Read); ok {
+			if local, known := e.regions.classObjects[e.functionIndex]; known && local == read.Local {
+				e.regionValues[value] = true
+			}
+		}
 		e.regionLiteralDepth = 0
 	} else {
 		value = e.value(statement.Value)
@@ -1569,6 +1574,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	// The literal a fresh function returns is made in the region it was handed, and so are the
 	// fresh values its fields are (region.go).
 	region := e.regionLiteralDepth != 0 && e.regionLiteralDepth == e.depth
+	if literal.Class != 0 && e.inRegion && e.program.Classes[literal.Class-1].Constructor == e.functionIndex {
+		region = true
+	}
 	e.regionLiteralDepth = 0
 	values := make([]string, 0, len(literal.Fields))
 	for _, field := range literal.Fields {
@@ -1932,7 +1940,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 			continue
 		}
 		value := ""
-		if e.statementRegion != "" && !e.regions.escapes[call.Function][index] {
+		if e.statementRegion != "" && !e.regions.callEscapes(call, index) {
 			// A parameter that flows nowhere: a fresh value handed to it lives in the statement's region.
 			value = e.handRegion(argument, "&"+e.statementRegion)
 		} else {

@@ -35,32 +35,13 @@ type regionPlan struct {
 	escapes map[int]map[int]bool
 
 	// statements are the statements that get a region.
-	statements map[*ir.Statement]bool
+	statements   map[*ir.Statement]bool
+	program      *ir.Program
+	classObjects map[int]int
 }
 
 func planRegions(program *ir.Program) *regionPlan {
-	plan := &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}}
-	// Virtual targets may differ in consumption and escape. Keep counts until those
-	// summaries can be joined across every implementation.
-	if program.HasInheritance() {
-		return plan
-	}
-	// Fresh: start from every named function returning an object, and take away any that returns
-	// something else, until none changes.
-	for index, function := range program.Functions {
-		if !function.Closure && function.Returns == ir.Object {
-			plan.fresh[index] = true
-		}
-	}
-	for changed := true; changed; {
-		changed = false
-		for index := range plan.fresh {
-			if !plan.returnsFresh(program, index) {
-				delete(plan.fresh, index)
-				changed = true
-			}
-		}
-	}
+	plan := &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}}
 	// Escape: start from every object parameter of a named function flowing nowhere, and mark any
 	// that escapes, until none changes.
 	for index, function := range program.Functions {
@@ -78,6 +59,22 @@ func planRegions(program *ir.Program) *regionPlan {
 					plan.escapes[index][position] = true
 					changed = true
 				}
+			}
+		}
+	}
+	// Fresh: start from every named function returning an object, and take away any that returns
+	// something else, until none changes.
+	for index, function := range program.Functions {
+		if !function.Closure && function.Returns == ir.Object {
+			plan.fresh[index] = true
+		}
+	}
+	for changed := true; changed; {
+		changed = false
+		for index := range plan.fresh {
+			if !plan.returnsFresh(program, index) {
+				delete(plan.fresh, index)
+				changed = true
 			}
 		}
 	}
@@ -102,6 +99,38 @@ func planRegions(program *ir.Program) *regionPlan {
 
 // returnsFresh reports whether every value a function returns is fresh, as the plan stands.
 func (plan *regionPlan) returnsFresh(program *ir.Program, function int) bool {
+	// Class allocators return their declared object after initialization. Its identity and
+	// fields stay in that allocation; it may use a region only if no other path exposes it.
+	for _, class := range program.Classes {
+		if class.Constructor != function {
+			continue
+		}
+		body := program.Functions[function].Body
+		if len(body) < 2 {
+			return false
+		}
+		declaration, ok := body[0].(ir.Declare)
+		if !ok {
+			return false
+		}
+		literal, ok := declaration.Value.(ir.ObjectLiteral)
+		if !ok || literal.Class == 0 {
+			return false
+		}
+		returned, ok := body[len(body)-1].(ir.Return)
+		if !ok {
+			return false
+		}
+		read, ok := returned.Value.(ir.Read)
+		if !ok || read.Local != declaration.Local {
+			return false
+		}
+		if plan.escaping(body[1:len(body)-1], declaration.Local) {
+			return false
+		}
+		plan.classObjects[function] = declaration.Local
+		return true
+	}
 	fresh := true
 	var statements func([]ir.Statement)
 	statements = func(list []ir.Statement) {
@@ -125,7 +154,7 @@ func (plan *regionPlan) freshValue(value ir.Expression) bool {
 	case ir.Undefined:
 		return true
 	case ir.Call:
-		return plan.fresh[value.Function]
+		return value.Virtual == 0 && plan.fresh[value.Function]
 	}
 	return false
 }
@@ -159,7 +188,7 @@ func (plan *regionPlan) escaping(body []ir.Statement, parameter int) bool {
 			return derived(expression.Value)
 		case ir.Call:
 			for position, argument := range expression.Arguments {
-				if derived(argument) && plan.escapes[expression.Function][position] {
+				if derived(argument) && plan.callEscapes(expression, position) {
 					escaped = true
 				}
 			}
@@ -220,7 +249,7 @@ func (plan *regionPlan) feedsRegion(statement ir.Statement) bool {
 	walk(statement, func(expression ir.Expression) {
 		if call, ok := expression.(ir.Call); ok {
 			for position, argument := range call.Arguments {
-				if inner, isCall := argument.(ir.Call); isCall && plan.fresh[inner.Function] && !plan.escapes[call.Function][position] {
+				if inner, isCall := argument.(ir.Call); isCall && inner.Virtual == 0 && plan.fresh[inner.Function] && !plan.callEscapes(call, position) {
 					feeds = true
 				}
 			}
@@ -279,7 +308,7 @@ func (e *emitter) regionFunctionName(function int) string {
 // regionFor is the region a call to a function that takes one is handed: the one its parent said
 // (a statement's region, or the function's own), or none, and then it's the heap version's call.
 func (e *emitter) regionFor(call ir.Call) string {
-	if !e.regions.fresh[call.Function] || e.depth != e.regionCallDepth {
+	if call.Virtual != 0 || !e.regions.fresh[call.Function] || e.depth != e.regionCallDepth {
 		return ""
 	}
 	return e.regionCallArgument
@@ -301,7 +330,7 @@ func (e *emitter) regionValue(value string) string {
 // takes one; anything else is evaluated as it would be.
 func (e *emitter) handRegion(expression ir.Expression, region string) string {
 	call, isCall := expression.(ir.Call)
-	if region == "" || !isCall || !e.regions.fresh[call.Function] {
+	if region == "" || !isCall || call.Virtual != 0 || !e.regions.fresh[call.Function] {
 		return e.value(expression)
 	}
 	outerDepth, outerArgument := e.regionCallDepth, e.regionCallArgument
@@ -324,4 +353,19 @@ func (e *emitter) regionStatement(at *ir.Statement) bool {
 	e.statementRegion = outer
 	e.line("adamic_region_end(&%s);", region)
 	return true
+}
+
+// Every possible implementation must finish with the argument before its region can end.
+func (plan *regionPlan) callEscapes(call ir.Call, position int) bool {
+	targets := plan.program.CallTargets(call)
+	if len(targets) == 0 {
+		return true
+	}
+	for _, target := range targets {
+		escapes, known := plan.escapes[target][position]
+		if !known || escapes {
+			return true
+		}
+	}
+	return false
 }
