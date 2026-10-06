@@ -11,8 +11,9 @@ package main
 //     so a function cannot carry properties. rewriteHarnessCalls renames the calls in the test body.
 //     Both Node and the native binary run that one rewritten program.
 //   - SameValue covers string, number (NaN equals NaN, and -0 is not 0), boolean and undefined.
-//     Anything else is not a member of that union, so the checker refuses the call instead of the
-//     runner comparing it wrong.
+//     rewriteHarnessCalls uses strict equality when null, unshadowed undefined, or the
+//     intrinsic Date.prototype makes SameValue equivalent to strict equality. Other operands
+//     outside the primitive union are still checked and refused rather than compared wrong.
 //   - assert.throws is assertThrows(name, fn). It checks that an Error was caught, not that the
 //     constructor is the one named: stage 0 only builds `new Error`, and only `instanceof Error`
 //     on a catch lowers. The name is what the failure says when nothing was thrown. This is weaker
@@ -62,6 +63,13 @@ function assert(mustBeTrue: boolean, message?: string): void {
 		return;
 	}
 	throw new Error(message ?? "Expected true but got a non-true value");
+}
+
+function assertIdentity(mustBeTrue: boolean, fallback: string, message?: string): void {
+	if (mustBeTrue) {
+		return;
+	}
+	throw new Error(message ?? fallback);
 }
 
 function assertSameValue(actual: string | number | boolean | undefined, expected: string | number | boolean | undefined, message?: string): void {

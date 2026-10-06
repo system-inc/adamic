@@ -53,6 +53,11 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 	if value.Type() == ir.String && l.includesNull(l.checker.GetTypeAtLocation(node)) {
 		return ir.DateCall{Method: "nullableNumber", Receiver: value, Returns: ir.Number}, nil
 	}
+	// Date is a proven intrinsic: its numeric valueOf reads the internal slot.
+	// Generic objects still require user-defined coercion and remain NotYet.
+	if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Date") {
+		return ir.DateCall{Method: "valueOf", Receiver: value, Returns: ir.Number}, nil
+	}
 	switch value.Type() {
 	case ir.Number:
 		return value, nil

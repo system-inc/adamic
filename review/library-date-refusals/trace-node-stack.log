@@ -1,0 +1,13 @@
+RangeError: Invalid array length
+    at Array.push (<anonymous>)
+    at adamicLeave (file:///tmp/adamic-gate/TestDateSweepDiagnostic4291520732/001/program.mjs:43:14)
+    at function_3_visit (file:///tmp/adamic-gate/TestDateSweepDiagnostic4291520732/001/program.mjs:250:3)
+    at file:///tmp/adamic-gate/TestDateSweepDiagnostic4291520732/001/program.mjs:295:13
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async file:///workspace/adamic/oracle/node.mjs:36:1
+adamic: panic: RangeError: Invalid array length
+RangeError: Invalid array length
+    at process.<anonymous> (file:///tmp/adamic-gate/TestDateSweepDiagnostic4291520732/001/program.mjs:66:135)
+    at process.emit (node:events:509:28)
+Node trace process exit=70

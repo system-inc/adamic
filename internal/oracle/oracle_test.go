@@ -37,6 +37,8 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/library_date_metadata.a", true, false},
+	{"internal/oracle/testdata/library_date_number.a", true, false},
 	{"internal/oracle/testdata/library_date_json.a", true, false},
 	{"internal/oracle/testdata/library_date_dynamic_parse.a", true, false},
 	{"internal/oracle/testdata/library_date_format.a", true, false},
@@ -48,6 +50,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/library_date_parse.a", true, false},
 	{"internal/oracle/testdata/library_date_invalid_iso.a", true, false},
 	{"internal/oracle/testdata/library_date_days.a", true, false},
+	{"internal/oracle/testdata/date_sweeps/library_date_days.a", true, false},
 	{"internal/oracle/testdata/library_date_calendar.a", true, false},
 	{"internal/oracle/testdata/library_date_limits.a", true, false},
 	{"internal/oracle/testdata/library_date_past.a", true, false},
