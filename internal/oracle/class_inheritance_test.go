@@ -6,6 +6,9 @@ func init() {
 	for _, path := range []string{
 		"internal/oracle/testdata/class_features_private.a",
 		"internal/oracle/testdata/class_features_accessors.a",
+		"internal/oracle/testdata/class_features_twice.a",
+		"internal/oracle/testdata/class_features_retained.a",
+		"internal/oracle/testdata/class_features_distinct.a",
 		"internal/oracle/testdata/class_inheritance.a",
 		"internal/oracle/testdata/class_inheritance_exceptions.a",
 		"internal/oracle/testdata/class_inheritance_order.a",
