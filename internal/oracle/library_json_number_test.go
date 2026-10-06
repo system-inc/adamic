@@ -44,4 +44,9 @@ func init() {
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/library_json_gap_nul.a", true, false})
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/library_json_shapes.a", true, false})
 }

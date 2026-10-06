@@ -29,3 +29,19 @@ The uncached full oracle comparison for this fixture passed (8.695s).
 Removing only the cutoff compiled and exited 0 with empty stderr, leaked
 nothing, and failed only the Node stdout comparison: native length 27,
 Node length 17 (8.849s). The mutant was restored.
+
+## 3. Runtime shapes
+
+Exact probe D is `library_json_shapes.a`, registered with the shared oracle and
+counts gate. The uncached Node/native/backend/release/leak comparison passed
+(0.444s). All three requested runtime-line mutants compiled and were caught:
+
+| Mutant | Check that failed |
+|---|---|
+| Remove the replacer NULL guard | UBSan: member access within NULL array in keys |
+| Remove arrays from scalar's NULL-to-undefined list | UBSan: member access within NULL array in write_value |
+| Read a union closure as a Map | Node stdout comparison; both executions exit 0 with empty stderr |
+
+The script `run-stringify-mutants.py` runs them independently, records complete
+logs under `/tmp/library-json-number-shapes-mutants/`, and restores the runtime
+in a finally block. No mutated source is committed.
