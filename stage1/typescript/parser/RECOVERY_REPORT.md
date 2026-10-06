@@ -394,3 +394,12 @@ recovery path. Focused Go/Node/native comparison passes in 23.585s and cohere
 passes. The same deterministic 22,497-input corpus now runs with four workers,
 unique position-prefixed artifacts, and unchanged independent two-second
 process deadlines. Failures stop new work and preserve all failing inputs.
+
+## Continued recovery: standalone arrows and malformed property names
+
+The builder.ts continuation retains failures at inputs 902 and 904. The former
+exposes Go's property-assignment recovery when the property name is missing,
+and its 1443 diagnostic for a tagged template without a statement separator.
+The latter exposes standalone => recovery into an arrow with a missing parameter
+list. The port now preserves these exact shapes and diagnostic ranges. Five
+focused additions pass with all preceding probes in 25.038s; cohere passes.

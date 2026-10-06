@@ -1249,7 +1249,7 @@ export class Parser {
         for(const parameter of this.typeParameters()) {
             children.push(parameter);
         }
-        if(this.kind() === 'OpenParenToken') {
+        if(this.kind() === 'OpenParenToken' || this.kind() === 'EqualsGreaterThanToken') {
             for(const parameter of this.parameters()) {
                 children.push(parameter);
             }
@@ -1758,6 +1758,7 @@ export class Parser {
         if(generator) {
             children.push(this.token());
         }
+        const identifier = this.bindingIdentifier();
         children.push(this.propertyName());
         if(this.kind() === 'QuestionToken' || this.kind() === 'ExclamationToken') {
             children.push(this.token());
@@ -1766,9 +1767,9 @@ export class Parser {
             return this.methodBody(start, children, methodKind, async, generator);
         }
 
-        const assignment = this.kind() === 'ColonToken';
+        const assignment = !identifier || this.kind() === 'ColonToken';
         if(assignment) {
-            this.next();
+            this.expect('ColonToken');
             children.push(this.allowInAssignment());
         }
         else if(this.kind() === 'EqualsToken') {

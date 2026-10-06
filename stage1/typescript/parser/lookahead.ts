@@ -97,6 +97,9 @@ function optionalParameterAhead(scanner: Scanner): boolean {
 }
 
 export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
+    if(kind(scanner) === 'EqualsGreaterThanToken') {
+        return true;
+    }
     const state = new Speculation(scanner);
     let result = false;
     if(kind(scanner) === 'AsyncKeyword') {

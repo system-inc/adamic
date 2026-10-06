@@ -1,6 +1,6 @@
 // Statement and declaration descent follows typescript-go's parser.
 import { panic } from 'adamic';
-import type { Scanner } from '../scanner/scanner.ts';
+import { Scanner } from '../scanner/scanner.ts';
 import type { ParseNode } from './nodes.ts';
 import { reservedKinds } from './grammar.ts';
 import { keywordSuggestion } from './spelling.ts';
@@ -103,6 +103,25 @@ export class Statements {
     }
     expressionSemicolon(expression: number, tokenStart: number): void {
         const node = this.parser.node(expression);
+        if(
+            node.kind === 'TaggedTemplateExpression' &&
+            !['SemicolonToken', 'CloseBraceToken', 'EndOfFile'].includes(this.parser.kind()) &&
+            (this.parser.scanner.flags & 1) === 0
+        ) {
+            const template = this.parser.node(
+                node.children[node.children.length - 1] ?? panic('missing tagged template'),
+            );
+            const scanner = new Scanner(this.parser.scanner.text);
+            scanner.pos = template.pos;
+            scanner.scan();
+            this.parser.errorAt(
+                1443,
+                scanner.start,
+                template.end,
+                `Module declaration names may only use ' or " quoted strings.`,
+            );
+            return;
+        }
         if(
             node.kind === 'Identifier' &&
             node.text !== '' &&
