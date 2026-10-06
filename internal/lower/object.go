@@ -217,7 +217,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	access := node.AsPropertyAccessExpression()
-	name := node.Name().Text()
+	name := l.fieldName(node.Name())
 	if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		// The rest of a chain after a ?., which short-circuits with it.
 		return nil, l.notYet(node, "an optional chain longer than one step")

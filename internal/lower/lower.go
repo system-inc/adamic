@@ -61,6 +61,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err != nil {
 		return nil, err
 	}
+	lowering.noteInheritance(modules)
 	for _, module := range modules {
 		if err := lowering.refuse(module); err != nil {
 			return nil, err
@@ -82,6 +83,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, lowering.unlowerable
 	}
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
+	lowering.finishClassCalls()
 	if err := lowering.exceptions(); err != nil {
 		return nil, err
 	}
@@ -120,8 +122,9 @@ type lowering struct {
 
 	// classes maps each module class's symbol to its declaration, and instances each instantiation
 	// already lowered (class.go).
-	classes   map[*ast.Symbol]*ast.Node
-	instances map[string]*instance
+	classes          map[*ast.Symbol]*ast.Node
+	instances        map[string]*instance
+	derivedAncestors map[*ast.Symbol]bool
 
 	// instance is the class instantiation being lowered, if any.
 	instance *instance
@@ -428,7 +431,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// needs two words.
 		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
 	}
-	if declaration.Body() == nil {
+	if declaration.Body() == nil && !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAbstract) {
 		return l.notYet(declaration, "a function without a body")
 	}
 	l.result.Functions[index] = function
@@ -605,6 +608,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	expression = ast.SkipParentheses(expression)
 	switch expression.Kind {
 	case ast.KindCallExpression:
+		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
+			return l.superStatement(expression)
+		}
 		if err := l.optionalCall(expression); err != nil {
 			return nil, err
 		}

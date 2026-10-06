@@ -57,6 +57,11 @@ type reusePlan struct {
 // planReuse makes the plan for a program.
 func planReuse(program *ir.Program) *reusePlan {
 	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}}
+	// Virtual targets may differ in consumption and escape. Keep counts until those
+	// summaries can be joined across every implementation.
+	if program.HasInheritance() {
+		return plan
+	}
 	comparators := map[int]bool{}
 	walkExpressions(program, func(expression ir.Expression) {
 		if sort, ok := expression.(ir.ArraySort); ok {
@@ -501,6 +506,8 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 			e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 		}
 	}
+	// A spread produces a plain object, even when its source allocation is reused.
+	e.line("%s->class = NULL;", object)
 	return object, true
 }
 

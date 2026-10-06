@@ -93,6 +93,7 @@ func C(program *ir.Program) string {
 	if len(emitter.declarations) > 0 {
 		builder.WriteString("\n")
 	}
+	emitter.classDeclarations(&builder)
 	builder.WriteString(bodies.String())
 	return builder.String()
 }
@@ -462,8 +463,8 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		if call, isCall := statement.Value.(ir.Call); isCall && call.Returns == 0 {
-			e.line("%s(%s);", e.functionName(call.Function), strings.Join(e.arguments(call), ", "))
-			if e.program.Functions[call.Function].MayThrow {
+			e.line("%s;", e.callCode(call, e.arguments(call)))
+			if e.program.CallMayThrow(call) {
 				e.checkThrown()
 			}
 		} else {
@@ -793,7 +794,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Call:
 		region := e.regionFor(expression)
 		arguments := e.arguments(expression)
-		call := fmt.Sprintf("%s(%s)", e.functionName(expression.Function), strings.Join(arguments, ", "))
+		call := e.callCode(expression, arguments)
 		var result string
 		switch {
 		case region != "":
@@ -805,11 +806,18 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			result = e.temporary()
 			e.line("%s %s = %s;", cType(expression.Returns), result, call)
 		}
-		if e.program.Functions[expression.Function].MayThrow {
+		if e.program.CallMayThrow(expression) {
 			// A throw left the call: the result is the zero value it returned, owned like any.
 			e.checkThrown()
 		}
 		return result
+	case ir.InstanceOf:
+		value := e.value(expression.Value)
+		if !expression.Value.Type().IsReference() {
+			e.line("(void)%s;", value)
+			return e.snapshot(ir.Boolean, "false")
+		}
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_instanceof(%s, &adamic_class_%d)", value, expression.Class))
 	case ir.NumberToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", e.value(expression.Value)))
 	case ir.BooleanToString:
@@ -1575,6 +1583,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.shape(literal.Fields)))
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.shape(literal.Fields)))
+	}
+	if literal.Class != 0 {
+		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
 	}
 	for index, field := range literal.Fields {
 		value := values[index]

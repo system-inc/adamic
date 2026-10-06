@@ -1,0 +1,18 @@
+package oracle
+
+// The shared oracle runs this fixture against source Node, generated JavaScript, native release,
+// ASan/UBSan and the leak check. Register separately to avoid changing oracle_test.go's fixture list.
+func init() {
+	for _, path := range []string{
+		"internal/oracle/testdata/class_inheritance.a",
+		"internal/oracle/testdata/class_inheritance_exceptions.a",
+		"internal/oracle/testdata/class_inheritance_order.a",
+		"internal/oracle/testdata/class_identity.a",
+	} {
+		fixtures = append(fixtures, struct {
+			path    string
+			lowers  bool
+			checked bool
+		}{path, true, false})
+	}
+}

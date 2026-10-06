@@ -40,6 +40,11 @@ type regionPlan struct {
 
 func planRegions(program *ir.Program) *regionPlan {
 	plan := &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}}
+	// Virtual targets may differ in consumption and escape. Keep counts until those
+	// summaries can be joined across every implementation.
+	if program.HasInheritance() {
+		return plan
+	}
 	// Fresh: start from every named function returning an object, and take away any that returns
 	// something else, until none changes.
 	for index, function := range program.Functions {

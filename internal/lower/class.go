@@ -8,13 +8,18 @@ import (
 
 // instance is one instantiation of a class, lowered: its constructor, and its methods by name.
 //
-// Classes in 0.1 are nominal, invariant and without inheritance (docs/0.1.md), so every method call
-// resolves at compile time: a method is a function whose first parameter is this. A generic class is
-// lowered once per instantiation, its type parameters standing for what that instantiation made them,
-// so Stack<string> and Stack<number> are two classes in C.
+// Each instantiation has one nominal identity and one prefix layout. A virtual call keeps its
+// static signature while selecting the implementation from the object's dynamic table.
 type instance struct {
-	constructor int
-	methods     map[string]int
+	constructor    int
+	methods        map[string]int
+	slots          map[string]int
+	class          int
+	base           *instance
+	initializer    int
+	beforeSuper    int
+	constructing   bool
+	hasDescendants bool
 
 	// thisLocals are the this of its constructor and methods, which every instantiation sharing it
 	// (Box<Tree> and Box<Listener> are both objects) has as its own type, for the cycle finder.
@@ -36,12 +41,6 @@ type template struct {
 func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, where *ast.Node) (*instance, error) {
 	// Box<T> inside Maker<Node> is a Box<Node>: what it is, for the cycle finder.
 	classType = l.concrete(classType)
-	clauses := declaration.AsClassDeclaration().HeritageClauses
-	for _, clause := range nodesOf(clauses) {
-		if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
-			return nil, &Refused{Where: l.program.Where(clause), What: "class inheritance (extends)", Fix: "implement an interface instead; 0.1's classes don't inherit"}
-		}
-	}
 	arguments := []ir.Type{}
 	substitution := map[*checker.Type]ir.Type{}
 	parameters := declaration.TypeParameters()
@@ -86,13 +85,38 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		return existing, nil
 	}
 
+	base, err := l.baseInstance(declaration, classType)
+	if err != nil {
+		return nil, err
+	}
+	if err := l.checkOverrides(declaration, classType); err != nil {
+		return nil, err
+	}
+
 	// Register every function of the instantiation first, so methods can find each other.
 	name := declaration.Name().Text()
 	for _, argument := range arguments {
 		name += "_" + typeName(argument)
 	}
-	lowered := &instance{constructor: len(l.result.Functions), methods: map[string]int{}}
+	lowered := &instance{constructor: len(l.result.Functions), methods: map[string]int{}, slots: map[string]int{}, initializer: -1}
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_new", Returns: ir.Object})
+	lowered.hasDescendants = l.derivedAncestors[l.symbol(declaration.Name())]
+	lowered.base = base
+	lowered.class = len(l.result.Classes) + 1
+	metadata := ir.Class{Name: name, Constructor: lowered.constructor}
+	if base != nil {
+		metadata.Base = base.class
+		metadata.Fields = append(metadata.Fields, l.result.Classes[base.class-1].Fields...)
+		metadata.Methods = append(metadata.Methods, l.result.Classes[base.class-1].Methods...)
+		for method, function := range base.methods {
+			lowered.methods[method] = function
+		}
+		for method, slot := range base.slots {
+			lowered.slots[method] = slot
+		}
+	}
+	metadata.OwnStart = len(metadata.Fields)
+	l.result.Classes = append(l.result.Classes, metadata)
 	members := declaration.Members()
 	for _, member := range members {
 		switch member.Kind {
@@ -100,7 +124,19 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 			if !ast.IsIdentifier(member.Name()) {
 				return nil, l.notYet(member, "a method with a computed name")
 			}
-			lowered.methods[member.Name().Text()] = len(l.result.Functions)
+			if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+				return nil, l.notYet(member, "a static class method")
+			}
+			methodName := member.Name().Text()
+			lowered.methods[methodName] = len(l.result.Functions)
+			meta := &l.result.Classes[lowered.class-1]
+			slot, exists := lowered.slots[methodName]
+			if !exists {
+				slot = len(meta.Methods)
+				lowered.slots[methodName] = slot
+				meta.Methods = append(meta.Methods, -1)
+			}
+			meta.Methods[slot] = len(l.result.Functions)
 			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + member.Name().Text()})
 		case ast.KindPropertyDeclaration, ast.KindConstructor:
 		default:
@@ -146,6 +182,9 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 			continue
 		}
 		method := lowered.methods[member.Name().Text()]
+		if member.Body() == nil {
+			continue
+		}
 		if err := l.lowerFunction(method, member, -1); err != nil {
 			return nil, err
 		}
@@ -165,62 +204,7 @@ func (l *lowering) thisLocal(owner int) int {
 // initializer (or its type's zero until the constructor body assigns it, which the checker requires),
 // then the constructor's body, which returns the object.
 func (l *lowering) constructor(index int, declaration *ast.Node) error {
-	this := l.thisLocal(index)
-	fields := []ir.Field{}
-	for _, member := range declaration.Members() {
-		if member.Kind != ast.KindPropertyDeclaration {
-			continue
-		}
-		property := member.AsPropertyDeclaration()
-		if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier {
-			return l.notYet(member, "a field with a computed name")
-		}
-		if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
-			return l.notYet(member, "a static field")
-		}
-		of, err := l.typeOf(member.Name())
-		if err != nil {
-			return err
-		}
-		if slotless(of) {
-			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
-		}
-		var value ir.Expression
-		if property.Initializer != nil {
-			if containsThis(property.Initializer) {
-				return l.notYet(property.Initializer, "a field initializer that reads this")
-			}
-			if value, err = l.expression(property.Initializer); err != nil {
-				return err
-			}
-			value = fit(value, of)
-		} else {
-			value = zeroValue(of)
-		}
-		fields = append(fields, ir.Field{Name: member.Name().Text(), Value: value})
-	}
-	function := l.result.Functions[index]
-	function.Body = []ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{Fields: fields}}}
-	l.result.Functions[index] = function
-	var body *ast.Node
-	for _, member := range declaration.Members() {
-		if member.Kind == ast.KindConstructor {
-			body = member
-		}
-	}
-	if body != nil {
-		outerUnsetUntil := l.unsetUntil
-		l.unsetUntil = lastFieldAssignment(declaration, body)
-		err := l.lowerFunction(index, body, this)
-		l.unsetUntil = outerUnsetUntil
-		if err != nil {
-			return err
-		}
-	}
-	function = l.result.Functions[index]
-	function.Body = append(function.Body, ir.Return{Value: ir.Read{Local: this, Of: ir.Object}})
-	l.result.Functions[index] = function
-	return nil
+	return l.inheritanceConstructor(index, declaration)
 }
 
 // zeroValue is a field's value before its constructor assigns it.
@@ -256,6 +240,9 @@ func containsThis(node *ast.Node) bool {
 
 // construct lowers new Class(...).
 func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expression, error) {
+	if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAbstract) {
+		return nil, &Refused{Where: l.program.Where(node), What: "new of an abstract class", Fix: "construct a concrete subclass that implements its abstract methods"}
+	}
 	lowered, err := l.instantiate(declaration, l.checker.GetTypeAtLocation(node), node)
 	if err != nil {
 		return nil, err
@@ -276,6 +263,9 @@ func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expressi
 // callOrMethod lowers a call to one of the module's functions, or to a method of one of its classes.
 func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if callee.Kind == ast.KindSuperKeyword {
+		return l.superCall(node)
+	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return l.call(node)
 	}
@@ -289,6 +279,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a method of a class stage 0 doesn't have")
 	}
 	receiver := callee.AsPropertyAccessExpression().Expression
+	if receiverType := l.checker.GetTypeAtLocation(receiver); receiverType.Flags()&checker.TypeFlagsUnion != 0 && l.withoutUndefined(receiverType) == nil {
+		return nil, l.notYet(receiver, "a method call through a union of class types; narrow with instanceof first")
+	}
 	// this.method() is the instantiation being lowered: this is the polymorphic this type there,
 	// which carries no type arguments of its own.
 	lowered := l.instance
@@ -298,7 +291,19 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 	}
-	object, err := l.expression(receiver)
+	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
+		if l.instance == nil || l.instance.base == nil {
+			return nil, l.notYet(node, "super outside a derived class")
+		}
+		lowered = l.instance.base
+	}
+	var object ir.Expression
+	var err error
+	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
+		object = ir.Read{Local: l.this, Of: ir.Object}
+	} else {
+		object, err = l.expression(receiver)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -311,7 +316,11 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		arguments = append(arguments, value)
 	}
 	function := lowered.methods[callee.Name().Text()]
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
+	virtual := lowered.slots[callee.Name().Text()] + 1
+	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
+		virtual = 0
+	}
+	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns, Virtual: virtual}, nil
 }
 
 // setProperty lowers object.name = value, as a statement.
@@ -338,7 +347,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: target.Name().Text(), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
@@ -370,7 +379,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 			return nil, err
 		}
 	}
-	name := target.Name().Text()
+	name := l.fieldName(target.Name())
 	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
 	if operator == ast.KindPlusToken && valueNode != nil {
 		current, value = l.spelled(target, current), l.spelled(valueNode, value)
@@ -457,6 +466,17 @@ func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
 // object of a field it reads or writes: a method it calls, or a function it's handed to, could read a
 // field not set yet.
 func (l *lowering) useOfThis(node *ast.Node) error {
+	if l.instance != nil && l.instance.beforeSuper != 0 && node.Pos() < l.instance.beforeSuper {
+		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super(...) before using this"}
+	}
+	if l.instance != nil && l.instance.constructing && l.instance.hasDescendants {
+		if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression {
+			if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && field.Flags&ast.SymbolFlagsProperty != 0 {
+				return nil
+			}
+		}
+		return &Refused{Where: l.program.Where(node), What: "this escaping a base constructor before derived fields are initialized", Fix: "use this only to read or write initialized base fields; call methods and publish the object after construction"}
+	}
 	if l.unsetUntil == 0 || node.Pos() >= l.unsetUntil {
 		return nil
 	}

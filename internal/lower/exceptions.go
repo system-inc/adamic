@@ -151,7 +151,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 		case ir.Throw:
 			found = true
 		case ir.Call:
-			if l.result.Functions[node.Function].MayThrow {
+			if l.result.CallMayThrow(node) {
 				found = true
 			}
 		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
@@ -178,9 +178,14 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 	walk(statements, func(node any) bool {
 		switch node := node.(type) {
 		case ir.Call:
-			if !visited[node.Function] {
-				visited[node.Function] = true
-				failing = l.libraryFailure(l.result.Functions[node.Function].Body, visited)
+			for _, target := range l.result.CallTargets(node) {
+				if !visited[target] {
+					visited[target] = true
+					failing = l.libraryFailure(l.result.Functions[target].Body, visited)
+					if failing != "" {
+						break
+					}
+				}
 			}
 		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
 			callsClosures = true
