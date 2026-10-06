@@ -53,12 +53,13 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) {
-			// A nullable match result uses NULL. A type also holding undefined needs a tag.
+			// Nullable arrays, including match results passed to generic helpers,
+			// use NULL. A type also holding undefined needs a distinct tag.
 			if l.includesUndefined(proven) {
 				return 0, false
 			}
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull == 0 && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray") {
+				if member.Flags()&checker.TypeFlagsNull == 0 && !l.checker.IsArrayType(member) && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
 					return 0, false
 				}
 			}
