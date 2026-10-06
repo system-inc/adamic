@@ -1,11 +1,14 @@
 # Benchmarks
 
-Six fair programs, the same source run three ways: Adamic's native binary (`adamic build`, clang `-O2`, no sanitizers), Node, and Bun when it's installed. Each program makes its own input from a fixed seed and prints a checksum, so there's no I/O in the timing and every runtime has to give the same answer.
+Seven fair programs, the same source run three ways: Adamic's native binary (`adamic build`, clang `-O2`, no sanitizers), Node, and Bun when it's installed. Each program makes its own input from a fixed seed and prints a checksum, so there's no I/O in the timing and every runtime has to give the same answer.
 
 ```
 go run ./bench                      # every program, 5 interleaved rounds, best of 5
 go run ./bench -rounds 9 -only trees,nbody -timeout 300s
+go run ./bench -only parallel_files -threads 1,2,4,8,16 -rounds 5
 ```
+
+`-threads` interleaves native thread settings too; Node and Bun use the independent sequential `parallelMap` shim. Parallel counts use one thread so peak liveness is reproducible.
 
 The runs are interleaved round by round, so a machine that slows down slows all three alike, and the best round is reported. Time is wall clock; memory is the process's peak resident set. The counted table comes from `adamic build --count`, run once, untimed: it's what explains a native time. The machine, the versions and the load before and after print with the numbers, and numbers without them aren't worth quoting.
 
@@ -16,6 +19,7 @@ The runs are interleaved round by round, so a machine that slows down slows all 
 | `tokenizer.ts` | a lexer walking a 3.5-million-code-unit text with `charCodeAt`, some of it non-ASCII |
 | `word_count.ts` | `split`, then a `Map<string, number>` over a million words, then a sort |
 | `sort.ts` | a million numbers sorted with a comparator, random and then nearly sorted |
+| `parallel_files.ts` | 4,096 deterministic in-memory files, pure tokenization and summaries in parallel, merged in order |
 | `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
 
 ## Noisy cloud numbers, October 5, 2026

@@ -20,6 +20,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+	paths = append(paths, filepath.Join(repository, "bench/parallel_files.ts"))
 	for _, path := range paths {
 		relative, err := filepath.Rel(repository, path)
 		if err != nil {
@@ -130,4 +131,53 @@ func executeParallel(t *testing.T, threads string, leaks bool, name string, argu
 	result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 	rememberRun(t, result)
 	return result
+}
+
+// Reordering still compiles, finishes and leaks nothing. Only Node's ordered output catches it.
+func TestParallelOracleCatchesResultOrder(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/numbers.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := native.C(program)
+	if !strings.Contains(source, "adamic_parallel_map(") {
+		t.Fatal("mutant changed no call")
+	}
+	source = strings.ReplaceAll(source, "adamic_parallel_map(", "oracle_reordered_map(")
+	source = `#include "adamic.h"
+adamic_array *oracle_reordered_map(adamic_array *items, adamic_closure *work, bool references) {
+ adamic_array *results = adamic_parallel_map(items, work, references);
+ if (results != NULL) { adamic_array_reverse(results); }
+ return results;
+}
+` + source
+	binary := filepath.Join(t.TempDir(), "mutant")
+	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	for _, threads := range []string{"1", ""} {
+		observed := executeParallel(t, threads, runtime.GOOS == "linux", binary)
+		if observed.exitCode != 0 || len(observed.stderr) != 0 {
+			t.Fatalf("mutant must finish sanitizer and leak clean: %+v", observed)
+		}
+		if difference := disagreement(onNode(t, path), observed); difference != "stdout differs" {
+			t.Fatalf("mutant caught by %q, want only stdout differs", difference)
+		}
+	}
+	if runtime.GOOS == "darwin" {
+		mallocBinary := filepath.Join(t.TempDir(), "malloc-mutant")
+		if err := native.Build(source, mallocBinary, native.Options{Malloc: true}); err != nil {
+			t.Fatal(err)
+		}
+		report := executeParallel(t, "1", false, "leaks", "--atExit", "--", mallocBinary)
+		if report.exitCode != 0 {
+			t.Fatalf("mutant leaks: %s %s", report.stdout, report.stderr)
+		}
+	}
+	t.Log("result-order mutant compiled, finished sanitizer and leak clean; Node caught stdout differs at one thread and default")
 }

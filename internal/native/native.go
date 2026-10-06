@@ -47,7 +47,7 @@ type Options struct {
 	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
 	Sanitize bool
 
-	// ThreadSanitize is a separate Linux race-check build, never combined with ASan.
+	// ThreadSanitize is a separate race-check build, never combined with ASan.
 	ThreadSanitize bool
 
 	// Count makes the binary count its allocations, frees, retains and releases, and write them to
