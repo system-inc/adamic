@@ -709,4 +709,8 @@ _Noreturn void adamic_stack_overflow(void);
 // bug, and it says so rather than returning garbage.
 _Noreturn void adamic_unreachable(void);
 
+// Fixed plain-object own enumerable string keys, in JavaScript order (library_language.c).
+adamic_array *adamic_object_keys(const adamic_object *object);
+void *adamic_library_identity(size_t index);
+
 #endif

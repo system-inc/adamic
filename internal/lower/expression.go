@@ -345,6 +345,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
 		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
 	case ast.KindIdentifier:
+		if value, known, err := l.libraryGlobalValue(node); known {
+			return value, err
+		}
 		local, isLocal := l.local(node)
 		if !isLocal && node.Text() == "undefined" {
 			return ir.Undefined{}, nil
@@ -434,7 +437,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindAsExpression:
 		return l.cast(node)
 	case ast.KindFunctionExpression:
-		return nil, l.notYet(node, "a function expression (an arrow function captures this as written)")
+		return l.functionExpression(node)
 	case ast.KindCallExpression:
 		if err := l.optionalCall(node); err != nil {
 			return nil, err

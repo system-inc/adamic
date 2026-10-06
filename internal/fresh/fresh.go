@@ -1000,6 +1000,9 @@ func (a *analysis) value(expression ir.Expression) value {
 	if expression == nil {
 		return value{}
 	}
+	if held, known := a.libraryLanguage(expression); known {
+		return held
+	}
 	switch expression := expression.(type) {
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined:
 		return value{}

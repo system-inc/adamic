@@ -216,6 +216,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if err := l.libraryPrototypeValue(node); err != nil {
+		return nil, err
+	}
 	access := node.AsPropertyAccessExpression()
 	name := node.Name().Text()
 	if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {

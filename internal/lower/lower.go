@@ -579,6 +579,8 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		return l.forStatement(node)
 	case ast.KindWhileStatement, ast.KindDoStatement:
 		return l.whileStatement(node)
+	case ast.KindForInStatement:
+		return l.forIn(node)
 	case ast.KindForOfStatement:
 		return l.forOf(node)
 	case ast.KindSwitchStatement:
