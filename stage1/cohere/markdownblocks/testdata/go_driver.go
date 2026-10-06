@@ -35,15 +35,19 @@ func main() {
 	encoder := json.NewEncoder(os.Stdout)
 	options := formatoptions.Default()
 	formatter := native.Formatter{Options: options}
+	offOnly := len(os.Args) > 2 && os.Args[2] == "off-only"
 	for scanner.Scan() {
 		var in input
 		if err := json.Unmarshal(scanner.Bytes(), &in); err != nil {
 			panic(err)
 		}
-		result := output{Name: in.Name, Embeds: markdown.EmbeddedParsers(in.Text)}
-		result.Auto, err = formatter.Format("fixture.md", in.Text)
-		if err != nil {
-			result.AutoError = err.Error()
+		result := output{Name: in.Name}
+		if !offOnly {
+			result.Embeds = markdown.EmbeddedParsers(in.Text)
+			result.Auto, err = formatter.Format("fixture.md", in.Text)
+			if err != nil {
+				result.AutoError = err.Error()
+			}
 		}
 		// The off baseline uses the same real Markdown printer, with no embedding callback.
 		text := strings.TrimPrefix(in.Text, "\ufeff")

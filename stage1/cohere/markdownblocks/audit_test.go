@@ -2,7 +2,9 @@ package markdownblocks
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -181,6 +183,22 @@ func TestWholeDocumentOraclePreflight(t *testing.T) {
 		"generated/embedded_jsonc.md": false,
 		"generated/embedded_flow.md":  false,
 	}
+	witnessFile, err := os.ReadFile("GAPS.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var witnessStrings []string
+	for _, line := range strings.Split(string(witnessFile), "\n") {
+		if !strings.HasPrefix(line, `"`) {
+			continue
+		}
+		var value string
+		if err := json.Unmarshal([]byte(line), &value); err != nil {
+			t.Fatalf("witness JSON: %v", err)
+		}
+		witnessStrings = append(witnessStrings, value)
+	}
+	witnessCount := 0
 	for index, actual := range goAnswers {
 		expected := nodeAnswers[index]
 		if actual.Name != inputs[index].Name || expected.Name != actual.Name {
@@ -192,9 +210,30 @@ func TestWholeDocumentOraclePreflight(t *testing.T) {
 				t.Fatalf("new auto-mode discrepancy at %s", actual.Name)
 			}
 			gaps[actual.Name] = true
+			if strings.HasPrefix(actual.Name, "cohere/") {
+				witnessCount++
+				for _, output := range []string{actual.Auto, expected.Auto} {
+					found := false
+					for _, recorded := range witnessStrings {
+						if recorded == output {
+							found = true
+						}
+					}
+					if !found {
+						t.Fatalf("GAPS.md lost complete output for %s", actual.Name)
+					}
+				}
+				digest := fmt.Sprintf("%x", sha256.Sum256([]byte(inputs[index].Text)))
+				if !strings.Contains(string(witnessFile), "`"+digest+"`") {
+					t.Fatalf("GAPS.md lost input digest for %s", actual.Name)
+				}
+			}
 			offset := firstDifference(actual.Auto, expected.Auto)
 			t.Logf("known auto gap %s at byte %d, embeds %v", actual.Name, offset, actual.Embeds)
 		}
+	}
+	if witnessCount != 7 || len(witnessStrings) != 14 {
+		t.Fatalf("expected seven witnesses and fourteen complete outputs, got %d and %d", witnessCount, len(witnessStrings))
 	}
 	for name, seen := range gaps {
 		if !seen {
@@ -251,22 +290,26 @@ func TestWholeDocumentOraclePreflight(t *testing.T) {
 		name, command string
 		args          []string
 	}{
-		{"Go whole-document preflight", binary, []string{cases}},
-		{"Node pinned-fork whole-document preflight", "node", []string{script, fork, cases, "fork"}},
+		{"Go Markdown embedding off", binary, []string{cases, "off-only"}},
+		{"Node pinned-fork Markdown embedding off", "node", []string{script, fork, cases, "fork", "off-only"}},
 	} {
 		var elapsed time.Duration
 		for round := 0; round < 3; round++ {
 			start := time.Now()
 			answer := execute(t, nil, side.command, side.args...)
 			elapsed += time.Since(start)
-			clean(t, side.name, answer)
-			expected := goRun.stdout
-			if side.command == "node" {
-				expected = nodeRun.stdout
+			answers := auditResults(t, side.name, answer)
+			if len(answers) != len(inputs) {
+				t.Fatal("measured baseline lost a document")
 			}
-			equal(t, side.name, answer.stdout, expected)
+			for index, actual := range answers {
+				if actual.Name != inputs[index].Name {
+					t.Fatal("measured baseline reordered documents")
+				}
+				equal(t, side.name+": "+actual.Name, []byte(actual.Off), []byte(goAnswers[index].Off))
+			}
 		}
-		t.Logf("baseline throughput %s %.1f documents/s, 3 runs %.6fs; both auto and off computed per document, startup/I/O included, no Adamic block formatter measured", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
+		t.Logf("baseline throughput %s %.1f documents/s, 3 runs %.6fs; one off-mode format per document, startup/I/O included, no Adamic block formatter measured", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
 	}
 	t.Logf("corpus %d physical repository/submodule Markdown files, %d generated documents, %d total; off byte-identical, auto %d/%d identical with %d named disagreements", files, len(inputs)-files, len(inputs), len(inputs)-len(gaps), len(inputs), len(gaps))
 }

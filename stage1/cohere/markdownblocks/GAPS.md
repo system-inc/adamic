@@ -1,10 +1,10 @@
-# Markdown block/parser preflight: stopped before a full port
+# Markdown parser and layout: embedding off
 
-The requested complete native Markdown formatter was not built. This branch
-contains a reproducible whole-document oracle audit and parser-representation
-probes, alongside the preceding inline slice as an unchanged dependency.
-There is no Adamic Markdown file formatter or native full-document throughput
-claim here. The audit establishes the target before importing its implementation.
+The contract is Markdown parsing and layout with `embeddedLanguageFormatting: off`
+on both oracles. The port is held to Go cohere. Embedded JSON, YAML, TOML and
+other languages compose later from their own slices. Front matter and fenced
+contents are raw under this contract. The prior inline printers are available as
+a dependency. The complete native parser and block formatter are still unfinished.
 
 ## The default full-document oracles disagree
 
@@ -28,8 +28,8 @@ because `native/json.go` registers only `.json`, while embedded `jsonc` maps to
 cannot equal both. `gaps/embedded_flow.md` proves the Flow embedding difference:
 the native JavaScript path does not format that Flow program as the Babel/Flow
 printer in the fork does. These dependencies are outside this unit's territory.
-Front matter likewise invokes YAML/TOML embedding when recognized; it cannot be
-silently treated as a raw block in a claim about the default complete formatter.
+These auto-mode differences are historical witnesses, outside the agreed
+embedding-off contract. Front matter is deliberately raw with embedding off.
 
 The audit checks both `auto` and `off` without filtering out embedded files.
 The off baseline calls Go's actual `markdown.Format` with a nil embedding
@@ -90,10 +90,157 @@ exit zero, produce no stderr or formatting errors, and fail the off baseline's
 byte comparison. These prove the preflight comparison catches real output
 changes; they are Go mutants, not mutants of an unbuilt Adamic block printer.
 
-No new native Markdown parser, preprocessing, recursive block printer, table
-layout, HTML block printer, document engine or embedded-language printer was
-ported. The block unit remains incomplete. The prior inline implementation is
+The complete native Markdown parser, preprocessing, recursive block printer,
+table layout, HTML block printer and document engine remain unported. The block unit remains incomplete. The prior inline implementation is
 composed only as a branch dependency, not yet wired into a block formatter.
-A full default-mode common target requires resolving the JSONC/Flow oracle gaps
-first; an explicit off-mode contract avoids those embedding dependencies but
-still requires the complete parser/frame and document-printer work above.
+The embedding-off contract avoids those embedding dependencies. The remaining
+work is the native parser/frame and document printer, not a change to embedded
+language formatting.
+
+## Native front-matter parser stage
+
+`frontmatter.ts` ports the complete `mdast.ParseFrontMatter` stage. It recognizes
+both YAML and TOML delimiters, explicit languages and YAML's `...` terminator,
+retains the exact raw text, and blanks the prefix one space per UTF-16 unit while
+preserving LF. The upstream closing-delimiter suffix check accepts all suffixes;
+that behavior is retained. ECMAScript whitespace is scanned explicitly: U+FEFF
+is trimmed and U+0085 is retained. This stage receives the parser's text, before
+any micromark events; it does not normalize line endings or remove BOM itself.
+
+`testdata/frontmatter_probe.ts` exercises this stage, not full Markdown layout.
+Its test walks all 876 physical Markdown files, the 77 existing generated block
+cases and 3,116 new front-matter cases. Go's actual `ParseFrontMatter`, the pinned
+fork's real Markdown parser, source Node, Adamic's JavaScript backend and native
+agree on all 4,069 observations. Native runs under ASan/UBSan and LeakSanitizer.
+The fork parser's first `frontMatter` node supplies the original library fields;
+its blanked prefix is checked with the library's specified non-Unicode JavaScript
+replacement. No original parsing is delegated to an oracle in production code.
+
+Three native output-only mutants change YAML fallback selection, add one blank
+space to each prefix line, and remove BOM from the language whitespace class.
+Each lowers, builds and exits zero with no stderr; only its bytes fail the oracle
+comparison. These are native front-matter mutants, not full block-printer mutants.
+The inherited Go heading/list/fence mutants still test the whole-document audit.
+The prior inline printers are not wired into a block formatter yet.
+
+## Seven upstream embedding witnesses, with complete outputs
+
+These are the seven existing repository files from the original census. Both
+outputs use embedding **auto**, tab width 4, print width 120, preserved prose,
+spaces, semicolons and single quotes. The Go pin is
+`715ba94f3608a6500086b1076ce5cb7e51b836db`; the other output comes from its exact
+vendored Prettier 3.9.6 fork. With embedding **off**, each pair agrees. The JSON
+string literals below preserve every byte, including the final newline. Input
+SHA-256 identifies the witness independently of later edits.
+
+### 1. `cohere/TypeScript/packages/vscode-typescript/README.md`
+
+Input SHA-256: `fdb86d928c1f51034f590027c1e158aaf092ddd0b587fac4f4f80ef46d2c8822`.
+
+Go cohere, complete output as a JSON string:
+
+````text
+"# TypeScript 7\n\nThis extension provides the native implementation of the TypeScript language service. It provides features like go-to-definition, completions, errors and diagnostics, quick info/tooltip hovers, and more.\n\n## Usage\n\n1. Install the extension from the marketplace.\n2. Open a TypeScript or JavaScript file (`.ts`) in your editor.\n3. Activate the extension with the command `TypeScript: Enable TypeScript 7`, or update your settings below:\n\n## Configuration\n\nYou can enable this extension by modifying the following settings:\n\n```jsonc\n{\n    // UI Setting:\n    // TypeScript 7 > Experimental: Use Tsgo\n    \"js/ts.experimental.useTsgo\": true,\n\n    // Optional: use a local TypeScript package directory.\n    \"js/ts.tsdk.path\": \"./node_modules/typescript\"\n}\n```\n\n## Feedback\n\nIf you encounter any issues or have suggestions for improvement, please open an issue on the [GitHub repository](https://github.com/microsoft/TypeScript/tsc).\n"
+````
+
+Cohere's Prettier fork, complete output as a JSON string:
+
+````text
+"# TypeScript 7\n\nThis extension provides the native implementation of the TypeScript language service. It provides features like go-to-definition, completions, errors and diagnostics, quick info/tooltip hovers, and more.\n\n## Usage\n\n1. Install the extension from the marketplace.\n2. Open a TypeScript or JavaScript file (`.ts`) in your editor.\n3. Activate the extension with the command `TypeScript: Enable TypeScript 7`, or update your settings below:\n\n## Configuration\n\nYou can enable this extension by modifying the following settings:\n\n```jsonc\n{\n    // UI Setting:\n    // TypeScript 7 > Experimental: Use Tsgo\n    \"js/ts.experimental.useTsgo\": true,\n\n    // Optional: use a local TypeScript package directory.\n    \"js/ts.tsdk.path\": \"./node_modules/typescript\",\n}\n```\n\n## Feedback\n\nIf you encounter any issues or have suggestions for improvement, please open an issue on the [GitHub repository](https://github.com/microsoft/TypeScript/tsc).\n"
+````
+
+### 2. `cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-hir_fn_type_mismatch_2.expect.md`
+
+Input SHA-256: `8686b393bc7969930ea787b1a735c652ce2b029a544cd44cab152282614d0cf5`.
+
+Go cohere, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n/**\n * @flow strict-local\n * @format\n */\n\n'use strict';\n\nimport type {SimpleTooltipMessageTypesType} from 'SimpleTooltipMessageTypes';\nimport type {Alignment, Position, Width} from 'AmbientTooltip.react';\n\nimport * as SimpleTooltipMessage from 'SimpleTooltipMessage';\nimport AmbientTooltip from 'AmbientTooltip.react';\n\nimport * as React from 'react';\n\nexport type NUXProps = {\n  alignment?: Alignment,\n  children: React.Node,\n  customWidth?: number,\n  disabled?: boolean,\n  hideOnXout?: boolean,\n  position: Position,\n  showOnce?: boolean,\n  type: SimpleTooltipMessageTypesType,\n  width?: Width,\n};\n\ntype CurrentState = {\n  showNux: boolean,\n};\n\ntype ExposedProps<Props extends {...}> = {\n  ...$Exact<Props>,\n  nuxProps: NUXProps,\n};\n\nexport default function WidgetWithTooltip<\n  Props extends {...},\n  WidgetWithTooltipComponent extends React.ComponentType<Props>,\n>(\n  WrappedComponent: WidgetWithTooltipComponent\n): Class<\n  React.Component<\n    ExposedProps<React.ElementConfig<WidgetWithTooltipComponent>>,\n    CurrentState,\n  >,\n> {\n  class WithNux extends React.PureComponent<ExposedProps<Props>, CurrentState> {\n    state: CurrentState = {\n      showNux:\n        this.props.nuxProps.disabled !== true &&\n        !SimpleTooltipMessage.hasUserSeenMessage_LEGACY(\n          this.props.nuxProps.type\n        ),\n    };\n\n    wrappedRef: {\n      current: HTMLSpanElement | null,\n      ...\n    } = React.createRef();\n\n    componentDidMount(): void {\n      if (this.props.nuxProps.showOnce === true && this.state.showNux) {\n        SimpleTooltipMessage.markMessageSeenByUser(this.props.nuxProps.type);\n      }\n    }\n\n    #onNuxClose = (): void => {\n      if (this.props.nuxProps.hideOnXout === true && this.state.showNux) {\n        SimpleTooltipMessage.markMessageSeenByUser(this.props.nuxProps.type);\n      }\n      this.setState({\n        showNux: false,\n      });\n    };\n\n    #getRef = (): null | HTMLSpanElement => this.wrappedRef.current;\n\n    render(): React.MixedElement {\n      const {nuxProps, ...passProps} = this.props;\n      return (\n        <>\n          <span className=\"uiContextualLayerParent\" ref={this.wrappedRef}>\n            <WrappedComponent {...passProps} />\n          </span>\n          {this.state.showNux ? (\n            <AmbientTooltip\n              alignment={nuxProps.alignment}\n              children={nuxProps.children}\n              contextRef={this.#getRef}\n              customwidth={nuxProps.customWidth}\n              onCloseButtonClick={this.#onNuxClose}\n              position={nuxProps.position}\n              shown={this.state.showNux}\n              width={nuxProps.width}\n            />\n          ) : null}\n        </>\n      );\n    }\n  }\n  return WithNux;\n}\n\n```\n\n## Error\n\n```\nUnexpected token (32:33)\n```\n"
+````
+
+Cohere's Prettier fork, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n/**\n * @flow strict-local\n * @format\n */\n\n'use strict';\n\nimport type { SimpleTooltipMessageTypesType } from 'SimpleTooltipMessageTypes';\nimport type { Alignment, Position, Width } from 'AmbientTooltip.react';\n\nimport * as SimpleTooltipMessage from 'SimpleTooltipMessage';\nimport AmbientTooltip from 'AmbientTooltip.react';\n\nimport * as React from 'react';\n\nexport type NUXProps = {\n    alignment?: Alignment,\n    children: React.Node,\n    customWidth?: number,\n    disabled?: boolean,\n    hideOnXout?: boolean,\n    position: Position,\n    showOnce?: boolean,\n    type: SimpleTooltipMessageTypesType,\n    width?: Width,\n};\n\ntype CurrentState = {\n    showNux: boolean,\n};\n\ntype ExposedProps<Props: { ... }> = {\n    ...$Exact<Props>,\n    nuxProps: NUXProps,\n};\n\nexport default function WidgetWithTooltip<Props: { ... }, WidgetWithTooltipComponent: React.ComponentType<Props>>(\n    WrappedComponent: WidgetWithTooltipComponent,\n): Class<React.Component<ExposedProps<React.ElementConfig<WidgetWithTooltipComponent>>, CurrentState>> {\n    class WithNux extends React.PureComponent<ExposedProps<Props>, CurrentState> {\n        state: CurrentState = {\n            showNux:\n                this.props.nuxProps.disabled !== true &&\n                !SimpleTooltipMessage.hasUserSeenMessage_LEGACY(this.props.nuxProps.type),\n        };\n\n        wrappedRef: {\n            current: HTMLSpanElement | null,\n            ...\n        } = React.createRef();\n\n        componentDidMount(): void {\n            if(this.props.nuxProps.showOnce === true && this.state.showNux) {\n                SimpleTooltipMessage.markMessageSeenByUser(this.props.nuxProps.type);\n            }\n        }\n\n        #onNuxClose = (): void => {\n            if(this.props.nuxProps.hideOnXout === true && this.state.showNux) {\n                SimpleTooltipMessage.markMessageSeenByUser(this.props.nuxProps.type);\n            }\n            this.setState({\n                showNux: false,\n            });\n        };\n\n        #getRef = (): null | HTMLSpanElement => this.wrappedRef.current;\n\n        render(): React.MixedElement {\n            const { nuxProps, ...passProps } = this.props;\n            return (\n                <>\n                    <span className=\"uiContextualLayerParent\" ref={this.wrappedRef}>\n                        <WrappedComponent {...passProps} />\n                    </span>\n                    {this.state.showNux ? (\n                        <AmbientTooltip\n                            alignment={nuxProps.alignment}\n                            children={nuxProps.children}\n                            contextRef={this.#getRef}\n                            customwidth={nuxProps.customWidth}\n                            onCloseButtonClick={this.#onNuxClose}\n                            position={nuxProps.position}\n                            shown={this.state.showNux}\n                            width={nuxProps.width}\n                        />\n                    ) : null}\n                </>\n            );\n        }\n    }\n    return WithNux;\n}\n```\n\n## Error\n\n```\nUnexpected token (32:33)\n```\n"
+````
+
+### 3. `cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-hir_loc_diff_1.expect.md`
+
+Input SHA-256: `f40f1db9e8a46fc284bee4df1ac6bccb6cfefdec0b9df25159bb7c8211514fb6`.
+
+Go cohere, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n/**\n *  * @flow strict\n * @format\n */\n\n/**\n * creates a cache for Component props so we prevent rendering a component\n * sequentially if the props didn't change. Useful to wrap FluxContainer\n * with pure calculateState and getStores functions.\n */\n\n'use strict';\n\nimport * as React from 'react';\nimport {PureComponent} from 'react';\n\nexport default function createPureComponent<\n  DefaultProps extends {...} | void,\n  Props extends {...},\n>(\n  Component: React.ComponentType<Props> & {\n    defaultProps?: DefaultProps,\n    displayName?: string,\n  }\n): React.ComponentType<Props> {\n  class PureComponentCache extends PureComponent<Props, void> {\n    static defaultProps: DefaultProps;\n\n    render(): React.MixedElement {\n      return <Component {...this.props} />;\n    }\n  }\n\n  if (Component.defaultProps) {\n    PureComponentCache.defaultProps = Component.defaultProps;\n  }\n  PureComponentCache.displayName = `PureComponentCache(${\n    /* $FlowFixMe[incompatible-type] (>=0.66.0 site=www) This comment\n     * suppresses an error found when Flow v0.66 was deployed. To see the\n     * error delete this comment and run Flow. */\n    Component.displayName\n  })`;\n  // $FlowFixMe[incompatible-type]\n  return PureComponentCache;\n}\n\n```\n\n## Error\n\n```\nUnexpected token (18:24)\n```\n"
+````
+
+Cohere's Prettier fork, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n/**\n *  * @flow strict\n * @format\n */\n\n/**\n * creates a cache for Component props so we prevent rendering a component\n * sequentially if the props didn't change. Useful to wrap FluxContainer\n * with pure calculateState and getStores functions.\n */\n\n'use strict';\n\nimport * as React from 'react';\nimport { PureComponent } from 'react';\n\nexport default function createPureComponent<DefaultProps: { ... } | void, Props: { ... }>(\n    Component: React.ComponentType<Props> & {\n        defaultProps?: DefaultProps,\n        displayName?: string,\n    },\n): React.ComponentType<Props> {\n    class PureComponentCache extends PureComponent<Props, void> {\n        static defaultProps: DefaultProps;\n\n        render(): React.MixedElement {\n            return <Component {...this.props} />;\n        }\n    }\n\n    if(Component.defaultProps) {\n        PureComponentCache.defaultProps = Component.defaultProps;\n    }\n    PureComponentCache.displayName = `PureComponentCache(${\n        /* $FlowFixMe[incompatible-type] (>=0.66.0 site=www) This comment\n         * suppresses an error found when Flow v0.66 was deployed. To see the\n         * error delete this comment and run Flow. */\n        Component.displayName\n    })`;\n    // $FlowFixMe[incompatible-type]\n    return PureComponentCache;\n}\n```\n\n## Error\n\n```\nUnexpected token (18:24)\n```\n"
+````
+
+### 4. `cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-pattern3_type_to_poly.expect.md`
+
+Input SHA-256: `09e9ebd9520468174c33b4479402d511f08d097ebe2611efd5db961961b4da05`.
+
+Go cohere, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n// Pattern 3: shapeId null→generated + return Type→Poly\n// Generic function with Object.entries().reduce()\n// Divergence: TS has shapeId:null, return:Type(32); Rust has shapeId:\"<generated_1>\", return:Poly\n\n/**\n * @flow strict\n */\nexport default function flipAndAggregateObject<TValue extends string>(obj: {\n  +[key: TKey]: TValue,\n  ...\n}): {} {\n  return Object.entries(obj).reduce((acc, [currKey, currVal]) => {\n    return {};\n  }, {});\n}\n\n```\n\n## Error\n\n```\nUnexpected token (9:2)\n```\n"
+````
+
+Cohere's Prettier fork, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n// Pattern 3: shapeId null→generated + return Type→Poly\n// Generic function with Object.entries().reduce()\n// Divergence: TS has shapeId:null, return:Type(32); Rust has shapeId:\"<generated_1>\", return:Poly\n\n/**\n * @flow strict\n */\nexport default function flipAndAggregateObject<TValue: string>(obj: { +[key: TKey]: TValue, ... }): {} {\n    return Object.entries(obj).reduce((acc, [currKey, currVal]) => {\n        return {};\n    }, {});\n}\n```\n\n## Error\n\n```\nUnexpected token (9:2)\n```\n"
+````
+
+### 5. `cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-round2_identifier_diff.expect.md`
+
+Input SHA-256: `53c0cd7ff1745679ace6a7ee83e9470eea3f6f2b9b82cccfaeeccbec8f4d8be5`.
+
+Go cohere, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n// Round 2 HIR: IDENTIFIER_DIFF (11 files)\n// Extra/different context identifiers — class components with this/setState\n/**\n * @flow strict-local\n */\nexport default function withRemountOnChange<OuterProps extends {}>(\n  shouldRemount: () => boolean\n): () => React.ComponentType<OuterProps> {\n  return function withRemountOnChangeInner(WrappedComponent) {\n    return class Wrapper extends React.Component<OuterProps, WrapperState> {\n      static displayName: ?string = `withRemountOnChange(${getDisplayName()})`;\n      state: WrapperState = {};\n      componentDidUpdate(prevProps: OuterProps, prevState: WrapperState) {\n        if (shouldRemount()) {\n          this.setState(({keyId}) => {});\n        }\n      }\n      render(): React.MixedElement {}\n    };\n  };\n}\n\n```\n\n## Error\n\n```\nUnexpected token (11:26)\n```\n"
+````
+
+Cohere's Prettier fork, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n// Round 2 HIR: IDENTIFIER_DIFF (11 files)\n// Extra/different context identifiers — class components with this/setState\n/**\n * @flow strict-local\n */\nexport default function withRemountOnChange<OuterProps: {}>(\n    shouldRemount: () => boolean,\n): () => React.ComponentType<OuterProps> {\n    return function withRemountOnChangeInner(WrappedComponent) {\n        return class Wrapper extends React.Component<OuterProps, WrapperState> {\n            static displayName: ?string = `withRemountOnChange(${getDisplayName()})`;\n            state: WrapperState = {};\n            componentDidUpdate(prevProps: OuterProps, prevState: WrapperState) {\n                if(shouldRemount()) {\n                    this.setState(({ keyId }) => {});\n                }\n            }\n            render(): React.MixedElement {}\n        };\n    };\n}\n```\n\n## Error\n\n```\nUnexpected token (11:26)\n```\n"
+````
+
+### 6. `cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-round2_severity_diff.expect.md`
+
+Input SHA-256: `4e4b4b0a786f3ae7de1266c8e4786b107cb0aa2edc753debe2f755aa445f764b`.
+
+Go cohere, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n// Round 2 HIR: SEVERITY_DIFF (1 file from OTHER)\n// delete on optional chain — TS: severity Error/Syntax, Rust: severity Hint/Todo\n/**\n * @flow strict-local\n */\nimport {} from 'PreloadingTTL';\nconst preloadedRequests: Map<> = new Map();\nexport function execute(): Promise<{error?: APIErrorEventArgs['error'], ...}> {\n  if (request.params != null && !(request.params instanceof FormData)) {\n    delete request.params?.__entryPointPreloaded;\n  }\n  if (!consumers) {\n    if (APIRequestMatchingUtils.areRequestsEquivalent()) {\n    }\n  }\n}\n\n```\n\n## Error\n\n```\nType argument list cannot be empty. (7:28)\n```\n"
+````
+
+Cohere's Prettier fork, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n// Round 2 HIR: SEVERITY_DIFF (1 file from OTHER)\n// delete on optional chain — TS: severity Error/Syntax, Rust: severity Hint/Todo\n/**\n * @flow strict-local\n */\nimport {} from 'PreloadingTTL';\nconst preloadedRequests: Map<> = new Map();\nexport function execute(): Promise<{ error?: APIErrorEventArgs['error'], ... }> {\n    if(request.params != null && !(request.params instanceof FormData)) {\n        delete request.params?.__entryPointPreloaded;\n    }\n    if(!consumers) {\n        if(APIRequestMatchingUtils.areRequestsEquivalent()) {\n        }\n    }\n}\n```\n\n## Error\n\n```\nType argument list cannot be empty. (7:28)\n```\n"
+````
+
+### 7. `cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-update-expression-context-variable-via-type-annotation.expect.md`
+
+Input SHA-256: `cd4a073e669a886fc32f65b5ec66b11ae6fb3f2972e9074936ca0c9bc222ccea`.
+
+Go cohere, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n// @flow @compilationMode(infer)\nfunction Component(props: {data: Array<[string, mixed]>}) {\n  let id = 0;\n  for (const [key, value] of props.data) {\n    const item = {\n      key,\n      id: '' + id++,\n    };\n  }\n  const getIndex = ((): ((id: string) => number) => {\n    return (id: string): number => 0;\n  })();\n  return <div />;\n}\n\n```\n\n## Error\n\n```\nFound 1 error:\n\nTodo: (BuildHIR::lowerExpression) Handle UpdateExpression to variables captured within lambdas.\n\n   5 |     const item = {\n   6 |       key,\n>  7 |       id: '' + id++,\n     |                ^^^^ (BuildHIR::lowerExpression) Handle UpdateExpression to variables captured within lambdas.\n   8 |     };\n   9 |   }\n  10 |   const getIndex = ((): ((id: string) => number) => {\n```\n"
+````
+
+Cohere's Prettier fork, complete output as a JSON string:
+
+````text
+"## Input\n\n```javascript\n// @flow @compilationMode(infer)\nfunction Component(props: { data: Array<[string, mixed]> }) {\n    let id = 0;\n    for(const [key, value] of props.data) {\n        const item = {\n            key,\n            id: '' + id++,\n        };\n    }\n    const getIndex = ((): ((id: string) => number) => {\n        return (id: string): number => 0;\n    })();\n    return <div />;\n}\n```\n\n## Error\n\n```\nFound 1 error:\n\nTodo: (BuildHIR::lowerExpression) Handle UpdateExpression to variables captured within lambdas.\n\n   5 |     const item = {\n   6 |       key,\n>  7 |       id: '' + id++,\n     |                ^^^^ (BuildHIR::lowerExpression) Handle UpdateExpression to variables captured within lambdas.\n   8 |     };\n   9 |   }\n  10 |   const getIndex = ((): ((id: string) => number) => {\n```\n"
+````

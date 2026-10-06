@@ -9,7 +9,7 @@ for(const line of fs.readFileSync(process.argv[3], 'utf8').split('\n')) {
     if(!line) continue;
     const {name,text} = JSON.parse(line);
     const result = {name};
-    for(const mode of ['auto','off']) {
+    for(const mode of process.argv[5] === 'off-only' ? ['off'] : ['auto','off']) {
         try {
             result[mode] = await prettier.format(text,{parser:'markdown',tabWidth:4,useTabs:false,semi:true,singleQuote:true,printWidth:120,embeddedLanguageFormatting:mode,plugins});
         }
