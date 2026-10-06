@@ -181,3 +181,35 @@ func (p *Program) nativeStraightLineASCII(name string) string {
 	body := copyProgram.nativeStraightLine(name)
 	return strings.ReplaceAll(strings.ReplaceAll(body, name+"_fast", name+"_ascii"), "uint16_t", "unsigned char")
 }
+
+// A leading positive literal lookbehind supplies a necessary context filter.
+// The VM still evaluates the assertion, including any captures. Negative,
+// branching, folded and non-ASCII lookbehind remain completely general.
+func (p *Program) nativeLookbehindPrefix() []rune {
+	for _, i := range p.code {
+		if i.op == opSave {
+			continue
+		}
+		if i.op != opLook || i.negative {
+			return nil
+		}
+		var reverse []rune
+		for _, sub := range i.look.code {
+			switch sub.op {
+			case opSave, opAccept:
+			case opSet:
+				if sub.direction != -1 || sub.flags.IgnoreCase || len(sub.set.strings) != 0 || len(sub.set.ranges) != 1 || sub.set.ranges[0].From != sub.set.ranges[0].To || sub.set.ranges[0].To >= 128 {
+					return nil
+				}
+				reverse = append(reverse, sub.set.ranges[0].From)
+			default:
+				return nil
+			}
+		}
+		for left, right := 0, len(reverse)-1; left < right; left, right = left+1, right-1 {
+			reverse[left], reverse[right] = reverse[right], reverse[left]
+		}
+		return reverse
+	}
+	return nil
+}
