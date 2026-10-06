@@ -1,0 +1,26 @@
+let trace = '';
+class Counter {
+    #n = 0;
+    get value(): number {
+        this.#n += 1;
+        trace += `b${this.#n}`;
+        return this.#n;
+    }
+}
+class Doubled extends Counter {
+    get value(): number {
+        const inner = super.value;
+        trace += `d${inner}`;
+        return inner * 2;
+    }
+}
+function readTwice(counter: Counter): string {
+    const first = counter.value;
+    const second = counter.value;
+    return `${first}/${second}`;
+}
+const plain = new Counter();
+console.log(readTwice(plain));
+const doubled = new Doubled();
+console.log(readTwice(doubled));
+console.log(trace);
