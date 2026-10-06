@@ -1,5 +1,121 @@
 # test262 outcomes
 
+## Merge comparison: main vs regex-matcher
+
+Across all 25,147 tests, main has 2 disagreements and 82 crashes; regex-matcher has 2 disagreements and 9 crashes. The requested zero-disagreement merge gate does not pass.
+
+No directory has an increased disagreement or crash count. All previously passing paths still pass. The 862 newly passing tests agree with Node: 861 in built-ins/RegExp and one in language/literals/regexp.
+
+There are 0 newly observed disagreement/crash test paths, comparing the full branch audit with main's recorded crash paths and the Object/String disagreement audit.
+
+### Disagreements inherited from main
+
+Both Node and the native binary ran the adapted source. Node exited 0; native exited 70. The observation-only main rerun reproduced both baseline counts and all passing paths for Object and String.
+
+- `built-ins/Object/is/not-same-value-x-y-undefined.js`
+- `built-ins/String/fromCodePoint/number-is-out-of-range.js`
+
+The Object test expects `Object.is(undefined, null)` to be false. The String test expects invalid code points to throw a catchable RangeError. These are observed baseline failures, not evidence that the regex branch introduced them.
+
+### Pinning and method
+
+Main: `5d4c8012a0877094134e6c6bac367ff68f9313e8`. Regex-matcher tip fetched for this comparison: `df959ee978da7cfcac45fe0e9ff941b80a6fda58`. Both use test262 `c8c798898646638cd0c24879f8e0374e847e7d74`, Node `v24.19.0`, Linux, clang 20.1.8, adaptation on, a 15-second native/Node execution limit and the original outcome buckets. This compares each tip as a whole, including compiler, runtime and runner; it does not isolate individual edits.
+
+The complete main built-ins baseline below was reused because origin/main is still the same commit. The original main runner additionally ran every test under `language/literals/regexp` and `annexB`; both directories were reachable. The regex branch ran all 66 filters without a limit, with `-jobs 4` and private worker artifacts. Main used its serial runner. An isolated main checkout added only JSON observation logging to recover the Object/String failure names; its counts and pass lists were asserted equal to the unmodified baseline. VCS stamping was disabled for this audit because its unchanged cohere submodule was reused via a symlink. No comparison runner changes were committed.
+
+The regex branch records every result in `/tmp/test262-regex-survey/results.jsonl`. Every result was reconciled against the aggregate JSON and checked for duplicate paths. Main and branch filter sets and test totals were asserted equal. Raw reports are `/tmp/test262-before.json`, `/tmp/test262-main-extras.json`, `/tmp/test262-main-audit.json`, and `/tmp/test262-regex-survey.json`; logs use the corresponding `.log` names.
+
+Commands for the additional runs:
+
+```sh
+source /workspace/adamic-tools/env.sh
+/tmp/test262-before -adapt -json -root /workspace/adamic -test262 /tmp/test262 -work /tmp/test262-main-extras language/literals/regexp annexB > /tmp/test262-main-extras.json 2> /tmp/test262-main-extras.log
+/tmp/test262-regex-runner -adapt -json -jobs 4 -timeout 15s -root /tmp/adamic-regex-matcher -test262 /tmp/test262 -work /tmp/test262-regex-survey $(python3 -c 'from pathlib import Path; print(" ".join("built-ins/"+p.name for p in sorted(Path("/tmp/test262/test/built-ins").iterdir()) if p.is_dir()))') language/literals/regexp annexB > /tmp/test262-regex-survey.json 2> /tmp/test262-regex-survey.log
+```
+
+### Per-directory old outcomes
+
+Sorted by regex-matcher refusals descending, then directory. `disagreement` is the JSON `fail` bucket. The extra corpus groups are included alongside the 64 top-level built-ins directories.
+
+| Directory | main pass | main disagreement | main refused | main crashed | main skipped | regex pass | regex disagreement | regex refused | regex crashed | regex skipped | total |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| built-ins/Array | 125 | 0 | 2339 | 8 | 610 | 125 | 0 | 2339 | 8 | 610 | 3082 |
+| built-ins/Object | 17 | 1 | 2317 | 0 | 1076 | 17 | 1 | 2317 | 0 | 1076 | 3411 |
+| built-ins/String | 205 | 1 | 700 | 1 | 316 | 205 | 1 | 702 | 1 | 314 | 1223 |
+| built-ins/RegExp | 53 | 0 | 424 | 73 | 1329 | 914 | 0 | 449 | 0 | 516 | 1879 |
+| built-ins/Date | 0 | 0 | 324 | 0 | 270 | 0 | 0 | 324 | 0 | 270 | 594 |
+| built-ins/Iterator | 0 | 0 | 240 | 0 | 414 | 0 | 0 | 240 | 0 | 414 | 654 |
+| built-ins/Function | 0 | 0 | 228 | 0 | 281 | 0 | 0 | 228 | 0 | 281 | 509 |
+| built-ins/Set | 19 | 0 | 205 | 0 | 159 | 19 | 0 | 205 | 0 | 159 | 383 |
+| built-ins/Promise | 0 | 0 | 174 | 0 | 558 | 0 | 0 | 174 | 0 | 558 | 732 |
+| built-ins/DataView | 0 | 0 | 155 | 0 | 406 | 0 | 0 | 155 | 0 | 406 | 561 |
+| annexB | 1 | 0 | 131 | 0 | 954 | 1 | 0 | 135 | 0 | 950 | 1086 |
+| built-ins/Number | 152 | 0 | 114 | 0 | 74 | 152 | 0 | 114 | 0 | 74 | 340 |
+| built-ins/JSON | 7 | 0 | 95 | 0 | 63 | 7 | 0 | 95 | 0 | 63 | 165 |
+| built-ins/Map | 6 | 0 | 77 | 0 | 121 | 6 | 0 | 77 | 0 | 121 | 204 |
+| built-ins/WeakMap | 0 | 0 | 50 | 0 | 91 | 0 | 0 | 50 | 0 | 91 | 141 |
+| built-ins/ArrayBuffer | 0 | 0 | 48 | 0 | 173 | 0 | 0 | 48 | 0 | 173 | 221 |
+| built-ins/Math | 118 | 0 | 48 | 0 | 161 | 118 | 0 | 48 | 0 | 161 | 327 |
+| built-ins/WeakSet | 0 | 0 | 43 | 0 | 42 | 0 | 0 | 43 | 0 | 42 | 85 |
+| built-ins/Boolean | 0 | 0 | 37 | 0 | 14 | 0 | 0 | 37 | 0 | 14 | 51 |
+| built-ins/NativeErrors | 0 | 0 | 37 | 0 | 57 | 0 | 0 | 37 | 0 | 57 | 94 |
+| built-ins/ShadowRealm | 0 | 0 | 35 | 0 | 29 | 0 | 0 | 35 | 0 | 29 | 64 |
+| built-ins/Error | 0 | 0 | 31 | 0 | 62 | 0 | 0 | 31 | 0 | 62 | 93 |
+| built-ins/parseFloat | 20 | 0 | 31 | 0 | 3 | 20 | 0 | 31 | 0 | 3 | 54 |
+| built-ins/decodeURIComponent | 0 | 0 | 24 | 0 | 32 | 0 | 0 | 24 | 0 | 32 | 56 |
+| built-ins/decodeURI | 0 | 0 | 23 | 0 | 32 | 0 | 0 | 23 | 0 | 32 | 55 |
+| built-ins/global | 0 | 0 | 20 | 0 | 9 | 0 | 0 | 20 | 0 | 9 | 29 |
+| built-ins/parseInt | 33 | 0 | 19 | 0 | 3 | 33 | 0 | 19 | 0 | 3 | 55 |
+| built-ins/encodeURI | 0 | 0 | 16 | 0 | 15 | 0 | 0 | 16 | 0 | 15 | 31 |
+| built-ins/encodeURIComponent | 0 | 0 | 16 | 0 | 15 | 0 | 0 | 16 | 0 | 15 | 31 |
+| language/literals/regexp | 15 | 0 | 12 | 0 | 213 | 16 | 0 | 12 | 0 | 212 | 240 |
+| built-ins/ThrowTypeError | 0 | 0 | 11 | 0 | 3 | 0 | 0 | 11 | 0 | 3 | 14 |
+| built-ins/AggregateError | 0 | 0 | 6 | 0 | 19 | 0 | 0 | 6 | 0 | 19 | 25 |
+| built-ins/isFinite | 0 | 0 | 6 | 0 | 9 | 0 | 0 | 6 | 0 | 9 | 15 |
+| built-ins/isNaN | 0 | 0 | 5 | 0 | 10 | 0 | 0 | 5 | 0 | 10 | 15 |
+| built-ins/eval | 0 | 0 | 4 | 0 | 6 | 0 | 0 | 4 | 0 | 6 | 10 |
+| built-ins/Infinity | 0 | 0 | 3 | 0 | 3 | 0 | 0 | 3 | 0 | 3 | 6 |
+| built-ins/NaN | 0 | 0 | 3 | 0 | 3 | 0 | 0 | 3 | 0 | 3 | 6 |
+| built-ins/undefined | 0 | 0 | 3 | 0 | 5 | 0 | 0 | 3 | 0 | 5 | 8 |
+| built-ins/AsyncFunction | 0 | 0 | 1 | 0 | 17 | 0 | 0 | 1 | 0 | 17 | 18 |
+| built-ins/Atomics | 0 | 0 | 1 | 0 | 388 | 0 | 0 | 1 | 0 | 388 | 389 |
+| built-ins/AbstractModuleSource | 0 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 8 | 8 |
+| built-ins/ArrayIteratorPrototype | 0 | 0 | 0 | 0 | 27 | 0 | 0 | 0 | 0 | 27 | 27 |
+| built-ins/AsyncDisposableStack | 0 | 0 | 0 | 0 | 104 | 0 | 0 | 0 | 0 | 104 | 104 |
+| built-ins/AsyncFromSyncIteratorPrototype | 0 | 0 | 0 | 0 | 38 | 0 | 0 | 0 | 0 | 38 | 38 |
+| built-ins/AsyncGeneratorFunction | 0 | 0 | 0 | 0 | 23 | 0 | 0 | 0 | 0 | 23 | 23 |
+| built-ins/AsyncGeneratorPrototype | 0 | 0 | 0 | 0 | 48 | 0 | 0 | 0 | 0 | 48 | 48 |
+| built-ins/AsyncIteratorPrototype | 0 | 0 | 0 | 0 | 13 | 0 | 0 | 0 | 0 | 13 | 13 |
+| built-ins/BigInt | 0 | 0 | 0 | 0 | 77 | 0 | 0 | 0 | 0 | 77 | 77 |
+| built-ins/DisposableStack | 0 | 0 | 0 | 0 | 93 | 0 | 0 | 0 | 0 | 93 | 93 |
+| built-ins/FinalizationRegistry | 0 | 0 | 0 | 0 | 47 | 0 | 0 | 0 | 0 | 47 | 47 |
+| built-ins/GeneratorFunction | 0 | 0 | 0 | 0 | 23 | 0 | 0 | 0 | 0 | 23 | 23 |
+| built-ins/GeneratorPrototype | 0 | 0 | 0 | 0 | 61 | 0 | 0 | 0 | 0 | 61 | 61 |
+| built-ins/MapIteratorPrototype | 0 | 0 | 0 | 0 | 11 | 0 | 0 | 0 | 0 | 11 | 11 |
+| built-ins/Proxy | 0 | 0 | 0 | 0 | 311 | 0 | 0 | 0 | 0 | 311 | 311 |
+| built-ins/Reflect | 0 | 0 | 0 | 0 | 153 | 0 | 0 | 0 | 0 | 153 | 153 |
+| built-ins/RegExpStringIteratorPrototype | 0 | 0 | 0 | 0 | 17 | 0 | 0 | 0 | 0 | 17 | 17 |
+| built-ins/SetIteratorPrototype | 0 | 0 | 0 | 0 | 11 | 0 | 0 | 0 | 0 | 11 | 11 |
+| built-ins/SharedArrayBuffer | 0 | 0 | 0 | 0 | 104 | 0 | 0 | 0 | 0 | 104 | 104 |
+| built-ins/StringIteratorPrototype | 0 | 0 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 7 | 7 |
+| built-ins/SuppressedError | 0 | 0 | 0 | 0 | 22 | 0 | 0 | 0 | 0 | 22 | 22 |
+| built-ins/Symbol | 0 | 0 | 0 | 0 | 98 | 0 | 0 | 0 | 0 | 98 | 98 |
+| built-ins/Temporal | 0 | 0 | 0 | 0 | 4605 | 0 | 0 | 0 | 0 | 4605 | 4605 |
+| built-ins/TypedArray | 0 | 0 | 0 | 0 | 1453 | 0 | 0 | 0 | 0 | 1453 | 1453 |
+| built-ins/TypedArrayConstructors | 0 | 0 | 0 | 0 | 738 | 0 | 0 | 0 | 0 | 738 | 738 |
+| built-ins/Uint8Array | 0 | 0 | 0 | 0 | 70 | 0 | 0 | 0 | 0 | 70 | 70 |
+| built-ins/WeakRef | 0 | 0 | 0 | 0 | 29 | 0 | 0 | 0 | 0 | 29 | 29 |
+| **All measured tests** | 771 | 2 | 8056 | 82 | 16236 | 1633 | 2 | 8087 | 9 | 15416 | 25147 |
+
+| Corpus | Branch | pass | disagreement | refused | crashed | skipped | total |
+|---|---|---:|---:|---:|---:|---:|---:|
+| built-ins/ | main | 755 | 2 | 7913 | 82 | 15069 | 23821 |
+| built-ins/ | regex-matcher | 1616 | 2 | 7940 | 9 | 14254 | 23821 |
+| Extra filters | main | 16 | 0 | 143 | 0 | 1167 | 1326 |
+| Extra filters | regex-matcher | 17 | 0 | 147 | 0 | 1162 | 1326 |
+
+## TypeScript validity outcome and main survey
+
 `not-typescript` separates a checker rejection independently confirmed by stock
 TypeScript from remaining Adamic refusals. Only an Adamic checker diagnostic is
 eligible. The runner checks the exact adapted source, including the adapted
