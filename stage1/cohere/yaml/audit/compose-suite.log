@@ -1,0 +1,5 @@
+=== RUN   TestComposeMatchGo
+    compose_test.go:150: 36 repository files, 9216 cases, 13235527 compose answer bytes identical on all five sides
+--- PASS: TestComposeMatchGo (50.97s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	50.985s

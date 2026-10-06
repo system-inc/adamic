@@ -1,10 +1,40 @@
-# YAML port: lexer, CST, scalar and property checkpoints
+# YAML port: parser and composer checkpoints
 
-The Adamic lexer, CST parser, scalar and property resolvers and comparison drivers are implemented.
+The Adamic lexer, CST parser, scalar and property resolvers, composer and comparison drivers are implemented.
 All 36 repository files and generated cases match Go, with 9,272 scalar cases.
 Native sanitizers, Node source, emitted JavaScript and yaml 2.9.0 all agree.
-Fifteen port mutants are caught; nine compiler refusals and one runtime bug have proving programs.
-Document composition, unist conversion, the printer and formatting driver remain unfinished.
+Eighteen port mutants are caught; nine compiler refusals and one runtime bug have proving programs.
+Unist conversion, the printer and formatting driver remain unfinished.
+
+## Green composer step
+
+`composer.ts`, `directives.ts`, `composedNode.ts` and `composedDocument.ts`
+compose document streams, block and flow collections, pairs, aliases, tag and
+anchor properties, schema tests, and exact errors and warnings. `compose_main.ts`
+compares the formatter-facing tree fields, presence and ranges. Its comparison
+intentionally excludes scalar semantic values: date and binary payloads are not
+implemented, and the printer does not read them. This is not a general YAML
+object loader.
+
+36 repository files and 9,216 cases produced 13,235,527 identical answer bytes
+on Go, native under ASan/UBSan/LeakSanitizer, source Node, emitted JavaScript,
+and original yaml 2.9.0. The added 484 cases cover explicit core and YAML 1.1
+tags, sets, pairs, ordered maps, prototype properties, tag URI decoding,
+document boundaries and the 1,024-character implicit key limit. Baseline passed
+in 50.985s; the mutation suite passed in 24.322s. All three mutations compiled
+and exited zero with empty stderr on native and Node; only comparison caught
+lost document start markers (byte 241655), lost mapping values (6896), and
+skipped implicit key limits (13235125).
+
+```sh
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run TestComposeMatchGo > /tmp/stage1-yaml-compose-test.log 2>&1
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run TestComposeMutants > /tmp/stage1-yaml-compose-mutants.log 2>&1
+go vet ./stage1/cohere/yaml > /tmp/stage1-yaml-compose-vet.log 2>&1
+```
+
+Logs: [comparison](audit/compose-suite.log), [mutants](audit/compose-mutants.log),
+[lint](audit/compose-lint.log). Unist conversion is being implemented; printer,
+formatting driver and formatter throughput are not yet complete.
 
 ## Green schema-test step
 
@@ -32,7 +62,7 @@ ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./
 ```
 
 Logs: [suite](audit/schema-suite.log), [lint](audit/schema-lint.log).
-Document composition is being implemented but is not yet a green checkpoint.
+Document composition passed the later checkpoint above.
 The printer, comment attachment and formatting driver remain unfinished.
 
 ## Green property step
