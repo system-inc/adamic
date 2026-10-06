@@ -14,8 +14,11 @@ import (
 // layout the constructor's object literal has, for an object of that shape: a compare and a load,
 // inline. Any other object is looked up by name through the field cache, as is every other field:
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
-// adamic/nominal-class refuses it, so the shape is checked, never assumed.
+// adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
 func (e *emitter) fieldSlot(object string, name string, class int) string {
+	if slot := e.uniformFieldSlot(object, name); slot != "" {
+		return slot
+	}
 	lookup := fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
 	if class == 0 || !cName.MatchString(object) {
 		return lookup
