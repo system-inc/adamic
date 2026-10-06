@@ -1,0 +1,12 @@
+function scalar(flag: boolean): string | number { return flag ? 'x'.repeat(2) : 3; }
+function pick(flag: boolean): string | boolean { return flag ? 'x'.repeat(2) : true; }
+function describe<T>(value: T): string {
+    if (typeof value === 'string') { return 'text'; }
+    if (typeof value === 'number') { return 'number'; }
+    if (typeof value === 'boolean') { return 'boolean'; }
+    return 'other';
+}
+console.log(describe(scalar(false)));
+console.log(describe(pick(false)));
+console.log(describe(scalar(true)));
+console.log(describe(pick(true)));
