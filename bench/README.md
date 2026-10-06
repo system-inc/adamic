@@ -22,6 +22,12 @@ The runs are interleaved round by round, so a machine that slows down slows all 
 | `parallel_files.a` | 4,096 deterministic in-memory files, pure tokenization and summaries in parallel, merged in order |
 | `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
 
+## Parallel files, October 6, 2026
+
+`parallel_files.a` generates 4,096 files, tokenizes and summarizes them through pure functions, then merges in input order. Linux amd64, AMD EPYC 9V74, four quota-limited CPUs (`nproc` 5), clang 20.1.8, Node 24.19.0, Bun 1.3.14. Best of five interleaved rounds: native 1/2/4 threads **0.744/0.454/0.312 s**, Node **0.637 s**, Bun **0.866 s**. All answers match. Load before **0.11/3.16/6.23**, after **0.69/3.10/6.14**; tests had finished, but the longer load averages still include them.
+
+[Every round](parallel_files.measurements.log) and [the integration report](../docs/concurrency-integration.md) include memory, counts, proofs, limits and the 16-core Mac command. Node uses oracle/node.mjs for `.a` sources; Bun 1.3.14 executes `.a` directly. Both resolve the independent sequential shim; existing `.ts` programs remain unchanged.
+
 ## Noisy cloud numbers, October 5, 2026
 
 Not the record: a shared cloud container, 4 vCPUs (Intel Xeon @ 2.80GHz), Linux 6.18, load 0.74 before and 1.04 after. Across the five rounds one runtime's times on one program spread 7% to 40%, so differences under about 1.4x here mean little. The quiet Mac reruns this for the record. Adamic `0955c44`, clang 18.1.3, Node 24.21.0, Bun 1.3.14.

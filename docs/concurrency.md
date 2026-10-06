@@ -50,6 +50,6 @@ Audit additions to the runtime claims: `internal/native/library.go` (the actual 
 
 Additional runtime claims: `internal/native/runtime/region.c` initializes the slab/region marker used by sharing; `closure.c` will initialize result metadata once the ABI choice is agreed. Readonly Map iteration has an atomic iterator tally.
 
-Final runtime ABI decision from @system_adamic_runtime: `adamic_parallel_map(items, work, bool references)` takes the result reference flag explicitly, just as `adamic_array_new` does. No closure result metadata is needed. Runtime implementation, C proofs and measured costs are recorded in [concurrency-runtime.md](concurrency-runtime.md); source lowering and the parallel oracle variant remain the third pass.
+Final runtime ABI decision from @system_adamic_runtime: `adamic_parallel_map(items, work, bool references)` takes the result reference flag explicitly, just as `adamic_array_new` does. No closure result metadata is needed. Runtime implementation, C proofs and measured costs are recorded in [concurrency-runtime.md](concurrency-runtime.md); source lowering, the parallel oracle variant and the `.a` file benchmark are now integrated in [concurrency-integration.md](concurrency-integration.md).
 
 Inline-count follow-up: `internal/native/release_test.go` updates the merged premature-free mutant to exercise both the new header dispatch and the last-reference decision in `heap.c`.
