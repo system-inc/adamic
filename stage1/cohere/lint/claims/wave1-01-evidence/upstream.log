@@ -1,0 +1,824 @@
+go: downloading github.com/dlclark/regexp2/v2 v2.5.2
+go: downloading github.com/dlclark/regexp2 v1.11.5
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases
+=== RUN   TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite
+=== PAUSE TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite
+=== RUN   TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion
+=== PAUSE TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion
+=== RUN   TestConsistentTypeAssertionsFallsBackWhenHandedNilOptions
+=== PAUSE TestConsistentTypeAssertionsFallsBackWhenHandedNilOptions
+=== RUN   TestConsistentTypeAssertionsWrapsAnOperandOfEqualPrecedence
+=== PAUSE TestConsistentTypeAssertionsWrapsAnOperandOfEqualPrecedence
+=== RUN   TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes
+=== PAUSE TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case0
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case0
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case1
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case1
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case2
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case2
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case3
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case3
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case4
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case4
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case5
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case5
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case6
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case6
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case7
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case7
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case8
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case8
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case9
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case9
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case10
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case10
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case11
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case11
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case12
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case12
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case13
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case13
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case14
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case14
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case15
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case15
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case16
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case16
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case17
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case17
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case18
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case18
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case19
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case19
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case20
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case20
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case21
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case21
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case22
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case22
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case23
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case23
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case24
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case24
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case25
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case25
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case26
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case26
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case27
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case27
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case28
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case28
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case29
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case29
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case30
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case30
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case31
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case31
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case32
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case32
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case33
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case33
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case34
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case34
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case35
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case35
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case36
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case36
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case37
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case37
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case38
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case38
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case39
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case39
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case40
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case40
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case41
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case41
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case42
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case42
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case43
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case43
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case44
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case44
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case45
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case45
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case46
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case46
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case47
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case47
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case48
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case48
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case49
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case49
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case50
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case50
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case51
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case51
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case52
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case52
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case53
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case53
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case54
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case54
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case55
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case55
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case56
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case56
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case57
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case57
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case58
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case58
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case59
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case59
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case60
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case60
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case61
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case61
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case62
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case62
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case63
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case63
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case64
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case64
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case65
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case65
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case66
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case66
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case67
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case67
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case68
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case68
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case69
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case69
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case70
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case70
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case71
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case71
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case72
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case72
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case73
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case73
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case74
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case74
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case75
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case75
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case76
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case76
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case77
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case77
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case78
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case78
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case79
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case79
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case80
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case80
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case81
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case81
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case82
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case82
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case83
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case83
+=== RUN   TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case84
+=== PAUSE TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case84
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case0
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case46
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case69
+=== CONT  TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes
+=== CONT  TestConsistentTypeAssertionsWrapsAnOperandOfEqualPrecedence
+=== RUN   TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/declarator-with-annotation
+=== PAUSE TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/declarator-with-annotation
+=== RUN   TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/declarator-without-annotation
+=== PAUSE TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/declarator-without-annotation
+=== RUN   TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/untagged-template
+=== PAUSE TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/untagged-template
+=== RUN   TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/tagged-template
+=== PAUSE TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/tagged-template
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case23
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case45
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case44
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case43
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case42
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case41
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case40
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case39
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case38
+--- PASS: TestConsistentTypeAssertionsWrapsAnOperandOfEqualPrecedence (0.03s)
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case37
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case36
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case35
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case34
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case33
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case32
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case31
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case28
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case27
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case26
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case30
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case24
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case25
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case29
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case79
+=== CONT  TestConsistentTypeAssertionsFallsBackWhenHandedNilOptions
+--- PASS: TestConsistentTypeAssertionsFallsBackWhenHandedNilOptions (0.00s)
+=== CONT  TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion
+=== RUN   TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{}
+=== PAUSE TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{}
+=== RUN   TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"never"}
+=== PAUSE TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"never"}
+=== RUN   TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"angle-bracket",_"objectLiteralTypeAssertions":_"never"}
+=== PAUSE TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"angle-bracket",_"objectLiteralTypeAssertions":_"never"}
+=== RUN   TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"bogus"}
+=== PAUSE TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"bogus"}
+=== CONT  TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite
+=== RUN   TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/angle-bracket-inside-an-as
+=== PAUSE TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/angle-bracket-inside-an-as
+=== RUN   TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/satisfies-operand
+=== PAUSE TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/satisfies-operand
+=== RUN   TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/new-without-arguments
+=== PAUSE TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/new-without-arguments
+=== RUN   TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/new-with-arguments
+=== PAUSE TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/new-with-arguments
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case0
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case0
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case1
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case1
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case2
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case2
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case3
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case3
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case4
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case84
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case4
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case5
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case5
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case6
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case6
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case7
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case7
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case8
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case8
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case9
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case9
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case10
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case10
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case11
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case11
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case12
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case12
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case13
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case13
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case14
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case14
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case15
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case15
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case16
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case16
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case17
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case17
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case18
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case18
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case19
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case19
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case20
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case83
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case20
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case21
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case21
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case22
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case22
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case23
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case23
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case24
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case24
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case25
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case25
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case26
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case26
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case27
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case27
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case28
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case28
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case29
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case29
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case30
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case30
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case31
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case31
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case32
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case32
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case33
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case33
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case34
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case34
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case35
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case35
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case36
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case36
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case37
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case37
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case38
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case38
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case39
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case39
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case40
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case40
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case41
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case41
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case42
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case42
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case43
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case43
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case44
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case44
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case45
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case45
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case46
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case46
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case47
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case47
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case48
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case48
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case49
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case49
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case50
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case50
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case51
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case51
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case52
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case52
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case53
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case53
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case54
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case54
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case55
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case55
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case56
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case56
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case57
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case57
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case58
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case58
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case59
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case59
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case60
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case60
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case61
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case61
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case62
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case62
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case63
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case63
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case64
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case64
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case65
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case65
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case66
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case81
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case66
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case67
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case67
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case68
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case68
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case69
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case69
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case70
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case70
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case71
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case71
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case72
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case72
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case73
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case73
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case74
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case74
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case75
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case75
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case76
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case76
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case77
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case77
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case78
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case78
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case79
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case79
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case80
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case80
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case81
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case81
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case82
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case82
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case83
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case83
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case84
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case84
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case85
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case85
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case86
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case86
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case87
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case87
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case88
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case88
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case89
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case89
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case90
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case90
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case91
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case91
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case92
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case92
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case93
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case93
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case94
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case94
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case95
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case95
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case96
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case96
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case97
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case97
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case98
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case98
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case99
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case99
+=== RUN   TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case100
+=== PAUSE TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case100
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case80
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case57
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case68
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case67
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case66
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case65
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case64
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case63
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case62
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case61
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case60
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case82
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case59
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case58
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case12
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case22
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case21
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case20
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case19
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case18
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case17
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case16
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case15
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case14
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case13
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case74
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case78
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case77
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case76
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case75
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case71
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case51
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case56
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case55
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case54
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case53
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case52
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case48
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case50
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case49
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case72
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case70
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case6
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case11
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case10
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case73
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case9
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case8
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case7
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case47
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case3
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case5
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case4
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case2
+=== CONT  TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case1
+=== CONT  TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/declarator-with-annotation
+=== CONT  TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/untagged-template
+=== CONT  TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/tagged-template
+=== CONT  TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/declarator-without-annotation
+=== CONT  TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{}
+=== CONT  TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/angle-bracket-inside-an-as
+--- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case0 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case46 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case23 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case44 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case43 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case41 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case40 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case39 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case45 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case38 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case36 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case34 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case33 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case37 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case42 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case69 (0.04s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case35 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case31 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case28 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case26 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case30 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case24 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case27 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case25 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case79 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case29 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case32 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case81 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case57 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case80 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case68 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case67 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case66 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case65 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case64 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case63 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case62 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case83 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case82 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case59 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case58 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case12 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case22 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case21 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case61 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case84 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case60 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case18 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case20 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case16 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case19 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case17 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case13 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case78 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case74 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case15 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case14 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case77 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case75 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case71 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case51 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case56 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case76 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case54 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case53 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case52 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case48 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case72 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case50 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case70 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case55 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case73 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case10 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case6 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case9 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case11 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case47 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case7 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case5 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case49 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case1 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case4 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case8 (0.03s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case3 (0.03s)
+    --- PASS: TestConsistentTypeAssertionsStaysSilentOnUpstreamPassCases/case2 (0.04s)
+=== CONT  TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"bogus"}
+=== CONT  TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"angle-bracket",_"objectLiteralTypeAssertions":_"never"}
+=== CONT  TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"never"}
+--- PASS: TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion (0.00s)
+    --- PASS: TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{} (0.00s)
+    --- PASS: TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"bogus"} (0.00s)
+    --- PASS: TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"angle-bracket",_"objectLiteralTypeAssertions":_"never"} (0.00s)
+    --- PASS: TestConsistentTypeAssertionsDecoderReadsUpstreamsUnion/{"assertionStyle":_"never"} (0.00s)
+=== CONT  TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/new-with-arguments
+=== CONT  TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/new-without-arguments
+=== CONT  TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/satisfies-operand
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case0
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case51
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case100
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case99
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case97
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case98
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case96
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case95
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case94
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case93
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case92
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case91
+--- PASS: TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes (0.00s)
+    --- PASS: TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/declarator-with-annotation (0.02s)
+    --- PASS: TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/tagged-template (0.02s)
+    --- PASS: TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/declarator-without-annotation (0.02s)
+    --- PASS: TestConsistentTypeAssertionsOnSuggestionAndTemplateShapes/untagged-template (0.04s)
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case90
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case89
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case88
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case87
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case86
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case85
+--- PASS: TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite (0.00s)
+    --- PASS: TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/new-with-arguments (0.00s)
+    --- PASS: TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/new-without-arguments (0.00s)
+    --- PASS: TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/satisfies-operand (0.00s)
+    --- PASS: TestConsistentTypeAssertionsOnPrecedenceShapesUpstreamsCorpusDoesNotWrite/angle-bracket-inside-an-as (0.01s)
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case84
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case83
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case82
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case81
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case80
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case79
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case78
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case77
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case76
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case74
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case73
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case72
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case71
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case70
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case69
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case68
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case67
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case66
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case65
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case64
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case63
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case62
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case75
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case61
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case60
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case59
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case58
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case57
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case56
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case55
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case54
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case53
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case52
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case26
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case50
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case49
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case48
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case47
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case46
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case45
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case44
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case43
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case42
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case41
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case40
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case39
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case38
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case37
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case36
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case35
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case34
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case33
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case32
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case31
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case30
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case29
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case28
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case27
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case13
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case25
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case24
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case23
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case22
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case21
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case20
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case19
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case18
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case17
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case16
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case15
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case14
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case7
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case12
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case11
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case10
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case9
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case8
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case4
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case6
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case5
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case2
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case3
+=== CONT  TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case1
+--- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases (0.01s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case0 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case51 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case100 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case99 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case98 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case96 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case95 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case94 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case92 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case91 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case90 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case97 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case89 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case93 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case87 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case85 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case82 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case83 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case88 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case84 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case86 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case79 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case80 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case77 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case81 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case74 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case76 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case72 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case73 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case71 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case70 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case69 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case68 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case67 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case65 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case64 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case66 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case61 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case62 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case75 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case78 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case57 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case56 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case55 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case54 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case53 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case58 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case26 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case50 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case49 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case48 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case47 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case46 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case45 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case59 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case43 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case42 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case41 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case40 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case39 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case63 (0.03s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case37 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case36 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case35 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case34 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case33 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case60 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case31 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case52 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case29 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case32 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case27 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case44 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case30 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case24 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case28 (0.02s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case22 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case21 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case20 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case23 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case25 (0.03s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case38 (0.04s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case17 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case16 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case15 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case14 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case7 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case11 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case10 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case9 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case12 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case19 (0.01s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case13 (0.03s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case8 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case6 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case4 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case5 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case2 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case3 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case1 (0.00s)
+    --- PASS: TestConsistentTypeAssertionsFiresOnUpstreamFailCases/case18 (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.268s

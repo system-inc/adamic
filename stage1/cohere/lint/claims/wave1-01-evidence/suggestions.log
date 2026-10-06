@@ -1,0 +1,13 @@
+build exit=0
+case 0
+/tmp/adamic-gate/lint-wave1-01-suggestions-a8ji7nnr/witness.ts.txt:1:11
+  @typescript-eslint/consistent-type-assertions  Always prefer const x: T = { ... }.
+
+panic: unexpected suggestion shape
+
+goroutine 1 [running]:
+main.run({0x2eaf9b258cc0?, 0x2eaf9b379040?}, 0x0, 0x2eaf9b379040)
+	/workspace/adamic/cohere/adamic_wave1_probe.go:70 +0x8f8
+main.main()
+	/workspace/adamic/cohere/adamic_wave1_probe.go:143 +0x2f7
+run exit=2

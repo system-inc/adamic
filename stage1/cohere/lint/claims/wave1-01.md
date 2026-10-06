@@ -18,3 +18,9 @@ Positions 1, 2 and 3 are:
 No rule implementation has been written before this claim commit and push.
 Existing branch implementations are observations, not parity certifications by
 this worker. The remaining rule is not declared ported.
+
+## Outcome
+
+Consistent-type-assertions is blocked on the shared .a registration and suggestion
+record contracts. No partial rule is registered. Reproducible evidence and exact
+validation commands are in wave1-01-report.md and wave1-01-evidence/.
