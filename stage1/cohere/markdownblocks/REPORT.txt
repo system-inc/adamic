@@ -1,3 +1,94 @@
+Lists, block quotes, tables, code and HTML now have native layout components.
+4,314 source contexts agree with Go and the pinned fork, embedding off.
+Native/source/backend bytes match Go; 1,270 HTML frames and three HTML mutants pass.
+Native block component measures 3,815.8 documents/s, with parsing excluded.
+These are layout slices on Go trees; native Markdown parsing and width remain pending.
+
+HTML slice, October 6, 2026
+
+Raw code slice pushed: 174d3c063d93233d7f1891edc740b1715f9d2894.
+htmlblocks.ts ports all HTML-node layout from print.go: complete comments use
+hardlines, other HTML uses literal lines marked with the current indentation as
+root, and the final HTML node directly under root loses trailing JavaScript
+whitespace. The comment matcher and whitespace scanner use no regex. Literal
+lines preserve internal spaces/tabs and quote/list prefixes exactly. This also
+covers inline HTML nodes encountered by the same printer, not only block HTML.
+Go supplies node values, root/last path facts and exact line widths after root
+trimming. Native trims/classifies/builds docs independently. Go still supplies
+Markdown parsing, preprocessing, other unported printers and Unicode widths.
+No source-file-native formatter or full native parser is claimed.
+
+953 original + 1,218 list + 153 quote + 164 table + 1,316 code + 510 HTML cases
+= 4,314 contexts. HTML crosses 17 bodies, five nesting prefixes and six endings.
+Bodies include raw script/style/pre, comments, malformed comments, processing
+instructions, declarations, CDATA, custom elements, inline tags, blank lines,
+ignore-next and Unicode. Endings include spaces, tab, NBSP, U+2000 and BOM.
+876 physical files, 3,438 generated. Native frames: 2,969 lists, 2,897 quotes,
+654 tables, 4,218 code, 1,270 HTML and 221,604 words. Source Node/backend/native
+agree with actual Go Format. ASan/UBSan and LeakSanitizer pass. Original pinned
+fork's doc printer agrees on canonical docs and its complete Markdown parser/
+layout agrees with Go for all 4,314 source strings with embedding off.
+
+Commands (source /workspace/adamic-tools/env.sh first):
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-html-final
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownHTMLBlockLayout$' -count=1 -v -timeout 15m
+/tmp/markdown-html-test.log: PASS, 93.576s. Corpus and streams retained at
+/tmp/markdown-html-final. Cohere --no-cache --no-fix htmlblocks.ts and probe:
+/tmp/markdown-html-style.log: 276 rules, 2 checked, 100% Adamic-ready.
+go vet ./stage1/cohere/markdownblocks and git diff --check: exit 0.
+Combined touched-package gate and fresh scoped oracle follow this push.
+No compiler files were changed. Full repository gate not run.
+
+Three native output-only HTML mutants compile, exit 0, empty stderr:
+root-last trim disabled: generated div ending NBSP, byte 2832392.
+complete-comment predicate inverted: generated multiline comment, byte 2836129.
+literal MarkRoot replaced by DedentRoot: generated quote/div, byte 2739759.
+
+Three process runs with startup/protocol/output included; parsing/builds/fixture
+generation excluded. Native/source construct components too; Go/fork receive
+canonical docs, so workloads differ. Go docs 7530.9 documents/s (1.718508s),
+native 3815.8 (3.391709s), source Node 3760.4 (3.441625s), fork docs 3639.7
+(3.555781s). No end-to-end formatter speed claim. Setup/nproc/pins unchanged.
+
+Actual HTML log:
+
+=== RUN   TestMarkdownHTMLBlockLayout
+=== PAUSE TestMarkdownHTMLBlockLayout
+=== CONT  TestMarkdownHTMLBlockLayout
+    lists_test.go:260: original fork full Markdown parsing/layout off agrees on all 4314 source documents
+=== RUN   TestMarkdownHTMLBlockLayout/HTML_root_trim
+    lists_test.go:343: output-only native mutant caught by generated/html-layout/<div>
+        x  
+        </div> 
+         at byte 2832392
+=== RUN   TestMarkdownHTMLBlockLayout/HTML_comment_line
+    lists_test.go:343: output-only native mutant caught by generated/html-layout/<!-- a  
+        b	 -->
+         at byte 2836129
+=== RUN   TestMarkdownHTMLBlockLayout/HTML_literal_root
+    lists_test.go:343: output-only native mutant caught by generated/block/> <div>
+        x
+        </div> at byte 2739759
+=== NAME  TestMarkdownHTMLBlockLayout
+    lists_test.go:366: component throughput Go document layout 7530.9 documents/s, three runs 1.718508s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:366: component throughput native block/layout component 3815.8 documents/s, three runs 3.391709s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:366: component throughput source Node block/layout component 3760.4 documents/s, three runs 3.441625s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:366: component throughput original Node document layout 3639.7 documents/s, three runs 3.555781s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:372: 876 physical files, 3438 generated, 4314 whole-document contexts; 2969 native list frames, 221604 composed word nodes; Go/source/native/backend/original doc bytes identical
+    lists_test.go:373: 1270 native HTML frames
+    lists_test.go:374: 4218 native code frames
+    lists_test.go:375: 654 native table frames
+    lists_test.go:376: 2897 native quote frames
+--- PASS: TestMarkdownHTMLBlockLayout (93.57s)
+    --- PASS: TestMarkdownHTMLBlockLayout/HTML_root_trim (12.08s)
+    --- PASS: TestMarkdownHTMLBlockLayout/HTML_comment_line (11.10s)
+    --- PASS: TestMarkdownHTMLBlockLayout/HTML_literal_root (11.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	93.576s
+
+Prior code block report, retained:
+
 Native fenced and indented code block layout is green with embedding off.
 3,804 source documents agree with Go and the pinned fork; native bytes match Go.
 4,218 native code frames compose with tables, quotes, lists and inline words.

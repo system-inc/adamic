@@ -32,6 +32,11 @@ func TestMarkdownCodeBlockLayout(t *testing.T) {
 	testBlockLayout(t, "code")
 }
 
+func TestMarkdownHTMLBlockLayout(t *testing.T) {
+	t.Parallel()
+	testBlockLayout(t, "html")
+}
+
 func testBlockLayout(t *testing.T, slice string) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
@@ -89,7 +94,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			inputs = append(inputs, auditInput{Name: "generated/table-layout/edge/" + text, Text: text})
 		}
 	}
-	if slice == "code" {
+	if slice == "code" || slice == "html" {
 		for _, marker := range []string{"```", "````", "~~~~", "```````"} {
 			for _, info := range []string{"", "js", "json", "yaml", "toml", "css", "html", "text title=foo", "x {#id .class}"} {
 				for _, body := range []string{"", "a", "a\nb", "\n\nx\n", "a  \nb\t", "`a`", "```", "~~~~", "中😀"} {
@@ -113,6 +118,25 @@ func testBlockLayout(t *testing.T, slice string) {
 			for _, body := range []string{"a", "a  \nb\t", "\n\nx\n", "中😀"} {
 				text := indent + strings.ReplaceAll(body, "\n", "\n"+indent) + "\n"
 				inputs = append(inputs, auditInput{Name: "generated/code-layout/indent/" + text, Text: text})
+			}
+		}
+	}
+	if slice == "html" {
+		for _, body := range []string{"<div>\nx  \n</div>", "<script>\nx  \n</script>", "<style>\nx\t\n</style>", "<pre>\nx  \n</pre>", "<!-- a  \nb\t -->", "<!-->", "<!--->", "<!--a-->", "<?xml\nx  \n?>", "<!DOCTYPE html>", "<![CDATA[\nx  \n]]>", "<table>\n<tr>\nx\n</tr>\n</table>", "<x-a a='b'>\nx\n</x-a>", "a <em>\nx  \n</em> b", "<div>\n\n# h\n\n</div>", "<!-- prettier-ignore -->\n<div>  \nx\n</div>", "<div>中😀</div>"} {
+			for _, prefix := range []string{"", "> ", "> > ", "- ", "> - "} {
+				for _, ending := range []string{"", "  ", "\t", "\u00a0", "\u2000", "\ufeff"} {
+					text := body + ending + "\n"
+					lines := strings.Split(strings.TrimSuffix(text, "\n"), "\n")
+					text = prefix + lines[0] + "\n"
+					continuation := prefix
+					if strings.HasSuffix(prefix, "- ") {
+						continuation = strings.TrimSuffix(prefix, "- ") + "  "
+					}
+					for _, line := range lines[1:] {
+						text += continuation + line + "\n"
+					}
+					inputs = append(inputs, auditInput{Name: "generated/html-layout/" + text, Text: text})
+				}
 			}
 		}
 	}
@@ -265,6 +289,14 @@ func testBlockLayout(t *testing.T, slice string) {
 			{"code indentation", "' '.repeat(4)", "' '.repeat(3)"},
 		}
 	}
+	if slice == "html" {
+		mutantFile = "htmlblocks.ts"
+		mutations = []struct{ name, from, to string }{
+			{"HTML root trim", "if(frame.rootLast)", "if(false)"},
+			{"HTML comment line", "value.startsWith('<!--')", "!value.startsWith('<!--')"},
+			{"HTML literal root", "arena.add('r', '', 0, [literal])", "arena.add('d', '', 0, [literal])"},
+		}
+	}
 	for _, mutation := range mutations {
 		t.Run(mutation.name, func(t *testing.T) {
 			scratch := t.TempDir()
@@ -281,7 +313,7 @@ func testBlockLayout(t *testing.T, slice string) {
 				}
 				write(t, filepath.Join(scratch, "markdowninline", name), content)
 			}
-			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts"} {
+			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts"} {
 				content, err := os.ReadFile(name)
 				if err != nil {
 					t.Fatal(err)
@@ -338,6 +370,7 @@ func testBlockLayout(t *testing.T, slice string) {
 		t.Fatal(err)
 	}
 	t.Logf("%d physical files, %d generated, %d whole-document contexts; %d native list frames, %d composed word nodes; Go/source/native/backend/original doc bytes identical", files, len(inputs)-files, len(inputs), bytes.Count(data, []byte("\nL\t")), bytes.Count(data, []byte("\nW\t")))
+	t.Logf("%d native HTML frames", bytes.Count(data, []byte("\nH\t")))
 	t.Logf("%d native code frames", bytes.Count(data, []byte("\nC\t")))
 	t.Logf("%d native table frames", bytes.Count(data, []byte("\nT\t")))
 	t.Logf("%d native quote frames", bytes.Count(data, []byte("\nQ\t")))

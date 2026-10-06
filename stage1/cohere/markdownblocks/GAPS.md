@@ -6,6 +6,14 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native HTML layout boundary
+
+`htmlblocks.ts` prints HTML values with comment hardlines and marked-root literal
+lines, and scans final-root JavaScript whitespace without regex. Its inputs still
+come from Go AST/path facts and exact display widths. All five requested layout
+components now compose natively in the fixture driver. This does not close the
+native parser, preprocessing, Unicode-width or complete-block-printer gaps.
+
 ## Native code block layout boundary
 
 `codeblocks.ts` prints fenced and indented values with embedding off and computes

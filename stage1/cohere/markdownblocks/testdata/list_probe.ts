@@ -3,6 +3,7 @@ import { panic, programArguments, readTextFile } from 'adamic';
 import { decode, encode } from '../codec.ts';
 import { DocumentArena, printDocument } from '../document.ts';
 import { printList, type ListBlockInterface, type ListItemInterface } from '../lists.ts';
+import { printHTMLBlock } from '../htmlblocks.ts';
 import { printCodeBlock } from '../codeblocks.ts';
 import { printTable, type TableCellInterface } from '../tables.ts';
 import { printQuote } from '../quotes.ts';
@@ -80,6 +81,14 @@ for(const line of input.text.split('\n')) {
         );
         documents.push(arena.text(text, integer(fields[3] ?? '')));
     }
+    else if(kind === 'H')
+        documents.push(
+            printHTMLBlock(arena, {
+                rootLast: fields[1] === '1',
+                lineWidths: numbers(fields[2] ?? ''),
+                value: decode(fields[3] ?? ''),
+            }),
+        );
     else if(kind === 'C')
         documents.push(
             printCodeBlock(arena, {
