@@ -265,3 +265,13 @@ The harness can resume at an explicitly logged ADAMIC_RECOVERY_START while
 investigating, but reports such runs as partial. The default gate still
 checks every planned input. Successful input/output artifacts are removed;
 failed inputs and both output streams remain saved.
+
+## Continued recovery: incomplete expression tails
+
+Conditionals insert a zero-width ColonToken and missing false Identifier
+when the colon is absent. Optional chains insert a missing member name.
+Template expressions and template types insert an empty TemplateTail when
+the interpolation's closing brace is absent. The focused comparison passes
+in 16.820s. The wider continuation advances to input 307 in binder.ts,
+where an incomplete function return type must be recognized before its
+arrow token exists. Mutant anchors remain restricted to one exact site.

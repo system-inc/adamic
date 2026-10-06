@@ -60,6 +60,13 @@ export class Parser {
         this.next();
         return true;
     }
+    expectedToken(kind: string): number {
+        if(this.kind() === kind) {
+            return this.token();
+        }
+        this.error(1005, `'${tokenSpelling(kind)}' expected.`);
+        return this.make(kind, this.scanner.fullStart);
+    }
     literal(): number {
         const id = this.make(this.kind(), this.scanner.fullStart);
         const node = this.node(id);
@@ -1261,7 +1268,10 @@ export class Parser {
                 continue;
             }
             if(question >= 0) {
-                panic('optional chain missing member');
+                const name = this.identifier();
+                left = this.make('PropertyAccessExpression', pos, [left, question, name]);
+                this.node(left).optional = true;
+                return left;
             }
             if(this.kind() === 'ExclamationToken' && (this.scanner.flags & 1) === 0) {
                 this.next();
@@ -1285,15 +1295,22 @@ export class Parser {
         node.end = this.scanner.fullStart;
         return id;
     }
+    templateSpanLiteral(): number {
+        if(this.kind() === 'CloseBraceToken') {
+            this.scanner.rescanTemplate();
+            return this.templatePart();
+        }
+        this.expect('CloseBraceToken');
+        return this.make('TemplateTail', this.scanner.fullStart);
+    }
     templateType(): number {
         const pos = this.scanner.fullStart;
         const children = [this.templatePart()];
         while(true) {
             const start = this.scanner.fullStart;
             const type = this.type();
-            this.scanner.rescanTemplate();
-            const tail = this.kind() === 'TemplateTail';
-            const literal = this.templatePart();
+            const literal = this.templateSpanLiteral();
+            const tail = this.node(literal).kind === 'TemplateTail';
             children.push(this.make('TemplateLiteralTypeSpan', start, [type, literal]));
             if(tail) {
                 break;
@@ -1307,12 +1324,8 @@ export class Parser {
         while(true) {
             const spanPos = this.scanner.fullStart;
             const expression = this.allowInExpression();
-            if(this.kind() !== 'CloseBraceToken') {
-                panic('template missing closing brace');
-            }
-            this.scanner.rescanTemplate();
-            const tail = this.kind() === 'TemplateTail';
-            const literal = this.templatePart();
+            const literal = this.templateSpanLiteral();
+            const tail = this.node(literal).kind === 'TemplateTail';
             children.push(this.make('TemplateSpan', spanPos, [expression, literal]));
             if(tail) {
                 break;
@@ -1596,11 +1609,9 @@ export class Parser {
         if(operator === 'QuestionToken') {
             const question = this.token();
             const yes = this.allowInAssignment(false);
-            if(this.kind() !== 'ColonToken') {
-                panic('conditional missing colon');
-            }
-            const colon = this.token();
-            const no = this.assignment();
+            const present = this.kind() === 'ColonToken';
+            const colon = this.expectedToken('ColonToken');
+            const no = present ? this.assignment() : this.make('Identifier', this.scanner.fullStart);
             left = this.make('ConditionalExpression', pos, [left, question, yes, colon, no]);
         }
         return left;
