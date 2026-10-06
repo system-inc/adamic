@@ -4,7 +4,9 @@
 in-memory optional-property declaration adaptation. It resolves declarations
 through the checker, applies edits to the existing source overlay, and rechecks
 the whole program until no further eligible declaration is found. Source files
-on disk are unchanged. No language options or lowering rules were changed.
+on disk are unchanged. No language options or lowering rules were changed. The subsequent
+[return adaptation and next-layer survey](tsc-strictness-next-layer.md) has a
+separate report.
 
 ```ts
 // Before

@@ -3,7 +3,9 @@
 For Kirk and Ahra's design decision. The original survey was completed
 2026-10-06 without changing the language, compiler, or adapter. The subsequent
 [in-memory adapter implementation and re-measurement](tsc-strictness-adaptation.md)
-are recorded separately.
+are recorded separately. The next
+[return adaptation, argument survey and syntax census](tsc-strictness-next-layer.md)
+records the subsequent meter layer.
 
 The evidence favors keeping both strictness rules. In the exact-optional sample,
 96/100 findings describe values the implementation deliberately stores; honest

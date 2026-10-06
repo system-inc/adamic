@@ -41,6 +41,7 @@ type adaptation struct {
 	Rewrite             string `json:"rewrite"`
 	Removed             int    `json:"diagnostics_removed"`
 	DeclarationsChanged int    `json:"declarations_changed,omitempty"`
+	FunctionsChanged    int    `json:"functions_changed,omitempty"`
 }
 
 func main() { os.Exit(run(os.Args[1:], os.Stdout, os.Stderr)) }
@@ -252,6 +253,15 @@ func adaptations(paths []string, baselineErr error) (map[string]string, []adapta
 	}
 	if changed != 0 {
 		rewrites = append(rewrites, adaptation{Rewrite: optionalRewrite, Removed: initial - optionalDiagnosticCount(before), DeclarationsChanged: changed})
+	}
+	initialReturns := diagnosticCount(before, "7030")
+	overlay, changed, err = returnAdaptations(paths, overlay, before)
+	if err != nil {
+		return nil, nil, err
+	}
+	if changed != 0 {
+		_, after := load.LoadOverlay(paths, overlay)
+		rewrites = append(rewrites, adaptation{Rewrite: returnRewrite, Removed: initialReturns - diagnosticCount(after, "7030"), FunctionsChanged: changed})
 	}
 	return overlay, rewrites, nil
 }
