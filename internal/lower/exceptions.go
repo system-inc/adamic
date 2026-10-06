@@ -205,6 +205,10 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				visited[node.Comparator] = true
 				failing = l.libraryFailure(l.result.Functions[node.Comparator].Body, visited)
 			}
+		case ir.RegExpCall:
+			if node.Method == "replaceAll" || node.Method == "matchAll" {
+				failing = "RegExp global-flag validation"
+			}
 		case ir.StringCall:
 			switch {
 			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
