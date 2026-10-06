@@ -31,7 +31,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
 		}
-		return 0, false
+		return l.objectIntersection(proven)
 	}
 	switch {
 	case flags&checker.TypeFlagsNumberLike != 0:

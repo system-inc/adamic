@@ -595,6 +595,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "String.fromCodePoint(" + codes + ")"
 		}
 		return "String.fromCharCode(" + codes + ")"
+	case ir.ObjectCall:
+		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "prototypeHasOwnProperty" {
 			return "Number.prototype.hasOwnProperty(" + e.values(expression.Arguments) + ")"

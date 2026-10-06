@@ -148,6 +148,7 @@ typedef struct adamic_object {
 	adamic_heap heap;
 	const adamic_shape *shape;
 	const adamic_class *class;
+	bool frozen;
 	adamic_value slots[];
 } adamic_object;
 
@@ -206,6 +207,16 @@ static inline adamic_value *adamic_object_field(const adamic_object *object, con
 	}
 	return adamic_object_find(object, name, cache);
 }
+
+// Static Object methods (library_object.c). Returned collections and freeze own one reference.
+bool adamic_object_is(const adamic_heap *left, const adamic_heap *right);
+bool adamic_object_is_frozen(const adamic_heap *value);
+adamic_object *adamic_object_freeze(adamic_object *object);
+bool adamic_object_has_own(const adamic_object *object, const adamic_string *key);
+struct adamic_array *adamic_object_keys(const adamic_object *object);
+struct adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries);
+void adamic_object_assign(adamic_object *target, const adamic_object *source);
+void adamic_object_check_write(const adamic_object *object, const char *name);
 
 // adamic_array is an array (array.c). references says whether its elements are references.
 typedef struct adamic_array {

@@ -37,6 +37,12 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/library_object_keys.a", true, false},
+	{"internal/oracle/testdata/library_object_is.a", true, false},
+	{"internal/oracle/testdata/library_object_has_own.a", true, false},
+	{"internal/oracle/testdata/library_object_assign.a", true, false},
+	{"internal/oracle/testdata/library_object_freeze.a", true, false},
+	{"internal/oracle/testdata/library_object_freeze_write.a", true, false},
 	{"dedication/dedication.a", true, false},
 	// October 6 coverage: deeper dispatch, field order, ownership and subclass holders.
 	{"internal/oracle/testdata/class_oct6_deep.a", true, false},
