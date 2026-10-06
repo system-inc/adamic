@@ -133,3 +133,48 @@ mutants, regressions and why the measured result did not justify batching.
 Native phase and leaf tools live in `bridge/tsgo/profile/`; normal builds do not
 instrument native phases. Earlier six-rule measurements remain in
 [SIX_RULE_REPORT.md](SIX_RULE_REPORT.md).
+
+
+## Ten rules selected by finding volume
+
+`volume_suite.ts` runs the original six and the next ten default TypeScript
+rules. Selection began with Go counts of all 62 checker-dependent
+`@typescript-eslint` rules. The counter now also records all 197 checker-dependent
+rules across every family. These are the ten highest combined counts among the
+remaining `@typescript-eslint` rules on the pinned compiler corpus and pre-port
+repository manifest; higher-volume rules in other families remain unported:
+unsafe type assertions, unsafe member access, nullish coalescing, shadowing,
+unsafe enum comparisons, unsafe assignment, confusing void expressions,
+consistent returns, exhaustive switches and unbound methods.
+
+The runner loads once, parses each file with Adamic's parser, and emits complete
+canonical findings. After fix count and suggestion count, every fix contains
+byte start/end and escaped replacement. Each suggestion contains message ID,
+escaped message, fix count and those fix triples. Fix ordering and duplicate
+findings are preserved; lines sort by their complete canonical representation.
+This compares proposed edits without applying them or running suppressions.
+
+```sh
+/tmp/adamic build stage1/cohere/typeaware/volume_suite.ts -o /tmp/volume --tsgo /tmp/tsgo.a
+/tmp/volume /path/tsconfig.json /path/manifest
+ADAMIC_TSGO_TIMING=1 /tmp/volume /path/tsconfig.json /path/manifest --count
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/tsgo-typescript \
+ADAMIC_VOLUME_ARTIFACTS=/tmp/volume-validation \
+ADAMIC_VOLUME_REPOSITORY_MANIFEST=/path/pre-port-repository.manifest \
+go test -v -count=1 -timeout 30m ./stage1/cohere/typeaware \
+  -run '^TestVolumeAgreementAndMutants$' > /tmp/volume.log 2>&1
+```
+
+`testdata/count_volume.go` and `testdata/oracle_volume.go` build through overlays
+inside the pinned cohere module. They independently load programs and call its
+unchanged production rules, with one shared AST walk and production program views
+and file caches. They import no bridge code. The declaration roots from the
+config are retained when explicit manifests replace its ordinary roots; `.a`
+files are read as TypeScript with the compiler's non-TS-extension option.
+
+[Volume report](VOLUME_REPORT.md) records selection counts, byte comparisons,
+sanitizer and mutant evidence, timings, exact commands and limits. The additional
+compiler questions and their ownership are in
+[facts.md](../../../bridge/tsgo/facts.md). The fixed suite accepts default rule
+options and uses the original strict configs for both measured corpora. It explicitly
+refuses `noImplicitThis: false` until those special diagnostic variants are ported.

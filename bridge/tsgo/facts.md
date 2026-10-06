@@ -1,4 +1,4 @@
-# Checker facts for the six-rule pilot
+# Checker facts for native type-aware rules
 
 `tsgo_inspect` adds one function to ABI 1. Adamic calls it through the explicitly
 linked `tsgoInspect` prelude declaration. It borrows file/kind/question bytes,
@@ -97,3 +97,69 @@ fact bytes. These profiling runs are separate from throughput measurements.
 The public-call interval minus Go-body intervals estimates boundary overhead,
 including copies, cgo and timer overhead; it is not a pure cgo latency measure.
 CPU seconds can exceed wall time because background Go collection is concurrent.
+
+
+## Questions added for the next ten rules
+
+All questions retain schema 1, exact node selection, explicit UTF-8 byte lengths,
+UTF-16 field framing, and the existing ownership and released-handle checks.
+They supply compiler facts; all rule predicates and repair construction run in
+Adamic. Type-ID arguments must be canonical, nonzero IDs already issued by the
+same live program. A property name consumes the remaining bytes after its second
+LF, so embedded LF is not an extra argument.
+
+| Question | Compiler fact |
+| --- | --- |
+| `strict-this` | SourceFile's resolved `noImplicitThis` compiler option |
+| `assignable-types` LF source-ID LF target-ID | `isTypeAssignableTo` on those two types |
+| `widened-shape` | Raw node type passed through `getWidenedType`, with unnamed records |
+| `enum-types` | Union enum-literal constituents' parent enum type identities, in checker order |
+| `type-symbol` LF ID | The type's symbol name, or empty when absent |
+| `scope-locals` | SourceFile's binder locals tables and enum exports tables |
+| `contextual-shape` | `getContextualType(node)`, with false presence if absent |
+| `property-shape` LF ID LF name | Property's type at the selected node, with false presence if absent |
+| `call-returns` | Return types of every call signature of the raw node type |
+| `apparent-shape` LF ID | `getApparentType` of the issued type |
+| `call-parameters` LF ID | Apparent types of the first parameter of every nonempty call signature |
+| `call-count` LF ID | Number of call signatures of that type |
+| `symbol-origin` | Value declaration's source path for the node's symbol, or empty |
+| `type-origin` LF ID | Type symbol name and its declaration files/library membership |
+| `base-shapes` LF ID | Base types of a class/interface symbol's declared type |
+| `property-info` LF ID LF name | Property value declaration kind, initializer kind and first parameter shape |
+
+`widened-shape`, `contextual-shape`, `property-shape`, `call-returns`,
+`apparent-shape`, `call-parameters` and `base-shapes` use the existing type-graph
+wire schema with empty names, no rest marks, and the listed roots. A missing
+contextual/property type has false presence and no roots. Signature/base lists
+may be empty with true presence. Call-return types remain unconstrained.
+
+`assignable-types` returns one boolean. `enum-types` returns an ID list.
+`type-symbol` and `symbol-origin` return one string. `call-count` returns one
+natural number. `type-origin` returns symbol-presence; if present, name, count,
+then each declaration's source path, declaration-file boolean and the program's
+`IsSourceFileDefaultLibrary` boolean. `property-info` returns value-declaration
+presence; if present, declaration kind, initializer kind (empty if absent), first
+parameter identifier name (empty if absent or not an identifier), and first
+parameter annotation kind (empty if absent). These shapes deliberately do not
+answer whether a method is dangerous or a global is exempt.
+
+`scope-locals` requires a SourceFile. After the header it returns table count,
+then table kind (`locals` or `exports`), container kind/start/end, symbol count,
+and alphabetically sorted symbols. Each symbol is name, SymbolFlags, declaration
+count and declaration kind/start/end triples in compiler order. Adamic joins
+these byte spans to its own parser nodes, chooses enclosing scopes, applies the
+production rule's exemptions and renders its own source positions.
+
+Explicit root lists now retain configured `.d.ts` roots. An explicit `.a` root
+sets `AllowNonTsExtensions`, so the checker reads its TypeScript syntax directly.
+No content mapper or Adamic syntax translation is introduced.
+
+The volume cost probe accepts `property-info:NAME` as a command-line shorthand:
+one raw-shape query obtains the live ID, then N identical property-info calls
+are measured. The direct Go probe performs the same bootstrap outside its
+query-loop timer. This shorthand belongs only to the probes, not the C API.
+
+`strict-this` returns one boolean. The volume runner checks it once and refuses
+a program with `noImplicitThis` disabled: the special implicit-this diagnostic
+variants are not part of this strict-config port. Refusal is explicit before
+any finding is printed. The original six-rule runner is unaffected.

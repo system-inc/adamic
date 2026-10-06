@@ -78,7 +78,7 @@ func Open(configPath string, files []string) (*Program, error) {
 			}
 		}
 		for _, declaration := range config.FileNames() {
-			if strings.HasSuffix(declaration, ".d.ts") {
+			if false {
 				found := false
 				for _, root := range roots {
 					if root == declaration {

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 	"unicode/utf16"
 
@@ -35,11 +36,30 @@ func main() {
 		panic(err)
 	}
 	load := time.Since(started)
+	question := args[5]
+	if strings.HasPrefix(question, "property-info:") {
+		answer, err := program.Inspect(args[1], first, last, args[4], "raw-shape")
+		if err != nil {
+			panic(err)
+		}
+		// The first six fields (header, flags, count, first root) are ASCII.
+		var root string
+		for field := 0; field < 6; field++ {
+			newline := strings.IndexByte(answer, '\n')
+			length, err := strconv.Atoi(answer[:newline])
+			if err != nil {
+				panic(err)
+			}
+			root = answer[newline+1 : newline+1+length]
+			answer = answer[newline+1+length:]
+		}
+		question = "property-info\n" + root + "\n" + strings.TrimPrefix(question, "property-info:")
+	}
 	var total, initial time.Duration
 	units := 0
 	for index := 0; index < count; index++ {
 		before := time.Now()
-		answer, err := program.Inspect(args[1], first, last, args[4], args[5])
+		answer, err := program.Inspect(args[1], first, last, args[4], question)
 		if err != nil {
 			panic(err)
 		}

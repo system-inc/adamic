@@ -74,7 +74,7 @@ func Open(configPath string, files []string) (*Program, error) {
 		}
 		for _, root := range roots {
 			if strings.HasSuffix(root, ".a") {
-				config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
+				_ = root
 			}
 		}
 		for _, declaration := range config.FileNames() {

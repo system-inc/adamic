@@ -1,4 +1,4 @@
-// Checker facts for the six-rule native pilot. No lint predicates live here.
+// Checker facts for the native type-aware rules. No lint predicates live here.
 package checker
 
 import (
@@ -186,11 +186,49 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
-	case "options":
-		if question != mode || node.Kind != ast.KindSourceFile {
-			return "", fmt.Errorf("options requires a SourceFile")
+	case "symbol-origin":
+		if question != mode {
+			return "", fmt.Errorf("unexpected symbol-origin suffix")
 		}
-		out.yes(p.Compiler.Options().GetStrictOptionValue(p.Compiler.Options().StrictNullChecks))
+		symbol := c.GetSymbolAtLocation(node)
+		file := ""
+		if symbol != nil && symbol.ValueDeclaration != nil {
+			if f := ast.GetSourceFileOfNode(symbol.ValueDeclaration); f != nil {
+				file = f.FileName()
+			}
+		}
+		out.text(file)
+	case "type-origin", "property-info", "call-count":
+		split := strings.SplitN(question, "\n", 3)
+		if len(split) < 2 || (mode == "property-info" && len(split) != 3) || (mode != "property-info" && len(split) != 2) {
+			return "", fmt.Errorf("invalid metadata question")
+		}
+		id, err := strconv.ParseUint(split[1], 10, 64)
+		if err != nil || id == 0 || id > uint64(len(p.typesByID)) || strconv.FormatUint(id, 10) != split[1] {
+			return "", fmt.Errorf("unknown checker type identity")
+		}
+		subject := p.typesByID[id-1]
+		if mode == "call-count" {
+			out.number(uint64(len(c.GetSignaturesOfType(subject, checker.SignatureKindCall))))
+		} else if mode == "type-origin" {
+			writeSymbolOrigin(out, p, subject.Symbol())
+		} else {
+			writePropertyInfo(out, checker.Checker_getPropertyOfType(c, subject, split[2]))
+		}
+	case "scope-locals":
+		if question != mode || node.Kind != ast.KindSourceFile {
+			return "", fmt.Errorf("scope-locals requires a SourceFile")
+		}
+		scopeTables(out, node)
+	case "options", "strict-this":
+		if question != mode || node.Kind != ast.KindSourceFile {
+			return "", fmt.Errorf("%s requires a SourceFile", mode)
+		}
+		option := p.Compiler.Options().StrictNullChecks
+		if mode == "strict-this" {
+			option = p.Compiler.Options().NoImplicitThis
+		}
+		out.yes(p.Compiler.Options().GetStrictOptionValue(option))
 	case "assignable":
 		split := strings.Split(question, "\n")
 		if len(split) != 4 {
@@ -206,7 +244,43 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 			return "", e
 		}
 		out.yes(checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(node), c.GetTypeAtLocation(target)))
-	case "name":
+	case "assignable-types":
+		split := strings.Split(question, "\n")
+		if len(split) != 3 {
+			return "", fmt.Errorf("assignable-types requires two type identities")
+		}
+		selected := make([]*checker.Type, 2)
+		for i := range selected {
+			id, err := strconv.ParseUint(split[i+1], 10, 64)
+			if err != nil || id == 0 || id > uint64(len(p.typesByID)) || strconv.FormatUint(id, 10) != split[i+1] {
+				return "", fmt.Errorf("unknown checker type identity")
+			}
+			selected[i] = p.typesByID[id-1]
+		}
+		out.yes(checker.Checker_isTypeAssignableTo(c, selected[0], selected[1]))
+	case "enum-types":
+		if question != mode {
+			return "", fmt.Errorf("unexpected enum question suffix")
+		}
+		g := &graph{program: p, checker: c}
+		subject := c.GetTypeAtLocation(node)
+		parts := []*checker.Type{subject}
+		if subject.Flags()&checker.TypeFlagsUnion != 0 {
+			parts = subject.Types()
+		}
+		var bases []uint64
+		for _, part := range parts {
+			if part.Flags()&checker.TypeFlagsEnumLiteral == 0 {
+				continue
+			}
+			base := part
+			if symbol := part.Symbol(); symbol != nil && symbol.Flags&ast.SymbolFlagsEnumMember != 0 && symbol.ValueDeclaration != nil && symbol.ValueDeclaration.Parent != nil {
+				base = c.GetTypeAtLocation(symbol.ValueDeclaration.Parent)
+			}
+			bases = append(bases, g.id(base))
+		}
+		out.ids(bases)
+	case "name", "type-symbol":
 		split := strings.Split(question, "\n")
 		if len(split) != 2 {
 			return "", fmt.Errorf("name requires a type identity")
@@ -215,7 +289,15 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 		if err != nil || id == 0 || id > uint64(len(p.typesByID)) || strconv.FormatUint(id, 10) != split[1] {
 			return "", fmt.Errorf("unknown checker type identity")
 		}
-		out.text(c.TypeToString(p.typesByID[id-1]))
+		if mode == "type-symbol" {
+			name := ""
+			if symbol := p.typesByID[id-1].Symbol(); symbol != nil {
+				name = symbol.Name
+			}
+			out.text(name)
+		} else {
+			out.text(c.TypeToString(p.typesByID[id-1]))
+		}
 	case "declarations":
 		if question != mode {
 			return "", fmt.Errorf("unexpected declaration question suffix")
@@ -256,15 +338,66 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 		}
 		write(symbol)
 		write(node.LocalSymbol())
-	case "raw-type", "type", "base-type", "signature", "raw-shape", "type-shape", "signature-shape":
-		if question != mode {
+	case "call-parameters", "apparent-shape", "base-shapes", "call-returns", "property-shape", "contextual-shape", "widened-shape", "raw-type", "type", "base-type", "signature", "raw-shape", "type-shape", "signature-shape":
+		if question != mode && mode != "property-shape" && mode != "call-parameters" && mode != "apparent-shape" && mode != "base-shapes" {
 			return "", fmt.Errorf("unexpected type question suffix")
 		}
-		g := &graph{program: p, checker: c, seen: make(map[*checker.Type]bool), names: !strings.HasSuffix(mode, "-shape")}
+		g := &graph{program: p, checker: c, seen: make(map[*checker.Type]bool), names: !strings.HasSuffix(mode, "-shape") && mode != "call-returns" && mode != "call-parameters" && mode != "base-shapes"}
 		var roots []uint64
 		var rest []bool
 		present := true
-		if mode == "signature" || mode == "signature-shape" {
+		if mode == "call-parameters" || mode == "apparent-shape" || mode == "base-shapes" {
+			split := strings.Split(question, "\n")
+			if len(split) != 2 {
+				return "", fmt.Errorf("type metadata requires an identity")
+			}
+			id, err := strconv.ParseUint(split[1], 10, 64)
+			if err != nil || id == 0 || id > uint64(len(p.typesByID)) || strconv.FormatUint(id, 10) != split[1] {
+				return "", fmt.Errorf("unknown checker type identity")
+			}
+			subject := p.typesByID[id-1]
+			if mode == "apparent-shape" {
+				roots = append(roots, g.add(checker.Checker_getApparentType(c, subject)))
+			} else if mode == "base-shapes" {
+				symbol := subject.Symbol()
+				if symbol != nil && symbol.Flags&(ast.SymbolFlagsClass|ast.SymbolFlagsInterface) != 0 {
+					for _, base := range checker.Checker_getBaseTypes(c, checker.Checker_getDeclaredTypeOfSymbol(c, symbol)) {
+						roots = append(roots, g.add(base))
+					}
+				}
+			} else {
+				for _, signature := range c.GetSignaturesOfType(subject, checker.SignatureKindCall) {
+					params := checker.Signature_parameters(signature)
+					if len(params) > 0 {
+						roots = append(roots, g.add(checker.Checker_getApparentType(c, c.GetTypeOfSymbolAtLocation(params[0], node))))
+					}
+				}
+			}
+		} else if mode == "call-returns" {
+			for _, signature := range c.GetSignaturesOfType(c.GetTypeAtLocation(node), checker.SignatureKindCall) {
+				roots = append(roots, g.add(c.GetReturnTypeOfSignature(signature)))
+			}
+		} else if mode == "property-shape" {
+			split := strings.SplitN(question, "\n", 3)
+			if len(split) != 3 {
+				return "", fmt.Errorf("property-shape requires type identity and property name")
+			}
+			id, err := strconv.ParseUint(split[1], 10, 64)
+			if err != nil || id == 0 || id > uint64(len(p.typesByID)) || strconv.FormatUint(id, 10) != split[1] {
+				return "", fmt.Errorf("unknown checker type identity")
+			}
+			property := checker.Checker_getPropertyOfType(c, p.typesByID[id-1], split[2])
+			present = property != nil
+			if present {
+				roots = append(roots, g.add(c.GetTypeOfSymbolAtLocation(property, node)))
+			}
+		} else if mode == "contextual-shape" {
+			t := checker.Checker_getContextualType(c, node, checker.ContextFlagsNone)
+			present = t != nil
+			if present {
+				roots = append(roots, g.add(t))
+			}
+		} else if mode == "signature" || mode == "signature-shape" {
 			switch node.Kind {
 			case ast.KindCallExpression, ast.KindNewExpression, ast.KindTaggedTemplateExpression:
 			default:
@@ -308,8 +441,11 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 			}
 		} else {
 			t := c.GetTypeAtLocation(node)
-			if mode != "raw-type" && mode != "raw-shape" {
+			if mode != "raw-type" && mode != "raw-shape" && mode != "widened-shape" {
 				t = constrained(c, t)
+			}
+			if mode == "widened-shape" {
+				t = checker.Checker_getWidenedType(c, t)
 			}
 			if mode == "base-type" {
 				t = checker.Checker_getBaseTypeOfLiteralType(c, t)

@@ -2,8 +2,10 @@
  * Inputs are borrowed UTF-8 bytes for the duration of a call, never terminated.
  * data may be NULL only when length is zero. C copies inputs before entering Go.
  * Paths must contain no NUL. Explicit file names are relative to the config's
- * directory; an empty list uses the config's roots. Query paths are relative to
- * the process working directory. Positions count UTF-8 bytes, starting at zero.
+ * directory; an empty list uses the config's roots. Configured .d.ts roots are
+ * retained with explicit roots. Explicit .a roots are read as TypeScript.
+ * Query paths are relative to the process working directory. Positions count
+ * UTF-8 bytes, starting at zero.
  * Queries use half-open AST ranges, including leading trivia; EOF is an error.
  *
  * Each successful create returns an owned, nonzero handle. Release it exactly
@@ -41,7 +43,7 @@ int tsgo_query(tsgo_handle handle, tsgo_view file, uint64_t position, tsgo_resul
  * same ownership as every other output. Flags are pinned to this checker.
  * No rule predicate is applied by the bridge. */
 int tsgo_type_parts(tsgo_handle handle, tsgo_view file, uint64_t start, uint64_t end, tsgo_view kind, tsgo_buffer *parts, tsgo_buffer *error);
-/* Six-rule pilot facts, schema version 1, documented in bridge/tsgo/facts.md.
+/* Native type-aware rule facts, schema version 1, documented in bridge/tsgo/facts.md.
  * Exact node selection and buffer ownership are identical to tsgo_type_parts.
  * question is borrowed UTF-8 with an explicit byte length. Supported questions:
  * raw-type, type (constrained), base-type (constrained and literal-widened),
@@ -50,6 +52,13 @@ int tsgo_type_parts(tsgo_handle handle, tsgo_view file, uint64_t start, uint64_t
  * (the corresponding graph with empty names), name LF type-ID (TypeToString for
  * a previously returned type ID in this live program), and
  * assignable LF target-start LF target-end LF target-kind in this same file.
+ * Additional compiler facts: strict-this (resolved noImplicitThis),
+ * widened-shape, enum-types, scope-locals,
+ * contextual-shape, call-returns, symbol-origin; assignable-types LF source-ID
+ * LF target-ID; name/type-symbol/type-origin/call-count/apparent-shape/
+ * base-shapes/call-parameters LF type-ID; property-shape/property-info LF type-ID
+ * LF property-name. These return types, signatures, binder tables, declaration
+ * shapes or declaration origins, never a lint decision. See facts.md for fields.
  * Unsupported questions and malformed/inexact targets are refused.
  * Facts contain no Go pointers. Type IDs are opaque, program-scoped, borrowed
  * identities, usable for equality and name queries while that program is live. Release

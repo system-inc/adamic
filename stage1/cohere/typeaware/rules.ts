@@ -19,7 +19,7 @@ const mergingMessage =
     'A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.';
 const plusAllowed = 'string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`';
 
-function unsafeAssignment(
+export function unsafeAssignment(
     senderFacts: Types,
     sender: TypeFact,
     receiverFacts: Types,
