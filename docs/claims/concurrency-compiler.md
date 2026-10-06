@@ -105,3 +105,27 @@ are conservatively refused rather than adapted from their native object layout.
 Concurrency fixtures have a separate oracle list, so counts.md native baseline
 rows remain pending runtime integration. No full repository-wide test suite or
 exhaustive TypeScript conformance run was performed.
+
+## ABI revision
+
+The runtime owner's subsequent decision replaces closure result metadata with
+an explicit third parameter:
+
+```c
+adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references);
+```
+
+The compiler emits this declaration and passes Result.IsReference() directly.
+The adapter still preserves closure identity and shared global marking roots;
+it no longer writes result_references. The ABI unit check covers both false
+(number results) and true (string results), and rejects metadata writes.
+Native fixture gating on codex/concurrency remains unchanged. The fetched
+runtime branch still declared the previous two-argument signature during this
+revision, so the earlier native integration results document the previous ABI;
+updated native integration requires the runtime owner's three-argument update.
+Required compiler packages and the full oracle are rerun for this revision.
+
+Revision verification: lower/javascript packages passed; the full oracle passed
+in 17.636s (/tmp/concurrency-oracle-v2.log); the ABI unit check passed in 0.007s
+(/tmp/concurrency-abi-v2.log). All six mutants were rerun and caught by the same
+witnesses, with all source restored (/tmp/concurrency-mutants-v2.log).
