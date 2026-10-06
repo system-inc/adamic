@@ -1,3 +1,160 @@
+Two native slices are green: AST preprocessing and tokenizer input chunking.
+5,099 AST contexts and 79,873 input-chunk cases agree with Go and the original fork.
+Six new output mutants caught; sanitizer, leak and compiler checks pass.
+Chunking: native 130k, Go 157k, original Node 109k texts/s, transport included.
+Printer AstPath, tokenizer events and full mdast construction remain unfinished.
+
+
+Native tokenizer input chunking slice, October 6, 2026
+
+First green slice committed and pushed:
+644be3eb85c96d24ef6bd4feebeaee477cbb5134 Port Markdown AST preprocessing to native numeric trees
+/tmp/markdown-ast-push.log: origin advanced7963d53..644be3e, exit0.
+
+Built inputChunks.ts and testdata/chunks_probe.ts. Ports micromark/lib/preprocess.js
+single complete call with end=true, state for state, no native regular expressions.
+Numeric UTF-16 input preserves every unit, including lone surrogates. Exact text
+chunk boundaries and negative virtual codes compare. Original null EOF is mapped
+explicitly to Go's EOF code0; real NUL becomes65533. Streaming calls are unported.
+Actual Go private preprocess is called through an overlay bridge; actual pinned
+micromark factory li is exposed by reference inside the unchanged original bundle
+in memory, using checked unique anchors. Bundle bytes match the scratch installed
+fork at /tmp/adamic-markdown-blocks-fork. Function bodies/constants are unchanged.
+
+ ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test ./stage1/cohere/markdownblocks -run '^TestMicromarkInputChunks$' -count=1 -v -timeout 20m
+/tmp/markdown-chunks-green.log PASS22.529s,79,873 cases:
+1empty+4,943layout documents+65,536single units+9,330sequences+63column cases.
+Every physical repository/submodule Markdown file is included (876files).
+Native ASan/UBSan, source Node, JS backend, actual original fork and Go agree.
+Leak check is empty. All three native output-only mutants compile and exit0,
+empty stderr, then fail chunk bytes:
+- initial BOM65279 becomes65278: unit/65278 byte0;
+- tab stop divisor4 becomes3: cohere/TypeScript/packages/typescript/vendor/vscode-jsonrpc/README.md byte3765;
+- CRLF condition LF becomesHTAB: cohere/TypeScript/.github/pull_request_template.md byte15.
+Three-run end-to-end rates, identical numeric input/chunk output transport and
+startup included: actualGo147,288.4/native143,932.7/actualoriginalNode126,172.3
+texts/s. These mixed-corpus measurements include many one-unit probes; they are
+not full Markdown parsing rates. Shared machine with another scoped test running.
+/tmp/markdown-chunks-lint.log:276rules,2checked,zero,100%Adamic-ready.
+
+Full tokenizer events, rollback, resolver/subtokenization machinery, full mdast
+and printer AstPath remain unfinished. AST preprocessing is standalone native;
+it has not replaced the existing layout driver's Go preprocessing/path fixtures.
+All original7embedding disagreements/14outputs remain in GAPS.md, embedding off.
+No compiler-owned or prior inline files changed. No PR.
+
+Final checks on the updated Markdown corpus:
+ ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test ./stage1/cohere/markdownblocks -run '^(TestMicromarkInputChunks|TestWholeDocumentOraclePreflight)$' -count=1 -v -timeout 20m
+/tmp/markdown-chunks-final.log PASS97.338s: chunking PASS22.10s, all79,873 cases
+and all3native mutants; source/backend, actualGo/originalfork, sanitizers/leaks pass.
+Final chunk rates Go156,604.2/native130,285.8/originalNode109,166.8 texts/s.
+Whole-source preflight PASS75.22s:953/953off,942/953auto; all7original witnesses,
+all14complete outputs and source hashes retained.11auto disagreements are named.
+The existing preflight's3output-only mutants also rerun: heading prefix caught
+in CLAUDE.md byte1, list marker byte618, fence length byte3022. These are reruns,
+not counted among the6new native mutants. Full-source Go311.1/Node199.1 docs/s;
+no native full-source parser exists, so those are baselines only.
+
+ ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test ./stage1/cohere/markdownblocks -run '^(TestMarkdownASTPreprocessing|TestMarkdownWhitespaceLayout)$/^$' -count=1 -v -timeout 20m
+/tmp/markdown-ast-chunks-final-regression.log PASS308.052s:
+AST parent PASS144.66s,5,099contexts, all original/native/source/backend/Go facts
+oracles and leak checks. Final AST rates Go1,330.4/native1,156.6/Node1,619.1 docs/s.
+Layout parent PASS163.39s,4,943embedding-off docs;206,948whitespace nodes x6modes,
+225,716words;3,124lists,2,981quotes,717tables,4,236code,1,486HTMLframes.
+All full-source Go/fork, native/source/backend/docs agree, sanitation/leaks pass.
+This filters named mutant subtests; parents execute all other checks despite
+Go's '[no tests to run]' suffix. New output mutants already passed both full gates.
+Final layout components Go6,206.7/native2,880.7/sourceNode3,102.6/originalNode2,581.3
+are different workloads, not a full native Markdown speed comparison.
+/tmp/markdown-ast-harness-final.log also PASS133.979s: same complete parent after
+hardening the comparison's result-count check, before the final GAPS corpus edit.
+
+ /tmp/cssstrings-cohere --no-cache --no-fix stage1/cohere/markdownblocks/ast*.ts stage1/cohere/markdownblocks/inputChunks.ts
+/tmp/markdown-ast-chunks-lint-final.log:276rules,9checked,zero,100%Adamic-ready.
+ go vet ./... -> /tmp/markdown-ast-chunks-vet-final.log: exit0, empty.
+ gofmt -l on all9changed Go files -> /tmp/markdown-ast-chunks-gofmt-final.log: empty.
+ git diff --check: exit0, empty. Full package/repository gates not run.
+Pinned cohere715ba94f3608a6500086b1076ce5cb7e51b836db, fork based on Prettier3.9.6;
+markdown bundle SHA256 c2b90eeee96c3fc37516c34b4ca63bdb498975a30132c7e624b681c5669da6f5.
+The implementation/report commit follows; final reply records its SHA and push.
+
+
+Native AST preprocessing slice, October 6, 2026
+
+Continued codex/stage1-markdown-blocks from pushed 7963d5323e46f1d2a2b2a34addba3b64cee990c6.
+Fetched origin, read CLAUDE.md whole, read upstream preprocess/astpath/mdast node
+and named new modules whole before editing. No compiler-owned or inline files changed.
+Runtime cloud skill applied; restricted network allows GitHub/npm/Go destinations.
+Setup logged to /tmp/markdown-ast-setup.log: Go ready0s; clang ready1s; Node ready1s;
+submodules ready1s; cache warm18s; done18s. nproc5; cgroup400000/100000;17.6GB.
+Go1.27.1, Node24.19.0, clang20.1.8, /workspace/adamic-tools/env.sh.
+
+Built astArena.ts, astWalk.ts, astSource.ts, astLists.ts, astPreprocess.ts.
+Driver testdata/ast_probe.ts formats unprocessed AST fixtures to projected AST
+stdout. astProtocol.ts transports every preprocessing input/output field and
+shared position identity. Numeric child edges avoid owning cycles. The six passes
+are raw capture, continuous-text merge, indented-code flags, original image alt,
+list alignment and sentences with accidental wiki-link protection. Existing
+source splitter supplies native words/whitespace. This is not a source-file parser
+or the printer AstPath; layout fixtures still use Go's parse/preprocess/path facts.
+The test bridge alone builds parser fixtures and actual Go expected AST results.
+Actual original oracle calls pinned printers.mdast.preprocess unchanged; bundle
+bytes checked against cohere. Fork adds unused originalLabelText, omitted by Go
+and this projection. Coordinates compare in UTF-16; shared position identity is
+canonicalized by first encounter, not collapsed by equal coordinates.
+One synthetic AST has adjacent text children: both actual preprocessors drop raw
+while merging and then throw. Native returns the same observed error as a value;
+Node adapter adds Go's markdown prefix. Process exit equivalence is not claimed.
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ ADAMIC_MARKDOWNAST_KEEP=/tmp/markdown-ast-final
+ go test ./stage1/cohere/markdownblocks -run '^TestMarkdownASTPreprocessing$' -count=1 -v -timeout 20m
+/tmp/markdown-ast-green.log: PASS290.759s, 5,099 contexts: all4,943 layout documents
+(876 physical repository/submodule files +4,067 generated),155 generated cases at
+five tab widths,1 synthetic AST. Actual parsed Go, actual Go from AST transport,
+actual original Node, source Node, native ASan/UBSan, JS backend and leaks agree.
+Output-only native mutants compile, exit0 and empty stderr, then fail AST bytes:
+- raw source slice becomes decoded value: cohere/TypeScript/tsc/CHANGES.md byte55395;
+- accidental wiki paragraph protection inverted: CLAUDE.md byte52;
+- multi-item modulo alignment inverted: README.md byte29216.
+Benchmark three end-to-end runs, same initial AST and serialized output transport,
+parser excluded on ALL sides: Go1,305.5/native1,116.0/originalNode1,723.8 documents/s.
+This closes preprocessing behavior, not full-source Markdown throughput. Shared
+machine timings; no speedup over Go or Node is claimed for this AST corpus.
+
+Initial lower failed on member postfix increment as an expression, NotYet
+'a PostfixUnaryExpression'. gaps/7_postfix_property.ts minimizes it; Node0/1,
+expected NotYet. Separate assignment and increment statements fix production.
+/tmp/markdown-ast-gaps.log initially failed because console.log(number) violates
+Adamic's string console API; corrected witness interpolates numbers. Final
+/tmp/markdown-ast-gaps-final.log: PASS0.549s, all6 representation witnesses.
+An initial mutant used a two-occurrence anchor; harness refused it. The final
+mutant targets the unique multi-item if. /tmp/markdown-ast-final.log PASS324.871s
+is superseded: its Go benchmark included parsing. Final fair Go --facts adapter
+uses actual private preprocessing with the SAME tree transport as Node/native.
+Lint initially found direct caller counter mutation; now AstArena.reservePosition
+owns it. /tmp/markdown-ast-lint-final2.log: 276rules,7checked,zero,100%Adamic-ready.
+
+Corpus generation extracted unchanged from lists_test.go into blockCorpus.
+ ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test ./stage1/cohere/markdownblocks -run '^TestMarkdownWhitespaceLayout$/^$' -count=1 -v -timeout 20m
+/tmp/markdown-ast-layout-regression.log PASS201.440s: all4,943 documents match
+actual Go/full fork with embedding off, native/source/backend/doc printer agree;
+206,733 whitespace nodes in six modes match actual private Go/fork policy.
+The regex filters named mutant subtests only; the parent runs every oracle,
+sanitation/leak and benchmark check, despite Go's '[no tests to run]' suffix.
+Observed component rates Go5,100.0/native2,237.6/sourceNode2,967.2/originalNode2,335.6;
+these layout component workloads differ, as recorded in the earlier report.
+
+ ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(classes.a|class_as_interface.a|objects.a|maybe_number_slots.a|reuse_arrays.a|maps_and_text.a|array_from.a)$' -count=1 -v -timeout 10m
+/tmp/markdown-ast-compiler-oracle.log PASS3.271s:7fixtures; native0hits21misses,
+Node0hits14misses. go vet ./... -> /tmp/markdown-ast-vet.log: exit0, empty.
+Full repository/package gates not run; scoped complete preprocessing, accumulated
+layout regression and uncached compiler fixture selection are the exact checks.
+Seven original Go/fork embedding disagreements and all14 complete outputs remain
+in GAPS.md unchanged. Embedding stays off. No PR. Commit/push recorded below.
+
+Historical report follows.
+
 Seven more native Markdown slices are green and pushed; full parsing is unfinished.
 4,943 composed documents match Go and the pinned fork with embedding off.
 Widths: 1,205,496 cases; prose splitting: 1,180,938; decoding: 2,242,268.
