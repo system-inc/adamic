@@ -12,7 +12,10 @@ import (
 	"github.com/system-inc/cohere/internal/edit"
 	"github.com/system-inc/cohere/internal/lint/report"
 	"github.com/system-inc/cohere/internal/lint/rule"
+	adamic "github.com/system-inc/cohere/internal/lint/rules/adamic"
+	base "github.com/system-inc/cohere/internal/lint/rules/base"
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
+	nexus "github.com/system-inc/cohere/internal/lint/rules/nexus"
 	"os"
 	"sort"
 	"strings"
@@ -108,7 +111,7 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v", path, file.Diagnostics()))
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments}
+	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate}
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
 	for _, subject := range selected {
@@ -117,6 +120,13 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 		}
 		ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
 		var options any
+		if subject.Name == "no-plusplus" && fields[5] != "" {
+			var decoded rules.NoPlusplusOptions
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+			options = decoded
+		}
 		if subject.Name == "eqeqeq" {
 			options = rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}
 		}

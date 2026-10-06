@@ -4,3 +4,5 @@ validation/*.log -whitespace
 # Profiling logs also preserve raw oracle/tool output.
 performance/*.log -whitespace
 performance/*-callgrind.stderr -whitespace
+
+volume_evidence/*.log -whitespace
