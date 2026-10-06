@@ -818,6 +818,7 @@ double adamic_date_get(const adamic_object *date, int field);
 double adamic_date_set(adamic_object *date, int field, size_t count, const double *arguments);
 double adamic_date_parse_iso(const adamic_string *text);
 adamic_string *adamic_date_iso(const adamic_object *date);
+adamic_string *adamic_date_json(const adamic_object *date);
 adamic_string *adamic_date_format(const adamic_object *date, int style);
 
 #endif

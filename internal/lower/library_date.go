@@ -2,7 +2,6 @@ package lower
 
 import (
 	"os"
-	"regexp"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -26,35 +25,12 @@ func (l *lowering) dateRefusal(node *ast.Node) error {
 	return nil
 }
 
-// Accept constant ISO input and V8-rendered strings; arbitrary legacy parsing stays NotYet.
-var dateISO = regexp.MustCompile(`^(?:[0-9]{4}|[+-][0-9]{6})(?:-[0-9]{2}(?:-[0-9]{2})?)?(?:T[0-9]{2}:[0-9]{2}(?::[0-9]{2}(?:\.[0-9]+)?)?(?:Z|[+-][0-9]{2}:[0-9]{2})?)?$`)
-
-var dateZone = regexp.MustCompile(`[+-][0-9]{2}:[0-9]{2}$`)
-
-var dateRFC = regexp.MustCompile(`^(Sun|Mon|Tue|Wed|Thu|Fri|Sat), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4,6} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$`)
-var dateNativeString = regexp.MustCompile(`^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{2} [0-9]{4,6} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT\+0000 \(Coordinated Universal Time\)$`)
-
+// Dynamic strings can select local legacy forms, so all parsing uses the explicit UTC contract.
 func (l *lowering) dateString(node *ast.Node) (ir.Expression, error) {
-	if skipped := ast.SkipParentheses(node); skipped.Kind == ast.KindCallExpression {
-		callee := ast.SkipParentheses(skipped.AsCallExpression().Expression)
-		if callee.Kind == ast.KindPropertyAccessExpression && l.libraryMember(callee) && l.isLibraryType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression), "Date") {
-			name := callee.Name().Text()
-			if name == "toString" || name == "toUTCString" || name == "toISOString" {
-				return l.expression(node)
-			}
-		}
+	if os.Getenv("TZ") != "UTC" {
+		return nil, l.notYet(node, "Date parsing without TZ=UTC fixed for native and Node")
 	}
-	text, known := l.constantPattern(node, 0)
-	if !known || (!dateISO.MatchString(text) && !dateRFC.MatchString(text) && !dateNativeString.MatchString(text)) {
-		return nil, l.notYet(node, "Date parsing outside a constant ISO format (V8 legacy parsing is not built)")
-	}
-	if strings.HasPrefix(text, "-000000") && !strings.Contains(text, "T") {
-		return nil, l.notYet(node, "Date negative-zero date-only legacy parsing")
-	}
-	if dateISO.MatchString(text) && strings.Contains(text, "T") && !strings.HasSuffix(text, "Z") && !dateZone.MatchString(text) && os.Getenv("TZ") != "UTC" {
-		return nil, l.notYet(node, "local Date parsing without TZ=UTC fixed for native and Node")
-	}
-	return l.expression(node)
+	return l.stringConversion(node)
 }
 func (l *lowering) dateArguments(node *ast.Node, written []*ast.Node) ([]ir.Expression, error) {
 	var args []ir.Expression
@@ -111,6 +87,9 @@ func (l *lowering) libraryDateCall(node *ast.Node) (ir.Expression, bool, error) 
 		method := ast.SkipParentheses(receiver)
 		if method.Kind == ast.KindPropertyAccessExpression && l.datePrototype(method.AsPropertyAccessExpression().Expression) {
 			if len(written) == 0 || !l.isLibraryType(l.checker.GetTypeAtLocation(written[0]), "Date") {
+				if method.Name().Text() == "toJSON" {
+					return nil, true, l.notYet(node, "Date.toJSON on a generic receiver (ToPrimitive and dynamic toISOString lookup are not built)")
+				}
 				return nil, true, l.notYet(node, "Date prototype method requires a Date internal slot")
 			}
 			name = method.Name().Text()
@@ -166,7 +145,18 @@ func (l *lowering) libraryDateCall(node *ast.Node) (ir.Expression, bool, error) 
 		return ir.DateCall{Receiver: value, Method: name, Arguments: args, Returns: ir.String}, true, err
 	}
 	if name == "toJSON" {
-		return nil, true, l.notYet(node, "Date.toJSON (invalid dates return null, whose general representation is not built)")
+		args := []ir.Expression{}
+		for _, argument := range written {
+			if argument.Kind == ast.KindSpreadElement {
+				return nil, true, l.notYet(node, "Date.toJSON spread arguments")
+			}
+			evaluated, err := l.expression(argument)
+			if err != nil {
+				return nil, true, err
+			}
+			args = append(args, evaluated)
+		}
+		return ir.DateCall{Receiver: value, Method: name, Arguments: args, Returns: ir.String}, true, nil
 	}
 	return nil, true, l.notYet(node, "Date."+name)
 }
@@ -229,4 +219,22 @@ func (l *lowering) libraryDateBoundMethod(node *ast.Node) bool {
 		parent = parent.Parent
 	}
 	return parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Name().Text() == "call" && called(parent)
+}
+
+// Null strings use the existing reference null pointer, but never the undefined union tag.
+func (l *lowering) dateNullableString(proven *checker.Type) bool {
+	for _, member := range proven.Types() {
+		if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsStringLike) == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+// Nullable strings and present strings need distinct generic bodies even though both are pointers.
+func (l *lowering) dateTypeKey(proven *checker.Type, held ir.Type) string {
+	if held == ir.String && l.includesNull(proven) {
+		return "nullable-string"
+	}
+	return typeName(held)
 }
