@@ -1,3 +1,237 @@
+Native list construction and Markdown document layout are green on Go trees.
+2,171 whole-document contexts match Go, source Node, backend and the pinned fork's doc printer.
+1,998 list frames compose with 204,131 native word nodes; ASan/UBSan/leaks pass.
+Three native list mutants are caught; the 953-case off audit and seven witness pairs remain green.
+This is a layout component slice: native Markdown parsing and Unicode width are still unfinished.
+
+Lists slice, October 6, 2026
+
+Implementation commit: 324923ea318761f38f56eda2fdc0e4050ed21093.
+Branch: codex/stage1-markdown-blocks. The report commit follows before the slice push.
+Same main base, toolchain, nproc=5 and cohere/TypeScript pins as the prior reports.
+Initial setup timing remains: Go 0s, clang 1s, Node 1s, submodules 1s, cache warm 10s,
+total 10s. Source /workspace/adamic-tools/env.sh in every toolchain shell.
+
+What was ported
+
+lists.ts ports cohere's entire list/list-item document construction: sibling
+marker alternation, initial/continuing/Git-friendly numbering, ordered-marker
+scanning without regex, number capping, alignment decisions, task boxes,
+tight/loose and nested-list blank lines, code-required indentation and the HTML
+column exception. Its inputs explicitly carry the caller's AST/path facts.
+
+The native document renderer covers the document operations actual Markdown
+uses: text, concat, indent, string/width/root alignment and dedent, groups and
+expanded states, fill, if-break, literal/hard/soft lines, labels, trim and break
+propagation. Unknown operations panic. It is not claimed as the complete general
+Prettier document engine: line suffixes and indent-if-break are not implemented.
+Child edges, group identity, commands and indentation roots use numeric IDs in
+owned arenas. The implementation has no strong owning cycles or nested closures.
+The command stack is owned by its class; indentation generation returns data to
+its caller rather than mutating the caller's array. Cohere caught and guided these
+ownership/API refactors, along with a shadowed name, unused initializer and
+multiple-classes-per-file finding. Final checks have zero findings.
+
+Text display width is an explicit component input. Go's actual StringWidth
+supplies it in fixtures. Unicode width remains a separate service to port;
+ASCII list/task prefixes measure themselves. No width approximation is claimed.
+
+The list fixture bridge parses and preprocesses every document using actual Go
+cohere. It wraps list/word outputs in transparent labels, then captures child docs
+and list/path facts. Every collector result is compared to the actual unmodified
+Go Markdown formatter with embedding off. Fixtures are serialized before Go
+PropagateBreaks mutates groups, so native propagation is exercised. Native
+replaces all list labels with its own list constructor and eligible word labels
+with the prior inline slice, and lays out the entire document. Ignore contents
+remain original raw docs as Go specifies. Source Node and backend run this same
+native component implementation; the exact pinned fork's own document printer
+runs the original canonical document as another external check.
+
+There is no runtime Go/Node call in native code. Go supplies unported parsing,
+non-list block printing, AST/path facts and inherited alignment in the test
+harness. The fixture driver is not a native Markdown-file formatter. Full
+CommonMark list recognition and the tokenizer/container state engine remain
+unported; orderedMarker is the printer's prefix-info scanner, not that engine.
+
+Coverage and proof
+
+876 physical repository/submodule Markdown files plus the original 77 generated
+cases are all retained. Another 1,218 generated list cases cross ten markers,
+six space/tab prefixes, four task forms and five body forms, with focused numbering,
+cap, HTML, table, quote, code, definitions, ignore and blank-line cases. Total:
+2,171 whole-document contexts, 1,998 native list frames and 204,131 native words.
+All outputs match actual Go formatting, source Node, backend and the original
+fork document printer. Original native execution passes ASan/UBSan and leaks.
+
+Three mutants each lower/build, exit zero with empty stderr, and fail only output:
+- Canonical unordered '-' changed to '+': caught in CLAUDE.md at byte 626.
+- Checked '[x]' changed to '[X]': caught in the generated checked-task case.
+- Ordered maximum 999999999 changed to 999999998: caught in the generated
+  999999999./nn nested list case.
+Exact final byte offsets and full case names appear in the captured output below.
+These are native list mutants, unlike the inherited Go audit mutants. The whole
+touched package also reran all front-matter checks, representation probes, seven
+complete witness pairs and Go heading/list/fence audit mutants successfully.
+
+Measurements and their limit
+
+Final native list/layout component: 1,924.9 documents/s, three runs 3.383625s.
+Source Node component: 2,126.2 documents/s, 3.063153s.
+Go document layout only: 3,680.0 documents/s, 1.769836s.
+Original Node document layout only: 1,833.0 documents/s, 3.553130s.
+All runs include startup, fixture decoding and escaped output, and exclude builds,
+Markdown parsing and fixture generation. Go/original Node consume the canonical
+22 MB document stream and perform layout; native/source consume the 17 MB stream,
+build native lists/words and perform layout. The workloads differ: these numbers
+are component observations, not native-versus-Go full Markdown formatter speeds.
+Every measured output is compared with Go's actual whole-document output. Tests
+are parallel, so throughput is not an isolated-machine result.
+
+Final full touched-package run passed in 98.330s. Cohere checks four new TS files
+with 276 rules, zero findings, 100% Adamic-ready. go vet ./... and gofmt returned
+zero with empty output. Four relevant class/object/optional-slot fixtures ran
+uncached, native hits=0 misses=12, Node hits=0 misses=8, all passed in 1.546s.
+The full repository gate was not repeated; integration still requires it.
+
+Retained audit: /tmp/markdown-list-final/{cases.jsonl,native.txt,canonical.txt,want.txt}.
+Retained off audit: /tmp/markdown-list-off-final/{cases,go,fork}.jsonl.
+The historical reports below retain their old status as previous checkpoints.
+The next requested slice is block quotes, then tables, code with embedding off and
+HTML. The complete source parser still remains additional implementation work.
+
+Commands and actual outputs
+
+/tmp/cssstrings-cohere --no-cache --no-fix stage1/cohere/markdownblocks/document.ts stage1/cohere/markdownblocks/commandStack.ts stage1/cohere/markdownblocks/lists.ts stage1/cohere/markdownblocks/testdata/list_probe.ts > /tmp/markdown-list-style-final.log 2>&1
+✓ 💎 0.09s (276 rules • 4 checked) • 100% Adamic-ready (4 of 4) • ⚠ only 4 of 103 files
+
+ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-list-final ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork ADAMIC_MARKDOWNBLOCKS_KEEP=/tmp/markdown-list-off-final go test -count=1 -v -timeout=30m ./stage1/cohere/markdownblocks > /tmp/markdown-list-gate.log 2>&1
+=== RUN   TestWholeDocumentOraclePreflight
+=== PAUSE TestWholeDocumentOraclePreflight
+=== RUN   TestFrontMatterStage
+=== PAUSE TestFrontMatterStage
+=== RUN   TestParserRepresentationProbes
+=== PAUSE TestParserRepresentationProbes
+=== RUN   TestMarkdownListLayout
+=== PAUSE TestMarkdownListLayout
+=== CONT  TestWholeDocumentOraclePreflight
+=== CONT  TestParserRepresentationProbes
+=== CONT  TestMarkdownListLayout
+=== RUN   TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== PAUSE TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== RUN   TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== PAUSE TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== CONT  TestFrontMatterStage
+=== RUN   TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== PAUSE TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== CONT  TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== CONT  TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== CONT  TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+--- PASS: TestParserRepresentationProbes (0.00s)
+    --- PASS: TestParserRepresentationProbes/gaps/1_recursive_state.ts (0.17s)
+    --- PASS: TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts (0.14s)
+    --- PASS: TestParserRepresentationProbes/gaps/3_recursive_callable.ts (0.54s)
+=== RUN   TestFrontMatterStage/YAML_fallback_delimiter
+    frontmatter_test.go:161: native output-only mutant caught at output byte 2580510 by generated/front-matter/64
+=== RUN   TestFrontMatterStage/UTF-16_blank_prefix
+    frontmatter_test.go:161: native output-only mutant caught at output byte 274410 by cohere/TypeScript/.github/ISSUE_TEMPLATE/types-not-correct-in-with-callback.md
+=== RUN   TestFrontMatterStage/JavaScript_BOM_trimming
+    frontmatter_test.go:161: native output-only mutant caught at output byte 2623128 by generated/front-matter/896
+=== NAME  TestFrontMatterStage
+    frontmatter_test.go:188: parser-stage throughput Go front-matter stage 47689.1 texts/s, 3 runs 0.255971s; startup/protocol/I/O included, no Markdown layout measured
+    frontmatter_test.go:188: parser-stage throughput native front-matter stage 23932.5 texts/s, 3 runs 0.510060s; startup/protocol/I/O included, no Markdown layout measured
+    frontmatter_test.go:188: parser-stage throughput source Node front-matter stage 14423.3 texts/s, 3 runs 0.846340s; startup/protocol/I/O included, no Markdown layout measured
+    frontmatter_test.go:190: front-matter stage 876 physical Markdown files and 3193 generated cases, 4069 total: Go/native/source Node/backend/pinned library byte parity, ASan/UBSan/leaks
+--- PASS: TestFrontMatterStage (11.20s)
+    --- PASS: TestFrontMatterStage/YAML_fallback_delimiter (0.98s)
+    --- PASS: TestFrontMatterStage/UTF-16_blank_prefix (0.91s)
+    --- PASS: TestFrontMatterStage/JavaScript_BOM_trimming (0.92s)
+=== NAME  TestWholeDocumentOraclePreflight
+    audit_test.go:232: known auto gap cohere/TypeScript/packages/vscode-typescript/README.md at byte 763, embeds [jsonc]
+    audit_test.go:232: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-hir_fn_type_mismatch_2.expect.md at byte 94, embeds [babel]
+    audit_test.go:232: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-hir_loc_diff_1.expect.md at byte 328, embeds [babel]
+    audit_test.go:232: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-pattern3_type_to_poly.expect.md at byte 312, embeds [babel]
+    audit_test.go:232: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-round2_identifier_diff.expect.md at byte 230, embeds [babel]
+    audit_test.go:232: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-round2_severity_diff.expect.md at byte 300, embeds [babel]
+    audit_test.go:232: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-update-expression-context-variable-via-type-annotation.expect.md at byte 84, embeds [babel]
+    audit_test.go:232: known auto gap stage1/cohere/markdownblocks/gaps/embedded_flow.md at byte 39, embeds [babel]
+    audit_test.go:232: known auto gap stage1/cohere/markdownblocks/gaps/embedded_jsonc.md at byte 21, embeds [jsonc]
+    audit_test.go:232: known auto gap generated/embedded_jsonc.md at byte 21, embeds [jsonc]
+    audit_test.go:232: known auto gap generated/embedded_flow.md at byte 39, embeds [babel]
+=== RUN   TestWholeDocumentOraclePreflight/heading_prefix
+    audit_test.go:279: output-only mutant caught by CLAUDE.md at byte 1
+=== RUN   TestWholeDocumentOraclePreflight/list_marker
+    audit_test.go:279: output-only mutant caught by CLAUDE.md at byte 618
+=== RUN   TestWholeDocumentOraclePreflight/fence_length
+=== RUN   TestMarkdownListLayout/unordered_marker
+=== NAME  TestWholeDocumentOraclePreflight/fence_length
+    audit_test.go:279: output-only mutant caught by CLAUDE.md at byte 3022
+=== NAME  TestMarkdownListLayout/unordered_marker
+    lists_test.go:192: output-only native mutant caught by CLAUDE.md at byte 626
+=== RUN   TestMarkdownListLayout/task_box
+=== NAME  TestWholeDocumentOraclePreflight
+    audit_test.go:312: baseline throughput Go Markdown embedding off 314.3 documents/s, 3 runs 9.095697s; one off-mode format per document, startup/I/O included, no Adamic block formatter measured
+=== NAME  TestMarkdownListLayout/task_box
+    lists_test.go:192: output-only native mutant caught by generated/list-layout/- [x] a *b _c_* `x`
+         at byte 2739310
+=== RUN   TestMarkdownListLayout/ordered_cap
+=== NAME  TestWholeDocumentOraclePreflight
+    audit_test.go:312: baseline throughput Node pinned-fork Markdown embedding off 219.0 documents/s, 3 runs 13.055101s; one off-mode format per document, startup/I/O included, no Adamic block formatter measured
+    audit_test.go:314: corpus 876 physical repository/submodule Markdown files, 77 generated documents, 953 total; off byte-identical, auto 942/953 identical with 11 named disagreements
+--- PASS: TestWholeDocumentOraclePreflight (75.70s)
+    --- PASS: TestWholeDocumentOraclePreflight/heading_prefix (10.55s)
+    --- PASS: TestWholeDocumentOraclePreflight/list_marker (10.13s)
+    --- PASS: TestWholeDocumentOraclePreflight/fence_length (9.23s)
+=== NAME  TestMarkdownListLayout/ordered_cap
+    lists_test.go:192: output-only native mutant caught by generated/list/999999999./nn at byte 2737736
+=== NAME  TestMarkdownListLayout
+    lists_test.go:215: component throughput Go document layout 3680.0 documents/s, three runs 1.769836s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:215: component throughput native list/layout component 1924.9 documents/s, three runs 3.383625s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:215: component throughput source Node list/layout component 2126.2 documents/s, three runs 3.063153s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:215: component throughput original Node document layout 1833.0 documents/s, three runs 3.553130s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:221: 876 physical files, 1295 generated, 2171 whole-document contexts; 1998 native list frames, 204131 composed word nodes; Go/source/native/backend/original doc bytes identical
+--- PASS: TestMarkdownListLayout (98.32s)
+    --- PASS: TestMarkdownListLayout/unordered_marker (11.26s)
+    --- PASS: TestMarkdownListLayout/task_box (11.24s)
+    --- PASS: TestMarkdownListLayout/ordered_cap (12.18s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	98.330s
+
+go vet ./... > /tmp/markdown-list-vet.log 2>&1
+(exit zero, empty output)
+gofmt -l cmd internal stage1/cohere/markdownblocks > /tmp/markdown-list-gofmt.log
+(exit zero, empty output)
+git diff --check; git diff --cached --check
+(both exit zero, empty output)
+
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout=30m ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/^(classes\.a|class_as_interface\.a|objects\.a|maybe_number_slots\.a)$' > /tmp/markdown-list-oracle.log 2>&1
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/objects.a (0.93s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/classes.a (1.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a (1.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a (1.52s)
+PASS
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.546s
+
+Previous checkpoints follow.
+
 Embedding off is the contract; the full native Markdown block port remains incomplete.
 Ported the exact front-matter parser, including UTF-16 offset-preserving blanking.
 4,069 parser-stage cases match Go, source Node, backend and the pinned original parser.
