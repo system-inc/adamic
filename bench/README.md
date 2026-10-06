@@ -19,7 +19,7 @@ The runs are interleaved round by round, so a machine that slows down slows all 
 | `tokenizer.ts` | a lexer walking a 3.5-million-code-unit text with `charCodeAt`, some of it non-ASCII |
 | `word_count.ts` | `split`, then a `Map<string, number>` over a million words, then a sort |
 | `sort.ts` | a million numbers sorted with a comparator, random and then nearly sorted |
-| `parallel_files.ts` | 4,096 deterministic in-memory files, pure tokenization and summaries in parallel, merged in order |
+| `parallel_files.a` | 4,096 deterministic in-memory files, pure tokenization and summaries in parallel, merged in order |
 | `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
 
 ## Noisy cloud numbers, October 5, 2026

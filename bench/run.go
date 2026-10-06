@@ -136,7 +136,7 @@ func main() {
 	for _, kind := range runtimes {
 		header = append(header, kind.name+" time", kind.name+" memory")
 	}
-	header = append(header, "native vs node", "same answer")
+	header = append(header, runtimes[0].name+" vs node", "same answer")
 	fmt.Println("| " + strings.Join(header, " | ") + " |")
 	fmt.Println("|" + strings.Repeat("---|", len(header)))
 	for programIndex, program := range programs {
@@ -189,6 +189,12 @@ func findPrograms(directory string, only string) ([]program, error) {
 	if err != nil {
 		return nil, err
 	}
+	adamicSources, err := filepath.Glob(filepath.Join(directory, "*.a"))
+	if err != nil {
+		return nil, err
+	}
+	sources = append(sources, adamicSources...)
+	slices.Sort(sources)
 	wanted := map[string]bool{}
 	for _, name := range strings.Split(only, ",") {
 		if name != "" {
@@ -196,9 +202,14 @@ func findPrograms(directory string, only string) ([]program, error) {
 		}
 	}
 	programs := []program{}
+	seen := map[string]bool{}
 	for _, source := range sources {
-		name := strings.TrimSuffix(filepath.Base(source), ".ts")
+		name := strings.TrimSuffix(filepath.Base(source), filepath.Ext(source))
 		if len(wanted) == 0 || wanted[name] {
+			if seen[name] {
+				return nil, fmt.Errorf("duplicate benchmark name %q across source extensions", name)
+			}
+			seen[name] = true
 			contents, err := os.ReadFile(source)
 			if err != nil {
 				return nil, err
@@ -229,13 +240,16 @@ func availableRuntimes(threads, modules string) []runtimeKind {
 		}
 	}
 	runtimes = append(runtimes, runtimeKind{name: "node", command: func(program program) []string {
-		if program.adamic {
+		if program.adamic || filepath.Ext(program.source) == ".a" {
 			return []string{"node", "--disable-warning=ExperimentalWarning", filepath.Join(filepath.Dir(filepath.Dir(program.source)), "oracle", "node.mjs"), program.source}
 		}
 		return []string{"node", program.source}
 	}})
 	if _, err := exec.LookPath("bun"); err == nil {
 		runtimes = append(runtimes, runtimeKind{name: "bun", environment: []string{"NODE_PATH=" + modules}, command: func(program program) []string {
+			if filepath.Ext(program.source) == ".a" {
+				return []string{"bun", "--preload", filepath.Join(filepath.Dir(program.source), "bun.mjs"), program.source}
+			}
 			return []string{"bun", program.source}
 		}})
 	}

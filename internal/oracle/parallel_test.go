@@ -20,7 +20,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	paths = append(paths, filepath.Join(repository, "bench/parallel_files.ts"))
+	paths = append(paths, filepath.Join(repository, "bench/parallel_files.a"))
 	for _, path := range paths {
 		relative, err := filepath.Rel(repository, path)
 		if err != nil {
