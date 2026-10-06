@@ -57,6 +57,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			if l.includesUndefined(proven) {
 				return 0, false
 			}
+			if l.dateNullableString(proven) {
+				return ir.String, true
+			}
 			for _, member := range proven.Types() {
 				if member.Flags()&checker.TypeFlagsNull == 0 && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray") {
 					return 0, false
@@ -132,6 +135,7 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 }
 
 func (l *lowering) includesNull(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsNull != 0
 	}
@@ -437,6 +441,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
+		if operand.Type() == ir.String && l.includesNull(l.checker.GetTypeAtLocation(node.AsTypeOfExpression().Expression)) {
+			return ir.DateCall{Method: "nullableTypeOf", Receiver: operand, Returns: ir.String}, nil
+		}
 		return ir.TypeOf{Value: operand}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
@@ -710,6 +717,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 // spelled is a string as + and a template write it: one that may be missing (a null reference) is
 // written "undefined", as JavaScript writes it.
 func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
+	if value.Type() == ir.String && l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("null")}, Of: ir.String}
+	}
 	if value.Type() != ir.String || !l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
 		return value
 	}

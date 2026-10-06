@@ -14,6 +14,12 @@ import (
 func TestDateOracleCatchesMutants(t *testing.T) {
 	t.Parallel()
 	mutants := []struct{ name, fixture, before, after string }{
+		{"nullable_typeof", "json", "&adamic_typeof_object", "&adamic_typeof_undefined"},
+		{"nullable_number", "json", " == NULL ? 0.0 :", " == NULL ? NAN :"},
+		{"nullable_stringify", "json", "adamic_json_nullable_string", "adamic_json_string"},
+		{"date_stringify", "json", "adamic_json_date", "adamic_json_map"},
+		{"toJSON", "json", "adamic_date_json(", "date_mutant_json("},
+		{"dynamic_parse", "dynamic_parse", "adamic_date_parse_iso(", "1 + adamic_date_parse_iso("},
 		{"constructor_clip", "construct", "adamic_date_new(", "adamic_date_new(1 + "},
 		{"UTC", "utc", "adamic_date_utc(", "1 + adamic_date_utc("},
 		{"invalid_NaN", "get", "adamic_date_get(", "date_mutant_get("},
@@ -39,6 +45,9 @@ func TestDateOracleCatchesMutants(t *testing.T) {
 				t.Fatalf("mutant target %q absent", mutant.before)
 			}
 			source = strings.ReplaceAll(source, mutant.before, mutant.after)
+			if mutant.name == "toJSON" {
+				source = "#include \"adamic.h\"\nstatic adamic_string *date_mutant_json(const adamic_object *date) { return isnan(adamic_date_value(date)) ? adamic_date_format(date, 0) : adamic_date_iso(date); }\n" + source
+			}
 			if mutant.name == "iso_format" {
 				source = "#include \"adamic.h\"\nstatic adamic_string *date_mutant_iso(const adamic_object *date) { adamic_string *text = adamic_date_iso(date); ((char *)text->bytes)[text->length - 2] = '0'; return text; }\n" + source
 			}

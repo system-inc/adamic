@@ -152,7 +152,7 @@ func (l *lowering) genericTypeKey(proven *checker.Type) string {
 			if !argumentKnown {
 				key += ",unread"
 			} else {
-				key += "," + typeName(argumentHeld)
+				key += "," + l.dateTypeKey(argument, argumentHeld)
 			}
 		}
 		return key
@@ -160,7 +160,7 @@ func (l *lowering) genericTypeKey(proven *checker.Type) string {
 	if isClassInstance(proven) {
 		return l.checker.TypeToString(proven)
 	}
-	return typeName(held)
+	return l.dateTypeKey(proven, held)
 }
 
 // refuseInstantiatedMutation checks writes whose safety depends on a type parameter's constraint.

@@ -116,85 +116,11 @@ adamic_string *adamic_date_iso(const adamic_object *date) {
  memcpy((char *)result->bytes, text, (size_t)length);
  return result;
 }
-static int digits(const adamic_string *text, size_t *position, int width) {
- int value = 0;
- for (int i = 0; i < width; i++) {
-  if (*position >= text->length) return -1;
-  char c = text->bytes[(*position)++]; if (c < '0' || c > '9') return -1;
-  value = value * 10 + c - '0';
- }
- return value;
+adamic_string *adamic_date_json(const adamic_object *date) {
+ return isnan(adamic_date_value(date)) ? NULL : adamic_date_iso(date);
 }
-static bool take(const adamic_string *text, size_t *position, char c) {
- if (*position == text->length || text->bytes[*position] != c) return false;
- (*position)++; return true;
-}
-// These are the two legacy forms Date itself prints with TZ=UTC, also checked by test262.
-static double parse_rendered(const adamic_string *text) {
- if (text->length >= 128) return NAN;
- char input[128]; memcpy(input, text->bytes, text->length); input[text->length] = '\0';
- char weekday[4], month[4]; int year, day, hour, minute, second, consumed = 0;
- int fields = sscanf(input, "%3s, %d %3s %d %d:%d:%d GMT%n", weekday, &day, month, &year, &hour, &minute, &second, &consumed);
- if (fields != 7 || consumed == 0 || (size_t)consumed != text->length) {
-  consumed = 0;
-  fields = sscanf(input, "%3s %3s %d %d %d:%d:%d GMT+0000 (Coordinated Universal Time)%n", weekday, month, &day, &year, &hour, &minute, &second, &consumed);
-  if (fields != 7 || consumed == 0 || (size_t)consumed != text->length) return NAN;
- }
- if (year < 0 || day < 1 || day > 31 || hour < 0 || hour > 24 || minute < 0 || minute > 59 || second < 0 || second > 59 || (hour == 24 && (minute != 0 || second != 0))) return NAN;
- static const char *const months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
- int index = 0; while (index < 12 && strcmp(month, months[index]) != 0) index++;
- if (index == 12) return NAN;
- // V8's legacy parser applies its two-digit-year rule even when the zeros were padded.
- if (year < 50) year += 2000; else if (year < 100) year += 1900;
- double parts[7] = {year, index, day, hour, minute, second, 0};
- return make_date(parts);
-}
-double adamic_date_parse_iso(const adamic_string *text) {
- if (text->length > 0 && text->bytes[0] >= 'A' && text->bytes[0] <= 'Z') return parse_rendered(text);
- size_t at = 0; int sign = 1, width = 4; bool expanded = false;
- if (take(text, &at, '-')) { sign = -1; width = 6; expanded = true; }
- else if (take(text, &at, '+')) { width = 6; expanded = true; }
- int year = digits(text, &at, width);
- if (year < 0 || (expanded && sign < 0 && year == 0)) return NAN;
- double parts[7] = {(double)(sign * year), 0, 1, 0, 0, 0, 0};
- if (take(text, &at, '-')) {
-  int month = digits(text, &at, 2); if (month < 1 || month > 12) return NAN; parts[1] = month - 1;
-  if (take(text, &at, '-')) { int day = digits(text, &at, 2); if (day < 1 || day > 31) return NAN; parts[2] = day; }
- }
- int offset = 0;
- if (take(text, &at, 'T')) {
-  int hour = digits(text, &at, 2); if (hour < 0 || hour > 24 || !take(text, &at, ':')) return NAN;
-  int minute = digits(text, &at, 2); if (minute < 0 || minute > 59) return NAN;
-  parts[3] = hour; parts[4] = minute;
-  if (take(text, &at, ':')) {
-   int second = digits(text, &at, 2); if (second < 0 || second > 59) return NAN; parts[5] = second;
-   if (take(text, &at, '.')) {
-    int millisecond = 0, count = 0; bool nonzero_fraction = false;
-    while (at < text->length && text->bytes[at] >= '0' && text->bytes[at] <= '9') {
-     nonzero_fraction = nonzero_fraction || text->bytes[at] != '0';
-     if (count < 3) millisecond = millisecond * 10 + text->bytes[at] - '0';
-     count++; at++;
-    }
-    if (count == 0 || (hour == 24 && nonzero_fraction)) return NAN;
-    while (count < 3) {millisecond *= 10; count++;}
-    parts[6] = millisecond;
-   }
-  }
-  if (hour == 24 && (parts[4] != 0 || parts[5] != 0 || parts[6] != 0)) return NAN;
-  if (!take(text, &at, 'Z') && at < text->length) {
-   int zone_sign;
-   if (take(text, &at, '+')) zone_sign = 1;
-   else if (take(text, &at, '-')) zone_sign = -1;
-   else return NAN;
-   int zone_hour = digits(text, &at, 2); if (zone_hour < 0 || zone_hour > 23 || !take(text, &at, ':')) return NAN;
-   int zone_minute = digits(text, &at, 2); if (zone_minute < 0 || zone_minute > 59) return NAN;
-   offset = zone_sign * (zone_hour * 60 + zone_minute) * 60000;
-  }
- }
- if (at != text->length) return NAN;
- // Clip after applying the timezone, so an out-of-range local time may still be valid UTC.
- return time_clip(make_day(parts[0], parts[1], parts[2]) * 86400000 + make_time(parts + 3) - offset);
-}
+
+#include "date_parse_impl.h"
 
 // Stable UTC renderings use V8's English month/day names, with the oracle's fixed TZ=UTC.
 adamic_string *adamic_date_format(const adamic_object *date, int style) {

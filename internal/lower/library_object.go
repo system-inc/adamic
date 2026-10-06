@@ -45,6 +45,9 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	switch name {
 	case "is":
 		for _, argument := range written {
+			if l.includesNull(l.checker.GetTypeAtLocation(argument)) {
+				return nil, true, l.notYet(argument, "Object.is with null (the union representation reserves NULL for undefined); use ===")
+			}
 			value, err := l.expression(argument)
 			if err != nil {
 				return nil, true, err
