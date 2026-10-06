@@ -1,0 +1,20 @@
+backend-gate-omitted: CAUGHT exit=1; /tmp/regex-v8-mutant-backend-gate-omitted.log
+    regexp_v8_test.go:23: expected named V8/spec refusal: console.log( /[\q{a}]/iv.test('A') ? 'yes' : 'no');: <nil>
+singleton-fold-refusal-omitted: CAUGHT exit=1; /tmp/regex-v8-mutant-singleton-fold-refusal-omitted.log
+    v8_test.go:29: expected V8 compatibility refusal, got <nil>
+modifier-leak-refusal-omitted: CAUGHT exit=1; /tmp/regex-v8-mutant-modifier-leak-refusal-omitted.log
+    v8_test.go:29: expected V8 compatibility refusal, got <nil>
+empty-mixed-refusal-omitted: CAUGHT exit=1; /tmp/regex-v8-mutant-empty-mixed-refusal-omitted.log
+    v8_test.go:29: expected V8 compatibility refusal, got <nil>
+class-string-fold-omitted: CAUGHT exit=1; /tmp/regex-v8-mutant-class-string-fold-omitted.log
+    oracle_test.go:580: stdout differs
+go-skips-pair-interior: CAUGHT exit=1; /tmp/regex-v8-mutant-go-skips-pair-interior.log
+    v8_test.go:140: DISAGREEMENT source=V8 surrogate assertions pattern="\\B" flags="gu" input=[97 55356 57101 98] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[2 2]] LastIndex:2 Groups:map[]}
+native-skips-pair-interior: CAUGHT exit=1; /tmp/regex-v8-mutant-native-skips-pair-interior.log
+    oracle_test.go:580: stdout differs
+go-consumes-pair-half: CAUGHT exit=1; /tmp/regex-v8-mutant-go-consumes-pair-half.log
+    v8_test.go:140: DISAGREEMENT source=V8 surrogate assertions pattern="(?!\\W)" flags="gu" input=[97 55356 57101 98] lastIndex=1 got={Captures:[[3 3]] LastIndex:3 Groups:map[]} node={Captures:[[2 2]] LastIndex:2 Groups:map[]}
+native-consumes-pair-half: CAUGHT exit=1; /tmp/regex-v8-mutant-native-consumes-pair-half.log
+    oracle_test.go:580: stdout differs
+sticky-retry-omitted: CAUGHT exit=1; /tmp/regex-v8-mutant-sticky-retry-omitted.log
+    v8_test.go:140: DISAGREEMENT source=V8 surrogate assertions pattern="\\B" flags="yu" input=[97 55356 57101 98] lastIndex=2 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[2 2]] LastIndex:2 Groups:map[]}
