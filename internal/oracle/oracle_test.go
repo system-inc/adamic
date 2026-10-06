@@ -315,6 +315,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
 	// A move handed to a call whose later argument throws (reuse.go, handOver).
 	{"internal/oracle/testdata/reuse_handover_throw.a", true, false},
+	// A new object, a fresh array and a moved array handed to a call whose later argument throws.
+	{"internal/oracle/testdata/reuse_handover_fresh.a", true, false},
+	// Every string length from 1 to 300 bytes, and objects of every size an object can be in that
+	// range: some kept, some dropped, then more of the same size (heap.c).
+	{"internal/oracle/testdata/slab_sizes.a", true, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
