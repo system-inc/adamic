@@ -357,3 +357,48 @@ go vet ./... > /tmp/flag-enums-final-vet.log 2>&1
 gofmt -l cmd internal > /tmp/flag-enums-final-format.log
 git diff --check > /tmp/flag-enums-final-diff.log
 ```
+
+
+## Integration with current main
+
+Merged `origin/main` at `50045bd` with a merge commit. The only conflict was
+`internal/lower/lower.go`: the enum branch modified code that main extracted.
+The resolution preserves main's ownership map: initialization preflight stays
+in `lower.go`, module enum registration moves to `modules.go`, and enum statement
+dispatch moves to `statements.go`. The native split is unchanged from main.
+
+Validation passed: `go vet ./...`; `gofmt -l cmd internal` (empty output);
+`go test ./internal/lower ./internal/load -count=1 -timeout 30m` (52.204s and
+2.586s); the six enum Node fixtures with `ADAMIC_GATE_UNCACHED=1`, `-count=1`
+(65.508s, zero cache hits); and `TestCountsAreRecorded -count=1` (101.364s).
+Logs are `/tmp/flag-enums-merge-{vet,format,packages,oracle,counts}.log`.
+Setup reported Go ready at 0s, clang, Node and submodules at 1s, build cache warm
+and total at 152s. `nproc` is 5 and the CPU quota is four CPUs.
+
+Counts verification passed without regeneration. Main supplied 12 new rows and
+changed the 20 existing rows below; the merge introduces no further count drift.
+Only retains and releases changed. All fixture paths are under
+`internal/oracle/testdata/` except the explicitly named load fixture.
+
+| Fixture | Retains before | Retains after | Releases before | Releases after |
+| --- | ---: | ---: | ---: | ---: |
+| class_oct6_subclass_holder.a | 49 | 55 | 110 | 116 |
+| internal/load/testdata/0.1/compile/09_tree.ts | 82 | 85 | 123 | 126 |
+| casts.a | 16 | 17 | 24 | 25 |
+| visits.a | 124 | 125 | 208 | 209 |
+| narrowed_reads.a | 0 | 3 | 5 | 7 |
+| narrowed_methods.a | 1 | 3 | 5 | 6 |
+| narrowed_fields.a | 2 | 4 | 5 | 6 |
+| fills.a | 27 | 28 | 50 | 51 |
+| fresh_writes.a | 407 | 409 | 523 | 525 |
+| fresh_calls.a | 266 | 268 | 321 | 323 |
+| weak_narrowed.a | 50 | 53 | 69 | 72 |
+| undefined_keys.a | 171 | 173 | 236 | 238 |
+| undefined_strings.a | 20 | 21 | 42 | 43 |
+| undefined_references.a | 36 | 37 | 51 | 52 |
+| reuse_narrowed.a | 4 | 6 | 7 | 8 |
+| reuse_lent_global.a | 7 | 8 | 14 | 15 |
+| regexp.a | 355 | 369 | 408 | 422 |
+| regexp_null_narrowed.a | 7 | 8 | 5 | 5 |
+| regexp_exec.a | 81 | 82 | 159 | 160 |
+| regexp_unicode.a | 99 | 101 | 86 | 88 |
