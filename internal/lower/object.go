@@ -225,6 +225,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if accessorSymbol(l.checker.GetSymbolAtLocation(node.Name())) {
+		return l.getAccessor(node)
+	}
 	access := node.AsPropertyAccessExpression()
 	name := l.fieldName(node.Name())
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {

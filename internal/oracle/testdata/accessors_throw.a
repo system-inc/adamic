@@ -1,0 +1,22 @@
+class Base {
+ get text(): string { return 'ok'; }
+}
+class Thrower extends Base {
+ override get text(): string { const owned = 'held'.repeat(3); throw new Error(owned + ' getter'); }
+}
+function read(value: Base): string { return value.text + ' after'; }
+const values: readonly Base[] = [new Base(), new Thrower()];
+for (const value of values) {
+ const held = 'live'.repeat(4);
+ try { console.log(read(value)); } catch (error) {
+  if (error instanceof Error) { console.log(`${held} ${error.message}`); }
+ } finally { console.log('finally'); }
+}
+class FailUpdate {
+ stored = 0;
+ get x(): number { console.log('throw get'); throw new Error('update'); }
+ set x(value: number) { this.stored = value; console.log('wrong setter'); }
+}
+function operand(): number { console.log('wrong operand'); return 1; }
+const fail = new FailUpdate();
+try { fail.x += operand(); } catch { console.log(`caught ${fail.stored}`); }

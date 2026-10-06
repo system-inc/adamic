@@ -20,8 +20,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
-	ast.KindGetAccessor:       {"a getter", "write a method: in 0.1 reading a property is just a read"},
-	ast.KindSetAccessor:       {"a setter", "write a method: in 0.1 writing a property is just a write"},
 	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
@@ -51,6 +49,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {
+			return true
+		}
+		if err := l.accessorRefusal(node); err != nil {
+			found = err
 			return true
 		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {

@@ -1,0 +1,44 @@
+interface Item { readonly label: string }
+class Reader {
+ get size(): number { return 0; }
+ set size(value: number) { console.log(`base setter ${value}`); }
+}
+class Popper extends Reader {
+ private readonly items: Item[];
+ constructor(items: Item[]) { super(); this.items = items; }
+ override get size(): number { this.items.pop(); return 1; }
+ override set size(value: number) { this.items.pop(); console.log(`pop setter ${value}`); }
+}
+function getterBorrow(): void {
+ const items: Item[] = [{ label: 'getter'.repeat(3) }];
+ const reader: Reader = new Popper(items);
+ const before = items[0] ?? { label: 'fallback' };
+ console.log(`${reader.size} ${before.label}`);
+ console.log(before.label);
+}
+function setterBorrow(): void {
+ const items: Item[] = [{ label: 'setter'.repeat(3) }];
+ const reader: Reader = new Popper(items);
+ const before = items[0] ?? { label: 'fallback' };
+ reader.size = 3;
+ console.log(before.label);
+}
+getterBorrow();
+setterBorrow();
+let text = 'old'.repeat(3);
+class Changer {
+ get x(): string { text = 'new'.repeat(4); return '!'.repeat(2); }
+}
+const changer = new Changer();
+console.log(text + changer.x);
+console.log(text);
+interface Point { readonly x: number; readonly label: string }
+let saved: Point | undefined = undefined;
+class Saver {
+ private point: Point = { x: 1, label: 'held'.repeat(3) };
+ get value(): Point { saved = this.point; return this.point; }
+}
+function size(point: Point): number { return point.label.length + point.x; }
+console.log(`${size(new Saver().value)}`);
+function showSaved(): void { if (saved !== undefined) { console.log(saved.label); } }
+showSaved();

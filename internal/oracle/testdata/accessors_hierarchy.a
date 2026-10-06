@@ -1,0 +1,23 @@
+class Base {
+ stored = 1;
+ get x(): number { console.log('base get'); return this.stored; }
+ set x(value: number) { console.log('base set'); this.stored = value; }
+ get tag(): string { return 'base'; }
+}
+class Middle extends Base {
+ override get x(): number { console.log('middle get'); return this.stored * 2; }
+ override set x(value: number) { console.log('middle set'); this.stored = value + 2; }
+ override get tag(): string { return 'middle'; }
+}
+class Leaf extends Middle {
+ override get x(): number { console.log('leaf get'); return this.stored * 3; }
+ override set x(value: number) { console.log('leaf set'); this.stored = value + 3; }
+ override get tag(): string { return 'leaf'; }
+}
+function update(value: Base): void { value.x += 1; console.log(`${value.tag} ${value.x}`); }
+const values: readonly Base[] = [new Base(), new Middle(), new Leaf()];
+for (const value of values) { update(value); }
+class Inherited extends Leaf {}
+const inherited: Base = new Inherited();
+inherited.x = 5;
+console.log(`${inherited.tag} ${inherited.x}`);

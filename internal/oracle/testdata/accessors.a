@@ -1,0 +1,36 @@
+class Computed {
+ private stored = 2;
+ private cached: number | undefined = undefined;
+ get x(): number {
+  console.log('get');
+  if (this.cached === undefined) {
+   console.log('compute');
+   this.cached = this.stored * 3;
+  }
+  return this.cached;
+ }
+ set x(value: number) {
+  console.log(`set ${value}`);
+  if (value < 0) { throw new Error(`negative ${value}`); }
+  this.stored = value;
+  this.cached = undefined;
+ }
+}
+const computed = new Computed();
+console.log(`${computed.x} ${computed.x}`);
+computed.x = 4;
+console.log(`${computed.x}`);
+computed.x += 1;
+computed.x++;
+console.log(`${computed.x}`);
+try { computed.x = -1; } catch (error) {
+ if (error instanceof Error) { console.log(error.message); }
+}
+console.log(`${computed.x}`);
+class Sink {
+ stored = 0;
+ set x(value: number) { this.stored = value; }
+}
+const sink = new Sink();
+sink.x = 9;
+console.log(`${sink.stored}`);

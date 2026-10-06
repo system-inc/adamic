@@ -154,11 +154,11 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	members := declaration.Members()
 	for _, member := range members {
 		switch member.Kind {
-		case ast.KindMethodDeclaration:
+		case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
 			if !ast.IsIdentifier(member.Name()) {
 				return nil, l.notYet(member, "a method with a computed name")
 			}
-			methodName := member.Name().Text()
+			methodName := classMethodName(member)
 			lowered.methods[methodName] = len(l.result.Functions)
 			lowered.static[methodName] = ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic)
 			if !lowered.static[methodName] {
@@ -171,7 +171,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 				}
 				meta.Methods[slot] = len(l.result.Functions)
 			}
-			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + member.Name().Text()})
+			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + methodName})
 		case ast.KindPropertyDeclaration, ast.KindConstructor:
 		default:
 			return nil, l.notYet(member, describe(member)+" in a class")
@@ -200,10 +200,10 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	// Every method's signature is written before any body is lowered, the constructor's included, so a
 	// method can call one declared below it, and two can call each other.
 	for _, member := range members {
-		if member.Kind != ast.KindMethodDeclaration {
+		if !classMethod(member) {
 			continue
 		}
-		method := lowered.methods[member.Name().Text()]
+		method := lowered.methods[classMethodName(member)]
 		if err := l.signature(method, member, l.thisLocal(method)); err != nil {
 			return nil, err
 		}
@@ -212,10 +212,10 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		return nil, err
 	}
 	for _, member := range members {
-		if member.Kind != ast.KindMethodDeclaration {
+		if !classMethod(member) {
 			continue
 		}
-		method := lowered.methods[member.Name().Text()]
+		method := lowered.methods[classMethodName(member)]
 		if member.Body() == nil {
 			continue
 		}
@@ -368,6 +368,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if accessorSymbol(l.checker.GetSymbolAtLocation(target.Name())) {
+		return l.setAccessor(target, valueNode)
+	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
 		return nil, err
@@ -398,6 +401,9 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 // read twice, since nothing runs between the two reads, and anything else is held in a local of its
 // own for the statement, so make().count++ makes one object.
 func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+	if accessorSymbol(l.checker.GetSymbolAtLocation(target.Name())) {
+		return l.updateAccessor(node, target, operator, valueNode)
+	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
 		return nil, err

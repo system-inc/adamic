@@ -52,6 +52,12 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 		if inherited == nil {
 			continue
 		}
+		if accessorSymbol(inherited) || member.Kind == ast.KindGetAccessor || member.Kind == ast.KindSetAccessor {
+			if err := l.checkAccessorOverride(member, inherited); err != nil {
+				return err
+			}
+			continue
+		}
 		own := l.checker.GetTypeAtLocation(member.Name())
 		if property := l.checker.GetPropertyOfType(classType, member.Name().Text()); property != nil {
 			own = l.checker.GetTypeOfSymbol(property)
@@ -661,7 +667,7 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 		if found := l.nominalMismatch(source, target, seen); found != nil {
 			return found
 		}
-		if !l.checker.IsReadonlySymbol(property) {
+		if !accessorReadonly(l.checker, property) && !accessorSymbol(property) {
 			if found := l.nominalMismatch(target, source, seen); found != nil {
 				return found
 			}

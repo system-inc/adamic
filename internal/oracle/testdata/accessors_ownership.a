@@ -1,0 +1,33 @@
+interface Item { readonly label: string }
+class Maker {
+ private count = 0;
+ private saved = 'seed'.repeat(2);
+ get text(): string { this.count += 1; return `fresh ${this.count}`; }
+ set text(value: string) { this.saved = value + '!'; }
+ get item(): Item { return { label: this.text }; }
+ get stored(): string { return this.saved; }
+}
+function consume(value: Item): string { return value.label + '?'; }
+function run(): void {
+ const maker = new Maker();
+ for (let index = 0; index < 4; index++) {
+  const item = maker.item;
+  console.log(consume(item));
+  maker.text = maker.text;
+  console.log(maker.stored);
+  maker.text += 'more'.repeat(2);
+  console.log(maker.stored);
+ }
+ const before = maker.stored;
+ maker.text = 'other'.repeat(3);
+ console.log(before);
+}
+run();
+class BaseMaker {
+ get item(): Item { return { label: 'base'.repeat(2) }; }
+}
+class DerivedMaker extends BaseMaker {
+ override get item(): Item { return { label: 'derived'.repeat(2) }; }
+}
+const makers: readonly BaseMaker[] = [new BaseMaker(), new DerivedMaker()];
+for (const maker of makers) { console.log(consume(maker.item)); }

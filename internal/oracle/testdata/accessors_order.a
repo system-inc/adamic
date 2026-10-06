@@ -1,0 +1,33 @@
+class Counter {
+ stored = 1;
+ get x(): number { console.log(`get ${this.stored}`); if (moveOnGet) { selected = second; } return this.stored; }
+ set x(value: number) { console.log(`set ${value}`); this.stored = value; }
+}
+const first = new Counter();
+const second = new Counter();
+let selected = first;
+let moveOnGet = false;
+function receiver(): Counter { console.log('receiver'); return selected; }
+function operand(): number { console.log('operand'); selected = second; first.stored = 20; return 3; }
+receiver().x += operand();
+console.log(`${first.stored} ${second.stored}`);
+selected = first;
+selected.x += operand();
+console.log(`${first.stored} ${second.stored}`);
+receiver().x++;
+receiver().x = operand();
+console.log(`${first.stored} ${second.stored}`);
+class Redirect {
+ stored = 5;
+ get x(): number { selected = second; console.log('redirect'); return this.stored; }
+ set x(value: number) { this.stored = value; console.log(`redirect set ${value}`); }
+}
+const redirect = new Redirect();
+redirect.x += 2;
+console.log(`${redirect.stored}`);
+
+selected = first;
+moveOnGet = true;
+selected.x += 2;
+moveOnGet = false;
+console.log(`${first.stored} ${second.stored}`);
