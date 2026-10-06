@@ -1,0 +1,17 @@
+{
+  "name": "no-var",
+  "order": 4,
+  "kinds": [
+    "VariableStatement",
+    "ForStatement",
+    "ForInStatement",
+    "ForOfStatement"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNoVar",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoVar",
+  "factory": "create",
+  "class": "Rule",
+  "parent": true
+}
