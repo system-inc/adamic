@@ -97,6 +97,36 @@ func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 // refuses what can't be done yet: a try that can reach a library call whose failure is a panic
 // natively but a throw on Node.
 func (l *lowering) exceptions() error {
+	// Register errors before taking the functions slice: creating a built-in error
+	// adds its allocator and initializer. A ready check is an ordinary throw.
+	register := func(node any) bool {
+		local := -1
+		switch node := node.(type) {
+		case ir.Read:
+			if node.Checked {
+				local = node.Local
+			}
+		case ir.Assign:
+			if node.Checked {
+				local = node.Local
+			}
+		}
+		if local >= 0 {
+			if l.result.ReadyErrors == nil {
+				l.result.ReadyErrors = map[int]ir.Call{}
+			}
+			if _, found := l.result.ReadyErrors[local]; !found {
+				instance := l.errorInstance("ReferenceError")
+				message := "Cannot access '" + l.result.Locals[local].Name + "' before initialization"
+				l.result.ReadyErrors[local] = ir.Call{Function: instance.constructor, Returns: ir.Object, Arguments: []ir.Expression{ir.StringConstant{Index: l.constant(message)}, ir.Undefined{Of: ir.Union}}}
+			}
+		}
+		return true
+	}
+	walk(l.result.Main, register)
+	for index := 0; index < len(l.result.Functions); index++ {
+		walk(l.result.Functions[index].Body, register)
+	}
 	functions := l.result.Functions
 	// A class's methods are reached through function values too: a call through an interface the
 	// class implements calls one where it would call the object's own function value (ir.Property's
@@ -143,6 +173,10 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
 				return false
 			}
+		case ir.Read:
+			found = found || node.Checked
+		case ir.Assign:
+			found = found || node.Checked
 		case ir.Throw:
 			found = true
 		case ir.Call:

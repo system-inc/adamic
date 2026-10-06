@@ -28,10 +28,11 @@ process.on('uncaughtException', (error) => {
 		process.exit(70);
 	}
 	panicking = true;
-	const message = error instanceof AdamicPanic ? error.message : Error.prototype.toString.call(error);
-	const isPanic = error instanceof AdamicPanic;
-	process.stderr.write(`${isPanic ? 'adamic: panic: ' : ''}${message}\n`);
-	process.exitCode = isPanic ? 70 : 1;
+	const message = error instanceof AdamicPanic ? error.message
+		: error !== null && typeof error === 'object' && typeof error.name === 'string' && typeof error.message === 'string'
+			? Error.prototype.toString.call(error) : String(error);
+	process.stderr.write(`adamic: panic: ${message}\n`);
+	process.exitCode = 70;
 });
 
 for (const stream of [process.stdout, process.stderr]) {

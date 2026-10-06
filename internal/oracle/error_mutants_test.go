@@ -271,8 +271,8 @@ func errorRewrite(value reflect.Value, change func(any) any) reflect.Value {
 func TestErrorReportingMutants(t *testing.T) {
 	t.Parallel()
 	for _, mutant := range []struct{ name, replacement string }{
-		{"restored panic exit", `adamic_panic("restored panic exit", 19);`},
-		{"lost buffered stdout", `_Exit(1);`},
+		{"wrong exit status", `error_reporting_mutant(true, 1);`},
+		{"lost buffered stdout", `error_reporting_mutant(false, 70);`},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			t.Parallel()
@@ -289,7 +289,24 @@ func TestErrorReportingMutants(t *testing.T) {
 			if !strings.Contains(code, "adamic_uncaught();") {
 				t.Fatal("mutant changed nothing")
 			}
-			code = "#include <stdlib.h>\n" + strings.ReplaceAll(code, "adamic_uncaught();", mutant.replacement)
+			code = strings.ReplaceAll(code, "adamic_uncaught();", mutant.replacement)
+			// Preserve the complete diagnostic in both mutants; change only status or stdout flushing.
+			code = strings.Replace(code, "#include \"adamic.h\"", `#include "adamic.h"
+#include <stdio.h>
+#include <stdlib.h>
+static _Noreturn void error_reporting_mutant(bool flush, int status) {
+ if (flush) adamic_output_flush();
+ static adamic_slot_cache nc, mc;
+ const adamic_string *name = adamic_object_field(adamic_thrown, "name", &nc)->reference;
+ const adamic_string *message = adamic_object_field(adamic_thrown, "message", &mc)->reference;
+ fputs("adamic: panic: ", stderr);
+ fwrite(name->bytes, 1, name->length, stderr);
+ if (name->length && message->length) fputs(": ", stderr);
+ fwrite(message->bytes, 1, message->length, stderr);
+ fputc('\n', stderr);
+ fflush(stderr);
+ _Exit(status);
+}`, 1)
 			binary := filepath.Join(t.TempDir(), "mutant")
 			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
@@ -335,6 +352,133 @@ func errorPrototypeDefaultMutant(fallback string) func(*ir.Program) bool {
 				}
 			}
 			return value
+		})
+	}
+}
+
+// Ready checks must preserve nominal identity and propagate through every call edge.
+func TestGeneratedErrorMutants(t *testing.T) {
+	t.Parallel()
+	for _, mutant := range []struct {
+		name   string
+		mutate func(*ir.Program) bool
+	}{
+		{"ready checks become panics", func(p *ir.Program) bool { p.ReadyErrors = nil; return true }},
+		{"ready checks throw TypeError", func(p *ir.Program) bool {
+			ctor := -1
+			for _, c := range p.Classes {
+				if c.Name == "TypeError" {
+					ctor = c.Constructor
+				}
+			}
+			if ctor < 0 {
+				return false
+			}
+			for local, call := range p.ReadyErrors {
+				call.Function = ctor
+				p.ReadyErrors[local] = call
+			}
+			return true
+		}},
+		{"ready read ignored", func(p *ir.Program) bool {
+			return changeErrorFunction(p, "readFuture", func(value any) any {
+				if read, ok := value.(ir.Read); ok {
+					read.Checked = false
+					return read
+				}
+				return value
+			})
+		}},
+		{"ready write ignored", func(p *ir.Program) bool {
+			return changeErrorFunction(p, "writeFuture", func(value any) any {
+				if write, ok := value.(ir.Assign); ok {
+					write.Checked = false
+					return write
+				}
+				return value
+			})
+		}},
+		{"ready caller ignores throw", func(p *ir.Program) bool {
+			for i, f := range p.Functions {
+				if f.Name == "readFuture" {
+					p.Functions[i].MayThrow = false
+					return true
+				}
+			}
+			return false
+		}},
+		{"ready closure ignores throw", func(p *ir.Program) bool { p.ClosuresMayThrow = false; return true }},
+		{"null read guard removed", func(p *ir.Program) bool {
+			return changeErrorFunction(p, "error_defined", func(value any) any {
+				if branch, ok := value.(ir.If); ok {
+					if _, null := branch.Condition.(ir.IsNull); null {
+						branch.Condition = ir.BooleanConstant{}
+						return branch
+					}
+				}
+				return value
+			})
+		}},
+		{"array with throws generic Error", func(p *ir.Program) bool {
+			ctor := -1
+			for _, class := range p.Classes {
+				if class.Name == "Error" {
+					ctor = class.Constructor
+				}
+			}
+			if ctor < 0 {
+				return false
+			}
+			return changeErrorFunction(p, "array_with", func(value any) any {
+				if call, ok := value.(ir.Call); ok && p.Functions[call.Function].Name == "RangeError_new" {
+					call.Function = ctor
+					return call
+				}
+				return value
+			})
+		}},
+		{"prototype number guard removed", errorGuardMutant("toFixed() digits argument")},
+		{"prototype string guard removed", errorGuardMutant("Invalid count value")},
+	} {
+		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/error_checks.a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			p, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := onNode(t, path)
+			if !mutant.mutate(p) {
+				t.Fatal("mutant changed nothing")
+			}
+			got, _ := natively(t, p)
+			if difference := disagreement(want, got); difference == "" {
+				t.Fatal("mutant survived Node comparison")
+			} else {
+				t.Logf("caught: %s (Node exit %d, mutant exit %d)", difference, want.exitCode, got.exitCode)
+			}
+		})
+	}
+}
+
+func TestOracleUncaughtThrowConvention(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ value, text string }{{"42", "42"}, {"null", "null"}, {"undefined", "undefined"}, {"'text'", "text"}, {"({})", "[object Object]"}} {
+		t.Run(probe.text, func(t *testing.T) {
+			t.Parallel()
+			runtime, err := filepath.Abs(filepath.Join(repository, "oracle/adamic.mjs"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			script := "import " + "\"file://" + runtime + "\"; console.log('before');throw " + probe.value
+			got := execute(t, "node", "--input-type=module", "--eval", script)
+			want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + probe.text + "\n"), exitCode: 70}
+			if difference := disagreement(want, got); difference != "" {
+				t.Fatalf("%s: exit %d stdout %q stderr %q", difference, got.exitCode, got.stdout, got.stderr)
+			}
 		})
 	}
 }

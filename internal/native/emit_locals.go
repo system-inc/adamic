@@ -59,9 +59,22 @@ func (e *emitter) store(local int, value string, owned bool) {
 	e.line("adamic_release(%s);", old)
 }
 
-// checkReady panics as JavaScript throws when a global is touched before its declaration has run.
+// checkReady throws a nominal ReferenceError before touching an uninitialized global.
 func (e *emitter) checkReady(local int) {
 	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
+	if failure, found := e.program.ReadyErrors[local]; found {
+		e.line("if (!%s) {", readyName(local))
+		e.indent++
+		owned := append([]string(nil), e.owned...)
+		value := e.value(failure)
+		e.line("adamic_thrown = adamic_retain(%s);", value)
+		e.checkThrown()
+		e.owned = owned
+		e.indent--
+		e.line("}")
+		return
+	}
+	// Hand-built legacy IR has no nominal error allocator.
 	e.line("if (!%s) {", readyName(local))
 	e.line("\tstatic const char message[] = %s;", cString(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")

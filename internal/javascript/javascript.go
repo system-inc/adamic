@@ -316,7 +316,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			temporary := e.temporary()
 			e.line("const %s = %s;", temporary, value)
-			e.line("if (!%s) adamicUnready(%s);", readyName(statement.Local), quote(e.program.Locals[statement.Local].Name))
+			e.line("if (!%s) %s;", readyName(statement.Local), e.unready(statement.Local))
 			value = temporary
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
@@ -531,7 +531,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		return quote(e.program.Strings[expression.Index])
 	case ir.Read:
 		if expression.Checked {
-			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+			return fmt.Sprintf("(%s ? %s : %s)", readyName(expression.Local), e.variable(expression.Local), e.unready(expression.Local))
 		}
 		return e.variable(expression.Local)
 	case ir.Unary:
@@ -929,3 +929,11 @@ func quote(text string) string {
 
 // narrowedAwayMessage is native's (internal/native), word for word: the checks are the same on both sides.
 const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
+
+// unready uses the same nominal error allocator as an explicit new ReferenceError.
+func (e *emitter) unready(local int) string {
+	if failure, found := e.program.ReadyErrors[local]; found {
+		return "(() => { throw " + e.value(failure) + "; })()"
+	}
+	return "adamicUnready(" + quote(e.program.Locals[local].Name) + ")"
+}

@@ -38,6 +38,10 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+
+	// ReadyErrors constructs nominal ReferenceErrors for checked global reads and writes.
+	// These hidden throws participate in MayThrow and use the ordinary cleanup paths.
+	ReadyErrors map[int]Call
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.

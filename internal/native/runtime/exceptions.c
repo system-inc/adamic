@@ -38,23 +38,27 @@ _Noreturn void adamic_uncaught(void) {
 		text = adamic_string_concat(3, (adamic_string *const[]){(adamic_string *)name, &separator, (adamic_string *)message});
 	}
 	// write_line applies Node's UTF-8 replacement for lone surrogates.
-	adamic_write_line(adamic_stderr, text);
+	static adamic_string prefix = ADAMIC_STRING("adamic: panic: ");
+	adamic_string *line = adamic_string_concat(2, (adamic_string *const[]){&prefix, text});
+	adamic_write_line(adamic_stderr, line);
+	adamic_release(line);
 	adamic_release(text);
 	adamic_release(adamic_thrown);
 	adamic_thrown = NULL;
 	adamic_output_flush();
 	fflush(NULL);
 	ADAMIC_COUNT_REPORT();
-	_Exit(1);
+	_Exit(70);
 }
 
 _Noreturn void adamic_uncaught_library_error(const char *message, size_t length) {
 	// Runtime library messages contain only ASCII, including formatted numbers.
 	adamic_output_flush();
+	fputs("adamic: panic: ", stderr);
 	fwrite(message, 1, length, stderr);
 	fputc('\n', stderr);
 	adamic_output_flush();
 	fflush(NULL);
 	ADAMIC_COUNT_REPORT();
-	_Exit(1);
+	_Exit(70);
 }

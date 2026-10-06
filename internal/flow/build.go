@@ -425,6 +425,9 @@ func (b *builder) try(at *ir.Statement, statement ir.Try) {
 // through a function value when one in the program can throw, or as a sort's comparator. A throw
 // statement isn't one of these: it always throws, and its block goes straight to its handler.
 func CanThrow(program *ir.Program, instruction *Instruction) bool {
+	if statement, ok := (*instruction.At).(ir.Assign); ok && statement.Checked && instruction.Part == 0 {
+		return true
+	}
 	var node any = instruction.Expression
 	if instruction.Expression == nil {
 		switch statement := (*instruction.At).(type) {
@@ -447,6 +450,10 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			}
 		case reflect.Struct:
 			switch value.Type() {
+			case reflect.TypeOf(ir.Read{}):
+				if value.Interface().(ir.Read).Checked {
+					throws = true
+				}
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

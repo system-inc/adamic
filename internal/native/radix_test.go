@@ -100,7 +100,7 @@ func TestToStringWithARadixMatchesNode(t *testing.T) {
 	t.Logf("%d answers (%d values, every radix from 2 to 36), %d mismatches", lines, len(values), mismatches)
 }
 
-// A radix out of range is a RangeError in Node and an uncaught error in Adamic, checked before the value, so
+// A radix out of range is a RangeError in Node and a panic in Adamic, checked before the value, so
 // NaN and the infinities throw too.
 func TestToStringWithARadixOutOfRangePanics(t *testing.T) {
 	t.Parallel()
@@ -141,10 +141,10 @@ int main(int count, char **arguments) {
 		script := fmt.Sprintf("console.log('before'); console.log((%s).toString(%s));", value, radix)
 		native := outcome(t, binary, probe.value, probe.radix)
 		node := outcome(t, "node", "--eval", script)
-		if native.stdout != node.stdout || (native.exitCode == 1) != probe.panics || (node.exitCode != 0) != probe.panics {
+		if native.stdout != node.stdout || (native.exitCode == 70) != probe.panics || (node.exitCode != 0) != probe.panics {
 			t.Errorf("(%s).toString(%s): native exit %d %q, Node exit %d %q", value, radix, native.exitCode, native.stdout, node.exitCode, node.stdout)
 		}
-		if probe.panics && (!strings.HasPrefix(native.stderr, "RangeError: toString() radix argument must be between 2 and 36") || !strings.Contains(node.stderr, "RangeError: toString() radix argument must be between 2 and 36")) {
+		if probe.panics && (!strings.HasPrefix(native.stderr, "adamic: panic: RangeError: toString() radix argument must be between 2 and 36") || !strings.Contains(node.stderr, "RangeError: toString() radix argument must be between 2 and 36")) {
 			t.Errorf("(%s).toString(%s): native stderr %q, Node stderr %q", value, radix, native.stderr, node.stderr)
 		}
 	}

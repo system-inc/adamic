@@ -2,6 +2,7 @@ package lower
 
 import (
 	"math"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
@@ -107,8 +108,12 @@ func (l *lowering) errorDefined(value ir.Expression, message string) ir.Expressi
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "error_defined", Parameters: []int{local}, Returns: value.Type(), LibraryGuarded: true})
 	read := ir.Read{Local: local, Of: value.Type()}
 	failure := l.errorInstance("TypeError")
+	missing := ir.Expression(ir.IsUndefined{Value: read})
+	if strings.Contains(message, "properties of null") {
+		missing = ir.IsNull{Value: read}
+	}
 	l.result.Functions[index].Body = []ir.Statement{
-		ir.If{Condition: ir.IsUndefined{Value: read}, Then: []ir.Statement{ir.Throw{Value: ir.Call{Function: failure.constructor, Returns: ir.Object, Arguments: []ir.Expression{ir.StringConstant{Index: l.constant(message)}, ir.Undefined{Of: ir.Union}}}}}},
+		ir.If{Condition: missing, Then: []ir.Statement{ir.Throw{Value: ir.Call{Function: failure.constructor, Returns: ir.Object, Arguments: []ir.Expression{ir.StringConstant{Index: l.constant(message)}, ir.Undefined{Of: ir.Union}}}}}},
 		ir.Return{Value: read},
 	}
 	return ir.Call{Function: index, Returns: value.Type(), Arguments: []ir.Expression{value}}

@@ -8,8 +8,12 @@ import (
 func TestErrorBoundariesAreExplicit(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
+		{"derived error static own", "class Derived extends Error {} const error=new Derived('x'); Object.hasOwn(error,'name');", "on Error"},
+		{"derived error hasOwn", "class Derived extends Error {} const error=new Derived('x'); error.hasOwnProperty('name');", "on Error"},
+		{"derived error enumerable", "class Derived extends Error {} const error=new Derived('x'); error.propertyIsEnumerable('message');", "on Error"},
+		{"derived error locale", "class Derived extends Error {} const error=new Derived('x'); error.toLocaleString();", "on Error"},
 		{"normalization expansion", "function normalized(text:string):string {return text.normalize();} try {console.log(normalized('x'));} catch(e) {console.log('caught');}", "native runtime failure cannot unwind"},
-		{"inherited constructor value", "const ctor=new Error('x').constructor;", "an inherited library constructor"},
+		{"inherited constructor value", "const ctor=new Error('x').constructor;", "inherited library member constructor"},
 		{"inherited method value", "const method=new Error('x').valueOf;", "method read as a value"},
 		{"stack read", "console.log(new Error('x').stack ?? '');", "Error.stack"},
 		{"stack write", "const e=new Error('x'); e.stack='made up';", "writing Error.stack"},
