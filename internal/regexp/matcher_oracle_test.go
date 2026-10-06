@@ -95,7 +95,7 @@ func compareExecutionCases(t *testing.T, cases []executionCase, external bool) {
 	}
 	programs := map[string]*Program{}
 	unavailablePrograms := map[string]error{}
-	compared, unavailable := 0, 0
+	compared, unavailable, regularCases := 0, 0, 0
 	for i, c := range cases {
 		key := c.Pattern + "\x00" + c.Flags + fmt.Sprint(c.PatternUnits)
 		if _, missing := unavailablePrograms[key]; missing {
@@ -123,24 +123,35 @@ func compareExecutionCases(t *testing.T, cases []executionCase, external bool) {
 			}
 			programs[key] = p
 		}
-		r := p.New()
-		r.LastIndex = c.LastIndex
-		r.StepLimit = 10_000_000
-		got, err := matcherResult(r, c.Input)
-		want := c.Expected
-		if external {
-			want = results[i]
+		if p.regular != nil {
+			regularCases++
 		}
-		if err != nil {
-			t.Errorf("execution source=%s pattern=%q flags=%q input=%v lastIndex=%d: %v", c.Source, c.Pattern, c.Flags, c.Input, c.LastIndex, err)
-			continue
-		}
-		compared++
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("DISAGREEMENT source=%s pattern=%q flags=%q input=%v lastIndex=%d got=%+v node=%+v", c.Source, c.Pattern, c.Flags, c.Input, c.LastIndex, got, want)
+		for mode := 0; mode < 3; mode++ {
+			r := p.New()
+			r.LastIndex = c.LastIndex
+			if mode == 0 {
+				r.StepLimit = 10_000_000
+			}
+			r.DisableRegular = mode == 2
+			got, err := matcherResult(r, c.Input)
+			want := c.Expected
+			if external {
+				want = results[i]
+			}
+			if err != nil {
+				t.Errorf("execution source=%s pattern=%q flags=%q input=%v lastIndex=%d: %v", c.Source, c.Pattern, c.Flags, c.Input, c.LastIndex, err)
+				continue
+			}
+			if mode == 0 {
+				compared++
+			}
+			if !reflect.DeepEqual(got, want) {
+				t.Errorf("DISAGREEMENT source=%s pattern=%q flags=%q input=%v lastIndex=%d got=%+v node=%+v", c.Source, c.Pattern, c.Flags, c.Input, c.LastIndex, got, want)
+			}
 		}
 	}
 	t.Logf("execution totals: %d cases, %d compared, %d property stand-in unavailable", len(cases), compared, unavailable)
+	t.Logf("three modes: budgeted VM, regular with recovery, unlimited VM; %d eligible executions", regularCases)
 }
 func TestMatcherNodeControls(t *testing.T) {
 	tests := [][3]string{

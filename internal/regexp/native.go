@@ -144,7 +144,21 @@ func (p *Program) NativeDeclarations(name string) (string, error) {
 			out.WriteString(body)
 			ascii = name + "_ascii"
 		}
-		fmt.Fprintf(&out, "static const adamic_regex_program %s = {%s_code,%d,%d,%d,%s,%d,%s,{UINT64_C(%d),UINT64_C(%d)},%t,%s,%d,%s,%t,%s};\n", name, name, p.captures, p.repeats, nativeFlags(p.flags), groupNames, len(names), shape, bits[0], bits[1], filter, prefixName, len(prefix), fast, p.nativeAnchored(), ascii)
+		behind := p.nativeLookbehindPrefix()
+		behindName := "NULL"
+		if len(behind) > 0 {
+			behindName = name + "_before"
+			fmt.Fprintf(&out, "static const uint16_t %s[] = {", behindName)
+			for _, c := range behind {
+				fmt.Fprintf(&out, "%d,", c)
+			}
+			out.WriteString("};\n")
+		}
+		firstBody, firstName := p.nativeSparseFirst(name)
+		out.WriteString(firstBody)
+		regularBody, regularName := p.nativeRegular(name)
+		out.WriteString(regularBody)
+		fmt.Fprintf(&out, "static const adamic_regex_program %s = {%s_code,%d,%d,%d,%s,%d,%s,{UINT64_C(%d),UINT64_C(%d)},%t,%s,%d,%s,%t,%s,%s,%s,%d,%s};\n", name, name, p.captures, p.repeats, nativeFlags(p.flags), groupNames, len(names), shape, bits[0], bits[1], filter, prefixName, len(prefix), fast, p.nativeAnchored(), ascii, regularName, behindName, len(behind), firstName)
 		return nil
 	}
 	if err := emit(p, name); err != nil {
