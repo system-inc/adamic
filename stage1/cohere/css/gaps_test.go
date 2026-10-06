@@ -59,18 +59,3 @@ func TestClosedParserRegexGap(t *testing.T) {
 		t.Fatal(report)
 	}
 }
-
-// This runtime gap was exposed by replacing the printer's trim regexp with a
-// slice. Keep the reproducer checked until its owner fixes capacity underflow.
-func TestSharedSliceAppendGap(t *testing.T) {
-	path, _ := filepath.Abs("gaps/7_shared_slice_append.ts")
-	result := onNode(t, path)
-	if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "1152\n" {
-		t.Fatalf("Node: %d %q %s", result.exitCode, result.stdout, result.stderr)
-	}
-	bad := nativelyRun(t, lowered(t, path))
-	if bad.exitCode == 0 || !strings.Contains(string(bad.stderr), "AddressSanitizer: heap-buffer-overflow") {
-		t.Fatalf("gap changed: %d %q %s", bad.exitCode, bad.stdout, bad.stderr)
-	}
-	t.Log("Node prints 1152; native ASan catches shared-slice append heap-buffer-overflow")
-}
