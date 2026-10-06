@@ -1,0 +1,14 @@
+class Base {
+ stored = 2;
+ get total(): number { return this.stored; }
+ set total(value: number) { this.stored = value; }
+}
+class Holder<T> extends Base {
+ readonly item: T;
+ constructor(item: T) { super(); this.item = item; }
+}
+const text = new Holder('held'.repeat(2));
+const number = new Holder(7);
+text.total += 1;
+number.total = 4;
+console.log(`${text.item} ${text.total} ${number.item} ${number.total}`);

@@ -1,0 +1,8 @@
+class Counter {
+ stored = 0;
+ get total(): number { console.log(`get ${this.stored}`); return this.stored; }
+ set total(value: number) { console.log(`set ${value}`); this.stored = value; }
+}
+const value = new Counter();
+for (value.total = 0; value.total < 2; value.total++) { console.log('body'); }
+console.log(`${value.total}`);

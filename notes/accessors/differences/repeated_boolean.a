@@ -1,0 +1,9 @@
+class Flaky {
+ private calls = 0;
+ get total(): boolean | undefined {
+  this.calls += 1;
+  return this.calls === 1 ? true : undefined;
+ }
+}
+const value = new Flaky();
+if (value.total !== undefined) { console.log(`${value.total}`); }

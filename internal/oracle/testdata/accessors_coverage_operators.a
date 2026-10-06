@@ -1,0 +1,25 @@
+class Counter {
+ private stored = 8;
+ get total(): number { console.log(`get ${this.stored}`); return this.stored; }
+ set total(value: number) { console.log(`set ${value}`); this.stored = value; }
+}
+const x = new Counter();
+x.total += 1;
+x.total -= 2;
+x.total *= 3;
+x.total /= 7;
+x.total %= 2;
+x.total **= 3;
+x.total |= 8;
+x.total &= 13;
+x.total ^= 3;
+x.total <<= 2;
+x.total >>= 1;
+x.total >>>= 1;
+++x.total;
+--x.total;
+x.total--;
+(x.total++);
+for (let index = 0; index < 2; ++x.total) { index += 1; }
+for (let index = 0; index < 2; x.total -= 1) { index += 1; }
+console.log(`${x.total}`);

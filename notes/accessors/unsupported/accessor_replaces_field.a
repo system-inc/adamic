@@ -1,0 +1,1 @@
+class A { total = 1; } class B extends A { override get total(): number { return 2; } } console.log(`${new B().total}`);

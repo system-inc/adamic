@@ -1,0 +1,31 @@
+class Values {
+ private enabled = false;
+ private amount: number | undefined = undefined;
+ private selection = 0;
+ get active(): boolean { return this.enabled; }
+ set active(value: boolean) { this.enabled = value; }
+ get count(): number | undefined { return this.amount; }
+ set count(value: number | undefined) { this.amount = value; }
+ get choice(): boolean | undefined { return this.selection === 0 ? undefined : this.enabled; }
+ set choice(value: boolean | undefined) {
+  if (value === undefined) { this.selection = 0; } else { this.selection = 1; this.enabled = value; }
+ }
+ get mixed(): number | string { return this.enabled ? 'yes'.repeat(2) : 7; }
+}
+function show(value: Values): void {
+ console.log(`${value.count ?? -1} ${value.choice ?? false}`);
+}
+const values = new Values();
+console.log(`${values.active} ${values.count ?? -1} ${values.choice ?? false}`);
+const first = values.mixed;
+console.log(typeof first === 'number' ? `${first + 1}` : first);
+values.active = true;
+values.count = 4;
+values.choice = true;
+if (values.count !== undefined) { console.log(`${values.count + 1}`); }
+if (values.choice !== undefined) { console.log(`${values.choice}`); }
+const second = values.mixed;
+console.log(typeof second === 'string' ? second.toUpperCase() : `${second}`);
+values.count = undefined;
+values.choice = undefined;
+show(values);

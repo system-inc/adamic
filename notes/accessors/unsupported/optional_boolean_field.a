@@ -1,0 +1,1 @@
+class A { private stored: boolean | undefined = undefined; get value(): boolean | undefined { return this.stored; } } console.log(`${new A().value ?? false}`);

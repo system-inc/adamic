@@ -1,0 +1,13 @@
+class Functions {
+ private operation: (value: number) => string = (value) => `initial ${value}`;
+ get action(): (value: number) => string { return this.operation; }
+ set action(value: (value: number) => string) { this.operation = value; }
+ get fresh(): () => string { const text = 'closure'.repeat(2); return () => text; }
+}
+const functions = new Functions();
+const before = functions.action;
+functions.action = (value) => `changed ${value}`;
+console.log(before(2));
+console.log(functions.action(3));
+const fresh = new Functions().fresh;
+console.log(fresh());

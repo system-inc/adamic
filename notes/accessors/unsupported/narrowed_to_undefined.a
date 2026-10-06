@@ -1,0 +1,1 @@
+class A { get total(): number | undefined { return undefined; } set total(value: number | undefined) {} } const a = new A(); a.total = undefined; console.log(`${a.total ?? -1}`);

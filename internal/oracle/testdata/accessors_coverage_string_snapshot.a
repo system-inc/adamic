@@ -1,0 +1,9 @@
+class Text {
+ private stored = 'old'.repeat(3);
+ get value(): string { console.log('get'); return this.stored; }
+ set value(value: string) { this.stored = value; }
+}
+const text = new Text();
+function operand(): string { text.value = 'changed'.repeat(3); return '!'.repeat(2); }
+text.value += operand();
+console.log(text.value);

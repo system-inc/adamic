@@ -1,0 +1,1 @@
+class A { get x(): number { return 1; } } function read(a: A | undefined): number | undefined { return a?.x; }

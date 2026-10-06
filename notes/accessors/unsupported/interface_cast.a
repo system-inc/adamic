@@ -1,0 +1,1 @@
+interface View { readonly total: number } class A { get total(): number { return 1; } } const value = new A() as View; console.log(`${value.total}`);

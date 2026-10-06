@@ -1,0 +1,1 @@
+interface View { x: number } class A { get x(): number { return 1; } } function make(): A { return new A(); } const f: () => View = make;

@@ -1,0 +1,1 @@
+class A<T> { get x(): number { return 1; } } const a = new A<number>();

@@ -1,0 +1,14 @@
+interface Item { readonly label: string }
+class Reader {
+ get total(): number { return 1; }
+}
+class Derived extends Reader {
+ override get total(): number { return 2; }
+}
+function read(value: Reader): void {
+ const items: Item[] = [{ label: 'held'.repeat(2) }];
+ const before = items[0] ?? { label: 'fallback' };
+ console.log(`${value.total} ${before.label}`);
+}
+read(new Reader());
+read(new Derived());

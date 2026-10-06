@@ -1,0 +1,1 @@
+class A<T> { set total(value: number) { console.log(`${value}`); } } new A<string>().total = 3;

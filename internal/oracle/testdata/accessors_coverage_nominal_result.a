@@ -1,0 +1,7 @@
+class Item { readonly name = 'item'.repeat(2); }
+class Special extends Item { readonly label = 'special'.repeat(2); }
+class Base { get item(): Item { return new Item(); } }
+class Derived extends Base { override get item(): Special { return new Special(); } }
+const base: Base = new Derived();
+console.log(`${base.item instanceof Special} ${base.item.name}`);
+console.log(new Derived().item.label);

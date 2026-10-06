@@ -1,0 +1,10 @@
+class Value {
+ private stored = '';
+ get text(): string { return this.stored; }
+ set text(value: string | number) { this.stored = typeof value === 'number' ? `${value}` : value; }
+}
+const value = new Value();
+value.text = 3;
+console.log(value.text);
+value.text = 'text'.repeat(2);
+console.log(value.text);

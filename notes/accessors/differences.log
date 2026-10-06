@@ -1,0 +1,47 @@
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/notes/accessors/differences/inferred_mixed_array.a (0.42s)
+        oracle_test.go:580: exit codes differ
+            node:   exit 0, stdout "1\n2\n", stderr ""
+            native: exit 70, stdout "1\n", stderr "adamic: panic: compiler bug: virtual call on an object without class identity\n"
+        oracle_test.go:586: JavaScript backend: exit codes differ
+            node:    exit 0, stdout "1\n2\n", stderr ""
+            backend: exit 70, stdout "1\n", stderr "adamic: panic: TypeError: Cannot read properties of undefined (reading 'methods')\n"
+        oracle_test.go:593: leaks:
+            exit 70
+            adamic: panic: compiler bug: virtual call on an object without class identity
+    --- FAIL: TestNativeAgreesWithNode/notes/accessors/differences/repeated_boolean.a (0.42s)
+        oracle_test.go:580: exit codes differ
+            node:   exit 0, stdout "undefined\n", stderr ""
+            native: exit 70, stdout "", stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+        oracle_test.go:586: JavaScript backend: exit codes differ
+            node:    exit 0, stdout "undefined\n", stderr ""
+            backend: exit 70, stdout "", stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+        oracle_test.go:593: leaks:
+            exit 70
+            adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back
+    --- FAIL: TestNativeAgreesWithNode/notes/accessors/differences/repeated_string.a (0.43s)
+        oracle_test.go:580: exit codes differ
+            node:   exit 0, stdout "undefined\n", stderr ""
+            native: exit 70, stdout "", stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+        oracle_test.go:586: JavaScript backend: exit codes differ
+            node:    exit 0, stdout "undefined\n", stderr ""
+            backend: exit 70, stdout "", stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+        oracle_test.go:593: leaks:
+            exit 70
+            adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back
+    --- FAIL: TestNativeAgreesWithNode/notes/accessors/differences/repeated_number.a (0.45s)
+        oracle_test.go:580: exit codes differ
+            node:   exit 0, stdout "NaN\n", stderr ""
+            native: exit 70, stdout "", stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+        oracle_test.go:586: JavaScript backend: exit codes differ
+            node:    exit 0, stdout "NaN\n", stderr ""
+            backend: exit 70, stdout "", stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+        oracle_test.go:593: leaks:
+            exit 70
+            adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back
+FAIL
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.454s
+FAIL

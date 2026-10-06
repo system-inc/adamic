@@ -1,0 +1,5 @@
+class A {
+ get total(): number { return 1; }
+}
+const items = [new A(), { total: 2 }];
+for (const item of items) { console.log(`${item.total}`); }

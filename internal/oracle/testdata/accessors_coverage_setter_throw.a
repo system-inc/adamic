@@ -1,0 +1,19 @@
+class Base {
+ get text(): string { return 'base'.repeat(2); }
+ set text(value: string) { console.log(`base ${value}`); }
+}
+class Thrower extends Base {
+ override get text(): string { console.log('get'); return 'fresh'.repeat(2); }
+ override set text(value: string) { const held = value + '!'; console.log(held); throw new Error(held); }
+}
+function operand(): string { console.log('operand'); return 'right'.repeat(2); }
+function update(value: Base): void { value.text += operand(); console.log('wrong after'); }
+try { update(new Thrower()); } catch (error) {
+ if (error instanceof Error) { console.log(`caught ${error.message}`); }
+} finally { console.log('finally'); }
+class Sink {
+ set text(value: string) { throw new Error(value); }
+}
+try { new Sink().text = 'sink'.repeat(2); } catch (error) {
+ if (error instanceof Error) { console.log(error.message); }
+}

@@ -1,0 +1,1 @@
+class A { get x(): number { return 1; } set x(value: number) {} } const a = new A(); const value = a.x++;

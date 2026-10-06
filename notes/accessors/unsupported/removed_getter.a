@@ -1,0 +1,1 @@
+class A { get total(): number { return 1; } set total(value: number) {} } class B extends A { override set total(value: number) {} } new B().total = 3;

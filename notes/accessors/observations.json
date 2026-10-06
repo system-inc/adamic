@@ -1,0 +1,2990 @@
+[
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_assignment_order.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_assignment_order.a"
+      ],
+      "exit": 0,
+      "stdout": "operand\nset mademade\nmademade|\nreceiver\noperand\nset mademade\nmademade|\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_assignment_order.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_assignment_order"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_assignment_order"
+      ],
+      "exit": 0,
+      "stdout": "operand\nset mademade\nmademade|\nreceiver\noperand\nset mademade\nmademade|\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_assignment_order.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_assignment_order.mjs"
+      ],
+      "exit": 0,
+      "stdout": "operand\nset mademade\nmademade|\nreceiver\noperand\nset mademade\nmademade|\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_borrow_safe.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_borrow_safe.a"
+      ],
+      "exit": 0,
+      "stdout": "1 heldheld\n2 heldheld\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_borrow_safe.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_borrow_safe"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_borrow_safe"
+      ],
+      "exit": 0,
+      "stdout": "1 heldheld\n2 heldheld\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_borrow_safe.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_borrow_safe.mjs"
+      ],
+      "exit": 0,
+      "stdout": "1 heldheld\n2 heldheld\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_collections.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_collections.a"
+      ],
+      "exit": 0,
+      "stdout": "storedstored,extraextra newnew\nvaluevalue replacementreplacement\nmembermember nextnext\n3 pairpair\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_collections.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_collections"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_collections"
+      ],
+      "exit": 0,
+      "stdout": "storedstored,extraextra newnew\nvaluevalue replacementreplacement\nmembermember nextnext\n3 pairpair\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_collections.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_collections.mjs"
+      ],
+      "exit": 0,
+      "stdout": "storedstored,extraextra newnew\nvaluevalue replacementreplacement\nmembermember nextnext\n3 pairpair\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_constructor.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_constructor.a"
+      ],
+      "exit": 0,
+      "stdout": "constructor 6\n14 14\nderived 12\n12\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_constructor.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_constructor"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_constructor"
+      ],
+      "exit": 0,
+      "stdout": "constructor 6\n14 14\nderived 12\n12\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_constructor.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_constructor.mjs"
+      ],
+      "exit": 0,
+      "stdout": "constructor 6\n14 14\nderived 12\n12\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_functions.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_functions.a"
+      ],
+      "exit": 0,
+      "stdout": "initial 2\nchanged 3\nclosureclosure\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_functions.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_functions"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_functions"
+      ],
+      "exit": 0,
+      "stdout": "initial 2\nchanged 3\nclosureclosure\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_functions.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_functions.mjs"
+      ],
+      "exit": 0,
+      "stdout": "initial 2\nchanged 3\nclosureclosure\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_generic_inherited.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_generic_inherited.a"
+      ],
+      "exit": 0,
+      "stdout": "heldheld 3 7 4\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_generic_inherited.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_generic_inherited"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_generic_inherited"
+      ],
+      "exit": 0,
+      "stdout": "heldheld 3 7 4\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_generic_inherited.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_generic_inherited.mjs"
+      ],
+      "exit": 0,
+      "stdout": "heldheld 3 7 4\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_loop.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_loop.a"
+      ],
+      "exit": 0,
+      "stdout": "set 0\nget 0\nbody\nget 0\nset 1\nget 1\nbody\nget 1\nset 2\nget 2\nget 2\n2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_loop.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_loop"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_loop"
+      ],
+      "exit": 0,
+      "stdout": "set 0\nget 0\nbody\nget 0\nset 1\nget 1\nbody\nget 1\nset 2\nget 2\nget 2\n2\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_loop.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_loop.mjs"
+      ],
+      "exit": 0,
+      "stdout": "set 0\nget 0\nbody\nget 0\nset 1\nget 1\nbody\nget 1\nset 2\nget 2\nget 2\n2\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_nominal_result.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_nominal_result.a"
+      ],
+      "exit": 0,
+      "stdout": "true itemitem\nspecialspecial\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_nominal_result.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_nominal_result"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_nominal_result"
+      ],
+      "exit": 0,
+      "stdout": "true itemitem\nspecialspecial\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_nominal_result.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_nominal_result.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true itemitem\nspecialspecial\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_objects.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_objects.a"
+      ],
+      "exit": 0,
+      "stdout": "false itemitem errorerror\ntrue 2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_objects.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_objects"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_objects"
+      ],
+      "exit": 0,
+      "stdout": "false itemitem errorerror\ntrue 2\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_objects.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_objects.mjs"
+      ],
+      "exit": 0,
+      "stdout": "false itemitem errorerror\ntrue 2\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_operand_throw.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_operand_throw.a"
+      ],
+      "exit": 0,
+      "stdout": "get\noperand\ncaught\ntext caught\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_operand_throw.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_operand_throw"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_operand_throw"
+      ],
+      "exit": 0,
+      "stdout": "get\noperand\ncaught\ntext caught\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_operand_throw.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_operand_throw.mjs"
+      ],
+      "exit": 0,
+      "stdout": "get\noperand\ncaught\ntext caught\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_operators.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_operators.a"
+      ],
+      "exit": 0,
+      "stdout": "get 8\nset 9\nget 9\nset 7\nget 7\nset 21\nget 21\nset 3\nget 3\nset 1\nget 1\nset 1\nget 1\nset 9\nget 9\nset 9\nget 9\nset 10\nget 10\nset 40\nget 40\nset 20\nget 20\nset 10\nget 10\nset 11\nget 11\nset 10\nget 10\nset 9\nget 9\nset 10\nget 10\nset 11\nget 11\nset 12\nget 12\nset 11\nget 11\nset 10\nget 10\n10\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_operators.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_operators"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_operators"
+      ],
+      "exit": 0,
+      "stdout": "get 8\nset 9\nget 9\nset 7\nget 7\nset 21\nget 21\nset 3\nget 3\nset 1\nget 1\nset 1\nget 1\nset 9\nget 9\nset 9\nget 9\nset 10\nget 10\nset 40\nget 40\nset 20\nget 20\nset 10\nget 10\nset 11\nget 11\nset 10\nget 10\nset 9\nget 9\nset 10\nget 10\nset 11\nget 11\nset 12\nget 12\nset 11\nget 11\nset 10\nget 10\n10\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_operators.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_operators.mjs"
+      ],
+      "exit": 0,
+      "stdout": "get 8\nset 9\nget 9\nset 7\nget 7\nset 21\nget 21\nset 3\nget 3\nset 1\nget 1\nset 1\nget 1\nset 9\nget 9\nset 9\nget 9\nset 10\nget 10\nset 40\nget 40\nset 20\nget 20\nset 10\nget 10\nset 11\nget 11\nset 10\nget 10\nset 9\nget 9\nset 10\nget 10\nset 11\nget 11\nset 12\nget 12\nset 11\nget 11\nset 10\nget 10\n10\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_optional_references.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_optional_references.a"
+      ],
+      "exit": 0,
+      "stdout": "none none\nitemitem\n8\nnone none\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_optional_references.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_optional_references"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_optional_references"
+      ],
+      "exit": 0,
+      "stdout": "none none\nitemitem\n8\nnone none\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_optional_references.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_optional_references.mjs"
+      ],
+      "exit": 0,
+      "stdout": "none none\nitemitem\n8\nnone none\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_override_types.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_override_types.a"
+      ],
+      "exit": 0,
+      "stdout": "derived 1\n1 dogdog\nderived 9\nwoofwoof\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_override_types.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_override_types"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_override_types"
+      ],
+      "exit": 0,
+      "stdout": "derived 1\n1 dogdog\nderived 9\nwoofwoof\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_override_types.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_override_types.mjs"
+      ],
+      "exit": 0,
+      "stdout": "derived 1\n1 dogdog\nderived 9\nwoofwoof\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_scalars.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_scalars.a"
+      ],
+      "exit": 0,
+      "stdout": "false -1 false\n8\n5\ntrue\nYESYES\n-1 false\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_scalars.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_scalars"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_scalars"
+      ],
+      "exit": 0,
+      "stdout": "false -1 false\n8\n5\ntrue\nYESYES\n-1 false\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_scalars.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_scalars.mjs"
+      ],
+      "exit": 0,
+      "stdout": "false -1 false\n8\n5\ntrue\nYESYES\n-1 false\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_setter_only_override.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_setter_only_override.a"
+      ],
+      "exit": 0,
+      "stdout": "base 3\nderived 3\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_setter_only_override.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_setter_only_override"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_setter_only_override"
+      ],
+      "exit": 0,
+      "stdout": "base 3\nderived 3\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_setter_only_override.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_setter_only_override.mjs"
+      ],
+      "exit": 0,
+      "stdout": "base 3\nderived 3\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_setter_throw.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_setter_throw.a"
+      ],
+      "exit": 0,
+      "stdout": "get\noperand\nfreshfreshrightright!\ncaught freshfreshrightright!\nfinally\nsinksink\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_setter_throw.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_setter_throw"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_setter_throw"
+      ],
+      "exit": 0,
+      "stdout": "get\noperand\nfreshfreshrightright!\ncaught freshfreshrightright!\nfinally\nsinksink\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_setter_throw.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_setter_throw.mjs"
+      ],
+      "exit": 0,
+      "stdout": "get\noperand\nfreshfreshrightright!\ncaught freshfreshrightright!\nfinally\nsinksink\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_string_snapshot.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_string_snapshot.a"
+      ],
+      "exit": 0,
+      "stdout": "get\nget\noldoldold!!\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_string_snapshot.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_string_snapshot"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_string_snapshot"
+      ],
+      "exit": 0,
+      "stdout": "get\nget\noldoldold!!\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_string_snapshot.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_string_snapshot.mjs"
+      ],
+      "exit": 0,
+      "stdout": "get\nget\noldoldold!!\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_union_narrowed.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_union_narrowed.a"
+      ],
+      "exit": 0,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_union_narrowed.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_union_narrowed"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_union_narrowed"
+      ],
+      "exit": 0,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_union_narrowed.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_union_narrowed.mjs"
+      ],
+      "exit": 0,
+      "stdout": "1 2\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_union_setter.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_union_setter.a"
+      ],
+      "exit": 0,
+      "stdout": "3\ntexttext\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_union_setter.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_union_setter"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_union_setter"
+      ],
+      "exit": 0,
+      "stdout": "3\ntexttext\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_union_setter.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_union_setter.mjs"
+      ],
+      "exit": 0,
+      "stdout": "3\ntexttext\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/accessors_coverage_weak.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "internal/oracle/testdata/accessors_coverage_weak.a"
+      ],
+      "exit": 0,
+      "stdout": "heldheld\nnone\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "internal/oracle/testdata/accessors_coverage_weak.a",
+        "-o",
+        "/tmp/adamic-accessors/accessors_coverage_weak"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/accessors_coverage_weak"
+      ],
+      "exit": 0,
+      "stdout": "heldheld\nnone\n",
+      "stderr": ""
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "internal/oracle/testdata/accessors_coverage_weak.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/accessors_coverage_weak.mjs"
+      ],
+      "exit": 0,
+      "stdout": "heldheld\nnone\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "notes/accessors/differences/inferred_mixed_array.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/differences/inferred_mixed_array.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/differences/inferred_mixed_array.a",
+        "-o",
+        "/tmp/adamic-accessors/inferred_mixed_array"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/inferred_mixed_array"
+      ],
+      "exit": 70,
+      "stdout": "1\n",
+      "stderr": "adamic: panic: compiler bug: virtual call on an object without class identity\n"
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "notes/accessors/differences/inferred_mixed_array.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/inferred_mixed_array.mjs"
+      ],
+      "exit": 70,
+      "stdout": "1\n",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'methods')\n"
+    }
+  },
+  {
+    "program": "notes/accessors/differences/repeated_boolean.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/differences/repeated_boolean.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/differences/repeated_boolean.a",
+        "-o",
+        "/tmp/adamic-accessors/repeated_boolean"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/repeated_boolean"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "notes/accessors/differences/repeated_boolean.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/repeated_boolean.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+    }
+  },
+  {
+    "program": "notes/accessors/differences/repeated_number.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/differences/repeated_number.a"
+      ],
+      "exit": 0,
+      "stdout": "NaN\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/differences/repeated_number.a",
+        "-o",
+        "/tmp/adamic-accessors/repeated_number"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/repeated_number"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "notes/accessors/differences/repeated_number.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/repeated_number.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+    }
+  },
+  {
+    "program": "notes/accessors/differences/repeated_string.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/differences/repeated_string.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/differences/repeated_string.a",
+        "-o",
+        "/tmp/adamic-accessors/repeated_string"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/adamic-accessors/repeated_string"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+    },
+    "javascript_build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "notes/accessors/differences/repeated_string.a"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-accessors/repeated_string.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/abstract.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/abstract.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/abstract.a",
+        "-o",
+        "/tmp/adamic-accessors/abstract"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/abstract.a:1:20: stage 0 can't lower abstract or ambient accessors (adamic/abstract-accessor) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/accessor_replaces_field.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/accessor_replaces_field.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/accessor_replaces_field.a",
+        "-o",
+        "/tmp/adamic-accessors/accessor_replaces_field"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "notes/accessors/unsupported/accessor_replaces_field.a:1:57: error TS2611: 'total' is defined as a property in class 'A', but is overridden here in 'B' as an accessor.\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/added_half.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/added_half.a"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/added_half.a",
+        "-o",
+        "/tmp/adamic-accessors/added_half"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/added_half.a:1:67: stage 0 can't lower an override changing the getter/setter descriptor halves (adamic/accessor-descriptor-override) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/ambient.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/ambient.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/ambient.a",
+        "-o",
+        "/tmp/adamic-accessors/ambient"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/ambient.a:1:19: stage 0 can't lower abstract or ambient accessors (adamic/abstract-accessor) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/base_constructor_escape.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/base_constructor_escape.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/base_constructor_escape.a",
+        "-o",
+        "/tmp/adamic-accessors/base_constructor_escape"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/base_constructor_escape.a:1:69: Adamic 0.1 refuses this escaping a base constructor before derived fields are initialized; use this only to read or write initialized base fields; call methods and publish the object after construction\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/captured_this_result.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/captured_this_result.a"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/captured_this_result.a",
+        "-o",
+        "/tmp/adamic-accessors/captured_this_result"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/captured_this_result.a:1:7: Adamic 0.1 refuses 'this', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function this() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/compound_value.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/compound_value.a"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/compound_value.a",
+        "-o",
+        "/tmp/adamic-accessors/compound_value"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/compound_value.a:1:109: stage 0 can't lower an accessor assignment or update used as a value (adamic/accessor-update-value) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/computed.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/computed.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/computed.a",
+        "-o",
+        "/tmp/adamic-accessors/computed"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/computed.a:1:11: stage 0 can't lower computed or private accessor names (adamic/accessor-name) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/constructor_escape.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/constructor_escape.a"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'toString')\n"
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/constructor_escape.a",
+        "-o",
+        "/tmp/adamic-accessors/constructor_escape"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/constructor_escape.a:1:89: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/destructure.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/destructure.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/destructure.a",
+        "-o",
+        "/tmp/adamic-accessors/destructure"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/destructure.a:1:49: stage 0 can't lower spread, destructuring or indexed access of an accessor-bearing value (adamic/accessor-property-operation) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/discarded.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/discarded.a"
+      ],
+      "exit": 0,
+      "stdout": "item\ntext\nitem\nfreshfresh\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/discarded.a",
+        "-o",
+        "/tmp/adamic-accessors/discarded"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/discarded.a:6:1: stage 0 can't lower a PropertyAccessExpression as a statement yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/erased_accessor.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/erased_accessor.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/erased_accessor.a",
+        "-o",
+        "/tmp/adamic-accessors/erased_accessor"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/erased_accessor.a:1:84: Adamic 0.1 refuses a view erasing accessor x (adamic/accessor-view-erasure); keep a class view declaring the accessor; erasing it could expose it later as an optional field\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/erased_base.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/erased_base.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/erased_base.a",
+        "-o",
+        "/tmp/adamic-accessors/erased_base"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/erased_base.a:1:98: Adamic 0.1 refuses a view erasing accessor total (adamic/accessor-view-erasure); keep a class view declaring the accessor; erasing it could expose it later as an optional field\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/field_replaces_accessor.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/field_replaces_accessor.a"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/field_replaces_accessor.a",
+        "-o",
+        "/tmp/adamic-accessors/field_replaces_accessor"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "notes/accessors/unsupported/field_replaces_accessor.a:1:76: error TS2610: 'total' is defined as an accessor in class 'A', but is overridden here in 'B' as an instance property.\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/function_view.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/function_view.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/function_view.a",
+        "-o",
+        "/tmp/adamic-accessors/function_view"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/function_view.a:1:133: Adamic 0.1 refuses an accessor and a field sharing the view of x (adamic/accessor-field-view); keep the nominal class type; structural property views do not carry accessor dispatch\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/generic.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/generic.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/generic.a",
+        "-o",
+        "/tmp/adamic-accessors/generic"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/generic.a:1:14: stage 0 can't lower accessors on generic classes (adamic/generic-accessor) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/generic_function_receiver.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/generic_function_receiver.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/generic_function_receiver.a",
+        "-o",
+        "/tmp/adamic-accessors/generic_function_receiver"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/generic_function_receiver.a:1:97: stage 0 can't lower accessor dispatch through a type parameter (adamic/generic-accessor-receiver) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/generic_setter.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/generic_setter.a"
+      ],
+      "exit": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/generic_setter.a",
+        "-o",
+        "/tmp/adamic-accessors/generic_setter"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/generic_setter.a:1:14: stage 0 can't lower accessors on generic classes (adamic/generic-accessor) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/getter_narrowing.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/getter_narrowing.a"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/getter_narrowing.a",
+        "-o",
+        "/tmp/adamic-accessors/getter_narrowing"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/getter_narrowing.a:1:133: stage 0 can't lower a narrowed accessor result with a different native representation (adamic/accessor-narrowing) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/getter_only_write.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/getter_only_write.a"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot set property total of #<A> which has only a getter\n"
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/getter_only_write.a",
+        "-o",
+        "/tmp/adamic-accessors/getter_only_write"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "notes/accessors/unsupported/getter_only_write.a:1:76: error TS2540: Cannot assign to 'total' because it is a read-only property.\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/indexed.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/indexed.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/indexed.a",
+        "-o",
+        "/tmp/adamic-accessors/indexed"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/indexed.a:1:74: stage 0 can't lower spread, destructuring or indexed access of an accessor-bearing value (adamic/accessor-property-operation) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/initializer_escape.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/initializer_escape.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/initializer_escape.a",
+        "-o",
+        "/tmp/adamic-accessors/initializer_escape"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/initializer_escape.a:1:50: Adamic 0.1 refuses this in a field initializer before the fields it reads are initialized; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/interface_argument.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/interface_argument.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/interface_argument.a",
+        "-o",
+        "/tmp/adamic-accessors/interface_argument"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/interface_argument.a:1:168: Adamic 0.1 refuses an accessor and a field sharing the view of total (adamic/accessor-field-view); keep the nominal class type; structural property views do not carry accessor dispatch\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/interface_cast.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/interface_cast.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/interface_cast.a",
+        "-o",
+        "/tmp/adamic-accessors/interface_cast"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/interface_cast.a:1:103: Adamic 0.1 refuses an accessor and a field sharing the view of total (adamic/accessor-field-view); keep the nominal class type; structural property views do not carry accessor dispatch\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/interface_descriptor.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/interface_descriptor.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/interface_descriptor.a",
+        "-o",
+        "/tmp/adamic-accessors/interface_descriptor"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/interface_descriptor.a:1:18: stage 0 can't lower an accessor declaration outside a class (adamic/accessor-declaration) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/interface_field.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/interface_field.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/interface_field.a",
+        "-o",
+        "/tmp/adamic-accessors/interface_field"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/interface_field.a:1:126: Adamic 0.1 refuses an accessor and a field sharing the view of total (adamic/accessor-field-view); keep the nominal class type; structural property views do not carry accessor dispatch\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/interface_getter_parameter.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/interface_getter_parameter.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/interface_getter_parameter.a",
+        "-o",
+        "/tmp/adamic-accessors/interface_getter_parameter"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/interface_getter_parameter.a:1:115: Adamic 0.1 refuses an accessor through a structural property view (adamic/accessor-field-view); keep the nominal class type; an interface does not prove the virtual slot's layout\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/interface_inherits_accessor.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/interface_inherits_accessor.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/interface_inherits_accessor.a",
+        "-o",
+        "/tmp/adamic-accessors/interface_inherits_accessor"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/interface_inherits_accessor.a:1:91: Adamic 0.1 refuses an accessor and a field sharing the view of x (adamic/accessor-field-view); keep the nominal class type; structural property views do not carry accessor dispatch\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/literal.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/literal.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/literal.a",
+        "-o",
+        "/tmp/adamic-accessors/literal"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/literal.a:1:17: stage 0 can't lower object-literal accessors (adamic/object-accessor) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/method_replaces_accessor.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/method_replaces_accessor.a"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/method_replaces_accessor.a",
+        "-o",
+        "/tmp/adamic-accessors/method_replaces_accessor"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "notes/accessors/unsupported/method_replaces_accessor.a:1:88: error TS2426: Class 'A' defines instance member accessor 'total', but extended class 'B' defines it as instance member function.\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/mutable_getter_result_override.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/mutable_getter_result_override.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/mutable_getter_result_override.a",
+        "-o",
+        "/tmp/adamic-accessors/mutable_getter_result_override"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/mutable_getter_result_override.a:1:173: Adamic 0.1 refuses an unsound accessor override (adamic/accessor-override); keep the inherited accessor descriptor and its read and write types\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/narrowed_to_undefined.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/narrowed_to_undefined.a"
+      ],
+      "exit": 0,
+      "stdout": "-1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/narrowed_to_undefined.a",
+        "-o",
+        "/tmp/adamic-accessors/narrowed_to_undefined"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/narrowed_to_undefined.a:1:162: stage 0 can't lower a value of type undefined yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/nested_writable_interface.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/nested_writable_interface.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/nested_writable_interface.a",
+        "-o",
+        "/tmp/adamic-accessors/nested_writable_interface"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/nested_writable_interface.a:1:104: Adamic 0.1 refuses an accessor and a field sharing the view of x (adamic/accessor-field-view); keep the nominal class type; structural property views do not carry accessor dispatch\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/never_result.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/never_result.a"
+      ],
+      "exit": 0,
+      "stdout": "caught\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/never_result.a",
+        "-o",
+        "/tmp/adamic-accessors/never_result"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/never_result.a:1:74: stage 0 can't lower a value of type never yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/null_result.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/null_result.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/null_result.a",
+        "-o",
+        "/tmp/adamic-accessors/null_result"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/null_result.a:1:15: stage 0 can't lower a function returning null yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/object_setter.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/object_setter.a"
+      ],
+      "exit": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/object_setter.a",
+        "-o",
+        "/tmp/adamic-accessors/object_setter"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/object_setter.a:1:17: stage 0 can't lower object-literal accessors (adamic/object-accessor) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/optional.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/optional.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/optional.a",
+        "-o",
+        "/tmp/adamic-accessors/optional"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/optional.a:1:104: stage 0 can't lower optional accessor access (adamic/optional-accessor) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/optional_boolean_field.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/optional_boolean_field.a"
+      ],
+      "exit": 0,
+      "stdout": "false\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/optional_boolean_field.a",
+        "-o",
+        "/tmp/adamic-accessors/optional_boolean_field"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/optional_boolean_field.a:1:11: stage 0 can't lower a field of type boolean | undefined yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/override_representation.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/override_representation.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/override_representation.a",
+        "-o",
+        "/tmp/adamic-accessors/override_representation"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/override_representation.a:1:72: stage 0 can't lower an accessor override changing native representation (adamic/accessor-override-representation) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/parameter_destructure.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/parameter_destructure.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/parameter_destructure.a",
+        "-o",
+        "/tmp/adamic-accessors/parameter_destructure"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/parameter_destructure.a:1:57: stage 0 can't lower spread, destructuring or indexed access of an accessor-bearing value (adamic/accessor-property-operation) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/partial_descriptor.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/partial_descriptor.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/partial_descriptor.a",
+        "-o",
+        "/tmp/adamic-accessors/partial_descriptor"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/partial_descriptor.a:1:87: stage 0 can't lower an override changing the getter/setter descriptor halves (adamic/accessor-descriptor-override) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/private_name.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/private_name.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/private_name.a",
+        "-o",
+        "/tmp/adamic-accessors/private_name"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/private_name.a:1:11: stage 0 can't lower computed or private accessor names (adamic/accessor-name) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/readonly_interface.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/readonly_interface.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/readonly_interface.a",
+        "-o",
+        "/tmp/adamic-accessors/readonly_interface"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/readonly_interface.a:1:100: Adamic 0.1 refuses an accessor and a field sharing the view of x (adamic/accessor-field-view); keep the nominal class type; structural property views do not carry accessor dispatch\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/removed_getter.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/removed_getter.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/removed_getter.a",
+        "-o",
+        "/tmp/adamic-accessors/removed_getter"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/removed_getter.a:1:95: stage 0 can't lower an override changing the getter/setter descriptor halves (adamic/accessor-descriptor-override) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/setter_only_read.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/setter_only_read.a"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'toString')\n"
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/setter_only_read.a",
+        "-o",
+        "/tmp/adamic-accessors/setter_only_read"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/setter_only_read.a:1:49: Adamic 0.1 refuses a setter-only property read (adamic/setter-only-read); declare the missing accessor, or use an explicit method\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/setter_parameter_narrowing.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/setter_parameter_narrowing.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/setter_parameter_narrowing.a",
+        "-o",
+        "/tmp/adamic-accessors/setter_parameter_narrowing"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/setter_parameter_narrowing.a:1:87: Adamic 0.1 refuses an unsound accessor override (adamic/accessor-override); keep the inherited accessor descriptor and its read and write types\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/setter_value.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/setter_value.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/setter_value.a",
+        "-o",
+        "/tmp/adamic-accessors/setter_value"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/setter_value.a:1:101: stage 0 can't lower an accessor assignment or update used as a value (adamic/accessor-update-value) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/spread.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/spread.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/spread.a",
+        "-o",
+        "/tmp/adamic-accessors/spread"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/spread.a:1:74: stage 0 can't lower spread, destructuring or indexed access of an accessor-bearing value (adamic/accessor-property-operation) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/static.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/static.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/static.a",
+        "-o",
+        "/tmp/adamic-accessors/static"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/static.a:1:11: stage 0 can't lower static accessors (adamic/static-accessor) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/static_setter.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/static_setter.a"
+      ],
+      "exit": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/static_setter.a",
+        "-o",
+        "/tmp/adamic-accessors/static_setter"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/static_setter.a:1:11: stage 0 can't lower static accessors (adamic/static-accessor) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/super.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/super.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/super.a",
+        "-o",
+        "/tmp/adamic-accessors/super"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/super.a:1:97: stage 0 can't lower super accessor access (adamic/super-accessor) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/undefined_result.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/undefined_result.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/undefined_result.a",
+        "-o",
+        "/tmp/adamic-accessors/undefined_result"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/undefined_result.a:1:15: stage 0 can't lower a function returning undefined yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/union.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/union.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/union.a",
+        "-o",
+        "/tmp/adamic-accessors/union"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/union.a:1:138: stage 0 can't lower accessor dispatch through a union (adamic/accessor-union) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/unrelated_getter_interface.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/unrelated_getter_interface.a"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/unrelated_getter_interface.a",
+        "-o",
+        "/tmp/adamic-accessors/unrelated_getter_interface"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/unrelated_getter_interface.a:1:163: Adamic 0.1 refuses an accessor and a field sharing the view of x (adamic/accessor-field-view); keep the nominal class type; structural property views do not carry accessor dispatch\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/update_value.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/update_value.a"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/update_value.a",
+        "-o",
+        "/tmp/adamic-accessors/update_value"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/update_value.a:1:100: stage 0 can't lower an accessor assignment or update used as a value (adamic/accessor-update-value) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/void_result.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/void_result.a"
+      ],
+      "exit": 0,
+      "stdout": "called\ntrue\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/void_result.a",
+        "-o",
+        "/tmp/adamic-accessors/void_result"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/void_result.a:1:82: stage 0 can't lower a value of type void yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/accessors/unsupported/writable_interface.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/accessors/unsupported/writable_interface.a"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot set property x of #<A> which has only a getter\n"
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "notes/accessors/unsupported/writable_interface.a",
+        "-o",
+        "/tmp/adamic-accessors/writable_interface"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/accessors/unsupported/writable_interface.a:1:91: Adamic 0.1 refuses an accessor and a field sharing the view of x (adamic/accessor-field-view); keep the nominal class type; structural property views do not carry accessor dispatch\nexit status 1\n"
+    }
+  }
+]

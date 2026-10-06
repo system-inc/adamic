@@ -1,0 +1,12 @@
+class Counter {
+ get total(): number { console.log('get'); return 3; }
+ set total(value: number) { console.log(`wrong setter ${value}`); }
+}
+function operand(): number { console.log('operand'); throw new Error('operand'); }
+try { new Counter().total += operand(); } catch { console.log('caught'); }
+class Text {
+ get value(): string { return 'held'.repeat(3); }
+ set value(value: string) { console.log(`wrong ${value}`); }
+}
+function fail(): string { throw new Error('text'); }
+try { new Text().value += fail(); } catch { console.log('text caught'); }

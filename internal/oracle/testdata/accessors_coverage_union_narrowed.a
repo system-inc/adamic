@@ -1,0 +1,7 @@
+class First { get total(): number { return 1; } }
+class Second { get total(): number { return 2; } }
+function read(value: First | Second): number {
+ if (value instanceof First) { return value.total; }
+ return value.total;
+}
+console.log(`${read(new First())} ${read(new Second())}`);
