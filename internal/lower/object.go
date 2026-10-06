@@ -3,6 +3,7 @@ package lower
 import (
 	"fmt"
 	"math"
+	"sort"
 	"strconv"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -351,6 +352,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if access.QuestionDotToken != nil && object.Type() != ir.Object {
 		return nil, l.notYet(node, "optional chaining to ."+name+" on a "+typeName(object.Type()))
 	}
+	if object.Type() == ir.Object && name == "length" {
+		if length, handled, err := l.tupleViewLength(node, object); handled {
+			return length, err
+		}
+	}
 	switch {
 	case object.Type() == ir.Array && name == "length":
 		return ir.Length{Array: object}, nil
@@ -402,6 +408,56 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		return l.defined(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
+}
+
+// tupleViewLength handles optional and union views of fixed tuples. The receiver is evaluated
+// once, including its effects and dead-zone check. Each fixed tuple has its own indexed fields;
+// testing the last index of longer members selects the held member without reading a missing field.
+func (l *lowering) tupleViewLength(node *ast.Node, object ir.Expression) (ir.Expression, bool, error) {
+	access := node.AsPropertyAccessExpression()
+	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+	members := []*checker.Type{receiver}
+	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
+		members = receiver.Types()
+	}
+	hasTuple := false
+	for _, member := range members {
+		hasTuple = hasTuple || checker.IsTupleType(member)
+	}
+	if !hasTuple {
+		return nil, false, nil
+	}
+	if len(members) == 1 && access.QuestionDotToken == nil && checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+		return nil, false, nil // Keep the existing constant read for a plain fixed tuple.
+	}
+	lengths := []int{}
+	for _, member := range members {
+		if !checker.IsTupleType(member) {
+			return nil, true, l.notYet(node, "length through a union containing a tuple and a non-tuple")
+		}
+		length := l.checker.GetTypeOfPropertyOfType(member, "length")
+		if length == nil || length.Flags()&checker.TypeFlagsNumberLiteral == 0 {
+			return nil, true, l.notYet(node, "length through a tuple view with optional or rest elements, whose runtime length is not stored")
+		}
+		lengths = append(lengths, len(l.checker.GetTypeArguments(member)))
+	}
+	sort.Ints(lengths)
+	b := l.libraryArrayBuilder([]ir.Expression{object})
+	read := b.read(b.parameters[0])
+	result := ir.Expression(ir.NumberConstant{Value: float64(lengths[0])})
+	for index := 1; index < len(lengths); index++ {
+		if lengths[index] == lengths[index-1] {
+			continue
+		}
+		result = ir.Conditional{
+			Condition: ir.HasOwn{Object: read, Key: ir.StringConstant{Index: l.constant(strconv.Itoa(lengths[index] - 1))}},
+			WhenTrue:  ir.NumberConstant{Value: float64(lengths[index])}, WhenNot: result,
+		}
+	}
+	if access.QuestionDotToken != nil {
+		result = ir.Conditional{Condition: ir.IsUndefined{Value: read}, WhenTrue: ir.MaybeOf{Of: ir.MaybeNumber}, WhenNot: fit(result, ir.MaybeNumber), Of: ir.MaybeNumber}
+	}
+	return b.finish("tuple_view_length", result), true, nil
 }
 
 // hasOwnProperty lowers object.hasOwnProperty(key) when the method is the library's, not a field the

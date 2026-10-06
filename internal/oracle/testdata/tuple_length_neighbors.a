@@ -1,0 +1,18 @@
+type Entry = readonly [] | readonly [string] | readonly [string, number, number];
+function size(entry: Entry | undefined): number {
+ return entry?.length ?? -1;
+}
+console.log(`${size([])} ${size([`a${1}`])} ${size([`b${1}`, 2, 3])} ${size(undefined)}`);
+const entries: (readonly [string, number])[] = [[`x${1}`, 2]];
+console.log(`${entries[0]?.length ?? -1} ${entries[1]?.length ?? -1}`);
+let calls = 0;
+function next(): readonly [string, number] | undefined {
+ calls += 1;
+ return calls === 1 ? [`z${calls}`, calls] : undefined;
+}
+console.log(`${next()?.length ?? -1} ${calls}`);
+console.log(`${next()?.length ?? -1} ${calls}`);
+function same(entry: readonly [string, number] | readonly [number, string]): number {
+ return entry.length;
+}
+console.log(`${same([`a${1}`, 1])} ${same([1, `b${1}`])}`);
