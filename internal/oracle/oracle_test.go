@@ -426,6 +426,17 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 	return lower.Lower(context.Background(), program)
 }
 
+// nativeVariant is a native build a fixture runs as, each with its own runtime library (identity's
+// libraries, in this order) and its own cached result.
+type nativeVariant int
+
+const (
+	sanitizedBuild nativeVariant = iota
+	releaseBuild
+	countedBuild
+	slabsBuild
+)
+
 // natively builds a lowered program under the sanitizers and runs it. It returns the binary too, so
 // the leak check on Linux can run the same one again.
 //
@@ -438,21 +449,33 @@ func released(t *testing.T, program *ir.Program) run {
 		identity(t).cache.misses[nativeResults].Add(1)
 		return releasedUncached(t, program)
 	}
-	return cachedNative(t, program, true).Run.run()
+	return cachedNative(t, program, releaseBuild).Run.run()
+}
+
+// slabbed builds a lowered program under the sanitizers with the size-class allocator kept on (heap.c),
+// and runs it. The release build runs the classes too, but with nothing to catch a slot read past its
+// class or a class index past the table; here ASan and UBSan watch them. A leak into a chunk can't be
+// seen here (the chunk stays reachable), which is why the comparison build stays on malloc.
+func slabbed(t *testing.T, program *ir.Program) run {
+	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+		identity(t).cache.misses[nativeResults].Add(1)
+		return slabbedUncached(t, program)
+	}
+	return cachedNative(t, program, slabsBuild).Run.run()
 }
 func natively(t *testing.T, program *ir.Program) (run, string) {
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
 		identity(t).cache.misses[nativeResults].Add(1)
 		return nativelyUncached(t, program)
 	}
-	return cachedNative(t, program, false).Run.run(), ""
+	return cachedNative(t, program, sanitizedBuild).Run.run(), ""
 }
 func leaks(t *testing.T, program *ir.Program, sanitized string) string {
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
 		identity(t).cache.misses[nativeResults].Add(1)
 		return leaksUncached(t, program, sanitized)
 	}
-	return string(cachedNative(t, program, false).LeakReport)
+	return string(cachedNative(t, program, sanitizedBuild).LeakReport)
 }
 
 func releasedUncached(t *testing.T, program *ir.Program) run {
@@ -462,6 +485,19 @@ func releasedUncached(t *testing.T, program *ir.Program) run {
 		t.Fatal(err)
 	}
 	return execute(t, binary)
+}
+
+func slabbedUncached(t *testing.T, program *ir.Program) run {
+	t.Helper()
+	binary := filepath.Join(t.TempDir(), "slabs")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true, Slabs: true}); err != nil {
+		t.Fatal(err)
+	}
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+	}
+	return executeWith(t, environment, binary)
 }
 
 func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
@@ -495,12 +531,14 @@ func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
 	return ""
 }
 
-// leaksTool builds a lowered program without sanitizers (they and macOS's leaks tool don't mix), runs
-// it under leaks --atExit, and returns its report when anything leaked.
+// leaksTool builds a lowered program without sanitizers (they and macOS's leaks tool don't mix) and
+// with every value from malloc (Malloc: a value leaked into a size class's chunk is reachable through
+// the chunk, so leaks would never report it), runs it under leaks --atExit, and returns its report
+// when anything leaked.
 func leaksTool(t *testing.T, program *ir.Program) string {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	if err := native.Build(native.C(program), binary, native.Options{Malloc: true}); err != nil {
 		t.Fatal(err)
 	}
 	report := execute(t, "leaks", "--atExit", "--", binary)
@@ -563,6 +601,11 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			if released := released(t, program); disagreement(native, released) != "" {
 				t.Errorf("the release build: %s\nsanitized: exit %d, stdout %q, stderr %q\nrelease:   exit %d, stdout %q, stderr %q",
 					disagreement(native, released), native.exitCode, native.stdout, native.stderr, released.exitCode, released.stdout, released.stderr)
+			}
+			// The size classes under the sanitizers must say exactly what malloc did too.
+			if slabbed := slabbed(t, program); disagreement(native, slabbed) != "" {
+				t.Errorf("the sanitized build with the size classes: %s\nsanitized: exit %d, stdout %q, stderr %q\nslabs:     exit %d, stdout %q, stderr %q",
+					disagreement(native, slabbed), native.exitCode, native.stdout, native.stderr, slabbed.exitCode, slabbed.stdout, slabbed.stderr)
 			}
 			if fixture.checked {
 				// The check fires, so the source on Node goes on where Adamic stops: hold native to the
