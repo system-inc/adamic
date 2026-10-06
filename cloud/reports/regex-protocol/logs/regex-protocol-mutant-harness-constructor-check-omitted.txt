@@ -1,0 +1,10 @@
+=== RUN   TestRegExpRunnerNode
+built-ins/RegExp 3/3 pass=3 fail=0 refused=0 crashed=0 skipped=0
+built-ins/RegExp 3/3 pass=3 fail=0 refused=0 crashed=0 skipped=0
+built-ins/RegExp 3/3 pass=1 fail=0 refused=0 crashed=0 skipped=0
+built-ins/RegExp 3/3 pass=1 fail=0 refused=0 crashed=0 skipped=0
+    regexp_test.go:102: wrong constructor accepted: {Path:built-ins/RegExp/wrong-constructor.js Directory:built-ins/RegExp Kind:refused Reason:not yet: constructor-identity assertion in RegExp harness Adaptations:map[]}
+--- FAIL: TestRegExpRunnerNode (100.76s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-test262	100.772s
+FAIL
