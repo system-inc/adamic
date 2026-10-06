@@ -1043,13 +1043,19 @@ func (a *analysis) value(expression ir.Expression) value {
 		// Patterns are compiled constants; the runtime object holds only immutable strings.
 		return a.fresh(anyField, value{})
 	case ir.RegExpCall:
-		// Conservatively expose operands and treat mutable results as outside. Regex methods
-		// change lastIndex and iterator state, but never store user references into them.
-		return a.call(a.operands(expression), expression.Type())
+		return a.regexCall(expression)
 	case ir.RegExpProperty:
-		return a.load(a.value(expression.Array), expression.Name)
+		a.value(expression.Array)
+		if mutable(expression.Type()) {
+			return outsideValue()
+		}
+		return value{}
 	case ir.RegExpGroup:
-		return a.load(a.value(expression.Object), expression.Name)
+		a.value(expression.Object)
+		if mutable(expression.Type()) {
+			return outsideValue()
+		}
+		return value{}
 	case ir.JSONStringify:
 		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
 		a.value(expression.Value)
