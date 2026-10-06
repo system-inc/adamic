@@ -54,6 +54,8 @@ type cycleFinder struct {
 	// writes is every write in the program, judged by the relaxation for fresh writes (fresh.go),
 	// worked out the first time a slot needs it.
 	writes []fresh.Write
+
+	libraryIterators []libraryIteratorCapture
 }
 
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
@@ -66,6 +68,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			if ast.IsPartOfTypeNode(node) {
 				return false
 			}
+			finder.libraryIteratorMade(node)
 			switch {
 			case node.Kind == ast.KindObjectLiteralExpression:
 				// A literal is what a value may really be, and nothing is written through its own
@@ -387,6 +390,8 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			return true
 		}
 		switch {
+		case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+			queue = append(queue, f.libraryIteratorCaptures(proven)...)
 		case f.isFunction(proven):
 			// What a function value holds is what it captured: the cells of every function value the
 			// program makes that can be seen as this type.

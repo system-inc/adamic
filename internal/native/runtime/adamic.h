@@ -259,9 +259,11 @@ typedef struct adamic_map_iterator {
 	adamic_heap heap;
 	adamic_map *map;
 	size_t next;
+	bool exhausted;
 } adamic_map_iterator;
 
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
+adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
@@ -274,6 +276,8 @@ adamic_map *adamic_map_new_identity(bool reference_values);
 
 // adamic_map_new_booleans is a map whose keys are booleans: true and false, two keys at most.
 adamic_map *adamic_map_new_booleans(bool reference_values);
+bool adamic_map_maybe_key_equal(double left, double right);
+uint64_t adamic_map_maybe_key_hash(double key);
 
 // adamic_map_new_maybe_numbers makes a map whose keys are packed number | undefined values.
 adamic_map *adamic_map_new_maybe_numbers(bool reference_values);

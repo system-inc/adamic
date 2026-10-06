@@ -1143,6 +1143,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.stringCall(expression)
 	case ir.Trim:
 		return e.own(ir.String, fmt.Sprintf("adamic_string_trim(%s)", e.value(expression.Value)))
+	case ir.CollectionIterator:
+		return e.collectionIterator(expression)
 	case ir.MapNew:
 		entries := make([][2]string, 0, len(expression.Entries))
 		for _, entry := range expression.Entries {

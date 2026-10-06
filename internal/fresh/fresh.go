@@ -1203,6 +1203,8 @@ func (a *analysis) value(expression ir.Expression) value {
 			elements.merge(held)
 		}
 		return a.fresh(elementKey, elements)
+	case ir.CollectionIterator:
+		return a.fresh(anyField, a.value(expression.Collection))
 	case ir.MapNew:
 		var entries value
 		for _, entry := range expression.Entries {
