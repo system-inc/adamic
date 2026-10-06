@@ -11,6 +11,7 @@ func init() {
 		"internal/oracle/testdata/class_inheritance_memory.a",
 		"internal/oracle/testdata/class_inheritance_generic.a",
 		"internal/oracle/testdata/class_inheritance_interface.a",
+		"internal/oracle/testdata/class_super_closure.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path    string

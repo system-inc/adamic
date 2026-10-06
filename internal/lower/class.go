@@ -343,6 +343,8 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	var object ir.Expression
 	var err error
 	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
+		// super.method() reads this as this.method() does, and inside an arrow that's a capture.
+		l.touch(l.this)
 		object = ir.Read{Local: l.this, Of: ir.Object}
 	} else {
 		object, err = l.expression(receiver)
