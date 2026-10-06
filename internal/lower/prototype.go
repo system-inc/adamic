@@ -185,9 +185,15 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 		if reason != "" {
 			return true
 		}
-		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindArrowFunction || node.Kind == ast.KindNumericLiteral || node.Kind == ast.KindStringLiteral || node.Kind == ast.KindTrueKeyword || node.Kind == ast.KindFalseKeyword {
+		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindRegularExpressionLiteral || (node.Kind == ast.KindCallExpression && l.isLibraryType(l.checker.GetTypeAtLocation(node), "RegExp", "RegExpStringIterator")) || node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindArrowFunction || node.Kind == ast.KindNumericLiteral || node.Kind == ast.KindStringLiteral || node.Kind == ast.KindTrueKeyword || node.Kind == ast.KindFalseKeyword {
 			shape := l.checker.GetTypeAtLocation(node)
 			if l.checker.IsTypeAssignableTo(shape, view) {
+				if l.isLibraryType(shape, "RegExp", "RegExpStringIterator") && !l.exactPlainObject(receiver) {
+					// Regex objects have intrinsic prototype behavior and metadata slots. A structural
+					// view cannot make those plain-object methods or own-property descriptors.
+					reason = "a RegExp or its iterator may be hidden by the view"
+					return true
+				}
 				if representation, known := l.representation(shape); known && representation != ir.Object && !l.exactPlainObject(receiver) {
 					reason = "a value with a different native representation may be hidden by the view"
 					return true

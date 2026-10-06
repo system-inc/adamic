@@ -127,6 +127,9 @@ func TestNullishPrototypeReadsAreRejectedByChecker(t *testing.T) {
 func TestPrototypeHazardsBehindObjectViewsAreNotYet(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
+		"const value: {} = /a/; console.log(value.toString());",
+		"const value: {} = new RegExp('a'); console.log(value.toString());",
+		"const value: {} = RegExp('a'); console.log(value.toLocaleString());",
 		"function show(value: {}): string { return value.toString(); } const value = { toString: (): string => 'custom' }; console.log(show(value));",
 		"function show(value: {}): string { return value.toLocaleString(); } const value = { toString: (): string => 'custom' }; console.log(show(value));",
 		"function show(value: {}): string { return value.toString(); } console.log(show(new Error('message')));",
@@ -145,7 +148,7 @@ func TestPrototypeHazardsBehindObjectViewsAreNotYet(t *testing.T) {
 			want = "a declare or abstract class field"
 		}
 		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, want) {
-			t.Errorf("got %v, want an explicit NotYet containing %q", err, want)
+			t.Errorf("%s: got %v, want an explicit NotYet containing %q", source, err, want)
 		}
 	}
 }

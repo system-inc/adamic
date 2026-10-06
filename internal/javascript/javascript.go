@@ -204,7 +204,8 @@ func (e *emitter) prototype(methods []ir.Method) string {
 	}
 	name := fmt.Sprintf("methods_%d", len(e.prototypes))
 	e.prototypeNames[key] = name
-	e.prototypes = append(e.prototypes, fmt.Sprintf("const %s = { __proto__: null, %s };\n", name, key))
+	// Class prototypes inherit Object methods, just as the source classes do.
+	e.prototypes = append(e.prototypes, fmt.Sprintf("const %s = { __proto__: Object.prototype, %s };\n", name, key))
 	return name
 }
 
