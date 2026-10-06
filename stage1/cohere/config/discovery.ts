@@ -1,10 +1,11 @@
 // cohere/command/cohere/discovery.go: project markers, not TypeScript source enumeration.
 // Directory reads are sequential here; Go sorts the parallel walk's result, so order is identical.
-import { readDirectory } from 'adamic';
+import { fileStatus, readDirectory } from 'adamic';
 import { DiskTree, lstat } from '../formatfiles/disk.ts';
 import { compareCodePoints, join, rel } from '../formatfiles/golang.ts';
 import { clean, dir } from '../gitignore/path.ts';
 import { ExcludeFile, IgnoreFileName, newMatcher, type Matcher } from '../gitignore/gitignore.ts';
+import { ignorePatternsOf } from './settings.ts';
 import { LintGlob, matchAny } from './glob.ts';
 
 export interface Project {
@@ -134,4 +135,14 @@ export function discoverProjects(root: string, ignorePatterns: readonly string[]
 	found.refused.sort(compareCodePoints);
 	found.nestedRepositories.sort(compareCodePoints);
 	return { kind: 'Ok', found };
+}
+
+// command/cohere/rootIgnorePatterns: a missing/default non-file settings path contributes no globs.
+export function discoverConfiguredProjects(root: string): Discovered {
+    const path = join(root, 'CohereSettings.json');
+    const status = fileStatus(path);
+    if (status.kind !== 'Ok' || status.type !== 'file') { return discoverProjects(root, []); }
+    const patterns = ignorePatternsOf(path);
+    if (patterns.kind === 'Error') { return patterns; }
+    return discoverProjects(root, patterns.values);
 }
