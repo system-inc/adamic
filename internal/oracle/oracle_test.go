@@ -245,6 +245,7 @@ var fixtures = []struct {
 	// arguments.
 	{"internal/oracle/testdata/generic_functions.a", true, false},
 	{"internal/oracle/testdata/generic_method_return.a", true, false},
+	{"internal/oracle/testdata/generic_values.a", true, false},
 	{"internal/oracle/testdata/undefined_references.a", true, false},
 	{"internal/oracle/testdata/spread_calls.a", true, false},
 	// A string's UTF-8 read in place, and past its end.
