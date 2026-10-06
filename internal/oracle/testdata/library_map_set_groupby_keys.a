@@ -1,0 +1,39 @@
+// Keys that SameValueZero treats as one key share a bucket. undefined does not.
+const numbers = [1, 2, 3, 4, 5];
+const groups = Map.groupBy(numbers, (value: number): number => {
+	if (value === 1 || value === 4) {
+		return NaN;
+	}
+	if (value === 2) {
+		return -0;
+	}
+	if (value === 5) {
+		return 0;
+	}
+	return 1;
+});
+for (const [key, bucket] of groups) {
+	const kind = Number.isNaN(key) ? 'NaN' : key === 0 ? (1 / key > 0 ? '+0' : '-0') : `${key}`;
+	console.log(`number ${kind}: ${bucket.join(',')}`);
+}
+
+const packed = Map.groupBy([10, 20, 30, 40, 50, 60], (value: number): number | undefined => {
+	if (value === 10 || value === 40) {
+		return undefined;
+	}
+	if (value === 20 || value === 50) {
+		return NaN;
+	}
+	if (value === 30) {
+		return -0;
+	}
+	return 0;
+});
+for (const [key, bucket] of packed) {
+	let kind = 'undefined';
+	if (key !== undefined) {
+		kind = Number.isNaN(key) ? 'NaN' : key === 0 ? (1 / key > 0 ? '+0' : '-0') : `${key}`;
+	}
+	console.log(`packed ${kind}: ${bucket.join(',')}`);
+}
+console.log(`${groups.size} ${packed.size}`);
