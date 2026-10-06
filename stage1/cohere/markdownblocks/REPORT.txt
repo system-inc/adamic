@@ -1,3 +1,58 @@
+Native Unicode widths and the major Markdown block and inline dispatch compose.
+4,813 documents match Go and the pinned fork with embedded formatting off.
+1,205,496 width cases agree; twelve new output-only mutants have been caught.
+Each completed slice is pushed; sanitizer/leak, lint and static checks pass.
+Full native parsing, AST preprocessing and whitespace/reference-label printing remain.
+
+Remaining dispatch composition slice, October 6, 2026
+
+Prior root slice pushed: 54a00842a4795fbf6a782370af1af60b52e378d9.
+leaves.ts composes the prior markdowninline functions for inline code, wiki
+links, URLs/titles/references and builds exact document fragments for links,
+images, emphasis, strong/delete, definitions, footnotes, thematic/explicit
+breaks, math, liquid nodes, raw front matter, text and table cells. Ignored
+nodes also construct native docs, including the quote-list trailing-marker
+rule. children.ts constructs block children for footnote definitions.
+Parsed AST fields and some parent/ancestor predicates are still Go fixtures;
+whitespace dispatch and raw reference-label preservation remain Go docs.
+No complete native Markdown parser or source-file formatter is claimed.
+All common preserved-prose/default option limitations remain as before.
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-leaf-final
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownLeafComposition$' -count=1 -v
+/tmp/markdown-leaf-final.log: PASS, 228.436s. 4,813 source contexts, including
+all 953 originals, all accumulated layout cases and 89 new link/title/definition/
+reference/footnote/thematic/math/liquid cases. Actual Go format, original full
+fork off, source Node, backend, sanitized native and both canonical doc printers
+agree; leak detection passes. Text widths in the native protocol stay poisoned.
+Actual native leaf counts in retained DSL: inlineCode 10646, strong 3038,
+link 1218, tableCell 9428, emphasis 1265, frontMatter 7, thematicBreak 281,
+image 87, break 446, linkReference 4, definition 96, wikiLink 31, ignored 69,
+footnoteDefinition 2, footnoteReference 2, delete 1, math 1, inlineMath 1,
+liquidNode 2, imageReference 3. Sparse types need broader future cases.
+
+Three native mutants compile and run with exit 0 and empty stderr, caught only
+by byte comparison: strong '**' becomes '*', CLAUDE.md byte 2016;
+collapsed reference suffix removed, generated reference edge byte 2875845;
+footnote alignment shrinks from four spaces to three, generated footnote edge
+byte 2875679. Initial corpus/mutants also passed in 213.681s; full lint then
+found a prohibited property alias. An automated alias cleanup briefly changed
+an object key and a child property too; type checking caught it before a build.
+Both were corrected, alias removed, full lint and the complete native/oracle/
+mutant gate rerun to produce the final green log above. A transient exec-server
+transport disconnection was retried successfully; it was not an approval rejection.
+
+Component rates: Go canonical docs 8,138.7; native components 4,011.6; source
+Node components 3,993.2; original fork canonical docs 3,700.6 documents/s.
+Startup/protocol/output included, parsing/fixture generation excluded, and the
+canonical-document/component workloads differ. Not full formatter comparisons.
+/tmp/markdown-leaf-style-final.log: cohere --no-cache --no-fix, 276 rules,
+3 files checked, 100% Adamic-ready, zero findings. go vet ./... passes with
+empty /tmp/markdown-leaf-vet.log. Full repository gate not run; seven uncached
+compiler fixtures passed during the structural slice. Only the named Markdown
+territory changed; the inline dependency and reserved compiler files did not.
+
 Unicode widths and root, heading, sentence and paragraph layout are native.
 4,724 accumulated documents match Go and the pinned fork with embedding off.
 1,205,496 widths agree; nine new output-only mutants have been caught.

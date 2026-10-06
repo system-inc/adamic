@@ -6,6 +6,22 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native dispatch composed with prior inline leaves
+
+`leaves.ts` composes the previously verified inline-code, wiki-link, URL, title,
+reference and image routines and constructs emphasis, links, definitions,
+footnotes, thematic breaks, explicit breaks, math, liquid and table-cell docs.
+It also prints ignored nodes, including the quote-list trailing-marker rule.
+All 4,813 source contexts match the complete Go and original fork formatters
+with embedding off. The captured corpus has only two footnote definitions;
+this is recorded coverage, not a claim that every nesting/options combination
+has been exercised. Prose remains preserved with common options.
+
+Remaining printer dependencies include whitespace dispatch and preserved
+reference-label content; those still use Go-produced docs. Parent/ancestor facts
+for emphasis and thematic breaks still come from the fixture adapter. A native
+AST path walker, AST preprocessing and the tokenizer/mdast remain unported.
+
 ## Native root and ignore layout boundary
 
 `root.ts` prints root children, exact blank-line predicates, trailing hardline,

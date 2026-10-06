@@ -37,6 +37,8 @@ func TestMarkdownHTMLBlockLayout(t *testing.T) {
 	testBlockLayout(t, "html")
 }
 
+func TestMarkdownLeafComposition(t *testing.T) { testBlockLayout(t, "leaves") }
+
 func TestMarkdownRootLayout(t *testing.T) { testBlockLayout(t, "root") }
 
 func TestMarkdownStructureLayout(t *testing.T) { testBlockLayout(t, "structure") }
@@ -98,7 +100,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			inputs = append(inputs, auditInput{Name: "generated/table-layout/edge/" + text, Text: text})
 		}
 	}
-	if slice == "code" || (slice == "html" || slice == "structure" || slice == "root") {
+	if slice == "code" || (slice == "html" || slice == "structure" || slice == "root" || slice == "leaves") {
 		for _, marker := range []string{"```", "````", "~~~~", "```````"} {
 			for _, info := range []string{"", "js", "json", "yaml", "toml", "css", "html", "text title=foo", "x {#id .class}"} {
 				for _, body := range []string{"", "a", "a\nb", "\n\nx\n", "a  \nb\t", "`a`", "```", "~~~~", "中😀"} {
@@ -125,7 +127,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			}
 		}
 	}
-	if slice == "html" || slice == "structure" || slice == "root" {
+	if slice == "html" || slice == "structure" || slice == "root" || slice == "leaves" {
 		for _, body := range []string{"<div>\nx  \n</div>", "<script>\nx  \n</script>", "<style>\nx\t\n</style>", "<pre>\nx  \n</pre>", "<!-- a  \nb\t -->", "<!-->", "<!--->", "<!--a-->", "<?xml\nx  \n?>", "<!DOCTYPE html>", "<![CDATA[\nx  \n]]>", "<table>\n<tr>\nx\n</tr>\n</table>", "<x-a a='b'>\nx\n</x-a>", "a <em>\nx  \n</em> b", "<div>\n\n# h\n\n</div>", "<!-- prettier-ignore -->\n<div>  \nx\n</div>", "<div>中😀</div>"} {
 			for _, prefix := range []string{"", "> ", "> > ", "- ", "> - "} {
 				for _, ending := range []string{"", "  ", "\t", "\u00a0", "\u2000", "\ufeff"} {
@@ -144,7 +146,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			}
 		}
 	}
-	if slice == "html" || slice == "structure" || slice == "root" {
+	if slice == "html" || slice == "structure" || slice == "root" || slice == "leaves" {
 		for _, cell := range []string{"中", "Ａ", "α", "é", "©", "©️", "👩🏽‍⚕️", "👨🏻‍❤️‍💋‍👨🏿", "🧑🏿‍🦽‍➡️", "🏳️‍🌈", "🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f"} {
 			for _, align := range []string{"---", ":--", "--:", ":-:"} {
 				text := "| " + cell + " | a |\n| " + align + " | --- |\n| a | " + cell + " |\n"
@@ -152,7 +154,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			}
 		}
 	}
-	if slice == "structure" || slice == "root" {
+	if slice == "structure" || slice == "root" || slice == "leaves" {
 		for depth := 1; depth <= 6; depth++ {
 			for _, body := range []string{"", "a", "*a _b_*", "中 👩🏽‍⚕️", "[a](/b)", "a #", "`a  b`"} {
 				for _, prefix := range []string{"", "> ", "- ", "> - "} {
@@ -170,7 +172,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			}
 		}
 	}
-	if slice == "root" {
+	if slice == "root" || slice == "leaves" {
 		for _, space := range []string{"", " ", "\t", "\u00a0", "\u2028", "\ufeff"} {
 			for _, body := range []string{"+    a\n*   b", "a\n====", "|a|b|\n|-|-|\n|中|😀|", "```js\na  b\n```", "<div>  \nx\n</div>"} {
 				for _, marker := range []string{"next", "range", "nested", "unmatched"} {
@@ -191,6 +193,19 @@ func testBlockLayout(t *testing.T, slice string) {
 		}
 		for _, text := range []string{"", " \n", "a\n<div>\nx\n</div>\n", "[a]: /x\n[b]: /y\n", "<!-- prettier-ignore-start -->\n+    a\n<!-- prettier-ignore-end -->\n\n<!-- prettier-ignore-start -->\n*    b\n<!-- prettier-ignore-end -->\n", "<!-- prettier-ignore-end -->\n+    a\n"} {
 			inputs = append(inputs, auditInput{Name: "generated/root/edge/" + text, Text: text})
+		}
+	}
+	if slice == "leaves" {
+		for _, label := range []string{"a", "中", "a b", "x-y"} {
+			for _, url := range []string{"/x", "", "<x>", "/a%20b", "https://example.test"} {
+				for _, title := range []string{"", " \"title\"", " 'a \"b\"'", " (a'b)"} {
+					text := "[" + label + "](" + url + title + ") ![" + label + "](" + url + title + ")\n\n[" + label + "]: " + url + title + "\n"
+					inputs = append(inputs, auditInput{Name: "generated/leaves/links/" + text, Text: text})
+				}
+			}
+		}
+		for _, text := range []string{"*a* **b** ~~c~~ _d_ 1*2*3 1***2***3\n", "_<https://example.test>_\n", "a  \nb\nc\\\nd\n", "[^x]\n\n[^x]: first\n    second\n\n    - a\n    - b\n", "- a\n\n  ***\n\n- b\n\n  ---\n", "$$ title\na+b\n$$\n\n$x + y$\n", "{{ a }} {% b %}\n", "[[wiki link]]\n", "![a][b] [a][b] ![b][] [b][] ![b] [b]\n\n[b]: /x 'title'\n"} {
+			inputs = append(inputs, auditInput{Name: "generated/leaves/edge/" + text, Text: text})
 		}
 	}
 	dir := t.TempDir()
@@ -405,6 +420,14 @@ func testBlockLayout(t *testing.T, slice string) {
 			{"ignore range closing comment", "arena.text(last.value)", "arena.text('')"},
 		}
 	}
+	if slice == "leaves" {
+		mutantFile = "leaves.ts"
+		mutations = []struct{ name, from, to string }{
+			{"strong delimiter", "frame.kind === 'strong'\n                ? '**'", "frame.kind === 'strong'\n                ? '*'"},
+			{"reference collapse", "frame.referenceType === 'collapsed'\n                  ? '[]'", "frame.referenceType === 'collapsed'\n                  ? ''"},
+			{"footnote indentation", "arena.align('    ',", "arena.align('   ',"},
+		}
+	}
 	for _, mutation := range mutations {
 		t.Run(mutation.name, func(t *testing.T) {
 			scratch := t.TempDir()
@@ -421,10 +444,13 @@ func testBlockLayout(t *testing.T, slice string) {
 				}
 				write(t, filepath.Join(scratch, "markdowninline", name), content)
 			}
-			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "structure.ts", "root.ts"} {
+			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "structure.ts", "root.ts", "leaves.ts", "children.ts"} {
 				content, err := os.ReadFile(name)
 				if err != nil {
 					t.Fatal(err)
+				}
+				if name == "leaves.ts" {
+					content = []byte(strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1))
 				}
 				if name == mutantFile {
 					if strings.Count(string(content), mutation.from) != 1 {

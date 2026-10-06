@@ -67,7 +67,14 @@ type adamicRoot struct {
 	source   string
 	children []adamicBlock
 }
+type adamicLeaf struct {
+	kind, value, source, url, title, label, referenceType, alt, originalAlt, metadata string
+	hasTitle                                                                          bool
+	flags, sibling                                                                    int
+	children                                                                          []adamicBlock
+}
 type adamicDocuments struct {
+	leaves     []adamicLeaf
 	roots      []adamicRoot
 	structures []adamicStructure
 	native     bool
@@ -249,6 +256,23 @@ func (out *adamicDocuments) serialize(document doc.Doc) int {
 			out.documents++
 			return id
 		}
+		if out.native && strings.HasPrefix(node.Label, "adamic-leaf:") {
+			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-leaf:"))
+			frame := out.leaves[index]
+			children := []string{}
+			for _, child := range frame.children {
+				n := child.node
+				start, end, column := 0, 0, 0
+				if n.Position != nil {
+					start, end, column = n.Position.Start.Line, n.Position.End.Line, n.Position.Start.Column
+				}
+				children = append(children, fmt.Sprintf("%s,%d,%d,%d,%d,%d,%d", n.NodeType, out.serialize(child.document), start, end, column, adamicFlag(n.IsIndented), adamicFlag(isPrettierIgnore(n) == "next")))
+			}
+			out.lines = append(out.lines, fmt.Sprintf("Y\t%s\t%s\t%s\t%s\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%d\t%d\t%s", frame.kind, adamicEscape(frame.value), adamicEscape(frame.source), adamicEscape(frame.url), adamicEscape(frame.title), adamicFlag(frame.hasTitle), adamicEscape(frame.label), frame.referenceType, adamicEscape(frame.alt), adamicEscape(frame.originalAlt), adamicEscape(frame.metadata), frame.flags, frame.sibling, strings.Join(children, ";")))
+			id := out.documents
+			out.documents++
+			return id
+		}
 		if out.native && strings.HasPrefix(node.Label, "adamic-root:") {
 			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-root:"))
 			frame := out.roots[index]
@@ -313,10 +337,71 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	words := []adamicWord{}
 	structures := []adamicStructure{}
 	roots := []adamicRoot{}
+	leaves := []adamicLeaf{}
 	printer := *mdastPrinter
+	printer.PrintPrettierIgnored = func(path *astPath, options *options, print printing.PrintFunc, args any) doc.Doc {
+		node := currentNode(path)
+		frame := adamicLeaf{kind: "ignored", value: node.NodeType, source: options.OriginalText[node.Position.Start.Offset:node.Position.End.Offset], sibling: -1, flags: adamicFlag(path.HasAncestor(func(n *Node) bool { return n.NodeType == "blockquote" }))}
+		id := len(leaves)
+		leaves = append(leaves, frame)
+		return doc.NewLabel(fmt.Sprintf("adamic-leaf:%d", id), printPrettierIgnored(path, options, print, args))
+	}
 	printer.Print = func(path *astPath, options *options, print printing.PrintFunc, args any) doc.Doc {
 		original := printMdast(path, options, print, args)
 		node := currentNode(path)
+		switch node.NodeType {
+		case "frontMatter", "emphasis", "strong", "delete", "inlineCode", "wikiLink", "link", "image", "thematicBreak", "linkReference", "imageReference", "definition", "footnoteReference", "footnoteDefinition", "break", "liquidNode", "math", "inlineMath", "text", "tableCell":
+			if !shouldRemainTheSameContent(path) {
+				frame := adamicLeaf{kind: node.NodeType, value: node.Value, url: node.URL, referenceType: node.ReferenceType, hasTitle: node.Title != nil, sibling: -1}
+				if node.Position != nil {
+					frame.source = options.OriginalText[node.Position.Start.Offset:node.Position.End.Offset]
+				}
+				if node.FrontMatter != nil {
+					frame.source = node.FrontMatter.Raw
+				}
+				if node.Title != nil {
+					frame.title = *node.Title
+				}
+				if node.Label != nil {
+					frame.label = *node.Label
+				}
+				if node.Alt != nil {
+					frame.alt = *node.Alt
+				}
+				if node.OriginalAltText != nil {
+					frame.originalAlt = *node.OriginalAltText
+				}
+				if node.Meta != nil {
+					frame.metadata = *node.Meta
+				}
+				if node.NodeType == "emphasis" {
+					frame.flags = adamicFlag(len(node.Children) > 0 && isAutolink(node.Children[0])) + 2*adamicFlag(prevOrNextWord(path)) + 4*adamicFlag(printing.CallParent(path, func(p *astPath) bool { return currentNode(p).NodeType == "strong" && prevOrNextWord(p) }, 0)) + 8*adamicFlag(path.HasAncestor(func(n *Node) bool { return n.NodeType == "emphasis" }))
+				}
+				if node.NodeType == "inlineCode" {
+					frame.flags = adamicFlag(path.HasAncestor(func(n *Node) bool { return n.NodeType == "tableCell" }))
+				}
+				if node.NodeType == "wikiLink" {
+					frame.flags = adamicFlag(node.ValueNull)
+				}
+				if node.NodeType == "thematicBreak" {
+					ancestors := path.Ancestors()
+					for i, ancestor := range ancestors {
+						if ancestor.NodeType == "list" {
+							frame.sibling = getNthListSiblingIndex(ancestor, ancestors[i+1])
+							break
+						}
+					}
+				}
+				if node.IsParent {
+					path.Each(func(childPath *astPath, _ int, _ any) {
+						frame.children = append(frame.children, adamicBlock{currentNode(childPath), print(nil, nil)})
+					}, "children")
+				}
+				id := len(leaves)
+				leaves = append(leaves, frame)
+				return doc.NewLabel(fmt.Sprintf("adamic-leaf:%d", id), original)
+			}
+		}
 		if node.NodeType == "root" {
 			frame := adamicRoot{source: options.OriginalText}
 			path.Each(func(childPath *astPath, _ int, _ any) {
@@ -450,7 +535,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	}
 	// Serialize before Print mutates group break flags, so native propagation is exercised.
 	for _, side := range []bool{true, false} {
-		out := &adamicDocuments{native: side, roots: roots, structures: structures, htmls: htmls, codes: codes, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
+		out := &adamicDocuments{native: side, leaves: leaves, roots: roots, structures: structures, htmls: htmls, codes: codes, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
 		root := out.serialize(document)
 		out.lines = append(out.lines, fmt.Sprintf("R\t%d\t%d", root, adamicFlag(bom)))
 		stream := strings.Join(out.lines, "\n") + "\n"

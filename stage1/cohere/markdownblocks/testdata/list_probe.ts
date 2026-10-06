@@ -1,3 +1,4 @@
+import { printLeaf } from '../leaves.ts';
 import { printRoot, type RootChildInterface } from '../root.ts';
 import { printHeading, printParagraph, printSentence, type SentenceChildInterface } from '../structure.ts';
 // Component driver: Go AST/doc fixtures supply unported blocks, not production Markdown input.
@@ -71,6 +72,25 @@ for(const line of input.text.split('\n')) {
                 integer(fields[4] ?? ''),
                 integer(fields[5] ?? ''),
             ),
+        );
+    else if(kind === 'Y')
+        documents.push(
+            printLeaf(arena, {
+                kind: fields[1] ?? '',
+                value: decode(fields[2] ?? ''),
+                source: decode(fields[3] ?? ''),
+                url: decode(fields[4] ?? ''),
+                title: decode(fields[5] ?? ''),
+                hasTitle: fields[6] === '1',
+                label: decode(fields[7] ?? ''),
+                referenceType: fields[8] ?? '',
+                alt: decode(fields[9] ?? ''),
+                originalAlt: decode(fields[10] ?? ''),
+                metadata: decode(fields[11] ?? ''),
+                flags: integer(fields[12] ?? ''),
+                sibling: integer(fields[13] ?? ''),
+                children: blocks(fields[14] ?? '', documents),
+            }),
         );
     else if(kind === 'J')
         rootChildren.push({
