@@ -358,3 +358,50 @@ The scratch library installation is pinned to yaml 2.9.0, yaml-unist-parser 3.2.
 and Prettier 3.9.6 as documented in GAPS.md. Toolchain setup timings remain in
 PERFORMANCE.md and audit/setup.log: Go 0s, clang 1s, Node 1s, submodules 1s,
 build cache 78s, total 78s; `nproc` reports 5, with a four-CPU quota.
+
+## Final five-round results
+
+Final implementation checkpoint: `f053bec`. Five interleaved rounds, with
+no concurrent tests or profiles, checked every saved Go byte on all seven
+drivers. All 35 runs exited zero with empty stderr and reproduced 992,282
+answer bytes for 10,026 formatting calls (all 36 repository files included).
+
+| Driver / checkpoint | Median texts/s | Median elapsed seconds |
+| --- | ---: | ---: |
+| Original native / 77327e3 | 2,808.75 | 3.569556 |
+| Shared schemas / 26c379e | 8,003.25 | 1.252741 |
+| Matcher fast paths with Map / 6385e9e | 9,753.31 | 1.027959 |
+| Final native / f053bec | 11,504.03 | 0.871521 |
+| Original source Node / 77327e3 | 7,838.61 | 1.279053 |
+| Final source Node / f053bec | 13,818.88 | 0.725529 |
+| Go cohere / 715ba94 | 15,190.25 | 0.660028 |
+
+Native is 4.10 times its rebuilt baseline
+and 1.47 times the original Node port.
+The original 7,300 texts/s Node target is cleared. The same optimizations also
+help Node: final native still takes 20.1% longer
+than final Node and 32.0% longer than Go. No parity
+with the optimized Node port is claimed. Further runtime/compiler work has
+minimal programs here rather than changes to files owned by other workers.
+The elapsed deficit to Node fell from 2.79 times (rebuilt original) to 1.20 times.
+
+All five samples and input/answer SHA-256 hashes are in the
+[measurement record](audit/speed-measurements.txt);
+[full timing log](audit/speed-final-timing.log) holds every verified run.
+Earlier single observations and timeout-polling measurements are exploratory;
+this blocking-wait five-round comparison is the final report.
+
+Green implementation commits, each pushed before proceeding:
+`26c379e` shared schemas; `6385e9e` matcher/printer fast paths and width oracle;
+`1429a5e` direct emoji indexing and map probe; `d2081b4` ASCII cache;
+`f053bec` numeric lexer scans and unified whitespace predicates.
+The final report/measurement commit follows those checkpoints.
+
+The complete YAML suite, sanitizer checks, external libraries, exhaustive width,
+mutants, lint, format and vet passed. An uncached filtered compiler oracle passed
+in 1.777s (27 native misses, 18 Node misses, zero hits). The complete repository
+gate was not run. Coverage remains Go cohere's default options and the held
+corpus; throughput is measured on mixed valid/error edge cases, with repeated
+chunk variants counted as separate calls. RSS and production workloads were
+not measured. The pre-existing shared-slice runtime correctness gap remains
+separately proved and is not used by the formatter.

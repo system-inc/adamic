@@ -1,5 +1,11 @@
 # YAML formatter throughput
 
+The speed follow-up measures native 11,504, source Node 13,819 and Go 15,190
+texts/s. Native clears the original Node target; the optimized Node port still
+takes less time. [SPEED.md](SPEED.md) contains profiles, proving programs,
+optimizations and the complete final five-round comparison. This page retains
+the original checkpoint for comparison.
+
 Measured the complete file formatter at checkpoint `3803cbd`, not just its lexer
 or scalar resolver. Five interleaved fresh-process rounds used the exact 10,026-case
 correctness corpus, including all 36 repository/submodule YAML files. Every timed
@@ -12,8 +18,8 @@ native, source Node and Go run exited zero, wrote no stderr and reproduced all
 | Same Adamic TypeScript source on Node | 7,300.26 | 1.373376 |
 | Go cohere public file formatter | 14,894.45 | 0.673137 |
 
-Native currently takes 5.38 times Go's elapsed time and 2.64 times Node's.
-This is an observed speed deficit; the port has not been profiled or optimized.
+At the original checkpoint, native took 5.38 times Go's elapsed time and 2.64 times Node's.
+This is an observed speed deficit; the port had not been profiled or optimized then.
 Node here means the same port source through `oracle/node.mjs`, not published
 Prettier. Published Prettier 3.9.6 is independently checked for correctness, with
 42 proved upstream differences described in [GAPS.md](GAPS.md).

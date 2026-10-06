@@ -4,7 +4,7 @@ The complete Adamic YAML formatting slice is implemented at Go cohere's default 
 Go, sanitized native, source Node and emitted JavaScript compare all 36 repository files and generated cases.
 Original Prettier 3.9.6 is compared independently, with 42 proved upstream binary/minification differences.
 Thirty successful wrong-output port mutants are caught; eleven compiler refusals and one runtime bug have proving programs.
-Median throughput: native 2,768, source Node 7,300, Go 14,894 texts/s; all green checkpoints are pushed.
+Final throughput: native 11,504, source Node 13,819, Go 15,190 texts/s; native is 4.10 times its original baseline.
 
 ## Speed follow-up
 
@@ -12,13 +12,18 @@ The native formatter now shares its compiled schemas and avoids impossible
 schema/emoji matches. [SPEED.md](SPEED.md) records the Linux sampling profile,
 all new mutants, exhaustive Unicode widths and minimal runtime/compiler cost
 programs. The throughput section below retains the original formatter baseline;
-the final speed comparison is reported in SPEED.md.
+the final speed comparison is reported in SPEED.md. Native clears the original
+Node target but still takes 20.1% longer than the optimized Node port. The six
+new qualifying speed mutants and three cost programs are documented there.
+[negativeCase.ts](gaps/negativeCase.ts) adds an eleventh compiler-refusal proof:
+Node prints `1`; Adamic refuses `case -1` as a nonconstant case; the lexer uses
+an explicit numeric predicate instead.
 
-## Formatter throughput
+## Original formatter throughput
 
 Five interleaved fresh-process rounds reproduce all 992,282 Go answer bytes.
 Native release measures 2,768.29 texts/s, source Node 7,300.26 and Go 14,894.45;
-native is currently slower. [PERFORMANCE.md](PERFORMANCE.md) gives full methodology,
+native trailed both at that checkpoint. [PERFORMANCE.md](PERFORMANCE.md) gives full methodology,
 commands, limitations and setup timings; [timing log](audit/format-timing.log)
 contains every sample. No concurrent tests ran during measurement.
 
