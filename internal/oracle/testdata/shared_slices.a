@@ -1,0 +1,99 @@
+// Slices long enough to share their parent's bytes (string_share.c), each read after the string it was
+// cut from is gone: built at runtime, since a constant's bytes never go away. Slices of slices, a
+// non-ASCII slice long enough for its own index read by charCodeAt in a loop and at scattered places,
+// lone surrogates at a slice's ends, trim and split, and a sweep of every slice of a text against Node.
+import { panic, utf8At, utf8Length } from 'adamic';
+
+function built(word: string, times: number): string {
+	let text = '';
+	for (let index = 0; index < times; index++) {
+		text = `${text}${word}${index % 10}`;
+	}
+	return text;
+}
+
+function checksum(text: string): number {
+	let sum = 0;
+	for (let index = 0; index < text.length; index++) {
+		sum = (sum * 31 + text.charCodeAt(index)) % 1000003;
+	}
+	return sum;
+}
+
+function bytesum(text: string): number {
+	let sum = 0;
+	for (let index = 0; index < utf8Length(text); index++) {
+		sum = (sum * 33 + utf8At(text, index)) % 1000003;
+	}
+	return sum;
+}
+
+// The parent goes out of scope here: only the slices hold it.
+function cut(): string[] {
+	const parent = built('path/segment/', 20);
+	return [parent.slice(10, 200), parent.slice(0, parent.length - 1), parent.slice(-150), parent.slice(5, 105)];
+}
+
+const kept = cut();
+for (const slice of kept) {
+	console.log(`${slice.length} ${checksum(slice)} ${bytesum(slice)} ${slice.slice(0, 12)}|${slice.slice(-12)}`);
+}
+
+// A slice of a slice, after both parents are let go.
+const first = kept[0] ?? panic('cut gives four slices');
+let inner = first.slice(20, 120);
+console.log(`${inner.length} ${checksum(inner)} ${inner.slice(0, 8)}`);
+let outer = inner.slice(10);
+inner = 'replaced';
+console.log(`${outer.length} ${checksum(outer)} ${outer === first.slice(30, 120)} ${inner}`);
+outer = outer.slice(0, outer.length - 3);
+console.log(`${outer.length} ${outer.endsWith(first.slice(114, 117))}`);
+
+// Non-ASCII: the slice counts its own units and builds its own index, from its own first byte.
+const wide = built('é🌍ab', 60);
+const middle = wide.slice(7, 290);
+console.log(`${wide.length} ${middle.length} ${checksum(middle)} ${bytesum(middle)}`);
+const scattered: number[] = [];
+for (let position = middle.length - 1; position >= 0; position -= 37) {
+	scattered.push(middle.charCodeAt(position));
+}
+console.log(scattered.join(' '));
+console.log(`${middle.indexOf('9')} ${middle.lastIndexOf('🌍')} ${middle.codePointAt(3)} ${[...middle.slice(0, 9)].length}`);
+
+// Ends inside a surrogate pair: a lone surrogate there, which no parent's bytes hold.
+const pairs = built('🌍🌍🌍🌍', 30);
+const ends: readonly (readonly [number, number])[] = [[1, 101], [0, 101], [1, 100], [2, 200], [3, 257]];
+for (const [start, end] of ends) {
+	const slice = pairs.slice(start, end);
+	console.log(`${start} ${end} ${slice.length} ${slice.charCodeAt(0)} ${slice.charCodeAt(slice.length - 1)} ${checksum(slice)}`);
+}
+
+// trim and split share too.
+const padded = `   ${built('word ', 30)}   `;
+const trimmed = padded.trim();
+console.log(`${trimmed.length} ${checksum(trimmed)} ${trimmed.split(' ').length} ${trimmed.split('word ')[7] ?? 'missing'}`);
+const lines = `${built('first line of text ', 8)}\n${built('second line, longer than the first ', 9)}`.split('\n');
+console.log(`${lines.length} ${(lines[0] ?? '').length} ${(lines[1] ?? '').length} ${checksum(lines[1] ?? '')}`);
+
+// A slice equal to its whole string, and a Map keyed by shared slices.
+const whole = padded.slice(0);
+console.log(`${whole === padded} ${whole.length}`);
+const counted = new Map<string, number>();
+for (let round = 0; round < 3; round++) {
+	const source = built('key-', 25);
+	const key = source.slice(4, 104);
+	counted.set(key, (counted.get(key) ?? 0) + 1);
+}
+console.log(`${counted.size} ${counted.get(`${built('key-', 25)}`.slice(4, 104)) ?? 0}`);
+
+// Every slice of a mixed text, as one checksum per start.
+const mixed = `${built('ab', 30)}é${built('🌍x', 20)}${built('cd', 30)}`;
+const sums: number[] = [];
+for (let start = -3; start <= mixed.length + 2; start += 3) {
+	let sum = 0;
+	for (let end = start; end <= mixed.length + 2; end += 2) {
+		sum = (sum * 7 + checksum(mixed.slice(start, end)) + mixed.slice(start, end).length) % 1000003;
+	}
+	sums.push(sum);
+}
+console.log(sums.join(' '));

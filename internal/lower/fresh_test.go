@@ -11,7 +11,7 @@ import (
 // a cycle. One whose every write is proven, or whose type can't reach back, still compiles.
 func TestReadonlyFieldsAreJudgedByTheirConstructorsWrites(t *testing.T) {
 	t.Parallel()
-	refused := "class Node {\n\treadonly kids: Node[] = [];\n\treadonly parent: Node | undefined;\n\tconstructor(parent: Node | undefined) {\n\t\tif (parent !== undefined) {\n\t\t\tparent.kids.push(this);\n\t\t}\n\t\tthis.parent = parent;\n\t}\n}\nconst root = new Node(undefined);\nconst child = new Node(root);\nconsole.log(`${root.kids.length}`);\n"
+	refused := "class Node {\n\treadonly kids: Node[] = [];\n\treadonly parent: Node | undefined;\n\tconstructor(parent: Node | undefined) {\n\t\tthis.parent = undefined;\n\t\tif (parent !== undefined) {\n\t\t\tparent.kids.push(this);\n\t\t}\n\t\tthis.parent = parent;\n\t}\n}\nconst root = new Node(undefined);\nconst child = new Node(root);\nconsole.log(`${root.kids.length}`);\n"
 	_, err := lowerSource(t, refused)
 	var refusal *Refused
 	if !errors.As(err, &refusal) {
@@ -20,7 +20,7 @@ func TestReadonlyFieldsAreJudgedByTheirConstructorsWrites(t *testing.T) {
 	for _, want := range []string{
 		"main.a:3:2: Adamic 0.1 refuses Node.parent, a readonly field, which its constructor writes, of type Node | undefined",
 		"the write at ",
-		"main.a:8:3 may close one",
+		"main.a:9:3 may close one",
 		"declare it parent: Weak<Node> (import type { Weak } from 'adamic')",
 	} {
 		if !strings.Contains(refusal.Error(), want) {

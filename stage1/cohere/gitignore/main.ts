@@ -14,7 +14,8 @@ import { compileGlob } from './glob.ts';
 
 // verdictLine is a verdict in check-ignore's verbose words, without the path.
 function verdictLine(verdict: Verdict): string {
-	return `${verdict.ignored ? '1' : '0'} ${verdict.source.isZero() ? '::' : verdict.source.toString()}`;
+	const [ignored, source] = verdict;
+	return `${ignored ? '1' : '0'} ${source.isZero() ? '::' : source.toString()}`;
 }
 
 // scopeFor is the matcher for directory, as a walk has it: entered from the nearest directory above it

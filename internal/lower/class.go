@@ -86,7 +86,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		return existing, nil
 	}
 
-	// Register every function of the instantiation first, so methods can call each other.
+	// Register every function of the instantiation first, so methods can find each other.
 	name := declaration.Name().Text()
 	for _, argument := range arguments {
 		name += "_" + typeName(argument)
@@ -127,6 +127,17 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	}
 	defer func() { l.substitution, l.locals, l.instance = outerSubstitution, outerLocals, outerInstance }()
 
+	// Every method's signature is written before any body is lowered, the constructor's included, so a
+	// method can call one declared below it, and two can call each other.
+	for _, member := range members {
+		if member.Kind != ast.KindMethodDeclaration {
+			continue
+		}
+		method := lowered.methods[member.Name().Text()]
+		if err := l.signature(method, member, l.thisLocal(method)); err != nil {
+			return nil, err
+		}
+	}
 	if err := l.constructor(lowered.constructor, declaration); err != nil {
 		return nil, err
 	}
@@ -135,7 +146,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 			continue
 		}
 		method := lowered.methods[member.Name().Text()]
-		if err := l.lowerFunction(method, member, l.thisLocal(method)); err != nil {
+		if err := l.lowerFunction(method, member, -1); err != nil {
 			return nil, err
 		}
 	}
@@ -198,7 +209,11 @@ func (l *lowering) constructor(index int, declaration *ast.Node) error {
 		}
 	}
 	if body != nil {
-		if err := l.lowerFunction(index, body, this); err != nil {
+		outerUnsetUntil := l.unsetUntil
+		l.unsetUntil = lastFieldAssignment(declaration, body)
+		err := l.lowerFunction(index, body, this)
+		l.unsetUntil = outerUnsetUntil
+		if err != nil {
 			return err
 		}
 	}
@@ -395,4 +410,60 @@ func nodesOf(list *ast.NodeList) []*ast.Node {
 		return nil
 	}
 	return list.Nodes
+}
+
+// lastFieldAssignment is where, in the constructor body, every field without an initializer has
+// been assigned: the end of the latest of their first assignments, each a statement of the body
+// itself, which run in order and unconditionally. A field first assigned anywhere else (in a branch,
+// a loop or a closure) is set by no point the body can be sure of, so it's the body's end; 0 when
+// there are no such fields. Before that point, JavaScript reads an unset field as undefined, which a
+// field of number or string can't hold: the checker proves the constructor itself never reads one,
+// but not a method it calls, nor anything it hands this to (useOfThis).
+func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
+	unset := map[string]bool{}
+	for _, member := range declaration.Members() {
+		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+			unset[member.Name().Text()] = true
+		}
+	}
+	if len(unset) == 0 || constructor.Body() == nil {
+		return 0
+	}
+	last := 0
+	for _, statement := range constructor.Body().AsBlock().Statements.Nodes {
+		if len(unset) == 0 {
+			break
+		}
+		if statement.Kind != ast.KindExpressionStatement {
+			continue
+		}
+		assignment := ast.SkipParentheses(statement.AsExpressionStatement().Expression)
+		if assignment.Kind != ast.KindBinaryExpression || assignment.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
+			continue
+		}
+		target := ast.SkipParentheses(assignment.AsBinaryExpression().Left)
+		if target.Kind == ast.KindPropertyAccessExpression && ast.SkipParentheses(target.AsPropertyAccessExpression().Expression).Kind == ast.KindThisKeyword && unset[target.Name().Text()] {
+			delete(unset, target.Name().Text())
+			last = statement.End()
+		}
+	}
+	if len(unset) > 0 {
+		return constructor.Body().End()
+	}
+	return last
+}
+
+// useOfThis refuses this, in a constructor before its last field is assigned, anywhere but as the
+// object of a field it reads or writes: a method it calls, or a function it's handed to, could read a
+// field not set yet.
+func (l *lowering) useOfThis(node *ast.Node) error {
+	if l.unsetUntil == 0 || node.Pos() >= l.unsetUntil {
+		return nil
+	}
+	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
+		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && field.Declarations[0].Kind == ast.KindPropertyDeclaration {
+			return nil
+		}
+	}
+	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}
 }

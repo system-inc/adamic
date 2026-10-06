@@ -66,7 +66,7 @@ static adamic_string *text(const uint32_t *points, size_t count) {
 	adamic_string pieces[8];
 	for (size_t index = 0; index < count; index++) {
 		size_t size = encode(points[index], bytes[index]);
-		adamic_string piece = {{0, adamic_kind_string, 0}, size, bytes[index], 0, NULL};
+		adamic_string piece = {{0, adamic_kind_string, 0}, size, bytes[index], 0, NULL, NULL, 0};
 		pieces[index] = piece;
 		parts[index] = &pieces[index];
 	}

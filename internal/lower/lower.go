@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"slices"
+	"strconv"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -80,6 +81,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
+	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	if err := lowering.exceptions(); err != nil {
 		return nil, err
 	}
@@ -134,6 +136,27 @@ type lowering struct {
 	// their type: the first of an Array.from callback's (from.go). Each is a reference that's always
 	// missing.
 	alwaysUndefined map[*ast.Symbol]bool
+
+	// signed are the functions whose signatures are written and whose bodies aren't lowered yet, by
+	// index, each with what its body still needs (signature).
+	signed map[int]signed
+
+	// forwarders are the globals holding the function values made for module functions read as values,
+	// by the function each forwards to, and forwarderValues the declarations that make them, which run
+	// before anything else (functionValue).
+	forwarders      map[int]int
+	forwarderValues []ir.Statement
+
+	// unsetUntil is where, in the constructor being lowered, its last assignment of a field without an
+	// initializer ends: before it, this is only for reading and writing fields (useOfThis).
+	unsetUntil int
+
+	// generics maps each generic module function's symbol to its declaration, and genericInstances
+	// each instantiation already lowered to its function (generic.go). genericDepth counts the
+	// instantiations being lowered inside one another.
+	generics         map[*ast.Symbol]*ast.Node
+	genericInstances map[string]int
+	genericDepth     int
 
 	// caught are the variables a catch binds, each always an Error; tries are the try statements
 	// lowered (exceptions.go).
@@ -209,7 +232,9 @@ func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
 
 // declareModule registers the module's globals and functions before anything is lowered, so a
 // function can call one declared below it and read a global declared below it, as JavaScript
-// allows, and then lowers each function's body.
+// allows. Every function's signature is written, from the checker, before any body is lowered, so a
+// call knows what the function it calls returns wherever that function is declared, and two
+// functions can call each other. Then each body is lowered.
 func (l *lowering) declareModule(statements []*ast.Node) error {
 	declarations := []*ast.Node{}
 	for _, statement := range statements {
@@ -224,7 +249,7 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				// its own.
 				if declaration.Name().Kind == ast.KindArrayBindingPattern || declaration.Name().Kind == ast.KindObjectBindingPattern {
 					for _, binding := range declaration.Name().AsBindingPattern().Elements.Nodes {
-						if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil || !ast.IsIdentifier(binding.Name()) {
+						if skipped(binding) || !ast.IsIdentifier(binding.Name()) {
 							continue
 						}
 						local, err := l.declareLocal(binding.Name())
@@ -250,12 +275,25 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			l.classes[l.symbol(statement.Name())] = statement
 		case ast.KindFunctionDeclaration:
 			symbol := l.symbol(statement.Name())
+			if len(statement.TypeParameters()) > 0 {
+				// A generic function is lowered once per instantiation, where it's called (generic.go).
+				if l.generics == nil {
+					l.generics = map[*ast.Symbol]*ast.Node{}
+				}
+				l.generics[symbol] = statement
+				continue
+			}
 			if l.functions == nil {
 				l.functions = map[*ast.Symbol]int{}
 			}
 			l.functions[symbol] = len(l.result.Functions)
 			l.result.Functions = append(l.result.Functions, ir.Function{Name: statement.Name().Text()})
 			declarations = append(declarations, statement)
+		}
+	}
+	for _, declaration := range declarations {
+		if err := l.signature(l.functions[l.symbol(declaration.Name())], declaration, -1); err != nil {
+			return err
 		}
 	}
 	for _, declaration := range declarations {
@@ -271,22 +309,50 @@ func (l *lowering) functionBody(declaration *ast.Node) error {
 	return l.lowerFunction(l.functions[l.symbol(declaration.Name())], declaration, -1)
 }
 
-// lowerFunction lowers a function-like declaration into the function at index. this, when not -1,
-// is the local a method's or constructor's this is, passed first.
+// defaulted is a parameter with a default: the local the body declares, the one the argument arrives
+// in, and the default.
+type defaulted struct {
+	local, incoming int
+	initializer     *ast.Node
+}
+
+// signed is what a function whose signature is written still needs to lower its body: the local its
+// this is, or -1, its parameters' defaults, and its destructured parameters.
+type signed struct {
+	this     int
+	defaults []defaulted
+	patterns []patterned
+}
+
+// patterned is a destructured parameter, ([key, value]) or ({ x, y }): the pattern, the parameter,
+// and the local it arrives in whole.
+type patterned struct {
+	pattern   *ast.Node
+	parameter *ast.Node
+	incoming  int
+}
+
+// lowerFunction lowers a function-like declaration into the function at index: its signature, unless
+// signature has written it already, then its body. this, when not -1, is the local a method's or
+// constructor's this is, passed first.
 //
 // It works on a copy and writes it back by index: lowering a body can instantiate a class, which
 // appends functions, and a pointer into the slice would be left pointing at the old one.
 func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {
-	function := l.result.Functions[index]
-	if !function.Closure {
-		// A function declaration, a method or a constructor is lowered where a use of it is first met,
-		// a closure's body included, but it's declared at the top level and captures nothing from
-		// the closures being lowered there: a local of its own read in a closure of its own must not
-		// land in their environments.
-		outerClosures := l.closures
-		l.closures = nil
-		defer func() { l.closures = outerClosures }()
+	if _, isSigned := l.signed[index]; !isSigned {
+		if err := l.signature(index, declaration, this); err != nil {
+			return err
+		}
 	}
+	pending := l.signed[index]
+	delete(l.signed, index)
+	return l.lowerBody(index, declaration, pending.this, pending.defaults, pending.patterns)
+}
+
+// signature writes the function at index's parameters and result, from the checker, without lowering
+// its body, so a call to it lowers whether or not its body has been. this is as for lowerFunction.
+func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
+	function := l.result.Functions[index]
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
@@ -294,7 +360,11 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 	if declaration.Kind != ast.KindConstructor {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
 		returns := l.checker.GetReturnTypeOfSignature(signature)
-		if returns.Flags()&checker.TypeFlagsVoid == 0 {
+		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
+		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
+		// reason, a variable the checker narrowed to nothing, isn't one.
+		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && !l.isPanicCall(declaration.Body())
+		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
 			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
@@ -312,18 +382,9 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 	defer func() { l.functionIndex = outerIndexForParameters }()
 	// A parameter with a default arrives as what may be missing, and the body begins by declaring the
 	// parameter itself: the argument, or the default when it's undefined, as JavaScript decides.
-	type defaulted struct {
-		local, incoming int
-		initializer     *ast.Node
-	}
 	defaults := []defaulted{}
 	// A destructured parameter, ([key, value]) or ({ x, y }), arrives whole in a parameter of its own,
 	// and its names are declared from it before the body runs.
-	type patterned struct {
-		pattern   *ast.Node
-		parameter *ast.Node
-		incoming  int
-	}
 	patterns := []patterned{}
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
@@ -367,13 +428,30 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		// needs two words.
 		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
 	}
-	body := declaration.Body()
-	if body == nil {
+	if declaration.Body() == nil {
 		return l.notYet(declaration, "a function without a body")
 	}
-	// The signature is written back before the body is lowered, so a recursive call inside it knows
-	// what the function returns.
 	l.result.Functions[index] = function
+	if l.signed == nil {
+		l.signed = map[int]signed{}
+	}
+	l.signed[index] = signed{this: this, defaults: defaults, patterns: patterns}
+	return nil
+}
+
+// lowerBody lowers the body of the function at index, whose signature is written.
+func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error {
+	function := l.result.Functions[index]
+	if !function.Closure {
+		// A function declaration, a method or a constructor has its body lowered where a use of it is first met,
+		// a closure's body included, but it's declared at the top level and captures nothing from
+		// the closures being lowered there: a local of its own read in a closure of its own must not
+		// land in their environments.
+		outerClosures := l.closures
+		l.closures = nil
+		defer func() { l.closures = outerClosures }()
+	}
+	body := declaration.Body()
 	outer, outerThis, outerIndex := l.function, l.this, l.functionIndex
 	l.function, l.functionIndex = &function, index
 	if this >= 0 {
@@ -419,8 +497,9 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 	}
 	if body.Kind == ast.KindBlock {
 		lowered, err = l.statements(body.AsBlock().Statements.Nodes)
-	} else if function.Returns == 0 {
-		// An arrow function's expression body, when it returns nothing, is a statement.
+	} else if function.Returns == 0 || l.isPanicCall(body) {
+		// An arrow function's expression body, when it returns nothing or never returns (() =>
+		// panic('why')), is a statement.
 		lowered, err = l.expressionStatement(body)
 	} else {
 		// Otherwise its value is what it returns.
@@ -526,6 +605,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	expression = ast.SkipParentheses(expression)
 	switch expression.Kind {
 	case ast.KindCallExpression:
+		if err := l.optionalCall(expression); err != nil {
+			return nil, err
+		}
 		if l.isConsole(expression.AsCallExpression().Expression) {
 			statement, err := l.console(expression)
 			if err != nil {
@@ -622,6 +704,12 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
 	}
 	return statements, nil
+}
+
+// skipped reports whether an element of an array binding pattern is a hole, as in const [, b]: the
+// checker's tree has a binding element with no name there.
+func skipped(binding *ast.Node) bool {
+	return binding.Kind == ast.KindOmittedExpression || binding.Name() == nil
 }
 
 // declareLocal makes a new local for a declared name, typed by what the checker proved for it.
@@ -745,6 +833,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if target.Kind == ast.KindElementAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
 		return l.setIndex(target, binary.Right)
 	}
+	if target.Kind == ast.KindArrayLiteralExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
+		return l.destructuringAssignment(target, binary.Right)
+	}
 	local, isLocal := l.local(target)
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
@@ -772,6 +863,60 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local)}}, nil
 }
 
+// tupleField reads element index of the tuple held in the local held, as the tuple's element type
+// holds it, and makes it what the name it goes to holds: a string element going to a string | number
+// name is boxed on the way.
+func (l *lowering) tupleField(where *ast.Node, held int, elements []*checker.Type, index int, to ir.Type) (ir.Expression, error) {
+	if index >= len(elements) {
+		return nil, l.notYet(where, "a name past its tuple's elements")
+	}
+	of, isKnown := l.representation(elements[index])
+	if !isKnown || slotless(of) {
+		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(elements[index]))
+	}
+	value := fit(ir.Expression(ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: strconv.Itoa(index), Of: of}), to)
+	if value.Type() != to {
+		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(elements[index])+" given to a "+typeName(to))
+	}
+	return value, nil
+}
+
+// destructuringAssignment lowers [a, b] = tuple: the tuple is evaluated whole and held, then each
+// name is assigned its field, in order, as JavaScript assigns them. A name left out ([, b]) is
+// skipped. Anything but plain names, or a value that isn't a tuple, is not lowered yet.
+func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if !checker.IsTupleType(l.checker.GetTypeAtLocation(valueNode)) {
+		return nil, l.notYet(pattern, "destructuring other than a tuple")
+	}
+	value, err := l.expression(valueNode)
+	if err != nil {
+		return nil, err
+	}
+	if value.Type() != ir.Object {
+		return nil, l.notYet(pattern, "destructuring a "+typeName(value.Type()))
+	}
+	elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(valueNode))
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "tuple", Type: ir.Object, Function: l.functionIndex})
+	statements := []ir.Statement{ir.Declare{Local: held, Value: value}}
+	for index, element := range pattern.AsArrayLiteralExpression().Elements.Nodes {
+		if element.Kind == ast.KindOmittedExpression {
+			continue
+		}
+		local, isLocal := l.local(element)
+		if !ast.IsIdentifier(element) || !isLocal || l.alwaysUndefined[l.symbol(element)] {
+			return nil, l.notYet(element, "assigning to "+describe(element)+" in a destructuring assignment")
+		}
+		field, err := l.tupleField(element, held, elements, index, l.result.Locals[local].Type)
+		if err != nil {
+			return nil, err
+		}
+		statements = append(statements, ir.Assign{Local: local, Value: field, Checked: l.checked(local)})
+	}
+	// The held tuple is the block's, released when it ends.
+	return []ir.Statement{ir.Block{Body: statements}}, nil
+}
+
 // checked reports whether touching a local must be checked against the temporal dead zone: a
 // global, from inside a function, which may run before the global's declaration has.
 func (l *lowering) checked(local int) bool {
@@ -787,11 +932,21 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if expression == nil {
 		return []ir.Statement{ir.Return{}}, nil
 	}
+	if l.isPanicCall(expression) {
+		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
+		return l.expressionStatement(expression)
+	}
 	value, err := l.expression(expression)
 	if err != nil {
 		return nil, err
 	}
 	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
+}
+
+// isPanicCall reports whether an expression is a call to the prelude's panic, which never returns.
+func (l *lowering) isPanicCall(expression *ast.Node) bool {
+	expression = ast.SkipParentheses(expression)
+	return expression.Kind == ast.KindCallExpression && l.isPreludeFunction(expression.AsCallExpression().Expression, "panic")
 }
 
 var compoundAssignments = map[ast.Kind]ast.Kind{
@@ -801,6 +956,13 @@ var compoundAssignments = map[ast.Kind]ast.Kind{
 	ast.KindSlashEqualsToken:            ast.KindSlashToken,
 	ast.KindPercentEqualsToken:          ast.KindPercentToken,
 	ast.KindAsteriskAsteriskEqualsToken: ast.KindAsteriskAsteriskToken,
+
+	ast.KindAmpersandEqualsToken:                         ast.KindAmpersandToken,
+	ast.KindBarEqualsToken:                               ast.KindBarToken,
+	ast.KindCaretEqualsToken:                             ast.KindCaretToken,
+	ast.KindLessThanLessThanEqualsToken:                  ast.KindLessThanLessThanToken,
+	ast.KindGreaterThanGreaterThanEqualsToken:            ast.KindGreaterThanGreaterThanToken,
+	ast.KindGreaterThanGreaterThanGreaterThanEqualsToken: ast.KindGreaterThanGreaterThanGreaterThanToken,
 }
 
 // increment lowers ++ and -- on a number local or field, as a statement, where prefix and postfix

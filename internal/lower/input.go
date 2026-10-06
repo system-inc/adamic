@@ -42,6 +42,25 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, errors.New("lower: " + l.program.Where(node) + ": writeTextFile's path or text isn't a string, and the checker let it through")
 		}
 		return ir.WriteTextFile{Path: path, Text: text}, true, nil
+	case l.isPreludeFunction(callee, "utf8Length") || l.isPreludeFunction(callee, "utf8At"):
+		lowered := []ir.Expression{}
+		for _, argument := range arguments {
+			value, err := l.expression(argument)
+			if err != nil {
+				return nil, true, err
+			}
+			lowered = append(lowered, value)
+		}
+		if l.isPreludeFunction(callee, "utf8Length") {
+			if len(lowered) != 1 || lowered[0].Type() != ir.String {
+				return nil, true, errors.New("lower: " + l.program.Where(node) + ": utf8Length takes one string, and the checker let something else through")
+			}
+			return ir.Utf8Length{Text: lowered[0]}, true, nil
+		}
+		if len(lowered) != 2 || lowered[0].Type() != ir.String || lowered[1].Type() != ir.Number {
+			return nil, true, errors.New("lower: " + l.program.Where(node) + ": utf8At takes a string and a number, and the checker let something else through")
+		}
+		return ir.Utf8At{Text: lowered[0], Index: lowered[1]}, true, nil
 	case l.isPreludeFunction(callee, "readDirectory"), l.isPreludeFunction(callee, "fileStatus"):
 		// By what it is, not what it's called here: an import may name it anything.
 		name := "fileStatus"

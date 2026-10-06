@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"fmt"
 	"math"
 	"strconv"
 
@@ -135,8 +136,8 @@ func (l *lowering) hasProperty(node *ast.Node, name string) bool {
 }
 
 func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
-	if checker.IsTupleType(l.checker.GetTypeAtLocation(node)) {
-		return l.tupleLiteral(node)
+	if tuple := l.tupleType(node); tuple != nil {
+		return l.tupleLiteral(node, tuple)
 	}
 	element, err := l.elementType(node)
 	if err != nil {
@@ -238,13 +239,40 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "Number."+name)
 	}
+	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration {
+		// A method read off its object, not called: JavaScript loses its this (unbound-method,
+		// docs/0.1.md). A call never comes here; callOrMethod lowers it.
+		object := "object"
+		if receiver := ast.SkipParentheses(access.Expression); ast.IsIdentifier(receiver) {
+			object = receiver.Text()
+		} else if receiver.Kind == ast.KindThisKeyword {
+			object = "this"
+		}
+		return nil, &Refused{
+			Where: l.program.Where(node),
+			What:  "a method read off its object, which loses its this when called (unbound-method)",
+			Fix:   fmt.Sprintf("wrap the call in an arrow function, which keeps its object: (value) => %s.%s(value)", object, name),
+		}
+	}
+	if receiver := l.checker.GetTypeAtLocation(access.Expression); name != "length" && (checker.IsTupleType(receiver) || checker.IsTupleType(l.checker.GetNonNullableType(receiver))) {
+		// A tuple is held as an object of its elements, "0", "1", ..., read by index; an array's
+		// methods aren't fields of it, and reading them as fields would find nothing. Its length is
+		// read below (tupleLength).
+		return nil, l.notYet(node, "."+name+" on a tuple")
+	}
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
 	}
+	if access.QuestionDotToken != nil && (object.Type() == ir.Array || object.Type() == ir.String) && name == "length" {
+		// words?.length and text?.length: undefined where the array or string is, a number | undefined.
+		if object.Type() == ir.Array {
+			return ir.Length{Array: object, Optional: true}, nil
+		}
+		return ir.StringLength{Value: object, Optional: true}, nil
+	}
 	if access.QuestionDotToken != nil && object.Type() != ir.Object {
-		// words[0]?.length is number | undefined, which a length read as a number can't hold.
-		return nil, l.notYet(node, "optional chaining on a "+typeName(object.Type()))
+		return nil, l.notYet(node, "optional chaining to ."+name+" on a "+typeName(object.Type()))
 	}
 	switch {
 	case object.Type() == ir.Array && name == "length":
@@ -347,6 +375,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if l.isLibraryGlobal(receiver, "Array") && name == "from" {
 		return l.arrayFrom(node)
 	}
+	if l.isLibraryGlobal(receiver, "String") && (name == "fromCharCode" || name == "fromCodePoint") {
+		return l.stringFromCodes(node, name == "fromCodePoint")
+	}
 	if receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); receiverType == ir.Number && name == "toString" && len(node.AsCallExpression().Arguments.Nodes) == 0 {
 		value, err := l.expression(receiver)
 		if err != nil {
@@ -404,8 +435,18 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, err
 		}
 	}
+	if isMath && (name == "max" || name == "min" || name == "hypot") && hasSpread(node) {
+		spread, err := l.spreadNumbers(node)
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.MathCall{Function: name, Spread: spread}, true, nil
+	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+		if argument.Kind == ast.KindSpreadElement {
+			return nil, true, l.notYet(argument, "a spread argument to "+name)
+		}
 		lowered, err := l.expression(argument)
 		if err != nil {
 			return nil, true, err
@@ -527,6 +568,11 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	}
 	// map.entries(), map.keys() and map.values() are the map itself, iterated for that part.
 	iterated, mapPart := statement.Expression, ""
+	if call := ast.SkipParentheses(iterated); call.Kind == ast.KindCallExpression {
+		if err := l.optionalCall(call); err != nil {
+			return nil, err
+		}
+	}
 	if call := ast.SkipParentheses(iterated); call.Kind == ast.KindCallExpression && len(call.AsCallExpression().Arguments.Nodes) == 0 {
 		if callee := ast.SkipParentheses(call.AsCallExpression().Expression); callee.Kind == ast.KindPropertyAccessExpression {
 			receiver := callee.AsPropertyAccessExpression().Expression
@@ -572,8 +618,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			return nil, l.notYet(name, "destructuring a "+typeName(element))
 		}
 		for index, binding := range name.AsBindingPattern().Elements.Nodes {
-			// A hole, [, second], is a binding element with no name.
-			if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
+			if skipped(binding) {
 				continue
 			}
 			bound := binding.AsBindingElement()
@@ -618,8 +663,7 @@ func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *as
 			return nil, l.notYet(name, "destructuring more than a key and a value")
 		}
 		for index, binding := range elements {
-			// A hole, [, second], is a binding element with no name.
-			if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
+			if skipped(binding) {
 				continue
 			}
 			bound := binding.AsBindingElement()
@@ -1140,8 +1184,8 @@ var stringMethods = map[string]struct {
 	"padStart":    {[]ir.Type{ir.Number, ir.String}, 1},
 	"padEnd":      {[]ir.Type{ir.Number, ir.String}, 1},
 	"repeat":      {[]ir.Type{ir.Number}, 0},
-	"indexOf":     {[]ir.Type{ir.String}, 0},
-	"includes":    {[]ir.Type{ir.String}, 0},
+	"indexOf":     {[]ir.Type{ir.String, ir.Number}, 1},
+	"includes":    {[]ir.Type{ir.String, ir.Number}, 1},
 	"startsWith":  {[]ir.Type{ir.String}, 0},
 	"endsWith":    {[]ir.Type{ir.String}, 0},
 	"split":       {[]ir.Type{ir.String}, 0},
@@ -1319,4 +1363,219 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 		return nil, err
 	}
 	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element, Site: l.writeSite(access.Expression)}}, nil
+}
+
+// stringFromCodes lowers String.fromCharCode(...) and String.fromCodePoint(...), each argument a
+// number, evaluated in order.
+func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expression, bool, error) {
+	lowered := ir.StringFromCodes{CodePoints: codePoints}
+	if hasSpread(node) {
+		spread, err := l.spreadNumbers(node)
+		if err != nil {
+			return nil, true, err
+		}
+		lowered.Spread = spread
+		return lowered, true, nil
+	}
+	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+		if argument.Kind == ast.KindSpreadElement {
+			return nil, true, l.notYet(argument, "a spread argument to String."+node.AsCallExpression().Expression.Name().Text())
+		}
+		value, err := l.expression(argument)
+		if err != nil {
+			return nil, true, err
+		}
+		if value.Type() != ir.Number {
+			return nil, true, l.notYet(argument, "a "+typeName(value.Type())+" argument to String."+node.AsCallExpression().Expression.Name().Text())
+		}
+		lowered.Codes = append(lowered.Codes, value)
+	}
+	return lowered, true, nil
+}
+
+// tupleType is the tuple type an array literal makes, from the checker or from where it's written
+// (return ['a', 1] in a function returning [string, number]), or nil when it makes an array.
+func (l *lowering) tupleType(node *ast.Node) *checker.Type {
+	// The tuple it's written into first: [5] written into [number, string?] is that tuple, with its
+	// second element undefined, though the literal's own type is [number].
+	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && checker.IsTupleType(contextual) && l.everyKnown(l.checker.GetTypeArguments(contextual)) {
+		// (Under as const the contextual tuple's elements are any, and the literal's own type says
+		// how they're held.)
+		return contextual
+	}
+	if made := l.checker.GetTypeAtLocation(node); checker.IsTupleType(made) {
+		return made
+	}
+	return nil
+}
+
+// tupleLiteral lowers [a, b] where it makes a tuple: an object whose fields are named "0", "1", ...,
+// as a tuple's elements are read (elementAccess) and destructured (destructure, and for...of), each
+// made what its element's type holds. A literal with as many elements as its tuple has is lowered;
+// one leaving out an optional element, or spreading, is not yet.
+func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Expression, error) {
+	items := node.AsArrayLiteralExpression().Elements.Nodes
+	elements := l.checker.GetTypeArguments(tuple)
+	if len(items) > len(elements) {
+		return nil, l.notYet(node, "a tuple literal with more values than its tuple has elements")
+	}
+	literal := ir.ObjectLiteral{Tuple: true}
+	// An optional element left out is undefined, a field of its own, as tuple[index] reads it.
+	missing := []ir.Field{}
+	for index := len(items); index < len(elements); index++ {
+		of, isKnown := l.representation(elements[index])
+		if !isKnown || slotless(of) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
+			return nil, l.notYet(node, "a tuple literal leaving out an element of type "+l.checker.TypeToString(elements[index]))
+		}
+		missing = append(missing, ir.Field{Name: strconv.Itoa(index), Value: fit(ir.Undefined{}, of)})
+	}
+	for index, item := range items {
+		if item.Kind == ast.KindSpreadElement || item.Kind == ast.KindOmittedExpression {
+			return nil, l.notYet(item, describe(item)+" in a tuple literal")
+		}
+		of, isKnown := l.representation(elements[index])
+		if !isKnown || slotless(of) {
+			return nil, l.notYet(item, "a tuple element of type "+l.checker.TypeToString(elements[index]))
+		}
+		value, err := l.expression(item)
+		if err != nil {
+			return nil, err
+		}
+		if value = fit(value, of); value.Type() != of {
+			if _, isUndefined := value.(ir.Undefined); !isUndefined || !of.IsReference() {
+				return nil, l.notYet(item, "a tuple element of another type than its tuple's")
+			}
+		}
+		literal.Fields = append(literal.Fields, ir.Field{Name: strconv.Itoa(index), Value: value})
+	}
+	literal.Fields = append(literal.Fields, missing...)
+	return literal, nil
+}
+
+// hasSpread reports whether a call spreads an argument: Math.max(...values).
+func hasSpread(call *ast.Node) bool {
+	for _, argument := range call.AsCallExpression().Arguments.Nodes {
+		if argument.Kind == ast.KindSpreadElement {
+			return true
+		}
+	}
+	return false
+}
+
+// spreadNumbers lowers a call's arguments, some of them spread, as the array of numbers they spell,
+// evaluated in order, as [a, ...values, b] is.
+func (l *lowering) spreadNumbers(call *ast.Node) (ir.Expression, error) {
+	literal := ir.ArrayLiteral{Element: ir.Number}
+	for _, argument := range call.AsCallExpression().Arguments.Nodes {
+		spread := argument.Kind == ast.KindSpreadElement
+		item := argument
+		if spread {
+			item = ast.SkipParentheses(argument.AsSpreadElement().Expression)
+		}
+		if spread && item.Kind == ast.KindArrayLiteralExpression {
+			// ...[3, 4] is its elements, each an argument (the checker may type the literal a tuple).
+			for _, element := range item.AsArrayLiteralExpression().Elements.Nodes {
+				if element.Kind == ast.KindSpreadElement || element.Kind == ast.KindOmittedExpression {
+					return nil, l.notYet(element, describe(element)+" in an array spread into a call")
+				}
+				value, err := l.expression(element)
+				if err != nil {
+					return nil, err
+				}
+				if value.Type() != ir.Number {
+					return nil, l.notYet(element, "a "+typeName(value.Type())+" argument where numbers go")
+				}
+				literal.Elements = append(literal.Elements, value)
+				literal.Spread = append(literal.Spread, false)
+			}
+			continue
+		}
+		value, err := l.expression(item)
+		if err != nil {
+			return nil, err
+		}
+		if spread {
+			if element, err := l.elementType(item); err != nil || value.Type() != ir.Array || element != ir.Number {
+				return nil, l.notYet(argument, "spreading other than an array of numbers into a call")
+			}
+		} else if value.Type() != ir.Number {
+			return nil, l.notYet(argument, "a "+typeName(value.Type())+" argument where numbers go")
+		}
+		literal.Elements = append(literal.Elements, value)
+		literal.Spread = append(literal.Spread, spread)
+	}
+	return literal, nil
+}
+
+// tupleWhereArrayGoes reports whether a value of type value, going where target is expected, carries a
+// tuple to where an array is: directly, as an array's elements, as a Map's keys or values, as a field
+// of an object, or as a function's result, or the other way round for a function's parameters (a
+// function taking arrays called with tuples). A tuple is held as an object of its elements, so array
+// code would read it as something it isn't; until a tuple can be one, it's refused there.
+func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type, depth int) bool {
+	if value == nil || target == nil || value == target || depth > 4 {
+		return false
+	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		// Into a union: fine if any member takes it as it is.
+		for _, member := range target.Types() {
+			if !l.tupleWhereArrayGoes(value, member, depth+1) {
+				return false
+			}
+		}
+		return true
+	}
+	if value.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range value.Types() {
+			if l.tupleWhereArrayGoes(member, target, depth+1) {
+				return true
+			}
+		}
+		return false
+	}
+	valueTuple, targetTuple := checker.IsTupleType(value), checker.IsTupleType(target)
+	switch {
+	case valueTuple && !targetTuple && l.checker.IsArrayType(target):
+		return true
+	case valueTuple && targetTuple:
+		return l.pairwiseTupleWhereArrayGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), depth)
+	case l.checker.IsArrayType(value) && l.checker.IsArrayType(target):
+		return l.pairwiseTupleWhereArrayGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), depth)
+	case l.isLibraryType(value, "Map", "ReadonlyMap") && l.isLibraryType(target, "Map", "ReadonlyMap"):
+		return l.pairwiseTupleWhereArrayGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), depth)
+	}
+	if value.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 {
+		return false
+	}
+	valueSignatures := l.checker.GetSignaturesOfType(value, checker.SignatureKindCall)
+	targetSignatures := l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
+	if len(valueSignatures) == 1 && len(targetSignatures) == 1 {
+		// A function: what it returns goes where the target's result goes, and what the target is
+		// called with goes to its parameters.
+		if l.tupleWhereArrayGoes(l.checker.GetReturnTypeOfSignature(valueSignatures[0]), l.checker.GetReturnTypeOfSignature(targetSignatures[0]), depth+1) {
+			return true
+		}
+		valueParameters, targetParameters := valueSignatures[0].Parameters(), targetSignatures[0].Parameters()
+		for index := range valueParameters {
+			if index < len(targetParameters) && l.tupleWhereArrayGoes(l.checker.GetTypeOfSymbol(targetParameters[index]), l.checker.GetTypeOfSymbol(valueParameters[index]), depth+1) {
+				return true
+			}
+		}
+		return false
+	}
+	for _, field := range l.checker.GetPropertiesOfType(target) {
+		if l.tupleWhereArrayGoes(l.checker.GetTypeOfPropertyOfType(value, field.Name), l.checker.GetTypeOfSymbol(field), depth+1) {
+			return true
+		}
+	}
+	return false
+}
+
+func (l *lowering) pairwiseTupleWhereArrayGoes(values []*checker.Type, targets []*checker.Type, depth int) bool {
+	for index := range values {
+		if index < len(targets) && l.tupleWhereArrayGoes(values[index], targets[index], depth+1) {
+			return true
+		}
+	}
+	return false
 }

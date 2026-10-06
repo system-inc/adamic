@@ -1,0 +1,43 @@
+// return panic('why') is the panic itself: nothing is returned, because panic never returns. Here it
+// stands on paths the program never takes, in functions returning each kind of value.
+import { panic } from 'adamic';
+
+type Shape = { readonly kind: 'Circle'; readonly radius: number } | { readonly kind: 'Square'; readonly side: number };
+
+function kindNumber(kind: string): number {
+	switch (kind) {
+		case 'one':
+			return 1;
+		case 'two':
+			return 2;
+	}
+	return panic(`no kind ${kind}`);
+}
+
+function spelled(value: number): string {
+	if (value >= 0) {
+		return `${value}`.padStart(3, '0');
+	}
+	return panic('a negative count');
+}
+
+function shapeOf(kind: string): Shape {
+	if (kind === 'Circle') {
+		return { kind: 'Circle', radius: 1 };
+	}
+	if (kind === 'Square') {
+		return { kind: 'Square', side: 2 };
+	}
+	return panic(`no shape ${kind}`);
+}
+
+function firstWord(words: readonly string[]): string {
+	for (const word of words) {
+		return word;
+	}
+	return (panic('no words'));
+}
+
+const failing: (why: string) => number = (why) => panic(why);
+const chosen = 2 > 1 ? kindNumber : failing;
+console.log(`${kindNumber('one')} ${kindNumber('two')} ${spelled(7)} ${shapeOf('Square').kind} ${firstWord(['first', 'second'])} ${chosen('one')}`);

@@ -667,6 +667,10 @@ Three mutants, each run against the whole oracle and each caught by ASan alone:
 
 UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.
 
+Since a string is immutable, a slice can read its parent's bytes in place, as a Go string does, and hold a reference to the parent (its owner) so they outlive it (runtime/string_share.c, fixture `shared_slices.a`). A slice of a slice holds the first one's owner, so no chain grows. Its caches (units and index) are its own, counted from its own first byte. A short slice of a long string is copied instead: a slice shares only when it is at least 64 bytes and a quarter of its owner, so it never keeps more than four times its own bytes alive.
+
+`text = text + more` on a local nothing else can write while `more` is evaluated (not a global, not captured) is an append (runtime/string_append.c, fixture `string_append.a`). When the local holds the only reference, a count of one, no one can see the string change, so the append writes after its last byte if there's room, and resets what was cached about the old bytes (units and index). Otherwise it copies into a new string with twice the room. A loop of n appends allocates about log n times, not n. A string built that way can hold up to twice its bytes. A shared slice, a constant and a string some slice reads are never written: their room is 0, or their count is more than one.
+
 ## How this is held honest
 
 - Every native fixture runs under ASan and UBSan (use-after-free, overflow, undefined behavior) and, separately, under a leak check (`leaks --atExit` on macOS, LeakSanitizer on Linux) for anything never freed. A mutant that drops releases is caught by the leak check (`2a2e30b`).

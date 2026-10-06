@@ -440,6 +440,11 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("%s %s (int64_t)(%s);", e.localName(statement.Local), operator, e.value(sum.Right))
 			return
 		}
+		if parts, appends := e.appendsTo(statement); appends {
+			e.appendTo(statement.Local, parts)
+			e.end()
+			break
+		}
 		value := e.value(statement.Value)
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
@@ -577,6 +582,36 @@ func (e *emitter) store(local int, value string, owned bool) {
 	e.line("%s %s = %s;", cType(e.program.Locals[local].Type), old, name)
 	e.line("%s = %s;", name, value)
 	e.line("adamic_release(%s);", old)
+}
+
+// appendsTo is the parts after the first of an assignment text = text + ..., to a string local only
+// this function can see: not a global, which a call among the parts could write, not captured, which a
+// closure among them could, and not borrowed. Those are the assignments appendTo writes, where text's
+// own reference goes to adamic_string_append, which may write in place.
+func (e *emitter) appendsTo(statement ir.Assign) ([]ir.Expression, bool) {
+	declared := e.program.Locals[statement.Local]
+	if declared.Type != ir.String || declared.Global || declared.Captured || declared.Borrowed || statement.Checked {
+		return nil, false
+	}
+	concat, isConcat := statement.Value.(ir.Concat)
+	if !isConcat || len(concat.Parts) < 2 {
+		return nil, false
+	}
+	if read, isRead := concat.Parts[0].(ir.Read); !isRead || read.Local != statement.Local || read.Checked {
+		return nil, false
+	}
+	return concat.Parts[1:], true
+}
+
+// appendTo is text = text + parts: the parts first, as JavaScript reads them after text, which only
+// this function writes, then the append, which takes text's reference and gives one back.
+func (e *emitter) appendTo(local int, parts []ir.Expression) {
+	values := make([]string, 0, len(parts))
+	for _, part := range parts {
+		values = append(values, e.value(part))
+	}
+	name := e.localName(local)
+	e.line("%s = adamic_string_append(%s, %d, (adamic_string *const[]){%s});", name, name, len(values), strings.Join(values, ", "))
 }
 
 // releaseGlobals lets go of every global main declared, the last declared first, once main has run
@@ -747,6 +782,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return "(+" + operand + ")"
 		case ir.Not:
 			return "(!" + operand + ")"
+		case ir.BitNot:
+			return "adamic_bitwise_not(" + operand + ")"
 		}
 	case ir.Binary:
 		if expression.Operator == ir.And || expression.Operator == ir.Or {
@@ -867,6 +904,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Coalesce:
 		return e.coalesce(expression)
 	case ir.StringLength:
+		if expression.Optional {
+			text := e.value(expression.Value)
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, adamic_string_length(%s)})", text, zero(ir.MaybeNumber), text))
+		}
 		return fmt.Sprintf("adamic_string_length(%s)", e.value(expression.Value))
 	case ir.CharCodeAt:
 		value := e.value(expression.Value)
@@ -1133,6 +1174,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
 	case ir.ProgramArguments:
 		return e.own(ir.Array, "adamic_program_arguments()")
+	case ir.Utf8Length:
+		return fmt.Sprintf("adamic_utf8_length(%s)", e.value(expression.Text))
+	case ir.Utf8At:
+		text := e.value(expression.Text)
+		return e.snapshot(ir.Number, fmt.Sprintf("adamic_utf8_at(%s, %s)", text, e.value(expression.Index)))
 	case ir.ReadDirectory:
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_directory(%s)", e.value(expression.Path)))
 	case ir.FileStatus:
@@ -1190,9 +1236,29 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return array
 	case ir.Length:
+		if expression.Optional {
+			array := e.value(expression.Array)
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->length})", array, zero(ir.MaybeNumber), array))
+		}
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->length", e.value(expression.Array)))
 	case ir.MathCall:
 		return e.mathCall(expression)
+	case ir.StringFromCodes:
+		function := "adamic_string_from_char_codes"
+		if expression.CodePoints {
+			function = "adamic_string_from_code_points"
+		}
+		if expression.Spread != nil {
+			return e.own(ir.String, fmt.Sprintf("%s_of(%s)", function, e.value(expression.Spread)))
+		}
+		codes := make([]string, 0, len(expression.Codes))
+		for _, code := range expression.Codes {
+			codes = append(codes, e.value(code))
+		}
+		if len(codes) == 0 {
+			return e.own(ir.String, function+"(0, NULL)")
+		}
+		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
 	case ir.NumberCall:
 		arguments := []string{}
 		for _, argument := range expression.Arguments {
@@ -1603,6 +1669,9 @@ var cIeee754 = map[string]bool{
 }
 
 func (e *emitter) mathCall(call ir.MathCall) string {
+	if call.Spread != nil {
+		return e.snapshot(ir.Number, fmt.Sprintf("adamic_math_%s_of(%s)", call.Function, e.value(call.Spread)))
+	}
 	arguments := make([]string, 0, len(call.Arguments))
 	for _, argument := range call.Arguments {
 		arguments = append(arguments, e.value(argument))
@@ -2022,6 +2091,12 @@ func (e *emitter) own(valueType ir.Type, value string) string {
 	return name
 }
 
+// cBitwise are the runtime's bitwise operators (bitwise.c).
+var cBitwise = map[ir.Operator]string{
+	ir.BitAnd: "adamic_bitwise_and", ir.BitOr: "adamic_bitwise_or", ir.BitXor: "adamic_bitwise_xor",
+	ir.ShiftLeft: "adamic_shift_left", ir.ShiftRight: "adamic_shift_right", ir.ShiftRightUnsigned: "adamic_shift_right_unsigned",
+}
+
 var cOperators = map[ir.Operator]string{
 	ir.Add: "+", ir.Subtract: "-", ir.Multiply: "*", ir.Divide: "/",
 	ir.Less: "<", ir.LessOrEqual: "<=", ir.Greater: ">", ir.GreaterOrEqual: ">=",
@@ -2035,6 +2110,8 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 		return fmt.Sprintf("fmod(%s, %s)", left, right)
 	case operator == ir.Power:
 		return fmt.Sprintf("adamic_power(%s, %s)", left, right)
+	case cBitwise[operator] != "":
+		return fmt.Sprintf("%s(%s, %s)", cBitwise[operator], left, right)
 	case operandType == ir.String && (operator == ir.Less || operator == ir.LessOrEqual || operator == ir.Greater || operator == ir.GreaterOrEqual):
 		return fmt.Sprintf("(adamic_string_compare(%s, %s) %s 0)", left, right, cOperators[operator])
 	case operandType == ir.String && operator == ir.Equal:
@@ -2252,6 +2329,9 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 	case "split":
 		return e.own(ir.Array, fmt.Sprintf("adamic_string_split(%s, %s)", value, arguments[0]))
 	case "indexOf":
+		if len(arguments) == 2 {
+			return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_index_of_from(%s, %s, %s)", value, arguments[0], arguments[1]))
+		}
 		return fmt.Sprintf("adamic_string_index_of(%s, %s)", value, arguments[0])
 	case "lastIndexOf":
 		return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_last_index_of(%s, %s)", value, arguments[0]))
@@ -2268,6 +2348,9 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 	case "replace", "replaceAll":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_replace(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "replaceAll"))
 	case "includes":
+		if len(arguments) == 2 {
+			return e.snapshot(ir.Boolean, fmt.Sprintf("(adamic_string_index_of_from(%s, %s, %s) != -1)", value, arguments[0], arguments[1]))
+		}
 		return fmt.Sprintf("(adamic_string_index_of(%s, %s) != -1)", value, arguments[0])
 	case "startsWith":
 		return fmt.Sprintf("adamic_string_starts_with(%s, %s)", value, arguments[0])

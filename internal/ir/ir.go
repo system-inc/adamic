@@ -6,6 +6,8 @@
 // and the oracle has checked what it prints.
 package ir
 
+import "fmt"
+
 // Program is one compiled Adamic program.
 type Program struct {
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
@@ -253,12 +255,30 @@ type (
 	}
 
 	// Length is array.length.
-	Length struct{ Array Expression }
+	Length struct {
+		Array Expression
+
+		// Optional is array?.length: undefined, a number | undefined, where the array is.
+		Optional bool
+	}
+
+	// StringFromCodes is String.fromCharCode(...Codes), or String.fromCodePoint when CodePoints is
+	// set: a string of the UTF-16 units, or of the code points, the numbers name.
+	StringFromCodes struct {
+		Codes      []Expression
+		CodePoints bool
+
+		// Spread, when set, is the codes instead, as an array of numbers: fromCharCode(...codes).
+		Spread Expression
+	}
 
 	// MathCall is Math.<Function>(...), on numbers.
 	MathCall struct {
 		Function  string
 		Arguments []Expression
+
+		// Spread, when set, is the arguments instead, as an array of numbers: Math.max(...values).
+		Spread Expression
 	}
 
 	// NumberCall is Number.<Function>(...): parseInt (text, and a radix perhaps left out), parseFloat
@@ -281,8 +301,9 @@ type (
 	}
 
 	// Undefined is undefined where a reference goes: an object, an array or a string that may be
-	// missing (Tree | undefined), held as a null pointer.
-	Undefined struct{}
+	// missing (Tree | undefined), held as a null pointer. Of is the reference it stands in for, a
+	// string where a string | undefined is returned, and an object when it isn't set.
+	Undefined struct{ Of Type }
 
 	// IsUndefined is Value === undefined, for a reference that may be missing.
 	IsUndefined struct{ Value Expression }
@@ -365,7 +386,12 @@ type (
 	}
 
 	// StringLength is string.length, in UTF-16 code units.
-	StringLength struct{ Value Expression }
+	StringLength struct {
+		Value Expression
+
+		// Optional is text?.length: undefined, a number | undefined, where the string is.
+		Optional bool
+	}
 
 	// CharCodeAt is string.charCodeAt(Index): a UTF-16 code unit, or NaN.
 	CharCodeAt struct{ Value, Index Expression }
@@ -628,6 +654,11 @@ type (
 	// program, as process.argv.slice(2) is.
 	ProgramArguments struct{}
 
+	// Utf8Length is utf8Length(Text) from 'adamic', and Utf8At utf8At(Text, Index): the text's UTF-8,
+	// read in place.
+	Utf8Length struct{ Text Expression }
+	Utf8At     struct{ Text, Index Expression }
+
 	// WriteTextFile is writeTextFile(Path, Text) from 'adamic': the file made or emptied, then Text
 	// written as UTF-8 the way Node's writeFileSync(path, text) writes it (a lone surrogate as U+FFFD),
 	// in { kind: 'Ok' }, or what went wrong in { kind: 'Error', message }.
@@ -670,8 +701,14 @@ func (p Property) Type() Type {
 	return p.Of
 }
 func (ArrayLiteral) Type() Type { return Array }
-func (Length) Type() Type       { return Number }
-func (MathCall) Type() Type     { return Number }
+func (l Length) Type() Type {
+	if l.Optional {
+		return MaybeNumber
+	}
+	return Number
+}
+func (MathCall) Type() Type        { return Number }
+func (StringFromCodes) Type() Type { return String }
 
 func (c NumberCall) Type() Type {
 	if c.Function == "parseInt" || c.Function == "parseFloat" {
@@ -679,9 +716,14 @@ func (c NumberCall) Type() Type {
 	}
 	return Boolean
 }
-func (ToFixed) Type() Type       { return String }
-func (NumberFormat) Type() Type  { return String }
-func (Undefined) Type() Type     { return Object }
+func (ToFixed) Type() Type      { return String }
+func (NumberFormat) Type() Type { return String }
+func (u Undefined) Type() Type {
+	if u.Of != 0 {
+		return u.Of
+	}
+	return Object
+}
 func (IsUndefined) Type() Type   { return Boolean }
 func (ArrayPush) Type() Type     { return Number }
 func (ArrayJoin) Type() Type     { return String }
@@ -697,7 +739,12 @@ func (WeakOf) Type() Type        { return Weak }
 func (MakeError) Type() Type     { return Object }
 func (w WeakTarget) Type() Type  { return w.To }
 func (c Coalesce) Type() Type    { return c.Of }
-func (StringLength) Type() Type  { return Number }
+func (l StringLength) Type() Type {
+	if l.Optional {
+		return MaybeNumber
+	}
+	return Number
+}
 func (CharCodeAt) Type() Type    { return Number }
 func (Trim) Type() Type          { return String }
 func (CodePoints) Type() Type    { return Array }
@@ -755,6 +802,8 @@ func (c StringCall) Type() Type {
 }
 func (ReadTextFile) Type() Type     { return Object }
 func (ProgramArguments) Type() Type { return Array }
+func (Utf8Length) Type() Type       { return Number }
+func (Utf8At) Type() Type           { return Number }
 func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
@@ -786,10 +835,13 @@ func (u Unary) Type() Type {
 
 func (b Binary) Type() Type {
 	switch b.Operator {
-	case Add, Subtract, Multiply, Divide, Remainder, Power:
+	case Add, Subtract, Multiply, Divide, Remainder, Power, BitAnd, BitOr, BitXor, ShiftLeft, ShiftRight, ShiftRightUnsigned:
 		return Number
+	case Less, LessOrEqual, Greater, GreaterOrEqual, Equal, NotEqual, And, Or:
+		return Boolean
 	}
-	return Boolean
+	// An operator neither list names would be typed by a guess, and a wrong guess compiles wrong.
+	panic(fmt.Sprintf("ir: a binary operator %d with no type", b.Operator))
 }
 
 // Operator is an arithmetic, comparison, equality or logical operator.
@@ -813,6 +865,16 @@ const (
 	Not
 	Negate
 	Plus
+
+	// The bitwise operators, on numbers, each through ToInt32 or ToUint32 as JavaScript's are: &, |,
+	// ^, <<, >>, >>> and ~.
+	BitAnd
+	BitOr
+	BitXor
+	ShiftLeft
+	ShiftRight
+	ShiftRightUnsigned
+	BitNot
 )
 
 // Statement is one step of a program.

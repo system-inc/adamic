@@ -1,11 +1,14 @@
 // Reviewer R, round 12: a constructor puts this where its parent holds it, then closes the
-// cycle through a readonly field, a write the finder once skipped.
+// cycle through a readonly field, a write the finder once skipped. Every field is set before this
+// goes anywhere, so the constructor rule (this escaping before its fields are set) lets it through
+// to the cycle finder, which must refuse the second write to parent.
 class Node {
   readonly kids: Node[] = [];
   readonly parent: Node | undefined;
   readonly name: string;
   constructor(name: string, parent: Node | undefined) {
     this.name = name;
+    this.parent = undefined; // every field set before this goes anywhere
     if (parent !== undefined) {
       parent.kids.push(this);
     }

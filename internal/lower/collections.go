@@ -201,48 +201,6 @@ func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string,
 	return ir.MapForEach{Map: collection, Callback: callback, Key: key, Value: value, Set: set, Returns: returns}, true, nil
 }
 
-// tupleLiteral lowers a tuple written out, [key, value], where the checker typed it a tuple: an
-// object whose fields are "0", "1" and on, each held as the tuple's type says, as [...map]'s entries
-// are made.
-func (l *lowering) tupleLiteral(node *ast.Node) (ir.Expression, error) {
-	elements := node.AsArrayLiteralExpression().Elements.Nodes
-	// What it's written into decides how each element is held: [key, undefined] pushed onto an array
-	// of [string, number | undefined] holds number | undefined, which its own type wouldn't say.
-	tuple := l.checker.GetTypeAtLocation(node)
-	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && checker.IsTupleType(contextual) && l.everyKnown(l.checker.GetTypeArguments(contextual)) {
-		// (Under as const the contextual tuple's elements are any, and the literal's own type says
-		// how they're held.)
-		tuple = contextual
-	}
-	types := l.checker.GetTypeArguments(tuple)
-	if len(types) != len(elements) {
-		return nil, l.notYet(node, "a tuple with optional or rest elements")
-	}
-	literal := ir.ObjectLiteral{Tuple: true}
-	for index, element := range elements {
-		if element.Kind == ast.KindSpreadElement || element.Kind == ast.KindOmittedExpression {
-			return nil, l.notYet(element, describe(element)+" in a tuple")
-		}
-		held, isKnown := l.representation(types[index])
-		if !isKnown || slotless(held) {
-			return nil, l.notYet(element, "a tuple element of type "+l.checker.TypeToString(types[index]))
-		}
-		value, err := l.expression(element)
-		if err != nil {
-			return nil, err
-		}
-		// A number, or undefined, where number | undefined goes is made that pair.
-		value = fit(value, held)
-		// undefined where a reference that may be missing goes is a null one, as anywhere.
-		_, isUndefined := value.(ir.Undefined)
-		if value.Type() != held && !(isUndefined && held.IsReference()) {
-			return nil, l.notYet(element, "a tuple element held otherwise than its type")
-		}
-		literal.Fields = append(literal.Fields, ir.Field{Name: strconv.Itoa(index), Value: value})
-	}
-	return literal, nil
-}
-
 // tupleLength is tuple.length for a tuple of fixed length: its type's count, which the checker gives
 // as the type of the read. The tuple is a plain variable, so not reading it changes nothing, unless
 // it's a global read from a function, which may throw for the temporal dead zone, as JavaScript does.

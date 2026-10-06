@@ -216,6 +216,34 @@ var fixtures = []struct {
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
 	// read back (reviewer R, from the first night's number.c).
 	{"internal/oracle/testdata/power_of_two_string.a", true, false},
+	// Signatures before bodies: calls to functions and methods declared later, mutual recursion, and
+	// declared functions as values.
+	{"internal/oracle/testdata/declared_later.a", true, false},
+	// return panic('why'), in functions of each kind of result and in an arrow, where it doesn't run
+	// and where it does.
+	{"internal/oracle/testdata/return_panic.a", true, false},
+	{"internal/oracle/testdata/return_panic_fires.a", true, false},
+	// String.fromCharCode over ToUint16's edges, and String.fromCodePoint, surrogates joined into pairs
+	// as JavaScript joins them, and its RangeError.
+	{"internal/oracle/testdata/from_codes.a", true, false},
+	{"internal/oracle/testdata/from_code_point_fails.a", true, false},
+	// &, |, ^, ~, <<, >> and >>>, swept over every pair of 36 edge values against Node.
+	{"internal/oracle/testdata/bitwise.a", true, false},
+	// Tuples as values: returned, passed, held, destructured and read by index.
+	{"internal/oracle/testdata/tuple_values.a", true, false},
+	// Generic functions per instantiation, undefined where a reference goes, ?.length, and spread
+	// arguments.
+	{"internal/oracle/testdata/generic_functions.a", true, false},
+	{"internal/oracle/testdata/undefined_references.a", true, false},
+	{"internal/oracle/testdata/spread_calls.a", true, false},
+	// A string's UTF-8 read in place, and past its end.
+	{"internal/oracle/testdata/utf8_view.a", true, false},
+	{"internal/oracle/testdata/utf8_view_fails.a", true, false},
+	// indexOf and includes from a position.
+	{"internal/oracle/testdata/search_from.a", true, false},
+	{"internal/oracle/testdata/shared_slices.a", true, false},
+	{"internal/oracle/testdata/string_append.a", true, false},
+	{"internal/oracle/testdata/search_from_sweep.a", true, false},
 	// Reuse meeting exceptions, narrowing and lending (integration 7): a throw after a move, a narrowed
 	// field emptied in place, and a lent global moved under its borrower.
 	{"internal/oracle/testdata/reuse_throw.a", true, false},

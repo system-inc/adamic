@@ -137,6 +137,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 	}
+	// Anything the check above doesn't see (a tuple inside a literal, or a union around it) is still
+	// not yet: wherever a tuple flows into an array slot, at any depth.
+	if skipped := ast.SkipParentheses(node); err == nil && skipped.Kind != ast.KindSpreadElement {
+		if contextual := l.checker.GetContextualType(skipped, checker.ContextFlagsNone); contextual != nil && l.tupleWhereArrayGoes(l.checker.GetTypeAtLocation(skipped), contextual, 0) {
+			return nil, l.notYet(skipped, "a tuple where an array goes (as "+l.checker.TypeToString(contextual)+")")
+		}
+	}
 	if err != nil || value.Type() != ir.Weak {
 		return value, err
 	}
@@ -345,6 +352,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if !isLocal && (l.isLibraryGlobal(node, "NaN") || l.isLibraryGlobal(node, "Infinity")) {
 			return ir.NumberConstant{Value: numberConstants[node.Text()]}, nil
 		}
+		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
+			return l.functionValue(node, function)
+		}
+		if _, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+			return nil, l.notYet(node, "a generic function as a value")
+		}
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
@@ -411,6 +424,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if l.this < 0 {
 			return nil, l.notYet(node, "this outside a method")
 		}
+		if err := l.useOfThis(node); err != nil {
+			return nil, err
+		}
 		l.touch(l.this)
 		return ir.Read{Local: l.this, Of: ir.Object}, nil
 	case ast.KindArrowFunction:
@@ -420,6 +436,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindFunctionExpression:
 		return nil, l.notYet(node, "a function expression (an arrow function captures this as written)")
 	case ast.KindCallExpression:
+		if err := l.optionalCall(node); err != nil {
+			return nil, err
+		}
 		if lowered, isBuiltin, err := l.builtin(node); isBuiltin {
 			if err == nil && lowered.Type() == 0 {
 				// forEach is void; as a value it's undefined, which only places 0.1 refuses would use.
@@ -450,6 +469,11 @@ func fit(value ir.Expression, to ir.Type) ir.Expression {
 	}
 	if to == ir.Union && value != nil && value.Type() != ir.Union {
 		return ir.Box{Value: value}
+	}
+	if _, isUndefined := value.(ir.Undefined); isUndefined && to.IsReference() && to != ir.Union {
+		// undefined going where a string, an array or a function may be missing is that reference,
+		// missing: typed as it, so the C holding it is.
+		return ir.Undefined{Of: to}
 	}
 	if !to.IsMaybe() || value == nil {
 		return value
@@ -490,6 +514,8 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 		return ir.Unary{Operator: ir.Plus, Operand: operand}, nil
 	case prefix.Operator == ast.KindExclamationToken && operand.Type() == ir.Boolean:
 		return ir.Unary{Operator: ir.Not, Operand: operand}, nil
+	case prefix.Operator == ast.KindTildeToken && operand.Type() == ir.Number:
+		return ir.Unary{Operator: ir.BitNot, Operand: operand}, nil
 	}
 	return nil, l.notYet(node, describe(node)+" on a "+typeName(operand.Type()))
 }
@@ -501,6 +527,16 @@ var arithmetic = map[ast.Kind]ir.Operator{
 	ast.KindSlashToken:            ir.Divide,
 	ast.KindPercentToken:          ir.Remainder,
 	ast.KindAsteriskAsteriskToken: ir.Power,
+}
+
+// bitwise are the binary bitwise operators, on two numbers.
+var bitwise = map[ast.Kind]ir.Operator{
+	ast.KindAmpersandToken:                         ir.BitAnd,
+	ast.KindBarToken:                               ir.BitOr,
+	ast.KindCaretToken:                             ir.BitXor,
+	ast.KindLessThanLessThanToken:                  ir.ShiftLeft,
+	ast.KindGreaterThanGreaterThanToken:            ir.ShiftRight,
+	ast.KindGreaterThanGreaterThanGreaterThanToken: ir.ShiftRightUnsigned,
 }
 
 var comparisons = map[ast.Kind]ir.Operator{
@@ -517,6 +553,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
 	}
 	if lowered, isArithmetic := arithmetic[operator]; isArithmetic && both(ir.Number) {
+		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	}
+	if lowered, isBitwise := bitwise[operator]; isBitwise && both(ir.Number) {
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
 	if lowered, isComparison := comparisons[operator]; isComparison && (both(ir.Number) || both(ir.String)) {
@@ -640,7 +679,7 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 	if whenTrue.Type() != whenNot.Type() {
 		// flag ? 1 : undefined is number | undefined, and flag ? 1 : 'one' a union: each branch made
 		// one.
-		if of, err := l.typeOf(node); err == nil && (of.IsMaybe() || of == ir.Union) {
+		if of, err := l.typeOf(node); err == nil && (of.IsMaybe() || of == ir.Union || of.IsReference()) {
 			whenTrue, whenNot = fit(whenTrue, of), fit(whenNot, of)
 		}
 	}
@@ -711,6 +750,13 @@ func slotless(valueType ir.Type) bool {
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
+	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
+		instance, err := l.instantiateFunction(node, declaration)
+		if err != nil {
+			return nil, err
+		}
+		return l.callFunction(call, instance)
+	}
 	function, isFunction := l.functions[l.symbol(callee)]
 	if !ast.IsIdentifier(callee) || !isFunction {
 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
@@ -718,6 +764,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "a call to "+describe(callee))
 	}
+	return l.callFunction(call, function)
+}
+
+// callFunction lowers a call's arguments, in order, and the call to function.
+func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
 	arguments := []ir.Expression{}
 	for _, argument := range call.Arguments.Nodes {
 		lowered, err := l.expression(argument)
@@ -781,6 +832,68 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	return ir.MakeClosure{Function: index}, nil
+}
+
+// functionValue lowers a module function read as a value rather than called: a function value whose
+// code forwards its arguments to the function, made once for each function read so, before the
+// program runs. It takes exactly
+// the parameters the function declares, so one with a parameter that may be left out isn't made yet:
+// a function value is called with the arguments its caller has, and no more.
+func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if held, isMade := l.forwarders[target]; isMade {
+		return ir.Read{Local: held, Of: ir.Closure}, nil
+	}
+	symbol := l.symbol(node)
+	for _, parameter := range symbol.Declarations[0].Parameters() {
+		declared := parameter.AsParameterDeclaration()
+		if declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
+			return nil, l.notYet(node, "a function with an optional or rest parameter, as a value")
+		}
+	}
+	callee := l.result.Functions[target]
+	if slotless(callee.Returns) {
+		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
+	}
+	index := len(l.result.Functions)
+	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns}
+	arguments := []ir.Expression{}
+	for _, parameter := range callee.Parameters {
+		declared := l.result.Locals[parameter]
+		if slotless(declared.Type) {
+			return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
+		}
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: declared.Name, Type: declared.Type, Function: index})
+		forwarder.Parameters = append(forwarder.Parameters, local)
+		arguments = append(arguments, ir.Read{Local: local, Of: declared.Type})
+	}
+	call := ir.Call{Function: target, Arguments: arguments, Returns: callee.Returns}
+	if callee.Returns == 0 {
+		forwarder.Body = []ir.Statement{ir.Evaluate{Value: call}}
+	} else {
+		forwarder.Body = []ir.Statement{ir.Return{Value: call}}
+	}
+	l.result.Functions = append(l.result.Functions, forwarder)
+	// One function value for the function, made before anything runs and held by a global of its
+	// own, so reading the function twice gives the same value, === as JavaScript's.
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: callee.Name + "_value", Type: ir.Closure, Global: true, Function: -1})
+	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
+	if l.forwarders == nil {
+		l.forwarders = map[int]int{}
+	}
+	l.forwarders[target] = held
+	return ir.Read{Local: held, Of: ir.Closure}, nil
+}
+
+// optionalCall refuses a call in an optional chain, text?.toUpperCase() or run?.(): the receiver has
+// to be evaluated once and tested before the call, which stage 0 doesn't lower yet. Lowered as a
+// plain call, it ran the method on undefined.
+func (l *lowering) optionalCall(call *ast.Node) error {
+	if call.Flags&ast.NodeFlagsOptionalChain != 0 {
+		return l.notYet(call, "a call through ?. (an optional call)")
+	}
+	return nil
 }
 
 // callClosure lowers a call through a function value.
