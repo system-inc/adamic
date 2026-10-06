@@ -1,0 +1,4 @@
+nonfinite: exit 1, Node caught stdout differs; native exited 0, no clang or sanitizer failure
+surrogates: exit 1, Node caught stdout differs; native exited 0, no clang or sanitizer failure
+replacer: exit 1, Node caught stdout differs; native exited 0, no clang or sanitizer failure
+result-type: exit 1, the checker-declaration test caught the unsound string result
