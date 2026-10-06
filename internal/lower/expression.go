@@ -478,6 +478,8 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		return ir.Read{Local: l.this, Of: ir.Object}, nil
 	case ast.KindArrowFunction:
 		return l.closure(node)
+	case ast.KindNonNullExpression:
+		return l.nonNull(node)
 	case ast.KindAsExpression:
 		return l.cast(node)
 	case ast.KindFunctionExpression:
