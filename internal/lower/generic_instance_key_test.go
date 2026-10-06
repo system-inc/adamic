@@ -43,3 +43,16 @@ func TestGenericUnionFixtureHasSeparateInstances(t *testing.T) {
 		t.Fatalf("got %d describe instances for distinct unions, want 2", instances)
 	}
 }
+
+func TestGenericJSONUnionArrayIsNotYet(t *testing.T) {
+	t.Parallel()
+	source, err := os.ReadFile("../oracle/testdata/generic_instance_key_json.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowerSource(t, string(source))
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || notYet.What != "JSON.stringify unions containing arrays (adamic/json-union-array)" {
+		t.Fatalf("want the named JSON union array NotYet, got %v", err)
+	}
+}

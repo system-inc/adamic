@@ -260,6 +260,17 @@ func (l *lowering) checkInstantiatedJSONInput(node *ast.Node) error {
 		}
 		return nil
 	}
-	_, err := l.jsonType(node, l.concrete(l.checker.GetTypeAtLocation(node)), 0)
+	concrete := l.concrete(l.checker.GetTypeAtLocation(node))
+	if concrete.Flags()&checker.TypeFlagsUnion != 0 {
+		held, known := l.representation(concrete)
+		if known && held == ir.Union {
+			for _, member := range concrete.Types() {
+				if l.checker.IsArrayType(member) {
+					return l.notYet(node, "JSON.stringify unions containing arrays (adamic/json-union-array)")
+				}
+			}
+		}
+	}
+	_, err := l.jsonType(node, concrete, 0)
 	return err
 }
