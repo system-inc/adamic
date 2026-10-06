@@ -46,6 +46,95 @@ const varMessage =
 const duplicateMessage =
     'Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.';
 
+// Kind membership is a switch, so visiting a node allocates no lookup array.
+function isFunctionKind(kind: string): boolean {
+    switch(kind) {
+        case 'FunctionDeclaration':
+        case 'FunctionExpression':
+        case 'ArrowFunction':
+        case 'MethodDeclaration':
+        case 'Constructor':
+        case 'GetAccessor':
+        case 'SetAccessor':
+            return true;
+        default:
+            return false;
+    }
+}
+function isVariableContainerKind(kind: string): boolean {
+    switch(kind) {
+        case 'VariableStatement':
+        case 'ForStatement':
+        case 'ForInStatement':
+        case 'ForOfStatement':
+            return true;
+        default:
+            return false;
+    }
+}
+function isGeneratorKind(kind: string): boolean {
+    switch(kind) {
+        case 'FunctionDeclaration':
+        case 'FunctionExpression':
+        case 'MethodDeclaration':
+            return true;
+        default:
+            return false;
+    }
+}
+function isLiteralPartKind(kind: string): boolean {
+    switch(kind) {
+        case 'StringLiteral':
+        case 'RegularExpressionLiteral':
+        case 'NoSubstitutionTemplateLiteral':
+        case 'TemplateHead':
+        case 'TemplateMiddle':
+        case 'TemplateTail':
+            return true;
+        default:
+            return false;
+    }
+}
+function isParameterListKind(kind: string): boolean {
+    switch(kind) {
+        case 'FunctionDeclaration':
+        case 'FunctionExpression':
+        case 'ArrowFunction':
+        case 'MethodDeclaration':
+        case 'Constructor':
+        case 'GetAccessor':
+        case 'SetAccessor':
+        case 'FunctionType':
+        case 'ConstructorType':
+        case 'CallSignature':
+        case 'ConstructSignature':
+        case 'MethodSignature':
+        case 'IndexSignature':
+            return true;
+        default:
+            return false;
+    }
+}
+function isBracedListKind(kind: string): boolean {
+    switch(kind) {
+        case 'ClassDeclaration':
+        case 'ClassExpression':
+        case 'Block':
+        case 'CaseBlock':
+        case 'ModuleBlock':
+        case 'InterfaceDeclaration':
+        case 'EnumDeclaration':
+        case 'TypeLiteral':
+        case 'ObjectLiteralExpression':
+        case 'ObjectBindingPattern':
+        case 'NamedImports':
+        case 'NamedExports':
+            return true;
+        default:
+            return false;
+    }
+}
+
 function compareFindings(left: Finding, right: Finding): number {
     const position = left.start - right.start;
     if(position !== 0) {
@@ -283,15 +372,7 @@ export class Linter {
             this.report(index, 'no-debugger', 'unexpectedDebugger', debuggerMessage, removable ? 'fix' : '', '', '');
         }
         if(node.kind === 'Block' && this.enabled('no-empty') && node.children.length === 0) {
-            const functionBody = [
-                'FunctionDeclaration',
-                'FunctionExpression',
-                'ArrowFunction',
-                'MethodDeclaration',
-                'Constructor',
-                'GetAccessor',
-                'SetAccessor',
-            ].includes(parentKind);
+            const functionBody = isFunctionKind(parentKind);
             if(!functionBody && !(this.allowCatch && parentKind === 'CatchClause') && !this.comment(index)) {
                 this.report(index, 'no-empty', 'unexpectedBlock', blockMessage, '', '', '');
             }
@@ -312,10 +393,7 @@ export class Linter {
         if(node.kind === 'BinaryExpression' && this.enabled('eqeqeq')) {
             this.equality(index);
         }
-        if(
-            ['VariableStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement'].includes(node.kind) &&
-            this.enabled('no-var')
-        ) {
+        if(isVariableContainerKind(node.kind) && this.enabled('no-var')) {
             this.variable(index, parent);
         }
         this.additional(index, parent);
@@ -324,15 +402,7 @@ export class Linter {
         }
     }
     functionLike(index: number): boolean {
-        return [
-            'FunctionDeclaration',
-            'FunctionExpression',
-            'ArrowFunction',
-            'MethodDeclaration',
-            'GetAccessor',
-            'SetAccessor',
-            'Constructor',
-        ].includes(this.node(index).kind);
+        return isFunctionKind(this.node(index).kind);
     }
     hasKind(index: number, kind: string): boolean {
         for(const child of this.node(index).children) {
@@ -690,11 +760,7 @@ export class Linter {
         ) {
             this.report(index, 'no-sparse-arrays', 'unexpectedSparseArray', messageSparse, '', '', '');
         }
-        if(
-            this.enabled('require-yield') &&
-            ['FunctionDeclaration', 'FunctionExpression', 'MethodDeclaration'].includes(node.kind) &&
-            this.hasKind(index, 'AsteriskToken')
-        ) {
+        if(this.enabled('require-yield') && isGeneratorKind(node.kind) && this.hasKind(index, 'AsteriskToken')) {
             for(const child of node.children) {
                 if(
                     this.node(child).kind === 'Block' &&
@@ -1013,16 +1079,7 @@ export class Linter {
             this.literalEnds = new Array<number>(this.source.length + 1).fill(-1);
         }
         const node = this.node(index);
-        if(
-            [
-                'StringLiteral',
-                'RegularExpressionLiteral',
-                'NoSubstitutionTemplateLiteral',
-                'TemplateHead',
-                'TemplateMiddle',
-                'TemplateTail',
-            ].includes(node.kind)
-        ) {
+        if(isLiteralPartKind(node.kind)) {
             this.literalEnds[this.start(index)] = node.end;
         }
         for(const child of node.children) {
@@ -1033,31 +1090,9 @@ export class Linter {
         const node = this.node(index);
         this.anchors[node.pos] = true;
         this.anchors[node.end] = true;
-        const parameterList =
-            this.functionLike(index) ||
-            [
-                'FunctionType',
-                'ConstructorType',
-                'CallSignature',
-                'ConstructSignature',
-                'MethodSignature',
-                'IndexSignature',
-            ].includes(node.kind);
+        const parameterList = isParameterListKind(node.kind);
         const argumentsList = node.kind === 'CallExpression' || node.kind === 'NewExpression';
-        const bracedList = [
-            'ClassDeclaration',
-            'ClassExpression',
-            'Block',
-            'CaseBlock',
-            'ModuleBlock',
-            'InterfaceDeclaration',
-            'EnumDeclaration',
-            'TypeLiteral',
-            'ObjectLiteralExpression',
-            'ObjectBindingPattern',
-            'NamedImports',
-            'NamedExports',
-        ].includes(node.kind);
+        const bracedList = isBracedListKind(node.kind);
         const arrayList = node.kind === 'ArrayLiteralExpression' || node.kind === 'ArrayBindingPattern';
         const caseList = node.kind === 'CaseClause' || node.kind === 'DefaultClause';
         if(parameterList || argumentsList || bracedList || arrayList || caseList) {

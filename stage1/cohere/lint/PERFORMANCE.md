@@ -131,6 +131,25 @@ executed successfully. Cohere, vet and the filtered one-byte core oracle pass.
    parity: 16,140,904 bytes. Cohere passes. Memory-domain representation remains
    the same; fill does not remove the position arrays' larger memory cost.
 
+4. Replace seven hot literal-array membership sites with kind switches: function
+   parents/boundaries, variable containers, generators, literal spans, parameter
+   owners and braced-list owners. Parameter-owner classification also uses the
+   already fetched kind instead of a second node lookup. Removes 5,315,969
+   allocations, 31,884,072 retains, and 3,528,184 releases relative to filled masks.
+   Ir falls 3,299,157,310 (16.18%). Native reaches 4,701.32 findings/s, 1.188 times
+   filled masks. Node is 6,160.75/s, a 2.36% timing regression. Load before
+   `0.01 0.12 0.35`, after `0.58 0.24 0.39`. Full sanitized parity: 578,745 fixture
+   bytes plus 15,551,220 corpus bytes. Release/debug/Node: 16,141,929 identical
+   bytes. Empty-function exemption mutant compiles/runs and is caught on both
+   Node and sanitized native at case 0, line 26. The first combined test filter
+   selected only snapshot comparison; the saved separate exact subtest run is
+   the actual mutant proof.
+
+The next measured hotspot is 13,317,045 calls from `additional` to `enabled`,
+918,876,105 inclusive Ir. Kind gating should occur before rule-selection tests;
+nonapplicable nodes currently pay every rule's selector. This is a port cost,
+not attributed to the compiler/runtime. The following step handles it.
+
 ## Proposed compiler and runtime units
 
 - Numeric Map/Set hash distribution: use an avalanche with adequate low-bit
@@ -177,6 +196,7 @@ VALGRIND_LIB=/workspace/scratch/scanner-perf/valgrind/usr/libexec/valgrind pytho
 | 2-position-arrays | 4,018.26 | 16,606.44 | 4,083.68 | 20,940,946,893 | 2,549,111.00 |
 | 2b-position-arrays | 4,101.37 | 17,098.74 | 4,203.20 | 20,970,336,919 | 2,552,688.61 |
 | 3-filled-masks | 3,967.64 | 16,847.92 | 6,309.38 | 20,387,510,285 | 2,481,741.97 |
+| 4-kind-switches | 4,701.32 | 17,111.80 | 6,160.75 | 17,088,352,975 | 2,080,140.35 |
 
 Scalar comparison removes 7,621,599,012 Ir (19.77%), 1,766,845 logical allocations, and improves native throughput 1.175 times. Load before `0.67 0.73 0.46`, after `0.79 0.75 0.48`. Full sanitized parity: 577,682 fixture bytes plus 15,548,752 source-corpus bytes, 16,126,434 total. Cohere passes the changed source.
 
