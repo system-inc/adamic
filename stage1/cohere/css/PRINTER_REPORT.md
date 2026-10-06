@@ -140,6 +140,18 @@ and is discarded; the final benchmark runs without competing test processes.
 ADAMIC_CSS_FIXTURES=/tmp/adamic-css-prettier ADAMIC_CSS_PRINTER_LIBRARY=/tmp/adamic-css-printer-library ADAMIC_CSS_PRINTER_BENCH=1 go test -v -count=1 -timeout=30m ./stage1/cohere/css -run '^TestCSSPrinterThroughput$'
 ```
 
+Final benchmark PASS in 226.708s. Every round has the exact output checksum.
+
+| Runtime | Round 1 / s | Round 2 / s | Round 3 / s | Median / s |
+|---|---:|---:|---:|---:|
+| Adamic source on Node | 1708 | 1580 | 1596 | 1596 |
+| Prettier fork on Node | 1777 | 1632 | 1703 | 1703 |
+| Go | 4432 | 5347 | 5568 | 5347 |
+
+Printer implementation commit: `b902761`; regex compatibility: `2a3416f`;
+dependency merge: `8d21b63`. This report and the throughput log are committed
+separately. Verification logs have trailing whitespace trimmed for review.
+
 # Limits
 
 Native composition, native throughput, printer sanitizer/leak evidence and the
