@@ -81,8 +81,13 @@ func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	if err != nil {
 		return nil, true, err
 	}
-	if value.Type() != element {
-		return nil, true, l.notYet(arguments[0], "set."+name+" with a value of another type than the elements")
+	// set.has(undefined), written out, which the checker allows only where the elements may be
+	// undefined: a reference's undefined is its null one, which the set holds as any element.
+	_, isUndefined := value.(ir.Undefined)
+	if !isUndefined || !element.IsReference() {
+		if value = fit(value, element); value.Type() != element {
+			return nil, true, l.notYet(arguments[0], "set."+name+" with a value of another type than the elements")
+		}
 	}
 	switch name {
 	case "add":

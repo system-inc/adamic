@@ -167,6 +167,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/writes_in_try.a", true, false},
 	{"internal/oracle/testdata/class_as_interface.a", true, false},
 	{"internal/oracle/testdata/optional_class_method.a", true, false},
+	{"internal/oracle/testdata/set_undefined.a", true, false},
 	{"internal/oracle/testdata/borrow_map_overwrite.a", true, false},
 	// A spread is read before its fields' values, as JavaScript reads it.
 	{"internal/oracle/testdata/spread_snapshot.a", true, false},
