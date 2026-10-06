@@ -14,6 +14,9 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
+  - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
+    after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
+    GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);

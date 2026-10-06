@@ -32,10 +32,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			literal.SpreadMaybeUndefined = l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
 			name := property.Name()
-			if !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
+			fieldName, known := l.libraryArrayLikeFieldName(name)
+			if !known {
 				return nil, l.notYet(name, "a computed field name")
 			}
-			if property.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__" {
+			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
 			}
 			var value ir.Expression
@@ -48,10 +49,10 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if err != nil {
 				return nil, err
 			}
-			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, name.Text()) {
+			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, name.Text()); declared == ir.MaybeNumber || declared == ir.Weak {
+			if declared := l.declaredField(node, fieldName); declared == ir.MaybeNumber || declared == ir.Weak {
 				// Where the field is number | undefined, what it's given is packed as one; where it's
 				// a Weak, what it's given is kept weakly.
 				value = fit(value, declared)
@@ -59,7 +60,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if slotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: name.Text(), Value: value})
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
@@ -463,6 +464,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.libraryArrayGenericCall(node); known {
+		return value, true, err
+	}
 	if value, known, err := l.libraryMathNumberCall(node); known {
 		return value, true, err
 	}
