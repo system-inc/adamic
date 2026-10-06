@@ -330,3 +330,17 @@ Duplicated colons report the same statement diagnostic and advance without
 inventing an extra statement or stalling. Focused comparison passes in
 22.667s. The continuation advances to input 554, duplicating const, where
 Go reports 1389 and leaves the keyword to start another variable statement.
+
+## Continued recovery: variable declaration lists
+
+Variable declarations now use the same Go list recognition, comma insertion
+and outer-context recovery. A duplicated const reports 1389 and remains
+available to start the next statement. Focused comparison passes in 21.109s;
+cohere passes. The continuation reaches input 555, removing a parameter comma.
+
+An attempted higher-order callback through StatementContextInterface stalled
+native compilation in internal/fresh.ProveWrites before any input ran. It
+was stopped with SIGQUIT after 155.786s; the stack is retained in
+validation/recovery-variable-focused.log. Expressing the identical list
+algorithm through existing first-order callbacks builds and passes normally.
+No compiler source was edited, and that stalled build is not a mutant kill.

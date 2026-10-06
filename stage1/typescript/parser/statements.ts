@@ -116,29 +116,48 @@ export class Statements {
         }
         this.parser.next();
         const declarations: number[] = [];
-        while(this.parser.kind() !== 'EndOfFile') {
-            const start = this.parser.scanner.fullStart;
-            const children = [this.parser.bindingName()];
-            if(this.parser.kind() === 'ExclamationToken') {
-                children.push(this.parser.token());
+        this.parser.beginList('variables');
+        while(true) {
+            if(this.parser.listElement('variables')) {
+                const start = this.parser.scanner.fullStart;
+                declarations.push(this.variableDeclaration());
+                if(this.parser.kind() === 'CommaToken') {
+                    this.parser.next();
+                    continue;
+                }
+                if(this.parser.listTerminator('variables')) {
+                    break;
+                }
+                this.parser.expect('CommaToken');
+                if(start === this.parser.scanner.fullStart) {
+                    this.parser.next();
+                }
+                continue;
             }
-            if(this.parser.kind() === 'ColonToken') {
-                this.parser.next();
-                children.push(this.type());
-            }
-            if(this.parser.kind() === 'EqualsToken') {
-                this.parser.next();
-                children.push(this.parser.rootAssignment());
-            }
-            declarations.push(this.make('VariableDeclaration', start, children));
-            if(this.parser.kind() !== 'CommaToken') {
+            if(this.parser.listTerminator('variables') || this.parser.recoverList('variables')) {
                 break;
             }
-            this.parser.next();
         }
+        this.parser.endList('variables');
         const id = this.make('VariableDeclarationList', pos, declarations);
         this.parser.node(id).semantic = `${flags}`;
         return id;
+    }
+    variableDeclaration(): number {
+        const start = this.parser.scanner.fullStart;
+        const children = [this.parser.bindingName()];
+        if(this.parser.kind() === 'ExclamationToken') {
+            children.push(this.parser.token());
+        }
+        if(this.parser.kind() === 'ColonToken') {
+            this.parser.next();
+            children.push(this.type());
+        }
+        if(this.parser.kind() === 'EqualsToken') {
+            this.parser.next();
+            children.push(this.parser.rootAssignment());
+        }
+        return this.make('VariableDeclaration', start, children);
     }
     lookahead(offset: number): string {
         const saved = {
