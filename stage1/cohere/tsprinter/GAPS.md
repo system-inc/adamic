@@ -14,7 +14,7 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | Input | Reason | Work still needed |
 |---|---|---|
 | `(x: number) => x` | `function-types` | Typed signatures belong to the type-printing slice |
-| `({method(){return 1;}})` | `MethodDeclaration` | Method parameters and statement bodies |
+| `({method(x:number){return x;}})` | `function-types` | Typed method signatures |
 | `[a,b]=items` | `assignment-pattern` | Destructuring target patterns and their assignment layout |
 | `` tag`a${b}` `` | `TaggedTemplateExpression` | Tag layout, Jest tables and embedded language reporting |
 | `(function () {return 1;})` | `FunctionExpression` | Function parameters and statement bodies |
@@ -24,13 +24,12 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | `a +` then a blank line then `b` | `source-trivia` | Preserve source-driven empty-line decisions |
 | `a; b` | `expression-file` | Statement and document composition |
 | String with a backslash-newline continuation | `string-literal-layout` | Multiline raw literal layout |
-| `(a?.b).c` | `optional-chain-parentheses` | Preserve optional-chain stopping boundaries |
+| `await value` | `AwaitExpression` | Contextual await and yield |
 | Numeric array with a whitespace-only blank line | `source-trivia` | Preserve empty lines containing spaces |
 
 Comments are conservatively detected by raw marker substrings. This also declines a marker inside
-a string or regex; it never pretends to attach it. Blank lines, including whitespace-only lines, and CR source are likewise declined. Parentheses that stop an active optional chain are conservatively declined; removing those parentheses can
-change whether a later property access throws.
-This core does not promise arbitrary multiline literal handling, JSX, function/class expressions,
+a string or regex; it never pretends to attach it. Blank lines, including whitespace-only lines, and CR source are likewise declined. Parentheses that stop an active optional chain are preserved, including in flat interpolation previews.
+This core does not promise arbitrary multiline literal handling, JSX, anonymous function/class expressions,
 tagged templates, yield/await, TypeScript assertion/satisfies expressions or whole-file syntax.
 No accepted-corpus disagreement is put on an ignore list. The document generator covers conditional
 groups and suffixes already, so the missing expression layouts can use them without another doc
@@ -86,6 +85,9 @@ barrier to propagating breaks is preserved. Unknown kinds and forward/cyclic lin
 The Go printer's `settled` output optimization is omitted: chunks are trimmed and joined at the end,
 with the same output bytes on the independent boundary/random corpus. Unicode width code is copied
 from the established JSON slice; align-string indentation counts UTF-16 units, as Go's printer does.
+
+Earlier increment sections below record the progression; the runnable gap table above and the newest
+validation section describe current support.
 
 ## Boundary audit
 
@@ -226,3 +228,26 @@ body printer. Untyped return positions and call/constructor parentheses are pres
 recognized only before the parameter list; a later identifier return type is not mistaken for a
 name. Typed signatures, binding patterns and await/yield bodies still return explicit gaps.
 Anonymous function expressions retain their existing proving program and exact npm spacing report.
+
+## Object methods and accessors
+
+Untyped methods, getters and setters are implemented, including async/generator method prefixes,
+numeric and quoted names, computed names, defaults/rest and supported body statements. The former
+method proving gap is now `({method(x:number){return x;}})` / `function-types`; typed signatures
+remain outside this slice. The blank-line predicate is a pure helper in `syntax.ts`.
+
+The computed-short-key audit proved a missed layout: `[x]` and `[1]` with a long string or member
+chain broke after the colon on both Node and the previous native release, while Go kept the value
+with the key. The fix recognizes text after cleaning text/concat-only docs, without erasing groups
+or other doc commands. Sixty-four generated boundaries cover identifier, numeric, unary, literal
+and width-threshold keys in four contexts. The regression is an oracle case, not a declined input.
+
+## Optional-chain interpolation composition correction
+
+A targeted probe after the first method gate found that the flat interpolation preview copied
+sequence boundaries but omitted optional-chain boundaries. Go preserves `(x?.y).z` in
+`` `a${(x?.y).z}b` ``; both source Node and native had produced `` `a${x?.y.z}b` ``.
+The preview now copies both sets. The generated corpus adds 48 combinations of four stopped
+chains, three raw-line layouts and four expression contexts. A mutant removes that copy and must
+finish normally on Node and native, then fail the byte comparison. This is a port correction,
+not a compiler or runtime change.

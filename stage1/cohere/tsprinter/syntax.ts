@@ -276,3 +276,14 @@ export function numericArray(parser: Parser, index: number): boolean {
     }
     return true;
 }
+
+export function hasBlankLine(source: string): boolean {
+    let previous = source.indexOf('\n');
+    while(previous >= 0) {
+        const next = source.indexOf('\n', previous + 1);
+        if(next < 0) return false;
+        if(source.slice(previous + 1, next).trim() === '') return true;
+        previous = next;
+    }
+    return false;
+}

@@ -170,3 +170,10 @@ Untyped named function expressions now compose ordinary, async and generator pre
 rest and supported block bodies with calls, constructors, objects, arrays and assignments. First
 and last function arguments follow their own signature expansion rules. Anonymous functions remain
 the separately recorded upstream npm spacing difference; accepted cases retain the strict npm oracle.
+
+## Object method and accessor increment
+
+Untyped object methods, getters and setters compose with the existing expression families and
+simple bodies. Keys reuse the existing Unicode and quoted-key rules; async/generator prefixes and
+computed names retain their own syntax. Computed short keys now follow Go's cleaned-doc overlap
+rule for long values. Typed method signatures remain an explicit proving gap.

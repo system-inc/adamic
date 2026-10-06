@@ -8,6 +8,7 @@ import { isKeyName } from './keys.ts';
 import { stringWidth } from './width.ts';
 import {
     assignmentOperators,
+    hasBlankLine,
     syntaxOperator,
     rank,
     flatten,
@@ -21,16 +22,6 @@ import {
 } from './syntax.ts';
 export type ResultType =
     { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'NotYet'; readonly reason: string };
-function hasBlankLine(source: string): boolean {
-    let previous = source.indexOf('\n');
-    while(previous >= 0) {
-        const next = source.indexOf('\n', previous + 1);
-        if(next < 0) return false;
-        if(source.slice(previous + 1, next).trim() === '') return true;
-        previous = next;
-    }
-    return false;
-}
 export class Expressions {
     readonly parser: Parser;
     readonly source: string;
@@ -101,6 +92,9 @@ export class Expressions {
                 return '';
             case 'ArrowFunction':
             case 'FunctionExpression':
+            case 'MethodDeclaration':
+            case 'GetAccessor':
+            case 'SetAccessor':
                 return this.functionUnsupported(id);
             case 'TemplateExpression':
                 for(let position = 1; position < node.children.length; position++) {
@@ -419,8 +413,8 @@ export class Expressions {
         const leading = prefix + firstRaw.slice(0, start);
         return this.docs.group(content, '', leading.includes('\n'));
     }
-    propertyKey(index: number): number {
-        const keyIndex = this.child(index, 0);
+    propertyKey(index: number, offset = 0): number {
+        const keyIndex = this.child(index, offset);
         const key = this.node(keyIndex);
         if(key.kind === 'ComputedPropertyName')
             return this.docs.concat([
@@ -979,6 +973,18 @@ export class Expressions {
         for(let position = 0; position < node.children.length - 1; position++) {
             const child = node.children[position] ?? panic('missing function child');
             const item = this.node(child);
+            if(
+                ['MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(node.kind) &&
+                !named &&
+                !['AsyncKeyword', 'AsteriskToken'].includes(item.kind)
+            ) {
+                if(!['Identifier', 'StringLiteral', 'NumericLiteral', 'ComputedPropertyName'].includes(item.kind))
+                    return 'method-key';
+                const reason = this.unsupported(child);
+                if(reason !== '') return reason;
+                named = true;
+                continue;
+            }
             if(item.kind === 'Identifier') {
                 if(node.kind === 'ArrowFunction' || this.source.slice(node.pos, item.pos).includes('('))
                     return 'function-types';
@@ -1020,6 +1026,25 @@ export class Expressions {
             this.parametersDoc(index),
             this.docs.text(' '),
             this.statementDoc(node.children[node.children.length - 1] ?? panic('missing function body'), index),
+        ]);
+    }
+    methodDoc(index: number): number {
+        const node = this.node(index);
+        let offset = 0;
+        let prefix = node.kind === 'GetAccessor' ? 'get ' : node.kind === 'SetAccessor' ? 'set ' : '';
+        while(offset < node.children.length) {
+            const kind = this.node(node.children[offset] ?? panic('missing method prefix')).kind;
+            if(kind === 'AsyncKeyword') prefix += 'async ';
+            else if(kind === 'AsteriskToken') prefix += '*';
+            else break;
+            offset++;
+        }
+        return this.docs.concat([
+            this.docs.text(prefix),
+            this.propertyKey(index, offset),
+            this.parametersDoc(index),
+            this.docs.text(' '),
+            this.statementDoc(node.children[node.children.length - 1] ?? panic('missing method body'), index),
         ]);
     }
     templateHasLines(index: number): boolean {
@@ -1080,6 +1105,7 @@ export class Expressions {
                 flatPrinter.state.directive = false;
                 for(const ancestor of this.ancestors) flatPrinter.ancestors.push(ancestor);
                 for(const boundary of this.sequenceBoundaries) flatPrinter.sequenceBoundaries.add(boundary);
+                for(const boundary of this.optionalBoundaries) flatPrinter.optionalBoundaries.add(boundary);
                 const rendered = flatDocs.print(flatPrinter.print(expression, index, 'expressions'));
                 if(rendered.includes('\n')) newline = true;
                 else expressionDoc = this.docs.text(rendered);
@@ -1571,6 +1597,11 @@ export class Expressions {
             case 'NoSubstitutionTemplateLiteral':
                 result = this.docs.concat([this.docs.add('lineSuffixBoundary', []), this.templateRaw(raw)]);
                 break;
+            case 'MethodDeclaration':
+            case 'GetAccessor':
+            case 'SetAccessor':
+                result = this.methodDoc(id);
+                break;
             case 'FunctionExpression':
                 result = this.functionDoc(id);
                 break;
@@ -1629,8 +1660,8 @@ export class Expressions {
             case 'PropertyAssignment': {
                 const left = this.propertyKey(id);
                 const value = this.child(id, 1);
-                const keyDoc = this.docs.get(left);
-                const shortKey = keyDoc.kind === 'text' && stringWidth(keyDoc.text) < this.docs.settings.tabWidth + 3;
+                const keyText = this.docs.textContent(left);
+                const shortKey = keyText !== undefined && stringWidth(keyText) < this.docs.settings.tabWidth + 3;
                 result = this.valueDoc(
                     id,
                     parent,

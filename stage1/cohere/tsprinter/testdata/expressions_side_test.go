@@ -120,6 +120,13 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
 		}
 	}
+	for _, expression := range []string{"(x?.y).z", "(fn?.()).x", "(obj?.x)!.y", "(obj?.[key]).value"} {
+		for _, template := range []string{"`a${" + expression + "}b`", "`a\n${" + expression + "}b`", "`a${" + expression + "}\nb`"} {
+			for _, context := range []string{template, "f(" + template + ")", "value=" + template, "x=>" + template} {
+				add("template-optional-boundary-composition", context)
+			}
+		}
+	}
 	for _, chain := range []string{"obj?.x", "obj?.[key]", "obj?.method()", "fn?.()", "obj?.x.y", "obj?.x!.y", "obj.method?.(x)", "veryLongIdentifierAlpha?.veryLongPropertyNameBeta.veryLongPropertyNameGamma"} {
 		for _, suffix := range []string{".x", "[key]", "()", "(x)", "!.x", "!()", "?.x", "?.(x)", ".first().second().third()", ".veryLongPropertyNameAlpha.veryLongPropertyNameBeta.veryLongPropertyNameGamma"} {
 			value := "(" + chain + ")" + suffix
@@ -135,6 +142,35 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 				for _, context := range []string{"(" + value + ")", "x=" + value, "f(" + value + ")", "f(x," + value + ")", "f(" + value + ",x)", "[" + value + "]", "({key:" + value + "})", "(" + value + ")(x)", "(" + value + ").x", "new (" + value + ")(x)"} {
 					add("named-function-composition", context)
 				}
+			}
+		}
+	}
+	for _, name := range []string{"method", "'escaped-name'", "'é'", "123", "[key]", "[a+b]", "async", "get"} {
+		for _, prefix := range []string{"", "async ", "*", "async *"} {
+			for _, parameters := range []string{"()", "(x)", "(x=1)", "(...items)", "(veryLongParameterNameAlpha,veryLongParameterNameBeta,veryLongParameterNameGamma)"} {
+				for _, body := range []string{"{}", "{return x;}", "{return a?b:c;}", "{f(x);return ({x:1}).x;}"} {
+					object := "{" + prefix + name + parameters + body + ",value:1}"
+					for _, context := range []string{"(" + object + ")", "f(" + object + ")", "x=" + object, "x=>" + object} {
+						if strings.HasPrefix(context, "x=>{") {
+							context = "x=>(" + object + ")"
+						}
+						add("object-method-composition", context)
+					}
+				}
+			}
+		}
+		for _, member := range []string{"get " + name + "(){return x;}", "set " + name + "(x){f(x);}"} {
+			object := "{" + member + ",value:1}"
+			for _, context := range []string{"(" + object + ")", "f(" + object + ")", "x=" + object, "x=>(" + object + ")"} {
+				add("object-accessor-composition", context)
+			}
+		}
+	}
+	for _, key := range []string{"[x]", "[1]", "[-1]", "['a']", "[true]", "[null]", "[long]", "[longer]"} {
+		for _, value := range []string{"'" + strings.Repeat("longText", 20) + "'", "object.veryLongPropertyNameAlpha.veryLongPropertyNameBeta.veryLongPropertyNameGamma"} {
+			object := "{" + key + ":" + value + "}"
+			for _, context := range []string{"(" + object + ")", "f(" + object + ")", "x=" + object, "x=>(" + object + ")"} {
+				add("computed-short-key-boundary", context)
 			}
 		}
 	}
@@ -458,6 +494,21 @@ func supportedSyntax(node *ast.Node) bool {
 		return valid
 	case ast.KindShorthandPropertyAssignment:
 		return node.AsShorthandPropertyAssignment().ObjectAssignmentInitializer == nil
+	case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
+		if node.Parent == nil || node.Parent.Kind != ast.KindObjectLiteralExpression || node.Type() != nil || node.TypeParameterList() != nil {
+			return false
+		}
+		if node.Kind == ast.KindMethodDeclaration && node.AsMethodDeclaration().QuestionToken() != nil {
+			return false
+		}
+		valid := true
+		node.ForEachChild(func(child *ast.Node) bool {
+			if child.Kind != ast.KindAsteriskToken && child.Kind != ast.KindAsyncKeyword && !supportedSyntax(child) {
+				valid = false
+			}
+			return false
+		})
+		return valid
 	case ast.KindFunctionExpression:
 		item := node.AsFunctionExpression()
 		if node.Name() == nil || item.Type != nil || item.TypeParameters != nil {

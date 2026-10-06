@@ -40,8 +40,8 @@
     "Reason": "assignment-pattern"
   },
   {
-    "Source": "({method(){return 1;}})",
-    "Reason": "MethodDeclaration"
+    "Source": "({method(x:number){return x;}})",
+    "Reason": "function-types"
   },
   {
     "Source": "tag`a${b}`",

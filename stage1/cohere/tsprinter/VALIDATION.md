@@ -802,3 +802,92 @@ python3 stage1/cohere/tsprinter/testdata/measure.py /tmp/ts-printer-function-cor
 ```
 
 Native remains slower than Go and Node on this workload; no speed improvement is claimed.
+
+## Object method and accessor increment
+
+Object methods, getters and setters reuse key, parameter and block-body printers. The key offset
+accounts for async and generator tokens. Typed signatures and binding parameters remain loud gaps.
+The pure blank-line helper moves to `syntax.ts`; stateful layout stays in the concrete printer.
+Source cohere passes 276 rules, 10 checked, 100% Adamic-ready; the expression file is 1,974 lines.
+
+The generator adds 2,560 method combinations (eight names, four prefixes, five parameter lists,
+four bodies, four contexts) and 64 accessor combinations. A separate audit of computed short keys
+proved the recorded concern: `[x]` and `[1]` with long strings/member chains disagreed on both
+source Node and the last green native release. Go's CleanDoc reduces text-only concats to text.
+The port now classifies that cleaned text without changing the printed key or removing groups.
+Another 64 boundaries cover eight keys, two values and four contexts. The native gate was restarted
+on this corrected frozen source; the earlier gate does not count as final validation.
+
+An initial Go selector build failure called the optional-token accessor as a field. Correcting it
+to `QuestionToken()` fixes the selector; that failed build is not an oracle catch. The untyped method
+gap is replaced by a typed method signature in the 13-input loud-gap corpus.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-method-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-method-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-method-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/(method|computed)' > /tmp/ts-printer-method-mutants.log 2>&1
+```
+
+The mutant regex also selects the previously implemented member-chain method-dot mutant. It is
+rerun on this corpus alongside the method-key removal and computed-key cleanup reversal.
+
+Intermediate method/accessor gate before the interpolation audit: exit 0, 477.358 s. **144,858 maximal fragments from 199 files**, zero
+full-file parse failures, all byte-identical to Go cohere, npm Prettier 3.9.6 and the embedded fork
+on source Node, native ASan/UBSan, JavaScript backend and native release. The separate leak run
+passes, as do all 13 exact NotYet proofs. Coverage is in `results/method-coverage.json`.
+
+All three selected mutants compile and finish normally, exit 0 and empty stderr on Node and
+native, then mismatch only in output:
+
+| Mutant | First mismatch | Subtest seconds |
+|---|---|---:|
+| Method loses key | Case 117049, `({ () {}, value: 1 });` | 339.46 |
+| Computed-key text cleanup is undone | Case 119673, line break after `[x]:` | 336.03 |
+| Member method dot disappears | Case 35, `Mathsqrt` | 335.95 |
+
+Complete mutant command exit 0, 344.956 s. Source cohere, vet and whitespace checks pass.
+No full-repository gate was run, and no internal compiler or parser file changed.
+
+### Final method/accessor composition gate
+
+The subsequent optional-chain interpolation audit exposed a real port bug that the intermediate
+corpus missed. Both source Node and native flattened `(x?.y).z` into `x?.y.z`. The flat preview now
+copies the optional-boundary set. There are 48 generated regression compositions plus two newly
+extractable own-source fragments. The final frozen source supersedes the intermediate gate:
+
+```sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-method-final-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-method-final-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-method-final-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/(template_preview|method|computed)' > /tmp/ts-printer-method-final-mutants.log 2>&1
+```
+
+Both exit 0. Final gate **566.021 s: 144,908 / 144,908** from 199 files, zero full-file parse
+failures. All bytes match Go, npm Prettier and the embedded fork on Node, ASan/UBSan native,
+JavaScript backend and release native; the separate leak pass and 13 exact NotYet proofs pass.
+`results/method-coverage.json` is this final corpus.
+
+The four mutants finish normally with empty stderr on both Node and native. The first mismatch
+is line 119723 for computed-key cleanup (433.46 s), line 114171 for optional boundaries in the
+preview (436.63 s), line 35 for member dots (440.33 s), and line 117099 for method keys (441.66 s).
+The complete mutant command passes in **447.824 s**. Source cohere prints 276 rules, ten checked,
+100% Adamic-ready; package vet and `git diff --check` pass.
+
+The intermediate 144,858-text benchmark is retained in `results/method-timing.json`, explicitly
+marked as preceding the preview correction. Three complete-process runs each produced Go's exact
+bytes: medians native **33,956**, Node **62,494**, Go **50,703**, npm Prettier **3,080** texts/s.
+Native is slower than Go and Node on this expanded workload. No full-repository gate was run.

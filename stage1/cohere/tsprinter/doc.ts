@@ -110,6 +110,18 @@ export class Documents {
         }
         return this.concat(joined);
     }
+    textContent(index: number): string | undefined {
+        const doc = this.get(index);
+        if(doc.kind === 'text') return doc.text;
+        if(doc.kind !== 'concat') return undefined;
+        let text = '';
+        for(const child of doc.parts) {
+            const content = this.textContent(child);
+            if(content === undefined) return undefined;
+            text += content;
+        }
+        return text;
+    }
     willBreak(index: number): boolean {
         const doc = this.get(index);
         if(

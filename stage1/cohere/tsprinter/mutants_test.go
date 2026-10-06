@@ -10,6 +10,9 @@ import (
 type mutation struct{ name, file, from, to, entry string }
 
 var mutations = []mutation{
+	{"template preview loses optional stopping boundaries", "expressions.ts", "for(const boundary of this.optionalBoundaries) flatPrinter.optionalBoundaries.add(boundary);", "for(const boundary of this.optionalBoundaries) flatPrinter.sequenceBoundaries.add(boundary);", "main.ts"},
+	{"computed key forgets its clean text", "expressions.ts", "const keyText = this.docs.textContent(left);", "const keyText = this.docs.get(left).kind === 'text' ? this.docs.get(left).text : undefined;", "main.ts"},
+	{"method loses its key", "expressions.ts", "this.propertyKey(index, offset)", "this.docs.text(\"\")", "main.ts"},
 	{"function loses its keyword", "expressions.ts", "`${async}function${generator}${name}`", "`${async}${generator}${name}`", "main.ts"},
 	{"optional chain loses its stopping parentheses", "expressions.ts", "if(this.optionalBoundaries.has(index) && parent >= 0)", "if(false && parent >= 0)", "main.ts"},
 	{"return and throw lose their keyword", "expressions.ts", "this.docs.text(node.kind === 'ReturnStatement' ? 'return' : 'throw')", "this.docs.text(node.kind === 'ReturnStatement' ? 'throw' : 'throw')", "main.ts"},
