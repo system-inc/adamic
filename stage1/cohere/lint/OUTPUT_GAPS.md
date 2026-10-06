@@ -221,9 +221,11 @@ the same with `--no-fix` removed. Full output bytes are in the corresponding
 `output_evidence/go-*.log` files. These are tiny Go reference observations,
 not the user's large-corpus comparison.
 
-Formatting and `git diff --check` were clean. One initial `gofmt` invocation
-without sourcing the toolchain failed with `command not found`; sourcing
-`/workspace/adamic-tools/env.sh` resolved it.
+Source formatting and `git diff --check` excluding `output_evidence` were clean.
+The complete diff check reports trailing whitespace in literal upstream output
+and spaces before tabs in Go's flag usage text. Those logs retain the observed
+bytes. One initial `gofmt` invocation without sourcing the toolchain failed with
+`command not found`; sourcing `/workspace/adamic-tools/env.sh` resolved it.
 
 The final source reran the focused six subtests with the same command as the
 initial focused run, writing `/tmp/stage1-lint-output-final-gaps.log`. Exit 0,
