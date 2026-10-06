@@ -1,0 +1,8 @@
+=== RUN   TestCohereObservationGuards
+=== RUN   TestCohereObservationGuards/index
+    cohere_patterns_test.go:642: index-only mutant survived at case 0
+--- FAIL: TestCohereObservationGuards (0.81s)
+    --- FAIL: TestCohereObservationGuards/index (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/regexp	0.828s
+FAIL

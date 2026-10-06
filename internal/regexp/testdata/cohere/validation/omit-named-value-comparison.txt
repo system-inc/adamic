@@ -1,0 +1,8 @@
+=== RUN   TestCohereObservationGuards
+=== RUN   TestCohereObservationGuards/named_values
+    cohere_patterns_test.go:645: named values-only mutant survived at case 92800
+--- FAIL: TestCohereObservationGuards (1.12s)
+    --- FAIL: TestCohereObservationGuards/named_values (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/regexp	1.135s
+FAIL
