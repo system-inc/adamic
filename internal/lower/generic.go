@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"strconv"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -25,19 +27,37 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	if resolved == nil || target == nil {
 		return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
 	}
-	substitution := map[*checker.Type]ir.Type{}
+	concreteTypes := map[*checker.Type]*checker.Type{}
 	declared, given := target.Parameters(), resolved.Parameters()
 	for index := range declared {
 		if index < len(given) {
-			l.inferTypes(l.checker.GetTypeOfSymbol(declared[index]), l.checker.GetTypeOfSymbol(given[index]), substitution)
+			l.inferTypes(l.checker.GetTypeOfSymbol(declared[index]), l.checker.GetTypeOfSymbol(given[index]), concreteTypes)
 		}
 	}
-	l.inferTypes(l.checker.GetReturnTypeOfSignature(target), l.checker.GetReturnTypeOfSignature(resolved), substitution)
+	l.inferTypes(l.checker.GetReturnTypeOfSignature(target), l.checker.GetReturnTypeOfSignature(resolved), concreteTypes)
+
+	// An explicit type argument can make tsc view a mutable argument through a wider type without
+	// giving the argument that contextual type. Judge the instantiated parameter directly: the
+	// ordinary refusal walk cannot see this view at the argument node.
+	if call.AsCallExpression().TypeArguments != nil && len(call.AsCallExpression().TypeArguments.Nodes) > 0 {
+		for index, argument := range call.AsCallExpression().Arguments.Nodes {
+			if index >= len(given) || argument.Kind == ast.KindObjectLiteralExpression || argument.Kind == ast.KindArrayLiteralExpression {
+				continue
+			}
+			from, to := l.checker.GetTypeAtLocation(argument), l.checker.GetTypeOfSymbol(given[index])
+			if found := l.widened(from, to, map[[2]*checker.Type]bool{}); found != nil {
+				return 0, &Refused{Where: l.program.Where(argument), What: "a type argument makes a value of type " + l.checker.TypeToString(from) + " seen as " + l.checker.TypeToString(to) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "use the value's invariant type argument, or make the parameter readonly (adamic/invariant-mutable)"}
+			}
+		}
+	}
+
+	substitution := map[*checker.Type]ir.Type{}
 
 	key := l.program.Where(declaration)
 	name := declaration.Name().Text()
 	for _, parameter := range declaration.TypeParameters() {
-		held, isKnown := substitution[l.checker.GetTypeAtLocation(parameter.Name())]
+		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
+		concrete, isKnown := concreteTypes[parameterType]
 		if !isKnown {
 			// Not read back (it stands only inside a union or an object, Result<Value>): left
 			// unmapped, so whatever in the body needs to know how it's held says not yet, there.
@@ -45,8 +65,14 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 			name += "_unread"
 			continue
 		}
-		key += "," + typeName(held)
-		name += "_" + typeName(held)
+		held, hasRepresentation := l.representation(concrete)
+		if !hasRepresentation {
+			key += ",unread"
+			name += "_unread"
+			continue
+		}
+		substitution[parameterType] = held
+		key += "," + l.checker.TypeToString(concrete)
 	}
 	if existing, isLowered := l.genericInstances[key]; isLowered {
 		return existing, nil
@@ -56,6 +82,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	}
 
 	index := len(l.result.Functions)
+	name += "_" + strconv.Itoa(index)
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: name})
 	if l.genericInstances == nil {
 		l.genericInstances = map[string]int{}
@@ -64,8 +91,18 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 
 	// Lower with this instantiation's meaning of each type parameter, and locals of its own, outside
 	// whatever function or closure called it.
-	outerSubstitution, outerLocals, outerClosures := l.substitution, l.locals, l.closures
+	outerSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper
 	l.substitution, l.closures = substitution, nil
+	sources, targets := []*checker.Type{}, []*checker.Type{}
+	for _, parameter := range declaration.TypeParameters() {
+		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
+		if concrete, ok := concreteTypes[parameterType]; ok {
+			sources, targets = append(sources, parameterType), append(targets, concrete)
+		}
+	}
+	if len(sources) > 0 {
+		l.typeMapper = newTypeMapper(sources, targets)
+	}
 	l.locals = map[*ast.Symbol]int{}
 	for symbol, local := range outerLocals {
 		if l.result.Locals[local].Global {
@@ -74,7 +111,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	}
 	l.genericDepth++
 	defer func() {
-		l.substitution, l.locals, l.closures = outerSubstitution, outerLocals, outerClosures
+		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
 		l.genericDepth--
 	}()
 	if err := l.lowerFunction(index, declaration, -1); err != nil {
@@ -84,27 +121,37 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 }
 
 // inferTypes records what each type parameter in declared stands for, by where it stands in
-// instantiated: the type itself, or an array's or a tuple's elements. What a type parameter stands
-// for is held as the caller's own substitution makes it, so a generic function calling another with
-// its own type parameter passes it on.
-func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]ir.Type) {
+// instantiated: the type itself, a referenced type's arguments, or a function's parameters and
+// result. The caller's type mapper makes an outer function's parameter concrete before it is saved,
+// so a generic function calling another with its own type parameter passes the concrete type on.
+func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
 	if declared == nil || instantiated == nil {
 		return
 	}
 	if declared.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		if _, isSet := into[declared]; !isSet {
-			if held, isKnown := l.representation(instantiated); isKnown {
-				into[declared] = held
-			}
+			into[declared] = l.concrete(instantiated)
 		}
 		return
 	}
-	if (l.checker.IsArrayType(declared) && l.checker.IsArrayType(instantiated)) || (checker.IsTupleType(declared) && checker.IsTupleType(instantiated)) {
-		declaredArguments, instantiatedArguments := l.checker.GetTypeArguments(declared), l.checker.GetTypeArguments(instantiated)
-		for index := range declaredArguments {
-			if index < len(instantiatedArguments) {
-				l.inferTypes(declaredArguments[index], instantiatedArguments[index], into)
+	if declared.Flags()&checker.TypeFlagsObject != 0 && instantiated.Flags()&checker.TypeFlagsObject != 0 {
+		if declared.ObjectFlags()&checker.ObjectFlagsReference != 0 && instantiated.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+			declaredArguments, instantiatedArguments := l.checker.GetTypeArguments(declared), l.checker.GetTypeArguments(instantiated)
+			for index := range declaredArguments {
+				if index < len(instantiatedArguments) {
+					l.inferTypes(declaredArguments[index], instantiatedArguments[index], into)
+				}
 			}
+		}
+		declaredSignatures, instantiatedSignatures := l.checker.GetSignaturesOfType(declared, checker.SignatureKindCall), l.checker.GetSignaturesOfType(instantiated, checker.SignatureKindCall)
+		if len(declaredSignatures) > 0 && len(instantiatedSignatures) > 0 {
+			declaredParameters, instantiatedParameters := declaredSignatures[0].Parameters(), instantiatedSignatures[0].Parameters()
+			for index := range declaredParameters {
+				if index < len(instantiatedParameters) {
+					l.inferTypes(l.checker.GetTypeOfSymbol(declaredParameters[index]), l.checker.GetTypeOfSymbol(instantiatedParameters[index]), into)
+				}
+			}
+			l.inferTypes(l.checker.GetReturnTypeOfSignature(declaredSignatures[0]), l.checker.GetReturnTypeOfSignature(instantiatedSignatures[0]), into)
 		}
 	}
 }

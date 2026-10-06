@@ -1,0 +1,53 @@
+// A value of T is lowered separately for every concrete instantiation and kept with that
+// instantiation's ownership. The object and nested Box values are built at runtime so ASan and the
+// leak check can catch a missing retain.
+class Box<Value> {
+	readonly value: Value;
+	constructor(value: Value) {
+		this.value = value;
+	}
+}
+
+interface Named {
+	readonly name: string;
+}
+
+function local<Value>(value: Value): Value {
+	const held: Value = value;
+	return held;
+}
+
+function arrayOf<Value>(value: Value): Value[] {
+	const values: Value[] = [value];
+	return values;
+}
+
+function mapOf<Value>(value: Value): Map<string, Value> {
+	const values = new Map<string, Value>();
+	values.set('value', value);
+	return values;
+}
+
+function setOf<Value>(value: Value): Set<Value> {
+	const values = new Set<Value>();
+	values.add(value);
+	return values;
+}
+
+function captured<Value>(value: Value): () => Value {
+	return (): Value => value;
+}
+
+function through<Value>(value: Value): Value {
+	return local(value);
+}
+
+const maybe: number | undefined = 7;
+const named: Named = { name: ['Ada', 'mic'].join('') };
+const numbers = [2, 3];
+const nested = new Box(new Box(11));
+
+console.log(`${through(1)} ${through('two')} ${through(true)} ${through(maybe)}`);
+console.log(`${through(named).name} ${through(numbers).join('-')} ${through(nested).value.value}`);
+console.log(`${arrayOf(named)[0]?.name} ${mapOf(named).get('value')?.name} ${setOf(named).size}`);
+console.log(captured(new Box(['kept'].join('')))().value);

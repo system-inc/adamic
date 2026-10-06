@@ -227,6 +227,13 @@ add(new Map<string, Dog>());
 	return pack.length;
 }
 `, "main.a:12:21: Adamic 0.1 refuses a value of type Narrow seen as Pack, a type parameter whose constraint Animal[] can be written, so it can write what Narrow can't hold; take it as Narrow, or constrain Pack to something readonly"},
+		{"an explicit type argument widens a mutable parameter", `function adopt<Pack extends Animal[]>(pack: Pack): number {
+	pack.push({ name: 'Tom' });
+	return pack.length;
+}
+const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+adopt<Animal[]>(dogs);
+`, "main.a:16:17: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly"},
 		{"a type parameter's constraint behind a readonly property", `interface Held<Pack> {
 	readonly pack: Pack;
 }
