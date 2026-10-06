@@ -87,7 +87,7 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 	return len(diagnostics)
 }
 func collect(path, source string, fields []string) []rule.Diagnostic {
-	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, core.ScriptKindTS)
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(path), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(path))}, source, core.ScriptKindTS)
 	if len(file.Diagnostics()) != 0 {
 		panic(fmt.Sprintf("invalid corpus %s: %v", path, file.Diagnostics()))
 	}
