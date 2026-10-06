@@ -233,3 +233,12 @@ semicolon diagnostic. Explicit-range diagnostics preserve Go's suppression
 of consecutive diagnostics at the same start. The focused comparison passes
 in 14.756s and cohere reports no findings. The wider run has passed both
 five-token namespace wrappers and reached the main namespace wrapper.
+
+## Continued recovery: source element recognition
+
+Source-list recognition now handles stranded import tokens and invalid
+punctuation with Go's 1128 diagnostic and token advancement. Declaration
+lookahead distinguishes import declarations from import expressions and
+handles contextual modifiers. Focused comparison passes in 14.596s. The
+wider comparison reaches input 220: an import specifier list cut at EOF
+needs an empty remaining list and a missing closing-brace diagnostic.

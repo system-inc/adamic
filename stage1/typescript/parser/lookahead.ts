@@ -369,3 +369,95 @@ export function declarationAhead(scanner: Scanner): boolean {
     state.restore();
     return result;
 }
+
+export function statementAhead(scanner: Scanner): boolean {
+    const current = kind(scanner);
+    if(current === 'ExportKeyword' || current === 'ConstKeyword') {
+        return declarationAhead(scanner);
+    }
+    if(current === 'ImportKeyword') {
+        const state = new Speculation(scanner);
+        state.next();
+        const expression = ['OpenParenToken', 'LessThanToken', 'DotToken'].includes(kind(scanner));
+        state.restore();
+        return expression || declarationAhead(scanner);
+    }
+    if(
+        [
+            'AccessorKeyword',
+            'PublicKeyword',
+            'PrivateKeyword',
+            'ProtectedKeyword',
+            'StaticKeyword',
+            'ReadonlyKeyword',
+        ].includes(current)
+    ) {
+        if(declarationAhead(scanner)) {
+            return true;
+        }
+        const state = new Speculation(scanner);
+        state.next();
+        const identifier =
+            (kind(scanner) === 'Identifier' || kind(scanner).endsWith('Keyword')) && (scanner.flags & 1) === 0;
+        state.restore();
+        return !identifier;
+    }
+    return (
+        [
+            'AtToken',
+            'SemicolonToken',
+            'OpenBraceToken',
+            'VarKeyword',
+            'LetKeyword',
+            'UsingKeyword',
+            'FunctionKeyword',
+            'ClassKeyword',
+            'EnumKeyword',
+            'IfKeyword',
+            'DoKeyword',
+            'WhileKeyword',
+            'ForKeyword',
+            'ContinueKeyword',
+            'BreakKeyword',
+            'ReturnKeyword',
+            'WithKeyword',
+            'SwitchKeyword',
+            'ThrowKeyword',
+            'TryKeyword',
+            'DebuggerKeyword',
+            'CatchKeyword',
+            'FinallyKeyword',
+            'ThisKeyword',
+            'SuperKeyword',
+            'NullKeyword',
+            'TrueKeyword',
+            'FalseKeyword',
+            'NumericLiteral',
+            'BigIntLiteral',
+            'StringLiteral',
+            'NoSubstitutionTemplateLiteral',
+            'TemplateHead',
+            'OpenParenToken',
+            'OpenBracketToken',
+            'NewKeyword',
+            'SlashToken',
+            'SlashEqualsToken',
+            'PlusToken',
+            'MinusToken',
+            'TildeToken',
+            'ExclamationToken',
+            'DeleteKeyword',
+            'TypeOfKeyword',
+            'VoidKeyword',
+            'PlusPlusToken',
+            'MinusMinusToken',
+            'LessThanToken',
+            'AwaitKeyword',
+            'YieldKeyword',
+            'PrivateIdentifier',
+        ].includes(current) ||
+        precedence(current) >= 0 ||
+        current === 'Identifier' ||
+        (current.endsWith('Keyword') && !reservedKinds.includes(current))
+    );
+}
