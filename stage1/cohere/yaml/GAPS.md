@@ -1,10 +1,85 @@
-# YAML port: parser and composer checkpoints
+# YAML parser, printer and file driver
 
-The Adamic lexer, CST parser, scalar and property resolvers, composer and comparison drivers are implemented.
-All 36 repository files and generated cases match Go, with 9,272 scalar cases.
-Native sanitizers, Node source, emitted JavaScript and yaml 2.9.0 all agree.
-Twenty-one port mutants are caught; ten compiler refusals and one runtime bug have proving programs.
-The printer and formatting driver are being checked; formatter throughput remains unfinished.
+The complete Adamic YAML formatting slice is implemented at Go cohere's default options.
+Go, sanitized native, source Node and emitted JavaScript compare all 36 repository files and generated cases.
+Original Prettier 3.9.6 is compared independently, with 42 proved upstream binary/minification differences.
+Twenty-four successful wrong-output port mutants are caught; ten compiler refusals and one runtime bug have proving programs.
+Formatter throughput and final validation results are recorded below and in PERFORMANCE.md.
+
+## Complete formatter checkpoint
+
+`format.ts` composes lexer, CST, scalar/property resolution, schema and document
+composition with the unist tree and `printer.ts`. `layout.ts` ports the YAML-reachable
+Go document algebra: groups, fills, conditional breaks, suffixes, indentation,
+Unicode display widths and break propagation. Numeric arenas keep ownership acyclic.
+`main.ts <file>` writes exact formatted bytes to stdout, including BOM-only files,
+empty output and keep-chomping output without a final newline. Its `--cases` mode
+provides the escaped batch comparison protocol. The printer's document entry can
+be composed by a future Markdown front-matter formatter.
+
+The Go adapter calls the public `native.Formatter.Format` with `PrettierDefaults`,
+rather than independently reimplementing file normalization. An independent BOM-only
+Prettier probe caught a mistake in both the first port wrapper and its initial Go
+adapter. Both were corrected before this checkpoint: a BOM is restored even when
+the formatted body is empty. The original-library adapter always calls Prettier,
+including empty and whitespace inputs. The direct-driver controls hold this rule.
+
+The formatter corpus contains 10,026 cases: all 36 repository/submodule YAML files,
+parser cases and generated printer cases covering width boundaries, Unicode,
+quotes, comments, ignore directives, mapping styles, flow punctuation, block
+indentation/chomping, directives, CRLF/CR and BOM. Direct-file comparisons add
+14 stdout controls to the 36 repository files. Native uses ASan, UBSan and leak
+detection; source Node and emitted JavaScript must produce the same Go bytes.
+
+Published Prettier matches 9,984 cases. Exactly six explicit binary cases differ
+because its bundled browser decoder rejects strings Go and yaml 2.9.0 accept;
+36 prototype-tag cases differ solely in the thrown variable name (`c.resolve`
+versus `tag.resolve`). `gaps/bundledParser.mjs` independently proves both categories
+at pinned versions. Every allowed input and both outputs are held explicitly;
+any other difference fails. This is an observed upstream discrepancy, not a claim
+of byte identity to published Prettier on those 42 cases.
+
+The three printer mutations are root newline suppression, loss of the colon's
+following space, and loss of broken-flow trailing commas. Each compiles and exits
+zero with empty stderr on native and Node; only byte comparison catches it.
+Earlier sections retain every parser-layer mutant and the compiler gap programs.
+
+Final corrected formatter/gap/driver/mutant suite: PASS, 139.079s;
+992,282 identical format answer bytes, baseline 64.49s, driver 36.40s,
+mutants 38.07s. Printer mutant differences begin at bytes 28293, 1694 and
+783469, respectively, on both native and Node. The full YAML package passed
+in 384.721s before the BOM-only correction; the focused suite above revalidated
+all corrected formatting paths afterward. The uncached filtered oracle passed
+in 2.421s, with 27 native and 18 Node cache misses and zero hits. Vet and gofmt
+produced empty logs; cohere reported 276 rules, 42 files, 100% Adamic-ready,
+and the formatting check passed.
+
+Logs: [corrected formatter suite](audit/format-suite.log),
+[full YAML suite](audit/final-suite.log), [uncached oracle](audit/final-oracle.log),
+[lint](audit/format-lint.log), [format check](audit/format-check.log),
+[vet](audit/final-vet.log), [gofmt](audit/final-gofmt.log).
+
+
+Validation commands (output redirected to the linked audit logs):
+
+```sh
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library ADAMIC_YAML_ARTIFACTS=/tmp/stage1-yaml-format-artifacts go test -v -count=1 -timeout=30m ./stage1/cohere/yaml
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library ADAMIC_YAML_ARTIFACTS=/tmp/stage1-yaml-format-artifacts go test -v -count=1 -timeout=20m ./stage1/cohere/yaml -run 'TestFormatter|TestFileDriver|TestBundledParser'
+ADAMIC_GATE_UNCACHED=1 go test -v -count=1 -timeout=15m ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(strings|strings_more|collections|exceptions|bitwise)\.a$'
+go vet ./stage1/cohere/yaml
+gofmt -l stage1/cohere/yaml
+/tmp/stage1-yaml-cohere --no-fix --no-format stage1/cohere/yaml/*.ts
+/tmp/stage1-yaml-cohere --no-fix --format-only --format-all stage1/cohere/yaml/*.ts
+```
+
+Scope: default width 80, tab width 2, double quotes and preserved prose wrapping.
+Repository option discovery, other formatting options, malformed UTF-8 files,
+Markdown front matter and YAML semantic object loading are not covered. Timestamp
+and binary semantic payloads are not materialized; the formatter does not read
+them. No compiler/runtime implementation changed. The complete repository gate
+was not run; the touched package and uncached filtered oracle were run instead.
+Historical checkpoint sections below describe coverage at their commit dates;
+their statements about unfinished later stages are superseded by this checkpoint.
 
 ## Green printer-tree step
 
