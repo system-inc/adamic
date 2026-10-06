@@ -47,6 +47,36 @@ func Parse(pattern, flags string) (*Pattern, error) {
 	return &Pattern{Flags: f, Body: body}, nil
 }
 
+// ParseUTF16 preserves JavaScript pattern strings, including lone surrogates.
+func ParseUTF16(pattern []uint16, flags string) (*Pattern, error) {
+	return Parse(patternFromUTF16(pattern), flags)
+}
+func patternFromUTF16(pattern []uint16) string {
+	var encoded []byte
+	for i := 0; i < len(pattern); i++ {
+		c := rune(pattern[i])
+		if c >= 0xd800 && c <= 0xdbff && i+1 < len(pattern) && pattern[i+1] >= 0xdc00 && pattern[i+1] <= 0xdfff {
+			c = 0x10000 + (c-0xd800)*0x400 + rune(pattern[i+1]) - 0xdc00
+			i++
+		}
+		if c >= 0xd800 && c <= 0xdfff {
+			encoded = append(encoded, byte(0xe0|c>>12), byte(0x80|(c>>6)&0x3f), byte(0x80|c&0x3f))
+		} else {
+			encoded = utf8.AppendRune(encoded, c)
+		}
+	}
+	return string(encoded)
+}
+
+// Adamic strings use WTF-8 so that lone UTF-16 surrogates remain observable.
+func patternRune(source string) (rune, int) {
+	r, width := utf8.DecodeRuneInString(source)
+	if width == 1 && r == utf8.RuneError && len(source) >= 3 && source[0] == 0xed && source[1] >= 0xa0 && source[1] <= 0xbf && source[2] >= 0x80 && source[2] <= 0xbf {
+		return rune(source[0]&15)<<12 | rune(source[1]&63)<<6 | rune(source[2]&63), 3
+	}
+	return r, width
+}
+
 func parseFlags(s string) (Flags, error) {
 	var f Flags
 	seen := [128]bool{}
@@ -89,6 +119,7 @@ type parser struct {
 	flags                  Flags
 	captureCount, captures int
 	hasNamedCapture        bool
+	pendingCharacter       *Character
 	names                  map[string]bool
 	namedReferences        map[string]int
 }
@@ -305,6 +336,19 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 	if p.done() {
 		return nil, false, p.fail("trailing escape")
 	}
+	if p.peek() >= utf8.RuneSelf {
+		if p.flags.Unicode || p.flags.UnicodeSets {
+			return nil, false, p.failAt(start, "invalid identity escape")
+		}
+		node, _, err := p.literal()
+		if err != nil {
+			return nil, false, err
+		}
+		character := node.(*Character)
+		character.Kind = Escape
+		character.Raw = p.source[start:p.pos]
+		return character, true, nil
+	}
 	c := p.peek()
 	p.pos++
 	if !inClass && (c == 'b' || c == 'B') {
@@ -331,7 +375,7 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 			if p.flags.Unicode || p.flags.UnicodeSets {
 				return nil, false, p.failAt(start, "invalid named reference")
 			}
-			return p.char(start, Escape)
+			return &Character{Value: 'k', Raw: p.source[start:p.pos], Kind: Escape}, true, nil
 		}
 		if !p.take('<') {
 			return nil, false, p.fail("invalid named reference")
@@ -381,7 +425,7 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 		return &Character{Value: 0, Raw: p.source[start:p.pos], Kind: Escape}, true, nil
 	}
 	if c == 'c' {
-		if !p.done() && (p.peek() >= 'a' && p.peek() <= 'z' || p.peek() >= 'A' && p.peek() <= 'Z') {
+		if !p.done() && (p.peek() >= 'a' && p.peek() <= 'z' || p.peek() >= 'A' && p.peek() <= 'Z' || inClass && !p.flags.Unicode && !p.flags.UnicodeSets && (p.peek() >= '0' && p.peek() <= '9' || p.peek() == '_')) {
 			value := p.peek() % 32
 			p.pos++
 			return &Character{Value: rune(value), Raw: p.source[start:p.pos], Kind: Escape}, true, nil
@@ -389,7 +433,8 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 		if p.flags.Unicode || p.flags.UnicodeSets {
 			return nil, false, p.failAt(start, "invalid control escape")
 		}
-		return &Character{Value: 'c', Raw: p.source[start:p.pos], Kind: Escape}, true, nil
+		p.pos = start + 1
+		return &Character{Value: '\\', Raw: p.source[start:p.pos], Kind: Literal}, true, nil
 	}
 	if c == 'u' {
 		ch, err := p.unicodeEscape(start)
@@ -397,12 +442,16 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 	}
 	if c == 'x' {
 		ch, err := p.hexEscape(start, 2)
+		if err != nil && !p.flags.Unicode && !p.flags.UnicodeSets {
+			p.pos = start + 2
+			return &Character{Value: 'x', Raw: p.source[start:p.pos], Kind: Escape}, true, nil
+		}
 		return ch, true, err
 	}
 	if strings.ContainsRune("fnrtv", rune(c)) {
-		return &Character{Raw: p.source[start:p.pos], Kind: Escape}, true, nil
+		return &Character{Value: map[byte]rune{'f': 12, 'n': 10, 'r': 13, 't': 9, 'v': 11}[c], Raw: p.source[start:p.pos], Kind: Escape}, true, nil
 	}
-	if (p.flags.Unicode || p.flags.UnicodeSets) && !strings.ContainsRune("^$\\.*+?()[]{}|/", rune(c)) {
+	if (p.flags.Unicode || p.flags.UnicodeSets) && !strings.ContainsRune("^$\\.*+?()[]{}|/", rune(c)) && !(inClass && (c == '-' || p.flags.UnicodeSets && strings.ContainsRune("!#%&,:;<=>@`~", rune(c)))) {
 		return nil, false, p.failAt(start, "invalid identity escape")
 	}
 	return &Character{Value: rune(c), Raw: p.source[start:p.pos], Kind: Escape}, true, nil
@@ -419,6 +468,12 @@ func (p *parser) characterClass() (Node, error) {
 		}
 		union.Operands = append(union.Operands, operand)
 		if p.flags.UnicodeSets && (p.match("&&") || p.match("--")) {
+			if len(union.Operands) != 1 {
+				return nil, p.fail("invalid Unicode set operation")
+			}
+			if _, rangeOperand := operand.(*ClassRange); rangeOperand {
+				return nil, p.fail("range must be nested in Unicode set operation")
+			}
 			op := p.source[p.pos : p.pos+2]
 			p.pos += 2
 			left := ClassExpression(union)
@@ -426,6 +481,9 @@ func (p *parser) characterClass() (Node, error) {
 				right, operandErr := p.classSetOperand()
 				if operandErr != nil {
 					return nil, operandErr
+				}
+				if _, rangeOperand := right.(*ClassRange); rangeOperand {
+					return nil, p.fail("range must be nested in Unicode set operation")
 				}
 				if op == "&&" {
 					left = &ClassIntersection{Left: left, Right: right}
@@ -453,12 +511,16 @@ func (p *parser) finishClass(neg bool, expr ClassExpression) (Node, error) {
 	return &CharacterClass{Negated: neg, Expr: expr}, nil
 }
 func (p *parser) classSetOperand() (ClassExpression, error) {
-	if p.peek() == '[' {
+	if p.flags.UnicodeSets && p.peek() == '[' {
 		n, e := p.characterClass()
 		if e != nil {
 			return nil, e
 		}
-		return n.(*CharacterClass).Expr, nil
+		class := n.(*CharacterClass)
+		if class.Negated {
+			return &ClassNegation{Operand: class.Expr}, nil
+		}
+		return class.Expr, nil
 	}
 	if p.flags.UnicodeSets && p.match("\\q{") {
 		p.pos += 3
@@ -490,7 +552,13 @@ func (p *parser) classSetOperand() (ClassExpression, error) {
 		if err != nil {
 			return nil, err
 		}
-		if c.Kind == ClassEscape || c.Kind == PropertyEscape || right.Kind == ClassEscape || right.Kind == PropertyEscape || c.Value > right.Value {
+		if c.Kind == ClassEscape || c.Kind == PropertyEscape || right.Kind == ClassEscape || right.Kind == PropertyEscape {
+			if !p.flags.Unicode && !p.flags.UnicodeSets {
+				return &ClassUnion{Operands: []ClassExpression{&ClassCharacter{Character: c}, &ClassCharacter{Character: &Character{Value: '-', Raw: "-", Kind: Literal}}, &ClassCharacter{Character: right}}}, nil
+			}
+			return nil, p.fail("invalid character class range")
+		}
+		if c.Value > right.Value {
 			return nil, p.fail("invalid character class range")
 		}
 		return &ClassRange{From: c, To: right}, nil
@@ -498,6 +566,11 @@ func (p *parser) classSetOperand() (ClassExpression, error) {
 	return &ClassCharacter{Character: c}, nil
 }
 func (p *parser) classCharacter() (*Character, error) {
+	if p.pendingCharacter != nil {
+		character := p.pendingCharacter
+		p.pendingCharacter = nil
+		return character, nil
+	}
 	if p.done() {
 		return nil, p.fail("unterminated character class")
 	}
@@ -523,7 +596,7 @@ func classMayContainStrings(expression ClassExpression) bool {
 	switch expression := expression.(type) {
 	case *ClassString:
 		for _, alternative := range expression.Alternatives {
-			if len(alternative) > 1 {
+			if len(alternative) != 1 {
 				return true
 			}
 		}
@@ -541,7 +614,7 @@ func classMayContainStrings(expression ClassExpression) bool {
 			}
 		}
 	case *ClassIntersection:
-		return classMayContainStrings(expression.Left) || classMayContainStrings(expression.Right)
+		return classMayContainStrings(expression.Left) && classMayContainStrings(expression.Right)
 	case *ClassSubtraction:
 		return classMayContainStrings(expression.Left)
 	}
@@ -601,12 +674,22 @@ func validateDuplicateNames(body *Disjunction) error {
 }
 
 func (p *parser) literal() (Node, bool, error) {
+	if p.pendingCharacter != nil {
+		character := p.pendingCharacter
+		p.pendingCharacter = nil
+		return character, true, nil
+	}
 	start := p.pos
-	r, n := utf8.DecodeRuneInString(p.source[p.pos:])
+	r, n := patternRune(p.source[p.pos:])
 	if r == utf8.RuneError && n == 1 {
 		return nil, false, p.fail("invalid UTF-8")
 	}
 	p.pos += n
+	if r > 0xffff && !p.flags.Unicode && !p.flags.UnicodeSets {
+		value := r - 0x10000
+		p.pendingCharacter = &Character{Value: 0xdc00 + value%0x400, Raw: p.source[start:p.pos], Kind: Literal}
+		r = 0xd800 + value/0x400
+	}
 	return &Character{Value: r, Raw: p.source[start:p.pos], Kind: Literal}, true, nil
 }
 func (p *parser) char(start int, kind CharacterKind) (Node, bool, error) {
@@ -615,7 +698,8 @@ func (p *parser) char(start int, kind CharacterKind) (Node, bool, error) {
 func (p *parser) unicodeEscape(start int) (*Character, error) {
 	if p.take('{') {
 		if !(p.flags.Unicode || p.flags.UnicodeSets) {
-			return nil, p.failAt(start, "invalid Unicode escape")
+			p.pos = start + 2
+			return &Character{Value: 'u', Raw: p.source[start:p.pos], Kind: Escape}, nil
 		}
 		n, ok := p.hexNumber('}')
 		if !ok || n > 0x10ffff {
@@ -623,7 +707,28 @@ func (p *parser) unicodeEscape(start int) (*Character, error) {
 		}
 		return &Character{Value: rune(n), Raw: p.source[start:p.pos], Kind: Escape}, nil
 	}
-	return p.hexEscape(start, 4)
+	first, err := p.hexEscape(start, 4)
+	if err != nil && !p.flags.Unicode && !p.flags.UnicodeSets {
+		p.pos = start + 2
+		return &Character{Value: 'u', Raw: p.source[start:p.pos], Kind: Escape}, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	// In Unicode mode a paired Unicode escape is one atom, before a
+	// quantifier or class range is parsed.
+	if (p.flags.Unicode || p.flags.UnicodeSets) && first.Value >= 0xd800 && first.Value <= 0xdbff && p.match("\\u") {
+		secondStart := p.pos
+		p.pos += 2
+		second, secondErr := p.hexEscape(secondStart, 4)
+		if secondErr == nil && second.Value >= 0xdc00 && second.Value <= 0xdfff {
+			first.Value = 0x10000 + (first.Value-0xd800)*0x400 + second.Value - 0xdc00
+			first.Raw = p.source[start:p.pos]
+		} else {
+			p.pos = secondStart
+		}
+	}
+	return first, nil
 }
 func (p *parser) hexEscape(start, n int) (*Character, error) {
 	if p.pos+n > len(p.source) {
@@ -637,8 +742,17 @@ func (p *parser) hexEscape(start, n int) (*Character, error) {
 	return &Character{Value: rune(v), Raw: p.source[start:p.pos], Kind: Escape}, nil
 }
 func (p *parser) legacyOctal(start int) (Node, bool, error) {
+	if p.peek() == '8' || p.peek() == '9' {
+		value := rune(p.peek())
+		p.pos++
+		return &Character{Value: value, Raw: p.source[start:p.pos], Kind: Escape}, true, nil
+	}
+	limit := 3
+	if p.peek() >= '4' {
+		limit = 2
+	}
 	n := 0
-	for i := 0; i < 3 && !p.done() && p.peek() >= '0' && p.peek() <= '7'; i++ {
+	for i := 0; i < limit && !p.done() && p.peek() >= '0' && p.peek() <= '7'; i++ {
 		n = n*8 + int(p.peek()-'0')
 		p.pos++
 	}
@@ -663,7 +777,7 @@ func (p *parser) groupName() (string, error) {
 
 func (p *parser) groupNameRune() (rune, error) {
 	if p.peek() != '\\' {
-		r, width := utf8.DecodeRuneInString(p.source[p.pos:])
+		r, width := patternRune(p.source[p.pos:])
 		if r == utf8.RuneError && width == 1 {
 			return 0, p.fail("invalid UTF-8")
 		}
@@ -740,8 +854,12 @@ func (p *parser) hexNumber(end byte) (int, bool) {
 	}
 	return n, true
 }
-func (p *parser) done() bool { return p.pos >= len(p.source) }
+func (p *parser) done() bool { return p.pendingCharacter == nil && p.pos >= len(p.source) }
 func (p *parser) peek() byte {
+	if p.pendingCharacter != nil {
+		// A pending low surrogate cannot begin ASCII pattern syntax.
+		return 0xff
+	}
 	if p.done() {
 		return 0
 	}
