@@ -199,8 +199,13 @@ func identity(t *testing.T) gateIdentity {
 			gateError = err
 			return
 		}
-		files = append(files, repository+"/oracle/node.mjs", repository+"/oracle/adamic.mjs", repository+"/internal/native/native.go", repository+"/internal/native/library.go")
-		parts := []string{"gate-context-v1", runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
+		files = append(files, repository+"/internal/native/native.go", repository+"/internal/native/library.go")
+		runner, err := oracleRunnerIdentity(repository)
+		if err != nil {
+			gateError = err
+			return
+		}
+		parts := []string{"gate-context-v1", runner, runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
 		root, err := filepath.Abs(repository)
 		if err != nil {
 			gateError = err
@@ -234,6 +239,20 @@ func identity(t *testing.T) gateIdentity {
 		t.Fatal(gateError)
 	}
 	return gate
+}
+
+// The shared source loader is part of the oracle, so changing it invalidates evidence
+// even when node.mjs and generated code remain identical.
+func oracleRunnerIdentity(root string) (string, error) {
+	var parts []string
+	for _, name := range []string{"node.mjs", "register-dot-a.mjs", "adamic.mjs"} {
+		contents, err := os.ReadFile(filepath.Join(root, "oracle", name))
+		if err != nil {
+			return "", err
+		}
+		parts = append(parts, name, string(contents))
+	}
+	return cacheKey(parts...), nil
 }
 
 // Reuse import declarations already parsed by lowered, keyed by the current source bytes. This
