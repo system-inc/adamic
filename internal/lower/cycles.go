@@ -227,11 +227,11 @@ func (f *cycleFinder) template(proven *checker.Type) bool {
 	return false
 }
 
-// fields is an object type's fields, its methods left out: a method is code, and holds nothing.
+// fields includes literal methods, which own closures. Class prototype methods hold no instance data.
 func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 	fields := []*ast.Symbol{}
 	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
-		if property.Flags&ast.SymbolFlagsMethod == 0 && !accessorSymbol(property) && !(f.l.isStaticType(proven) && property.Name == "prototype") {
+		if (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) && !accessorSymbol(property) && !(f.l.isStaticType(proven) && property.Name == "prototype") {
 			fields = append(fields, property)
 		}
 	}
@@ -467,4 +467,13 @@ func (f *cycleFinder) related(one *checker.Type, other *checker.Type) bool {
 		return false
 	}
 	return f.l.checker.IsTypeAssignableTo(one, other) || f.l.checker.IsTypeAssignableTo(other, one)
+}
+
+func literalMethod(property *ast.Symbol) bool {
+	for _, declaration := range property.Declarations {
+		if declaration.Kind == ast.KindMethodDeclaration && declaration.Parent.Kind == ast.KindObjectLiteralExpression {
+			return true
+		}
+	}
+	return false
 }

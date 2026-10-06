@@ -17,6 +17,9 @@ func classFunction(node *ast.Node) bool {
 	return node.Kind == ast.KindMethodDeclaration || accessorMember(node)
 }
 func methodKey(node *ast.Node, class int) string {
+	if node.Name().Kind == ast.KindComputedPropertyName {
+		return iteratorSlot
+	}
 	name := memberKey(node.Name(), class)
 	if node.Kind == ast.KindGetAccessor {
 		return "$get:" + name

@@ -163,7 +163,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	for _, member := range members {
 		switch member.Kind {
 		case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
-			if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier {
+			if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier && !(member.Kind == ast.KindMethodDeclaration && member.Name().Kind == ast.KindComputedPropertyName && l.symbolIterator(member.Name().AsComputedPropertyName().Expression)) {
 				return nil, l.notYet(member, "a method with a computed name")
 			}
 			if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
@@ -185,7 +185,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 				}
 				meta.Methods[slot] = len(l.result.Functions)
 			}
-			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + member.Name().Text()})
+			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + methodName})
 		case ast.KindPropertyDeclaration, ast.KindConstructor, ast.KindClassStaticBlockDeclaration:
 		default:
 			return nil, l.notYet(member, describe(member)+" in a class")
@@ -414,6 +414,9 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 			return nil, err
 		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
+	}
+	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
+		return nil, l.notYet(target, "replacing a represented method at runtime")
 	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
