@@ -12,7 +12,7 @@ Branch `codex/stage1-lint-batch5`, cut from `origin/main` at
 7. `@typescript-eslint/no-extra-non-null-assertion`
 8. `@typescript-eslint/no-duplicate-enum-values`
 9. `@typescript-eslint/no-explicit-any`
-10. `default-case-last`
+10. `@typescript-eslint/no-useless-empty-export`
 
 Each rule will live in its own file with a one-line registration. The oracle
 is unmodified Go Cohere at the submodule pin, compared byte for byte with the
@@ -31,3 +31,14 @@ are not treated as claims.
 
 This commit contains the reservation only. Implementation and final evidence
 will follow on this branch. No implementation or parity result is claimed yet.
+
+## Updated claim before replacement implementation
+
+Batch 4 appeared during final refresh at `d486b03` and holds
+`default-case-last`. That original tenth reservation is cancelled; no copy of
+its implementation will ship in batch 5. The replacement tenth name is
+`@typescript-eslint/no-useless-empty-export`, checked against published batch 2,
+batch 3 and batch 4 before this claim update. None holds it. A considered
+alternative, `no-unnecessary-type-constraint`, was rejected because batch 2
+already holds it. The nine TypeScript rules originally reserved remain unchanged.
+This claim update is pushed before writing the replacement implementation.
