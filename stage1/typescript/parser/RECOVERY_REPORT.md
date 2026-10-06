@@ -2,7 +2,7 @@ Rebased codex/parser-recovery onto origin/main at 5d4c801 without conflicts.
 Parser regression passes in 612.959s, including five recovery mutants.
 77 compiler files match Go, Node and native expression and whole-tree bytes.
 Vet, formatting, cohere and the filtered oracle pass; setup 86s, nproc 5.
-The 22,497-input mutation comparison rerun from zero remains active.
+The wider gate fails at input 2597 after 2,603 comparisons, with no timeouts.
 
 ## Built
 
@@ -670,3 +670,47 @@ fields and diagnostic fields are those documented above; related diagnostic
 information and every internal Go AST field are not serialized. The wider
 22,497-input comparison was restarted with ADAMIC_RECOVERY_START unset and
 has not yet passed its complete gate.
+
+
+## Final wider rerun after the rebase
+
+```sh
+unset ADAMIC_RECOVERY_START
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 \
+  go test ./stage1/typescript/parser -run '^TestIncompleteCompilerAgrees$' \
+  -count=1 -v -timeout 2h > /tmp/parser-recovery-rebase-incomplete.log 2>&1
+# FAIL, 712.404s. All 77 files / 22,497 selected inputs were planned.
+# Started at input 1 with no continuation skip or diagnostic filtering.
+# Stopped after 2,603 comparisons, including the failing input and in-flight jobs.
+```
+
+Observed: input 2597, core.ts duplicate token 15780, fails on both Node and
+sanitized native. The changed signature starts:
+
+```ts
+function cartesianProductWorker<T>(arrays: readonly (readonly T[]) )[], result: (readonly T[])[], outer: readonly T[] | undefined, index: number) {
+```
+
+The first differing diagnostic is port code 1005 at byte 90216, length 1,
+message `')' expected.`, versus Go code 1005 at byte 90217, length 1,
+message `',' expected.`. The recovered trees also differ. Both ports finish
+normally; this is a recovery mismatch, not a timeout. No process in this
+rerun timed out. Slowest complete parse-and-print observations were Go
+0.850014998s, Node 2.421945107s, and native 8.154023398s, all within the
+shared ten-second corpus deadline. The EOF mutant still uses two seconds.
+
+The exact input and all three stdout/stderr pairs survive under
+/tmp/adamic-parser-incomplete/02597-core.ts-duplicate-15780.ts. Copies are
+committed under validation/rebase-incomplete/; the source uses the .input
+extension so malformed TypeScript is retained as evidence rather than
+checked as an Adamic program. This archive also records its SHA-256.
+No claim of parity for all 22,497 inputs is made. The wider recovery work
+remains unfinished; this turn ends after the user's requested rebase,
+validation and push. The complete repository gate was not run.
+
+The green rebase step was committed and pushed as
+d7949bb (Preserve expression byte parity and validate the main rebase).
+Its lease-protected rebase push required the remote branch still to name
+8ce437f114721b0f997a80fbabecde05e98defbb. The report/evidence follow-up
+uses an ordinary fast-forward push. The final report commit is the branch
+tip printed in the five-line handoff.
