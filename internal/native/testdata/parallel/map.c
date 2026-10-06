@@ -11,6 +11,23 @@
 enum { numbers, strings, objects, captured_map, fresh, nested, exceptions, million, panic_work, nested_exception };
 static pthread_t caller;
 static bool single;
+static pthread_mutex_t first_lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t first_ready = PTHREAD_COND_INITIALIZER;
+static size_t first_arrived;
+static _Thread_local bool first_string;
+
+// Force the first four callbacks to overlap before any result can mark its input owner. Without
+// this rendezvous, a missing items share can be accidentally repaired by the first slice result.
+static void first_string_reads(adamic_string *text) {
+	if (single || first_string) { return; }
+	first_string = true;
+	pthread_mutex_lock(&first_lock);
+	first_arrived++;
+	pthread_cond_broadcast(&first_ready);
+	while (first_arrived != adamic_parallel_threads()) { pthread_cond_wait(&first_ready, &first_lock); }
+	pthread_mutex_unlock(&first_lock);
+	for (size_t i = 0; i < 10000; i++) { adamic_retain(text); adamic_release(text); }
+}
 static const char *const names[] = {"value", "children"};
 static const bool fields[] = {false, true};
 static const adamic_shape shape = {2, names, fields, NULL};
@@ -37,6 +54,7 @@ static adamic_value work(adamic_closure *self, adamic_value *arguments) {
 	size_t index = (size_t)arguments[1].number;
 	if (mode == strings) {
 		adamic_string *text = arguments[0].reference;
+		first_string_reads(text);
 		adamic_retain(text);
 		// Both supplementary-point cursors and compact BMP views, in scattered read order.
 		size_t length = (size_t)adamic_string_length(text);
@@ -96,7 +114,10 @@ static adamic_value work(adamic_closure *self, adamic_value *arguments) {
 		adamic_release(results);
 		return (adamic_value){.number = sum + (double)index};
 	}
-	if (mode == panic_work) { adamic_panic("worker panic", sizeof "worker panic" - 1); }
+	if (mode == panic_work) {
+		if (!pthread_equal(caller, pthread_self())) { adamic_panic("worker panic", sizeof "worker panic" - 1); }
+		struct timespec delay = {0, 1000000}; nanosleep(&delay, NULL);
+	}
 	return (adamic_value){.number = arguments[0].number * 2 + arguments[1].number};
 }
 
