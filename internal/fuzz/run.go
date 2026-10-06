@@ -141,10 +141,21 @@ func (c *Checkout) Try(source string, directory string) Outcome {
 	}
 
 	oracle := filepath.Join(c.Root, "oracle", "node.mjs")
+	// A program may write files, and each run starts from none, so no run reads what another wrote.
+	fresh := func(run func() Run) Run {
+		clearFiles(directory)
+		return run()
+	}
 	outcome := Outcome{
-		Node:    execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, path),
-		Native:  execute(directory, []string{"ASAN_OPTIONS=detect_leaks=0"}, 20*time.Second, binary),
-		Backend: execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, filepath.Join(directory, "program.mjs")),
+		Node: fresh(func() Run {
+			return execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, path)
+		}),
+		Native: fresh(func() Run {
+			return execute(directory, []string{"ASAN_OPTIONS=detect_leaks=0"}, 20*time.Second, binary)
+		}),
+		Backend: fresh(func() Run {
+			return execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, filepath.Join(directory, "program.mjs"))
+		}),
 	}
 	return c.judge(outcome, binary, directory)
 }
@@ -216,6 +227,7 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 	}
 	// Every program that finishes must let go of everything: the same binary again, leak detection on.
 	if outcome.Node.ExitCode == 0 {
+		clearFiles(directory)
 		leaked := execute(directory, []string{"ASAN_OPTIONS=detect_leaks=1"}, 20*time.Second, binary)
 		if leaked.ExitCode != 0 {
 			outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(string(leaked.Stderr), 20)
@@ -315,4 +327,12 @@ func tail(output []byte) []byte {
 		return output[len(output)-400:]
 	}
 	return output
+}
+
+// clearFiles removes the text files a program wrote in its directory, so the next run starts from none.
+func clearFiles(directory string) {
+	written, _ := filepath.Glob(filepath.Join(directory, "*.txt"))
+	for _, path := range written {
+		os.Remove(path)
+	}
 }

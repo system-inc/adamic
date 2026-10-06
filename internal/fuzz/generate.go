@@ -50,6 +50,18 @@ var Features = []string{
 	"number-formats",   // toExponential and toPrecision
 	"array-from",       // Array.from({ length }, callback)
 	"long-inputs",      // an array past 64 for TimSort's galloping, a string past 64 bytes for its index
+	"unions",           // a string | number, read through typeof
+	"casts",            // checked downcasts to a member of a discriminated union
+	"switch",           // switch on a number, and on a union's kind
+	"do-while",         // do...while
+	"tuples",           // a [number, string]
+	"sets",             // a Set, changed while it's iterated
+	"map-spread",       // [...table], the Map's entries
+	"normalize",        // normalize, every form
+	"console-error",    // console.error
+	"panic",            // panic, seldom
+	"files",            // writeTextFile and readTextFile
+	"generic-classes",  // a generic class, made for a number and for a string
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -156,6 +168,9 @@ func (g *generator) program() *Program {
 	add := func(statement *Statement) {
 		program.Block.Statements = append(program.Block.Statements, statement)
 	}
+	if imports := g.roundThreeImports(); imports != nil {
+		add(imports)
+	}
 	g.push()
 	add(statement("interface Holder {\n\tvalue: number;\n\tname: string;\n\tlist: number[];\n}"))
 	g.declare("holder.value", Number, true)
@@ -197,6 +212,7 @@ func (g *generator) program() *Program {
 	if g.allowed("long-inputs") {
 		g.declareLong(add)
 	}
+	g.roundThreeDeclarations(add)
 	if g.allowed("closures-deep") {
 		add(statement("const " + pendingClosures + ": (() => number)[] = [];"))
 	}
@@ -365,6 +381,11 @@ func (g *generator) statement() *Statement {
 	nested := g.loopDepth < 2 && g.statements < 60
 	if g.allowed("long-inputs") && g.chance(1, 10) {
 		return g.longStatement()
+	}
+	if g.chance(1, 5) {
+		if third := g.roundThreeStatement(nested); third != nil {
+			return third
+		}
 	}
 	if g.chance(1, 4) {
 		if widened := g.widenedStatement(nested); widened != nil {
@@ -696,6 +717,11 @@ func (g *generator) expression(t Type, depth int) *Expression {
 	if g.chance(1, 6) {
 		if widened := g.widenedExpression(t, depth); widened != nil {
 			return widened
+		}
+	}
+	if g.chance(1, 7) {
+		if third := g.roundThreeExpression(t, depth); third != nil {
+			return third
 		}
 	}
 	switch t {
