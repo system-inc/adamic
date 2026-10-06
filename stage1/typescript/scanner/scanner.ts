@@ -647,7 +647,7 @@ export class Scanner {
                 this.kind = 'PrivateIdentifier';
                 return this.kind;
             }
-            if(this.identifier(0)) {
+            if((isIdentifierStart(code) || code === 92) && this.identifier(0)) {
                 this.kind = keywords.get(this.value) ?? 'Identifier';
                 return this.kind;
             }
@@ -657,26 +657,159 @@ export class Scanner {
                 this.kind = 'NonTextFileMarkerTrivia';
                 return this.kind;
             }
-            // Scan deliberately leaves > alone until the parser asks for ReScanGreaterThanToken.
-            for(let length = code === 62 ? 1 : 3; length >= 1; length--) {
-                const spelling = this.text.slice(this.pos, this.pos + length);
-                if(spelling.length !== length) {
-                    continue;
-                }
-                if(spelling === '?.' && this.code(2) >= 48 && this.code(2) <= 57) {
-                    continue;
-                }
-                const kind = punctuators.get(spelling);
-                if(kind !== undefined && spelling !== '</' && spelling !== '`' && spelling !== '#') {
-                    this.pos += length;
-                    this.kind = kind;
-                    return kind;
-                }
+            const spelling = this.punctuation(code);
+            const kind = punctuators.get(spelling);
+            if(kind !== undefined) {
+                this.pos += spelling.length;
+                this.kind = kind;
+                return kind;
             }
             this.error(1127, this.pos, code > 0xffff ? 2 : 1);
             this.advance(code);
             this.kind = 'Unknown';
             return this.kind;
+        }
+    }
+
+    // Character dispatch avoids allocating speculative slices for every punctuation token.
+    punctuation(code: number): string {
+        switch(code) {
+            case 33:
+                if(this.code(1) === 61 && this.code(2) === 61) {
+                    return '!==';
+                }
+                if(this.code(1) === 61) {
+                    return '!=';
+                }
+                return '!';
+            case 37:
+                if(this.code(1) === 61) {
+                    return '%=';
+                }
+                return '%';
+            case 38:
+                if(this.code(1) === 38 && this.code(2) === 61) {
+                    return '&&=';
+                }
+                if(this.code(1) === 61) {
+                    return '&=';
+                }
+                if(this.code(1) === 38) {
+                    return '&&';
+                }
+                return '&';
+            case 42:
+                if(this.code(1) === 42 && this.code(2) === 61) {
+                    return '**=';
+                }
+                if(this.code(1) === 61) {
+                    return '*=';
+                }
+                if(this.code(1) === 42) {
+                    return '**';
+                }
+                return '*';
+            case 43:
+                if(this.code(1) === 61) {
+                    return '+=';
+                }
+                if(this.code(1) === 43) {
+                    return '++';
+                }
+                return '+';
+            case 45:
+                if(this.code(1) === 61) {
+                    return '-=';
+                }
+                if(this.code(1) === 45) {
+                    return '--';
+                }
+                return '-';
+            case 46:
+                if(this.code(1) === 46 && this.code(2) === 46) {
+                    return '...';
+                }
+                return '.';
+            case 47:
+                if(this.code(1) === 61) {
+                    return '/=';
+                }
+                return '/';
+            case 60:
+                if(this.code(1) === 60 && this.code(2) === 61) {
+                    return '<<=';
+                }
+                if(this.code(1) === 61) {
+                    return '<=';
+                }
+                if(this.code(1) === 60) {
+                    return '<<';
+                }
+                return '<';
+            case 61:
+                if(this.code(1) === 61 && this.code(2) === 61) {
+                    return '===';
+                }
+                if(this.code(1) === 61) {
+                    return '==';
+                }
+                if(this.code(1) === 62) {
+                    return '=>';
+                }
+                return '=';
+            case 62:
+                return '>';
+            case 63:
+                if(this.code(1) === 63 && this.code(2) === 61) {
+                    return '??=';
+                }
+                if(this.code(1) === 63) {
+                    return '??';
+                }
+                if(this.code(1) === 46 && !(this.code(2) >= 48 && this.code(2) <= 57)) {
+                    return '?.';
+                }
+                return '?';
+            case 94:
+                if(this.code(1) === 61) {
+                    return '^=';
+                }
+                return '^';
+            case 124:
+                if(this.code(1) === 124 && this.code(2) === 61) {
+                    return '||=';
+                }
+                if(this.code(1) === 61) {
+                    return '|=';
+                }
+                if(this.code(1) === 124) {
+                    return '||';
+                }
+                return '|';
+            case 126:
+                return '~';
+            case 64:
+                return '@';
+            case 40:
+                return '(';
+            case 41:
+                return ')';
+            case 91:
+                return '[';
+            case 93:
+                return ']';
+            case 123:
+                return '{';
+            case 125:
+                return '}';
+            case 59:
+                return ';';
+            case 58:
+                return ':';
+            case 44:
+                return ',';
+            default:
+                return '';
         }
     }
 
