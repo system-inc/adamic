@@ -10,7 +10,7 @@ func TestLibraryLanguageBoundaries(t *testing.T) {
 		{"array", `for(const key in [1,2]) { console.log(key); }`, "for...in over an array"},
 		{"hidden array", `const value: {} = [1,2]; for(const key in value) { console.log(key); }`, "plain-object origin"},
 		{"parameter", `function keys(value: {}): void { for(const key in value) { console.log(key); } } keys({a:1});`, "plain-object origin"},
-		{"prototype", `const value = {__proto__: {inherited: 1}, own: 2}; for(const key in value) { console.log(key); }`, "plain-object origin"},
+		{"prototype", `const value = {__proto__: {inherited: 1}, own: 2}; for(const key in value) { console.log(key); }`, "refuses __proto__ in an object literal"},
 		{"optional object", `const value: {x?: number} = {}; for(const key in value) { console.log(key); }`, "plain-object origin"},
 		{"optional spread", `const source: {x?: number} = {}; const value = {...source, x:1}; for(const key in value) { console.log(key); }`, "plain-object origin"},
 		{"destructured write", `let value: {} = {}; for(const key in value) { console.log(key); } [value] = [[1,2]];`, "plain-object origin"},
