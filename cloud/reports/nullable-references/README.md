@@ -95,3 +95,42 @@ go test -count=1 -timeout=30m ./internal/oracle -run '^TestCountsAreRecorded$' -
 ```
 
 This follow-up adds a fifth fixture row. Existing rows remain unchanged.
+
+
+## Inline triple-empty reads
+
+The branch's existing expression guard rejects the integration probe. Added
+`TestNullableReferenceReadsNeedATagInEveryExpression` checks its complete body and
+independent strict comparisons, template spelling, typeof, argument passing and
+attempts to guard a repeated nullable Map get with has() or !== undefined. It
+requires NotYet with the named empty-case-tag reason. The full lowering package
+passed in 14.838 seconds. Disabling the own-type guard in nullableUse and the
+matching typeOf guard makes this named test fail with `got <nil>` for forbidden
+reads. Compiler sources were restored; no build failure counted.
+
+The new sound-neighbor fixture passed uncached in 1.121 seconds, including both
+backends, ASan/UBSan, release and leak checks. It covers a Map<K, R> get narrowed
+with !== undefined and Map<K, R | null> value iteration. The checker does not
+narrow Map get through has() or across repeated calls. An unnarrowed nullable get
+remains NotYet, including when it is the operand of an undefined guard. This
+unit does not invent a presence refinement that the checker has not proved.
+
+```sh
+go test -count=1 -timeout=30m ./internal/lower > /tmp/nullable-inline-lower.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v ./internal/oracle -run '^TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references_map_narrowed' > /tmp/nullable-inline-neighbor.log 2>&1
+go test -count=1 -timeout=30m ./internal/oracle -run '^TestCountsAreRecorded$' -args -update-counts > /tmp/nullable-inline-counts.log 2>&1
+```
+
+The counts update passed in 24.826 seconds. Only the sixth new fixture row was
+added; all previously recorded rows are unchanged.
+
+
+The same named regression was copied into a detached worktree of main at
+`50045bd797650a34aa40b55ad751b6a667a6ab31`, with its identical cohere gitlink
+`715ba94f3608a6500086b1076ce5cb7e51b836db` reused from this workspace. The focused
+command `go test -count=1 ./internal/lower -run
+'^TestNullableReferenceReadsNeedATagInEveryExpression$'` failed semantically:
+main lowered the full integration probe and individual comparison/typeof cases
+successfully (`got <nil>`). See `inline-main.log`. This is an expected test failure,
+not a build failure. The existing branch expression guard already supplies the
+fix; this follow-up adds regression coverage rather than another special case.

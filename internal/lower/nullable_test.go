@@ -61,3 +61,26 @@ func TestNullableReferencesKeepAssertionsAndLooseEqualityRefused(t *testing.T) {
 		}
 	}
 }
+
+func TestNullableReferenceReadsNeedATagInEveryExpression(t *testing.T) {
+	t.Parallel()
+	prelude := "const seen = new Map<string, RegExpExecArray | null>(); seen.set('miss', /z/.exec('abc')); const found: (RegExpExecArray | null)[] = []; found.push(/z/.exec('abc')); "
+	for _, observed := range []string{
+		"console.log(`absent: undefined=${seen.get('absent') === undefined} null=${seen.get('absent') === null}`); console.log(`miss: undefined=${seen.get('miss') === undefined} null=${seen.get('miss') === null}`); console.log(`past end: undefined=${found[3] === undefined} null=${found[3] === null}`); console.log(`stored: undefined=${found[0] === undefined} null=${found[0] === null}`);",
+		"console.log(`${seen.get('absent') === null}`);",
+		"console.log(`${seen.get('miss') === undefined}`);",
+		"console.log(`${found[3] === null}`);",
+		"console.log(`${found[0] === undefined}`);",
+		"console.log(`${seen.get('miss')}`);",
+		"console.log(typeof found[0]);",
+		"function pass<T>(v: T): string { return typeof v; } console.log(pass(seen.get('miss')));",
+		"if (seen.has('miss')) { console.log(`${seen.get('miss') === null}`); }",
+		"if (seen.get('miss') !== undefined) { console.log(`${seen.get('miss') === null}`); }",
+	} {
+		_, err := lowerSource(t, prelude+observed)
+		var gap *NotYet
+		if !errors.As(err, &gap) || !strings.Contains(err.Error(), "empty-case tag") {
+			t.Errorf("%s: got %v, want the named empty-case tag reason", observed, err)
+		}
+	}
+}

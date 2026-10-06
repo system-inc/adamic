@@ -7,6 +7,7 @@ func init() {
 		"nullable_references_json.a",
 		"nullable_references_slots.a",
 		"nullable_references_typeof_match.a",
+		"nullable_references_map_narrowed.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path    string

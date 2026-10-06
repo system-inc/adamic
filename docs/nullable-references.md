@@ -95,9 +95,28 @@ before proceeding. A compiler or C build failure is rejected as evidence.
 | Ignore nullable views | TestNullableReferenceViewsCannotChangeTheEmptyCase |
 | Treat empty string as truthy | Node stdout comparison |
 
-The five new fixture rows are the only changes to `internal/oracle/counts.md`.
+The six new fixture rows are the only changes to `internal/oracle/counts.md`.
 No existing program's recorded counts changed.
 
 The typeof match fixture also holds null `.match()` and `.exec()` array results
 to Node: the output is `object true`, `object`, `object`. A targeted typeof-null
 mutant makes both backends disagree with that fixture.
+
+
+## Inline reads and narrowing
+
+The tag refusal applies to every expression, before comparison lowering or other
+observations. A missing `Map<K, R | null>.get()` and an index read of `(R | null)[]`
+have type R | null | undefined, even when their immediate use is a strict equality,
+template, typeof or argument. They are NotYet with the same named tag reason.
+`TestNullableReferenceReadsNeedATagInEveryExpression` holds these cases, including
+the integration match-or-null probe.
+
+The current Map declaration's has() returns boolean and does not narrow get().
+TypeScript also does not retain narrowing across repeated get() calls. Neither is
+an exception to the expression guard. A local triple-empty value remains refused,
+including before an undefined test. The sound neighbor therefore tests a
+Map<K, R> read (one undefined case) narrowed with !== undefined, and direct
+iteration over Map<K, R | null> values (one null case). These compile and agree
+with Node. Supporting a nullable get() with a proven presence refinement needs a
+checker-visible refinement; it is not inferred merely from has().
