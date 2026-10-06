@@ -23,7 +23,12 @@ var recoveryCases = []string{
 // Each process has its own deadline. Inputs and answers survive a failing test.
 func recoveryRun(t *testing.T, artifact, name string, args ...string) ([]byte, error) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	return recoveryRunLimit(t, 2*time.Second, artifact, name, args...)
+}
+
+func recoveryRunLimit(t *testing.T, limit time.Duration, artifact, name string, args ...string) ([]byte, error) {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), limit)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
 	output, err := os.Create(artifact + ".stdout")
@@ -39,7 +44,7 @@ func recoveryRun(t *testing.T, artifact, name string, args ...string) ([]byte, e
 	command.Stdout, command.Stderr = output, stderr
 	err = command.Run()
 	if ctx.Err() != nil {
-		err = fmt.Errorf("timeout after 2s: %w", ctx.Err())
+		err = fmt.Errorf("timeout after %s: %w", limit, ctx.Err())
 	}
 	data, readErr := os.ReadFile(output.Name())
 	if readErr != nil {

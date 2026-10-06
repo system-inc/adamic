@@ -10,6 +10,7 @@ import (
 	"sync"
 	"sync/atomic"
 	"testing"
+	"time"
 )
 
 // Four workers each run independently bounded subprocesses. The corpus pin
@@ -78,7 +79,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		planned += count
 		t.Logf("planned %s: %d tokens, cutoff stride %d, edit stride %d, %d inputs", sourcePath, len(tokens), stride, editStride, count)
 	}
-	t.Logf("planned all %d compiler files: %d inputs", files, planned)
+	t.Logf("planned all %d compiler files: %d inputs; each Go/Node/native parse and print has a 10s deadline", files, planned)
 	var checked atomic.Int64
 	type comparison struct {
 		position, index  int
@@ -133,6 +134,23 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 			compare("duplicate", i+1, duplicated)
 		}
 	}
+	type timing struct {
+		duration time.Duration
+		path     string
+	}
+	slowest := map[string]timing{}
+	var timingLock sync.Mutex
+	measure := func(label, path, command string, args ...string) ([]byte, error) {
+		started := time.Now()
+		data, err := recoveryRunLimit(t, 10*time.Second, path+"."+label, command, args...)
+		duration := time.Since(started)
+		timingLock.Lock()
+		if duration > slowest[label].duration {
+			slowest[label] = timing{duration, path}
+		}
+		timingLock.Unlock()
+		return data, err
+	}
 	var cursor atomic.Int64
 	var stopped atomic.Bool
 	var workers sync.WaitGroup
@@ -152,7 +170,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 						stopped.Store(true)
 						t.Fatal(err)
 					}
-					want, err := recoveryRun(t, path+".go", oracle, path, "--whole", "--recovery")
+					want, err := measure("go", path, oracle, path, "--whole", "--recovery")
 					if err != nil {
 						stopped.Store(true)
 						t.Fatalf("Go %s: %v; saved input %s", job.sourcePath, err, path)
@@ -165,7 +183,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 						{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), path, "--whole", "--recovery"}},
 						{"native", binary, []string{path, "--whole", "--recovery"}},
 					} {
-						got, err := recoveryRun(t, path+"."+side.name, side.command, side.args...)
+						got, err := measure(side.name, path, side.command, side.args...)
 						if err != nil {
 							failed = true
 							t.Errorf("%s %s %s token %d: %v; saved input %s", side.name, job.sourcePath, job.mode, job.index, err, path)
@@ -186,7 +204,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 							return
 						}
 					}
-					if count%256 == 0 {
+					if count%64 == 0 {
 						t.Logf("checked %d of %d scheduled inputs", count, len(jobs))
 					}
 				}()
@@ -194,6 +212,10 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		}()
 	}
 	workers.Wait()
+	for _, label := range []string{"go", "Node", "native"} {
+		sample := slowest[label]
+		t.Logf("slowest %s parse and print: %s; input %s", label, sample.duration, sample.path)
+	}
 	if t.Failed() {
 		t.Fatalf("comparison stopped after checking %d inputs; failures retained", checked.Load())
 	}

@@ -514,3 +514,18 @@ Block after reporting the missing closing brace. Try recovery now always
 parses finally when no catch exists, reporting 1472 unless position
 deduplication suppresses it, and retaining the empty block. Six focused
 additions and preceding cases pass in 33.092s; cohere passes.
+
+## Continued comparison: large-output deadlines
+
+Input 1725 (checker.ts cut after token 117218, 1,046,858 source bytes) failed
+the initial two-second native deadline while printing: native had emitted
+5,175,461 of Go's 5,201,071 output bytes. Retesting with a fixed ten-second
+parse-and-print deadline passes exact Go/Node/native bytes. The corpus uses
+that same deadline for all three runtimes; the small probes and loop mutants
+retain two seconds. The shared deadline helper still kills the seeded EOF
+loop in both runtimes: filtered mutant test passes in 27.906s. Progress and
+slowest per-runtime durations are recorded without changing the corpus.
+The saved timeout input is retained separately at
+/tmp/adamic-parser-timeout-evidence/checker-cut-117218.ts, SHA-256
+ebca5fcd4795f2c463b828006461a8a101bb52d40223a05ad2cf3a69ec0b4281.
+The wider continuation remains in progress; this is not a full corpus pass.
