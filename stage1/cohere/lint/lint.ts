@@ -208,6 +208,7 @@ export class Linter {
     readonly scanner: Scanner;
     readonly findings: Finding[] = [];
     readonly rejected: string[] = [];
+    readonly fixesByRule = new Map<string, number>();
     literalEnds: number[] = [];
     anchors: boolean[] = [];
     parents: number[] = [];
@@ -1329,6 +1330,7 @@ export class Linter {
         }
     }
     fixed(): string {
+        this.fixesByRule.clear();
         let current = this.source;
         let findings = this.findings;
         for(let pass = 0; pass < 10; pass++) {
@@ -1363,6 +1365,7 @@ export class Linter {
             let result = current;
             for(let index = applied.length - 1; index >= 0; index--) {
                 const finding = applied[index] ?? panic('missing fix');
+                this.fixesByRule.set(finding.rule, (this.fixesByRule.get(finding.rule) ?? 0) + 1);
                 result = result.slice(0, finding.editStart) + finding.replacement + result.slice(finding.editEnd);
             }
             const parser = new Parser(result, 'fixed source');

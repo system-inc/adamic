@@ -1,8 +1,10 @@
-The lint output unit is blocked at the current scanner branch baseline.
-Three minimal programs hold the exit, environment, and clock gaps to Node.
-Three sanitized workaround mutants finish cleanly but fail the original Node observations.
-No output renderer, summary port, or full corpus output parity is claimed.
-The pinned Go source has human, verbose, and NDJSON modes; no GitHub annotation mode was found.
+The exit and environment gaps are closed by codex/process-exit-and-tty, merged into this branch.
+The probes now use the implemented global prelude API rather than local ambient declarations.
+Human, verbose finding, NDJSON, and summary renderers now have native parity tests.
+The native clock and the full live CLI/corpus contract remain separate coverage limits.
+The report below records the earlier blocked baseline; OUTPUT_REPORT.md records the resumed work.
+
+# Historical baseline diagnosis
 
 # Baseline and scope
 
