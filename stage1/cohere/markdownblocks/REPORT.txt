@@ -1,8 +1,141 @@
-Two native slices are green: AST preprocessing and tokenizer input chunking.
-5,099 AST contexts and 79,873 input-chunk cases agree with Go and the original fork.
-Six new output mutants caught; sanitizer, leak and compiler checks pass.
-Chunking: native 130k, Go 157k, original Node 109k texts/s, transport included.
-Printer AstPath, tokenizer events and full mdast construction remain unfinished.
+Native Markdown printer AstPath is green on the existing branch.
+4,975 documents agree with actual Go and fork path classes; all 876 files included.
+Three native output mutants caught; source/backend, sanitizers and leaks pass.
+Path observation rates: Go642.1, native386.1, fork246.3 documents/s; parsing excluded.
+Tokenizer events and full mdast construction remain unfinished; this unit is partial.
+
+Native printer AstPath slice, October 6, 2026
+
+Scope and oracle
+
+Built astPath.ts, pathObserve.ts and testdata/path_probe.ts. Numeric AST identities
+and tagged property/index/value frames preserve the alternating AstPath stack.
+Current/root/parent/grandparent, siblings, array predicates, ancestors and match,
+scoped call/callParent and each/map are native. Map returns numeric IDs; callback
+results use concrete string, number and boolean specializations. Normal callback
+restoration is held; fatal-panic exception unwinding is not claimed.
+
+The Go overlay calls printing.NewAstPath[*mdast.Node] and its actual methods.
+The fork adapter exposes actual class Mt by reference at a checked unique anchor
+in the pinned standalone.js, changing no class implementation or constants.
+Its installed bytes match the pinned original. Version3.9.6 as in the existing
+full-source adapter. Node/array identities are canonical preorder numeric IDs.
+The Go source driver parses and preprocesses ASTs; the fair second Go driver
+reconstructs the identical transported AST used by native and original Node.
+Path decisions are independently compared, not replayed Go path observations.
+Source Node and the JS backend also execute the new native source implementation.
+
+Corpus: 4,943 accumulated documents plus32 nested-quote cases, depth1 through32.
+876 physical repository/submodule files, with all generated layout documents.
+Per-node getter snapshots, full stacks, ancestor predicates and boundary cases;
+parent-node call/map/each callbacks and arguments, child array identities/results,
+restored stacks and up to3 valid callParent levels. Output272,266,694 bytes.
+Markdown children traversal and Go typed node access are the scope. Invalid parent
+counts beyond root, mutation of child arrays, arbitrary scalar JS object fields,
+attached comment nodes and exception unwinding are not covered. The existing
+layout DSL's path facts are still supplied by Go. This is independently native
+AstPath, not an integrated source-file native Markdown formatter.
+
+Actual oracle discrepancy and compiler witnesses
+
+Go's deep missing-property key is absent; the fork returns numeric0. The complete
+outputs and programs are in GAPS.md; --key-gap modes execute the actual classes,
+and the gate asserts both outputs. The additional native proving program gaps/14_missing_path_key.ts
+prints the complete Go result on source Node, native and backend, with sanitizers
+and leaks checked. The common-domain comparison includes a
+single absent-property call and out-of-range child indexes. No false simultaneous
+agreement is claimed for the deeper witness. All original7 embedding disagreements
+and14 complete outputs remain intact, with embedding off as the contract.
+
+Six new compiler proving programs, gaps/8 through13, preserve source Node truth:
+generic callback-result method, mixed string/number array, multi-value push,
+function expression and inferred never[] are NotYet with exact diagnoses. Array
+indexed growth compiles but both native/backend panic with exit70 where Node
+extends the array and prints1. Production uses concrete callback specializations,
+tagged frames, one push per frame, an explicit map loop and typed empty arrays.
+The observed growth panic is recorded separately as a gap, not adopted as the
+production oracle. All exact outputs, diagnostics and workaround scopes are in
+GAPS.md. No compiler-owned or prior inline files were changed.
+
+Mutants and measurements
+
+All three native output-only mutants compile, exit0 with empty stderr and fail
+only exact observed bytes:
+- array frame: siblings at(-3) becomes at(-5), firstdifference268;
+- ancestor order: first nodeStackIndex index-=2 becomes index-=4, difference191;
+- call restore: first string-call truncate(length) becomes length+2, difference260.
+These add3 to the prior30 native output mutants across Markdown slices, total33.
+
+Three runs each on identical AST transport, full path observation output, startup
+and I/O included, parser excluded: actualGo642.1/native386.1/originalNode246.3
+documents/s. Native is1.57x Node and0.60x Go on this workload. These are path
+observations, not texts/s of a full Markdown formatter. An earlier run overlapped
+other work and measured native311.2/Node179.3, with no fair Go transport benchmark;
+the final three-sided measurement above supersedes it.
+
+Commands and outputs
+
+Existing branch codex/stage1-markdown-blocks, parentc22c7ebc34a046b7d92e09c67da527fd1daa04fc.
+User explicitly requested the same branch. git fetch origin succeeded; no reset.
+bash cloud/setup.sh > /tmp/markdown-path-setup.log 2>&1
+Go0s, clang0s, Node0s, submodules0s, cachewarm16s, total16s; nproc5.
+cpu.max400000100000,17.6GB. Go1.27.1, Node24.19.0, clang20.1.8.
+source /workspace/adamic-tools/env.sh in every toolchain shell.
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork ADAMIC_PATH_KEEP=/tmp/markdown-path-corpus go test ./stage1/cohere/markdownblocks -run '^TestMarkdownAstPath$' -count=1 -v -timeout 20m
+/tmp/markdown-path-final2.log PASS606.420s; all4975 contexts and272266694bytes.
+ASan/UBSan native, source Node, backend, actual original fork, both actual Go
+routes and leak check pass. Three mutants caught, as above. Retained numeric AST
+transport and Go expected bytes: /tmp/markdown-path-corpus/{native,want}.txt.
+
+Earlier diagnostic gates: test.log found the deep missing-key Go/fork witness;
+test2.log found indexed-array growth; test3.log found a missing post-call snapshot
+in the native TEST observer, which was added. Production restoration was correct.
+test4.log PASS566.361s,4975contexts/all3mutants; final2 adds the fairGo benchmark.
+An initial final.log did not build because a test benchmark table was assigned
+an observation-result entry; corrected before final2. These were not green runs.
+
+go test ./stage1/cohere/markdownblocks -run '^(TestParserRepresentationProbes|TestArrayGrowthWitness)$' -count=1 -v
+/tmp/markdown-path-gaps-final.log PASS1.028s; then the native key witness was added.
+/tmp/markdown-path-gaps-complete.log PASS2.051s, including all proving programs.
+/tmp/cssstrings-cohere --fix <the3newproductionTSpaths>
+/tmp/cssstrings-cohere --no-cache --no-fix <the3newproductionTSpaths>
+/tmp/markdown-path-lint.log:276rules,3checked,zero,100%Adamic-ready.
+
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(classes.a|class_as_interface.a|objects.a|maybe_number_slots.a|reuse_arrays.a|maps_and_text.a|array_from.a)$' -count=1 -v -timeout 10m
+/tmp/markdown-path-compiler-oracle.log PASS2.231s,7fixtures; native21misses,
+Node14misses,zero cache hits. go vet ./...: /tmp/markdown-path-vet.log empty.
+gofmt -l stage1/cohere/markdownblocks and git diff --check: empty logs.
+The complete repository gate and the full expanded package gate were not run;
+the exact scoped path/gap/layout/audit/compiler checks are recorded here.
+
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test ./stage1/cohere/markdownblocks -run '^(TestMarkdownWhitespaceLayout|TestWholeDocumentOraclePreflight)$/^$' -count=1 -v -timeout 20m
+/tmp/markdown-path-integration.log PASS198.649s. Parent fixtures execute despite
+Go's final [no tests to run] notice for filtered subtests. Native layout and all
+oracles agree on4943documents,207521whitespace nodes in6modes; sanitizer/leaks pass.
+953-document audit: off953/953, auto942/953 with11named gaps. All7original physical
+witnesses and14complete outputs retained. This invocation filters out historical
+layout/preflight mutants; all3new path mutants ran in the full path gate above.
+
+Implementation commit953c863970776622d8e26c68ede34d700be95e9f:
+Port Markdown printer AstPath to native tagged frames.
+Report commit follows; its hash and the verified push appear in the final response.
+No PR. The only changed territory is stage1/cohere/markdownblocks/.
+
+Remaining requested work
+
+The tokenizer event/state engine, construct attempts and rollback, resolvers,
+subtokenization and full mdast construction were read and surveyed but NOT built.
+The existing recursive-closure witnesses still explain why their literal source
+representation cannot lower; top-level noncapturing recursive states do work.
+Numeric state/frame/construct arenas are a possible redesign, not an impossibility
+claim. No event-layer or mdast-layer mutant is claimed in this partial unit.
+AstPath and the prior native preprocessor are still standalone; the full layout
+driver continues to use Go parsing/preprocessing/path fixtures. No complete native
+Markdown source formatter, full-parser parity or full-parser speed is claimed.
+
+Historical reports follow; their unfinished-path statements describe prior slices.
 
 
 Native tokenizer input chunking slice, October 6, 2026
