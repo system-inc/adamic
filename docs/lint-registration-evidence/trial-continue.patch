@@ -1,0 +1,82 @@
+diff --git a/stage1/cohere/lint/rules/no-continue/messages.ts b/stage1/cohere/lint/rules/no-continue/messages.ts
+new file mode 100644
+index 0000000..e3f34e4
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-continue/messages.ts
+@@ -0,0 +1,2 @@
++export const message =
++    'This loop uses `continue`, which jumps to the next iteration from the middle of the body. A reader tracing what happens on one pass has to hold every `continue` above their position in mind, because any of them may have skipped the code they are looking at, and in a `for` loop the update expression still runs while the rest of the body does not. Inverting the condition and wrapping the remainder in an `if` says the same thing with the skip visible in the shape of the code rather than in a jump.';
+diff --git a/stage1/cohere/lint/rules/no-continue/mutant.json b/stage1/cohere/lint/rules/no-continue/mutant.json
+new file mode 100644
+index 0000000..7dbc7b9
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-continue/mutant.json
+@@ -0,0 +1,5 @@
++{
++  "name": "no-continue diagnostic mutant",
++  "from": "'unexpected'",
++  "to": "'wrong-id'"
++}
+diff --git a/stage1/cohere/lint/rules/no-continue/oracle.go b/stage1/cohere/lint/rules/no-continue/oracle.go
+new file mode 100644
+index 0000000..0ab1b23
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-continue/oracle.go
+@@ -0,0 +1,11 @@
++//go:build lintoracle
++
++package main
++
++import (
++	"github.com/system-inc/cohere/internal/lint/rule"
++	rules "github.com/system-inc/cohere/internal/lint/rules/core"
++)
++
++func oracleNoContinue() rule.Rule                 { return rules.NoContinue }
++func oracleNoContinueOptions(fields []string) any { return nil }
+diff --git a/stage1/cohere/lint/rules/no-continue/rule.json b/stage1/cohere/lint/rules/no-continue/rule.json
+new file mode 100644
+index 0000000..1e3b823
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-continue/rule.json
+@@ -0,0 +1,12 @@
++{
++  "name": "no-continue",
++  "kinds": [
++    "ContinueStatement"
++  ],
++  "visit": "visit",
++  "factory": "create",
++  "class": "Rule",
++  "oracle": "oracleNoContinue",
++  "upstreamPackage": "core",
++  "upstreamTest": "TestNoContinue"
++}
+diff --git a/stage1/cohere/lint/rules/no-continue/rule.ts b/stage1/cohere/lint/rules/no-continue/rule.ts
+new file mode 100644
+index 0000000..6772f77
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-continue/rule.ts
+@@ -0,0 +1,15 @@
++import type { RuleContext } from '../../context.ts';
++import { message } from './messages.ts';
++
++export class Rule {
++    readonly context: RuleContext;
++    constructor(context: RuleContext) {
++        this.context = context;
++    }
++    visit(index: number): void {
++        this.context.report(index, 'no-continue', 'unexpected', message, '', '', '');
++    }
++}
++export function create(context: RuleContext): Rule {
++    return new Rule(context);
++}
+diff --git a/stage1/cohere/lint/rules/no-continue/testdata/witness.ts.txt b/stage1/cohere/lint/rules/no-continue/testdata/witness.ts.txt
+new file mode 100644
+index 0000000..ac7be08
+--- /dev/null
++++ b/stage1/cohere/lint/rules/no-continue/testdata/witness.ts.txt
+@@ -0,0 +1 @@
++for(let i = 0; i < 2; i++) { continue; }
