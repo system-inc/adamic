@@ -14,7 +14,7 @@ Unknown doc kinds and forward or cyclic edges panic. `width.ts` and `widthTables
 proven JSON slice's Unicode width implementation, copied from `origin/codex/stage1-json-format`.
 
 `expressions.ts` reads the real parser's indexed nodes. It implements literals, ordinary and logical
-binary operators, precedence and parentheses, unary and update operators, arrays including holes
+binary operators, sequence expressions, assignments, precedence and parentheses, unary and update operators, arrays including holes
 and spreads, property and computed accesses including optional access, non-null assertions, and
 plain-identifier calls and constructors without type arguments or expanded array arguments. It
 includes cohere's logical-tree rebalancing and protection against accidentally making a string
@@ -92,3 +92,12 @@ parent context's indentation. Calls, array items, unary operands and member rece
 The expanded corpus contains 151,139 fragments from the same 197 source files, including 2,415
 generated cases. Of those, 1,212 are sequence cases: 12 boundaries, 240 width cases, and 960
 compositions with the existing expression families. See the sequence increment in VALIDATION.md.
+
+## Assignment increment
+
+The expression driver now formats assignments and compound assignments, including all 16
+operators, short and long chains, and assignment-sensitive member and binary layout. Destructuring
+targets are declined explicitly. The assignment corpus has 150,713 maximal fragments from the
+same 197 files, including 9,286 generated cases. The 6,871 added assignment cases cover every
+operator, five target layouts, 15 right-hand sides, five outer contexts, and chains up to 20
+segments. A lower total fragment count reflects newly accepted larger parents, not omitted files.

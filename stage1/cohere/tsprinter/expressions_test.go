@@ -103,6 +103,9 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 	}
 	script, _ := filepath.Abs("testdata/expressions.mjs")
 	compare("Prettier", execute(t, nil, "node", script, library, specs))
+	embeddedScript, _ := filepath.Abs("testdata/embedded.mjs")
+	bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
+	compare("embedded Prettier", execute(t, nil, "node", embeddedScript, bundles, specs))
 	gapDirectory := filepath.Dir(cases)
 	gapWant, err := os.ReadFile(gapDirectory + "/gap-answers.txt")
 	if err != nil {

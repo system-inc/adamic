@@ -6,8 +6,42 @@ import { Documents, type SettingsOptions } from './doc.ts';
 import { numberText, stringText } from './literals.ts';
 export type ResultType =
     { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'NotYet'; readonly reason: string };
+const assignmentOperators: readonly string[] = [
+    '=',
+    '+=',
+    '-=',
+    '*=',
+    '/=',
+    '%=',
+    '**=',
+    '<<=',
+    '>>=',
+    '>>>=',
+    '&=',
+    '|=',
+    '^=',
+    '&&=',
+    '||=',
+    '??=',
+];
 const operators = new Map<string, string>([
     ['CommaToken', ','],
+    ['EqualsToken', '='],
+    ['PlusEqualsToken', '+='],
+    ['MinusEqualsToken', '-='],
+    ['AsteriskEqualsToken', '*='],
+    ['SlashEqualsToken', '/='],
+    ['PercentEqualsToken', '%='],
+    ['AsteriskAsteriskEqualsToken', '**='],
+    ['LessThanLessThanEqualsToken', '<<='],
+    ['GreaterThanGreaterThanEqualsToken', '>>='],
+    ['GreaterThanGreaterThanGreaterThanEqualsToken', '>>>='],
+    ['AmpersandEqualsToken', '&='],
+    ['BarEqualsToken', '|='],
+    ['CaretEqualsToken', '^='],
+    ['AmpersandAmpersandEqualsToken', '&&='],
+    ['BarBarEqualsToken', '||='],
+    ['QuestionQuestionEqualsToken', '??='],
     ['PlusToken', '+'],
     ['MinusToken', '-'],
     ['AsteriskToken', '*'],
@@ -152,6 +186,16 @@ export class Expressions {
                 break;
             case 'BinaryExpression': {
                 if(this.operator(id) === '') return this.node(node.children[1] ?? panic('missing binary token')).kind;
+                if(
+                    this.isAssignment(id) &&
+                    ![
+                        'Identifier',
+                        'PropertyAccessExpression',
+                        'ElementAccessExpression',
+                        'NonNullExpression',
+                    ].includes(this.node(this.child(id, 0)).kind)
+                )
+                    return 'assignment-pattern';
                 const left = this.unsupported(node.children[0] ?? panic('missing left'));
                 return left !== '' ? left : this.unsupported(node.children[2] ?? panic('missing right'));
             }
@@ -255,7 +299,9 @@ export class Expressions {
             return role === 'object' || role === 'callee' || outer.kind === 'NonNullExpression';
         }
         if(node.kind === 'BinaryExpression') {
+            if(this.isAssignment(index)) return !this.isAssignment(parent);
             if(this.operator(index) === ',') return true;
+            if(this.isAssignment(parent)) return false;
             if(outer.kind === 'BinaryExpression') {
                 const operator = this.operator(index);
                 const other = this.operator(parent);
@@ -280,6 +326,143 @@ export class Expressions {
                 ].includes(outer.kind)
             );
         }
+        return false;
+    }
+    isAssignment(index: number): boolean {
+        if(index < 0 || this.node(index).kind !== 'BinaryExpression') return false;
+        return assignmentOperators.includes(this.operator(index));
+    }
+    inlineLogical(index: number): boolean {
+        return (
+            this.node(index).kind === 'BinaryExpression' &&
+            ['&&', '||', '??'].includes(this.operator(index)) &&
+            this.node(this.child(index, 2)).kind === 'ArrayLiteralExpression' &&
+            this.node(this.child(index, 2)).children.length > 0
+        );
+    }
+    shortArgument(index: number, preferSingle = true): boolean {
+        const node = this.node(index);
+        const threshold = this.docs.settings.printWidth * 0.25;
+        const raw = this.source.slice(node.pos, node.end).trim();
+        switch(node.kind) {
+            case 'ThisKeyword':
+                return true;
+            case 'Identifier':
+                return node.text.length <= threshold;
+            case 'NumericLiteral':
+            case 'BigIntLiteral':
+            case 'NullKeyword':
+            case 'TrueKeyword':
+            case 'FalseKeyword':
+                return true;
+            case 'RegularExpressionLiteral': {
+                const pattern = raw.slice(1, raw.lastIndexOf('/'));
+                return pattern === '' || pattern.length <= threshold;
+            }
+            case 'StringLiteral':
+                return stringText(raw, false, preferSingle).length <= threshold;
+            case 'NoSubstitutionTemplateLiteral':
+                return raw.slice(1, -1).length <= threshold && !raw.includes('\n');
+            case 'PrefixUnaryExpression':
+                if(['++', '--'].includes(this.operator(index))) return false;
+                if(
+                    ['+', '-'].includes(this.operator(index)) &&
+                    this.node(this.child(index, 0)).kind === 'NumericLiteral'
+                )
+                    return true;
+                return this.shortArgument(this.child(index, 0), false);
+            case 'DeleteExpression':
+            case 'VoidExpression':
+            case 'TypeOfExpression':
+                return this.shortArgument(this.child(index, 0), false);
+            case 'CallExpression':
+                return (
+                    !node.optional &&
+                    node.list === 0 &&
+                    this.node(this.child(index, 0)).kind === 'Identifier' &&
+                    this.node(this.child(index, 0)).text.length <= threshold - 2
+                );
+            default:
+                return false;
+        }
+    }
+    poorlyBreakable(index: number, deep = false): boolean {
+        const node = this.node(index);
+        if(node.kind === 'NonNullExpression') return this.poorlyBreakable(this.child(index, 0), deep);
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression')
+            return this.poorlyBreakable(this.child(index, 0), true);
+        if(node.kind === 'CallExpression') {
+            if(node.list !== 0 && !(node.list === 1 && this.shortArgument(this.child(index, node.children.length - 1))))
+                return false;
+            return this.poorlyBreakable(this.child(index, 0), true);
+        }
+        return deep && (node.kind === 'Identifier' || node.kind === 'ThisKeyword');
+    }
+    breakAfterOperator(index: number): boolean {
+        const node = this.node(index);
+        if(node.kind === 'BinaryExpression' && !this.isAssignment(index) && !this.inlineLogical(index)) return true;
+        let current = index;
+        while(
+            [
+                'PrefixUnaryExpression',
+                'DeleteExpression',
+                'VoidExpression',
+                'TypeOfExpression',
+                'NonNullExpression',
+            ].includes(this.node(current).kind) &&
+            !['++', '--'].includes(this.operator(current))
+        )
+            current = this.child(current, 0);
+        return this.node(current).kind === 'StringLiteral' || this.poorlyBreakable(current);
+    }
+    assignmentDoc(index: number, parent: number, left: number, right: number): number {
+        const rightIndex = this.child(index, 2);
+        const tail = !this.isAssignment(rightIndex);
+        const ancestor = this.ancestors[this.ancestors.length - 3] ?? -1;
+        const chain = this.isAssignment(parent) && (!tail || ancestor >= 0);
+        const operator = this.docs.text(` ${this.operator(index)}`);
+        if(chain)
+            return this.docs.concat([
+                this.docs.group(left),
+                operator,
+                tail
+                    ? this.docs.indent(this.docs.concat([this.docs.line(), right]))
+                    : this.docs.concat([this.docs.line(), right]),
+            ]);
+        const rightNode = this.node(rightIndex);
+        const requireCall =
+            rightNode.kind === 'CallExpression' && this.node(this.child(rightIndex, 0)).text === 'require';
+        if(requireCall)
+            return this.docs.group(this.docs.concat([this.docs.group(left), operator, this.docs.text(' '), right]));
+        if((!tail && this.isAssignment(this.child(rightIndex, 2))) || this.breakAfterOperator(rightIndex))
+            return this.docs.group(
+                this.docs.concat([
+                    this.docs.group(left),
+                    operator,
+                    this.docs.group(this.docs.indent(this.docs.concat([this.docs.line(), right]))),
+                ]),
+            );
+        if(
+            !this.canBreak(left) &&
+            ['TrueKeyword', 'FalseKeyword', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(rightNode.kind)
+        )
+            return this.docs.group(this.docs.concat([this.docs.group(left), operator, this.docs.text(' '), right]));
+        const key = `assignment-${index}`;
+        return this.docs.group(
+            this.docs.concat([
+                this.docs.group(left),
+                operator,
+                this.docs.group(this.docs.indent(this.docs.line()), key),
+                this.docs.add('lineSuffixBoundary', []),
+                this.docs.add('indentIfBreak', [right], '', 0, key),
+            ]),
+        );
+    }
+    canBreak(index: number): boolean {
+        const doc = this.docs.get(index);
+        if(['line', 'softline', 'hardlineWithoutBreakParent', 'literallineWithoutBreakParent'].includes(doc.kind))
+            return true;
+        for(const child of doc.parts) if(this.canBreak(child)) return true;
         return false;
     }
     // ESTree flattens the left comma spine, stopping at explicit parentheses.
@@ -309,7 +492,9 @@ export class Expressions {
         ]);
         const logical = ['&&', '||', '??'].includes(operator);
         const binaryType = (id: number): boolean =>
-            this.node(id).kind === 'BinaryExpression' && ['&&', '||', '??'].includes(this.operator(id)) === logical;
+            this.node(id).kind === 'BinaryExpression' &&
+            rank(this.operator(id)) >= 0 &&
+            ['&&', '||', '??'].includes(this.operator(id)) === logical;
         if((parent < 0 || !binaryType(parent)) && !binaryType(left) && !binaryType(right))
             rightDoc = this.docs.group(rightDoc);
         parts.push(this.docs.text(' '));
@@ -387,6 +572,15 @@ export class Expressions {
                 result = this.docs.concat([this.docs.text('...'), this.print(this.child(id, 0), id, 'argument')]);
                 break;
             case 'BinaryExpression': {
+                if(this.isAssignment(id)) {
+                    result = this.assignmentDoc(
+                        id,
+                        parent,
+                        this.print(this.child(id, 0), id, 'left'),
+                        this.print(this.child(id, 2), id, 'right'),
+                    );
+                    break;
+                }
                 if(this.operator(id) === ',') {
                     const sequence = this.sequenceParts(id);
                     const parts: number[] = [];
@@ -434,7 +628,7 @@ export class Expressions {
                         this.node(parent).children.length === 2 &&
                         this.node(this.child(parent, 0)).text === 'Boolean';
                     result =
-                        inline || coercion
+                        inline || coercion || this.isAssignment(parent)
                             ? this.docs.group(this.docs.concat(parts))
                             : this.docs.group(
                                   this.docs.concat([
@@ -548,10 +742,25 @@ export class Expressions {
                         ['PropertyAccessExpression', 'ElementAccessExpression'].includes(
                             this.node(this.ancestors[ancestor] ?? panic('missing member ancestor')).kind,
                         );
+                    let firstNonMember = this.ancestors.length - 2;
+                    while(
+                        firstNonMember >= 0 &&
+                        ['PropertyAccessExpression', 'ElementAccessExpression', 'NonNullExpression'].includes(
+                            this.node(this.ancestors[firstNonMember] ?? panic('missing ancestor')).kind,
+                        )
+                    )
+                        firstNonMember--;
+                    const enclosing = this.ancestors[firstNonMember] ?? -1;
+                    const assignmentInline =
+                        (this.isAssignment(enclosing) && this.node(this.child(enclosing, 0)).kind !== 'Identifier') ||
+                        (this.isAssignment(this.ancestors[ancestor] ?? -1) &&
+                            this.node(object).kind === 'CallExpression' &&
+                            this.node(object).list > 0);
                     const inline =
-                        this.node(object).kind === 'Identifier' &&
-                        this.node(property).kind === 'Identifier' &&
-                        !memberParent;
+                        assignmentInline ||
+                        (this.node(object).kind === 'Identifier' &&
+                            this.node(property).kind === 'Identifier' &&
+                            !memberParent);
                     result = this.docs.concat([
                         before,
                         inline

@@ -8,10 +8,6 @@
     "Reason": "ObjectLiteralExpression"
   },
   {
-    "Source": "a=b",
-    "Reason": "EqualsToken"
-  },
-  {
     "Source": "a?b:c",
     "Reason": "ConditionalExpression"
   },
@@ -66,5 +62,9 @@
   {
     "Source": "[1,\n    \n2]",
     "Reason": "source-trivia"
+  },
+  {
+    "Source": "[a,b]=items",
+    "Reason": "assignment-pattern"
   }
 ]

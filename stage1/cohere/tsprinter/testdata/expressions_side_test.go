@@ -29,7 +29,7 @@ func supportedExpression(node *estree.Node) bool {
 	switch node.Type() {
 	case "Identifier", "PrivateIdentifier", "Literal", "ThisExpression", "Super":
 		return true
-	case "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
+	case "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
 	case "TemplateLiteral":
 		return len(node.List("expressions")) == 0
 	case "CallExpression", "NewExpression":
@@ -116,6 +116,35 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 	}
 	for _, item := range []string{"a,b", "a,(b,c)", "(a,b),c", "f((a,b))", "[(a,b),c]", "(a,b).x", "a+(b,c)", "!(a,b)", "(a,b)!", "(a,b)[c]", "a && (b,c)", "(a,b) || c"} {
 		add("sequence", item)
+	}
+	for _, value := range []string{"f?.()", "f?.(x)", "f()", "f(veryLongIdentifierAlpha)", "obj?.x", "obj!.x", "!!x", "++x"} {
+		for _, right := range []string{"g(" + value + ")", "g(" + value + ").x"} {
+			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
+		}
+	}
+	assignmentOps := []string{"=", "+=", "-=", "*=", "/=", "%=", "**=", "<<=", ">>=", ">>>=", "&=", "|=", "^=", "&&=", "||=", "??="}
+	values := []string{"x", "1", "true", "'text'", "`template`", "[1,2]", "a+b+c", "a&&(b||c)", "obj.member", "obj.alpha.beta", "f()", "f(x)", "f(longIdentifierArgumentAlpha, longIdentifierArgumentBeta, longIdentifierArgumentGamma)", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma + veryLongIdentifierDelta", "(a,b,c)"}
+	for _, op := range assignmentOps {
+		for _, left := range []string{"a", "obj.x", "obj.alpha.beta", "obj[index+offset]", "veryLongIdentifierAlpha.veryLongPropertyNameBeta.veryLongPropertyNameGamma"} {
+			for _, right := range values {
+				value := left + op + right
+				for _, source := range []string{value, "f((" + value + "))", "[(" + value + ")]", "!(" + value + ")", "(" + value + ").x"} {
+					add("assignment-composition", source)
+				}
+			}
+		}
+	}
+	for length := 2; length <= 20; length++ {
+		parts := []string{}
+		for index := 0; index < length; index++ {
+			parts = append(parts, fmt.Sprintf("assignmentIdentifier%d", index))
+		}
+		for _, right := range values {
+			value := strings.Join(parts, "=") + "=" + right
+			for _, source := range []string{value, "f((" + value + "))", "(" + value + "),x"} {
+				add("assignment-chain", source)
+			}
+		}
 	}
 	sequenceItems := []string{"a", "a+b+c", "a||b||c", "a*b", "[a,b]", "f(a,b)", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma + veryLongIdentifierDelta", "veryLongIdentifierAlpha && veryLongIdentifierBeta && veryLongIdentifierGamma && veryLongIdentifierDelta"}
 	for _, left := range sequenceItems {
@@ -290,9 +319,16 @@ func supportedSyntax(node *ast.Node) bool {
 		return supportedSyntax(node.AsPostfixUnaryExpression().Operand)
 	case ast.KindBinaryExpression:
 		item := node.AsBinaryExpression()
-		switch item.OperatorToken.Kind {
-		case ast.KindEqualsToken, ast.KindPlusEqualsToken, ast.KindMinusEqualsToken, ast.KindAsteriskEqualsToken, ast.KindSlashEqualsToken, ast.KindPercentEqualsToken, ast.KindAsteriskAsteriskEqualsToken, ast.KindLessThanLessThanEqualsToken, ast.KindGreaterThanGreaterThanEqualsToken, ast.KindGreaterThanGreaterThanGreaterThanEqualsToken, ast.KindAmpersandEqualsToken, ast.KindBarEqualsToken, ast.KindCaretEqualsToken, ast.KindAmpersandAmpersandEqualsToken, ast.KindBarBarEqualsToken, ast.KindQuestionQuestionEqualsToken:
-			return false
+		if item.OperatorToken.Kind >= ast.KindFirstAssignment && item.OperatorToken.Kind <= ast.KindLastAssignment {
+			left := item.Left
+			for left.Kind == ast.KindParenthesizedExpression {
+				left = left.Expression()
+			}
+			switch left.Kind {
+			case ast.KindIdentifier, ast.KindPropertyAccessExpression, ast.KindElementAccessExpression, ast.KindNonNullExpression:
+			default:
+				return false
+			}
 		}
 		return supportedSyntax(item.Left) && supportedSyntax(item.Right)
 	case ast.KindPropertyAccessExpression:

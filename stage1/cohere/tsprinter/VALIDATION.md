@@ -221,3 +221,81 @@ ok github.com/system-inc/adamic/stage1/cohere/tsprinter 336.285s
 
 This holds the entire expanded corpus to Go and npm Prettier without accepted-case exceptions,
 on source Node, sanitized native, native release and the JS backend; the separate leak run passes.
+
+## Assignment printer family
+
+Continued from sequence commit `fbed1b7`, with the same toolchain and pins. Only the printer slice
+changes. Assignment strategies and chain selection follow `print_assignment.go`; short-argument
+classification follows `utility_call_arguments.go`. Binary and member contexts use their existing
+Go printers' assignment branches. The default string quote preference is unchanged; the lone-short
+argument classifier also reproduces Go's double-quote default inside unary arguments.
+
+The independent Go selector accepts every implemented assignment operator and supported target;
+it traverses rejected parents as before. No file is omitted or fails to parse. The generator adds
+6,855 cases: 6,000 operator/target/right-hand-side/outer-context combinations and 855 chain cases,
+with chains up to 20 segments. The final corpus is 150,713 maximal fragments, including 9,286 generated
+cases, from 197 files. Newly accepted larger assignment parents reduce the total fragment count.
+`results/assignment-coverage.json` preserves the exact accepted and rejected shapes.
+
+Commands:
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-assignment-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-assignment-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-assignment-test.log 2>&1
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/assignment' > /tmp/ts-printer-assignment-mutant.log 2>&1
+```
+
+The source Node and independent npm comparisons pass every fragment with no accepted-case
+exceptions. Destructuring assignments are explicit gaps: `[a,b]=items` is held to its exact
+`assignment-pattern` refusal, and Go/Prettier both prove the input formatable. There remain 17
+proving inputs, with assignment support replacing the old `EqualsToken` gap by this narrower one.
+Cohere reports 276 rules, 8 checked, 100% Adamic-ready. Vet, gofmt and `git diff --check` are clean.
+
+A separate 16-input audit found that an optional call is not a lone short argument in Go: a
+`ChainExpression` does not pass `isLoneShortArgument`. With a long assignment target and
+`g(f?.()).x`, the initial port broke after `=`, whereas Go broke inside `g`'s arguments. The
+classifier now excludes optional calls, and all 16 audit inputs are permanent generator regressions.
+The final test uses `/tmp/ts-printer-assignment-final-corpus`,
+`/tmp/ts-printer-assignment-final-artifacts`, and `/tmp/ts-printer-assignment-final.log`.
+
+The assignment mutant drops the operator's text. Its run compared the 150,697-fragment corpus
+before the optional-call audit; native and Node both finish normally with empty stderr and differ
+at the very first case: `this.x  x;` instead of `this.x = x;`. Exit 0, mutant subtest 256.99 s,
+complete mutant command 262.465 s. The optional-call correction does not affect this proving case.
+
+The actual embedded Prettier fork is now an additional permanent oracle, through
+`testdata/embedded.mjs`, alongside npm Prettier's unchanged strict comparison. It independently
+parses the original source on V8 with the vendored TypeScript and ESTree plugins. The current
+bundle set is the one committed at cohere's recorded submodule pin; its version is asserted as
+3.9.6. Its full 150,713-case comparison was also run directly:
+
+```sh
+node stage1/cohere/tsprinter/testdata/embedded.mjs \
+  /workspace/adamic/cohere/internal/format/prettier/bundles \
+  /tmp/ts-printer-assignment-final-corpus/cases.json \
+  > /tmp/ts-printer-assignment-embedded.txt 2> /tmp/ts-printer-assignment-embedded.err
+cmp /tmp/ts-printer-assignment-final-corpus/answers.txt /tmp/ts-printer-assignment-embedded.txt
+```
+
+Both exit 0; stderr is empty. The running final native gate was compiled before this extra harness
+assertion was added; this direct comparison supplies the same assertion for that run. Future slice
+runs invoke both Prettier implementations automatically.
+
+Final assignment output (exit 0):
+
+```text
+197 files, 0 full-file parse refusals, 150713 supported maximal expression fragments
+17 unported shapes return NotYet on native, Node and backend; Go and Prettier format every proving input
+150713 expression fragments byte-identical
+--- PASS: TestExpressionsAgainstGoAndPrettier (334.67s)
+ok github.com/system-inc/adamic/stage1/cohere/tsprinter 334.674s
+```
+
+Source Node, ASan/UBSan native, the JS backend, native release and the separate leak run all pass.

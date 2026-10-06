@@ -43,13 +43,13 @@ export function numberText(raw: string): string {
     return mantissa + value.slice(split);
 }
 
-export function stringText(raw: string, directive: boolean): string {
+export function stringText(raw: string, directive: boolean, preferSingle = true): string {
     const content = raw.slice(1, -1);
     if(directive)
         return content === 'use strict' || (!content.includes("'") && !content.includes('"')) ? `'${content}'` : raw;
     const single = content.split("'").length - 1;
     const double = content.split('"').length - 1;
-    const quote = single > double ? '"' : "'";
+    const quote = single > double || (single === double && !preferSingle) ? '"' : "'";
     if(raw.slice(0, 1) === quote) return raw;
     const parts: string[] = [quote];
     for(let index = 0; index < content.length; index++) {
