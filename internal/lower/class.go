@@ -298,6 +298,15 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a method of a class stage 0 doesn't have")
 	}
 	receiver := callee.AsPropertyAccessExpression().Expression
+	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
+		// object?.method(...), the object perhaps undefined: the class is instantiated for what the
+		// object is when it's there, and the call is made through the object's methods, which stops
+		// at undefined as JavaScript's chain does (ir.Property's Method).
+		if _, err := l.instantiate(declaration, l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), callee); err != nil {
+			return nil, err
+		}
+		return l.callClosure(node)
+	}
 	// this.method() is the instantiation being lowered: this is the polymorphic this type there,
 	// which carries no type arguments of its own.
 	lowered := l.instance
