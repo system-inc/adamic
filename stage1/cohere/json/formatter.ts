@@ -202,6 +202,7 @@ function jsonQuote(text: string): string {
 class Printer {
     readonly reader: Reader;
     readonly stringify: boolean;
+    readonly hasComments: boolean;
     readonly docs = new Documents();
     readonly leading: number[][] = [];
     readonly trailing: number[][] = [];
@@ -209,10 +210,13 @@ class Printer {
     constructor(reader: Reader, stringify: boolean) {
         this.reader = reader;
         this.stringify = stringify;
-        for(let count = reader.nodes.length; count > 0; count--) {
-            this.leading.push([]);
-            this.trailing.push([]);
-            this.dangling.push([]);
+        this.hasComments = reader.comments.length > 0;
+        if(this.hasComments) {
+            for(let count = reader.nodes.length; count > 0; count--) {
+                this.leading.push([]);
+                this.trailing.push([]);
+                this.dangling.push([]);
+            }
         }
     }
     // Attach to the nearest property/element within the smallest enclosing container.
@@ -330,8 +334,9 @@ class Printer {
                 }
                 previousKind = item.kind;
                 if(
-                    (this.leading[child] ?? panic('missing comment list')).length > 0 ||
-                    (this.trailing[child] ?? panic('missing comment list')).length > 0
+                    this.hasComments &&
+                    ((this.leading[child] ?? panic('missing comment list')).length > 0 ||
+                        (this.trailing[child] ?? panic('missing comment list')).length > 0)
                 ) {
                     concise = false;
                 }
@@ -363,11 +368,13 @@ class Printer {
                     }
                 }
             }
-            for(const commentIndex of this.dangling[index] ?? panic('missing comment list')) {
-                const comment = this.reader.comments[commentIndex] ?? panic('missing dangling comment');
-                parts.push(documents.text(comment.text));
-                if(comment.line || this.reader.text.slice(node.start, comment.start).includes('\n')) {
-                    broken = true;
+            if(this.hasComments) {
+                for(const commentIndex of this.dangling[index] ?? panic('missing comment list')) {
+                    const comment = this.reader.comments[commentIndex] ?? panic('missing dangling comment');
+                    parts.push(documents.text(comment.text));
+                    if(comment.line || this.reader.text.slice(node.start, comment.start).includes('\n')) {
+                        broken = true;
+                    }
                 }
             }
             if(node.children.length === 0 && (parts.length === 0 || (!broken && parts.length > 0))) {
@@ -401,7 +408,7 @@ class Printer {
         }
         else if(node.kind === 'NumericLiteral') {
             const raw = this.stringify ? node.raw : numberText(node.raw);
-            const canonical = `${numericValue(node.raw)}`;
+            const canonical = key ? `${numericValue(node.raw)}` : '';
             const numericKey =
                 key &&
                 (this.stringify
@@ -425,6 +432,14 @@ class Printer {
         }
         else {
             result = documents.text(node.raw);
+        }
+        // No comment wrapper is needed when both lists are empty.
+        if(
+            !this.hasComments ||
+            ((this.leading[index] ?? panic('missing comment list')).length === 0 &&
+                (this.trailing[index] ?? panic('missing comment list')).length === 0)
+        ) {
+            return result;
         }
         const before: number[] = [];
         for(const commentIndex of this.leading[index] ?? panic('missing comment list')) {

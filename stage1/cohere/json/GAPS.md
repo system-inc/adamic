@@ -90,12 +90,12 @@ its refusal, then runs its source on Node and checks the stated output:
 1. `gaps/multiplePush.ts`: `stage 0 can't lower push with other than one value yet`.
    Node prints `a,b`. Around it: one `push` call per value.
 2. `gaps/emptyFallback.ts`: `stage 0 can't lower an array of never yet`.
-   Node prints `0`. Around it: all comment lists are initialized; indexed reads
+   Node prints `0`. Around it: comment-bearing inputs initialize all comment lists; indexed reads
    use a checked `panic` fallback instead of an untyped `[]`.
 3. `gaps/repeatInTry.ts`: `stage 0 can't lower a try around repeat, whose failure
    is a panic natively but a throw a catch can take on Node (docs/memory.md) yet`.
-   Node prints `xxx` with three arguments. Around it: indentation joins a list
-   of spaces rather than calling dynamic `repeat` inside caught formatting code.
+   Node prints `xxx` with three arguments. Around it: indentation caches string
+   prefixes rather than calling dynamic `repeat` inside caught formatting code.
 
 The parser also uses the existing GraphQL slice's table-of-nodes shape and one
 self-recursive value method around the documented ownership-cycle and forward
@@ -136,7 +136,11 @@ upstream Go-printer mutations remain as checks of the external comparison.
 
 ## Performance and verification
 
-On the frozen source, three back-to-back rounds over all 1,075 inputs:
+The original port baseline below is retained for comparison. The performance
+follow-up, optimized measurements, top twenties and runtime/compiler proposals
+are in [PERFORMANCE.md](PERFORMANCE.md). No `internal/` files changed.
+
+On the original frozen source, three back-to-back rounds over all 1,075 inputs:
 
 | Side | Seconds, rounds 1 / 2 / 3 | Texts/s, rounds 1 / 2 / 3 | Median texts/s |
 |---|---|---|---|

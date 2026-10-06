@@ -2,9 +2,25 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { format } from './formatter.ts';
 export function escaped(text: string): string {
-    return text.split('\\').join('\\\\').split('\n').join('\\n').split('\r').join('\\r').split('\t').join('\\t');
+    let result = text;
+    if(result.includes('\\')) {
+        result = result.split('\\').join('\\\\');
+    }
+    if(result.includes('\n')) {
+        result = result.split('\n').join('\\n');
+    }
+    if(result.includes('\r')) {
+        result = result.split('\r').join('\\r');
+    }
+    if(result.includes('\t')) {
+        result = result.split('\t').join('\\t');
+    }
+    return result;
 }
 function unescaped(text: string): string {
+    if(!text.includes('\\')) {
+        return text;
+    }
     const pieces = text.split('\\');
     const parts: string[] = [pieces[0] ?? ''];
     for(let index = 1; index < pieces.length; index++) {

@@ -88,7 +88,7 @@ function nameStart(code: number): boolean {
     );
 }
 export function numericValue(raw: string): number {
-    const text = raw.split('_').join('');
+    const text = raw.includes('_') ? raw.split('_').join('') : raw;
     const prefix = text.slice(0, 2).toLowerCase();
     if(prefix === '0x' || prefix === '0o' || prefix === '0b') {
         return Number.parseInt(text.slice(2), prefix === '0x' ? 16 : prefix === '0o' ? 8 : 2);
@@ -117,7 +117,8 @@ export class Reader {
     skip(): void {
         while(this.position < this.text.length) {
             const start = this.position;
-            if(this.text.slice(start, start + 2) === '//') {
+            const code = this.text.charCodeAt(start);
+            if(code === 47 && this.text.charCodeAt(start + 1) === 47) {
                 this.position += 2;
                 while(
                     this.position < this.text.length &&
@@ -132,7 +133,7 @@ export class Reader {
                     line: true,
                 });
             }
-            else if(this.text.slice(start, start + 2) === '/*') {
+            else if(code === 47 && this.text.charCodeAt(start + 1) === 42) {
                 const end = this.text.indexOf('*/', start + 2);
                 if(end < 0) {
                     throw new Error(this.message('unterminated comment'));
@@ -145,7 +146,7 @@ export class Reader {
                     line: false,
                 });
             }
-            else if(whitespace(this.text.charCodeAt(start))) {
+            else if(whitespace(code)) {
                 this.position++;
             }
             else {
@@ -153,12 +154,12 @@ export class Reader {
             }
         }
     }
-    peek(): string {
+    peek(): number {
         this.skip();
-        return this.text.slice(this.position, this.position + 1);
+        return this.text.charCodeAt(this.position);
     }
     expect(char: string): void {
-        if(this.peek() !== char) {
+        if(this.peek() !== char.charCodeAt(0)) {
             throw new Error(this.message(`expected '${char}'`));
         }
         this.position++;
@@ -218,7 +219,7 @@ export class Reader {
             }
         }
         const raw = this.text.slice(start, position);
-        const literal = raw.split('_').join('');
+        const literal = raw.includes('_') ? raw.split('_').join('') : raw;
         if(base === 10 && literal.length > 1 && literal.startsWith('0') && digit(literal.charCodeAt(1)) < 10) {
             throw new Error(this.message(`legacy octal literal ${quoted(literal)}`));
         }
@@ -300,26 +301,27 @@ export class Reader {
     }
     // Mutual recursion is one method, as in the GraphQL port, around stage 0's forward-method gap.
     value(key: boolean): number {
-        const char = this.peek();
+        const code = this.peek();
         const start = this.position;
-        if(char === '{' || char === '[') {
-            const object = char === '{';
+        if(code === 123 || code === 91) {
+            const object = code === 123;
             this.position++;
             const children: number[] = [];
             const closer = object ? '}' : ']';
-            while(this.peek() !== closer) {
-                if(!object && this.peek() === ',') {
+            const closingCode = object ? 125 : 93;
+            while(this.peek() !== closingCode) {
+                if(!object && this.peek() === 44) {
                     this.position++;
                     children.push(this.add('Hole', this.position - 1, '', []));
                     continue;
                 }
                 if(object) {
                     const propertyStart = this.position;
-                    if(this.peek() === '[') {
+                    if(this.peek() === 91) {
                         throw new Error(this.message('Computed key is not allowed in JSON'));
                     }
                     const propertyKey = this.value(true);
-                    if(this.peek() !== ':') {
+                    if(this.peek() !== 58) {
                         throw new Error(this.message('Shorthand property is not allowed in JSON'));
                     }
                     this.position++;
@@ -329,7 +331,7 @@ export class Reader {
                 else {
                     children.push(this.value(false));
                 }
-                if(this.peek() === ',') {
+                if(this.peek() === 44) {
                     this.position++;
                     continue;
                 }
@@ -339,10 +341,11 @@ export class Reader {
             this.position++;
             return this.add(object ? 'ObjectExpression' : 'ArrayExpression', start, '', children);
         }
-        if(char === '"' || char === "'" || char === '`') {
+        if(code === 34 || code === 39 || code === 96) {
             return this.string();
         }
-        if(!key && (char === '+' || char === '-')) {
+        if(!key && (code === 43 || code === 45)) {
+            const char = code === 43 ? '+' : '-';
             this.position++;
             const argument = this.value(false);
             const node = this.get(argument);
@@ -354,7 +357,7 @@ export class Reader {
             }
             return this.add('UnaryExpression', start, char, [argument]);
         }
-        if(char === '.' || (char >= '0' && char <= '9' && char !== '')) {
+        if(code === 46 || (code >= 48 && code <= 57)) {
             return this.number();
         }
         const name = this.name();

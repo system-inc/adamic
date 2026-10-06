@@ -7,19 +7,13 @@ export interface DocInterface {
     text: string;
     parts: number[];
     broken: boolean;
+    width: number;
 }
 interface CommandInterface {
     doc: number;
     indent: number;
     flat: boolean;
     offset: number;
-}
-function spaces(count: number): string {
-    const parts: string[] = [];
-    for(let index = 0; index < count; index++) {
-        parts.push(' ');
-    }
-    return parts.join('');
 }
 export class Documents {
     readonly nodes: DocInterface[] = [];
@@ -33,7 +27,7 @@ export class Documents {
             }
         }
         const index = this.nodes.length;
-        this.nodes.push({ kind, text, parts, broken: mustBreak });
+        this.nodes.push({ kind, text, parts, broken: mustBreak, width: stringWidth(text) });
         return index;
     }
     text(text: string): number {
@@ -82,13 +76,13 @@ export class Documents {
                 continue;
             }
             if(node.kind === 'text') {
-                remainingWidth -= stringWidth(node.text);
+                remainingWidth -= node.width;
             }
             else if(node.kind === 'line') {
                 if(!command.flat || node.broken) {
                     return true;
                 }
-                remainingWidth -= stringWidth(node.text);
+                remainingWidth -= node.width;
             }
             else {
                 if(node.kind === 'group' && mustFlat && node.broken) {
@@ -107,17 +101,21 @@ export class Documents {
         const output: string[] = [];
         let column = 0;
         let pendingIndent = 0;
+        const indentation: string[] = [''];
         const suffixes: CommandInterface[] = [];
         while(stack.length > 0) {
             const command = stack.pop() ?? panic('missing print command');
             const node = this.get(command.doc);
             if(node.kind === 'text') {
                 if(node.text !== '' && pendingIndent > 0) {
-                    output.push(spaces(pendingIndent));
+                    while(indentation.length <= pendingIndent) {
+                        indentation.push(`${indentation[indentation.length - 1] ?? panic('missing indentation')} `);
+                    }
+                    output.push(indentation[pendingIndent] ?? panic('missing indentation'));
                     pendingIndent = 0;
                 }
                 output.push(node.text);
-                column += stringWidth(node.text);
+                column += node.width;
             }
             else if(node.kind === 'suffix') {
                 suffixes.push({ doc: this.concat(node.parts), indent: command.indent, flat: command.flat, offset: 0 });
@@ -132,7 +130,7 @@ export class Documents {
                 }
                 if(command.flat && !node.broken) {
                     output.push(node.text);
-                    column += stringWidth(node.text);
+                    column += node.width;
                 }
                 else {
                     output.push('\n');

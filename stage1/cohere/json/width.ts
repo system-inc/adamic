@@ -69,7 +69,8 @@ function wide(code: number): boolean {
 export function stringWidth(text: string): number {
     let ascii = true;
     for(let index = 0; index < text.length; index++) {
-        if(text.charCodeAt(index) < 32 || text.charCodeAt(index) > 127) {
+        const code = text.charCodeAt(index);
+        if(code < 32 || code > 127) {
             ascii = false;
             break;
         }
