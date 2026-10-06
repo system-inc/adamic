@@ -14,6 +14,9 @@ import (
 // Each instantiation has one nominal identity and one prefix layout. A virtual call keeps its
 // static signature while selecting the implementation from the object's dynamic table.
 type instance struct {
+	builtinError   string
+	defaultError   bool
+	errorCauses    []*checker.Type
 	constructor    int
 	methods        map[string]int
 	slots          map[string]int
@@ -159,6 +162,9 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 				return nil, l.notYet(member, "a method with a computed name")
 			}
 			methodName := member.Name().Text()
+			if methodName == "toString" && l.errorType(classType) {
+				return nil, l.notYet(member, "an Error.toString override: the synthetic built-in method's override ABI is not checked yet")
+			}
 			lowered.methods[methodName] = len(l.result.Functions)
 			lowered.static[methodName] = ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic)
 			if !lowered.static[methodName] {
@@ -196,6 +202,15 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		}
 	}
 	defer func() { l.substitution, l.locals, l.instance = outerSubstitution, outerLocals, outerInstance }()
+
+	if lowered.base != nil && (lowered.base.builtinError != "" || lowered.base.defaultError) {
+		lowered.defaultError = true
+		for _, member := range members {
+			if member.Kind == ast.KindConstructor {
+				lowered.defaultError = false
+			}
+		}
+	}
 
 	// Every method's signature is written before any body is lowered, the constructor's included, so a
 	// method can call one declared below it, and two can call each other.
@@ -280,6 +295,18 @@ func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expressi
 	lowered, err := l.instantiate(declaration, l.checker.GetTypeAtLocation(node), node)
 	if err != nil {
 		return nil, err
+	}
+	if lowered.defaultError {
+		args := nodesOf(node.AsNewExpression().Arguments)
+		message, err := l.errorMessage(node, args)
+		if err != nil {
+			return nil, err
+		}
+		cause, err := l.errorCause(node, args)
+		if err != nil {
+			return nil, err
+		}
+		return ir.Call{Function: lowered.constructor, Arguments: []ir.Expression{message, cause}, Returns: ir.Object}, nil
 	}
 	arguments := []ir.Expression{}
 	if node.AsNewExpression().Arguments != nil {
@@ -368,6 +395,13 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if l.isErrorCause(target) {
+		return nil, l.notYet(target, "assigning Error.cause after construction: its erased reference ownership must be proven before mutable cause links are allowed")
+	}
+	if target.Name().Text() == "stack" && l.errorType(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {
+		return nil, l.notYet(target, "writing Error.stack: native frames have no JavaScript source stack")
+	}
+
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
 		return nil, err
@@ -390,7 +424,11 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	write := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
+	if l.narrowedAway(target.AsPropertyAccessExpression().Expression) {
+		return []ir.Statement{l.errorSetProperty(write)}, nil
+	}
+	return []ir.Statement{write}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
@@ -524,7 +562,7 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 		return nil
 	}
 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
-		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && field.Declarations[0].Kind == ast.KindPropertyDeclaration {
+		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && (field.Declarations[0].Kind == ast.KindPropertyDeclaration || l.errorType(l.classType) && (parent.Name().Text() == "name" || parent.Name().Text() == "message")) {
 			return nil
 		}
 	}

@@ -34,8 +34,8 @@ int main(int count, char **arguments) {
 	}{
 		{"0", "allowed\n", 0},
 		{"536870888", "allowed\n", 0},
-		{"536870889", "adamic: panic: RangeError: Invalid string length\n", 70},
-		{"inf", "adamic: panic: RangeError: Invalid string length\n", 70},
+		{"536870889", "RangeError: Invalid string length\n", 1},
+		{"inf", "RangeError: Invalid string length\n", 1},
 	} {
 		output, err := exec.Command(binary, check.units).CombinedOutput()
 		exit := 0

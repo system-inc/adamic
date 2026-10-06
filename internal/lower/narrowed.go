@@ -60,6 +60,9 @@ func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
 		}
 		message = "TypeError: Cannot read properties of " + absent + " (reading '" + parent.Name().Text() + "')"
 	}
+	if len(message) >= len("TypeError: ") && message[:len("TypeError: ")] == "TypeError: " {
+		return l.errorDefined(value, message[len("TypeError: "):])
+	}
 	return ir.Defined{Value: value, Message: message, Null: null}
 }
 

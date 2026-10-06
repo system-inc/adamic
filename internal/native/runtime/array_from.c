@@ -1,6 +1,7 @@
 // array_from.c: Array.from({ length }, callback)'s length.
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <math.h>
 
@@ -13,7 +14,7 @@ size_t adamic_array_from_length(double length) {
 	}
 	if (length > 4294967295.0) {
 		static const char message[] = "RangeError: Invalid array length";
-		adamic_panic(message, sizeof message - 1);
+		adamic_uncaught_library_error(message, sizeof message - 1);
 	}
 	return (size_t)length;
 }

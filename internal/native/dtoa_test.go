@@ -156,7 +156,7 @@ func TestToExponentialAndToPrecisionMatchNode(t *testing.T) {
 	t.Logf("%d answers (%d values, every argument), %d mismatches", lines, len(values), total)
 }
 
-// Out of range, Node throws a RangeError, and Adamic panics: exit 70 with stdout flushed
+// Out of range, Node throws a RangeError, and Adamic exits: exit 1 with stdout flushed
 // (docs/0.1.md, library calls that throw). Each case is its own process, since a panic ends it.
 func TestToExponentialAndToPrecisionOutOfRangePanic(t *testing.T) {
 	t.Parallel()
@@ -201,10 +201,10 @@ int main(int count, char **arguments) {
 		script := fmt.Sprintf("console.log('before'); console.log((1.5).%s(%s));", method, digits)
 		native := outcome(t, binary, probe.operation, probe.digits)
 		node := outcome(t, "node", "--eval", script)
-		if native.stdout != node.stdout || (native.exitCode == 70) != probe.panics || (node.exitCode != 0) != probe.panics {
+		if native.stdout != node.stdout || (native.exitCode == 1) != probe.panics || (node.exitCode != 0) != probe.panics {
 			t.Errorf("(1.5).%s(%s): native exit %d %q, Node exit %d %q", method, digits, native.exitCode, native.stdout, node.exitCode, node.stdout)
 		}
-		if probe.panics && (!strings.HasPrefix(native.stderr, "adamic: panic: RangeError: ") || !strings.Contains(node.stderr, "RangeError")) {
+		if probe.panics && (!strings.HasPrefix(native.stderr, "RangeError: ") || !strings.Contains(node.stderr, "RangeError")) {
 			t.Errorf("(1.5).%s(%s): native stderr %q, Node stderr %q", method, digits, native.stderr, node.stderr)
 		}
 	}

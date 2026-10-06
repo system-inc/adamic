@@ -72,6 +72,8 @@ type Function struct {
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
+	// LibraryGuarded is a generated wrapper whose checks throw before a library argument fails.
+	LibraryGuarded bool
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of

@@ -1,0 +1,20 @@
+class ReportedError extends Error {
+    readonly code = 7;
+    constructor(message: string) {
+        super(message);
+        this.name = 'ReportedError';
+    }
+}
+function makeFailure(): ReportedError {
+    return new ReportedError('failed 🦉');
+}
+function stop(failure: Error): void {
+    throw failure;
+}
+console.log('before');
+try {
+    stop(makeFailure());
+}
+finally {
+    console.log('finally');
+}

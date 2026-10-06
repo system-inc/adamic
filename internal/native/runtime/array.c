@@ -1,6 +1,7 @@
 // array.c: arrays.
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -258,7 +259,7 @@ adamic_array *adamic_array_filled(double length, adamic_value value, bool refere
 	// new Array(length): an integer from 0 to 2^32 - 1, or JavaScript throws.
 	if (!(length >= 0) || length > 4294967295.0 || length != trunc(length)) {
 		static const char message[] = "RangeError: Invalid array length";
-		adamic_panic(message, sizeof message - 1);
+		adamic_uncaught_library_error(message, sizeof message - 1);
 	}
 	adamic_array *array = adamic_array_new((size_t)length, references);
 	for (size_t index = 0; index < (size_t)length; index++) {

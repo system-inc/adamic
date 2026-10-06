@@ -8,9 +8,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Exceptions (docs/memory.md, "Exceptions, designed into counting"): throw new Error(message), a
-// caught error thrown again, and try with catch, finally or both. What's thrown is only ever an
-// Error, made by new Error or caught, since a catch binds unknown and 0.2 has no value of every kind.
+// Exceptions retain nominal Error objects across calls and unwind through catch and finally.
+// Non-Error throws remain refused: catch's unknown has only the error-object representation.
 
 // tryRecord is a try statement lowered, for the checks made once every function is: where it is,
 // and its body.
@@ -22,12 +21,8 @@ type tryRecord struct {
 // throwStatement lowers throw.
 func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
-	isNewError := thrown.Kind == ast.KindNewExpression && l.isLibraryGlobal(thrown.AsNewExpression().Expression, "Error")
 	isCaught := ast.IsIdentifier(thrown) && l.caught[l.symbol(thrown)]
-	if !isNewError && !isCaught {
-		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
-			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
-		}
+	if !isCaught && !l.errorType(l.checker.GetTypeAtLocation(thrown)) {
 		return nil, &Refused{Where: l.program.Where(thrown), What: "throwing a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)), Fix: "throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"}
 	}
 	value, err := l.expression(thrown)
@@ -37,23 +32,19 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{ir.Throw{Value: value}}, nil
 }
 
-// newError lowers new Error(message), and new Error().
+// newError lowers the standard Error constructors, including the ES2022 cause option.
 func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 	created := node.AsNewExpression()
-	message := ir.Expression(ir.StringConstant{Index: l.constant("")})
-	if created.Arguments != nil && len(created.Arguments.Nodes) > 0 {
-		if len(created.Arguments.Nodes) > 1 {
-			return nil, l.notYet(node, "new Error with options")
-		}
-		var err error
-		if message, err = l.expression(created.Arguments.Nodes[0]); err != nil {
-			return nil, err
-		}
-		if message.Type() != ir.String {
-			return nil, l.notYet(node, "new Error with a message that isn't a string")
-		}
+	message, err := l.errorMessage(node, nodesOf(created.Arguments))
+	if err != nil {
+		return nil, err
 	}
-	return ir.MakeError{Message: message}, nil
+	cause, err := l.errorCause(node, nodesOf(created.Arguments))
+	if err != nil {
+		return nil, err
+	}
+	instance := l.errorInstance(l.errorGlobal(created.Expression))
+	return ir.Call{Function: instance.constructor, Arguments: []ir.Expression{message, cause}, Returns: ir.Object}, nil
 }
 
 // tryStatement lowers try, with catch, finally or both.
@@ -96,15 +87,10 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{lowered}, nil
 }
 
-// caughtInstanceOfError lowers error instanceof Error on what a catch took, which is always an Error.
+// caughtInstanceOfError no longer folds the test: catch preserves the actual error identity.
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
-	binary := node.AsBinaryExpression()
-	left := ast.SkipParentheses(binary.Left)
-	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] || !l.isLibraryGlobal(binary.Right, "Error") {
-		return nil, false
-	}
-	l.local(left)
-	return ir.BooleanConstant{Value: true}, true
+	// Caught values carry their actual nominal identity; classInstanceOf handles the test.
+	return nil, false
 }
 
 // exceptions works out which functions a throw can leave, once every function is lowered, and
@@ -138,7 +124,7 @@ func (l *lowering) exceptions() error {
 	}
 	for _, record := range l.tries {
 		if failing := l.libraryFailure(record.body, map[int]bool{}); failing != "" {
-			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
+			return l.notYet(record.node, "a try around "+failing+", whose native runtime failure cannot unwind to a catch yet (docs/memory.md)")
 		}
 	}
 	return nil
@@ -188,7 +174,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		switch node := node.(type) {
 		case ir.Call:
 			for _, target := range l.result.CallTargets(node) {
-				if !visited[target] {
+				if !visited[target] && !l.result.Functions[target].LibraryGuarded {
 					visited[target] = true
 					failing = l.libraryFailure(l.result.Functions[target].Body, visited)
 					if failing != "" {
@@ -216,6 +202,17 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		case ir.RegExpCall:
 			if node.Method == "replaceAll" || node.Method == "matchAll" {
 				failing = "RegExp global-flag validation"
+			}
+		case ir.StringFromCodes:
+			if node.CodePoints {
+				if node.Spread != nil {
+					failing = "String.fromCodePoint"
+				}
+				for _, argument := range node.Codes {
+					if !constantWithin(argument, 0, 1114111) {
+						failing = "String.fromCodePoint"
+					}
+				}
 			}
 		case ir.StringCall:
 			switch {
