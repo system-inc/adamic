@@ -140,6 +140,14 @@ func testBlockLayout(t *testing.T, slice string) {
 			}
 		}
 	}
+	if slice == "html" {
+		for _, cell := range []string{"中", "Ａ", "α", "é", "©", "©️", "👩🏽‍⚕️", "👨🏻‍❤️‍💋‍👨🏿", "🧑🏿‍🦽‍➡️", "🏳️‍🌈", "🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f"} {
+			for _, align := range []string{"---", ":--", "--:", ":-:"} {
+				text := "| " + cell + " | a |\n| " + align + " | --- |\n| a | " + cell + " |\n"
+				inputs = append(inputs, auditInput{Name: "generated/native-width/table/" + text, Text: text})
+			}
+		}
+	}
 	dir := t.TempDir()
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
@@ -175,6 +183,45 @@ func testBlockLayout(t *testing.T, slice string) {
 	nativeCases, canonicalCases := filepath.Join(dir, "native.txt"), filepath.Join(dir, "canonical.txt")
 	want := execute(t, nil, goBinary, cases, nativeCases, canonicalCases)
 	clean(t, "Go list fixtures", want)
+	// Width slots are retained only for the canonical Go/fork doc protocol.
+	// Poison every text-width field in the native protocol to prove no oracle service remains.
+	raw, err := os.ReadFile(nativeCases)
+	if err != nil {
+		t.Fatal(err)
+	}
+	lines := strings.Split(string(raw), "\n")
+	for index, line := range lines {
+		fields := strings.Split(line, "\t")
+		switch fields[0] {
+		case "D":
+			if fields[1] == "t" {
+				fields[3] = "-777"
+			}
+		case "W":
+			fields[3] = "-777"
+		case "H":
+			fields[2] = ""
+		case "C":
+			fields[4], fields[5], fields[6] = "-777", "-777", ""
+		case "T":
+			fields[2] = ""
+			rows := strings.Split(fields[3], ":")
+			for r, row := range rows {
+				cells := strings.Split(row, ";")
+				for c, cell := range cells {
+					pair := strings.Split(cell, ",")
+					if len(pair) == 2 {
+						pair[1] = "-777"
+						cells[c] = strings.Join(pair, ",")
+					}
+				}
+				rows[r] = strings.Join(cells, ";")
+			}
+			fields[3] = strings.Join(rows, ":")
+		}
+		lines[index] = strings.Join(fields, "\t")
+	}
+	write(t, nativeCases, []byte(strings.Join(lines, "\n")))
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
 			t.Fatal(err)
@@ -268,7 +315,7 @@ func testBlockLayout(t *testing.T, slice string) {
 	if slice == "quotes" {
 		mutantFile = "quotes.ts"
 		mutations = []struct{ name, from, to string }{
-			{"quote marker", "arena.text('> ', 2)", "arena.text('>> ', 3)"},
+			{"quote marker", "arena.text('> ')", "arena.text('>> ')"},
 			{"quote alignment", "arena.align('> ',", "arena.align('',"},
 			{"quote blank line", "!overlapping && !definitions", "!overlapping && definitions"},
 		}
@@ -313,7 +360,7 @@ func testBlockLayout(t *testing.T, slice string) {
 				}
 				write(t, filepath.Join(scratch, "markdowninline", name), content)
 			}
-			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts"} {
+			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts"} {
 				content, err := os.ReadFile(name)
 				if err != nil {
 					t.Fatal(err)

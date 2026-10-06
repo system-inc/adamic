@@ -158,7 +158,7 @@ export function printList(arena: DocumentArena, frame: ListFrameInterface, tabWi
         }
         const prefix = listPrefix(frame, index, tabWidth);
         const task = item.checked < 0 ? '' : item.checked === 1 ? '[x] ' : '[ ] ';
-        const itemParts: number[] = [arena.text(task, task.length)];
+        const itemParts: number[] = [arena.text(task)];
         for(let blockIndex = 0; blockIndex < item.children.length; blockIndex++) {
             const block = item.children[blockIndex] ?? panic('list block');
             if(blockIndex > 0) {
@@ -170,13 +170,11 @@ export function printList(arena: DocumentArena, frame: ListFrameInterface, tabWi
                 itemParts.push(arena.align(' '.repeat(task.length), block.doc));
             else {
                 const alignment = ' '.repeat(Math.max(0, Math.min(tabWidth - prefix.length, 3)));
-                itemParts.push(
-                    arena.concat([arena.text(alignment, alignment.length), arena.align(alignment, block.doc)]),
-                );
+                itemParts.push(arena.concat([arena.text(alignment), arena.align(alignment, block.doc)]));
             }
         }
         const body = arena.concat(itemParts);
-        parts.push(arena.text(prefix, prefix.length));
+        parts.push(arena.text(prefix));
         const first = item.children[0];
         const second = item.children[1];
         const specialHTML =

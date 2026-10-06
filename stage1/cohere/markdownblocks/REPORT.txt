@@ -1,3 +1,86 @@
+Native Unicode widths now compose with all five block layout slices.
+1,205,496 widths match Go, pinned dependency packages and actual fork group fits.
+All Unicode scalars, repository documents/lines and generated sequences covered.
+Three output-only width mutants caught; sanitizer, leak and lint checks pass.
+Full native Markdown parsing and the remaining printers are still unfinished.
+
+Unicode width slice, October 6, 2026
+
+Choice: cohere's StringWidth, because all existing native layout slices depend
+on this service for fitting and tables depend on it for cell and row padding.
+The implementation includes the pinned East Asian wide/fullwidth ranges, UTF-16
+emoji matching, narrow emojis, control/combining/selector exclusions and the
+ASCII shortcut that counts DEL as one column only on that shortcut.
+An offline Go generator compiles the pinned finite emoji patterns to ordered
+Thompson instructions. Numeric edges and owned matcher visitation arrays avoid
+runtime RegExp and ownership cycles. Rune classes and instructions live in
+separate generated files; regeneration is byte-checked after cohere formatting.
+Header records the exact source SHA256 and dependency versions. Native text
+and table APIs compute widths themselves. Legacy fixture text-width fields
+are poisoned to -777 or emptied before the native layout driver receives them.
+Numeric indentation widths remain document semantics, not a text-width oracle.
+
+Setup: bash cloud/setup.sh > /tmp/markdown-width-setup.log 2>&1
+Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s,
+build cache warm 16s, done in 16s on 5 processors; nproc prints 5.
+Go 1.27.1, clang 20.1.8, Node 24.19.0. Environment:
+source /workspace/adamic-tools/env.sh
+npm install --prefix /tmp/adamic-markdown-width --ignore-scripts --no-audit
+--no-fund emoji-regex@10.6.0 get-east-asian-width@1.6.0 narrow-emojis@0.0.3
+/tmp/markdown-width-npm.log: added 3 packages in 976ms.
+The checked-in library driver composes these actual pinned packages as upstream;
+this is distinct from the port's source running on Node. An independent driver
+uses the actual pinned fork's public doc printer and binary-searches its group
+fit boundary to observe its internal width computation.
+ADAMIC_MARKDOWNWIDTH_DEPS selects the scratch dependency directory.
+ADAMIC_MARKDOWNBLOCKS_FORK selects the exact fork scratch bundles, version 3.9.6.
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownUnicodeWidths$' -count=1 -v
+/tmp/markdown-width-final.log: PASS, 192.234s, 1,205,496 widths.
+876 physical Markdown files and the 77 original generated cases, every source
+line, every valid Unicode scalar (1,112,064), all triples of 30 sequence atoms,
+and longer skin-tone/ZWJ/tag-flag cases. Actual Go StringWidth, pinned packages,
+fork fitting, native ASan/UBSan, source Node and backend agree. Leak check passes.
+All three native mutants compile and run with exit 0 and empty stderr:
+East Asian ranges count 1 instead of 2: caught by width output mismatch.
+Narrow emojis count 2 instead of 1: caught by width output mismatch.
+ASCII shortcut excludes DEL: caught by width output mismatch.
+An initial run failed the DEL mutant's textual anchor after cohere lowercased
+hex literals. The anchor was corrected and the complete final run passed all
+three; the initial failing run is not counted as a green gate.
+
+Three-run width timing includes process startup, source protocol decoding and
+stdout. Go 321,376.4 texts/s; native O2 854,679.4; original Node dependency
+composition 954,878.4. Native is 2.66x Go and 0.90x Node in this observed batch.
+A separate layout gate ran concurrently, so these are observations, not isolated
+peak rates or a whole Markdown parser/formatter performance claim.
+Cohere --no-cache --no-fix: /tmp/markdown-width-style.log, 276 rules,
+12 files checked, 100% Adamic-ready, zero findings.
+go vet ./...: /tmp/markdown-width-vet.log, exit 0, empty.
+Only stage1/cohere/markdownblocks changed. The seven existing original-oracle
+disagreement witnesses and both full outputs remain in GAPS.md.
+
+Composed final gate with all legacy native text-width slots poisoned:
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-native-width-poisoned
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownHTMLBlockLayout$' -count=1 -v
+/tmp/markdown-width-poisoned.log: PASS, 221.426s. 4,358 complete source contexts,
+including all 953 original documents and 44 new Unicode table cases, match
+Go's actual formatter and the original fork's complete parser/layout with off.
+Native/source/backend/canonical Go/original fork doc bytes match too. Counts:
+2,969 lists, 2,897 quotes, 698 tables, 4,218 code blocks, 1,270 HTML and 222,063
+eligible word nodes. ASan/UBSan/leaks pass. Three existing HTML output mutants
+were rerun and caught by root-trim, comment-line and literal-root cases.
+Component timing: Go canonical docs 7,866.9, native components 3,685.7, source
+Node components 3,818.8, fork canonical docs 3,388.6 documents/s. These workloads
+differ: native/source build block docs; Go/fork receive complete canonical docs.
+An earlier unpoisoned composed run also passed (249.589s); the poisoned run is
+the final proof that the caller supplies no width service.
+Full repository tests were not run; the package slice and static vet were run.
+
+Historical report follows; its earlier unfinished-width statements are superseded.
+
 All five requested block layout components are green and pushed.
 4,314 source contexts match Go and the pinned fork with embedding off.
 Native source preprocessing and quote-prefix recognition also pass 2,091 sources.

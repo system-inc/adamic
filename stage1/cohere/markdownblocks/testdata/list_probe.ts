@@ -79,13 +79,12 @@ for(const line of input.text.split('\n')) {
             decode(fields[4] ?? ''),
             decode(fields[5] ?? ''),
         );
-        documents.push(arena.text(text, integer(fields[3] ?? '')));
+        documents.push(arena.text(text));
     }
     else if(kind === 'H')
         documents.push(
             printHTMLBlock(arena, {
                 rootLast: fields[1] === '1',
-                lineWidths: numbers(fields[2] ?? ''),
                 value: decode(fields[3] ?? ''),
             }),
         );
@@ -95,9 +94,6 @@ for(const line of input.text.split('\n')) {
                 indented: fields[1] === '1',
                 language: decode(fields[2] ?? ''),
                 metadata: decode(fields[3] ?? ''),
-                languageWidth: integer(fields[4] ?? ''),
-                metadataWidth: integer(fields[5] ?? ''),
-                lineWidths: numbers(fields[6] ?? ''),
                 value: decode(fields[7] ?? ''),
             }),
         );
@@ -110,20 +106,12 @@ for(const line of input.text.split('\n')) {
                     const parts = cell.split(',');
                     cells.push({
                         doc: documents[integer(parts[0] ?? '')] ?? panic('table cell document'),
-                        width: integer(parts[1] ?? ''),
                     });
                 }
             }
             rows.push(cells);
         }
-        documents.push(
-            printTable(
-                arena,
-                { rows, align: (fields[1] ?? '').split(','), rowWidths: numbers(fields[2] ?? '') },
-                120,
-                4,
-            ),
-        );
+        documents.push(printTable(arena, { rows, align: (fields[1] ?? '').split(',') }, 120, 4));
     }
     else if(kind === 'Q') documents.push(printQuote(arena, blocks(fields[1] ?? '', documents)));
     else if(kind === 'I') {

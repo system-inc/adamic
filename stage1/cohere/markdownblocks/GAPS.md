@@ -6,6 +6,25 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Unicode width gap closed
+
+`width.ts` computes cohere's StringWidth natively. It uses the pinned East Asian
+ranges and finite ordered emoji matcher instructions generated from the exact Go
+tables, with no runtime RegExp. Matching preserves UTF-16 code units, priority,
+greedy optional sequences, narrow emojis, controls, combining marks, selectors,
+and cohere's printable-ASCII shortcut, including DEL. Go supplies no text widths
+to the native document printer or the list, quote, table, code and HTML APIs.
+The fixture test poisons all legacy Go text-width protocol slots to prove this.
+
+The width check covers every Unicode scalar, all repository documents and their
+lines, plus generated emoji/selector/control sequences. The pinned original
+emoji-regex 10.6.0, get-east-asian-width 1.6.0 and narrow-emojis 0.0.3 packages
+are installed only in scratch. The actual bundled fork independently decides
+width through group-fit boundaries. This closes the width-service gap, not the
+full parser or the remaining printer gaps. Source-file decoding replaces lone
+surrogates; this corpus does not claim a direct lone-surrogate Go StringWidth
+oracle. Historical references to supplied widths below describe earlier slices.
+
 ## Native source preprocessing and quote-prefix recognition
 
 `preprocess.ts` now ports the complete single-call micromark preprocessing stage:

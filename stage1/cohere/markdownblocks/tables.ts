@@ -1,14 +1,13 @@
-// Cohere table.go, preserved prose layout. Display widths are an explicit service input.
+// Cohere table.go, preserved prose layout. Cell and row widths are computed natively.
 import { panic } from 'adamic';
+import { stringWidth } from './width.ts';
 import { printDocument, type DocumentArena } from './document.ts';
 export interface TableCellInterface {
     readonly doc: number;
-    readonly width: number;
 }
 export interface TableFrameInterface {
     readonly rows: readonly (readonly TableCellInterface[])[];
     readonly align: readonly string[];
-    readonly rowWidths: readonly number[];
 }
 interface PrintedCellInterface {
     readonly text: string;
@@ -38,9 +37,10 @@ export function printTable(
         for(let index = 0; index < row.length; index++) {
             const cell = row[index] ?? panic('table input cell');
             const text = printDocument(arena, cell.doc, printWidth, tabWidth);
+            const width = stringWidth(text);
             while(widths.length <= index) widths.push(3);
-            widths[index] = Math.max(widths[index] ?? panic('column maximum'), cell.width);
-            cells.push({ text, width: cell.width });
+            widths[index] = Math.max(widths[index] ?? panic('column maximum'), width);
+            cells.push({ text, width });
         }
         contents.push(cells);
     }
@@ -58,12 +58,7 @@ export function printTable(
     const parts: number[] = [arena.add('p', '', 0, [])];
     for(let index = 0; index < lines.length; index++) {
         if(index > 0) parts.push(arena.add('h', '', 0, [], 2));
-        parts.push(
-            arena.text(
-                lines[index] ?? panic('table output row'),
-                frame.rowWidths[index] ?? panic('table row display width'),
-            ),
-        );
+        parts.push(arena.text(lines[index] ?? panic('table output row')));
     }
     return arena.concat(parts);
 }

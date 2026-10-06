@@ -6,9 +6,6 @@ export interface CodeBlockInterface {
     readonly value: string;
     readonly language: string;
     readonly metadata: string;
-    readonly languageWidth: number;
-    readonly metadataWidth: number;
-    readonly lineWidths: readonly number[];
 }
 export function fenceStyle(value: string): string {
     let longest = 0;
@@ -27,21 +24,21 @@ export function printCodeBlock(arena: DocumentArena, frame: CodeBlockInterface):
     const lines = frame.value.split('\n');
     for(let index = 0; index < lines.length; index++) {
         if(index > 0) body.push(arena.hardline());
-        body.push(arena.text(lines[index] ?? panic('code line'), frame.lineWidths[index] ?? panic('code line width')));
+        body.push(arena.text(lines[index] ?? panic('code line')));
     }
     if(frame.indented) {
         const alignment = ' '.repeat(4);
-        return arena.align(alignment, arena.concat([arena.text(alignment, alignment.length), arena.concat(body)]));
+        return arena.align(alignment, arena.concat([arena.text(alignment), arena.concat(body)]));
     }
     const style = fenceStyle(frame.value);
     const metadata = frame.metadata === '' ? '' : ` ${frame.metadata}`;
     return arena.concat([
-        arena.text(style, style.length),
-        arena.text(frame.language, frame.languageWidth),
-        arena.text(metadata, frame.metadataWidth),
+        arena.text(style),
+        arena.text(frame.language),
+        arena.text(metadata),
         arena.hardline(),
         arena.concat(body),
         arena.hardline(),
-        arena.text(style, style.length),
+        arena.text(style),
     ]);
 }

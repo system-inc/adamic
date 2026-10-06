@@ -1,7 +1,8 @@
 // Markdown document layout from cohere/internal/format/doc/printer.go.
 // Nodes, indentation roots and commands use arena IDs, never owning back pointers.
-// Text display widths are supplied by the caller; Unicode width is a separate service.
+// Text display widths are computed natively from cohere's pinned Unicode data.
 import { panic } from 'adamic';
+import { stringWidth } from './width.ts';
 import { CommandStack, command, type CommandInterface } from './commandStack.ts';
 export interface DocumentInterface {
     readonly kind: string;
@@ -16,14 +17,22 @@ export class DocumentArena {
     readonly nodes: DocumentInterface[] = [];
     add(kind: string, text: string, width: number, children: readonly number[], flag = 0, group = -1): number {
         const id = this.nodes.length;
-        this.nodes.push({ kind, text, width, children, flag, group, breaks: (flag & 1) !== 0 });
+        this.nodes.push({
+            kind,
+            text,
+            width: kind === 't' ? stringWidth(text) : width,
+            children,
+            flag,
+            group,
+            breaks: (flag & 1) !== 0,
+        });
         return id;
     }
     node(id: number): DocumentInterface {
         return this.nodes[id] ?? panic('document ID outside arena');
     }
-    text(value: string, width: number): number {
-        return this.add('t', value, width, []);
+    text(value: string): number {
+        return this.add('t', value, 0, []);
     }
     concat(parts: readonly number[]): number {
         return this.add('a', '', 0, parts);

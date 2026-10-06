@@ -41,5 +41,5 @@ export function printQuote(arena: DocumentArena, children: readonly ListBlockInt
         }
         parts.push(child.doc);
     }
-    return arena.concat([arena.text('> ', 2), arena.align('> ', arena.concat(parts))]);
+    return arena.concat([arena.text('> '), arena.align('> ', arena.concat(parts))]);
 }

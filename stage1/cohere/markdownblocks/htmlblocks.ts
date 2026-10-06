@@ -4,7 +4,6 @@ import type { DocumentArena } from './document.ts';
 export interface HTMLBlockInterface {
     readonly value: string;
     readonly rootLast: boolean;
-    readonly lineWidths: readonly number[];
 }
 function space(code: number): boolean {
     return (
@@ -39,7 +38,7 @@ export function printHTMLBlock(arena: DocumentArena, frame: HTMLBlockInterface):
     const lines = value.split('\n');
     for(let index = 0; index < lines.length; index++) {
         if(index > 0) parts.push(replacement);
-        parts.push(arena.text(lines[index] ?? panic('HTML line'), frame.lineWidths[index] ?? panic('HTML line width')));
+        parts.push(arena.text(lines[index] ?? panic('HTML line')));
     }
     return arena.concat(parts);
 }
