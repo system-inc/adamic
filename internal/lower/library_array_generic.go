@@ -29,6 +29,15 @@ func (l *lowering) libraryArrayExplicitSearch(node *ast.Node) string {
 }
 
 func (l *lowering) libraryArrayGenericCall(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.libraryArrayReceiverCall(node); known {
+		return value, true, err
+	}
+	if value, known, err := l.libraryArrayFromIterable(node); known {
+		return value, true, err
+	}
+	if value, known, err := l.libraryArrayConstruct(node); known {
+		return value, true, err
+	}
 	if value, known, err := l.libraryArrayIsArray(node); known {
 		return value, true, err
 	}

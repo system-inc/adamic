@@ -1,0 +1,46 @@
+interface Leaf {readonly value: number;}
+const number_find: (number | undefined)[] = [1, 2, 3];
+const number_find_at = number_find.find((item, index): boolean => {
+	console.log(`${index} ${item === undefined ? 'hole' : item}`);
+	number_find.pop();
+	return item === undefined;
+});
+console.log(`${number_find_at ?? -1}`);
+const number_findLast: (number | undefined)[] = [1, 2, 3];
+const number_findLast_at = number_findLast.findLast((item, index): boolean => {
+	console.log(`${index} ${item === undefined ? 'hole' : item}`);
+	if (index === 2) {number_findLast.splice(0, 2);}
+	return item === undefined;
+});
+console.log(`${number_findLast_at ?? -1}`);
+const number_findLastIndex: (number | undefined)[] = [1, 2, 3];
+const number_findLastIndex_at = number_findLastIndex.findLastIndex((item, index): boolean => {
+	console.log(`${index} ${item === undefined ? 'hole' : item}`);
+	if (index === 2) {number_findLastIndex.splice(0, 2);}
+	return false;
+});
+console.log(`${number_findLastIndex_at}`);
+const leaf_find: (Leaf | undefined)[] = [{value: 1}, {value: 2}, {value: 3}];
+const leaf_find_at = leaf_find.find((item, index): boolean => {
+	console.log(`${index} ${item === undefined ? 'hole' : item.value}`);
+	leaf_find.pop();
+	return item === undefined;
+});
+console.log(`${leaf_find_at === undefined ? 'absent' : leaf_find_at.value}`);
+const leaf_findLast: (Leaf | undefined)[] = [{value: 1}, {value: 2}, {value: 3}];
+const leaf_findLast_at = leaf_findLast.findLast((item, index): boolean => {
+	console.log(`${index} ${item === undefined ? 'hole' : item.value}`);
+	if (index === 2) {leaf_findLast.splice(0, 2);}
+	return item === undefined;
+});
+console.log(`${leaf_findLast_at === undefined ? 'absent' : leaf_findLast_at.value}`);
+const leaf_findLastIndex: (Leaf | undefined)[] = [{value: 1}, {value: 2}, {value: 3}];
+const leaf_findLastIndex_at = leaf_findLastIndex.findLastIndex((item, index): boolean => {
+	console.log(`${index} ${item === undefined ? 'hole' : item.value}`);
+	if (index === 2) {leaf_findLastIndex.splice(0, 2);}
+	return false;
+});
+console.log(`${leaf_findLastIndex_at}`);
+const words: (string | undefined)[] = ['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2)];
+const wordAt = words.findIndex((item): boolean => {console.log(`${item === undefined ? 'hole' : item}`); words.pop(); return false;});
+console.log(`${wordAt}`);
