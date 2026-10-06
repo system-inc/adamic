@@ -233,6 +233,16 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions.a", true, false},
 	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
 	{"internal/oracle/testdata/regions_throw.a", true, false},
+	// Guards and paths no fixture reached, from integration's readings of aa17d3c and fa49e43
+	// (#fxspptb): a comparator that spreads its parameter, a global moved before it's declared, the
+	// ways a parameter escapes, a spread returned as fresh, an object bigger than a region's first
+	// block, and region paths through asides, nested literals and try/finally.
+	{"internal/oracle/testdata/reuse_comparator_spread.a", true, false},
+	{"internal/oracle/testdata/reuse_move_before_ready.a", true, false},
+	{"internal/oracle/testdata/regions_escapes.a", true, false},
+	{"internal/oracle/testdata/regions_spread_fresh.a", true, false},
+	{"internal/oracle/testdata/regions_big.a", true, false},
+	{"internal/oracle/testdata/regions_paths.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
