@@ -6,6 +6,40 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native whitespace and preserved reference labels
+
+`whitespace.ts` now makes whitespace document decisions natively: CJ/non-CJK
+spacing style, Hangul pairs, punctuation, all three prose-wrap policies, link-label
+mode, single-line ancestors and syntax-leading/setext/fake-whitespace exceptions.
+`preservedLabel.ts` composes native splitText and document fills for the preserved
+raw reference-label branch. No Go whitespace document or width service remains.
+The composed fixture stream still supplies parsed/preprocessed AST facts and
+path/ancestor predicates; this is not a source-file native Markdown formatter.
+
+All 4,943 accumulated documents (953 original plus generated layout cases) match
+Go, source Node, native, backend, original doc printer and original full-source
+fork formatter with embedding off. Separately, 205,931 whitespace nodes in six
+modes each match actual Go private routines and the unchanged original fork's
+private dispatch/policy functions, exposed in memory. Three policy and three
+layout output-only native mutants fail. All sanitize and leak checks pass.
+Only three preserved-label and three footnote-definition frames occur in this
+corpus. These counts describe coverage, not proof of every AST/options context.
+The full pipeline uses preserved prose; always/never have isolated policy checks,
+and compact never-mode tables remain a printer option gap.
+
+`gaps/5_conditional_panic.ts` proves that a nested conditional ending in panic
+is NotYet: Node prints T, Adamic reports `reading panic`. The whitespace probe
+now uses explicit if/else statements and passes every policy oracle.
+Fixture transport initially repeated every parent token per whitespace, producing
+302 MB. It now transports only actual whitespace samples and neighbor kinds that
+can contribute to CJ/non-CJK spacing counts, 43 MB; native still counts them.
+Superseded long runs were stopped. The final complete gate passes; no native
+printer decision was replaced by an oracle decision to reduce fixture size.
+
+The native tokenizer/event engine, rollback/resolvers/subtokenization, mdast
+construction, AST preprocessing and AST path walker remain unfinished. The
+remaining-printer wording in historical sections below describes earlier slices.
+
 ## Native source escape and character-reference decoding
 
 `decodeString.ts` ports micromark's complete source-string decoder: ASCII
@@ -59,8 +93,8 @@ with embedding off. The captured corpus has only two footnote definitions;
 this is recorded coverage, not a claim that every nesting/options combination
 has been exercised. Prose remains preserved with common options.
 
-Remaining printer dependencies include whitespace dispatch and preserved
-reference-label content; those still use Go-produced docs. Parent/ancestor facts
+Whitespace dispatch and preserved reference-label content are now native, as
+recorded above. Parent/ancestor facts
 for emphasis and thematic breaks still come from the fixture adapter. A native
 AST path walker, AST preprocessing and the tokenizer/mdast remain unported.
 

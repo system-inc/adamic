@@ -1,3 +1,126 @@
+Seven more native Markdown slices are green and pushed; full parsing is unfinished.
+4,943 composed documents match Go and the pinned fork with embedding off.
+Widths: 1,205,496 cases; prose splitting: 1,180,938; decoding: 2,242,268.
+Twenty-four new native output mutants caught; two new compiler gaps have witnesses.
+The tokenizer/mdast, AST preprocessing and native AST path traversal still remain.
+
+Native whitespace and preserved-reference-label slice, October 6, 2026
+
+Previous pushed source decoder: b7feae655eee2369c145f71e373cf3a8f64569ac.
+Built whitespace.ts, preservedLabel.ts and their composition in leaves/driver.
+CJK spacing, Korean pairing, punctuation, syntax-leading protection, fake/setext
+whitespace, ordinary/link modes and all three prose-wrap policies are native.
+Preserved raw labels compose the source splitter with native fills/hardlines.
+Go still supplies parsed/preprocessed AST and path facts. No full source-file
+native Markdown parser/formatter or full-formatter native speed is claimed.
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-whitespace-compact
+ go test ./stage1/cohere/markdownblocks -run '^TestMarkdownWhitespaceLayout$' -count=1 -v -timeout 20m
+/tmp/markdown-whitespace-compact.log: PASS, 409.804s, all 4,943 documents:
+876 physical repository/submodule Markdown files, 4,067 generated documents,
+including the original 953 and every prior layout case plus 130 whitespace cases.
+Go canonical docs, actual unmodified Go full formatter, sanitized native,
+source Node, JS backend, pinned original doc printer and full fork formatter
+all agree byte for byte with embedding off. Legacy width slots stay poisoned.
+Native observations: 3,124 lists, 2,981 quotes, 717 tables, 4,236 code blocks,
+1,486 HTML blocks, 224,695 words and 205,931 whitespace nodes.
+Only three preserved-label and three footnote-definition frames were observed;
+this is sparse-context coverage, not a promise about every possible combination.
+
+Independent policy check: 205,931 nodes x six modes = 1,235,586 observations.
+Go's actual private dispatch/whitespace routines and the unchanged original fork's
+private functions decide doc classifications. Native/source/backend agree and
+leak nothing. The original functions are exposed by reference in memory; their
+bodies, original regexes and constants remain unchanged. This independently
+checks always/never policies, while the full document pipeline remains preserve.
+Compact never-mode tables and nondefault full-pipeline options remain unported.
+
+Six sanitized native output-only mutants all compile, exit 0, empty stderr:
+- CJ spacing strict > becomes >=, caught by six-mode doc classification.
+- Korean/CJ pairing's first Korean kind becomes non-CJK, caught by classification.
+- tableCell removed from single-line ancestors, caught by classification.
+- preserved LF guard checks never instead, caught in CLAUDE.md at byte3296.
+- whitespace text spaces removed, caught in CLAUDE.md at byte16.
+- ordered syntax dot suffix becomes colon, caught in
+  cohere/internal/lint/rules/react/preserve_manual_memoization.md at byte2009835.
+The CJK-style mutant was moved into the independent policy check because the
+preserved document pipeline alone need not observe that decision; the layout
+check instead uses an observable space-removal mutant. No survivor counts as proof.
+
+Initial /tmp/markdown-whitespace-final2.log: FAIL246.557s, nested conditional
+panic in the new probe was NotYet. gaps/5_conditional_panic.ts is the minimized
+witness: Node T, Adamic reading panic. Explicit if/else fixes the probe.
+Superseded runs before/after that repair were stopped during development.
+Their fixture stream repeated all parent tokens per whitespace, 301,773,252 bytes.
+The final stream is 42,891,835 bytes: only actual whitespace/neighbor-kind samples
+that can count toward CJ spacing travel. Native counts samples, not Go's answer.
+All final oracle, sanitizer, leak and six mutation checks pass after this change.
+
+Three-run observed component rates, decoding/output/startup included:
+Go canonical doc layout 6,271.1 documents/s;
+native O2 block construction plus layout 2,790.3;
+source Node block construction plus layout 3,001.0;
+actual original Node canonical doc layout 2,530.0.
+These are DIFFERENT WORKLOADS: native/source build blocks from AST facts;
+Go/original Node receive completed docs. Markdown parsing and Go fixture generation
+are excluded. No full-formatter speed ratio can be inferred. Decoder probe rates
+are native766,717.3, Go3,186,652.6 and actual original Node664,532.4 texts/s.
+Width/splitter rates and their limitations remain in the prior slice reports below.
+
+ go test ./stage1/cohere/markdownblocks -run '^(TestWholeDocumentOraclePreflight|TestFrontMatterStage|TestMarkdownParserPrefixes)$' -count=1 -v -timeout 20m
+/tmp/markdown-white-decoder-regression.log: PASS75.774s. 953/953 original documents
+agree embedding off. All seven physical embedding disagreements retain both
+complete outputs and source hashes. Auto mode has 11 named differences including
+four generated/gap witnesses, unchanged. All nine prior source-stage/audit mutants
+also catch: heading/list/fence, YAML/UTF16/BOM, CRLF/tab/quote continuation.
+Front matter4069 cases and source preprocessing/prefix2091 x8 contexts pass
+native/source/backend/Go and applicable original library, including leak checks.
+Actual full-source baseline Go301.7 documents/s, original fork Node213.8;
+no native full formatter was timed. Full repository and full package gates not run:
+filtered slice/regression tests plus the seven uncached compiler fixtures were run.
+
+ /tmp/cssstrings-cohere --no-cache --no-fix stage1/cohere/markdownblocks/whitespace.ts stage1/cohere/markdownblocks/whitespaceCodec.ts stage1/cohere/markdownblocks/preservedLabel.ts stage1/cohere/markdownblocks/testdata/whitespace_probe.ts stage1/cohere/markdownblocks/leaves.ts stage1/cohere/markdownblocks/testdata/list_probe.ts
+/tmp/markdown-whitespace-style-final.log: 276 rules, 6 checked, 100% Adamic-ready,
+zero findings. go vet ./..., gofmt -l stage1/cohere/markdownblocks and
+ git diff --check all pass; empty /tmp/markdown-whitespace-vet-final.log,
+/tmp/markdown-whitespace-gofmt-final.log and /tmp/markdown-whitespace-diff-final.log.
+The two new compiler witnesses passed in /tmp/markdown-white-decode-gaps.log;
+seven uncached compiler fixtures passed in /tmp/markdown-whitespace-decoder-oracle.log.
+
+After GAPS.md's final Markdown edits, baseline/policy checks were rerun:
+ ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-whitespace-reported go test ./stage1/cohere/markdownblocks -run '^TestMarkdownWhitespaceLayout$/^$' -count=1 -v -timeout 20m
+/tmp/markdown-whitespace-reported.log: PASS164.171s, all4,943 documents, all source/
+backend/native/original checks, sanitizers/leaks; 206,426 whitespace nodes in six
+modes, 225,190 words. Other block counts unchanged. Rates Go canonical5257.8,
+native component2788.3, sourceNode2922.8, original canonical2465.3 documents/s.
+ ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test ./stage1/cohere/markdownblocks -run '^TestWholeDocumentOraclePreflight$/^$' -count=1 -v -timeout 20m
+/tmp/markdown-whitespace-witness-final.log: PASS40.629s,953/953 off, all seven
+physical witness hashes and fourteen complete outputs retained. Go full-source
+316.8 documents/s, actual original full-source Node216.6. Native parser absent.
+These two filters skip named mutant subtests only: all parent assertions run and
+log their document counts. Go prints [no tests to run] because no matching subtest
+ran; it does not mean the parent body was skipped. The complete six native and
+nine source-stage/audit mutants already passed unchanged implementations above.
+
+Exact setup timing lines:
+setup: go ready (0s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0s)
+setup: node ready (0s)
+setup: submodules ready (0s)
+setup: build cache warm (16s)
+setup: done in 16s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+nproc: 5
+
+Setup was rerun earlier this turn: /tmp/markdown-width-setup.log shows Go0s,
+clang0s, Node0s, submodules0s, build-cache warm16s, total16s on5processors.
+nproc=5. Toolchain environment /workspace/adamic-tools/env.sh; Go1.27.1,
+Node24.19.0, clang20.1.8. Original fork based on3.9.6 is pinned in cohere's
+bundles and scratch /tmp/adamic-markdown-blocks-fork. Width library versions are
+emoji-regex10.6.0, get-east-asian-width1.6.0, narrow-emojis0.0.3 in scratch.
+All source stays under stage1/cohere/markdownblocks; reserved compiler files and
+prior inline dependency are untouched. No PR. Branch codex/stage1-markdown-blocks.
+
 Native Unicode widths, major printers, prose splitting and entity decoding are green.
 4,813 composed documents and 2,242,268 decoder sources match both original oracles.
 Decoder probe: native 767k texts/s, Go 3.19M, original Node 665k.

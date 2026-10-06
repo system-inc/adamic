@@ -2,6 +2,7 @@
 import { panic } from 'adamic';
 import type { DocumentArena } from './document.ts';
 import type { ListBlockInterface } from './lists.ts';
+import { printPreservedLabel } from './preservedLabel.ts';
 import { printBlockChildren } from './children.ts';
 import { printInlineCode, printWikiLink, printURL, printTitle, printReference } from '../markdowninline/inline.ts';
 export interface LeafFrameInterface {
@@ -33,6 +34,7 @@ function group(arena: DocumentArena, contents: number): number {
 }
 export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): number {
     const contents = arena.concat(frame.children.map((child) => child.doc));
+    if(frame.kind === 'preservedLabel') return printPreservedLabel(arena, frame.source);
     if(frame.kind === 'ignored') {
         if(frame.value === 'list' && (frame.flags & 1) !== 0) {
             const start = frame.source.lastIndexOf('\n>');

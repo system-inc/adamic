@@ -73,22 +73,24 @@ type adamicLeaf struct {
 	flags, sibling                                                                    int
 	children                                                                          []adamicBlock
 }
+type adamicWhitespace struct{ fields []string }
 type adamicDocuments struct {
-	leaves     []adamicLeaf
-	roots      []adamicRoot
-	structures []adamicStructure
-	native     bool
-	lines      []string
-	documents  int
-	items      int
-	htmls      []adamicHTML
-	codes      []adamicCode
-	tables     []adamicTable
-	quotes     [][]adamicBlock
-	lists      []adamicList
-	words      []adamicWord
-	groups     map[*doc.Group]int
-	ids        map[*doc.GroupID]int
+	whitespaces []adamicWhitespace
+	leaves      []adamicLeaf
+	roots       []adamicRoot
+	structures  []adamicStructure
+	native      bool
+	lines       []string
+	documents   int
+	items       int
+	htmls       []adamicHTML
+	codes       []adamicCode
+	tables      []adamicTable
+	quotes      [][]adamicBlock
+	lists       []adamicList
+	words       []adamicWord
+	groups      map[*doc.Group]int
+	ids         map[*doc.GroupID]int
 }
 
 func adamicEscape(text string) string {
@@ -256,6 +258,13 @@ func (out *adamicDocuments) serialize(document doc.Doc) int {
 			out.documents++
 			return id
 		}
+		if out.native && strings.HasPrefix(node.Label, "adamic-whitespace:") {
+			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-whitespace:"))
+			out.lines = append(out.lines, "S\t"+strings.Join(out.whitespaces[index].fields, "\t"))
+			id := out.documents
+			out.documents++
+			return id
+		}
 		if out.native && strings.HasPrefix(node.Label, "adamic-leaf:") {
 			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-leaf:"))
 			frame := out.leaves[index]
@@ -338,6 +347,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	structures := []adamicStructure{}
 	roots := []adamicRoot{}
 	leaves := []adamicLeaf{}
+	whitespaces := []adamicWhitespace{}
 	printer := *mdastPrinter
 	printer.PrintPrettierIgnored = func(path *astPath, options *options, print printing.PrintFunc, args any) doc.Doc {
 		node := currentNode(path)
@@ -349,6 +359,76 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	printer.Print = func(path *astPath, options *options, print printing.PrintFunc, args any) doc.Doc {
 		original := printMdast(path, options, print, args)
 		node := currentNode(path)
+		if shouldRemainTheSameContent(path) {
+			id := len(leaves)
+			leaves = append(leaves, adamicLeaf{kind: "preservedLabel", source: options.OriginalText[node.Position.Start.Offset:node.Position.End.Offset], sibling: -1})
+			return doc.NewLabel(fmt.Sprintf("adamic-leaf:%d", id), original)
+		}
+		if node.NodeType == "whitespace" {
+			frame := adamicWhitespace{fields: []string{adamicEscape(node.Value), settingsOf(options).proseWrap, "0"}}
+			appendToken := func(n *Node) {
+				if n == nil {
+					frame.fields = append(frame.fields, "0", "", "", "", "0")
+					return
+				}
+				frame.fields = append(frame.fields, "1", n.NodeType, adamicEscape(n.Value), n.Kind, strconv.Itoa(adamicFlag(n.IsCJ)+2*adamicFlag(n.HasLeadingPunctuation)+4*adamicFlag(n.HasTrailingPunctuation)))
+			}
+			appendToken(previousNode(path))
+			appendToken(nextNode(path))
+			appendToken(siblingAt(path, pathIndex(path)+2))
+			kinds, setext, samples := []string{}, []string{}, []string{}
+			for _, ancestor := range path.Ancestors() {
+				kinds = append(kinds, ancestor.NodeType)
+				setext = append(setext, strconv.Itoa(adamicFlag(ancestor.Position != nil && isSetextHeading(ancestor))))
+			}
+			siblings := parentNode(path).Children
+			for i := 1; i < len(siblings)-1; i++ {
+				n := siblings[i]
+				// Transport only samples that the native/original policy can count.
+				// Keep the actual whitespace value and neighboring kinds, not Go's decision.
+				previousKind, nextKind := siblings[i-1].Kind, siblings[i+1].Kind
+				if n.NodeType != "whitespace" || (n.Value != "" && n.Value != " ") || !((previousKind == kindCJLetter && nextKind == kindNonCJK) || (previousKind == kindNonCJK && nextKind == kindCJLetter)) {
+					continue
+				}
+				value := -1
+				if n.Value == "" {
+					value = 0
+				} else if n.Value == " " {
+					value = 1
+				}
+				samples = append(samples, fmt.Sprintf("%s,%d,%s,%s", n.NodeType, value, siblings[i-1].Kind, siblings[i+1].Kind))
+			}
+			frame.fields = append(frame.fields, strings.Join(kinds, ","), strings.Join(setext, ","), strings.Join(samples, ";"))
+			saved := settingsOf(options).proseWrap
+			wanted := []string{}
+			classify := func(d doc.Doc) string {
+				switch n := d.(type) {
+				case doc.Text:
+					return "T" + string(n)
+				case *doc.Line:
+					if n.Soft {
+						return "S"
+					}
+					if n.Hard {
+						return "H"
+					}
+					return "L"
+				}
+				if _, ok := doc.Parts(d); ok {
+					return "H"
+				}
+				panic("unexpected whitespace doc")
+			}
+			for _, mode := range []string{"preserve", "always", "never"} {
+				settingsOf(options).proseWrap = mode
+				wanted = append(wanted, classify(printMdast(path, options, print, args)), classify(printWhitespace(path, node.Value, mode, true, options)))
+			}
+			settingsOf(options).proseWrap = saved
+			frame.fields = append(frame.fields, strings.Join(wanted, ","))
+			id := len(whitespaces)
+			whitespaces = append(whitespaces, frame)
+			return doc.NewLabel(fmt.Sprintf("adamic-whitespace:%d", id), original)
+		}
 		switch node.NodeType {
 		case "frontMatter", "emphasis", "strong", "delete", "inlineCode", "wikiLink", "link", "image", "thematicBreak", "linkReference", "imageReference", "definition", "footnoteReference", "footnoteDefinition", "break", "liquidNode", "math", "inlineMath", "text", "tableCell":
 			if !shouldRemainTheSameContent(path) {
@@ -535,7 +615,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	}
 	// Serialize before Print mutates group break flags, so native propagation is exercised.
 	for _, side := range []bool{true, false} {
-		out := &adamicDocuments{native: side, leaves: leaves, roots: roots, structures: structures, htmls: htmls, codes: codes, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
+		out := &adamicDocuments{native: side, whitespaces: whitespaces, leaves: leaves, roots: roots, structures: structures, htmls: htmls, codes: codes, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
 		root := out.serialize(document)
 		out.lines = append(out.lines, fmt.Sprintf("R\t%d\t%d", root, adamicFlag(bom)))
 		stream := strings.Join(out.lines, "\n") + "\n"

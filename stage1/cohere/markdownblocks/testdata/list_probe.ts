@@ -1,3 +1,5 @@
+import { printWhitespace } from '../whitespace.ts';
+import { whitespaceFrame } from '../whitespaceCodec.ts';
 import { printLeaf } from '../leaves.ts';
 import { printRoot, type RootChildInterface } from '../root.ts';
 import { printHeading, printParagraph, printSentence, type SentenceChildInterface } from '../structure.ts';
@@ -73,6 +75,7 @@ for(const line of input.text.split('\n')) {
                 integer(fields[5] ?? ''),
             ),
         );
+    else if(kind === 'S') documents.push(printWhitespace(arena, whitespaceFrame(fields)));
     else if(kind === 'Y')
         documents.push(
             printLeaf(arena, {
