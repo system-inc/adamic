@@ -546,3 +546,13 @@ constraint expression handling, and separator recovery. Ten added probes and
 all preceding cases pass in 35.150s; the focused-plus-generic-child-mutant
 verification passes in 52.623s, and cohere passes. The continuation advances
 to input 2575, exposing parameter modifier recovery.
+
+## Continued recovery: parameter modifiers
+
+At input 2575, a duplicated function-type opener makes Go recover through
+a parameter beginning with export. Parameters and generic parameters now
+share Go's contextual modifier lookahead, including export/default/static
+rules, const permission, duplicate-static stopping, and decorator ordering.
+The recovered export modifier is retained before the reserved function-name
+diagnostic. Four additional probes and preceding cases pass in 34.965s;
+cohere passes. The next failure (input 2578) is a recovered list range flag.

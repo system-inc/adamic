@@ -10,7 +10,7 @@ import {
     typeArgumentsAhead,
     typeMemberAhead,
     typeTokenStart,
-    typeParameterModifierAhead,
+    modifierAhead,
 } from './lookahead.ts';
 import type { ParserStateInterface } from './lookahead.ts';
 import { listDiagnostic, listTerminator } from './recovery.ts';
@@ -543,13 +543,7 @@ export class Parser {
                 continue;
             }
             const pos = this.scanner.fullStart;
-            const children: number[] = [];
-            while(
-                ['ConstKeyword', 'InKeyword', 'OutKeyword'].includes(this.kind()) &&
-                typeParameterModifierAhead(this.scanner)
-            ) {
-                children.push(this.token());
-            }
+            const children = this.modifiers(false, true);
             children.push(this.identifier(false));
             if(this.kind() === 'ExtendsKeyword') {
                 this.next();
@@ -1114,24 +1108,40 @@ export class Parser {
         this.expect('CloseParenToken');
         return result;
     }
-    parameter(): number {
-        const pos = this.scanner.fullStart;
+    modifiers(decorators: boolean, permitConst: boolean): number[] {
         const children: number[] = [];
-        while(this.kind() === 'AtToken') {
-            children.push(this.statements().decorator());
-        }
-        while(
-            this.kind() === 'PublicKeyword' ||
-            this.kind() === 'PrivateKeyword' ||
-            this.kind() === 'ProtectedKeyword' ||
-            this.kind() === 'ReadonlyKeyword' ||
-            this.kind() === 'OverrideKeyword'
-        ) {
-            if(!this.nextIdentifierSameLine()) {
+        let staticSeen = false;
+        let trailingDecorator = false;
+        let trailingModifier = false;
+        let modifierSeen = false;
+        while(true) {
+            if(decorators && this.kind() === 'AtToken' && !trailingModifier) {
+                children.push(this.statements().decorator());
+                if(modifierSeen) {
+                    trailingDecorator = true;
+                }
+            }
+            else if(!(staticSeen && this.kind() === 'StaticKeyword') && modifierAhead(this.scanner, permitConst)) {
+                if(this.kind() === 'StaticKeyword') {
+                    staticSeen = true;
+                }
+                children.push(this.token());
+                if(trailingDecorator) {
+                    trailingModifier = true;
+                }
+                else {
+                    modifierSeen = true;
+                }
+            }
+            else {
                 break;
             }
-            children.push(this.token());
         }
+        return children;
+    }
+    parameter(): number {
+        const pos = this.scanner.fullStart;
+        const children = this.modifiers(true, false);
         if(this.kind() === 'DotDotDotToken') {
             children.push(this.token());
         }

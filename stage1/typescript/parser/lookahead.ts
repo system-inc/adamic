@@ -555,12 +555,31 @@ export function typeTokenStart(tokenKind: string): boolean {
     );
 }
 
-export function typeParameterModifierAhead(scanner: Scanner): boolean {
+export function modifierAhead(scanner: Scanner, permitConst: boolean): boolean {
+    const current = kind(scanner);
+    if(!modifierKinds.includes(current)) {
+        return false;
+    }
     const state = new Speculation(scanner);
     state.next();
-    const result =
-        (scanner.flags & 1) === 0 &&
-        (kind(scanner) === 'Identifier' ||
+    let result: boolean;
+    if(current === 'DefaultKeyword' || (current === 'ExportKeyword' && kind(scanner) === 'DefaultKeyword')) {
+        if(current === 'ExportKeyword') {
+            state.next();
+        }
+        result = ['ClassKeyword', 'FunctionKeyword', 'InterfaceKeyword', 'AtToken'].includes(kind(scanner));
+        if(kind(scanner) === 'AbstractKeyword' || kind(scanner) === 'AsyncKeyword') {
+            const next = kind(scanner) === 'AbstractKeyword' ? 'ClassKeyword' : 'FunctionKeyword';
+            state.next();
+            result = kind(scanner) === next && (scanner.flags & 1) === 0;
+        }
+    }
+    else {
+        if(current === 'ExportKeyword' && kind(scanner) === 'TypeKeyword') {
+            state.next();
+        }
+        const follow =
+            kind(scanner) === 'Identifier' ||
             kind(scanner).endsWith('Keyword') ||
             [
                 'OpenBracketToken',
@@ -570,7 +589,15 @@ export function typeParameterModifierAhead(scanner: Scanner): boolean {
                 'StringLiteral',
                 'NumericLiteral',
                 'BigIntLiteral',
-            ].includes(kind(scanner)));
+            ].includes(kind(scanner));
+        result =
+            current === 'ExportKeyword'
+                ? kind(scanner) === 'AtToken' ||
+                  (!['AsteriskToken', 'AsKeyword', 'OpenBraceToken'].includes(kind(scanner)) && follow)
+                : current === 'ConstKeyword' && !permitConst
+                  ? kind(scanner) === 'EnumKeyword'
+                  : follow && (current === 'StaticKeyword' || (scanner.flags & 1) === 0);
+    }
     state.restore();
     return result;
 }
