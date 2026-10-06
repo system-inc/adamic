@@ -232,7 +232,7 @@ func TestDecodedOptionsAndMutant(t *testing.T) {
 	if string(count.output) != "0\n" {
 		t.Fatal("JSON catch option did not override the legacy default")
 	}
-	changed := mutant(t, "settings.read('allowemptycatch', allowCatch ? 'true' : 'false') === 'true'", "allowCatch", "context.ts")
+	changed := mutant(t, "'allowemptycatch'", "'ignored-allowemptycatch'", "main.ts")
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, side := range []struct {
 		name string
