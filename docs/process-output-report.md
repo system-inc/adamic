@@ -1,3 +1,6 @@
+Historical observations at 2972601, before the ruling to preserve all output in both backends.
+The current contract and validation are in [process.md](process.md) and [process-drain-report.md](process-drain-report.md).
+
 The follow-up adds Linux exit-output coverage on top of 3a9d1fc; the pushed tip is in the final report.
 Regular-file output before immediate exit and before normal return agrees byte for byte with Node.
 Interleaved stdout/stderr sharing one file or pipe agrees in order, bytes, and chosen exit status.
