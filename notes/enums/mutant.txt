@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_keys.a
+    oracle_test.go:580: stdout differs
+        node:   exit 0, stdout "1610612737=replaced\n536870913=two\n1610612737 true replaced\n536870913 true two\ntrue true 1 1\n", stderr ""
+        native: exit 0, stdout "1610612739=replaced\n536870914=two\n1610612739 true replaced\n536870914 true two\ntrue true 1 1\n", stderr ""
+    oracle_test.go:586: JavaScript backend: stdout differs
+        node:    exit 0, stdout "1610612737=replaced\n536870913=two\n1610612737 true replaced\n536870913 true two\ntrue true 1 1\n", stderr ""
+        backend: exit 0, stdout "1610612739=replaced\n536870914=two\n1610612739 true replaced\n536870914 true two\ntrue true 1 1\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_keys.a (0.42s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.425s
+FAIL

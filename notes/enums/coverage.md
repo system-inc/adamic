@@ -105,8 +105,8 @@ Temporarily changed exactly one line in internal/lower/enums.go enumConstant:
 The flag_keys fixture compiled and finished at exit 0 with empty stderr on every
 backend. Node printed keys 1610612737 and 536870913; native and generated JS
 printed 1610612739 and 536870914. The oracle failed only on stdout comparisons.
-Restored the line and reran the same oracle successfully. See mutant.log and
-restored.log. No mutant compiler code is committed.
+Restored the line and reran the same oracle successfully. See mutant.txt and
+restored.txt. No mutant compiler code is committed.
 
 ## Toolchain and commands
 
@@ -158,5 +158,5 @@ Final results: the full uncached repository gate exited 0 (Unicode properties
 690.824s, whole oracle package 195.666s, native package 220.674s). This gate used
 the initial 14-entry registry. The final 16-entry uncached oracle passed in
 4.142s, the final counts update in 22.565s, all 17 CLI source files agreed, and
-final formatting, vet and whitespace checks were clean. See gate.log, oracle.log,
-counts.log and cli.log for the observed output.
+final formatting, vet and whitespace checks were clean. See gate.txt, oracle.txt,
+counts.txt and cli.txt for the observed output.

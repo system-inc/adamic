@@ -1,0 +1,73 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_proofs.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_proofs.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_slots.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_slots.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_generic.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_generic.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_reflection.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_reflection.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_lookup.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_lookup.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_switches.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_switches.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_const_flags.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_const_flags.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_initialization.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_initialization.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_modules/main.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_modules/main.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_numeric_edges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_numeric_edges.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_string_names.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_string_names.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_constants.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_constants.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_views.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_views.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_shapes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_shapes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_mask_edges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_mask_edges.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_mask_edges.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_shapes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_views.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_constants.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_string_names.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_numeric_edges.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_modules/main.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_initialization.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_const_flags.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_switches.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_lookup.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_reflection.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_generic.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_slots.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_proofs.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_constants.a (1.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_keys.a (1.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_shapes.a (1.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_mask_edges.a (1.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_views.a (1.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_string_names.a (1.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_numeric_edges.a (1.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_const_flags.a (1.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_initialization.a (1.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_modules/main.a (1.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_switches.a (1.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_lookup.a (1.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_reflection.a (1.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_generic.a (1.22s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_slots.a (1.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_coverage_flag_proofs.a (0.93s)
+PASS
+gate cache: native hits=0 misses=48
+gate cache: node hits=0 misses=32
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.142s

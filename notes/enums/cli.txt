@@ -1,0 +1,78 @@
+internal/oracle/testdata/enums_coverage_const_flags.a: Node and CLI native agree, exit 0
+1610612736 1610612737 mask none
+1 true
+internal/oracle/testdata/enums_coverage_constants.a: Node and CLI native agree, exit 0
+16 17 16 13 4 1 4 8 0 19 8
+0,1,4,8,13,16,17,19,Start,Next,Plus,Subtract,Divide,Remainder,Right,Unsigned,And,Xor,Power
+-2 1.25 no
+internal/oracle/testdata/enums_coverage_flag_keys.a: Node and CLI native agree, exit 0
+1610612737=replaced
+536870913=two
+1610612737 true replaced
+536870913 true two
+true true 1 1
+internal/oracle/testdata/enums_coverage_flag_proofs.a: Node and CLI native agree, exit 0
+1610612737 1073741825 1610612736
+1073741825 1073741825 1610612736
+internal/oracle/testdata/enums_coverage_flag_slots.a: Node and CLI native agree, exit 0
+1610612736 536870912 1610612736
+0 mask missing
+internal/oracle/testdata/enums_coverage_generic.a: Node and CLI native agree, exit 0
+2.5 yes 1073741825 no
+1073741825
+internal/oracle/testdata/enums_coverage_initialization.a: Node and CLI native agree, exit 0
+3 4
+6,7
+3
+9
+internal/oracle/testdata/enums_coverage_lookup.a: Node and CLI native agree, exit 0
+Alias 1 1
+missing 2 2
+2.5 -2 -2 88
+2.5 -2
+internal/oracle/testdata/enums_coverage_mask_edges.a: Node and CLI native agree, exit 0
+0 0
+0 0
+0 0
+0 0
+1 1
+1610612737 1610612737
+1610612737 1610612737
+0 0
+1610612737 1610612737
+0 0
+1610612737
+internal/oracle/testdata/enums_coverage_numeric_edges.a: Node and CLI native agree, exit 0
+1e+22 Large
+1e-8 Tiny
+-1e+22 Negative
+0 Zero
+0,Large,1e+22,Tiny,1e-8,Negative,-1e+22,Zero
+internal/oracle/testdata/enums_coverage_reflection.a: Node and CLI native agree, exit 0
+Yes,No,Alias,NaN,Infinity
+yes,no,yes,nan,infinity
+Yes=yes
+No=no
+Alias=yes
+NaN=nan
+Infinity=infinity
+false true
+yes true
+0
+internal/oracle/testdata/enums_coverage_shapes.a: Node and CLI native agree, exit 0
+zero low high zero low high zero low
+internal/oracle/testdata/enums_coverage_string_names.a: Node and CLI native agree, exit 0
+space unicode newline
+with space,é,line
+name
+internal/oracle/testdata/enums_coverage_switches.a: Node and CLI native agree, exit 0
+low high yes other other low
+yes
+no
+internal/oracle/testdata/enums_coverage_views.a: Node and CLI native agree, exit 0
+1,2 1 2 -1 2
+2
+internal/oracle/testdata/enums_coverage_modules/main.a: Node and CLI native agree, exit 0
+1610612737 yes missing
+536870913 no missing
+internal/oracle/testdata/enums_coverage_modules/values.a: Node and CLI native agree, exit 0
