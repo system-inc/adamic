@@ -1,0 +1,67 @@
+// text += more on a shared slice (string_share.c): its bytes are its owner's, or a constant's, so the
+// append must copy rather than write in place, though the slice is the only holder of itself. Its
+// capacity is 0 and its length isn't, and an append that read capacity minus length as room found
+// nearly all of memory: it wrote into the owner, changing a string the program never touched, and
+// past the owner's end when the slice ended where the owner did. Stage 1's YAML port found it.
+
+// A slice from the middle of its owner, appended: the owner keeps its bytes.
+function middle(): void {
+	const source = 'a'.repeat(128);
+	let prefix = source.slice(0, 80);
+	prefix += 'x';
+	console.log(`${source.slice(78, 83)} ${source.length} ${prefix.slice(78)} ${prefix.length}`);
+}
+middle();
+
+// A slice that ends where its owner ends: there's no byte after it to write.
+function atTheEnd(): void {
+	const source = 'b'.repeat(128);
+	let suffix = source.slice(48);
+	suffix += 'y';
+	suffix += 'z';
+	console.log(`${source.slice(-3)} ${source.length} ${suffix.slice(-4)} ${suffix.length}`);
+}
+atTheEnd();
+
+// A slice of a slice points at the first one's owner.
+function nested(): void {
+	const source = `${'c'.repeat(100)}${'d'.repeat(100)}`;
+	const outer = source.slice(20, 180);
+	let inner = outer.slice(10, 100);
+	inner += '!';
+	console.log(`${source.slice(118, 123)} ${outer.slice(98, 103)} ${inner.slice(-3)} ${inner.length}`);
+}
+nested();
+
+// A slice of a constant: the constant's bytes are the program's, never written.
+const constant = 'The quick brown fox jumps over the lazy dog, then naps in the sun for most of the day.';
+function ofConstant(): void {
+	let piece = constant.slice(4, 80);
+	piece += '?';
+	console.log(`${constant.slice(78, 84)} ${piece.slice(-4)} ${piece.length}`);
+}
+ofConstant();
+
+// Read before the append, so the slice's own caches are built: its length in units and, for a long
+// non-ASCII slice, its position index. After the append they describe the new bytes, and the owner's
+// are untouched.
+function cachesFollow(): void {
+	const source = 'é🌍'.repeat(40);
+	let piece = source.slice(6, 150);
+	console.log(`${piece.length} ${piece.charCodeAt(100)} ${piece.indexOf('é', 50)}`);
+	piece += 'ü';
+	console.log(`${piece.length} ${piece.charCodeAt(piece.length - 1)} ${piece.charCodeAt(100)} ${piece.indexOf('é', 50)}`);
+	console.log(`${source.length} ${source.charCodeAt(150)} ${source.indexOf('ü')}`);
+}
+cachesFollow();
+
+// Appended in a loop: the first append copies, and every one after can write in place in the copy.
+function loop(): void {
+	const source = 'e'.repeat(256);
+	let growing = source.slice(64, 192);
+	for (let round = 0; round < 50; round++) {
+		growing += `${round % 10}`;
+	}
+	console.log(`${source.slice(190, 194)} ${source.length} ${growing.slice(126, 134)} ${growing.length}`);
+}
+loop();
