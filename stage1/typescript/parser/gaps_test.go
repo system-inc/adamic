@@ -87,7 +87,7 @@ func TestTypeImportCycleGap(t *testing.T) {
 	}
 }
 
-func TestClassMethodInterfaceGap(t *testing.T) {
+func TestClassMethodInterfaceAgreesWithNode(t *testing.T) {
 	path, err := filepath.Abs("gaps/4_class_interface_method.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -122,9 +122,15 @@ func TestClassMethodInterfaceGap(t *testing.T) {
 	command.Stdout = output
 	command.Stderr = &stderr
 	err = command.Run()
-	var status *exec.ExitError
-	if !errors.As(err, &status) || status.ExitCode() != 70 || !strings.Contains(stderr.String(), "compiler bug: a field the checker proved is there is missing") {
-		t.Fatalf("GAPS.md records native structural method dispatch panic, got %v %q", err, stderr.String())
+	if err != nil || stderr.Len() != 0 {
+		t.Fatalf("structural method dispatch: %v, stderr %q", err, stderr.String())
+	}
+	actual, err := os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(actual, result.output) {
+		t.Fatalf("structural method dispatch: native %q; Node %q", actual, result.output)
 	}
 }
 
