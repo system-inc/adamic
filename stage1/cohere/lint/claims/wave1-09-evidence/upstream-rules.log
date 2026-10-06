@@ -1,0 +1,1840 @@
+go: downloading github.com/dlclark/regexp2/v2 v2.5.2
+go: downloading github.com/dlclark/regexp2 v1.11.5
+=== RUN   TestJsxNoUselessFragmentFires
+=== PAUSE TestJsxNoUselessFragmentFires
+=== RUN   TestJsxNoUselessFragmentStaysSilent
+=== PAUSE TestJsxNoUselessFragmentStaysSilent
+=== RUN   TestJsxNoUselessFragmentDeclinesToDropAttributes
+=== PAUSE TestJsxNoUselessFragmentDeclinesToDropAttributes
+=== RUN   TestJsxNoUselessFragmentFixKeepsTypeScript
+=== PAUSE TestJsxNoUselessFragmentFixKeepsTypeScript
+=== RUN   TestJsxNoUselessFragmentSpans
+=== PAUSE TestJsxNoUselessFragmentSpans
+=== RUN   TestJsxNoUselessFragmentMessagesReadAsWritten
+=== PAUSE TestJsxNoUselessFragmentMessagesReadAsWritten
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits
+=== RUN   TestJsxNoUselessFragmentDecodesItsOptions
+=== PAUSE TestJsxNoUselessFragmentDecodesItsOptions
+=== RUN   TestJsxNoUselessFragmentRejectsMalformedOptions
+=== PAUSE TestJsxNoUselessFragmentRejectsMalformedOptions
+=== RUN   TestJsxNoUselessFragmentAllowExpressionsSilencesOneArmOnly
+=== PAUSE TestJsxNoUselessFragmentAllowExpressionsSilencesOneArmOnly
+=== RUN   TestJsxNoUselessFragmentHandlesNilOptions
+=== PAUSE TestJsxNoUselessFragmentHandlesNilOptions
+=== RUN   TestJsxNoUselessFragmentNeedsNoChecker
+=== PAUSE TestJsxNoUselessFragmentNeedsNoChecker
+=== RUN   TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic
+=== PAUSE TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic
+=== RUN   TestJsxNoUselessFragmentPragmaIsFixedAtReact
+=== PAUSE TestJsxNoUselessFragmentPragmaIsFixedAtReact
+=== RUN   TestJsxNoUselessFragmentReadsBothFragmentSpellings
+=== PAUSE TestJsxNoUselessFragmentReadsBothFragmentSpellings
+=== RUN   TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds
+=== PAUSE TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds
+=== RUN   TestNoInvalidHtmlAttributeFires
+=== PAUSE TestNoInvalidHtmlAttributeFires
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent
+=== RUN   TestNoInvalidHtmlAttributeCorpusIsSingleFinding
+=== PAUSE TestNoInvalidHtmlAttributeCorpusIsSingleFinding
+=== RUN   TestNoInvalidHtmlAttributeHasNoFileGate
+=== PAUSE TestNoInvalidHtmlAttributeHasNoFileGate
+=== RUN   TestNoInvalidHtmlAttributeReportsWhereItSays
+=== PAUSE TestNoInvalidHtmlAttributeReportsWhereItSays
+=== RUN   TestNoInvalidHtmlAttributeRendersTheTagListInUpstreamOrder
+=== PAUSE TestNoInvalidHtmlAttributeRendersTheTagListInUpstreamOrder
+=== RUN   TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms
+=== PAUSE TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms
+=== RUN   TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName
+=== PAUSE TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName
+=== RUN   TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver
+=== PAUSE TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver
+=== RUN   TestNoInvalidHtmlAttributeGatesTheCreateElementElementName
+=== PAUSE TestNoInvalidHtmlAttributeGatesTheCreateElementElementName
+=== RUN   TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace
+=== PAUSE TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace
+=== RUN   TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText
+=== PAUSE TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText
+=== RUN   TestNoInvalidHtmlAttributeOptions
+=== PAUSE TestNoInvalidHtmlAttributeOptions
+=== RUN   TestNoUnescapedEntitiesStaysSilent
+=== PAUSE TestNoUnescapedEntitiesStaysSilent
+=== RUN   TestNoUnescapedEntitiesFires
+=== PAUSE TestNoUnescapedEntitiesFires
+=== RUN   TestNoUnescapedEntitiesPointsAtTheCharacter
+=== PAUSE TestNoUnescapedEntitiesPointsAtTheCharacter
+=== RUN   TestNoUnescapedEntitiesRendersUpstreamsMessageText
+=== PAUSE TestNoUnescapedEntitiesRendersUpstreamsMessageText
+=== RUN   TestNoUnescapedEntitiesRendersTheBareStringMessage
+=== PAUSE TestNoUnescapedEntitiesRendersTheBareStringMessage
+=== RUN   TestNoUnescapedEntitiesOffersEveryAlternativeAsASuggestion
+=== PAUSE TestNoUnescapedEntitiesOffersEveryAlternativeAsASuggestion
+=== RUN   TestNoUnescapedEntitiesRepairsTheRightLineOfAMultiLineNode
+=== PAUSE TestNoUnescapedEntitiesRepairsTheRightLineOfAMultiLineNode
+=== RUN   TestNoUnescapedEntitiesReportsInSourceOrder
+=== PAUSE TestNoUnescapedEntitiesReportsInSourceOrder
+=== RUN   TestNoUnescapedEntitiesUsesTheDefaultsWhenHandedNilOptions
+=== PAUSE TestNoUnescapedEntitiesUsesTheDefaultsWhenHandedNilOptions
+=== RUN   TestNoUnescapedEntitiesSeparatesAnAbsentForbidFromAnEmptyOne
+=== PAUSE TestNoUnescapedEntitiesSeparatesAnAbsentForbidFromAnEmptyOne
+=== RUN   TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse
+=== PAUSE TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse
+=== RUN   TestNoUnescapedEntitiesReportsAnObjectEntryWithNoAlternatives
+=== PAUSE TestNoUnescapedEntitiesReportsAnObjectEntryWithNoAlternatives
+=== RUN   TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText
+=== PAUSE TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText
+=== RUN   TestNoUnescapedEntitiesScansBytesWithoutMisreadingMultiByteText
+=== PAUSE TestNoUnescapedEntitiesScansBytesWithoutMisreadingMultiByteText
+=== RUN   TestNoUnescapedEntitiesLeavesEscapedEntitiesAlone
+=== PAUSE TestNoUnescapedEntitiesLeavesEscapedEntitiesAlone
+=== RUN   TestNoUnescapedEntitiesRepairsCoverTheWholeNode
+=== PAUSE TestNoUnescapedEntitiesRepairsCoverTheWholeNode
+=== CONT  TestJsxNoUselessFragmentFires
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-0
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-0
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-1
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-1
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-2
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-2
+=== CONT  TestNoUnescapedEntitiesOffersEveryAlternativeAsASuggestion
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-3
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-3
+=== CONT  TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms
+--- PASS: TestNoUnescapedEntitiesOffersEveryAlternativeAsASuggestion (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeReportsWhereItSays
+=== CONT  TestNoInvalidHtmlAttributeRendersTheTagListInUpstreamOrder
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-4
+--- PASS: TestNoInvalidHtmlAttributeRendersTheTagListInUpstreamOrder (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeHasNoFileGate
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-4
+=== CONT  TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName
+=== RUN   TestNoInvalidHtmlAttributeHasNoFileGate//repository/source/Gate.tsx
+=== PAUSE TestNoInvalidHtmlAttributeHasNoFileGate//repository/source/Gate.tsx
+=== RUN   TestNoInvalidHtmlAttributeHasNoFileGate//repository/source/Gate.ts
+=== PAUSE TestNoInvalidHtmlAttributeHasNoFileGate//repository/source/Gate.ts
+=== RUN   TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/member-expression-tag
+=== PAUSE TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/member-expression-tag
+=== RUN   TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/spread-attribute
+=== PAUSE TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/spread-attribute
+=== RUN   TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/spread-in-create-props
+=== PAUSE TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/spread-in-create-props
+=== RUN   TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/computed-property-key
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-5
+=== PAUSE TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/computed-property-key
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-5
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-6
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-6
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-8
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-8
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-9
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-9
+=== RUN   TestNoInvalidHtmlAttributeReportsWhereItSays/neverValid-anchors-on-the-literal
+=== PAUSE TestNoInvalidHtmlAttributeReportsWhereItSays/neverValid-anchors-on-the-literal
+=== RUN   TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms/jsx-splits-on-whitespace
+=== PAUSE TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms/jsx-splits-on-whitespace
+=== RUN   TestNoInvalidHtmlAttributeReportsWhereItSays/notValidFor-anchors-on-the-literal
+=== RUN   TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms/createElement-looks-up-the-whole-string
+=== PAUSE TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms/createElement-looks-up-the-whole-string
+=== PAUSE TestNoInvalidHtmlAttributeReportsWhereItSays/notValidFor-anchors-on-the-literal
+=== CONT  TestNoInvalidHtmlAttributeCorpusIsSingleFinding
+=== CONT  TestNoInvalidHtmlAttributeFires
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-0
+--- PASS: TestNoInvalidHtmlAttributeCorpusIsSingleFinding (0.00s)
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-0
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-1
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-1
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-2
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-2
+=== CONT  TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-3
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-3
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-4
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-4
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-5
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-5
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-6
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-6
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-7
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-7
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-8
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-8
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-9
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-9
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-10
+=== RUN   TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/one_child
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-10
+=== PAUSE TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/one_child
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-11
+=== RUN   TestNoInvalidHtmlAttributeReportsWhereItSays/emptyIsMeaningless-anchors-on-the-name
+=== RUN   TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/only_a_comment
+=== PAUSE TestNoInvalidHtmlAttributeReportsWhereItSays/emptyIsMeaningless-anchors-on-the-name
+=== PAUSE TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/only_a_comment
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-11
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-12
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-12
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-13
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-0
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-13
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-0
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-1
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-14
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-1
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-14
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-2
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-15
+=== RUN   TestNoInvalidHtmlAttributeReportsWhereItSays/onlyMeaningfulFor-anchors-on-the-name
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-15
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-16
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-16
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-11
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-17
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-11
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-17
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-12
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-18
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-12
+=== PAUSE TestNoInvalidHtmlAttributeReportsWhereItSays/onlyMeaningfulFor-anchors-on-the-name
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-13
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-18
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-13
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-19
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-2
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-19
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-20
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-20
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-21
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-21
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-22
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-22
+=== RUN   TestNoInvalidHtmlAttributeReportsWhereItSays/onlyStrings-anchors-on-the-literal
+=== PAUSE TestNoInvalidHtmlAttributeReportsWhereItSays/onlyStrings-anchors-on-the-literal
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-23
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-23
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-24
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-24
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-25
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-25
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-26
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-26
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-27
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-27
+=== RUN   TestNoInvalidHtmlAttributeReportsWhereItSays/onlyStrings-anchors-on-the-container-for-an-object
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-28
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-28
+=== PAUSE TestNoInvalidHtmlAttributeReportsWhereItSays/onlyStrings-anchors-on-the-container-for-an-object
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-29
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-29
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-30
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-30
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-3
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-31
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-3
+=== RUN   TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/nothing
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-4
+=== CONT  TestJsxNoUselessFragmentReadsBothFragmentSpellings
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-4
+=== PAUSE TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/nothing
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-5
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-5
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-6
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-6
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-7
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-7
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-8
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-8
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-9
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-9
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-10
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-10
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-11
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-11
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-12
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-12
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-13
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-13
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-14
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-14
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-15
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-14
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-15
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-14
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-16
+=== RUN   TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_bare_fragment_with_a_paired_tag
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-16
+=== RUN   TestJsxNoUselessFragmentFires/upstream_invalid-15
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-17
+=== PAUSE TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_bare_fragment_with_a_paired_tag
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-17
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-18
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-18
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-19
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-19
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-20
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-20
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-21
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-21
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-22
+=== CONT  TestJsxNoUselessFragmentPragmaIsFixedAtReact
+=== PAUSE TestJsxNoUselessFragmentFires/upstream_invalid-15
+=== RUN   TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_Fragment_element_with_a_paired_tag
+=== PAUSE TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_Fragment_element_with_a_paired_tag
+=== RUN   TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_SELF-CLOSING_Fragment_element
+=== CONT  TestJsxNoUselessFragmentNeedsNoChecker
+=== PAUSE TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_SELF-CLOSING_Fragment_element
+=== RUN   TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_self-closing_namespaced_Fragment
+=== PAUSE TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_self-closing_namespaced_Fragment
+=== CONT  TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic
+--- PASS: TestJsxNoUselessFragmentPragmaIsFixedAtReact (0.00s)
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-22
+=== RUN   TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_self-closing_element_that_is_NOT_a_fragment_is_ignored
+=== PAUSE TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_self-closing_element_that_is_NOT_a_fragment_is_ignored
+=== RUN   TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_a_component_element
+=== PAUSE TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_a_component_element
+=== RUN   TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_another_fragment
+=== PAUSE TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_another_fragment
+=== RUN   TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_an_expression_container
+=== PAUSE TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_an_expression_container
+=== RUN   TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/a
+=== CONT  TestJsxNoUselessFragmentHandlesNilOptions
+=== PAUSE TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/a
+=== RUN   TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/b
+=== PAUSE TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/b
+=== RUN   TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/c
+=== PAUSE TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/c
+=== RUN   TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/d
+=== PAUSE TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/d
+=== RUN   TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/e
+=== PAUSE TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/e
+=== RUN   TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/f
+=== PAUSE TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/f
+=== RUN   TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/g
+=== PAUSE TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/g
+=== RUN   TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/h
+=== PAUSE TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/h
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-23
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-23
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-31
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-32
+--- PASS: TestJsxNoUselessFragmentHandlesNilOptions (0.00s)
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-32
+=== CONT  TestJsxNoUselessFragmentRejectsMalformedOptions
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-33
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-33
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-34
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-34
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-35
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-35
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-36
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-36
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-37
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-37
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-38
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-38
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-39
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-39
+--- PASS: TestJsxNoUselessFragmentRejectsMalformedOptions (0.00s)
+=== CONT  TestJsxNoUselessFragmentDecodesItsOptions
+=== CONT  TestJsxNoUselessFragmentAllowExpressionsSilencesOneArmOnly
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-40
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-40
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-41
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-41
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-42
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-42
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-43
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-43
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-44
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-44
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-45
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-45
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-46
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-46
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-47
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-47
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-48
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-48
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-49
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-49
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-50
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-50
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-51
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-51
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-52
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-52
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-53
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-53
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-54
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-54
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-55
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-55
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-56
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-56
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-57
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-57
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-58
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-58
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-59
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-59
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-60
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-60
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-61
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-61
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-62
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-62
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-63
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-63
+=== RUN   TestJsxNoUselessFragmentDecodesItsOptions/empty_input_answers_the_default
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-64
+=== PAUSE TestJsxNoUselessFragmentDecodesItsOptions/empty_input_answers_the_default
+--- PASS: TestJsxNoUselessFragmentAllowExpressionsSilencesOneArmOnly (0.00s)
+=== RUN   TestJsxNoUselessFragmentDecodesItsOptions/an_empty_object_answers_the_default
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-64
+=== PAUSE TestJsxNoUselessFragmentDecodesItsOptions/an_empty_object_answers_the_default
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-65
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-65
+=== RUN   TestJsxNoUselessFragmentDecodesItsOptions/allowExpressions_on
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-66
+=== PAUSE TestJsxNoUselessFragmentDecodesItsOptions/allowExpressions_on
+=== RUN   TestJsxNoUselessFragmentDecodesItsOptions/allowExpressions_explicitly_off
+=== PAUSE TestJsxNoUselessFragmentDecodesItsOptions/allowExpressions_explicitly_off
+=== RUN   TestJsxNoUselessFragmentDecodesItsOptions/an_unknown_key_is_ignored
+=== PAUSE TestJsxNoUselessFragmentDecodesItsOptions/an_unknown_key_is_ignored
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-66
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-67
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-67
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-68
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-68
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-69
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-69
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-70
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-70
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-71
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-71
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-72
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-72
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-73
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-73
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-74
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-74
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-75
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-75
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-76
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-76
+=== RUN   TestNoInvalidHtmlAttributeFires/invalid-77
+=== PAUSE TestNoInvalidHtmlAttributeFires/invalid-77
+=== CONT  TestJsxNoUselessFragmentMessagesReadAsWritten
+--- PASS: TestJsxNoUselessFragmentMessagesReadAsWritten (0.00s)
+=== CONT  TestJsxNoUselessFragmentFixKeepsTypeScript
+=== RUN   TestJsxNoUselessFragmentFixKeepsTypeScript/a_type_assertion_survives
+=== PAUSE TestJsxNoUselessFragmentFixKeepsTypeScript/a_type_assertion_survives
+=== RUN   TestJsxNoUselessFragmentFixKeepsTypeScript/a_non-null_assertion_survives
+=== PAUSE TestJsxNoUselessFragmentFixKeepsTypeScript/a_non-null_assertion_survives
+=== RUN   TestJsxNoUselessFragmentFixKeepsTypeScript/a_satisfies_expression_survives
+=== PAUSE TestJsxNoUselessFragmentFixKeepsTypeScript/a_satisfies_expression_survives
+=== RUN   TestJsxNoUselessFragmentFixKeepsTypeScript/an_explicit_type_argument_survives
+=== PAUSE TestJsxNoUselessFragmentFixKeepsTypeScript/an_explicit_type_argument_survives
+=== RUN   TestJsxNoUselessFragmentFixKeepsTypeScript/a_typed_arrow_survives,_parameters_and_return_type
+=== PAUSE TestJsxNoUselessFragmentFixKeepsTypeScript/a_typed_arrow_survives,_parameters_and_return_type
+=== RUN   TestJsxNoUselessFragmentFixKeepsTypeScript/a_comment_inside_the_fragment_survives
+=== PAUSE TestJsxNoUselessFragmentFixKeepsTypeScript/a_comment_inside_the_fragment_survives
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-24
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-24
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-25
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-25
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-26
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-26
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-27
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-27
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-28
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-28
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-29
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-29
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-30
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-30
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-31
+=== CONT  TestJsxNoUselessFragmentSpans
+=== CONT  TestNoUnescapedEntitiesRendersTheBareStringMessage
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-31
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_digit_in_the_tag_name_means_it_is_not_an_html_element
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_digit_in_the_tag_name_means_it_is_not_an_html_element
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-32
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-32
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_tag_name_outside_ASCII_is_not_an_html_element
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-33
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_tag_name_outside_ASCII_is_not_an_html_element
+--- PASS: TestNoUnescapedEntitiesRendersTheBareStringMessage (0.00s)
+=== CONT  TestJsxNoUselessFragmentDeclinesToDropAttributes
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-33
+=== RUN   TestJsxNoUselessFragmentDeclinesToDropAttributes/an_attribute_other_than_key_is_not_deleted
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-34
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/an_UPPERCASE_letter_in_the_tag_name_means_it_is_not_an_html_element
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/an_UPPERCASE_letter_in_the_tag_name_means_it_is_not_an_html_element
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_dash_in_the_tag_name_means_it_is_not_an_html_element
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-34
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-35
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_dash_in_the_tag_name_means_it_is_not_an_html_element
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_fragment_inside_a_component_reports_once_and_is_not_repaired
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-35
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-36
+=== PAUSE TestJsxNoUselessFragmentDeclinesToDropAttributes/an_attribute_other_than_key_is_not_deleted
+=== RUN   TestJsxNoUselessFragmentDeclinesToDropAttributes/a_spread_is_not_deleted
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_fragment_inside_a_component_reports_once_and_is_not_repaired
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_fragment_inside_a_fragment_is_repaired
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-36
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-37
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_fragment_inside_a_fragment_is_repaired
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_namespaced_Fragment_counts
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-37
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-38
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-38
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-39
+=== RUN   TestJsxNoUselessFragmentSpans/a_bare_fragment
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_namespaced_Fragment_counts
+=== PAUSE TestJsxNoUselessFragmentDeclinesToDropAttributes/a_spread_is_not_deleted
+=== RUN   TestJsxNoUselessFragmentDeclinesToDropAttributes/several_attributes_are_not_deleted
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_foreign_namespace_does_not
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_foreign_namespace_does_not
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_keyed_Fragment_is_skipped_entirely
+=== PAUSE TestJsxNoUselessFragmentSpans/a_bare_fragment
+=== RUN   TestJsxNoUselessFragmentSpans/both_findings_point_at_the_same_fragment
+=== PAUSE TestJsxNoUselessFragmentSpans/both_findings_point_at_the_same_fragment
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_keyed_Fragment_is_skipped_entirely
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_self-closing_Fragment_reports_both_arms
+=== RUN   TestJsxNoUselessFragmentSpans/a_Fragment_element
+=== PAUSE TestJsxNoUselessFragmentSpans/a_Fragment_element
+=== RUN   TestJsxNoUselessFragmentSpans/an_empty_fragment
+=== PAUSE TestJsxNoUselessFragmentSpans/an_empty_fragment
+=== CONT  TestNoUnescapedEntitiesRendersUpstreamsMessageText
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-39
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-40
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-40
+--- PASS: TestNoUnescapedEntitiesRendersUpstreamsMessageText (0.00s)
+=== CONT  TestJsxNoUselessFragmentStaysSilent
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-41
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-0
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-0
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_self-closing_Fragment_reports_both_arms
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-1
+=== PAUSE TestJsxNoUselessFragmentDeclinesToDropAttributes/several_attributes_are_not_deleted
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_single_call_expression_child_is_kept
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-41
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-42
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-42
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-43
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-43
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-44
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-44
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-45
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-45
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-46
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-46
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-47
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-47
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-48
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-48
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-49
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-49
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-50
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-50
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-51
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-51
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-52
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-52
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-53
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-53
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-54
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-54
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-55
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-55
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-56
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-56
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-57
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-57
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-58
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-58
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-59
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-59
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_single_call_expression_child_is_kept
+=== RUN   TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/two_children_inside_an_html_element_still_report_the_second_arm
+=== PAUSE TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/two_children_inside_an_html_element_still_report_the_second_arm
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-1
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-2
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-2
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-3
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-3
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-4
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-4
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-5
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-60
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-5
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-6
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-6
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-7
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-7
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-60
+=== CONT  TestNoUnescapedEntitiesPointsAtTheCharacter
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-8
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-8
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-9
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-9
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-10
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-10
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-11
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-11
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-12
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-12
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-61
+=== RUN   TestJsxNoUselessFragmentStaysSilent/upstream_valid-13
+=== PAUSE TestJsxNoUselessFragmentStaysSilent/upstream_valid-13
+=== CONT  TestNoUnescapedEntitiesLeavesEscapedEntitiesAlone
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-61
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-62
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-62
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-63
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-63
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-64
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-64
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-65
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-65
+=== CONT  TestNoUnescapedEntitiesFires
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-66
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-66
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-67
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-67
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-68
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-68
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-69
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-69
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-70
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-70
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-71
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-71
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-72
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-72
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-73
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-73
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-74
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-74
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-75
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-75
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-76
+--- PASS: TestNoUnescapedEntitiesPointsAtTheCharacter (0.00s)
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-76
+--- PASS: TestNoUnescapedEntitiesLeavesEscapedEntitiesAlone (0.00s)
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid0
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-77
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-77
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid0
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-78
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-78
+=== CONT  TestNoUnescapedEntitiesRepairsCoverTheWholeNode
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-79
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-79
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-80
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-80
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-81
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-81
+--- PASS: TestNoUnescapedEntitiesRepairsCoverTheWholeNode (0.00s)
+=== CONT  TestNoUnescapedEntitiesReportsAnObjectEntryWithNoAlternatives
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-82
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-82
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-83
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-83
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-84
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-84
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-85
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-85
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-86
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-86
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-87
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-87
+--- PASS: TestNoUnescapedEntitiesReportsAnObjectEntryWithNoAlternatives (0.00s)
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-88
+=== CONT  TestNoUnescapedEntitiesScansBytesWithoutMisreadingMultiByteText
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid1
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid1
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid2
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid2
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid3
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid3
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid4
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid4
+--- PASS: TestNoUnescapedEntitiesScansBytesWithoutMisreadingMultiByteText (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeOptions
+=== CONT  TestNoUnescapedEntitiesStaysSilent
+=== RUN   TestNoInvalidHtmlAttributeOptions/#00
+=== RUN   TestNoUnescapedEntitiesStaysSilent/upstreamValid0
+=== PAUSE TestNoInvalidHtmlAttributeOptions/#00
+=== PAUSE TestNoUnescapedEntitiesStaysSilent/upstreamValid0
+=== RUN   TestNoInvalidHtmlAttributeOptions/["rel"]
+=== PAUSE TestNoInvalidHtmlAttributeOptions/["rel"]
+=== RUN   TestNoUnescapedEntitiesStaysSilent/upstreamValid1
+=== RUN   TestNoInvalidHtmlAttributeOptions/[]
+=== PAUSE TestNoUnescapedEntitiesStaysSilent/upstreamValid1
+=== PAUSE TestNoInvalidHtmlAttributeOptions/[]
+=== RUN   TestNoUnescapedEntitiesStaysSilent/upstreamValid2
+=== PAUSE TestNoUnescapedEntitiesStaysSilent/upstreamValid2
+=== RUN   TestNoUnescapedEntitiesStaysSilent/upstreamValid3
+=== PAUSE TestNoUnescapedEntitiesStaysSilent/upstreamValid3
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid5
+=== RUN   TestNoUnescapedEntitiesStaysSilent/upstreamValid4
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid5
+=== PAUSE TestNoUnescapedEntitiesStaysSilent/upstreamValid4
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid6
+=== RUN   TestNoUnescapedEntitiesStaysSilent/upstreamValid5
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid6
+=== PAUSE TestNoUnescapedEntitiesStaysSilent/upstreamValid5
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid7
+=== RUN   TestNoUnescapedEntitiesStaysSilent/upstreamValid6
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-88
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-89
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid7
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-89
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid8
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid8
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid9
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid9
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid10
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid10
+=== RUN   TestNoUnescapedEntitiesFires/upstreamInvalid11
+=== PAUSE TestNoUnescapedEntitiesFires/upstreamInvalid11
+=== RUN   TestNoInvalidHtmlAttributeOptions/["rel",_"rel"]_is_refused
+=== PAUSE TestNoInvalidHtmlAttributeOptions/["rel",_"rel"]_is_refused
+=== RUN   TestNoInvalidHtmlAttributeOptions/["href"]_is_refused
+=== PAUSE TestNoInvalidHtmlAttributeOptions/["href"]_is_refused
+=== RUN   TestNoInvalidHtmlAttributeOptions/"rel"_is_refused
+=== PAUSE TestNoInvalidHtmlAttributeOptions/"rel"_is_refused
+=== CONT  TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText
+=== RUN   TestNoInvalidHtmlAttributeOptions/{}_is_refused
+=== PAUSE TestNoInvalidHtmlAttributeOptions/{}_is_refused
+=== RUN   TestNoInvalidHtmlAttributeOptions/null_is_refused
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-90
+=== PAUSE TestNoInvalidHtmlAttributeOptions/null_is_refused
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-90
+=== CONT  TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-91
+=== RUN   TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/control-real-double-space
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-91
+=== PAUSE TestNoUnescapedEntitiesStaysSilent/upstreamValid6
+=== RUN   TestNoUnescapedEntitiesStaysSilent/upstreamValid7
+=== PAUSE TestNoUnescapedEntitiesStaysSilent/upstreamValid7
+=== PAUSE TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/control-real-double-space
+=== RUN   TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/backslash-t-is-literal-text
+=== PAUSE TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/backslash-t-is-literal-text
+=== RUN   TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/real-tab-is-whitespace
+=== PAUSE TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/real-tab-is-whitespace
+=== RUN   TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/real-newline-is-whitespace
+=== PAUSE TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/real-newline-is-whitespace
+=== CONT  TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver
+=== RUN   TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/control-React-receiver-reports
+=== PAUSE TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/control-React-receiver-reports
+=== RUN   TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/lowercase-h
+=== PAUSE TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/lowercase-h
+=== RUN   TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/bare-call
+=== CONT  TestNoInvalidHtmlAttributeGatesTheCreateElementElementName
+=== RUN   TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/attributeString
+=== PAUSE TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/attributeString
+=== RUN   TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/expressionContainerString
+=== RUN   TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/control-literal-html-element
+=== PAUSE TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/expressionContainerString
+=== RUN   TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/plainString
+=== PAUSE TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/plainString
+=== PAUSE TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/control-literal-html-element
+=== RUN   TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/numeric-element-skips-the-gate
+=== RUN   TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/templateLiteral
+=== PAUSE TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/numeric-element-skips-the-gate
+=== RUN   TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/non-html-string-is-gated-out
+=== PAUSE TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/non-html-string-is-gated-out
+=== RUN   TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/identifier-element-declines
+=== PAUSE TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/identifier-element-declines
+=== RUN   TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/template-element-declines
+=== PAUSE TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/template-element-declines
+=== PAUSE TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/templateLiteral
+=== CONT  TestNoUnescapedEntitiesUsesTheDefaultsWhenHandedNilOptions
+--- PASS: TestNoUnescapedEntitiesUsesTheDefaultsWhenHandedNilOptions (0.00s)
+=== CONT  TestNoUnescapedEntitiesReportsInSourceOrder
+--- PASS: TestNoUnescapedEntitiesReportsInSourceOrder (0.00s)
+=== CONT  TestNoUnescapedEntitiesRepairsTheRightLineOfAMultiLineNode
+--- PASS: TestNoUnescapedEntitiesRepairsTheRightLineOfAMultiLineNode (0.00s)
+=== CONT  TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse
+=== RUN   TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/multiCharacterString
+=== PAUSE TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/multiCharacterString
+=== RUN   TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/emptyString
+=== PAUSE TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/emptyString
+=== RUN   TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/objectWithoutChar
+=== PAUSE TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/objectWithoutChar
+=== RUN   TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/objectWithoutAlternatives
+=== PAUSE TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/objectWithoutAlternatives
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-92
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-92
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-93
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-93
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-94
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-94
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-95
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-95
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-96
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-96
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-97
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-97
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-98
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-98
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-99
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-99
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-100
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-100
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-101
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-101
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-102
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-102
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-103
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-103
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-104
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-104
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-105
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-105
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-106
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-106
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-107
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-107
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-108
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-108
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-109
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-109
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-110
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-110
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-111
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-111
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-112
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-112
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-113
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-113
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-114
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-114
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-115
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-115
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-116
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-116
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-117
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-117
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-118
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-118
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-119
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-119
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-120
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-120
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-121
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-121
+=== CONT  TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace
+=== CONT  TestNoUnescapedEntitiesSeparatesAnAbsentForbidFromAnEmptyOne
+=== RUN   TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/narrow-no-break
+=== PAUSE TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/narrow-no-break
+=== RUN   TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/no-break-space
+=== PAUSE TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/no-break-space
+=== RUN   TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/byte-order-mark
+=== PAUSE TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/bare-call
+=== PAUSE TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/byte-order-mark
+=== RUN   TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/Preact-receiver
+=== RUN   TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/line-separator
+=== PAUSE TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/Preact-receiver
+=== PAUSE TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/line-separator
+=== CONT  TestNoInvalidHtmlAttributeHasNoFileGate//repository/source/Gate.tsx
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-122
+=== RUN   TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/paragraph-separator
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-122
+=== PAUSE TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/paragraph-separator
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-123
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-123
+=== RUN   TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/en-quad
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-124
+=== PAUSE TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/en-quad
+=== RUN   TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/ideographic-space
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-124
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-125
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-125
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-126
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-126
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-127
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-127
+=== CONT  TestNoInvalidHtmlAttributeHasNoFileGate//repository/source/Gate.ts
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-128
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-128
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-129
+--- PASS: TestNoUnescapedEntitiesSeparatesAnAbsentForbidFromAnEmptyOne (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/member-expression-tag
+=== PAUSE TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/ideographic-space
+=== RUN   TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/ogham-space-mark
+=== CONT  TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/computed-property-key
+=== CONT  TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/spread-attribute
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-129
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-130
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-130
+--- PASS: TestNoInvalidHtmlAttributeHasNoFileGate (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeHasNoFileGate//repository/source/Gate.tsx (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeHasNoFileGate//repository/source/Gate.ts (0.00s)
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-131
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-131
+=== CONT  TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/spread-in-create-props
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-132
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-132
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-133
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-133
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-134
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-134
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-135
+=== CONT  TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms/jsx-splits-on-whitespace
+=== CONT  TestNoInvalidHtmlAttributeReportsWhereItSays/neverValid-anchors-on-the-literal
+=== CONT  TestNoInvalidHtmlAttributeReportsWhereItSays/onlyStrings-anchors-on-the-container-for-an-object
+=== CONT  TestNoInvalidHtmlAttributeReportsWhereItSays/onlyStrings-anchors-on-the-literal
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-135
+=== PAUSE TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/ogham-space-mark
+=== RUN   TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/control-these-are-not-javascript-whitespace
+=== PAUSE TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/control-these-are-not-javascript-whitespace
+--- PASS: TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/member-expression-tag (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/computed-property-key (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/spread-attribute (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeSurvivesAMemberItCannotName/spread-in-create-props (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeReportsWhereItSays/emptyIsMeaningless-anchors-on-the-name
+=== CONT  TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms/createElement-looks-up-the-whole-string
+--- PASS: TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms/jsx-splits-on-whitespace (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeSeparatesTheTwoValueArms/createElement-looks-up-the-whole-string (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeReportsWhereItSays/onlyMeaningfulFor-anchors-on-the-name
+=== CONT  TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/one_child
+=== CONT  TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/nothing
+=== CONT  TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/only_a_comment
+=== CONT  TestNoInvalidHtmlAttributeReportsWhereItSays/notValidFor-anchors-on-the-literal
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-0
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-6
+--- PASS: TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds (0.00s)
+    --- PASS: TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/one_child (0.00s)
+    --- PASS: TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/nothing (0.00s)
+    --- PASS: TestJsxNoUselessFragmentNeedsMoreChildrenSaysWhatTheFragmentHolds/only_a_comment (0.00s)
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-8
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-5
+--- PASS: TestNoInvalidHtmlAttributeReportsWhereItSays (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeReportsWhereItSays/neverValid-anchors-on-the-literal (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeReportsWhereItSays/onlyStrings-anchors-on-the-container-for-an-object (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeReportsWhereItSays/onlyStrings-anchors-on-the-literal (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeReportsWhereItSays/emptyIsMeaningless-anchors-on-the-name (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeReportsWhereItSays/onlyMeaningfulFor-anchors-on-the-name (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeReportsWhereItSays/notValidFor-anchors-on-the-literal (0.00s)
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-3
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-4
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-2
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-1
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-13
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-15
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-14
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-11
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-12
+=== CONT  TestJsxNoUselessFragmentFires/upstream_invalid-9
+=== CONT  TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_bare_fragment_with_a_paired_tag
+=== CONT  TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_a_component_element
+--- PASS: TestJsxNoUselessFragmentFires (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-0 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-6 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-8 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-5 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-2 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-3 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-1 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-4 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-15 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-14 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-13 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-11 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-12 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFires/upstream_invalid-9 (0.00s)
+=== CONT  TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/a
+=== CONT  TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_self-closing_element_that_is_NOT_a_fragment_is_ignored
+=== CONT  TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_SELF-CLOSING_Fragment_element
+=== CONT  TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_Fragment_element_with_a_paired_tag
+=== CONT  TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_self-closing_namespaced_Fragment
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-136
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-136
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-137
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-137
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-138
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-138
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-139
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-139
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-140
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-140
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-141
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-141
+=== CONT  TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_an_expression_container
+=== CONT  TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_another_fragment
+=== CONT  TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/e
+=== CONT  TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/h
+=== CONT  TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/g
+=== CONT  TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/f
+=== CONT  TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/c
+=== CONT  TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/d
+=== CONT  TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/b
+--- PASS: TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/a (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/e (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/h (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/g (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/f (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/c (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/d (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSurvivesShapesThatWouldPanic/b (0.00s)
+=== CONT  TestJsxNoUselessFragmentDecodesItsOptions/empty_input_answers_the_default
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-0
+=== CONT  TestJsxNoUselessFragmentFixKeepsTypeScript/a_type_assertion_survives
+=== CONT  TestJsxNoUselessFragmentDecodesItsOptions/an_unknown_key_is_ignored
+=== CONT  TestJsxNoUselessFragmentDecodesItsOptions/allowExpressions_explicitly_off
+=== CONT  TestJsxNoUselessFragmentDecodesItsOptions/allowExpressions_on
+=== CONT  TestJsxNoUselessFragmentDecodesItsOptions/an_empty_object_answers_the_default
+--- PASS: TestJsxNoUselessFragmentDecodesItsOptions (0.00s)
+    --- PASS: TestJsxNoUselessFragmentDecodesItsOptions/empty_input_answers_the_default (0.00s)
+    --- PASS: TestJsxNoUselessFragmentDecodesItsOptions/an_unknown_key_is_ignored (0.00s)
+    --- PASS: TestJsxNoUselessFragmentDecodesItsOptions/allowExpressions_explicitly_off (0.00s)
+    --- PASS: TestJsxNoUselessFragmentDecodesItsOptions/allowExpressions_on (0.00s)
+    --- PASS: TestJsxNoUselessFragmentDecodesItsOptions/an_empty_object_answers_the_default (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-36
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-15
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-35
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-34
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-33
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-32
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-31
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-30
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-29
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-28
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-27
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-26
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-25
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-24
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-23
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-22
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-21
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-20
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-19
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-18
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-17
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-142
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-142
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-143
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-143
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-144
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-144
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-145
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-145
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-146
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-146
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-147
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-147
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-148
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-148
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-149
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-149
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-150
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-150
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-151
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-151
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-152
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-152
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-153
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-153
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-154
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-154
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-155
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-155
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-156
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-156
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-157
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-157
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-158
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-158
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-159
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-159
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-160
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-160
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-161
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-161
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-162
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-162
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-163
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-163
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-164
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-164
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-165
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-165
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-166
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-166
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-167
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-167
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-57
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-168
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-168
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-169
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-169
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-170
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-170
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-171
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-171
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-172
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-172
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-77
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-173
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-173
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-174
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-174
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-175
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-175
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-176
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-176
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-76
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-177
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-177
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-178
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-178
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-179
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-75
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-179
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-180
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-74
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-180
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-181
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-181
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-73
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-182
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-182
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-183
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-183
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-72
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-184
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-184
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-185
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-185
+=== RUN   TestNoInvalidHtmlAttributeStaysSilent/valid-186
+=== PAUSE TestNoInvalidHtmlAttributeStaysSilent/valid-186
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-70
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-69
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-71
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-68
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-67
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-66
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-64
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-63
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-62
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-61
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-60
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-59
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-65
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-58
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-47
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-56
+--- PASS: TestJsxNoUselessFragmentReadsBothFragmentSpellings (0.00s)
+    --- PASS: TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_a_component_element (0.00s)
+    --- PASS: TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_self-closing_element_that_is_NOT_a_fragment_is_ignored (0.00s)
+    --- PASS: TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_bare_fragment_with_a_paired_tag (0.00s)
+    --- PASS: TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_SELF-CLOSING_Fragment_element (0.00s)
+    --- PASS: TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_an_expression_container (0.00s)
+    --- PASS: TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_fragment_whose_parent_is_another_fragment (0.00s)
+    --- PASS: TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_self-closing_namespaced_Fragment (0.00s)
+    --- PASS: TestJsxNoUselessFragmentReadsBothFragmentSpellings/a_Fragment_element_with_a_paired_tag (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-53
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-52
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-51
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-50
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-49
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-48
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-42
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-46
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-45
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-44
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-55
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-43
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-39
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-41
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-40
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-4
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-14
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-13
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-12
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-11
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-10
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-9
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-8
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-7
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-6
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-5
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-38
+=== CONT  TestJsxNoUselessFragmentFixKeepsTypeScript/a_comment_inside_the_fragment_survives
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-54
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-16
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-2
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-1
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-37
+=== CONT  TestJsxNoUselessFragmentFixKeepsTypeScript/a_satisfies_expression_survives
+=== CONT  TestJsxNoUselessFragmentFixKeepsTypeScript/a_typed_arrow_survives,_parameters_and_return_type
+=== CONT  TestJsxNoUselessFragmentFixKeepsTypeScript/an_explicit_type_argument_survives
+=== CONT  TestJsxNoUselessFragmentFixKeepsTypeScript/a_non-null_assertion_survives
+=== CONT  TestNoInvalidHtmlAttributeFires/invalid-3
+--- PASS: TestJsxNoUselessFragmentFixKeepsTypeScript (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFixKeepsTypeScript/a_type_assertion_survives (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFixKeepsTypeScript/a_comment_inside_the_fragment_survives (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFixKeepsTypeScript/a_satisfies_expression_survives (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFixKeepsTypeScript/a_typed_arrow_survives,_parameters_and_return_type (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFixKeepsTypeScript/a_non-null_assertion_survives (0.00s)
+    --- PASS: TestJsxNoUselessFragmentFixKeepsTypeScript/an_explicit_type_argument_survives (0.00s)
+=== CONT  TestJsxNoUselessFragmentSpans/an_empty_fragment
+=== CONT  TestJsxNoUselessFragmentSpans/both_findings_point_at_the_same_fragment
+--- PASS: TestNoInvalidHtmlAttributeFires (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-0 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-36 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-15 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-35 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-34 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-33 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-32 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-31 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-30 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-29 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-28 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-27 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-26 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-25 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-24 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-23 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-22 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-21 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-20 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-19 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-18 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-17 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-57 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-77 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-76 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-75 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-74 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-73 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-72 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-70 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-69 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-68 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-71 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-67 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-66 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-64 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-63 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-62 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-61 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-60 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-59 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-65 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-58 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-56 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-47 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-53 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-52 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-51 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-50 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-49 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-48 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-42 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-46 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-45 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-44 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-43 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-39 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-55 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-41 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-40 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-4 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-14 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-13 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-12 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-11 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-10 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-9 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-7 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-8 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-5 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-6 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-38 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-16 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-2 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-1 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-37 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-3 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeFires/invalid-54 (0.00s)
+=== CONT  TestJsxNoUselessFragmentSpans/a_bare_fragment
+=== CONT  TestJsxNoUselessFragmentDeclinesToDropAttributes/several_attributes_are_not_deleted
+=== CONT  TestJsxNoUselessFragmentSpans/a_Fragment_element
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_digit_in_the_tag_name_means_it_is_not_an_html_element
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_foreign_namespace_does_not
+--- PASS: TestJsxNoUselessFragmentSpans (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSpans/an_empty_fragment (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSpans/both_findings_point_at_the_same_fragment (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSpans/a_bare_fragment (0.00s)
+    --- PASS: TestJsxNoUselessFragmentSpans/a_Fragment_element (0.00s)
+=== CONT  TestJsxNoUselessFragmentDeclinesToDropAttributes/an_attribute_other_than_key_is_not_deleted
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_single_call_expression_child_is_kept
+=== CONT  TestJsxNoUselessFragmentDeclinesToDropAttributes/a_spread_is_not_deleted
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_keyed_Fragment_is_skipped_entirely
+--- PASS: TestJsxNoUselessFragmentDeclinesToDropAttributes (0.00s)
+    --- PASS: TestJsxNoUselessFragmentDeclinesToDropAttributes/several_attributes_are_not_deleted (0.00s)
+    --- PASS: TestJsxNoUselessFragmentDeclinesToDropAttributes/an_attribute_other_than_key_is_not_deleted (0.00s)
+    --- PASS: TestJsxNoUselessFragmentDeclinesToDropAttributes/a_spread_is_not_deleted (0.00s)
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/two_children_inside_an_html_element_still_report_the_second_arm
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_namespaced_Fragment_counts
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_fragment_inside_a_fragment_is_repaired
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/an_UPPERCASE_letter_in_the_tag_name_means_it_is_not_an_html_element
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_dash_in_the_tag_name_means_it_is_not_an_html_element
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_tag_name_outside_ASCII_is_not_an_html_element
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-0
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-13
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_self-closing_Fragment_reports_both_arms
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-11
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-10
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-9
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-8
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-7
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-6
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-5
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-4
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-3
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-2
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-1
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid0
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid6
+=== CONT  TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_fragment_inside_a_component_reports_once_and_is_not_repaired
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid10
+--- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_digit_in_the_tag_name_means_it_is_not_an_html_element (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_foreign_namespace_does_not (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_single_call_expression_child_is_kept (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_keyed_Fragment_is_skipped_entirely (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/two_children_inside_an_html_element_still_report_the_second_arm (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_namespaced_Fragment_counts (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_fragment_inside_a_fragment_is_repaired (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/an_UPPERCASE_letter_in_the_tag_name_means_it_is_not_an_html_element (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_tag_name_outside_ASCII_is_not_an_html_element (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_dash_in_the_tag_name_means_it_is_not_an_html_element (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_self-closing_Fragment_reports_both_arms (0.00s)
+    --- PASS: TestJsxNoUselessFragmentMatchesUpstreamOnShapesTheCorpusOmits/a_fragment_inside_a_component_reports_once_and_is_not_repaired (0.00s)
+=== CONT  TestJsxNoUselessFragmentStaysSilent/upstream_valid-12
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid8
+--- PASS: TestJsxNoUselessFragmentStaysSilent (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-0 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-13 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-11 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-10 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-9 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-8 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-7 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-6 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-5 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-4 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-3 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-2 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-1 (0.00s)
+    --- PASS: TestJsxNoUselessFragmentStaysSilent/upstream_valid-12 (0.00s)
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid11
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid3
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid5
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid4
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid1
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid2
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid9
+=== CONT  TestNoInvalidHtmlAttributeOptions/null_is_refused
+=== CONT  TestNoInvalidHtmlAttributeOptions/{}_is_refused
+=== CONT  TestNoInvalidHtmlAttributeOptions/"rel"_is_refused
+=== CONT  TestNoInvalidHtmlAttributeOptions/["rel",_"rel"]_is_refused
+=== CONT  TestNoUnescapedEntitiesFires/upstreamInvalid7
+=== CONT  TestNoInvalidHtmlAttributeOptions/[]
+--- PASS: TestNoUnescapedEntitiesFires (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid0 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid6 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid10 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid8 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid11 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid3 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid5 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid4 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid1 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid2 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid9 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesFires/upstreamInvalid7 (0.00s)
+=== CONT  TestNoUnescapedEntitiesStaysSilent/upstreamValid0
+=== CONT  TestNoInvalidHtmlAttributeOptions/#00
+=== CONT  TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/control-real-double-space
+=== CONT  TestNoInvalidHtmlAttributeOptions/["href"]_is_refused
+=== CONT  TestNoUnescapedEntitiesStaysSilent/upstreamValid7
+=== CONT  TestNoUnescapedEntitiesStaysSilent/upstreamValid6
+=== CONT  TestNoUnescapedEntitiesStaysSilent/upstreamValid5
+=== CONT  TestNoUnescapedEntitiesStaysSilent/upstreamValid4
+=== CONT  TestNoUnescapedEntitiesStaysSilent/upstreamValid3
+=== CONT  TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/real-newline-is-whitespace
+=== CONT  TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/real-tab-is-whitespace
+=== CONT  TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/backslash-t-is-literal-text
+=== CONT  TestNoUnescapedEntitiesStaysSilent/upstreamValid1
+--- PASS: TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/control-real-double-space (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/real-newline-is-whitespace (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/real-tab-is-whitespace (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeTreatsAJsxEscapeAsLiteralText/backslash-t-is-literal-text (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/control-literal-html-element
+=== CONT  TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/attributeString
+=== CONT  TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/multiCharacterString
+=== CONT  TestNoInvalidHtmlAttributeOptions/["rel"]
+--- PASS: TestNoInvalidHtmlAttributeOptions (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeOptions/null_is_refused (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeOptions/{}_is_refused (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeOptions/"rel"_is_refused (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeOptions/["rel",_"rel"]_is_refused (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeOptions/[] (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeOptions/#00 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeOptions/["href"]_is_refused (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeOptions/["rel"] (0.00s)
+=== CONT  TestNoUnescapedEntitiesStaysSilent/upstreamValid2
+=== CONT  TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/non-html-string-is-gated-out
+=== CONT  TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/numeric-element-skips-the-gate
+--- PASS: TestNoUnescapedEntitiesStaysSilent (0.00s)
+    --- PASS: TestNoUnescapedEntitiesStaysSilent/upstreamValid0 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesStaysSilent/upstreamValid7 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesStaysSilent/upstreamValid6 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesStaysSilent/upstreamValid5 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesStaysSilent/upstreamValid4 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesStaysSilent/upstreamValid3 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesStaysSilent/upstreamValid1 (0.00s)
+    --- PASS: TestNoUnescapedEntitiesStaysSilent/upstreamValid2 (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/template-element-declines
+=== CONT  TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/plainString
+=== CONT  TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/expressionContainerString
+=== CONT  TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/objectWithoutChar
+=== CONT  TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/identifier-element-declines
+=== CONT  TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/emptyString
+--- PASS: TestNoInvalidHtmlAttributeGatesTheCreateElementElementName (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/control-literal-html-element (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/non-html-string-is-gated-out (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/numeric-element-skips-the-gate (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/template-element-declines (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeGatesTheCreateElementElementName/identifier-element-declines (0.00s)
+=== CONT  TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/templateLiteral
+=== CONT  TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/lowercase-h
+--- PASS: TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText (0.00s)
+    --- PASS: TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/attributeString (0.00s)
+    --- PASS: TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/plainString (0.00s)
+    --- PASS: TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/expressionContainerString (0.00s)
+    --- PASS: TestNoUnescapedEntitiesIgnoresTextThatIsNotJsxText/templateLiteral (0.00s)
+=== CONT  TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/objectWithoutAlternatives
+=== CONT  TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/Preact-receiver
+=== CONT  TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/narrow-no-break
+=== CONT  TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/en-quad
+=== CONT  TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/control-these-are-not-javascript-whitespace
+=== CONT  TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/ogham-space-mark
+=== CONT  TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/ideographic-space
+=== CONT  TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/line-separator
+=== CONT  TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/paragraph-separator
+=== CONT  TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/byte-order-mark
+=== CONT  TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/control-React-receiver-reports
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-0
+--- PASS: TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse (0.00s)
+    --- PASS: TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/multiCharacterString (0.00s)
+    --- PASS: TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/objectWithoutChar (0.00s)
+    --- PASS: TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/emptyString (0.00s)
+    --- PASS: TestNoUnescapedEntitiesDeclinesTheForbidEntriesUpstreamCannotUse/objectWithoutAlternatives (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/bare-call
+=== CONT  TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/no-break-space
+--- PASS: TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/narrow-no-break (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/en-quad (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/control-these-are-not-javascript-whitespace (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/ogham-space-mark (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/ideographic-space (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/line-separator (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/paragraph-separator (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/byte-order-mark (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeWhitespaceIsJavaScriptWhitespace/no-break-space (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-186
+--- PASS: TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/lowercase-h (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/Preact-receiver (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/control-React-receiver-reports (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeChecksTheCreateElementReceiver/bare-call (0.00s)
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-183
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-94
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-182
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-181
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-180
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-178
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-177
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-176
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-175
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-174
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-173
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-172
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-179
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-171
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-170
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-169
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-168
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-167
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-166
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-165
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-164
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-163
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-162
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-161
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-160
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-159
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-158
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-157
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-156
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-155
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-154
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-153
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-152
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-151
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-150
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-149
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-148
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-147
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-146
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-145
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-144
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-143
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-142
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-141
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-140
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-139
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-138
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-137
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-136
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-135
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-134
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-133
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-132
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-131
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-130
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-129
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-128
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-127
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-126
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-125
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-124
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-123
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-122
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-121
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-120
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-119
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-118
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-117
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-116
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-115
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-114
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-113
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-112
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-111
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-110
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-109
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-108
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-107
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-106
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-105
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-104
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-103
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-102
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-101
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-100
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-99
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-98
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-97
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-96
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-95
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-47
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-93
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-92
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-91
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-90
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-89
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-88
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-87
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-85
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-185
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-84
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-83
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-82
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-86
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-80
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-79
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-78
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-77
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-76
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-75
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-74
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-73
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-72
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-71
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-70
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-69
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-68
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-67
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-66
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-65
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-64
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-63
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-62
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-61
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-60
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-59
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-58
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-57
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-56
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-55
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-54
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-53
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-52
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-51
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-50
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-49
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-48
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-23
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-46
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-45
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-44
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-43
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-42
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-41
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-40
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-39
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-38
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-37
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-36
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-35
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-34
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-33
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-32
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-31
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-30
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-29
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-28
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-27
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-26
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-25
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-24
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-11
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-22
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-21
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-20
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-19
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-18
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-17
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-16
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-15
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-14
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-13
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-12
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-5
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-10
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-9
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-8
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-7
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-6
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-2
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-4
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-3
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-1
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-184
+=== CONT  TestNoInvalidHtmlAttributeStaysSilent/valid-81
+--- PASS: TestNoInvalidHtmlAttributeStaysSilent (0.01s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-0 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-186 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-183 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-182 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-181 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-94 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-180 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-178 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-177 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-176 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-175 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-174 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-173 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-172 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-171 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-179 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-170 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-169 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-168 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-167 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-165 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-166 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-164 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-163 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-162 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-161 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-160 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-159 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-158 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-157 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-156 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-155 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-154 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-153 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-151 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-152 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-150 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-149 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-148 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-147 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-146 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-145 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-144 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-142 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-141 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-143 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-140 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-139 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-138 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-137 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-135 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-134 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-136 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-133 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-132 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-131 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-130 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-129 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-128 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-127 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-125 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-126 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-124 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-123 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-122 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-121 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-120 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-119 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-118 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-117 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-115 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-116 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-114 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-113 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-112 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-110 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-109 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-111 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-108 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-107 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-106 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-105 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-104 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-103 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-102 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-101 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-100 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-99 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-98 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-97 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-96 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-95 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-47 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-93 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-92 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-91 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-90 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-89 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-88 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-87 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-85 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-185 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-84 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-83 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-82 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-86 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-80 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-79 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-78 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-77 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-76 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-75 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-73 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-74 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-72 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-71 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-70 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-69 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-68 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-67 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-66 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-65 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-63 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-64 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-62 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-61 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-60 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-59 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-58 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-57 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-56 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-55 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-54 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-53 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-52 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-51 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-50 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-49 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-48 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-23 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-46 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-45 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-44 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-43 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-42 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-41 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-40 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-39 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-38 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-36 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-37 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-35 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-34 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-33 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-32 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-31 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-30 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-28 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-29 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-27 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-26 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-25 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-24 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-11 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-22 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-21 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-19 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-18 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-17 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-16 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-20 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-15 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-13 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-14 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-12 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-5 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-10 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-9 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-8 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-7 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-6 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-2 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-4 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-3 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-1 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-184 (0.00s)
+    --- PASS: TestNoInvalidHtmlAttributeStaysSilent/valid-81 (0.00s)
+--- PASS: TestJsxNoUselessFragmentNeedsNoChecker (0.02s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/react	0.026s
