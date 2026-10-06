@@ -62,6 +62,8 @@ export const keywords = new Map<string, string>([
     ['return', 'ReturnKeyword'],
     ['satisfies', 'SatisfiesKeyword'],
     ['set', 'SetKeyword'],
+    // TypeScript 2f9fd09a1, brought into cohere by cbe755d3: source phase imports.
+    ['source', 'SourceKeyword'],
     ['static', 'StaticKeyword'],
     ['string', 'StringKeyword'],
     ['super', 'SuperKeyword'],
