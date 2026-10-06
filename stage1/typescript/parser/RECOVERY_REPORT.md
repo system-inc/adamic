@@ -2,7 +2,7 @@ Fixed the four parser sources underlying all eight reported lint failures.
 Go, Node and sanitized native agree on their recovered trees and diagnostics.
 Three recovery mutants prove diagnostic, child-tree and timeout comparisons.
 All 77 compiler files yield 22,497 planned cutoff/removal/duplication inputs.
-General recovery is unfinished: that comparison fails on a saved bare export.
+Bare export now agrees; the wider comparison next fails after export *.
 
 ## Built
 
@@ -182,3 +182,22 @@ Implementation commit: `54024b1` (full SHA recorded by `git rev-parse` in
 `validation/recovery-commits.log`). The subsequent documentation commit
 retains this report, raw logs and the first broader failure. The requested
 branch is pushed without rewriting history.
+
+## Continued recovery: stranded export
+
+Declaration lookahead now follows Go's modifier scan. A stranded export in
+source elements reports 1128 and advances without constructing a statement.
+Six additional inputs cover EOF, CRLF, duplicate exports, an exported
+variable, a following expression, and a Unicode prefix. The focused parser
+comparison passes in 14.686s. The new stranded-export mutant changes 1128 to
+1129, compiles and finishes on both backends, and is caught by diagnostic
+bytes (11.656s). Cohere formatting and all parser source rules pass.
+
+The broader comparison advanced to input three, `export *`: Go's missing
+module expression is an empty Identifier, while the port retains the
+scanner's stale value `export` at EOF. This is the next recovery mechanism
+to implement. The full corpus remains red; no failure is filtered.
+
+Logs: `validation/recovery-export-step.log`,
+`validation/recovery-export-mutant.log`, and
+`validation/recovery-incomplete-next.log`.

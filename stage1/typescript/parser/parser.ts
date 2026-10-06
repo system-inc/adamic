@@ -4,7 +4,7 @@ import { Scanner } from '../scanner/scanner.ts';
 import { Statements } from './statements.ts';
 import { ParseNode } from './nodes.ts';
 import { precedence, reservedKinds, tokenSpelling } from './grammar.ts';
-import { arrowAhead, typeArgumentsAhead } from './lookahead.ts';
+import { arrowAhead, declarationAhead, typeArgumentsAhead } from './lookahead.ts';
 import type { ParserStateInterface } from './lookahead.ts';
 
 interface ParseDiagnosticInterface {
@@ -1618,6 +1618,11 @@ export class Parser {
         const parser = this.statements();
         const children: number[] = [];
         while(this.kind() !== 'EndOfFile') {
+            if(this.kind() === 'ExportKeyword' && !declarationAhead(this.scanner)) {
+                this.error(1128, 'Declaration or statement expected.');
+                this.next();
+                continue;
+            }
             children.push(parser.statement());
         }
         const eof = this.make('EndOfFile', this.scanner.fullStart);

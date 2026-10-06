@@ -281,3 +281,91 @@ export function typeArgumentsAhead(scanner: Scanner): boolean {
     state.restore();
     return result;
 }
+
+// A modifier is a declaration start only when its following tokens commit to
+// a declaration. Source-list recovery skips a stranded export token.
+export function declarationAhead(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    let result = false;
+    while(kind(scanner) !== 'EndOfFile') {
+        const current = kind(scanner);
+        if(
+            ['VarKeyword', 'LetKeyword', 'ConstKeyword', 'FunctionKeyword', 'ClassKeyword', 'EnumKeyword'].includes(
+                current,
+            )
+        ) {
+            result = true;
+            break;
+        }
+        if(['InterfaceKeyword', 'TypeKeyword', 'DeferKeyword', 'ModuleKeyword', 'NamespaceKeyword'].includes(current)) {
+            state.next();
+            result =
+                (scanner.flags & 1) === 0 &&
+                (kind(scanner) === 'Identifier' ||
+                    (kind(scanner).endsWith('Keyword') && !reservedKinds.includes(kind(scanner))) ||
+                    ((current === 'ModuleKeyword' || current === 'NamespaceKeyword') &&
+                        kind(scanner) === 'StringLiteral'));
+            break;
+        }
+        if(current === 'ExportKeyword') {
+            state.next();
+            if(
+                ['EqualsToken', 'AsteriskToken', 'OpenBraceToken', 'DefaultKeyword', 'AsKeyword', 'AtToken'].includes(
+                    kind(scanner),
+                )
+            ) {
+                result = true;
+                break;
+            }
+            if(kind(scanner) === 'TypeKeyword') {
+                state.next();
+                result =
+                    kind(scanner) === 'AsteriskToken' ||
+                    kind(scanner) === 'OpenBraceToken' ||
+                    ((kind(scanner) === 'Identifier' ||
+                        (kind(scanner).endsWith('Keyword') && !reservedKinds.includes(kind(scanner)))) &&
+                        (scanner.flags & 1) === 0);
+                break;
+            }
+            continue;
+        }
+        if(current === 'ImportKeyword') {
+            state.next();
+            result =
+                ['StringLiteral', 'AsteriskToken', 'OpenBraceToken', 'Identifier'].includes(kind(scanner)) ||
+                kind(scanner).endsWith('Keyword');
+            break;
+        }
+        if(current === 'GlobalKeyword') {
+            state.next();
+            result = ['OpenBraceToken', 'Identifier', 'ExportKeyword'].includes(kind(scanner));
+            break;
+        }
+        if(
+            [
+                'AbstractKeyword',
+                'AccessorKeyword',
+                'AsyncKeyword',
+                'DeclareKeyword',
+                'PrivateKeyword',
+                'ProtectedKeyword',
+                'PublicKeyword',
+                'ReadonlyKeyword',
+                'StaticKeyword',
+            ].includes(current)
+        ) {
+            state.next();
+            if(current !== 'StaticKeyword' && (scanner.flags & 1) !== 0) {
+                break;
+            }
+            if(current === 'DeclareKeyword' && kind(scanner) === 'TypeKeyword') {
+                result = true;
+                break;
+            }
+            continue;
+        }
+        break;
+    }
+    state.restore();
+    return result;
+}
