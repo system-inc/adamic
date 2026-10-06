@@ -116,6 +116,15 @@ int main(void) {
 				read_at(first, (double)index);
 			}
 			putchar('\n');
+			// Reads and slices disturb the same cursor. Visit both halves and step back nearby.
+			for (size_t index = 1; index < length; index++) {
+				read_at(first, (double)index);
+				adamic_string *piece = adamic_string_slice(first, (double)(index - 1), (double)(index + 2), true);
+				put_hex(piece);
+				adamic_release(piece);
+				read_at(first, (double)(index - 1));
+			}
+			putchar('\n');
 			// Jumping: a step that wraps around the length, back and forth across checkpoints.
 			for (size_t step = 0, at = 5; step < length; step++) {
 				at = (at * 37 + 11) % (length + 1);
@@ -217,6 +226,11 @@ for (const count of [@COUNTS@]) {
 		}
 		lines.push(line);
 		line = '';
+		for (let index = 1; index < length; index++) {
+			line += readAt(first, index) + wtf8(first.slice(index - 1, index + 2)) + readAt(first, index - 1);
+		}
+		lines.push(line);
+		line = '';
 		for (let step = 0, at = 5; step < length; step++) {
 			at = (at * 37 + 11) % (length + 1);
 			line += readAt(first, at);
@@ -252,10 +266,26 @@ process.stdout.write(lines.join('\n') + '\n');
 
 func TestStringIndexMatchesNode(t *testing.T) {
 	t.Parallel()
+	for _, pattern := range []struct{ name, points string }{
+		{"mixed", "0x61, 0xe9, 0x4e16, 0x1f30d, 0x62, 0xd800, 0x63, 0x1f600, 0x1f600, 0xdc00, 0x3b1, 0x20, 0xffff, 0x10ffff, 0xdbff, 0xdfff"},
+		// Lone high halves separated from low halves: no supplementary points can form.
+		{"BMP", "0x61, 0xe9, 0x4e16, 0x62, 0xd800, 0x63, 0x3b1, 0x20, 0xffff, 0xdbff"},
+		{"BMP low halves", "0x61, 0xe9, 0x4e16, 0xdc00, 0xdfff, 0x3b1, 0xffff"},
+		{"ASCII", "0x61, 0x62, 0x20, 0x7f"},
+	} {
+		t.Run(pattern.name, func(t *testing.T) {
+			t.Parallel()
+			checkStringIndex(t, pattern.points)
+		})
+	}
+}
+
+func checkStringIndex(t *testing.T, pattern string) {
+	t.Helper()
 	// One-, two-, three- and four-byte code points, and lone surrogates of each half, which meet in
 	// some shifts and stay apart in others.
 	replacer := strings.NewReplacer(
-		"@PATTERN@", "0x61, 0xe9, 0x4e16, 0x1f30d, 0x62, 0xd800, 0x63, 0x1f600, 0x1f600, 0xdc00, 0x3b1, 0x20, 0xffff, 0x10ffff, 0xdbff, 0xdfff",
+		"@PATTERN@", pattern,
 		"@COUNTS@", "20, 40, 41, 63, 64, 65, 100, 400, 2000",
 		"@SHIFTS@", "16",
 		"@SLICE_LIMIT@", "140",
@@ -283,4 +313,95 @@ func TestStringIndexMatchesNode(t *testing.T) {
 		t.Errorf("%d of %d lines differ", mismatches, len(native))
 	}
 	t.Logf("%d lines, %d mismatches", len(native), mismatches)
+}
+
+// Appending a low half joins the previous high half, changing the cached BMP fact as well as the
+// units and byte checkpoints. The pointer comparison proves this exercises the in-place path.
+func TestStringViewAfterAppendMatchesNode(t *testing.T) {
+	t.Parallel()
+	harness := strings.Split(indexHarness, "int main(void)")[0] + `int main(void) {
+	static adamic_string literal = ADAMIC_STRING("@BMP_LITERAL@");
+	adamic_string stack = {{0, adamic_kind_string, 0}, literal.length, literal.bytes, 0, NULL, NULL, 0};
+	put_number(adamic_string_length(&literal));
+	for (size_t at = 80; at-- > 0;) {
+		read_at(&literal, (double)at);
+		read_at(&stack, (double)at);
+	}
+	putchar('\n');
+	adamic_string *text = adamic_string_allocate(160);
+	for (size_t offset = 0; offset < 160; offset += 2) {
+		((char *)text->bytes)[offset] = (char)0xc3;
+		((char *)text->bytes)[offset + 1] = (char)0xa9;
+	}
+	static adamic_string high = ADAMIC_STRING("\xed\xa0\xbc");
+	static adamic_string low = ADAMIC_STRING("\xed\xbc\x8d");
+	text = adamic_string_append(text, 1, (adamic_string *const[]){&high});
+	put_number(adamic_string_length(text));
+	read_at(text, 80);
+	putchar('\n');
+	adamic_string *before = text;
+	text = adamic_string_append(text, 1, (adamic_string *const[]){&low});
+	put_number(text == before);
+	put_number(adamic_string_length(text));
+	read_at(text, 80);
+	putchar('\n');
+	static adamic_string more = ADAMIC_STRING("x\xf0\x9f\x8c\x8d\xc3\xa9");
+	for (size_t round = 0; round < 40; round++) {
+		text = adamic_string_append(text, 1, (adamic_string *const[]){&more});
+		size_t length = adamic_string_units(text);
+		put_number((double)length);
+		for (size_t at = length + 1; at-- > 0;) {
+			read_at(text, (double)at);
+			adamic_string *piece = adamic_string_slice(text, (double)(at == 0 ? 0 : at - 1), (double)(at + 2), true);
+			put_hex(piece);
+			adamic_release(piece);
+		}
+		putchar('\n');
+	}
+	adamic_release(text);
+	return 0;
+}
+`
+	harness = strings.NewReplacer("@PATTERN@", "0x61", "@BMP_LITERAL@", strings.Repeat(`\303\251`, 80)).Replace(harness)
+	// make is unused by this harness, so omit it instead of silencing -Werror.
+	from := strings.Index(harness, "// pattern is")
+	to := strings.Index(harness, "static void read_at")
+	harness = harness[:from] + harness[to:]
+	from = strings.Index(harness, "static size_t encode")
+	to = strings.Index(harness, "static void read_at")
+	harness = harness[:from] + harness[to:]
+	oracle := strings.Split(indexOracle, "const pattern =")[0] + `
+const readAt = (string, index) => {
+	const at = string[index];
+	return ' ' + string.charCodeAt(index) + ' ' + (string.codePointAt(index) ?? -1) + (at === undefined ? ' undefined' : wtf8(at));
+};
+let text = 'é'.repeat(80) + '\ud83c';
+const literal = 'é'.repeat(80);
+let literalLine = ' ' + literal.length;
+for (let at = 79; at >= 0; at--) {
+	literalLine += readAt(literal, at) + readAt(literal, at);
+}
+const lines = [literalLine, ' ' + text.length + readAt(text, 80)];
+text += '\udf0d';
+lines.push(' 1 ' + text.length + readAt(text, 80));
+for (let round = 0; round < 40; round++) {
+	text += 'x🌍é';
+	let line = ' ' + text.length;
+	for (let at = text.length; at >= 0; at--) {
+		line += readAt(text, at) + wtf8(text.slice(at === 0 ? 0 : at - 1, at + 2));
+	}
+	lines.push(line);
+}
+process.stdout.write(lines.join('\n') + '\n');
+`
+	binary := filepath.Join(t.TempDir(), "append")
+	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	node := runWithInput(t, "", "node", "--eval", oracle)
+	native := runWithInput(t, "", binary)
+	if native != node {
+		t.Fatal("UTF-16 view after append differs from Node")
+	}
+	t.Log("43 lines match Node, including literal, stack and in-place append views")
 }
