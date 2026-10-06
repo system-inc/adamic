@@ -71,3 +71,19 @@ propagation, nested new, trailing commas, and Unicode/escape templates.
 The lost optional-chain flag mutant is caught under Node and native.
 
 The file driver still accepts only expression and empty statements at this step.
+
+## Green step 3
+
+Adds simple, parenthesized, async and generic arrows with parameter annotations,
+default/rest/destructured parameters and return types, functions and generator
+bodies, object methods/accessors, type assertions/as/satisfies, type references
+and arguments, unions/intersections, readonly, indexed/array/tuple/function and
+conditional types. Basic block/return/throw/variable/if/while statements let
+these expression bodies carry their full trees. Fifty-eight generated inputs
+agree under Go, Node and sanitized native. All three requested tree mutants
+run successfully and disagree; the parenthesis mutant classifies an ordinary
+parenthesized expression as ArrowFunction in its returned tree.
+
+The full compiler-file corpus and its declaration/statement traversal are still
+pending at this step. Recovery diagnostics and type grammar beyond the generated
+cases remain outside this green step's coverage.

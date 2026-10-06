@@ -58,6 +58,8 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool) int {
 		operator = kind(n.AsPrefixUnaryExpression().Operator)
 	case ast.KindPostfixUnaryExpression:
 		operator = kind(n.AsPostfixUnaryExpression().Operator)
+	case ast.KindTypeOperator:
+		operator = kind(n.AsTypeOperatorNode().Operator)
 	case ast.KindMetaProperty:
 		operator = kind(n.AsMetaProperty().KeywordToken)
 	case ast.KindArrayLiteralExpression:
@@ -91,7 +93,7 @@ func run(out *bufio.Writer, path string, countOnly bool) int {
 	f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/source.ts"}, string(text), core.ScriptKindTS)
 	if len(f.Diagnostics()) != 0 {
 		for _, d := range f.Diagnostics() {
-			fmt.Fprintf(os.Stderr, "parser diagnostic %d %d %d\n", d.Code(), d.Pos(), d.Len())
+			fmt.Fprintf(os.Stderr, "parser diagnostic %s %d %d %d\n", path, d.Code(), d.Pos(), d.Len())
 		}
 		os.Exit(1)
 	}
