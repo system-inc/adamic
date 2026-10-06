@@ -1,0 +1,8 @@
+=== RUN   TestDateNumericLocals
+=== PAUSE TestDateNumericLocals
+=== CONT  TestDateNumericLocals
+    adapt_date_test.go:18: got main.adapted{Source:"let date = new Date(0); let result, expected; result = date.setUTCDate(2); expected = date.getTime(); assert.sameValue(result, expected);", Counts:map[string]int{"var-to-let":3}}
+--- FAIL: TestDateNumericLocals (0.11s)
+FAIL
+FAIL    github.com/system-inc/adamic/cmd/adamic-test262 0.121s
+FAIL

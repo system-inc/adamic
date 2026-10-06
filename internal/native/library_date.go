@@ -25,6 +25,8 @@ func (e *emitter) dateCall(call ir.DateCall) string {
 	}
 	code := ""
 	switch call.Method {
+	case "hasOwnProperty":
+		code = "adamic_date_has_own((int)" + args[0] + ", " + args[1] + ")"
 	case "UTC":
 		code = fmt.Sprintf("adamic_date_utc(%d, %s)", len(args), numbers)
 	case "components":

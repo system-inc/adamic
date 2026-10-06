@@ -1,0 +1,19 @@
+=== RUN   TestSentinelHarnessAgreesWithOriginal
+=== PAUSE TestSentinelHarnessAgreesWithOriginal
+=== CONT  TestSentinelHarnessAgreesWithOriginal
+    adapt_date_test.go:70: program 1: exit status 1: file:///tmp/adamic-gate/TestSentinelHarnessAgreesWithOriginal3172015046/002/program.mts:45
+            throw new Error(message ?? fallback);
+                  ^
+
+        Error: Expected SameValue
+            at assertIdentity (file:///tmp/adamic-gate/TestSentinelHarnessAgreesWithOriginal3172015046/002/program.mts:45:8)
+            at file:///tmp/adamic-gate/TestSentinelHarnessAgreesWithOriginal3172015046/002/program.mts:106:1
+            at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+            at async node:internal/modules/esm/loader:643:26
+            at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+        Node.js v24.19.0
+--- FAIL: TestSentinelHarnessAgreesWithOriginal (0.27s)
+FAIL
+FAIL    github.com/system-inc/adamic/cmd/adamic-test262 0.276s
+FAIL

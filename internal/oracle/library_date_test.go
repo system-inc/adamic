@@ -14,6 +14,10 @@ import (
 func TestDateOracleCatchesMutants(t *testing.T) {
 	t.Parallel()
 	mutants := []struct{ name, fixture, before, after string }{
+		{"number_date", "number", "adamic_date_value(", "1 + adamic_date_value("},
+		{"metadata_name", "metadata", "ADAMIC_STRING(\"Date\")", "ADAMIC_STRING(\"Dote\")"},
+		{"metadata_length", "metadata", "0x1.cp+02", "0x1p+03"},
+		{"metadata_own", "metadata", "adamic_date_has_own(", "!adamic_date_has_own("},
 		{"nullable_typeof", "json", "&adamic_typeof_object", "&adamic_typeof_undefined"},
 		{"nullable_number", "json", " == NULL ? 0.0 :", " == NULL ? NAN :"},
 		{"nullable_stringify", "json", "adamic_json_nullable_string", "adamic_json_string"},

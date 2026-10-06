@@ -1,5 +1,11 @@
 # Date TS2345 investigation
 
+**Decision superseding the original diagnosis:** stock TypeScript rejects the
+coercion tests with the same TS2345. These refusals are correct for Adamic, not
+a language gap to fix. The original evidence below is retained as history.
+The follow-up audit and runner work are recorded in
+[the Date refusal report](../library-date-refusals/report.md).
+
 Observed on `codex/library-date`, compiler commit
 `7d532eb9d6699bf8717e1f3ee520c8710a4cba33`, with test262 pinned to
 `3fd3eab12309bd7732f4b5ddeaae19c5d95ad9dd` and optional `--adapt` disabled.

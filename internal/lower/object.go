@@ -304,6 +304,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		// The rest of a chain after a ?., which short-circuits with it.
 		return nil, l.notYet(node, "an optional chain longer than one step")
 	}
+	if value, known := l.libraryDateProperty(node); known {
+		return value, nil
+	}
 	if value, known := l.libraryMathNumberProperty(node); known {
 		return value, nil
 	}

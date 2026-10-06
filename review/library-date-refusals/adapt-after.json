@@ -1,0 +1,854 @@
+{
+  "test262": "/workspace/test262",
+  "commit": "3fd3eab12309bd7732f4b5ddeaae19c5d95ad9dd",
+  "adapt": true,
+  "filters": [
+    {
+      "path": "built-ins/Date",
+      "pass": 163,
+      "fail": 0,
+      "refused": 161,
+      "crashed": 0,
+      "skipped": 270,
+      "total": 594,
+      "directories": [
+        {
+          "path": "built-ins/Date",
+          "pass": 13,
+          "fail": 0,
+          "refused": 36,
+          "crashed": 0,
+          "skipped": 29,
+          "total": 78
+        },
+        {
+          "path": "built-ins/Date/UTC",
+          "pass": 10,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 17
+        },
+        {
+          "path": "built-ins/Date/now",
+          "pass": 0,
+          "fail": 0,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 2,
+          "total": 6
+        },
+        {
+          "path": "built-ins/Date/parse",
+          "pass": 4,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype",
+          "pass": 42,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 1,
+          "total": 44
+        },
+        {
+          "path": "built-ins/Date/prototype/Symbol.toPrimitive",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 18,
+          "total": 18
+        },
+        {
+          "path": "built-ins/Date/prototype/constructor",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 1,
+          "total": 1
+        },
+        {
+          "path": "built-ins/Date/prototype/getDate",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getDay",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getFullYear",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getHours",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getMilliseconds",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getMinutes",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getMonth",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getSeconds",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getTime",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getTimezoneOffset",
+          "pass": 1,
+          "fail": 0,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getUTCDate",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getUTCDay",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getUTCFullYear",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getUTCHours",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getUTCMilliseconds",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getUTCMinutes",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getUTCMonth",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/getUTCSeconds",
+          "pass": 2,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/setDate",
+          "pass": 3,
+          "fail": 0,
+          "refused": 6,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 14
+        },
+        {
+          "path": "built-ins/Date/prototype/setFullYear",
+          "pass": 5,
+          "fail": 0,
+          "refused": 10,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 20
+        },
+        {
+          "path": "built-ins/Date/prototype/setHours",
+          "pass": 6,
+          "fail": 0,
+          "refused": 12,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 23
+        },
+        {
+          "path": "built-ins/Date/prototype/setMilliseconds",
+          "pass": 3,
+          "fail": 0,
+          "refused": 6,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 14
+        },
+        {
+          "path": "built-ins/Date/prototype/setMinutes",
+          "pass": 2,
+          "fail": 0,
+          "refused": 11,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 18
+        },
+        {
+          "path": "built-ins/Date/prototype/setMonth",
+          "pass": 4,
+          "fail": 0,
+          "refused": 8,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 17
+        },
+        {
+          "path": "built-ins/Date/prototype/setSeconds",
+          "pass": 4,
+          "fail": 0,
+          "refused": 8,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 17
+        },
+        {
+          "path": "built-ins/Date/prototype/setTime",
+          "pass": 3,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 11
+        },
+        {
+          "path": "built-ins/Date/prototype/setUTCDate",
+          "pass": 0,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 7
+        },
+        {
+          "path": "built-ins/Date/prototype/setUTCFullYear",
+          "pass": 0,
+          "fail": 0,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 6
+        },
+        {
+          "path": "built-ins/Date/prototype/setUTCHours",
+          "pass": 4,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 11
+        },
+        {
+          "path": "built-ins/Date/prototype/setUTCMilliseconds",
+          "pass": 1,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/setUTCMinutes",
+          "pass": 1,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/setUTCMonth",
+          "pass": 2,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 9
+        },
+        {
+          "path": "built-ins/Date/prototype/setUTCSeconds",
+          "pass": 2,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 9
+        },
+        {
+          "path": "built-ins/Date/prototype/toDateString",
+          "pass": 3,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 7
+        },
+        {
+          "path": "built-ins/Date/prototype/toISOString",
+          "pass": 5,
+          "fail": 0,
+          "refused": 10,
+          "crashed": 0,
+          "skipped": 2,
+          "total": 17
+        },
+        {
+          "path": "built-ins/Date/prototype/toJSON",
+          "pass": 0,
+          "fail": 0,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 11,
+          "total": 13
+        },
+        {
+          "path": "built-ins/Date/prototype/toLocaleDateString",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 4
+        },
+        {
+          "path": "built-ins/Date/prototype/toLocaleString",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 4
+        },
+        {
+          "path": "built-ins/Date/prototype/toLocaleTimeString",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 4
+        },
+        {
+          "path": "built-ins/Date/prototype/toString",
+          "pass": 3,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/toTemporalInstant",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 8,
+          "total": 8
+        },
+        {
+          "path": "built-ins/Date/prototype/toTimeString",
+          "pass": 2,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 6
+        },
+        {
+          "path": "built-ins/Date/prototype/toUTCString",
+          "pass": 5,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 9
+        },
+        {
+          "path": "built-ins/Date/prototype/valueOf",
+          "pass": 1,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 6
+        }
+      ],
+      "refusalReasons": [
+        {
+          "reason": "error TS2345: Argument of type '…' is not assignable to parameter of type '…'.",
+          "count": 76
+        },
+        {
+          "reason": "error TS7006: Parameter '…' implicitly has an '…' type.",
+          "count": 13
+        },
+        {
+          "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+          "count": 13
+        },
+        {
+          "reason": "error TS7034: Variable '…' implicitly has type '…' in some locations where its type cannot be determined.",
+          "count": 11
+        },
+        {
+          "reason": "refuses inherited library member prototype read as an own field",
+          "count": 9
+        },
+        {
+          "reason": "not yet: a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)",
+          "count": 4
+        },
+        {
+          "reason": "refuses Date.now",
+          "count": 4
+        },
+        {
+          "reason": "error TS2769: No overload matches this call.",
+          "count": 3
+        },
+        {
+          "reason": "error TS2554: Expected 1-3 arguments, but got 4.",
+          "count": 2
+        },
+        {
+          "reason": "not yet: Date prototype method requires a Date internal slot",
+          "count": 2
+        },
+        {
+          "reason": "error TS2554: Expected 0 arguments, but got 1.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2554: Expected 1-7 arguments, but got 0.",
+          "count": 1
+        },
+        {
+          "reason": "not yet: new an Identifier",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getDate would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getDay would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getFullYear would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getHours would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getMilliseconds would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getMinutes would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getMonth would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getSeconds would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getTime would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getTimezoneOffset would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getUTCDate would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getUTCDay would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getUTCFullYear would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getUTCHours would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getUTCMilliseconds would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getUTCMinutes would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getUTCMonth would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (getUTCSeconds would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (toISOString would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses isPrototypeOf",
+          "count": 1
+        },
+        {
+          "reason": "refuses new Date() without arguments",
+          "count": 1
+        }
+      ],
+      "skipReasons": [
+        {
+          "reason": "harness include propertyHelper.js",
+          "count": 144
+        },
+        {
+          "reason": "harness include isConstructor.js",
+          "count": 48
+        },
+        {
+          "reason": "feature Symbol",
+          "count": 27
+        },
+        {
+          "reason": "feature Symbol.toPrimitive",
+          "count": 25
+        },
+        {
+          "reason": "harness include assertRelativeDateMs.js",
+          "count": 6
+        },
+        {
+          "reason": "getters",
+          "count": 4
+        },
+        {
+          "reason": "harness include dateConstants.js",
+          "count": 4
+        },
+        {
+          "reason": "features Reflect, cross-realm",
+          "count": 3
+        },
+        {
+          "reason": "features Symbol, Symbol.toPrimitive",
+          "count": 3
+        },
+        {
+          "reason": "feature Temporal",
+          "count": 2
+        },
+        {
+          "reason": "feature Reflect",
+          "count": 1
+        },
+        {
+          "reason": "feature Reflect.construct",
+          "count": 1
+        },
+        {
+          "reason": "features BigInt, Symbol, Temporal",
+          "count": 1
+        },
+        {
+          "reason": "features BigInt, Temporal",
+          "count": 1
+        }
+      ],
+      "crashReasons": [],
+      "failReasons": [],
+      "passes": [
+        "built-ins/Date/15.9.1.15-1.js",
+        "built-ins/Date/S15.9.3.1_A1_T1.js",
+        "built-ins/Date/S15.9.3.1_A1_T2.js",
+        "built-ins/Date/S15.9.3.1_A1_T3.js",
+        "built-ins/Date/S15.9.3.1_A1_T4.js",
+        "built-ins/Date/S15.9.3.1_A1_T5.js",
+        "built-ins/Date/S15.9.3.1_A1_T6.js",
+        "built-ins/Date/S15.9.4_A1.js",
+        "built-ins/Date/S15.9.4_A2.js",
+        "built-ins/Date/S15.9.4_A3.js",
+        "built-ins/Date/S15.9.4_A5.js",
+        "built-ins/Date/TimeClip_negative_zero.js",
+        "built-ins/Date/UTC/fp-evaluation-order.js",
+        "built-ins/Date/UTC/infinity-make-day.js",
+        "built-ins/Date/UTC/infinity-make-time.js",
+        "built-ins/Date/UTC/nans.js",
+        "built-ins/Date/UTC/non-integer-values.js",
+        "built-ins/Date/UTC/overflow-make-day.js",
+        "built-ins/Date/UTC/overflow-make-time.js",
+        "built-ins/Date/UTC/return-value.js",
+        "built-ins/Date/UTC/time-clip.js",
+        "built-ins/Date/UTC/year-offset.js",
+        "built-ins/Date/parse/time-value-maximum-range.js",
+        "built-ins/Date/parse/without-utc-offset.js",
+        "built-ins/Date/parse/year-zero.js",
+        "built-ins/Date/parse/zero.js",
+        "built-ins/Date/prototype/S15.9.5_A01_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A02_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A03_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A04_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A05_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A06_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A07_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A08_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A09_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A10_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A11_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A12_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A13_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A14_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A15_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A16_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A17_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A18_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A19_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A20_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A21_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A22_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A23_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A24_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A25_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A26_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A27_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A28_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A29_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A30_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A31_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A32_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A33_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A34_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A35_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A36_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A37_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A38_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A39_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A40_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A41_T1.js",
+        "built-ins/Date/prototype/S15.9.5_A42_T1.js",
+        "built-ins/Date/prototype/getDate/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getDate/this-value-valid-date.js",
+        "built-ins/Date/prototype/getDay/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getDay/this-value-valid-date.js",
+        "built-ins/Date/prototype/getFullYear/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getFullYear/this-value-valid-date.js",
+        "built-ins/Date/prototype/getHours/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getHours/this-value-valid-date.js",
+        "built-ins/Date/prototype/getMilliseconds/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getMilliseconds/this-value-valid-date.js",
+        "built-ins/Date/prototype/getMinutes/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getMinutes/this-value-valid-date.js",
+        "built-ins/Date/prototype/getMonth/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getMonth/this-value-valid-date.js",
+        "built-ins/Date/prototype/getSeconds/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getSeconds/this-value-valid-date.js",
+        "built-ins/Date/prototype/getTime/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getTime/this-value-valid-date.js",
+        "built-ins/Date/prototype/getTimezoneOffset/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getUTCDate/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getUTCDate/this-value-valid-date.js",
+        "built-ins/Date/prototype/getUTCDay/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getUTCDay/this-value-valid-date.js",
+        "built-ins/Date/prototype/getUTCFullYear/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getUTCFullYear/this-value-valid-date.js",
+        "built-ins/Date/prototype/getUTCHours/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getUTCHours/this-value-valid-date.js",
+        "built-ins/Date/prototype/getUTCMilliseconds/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getUTCMilliseconds/this-value-valid-date.js",
+        "built-ins/Date/prototype/getUTCMinutes/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getUTCMinutes/this-value-valid-date.js",
+        "built-ins/Date/prototype/getUTCMonth/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getUTCMonth/this-value-valid-date.js",
+        "built-ins/Date/prototype/getUTCSeconds/this-value-invalid-date.js",
+        "built-ins/Date/prototype/getUTCSeconds/this-value-valid-date.js",
+        "built-ins/Date/prototype/setDate/new-value-time-clip.js",
+        "built-ins/Date/prototype/setDate/this-value-invalid-date.js",
+        "built-ins/Date/prototype/setDate/this-value-valid-date.js",
+        "built-ins/Date/prototype/setFullYear/new-value-time-clip.js",
+        "built-ins/Date/prototype/setFullYear/this-value-invalid-date.js",
+        "built-ins/Date/prototype/setFullYear/this-value-valid-date-date.js",
+        "built-ins/Date/prototype/setFullYear/this-value-valid-date-month.js",
+        "built-ins/Date/prototype/setFullYear/this-value-valid-date-year.js",
+        "built-ins/Date/prototype/setHours/new-value-time-clip.js",
+        "built-ins/Date/prototype/setHours/this-value-invalid-date.js",
+        "built-ins/Date/prototype/setHours/this-value-valid-date-hour.js",
+        "built-ins/Date/prototype/setHours/this-value-valid-date-min.js",
+        "built-ins/Date/prototype/setHours/this-value-valid-date-ms.js",
+        "built-ins/Date/prototype/setHours/this-value-valid-date-sec.js",
+        "built-ins/Date/prototype/setMilliseconds/new-value-time-clip.js",
+        "built-ins/Date/prototype/setMilliseconds/this-value-invalid-date.js",
+        "built-ins/Date/prototype/setMilliseconds/this-value-valid-date.js",
+        "built-ins/Date/prototype/setMinutes/new-value-time-clip.js",
+        "built-ins/Date/prototype/setMinutes/this-value-valid-date.js",
+        "built-ins/Date/prototype/setMonth/new-value-time-clip.js",
+        "built-ins/Date/prototype/setMonth/this-value-invalid-date.js",
+        "built-ins/Date/prototype/setMonth/this-value-valid-date-date.js",
+        "built-ins/Date/prototype/setMonth/this-value-valid-date-month.js",
+        "built-ins/Date/prototype/setSeconds/new-value-time-clip.js",
+        "built-ins/Date/prototype/setSeconds/this-value-invalid-date.js",
+        "built-ins/Date/prototype/setSeconds/this-value-valid-date-ms.js",
+        "built-ins/Date/prototype/setSeconds/this-value-valid-date-sec.js",
+        "built-ins/Date/prototype/setTime/new-value-time-clip.js",
+        "built-ins/Date/prototype/setTime/this-value-invalid-date.js",
+        "built-ins/Date/prototype/setTime/this-value-valid-date.js",
+        "built-ins/Date/prototype/setUTCHours/this-value-valid-date-hour.js",
+        "built-ins/Date/prototype/setUTCHours/this-value-valid-date-min.js",
+        "built-ins/Date/prototype/setUTCHours/this-value-valid-date-ms.js",
+        "built-ins/Date/prototype/setUTCHours/this-value-valid-date-sec.js",
+        "built-ins/Date/prototype/setUTCMilliseconds/this-value-valid-date.js",
+        "built-ins/Date/prototype/setUTCMinutes/this-value-valid-date.js",
+        "built-ins/Date/prototype/setUTCMonth/this-value-valid-date-date.js",
+        "built-ins/Date/prototype/setUTCMonth/this-value-valid-date-month.js",
+        "built-ins/Date/prototype/setUTCSeconds/this-value-valid-date-ms.js",
+        "built-ins/Date/prototype/setUTCSeconds/this-value-valid-date-sec.js",
+        "built-ins/Date/prototype/toDateString/format.js",
+        "built-ins/Date/prototype/toDateString/invalid-date.js",
+        "built-ins/Date/prototype/toDateString/negative-year.js",
+        "built-ins/Date/prototype/toISOString/15.9.5.43-0-11.js",
+        "built-ins/Date/prototype/toISOString/15.9.5.43-0-12.js",
+        "built-ins/Date/prototype/toISOString/15.9.5.43-0-2.js",
+        "built-ins/Date/prototype/toISOString/15.9.5.43-0-4.js",
+        "built-ins/Date/prototype/toISOString/15.9.5.43-0-5.js",
+        "built-ins/Date/prototype/toString/format.js",
+        "built-ins/Date/prototype/toString/invalid-date.js",
+        "built-ins/Date/prototype/toString/negative-year.js",
+        "built-ins/Date/prototype/toTimeString/format.js",
+        "built-ins/Date/prototype/toTimeString/invalid-date.js",
+        "built-ins/Date/prototype/toUTCString/day-names.js",
+        "built-ins/Date/prototype/toUTCString/format.js",
+        "built-ins/Date/prototype/toUTCString/invalid-date.js",
+        "built-ins/Date/prototype/toUTCString/month-names.js",
+        "built-ins/Date/prototype/toUTCString/negative-year.js",
+        "built-ins/Date/prototype/valueOf/S9.4_A3_T2.js",
+        "built-ins/Date/year-zero.js"
+      ],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 1054
+        },
+        {
+          "reason": "date-local",
+          "count": 71
+        },
+        {
+          "reason": "throw-error",
+          "count": 21
+        }
+      ]
+    }
+  ]
+}

@@ -811,6 +811,7 @@ adamic_array *adamic_plain_object_keys(const adamic_object *object);
 void *adamic_library_identity(size_t index);
 
 // Deterministic Date operations, stored with no enumerable fields.
+bool adamic_date_has_own(int target, const adamic_string *key);
 adamic_object *adamic_date_new(double time);
 double adamic_date_value(const adamic_object *date);
 double adamic_date_utc(size_t count, const double *arguments);

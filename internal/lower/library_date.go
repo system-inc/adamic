@@ -76,6 +76,9 @@ var dateSetters = map[string]int{"setFullYear": 0, "setMonth": 1, "setDate": 2, 
 
 func dateLocalName(name string) string { return strings.Replace(name, "UTC", "", 1) }
 func (l *lowering) libraryDateCall(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.libraryDateMetadataCall(node); known {
+		return value, true, err
+	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return nil, false, nil
