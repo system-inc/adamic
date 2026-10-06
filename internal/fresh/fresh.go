@@ -1123,6 +1123,22 @@ func (a *analysis) value(expression ir.Expression) value {
 		a.value(expression.Value)
 		a.value(expression.Index)
 		return value{}
+	case ir.Utf8Length:
+		a.value(expression.Text)
+		return value{}
+	case ir.Utf8At:
+		a.value(expression.Text)
+		a.value(expression.Index)
+		return value{}
+	case ir.StringFromCodes:
+		// A new string, from numbers: nothing it reaches can hold a holder.
+		for _, code := range expression.Codes {
+			a.value(code)
+		}
+		if expression.Spread != nil {
+			a.value(expression.Spread)
+		}
+		return value{}
 	case ir.Trim:
 		a.value(expression.Value)
 		return value{}
