@@ -1,0 +1,16 @@
+const original = [1, 2, 3];
+const indices = [-Infinity, -5.9, -3, -1.9, -0, 0, 1.9, 2, 3, Infinity, NaN];
+for (const index of indices) {
+	try {
+		const replaced = original.with(index, 9);
+		console.log(`${index}: ${replaced.join('|')} / ${original.join('|')} / ${replaced === original}`);
+	} catch (error) {
+		if (error instanceof Error) { console.log(`${index}: ${error.name}|${error.message}`); }
+	}
+}
+const words = ['a'.repeat(2), 'b'.repeat(2)];
+const copy = words.with(-1, 'c'.repeat(2));
+words.splice(0, 2);
+console.log(copy.join('|'));
+const empty: number[] = [];
+try { empty.with(0, 7); } catch (error) { if (error instanceof Error) { console.log(`${error.name}|${error.message}`); } }

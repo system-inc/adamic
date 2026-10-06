@@ -7,6 +7,7 @@ import (
 )
 
 func TestCEndsInNewline(t *testing.T) {
+	t.Parallel()
 	program := &ir.Program{Source: "newline fixture"}
 	for _, large := range []bool{false, true} {
 		if large {

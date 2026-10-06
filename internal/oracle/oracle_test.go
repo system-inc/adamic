@@ -38,6 +38,17 @@ var fixtures = []struct {
 	checked bool
 }{
 	{"dedication/dedication.a", true, false},
+	{"internal/oracle/testdata/library_array_join.a", true, false},
+	{"internal/oracle/testdata/library_array_iterators.a", true, false},
+	{"internal/oracle/testdata/library_array_metadata.a", true, false},
+	{"internal/oracle/testdata/library_array_with.a", true, false},
+	{"internal/oracle/testdata/library_array_flat_map.a", true, false},
+	{"internal/oracle/testdata/library_array_flat.a", true, false},
+	{"internal/oracle/testdata/library_array_spliced.a", true, false},
+	{"internal/oracle/testdata/library_array_copy_within.a", true, false},
+	{"internal/oracle/testdata/library_array_search.a", true, false},
+	{"internal/oracle/testdata/library_array_copy.a", true, false},
+	{"internal/oracle/testdata/library_array_find_last.a", true, false},
 	{"internal/load/testdata/0.1/compile/01_hello.ts", true, false},
 	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true, false},
 	{"internal/load/testdata/0.1/compile/03_shapes.ts", true, false},

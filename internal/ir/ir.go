@@ -436,8 +436,10 @@ type (
 	// which finds NaN.
 	ArraySearch struct {
 		Array, Value Expression
+		From         Expression
 		Element      Type
 		Includes     bool
+		Last         bool
 	}
 
 	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
@@ -643,6 +645,7 @@ type (
 		Array     Expression
 		Separator Expression
 		Element   Type
+		Depth     int
 	}
 
 	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
@@ -761,9 +764,9 @@ func (v ArrayVisit) Type() Type {
 		return Array
 	case "some", "every":
 		return Boolean
-	case "findIndex":
+	case "findIndex", "findLastIndex":
 		return Number
-	case "find":
+	case "find", "findLast":
 		return Maybe(v.Element)
 	}
 	return 0

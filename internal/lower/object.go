@@ -402,6 +402,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		return ir.ArrayPop{Array: array, Element: element}, true, nil
 	}
+	if receiverType == ir.Array && libraryArrayMethods[name] {
+		return l.libraryArrayMethod(node, receiver, name)
+	}
 	if _, isVisit := visits[name]; receiverType == ir.Array && (isVisit || arrayMethods[name]) {
 		return l.arrayMethod(node, receiver, name)
 	}
@@ -550,6 +553,9 @@ var numberConstants = map[string]float64{
 
 // forOf lowers for (const element of array).
 func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
+	if statements, known, err := l.libraryArrayForOf(node); known {
+		return statements, err
+	}
 	statement := node.AsForInOrOfStatement()
 	if statement.AwaitModifier != nil {
 		return nil, l.notYet(node, "for await")
