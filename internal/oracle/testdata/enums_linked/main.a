@@ -1,0 +1,14 @@
+import { Shade, Name, Scale } from './color.a';
+function label(value: Shade): string {
+    switch (value) {
+        case Shade.Black: return 'black';
+        case Shade.Gray: return 'gray';
+        case Shade.White: return 'white';
+    }
+}
+const names = new Map<Name, Shade>();
+names.set(Name.Black, Shade.Black);
+names.set(Name.White, Shade.Alias);
+console.log(`${label(Shade.Black)} ${label(Shade.Gray)} ${label(Shade.Alias)} ${Shade[Shade.White] ?? 'none'}`);
+console.log(`${Name.Black} ${Name.White} ${names.get(Name.White) ?? -1} ${Scale.Small} ${Scale.Large}`);
+console.log(Object.keys(Shade).join(','));

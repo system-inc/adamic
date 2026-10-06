@@ -1,0 +1,30 @@
+enum Rank { Low = 1, High = 2, AlsoLow = 1 }
+enum Word { A = 'a', B = 'b', Again = 'a' }
+const ranks = new Map<Rank, string>();
+ranks.set(Rank.Low, 'low');
+ranks.set(Rank.High, 'high');
+ranks.set(Rank.AlsoLow, 'replaced');
+console.log(`${ranks.size} ${ranks.get(Rank.Low) ?? 'none'} ${ranks.get(Rank.AlsoLow) ?? 'none'} ${ranks.has(Rank.High)} ${ranks.has(Rank.Low)}`);
+const listed: string[] = [];
+for (const [key, label] of ranks) listed.push(`${key}=${label}`);
+console.log(listed.join(','));
+console.log(`${ranks.delete(Rank.Low)} ${ranks.size} ${ranks.get(Rank.AlsoLow) ?? 'none'}`);
+const words = new Map<Word, number>();
+words.set(Word.A, 1);
+words.set(Word.B, 2);
+words.set(Word.Again, 3);
+console.log(`${words.size} ${words.get(Word.A) ?? 0} ${words.get(Word.Again) ?? 0}`);
+const rankSet = new Set<Rank>();
+rankSet.add(Rank.Low);
+rankSet.add(Rank.High);
+rankSet.add(Rank.AlsoLow);
+const rankKeys: number[] = [];
+for (const key of rankSet) rankKeys.push(key);
+console.log(`${rankSet.size} ${rankSet.has(Rank.Low)} ${rankSet.has(Rank.High)} ${rankKeys.join(',')}`);
+const wordSet = new Set<Word>();
+wordSet.add(Word.A);
+wordSet.add(Word.B);
+wordSet.add(Word.Again);
+const wordKeys: string[] = [];
+for (const key of wordSet) wordKeys.push(key);
+console.log(`${wordSet.size} ${wordSet.has(Word.A)} ${wordSet.has(Word.B)} ${wordKeys.join(',')}`);

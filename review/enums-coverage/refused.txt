@@ -1,0 +1,86 @@
+These do not run. The checker accepts the number and cross-module assignments; stage 0 then refuses them. The never default and the mixed switch are NotYet. Programs that do lower agree with Node.
+
+An arbitrary number returned as a numeric enum:
+
+source:
+enum E { None, Read = 1, Write = 2, Both = Read | Write }
+function permission(value: number): E { return value; }
+
+native:
+Adamic 0.1 refuses an arbitrary number or a value from another enum assigned to E.None; its members are a closed union; use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)
+
+A numeric literal, even one equal to a member, is the same refusal:
+
+source:
+enum E { None, Read = 1, Write = 2 }
+const member: E = 1;
+
+native:
+Adamic 0.1 refuses an arbitrary number or a value from another enum assigned to E.Read; its members are a closed union; use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)
+
+A number that matches no member is rejected by the checker first (TS2322: Type '7' is not assignable to type 'E').
+
+The same closed-union refusal applies across modules. The checker accepts it; stage 0 does not:
+
+source:
+import { E as Other } from './other.a';
+enum E { A = 1, B = 2 }
+const value: E = Other.A;
+
+other.a:
+export enum E { A = 1, B = 2 }
+
+native:
+Adamic 0.1 refuses an arbitrary number or a value from another enum assigned to E.A; its members are a closed union; use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)
+
+Incrementing an enum slot is a different refusal, not a number assignment:
+
+enum E { A, B } let value: E = E.A; value++;
+
+Adamic 0.1 refuses arithmetic assigned back into an enum; the result need not be one of its members; assign a declared member, or keep arithmetic results in a number (adamic/enum-members)
+
+A default that binds the residual as never:
+
+source:
+enum E { A = 1, B = 2 }
+function show(value: E): string {
+    switch (value) {
+        case E.A: return 'a';
+        case E.B: return 'b';
+        default: {
+            const unreachable: never = value;
+            throw new Error(`missing ${unreachable}`);
+        }
+    }
+}
+console.log(show(E.A));
+console.log(show(E.B));
+
+Node exit 0, stdout:
+a
+b
+
+native:
+stage 0 can't lower a value of type never
+
+An exhaustive switch that does not mention never does lower and agrees. That case is enums_switch.a.
+
+A mixed numeric and string enum as a switch:
+
+source:
+enum Mixed { Number = 7, Text = 'seven' }
+function show(value: Mixed): string {
+    switch (value) {
+        case Mixed.Number: return 'n';
+        case Mixed.Text: return 't';
+    }
+}
+console.log(show(Mixed.Number));
+
+Node exit 0, stdout:
+n
+
+native:
+stage 0 can't lower a case whose type differs from the switch's
+
+Mixed members themselves lower. Forward properties and the numeric reverse key agree with Node in enums_values.a.
