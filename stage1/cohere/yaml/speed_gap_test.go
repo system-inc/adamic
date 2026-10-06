@@ -27,6 +27,7 @@ func TestSpeedCostProbes(t *testing.T) {
 	for _, probe := range []struct{ file, first, second, answer string }{
 		{"stringUnitScan.ts", "slice", "numeric", "52998400000\n"},
 		{"arenaNodeRead.ts", "accessor", "direct", "57600000000\n"},
+		{"numericMapLookup.ts", "integer", "fractional", "1702000\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			entry, err := filepath.Abs(filepath.Join("gaps", probe.file))
@@ -49,14 +50,18 @@ func TestSpeedCostProbes(t *testing.T) {
 			if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
 				t.Fatal(err)
 			}
+			argument := input
+			if probe.file == "numericMapLookup.ts" {
+				argument = "185"
+			}
 			for _, mode := range []string{probe.first, probe.second} {
 				for _, side := range []struct {
 					name string
 					out  []byte
 				}{
-					{"native ASan/UBSan/LSan", run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, input, mode, "100")},
-					{"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, input, mode, "100")},
-					{"emitted JavaScript", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, input, mode, "100")},
+					{"native ASan/UBSan/LSan", run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, argument, mode, "100")},
+					{"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, argument, mode, "100")},
+					{"emitted JavaScript", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, argument, mode, "100")},
 				} {
 					if !bytes.Equal(side.out, []byte(probe.answer)) {
 						t.Fatalf("%s %s: got %q, want %q", mode, side.name, side.out, probe.answer)

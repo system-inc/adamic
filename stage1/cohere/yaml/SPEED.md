@@ -180,3 +180,57 @@ go run ./cmd/adamic build stage1/cohere/yaml/gaps/arenaNodeRead.ts -o /tmp/stage
 Logs: [full suite](audit/speed-fast-path-suite.log),
 [cost probes](audit/speed-cost-probes.log), [oracle](audit/speed-oracle.log),
 [lint](audit/speed-fast-path-lint.log), [format](audit/speed-fast-path-format.log).
+
+## Direct emoji indexing and numeric-map cost
+
+The emoji entry table now uses 65,536 UTF-16 slots rather than numeric Map keys.
+Mapped surrogate units are converted back to their UTF-16 slot at construction;
+the original matcher still uses the mapped rune representation. The table retains
+branch order and supports multiple candidates if the pinned graph changes.
+This trades a 64K reference-slot table (512 KiB of slots on this 64-bit build)
+for direct lookup; RSS was not measured.
+
+The post-matcher Map profile attributed 0.8 of 10.3 weighted seconds (7.77%) to
+`find`, called by `adamic_map_get` under `Layout_text` (the inlined width path).
+The direct-index profile has 9.5 weighted seconds and no sampled `find` cost.
+These short profiles identify costs; the unprofiled benchmark decides elapsed
+performance. Compiler/runtime files remain unchanged.
+
+[gaps/numericMapLookup.ts](gaps/numericMapLookup.ts) isolates the runtime numeric
+hash. It inserts 185 values, looks each up 10,000 times and prints the same
+checksum 170,200,000 for integer or fractional key distributions. Five fresh
+runs, with exact Node checksum and empty stderr, measured:
+
+| Driver | Integer keys | Fractional keys |
+| --- | ---: | ---: |
+| Native release | 0.481702s | 0.031763s |
+| Source Node | 0.087917s | 0.117898s |
+
+Native integer lookups take 15.2 times fractional lookups here. Observation:
+`map.c` hashes number bits with `(bits ^ (bits >> 29)) * 14695981039346656037`.
+All integer keys 0..184 select the same initial bucket when masked to 512 buckets.
+The probe and the sampler support hash collisions as the cause; no runtime hash
+implementation was changed. This is a performance gap, not a correctness bug.
+[Full samples](audit/speed-map-probe-timing.log) include every duration.
+
+```sh
+go run ./cmd/adamic build stage1/cohere/yaml/gaps/numericMapLookup.ts -o /tmp/stage1-yaml-speed/map-probe
+/tmp/stage1-yaml-speed/map-probe 185 integer 10000
+/tmp/stage1-yaml-speed/map-probe 185 fractional 10000
+node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/cohere/yaml/gaps/numericMapLookup.ts 185 integer 10000
+```
+
+The formatter/driver/mutant/Unicode-width/probe suite passed in 148.915s.
+Every output remains Go-identical; all three cost probes also agree on sanitized
+native, source Node and emitted JavaScript. Cohere's 276-rule check and format
+check pass; vet and gofmt are empty. A fourth speed mutant shifts the surrogate
+slot by 256: native and Node both finish successfully, and byte comparison alone
+catches it at byte 865030. There are now 28 qualifying port mutants total.
+
+```sh
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=20m ./stage1/cohere/yaml -run 'TestWidthsMatchGo|TestFormatter|TestFileDriver|TestSpeedCostProbes' > /tmp/stage1-yaml-speed/indexed-suite.log 2>&1
+```
+
+Logs: [direct-index suite](audit/speed-indexed-suite.log),
+[profile](audit/speed-indexed-profile.log), [header](audit/speed-indexed-profile-header.log),
+[lint](audit/speed-indexed-lint.log), [format](audit/speed-indexed-format.log).

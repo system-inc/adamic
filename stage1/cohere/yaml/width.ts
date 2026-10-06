@@ -68,8 +68,10 @@ function wide(code: number): boolean {
 }
 // Epsilon paths have no observable captures in this fixed width pattern.
 // Keep their depth-first branch order, indexed by the first mapped UTF-16 unit.
-function emojiEntries(): Map<number, number[]> {
-    const result = new Map<number, number[]>();
+function emojiEntries(): (number[] | undefined)[] {
+    // Direct UTF-16 indexing avoids the runtime's numeric Map hash probes.
+    const result: (number[] | undefined)[] = [];
+    for(let unit = 0; unit < 65536; unit++) result.push(undefined);
     const stack: number[] = [emojiStart];
     while(stack.length > 0) {
         const instruction = stack.pop() ?? -1;
@@ -87,8 +89,9 @@ function emojiEntries(): Map<number, number[]> {
                 const first = row[index] ?? 0;
                 const last = row.length === 4 ? first : (row[index + 1] ?? first);
                 for(let code = first; code <= last; code++) {
-                    const entries = result.get(code);
-                    if(entries === undefined) result.set(code, [instruction]);
+                    const unit = code >= 0x100000 ? code - 0x100000 + 0xd800 : code;
+                    const entries = result[unit];
+                    if(entries === undefined) result[unit] = [instruction];
                     else entries.push(instruction);
                 }
             }
@@ -98,7 +101,7 @@ function emojiEntries(): Map<number, number[]> {
 }
 const emojiFirst = emojiEntries();
 function matchEmoji(text: string, position: number): number {
-    const entries = emojiFirst.get(mapped(text.charCodeAt(position)));
+    const entries = emojiFirst[text.charCodeAt(position)];
     if(entries === undefined) return -1;
     for(const instruction of entries) {
         const end = match(emoji, instruction, text, position);

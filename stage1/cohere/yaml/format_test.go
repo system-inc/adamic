@@ -282,6 +282,7 @@ func TestFormatterMutants(t *testing.T) {
 		{"flow trailing comma lost", "printer.ts", "this.layout.ifBreak(this.layout.text(','), this.empty, -1)", "this.layout.ifBreak(this.layout.text(''), this.empty, -1)"},
 		{"batch backslash scan misses escapes", "main.ts", "text.charCodeAt(index) !== 92", "text.charCodeAt(index) !== 13"},
 		{"emoji first unit range loses endpoint", "width.ts", "code <= last", "code < last"},
+		{"emoji surrogate slot shifted", "width.ts", "code - 0x100000 + 0xd800", "code - 0x100000 + 0xd900"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()
