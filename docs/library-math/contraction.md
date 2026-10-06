@@ -34,10 +34,13 @@ forgiven only when contraction alone explains it:
   fixture only when that build prints exactly Node's output (`internal/oracle/contraction_test.go`).
   On a machine that can't fuse the build is the unfused one, so nothing is forgiven there. A mistake
   in the runtime's source is in both builds, so it still fails.
-- Ten Math answers on that Mac no build of the port reproduces (on or fast, -O1 to -O3). They are
-  recorded whole in `ieee754ContractionResiduals`, question and both answers, each one ulp apart
-  (checked by a test). Inference, unverified: where an expression has two products, clang fused the
-  other one when it compiled V8's C++. A new Node there may move them; re-record from the failure.
+
+On that Mac, ten Math answers (log, log10, asinh and tan, each one ulp from Adamic's) differ in a way
+no build of the port reproduces, with on or fast, -O1 to -O3, or any -mcpu. They are left failing,
+not recorded as exceptions: a list of forgiven answers would be a rule of its own. Inference,
+unverified: Node's clang, a different version from this one, chose to fuse the other product in an
+expression with two (log's `s * (hfsq + R) + dk * ln2_lo`). So the Math sweep is clean on Linux
+x86-64, the gate of record, and reports exactly these ten on macOS arm64.
 
 The sweep in `TestIeee754MatchesNodeBitForBit` is reproducible: its branch points used to come out of a
 map in a different order each run, so the seeded random draws, and the mismatches, moved between runs.
@@ -51,5 +54,4 @@ map in a different order each run, so the seeded random draws, and the mismatche
 | A forgiveness that ignores Node's answer, or compares with Adamic's | TestContractionForgivesOnlyWhatAFusedBuildReproduces |
 | kernel_cos's C1 changed in its fifteenth significant digit | the Math sweep (3,014 unexplained) and navigation.a |
 | parseInt chunked at 36 squared | the parseInt sweep (8,295 unexplained) |
-| A residual recorded two ulps off | TestIeee754ContractionResidualsAreOneUlpApart |
 | The oracle's explanation built without contraction | navigation.a |

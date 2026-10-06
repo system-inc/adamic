@@ -96,37 +96,6 @@ process.stdout.write(out.join('\n') + '\n');
 var ieee754Unary = []string{"sin", "cos", "tan", "asin", "acos", "atan", "sinh", "cosh", "tanh",
 	"asinh", "acosh", "atanh", "exp", "expm1", "log", "log1p", "log2", "log10", "cbrt"}
 
-// ieee754ContractionResiduals are the answers Node v24.14.1 on macOS arm64 contracts in a way no build
-// of runtime/ieee754.c reproduces (on or fast, -O1 to -O3), recorded whole: the question, then Adamic's
-// answer and that Node's. Each is forgiven only when all three match, so any other difference still
-// fails, and on a Node that doesn't fuse none can match. Inference, unverified: where an expression
-// has two products, as log's s * (hfsq + R) + dk * ln2_lo does, clang fused the other one when it
-// compiled V8's C++.
-var ieee754ContractionResiduals = map[string][2]string{
-	"asinh 1 c0161169535da32c": {"c00345d43f1bb0a6", "c00345d43f1bb0a7"},
-	"log 1 3fe62e42d3f12c99":   {"bfd774f31809ea42", "bfd774f31809ea43"},
-	"log 1 40765af2d16267dc":   {"401784c3275f3648", "401784c3275f3649"},
-	"log10 1 3fd62e43946889ff": {"bfdd73fcfd2959fb", "bfdd73fcfd2959fc"},
-	"tan 1 401b9764203449b2":   {"3fe69685b57e3502", "3fe69685b57e3501"},
-	"tan 1 6dc9c88407e00c99":   {"3ff9a445475f57d0", "3ff9a445475f57d1"},
-	"tan 1 bfe41870fadbb284":   {"bfe73ba513e048d9", "bfe73ba513e048da"},
-	"tan 1 bfed85892a2726c2":   {"bff51fb0db359132", "bff51fb0db359133"},
-	"tan 1 c020f6b2b21e3a8f":   {"3ff60b3695076e88", "3ff60b3695076e87"},
-	"tan 1 edc9c88407e00c99":   {"bff9a445475f57d0", "bff9a445475f57d1"},
-}
-
-// A residual is a contraction's rounding, never more: Adamic's answer and that Node's are neighbors.
-func TestIeee754ContractionResidualsAreOneUlpApart(t *testing.T) {
-	t.Parallel()
-	for question, answers := range ieee754ContractionResiduals {
-		adamic, _ := strconv.ParseUint(answers[0], 16, 64)
-		node, _ := strconv.ParseUint(answers[1], 16, 64)
-		if adamic != node+1 && node != adamic+1 {
-			t.Errorf("%s: Adamic %s and Node %s are not one ulp apart", question, answers[0], answers[1])
-		}
-	}
-}
-
 // ieee754BranchPoints are doubles on and beside every branch in the ported code. The code decides by
 // comparing a double's high word (and sometimes its low word) with a constant, so every 32-bit
 // constant in runtime/ieee754.c is read out of the file itself (the thresholds, and the high words
@@ -283,15 +252,7 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 	}
 	// Where this Node's V8 contracts multiply-adds, a difference a fused build explains is forgiven
 	// (fused_test.go); every other one fails.
-	explained, differing := contraction(native, oracle, same, func() []string { return fusedAnswers(t, ieee754Harness, input.String(), lines) })
-	unexplained := []int{}
-	for _, index := range differing {
-		if residual, ok := ieee754ContractionResiduals[asked[index]]; ok && residual == [2]string{native[index], oracle[index]} {
-			explained++
-			continue
-		}
-		unexplained = append(unexplained, index)
-	}
+	explained, unexplained := contraction(native, oracle, same, func() []string { return fusedAnswers(t, ieee754Harness, input.String(), lines) })
 	mismatches := map[string]int{}
 	for count, index := range unexplained {
 		operation, _, _ := strings.Cut(asked[index], " ")
