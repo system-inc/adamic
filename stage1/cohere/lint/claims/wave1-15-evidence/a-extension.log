@@ -1,0 +1,9 @@
+existing .ts baseline: exit=0
+no-debugger
+no-empty
+eqeqeq
+no-var
+no-duplicate-case
+same source renamed .a: exit=1
+open /tmp/adamic-gate/lint-wave1-15-39fiti2b/rules/no-debugger/rule.ts: no such file or directory
+exit status 1
