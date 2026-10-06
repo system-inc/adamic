@@ -210,3 +210,9 @@ start for EOF. Import/export module specifiers use expression descent.
 Focused tree and diagnostic comparison passes in 13.884s. All five token
 cuts of the first namespace wrapper now pass. The wider run reaches input
 seven, removing export, and exposes the port's semicolon refusal.
+
+## Continued recovery: missing semicolons
+
+Semicolon recovery now reports 1005 and leaves the next token for the next
+statement instead of refusing. The saved removed-export namespace input is
+included in the focused comparison. That comparison passes in 14.322s.

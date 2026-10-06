@@ -76,7 +76,7 @@ export class Statements {
             this.parser.kind() !== 'EndOfFile' &&
             (this.parser.scanner.flags & 1) === 0
         ) {
-            panic(`parser slice expected semicolon at ${this.parser.scanner.start} in ${this.parser.path}`);
+            this.parser.expect('SemicolonToken');
         }
     }
     variableList(): number {
