@@ -1,8 +1,8 @@
 # Syntax-only lint slice
 
 Twenty baseline rules from the pinned cohere submodule, plus the frequency-ranked
-continuation in [VOLUME.md](VOLUME.md), using the existing Adamic TypeScript
-parser and scanner:
+continuation in [VOLUME.md](VOLUME.md) and twenty TypeScript-specific syntax-only
+rules in [BATCH4.md](BATCH4.md), using the existing Adamic TypeScript parser and scanner:
 
 | Rule | Visitor shape | Repair |
 | --- | --- | --- |
@@ -52,8 +52,8 @@ A manifest row is tab-separated:
 source-path    rule-or-all    mode    null-policy    allow-empty-catch    decoded-options-json    recovery
 ```
 
-All fields after the path are optional. Defaults are all thirty implemented rules (method-signature-style has the
-explicit recovery limit in VOLUME.md), `Always`,
+All fields after the path are optional. Defaults are all fifty implemented rules (explicit parser limits are recorded in
+VOLUME.md and BATCH4.md), `Always`,
 `Always`, and false. Modes and null policies are cohere's decoded option values,
 not ESLint configuration syntax. `Smart` forces the null policy to `Ignore`.
 The driver is a corpus runner, not cohere's config, suppression, file-selection,
@@ -63,13 +63,15 @@ Each case starts with `case N`. Findings are stably sorted by start, then print
 cohere's human finding lines (filename, one-based line and byte column, rule,
 exact description). The oracle calls `report.Write` and excludes its timing and
 coverage footer. A following record checks the byte start and end, message ID,
-repair category, replacement and suggestion description. Every selected repair has exactly one edit; the Go oracle asserts this shape.
+repair category, replacement and suggestion description. The first edit is carried in the range record; additional edits have separate
+`edit` records in the original Go proposal order.
 Finding and edit ranges are checked separately. Decoded option JSON preserves
 nil versus false and nil versus an empty list. Settings reads this restricted
 data grammar through the existing parser, without evaluating it.
 
 ```
 range START END ID REPAIR<TAB>REPLACEMENT<TAB>SUGGESTION<TAB>EDIT-START EDIT-END
+edit START END<TAB>REPLACEMENT
 rejected RULE START END WINNER REASON
 fixed<TAB>WHOLE-FIXED-SOURCE
 ```
@@ -85,13 +87,16 @@ The native repair phase sorts proposals by start, end and rule, reports
 overlap refusals, applies surviving edits back to front, reparses and reruns
 until convergence (at most ten passes). The Go oracle uses cohere's actual `edit.FixText`, including overlap
 resolution, parse guards and repeated passes to convergence. Their resulting
-sources must agree. Invalid ranges, nonprogress and exhausted passes stop explicitly. No general
+sources must agree. Invalid ranges and exhausted passes stop explicitly. No-op edits are rejected
+with Go's exact reason. No general
 configuration, suppression, filesystem write or formatter layer is ported.
 
 ## Tests
 
-`TestRulesAgree` replays 873 distinct source/rule/decoded-options combinations
-from cohere's own tests and 140 generated runs. A Go overlay records every test
+`TestRulesAgree` captures 2,601 distinct source/rule/decoded-options/file-extension
+combinations from cohere's own tests and replays every supported case, plus 145
+generated baseline/continuation runs. Eleven explicit parser refusals are checked
+separately. `TestBatch4Controls` adds twenty independently nonzero controls. A Go overlay records every test
 harness `Run`, including tests that inspect repair fields without the ordinary
 Expect helpers. It changes no rule. The original assertions still run; a failed
 upstream test stops capture. Both positive and clean cases are retained.
@@ -99,11 +104,11 @@ upstream test stops capture. Both positive and clean cases are retained.
 `TestCompilerAndStage1Agree` compares every `.ts` file recursively under the
 pinned TypeScript v6.0.3 `src/compiler` and this repository's `stage1`. The corpus
 checkout stays in scratch. Both tests compare Go, the same TS on Node, and
-native under ASan/UBSan with leak checking. The Go oracle rejects input parse diagnostics except for five explicit
-`no-div-regex` recovery fixtures. Their findings and proposed edits are held
+native under ASan/UBSan with leak checking. The Go oracle rejects input parse diagnostics except for explicitly named
+findings-only recovery fixtures, including the five `no-div-regex` cases. Their findings and proposed edits are held
 byte for byte, with a `recovery findings only` marker in place of fixed output.
 Cohere's fix engine refuses invalid input before collecting proposals; those
-five cases therefore do not claim converged fixes or general parser recovery.
+recovery cases therefore do not claim converged fixes or general parser recovery.
 
 `TestMutants` changes only a scratch copy of the port. Each mutant must compile,
 run successfully on Node and sanitized native, and differ from the Go answer:
@@ -120,7 +125,7 @@ boolean inversion, comment directives and BOM edits.
 `TestCountGuardMutant` changes only count mode: ordinary output stays identical,
 but the throughput count check catches the wrong count on Node and native.
 `TestThroughput` runs compiler count mode in five interleaved rounds when
-`ADAMIC_LINT_BENCH=1`. Set `ADAMIC_TYPESCRIPT_SOURCE` to the pinned checkout.
+`ADAMIC_LINT_BENCH=1`, after full release-output comparison. Set `ADAMIC_TYPESCRIPT_SOURCE` to the pinned checkout.
 See [REPORT.md](REPORT.md) for commands, results and measurement limits, and
 [GAPS.md](GAPS.md) for the proving program and inherited representation gaps.
 

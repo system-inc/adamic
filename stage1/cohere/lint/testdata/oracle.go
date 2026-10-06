@@ -64,9 +64,6 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 		fmt.Fprint(out, display[:footer])
 		repair, replacement, suggestion := "", "", ""
 		if len(d.Fixes) > 0 {
-			if len(d.Fixes) != 1 {
-				panic("unexpected fix shape")
-			}
 			repair = "fix"
 			replacement = d.Fixes[0].Text
 		}
@@ -89,6 +86,13 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 			editEnd = d.Suggestions[0].Fixes[0].Range.End()
 		}
 		fmt.Fprintf(out, "range %d %d %s %s\t%s\t%s\t%d %d\n", start, end, d.Message.Id, repair, written(replacement), written(suggestion), editStart, editEnd)
+		var extraFixes []rule.Fix
+		if len(d.Fixes) > 1 {
+			extraFixes = d.Fixes[1:]
+		}
+		for _, fix := range extraFixes {
+			fmt.Fprintf(out, "edit %d %d\t%s\n", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+		}
 	}
 	if fields[6] == "recovery" {
 		fmt.Fprintln(out, "recovery findings only")
@@ -112,7 +116,7 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
+	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign, typescript.AdjacentOverloadSignatures, typescript.BanTslintComment, typescript.ConsistentTypeDefinitions, typescript.DefaultParamLast, typescript.InitDeclarations, typescript.NoDupeClassMembers, typescript.NoDuplicateEnumValues, typescript.NoDynamicDelete, typescript.NoExtraNonNullAssertion, typescript.NoImportTypeSideEffects, typescript.NoMisusedNew, typescript.NoNonNullAssertedOptionalChain, typescript.NoThisAlias, typescript.NoUnnecessaryParameterPropertyAssignment, typescript.NoUnsafeFunctionType, typescript.NoUselessEmptyExport, typescript.PreferAsConst, typescript.TripleSlashReference, typescript.NoExplicitAny, typescript.NoInferrableTypes}
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
 	for _, subject := range selected {
@@ -123,6 +127,42 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 		var options any
 		if fields[5] != "" {
 			switch subject.Name {
+			case "@typescript-eslint/consistent-type-definitions":
+				var decoded typescript.ConsistentTypeDefinitionsOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "@typescript-eslint/init-declarations":
+				var decoded typescript.InitDeclarationsOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "@typescript-eslint/no-this-alias":
+				var decoded typescript.NoThisAliasOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "@typescript-eslint/triple-slash-reference":
+				var decoded typescript.TripleSlashReferenceOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "@typescript-eslint/no-explicit-any":
+				var decoded typescript.NoExplicitAnyOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "@typescript-eslint/no-inferrable-types":
+				var decoded typescript.NoInferrableTypesOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
 			case "@typescript-eslint/method-signature-style":
 				var decoded typescript.MethodSignatureStyleOptions
 				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {

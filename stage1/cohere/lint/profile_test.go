@@ -181,7 +181,8 @@ func TestPositionIndexMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
-	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;")
+	// Keep this mutation on the warning collector, distinct from batch4 comment setup.
+	directory := mutant(t, "this.anchors[0] = true;\n        // Only parser owners", "this.anchors[0] = false;\n        // Only parser owners")
 	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string

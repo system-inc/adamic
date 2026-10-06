@@ -1,4 +1,7 @@
+import type { ExtraEdit } from './extra_edit.ts';
+
 export class Finding {
+    readonly extraEdits: ExtraEdit[] = [];
     editStart: number;
     editEnd: number;
     readonly rule: string;

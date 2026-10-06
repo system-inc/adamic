@@ -1,0 +1,44 @@
+import type { Batch4Context } from './batch4_context.ts';
+import { visit as adjacent_overload_signatures } from './adjacent_overload_signatures.ts';
+import { visit as ban_tslint_comment } from './ban_tslint_comment.ts';
+import { visit as consistent_type_definitions } from './consistent_type_definitions.ts';
+import { visit as default_param_last } from './default_param_last.ts';
+import { visit as init_declarations } from './init_declarations.ts';
+import { visit as no_dupe_class_members } from './no_dupe_class_members.ts';
+import { visit as no_duplicate_enum_values } from './no_duplicate_enum_values.ts';
+import { visit as no_dynamic_delete } from './no_dynamic_delete.ts';
+import { visit as no_extra_non_null_assertion } from './no_extra_non_null_assertion.ts';
+import { visit as no_import_type_side_effects } from './no_import_type_side_effects.ts';
+import { visit as no_misused_new } from './no_misused_new.ts';
+import { visit as no_non_null_asserted_optional_chain } from './no_non_null_asserted_optional_chain.ts';
+import { visit as no_this_alias } from './no_this_alias.ts';
+import { visit as no_unnecessary_parameter_property_assignment } from './no_unnecessary_parameter_property_assignment.ts';
+import { visit as no_unsafe_function_type } from './no_unsafe_function_type.ts';
+import { visit as no_useless_empty_export } from './no_useless_empty_export.ts';
+import { visit as prefer_as_const } from './prefer_as_const.ts';
+import { visit as triple_slash_reference } from './triple_slash_reference.ts';
+import { visit as no_explicit_any } from './no_explicit_any.ts';
+import { visit as no_inferrable_types } from './no_inferrable_types.ts';
+
+export function visitBatch4(ctx: Batch4Context, index: number): void {
+    adjacent_overload_signatures(ctx, index);
+    ban_tslint_comment(ctx, index);
+    consistent_type_definitions(ctx, index);
+    default_param_last(ctx, index);
+    init_declarations(ctx, index);
+    no_dupe_class_members(ctx, index);
+    no_duplicate_enum_values(ctx, index);
+    no_dynamic_delete(ctx, index);
+    no_extra_non_null_assertion(ctx, index);
+    no_import_type_side_effects(ctx, index);
+    no_misused_new(ctx, index);
+    no_non_null_asserted_optional_chain(ctx, index);
+    no_this_alias(ctx, index);
+    no_unnecessary_parameter_property_assignment(ctx, index);
+    no_unsafe_function_type(ctx, index);
+    no_useless_empty_export(ctx, index);
+    prefer_as_const(ctx, index);
+    triple_slash_reference(ctx, index);
+    no_explicit_any(ctx, index);
+    no_inferrable_types(ctx, index);
+}

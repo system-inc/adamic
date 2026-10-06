@@ -7,6 +7,8 @@ import type { Scanner } from '../../typescript/scanner/scanner.ts';
 import { matches, quote, selfDirective } from './comments.ts';
 import { isLineBreak, isSpace } from '../../typescript/scanner/characters.ts';
 import { Finding } from './finding.ts';
+import { Batch4Context } from './batch4_context.ts';
+import { visitBatch4 } from './batch4_registry.ts';
 import { VolumeRules } from './volume.ts';
 import { Scanner as SourceScanner } from '../../typescript/scanner/scanner.ts';
 import type { Settings } from './settings.ts';
@@ -212,6 +214,7 @@ export class Linter {
     anchors: boolean[] = [];
     parents: number[] = [];
     root = -1;
+    batch4: Batch4Context | undefined = undefined;
     volume: VolumeRules | undefined = undefined;
     readonly selected: string;
     readonly mode: string;
@@ -250,8 +253,46 @@ export class Linter {
             this.settings,
         );
         this.volume.prepare(this.root);
+        this.indexParents(this.root, -1);
+        this.batch4 = new Batch4Context(
+            this.source,
+            this.parser,
+            this.scanner,
+            this.parents,
+            this.findings,
+            this.selected,
+            this.settings,
+        );
+        if(
+            this.enabled('@typescript-eslint/ban-tslint-comment') ||
+            this.enabled('@typescript-eslint/triple-slash-reference')
+        ) {
+            this.literalSpans(this.root);
+            this.anchors = new Array<boolean>(this.source.length + 1).fill(false);
+            this.commentAnchors(this.root);
+            this.anchors[0] = true;
+            const reachable = this.reachableComments(this.anchors);
+            for(let cursor = 0; cursor < reachable.length; cursor++) {
+                if(reachable[cursor] !== true) continue;
+                const start = cursor;
+                if(this.source.slice(start, start + 2) === '//') {
+                    while(cursor < this.source.length && !isLineBreak(this.source.charCodeAt(cursor))) cursor++;
+                }
+                else {
+                    const closing = this.source.indexOf('*/', start + 2);
+                    cursor = closing < 0 ? this.source.length : closing + 2;
+                }
+                (this.batch4 ?? panic('batch4')).commentStarts.push(start);
+                (this.batch4 ?? panic('batch4')).commentEnds.push(cursor);
+                cursor--;
+            }
+        }
         this.walk(this.root, -1);
         this.findings.sort(compareFindings);
+    }
+    indexParents(index: number, parent: number): void {
+        this.parents[index] = parent;
+        for(const child of this.node(index).children) this.indexParents(child, index);
     }
     node(index: number): ParseNode {
         return this.parser.node(index);
@@ -458,6 +499,7 @@ export class Linter {
         if(isVariableContainerKind(node.kind) && this.enabled('no-var')) {
             this.variable(index, parent);
         }
+        visitBatch4(this.batch4 ?? panic('missing batch4 context'), index);
         this.additional(index, parent);
         (this.volume ?? panic('missing additional rules')).visit(index);
         for(const child of node.children) {
@@ -1333,6 +1375,24 @@ export class Linter {
         let findings = this.findings;
         for(let pass = 0; pass < 10; pass++) {
             const proposals = findings.filter((finding) => finding.repair === 'fix');
+            for(const finding of findings) {
+                if(finding.repair !== 'fix') continue;
+                for(const edit of finding.extraEdits) {
+                    const proposal = new Finding(
+                        finding.rule,
+                        finding.id,
+                        finding.message,
+                        finding.start,
+                        finding.end,
+                        'fix',
+                        edit.text,
+                        '',
+                    );
+                    proposal.editStart = edit.start;
+                    proposal.editEnd = edit.end;
+                    proposals.push(proposal);
+                }
+            }
             proposals.sort(compareEdits);
             const applied: Finding[] = [];
             let previous = -1;
@@ -1351,7 +1411,10 @@ export class Linter {
                     panic('invalid fix range');
                 }
                 if(current.slice(finding.editStart, finding.editEnd) === finding.replacement) {
-                    panic('nonprogressing fix');
+                    this.rejected.push(
+                        `rejected ${finding.rule} ${utf8Length(current.slice(0, finding.editStart))} ${utf8Length(current.slice(0, finding.editEnd))}  the fix replaces text with itself`,
+                    );
+                    continue;
                 }
                 applied.push(finding);
                 previous = finding.editEnd;
@@ -1365,7 +1428,7 @@ export class Linter {
                 const finding = applied[index] ?? panic('missing fix');
                 result = result.slice(0, finding.editStart) + finding.replacement + result.slice(finding.editEnd);
             }
-            const parser = new Parser(result, 'fixed source');
+            const parser = new Parser(result, this.parser.path);
             const scanner = new SourceScanner(result);
             const next = new Linter(
                 result,

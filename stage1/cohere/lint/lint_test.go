@@ -22,7 +22,7 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"finding.ts", "messages.ts", "settings.ts", "comments.ts", "unicode.ts", "lint.ts", "main.ts", "volume.ts", "volume_messages.ts"}
+var portFiles = []string{"finding.ts", "messages.ts", "settings.ts", "comments.ts", "unicode.ts", "lint.ts", "main.ts", "volume.ts", "volume_messages.ts", "batch4_context.ts", "batch4_registry.ts", "extra_edit.ts", "adjacent_overload_signatures.ts", "ban_tslint_comment.ts", "consistent_type_definitions.ts", "default_param_last.ts", "init_declarations.ts", "no_dupe_class_members.ts", "no_duplicate_enum_values.ts", "no_dynamic_delete.ts", "no_extra_non_null_assertion.ts", "no_import_type_side_effects.ts", "no_misused_new.ts", "no_non_null_asserted_optional_chain.ts", "no_this_alias.ts", "no_unnecessary_parameter_property_assignment.ts", "no_unsafe_function_type.ts", "no_useless_empty_export.ts", "prefer_as_const.ts", "triple_slash_reference.ts", "no_explicit_any.ts", "no_inferrable_types.ts"}
 
 type execution struct {
 	output   []byte
@@ -215,14 +215,14 @@ func upstream(t *testing.T) []string {
 	t.Setenv("COHERE_DOCS_CAPTURE", capture)
 	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase|NoContinue|NoWith|NoNew|NoSparseArrays|RequireYield|NoAwaitInLoop|VarsOnTop|NoTemplateCurlyInString|NoDivRegex|NoBitwise|NoLabels|NoSequences|UnicodeBom|NoUnneededTernary|NoWarningComments|NoPlusplus|NoNegatedCondition|NoReturnAssign)", "-count=1", "-timeout=10m")
 	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/base", "./internal/lint/rules/nexus", "./internal/lint/rules/adamic", "-run", "Test(ConsistencyNoConsole|ConsistencyRequireTypeSuffix|ConsistencyNoEnum|NoTypePredicate)", "-count=1", "-timeout=10m")
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(MethodSignatureStyle|NoWrapperObjectTypes|PreferLiteralEnumMember)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(MethodSignatureStyle|NoWrapperObjectTypes|PreferLiteralEnumMember|AdjacentOverloadSignatures|BanTslintComment|ConsistentTypeDefinitions|DefaultParamLast|InitDeclarations|NoDupeClassMembers|NoDuplicateEnumValues|NoDynamicDelete|NoExtraNonNullAssertion|NoImportTypeSideEffects|NoMisusedNew|NoNonNullAssertedOptionalChain|NoThisAlias|NoUnnecessaryParameterPropertyAssignment|NoUnsafeFunctionType|NoUselessEmptyExport|PreferAsConst|TripleSlashReference|NoExplicitAny|NoInferrableTypes)", "-count=1", "-timeout=10m")
 	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	type record struct {
-		Rule, Source, Outcome, FixedSource string
-		Options                            json.RawMessage
+		Rule, Source, Outcome, FixedSource, File string
+		Options                                  json.RawMessage
 	}
 	unique := map[string]record{}
 	for _, path := range files {
@@ -238,10 +238,10 @@ func upstream(t *testing.T) []string {
 			if err := json.Unmarshal(line, &row); err != nil {
 				t.Fatal(err)
 			}
-			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") {
+			if !batch4Selected(row.Rule) && !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") {
 				continue
 			}
-			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source)
+			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source+batch4Extension(row.Rule, row.File))
 			unique[key] = row
 		}
 	}
@@ -253,7 +253,7 @@ func upstream(t *testing.T) []string {
 	var rows []string
 	for i, key := range keys {
 		row := unique[key]
-		path := filepath.Join(directory, fmt.Sprintf("case-%03d.ts", i))
+		path := filepath.Join(directory, fmt.Sprintf("case-%03d%s", i, batch4Extension(row.Rule, row.File)))
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
@@ -267,6 +267,18 @@ func upstream(t *testing.T) []string {
 			}
 		}
 		mode := ""
+		if row.Rule == "@typescript-eslint/no-unnecessary-parameter-property-assignment" && row.Source == "class Foo {\n  constructor(public { a }: { a: string }) {\n    this.a = a;\n  }\n}\n" {
+			mode = "unsupported-recovery"
+		}
+		if row.Rule == "@typescript-eslint/triple-slash-reference" && row.Source == "/// <reference path=foo />\n" {
+			mode = "recovery"
+		}
+		if row.Rule == "@typescript-eslint/no-explicit-any" && (row.Source == "interface Greeter { constructor(param: Array<any>) {} }" || row.Source == "type obj = { constructor(param: Array<any>) {} }") {
+			mode = "unsupported-recovery"
+		}
+		if row.Rule == "@typescript-eslint/ban-tslint-comment" && (row.Source == "/* tslint:disable" || row.Source == "/**" || row.Source == "/*" || row.Source == "/*/") {
+			mode = "recovery"
+		}
 		if row.Rule == "@typescript-eslint/method-signature-style" {
 			switch row.Source {
 			case "type T = { m: => void };":
@@ -282,6 +294,28 @@ func upstream(t *testing.T) []string {
 	}
 	if len(rows) < 150 {
 		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
+	}
+	if os.Getenv("ADAMIC_BATCH4_CAPTURE") != "" {
+		destination := os.Getenv("ADAMIC_BATCH4_CAPTURE")
+		if err := os.MkdirAll(destination, 0755); err != nil {
+			t.Fatal(err)
+		}
+		var saved []string
+		for _, line := range rows {
+			fields := strings.Split(line, "\t")
+			data, err := os.ReadFile(fields[0])
+			if err != nil {
+				t.Fatal(err)
+			}
+			fields[0] = filepath.Join(destination, filepath.Base(fields[0]))
+			if err := os.WriteFile(fields[0], data, 0644); err != nil {
+				t.Fatal(err)
+			}
+			saved = append(saved, strings.Join(fields, "\t"))
+		}
+		if err := os.WriteFile(filepath.Join(destination, "manifest.txt"), []byte(strings.Join(saved, "\n")+"\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
 	}
 	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
 	return rows
@@ -504,6 +538,7 @@ func TestThroughput(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, false)
+	compare(t, oracle, binary, directory, path)
 	machine := execute(t, "", "uname", "-a")
 	cpu, err := os.ReadFile("/proc/cpuinfo")
 	if err != nil {
