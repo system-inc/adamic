@@ -1,5 +1,6 @@
 // Port of cohere/TypeScript/tsc/internal/scanner/scanner.go.
 // Positions inside the scanner are UTF-16; byte offsets are supplied by the driver.
+import { panic } from 'adamic';
 import { digit, isIdentifierPart, isIdentifierStart, isLineBreak, isSpace } from './characters.ts';
 import { keywords, punctuators } from './tokens.ts';
 
@@ -317,7 +318,7 @@ export class Scanner {
             }
         }
         this.kind = 'StringLiteral';
-        this.value = pieces.join('');
+        this.value = pieces.length === 1 ? (pieces[0] ?? panic('missing string piece')) : pieces.join('');
     }
 
     template(report: boolean): void {
@@ -363,7 +364,7 @@ export class Scanner {
                 this.pos++;
             }
         }
-        this.value = pieces.join('');
+        this.value = pieces.length === 1 ? (pieces[0] ?? panic('missing string piece')) : pieces.join('');
     }
 
     bigint(): void {

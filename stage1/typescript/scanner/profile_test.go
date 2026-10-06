@@ -91,3 +91,28 @@ func TestProfileArtifacts(t *testing.T) {
 	execute(t, "", "clang", flags...)
 	t.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)
 }
+
+// The measured release builds, not just sanitized builds, must retain the entire answer protocol.
+func TestProfileSnapshotsAgree(t *testing.T) {
+	asked := os.Getenv("ADAMIC_SCANNER_PROFILE_SNAPSHOTS")
+	if asked == "" {
+		t.Skip("set ADAMIC_SCANNER_PROFILE_SNAPSHOTS to the artifact directories")
+	}
+	corpus := askedCorpus(t)
+	want := execute(t, "", goOracle(t), "--manifest", corpus.all)
+	for _, directory := range filepath.SplitList(asked) {
+		for _, side := range []struct {
+			name string
+			run  execution
+		}{
+			{"release", execute(t, "", filepath.Join(directory, "scanner"), "--manifest", corpus.all)},
+			{"profiled", execute(t, "", filepath.Join(directory, "profiled"), "--manifest", corpus.all)},
+			{"Node", node(t, directory, corpus.all, false)},
+		} {
+			if diff := difference(side.run.output, want.output); diff != "" {
+				t.Fatalf("%s %s: %s", directory, side.name, diff)
+			}
+		}
+		t.Logf("%s: release, -O2 -g profiled and Node: %d identical answer bytes", filepath.Base(directory), len(want.output))
+	}
+}
