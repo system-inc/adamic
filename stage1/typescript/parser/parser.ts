@@ -1364,6 +1364,7 @@ export class Parser {
             make: (kind, pos, children) => this.make(kind, pos, children),
             entityName: () => this.entityName(),
             identifier: () => this.identifier(),
+            bindingIdentifier: () => this.identifier(false),
             token: () => this.token(),
             type: (minimum, conditional) => this.type(minimum, conditional),
             typeArguments: () => this.typeArguments(),

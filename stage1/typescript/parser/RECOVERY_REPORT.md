@@ -354,3 +354,13 @@ TypeReference name with diagnostic 1110. Missing function bodies retain an
 empty Block with diagnostic 1144 where required. Focused comparison passes
 in 22.130s and cohere passes. The continuation advances to input 560,
 duplicating break, which requires a missing label Identifier.
+
+## Continued recovery: jump labels and throw expressions
+
+Break and continue retain a missing Identifier label and reserved-word
+diagnostic instead of dropping the label. Throw always retains an expression,
+including a missing Identifier at EOF or after a line break. Its semicolon
+recovery shares Go's identifier-expression diagnostic. Focused comparison
+passes in 23.829s and cohere passes. The wider continuation advances to
+input 598: Go suggests 'set Parent' for a duplicated setParent identifier,
+requiring its keyword spelling/spacing suggestion algorithm.

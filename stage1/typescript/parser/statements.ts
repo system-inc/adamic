@@ -21,6 +21,7 @@ export interface StatementContextInterface {
     readonly make: (kind: string, pos: number, children: number[]) => number;
     readonly entityName: () => number;
     readonly identifier: () => number;
+    readonly bindingIdentifier: () => number;
     readonly token: () => number;
     readonly type: (minimum: number, conditional: boolean) => number;
     readonly typeArguments: () => number[];
@@ -97,6 +98,22 @@ export class Statements {
             (this.parser.scanner.flags & 1) === 0
         ) {
             this.parser.expect('SemicolonToken');
+        }
+    }
+    expressionSemicolon(expression: number, tokenStart: number): void {
+        const node = this.parser.node(expression);
+        if(
+            node.kind === 'Identifier' &&
+            node.text !== '' &&
+            this.parser.kind() !== 'SemicolonToken' &&
+            this.parser.kind() !== 'CloseBraceToken' &&
+            this.parser.kind() !== 'EndOfFile' &&
+            (this.parser.scanner.flags & 1) === 0
+        ) {
+            this.parser.errorAt(1434, tokenStart, node.end, 'Unexpected keyword or identifier.');
+        }
+        else {
+            this.semicolon();
         }
     }
     variableList(): number {
@@ -815,7 +832,16 @@ export class Statements {
             const returning = this.parser.kind() === 'ReturnKeyword';
             this.parser.next();
             const children: number[] = [];
-            if(
+            const tokenStart = this.parser.scanner.start;
+            if(!returning) {
+                const expression =
+                    (this.parser.scanner.flags & 1) !== 0
+                        ? this.make('Identifier', this.parser.scanner.fullStart)
+                        : this.parser.rootExpression();
+                children.push(expression);
+                this.expressionSemicolon(expression, tokenStart);
+            }
+            else if(
                 this.parser.kind() !== 'CloseBraceToken' &&
                 this.parser.kind() !== 'SemicolonToken' &&
                 this.parser.kind() !== 'EndOfFile' &&
@@ -823,7 +849,9 @@ export class Statements {
             ) {
                 children.push(this.parser.rootExpression());
             }
-            this.semicolon();
+            if(returning) {
+                this.semicolon();
+            }
             return this.make(returning ? 'ReturnStatement' : 'ThrowStatement', pos, children);
         }
         if(
@@ -887,10 +915,12 @@ export class Statements {
             const children: number[] = [];
             if(
                 kind !== 'DebuggerStatement' &&
-                this.parser.kind() === 'Identifier' &&
+                this.parser.kind() !== 'SemicolonToken' &&
+                this.parser.kind() !== 'CloseBraceToken' &&
+                this.parser.kind() !== 'EndOfFile' &&
                 (this.parser.scanner.flags & 1) === 0
             ) {
-                children.push(this.parser.identifier());
+                children.push(this.parser.bindingIdentifier());
             }
             this.semicolon();
             return this.make(kind, pos, children);
@@ -1026,20 +1056,7 @@ export class Statements {
         }
         const tokenStart = this.parser.scanner.start;
         const expression = this.parser.rootExpression();
-        const node = this.parser.node(expression);
-        if(
-            node.kind === 'Identifier' &&
-            node.text !== '' &&
-            this.parser.kind() !== 'SemicolonToken' &&
-            this.parser.kind() !== 'CloseBraceToken' &&
-            this.parser.kind() !== 'EndOfFile' &&
-            (this.parser.scanner.flags & 1) === 0
-        ) {
-            this.parser.errorAt(1434, tokenStart, node.end, 'Unexpected keyword or identifier.');
-        }
-        else {
-            this.semicolon();
-        }
+        this.expressionSemicolon(expression, tokenStart);
         return this.make('ExpressionStatement', pos, [expression]);
     }
 }
