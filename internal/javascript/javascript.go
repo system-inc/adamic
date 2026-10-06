@@ -687,6 +687,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "String.fromCodePoint(" + codes + ")"
 		}
 		return "String.fromCharCode(" + codes + ")"
+	case ir.DateCall:
+		return e.dateCall(expression)
 	case ir.ObjectCall:
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
