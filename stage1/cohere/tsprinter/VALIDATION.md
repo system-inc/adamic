@@ -420,3 +420,50 @@ the final 154,822-case corpus. Mutant subtest 263.21 s; complete command 269.398
 Final argument gate: exit 0, 417.315 s; all 154,822 fragments byte-identical to Go, npm Prettier
 3.9.6 and the embedded fork on source Node, ASan/UBSan native, JS backend and native release.
 The separate leak run passes. Fifteen unported proving inputs retain their exact NotYet reasons.
+
+## Member-call increment
+
+Every supported callee expression now composes with calls and constructors. Member-call chains
+linearize their parser nodes and docs, segment the base/member/call groups, apply cohere's
+factory and short-receiver heuristics, and choose flat or expanded layout. Curried calls prioritize
+the inner argument group when appropriate. A constructor callee containing a call retains its
+required parentheses. Optional lookup/call tokens are read from each link, not the inherited
+optional-chain flag. The latter initially produced `tracing?.pop?.()` instead of `tracing?.pop()`;
+the repository corpus caught it.
+
+The generator adds 2,533 cases: 2,430 base/argument/suffix/context combinations, 90 chains up to
+30 calls, and 13 constructor/curried/identifier boundaries. Both Go and npm Prettier drop the
+TypeScript placeholder's redundant parentheses; Go's Babel-only `Parenthesized` branch is not
+copied into the port. All 198 files parse, with no refusals. Accepted fragments decrease because
+larger member calls replace their previously selected children.
+
+Cohere required the deliberate chain output buffers' contract to be stated. `chainWalk` uses
+`@mutates nodes` and `@mutates docs`, with reasons: it appends reverse-order nodes and their matching
+docs for one final reversal. It mutates only fresh buffers created by its caller. The unused
+callee lookup was deleted. Source-only cohere now reports 276 rules, 9 checked, 100% Adamic-ready;
+vet and whitespace checks pass. A fresh final native gate recompiles this cleanup.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-member-final-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-member-final-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-member-final.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/member' > /tmp/ts-printer-member-mutant.log 2>&1
+```
+
+The member-chain mutant removes the method dot. Native and Node compile/run normally with empty
+stderr and exit 0; both differ at case 35: `Mathsqrt(squared)` instead of `Math.sqrt(squared)` in
+the repository's n-body expression. Subtest 264.33 s, complete command 270.894 s. It uses the
+137,638-case corpus before deleting the unused lookup; that deletion removes one fragment from
+the port's own source, not the proving input or the mutated dot printer.
+
+Final member source gate: exit 0, 410.302 s; all 137,637 fragments byte-identical to Go, npm
+Prettier 3.9.6 and the embedded fork on source Node, ASan/UBSan native, JS backend and native
+release. The separate leak run passes. Fourteen unported proving inputs retain their exact
+NotYet reasons. The pre-cleanup 137,638-case run also passed (412.697 s).

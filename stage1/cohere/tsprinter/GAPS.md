@@ -18,7 +18,6 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | `[a,b]=items` | `assignment-pattern` | Destructuring target patterns and their assignment layout |
 | `` `a${b}` `` | `TemplateExpression` | Substitution alignment, multiline strings and embeds |
 | `(function () {return 1;})` | `FunctionExpression` | Function parameters and statement bodies |
-| `a.b()` | `call-callee-layout` | Member-call chain segmentation and grouping |
 | `f<T>(x)` | `type-arguments` | Type printing and type-argument layout |
 | `a as T` | `AsExpression` | Cast/type composition |
 | `a /* comment */ + b` | `comment-attachment` | Shared comment attachment and printer hooks |
@@ -158,3 +157,16 @@ and numeric arrays in multi-argument calls disable expansion as in Go. Multiline
 outer groups when required. `require` and top-level `define` special layouts are ported. The
 independent selector now accepts these argument shapes and all previously rejected seeded random
 argument cases. Member-call chains, function/arrow arguments and type arguments remain gaps.
+
+## Member-call family
+
+Member calls, curried calls and arbitrary supported callees are implemented. Chains are segmented
+into their base, member and call groups, with cohere's factory/short-receiver merge heuristic and
+conditional expansion. Constructor callees containing a call retain required parentheses.
+`tracing?.pop()` has only one optional token: the parser's inherited chain flag is not an additional
+`?.`. Generated cases cover optional calls separately from optional member lookups.
+
+The placeholder parentheses branch in Go's general printer is dormant for its TypeScript adapter:
+`(PRETTIER_HTML_PLACEHOLDER_0_0_IN_JS)` normalizes to the bare identifier in both Go and npm Prettier.
+The proving cases retain that observed behavior rather than copying a Babel-only condition.
+Comments, typed calls and chain-stopping boundaries remain the recorded gaps.

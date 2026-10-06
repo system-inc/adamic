@@ -12,10 +12,6 @@
     "Reason": "FunctionExpression"
   },
   {
-    "Source": "a.b()",
-    "Reason": "call-callee-layout"
-  },
-  {
     "Source": "f<T>(x)",
     "Reason": "type-arguments"
   },

@@ -16,7 +16,7 @@ proven JSON slice's Unicode width implementation, copied from `origin/codex/stag
 `expressions.ts` reads the real parser's indexed nodes. It implements literals, ordinary and logical
 binary operators, sequence expressions, assignments, conditionals, object literals, precedence and parentheses, unary and update operators, arrays including holes
 and spreads, property and computed accesses including optional access, non-null assertions, and
-plain-identifier calls and constructors without type arguments, including expanded object and array arguments. It
+calls, member-call chains and constructors without type arguments, including expanded object and array arguments. It
 includes cohere's logical-tree rebalancing and protection against accidentally making a string
 expression a directive. Formatting defaults to width 120, four spaces, single quotes, semicolons,
 and trailing commas. The first differential expression corpus uses width 80.
@@ -74,7 +74,7 @@ and the JavaScript backend must match Go byte for byte. The actual npm Prettier 
 TypeScript printer are separate comparisons; every selected case must agree with them too. The
 separate unported proving corpus records one anonymous-function spacing difference in `testdata/prettier-differences.json`; accepted cases have
 no exceptions.
-Fifteen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
+Fourteen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
 prove that the same source texts are formatable. Native release output is also compared.
 
 Three mutants must compile and finish normally before a byte mismatch counts as a catch: a group
@@ -124,3 +124,12 @@ Plain-identifier calls and constructors now include object/array argument expans
 layout states, numeric-array packing, broken-argument propagation, trailing commas and the
 CommonJS/AMD special layouts. The corpus contains 154,822 maximal fragments from 198 files,
 including 19,084 generated cases. Member-call chains remain the next distinct printer family.
+
+## Member-call increment
+
+Calls now accept every supported callee expression. Member-call chains follow cohere's segmentation
+and factory/short-receiver heuristics; curried calls prioritize the correct argument group.
+Constructor callees retain parentheses when their left chain contains a call. An optional token is
+printed only at the link that owns it, separately from the parser's inherited optional-chain flag.
+The corpus contains 137,637 maximal fragments from 198 files; the drop reflects larger accepted
+call parents. The generator adds 2,533 member/curried-call compositions, width and boundary cases.

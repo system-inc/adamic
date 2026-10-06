@@ -33,7 +33,7 @@ func supportedExpression(node *estree.Node) bool {
 	case "TemplateLiteral":
 		return len(node.List("expressions")) == 0
 	case "CallExpression", "NewExpression":
-		if !node.Child("callee").Is("Identifier") || node.Child("typeArguments") != nil {
+		if node.Child("typeArguments") != nil {
 			return false
 		}
 	default:
@@ -120,6 +120,31 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 		for _, right := range []string{"g(" + value + ")", "g(" + value + ").x"} {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
 		}
+	}
+	memberBases := []string{"obj", "this", "Factory", "_", "$$", "longIdentifierName", "namespace.Factory", "f()", "f(x)", "[a,b]", "({a:1})", "(a+b)", "(a?b:c)", "1", "new C()"}
+	memberArguments := []string{"", "x", "x,y", "veryLongIdentifierAlpha,veryLongIdentifierBeta,veryLongIdentifierGamma", "{x:1,y:2}", "[1,2,3]", "[x,y,z]", "f(x)", "a+b"}
+	for _, base := range memberBases {
+		for _, arguments := range memberArguments {
+			for _, suffix := range []string{".method(" + arguments + ")", "[key](" + arguments + ")", ".method?.(" + arguments + ")", ".first().second(" + arguments + ").third()", ".first(" + arguments + ")[0].second().third()", ".first!.second(" + arguments + ")"} {
+				value := "(" + base + ")" + suffix
+				// A parenthesized optional chain remains a separate proving gap.
+				for _, source := range []string{value, "x=" + value, "[" + value + "]"} {
+					add("member-call-composition", source)
+				}
+			}
+		}
+	}
+	for length := 1; length <= 30; length++ {
+		value := "Factory.create()"
+		for index := 0; index < length; index++ {
+			value += fmt.Sprintf(".method%d(argument%d)", index, index)
+		}
+		for _, source := range []string{value, "x=" + value, "f(" + value + ")"} {
+			add("member-call-width", source)
+		}
+	}
+	for _, source := range []string{"(PRETTIER_HTML_PLACEHOLDER_0_0_IN_JS)", "f((PRETTIER_HTML_PLACEHOLDER_0_0_IN_JS))", "(PRETTIER_HTML_PLACEHOLDER_x_0_IN_JS)", "f()()", "f(a,b,c)(x)", "f(a,b,c)(x)(y)", "new (f().C)(a,b)", "new (f().C.x)(a,b)", "(let[x])()", "(1).toString()", "({x:1}).method()", "this.a().b().c()", "obj.a().b().c().d()"} {
+		add("member-call-boundary", source)
 	}
 	callValues := []string{"[]", "[1,2]", "[a,b]", "[[1,2],[3,4]]", "[1,,]", "[...items]", "{}", "{a:1}", "{a:x,b:y}", "{\na:x,\nb:y\n}", "{...items}", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma"}
 	for _, left := range callValues {
@@ -425,7 +450,7 @@ func supportedSyntax(node *ast.Node) bool {
 		}
 		return true
 	case ast.KindCallExpression, ast.KindNewExpression:
-		if node.Expression().Kind != ast.KindIdentifier || len(node.TypeArguments()) > 0 {
+		if !supportedSyntax(node.Expression()) || len(node.TypeArguments()) > 0 {
 			return false
 		}
 		for _, child := range node.Arguments() {

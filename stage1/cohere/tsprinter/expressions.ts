@@ -228,8 +228,8 @@ export class Expressions {
             }
             case 'CallExpression':
             case 'NewExpression': {
-                const callee = this.child(id, 0);
-                if(this.node(callee).kind !== 'Identifier') return 'call-callee-layout';
+                const calleeReason = this.unsupported(node.children[0] ?? panic('missing callee'));
+                if(calleeReason !== '') return calleeReason;
                 const count = Math.max(node.list, 0);
                 const first = node.children.length - count;
                 if(
@@ -288,6 +288,28 @@ export class Expressions {
         if(node.kind === 'ObjectLiteralExpression') return this.leftmost(this.ancestors[0] ?? index) === index;
         if(parent < 0) return false;
         const outer = this.node(parent);
+        if(outer.kind === 'NewExpression' && role === 'callee') {
+            let current = index;
+            while(
+                [
+                    'PropertyAccessExpression',
+                    'ElementAccessExpression',
+                    'NonNullExpression',
+                    'TaggedTemplateExpression',
+                ].includes(this.node(current).kind)
+            )
+                current = this.child(current, 0);
+            if(this.node(current).kind === 'CallExpression') return true;
+        }
+        if(
+            node.kind === 'Identifier' &&
+            node.text === 'let' &&
+            role === 'object' &&
+            outer.kind === 'ElementAccessExpression' &&
+            !outer.optional &&
+            this.leftmost(this.ancestors[0] ?? index) === index
+        )
+            return true;
         if(node.kind === 'NumericLiteral')
             return role === 'object' && ['PropertyAccessExpression', 'ElementAccessExpression'].includes(outer.kind);
         const unary = [
@@ -568,6 +590,10 @@ export class Expressions {
         if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression')
             return this.poorlyBreakable(this.child(index, 0), true);
         if(node.kind === 'CallExpression') {
+            if(this.memberish(this.child(index, 0))) {
+                const printed = this.print(index, this.ancestors[this.ancestors.length - 1] ?? -1, 'right');
+                if(this.docs.get(printed).kind === 'label') return false;
+            }
             if(node.list !== 0 && !(node.list === 1 && this.shortArgument(this.child(index, node.children.length - 1))))
                 return false;
             return this.poorlyBreakable(this.child(index, 0), true);
@@ -662,6 +688,277 @@ export class Expressions {
                 this.docs.add('indentIfBreak', [right], '', 0, key),
             ]),
         );
+    }
+    ownOptional(index: number): boolean {
+        for(const child of this.node(index).children) if(this.node(child).kind === 'QuestionDotToken') return true;
+        return false;
+    }
+    memberish(index: number): boolean {
+        return ['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.node(index).kind);
+    }
+    simpleArgument(index: number, depth = 2): boolean {
+        if(depth <= 0) return false;
+        const node = this.node(index);
+        if(node.kind === 'NonNullExpression') return this.simpleArgument(this.child(index, 0), depth);
+        if(node.kind === 'RegularExpressionLiteral') {
+            const raw = this.source.slice(node.pos, node.end).trim();
+            return stringWidth(raw.slice(1, raw.lastIndexOf('/'))) <= 5;
+        }
+        if(
+            [
+                'Identifier',
+                'PrivateIdentifier',
+                'ThisKeyword',
+                'SuperKeyword',
+                'NumericLiteral',
+                'BigIntLiteral',
+                'StringLiteral',
+                'NullKeyword',
+                'TrueKeyword',
+                'FalseKeyword',
+            ].includes(node.kind)
+        )
+            return true;
+        if(node.kind === 'NoSubstitutionTemplateLiteral') return !this.source.slice(node.pos, node.end).includes('\n');
+        if(node.kind === 'ObjectLiteralExpression') {
+            for(const child of node.children) {
+                const property = this.node(child);
+                if(property.kind === 'ShorthandPropertyAssignment') continue;
+                if(
+                    property.kind !== 'PropertyAssignment' ||
+                    this.node(this.child(child, 0)).kind === 'ComputedPropertyName' ||
+                    !this.simpleArgument(this.child(child, 1), depth - 1)
+                )
+                    return false;
+            }
+            return true;
+        }
+        if(node.kind === 'ArrayLiteralExpression') {
+            for(const child of node.children)
+                if(
+                    this.node(child).kind !== 'OmittedExpression' &&
+                    !this.simpleArgument(this.unwrapped(child), depth - 1)
+                )
+                    return false;
+            return true;
+        }
+        if(['CallExpression', 'NewExpression'].includes(node.kind)) {
+            if(!this.simpleArgument(this.child(index, 0), depth) || node.list > depth) return false;
+            for(
+                let position = node.children.length - Math.max(node.list, 0);
+                position < node.children.length;
+                position++
+            )
+                if(!this.simpleArgument(this.child(index, position), depth - 1)) return false;
+            return true;
+        }
+        if(this.memberish(index))
+            return (
+                this.simpleArgument(this.child(index, 0), depth) &&
+                this.simpleArgument(this.child(index, node.children.length - 1), depth)
+            );
+        if(
+            node.kind === 'PostfixUnaryExpression' ||
+            (node.kind === 'PrefixUnaryExpression' && ['!', '-', '+', '~', '++', '--'].includes(this.operator(index)))
+        )
+            return this.simpleArgument(this.child(index, 0), depth);
+        return false;
+    }
+    factory(name: string): boolean {
+        if(name.charCodeAt(0) >= 65 && name.charCodeAt(0) <= 90) return true;
+        if(name === '') return false;
+        for(let index = 0; index < name.length; index++)
+            if(!['_', '$'].includes(name.slice(index, index + 1))) return false;
+        return true;
+    }
+    memberLookup(index: number): number {
+        const node = this.node(index);
+        const property = this.child(index, node.children.length - 1);
+        if(node.kind === 'PropertyAccessExpression')
+            return this.docs.concat([
+                this.docs.text(this.ownOptional(index) ? '?.' : '.'),
+                this.print(property, index, 'property'),
+            ]);
+        const printed = this.print(property, index, 'property');
+        return this.docs.concat([
+            this.docs.text(this.ownOptional(index) ? '?.[' : '['),
+            this.node(property).kind === 'NumericLiteral'
+                ? printed
+                : this.docs.group(
+                      this.docs.concat([
+                          this.docs.indent(this.docs.concat([this.docs.softline(), printed])),
+                          this.docs.softline(),
+                      ]),
+                  ),
+            this.docs.text(']'),
+        ]);
+    }
+    /**
+     * @mutates nodes append reverse-order chain links for the caller to reverse once
+     * @mutates docs append each corresponding doc in the same order as nodes
+     */
+    chainWalk(index: number, parent: number, role: string, nodes: number[], docs: number[]): void {
+        const node = this.node(index);
+        if(
+            !this.parenthesize(index, parent, role) &&
+            ((node.kind === 'CallExpression' &&
+                (this.memberish(this.child(index, 0)) || this.node(this.child(index, 0)).kind === 'CallExpression')) ||
+                this.memberish(index) ||
+                node.kind === 'NonNullExpression')
+        ) {
+            this.ancestors.push(index);
+            let printed: number;
+            if(node.kind === 'CallExpression')
+                printed = this.docs.concat([
+                    this.docs.text(this.ownOptional(index) ? '?.' : ''),
+                    this.argumentsDoc(index, parent),
+                ]);
+            else if(node.kind === 'NonNullExpression') printed = this.docs.text('!');
+            else printed = this.memberLookup(index);
+            nodes.push(index);
+            docs.push(printed);
+            this.chainWalk(
+                this.child(index, 0),
+                index,
+                node.kind === 'CallExpression' ? 'callee' : node.kind === 'NonNullExpression' ? 'argument' : 'object',
+                nodes,
+                docs,
+            );
+            this.ancestors.pop();
+        }
+        else {
+            nodes.push(index);
+            docs.push(this.print(index, parent, role));
+        }
+    }
+    memberChainDoc(index: number, parent: number): number {
+        const reverseNodes = [index];
+        const reverseDocs = [
+            this.docs.concat([this.docs.text(this.ownOptional(index) ? '?.' : ''), this.argumentsDoc(index, parent)]),
+        ];
+        this.chainWalk(this.child(index, 0), index, 'callee', reverseNodes, reverseDocs);
+        const nodes: number[] = [];
+        const docs: number[] = [];
+        for(let position = reverseNodes.length - 1; position >= 0; position--) {
+            nodes.push(reverseNodes[position] ?? panic('missing chain node'));
+            docs.push(reverseDocs[position] ?? panic('missing chain doc'));
+        }
+        const groups: number[][] = [];
+        let current = [0];
+        let position = 1;
+        for(; position < nodes.length; position++) {
+            const item = nodes[position] ?? panic('missing first-group node');
+            const kind = this.node(item).kind;
+            if(
+                kind === 'NonNullExpression' ||
+                kind === 'CallExpression' ||
+                (kind === 'ElementAccessExpression' &&
+                    this.node(this.child(item, this.node(item).children.length - 1)).kind === 'NumericLiteral')
+            )
+                current.push(position);
+            else break;
+        }
+        if(this.node(nodes[0] ?? panic('missing chain base')).kind !== 'CallExpression') {
+            for(; position + 1 < nodes.length; position++) {
+                if(
+                    this.memberish(nodes[position] ?? panic('missing chain member')) &&
+                    this.memberish(nodes[position + 1] ?? panic('missing next member'))
+                )
+                    current.push(position);
+                else break;
+            }
+        }
+        groups.push(current);
+        current = [];
+        let seenCall = false;
+        for(; position < nodes.length; position++) {
+            const item = nodes[position] ?? panic('missing chain item');
+            if(seenCall && this.memberish(item)) {
+                if(
+                    this.node(item).kind === 'ElementAccessExpression' &&
+                    this.node(this.child(item, this.node(item).children.length - 1)).kind === 'NumericLiteral'
+                ) {
+                    current.push(position);
+                    continue;
+                }
+                groups.push(current);
+                current = [];
+                seenCall = false;
+            }
+            if(this.node(item).kind === 'CallExpression') seenCall = true;
+            current.push(position);
+        }
+        if(current.length > 0) groups.push(current);
+        let merge = false;
+        if(groups.length >= 2) {
+            const firstGroup = groups[0] ?? panic('missing first chain group');
+            const secondGroup = groups[1] ?? panic('missing second chain group');
+            const computed =
+                this.node(
+                    nodes[secondGroup[0] ?? panic('missing second-group start')] ?? panic('missing second-group node'),
+                ).kind === 'ElementAccessExpression';
+            if(firstGroup.length === 1) {
+                const base = this.node(nodes[firstGroup[0] ?? panic('missing base position')] ?? panic('missing base'));
+                merge =
+                    base.kind === 'ThisKeyword' ||
+                    (base.kind === 'Identifier' &&
+                        (this.factory(base.text) ||
+                            (parent < 0 && base.text.length <= this.docs.settings.tabWidth) ||
+                            computed));
+            }
+            else {
+                const last =
+                    nodes[firstGroup[firstGroup.length - 1] ?? panic('missing group end')] ??
+                    panic('missing group-end node');
+                if(this.memberish(last)) {
+                    const property = this.node(this.child(last, this.node(last).children.length - 1));
+                    merge = property.kind === 'Identifier' && (this.factory(property.text) || computed);
+                }
+            }
+        }
+        const printedGroups: number[] = [];
+        for(const group of groups) {
+            const parts: number[] = [];
+            for(const item of group) parts.push(docs[item] ?? panic('missing grouped doc'));
+            printedGroups.push(this.docs.concat(parts));
+        }
+        const oneLine = this.docs.concat(printedGroups);
+        const cutoff = merge ? 3 : 2;
+        const curried =
+            parent >= 0 &&
+            this.node(parent).kind === 'CallExpression' &&
+            this.child(parent, 0) === index &&
+            this.node(parent).list > 0 &&
+            this.node(index).list > this.node(parent).list;
+        if(groups.length <= cutoff) return curried ? oneLine : this.docs.group(oneLine);
+        const prefix = this.docs.concat(printedGroups.slice(0, merge ? 2 : 1));
+        const suffix = this.docs.indent(
+            this.docs.concat([
+                this.docs.hardline(),
+                this.docs.join(this.docs.hardline(), printedGroups.slice(merge ? 2 : 1)),
+            ]),
+        );
+        const expanded = this.docs.concat([prefix, suffix]);
+        let calls = 0;
+        let complex = false;
+        for(const item of nodes)
+            if(this.node(item).kind === 'CallExpression') {
+                calls++;
+                const call = this.node(item);
+                for(let offset = call.children.length - Math.max(0, call.list); offset < call.children.length; offset++)
+                    if(!this.simpleArgument(this.child(item, offset))) complex = true;
+            }
+        let brokenHead = false;
+        for(let offset = 0; offset < printedGroups.length - 1; offset++)
+            if(this.willBreak(printedGroups[offset] ?? panic('missing head group'))) brokenHead = true;
+        const result =
+            (calls > 2 && complex) || brokenHead
+                ? this.docs.group(expanded)
+                : this.docs.concat([
+                      this.willBreak(oneLine) ? this.docs.add('breakParent', []) : this.docs.text(''),
+                      this.docs.add('conditionalGroup', [oneLine, expanded]),
+                  ]);
+        return this.docs.add('label', [result], 'member-chain');
     }
     willBreak(index: number): boolean {
         const doc = this.docs.get(index);
@@ -774,17 +1071,20 @@ export class Expressions {
                 ? this.docs.concat([this.docs.add('breakParent', []), conditional])
                 : conditional;
         }
-        return this.docs.group(
-            this.docs.concat([
-                this.docs.text('('),
-                this.docs.indent(this.docs.concat([this.docs.softline(), this.docs.concat(printed)])),
-                trailing,
-                this.docs.softline(),
-                this.docs.text(')'),
-            ]),
-            '',
-            anyBroken,
-        );
+        const contents = this.docs.concat([
+            this.docs.text('('),
+            this.docs.indent(this.docs.concat([this.docs.softline(), this.docs.concat(printed)])),
+            trailing,
+            this.docs.softline(),
+            this.docs.text(')'),
+        ]);
+        const curried =
+            parent >= 0 &&
+            this.node(parent).kind === 'CallExpression' &&
+            this.child(parent, 0) === index &&
+            this.node(parent).list > 0 &&
+            node.list > this.node(parent).list;
+        return curried ? contents : this.docs.group(contents, '', anyBroken);
     }
     canBreak(index: number): boolean {
         const doc = this.docs.get(index);
@@ -1146,6 +1446,15 @@ export class Expressions {
             }
             case 'CallExpression':
             case 'NewExpression': {
+                const callee = this.child(id, 0);
+                if(
+                    node.kind === 'CallExpression' &&
+                    this.memberish(callee) &&
+                    !this.parenthesize(callee, id, 'callee')
+                ) {
+                    result = this.memberChainDoc(id, parent);
+                    break;
+                }
                 const count = Math.max(node.list, 0);
                 const optional = node.children.length - count === 2 ? '?.' : '';
                 const argumentDoc = this.argumentsDoc(id, parent);
@@ -1155,6 +1464,7 @@ export class Expressions {
                     this.docs.text(optional),
                     argumentDoc,
                 ]);
+                if(this.node(callee).kind === 'CallExpression') result = this.docs.group(result);
                 break;
             }
             default:
