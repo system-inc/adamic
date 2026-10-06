@@ -82,7 +82,7 @@ The cause is in `declareModule` (internal/lower/lower.go): it records every func
 
 **Around it:** every file of the port is ordered callee first. Each declaration still names the Go function it reads as, but the files no longer read top to bottom in the Go's order. `(*Matcher).decide` sits ahead of `enter`, and `(*glob).reach` ahead of `matches`.
 
-## 4. A declared function used as a value
+## 4. A declared function used as a value (closed on cloud/probes-10)
 
 ```ts
 function isEven(value: number): boolean {
@@ -96,9 +96,9 @@ console.log(`${test(4)}`);
 stage 0 can't lower reading isEven yet        (Node prints true)
 ```
 
-An arrow function in the same place lowers.
+An arrow function in the same place lowered. Stream C2 closed it: a declared function read as a value is a function value of its own that calls it, made once, so every read is the same object, as JavaScript's are (`isEven === isEven`, and a Set keeps it once). A function with an optional, rest or destructured parameter read as a value is still `NotYet`, since a function value is called with only the arguments its caller has.
 
-**Around it:** the Go's `in = isLetter` (glob.go, addClass) is written `inClass = (character) => isLetter(character)`, and the same for `isDigit`.
+**Around it, until it closed:** the Go's `in = isLetter` (glob.go, addClass) was written `inClass = (character) => isLetter(character)`, and the same for `isDigit`. The port assigns them again, and values' `regexLastIndex` takes its regex as a function, as the Go's does.
 
 ## 5. `Array.from` (closed at 80c3098)
 

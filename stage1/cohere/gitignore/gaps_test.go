@@ -24,7 +24,7 @@ var gaps = []struct {
 	{"gaps/2_bitwise.ts", true, "a BinaryExpression with a number and a number", "25 800 15 8 201 203 -201\n"},
 	{"gaps/3_later_function.ts", true, "a void call used as a value", "7\n"},
 	{"gaps/3_later_method.ts", true, "a void call used as a value", "3\n"},
-	{"gaps/4_function_value.ts", true, "reading isEven", "true\n"},
+	{"gaps/4_function_value.ts", false, "", "true\n"},
 	{"gaps/5_array_from.ts", false, "", "4\n"},
 	{"gaps/6_boolean_element.ts", false, "", "true true true\n"},
 	{"gaps/7_maybe_number_compared.ts", false, "", "true\n"},

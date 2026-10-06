@@ -293,6 +293,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if !isLocal && (l.isLibraryGlobal(node, "NaN") || l.isLibraryGlobal(node, "Infinity")) {
 			return ir.NumberConstant{Value: numberConstants[node.Text()]}, nil
 		}
+		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
+			return l.functionValue(node, function)
+		}
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
@@ -729,6 +732,65 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	return ir.MakeClosure{Function: index}, nil
+}
+
+// functionValue lowers one of the module's functions read as a value, passes rather than passes():
+// a function value of its own whose body calls the function with the arguments it's given, so all
+// that takes a function value (a call through one, map's loop, a sort, a variable, a Set) takes it
+// as it takes an arrow function. JavaScript gives every read of a function the same object, so
+// passes === passes and a Set keeps it once: the function value is made once, into a global main
+// makes first, and every read reads that global.
+func (l *lowering) functionValue(node *ast.Node, function int) (ir.Expression, error) {
+	if global, made := l.functionValues[function]; made {
+		return ir.Read{Local: global, Of: ir.Closure}, nil
+	}
+	symbol := l.symbol(node)
+	declaration := symbol.ValueDeclaration
+	if declaration == nil || declaration.Kind != ast.KindFunctionDeclaration {
+		return nil, l.notYet(node, "reading "+node.Text())
+	}
+	index := len(l.result.Functions)
+	wrapper := ir.Function{Name: node.Text(), Closure: true}
+	if returns := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration)); returns.Flags()&checker.TypeFlagsVoid == 0 {
+		valueType, isKnown := l.representation(returns)
+		if !isKnown || slotless(valueType) {
+			return nil, l.notYet(node, "a function returning "+l.checker.TypeToString(returns)+" read as a value")
+		}
+		wrapper.Returns = valueType
+	}
+	arguments := []ir.Expression{}
+	for _, parameter := range declaration.Parameters() {
+		declared := parameter.AsParameterDeclaration()
+		if !ast.IsIdentifier(parameter.Name()) || declared.DotDotDotToken != nil || declared.Initializer != nil || declared.QuestionToken != nil {
+			// A function value is called with the arguments its caller has, and no more.
+			return nil, l.notYet(node, "a function with an optional, rest or destructured parameter read as a value")
+		}
+		proven := l.checker.GetTypeAtLocation(parameter.Name())
+		valueType, isKnown := l.representation(proven)
+		if !isKnown || slotless(valueType) {
+			return nil, l.notYet(node, "a function taking "+l.checker.TypeToString(proven)+" read as a value")
+		}
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: parameter.Name().Text(), Type: valueType, Function: index})
+		wrapper.Parameters = append(wrapper.Parameters, local)
+		arguments = append(arguments, ir.Read{Local: local, Of: valueType})
+	}
+	call := ir.Call{Function: function, Arguments: arguments, Returns: wrapper.Returns}
+	if wrapper.Returns == 0 {
+		wrapper.Body = []ir.Statement{ir.Evaluate{Value: call}}
+	} else {
+		wrapper.Body = []ir.Statement{ir.Return{Value: call}}
+	}
+	l.result.Functions = append(l.result.Functions, wrapper)
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
+	global := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: node.Text(), Type: ir.Closure, Global: true, Function: -1})
+	l.functionValueDeclarations = append(l.functionValueDeclarations, ir.Declare{Local: global, Value: ir.MakeClosure{Function: index}})
+	if l.functionValues == nil {
+		l.functionValues = map[int]int{}
+	}
+	l.functionValues[function] = global
+	return ir.Read{Local: global, Of: ir.Closure}, nil
 }
 
 // callClosure lowers a call through a function value.

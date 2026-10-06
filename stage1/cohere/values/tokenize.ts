@@ -174,24 +174,11 @@ function unicodeRange(code: number): boolean {
 }
 
 // tokenize.go: regexLastIndex, `regex.lastIndex = from; regex.test(css); regex.lastIndex` for the
-// one-character global regexes above: one past the match, or 0 when there is none. The Go passes the
-// regex as a function; the port names which, since stage 0 doesn't lower a declared function as a value
-// yet (gitignore's GAPS.md, gap 4).
-function regexLastIndex(css: string, from: number, regex: 'atEnd' | 'wordEnd' | 'wordEndNum'): number {
+// one-character global regexes above: one past the match, or 0 when there is none. The regex is a
+// function, as the Go passes it.
+function regexLastIndex(css: string, from: number, matches: (css: string, index: number) => boolean): number {
 	for (let index = from; index < css.length; index++) {
-		let matches = false;
-		switch (regex) {
-			case 'atEnd':
-				matches = atEnd(css, index);
-				break;
-			case 'wordEnd':
-				matches = wordEnd(css, index);
-				break;
-			case 'wordEndNum':
-				matches = wordEndNum(css, index);
-				break;
-		}
-		if (matches) {
+		if (matches(css, index)) {
 			return index + 1;
 		}
 	}
@@ -322,7 +309,7 @@ export function tokenize(input: string, loose: boolean): Tokenized {
 				break;
 
 			case 0x40: { // at
-				const lastIndex = regexLastIndex(css, pos + 1, 'atEnd');
+				const lastIndex = regexLastIndex(css, pos + 1, atEnd);
 
 				if (lastIndex === 0) {
 					next = length - 1;
@@ -436,12 +423,14 @@ export function tokenize(input: string, loose: boolean): Tokenized {
 
 					pos = next - 1;
 				} else {
-					let regex: 'wordEnd' | 'wordEndNum' = 'wordEnd';
+					let regex = wordEnd;
+					let isWordEndNum = false;
 
 					// we're dealing with a word that starts with a number
 					// those get treated differently
 					if (code >= digit0 && code <= digit9) {
-						regex = 'wordEndNum';
+						regex = wordEndNum;
+						isWordEndNum = true;
 					}
 
 					const lastIndex = regexLastIndex(css, pos + 1, regex);
@@ -453,13 +442,13 @@ export function tokenize(input: string, loose: boolean): Tokenized {
 					}
 
 					// Exponential number notation with minus or plus: 1e-10, 1e+10
-					if (regex === 'wordEndNum' || code === period) {
+					if (isWordEndNum || code === period) {
 						const ncode = css.charCodeAt(next);
 						const ncode1 = css.charCodeAt(next + 1);
 						const ncode2 = css.charCodeAt(next + 2);
 
 						if ((ncode === lowerE || ncode === upperE) && (ncode1 === minus || ncode1 === plus) && ncode2 >= digit0 && ncode2 <= digit9) {
-							const exponentLastIndex = regexLastIndex(css, next + 2, 'wordEndNum');
+							const exponentLastIndex = regexLastIndex(css, next + 2, wordEndNum);
 
 							if (exponentLastIndex === 0) {
 								next = length - 1;

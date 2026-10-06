@@ -117,7 +117,7 @@ So a container has an `id`, the parser keeps each container's children in `#chil
 ## The other slices' gaps, met again
 
 - **gitignore gap 3, a call to a function or method declared later**: the parser's methods are ordered callee first, so `parseTokens` and `loop` come last. The Go's order is the library's, which is the other way round.
-- **gitignore gap 4, a declared function as a value**: the Go passes `regexLastIndex` the regex as a function (`wordEnd`, `wordEndNum`, `atEnd`); the port passes its name and switches on it.
+- **gitignore gap 4, a declared function as a value** (closed since): the Go passes `regexLastIndex` the regex as a function (`wordEnd`, `wordEndNum`, `atEnd`); the port passed its name and switched on it until the gap closed, and passes the function now.
 - **gitignore gap 9, `return panic(...)`**: the driver's `field` (main.ts) ends with `panic(...)` as a statement.
 - **mediaquery gap 2, `return undefined` from a `string | undefined` function is bad C**: the driver's `escapeOf` (main.ts) returns `''` for no escape, as the media query driver does.
 

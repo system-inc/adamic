@@ -57,9 +57,7 @@ function addClass(members: boolean[], name: string): boolean {
 			inClass = (character) => isLetter(character) || isDigit(character);
 			break;
 		case 'alpha':
-			// The Go assigns isLetter itself; stage 0 does not lower a declared function as a value yet
-			// (gap 4 in GAPS.md), so here, and for digit, an arrow calls it.
-			inClass = (character) => isLetter(character);
+			inClass = isLetter;
 			break;
 		case 'blank':
 			inClass = (character) => character === 0x20 || character === 0x09;
@@ -68,7 +66,7 @@ function addClass(members: boolean[], name: string): boolean {
 			inClass = (character) => character < 0x20 || character === 0x7f;
 			break;
 		case 'digit':
-			inClass = (character) => isDigit(character);
+			inClass = isDigit;
 			break;
 		case 'graph':
 			inClass = (character) => character > 0x20 && character < 0x7f;

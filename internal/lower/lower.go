@@ -77,6 +77,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		}
 		lowering.result.Main = append(lowering.result.Main, body...)
 	}
+	// Every function read as a value has its value made before anything else runs, so it's there
+	// wherever it's read, a function called early included.
+	lowering.result.Main = append(lowering.functionValueDeclarations, lowering.result.Main...)
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
@@ -149,8 +152,14 @@ type lowering struct {
 	localAlso      map[int][]*checker.Type
 	localNodes     map[int]*ast.Node
 	closureRecords []closureRecord
-	classType      *checker.Type
-	classNode      *ast.Node
+
+	// functionValues is, for each module function read as a value, the global holding its one
+	// function value, and functionValueDeclarations what makes them, run first in main
+	// (functionValue).
+	functionValues            map[int]int
+	functionValueDeclarations []ir.Statement
+	classType                 *checker.Type
+	classNode                 *ast.Node
 
 	// typeMapper is what the type parameters of the instantiation being lowered, and of those it's
 	// inside, stand for; instantiated is every class type an instantiation was made for (instantiate.go).
