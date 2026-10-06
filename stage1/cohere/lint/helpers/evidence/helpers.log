@@ -1,0 +1,26 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:100: /workspace/adamic/stage1/cohere/lint/helpers/option_schema.ts:12:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- FAIL: TestHelpersMatchCohere (15.49s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:138: /tmp/adamic-gate/TestHelperMutantsoptions_json.ts861190015/001/option_schema.ts:12:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:138: /tmp/adamic-gate/TestHelperMutantsoption_schema.ts2360289564/001/option_schema.ts:12:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:138: /tmp/adamic-gate/TestHelperMutantspolicy_message.ts1555379617/001/option_schema.ts:12:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:138: /tmp/adamic-gate/TestHelperMutantsstrict_options.ts4107403372/001/option_schema.ts:12:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- FAIL: TestHelperMutants (16.21s)
+    --- FAIL: TestHelperMutants/options_json.ts (0.08s)
+    --- FAIL: TestHelperMutants/option_schema.ts (0.07s)
+    --- FAIL: TestHelperMutants/policy_message.ts (0.07s)
+    --- FAIL: TestHelperMutants/strict_options.ts (0.08s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:186: /workspace/adamic/stage1/cohere/lint/helpers/option_schema.ts:12:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- FAIL: TestMessageRefusalsMatchGo (0.08s)
+=== RUN   TestKnownGapsAreExplicit
+    helpers_test.go:244: /workspace/adamic/stage1/cohere/lint/helpers/option_schema.ts:12:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- FAIL: TestKnownGapsAreExplicit (0.33s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	32.142s
+FAIL
