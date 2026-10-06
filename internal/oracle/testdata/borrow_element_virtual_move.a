@@ -1,0 +1,25 @@
+// A variable borrowed from an array, and the array then moved into a virtual call whose override maps
+// it in place (reuse.go). element_borrow.go's changes asks changing[call.Function], the signature,
+// whose own body only reads; the override's map lets go of the borrowed element.
+interface Box {
+	v: string;
+}
+class Worker {
+	run(items: Box[]): number {
+		return items.length;
+	}
+}
+class Mapper extends Worker {
+	run(items: Box[]): number {
+		const out = items.map((box) => ({ v: `${box.v}!` }));
+		return out.length;
+	}
+}
+function go(worker: Worker): string {
+	const items: Box[] = [{ v: `a${1}` }, { v: `b${2}` }];
+	const first = items[0] ?? { v: `z${0}` };
+	const count = worker.run(items);
+	return `${first.v} ${count}`;
+}
+console.log(go(new Worker()));
+console.log(go(new Mapper()));

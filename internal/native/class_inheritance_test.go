@@ -28,7 +28,8 @@ func TestInheritanceMemoryPlans(t *testing.T) {
 	t.Parallel()
 	program := inheritanceMemoryProgram(t)
 	regions := planRegions(program)
-	reuse := planReuse(program)
+	_, lending := planElementBorrows(program)
+	reuse := planReuse(program, lending)
 	if len(regions.statements) == 0 {
 		t.Fatal("hierarchy lost every region")
 	}
