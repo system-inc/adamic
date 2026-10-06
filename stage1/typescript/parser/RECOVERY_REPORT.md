@@ -1,8 +1,8 @@
-Fixed all eight reported failures and successive export, list and statement recovery gaps.
-Focused Go, Node and sanitized native probes match exact tree and diagnostic bytes.
-Four mutants cover diagnostic codes, child shape, stranded export and nontermination.
-77 compiler files yield 22,497 deterministic cutoff/removal/duplication inputs.
-The wider comparison remains active; its full corpus gate has not passed.
+Rebased codex/parser-recovery onto origin/main at 5d4c801 without conflicts.
+Parser regression passes in 612.959s, including five recovery mutants.
+77 compiler files match Go, Node and native expression and whole-tree bytes.
+Vet, formatting, cohere and the filtered oracle pass; setup 86s, nproc 5.
+The 22,497-input mutation comparison rerun from zero remains active.
 
 ## Built
 
@@ -46,7 +46,7 @@ lint combinations against real cohere findings and proposed repairs.
 Cohere's edit engine refuses malformed source, so this is findings/proposed
 repairs parity, not fixed-source parity.
 
-## Wider comparison and remaining failure
+## Initial comparison before continuation (historical)
 
 `TestIncompleteCompilerAgrees` checks the TypeScript v6.0.3 pin
 `050880ce59e30b356b686bd3144efe24f875ebc8` and enumerates every compiler file
@@ -90,7 +90,7 @@ unit. This unit leaves that worker's files untouched and provides the
 positive eight-case integration test under the parser package instead.
 The complete repository gate is not claimed green.
 
-## Mutants
+## Original mutant runs (historical)
 
 | Mutant | Independent check that catches it on both backends |
 | --- | --- |
@@ -578,3 +578,95 @@ parameters in a generic expression do not alone commit an arrow parse;
 without its arrow Go falls back to a type assertion. Three added probes and
 preceding cases pass in 36.045s; cohere passes. The user's main rebase now
 interrupts the wider continuation, which has not passed its complete gate.
+
+
+## Rebase onto current main
+
+The user redirected this turn to rebasing, rerunning validation and pushing.
+All 53 branch commits were replayed without conflicts onto origin/main
+5d4c8012a0877094134e6c6bac367ff68f9313e8. Main's hot-file split and positive
+class/interface dispatch test are retained. There are no changes under
+internal/ relative to main. Older commit SHAs in this report refer to the
+pre-rebase history; validation/rebase-commit-map.txt records the mapping.
+The rebased recovery tip before the additional fixes is
+056de2075c89e0a204e5b0edd9dd42b2b2246957.
+
+The first regression rerun exposed existing continuation regressions:
+nested parentheses could commit a typed arrow incorrectly, and module
+specifier strings were registered as expression roots. The arrow head now
+requires an identifier-like first token; string module specifiers use their
+literal path while missing specifiers still receive expression recovery.
+Parser speculation now rolls expression roots back along with nodes and
+diagnostics. Its seeded mutant independently produces an extra expression
+on both runtimes. The fixed expression-start token inventory moved into
+grammar.ts to keep parser.ts under cohere's 2,000-line limit. Vet also caught
+Fatal calls in comparison workers; those workers now report and return.
+The interrupted initial regression and failed intermediate verification are
+retained as development evidence, not green runs.
+
+Every command below wrote output directly to its named log. These logs are
+retained in validation/. Commands used /workspace/adamic-tools/env.sh.
+
+```sh
+bash cloud/setup.sh > /tmp/parser-recovery-rebase-setup.log 2>&1
+# PASS: Go, clang, Node and submodules ready in 0s each.
+# setup: build cache warm (86s)
+# setup: done in 86s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+nproc > /tmp/parser-recovery-rebase-nproc.log
+# 5
+
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 \
+  go test ./stage1/typescript/parser -skip '^TestIncompleteCompilerAgrees$' \
+  -count=1 -v -timeout 30m > /tmp/parser-recovery-rebase-final-regression.log 2>&1
+# PASS, 612.959s. The incomplete-input test is run separately.
+# 1,676 generated expression inputs: 1,432,520 identical bytes.
+# 58 expression probes: 17,463 identical bytes.
+# 77 compiler files: 28,836,875 identical expression tree bytes.
+# 77 compiler files: 44,766,682 identical whole-tree bytes.
+# Focused recovery PASS, 73.29s; five recovery mutants PASS, 106.46s.
+# All eight original lint combinations PASS, 35.91s.
+# 42 type-node kinds covered, 250 identical doc-type bytes.
+# 68 generated whole files: 93,323 identical bytes.
+# Obsolete assert forms: diagnostic 2880 and 1,021 identical tree bytes.
+# Main's positive class/interface dispatch probe passes under sanitizers.
+
+/workspace/scratch/cohere --no-fix --no-cache stage1/typescript/parser/*.ts \
+  > /tmp/parser-recovery-rebase-final-cohere.log 2>&1
+# PASS, 276 rules, no findings; 13 of 13 Adamic-ready.
+go vet ./... > /tmp/parser-recovery-rebase-final-vet.log 2>&1
+# PASS, no output.
+gofmt -l stage1/typescript/parser > /tmp/parser-recovery-rebase-final-gofmt.log
+# PASS, no output.
+git diff --check > /tmp/parser-recovery-rebase-final-diff-check.log 2>&1
+# PASS, no output before adding this report's raw logs.
+go test ./internal/oracle -run '^TestTheOracleCatchesOneByte$' -count=1 -v \
+  > /tmp/parser-recovery-rebase-filtered-oracle.log 2>&1
+# PASS, 10.114s. Both native and Node cache misses.
+```
+
+The final regression reran every existing parser mutant. All compile and
+finish normally on Node and sanitized native, except the intentional EOF
+loop, which must reach its two-second deadline:
+
+| Mutant | What catches it on both runtimes |
+| --- | --- |
+| Expected-token code 1005 becomes 1006 | Exact diagnostic bytes |
+| Bare export source-list diagnostic incremented | Exact diagnostic bytes |
+| TypeParameter Identifier child removed | Recovered tree bytes |
+| EOF exposed as Identifier | Two-second deadline, input saved |
+| Speculative roots retained | Extra expression versus Go |
+| Multiplication precedence lowered | Expression tree bytes |
+| Optional-chain flag cleared | Expression tree flag bytes |
+| Parenthesized expression becomes ArrowFunction | Expression node kind |
+| ForOfStatement becomes ForInStatement | Whole-tree node kind |
+| Type-only import phase lost | Whole-tree semantic field |
+| keyof operator becomes readonly | Whole-tree operator field |
+| countTree starts each node at zero, expression mode | 0 versus Go's 18, unchanged trees |
+| Same counter mutant, whole mode | 0 versus Go's 12, unchanged trees |
+
+The filtered compiler oracle's one-byte control also passes. No full
+repository test gate or performance benchmark is claimed. Canonical tree
+fields and diagnostic fields are those documented above; related diagnostic
+information and every internal Go AST field are not serialized. The wider
+22,497-input comparison was restarted with ADAMIC_RECOVERY_START unset and
+has not yet passed its complete gate.

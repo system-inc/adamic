@@ -168,12 +168,14 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 					path := filepath.Join(artifacts, fmt.Sprintf("%05d-%s-%s-%d.ts", job.position, filepath.Base(job.sourcePath), job.mode, job.index))
 					if err := os.WriteFile(path, job.input, 0644); err != nil {
 						stopped.Store(true)
-						t.Fatal(err)
+						t.Error(err)
+						return
 					}
 					want, err := measure("go", path, oracle, path, "--whole", "--recovery")
 					if err != nil {
 						stopped.Store(true)
-						t.Fatalf("Go %s: %v; saved input %s", job.sourcePath, err, path)
+						t.Errorf("Go %s: %v; saved input %s", job.sourcePath, err, path)
+						return
 					}
 					failed := false
 					for _, side := range []struct {

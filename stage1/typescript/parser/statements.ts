@@ -396,6 +396,9 @@ export class Statements {
         node.multiLine = multiLine;
         return id;
     }
+    moduleSpecifier(): number {
+        return this.parser.kind() === 'StringLiteral' ? this.parser.propertyName() : this.parser.rootExpression();
+    }
     importDeclaration(pos: number, prefix: readonly number[]): number {
         const children = prefix.slice();
         this.parser.expect('ImportKeyword');
@@ -479,7 +482,7 @@ export class Statements {
             children.push(clause);
             this.parser.expect('FromKeyword');
         }
-        children.push(this.parser.rootExpression());
+        children.push(this.moduleSpecifier());
         if(this.parser.kind() === 'WithKeyword' || this.parser.kind() === 'AssertKeyword') {
             children.push(this.attributes());
         }
@@ -522,13 +525,13 @@ export class Statements {
                 children.push(this.make('NamespaceExport', start, [name]));
             }
             this.parser.expect('FromKeyword');
-            children.push(this.parser.rootExpression());
+            children.push(this.moduleSpecifier());
         }
         else {
             children.push(this.specifiers(false));
             if(this.parser.kind() === 'FromKeyword') {
                 this.parser.next();
-                children.push(this.parser.rootExpression());
+                children.push(this.moduleSpecifier());
             }
         }
         if(this.parser.kind() === 'WithKeyword' || this.parser.kind() === 'AssertKeyword') {

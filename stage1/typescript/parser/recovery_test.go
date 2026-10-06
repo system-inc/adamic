@@ -77,7 +77,7 @@ func TestMethodRecoveryAgrees(t *testing.T) {
 		t.Fatal(err)
 	}
 	cases := append([]string(nil), recoveryCases...)
-	cases = append(cases, "export function min< <T>(items: readonly [T, ...T[]], compare: Comparer<T>): T;", "const x = <T>(x: T): T;", "const x = <T>(x: T) => x;", "const x = { has( (element: T): boolean {} };", "const x = { values() ): T {} };", "const x = { a: 1; x.y };", "class C { m() x; }", "const x = { a: 1\n; };", "const x = { a: 1; if (x) {} };", "f(x :);", "const x = [a :];", "function f(export function g() {}", "function f(static x: T) {}", "function f(abstract x: T) {}", "function f(public @dec x: T) {}", "function f<T, U = T T>() {}", "function f<T T>() {}", "function f<T,, U>() {}", "function f<out>", "function f<const>", "function f<T extends>", "const a = [x x, y];", "const a = [x,,];", "const a = [;];", "for (const a = [x in y];;) {}", "try", "try {", "try {x;}", "try {} catch {}", "try {} finally", "try {} x;", "interface {}", "interface 1 {}", "namespace {}", "namespace 1 {}", "type = A;", "type 1 = A;", "is T;", "declare", "declare x;", "abstract", "undefined: x;", "type: x;", "let: x;", "async function f(){ await: x; }", "enum E { A B }", "enum E { A,, B }", "enum E", "enum E {", "let", "let;", "let = 1;", "let\nx;", "function f(){ let }", "export let", "namespace N", "namespace A.B", "namespace N;", "declare module \"m\";", "function", "function () {}", "export function function f() {}", "export default function () {}", "const {a b} = obj;", "const {a,,b} = obj;", "const [a b] = obj;", "type T = A | | B;", "type T = A & & B;", "type T = | A;", "function f(x, { return g(); }", "const { return x } = obj;", "x[];", "x?.[];", "f()[ ];", "import { A B } from \"m\";", "import { A,, B } from \"m\";", "export { A B };", "import { A from \"m\";", "function f(x:: T | undefined, y: U) {}", "function f(| T) {}", "function f(1) {}", "`unterminated", "const s = \"unterminated", "/* unterminated", "const r = /unterminated", "const f = ( => g();", "=> x", "const x = { a.b };", "module`M` {}", "tag`x` x;", "const x = { a: 1; };", "const x = { a: 1 b: 2 };", "type T = Omit<A \"b\"> & { b: string | false | undefined; };", "type T = A[", "function f(x: A[", "type T = A[;", "* from \"../moduleSpecifiers.js\";", "export export * from \"../moduleSpecifiers.js\";", "export from \"../moduleSpecifiers.js\";", "import import * as p from \"p.js\";", "import", "import\r\n  ", "}", ") ;", "x ?", "x ? y", "x ? y :", "x?.", "`x${", "`x${y", "type T = `x${", "interface I { : I | undefined; name: string; }", "interface I { x: T y: U }", "f(x x);", "f(, x);", "function f(){ g(x }", "function f(){ export }", "default x;", "switch(x){case 1:: f();}", "switch(x){default:: f();}", "switch(x){ f(); }", "namespace N { : f(); }", "function f(x: T y: U) {}", "function f(, x: T) {}", "function f(return) {}", "function f(const) {}", "function f(this: T) {}", "function f(x:: T) {}", "function f() x;", "break break;", "continue continue;", "break 1;", "throw", "throw\nx;", "throw x y;", "setParent setParent(x, y);", "retrun 1;", "Set 1;", "globl 1;", "İmport 1;", "export {", "import {", "f(", "[", "({", "function f() {", "class C {", "type T =", "type T = A<", "type T = (x:", "type T = ()", "type T = <", "function f(): (x: T, y:", "const {", "const const x = 1;", "const x = 1 y = 2;", "const , x = 1;", "const", "function f() { const", "const f = (x:", "const f = (...", "const f = ():", "const f = () {}", "export *", "export * from", "export * from\r\n  ", "export default", "export =", "export", "export\r\n  ", "export export", "export\nconst x = 1;", "export x;", "/* π 💡 */\r\nexport")
+	cases = append(cases, "((x): number => x)(1);", "type T = ({x = 1}) => U;", "type T = ({x = 1});", "export function min< <T>(items: readonly [T, ...T[]], compare: Comparer<T>): T;", "const x = <T>(x: T): T;", "const x = <T>(x: T) => x;", "const x = { has( (element: T): boolean {} };", "const x = { values() ): T {} };", "const x = { a: 1; x.y };", "class C { m() x; }", "const x = { a: 1\n; };", "const x = { a: 1; if (x) {} };", "f(x :);", "const x = [a :];", "function f(export function g() {}", "function f(static x: T) {}", "function f(abstract x: T) {}", "function f(public @dec x: T) {}", "function f<T, U = T T>() {}", "function f<T T>() {}", "function f<T,, U>() {}", "function f<out>", "function f<const>", "function f<T extends>", "const a = [x x, y];", "const a = [x,,];", "const a = [;];", "for (const a = [x in y];;) {}", "try", "try {", "try {x;}", "try {} catch {}", "try {} finally", "try {} x;", "interface {}", "interface 1 {}", "namespace {}", "namespace 1 {}", "type = A;", "type 1 = A;", "is T;", "declare", "declare x;", "abstract", "undefined: x;", "type: x;", "let: x;", "async function f(){ await: x; }", "enum E { A B }", "enum E { A,, B }", "enum E", "enum E {", "let", "let;", "let = 1;", "let\nx;", "function f(){ let }", "export let", "namespace N", "namespace A.B", "namespace N;", "declare module \"m\";", "function", "function () {}", "export function function f() {}", "export default function () {}", "const {a b} = obj;", "const {a,,b} = obj;", "const [a b] = obj;", "type T = A | | B;", "type T = A & & B;", "type T = | A;", "function f(x, { return g(); }", "const { return x } = obj;", "x[];", "x?.[];", "f()[ ];", "import { A B } from \"m\";", "import { A,, B } from \"m\";", "export { A B };", "import { A from \"m\";", "function f(x:: T | undefined, y: U) {}", "function f(| T) {}", "function f(1) {}", "`unterminated", "const s = \"unterminated", "/* unterminated", "const r = /unterminated", "const f = ( => g();", "=> x", "const x = { a.b };", "module`M` {}", "tag`x` x;", "const x = { a: 1; };", "const x = { a: 1 b: 2 };", "type T = Omit<A \"b\"> & { b: string | false | undefined; };", "type T = A[", "function f(x: A[", "type T = A[;", "* from \"../moduleSpecifiers.js\";", "export export * from \"../moduleSpecifiers.js\";", "export from \"../moduleSpecifiers.js\";", "import import * as p from \"p.js\";", "import", "import\r\n  ", "}", ") ;", "x ?", "x ? y", "x ? y :", "x?.", "`x${", "`x${y", "type T = `x${", "interface I { : I | undefined; name: string; }", "interface I { x: T y: U }", "f(x x);", "f(, x);", "function f(){ g(x }", "function f(){ export }", "default x;", "switch(x){case 1:: f();}", "switch(x){default:: f();}", "switch(x){ f(); }", "namespace N { : f(); }", "function f(x: T y: U) {}", "function f(, x: T) {}", "function f(return) {}", "function f(const) {}", "function f(this: T) {}", "function f(x:: T) {}", "function f() x;", "break break;", "continue continue;", "break 1;", "throw", "throw\nx;", "throw x y;", "setParent setParent(x, y);", "retrun 1;", "Set 1;", "globl 1;", "İmport 1;", "export {", "import {", "f(", "[", "({", "function f() {", "class C {", "type T =", "type T = A<", "type T = (x:", "type T = ()", "type T = <", "function f(): (x: T, y:", "const {", "const const x = 1;", "const x = 1 y = 2;", "const , x = 1;", "const", "function f() { const", "const f = (x:", "const f = (...", "const f = ():", "const f = () {}", "export *", "export * from", "export * from\r\n  ", "export default", "export =", "export", "export\r\n  ", "export export", "export\nconst x = 1;", "export x;", "/* π 💡 */\r\nexport")
 	for _, source := range recoveryCases {
 		cases = append(cases, "/* π 💡 */\r\n"+source, source+"\r\n  ")
 	}
@@ -123,12 +123,13 @@ func TestRecoveryMutants(t *testing.T) {
 	}
 	mutations := []struct {
 		name, from, to, source string
-		timeout                bool
+		timeout, expressions   bool
 	}{
-		{"diagnostic-code", "this.error(1005, `'${tokenSpelling(kind)}' expected.`);\n            return false;", "this.error(1006, `'${tokenSpelling(kind)}' expected.`);\n            return false;", recoveryCases[0], false},
-		{"stranded-export", "this.error(diagnostic.code, diagnostic.message);", "this.error(diagnostic.code + (context === 'source' ? 1 : 0), diagnostic.message);", "export", false},
-		{"generic-child", "result.push(this.make('TypeParameter', pos, children));", "result.push(this.make('TypeParameter', pos, children.slice(0, 0)));", recoveryCases[3], false},
-		{"eof-loop", "return this.scanner.kind;", "return this.scanner.kind === 'EndOfFile' ? 'Identifier' : this.scanner.kind;", recoveryCases[1], true},
+		{"diagnostic-code", "this.error(1005, `'${tokenSpelling(kind)}' expected.`);\n            return false;", "this.error(1006, `'${tokenSpelling(kind)}' expected.`);\n            return false;", recoveryCases[0], false, false},
+		{"stranded-export", "this.error(diagnostic.code, diagnostic.message);", "this.error(diagnostic.code + (context === 'source' ? 1 : 0), diagnostic.message);", "export", false, false},
+		{"generic-child", "result.push(this.make('TypeParameter', pos, children));", "result.push(this.make('TypeParameter', pos, children.slice(0, 0)));", recoveryCases[3], false, false},
+		{"eof-loop", "return this.scanner.kind;", "return this.scanner.kind === 'EndOfFile' ? 'Identifier' : this.scanner.kind;", recoveryCases[1], true, false},
+		{"speculative-roots", "this.roots.splice(state.roots);", "this.roots.splice(this.roots.length);", "type T = ({ x = 1 }) => U;", false, true},
 	}
 	for _, mutation := range mutations {
 		t.Run(mutation.name, func(t *testing.T) {
@@ -136,7 +137,11 @@ func TestRecoveryMutants(t *testing.T) {
 			if err := os.WriteFile(path, []byte(mutation.source), 0644); err != nil {
 				t.Fatal(err)
 			}
-			want, err := recoveryRun(t, path+".go", oracle, path, "--whole", "--recovery")
+			args := []string{path, "--recovery"}
+			if !mutation.expressions {
+				args = append(args, "--whole")
+			}
+			want, err := recoveryRun(t, path+".go", oracle, args...)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -146,8 +151,8 @@ func TestRecoveryMutants(t *testing.T) {
 				name, command string
 				args          []string
 			}{
-				{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(mutant, "main.ts"), path, "--whole", "--recovery"}},
-				{"native", binary, []string{path, "--whole", "--recovery"}},
+				{"Node", "node", append([]string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(mutant, "main.ts")}, args...)},
+				{"native", binary, args},
 			} {
 				got, err := recoveryRun(t, path+"."+side.name, side.command, side.args...)
 				if mutation.timeout {

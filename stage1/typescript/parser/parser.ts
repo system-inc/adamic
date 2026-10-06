@@ -3,7 +3,7 @@ import { panic } from 'adamic';
 import { Scanner } from '../scanner/scanner.ts';
 import { Statements } from './statements.ts';
 import { ParseNode } from './nodes.ts';
-import { modifierKinds, precedence, reservedKinds, tokenSpelling } from './grammar.ts';
+import { modifierKinds, precedence, reservedKinds, tokenSpelling, expressionKinds } from './grammar.ts';
 import {
     arrowAhead,
     statementAhead,
@@ -71,40 +71,7 @@ export class Parser {
         return (
             this.bindingIdentifier() ||
             (precedence(this.kind()) >= 0 && !(this.kind() === 'InKeyword' && this.disallowIn)) ||
-            [
-                'ThisKeyword',
-                'SuperKeyword',
-                'NullKeyword',
-                'TrueKeyword',
-                'FalseKeyword',
-                'NumericLiteral',
-                'BigIntLiteral',
-                'StringLiteral',
-                'NoSubstitutionTemplateLiteral',
-                'TemplateHead',
-                'OpenParenToken',
-                'OpenBracketToken',
-                'OpenBraceToken',
-                'FunctionKeyword',
-                'ClassKeyword',
-                'NewKeyword',
-                'SlashToken',
-                'SlashEqualsToken',
-                'PlusToken',
-                'MinusToken',
-                'TildeToken',
-                'ExclamationToken',
-                'DeleteKeyword',
-                'TypeOfKeyword',
-                'VoidKeyword',
-                'PlusPlusToken',
-                'MinusMinusToken',
-                'LessThanToken',
-                'AwaitKeyword',
-                'YieldKeyword',
-                'PrivateIdentifier',
-                'AtToken',
-            ].includes(this.kind())
+            expressionKinds.includes(this.kind())
         );
     }
     literalPropertyName(): boolean {
@@ -458,6 +425,7 @@ export class Parser {
             flags: this.scanner.flags,
             errors: this.scanner.errors.length,
             nodes: this.nodes.length,
+            roots: this.roots.length,
             diagnostics: this.diagnostics.length,
         };
     }
@@ -470,6 +438,7 @@ export class Parser {
         this.scanner.flags = state.flags;
         this.scanner.errors.splice(state.errors);
         this.nodes.splice(state.nodes);
+        this.roots.splice(state.roots);
         this.diagnostics.splice(state.diagnostics);
     }
     docTypes(): number[] {

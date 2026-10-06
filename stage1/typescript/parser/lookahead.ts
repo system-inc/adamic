@@ -11,6 +11,7 @@ export interface ParserStateInterface {
     readonly flags: number;
     readonly errors: number;
     readonly nodes: number;
+    readonly roots: number;
     readonly diagnostics: number;
 }
 
@@ -135,6 +136,14 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
         }
     }
     if(kind(scanner) === 'OpenParenToken') {
+        const parameterState = new Speculation(scanner);
+        parameterState.next();
+        const first = kind(scanner);
+        parameterState.restore();
+        const parameterHead =
+            first === 'Identifier' ||
+            first === 'ThisKeyword' ||
+            (first.endsWith('Keyword') && !reservedKinds.includes(first));
         let depth = 0;
         let typed = false;
         let head = 0;
@@ -148,10 +157,11 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             if(depth === 1 && kind(scanner) !== 'OpenParenToken') {
                 head++;
                 if(
-                    (head === 2 &&
+                    (parameterHead &&
+                        head === 2 &&
                         (kind(scanner) === 'ColonToken' ||
                             (kind(scanner) === 'QuestionToken' && optionalParameterAhead(scanner)))) ||
-                    (head === 1 && kind(scanner) === 'DotDotDotToken')
+                    (head === 1 && first === 'DotDotDotToken')
                 ) {
                     typed = true;
                 }
