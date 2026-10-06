@@ -30,31 +30,14 @@ func borrow(program *ir.Program) {
 	}
 }
 
-// findAssigned adds every local an ir.Assign in statements writes, however deeply nested.
+// findAssigned adds every local an ir.Assign in statements writes, however deeply nested: walk goes
+// into every statement that holds others (a try's body, catch and finally among them), so one added
+// to the IR later isn't missed, as a hand-written list missed try.
 func findAssigned(statements []ir.Statement, assigned map[int]bool) {
-	for _, statement := range statements {
-		switch statement := statement.(type) {
-		case ir.Assign:
-			assigned[statement.Local] = true
-		case ir.If:
-			findAssigned(statement.Then, assigned)
-			findAssigned(statement.Else, assigned)
-		case ir.Loop:
-			findAssigned(statement.Body, assigned)
-			findAssigned(statement.Update, assigned)
-		case ir.Block:
-			findAssigned(statement.Body, assigned)
-		case ir.ForOf:
-			findAssigned(statement.Body, assigned)
-		case ir.Switch:
-			for _, switchCase := range statement.Cases {
-				findAssigned(switchCase.Body, assigned)
-			}
-			findAssigned(statement.Default, assigned)
-		case ir.Try:
-			findAssigned(statement.Body, assigned)
-			findAssigned(statement.Catch, assigned)
-			findAssigned(statement.Finally, assigned)
+	walk(statements, func(node any) bool {
+		if assign, ok := node.(ir.Assign); ok {
+			assigned[assign.Local] = true
 		}
-	}
+		return true
+	})
 }

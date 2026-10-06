@@ -245,6 +245,8 @@ func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instructio
 				reached = true
 			}
 		case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
+			// A Map's or Set's forEach is void, so it's never in the value an assignment evaluates;
+			// in a function this calls, touches finds it.
 			reached = true
 		}
 	})
@@ -278,7 +280,7 @@ func touches(program *ir.Program, function int, global int, seen map[int]bool) b
 					if touches(program, expression.Function, global, seen) {
 						found = true
 					}
-				case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
+				case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 					found = true
 				}
 			}, statement)
