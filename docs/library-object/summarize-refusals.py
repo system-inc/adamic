@@ -2,6 +2,7 @@
 import collections
 import gzip
 import hashlib
+import html
 import json
 from pathlib import Path
 import re
@@ -24,8 +25,23 @@ for row in observations.values():
         row['feature'] = re.search(r'error TS\d+', row['reason'])[0]
     else:
         method = re.search(r'(?:not yet: |refuses )(Object\.[\w]+)', row['reason'])
-        row['bucket'] = 'b' if method else 'c'
-        row['feature'] = method[1] if method else row['reason']
+        feature = method[1] if method else None
+        # A builtin constructor or builtin value is a library dependency, even when the first
+        # diagnostic only names the expression form rather than its identifier.
+        builtin = re.search(r'not yet: (?:reading |)(Object|Array|String|Number|Boolean|Date|RegExp|Error|EvalError|RangeError|ReferenceError|SyntaxError|TypeError|URIError|Math|JSON|Function)(?: as a value|$)', row['reason'])
+        if builtin:
+            feature = builtin[1] + ' builtin value'
+        if row['reason'] == 'not yet: Number.prototype':
+            feature = 'Number.prototype builtin value'
+        if row['reason'] == 'refuses isPrototypeOf':
+            feature = 'Object.prototype.isPrototypeOf'
+        if row['reason'] == 'not yet: new an Identifier':
+            body = programs[row['path']][programs[row['path']].rfind('// Copyright'):]
+            constructor = re.search(r'\bnew\s+(String|Number|Boolean|Date|SyntaxError|Object)\b', body)
+            assert constructor, row
+            feature = constructor[1] + ' constructor'
+        row['bucket'] = 'b' if feature else 'c'
+        row['feature'] = feature if feature else row['reason']
     row['sourceSha256'] = hashlib.sha256(programs[row['path']].encode()).hexdigest()
 rows = sorted(observations.values(), key=lambda row: row['path'])
 (root / 'classification.json').write_text(json.dumps(rows, indent=2) + '\n')
@@ -35,7 +51,7 @@ with gzip.open(root / 'adapted-sources.jsonl.gz', 'wb') as output:
 counts = collections.Counter(row['bucket'] for row in rows)
 text = '''# Fresh Object refusal classification
 
-Classification completed before implementation, from main `5d4c801`, with real `typescript@6.0.3` and test262 `5992dc3b60faf62a48fd6be8a40ae9d9a8c84d81`. Adaptation is enabled. The old 0-pass measurement predates existing Object support.
+The initial classification was committed and pushed before implementation as `c48709e`, from main `5d4c801`, with real `typescript@6.0.3` and test262 `5992dc3b60faf62a48fd6be8a40ae9d9a8c84d81`. Adaptation is enabled. The old 0-pass measurement predates existing Object support.
 
 | Measurement | Pass | Disagreement | Refused | Crashed | Skipped | Total |
 |---|---:|---:|---:|---:|---:|---:|
@@ -45,10 +61,10 @@ Classification completed before implementation, from main `5d4c801`, with real `
 
 '''
 text += '| Bucket | Count | Meaning |\n|---|---:|---|\n'
-for bucket, meaning in [('a','Real tsc rejects with the same TS diagnostic code'),('b','Real tsc accepts; first refusal names an Object library feature'),('c','Real tsc accepts; first refusal names a language or representation feature')]:
+for bucket, meaning in [('a','Real tsc rejects with the same TS diagnostic code'),('b','Real tsc accepts; first refusal names a library feature or dependency'),('c','Real tsc accepts; first refusal names a language or representation feature')]:
     text += f'| {bucket} | {counts[bucket]} | {meaning} |\n'
 text += '''
-No tsc rejection had a different code. A match means the runner's first normalized TS code appears among real tsc's diagnostics, not that every diagnostic or its order is identical. Every refused adapted program was checked separately against `lib.es2024.d.ts` and the exact `internal/load/prelude.d.ts`, with all `compilerOptions()` from `internal/load/load.go`. The checker implementation is the npm TypeScript package, not typescript-go. Skipped tests are outside the refusal classification.
+No tsc rejection had a different code. A match means the runner's first normalized TS code appears among real tsc's diagnostics, not that every diagnostic or its order is identical. Every refused adapted program was checked separately against `lib.es2024.d.ts` and the exact `internal/load/prelude.d.ts`, and Adamic's pinned declaration files from `cohere/TypeScript/tsc/internal/bundled/libs` with every `regexp_library.go` correction, with all `compilerOptions()` from `internal/load/load.go`. The checker implementation is the npm TypeScript package, not typescript-go. Skipped tests are outside the refusal classification.
 
 [classification.json](classification.json) lists every refused test, the full real-tsc diagnostics, feature, bucket and source hash. [adapted-sources.jsonl.gz](adapted-sources.jsonl.gz) preserves the runner's exact sources and per-test outcomes. [classify-tsc.cjs](classify-tsc.cjs) and [summarize-refusals.py](summarize-refusals.py) reproduce the tsc pass and tables. The scratch runner was a copy of `cmd/adamic-test262`, with only a capture after each result. The official runner's aggregate result and the capture run match. No runner source was edited.
 
@@ -60,6 +76,10 @@ for bucket in 'abc':
     for reason, count in reasons.most_common():
         text += f'| `{reason.replace("|", " / ")}` | {count} |\n'
 text += '''
+## Classification refinement
+
+The first claim used npm's es2024 declarations and classified generic builtin constructor/value diagnostics as representation gaps: (a) 1679, (b) 388, (c) 250. The final real-tsc pass uses the checker's exact pinned declaration text and RegExp corrections. Constructor/value expressions were inspected and named as library dependencies rather than generic language blockers; the final tables reflect that refinement. The accepted/rejected partition and matching diagnostic codes are checked again, not inferred. These dependencies may belong to other library slices and do not authorize edits there.
+
 ## Claim and build order
 
 1. The largest library refusal, `Object.defineProperty` (185), and `defineProperties` (24) require observable descriptors, accessors and shape mutation. These remain explicit refusals: CLAUDE.md binds the approved fixed-shape memory and type contract, and docs/0.1.md forbids this mutation. Implementing them needs a representation and soundness design beyond this slice. Prototype mutation has the same constraint. Descriptor reads currently return any, adding a language blocker even if their first refusal were removed.
@@ -77,12 +97,12 @@ Each row is a representative adapted test body on one line. To reproduce, prepen
 reasons = collections.Counter(row['feature'] for row in rows if row['bucket'] == 'c')
 for reason, count in reasons.most_common():
     row = next(row for row in rows if row['feature'] == reason and row['bucket'] == 'c')
-    body = programs[row['path']].split('\n}\n', 1)[0] if False else programs[row['path']]
+    body = programs[row['path']]
     # Prelude ends immediately before the test copyright; use the exact body, not a guessed reduction.
     body = body[body.find('// Copyright'): ] if '// Copyright' in body else body[body.find('/* Copyright'):]
     body = re.sub(r'/\*.*?\*/', '', body, flags=re.S)
     body = re.sub(r'//[^\n]*', '', body)
-    body = ' '.join(body.split()).replace('|', '&#124;').replace('`', '&#96;')
+    body = html.escape(' '.join(body.split())).replace('|', '&#124;').replace('`', '&#96;')
     text += f'| {reason.replace("|", " / ")} | {count} | <code>{body}</code> | `{row["path"]}` |\n'
 (root / 'refusals.md').write_text(text)
 print(dict(counts))

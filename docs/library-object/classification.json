@@ -1235,8 +1235,8 @@
     "reason": "refuses isPrototypeOf",
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "refuses isPrototypeOf",
+    "bucket": "b",
+    "feature": "Object.prototype.isPrototypeOf",
     "sourceSha256": "d4beb63632556282348488a121e2ab7bef161c7f9fd4a4e2b98d43d2c72d2a59"
   },
   {
@@ -39279,8 +39279,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "String constructor",
     "sourceSha256": "f4e6c8bfcf1a0fe5dcf4325dfd19582fcfc9c625ba3cbb70022ef36621953cbd"
   },
   {
@@ -39293,8 +39293,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "Boolean constructor",
     "sourceSha256": "4b9d469c343c83e0568e5462e7f990490904ef4b0a0f0c9d1dac00c86f3314ae"
   },
   {
@@ -39307,8 +39307,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "Number constructor",
     "sourceSha256": "0eea6d611a3de89f2dbc5dd6a7fed248966fbb038c809934b4803a22fad6695c"
   },
   {
@@ -39321,8 +39321,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "Date constructor",
     "sourceSha256": "fa26b35fb84d4cc979b3f37fc327c85343e7ada869a30f87d3aa280fed516e24"
   },
   {
@@ -39356,8 +39356,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "SyntaxError constructor",
     "sourceSha256": "2a313f515730bcc4158f5dc66caed4b9cd22f38e4b83b497cc959b720f901ab6"
   },
   {
@@ -50083,7 +50083,7 @@
       },
       {
         "code": 2345,
-        "message": "Argument of type '{ (separator: string | RegExp, limit?: number | undefined): string[]; (splitter: { [Symbol.split](string: string, limit?: number | undefined): string[]; }, limit?: number | undefined): string[]; }' is not assignable to parameter of type 'string | number | boolean | undefined'.",
+        "message": "Argument of type '{ (separator: string, limit?: number | undefined): string[]; (separator: RegExp, limit?: number | undefined): (string | undefined)[]; (splitter: { [Symbol.split](string: string, limit?: number | undefined): (string | undefined)[]; }, limit?: number | undefined): (string | undefined)[]; }' is not assignable to parameter of type 'string | number | boolean | undefined'.",
         "line": 100,
         "file": "/tmp/object-tsc-program.ts"
       },
@@ -51955,8 +51955,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "String constructor",
     "sourceSha256": "c9c915d5bf1c034bd454562a0480e3eb2f5922dcdc137b01ced18395a2715c89"
   },
   {
@@ -51969,8 +51969,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "String constructor",
     "sourceSha256": "7605e84c804d3c3fcb89951407edd36e2751c99719f393bcbb043e422aa9e260"
   },
   {
@@ -51983,8 +51983,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "String constructor",
     "sourceSha256": "c5e317cf127a4b12de61335b0ab637419e1b2cb1e8c2e16fc09ada77a1f8296c"
   },
   {
@@ -53950,8 +53950,8 @@
     "reason": "not yet: Object as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: Object as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "bucket": "b",
+    "feature": "Object builtin value",
     "sourceSha256": "f13bc19b8483b5cf9401b13d96eaee46b4a3db80989db4c3af49be1ad5e01f54"
   },
   {
@@ -54058,8 +54058,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "Object constructor",
     "sourceSha256": "04cdc586a6bf674faac216d890ea1682e321137c50ef637fc7da0f1b1627f96b"
   },
   {
@@ -54934,8 +54934,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading Boolean",
+    "bucket": "b",
+    "feature": "Boolean builtin value",
     "sourceSha256": "2e2057007f02d970478cb401e337c708bcf5fb67c1ee7880a9c72264b734e52a"
   },
   {
@@ -54962,8 +54962,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: Number as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "bucket": "b",
+    "feature": "Number builtin value",
     "sourceSha256": "743917e358d5c02dfc2bfd8d88c9eb8e9eb73d03341895e187115f0ba5fecc52"
   },
   {
@@ -54976,8 +54976,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: Number.prototype",
+    "bucket": "b",
+    "feature": "Number.prototype builtin value",
     "sourceSha256": "6a50ec1af7cc31ab86487657d1277bd6cca5f2e365c528b14d6754fdaf9cdcd7"
   },
   {
@@ -54990,8 +54990,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading Math",
+    "bucket": "b",
+    "feature": "Math builtin value",
     "sourceSha256": "6a33c259f0927e882a9c57783ec653e6f547d5bdc1510d7d95fcc345e136e37e"
   },
   {
@@ -55004,8 +55004,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading Date",
+    "bucket": "b",
+    "feature": "Date builtin value",
     "sourceSha256": "cef5f91f11996e89ada43d0806995427b4c6da9539e8137b6fa4a1e623cad4f5"
   },
   {
@@ -55032,8 +55032,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading RegExp",
+    "bucket": "b",
+    "feature": "RegExp builtin value",
     "sourceSha256": "9bb5b9c43b4fedb615cd9308c8b94cd47506804c1450c424308ca7aee18bbdad"
   },
   {
@@ -55060,8 +55060,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading Error",
+    "bucket": "b",
+    "feature": "Error builtin value",
     "sourceSha256": "00da7539982b2f8a9013311773ba70ef973c1c78e91f6f05edbdc9f7ebac8f46"
   },
   {
@@ -55074,8 +55074,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: Object as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "bucket": "b",
+    "feature": "Object builtin value",
     "sourceSha256": "85a0e27e7e38eba1c1fc0d010308ce74c593570bbb037baf6416efce0dfb5917"
   },
   {
@@ -55102,8 +55102,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading EvalError",
+    "bucket": "b",
+    "feature": "EvalError builtin value",
     "sourceSha256": "a2e277cc201e69c3e98ce91d66ac52db9c72abd143f91d407d7e21a4b60d82a7"
   },
   {
@@ -55116,8 +55116,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading RangeError",
+    "bucket": "b",
+    "feature": "RangeError builtin value",
     "sourceSha256": "7e2f6465add16e0aa9276a7719d323cc7bf0de73b8de6a133162868f2aaa25bc"
   },
   {
@@ -55130,8 +55130,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading ReferenceError",
+    "bucket": "b",
+    "feature": "ReferenceError builtin value",
     "sourceSha256": "360fc09ab763b49f6e227ea89159902bd2a4ba123d8a53753163008878d4d084"
   },
   {
@@ -55144,8 +55144,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading SyntaxError",
+    "bucket": "b",
+    "feature": "SyntaxError builtin value",
     "sourceSha256": "0472beb849d307f95e8c6011f3bfa6db0ac28ca18abb5335d64555f643347bcb"
   },
   {
@@ -55158,8 +55158,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading TypeError",
+    "bucket": "b",
+    "feature": "TypeError builtin value",
     "sourceSha256": "20cb52bfb72174b6f110fd0c3b8b7be3c10f02ad1f2d5b56753ecccd74357ae9"
   },
   {
@@ -55172,8 +55172,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading URIError",
+    "bucket": "b",
+    "feature": "URIError builtin value",
     "sourceSha256": "0a194b9b55f5ab0a0687a4a4e877997e087fcf853cb674dc79ee2fc05382ff7d"
   },
   {
@@ -55186,8 +55186,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "bucket": "b",
+    "feature": "JSON builtin value",
     "sourceSha256": "40265d8d71dfb93538586b5e008649bde83366607ca64322d5f1887ec489a0f2"
   },
   {
@@ -55228,8 +55228,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: reading Function",
+    "bucket": "b",
+    "feature": "Function builtin value",
     "sourceSha256": "18e3bb15d1400860090e630f086fd305eb9527b8532069e6d11dde02a763e42b"
   },
   {
@@ -55256,8 +55256,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "bucket": "b",
+    "feature": "Array builtin value",
     "sourceSha256": "be5f4ca0a7c5f69fabd2b6aaeb43832977e95522c5316db64cfeaa078160896e"
   },
   {
@@ -55284,8 +55284,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: String as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "bucket": "b",
+    "feature": "String builtin value",
     "sourceSha256": "0ae88e3cb447ad93e1ffdcaa565fa445a599526dd0420c5ad4364be4aeddf18e"
   },
   {
@@ -56682,8 +56682,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "String constructor",
     "sourceSha256": "fa3aa160089dcbba4d62487449a8ff851fd9d724c64046ee7b28a30042a3ba9e"
   },
   {
@@ -57034,8 +57034,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "String constructor",
     "sourceSha256": "a22c1e079ebfff3f198d30608efce3ebcd50757b9d20308973e251f2015e2af5"
   },
   {
@@ -58720,8 +58720,8 @@
     "reason": "refuses isPrototypeOf",
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "refuses isPrototypeOf",
+    "bucket": "b",
+    "feature": "Object.prototype.isPrototypeOf",
     "sourceSha256": "9cffc60ad180ec422899bc7503ff74707d125298623985880c825fcf484ca753"
   },
   {
@@ -58803,8 +58803,8 @@
     "reason": "refuses isPrototypeOf",
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "refuses isPrototypeOf",
+    "bucket": "b",
+    "feature": "Object.prototype.isPrototypeOf",
     "sourceSha256": "78384ddd0127d67107068cf34b28ae93797fb82c9640da3b6d982126c395d42c"
   },
   {
@@ -59584,8 +59584,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "Boolean constructor",
     "sourceSha256": "84c175b68e82c60c01e8d4a2f732ab4fc446c3adbe5af00b777b0963d71e367e"
   },
   {
@@ -59598,8 +59598,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "Date constructor",
     "sourceSha256": "b878cb04543b611176f6712113497c3d455e0fdba06da8d67f7a864f4babf2c1"
   },
   {
@@ -59626,8 +59626,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "Number constructor",
     "sourceSha256": "953146699062847d9639e1c015e705612cc95b45bbb8c5cbc7d8b3883ab87def"
   },
   {
@@ -59661,8 +59661,8 @@
     },
     "tsc": [],
     "sameCode": false,
-    "bucket": "c",
-    "feature": "not yet: new an Identifier",
+    "bucket": "b",
+    "feature": "String constructor",
     "sourceSha256": "6079a9828df8d5f3961271401203b2389301c20f5c99a6dac71b92bc1c63b1ce"
   },
   {
