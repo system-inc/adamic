@@ -1,0 +1,19 @@
+interface Note { readonly text: string; }
+class Base {
+    readonly field = 1;
+    constructor(public readonly kind: string, public note: Note, public number: number) {}
+    read(): string { return `${this.kind} ${this.note.text} ${this.number} ${this.field}`; }
+}
+class Narrow extends Base {
+    readonly second = 2;
+    constructor(public override readonly kind: 'small', public override note: Note, public override number: number) {
+        super('base', {text: 'base-note'}, -1);
+        console.log(`${this.kind} ${this.note.text} ${this.number} ${this.second}`);
+    }
+}
+class Forward extends Narrow { readonly third = 3; }
+const child = new Forward('small', {text: 'child-note'}, 9);
+const base: Base = child;
+base.note = {text: 'new-note'};
+base.number += 1;
+console.log(`${base.read()} ${child.third}`);

@@ -1,0 +1,16 @@
+import { Shared } from './state.a';
+import { left, addLeft } from './left.a';
+import { right, addRight } from './right.a';
+class Base {
+    readonly field = Shared.title;
+    constructor(public readonly apply: (value: number) => number) {}
+}
+class Child extends Base {
+    readonly own = Shared.items;
+    constructor(apply: (value: number) => number, readonly value: number) { super(apply); }
+    run(): number { return this.apply(this.value); }
+}
+const first = new Child(left, 2);
+const second = new Child(right, 3);
+console.log(`${first.run()} ${second.run()} ${addLeft(1)} ${addRight(2)}`);
+console.log(`${addLeft === addRight} ${addLeft === Shared.add} ${Shared.read()} ${first.field} ${second.own.join(',')}`);

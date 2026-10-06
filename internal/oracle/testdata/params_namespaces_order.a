@@ -1,0 +1,39 @@
+namespace Trace {
+    let text = '';
+    export const step = 2;
+    export function mark(name: string): number { text += name + ' '; return text.length; }
+    export function read(): string { return text; }
+}
+class Root {
+    readonly seed = Trace.mark('root-field');
+    constructor(public value: number = this.seed, readonly doubled: number = value * Trace.step) {
+        value += 100;
+        console.log(`root ${value} ${this.value} ${this.doubled}`);
+    }
+}
+class Middle extends Root {
+    readonly seed2 = Trace.mark('middle-field');
+    constructor(public override value: number = Trace.mark('middle-default'), protected label: string = 'middle') {
+        value += 1;
+        super(value);
+        value += 10;
+        label += '!';
+        console.log(`middle ${value} ${this.value} ${label} ${this.label} ${this.seed2}`);
+    }
+    read(): string { return `${this.value} ${this.label}`; }
+}
+class Leaf extends Middle {
+    readonly seed3 = Trace.mark('leaf-field');
+    constructor(public override value: number = Trace.mark('leaf-default'), private label3: string = 'leaf') {
+        value *= Trace.step;
+        super(value, label3);
+        this.value += 3;
+        value += 50;
+        console.log(`leaf ${value} ${this.value} ${this.label3} ${this.seed3}`);
+    }
+}
+const root = new Root(undefined, undefined);
+const leaf = new Leaf();
+console.log(`${root.value} ${root.doubled} ${leaf.read()} ${Trace.read()}`);
+const supplied = new Leaf(4, 'given');
+console.log(`${supplied.read()} ${Trace.read()}`);

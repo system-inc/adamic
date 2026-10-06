@@ -1,0 +1,10 @@
+function show(value: Shapes.Point): string { return `${value.x},${value.y}`; }
+console.log(show({x: 2, y: 3}));
+namespace Shapes {
+    ;
+    export interface Point { readonly x: number; readonly y: number; }
+    export namespace Inner { export type Points = readonly Point[]; }
+}
+namespace Empty {}
+const points: Shapes.Inner.Points = [{x: 4, y: 5}];
+for (const point of points) { console.log(show(point)); }
