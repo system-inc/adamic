@@ -436,7 +436,7 @@ func testBlockLayout(t *testing.T, slice string) {
 	fixture := fullLayoutFixture(t)
 	layoutSlots <- struct{}{}
 	defer func() { <-layoutSlots }()
-	root, dir, nativeCases, canonicalCases := fixture.root, fixture.directory, fixture.nativeCases, fixture.canonicalCases
+	root, nativeCases, canonicalCases := fixture.root, fixture.nativeCases, fixture.canonicalCases
 	main, fork, goLayout, script := fixture.main, fixture.fork, fixture.goLayout, fixture.script
 	inputs, files, program := fixture.inputs, fixture.files, fixture.program
 	want := run{stdout: fixture.want}
