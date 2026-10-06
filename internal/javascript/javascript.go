@@ -595,6 +595,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "String.fromCharCode(" + codes + ")"
 	case ir.NumberCall:
+		if expression.Function == "prototypeHasOwnProperty" {
+			return "Number.prototype.hasOwnProperty(" + e.values(expression.Arguments) + ")"
+		}
+		if expression.Function == "convert" {
+			return "Number(" + e.values(expression.Arguments) + ")"
+		}
 		return "Number." + expression.Function + "(" + e.values(expression.Arguments) + ")"
 	case ir.ToFixed:
 		return e.value(expression.Value) + ".toFixed(" + e.value(expression.Digits) + ")"

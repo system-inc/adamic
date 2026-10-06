@@ -414,6 +414,12 @@ adamic_string *adamic_string_from_number(double value);
 // of 0 is the one left out.
 double adamic_number_parse_int(const adamic_string *text, double radix);
 double adamic_number_parse_float(const adamic_string *text);
+double adamic_number_from_string(const adamic_string *text);
+double adamic_number_from_union(const adamic_heap *value);
+bool adamic_number_has_own_property(const adamic_string *key, bool prototype);
+double adamic_math_clz32(double value);
+double adamic_math_imul(double left, double right);
+double adamic_math_fround(double value);
 adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]);
 
 // The strings every program has: "", and String(true) and String(false).

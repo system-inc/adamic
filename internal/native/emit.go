@@ -1310,6 +1310,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
 	case ir.NumberCall:
+		if value, known := e.libraryNumberCall(expression); known {
+			return value
+		}
 		arguments := []string{}
 		for _, argument := range expression.Arguments {
 			arguments = append(arguments, e.value(argument))
@@ -1823,6 +1826,9 @@ var cIeee754 = map[string]bool{
 }
 
 func (e *emitter) mathCall(call ir.MathCall) string {
+	if value, known := e.libraryMathCall(call); known {
+		return value
+	}
 	if call.Spread != nil {
 		return e.snapshot(ir.Number, fmt.Sprintf("adamic_math_%s_of(%s)", call.Function, e.value(call.Spread)))
 	}
