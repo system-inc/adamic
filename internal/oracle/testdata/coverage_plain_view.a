@@ -1,0 +1,9 @@
+interface Shown { readonly name: string; readonly message: string; }
+function copy(value: Shown): string {
+ const result = { ...value, message: 'replacement' };
+ return `${result.name} ${result.message} ${value.message}`;
+}
+console.log(copy({ name: 'plain', message: 'original' }));
+const source = { name: 'literal', message: 'own' };
+const result = { ...source };
+console.log(`${result.name} ${result.message} ${source.message}`);

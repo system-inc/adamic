@@ -1,0 +1,6 @@
+interface Cursor { readonly lastIndex: number; }
+function copy(value: Cursor): void {
+ const result = { ...value };
+ console.log(Object.keys(result).join(','));
+}
+copy(/a/g);
