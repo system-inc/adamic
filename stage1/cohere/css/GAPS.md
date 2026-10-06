@@ -90,3 +90,34 @@ entry point. Every one of the fork's 43 `.less` files is still tested through
 both supported grammars and compared with those Go and JavaScript parsers.
 Acceptance by a CSS grammar is not a claim of Less parsing. No postcss-less
 oracle or Less composition is implemented here.
+
+## 6. Printer native composition
+
+[gaps/6_printer_regex_tree.ts](gaps/6_printer_regex_tree.ts) constructs a regular
+expression and imports the media tree. Node prints `2` and `Ok`. Lowering
+refuses `ir.RegExpNew is a node the cycle finder doesn't know`. The complete
+`print_main.ts` reaches the same refusal.
+`TestNativeCSSPrinterHasTheRecordedCompositionGap` holds both proving programs
+and fails when the gap closes. The printer is type checked by Adamic and runs
+on Node; native printer output, sanitizer/leak checks and throughput remain
+blocked. This cycle-proof work belongs to the other worker.
+
+## Printer boundaries against full Prettier
+
+[gaps/printer_boundaries.ts](gaps/printer_boundaries.ts) and
+[gaps/printer_library.mjs](gaps/printer_library.mjs) prove four full-API
+boundaries. Go's internal CSS entry receives raw input, whereas Prettier's
+full format entry preserves a BOM, normalizes carriage returns, bypasses
+parsing for whitespace-only nonbreaking space, and delegates nonempty YAML
+front matter to its YAML printer. Go CSS explicitly refuses that delegation.
+The Adamic printer follows Go. These are entry-point differences, not newly
+claimed Prettier defects.
+
+`testdata/printer_library_gaps.json` records exact input, option mode, oracle
+variant and both answers; all other format or acceptance differences fail.
+For each option set each original oracle has 4,952 byte-identical formats,
+19,080 shared refusals and 44 recorded discrepancy occurrences: BOM 12, CR 2,
+nonbreaking space 2, YAML 28. Error messages from Prettier's public API include
+code frames and are not compared with Go's internal error API. Go errors and
+positions are held exactly. JSON escaping differences are decoded before
+comparing formatted string bytes. No arbitrary invalid-UTF-8 output is promised.

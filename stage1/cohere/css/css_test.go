@@ -39,7 +39,7 @@ var mutants = []mutant{
 func portDirectory(t *testing.T, applied *mutant) string {
 	t.Helper()
 	directory := t.TempDir()
-	for _, slice := range []string{"css", "selector", "values", "mediaquery"} {
+	for _, slice := range []string{"css", "selector", "values", "mediaquery", "cssstrings", "cssnumbers"} {
 		entries, err := os.ReadDir(filepath.Join("..", slice))
 		if err != nil {
 			t.Fatal(err)
