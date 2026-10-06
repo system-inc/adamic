@@ -156,9 +156,16 @@ func (p *Program) NativeDeclarations(name string) (string, error) {
 		}
 		firstBody, firstName := p.nativeSparseFirst(name)
 		out.WriteString(firstBody)
+		testName := "NULL"
+		if body := p.nativeBooleanASCII(name, firstName); body != "" {
+			out.WriteString(body)
+			testName = name + "_test"
+		}
 		regularBody, regularName := p.nativeRegular(name)
 		out.WriteString(regularBody)
-		fmt.Fprintf(&out, "static const adamic_regex_program %s = {%s_code,%d,%d,%d,%s,%d,%s,{UINT64_C(%d),UINT64_C(%d)},%t,%s,%d,%s,%t,%s,%s,%s,%d,%s};\n", name, name, p.captures, p.repeats, nativeFlags(p.flags), groupNames, len(names), shape, bits[0], bits[1], filter, prefixName, len(prefix), fast, p.nativeAnchored(), ascii, regularName, behindName, len(behind), firstName)
+		_, endAnchored := p.nativeBooleanWidth()
+		testPrefix := testName != "NULL" && !p.nativeAnchored() && !p.flags.Sticky && len(prefix) != 0 && !endAnchored
+		fmt.Fprintf(&out, "static const adamic_regex_program %s __attribute__((aligned(64))) = {%s_code,%s,%t,%d,%d,%d,%s,%d,%s,{UINT64_C(%d),UINT64_C(%d)},%t,%s,%d,%s,%t,%s,%s,%s,%d,%s};\n", name, name, testName, testPrefix, p.captures, p.repeats, nativeFlags(p.flags), groupNames, len(names), shape, bits[0], bits[1], filter, prefixName, len(prefix), fast, p.nativeAnchored(), ascii, regularName, behindName, len(behind), firstName)
 		return nil
 	}
 	if err := emit(p, name); err != nil {
