@@ -1,0 +1,32 @@
+Regex protocol unit claim
+
+Branch: codex/regex-protocol
+Base: codex/regex-matcher at df959ee978da7cfcac45fe0e9ff941b80a6fda58
+Baseline: 1,879 built-ins/RegExp files: 914 pass, 0 fail, 449 refused,
+0 crashed, 516 skipped. Existing Node comparison has zero disagreements.
+
+Work, in descending useful refusal/skip groups:
+- List the 223 existing TypeScript diagnostic refusals; do not implement
+  programs rejected by tsc or change runner classification/verdict ownership.
+- Implement sound well-known Symbol RegExp protocols and String dispatch,
+  with explicit refusals for unsupported dynamic hooks or species behavior.
+  Enabling currently classified Symbol skips requires the runner owner's handoff.
+- Make supported RegExp constructor failures throw SyntaxError at runtime;
+  distinguish TypeError and SyntaxError constructors in native exceptions and
+  harness assertions, preserving ownership and catch/finally behavior.
+- Investigate runtime patterns and flags using the existing compiler. If that
+  compiler cannot run in the native runtime soundly, retain an explicit refusal;
+  do not substitute another regexp grammar or silently freeze dynamic inputs.
+- Expose sound d-flag indices, including absent captures and named groups.
+
+Territory: regexp lowering, IR, library declarations, native regexp runtime
+and emission, extracted exception hooks, JS reference emission, harness prelude
+and run adaptation, targeted tests, oracle fixtures and reports as necessary.
+Do not edit runner classify/verdict files, internal/regexp/testdata/cohere,
+internal/native/emit.go, internal/native/native.go, internal/lower/lower.go,
+or internal/oracle/oracle_test.go.
+
+Validation: before/after reason tables; original and adapted programs held to
+Node; targeted feature mutants; existing 127,369 regexp executions and seeded
+random differential retained with zero disagreements. Log test commands and
+outputs, report unsupported cases explicitly, commit and push green work.
