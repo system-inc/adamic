@@ -64,8 +64,8 @@ export class Scanner {
     code(offset = 0): number {
         return this.text.codePointAt(this.pos + offset) ?? -1;
     }
-    advance(): void {
-        this.pos += this.code() > 0xffff ? 2 : 1;
+    advance(code: number): void {
+        this.pos += code > 0xffff ? 2 : 1;
     }
     error(code: number, start: number = this.pos, length = 0): void {
         this.errors.push({ code, start, length });
@@ -172,7 +172,7 @@ export class Scanner {
             this.error(1126);
             return '';
         }
-        this.advance();
+        this.advance(code);
         if(code >= 48 && code <= 55) {
             if(code === 48 && !(this.code() >= 48 && this.code() <= 57)) {
                 return '\u0000';
@@ -266,7 +266,7 @@ export class Scanner {
                 escaped = true;
             }
             else if(first ? isIdentifierStart(code) : isIdentifierPart(code)) {
-                this.advance();
+                this.advance(code);
             }
             else {
                 break;
@@ -308,7 +308,7 @@ export class Scanner {
                 start = this.pos;
             }
             else {
-                this.advance();
+                this.advance(code);
             }
         }
         this.kind = 'StringLiteral';
@@ -355,7 +355,7 @@ export class Scanner {
                 start = this.pos;
             }
             else {
-                this.advance();
+                this.advance(code);
             }
         }
         this.value = pieces.join('');
@@ -494,29 +494,37 @@ export class Scanner {
                 return this.kind;
             }
             if(isSpace(code)) {
-                this.advance();
+                this.advance(code);
                 continue;
             }
             if(isLineBreak(code)) {
                 this.flags |= 1;
-                this.advance();
+                this.advance(code);
                 continue;
             }
             if(code === 47 && this.code(1) === 47) {
                 this.pos += 2;
-                while(this.pos < this.text.length && !isLineBreak(this.code())) {
-                    this.advance();
+                while(this.pos < this.text.length) {
+                    const current = this.code();
+                    if(isLineBreak(current)) {
+                        break;
+                    }
+                    this.advance(current);
                 }
                 continue;
             }
             if(code === 47 && this.code(1) === 42) {
                 this.pos += 2;
                 const jsdoc = this.code() === 42 && this.code(1) !== 47;
-                while(this.pos < this.text.length && !(this.code() === 42 && this.code(1) === 47)) {
-                    if(isLineBreak(this.code())) {
+                while(this.pos < this.text.length) {
+                    const current = this.code();
+                    if(current === 42 && this.code(1) === 47) {
+                        break;
+                    }
+                    if(isLineBreak(current)) {
                         this.flags |= 1;
                     }
-                    this.advance();
+                    this.advance(current);
                 }
                 if(this.pos === this.text.length) {
                     this.error(1010);
@@ -551,8 +559,12 @@ export class Scanner {
             if(code === 35 && this.code(1) === 33) {
                 this.pos += 2;
                 if(this.start === 0) {
-                    while(this.pos < this.text.length && !isLineBreak(this.code())) {
-                        this.advance();
+                    while(this.pos < this.text.length) {
+                        const current = this.code();
+                        if(isLineBreak(current)) {
+                            break;
+                        }
+                        this.advance(current);
                     }
                     continue;
                 }
@@ -570,22 +582,27 @@ export class Scanner {
                 this.error(1185, this.pos, 7);
                 this.pos += 7;
                 if(code === 60 || code === 62) {
-                    while(this.pos < this.text.length && !isLineBreak(this.code())) {
-                        this.advance();
+                    while(this.pos < this.text.length) {
+                        const current = this.code();
+                        if(isLineBreak(current)) {
+                            break;
+                        }
+                        this.advance(current);
                     }
                 }
                 else {
                     while(this.pos < this.text.length) {
+                        const current = this.code();
                         if(
-                            (this.code() === 61 || this.code() === 62) &&
-                            this.code() !== code &&
+                            (current === 61 || current === 62) &&
+                            current !== code &&
                             (this.pos === 0 || isLineBreak(this.text.charCodeAt(this.pos - 1))) &&
-                            this.text.slice(this.pos, this.pos + 7) === String.fromCharCode(this.code()).repeat(7) &&
-                            (this.code() === 61 || this.code(7) === 32)
+                            this.text.slice(this.pos, this.pos + 7) === String.fromCharCode(current).repeat(7) &&
+                            (current === 61 || this.code(7) === 32)
                         ) {
                             break;
                         }
-                        this.advance();
+                        this.advance(current);
                     }
                 }
                 continue;
@@ -652,7 +669,7 @@ export class Scanner {
                 }
             }
             this.error(1127, this.pos, code > 0xffff ? 2 : 1);
-            this.advance();
+            this.advance(code);
             this.kind = 'Unknown';
             return this.kind;
         }
@@ -804,7 +821,7 @@ export class Scanner {
                 else if(!isSpace(current) && !isLineBreak(current)) {
                     first = this.pos;
                 }
-                this.advance();
+                this.advance(current);
             }
             this.value = this.text.slice(this.start, this.pos);
             this.kind = first === -1 ? 'JsxTextAllWhiteSpaces' : 'JsxText';
