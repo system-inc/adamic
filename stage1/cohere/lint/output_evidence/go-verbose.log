@@ -1,0 +1,17 @@
+graph built in 24ms — 65 files in the program, 2 of them ours
+sets: cohere:typescript on every file; cohere:react not applied, no file imports react or contains JSX; cohere:next not applied, no file imports next or is one of Next's own files; cohere:tailwind not applied, no Tailwind stylesheet at any of the places its rules look (app/globals.css and the others), so its rules are skipped
+/tmp/stage1-lint-output-reference/a.ts:1:1 - A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead. [no-debugger/unexpectedDebugger]
+/tmp/stage1-lint-output-reference/a.ts:2:1 - A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead. [no-debugger/unexpectedDebugger]
+/tmp/stage1-lint-output-reference/b.ts:1:1 - A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead. [no-debugger/unexpectedDebugger]
+lint: 3 findings — 276 rules over 2 files, 7 nodes visited, in 4ms
+coverage: 491 rules = 1 found something + 270 ran and found nothing + 5 registered no listener + 165 off by the config + 50 nobody has configured
+  0 files crashed · 0 findings suppressed, 0 without a reason · details: cohere --coverage
+  override: **/*.generated.* in cohere:house sets max-lines off: A generator's output is as long as the schema it prints, so its length measures the schema rather than a seam anyone chose. Every other rule holds generated code to the house standard (#c076xbg); max-lines alone does not apply (#50tpzjq).
+  no listener: rule nexus/localization-no-untranslated-value was offered 2 files and registered no listener on any, and it declares no reason it may (answering in Run, or declining files it is not about), so it checked nothing
+phases: fix skipped (not requested) · types skipped (not requested) · lint ran in 4ms · unused skipped (not requested — this is a report, ask for it with --unused)
+  total 97ms — graph 24ms, phases 4ms, 69ms outside any phase
+  memory: collector off, ceiling 6.0 GB (half of 12 GB available)
+  checked the project at /tmp/stage1-lint-output-reference (the run started in /workspace/adamic/cohere)
+  cache: off, by --no-cache: nothing was read from or written to this project's cache table or its incremental build info
+  this run did not check everything — the phases above say what was not checked
+✗ ☠️ 0.10s • 3 findings (276 rules • 2 checked • 7 nodes) • Adamic readiness not measured: types did not run, so no file's type errors are known • ⚠ 🔷 types not checked • 💅 formatting not checked

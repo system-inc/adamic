@@ -1,0 +1,14 @@
+=== RUN   TestOneFileHoldsNodesOrder
+=== PAUSE TestOneFileHoldsNodesOrder
+=== CONT  TestOneFileHoldsNodesOrder
+=== RUN   TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a
+=== PAUSE TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a
+=== RUN   TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a
+=== PAUSE TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a
+=== CONT  TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a
+=== CONT  TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a
+--- PASS: TestOneFileHoldsNodesOrder (0.00s)
+    --- PASS: TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a (4.00s)
+    --- PASS: TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a (4.10s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	4.101s
