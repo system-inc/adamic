@@ -214,8 +214,9 @@ function swap(kennel: Kennel): void {
 		{"a map's values seen wider, passed", `function add(animals: Map<string, Animal>): void {
 	animals.set('Tom', { name: 'Tom' });
 }
-add(new Map<string, Dog>());
-`, "main.a:14:5: Adamic 0.1 refuses a value of type Map<string, Dog> seen as Map<string, Animal>"},
+const dogsByName = new Map<string, Dog>();
+add(dogsByName);
+`, "main.a:15:5: Adamic 0.1 refuses a value of type Map<string, Dog> seen as Map<string, Animal>"},
 		{"a function seen as taking a narrower array", `const count: (dogs: Dog[]) => number = (animals: Animal[]): number => animals.push({ name: 'Tom' });
 `, "main.a:11:40: Adamic 0.1 refuses a value of type (animals: Animal[]) => number seen as (dogs: Dog[]) => number, which can write Animal where Dog is read"},
 		{"an array of arrays seen wider behind readonly", `function widen(packs: readonly Dog[][]): readonly Animal[][] {
@@ -290,6 +291,92 @@ function open(held: readonly Held[]): readonly Open[] {
 	return view;
 }
 `, "main.a:12:9: Adamic 0.1 refuses a value of type { readonly name: string; } seen as { name: string; }, whose readonly field name becomes writable"},
+		{"a shorthand property", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const list = dogs;
+const pen: { list: Animal[] } = { list };
+`, "main.a:13:35: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a parameter's default", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+function adopt(animals: Animal[] = dogs): number {
+	return animals.push({ name: 'Tom' });
+}
+`, "main.a:12:36: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a class field's initializer", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+class Pen {
+	animals: Animal[] = dogs;
+}
+`, "main.a:13:22: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"an object spread", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const kennel = { pets: dogs };
+const pen: { pets: Animal[] } = { ...kennel };
+`, "main.a:13:35: Adamic 0.1 refuses a value of type { pets: Dog[]"},
+		{"an as", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals = dogs as Animal[];
+`, "main.a:12:17: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a union target", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const slot: Animal[] | string = dogs;
+`, "main.a:12:33: Adamic 0.1 refuses a value of type Dog[] seen as string | Animal[], which can write Animal where Dog is read"},
+		{"a union source", `interface Cat extends Animal {
+	readonly lives: number;
+}
+function pick(either: Dog[] | Cat[]): Animal[] {
+	return either;
+}
+`, "main.a:15:9: Adamic 0.1 refuses a value of type Cat[] | Dog[] seen as Animal[], which can write Animal where Cat is read"},
+		{"a conditional tsc reduced to the wider branch", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = [{ name: 'Tom' }];
+const either = dogs.length > 0 ? dogs : animals;
+`, "main.a:13:34: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a literal's element tsc reduced to the wider", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = [{ name: 'Tom' }];
+const lists = [dogs, animals];
+`, "main.a:13:16: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a return tsc reduced to the wider", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = [{ name: 'Tom' }];
+function either(flag: boolean) {
+	if (flag) {
+		return dogs;
+	}
+	return animals;
+}
+`, "main.a:15:10: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a method's return", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const source = { list: (): Dog[] => dogs };
+const shelter: { list(): Animal[] } = source;
+`, "main.a:13:39: Adamic 0.1 refuses a value of type { list: () => Dog[]"},
+		{"a method's parameter, bivariant in tsc", `interface Handler {
+	handle(animal: Animal): void;
+}
+const dogHandler = { handle: (dog: Dog): void => console.log(dog.bark) };
+const handler: Handler = dogHandler;
+`, "main.a:15:26: Adamic 0.1 refuses a function taking Dog seen as one taking Animal (tsc relates a method's parameters both ways), so it can be handed what it can't take"},
+		{"a tuple's later element", `const pair: [Animal, Dog] = [{ name: 'Tom' }, { name: 'Rex', bark: 'woof' }];
+const list: Animal[] = pair;
+`, "main.a:12:24: Adamic 0.1 refuses a value of type [Animal, Dog] seen as Animal[], which can write Animal where Dog is read"},
+		{"a class target", `class Box<T> {
+	item: T;
+	constructor(item: T) {
+		this.item = item;
+	}
+}
+const dogBox = new Box<Dog>({ name: 'Rex', bark: 'woof' });
+const animalBox: Box<Animal> = dogBox;
+`, "main.a:18:32: Adamic 0.1 refuses a value of type Box<Dog> seen as Box<Animal>, which can write Animal where Dog is read"},
+		{"a plain object seen as a class", `class Pen {
+	pet: Animal = { name: 'Tom' };
+}
+const kennel = { pet: { name: 'Rex', bark: 'woof' } };
+const pen: Pen = kennel;
+`, "main.a:15:18: Adamic 0.1 refuses a value of type { pet: { name: string"},
+		{"a fresh copy's elements seen wider", `interface Kennel {
+	pet: Dog;
+}
+const kennels: Kennel[] = [{ pet: { name: 'Rex', bark: 'woof' } }];
+const pens: { pet: Animal }[] = kennels.slice();
+`, "main.a:15:33: Adamic 0.1 refuses a value of type Kennel[] seen as { pet: Animal"},
+		{"an annotated destructuring", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const kennel = { pets: dogs };
+const { pets }: { pets: Animal[] } = kennel;
+`, "main.a:13:38: Adamic 0.1 refuses a value of type { pets: Dog[]"},
 		{"an intersection's array seen as a plain array", `function tagged(dogs: Dog[] & Tag): number {
 	const animals: Animal[] = dogs;
 	return animals.push({ name: 'Tom' });
@@ -403,6 +490,61 @@ function keep(view: View): View {
 const pen: { pet: Animal } = { pet: view.pet };
 pen.pet = { name: 'Tom' };
 console.log(view.pet.name);
+`},
+		{"a copy made by slice", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.slice();
+animals.push({ name: 'Tom' });
+`},
+		{"a copy made by map", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.map((dog) => dog);
+`},
+		{"a copy made by filter", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.filter((dog) => dog.bark.length > 0);
+`},
+		{"a conditional of fresh arrays", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.length > 5 ? [{ name: 'Tom' }] : [];
+`},
+		{"a Map made from pairs", `const pairs: [string, Dog][] = [['Rex', { name: 'Rex', bark: 'woof' }]];
+const byName = new Map<string, Dog>(pairs);
+console.log(` + "`${byName.size}`" + `);
+`},
+		{"a conditional of fresh copies", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.length > 5 ? dogs.slice() : [];
+animals.push({ name: 'Tom' });
+`},
+		{"a new Map passed", `function add(animals: Map<string, Animal>): void {
+	animals.set('Tom', { name: 'Tom' });
+}
+add(new Map<string, Dog>());
+`},
+		{"a new Map", `const byName: Map<string, Animal> = new Map<string, Dog>();
+`},
+		{"a union target that can't write", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const slot: readonly Animal[] | string = dogs;
+`},
+		{"a shorthand property that can't write", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const list = dogs;
+const view: { list: readonly Animal[] } = { list };
+`},
+		{"a destructuring with no type", `interface View {
+	readonly pet: Animal;
+}
+const view: View = { pet: { name: 'Rex' } };
+const { pet } = view;
+console.log(pet.name);
+`},
+		{"a method returning the same type", `const source = { list: (): readonly Animal[] => [] };
+const shelter: { list(): readonly Animal[] } = source;
+`},
+		{"a class seen as itself", `class Box<T> {
+	item: T;
+	constructor(item: T) {
+		this.item = item;
+	}
+}
+const dogBox = new Box<Dog>({ name: 'Rex', bark: 'woof' });
+const again: Box<Dog> = dogBox;
+console.log(again.item.bark);
 `},
 		{"an intersection seen as itself", `function tagged(dogs: Dog[] & Tag): number {
 	const same: Dog[] & Tag = dogs;
