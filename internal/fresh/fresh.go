@@ -1006,7 +1006,33 @@ func (a *analysis) value(expression ir.Expression) value {
 		return value{}
 	}
 	switch expression := expression.(type) {
-	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined:
+	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.Null:
+		return value{}
+	case ir.RegExpNew:
+		// The compiled program, source and flags hold no user objects. Arguments
+		// still run, and can perform writes before the regex is made.
+		for _, argument := range expression.Arguments {
+			a.value(argument)
+		}
+		return a.fresh(anyField, value{})
+	case ir.RegExpCall:
+		return a.regexCall(expression)
+	case ir.RegExpProperty:
+		a.value(expression.Array)
+		// Metadata may alias a mutable indices array or group dictionary. Don't
+		// mistake that alias for a new, reference-free value.
+		if mutable(expression.Type()) {
+			return outsideValue()
+		}
+		return value{}
+	case ir.RegExpGroup:
+		a.value(expression.Object)
+		if mutable(expression.Type()) {
+			return outsideValue()
+		}
+		return value{}
+	case ir.IsNull:
+		a.value(expression.Value)
 		return value{}
 	case ir.Read:
 		declared := a.proof.program.Locals[expression.Local]
