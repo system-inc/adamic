@@ -302,6 +302,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		}
 		var field string
 		var fieldType *checker.Type
+		absent := false
 		if tuple {
 			if index >= len(elementTypes) {
 				return nil, l.notYet(binding, "destructuring past a tuple's end")
@@ -337,6 +338,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 				return nil, err
 			}
 			fieldType = l.checker.GetTypeOfSymbol(property)
+			absent = property.Flags&ast.SymbolFlagsOptional != 0
 		}
 		local, err := l.declareLocal(binding.Name())
 		if err != nil {
@@ -346,7 +348,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
-		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of}
+		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
 		statements = append(statements, ir.Declare{Local: local, Value: value})
 	}
 	return statements, nil

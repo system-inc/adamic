@@ -370,6 +370,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regexp_match.a", true, false},
 	{"internal/oracle/testdata/regexp_search.a", true, false},
 	{"internal/oracle/testdata/regexp_unicode.a", true, false},
+	{"internal/oracle/testdata/regexp_split_pair_pattern.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

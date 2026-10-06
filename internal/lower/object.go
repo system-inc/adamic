@@ -69,9 +69,8 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, fieldName); declared == ir.MaybeNumber || declared == ir.Weak {
-				// Where the field is number | undefined, what it's given is packed as one; where it's
-				// a Weak, what it's given is kept weakly.
+			if declared := l.declaredField(node, fieldName); declared != 0 && !slotless(declared) {
+				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
 			if slotless(value.Type()) {
@@ -136,6 +135,27 @@ func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
 	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
 	if contextual == nil {
 		return 0
+	}
+	if contextual.Flags()&checker.TypeFlagsUnion != 0 {
+		// The union's combined property can hold unrelated types. The literal belongs to a
+		// member, whose fields are what reads after discriminant narrowing expect.
+		made := l.checker.GetTypeAtLocation(literal)
+		var shared ir.Type
+		for _, member := range contextual.Types() {
+			if !l.checker.IsTypeAssignableTo(made, member) {
+				continue
+			}
+			field := l.checker.GetPropertyOfType(member, name)
+			if field == nil {
+				continue
+			}
+			declared, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+			if shared != 0 && shared != declared {
+				return 0
+			}
+			shared = declared
+		}
+		return shared
 	}
 	field := l.checker.GetPropertyOfType(contextual, name)
 	if field == nil {
@@ -417,7 +437,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 			if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.Weak {
 				// The field keeps a handle, whatever the checker narrowed the read to.
-				return ir.Property{Object: object, Name: name, Of: ir.Weak, Optional: access.QuestionDotToken != nil}, nil
+				return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Weak, Optional: access.QuestionDotToken != nil}), nil
 			}
 		}
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && (accessorSymbol(field) || (l.accessorNames[node.Name().Text()] && !isClassInstance(l.checker.GetTypeAtLocation(access.Expression)) && ast.SkipParentheses(access.Expression).Kind != ast.KindThisKeyword)) {
@@ -438,11 +458,25 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		optional := access.QuestionDotToken != nil
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {
+				// Read the declared representation before trusting the narrowing. A call or an
+				// alias write may have restored undefined, just as for a narrowed variable.
+				if slotless(stored) {
+					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
+				}
+				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
+				if comparedWithUndefined(node) {
+					return read, nil
+				}
+				return ir.Unwrap{Value: read}, nil
+			}
+		}
 		if of.IsMaybe() && optional {
 			// box?.size is number | undefined because box may be; the field itself is what's stored.
 			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 				if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == of.Present() {
-					return ir.Property{Object: object, Name: name, Of: stored, Optional: true, Class: l.classOf(node)}, nil
+					return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: true, Class: l.classOf(node)}), nil
 				}
 			}
 		}
@@ -452,14 +486,30 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if of == ir.MaybeNumber {
 			// number | undefined, whether the field holds it or ?. makes it: the packed word, or
 			// undefined when the object is.
-			return ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional, Class: l.classOf(node)}, nil
+			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional, Class: l.classOf(node)}), nil
 		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
-		return l.defined(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
+		return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
+}
+
+// readObjectField keeps an optional own field distinct from optional chaining of its receiver.
+// Absence is a read result, never a synthetic own field: hasOwnProperty and object spread still see
+// the shape that was actually made. A narrowed number checks the declared optional representation.
+func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
+	field := l.checker.GetSymbolAtLocation(node.Name())
+	if field == nil || field.Flags&ast.SymbolFlagsOptional == 0 {
+		return property
+	}
+	property.Absent = true
+	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.MaybeNumber && property.Of == ir.Number {
+		property.Of = ir.MaybeNumber
+		return fit(property, ir.Number)
+	}
+	return property
 }
 
 // hasOwnProperty lowers object.hasOwnProperty(key) when the method is the library's, not a field the
