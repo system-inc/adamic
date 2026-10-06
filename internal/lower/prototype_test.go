@@ -139,8 +139,13 @@ func TestPrototypeHazardsBehindObjectViewsAreNotYet(t *testing.T) {
 	} {
 		_, err := lowerSource(t, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "through an object view") {
-			t.Errorf("got %v, want an explicit NotYet for hidden runtime semantics", err)
+		want := "through an object view"
+		if strings.Contains(source, "declare field") {
+			// Declared fields are refused before prototype analysis in integration 13.
+			want = "a declare or abstract class field"
+		}
+		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, want) {
+			t.Errorf("got %v, want an explicit NotYet containing %q", err, want)
 		}
 	}
 }
