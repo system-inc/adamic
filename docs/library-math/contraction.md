@@ -8,12 +8,16 @@ multiply-add (every arm64) if the flag goes.
 
 ## Node is not the same everywhere
 
-Node v24.14.1 on macOS arm64 runs a V8 compiled with multiply-adds contracted. Checked on Darwin 27.0.0
-with Apple clang 21 (#myatdyv):
+Node v24.14.1 on macOS arm64 runs a V8 compiled with clang's default, `-ffp-contract=on`, which fuses a
+multiply and an add within one expression. Checked on Darwin 27.0.0 with Apple clang 21 (#myatdyv):
 
-- `runtime/ieee754.c` (the port of V8's ieee754.cc) built alone with `-ffp-contract=fast` gives that
-  Node's Math.cos, Math.tan and Math.acosh bit for bit where the unfused build, and Adamic, differ from
-  it in the last bit (cos of 0x7feffffffffffffe: Node 3fd7ffdfb4c5308f, Adamic 3fd7ffdfb4c53090).
+- V8's own `src/base/ieee754.cc` at 13.6.233.17, built alone with `-ffp-contract=on`, gives that
+  Node's answers for 20,000 random inputs to each of sin, cos, tan, log, log10, log2, log1p, exp,
+  expm1, asin, acos, atan, sinh, cosh, tanh and cbrt, every one; with `off`, it gives x86-64 Node's.
+- `runtime/ieee754.c`, this port, built the same way with its `#pragma STDC FP_CONTRACT OFF` lifted,
+  gives that Node's answers for all nineteen functions (asinh, acosh and atanh included), 380,000
+  inputs, every one. Built with `fast`, which also fuses across statements, it misses a few (log2 in
+  87 of 20,000), so `on` is what Node does, not just something close.
 - parseInt("9007199254740993", 36), V8's HandleGenericCase loop as `runtime/parse.c` has it: with
   `fma()` 44fa555c722220b7, Node's; without, 44fa555c722220b5, Adamic's.
 
@@ -27,20 +31,20 @@ ISO mode.
 Linux x86-64 stays the gate of record and stays bit for bit. Elsewhere a difference from Node is
 forgiven only when contraction alone explains it:
 
-- `native.Options.FusedRuntime` (tests only) builds the runtime with `-ffp-contract=fast` and the
-  program without, since V8 never fuses JavaScript's own arithmetic.
+- `native.Options.FusedRuntime` (tests only) builds the runtime as that Node's V8 is built:
+  `-ffp-contract=on`, with `ADAMIC_FUSED_RUNTIME` lifting the runtime's FP_CONTRACT OFF pragmas
+  (ieee754.c, hypot.c, radix.c). The program is built without, since V8 never fuses JavaScript's own
+  arithmetic.
 - `TestIeee754MatchesNodeBitForBit` and `TestNumbersParseExactlyAsJavaScriptDoes` forgive an answer
   only when that build gives exactly Node's (`internal/native/fused_test.go`). The oracle forgives a
   fixture only when that build prints exactly Node's output (`internal/oracle/contraction_test.go`).
   On a machine that can't fuse the build is the unfused one, so nothing is forgiven there. A mistake
   in the runtime's source is in both builds, so it still fails.
 
-On that Mac, ten Math answers (log, log10, asinh and tan, each one ulp from Adamic's) differ in a way
-no build of the port reproduces, with on or fast, -O1 to -O3, or any -mcpu. They are left failing,
-not recorded as exceptions: a list of forgiven answers would be a rule of its own. Inference,
-unverified: Node's clang, a different version from this one, chose to fuse the other product in an
-expression with two (log's `s * (hfsq + R) + dk * ln2_lo`). So the Math sweep is clean on Linux
-x86-64, the gate of record, and reports exactly these ten on macOS arm64.
+With that model nothing on the Mac is left over: 1,910 Math and 4,598 parseInt answers differ from
+Adamic's and all of them are that build's, and navigation.a prints that build's output. An earlier
+version used `-ffp-contract=fast`, which left ten Math answers no build reproduced; they were the
+difference between fusing within an expression and across statements, and `on` reproduces all ten.
 
 The sweep in `TestIeee754MatchesNodeBitForBit` is reproducible: its branch points used to come out of a
 map in a different order each run, so the seeded random draws, and the mismatches, moved between runs.
@@ -50,7 +54,8 @@ map in a different order each run, so the seeded random draws, and the mismatche
 | Mutant | Caught by |
 |---|---|
 | `-ffp-contract=off` dropped from `Flags` | TestArithmeticIsNeverFused |
-| FusedRuntime builds without contraction | both sweeps, 1,900 and 4,598 unexplained |
+| FusedRuntime keeps the pragmas | the Math sweep, 1,910 unexplained |
+| FusedRuntime with `fast` instead of `on` | the Math sweep, 10 unexplained |
 | A forgiveness that ignores Node's answer, or compares with Adamic's | TestContractionForgivesOnlyWhatAFusedBuildReproduces |
 | kernel_cos's C1 changed in its fifteenth significant digit | the Math sweep (3,014 unexplained) and navigation.a |
 | parseInt chunked at 36 squared | the parseInt sweep (8,295 unexplained) |

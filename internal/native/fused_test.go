@@ -7,9 +7,9 @@ import (
 )
 
 // A Node can differ from Adamic in the last bit of Math and parseInt for one reason Adamic accepts:
-// its V8 was compiled with multiply-adds contracted. Node v24.14.1 on macOS arm64 is: the runtime's
-// own ieee754.c built with -ffp-contract=fast gives that Node's cos, tan and acosh bit for bit, and
-// V8's parseInt loop with fma() gives its radix-36 answers. Adamic never fuses (Flags,
+// its V8 was compiled with multiply-adds contracted. Node v24.14.1 on macOS arm64 is, with clang's
+// default, -ffp-contract=on: the runtime built the same way, its FP_CONTRACT OFF pragmas lifted, gives
+// that Node's Math and parseInt bit for bit (docs/library-math/contraction.md). Adamic never fuses (Flags,
 // contract_test.go), so a program prints one answer on every platform, Node's on x86-64.
 //
 // So a difference is forgiven only where the same runtime, compiled with contraction allowed

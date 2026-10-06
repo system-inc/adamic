@@ -50,8 +50,10 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 	}
 	flags := Flags(options)
 	if options.FusedRuntime {
-		// The later -ffp-contract wins, and the key holds every flag, so this is a library of its own.
-		flags = append(slices.Clone(flags), "-ffp-contract=fast")
+		// As Node's V8 is built on macOS arm64: clang's default contraction, within an expression, with
+		// the runtime's FP_CONTRACT OFF pragmas lifted. The later -ffp-contract wins, and the key holds
+		// every flag, so this is a library of its own.
+		flags = append(slices.Clone(flags), "-ffp-contract=on", "-DADAMIC_FUSED_RUNTIME")
 	}
 	return cachedRuntime(files, flags, compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
 }

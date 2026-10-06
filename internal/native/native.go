@@ -59,8 +59,8 @@ type Options struct {
 	// value otherwise comes from malloc, to show a use after a free is still caught with it on.
 	slabs bool
 
-	// FusedRuntime, for tests only, compiles the runtime with multiply-adds contracted
-	// (-ffp-contract=fast) and the program without, to reproduce a Node whose V8 was compiled that
+	// FusedRuntime, for tests only, compiles the runtime with multiply-adds contracted within an
+	// expression (-ffp-contract=on, clang's default) and the program without, to reproduce a Node whose V8 was compiled that
 	// way while JavaScript's own arithmetic stays unfused, as V8's always is (fused_test.go). Never for
 	// a program anyone runs.
 	FusedRuntime bool
