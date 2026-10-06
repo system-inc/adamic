@@ -128,7 +128,6 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 		{"throwing a string", "function stop(): void {\n\tthrow 'stopped';\n}\nstop();\n", "main.a:2:8: Adamic 0.1 refuses throwing a \"stopped\"; throw an Error: throw new Error(String(value))"},
 		{"throwing a number", "function stop(code: number): void {\n\tthrow code;\n}\nstop(1);\n", "main.a:2:8: Adamic 0.1 refuses throwing a number; throw an Error"},
 		{"==", "const same = 1 == 1;\n", "main.a:1:16: Adamic 0.1 refuses ==;"},
-		{"for...in", "for (const key in { a: 1 }) {\n\tconsole.log(key);\n}\n", "main.a:1:1: Adamic 0.1 refuses for...in;"},
 		{"delete", "const box: { a?: number } = { a: 1 };\ndelete box.a;\n", "main.a:2:1: Adamic 0.1 refuses delete;"},
 		{"a getter", "class Box {\n\tget size(): number {\n\t\treturn 1;\n\t}\n}\n", "main.a:2:2: Adamic 0.1 refuses a getter;"},
 		{"a constructor calling a method before its fields are set (R2's, and R's half_built)", "class Scaled {\n\treadonly doubled: number;\n\treadonly base: number;\n\tconstructor(base: number) {\n\t\tthis.doubled = this.twice();\n\t\tthis.base = base;\n\t}\n\ttwice(): number {\n\t\treturn this.base * 2;\n\t}\n}\nconsole.log(`${new Scaled(21).doubled}`);\n", "main.a:5:18: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this"},

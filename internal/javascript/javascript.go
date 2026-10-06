@@ -759,6 +759,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "adamicCast(" + e.value(expression.Value) + ", " + quote(expression.Field) + ", [" + e.values(expression.Allowed) + "], " + quote(expression.Message) + ")"
 	case ir.ArrayPop:
 		return e.value(expression.Array) + ".pop()"
+	case ir.ObjectKeys:
+		return "Object.keys(" + e.value(expression.Object) + ")"
+	case ir.ClosureSelf:
+		return "self"
+	case ir.LibraryGlobal:
+		return expression.Name
 	case ir.MakeClosure:
 		cells := []string{}
 		for _, local := range e.program.Functions[expression.Function].Environment {

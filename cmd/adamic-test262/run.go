@@ -27,6 +27,7 @@ type engine struct {
 	include string
 	flags   []string
 	log     io.Writer
+	adapt   bool
 }
 
 func prepare(root string, test262 string, work string) (*engine, error) {
@@ -74,10 +75,11 @@ func prepare(root string, test262 string, work string) (*engine, error) {
 
 // result is one test after it has been classified and, if attempted, run.
 type result struct {
-	Path      string      `json:"path"`
-	Directory string      `json:"directory"`
-	Kind      outcomeKind `json:"kind"`
-	Reason    string      `json:"reason,omitempty"`
+	Path        string         `json:"path"`
+	Directory   string         `json:"directory"`
+	Kind        outcomeKind    `json:"kind"`
+	Reason      string         `json:"reason,omitempty"`
+	Adaptations map[string]int `json:"adaptations,omitempty"`
 }
 
 func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterReport, error) {
@@ -97,7 +99,7 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 			relative = file
 		}
 		relative = filepath.ToSlash(relative)
-		classified := classify(relative, string(source))
+		classified := classify(relative, string(source), e.adapt)
 		var one result
 		if classified.Skip != "" {
 			one = result{Path: relative, Directory: classified.Directory, Kind: outcomeSkipped, Reason: classified.Skip}
@@ -106,6 +108,9 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 		} else {
 			attempted++
 			one = e.attempt(classified)
+			if one.Kind == outcomeCrashed {
+				one.Reason = withCrashPath(one.Path, one.Reason)
+			}
 		}
 		report.add(one)
 		if (index+1)%50 == 0 || index+1 == len(files) {
@@ -118,7 +123,7 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 }
 
 func (e *engine) attempt(test classified) result {
-	base := result{Path: test.Path, Directory: test.Directory}
+	base := result{Path: test.Path, Directory: test.Directory, Adaptations: test.Adaptations}
 	typescript := filepath.Join(e.work, "program.ts")
 	module := filepath.Join(e.work, "program.mts")
 	if err := os.WriteFile(typescript, []byte(test.Program), 0o644); err != nil {
@@ -300,11 +305,13 @@ type filterReport struct {
 	CrashReasons   []reasonCount `json:"crashReasons"`
 	FailReasons    []reasonCount `json:"failReasons"`
 	Passes         []string      `json:"passes,omitempty"`
+	Adaptations    []reasonCount `json:"adaptations,omitempty"`
 	directories    map[string]*dirCount
 	refusalReasons map[string]int
 	skipReasons    map[string]int
 	crashReasons   map[string]int
 	failReasons    map[string]int
+	adaptations    map[string]int
 }
 
 type dirCount struct {
@@ -330,6 +337,7 @@ func (report *filterReport) add(one result) {
 		report.skipReasons = map[string]int{}
 		report.crashReasons = map[string]int{}
 		report.failReasons = map[string]int{}
+		report.adaptations = map[string]int{}
 	}
 	directory := report.directories[one.Directory]
 	if directory == nil {
@@ -363,6 +371,9 @@ func (report *filterReport) add(one result) {
 		report.Unrun++
 		directory.Unrun++
 	}
+	for kind, count := range one.Adaptations {
+		report.adaptations[kind] += count
+	}
 }
 
 func reasonOr(reason string) string {
@@ -381,6 +392,7 @@ func (report *filterReport) finish() {
 	report.SkipReasons = sortedReasons(report.skipReasons)
 	report.CrashReasons = sortedReasons(report.crashReasons)
 	report.FailReasons = sortedReasons(report.failReasons)
+	report.Adaptations = sortedReasons(report.adaptations)
 	sort.Strings(report.Passes)
 }
 
@@ -402,7 +414,20 @@ func sortedReasons(counts map[string]int) []reasonCount {
 type reportDocument struct {
 	Test262 string         `json:"test262"`
 	Commit  string         `json:"commit,omitempty"`
+	Adapt   bool           `json:"adapt"`
 	Filters []filterReport `json:"filters"`
+}
+
+// withCrashPath puts the test file on the crash record. The reason alone was not enough to see
+// which program the compiler or clang rejected.
+func withCrashPath(path string, reason string) string {
+	if path == "" {
+		return reason
+	}
+	if reason == "" {
+		return path
+	}
+	return path + ": " + reason
 }
 
 func test262Commit(test262 string) string {

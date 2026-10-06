@@ -778,5 +778,9 @@ _Noreturn void adamic_stack_overflow(void);
 _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
+// Fixed plain literals can have public # keys; Object reflection refuses those shapes.
+// Keep their enumeration distinct from the Object slice, which skips private class slots.
+adamic_array *adamic_plain_object_keys(const adamic_object *object);
+void *adamic_library_identity(size_t index);
 
 #endif

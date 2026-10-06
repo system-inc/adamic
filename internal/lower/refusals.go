@@ -22,7 +22,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindGetAccessor:       {"a getter", "write a method: in 0.1 reading a property is just a read"},
 	ast.KindSetAccessor:       {"a setter", "write a method: in 0.1 writing a property is just a write"},
-	ast.KindForInStatement:    {"for...in", "use a Map and for...of, or read the fields you mean"},
 	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},

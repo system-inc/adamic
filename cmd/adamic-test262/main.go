@@ -2,7 +2,7 @@
 // they compare.
 //
 //	adamic-test262 -test262 /path/to/test262 built-ins/String/prototype/padStart
-//	adamic-test262 -json -test262 /path/to/test262 built-ins/String built-ins/Math
+//	adamic-test262 -adapt -json -test262 /path/to/test262 built-ins/String built-ins/Math
 //
 // The test262 checkout is not part of this repo: clone it at a pinned commit into a scratch
 // directory and pass it. A test is skipped, with a reason, when it needs a feature Adamic refuses
@@ -12,7 +12,12 @@
 // means both succeeded and their output matches. fail means they disagree, or native failed where
 // Node passed. refused means stage 0 or the checker said no, the reason normalized the way a meter
 // groups them (cmd/adamic-meter is not on main; see reason.go). crashed means a signal, a
-// sanitizer, a timeout, or the compiler itself failing.
+// sanitizer, a timeout, or the compiler itself failing. The crash record names the test file.
+//
+// --adapt rewrites test262's spelling in memory only, and counts each rewrite: var to let where
+// the meaning does not change, a callback parameter typed the way the call would type it, == and
+// != where both sides already have the same type, and throw new Test262Error to throw new Error
+// when nothing observes the constructor. The checkout is not modified.
 //
 // Tests run one at a time. The runtime is built with the address and undefined-behavior sanitizers.
 package main
@@ -37,6 +42,7 @@ func run(arguments []string) int {
 	work := flags.String("work", "", "scratch directory (default: a directory under the system temp)")
 	asJSON := flags.Bool("json", false, "write the report as JSON on stdout; the table goes to stderr")
 	classifyOnly := flags.Bool("classify-only", false, "classify every test and do not compile or run")
+	adapt := flags.Bool("adapt", false, "rewrite test262 style in memory (var to let, callback params, strict equality, Test262Error) and count each rewrite")
 	limit := flags.Int("limit", 0, "run at most this many attempted tests per filter (0 is all)")
 	flags.Usage = func() {
 		fmt.Fprintf(os.Stderr, "usage: adamic-test262 [flags] <filter>...\n\n")
@@ -68,9 +74,10 @@ func run(arguments []string) int {
 			return 1
 		}
 	} else {
-		prepared = &engine{test262: *test262, log: os.Stderr}
+		prepared = &engine{test262: *test262, log: os.Stderr, adapt: *adapt}
 	}
-	document := reportDocument{Test262: *test262, Commit: test262Commit(*test262)}
+	prepared.adapt = *adapt
+	document := reportDocument{Test262: *test262, Commit: test262Commit(*test262), Adapt: *adapt}
 	for _, filter := range flags.Args() {
 		report, err := prepared.runFilter(filter, *limit, *classifyOnly)
 		if err != nil {
@@ -93,8 +100,14 @@ func run(arguments []string) int {
 
 func printTables(writer io.Writer, document reportDocument) {
 	if document.Commit != "" {
-		fmt.Fprintf(writer, "test262 %s\n\n", document.Commit)
+		fmt.Fprintf(writer, "test262 %s\n", document.Commit)
 	}
+	if document.Adapt {
+		fmt.Fprintf(writer, "adapt on\n")
+	} else {
+		fmt.Fprintf(writer, "adapt off\n")
+	}
+	fmt.Fprintln(writer)
 	for _, filter := range document.Filters {
 		fmt.Fprintf(writer, "%s\n", filter.Path)
 		if filter.Unrun > 0 {
@@ -119,6 +132,7 @@ func printTables(writer io.Writer, document reportDocument) {
 		printReasons(writer, "skip reasons", filter.SkipReasons)
 		printReasons(writer, "fail reasons", filter.FailReasons)
 		printReasons(writer, "crash reasons", filter.CrashReasons)
+		printReasons(writer, "adaptations", filter.Adaptations)
 		if len(filter.Passes) > 0 {
 			fmt.Fprintf(writer, "passes (%d)\n", len(filter.Passes))
 			shown := filter.Passes

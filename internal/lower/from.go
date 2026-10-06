@@ -42,7 +42,7 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, l.notYet(property, "Array.from with a length that isn't a number")
 	}
 	callback := ast.SkipParentheses(arguments[1])
-	if callback.Kind != ast.KindArrowFunction {
+	if callback.Kind != ast.KindArrowFunction && callback.Kind != ast.KindFunctionExpression {
 		// A function value from elsewhere would be typed (value: unknown, index: number), and an
 		// unknown parameter isn't something stage 0 holds.
 		return nil, true, l.notYet(arguments[1], "Array.from with a callback that isn't an arrow function written in place")
