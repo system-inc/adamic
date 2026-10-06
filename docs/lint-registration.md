@@ -15,6 +15,9 @@ The rule directory contains:
 - `oracle.go`: the unmodified upstream cohere rule and its typed options adapter.
 - `testdata/*.ts.txt`: raw TypeScript witnesses, outside the module graph.
 - `mutant.json`: one source mutation that compiles, runs, and must disagree with Go.
+  Fields are `name`, `from`, `to`, and optional `file` (default `rule.ts`). The
+  file must stay inside this rule directory. Anchors are scoped to that file,
+  so another worker can use the same snippet without changing your test.
 
 For example, the debugger descriptor is:
 

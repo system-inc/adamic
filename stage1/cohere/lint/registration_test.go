@@ -45,7 +45,7 @@ func TestOwnedWitnesses(t *testing.T) {
 
 func TestRegistrationMutant(t *testing.T) {
 	// This remains a valid descriptor and compiled rule: only its subscription is wrong.
-	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`)
+	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
 	source := ownedWitnesses(t, ".", "no-debugger")[0]
 	path := manifest(t, []string{source + "\tno-debugger"})
 	want := execute(t, "", goOracle(t), "--manifest", path).output
@@ -153,4 +153,26 @@ func ownedWitnesses(t *testing.T, directory, slug string) []string {
 		t.Fatalf("%s has no witnesses", slug)
 	}
 	return sources
+}
+
+func TestNestedOutsideModuleCopy(t *testing.T) {
+	directory := mutant(t, "", "")
+	source := rewritePortImports(t, "rules/probe/rule.ts", `import { written } from '../../../../typescript/parser/nodes.ts';
+console.log(written('copied'));
+`)
+	if err := os.WriteFile(filepath.Join(directory, "main.ts"), []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	path := manifest(t, nil)
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{
+		{"Node", node(t, directory, path, false)},
+		{"native", execute(t, "", buildPort(t, directory, true))},
+	} {
+		if string(side.run.output) != "copied\n" {
+			t.Fatalf("outside module copy on %s: %q", side.name, side.run.output)
+		}
+	}
 }

@@ -135,7 +135,7 @@ func Discover(root string) ([]Descriptor, error) {
 		if adapter.Name.Name != "main" || !functions[d.Oracle] || !functions[d.Oracle+"Options"] {
 			return nil, fmt.Errorf("%s: missing oracle adapter exports", path)
 		}
-		var mutant struct{ Name, From, To string }
+		var mutant struct{ Name, File, From, To string }
 		mutation, err := os.ReadFile(filepath.Join(filepath.Dir(path), "mutant.json"))
 		if err != nil {
 			return nil, err
@@ -143,6 +143,15 @@ func Discover(root string) ([]Descriptor, error) {
 		mutationDecoder := json.NewDecoder(bytes.NewReader(mutation))
 		mutationDecoder.DisallowUnknownFields()
 		if err := mutationDecoder.Decode(&mutant); err != nil {
+			return nil, err
+		}
+		if mutant.File == "" {
+			mutant.File = "rule.ts"
+		}
+		if filepath.IsAbs(mutant.File) || filepath.Clean(mutant.File) == ".." || strings.HasPrefix(filepath.Clean(mutant.File), ".."+string(filepath.Separator)) || !strings.HasSuffix(mutant.File, ".ts") {
+			return nil, fmt.Errorf("%s: mutant file must be an owned TS module", path)
+		}
+		if _, err := os.Stat(filepath.Join(filepath.Dir(path), mutant.File)); err != nil {
 			return nil, err
 		}
 		if mutant.Name == "" || mutant.From == "" || mutant.To == mutant.From {
