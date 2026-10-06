@@ -157,6 +157,10 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
                 break;
             }
         }
+        if(typed || (head === 0 && (kind(scanner) === 'ColonToken' || kind(scanner) === 'OpenBraceToken'))) {
+            state.restore();
+            return true;
+        }
         if(kind(scanner) === 'EqualsGreaterThanToken' && (scanner.flags & 1) === 0) {
             result = true;
         }

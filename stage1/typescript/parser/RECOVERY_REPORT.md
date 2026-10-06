@@ -284,3 +284,12 @@ diagnostics. Incomplete named, rest and generic type signatures now recover
 normally. Focused comparison passes in 16.720s. The wider continuation
 advances through 31 more inputs and reaches input 338: a variable list cut
 immediately after const must stay empty at EOF.
+
+## Continued recovery: variable and arrow cutoffs
+
+A variable list at EOF remains empty. Typed/rest arrow signatures are
+recognized before the arrow exists and insert a missing EqualsGreaterThanToken
+instead of an EOF token. Focused comparison passes in 17.941s. All remaining
+binder.ts cutoffs pass in the continuation, which checks 208 inputs in
+77.350s before reaching a removed interface property name at input 545.
+That failure needs type-member recognition and outer-list resynchronization.

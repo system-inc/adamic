@@ -98,7 +98,7 @@ export class Statements {
         }
         this.parser.next();
         const declarations: number[] = [];
-        while(true) {
+        while(this.parser.kind() !== 'EndOfFile') {
             const start = this.parser.scanner.fullStart;
             const children = [this.parser.bindingName()];
             if(this.parser.kind() === 'ExclamationToken') {

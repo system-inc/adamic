@@ -993,8 +993,15 @@ export class Parser {
             this.next();
             children.push(this.returnType());
         }
-        children.push(this.token());
-        children.push(this.kind() === 'OpenBraceToken' ? this.block() : this.assignment(allowReturn));
+        const bodyStart = this.kind();
+        children.push(this.expectedToken('EqualsGreaterThanToken'));
+        children.push(
+            bodyStart === 'EqualsGreaterThanToken' || bodyStart === 'OpenBraceToken'
+                ? this.kind() === 'OpenBraceToken'
+                    ? this.block()
+                    : this.assignment(allowReturn)
+                : this.identifier(),
+        );
         this.disallowIn = oldIn;
         this.awaitContext = previousAwait;
         this.yieldContext = previousYield;
