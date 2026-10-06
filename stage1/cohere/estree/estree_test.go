@@ -247,11 +247,14 @@ func TestThreePortMutants(t *testing.T) {
 }
 
 func TestOriginalLibraries(t *testing.T) {
+	checkOriginalLibraries(t, generated(), 3)
+}
+func checkOriginalLibraries(t *testing.T, cases []string, postprocessedGaps int) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to the pinned scratch npm installation")
 	}
-	list := manifest(t, generated())
+	list := manifest(t, cases)
 	oracle := goOracle(t)
 	for _, mode := range []string{"raw", "postprocessed"} {
 		flag := "--raw-json"
@@ -279,7 +282,7 @@ func TestOriginalLibraries(t *testing.T) {
 			leftBytes, _ := json.Marshal(left)
 			rightBytes, _ := json.Marshal(right)
 			if !bytes.Equal(leftBytes, rightBytes) {
-				source := generated()[index]
+				source := cases[index]
 				known := mode == "postprocessed" && (source == "x\u00a0;" || source == "x\u2028;" || source == "x\r\n;")
 				if !known {
 					t.Errorf("unrecorded %s case %d: Go %s; library %s", mode, index, leftBytes, rightBytes)
@@ -309,7 +312,7 @@ func TestOriginalLibraries(t *testing.T) {
 		t.Logf("%s: %d files, %d identical, %d differing", mode, len(want), len(want)-differences, differences)
 		expected := 0
 		if mode == "postprocessed" {
-			expected = 3
+			expected = postprocessedGaps
 		}
 		if differences != expected {
 			t.Errorf("expected exactly %d documented gaps, got %d", expected, differences)

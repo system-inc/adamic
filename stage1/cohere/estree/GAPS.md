@@ -79,7 +79,7 @@ The driver explicitly refuses that unrepresented string case rather than
 normalizing a wrong value. All `.tsx`/`.jsx` input is conservatively refused.
 Diagnostic acceptance parity and JSX grammar are still missing.
 
-The final audit has 92 remaining wrong-output files and 983 acceptance
+The final audit has 92 remaining wrong-output files and 984 acceptance
 disagreements. These include converter gaps as well as parser dependency gaps;
 no claim is made that all remaining work belongs to the compiler or runtime.
 Every file and first differing line is recorded in the compressed audit log.
@@ -103,3 +103,16 @@ Loading succeeds; lowering refuses unbound-method. `TestMethodReplacementGap`
 holds both observations. It prevents installing a progress wrapper by replacing
 a method on the parser instance. This does not establish that every possible
 progress-wrapper design is impossible.
+
+## Observed Go numeric range differences from the pinned original library
+
+`TestPinnedNumericGaps` uses `1e999; 0x10000000000000000;`. Go's converted Literal
+values are both NaN. The independently installed typescript-estree 8.65.0 converter
+returns Infinity and 18446744073709552000. The test calls that original parser,
+not the port's numeric helper, and holds exactly both answers. Go reports range
+failure for decimal overflow and a radix integer above uint64; the port follows
+that Go behavior. This is an observed conversion difference, not a JavaScript
+numeric rule. `TestScalarEdges` exercises decimal/subnormal thresholds, base
+limits, range errors and arbitrary precision bigint spelling on all four drivers.
+Five finite numeric/bigint files additionally match the raw original converter
+and the postprocessed original wrapper without any allowed deltas.

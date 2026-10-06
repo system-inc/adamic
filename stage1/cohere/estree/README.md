@@ -1,8 +1,8 @@
-Ported the indexed ESTree model, visitor keys, locations and TypeScript postprocessing.
-Added functions, generics, imports/exports, classes, interfaces, members and namespaces.
-78 generated files match 120,355 bytes on Go, source Node, sanitized native and emitted JS.
-Three wrong-output port mutants finish normally and are caught on Node and native.
-Raw typescript-estree matches all 78; whole-checkout parity remains blocked.
+Built an incomplete non-JSON ESTree converter, postprocessor and canonical tree driver.
+14,699 repository files match Go on source Node, sanitized native and emitted JavaScript.
+86 generated cases match 126,324 bytes; three successful port mutants are caught.
+Full-output throughput: native 5,709, Node 4,601, Go 11,345 texts/s.
+Whole-checkout parity is blocked by 92 wrong outputs and 984 acceptance disagreements.
 
 # Non-JSON ESTree slice
 
@@ -122,3 +122,29 @@ ASan reports a stack-buffer-overflow in native. The release build happened to pr
 4, an observation of undefined behavior, not a portable expectation. The port
 uses concrete model classes and simple tables instead. See `GAPS.md` and the
 retained gap-test log. This gap is not one of the three qualifying port mutants.
+
+## Final audit and throughput
+
+The inventory was extended with the three final unit source files: 27,369 source
+files total, with nine malformed UTF-8 files. Of these, 14,699 match Go on the
+uninstrumented source driver, sanitized native and emitted JS, totaling
+504,506,334 checked bytes. Both sides refuse 11,594; the port refuses 861
+Go-accepted files, accepts 123 Go-refused files, and has 92 output mismatches.
+There are 984 acceptance disagreements. These are failures of the whole-checkout
+contract, not successful cases. Audit instrumentation detected 13 recovery stalls.
+The two final matching files passed separately; the other final file was refused.
+
+Eight additional scalar edge files add 5,969 Go-identical bytes, for 86 generated
+files and 126,324 canonical bytes across Go, source Node, sanitized native and
+emitted JS. The original-library gate checks 78 general files and five finite
+scalar/bigint files: 83 raw agreements, 80 postprocessed agreements and the exact
+three known postprocessed deltas. Two numeric range differences from the original
+library are separately proved and documented in `GAPS.md`.
+
+Release throughput medians: native 5,709, source Node 4,601, Go 11,345 texts/s.
+Each run processes the 78-case manifest 20 times: 1,560 texts and 2,407,100 identical
+output bytes. Includes startup, input reads, full canonical serialization,
+file-backed stdout and the verification read. One warm-up and five rotated runs
+per implementation. This measures the implemented ESTree tree driver, not whole
+JavaScript formatting or parsing alone. See `validation/throughput.log` for every
+sample, and `REPORT.md` for commands, commits and the precise limits.

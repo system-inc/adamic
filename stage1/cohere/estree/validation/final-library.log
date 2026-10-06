@@ -1,0 +1,16 @@
+=== RUN   TestOriginalLibraries
+    estree_test.go:312: raw: 78 files, 78 identical, 0 differing
+    estree_test.go:309: proved postprocessed case 38 known gap for "x\u00a0;"
+    estree_test.go:309: proved postprocessed case 39 known gap for "x\u2028;"
+    estree_test.go:309: proved postprocessed case 40 known gap for "x\r\n;"
+    estree_test.go:312: postprocessed: 78 files, 75 identical, 3 differing
+--- PASS: TestOriginalLibraries (1.20s)
+=== RUN   TestScalarOriginalLibraries
+    estree_test.go:312: raw: 5 files, 5 identical, 0 differing
+    estree_test.go:312: postprocessed: 5 files, 5 identical, 0 differing
+--- PASS: TestScalarOriginalLibraries (1.01s)
+=== RUN   TestPinnedNumericGaps
+    scalars_test.go:62: Go values NaN/NaN; pinned original converter: "Infinity\n18446744073709552000\n"
+--- PASS: TestPinnedNumericGaps (0.88s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	3.097s
