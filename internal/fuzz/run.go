@@ -25,16 +25,15 @@ type Checkout struct {
 	Root      string
 	directory string
 	adamic    string
-	runtime   []string
+	runtime   string
 }
 
 // flags are native.Build's for a sanitized build, what the oracle compiles with. They're this tree's,
 // even for a checkout of another commit: the C and the runtime are the checkout's, the flags aren't.
 var flags = native.Flags(native.Options{Sanitize: true})
 
-// Prepare builds a checkout's adamic command and compiles its runtime into directory. Compiling the
-// runtime once, not once per program, is most of what makes fuzzing fast: a program is then one
-// small C file.
+// Prepare builds a checkout's adamic command into directory and gets its cached runtime library.
+// The cache is shared with native.Build, while another checkout keeps its own runtime bytes.
 func Prepare(root string, directory string) (*Checkout, error) {
 	root, err := filepath.Abs(root)
 	if err != nil {
@@ -49,17 +48,9 @@ func Prepare(root string, directory string) (*Checkout, error) {
 	if output, err := build.CombinedOutput(); err != nil {
 		return nil, fmt.Errorf("fuzz: building adamic in %s: %w\n%s", root, err, output)
 	}
-	sources, err := filepath.Glob(filepath.Join(root, "internal", "native", "runtime", "*.c"))
+	checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{Sanitize: true})
 	if err != nil {
-		return nil, err
-	}
-	for _, source := range sources {
-		object := filepath.Join(directory, strings.TrimSuffix(filepath.Base(source), ".c")+".o")
-		arguments := append(append([]string{}, flags...), "-c", source, "-o", object)
-		if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
-			return nil, fmt.Errorf("fuzz: compiling the runtime: %w\n%s", err, output)
-		}
-		checkout.runtime = append(checkout.runtime, object)
+		return nil, fmt.Errorf("fuzz: compiling the runtime: %w", err)
 	}
 	return checkout, nil
 }
@@ -130,8 +121,9 @@ func (c *Checkout) Try(source string, directory string) Outcome {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
 	binary := filepath.Join(directory, "program")
-	arguments := append(append([]string{}, flags...), "-I", filepath.Join(c.Root, "internal", "native", "runtime"), "-o", binary, filepath.Join(directory, "main.c"))
-	arguments = append(append(arguments, c.runtime...), "-lm")
+	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(c.runtime), "-o", binary, filepath.Join(directory, "main.c"))
+	arguments = append(arguments, native.RuntimeLinkFlags(c.runtime)...)
+	arguments = append(arguments, "-lm")
 	if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
 		key := "clang refused the C"
 		if warning := clangWarning.FindSubmatch(output); warning != nil {

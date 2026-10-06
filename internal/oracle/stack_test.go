@@ -33,44 +33,50 @@ func TestLongArgumentsLeaveTheStackItsLimit(t *testing.T) {
 	} {
 		t.Run(setting.name, func(t *testing.T) {
 			t.Parallel()
-			path, binary, _ := sanitized(t, "internal/oracle/testdata/stack_over.a")
-			// And built as adamic build builds it: under ASan the stack's layout hides the case of
-			// arguments alone, which crashed the -O2 build that ships.
-			plain := filepath.Join(t.TempDir(), "plain")
-			program, err := lowered(t, path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			if err := native.Build(native.C(program), plain, native.Options{}); err != nil {
-				t.Fatal(err)
-			}
-			ran := func(name string, arguments ...string) run {
-				t.Helper()
-				environment := append([]string{}, setting.environment...)
-				environment = append(environment, "ASAN_OPTIONS=detect_leaks=0")
-				if !setting.alone {
-					return executeWith(t, environment, name, append(arguments, setting.arguments...)...)
+			cacheProbe(t, "internal/oracle/testdata/stack_over.a", nil, "", func() {
+
+				path, binary, _ := sanitized(t, "internal/oracle/testdata/stack_over.a")
+				// And built as adamic build builds it: under ASan the stack's layout hides the case of
+				// arguments alone, which crashed the -O2 build that ships.
+				plain := filepath.Join(t.TempDir(), "plain")
+				program, err := lowered(t, path)
+				if err != nil {
+					t.Fatal(err)
 				}
-				command := bounded(t, name, append(arguments, setting.arguments...)...)
-				command.Env = []string{}
-				var stdout, stderr bytes.Buffer
-				command.Stdout, command.Stderr = &stdout, &stderr
-				if err := command.Run(); err != nil && command.ProcessState == nil {
-					t.Fatalf("running %s: %v", name, err)
+				if err := native.Build(native.C(program), plain, native.Options{}); err != nil {
+					t.Fatal(err)
 				}
-				return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
-			}
-			runner := repository + "/oracle/node.mjs"
-			node := ran("node", "--disable-warning=ExperimentalWarning", runner, path)
-			if node.exitCode != 70 {
-				t.Fatalf("want Node to run out of stack, exit 70, got %d, stderr %q", node.exitCode, node.stderr)
-			}
-			for _, built := range []string{binary, plain} {
-				native := ran(built)
-				if difference := disagreement(node, native); difference != "" {
-					t.Errorf("%s: %s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %.300q", filepath.Base(built), difference, node.exitCode, node.stdout, node.stderr, native.exitCode, native.stdout, native.stderr)
+				ran := func(name string, arguments ...string) run {
+					t.Helper()
+					environment := append([]string{}, setting.environment...)
+					environment = append(environment, "ASAN_OPTIONS=detect_leaks=0")
+					if !setting.alone {
+						return executeWith(t, environment, name, append(arguments, setting.arguments...)...)
+					}
+					command := bounded(t, name, append(arguments, setting.arguments...)...)
+					command.Env = []string{}
+					var stdout, stderr bytes.Buffer
+					command.Stdout, command.Stderr = &stdout, &stderr
+					if err := command.Run(); err != nil && command.ProcessState == nil {
+						t.Fatalf("running %s: %v", name, err)
+					}
+					result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+					rememberRun(t, result)
+					return result
 				}
-			}
+				runner := repository + "/oracle/node.mjs"
+				node := ran("node", "--disable-warning=ExperimentalWarning", runner, path)
+				if node.exitCode != 70 {
+					t.Fatalf("want Node to run out of stack, exit 70, got %d, stderr %q", node.exitCode, node.stderr)
+				}
+				for _, built := range []string{binary, plain} {
+					native := ran(built)
+					if difference := disagreement(node, native); difference != "" {
+						t.Errorf("%s: %s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %.300q", filepath.Base(built), difference, node.exitCode, node.stdout, node.stderr, native.exitCode, native.stdout, native.stderr)
+					}
+				}
+
+			})
 		})
 	}
 }
@@ -93,34 +99,38 @@ func TestSmallStacksStillPanic(t *testing.T) {
 		kibibytes := setting.kibibytes
 		t.Run(strconv.Itoa(kibibytes)+" KiB", func(t *testing.T) {
 			t.Parallel()
-			path, binary, _ := sanitized(t, "internal/oracle/testdata/stack_over.a")
-			plain := filepath.Join(t.TempDir(), "plain")
-			program, err := lowered(t, path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			if err := native.Build(native.C(program), plain, native.Options{}); err != nil {
-				t.Fatal(err)
-			}
-			limited := func(name string, arguments ...string) run {
-				t.Helper()
-				script := fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, kibibytes)
-				arguments = append(append([]string{"-c", script, name}, arguments...), setting.arguments...)
-				return executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, "/bin/sh", arguments...)
-			}
-			want := run{stdout: []byte("start\n"), stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded\n"), exitCode: 70}
-			if kibibytes >= 1024 {
-				node := limited("node", "--disable-warning=ExperimentalWarning", repository+"/oracle/node.mjs", path)
-				if difference := disagreement(want, node); difference != "" {
-					t.Fatalf("want Node to run out of stack and panic at %d KiB: exit %d, stderr %q", kibibytes, node.exitCode, node.stderr)
+			cacheProbe(t, "internal/oracle/testdata/stack_over.a", nil, "", func() {
+
+				path, binary, _ := sanitized(t, "internal/oracle/testdata/stack_over.a")
+				plain := filepath.Join(t.TempDir(), "plain")
+				program, err := lowered(t, path)
+				if err != nil {
+					t.Fatal(err)
 				}
-			}
-			for _, built := range []string{binary, plain} {
-				native := limited(built)
-				if difference := disagreement(want, native); difference != "" {
-					t.Errorf("%s at %d KiB: %s: exit %d, stdout %q, stderr %.300q", filepath.Base(built), kibibytes, difference, native.exitCode, native.stdout, native.stderr)
+				if err := native.Build(native.C(program), plain, native.Options{}); err != nil {
+					t.Fatal(err)
 				}
-			}
+				limited := func(name string, arguments ...string) run {
+					t.Helper()
+					script := fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, kibibytes)
+					arguments = append(append([]string{"-c", script, name}, arguments...), setting.arguments...)
+					return executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, "/bin/sh", arguments...)
+				}
+				want := run{stdout: []byte("start\n"), stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded\n"), exitCode: 70}
+				if kibibytes >= 1024 {
+					node := limited("node", "--disable-warning=ExperimentalWarning", repository+"/oracle/node.mjs", path)
+					if difference := disagreement(want, node); difference != "" {
+						t.Fatalf("want Node to run out of stack and panic at %d KiB: exit %d, stderr %q", kibibytes, node.exitCode, node.stderr)
+					}
+				}
+				for _, built := range []string{binary, plain} {
+					native := limited(built)
+					if difference := disagreement(want, native); difference != "" {
+						t.Errorf("%s at %d KiB: %s: exit %d, stdout %q, stderr %.300q", filepath.Base(built), kibibytes, difference, native.exitCode, native.stdout, native.stderr)
+					}
+				}
+
+			})
 		})
 	}
 }
