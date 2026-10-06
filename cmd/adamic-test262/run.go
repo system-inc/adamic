@@ -210,19 +210,23 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 	var stdout, stderr limitedBuffer
 	stdout.limit = limit
 	stderr.limit = limit
+	stderr.tail = true
 	command.Stdout = &stdout
 	command.Stderr = &stderr
 	err := command.Run()
 	result := execution{Stdout: stdout.String(), Stderr: stderr.String()}
-	if stdout.exceeded || stderr.exceeded {
-		result.Exit = -1
-		result.Stderr = "command output exceeded capture limit\n"
-		return result
-	}
 	if ctx.Err() == context.DeadlineExceeded {
 		result.TimedOut = true
 		result.Exit = -1
 		return result
+	}
+	if stdout.exceeded || stderr.exceeded {
+		result.Exit = -1
+		result.Stderr = "command output exceeded capture limit\n" + result.Stderr
+		// Keep processing the exit status: a signal is still a crash.
+		if err == nil {
+			return result
+		}
 	}
 	if err == nil {
 		return result
@@ -239,6 +243,9 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 			result.Exit = -1
 			return result
 		}
+		if stdout.exceeded || stderr.exceeded {
+			return result
+		}
 		result.Exit = status.ExitStatus()
 		return result
 	}
@@ -246,11 +253,12 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 	return result
 }
 
-// limitedBuffer keeps the start of a stream and drops the rest, so a test that prints without end
-// cannot fill memory before its timeout.
+// limitedBuffer bounds captured output. Stdout keeps its start; stderr keeps its tail so
+// a sanitizer report after excessive output survives until classification.
 type limitedBuffer struct {
 	buf      bytes.Buffer
 	limit    int
+	tail     bool
 	exceeded bool
 }
 
@@ -259,6 +267,16 @@ func (buffer *limitedBuffer) Write(data []byte) (int, error) {
 	room := buffer.limit - buffer.buf.Len()
 	if written > room {
 		buffer.exceeded = true
+	}
+	if buffer.tail && written > room {
+		if written >= buffer.limit {
+			buffer.buf.Reset()
+			data = data[written-buffer.limit:]
+		} else {
+			buffer.buf.Next(written - room)
+		}
+		_, _ = buffer.buf.Write(data)
+		return written, nil
 	}
 	if room > 0 {
 		if len(data) > room {
