@@ -71,3 +71,39 @@ func TestParallelMemory(t *testing.T) {
 		})
 	}
 }
+
+func TestParallelMap(t *testing.T) {
+	t.Parallel()
+	for _, build := range parallelBuilds() {
+		t.Run(build.name, func(t *testing.T) {
+			binary := parallelHarness(t, "map.c", build.options)
+			for _, mode := range []string{"numbers", "strings", "objects", "map", "fresh", "nested", "exception", "nested_exception", "million"} {
+				t.Run(mode, func(t *testing.T) {
+					one, _ := parallelRun(t, binary, "1", mode)
+					many, _ := parallelRun(t, binary, "4", mode)
+					if one != many {
+						t.Fatalf("one worker %q, four workers %q", one, many)
+					}
+				})
+			}
+		})
+	}
+}
+
+func TestParallelWorkerPanic(t *testing.T) {
+	t.Parallel()
+	for _, build := range parallelBuilds() {
+		t.Run(build.name, func(t *testing.T) {
+			binary := parallelHarness(t, "map.c", build.options)
+			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			defer cancel()
+			command := exec.CommandContext(ctx, binary, "panic")
+			command.Env = append(os.Environ(), "ADAMIC_THREADS=4", "ASAN_OPTIONS=detect_leaks=0", "TSAN_OPTIONS=halt_on_error=1")
+			output, err := command.CombinedOutput()
+			failure, ok := err.(*exec.ExitError)
+			if !ok || failure.ExitCode() != 70 || strings.Count(string(output), "adamic: panic: worker panic\n") != 1 || strings.Contains(string(output), "Sanitizer") {
+				t.Fatalf("got %v\n%s", err, output)
+			}
+		})
+	}
+}
