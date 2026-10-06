@@ -1,0 +1,22 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+    oracle_test.go:559: gate cache node miss
+    oracle_test.go:559: gate cache node miss
+    oracle_test.go:448: gate cache native miss
+    oracle_test.go:441: gate cache native miss
+    oracle_test.go:580: stdout differs
+        node:   exit 0, stdout "/a\\/b\\n/gim\nleft:/a\\/b\\n/gim\n/a\\/b\\n/gim:right\n7\n/(?:)/\nbefore\ntrue:true\nfinally\n", stderr ""
+        native: exit 0, stdout "/a\\/b\\n/\nleft:/a\\/b\\n/\n/a\\/b\\n/:right\n7\n/(?:)/\nbefore\ntrue:true\nfinally\n", stderr ""
+    oracle_test.go:455: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.06s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a (36.93s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	37.011s
+FAIL

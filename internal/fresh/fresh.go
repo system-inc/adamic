@@ -1039,6 +1039,12 @@ func (a *analysis) value(expression ir.Expression) value {
 		a.value(expression.Left)
 		a.value(expression.Right)
 		return value{}
+	case ir.ErrorIs:
+		a.value(expression.Value)
+		return value{}
+	case ir.BuiltinError:
+		a.value(expression.Message)
+		return a.fresh(anyField, value{})
 	case ir.IsNull:
 		a.value(expression.Value)
 		return value{}
