@@ -3,16 +3,19 @@
 Twenty TypeScript-specific syntax-only cohere rules, each in its own file with
 one-line dispatch entries in `batch4_registry.ts`. None declares
 `NeedsTypeChecker: true`; no binder, checker or inferred types are added.
-The branch is `codex/stage1-lint-batch4`, cut from scanner tip
+The requested branch was `codex/stage1-lint-batch4`. It was already occupied
+by another worker's a-to-m unit, so this implementation is published as
+`codex/stage1-lint-batch4-typescript`, cut from scanner tip
 `0090256e607c3f2de7d5b67cef680ec010f95c1d`, as requested.
 
 Exclusion tips checked before selection and fetched again before finalization:
 
 - `origin/codex/typescript-scanner`: `0090256e607c3f2de7d5b67cef680ec010f95c1d`.
 - `origin/codex/stage1-lint-batch2`: `c4373c05259c7235cf1202d5cd4138c16d498caa`.
-- Batch 3 had no published tip. The user explicitly authorized proceeding,
-  reserving its last-ten core rules. All twenty here come from cohere's
-  TypeScript-specific directory and exclude scanner/batch2 implementations.
+- Batch 3 was unpublished at selection; the user authorized proceeding. Final
+  direct remote inspection found `fa9781c2c0911c52312002ba97ffd4b560d178ae`.
+  Its `rules/registry.ts` has no overlapping rule. All twenty here come from
+  cohere's TypeScript-specific directory and exclude scanner/batch2 implementations.
 
 The unmodified Go rule source is the pinned cohere submodule
 `715ba94f3608a6500086b1076ce5cb7e51b836db`. Its real `report.Write`
@@ -287,8 +290,12 @@ A separate evidence commit adds this report and
 [the raw logs](batch4_evidence/). The requested remote `codex/stage1-lint-batch4` already contains another
 worker's a-to-m batch at `d486b03a15f3202acc317dc81c40cc21818e21f7`, based
 on batch2. The first push was rejected without changing remote history.
-Publication is handled separately to preserve that worker's commits; no pull
-request is opened.
+Publication uses `codex/stage1-lint-batch4-typescript` to preserve that worker's
+commits. No merge with the occupied branch is performed; its a-to-m unit also
+contains three of these TypeScript rules, so a future integration must deduplicate
+ban-tslint-comment, default-param-last and init-declarations. These three were
+absent from the scanner and batch2 tips specified for this selection.
+No pull request is opened.
 
 Raw oracle whitespace is preserved through the local `.gitattributes` entry.
 Source/document and staged whitespace checks pass. The retained failed setup
