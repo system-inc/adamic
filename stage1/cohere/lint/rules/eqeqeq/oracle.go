@@ -12,7 +12,7 @@ import (
 func oracleEqeqeq() rule.Rule { return rules.Eqeqeq }
 func oracleEqeqeqOptions(fields []string) any {
 	if len(fields) > 5 && fields[5] != "" && fields[5] != "null" {
-		var options rules.EqeqeqOptions
+		options := rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}
 		if err := json.Unmarshal([]byte(fields[5]), &options); err != nil {
 			panic(err)
 		}

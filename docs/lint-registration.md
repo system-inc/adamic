@@ -59,9 +59,10 @@ avoid interface-method casts and reference cycles. Keep new options decoding
 inside the rule adapter. Manifest field 5 carries the complete captured options
 as JSON, without a fixed per-rule capture struct. `context.settings.read` and
 `list` expose scalar/string-array settings with lowercase keys. Empty/null input
-uses defaults. The restricted parser accepts string options or an object of
-booleans, strings, numbers, arrays of those, and null fields. It refuses nested
-objects or executable expressions instead of silently ignoring them. This is the
+uses defaults. The settings parser reads flat scalar/array values; structured values remain
+JSON text for a rule's own decoder, and `settings.text` retains the complete raw
+options. Rules can decode new shapes entirely within their own directory.
+Option expressions are never executed. This is the
 scanner branch's existing restricted settings parser, reused on main. Legacy
 fields remain available, and JSON values override them when provided.
 

@@ -4,8 +4,10 @@ import { panic } from 'adamic';
 import { Parser } from '../../typescript/parser/parser.ts';
 
 export class Settings {
-    readonly values = new Map<string, string[]>();
+    text = '';
+    private readonly values = new Map<string, string[]>();
     load(text: string): void {
+        this.text = text;
         if(text === '' || text === 'null') {
             return;
         }
@@ -19,7 +21,8 @@ export class Settings {
             return;
         }
         if(parser.node(object).kind !== 'ObjectLiteralExpression') {
-            panic('options must be a string or object');
+            this.values.set('option', [text]);
+            return;
         }
         for(const property of parser.node(object).children) {
             const children = parser.node(property).children;
@@ -33,10 +36,28 @@ export class Settings {
                 parser.node(value).kind === 'ArrayLiteralExpression' ? parser.node(value).children : [value];
             for(const element of elements) {
                 const node = parser.node(element);
-                if(!['TrueKeyword', 'FalseKeyword', 'StringLiteral', 'NumericLiteral'].includes(node.kind)) {
-                    panic('unsupported option value');
+                const scalar = ['TrueKeyword', 'FalseKeyword', 'StringLiteral', 'NumericLiteral'].includes(node.kind);
+                if(
+                    !scalar &&
+                    ![
+                        'ObjectLiteralExpression',
+                        'ArrayLiteralExpression',
+                        'PrefixUnaryExpression',
+                        'NullKeyword',
+                    ].includes(node.kind)
+                ) {
+                    panic('unsupported option expression');
                 }
-                values.push(node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : node.text);
+                // Structured values stay as data for a rule's own decoder.
+                values.push(
+                    scalar
+                        ? node.kind === 'TrueKeyword'
+                            ? 'true'
+                            : node.kind === 'FalseKeyword'
+                              ? 'false'
+                              : node.text
+                        : `(${text});`.slice(node.pos, node.end).trim(),
+                );
             }
             this.values.set(name, values);
         }

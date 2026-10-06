@@ -311,22 +311,11 @@ func upstream(t *testing.T) []string {
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
-		var legacy struct {
-			Mode, Null      string
-			AllowEmptyCatch bool
-		}
-		// Preserve decoded legacy fields while transporting all options generically.
-		// Other rules' options can be strings or arrays; their adapter owns decoding.
-		if len(row.Options) > 0 && row.Options[0] == '{' {
-			if err := json.Unmarshal(row.Options, &legacy); err != nil {
-				t.Fatal(err)
-			}
-		}
 		options := "null"
 		if len(row.Options) > 0 {
 			options = string(row.Options)
 		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, options))
+		rows = append(rows, fmt.Sprintf("%s\t%s\t\t\tfalse\t%s", path, row.Rule, options))
 	}
 	if len(rows) < 150 {
 		t.Fatalf("capture unexpectedly small: %d cases", len(rows))

@@ -79,6 +79,7 @@ func TestFactoryHooks(t *testing.T) {
         if(!this.ready) { panic('visit before prepare'); }
         console.log('visit');`, 1)
 	source = strings.Replace(source, "return new Rule(context);", `if(context.node(context.parents.length - 1).kind !== 'SourceFile') { panic('factory before ancestry'); }
+    if(context.settings.read('number', '') !== '-2' || !context.settings.read('payload', '').includes('enabled')) { panic('structured option lost'); }
     console.log('factory');
     return new Rule(context);`, 1)
 	source = "import { panic } from 'adamic';\n" + source
@@ -110,7 +111,7 @@ func TestFactoryHooks(t *testing.T) {
 	if err := os.WriteFile(fixture, []byte("debugger;\n"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	path := manifest(t, []string{fixture + "\tno-debugger"})
+	path := manifest(t, []string{fixture + "\tno-debugger\t\t\tfalse\t{\"Number\":-2,\"Payload\":{\"enabled\":true}}"})
 	expected := []byte("case 0\nfactory\nprepare\nvisit\nfinish\n")
 	run := func(mutated bool) {
 		for _, side := range []struct {
