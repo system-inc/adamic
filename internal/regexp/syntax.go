@@ -5,6 +5,8 @@
 // own representation without losing JavaScript semantics.
 package regexp
 
+import "math/big"
+
 // Flags are the flags accepted by ECMAScript 2025.
 type Flags struct {
 	HasIndices, Global, IgnoreCase, Multiline bool
@@ -57,18 +59,21 @@ const (
 // Dot matches any character subject to the flags.
 type Dot struct{}
 
-// Quantifier applies bounds to Atom. Max == -1 means unbounded.
+// Quantifier applies arbitrary-precision ECMAScript integer bounds to Atom.
+// Max is nil for an unbounded quantifier.
 type Quantifier struct {
 	Atom     Node
-	Min, Max int
+	Min, Max *big.Int
 	Greedy   bool
 }
 
 // Group includes capturing, lookaround and ordinary non-capturing groups.
 type Group struct {
-	Kind GroupKind
-	Name string
-	Body *Disjunction
+	Kind    GroupKind
+	Name    string
+	Body    *Disjunction
+	Enable  Flags
+	Disable Flags
 }
 
 type GroupKind uint8

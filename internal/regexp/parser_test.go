@@ -42,7 +42,7 @@ func TestQuantifierBounds(t *testing.T) {
 		t.Fatal(err)
 	}
 	q := p.Body.Alternatives[0].Terms[0].(*Quantifier)
-	if q.Min != 2 || q.Max != 4 || q.Greedy {
+	if q.Min.String() != "2" || q.Max.String() != "4" || q.Greedy {
 		t.Fatalf("quantifier = %#v", q)
 	}
 }

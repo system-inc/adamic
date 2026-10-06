@@ -2,8 +2,10 @@ package regexp
 
 import (
 	"fmt"
+	"math/big"
 	"strconv"
 	"strings"
+	"unicode"
 	"unicode/utf8"
 )
 
@@ -38,6 +40,9 @@ func Parse(pattern, flags string) (*Pattern, error) {
 		if !p.names[name] {
 			return nil, p.failAt(p.namedReferences[name], "unknown capture name")
 		}
+	}
+	if err := validateDuplicateNames(body); err != nil {
+		return nil, err
 	}
 	return &Pattern{Flags: f, Body: body}, nil
 }
@@ -153,6 +158,9 @@ func (p *parser) term() (Node, bool, error) {
 	case '*', '+', '?':
 		return nil, false, p.fail("nothing to repeat")
 	case '{':
+		if p.quantifierAhead() {
+			return nil, false, p.fail("nothing to repeat")
+		}
 		if p.flags.Unicode || p.flags.UnicodeSets {
 			return nil, false, p.fail("incomplete quantifier")
 		}
@@ -167,6 +175,7 @@ func (p *parser) term() (Node, bool, error) {
 func (p *parser) group() (Node, bool, error) {
 	p.pos++
 	kind, name := Capturing, ""
+	var enable, disable Flags
 	if p.take('?') {
 		switch {
 		case p.take(':'):
@@ -187,11 +196,15 @@ func (p *parser) group() (Node, bool, error) {
 				if err != nil {
 					return nil, false, err
 				}
-				if p.names[name] {
-					return nil, false, p.fail("duplicate capture name")
-				}
 				p.names[name] = true
 			}
+		case strings.ContainsRune("ims-", rune(p.peek())):
+			var err error
+			enable, disable, err = p.modifiers()
+			if err != nil {
+				return nil, false, err
+			}
+			kind = NonCapturing
 		default:
 			return nil, false, p.fail("invalid group")
 		}
@@ -210,20 +223,55 @@ func (p *parser) group() (Node, bool, error) {
 	if !p.flags.Unicode && !p.flags.UnicodeSets && (kind == PositiveLookahead || kind == NegativeLookahead) {
 		q = true
 	}
-	return &Group{Kind: kind, Name: name, Body: body}, q, nil
+	return &Group{Kind: kind, Name: name, Body: body, Enable: enable, Disable: disable}, q, nil
+}
+
+func (p *parser) modifiers() (Flags, Flags, error) {
+	var enable, disable Flags
+	disabling, any := false, false
+	seen := make(map[byte]bool)
+	for !p.done() && p.peek() != ':' {
+		c := p.peek()
+		if c == '-' && !disabling {
+			disabling = true
+			p.pos++
+			continue
+		}
+		if c != 'i' && c != 'm' && c != 's' || seen[c] {
+			return enable, disable, p.fail("invalid modifiers")
+		}
+		seen[c], any = true, true
+		target := &enable
+		if disabling {
+			target = &disable
+		}
+		switch c {
+		case 'i':
+			target.IgnoreCase = true
+		case 'm':
+			target.Multiline = true
+		case 's':
+			target.DotAll = true
+		}
+		p.pos++
+	}
+	if !any || !p.take(':') {
+		return enable, disable, p.fail("invalid modifiers")
+	}
+	return enable, disable, nil
 }
 
 func (p *parser) quantifier(atom Node) (Node, error) {
-	min, max := 0, -1
+	min, max := big.NewInt(0), (*big.Int)(nil)
 	switch p.peek() {
 	case '*':
 		p.pos++
 	case '+':
 		p.pos++
-		min = 1
+		min = big.NewInt(1)
 	case '?':
 		p.pos++
-		max = 1
+		max = big.NewInt(1)
 	case '{':
 		start := p.pos
 		p.pos++
@@ -232,9 +280,9 @@ func (p *parser) quantifier(atom Node) (Node, error) {
 			p.pos = start
 			return nil, p.fail("incomplete quantifier")
 		}
-		min, max = m, m
+		min, max = m, new(big.Int).Set(m)
 		if p.take(',') {
-			max = -1
+			max = nil
 			if n, ok := p.decimal(); ok {
 				max = n
 			}
@@ -243,7 +291,7 @@ func (p *parser) quantifier(atom Node) (Node, error) {
 			p.pos = start
 			return nil, p.fail("incomplete quantifier")
 		}
-		if max >= 0 && min > max {
+		if max != nil && min.Cmp(max) > 0 {
 			return nil, p.failAt(start, "quantifier range out of order")
 		}
 	}
@@ -269,8 +317,8 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 	if !inClass && c >= '1' && c <= '9' {
 		p.pos--
 		n, _ := p.decimal()
-		if n <= p.captureCount {
-			return &Backreference{Index: n}, true, nil
+		if n.IsInt64() && n.Int64() <= int64(p.captureCount) {
+			return &Backreference{Index: int(n.Int64())}, true, nil
 		}
 		if p.flags.Unicode || p.flags.UnicodeSets {
 			return nil, false, p.failAt(start, "invalid decimal escape")
@@ -280,13 +328,13 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 	}
 	if !inClass && c == 'k' {
 		if !p.hasNamedCapture {
+			if p.flags.Unicode || p.flags.UnicodeSets {
+				return nil, false, p.failAt(start, "invalid named reference")
+			}
 			return p.char(start, Escape)
 		}
 		if !p.take('<') {
-			if p.flags.Unicode || p.flags.UnicodeSets {
-				return nil, false, p.fail("invalid named reference")
-			}
-			return p.char(start, Escape)
+			return nil, false, p.fail("invalid named reference")
 		}
 		name, err := p.groupName()
 		if err != nil {
@@ -299,7 +347,10 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 		return &Backreference{Name: name}, true, nil
 	}
 	if c == 'p' || c == 'P' {
-		if !(p.flags.Unicode || p.flags.UnicodeSets) || !p.take('{') {
+		if !(p.flags.Unicode || p.flags.UnicodeSets) {
+			return &Character{Value: rune(c), Raw: p.source[start:p.pos], Kind: Escape}, true, nil
+		}
+		if !p.take('{') {
 			return nil, false, p.failAt(start, "invalid property escape")
 		}
 		end := strings.IndexByte(p.source[p.pos:], '}')
@@ -308,13 +359,16 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 		}
 		property := p.source[p.pos : p.pos+end]
 		p.pos += end + 1
-		if !validProperty(property, p.flags.UnicodeSets) {
+		if !validProperty(property, p.flags.UnicodeSets) || c == 'P' && stringProperties[property] {
 			return nil, false, p.failAt(start, "invalid Unicode property")
 		}
 		return &Character{Raw: p.source[start:p.pos], Kind: PropertyEscape}, true, nil
 	}
 	if strings.ContainsRune("dDsSwW", rune(c)) {
 		return &Character{Raw: p.source[start:p.pos], Kind: ClassEscape}, true, nil
+	}
+	if inClass && c == 'b' {
+		return &Character{Value: '\b', Raw: p.source[start:p.pos], Kind: Escape}, true, nil
 	}
 	if c == '0' {
 		if !p.done() && p.peek() >= '0' && p.peek() <= '9' {
@@ -348,7 +402,7 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 	if strings.ContainsRune("fnrtv", rune(c)) {
 		return &Character{Raw: p.source[start:p.pos], Kind: Escape}, true, nil
 	}
-	if (p.flags.Unicode || p.flags.UnicodeSets) && isIdentifierPart(c) {
+	if (p.flags.Unicode || p.flags.UnicodeSets) && !strings.ContainsRune("^$\\.*+?()[]{}|/", rune(c)) {
 		return nil, false, p.failAt(start, "invalid identity escape")
 	}
 	return &Character{Value: rune(c), Raw: p.source[start:p.pos], Kind: Escape}, true, nil
@@ -359,64 +413,31 @@ func (p *parser) characterClass() (Node, error) {
 	neg := p.take('^')
 	union := &ClassUnion{}
 	for !p.done() && p.peek() != ']' {
-		if p.flags.UnicodeSets && p.peek() == '[' {
-			nested, err := p.characterClass()
-			if err != nil {
-				return nil, err
-			}
-			union.Operands = append(union.Operands, nested.(*CharacterClass).Expr)
-			continue
-		}
-		if p.flags.UnicodeSets && p.match("\\q{") {
-			p.pos += 3
-			s := &ClassString{Alternatives: [][]*Character{{}}}
-			for !p.done() && p.peek() != '}' {
-				if p.take('|') {
-					s.Alternatives = append(s.Alternatives, []*Character{})
-					continue
-				}
-				ch, err := p.classCharacter()
-				if err != nil {
-					return nil, err
-				}
-				last := len(s.Alternatives) - 1
-				s.Alternatives[last] = append(s.Alternatives[last], ch)
-			}
-			if !p.take('}') {
-				return nil, p.fail("unterminated class string")
-			}
-			union.Operands = append(union.Operands, s)
-			continue
-		}
-		left, err := p.classCharacter()
+		operand, err := p.classSetOperand()
 		if err != nil {
 			return nil, err
 		}
-		var expr ClassExpression = &ClassCharacter{Character: left}
-		if p.peek() == '-' && p.pos+1 < len(p.source) && p.source[p.pos+1] != ']' && !(p.flags.UnicodeSets && p.source[p.pos:p.pos+2] == "--") {
-			p.pos++
-			right, e := p.classCharacter()
-			if e != nil {
-				return nil, e
-			}
-			if left.Kind == ClassEscape || left.Kind == PropertyEscape || right.Kind == ClassEscape || right.Kind == PropertyEscape || left.Value > right.Value {
-				return nil, p.fail("invalid character class range")
-			}
-			expr = &ClassRange{From: left, To: right}
-		}
-		union.Operands = append(union.Operands, expr)
+		union.Operands = append(union.Operands, operand)
 		if p.flags.UnicodeSets && (p.match("&&") || p.match("--")) {
 			op := p.source[p.pos : p.pos+2]
 			p.pos += 2
-			right, e := p.classSetOperand()
-			if e != nil {
-				return nil, e
+			left := ClassExpression(union)
+			for {
+				right, operandErr := p.classSetOperand()
+				if operandErr != nil {
+					return nil, operandErr
+				}
+				if op == "&&" {
+					left = &ClassIntersection{Left: left, Right: right}
+				} else {
+					left = &ClassSubtraction{Left: left, Right: right}
+				}
+				if !p.match(op) {
+					break
+				}
+				p.pos += 2
 			}
-			var leftExpr ClassExpression = union
-			if op == "&&" {
-				return p.finishClass(neg, &ClassIntersection{Left: leftExpr, Right: right})
-			}
-			return p.finishClass(neg, &ClassSubtraction{Left: leftExpr, Right: right})
+			return p.finishClass(neg, left)
 		}
 	}
 	return p.finishClass(neg, union)
@@ -425,6 +446,9 @@ func (p *parser) characterClass() (Node, error) {
 func (p *parser) finishClass(neg bool, expr ClassExpression) (Node, error) {
 	if !p.take(']') {
 		return nil, p.fail("unterminated character class")
+	}
+	if neg && classMayContainStrings(expr) {
+		return nil, p.fail("cannot negate a class containing strings")
 	}
 	return &CharacterClass{Negated: neg, Expr: expr}, nil
 }
@@ -436,9 +460,40 @@ func (p *parser) classSetOperand() (ClassExpression, error) {
 		}
 		return n.(*CharacterClass).Expr, nil
 	}
+	if p.flags.UnicodeSets && p.match("\\q{") {
+		p.pos += 3
+		result := &ClassString{Alternatives: [][]*Character{{}}}
+		for !p.done() && p.peek() != '}' {
+			if p.take('|') {
+				result.Alternatives = append(result.Alternatives, []*Character{})
+				continue
+			}
+			character, err := p.classCharacter()
+			if err != nil {
+				return nil, err
+			}
+			last := len(result.Alternatives) - 1
+			result.Alternatives[last] = append(result.Alternatives[last], character)
+		}
+		if !p.take('}') {
+			return nil, p.fail("unterminated class string")
+		}
+		return result, nil
+	}
 	c, e := p.classCharacter()
 	if e != nil {
 		return nil, e
+	}
+	if p.peek() == '-' && p.pos+1 < len(p.source) && p.source[p.pos+1] != ']' && !(p.flags.UnicodeSets && p.match("--")) {
+		p.pos++
+		right, err := p.classCharacter()
+		if err != nil {
+			return nil, err
+		}
+		if c.Kind == ClassEscape || c.Kind == PropertyEscape || right.Kind == ClassEscape || right.Kind == PropertyEscape || c.Value > right.Value {
+			return nil, p.fail("invalid character class range")
+		}
+		return &ClassRange{From: c, To: right}, nil
 	}
 	return &ClassCharacter{Character: c}, nil
 }
@@ -457,11 +512,92 @@ func (p *parser) classCharacter() (*Character, error) {
 		}
 		return c, nil
 	}
-	if p.flags.UnicodeSets && strings.ContainsRune("(){}|/", rune(p.peek())) {
+	if p.flags.UnicodeSets && (strings.ContainsRune("(){}|/-", rune(p.peek())) || p.pos+1 < len(p.source) && p.source[p.pos] == p.source[p.pos+1] && strings.ContainsRune("!#$%&*+,.:;<=>?@^`~", rune(p.peek()))) {
 		return nil, p.fail("reserved character in Unicode set")
 	}
 	n, _, e := p.literal()
 	return n.(*Character), e
+}
+
+func classMayContainStrings(expression ClassExpression) bool {
+	switch expression := expression.(type) {
+	case *ClassString:
+		for _, alternative := range expression.Alternatives {
+			if len(alternative) > 1 {
+				return true
+			}
+		}
+	case *ClassCharacter:
+		if expression.Character.Kind == PropertyEscape {
+			raw := expression.Character.Raw
+			if open := strings.IndexByte(raw, '{'); open >= 0 && len(raw) > open+2 {
+				return stringProperties[raw[open+1:len(raw)-1]]
+			}
+		}
+	case *ClassUnion:
+		for _, operand := range expression.Operands {
+			if classMayContainStrings(operand) {
+				return true
+			}
+		}
+	case *ClassIntersection:
+		return classMayContainStrings(expression.Left) || classMayContainStrings(expression.Right)
+	case *ClassSubtraction:
+		return classMayContainStrings(expression.Left)
+	}
+	return false
+}
+
+type namedCaptureLocation struct {
+	path map[*Disjunction]int
+}
+
+func validateDuplicateNames(body *Disjunction) error {
+	locations := make(map[string][]namedCaptureLocation)
+	var visitDisjunction func(*Disjunction, map[*Disjunction]int)
+	var visitNode func(Node, map[*Disjunction]int)
+	visitNode = func(node Node, path map[*Disjunction]int) {
+		switch node := node.(type) {
+		case *Group:
+			if node.Kind == Capturing && node.Name != "" {
+				copyPath := make(map[*Disjunction]int, len(path))
+				for d, a := range path {
+					copyPath[d] = a
+				}
+				locations[node.Name] = append(locations[node.Name], namedCaptureLocation{path: copyPath})
+			}
+			visitDisjunction(node.Body, path)
+		case *Quantifier:
+			visitNode(node.Atom, path)
+		}
+	}
+	visitDisjunction = func(disjunction *Disjunction, path map[*Disjunction]int) {
+		for alternativeIndex, alternative := range disjunction.Alternatives {
+			path[disjunction] = alternativeIndex
+			for _, term := range alternative.Terms {
+				visitNode(term, path)
+			}
+		}
+		delete(path, disjunction)
+	}
+	visitDisjunction(body, make(map[*Disjunction]int))
+	for name, captures := range locations {
+		for i := range captures {
+			for j := 0; j < i; j++ {
+				disjoint := false
+				for d, a := range captures[i].path {
+					if b, ok := captures[j].path[d]; ok && a != b {
+						disjoint = true
+						break
+					}
+				}
+				if !disjoint {
+					return &SyntaxError{Message: "duplicate capture name " + name}
+				}
+			}
+		}
+	}
+	return nil
 }
 
 func (p *parser) literal() (Node, bool, error) {
@@ -511,32 +647,74 @@ func (p *parser) legacyOctal(start int) (Node, bool, error) {
 
 func (p *parser) groupName() (string, error) {
 	start := p.pos
-	if p.done() || !isNameStart(p.peek()) {
-		return "", p.fail("invalid capture name")
-	}
+	var name []rune
 	for !p.done() && p.peek() != '>' {
-		c := p.peek()
-		if !isNamePart(c) {
-			return "", p.fail("invalid capture name")
+		r, err := p.groupNameRune()
+		if err != nil || len(name) == 0 && !isRegExpIdentifierStart(r) || len(name) != 0 && !isRegExpIdentifierPart(r) {
+			return "", p.failAt(start, "invalid capture name")
 		}
-		p.pos++
+		name = append(name, r)
 	}
-	if p.pos == start || !p.take('>') {
+	if len(name) == 0 || !p.take('>') {
 		return "", p.fail("invalid capture name")
 	}
-	return p.source[start : p.pos-1], nil
+	return string(name), nil
 }
-func (p *parser) decimal() (int, bool) {
-	start := p.pos
-	n := 0
-	for !p.done() && p.peek() >= '0' && p.peek() <= '9' {
-		if n > 1_000_000_000 {
-			return 0, false
+
+func (p *parser) groupNameRune() (rune, error) {
+	if p.peek() != '\\' {
+		r, width := utf8.DecodeRuneInString(p.source[p.pos:])
+		if r == utf8.RuneError && width == 1 {
+			return 0, p.fail("invalid UTF-8")
 		}
-		n = n*10 + int(p.peek()-'0')
+		p.pos += width
+		return r, nil
+	}
+	start := p.pos
+	p.pos++
+	if !p.take('u') {
+		return 0, p.failAt(start, "invalid capture name escape")
+	}
+	if p.take('{') {
+		value, ok := p.hexNumber('}')
+		if !ok || value > utf8.MaxRune {
+			return 0, p.failAt(start, "invalid capture name escape")
+		}
+		return rune(value), nil
+	}
+	first, err := p.hexEscape(start, 4)
+	if err != nil {
+		return 0, err
+	}
+	if first.Value >= 0xD800 && first.Value <= 0xDBFF && p.match("\\u") {
+		secondStart := p.pos
+		p.pos += 2
+		second, secondErr := p.hexEscape(secondStart, 4)
+		if secondErr == nil && second.Value >= 0xDC00 && second.Value <= 0xDFFF {
+			return utf8.RuneSelf + (first.Value-0xD800)*0x400 + second.Value - 0xDC00 - utf8.RuneSelf + 0x10000, nil
+		}
+		p.pos = secondStart
+	}
+	return first.Value, nil
+}
+
+func isRegExpIdentifierStart(r rune) bool {
+	return r == '$' || r == '_' || unicode.IsLetter(r) || unicode.In(r, unicode.Nl)
+}
+
+func isRegExpIdentifierPart(r rune) bool {
+	return isRegExpIdentifierStart(r) || r == 0x200C || r == 0x200D || unicode.In(r, unicode.Mn, unicode.Mc, unicode.Nd, unicode.Pc)
+}
+func (p *parser) decimal() (*big.Int, bool) {
+	start := p.pos
+	for !p.done() && p.peek() >= '0' && p.peek() <= '9' {
 		p.pos++
 	}
-	return n, p.pos > start
+	if p.pos == start {
+		return nil, false
+	}
+	n, ok := new(big.Int).SetString(p.source[start:p.pos], 10)
+	return n, ok
 }
 func (p *parser) hexNumber(end byte) (int, bool) {
 	start := p.pos
@@ -605,13 +783,6 @@ func (p *parser) quantifierAhead() bool {
 func isIdentifierPart(c byte) bool {
 	return c == '_' || c == '$' || c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'
 }
-func isNamePart(c byte) bool {
-	return c == '_' || c == '$' || c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'
-}
-func isNameStart(c byte) bool {
-	return c == '_' || c == '$' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'
-}
-
 func countCaptures(s string) (int, bool) {
 	n := 0
 	named := false
