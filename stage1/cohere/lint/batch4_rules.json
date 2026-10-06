@@ -1,0 +1,162 @@
+[
+  {
+    "namespace": "core",
+    "stem": "default_case_last",
+    "symbol": "DefaultCaseLast",
+    "name": "default-case-last",
+    "file": "default_case_last.ts",
+    "upstream_cases": 38
+  },
+  {
+    "namespace": "core",
+    "stem": "default_param_last",
+    "symbol": "DefaultParamLast",
+    "name": "default-param-last",
+    "file": "default_param_last.ts",
+    "upstream_cases": 128
+  },
+  {
+    "namespace": "core",
+    "stem": "for_direction",
+    "symbol": "ForDirection",
+    "name": "for-direction",
+    "file": "for_direction.ts",
+    "upstream_cases": 46
+  },
+  {
+    "namespace": "core",
+    "stem": "guard_for_in",
+    "symbol": "GuardForIn",
+    "name": "guard-for-in",
+    "file": "guard_for_in.ts",
+    "upstream_cases": 20
+  },
+  {
+    "namespace": "core",
+    "stem": "max_classes_per_file",
+    "symbol": "MaxClassesPerFile",
+    "name": "max-classes-per-file",
+    "file": "max_classes_per_file.ts",
+    "upstream_cases": 29
+  },
+  {
+    "namespace": "core",
+    "stem": "max_depth",
+    "symbol": "MaxDepth",
+    "name": "max-depth",
+    "file": "max_depth.ts",
+    "upstream_cases": 38
+  },
+  {
+    "namespace": "core",
+    "stem": "max_lines",
+    "symbol": "MaxLines",
+    "name": "max-lines",
+    "file": "max_lines.ts",
+    "upstream_cases": 15
+  },
+  {
+    "namespace": "core",
+    "stem": "max_nested_callbacks",
+    "symbol": "MaxNestedCallbacks",
+    "name": "max-nested-callbacks",
+    "file": "max_nested_callbacks.ts",
+    "upstream_cases": 36
+  },
+  {
+    "namespace": "core",
+    "stem": "grouped_accessor_pairs",
+    "symbol": "GroupedAccessorPairs",
+    "name": "grouped-accessor-pairs",
+    "file": "grouped_accessor_pairs.ts",
+    "upstream_cases": 160
+  },
+  {
+    "namespace": "typescript",
+    "stem": "default_param_last",
+    "symbol": "DefaultParamLast",
+    "name": "@typescript-eslint/default-param-last",
+    "file": "ts_default_param_last.ts",
+    "upstream_cases": 117
+  },
+  {
+    "namespace": "typescript",
+    "stem": "ban_tslint_comment",
+    "symbol": "BanTslintComment",
+    "name": "@typescript-eslint/ban-tslint-comment",
+    "file": "ts_ban_tslint_comment.ts",
+    "upstream_cases": 42
+  },
+  {
+    "namespace": "typescript",
+    "stem": "init_declarations",
+    "symbol": "InitDeclarations",
+    "name": "@typescript-eslint/init-declarations",
+    "file": "ts_init_declarations.ts",
+    "upstream_cases": 92
+  },
+  {
+    "namespace": "base",
+    "stem": "boundary_no_global_container",
+    "symbol": "BoundaryNoGlobalContainer",
+    "name": "base/boundary-no-global-container",
+    "file": "base_boundary_no_global_container.ts",
+    "upstream_cases": 13
+  },
+  {
+    "namespace": "nexus",
+    "stem": "consistency_no_stuttering_name",
+    "symbol": "ConsistencyNoStutteringName",
+    "name": "nexus/consistency-no-stuttering-name",
+    "file": "nexus_consistency_no_stuttering_name.ts",
+    "upstream_cases": 17
+  },
+  {
+    "namespace": "base",
+    "stem": "consistency_no_hand_built_declared_error",
+    "symbol": "ConsistencyNoHandBuiltDeclaredError",
+    "name": "base/consistency-no-hand-built-declared-error",
+    "file": "base_consistency_no_hand_built_declared_error.ts",
+    "upstream_cases": 14
+  },
+  {
+    "namespace": "base",
+    "stem": "consistency_require_pagination_argument_name",
+    "symbol": "ConsistencyRequirePaginationArgumentName",
+    "name": "base/consistency-require-pagination-argument-name",
+    "file": "base_consistency_require_pagination_argument_name.ts",
+    "upstream_cases": 29
+  },
+  {
+    "namespace": "base",
+    "stem": "correctness_require_orm_column_declare",
+    "symbol": "CorrectnessRequireOrmColumnDeclare",
+    "name": "base/correctness-require-orm-column-declare",
+    "file": "base_correctness_require_orm_column_declare.ts",
+    "upstream_cases": 22
+  },
+  {
+    "namespace": "nexus",
+    "stem": "consistency_no_for_in",
+    "symbol": "ConsistencyNoForIn",
+    "name": "nexus/consistency-no-for-in",
+    "file": "nexus_consistency_no_for_in.ts",
+    "upstream_cases": 18
+  },
+  {
+    "namespace": "nexus",
+    "stem": "consistency_no_screaming_snake_case",
+    "symbol": "ConsistencyNoScreamingSnakeCase",
+    "name": "nexus/consistency-no-screaming-snake-case",
+    "file": "nexus_consistency_no_screaming_snake_case.ts",
+    "upstream_cases": 23
+  },
+  {
+    "namespace": "nexus",
+    "stem": "consistency_no_utils_folder",
+    "symbol": "ConsistencyNoUtilsFolder",
+    "name": "nexus/consistency-no-utils-folder",
+    "file": "nexus_consistency_no_utils_folder.ts",
+    "upstream_cases": 8
+  }
+]

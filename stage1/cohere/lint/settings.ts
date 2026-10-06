@@ -30,7 +30,15 @@ export class Settings {
                 parser.node(value).kind === 'ArrayLiteralExpression' ? parser.node(value).children : [value];
             for(const element of elements) {
                 const node = parser.node(element);
-                values.push(node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : node.text);
+                values.push(
+                    node.kind === 'TrueKeyword'
+                        ? 'true'
+                        : node.kind === 'FalseKeyword'
+                          ? 'false'
+                          : node.kind === 'PrefixUnaryExpression' && node.operator === 'MinusToken'
+                            ? `-${parser.node(node.children[0] ?? panic('missing negative option')).text}`
+                            : node.text,
+                );
             }
             this.values.set(name, values);
         }

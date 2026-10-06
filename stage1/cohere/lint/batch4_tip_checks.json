@@ -1,0 +1,150 @@
+{
+  "base": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+  "scanner_tip": "0090256e607c3f2de7d5b67cef680ec010f95c1d",
+  "batch3": "absent at each check; all twenty VOLUME.md selections reserved",
+  "rules": [
+    {
+      "rule": "default-case-last",
+      "checks": [
+        "default-case-last\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "default-case-last\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "default-param-last",
+      "checks": [
+        "default-param-last\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "default-param-last\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "for-direction",
+      "checks": [
+        "for-direction\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "for-direction\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "guard-for-in",
+      "checks": [
+        "guard-for-in\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "guard-for-in\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "max-classes-per-file",
+      "checks": [
+        "max-classes-per-file\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "max-classes-per-file\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "max-depth",
+      "checks": [
+        "max-depth\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "max-depth\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "max-lines",
+      "checks": [
+        "max-lines\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "max-lines\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "max-nested-callbacks",
+      "checks": [
+        "max-nested-callbacks\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "max-nested-callbacks\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "grouped-accessor-pairs",
+      "checks": [
+        "grouped-accessor-pairs\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "grouped-accessor-pairs\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/default-param-last",
+      "checks": [
+        "@typescript-eslint/default-param-last\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "@typescript-eslint/default-param-last\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/ban-tslint-comment",
+      "checks": [
+        "@typescript-eslint/ban-tslint-comment\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "@typescript-eslint/ban-tslint-comment\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/init-declarations",
+      "checks": [
+        "@typescript-eslint/init-declarations\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "@typescript-eslint/init-declarations\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "base/boundary-no-global-container",
+      "checks": [
+        "base/boundary-no-global-container\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "base/boundary-no-global-container\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "nexus/consistency-no-stuttering-name",
+      "checks": [
+        "Replacement nexus/consistency-no-hand-rolled-delay -> nexus/consistency-no-stuttering-name\t0090256e607c3f2de7d5b67cef680ec010f95c1d\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "base/consistency-no-hand-built-declared-error",
+      "checks": [
+        "base/consistency-no-hand-built-declared-error\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "base/consistency-no-hand-built-declared-error\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "base/consistency-require-pagination-argument-name",
+      "checks": [
+        "base/consistency-require-pagination-argument-name\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "base/consistency-require-pagination-argument-name\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "base/correctness-require-orm-column-declare",
+      "checks": [
+        "base/correctness-require-orm-column-declare\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "base/correctness-require-orm-column-declare\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "nexus/consistency-no-for-in",
+      "checks": [
+        "nexus/consistency-no-for-in\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "nexus/consistency-no-for-in\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "nexus/consistency-no-screaming-snake-case",
+      "checks": [
+        "Replacement nexus/consistency-no-return-void -> nexus/consistency-no-screaming-snake-case\t0090256e607c3f2de7d5b67cef680ec010f95c1d\tbatch3 absent; frequency twenty reserved"
+      ]
+    },
+    {
+      "rule": "nexus/consistency-no-utils-folder",
+      "checks": [
+        "nexus/consistency-no-utils-folder\torigin/codex/typescript-scanner\t0090256e607c3f2de7d5b67cef680ec010f95c1d",
+        "nexus/consistency-no-utils-folder\tbatch3 absent; frequency twenty reserved"
+      ]
+    }
+  ],
+  "final_check": {
+    "scanner": "0090256e607c3f2de7d5b67cef680ec010f95c1d",
+    "batch3": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+    "collisions": []
+  }
+}

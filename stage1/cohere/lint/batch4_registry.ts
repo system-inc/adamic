@@ -1,0 +1,44 @@
+// Each rule owns its implementation; each registration occupies one line.
+import type { RuleContext } from './rule_context.ts';
+import { visit as default_case_last } from './default_case_last.ts';
+import { visit as default_param_last } from './default_param_last.ts';
+import { visit as for_direction } from './for_direction.ts';
+import { visit as guard_for_in } from './guard_for_in.ts';
+import { visit as max_classes_per_file } from './max_classes_per_file.ts';
+import { visit as max_depth } from './max_depth.ts';
+import { visit as max_lines } from './max_lines.ts';
+import { visit as max_nested_callbacks } from './max_nested_callbacks.ts';
+import { visit as grouped_accessor_pairs } from './grouped_accessor_pairs.ts';
+import { visit as ts_default_param_last } from './ts_default_param_last.ts';
+import { visit as ts_ban_tslint_comment } from './ts_ban_tslint_comment.ts';
+import { visit as ts_init_declarations } from './ts_init_declarations.ts';
+import { visit as base_boundary_no_global_container } from './base_boundary_no_global_container.ts';
+import { visit as nexus_consistency_no_stuttering_name } from './nexus_consistency_no_stuttering_name.ts';
+import { visit as base_consistency_no_hand_built_declared_error } from './base_consistency_no_hand_built_declared_error.ts';
+import { visit as base_consistency_require_pagination_argument_name } from './base_consistency_require_pagination_argument_name.ts';
+import { visit as base_correctness_require_orm_column_declare } from './base_correctness_require_orm_column_declare.ts';
+import { visit as nexus_consistency_no_for_in } from './nexus_consistency_no_for_in.ts';
+import { visit as nexus_consistency_no_screaming_snake_case } from './nexus_consistency_no_screaming_snake_case.ts';
+import { visit as nexus_consistency_no_utils_folder } from './nexus_consistency_no_utils_folder.ts';
+export function visitBatch4(ctx: RuleContext, index: number): void {
+    max_lines(ctx, index);
+    default_case_last(ctx, index);
+    default_param_last(ctx, index);
+    for_direction(ctx, index);
+    guard_for_in(ctx, index);
+    max_classes_per_file(ctx, index);
+    max_depth(ctx, index);
+    max_nested_callbacks(ctx, index);
+    grouped_accessor_pairs(ctx, index);
+    ts_default_param_last(ctx, index);
+    ts_ban_tslint_comment(ctx, index);
+    ts_init_declarations(ctx, index);
+    base_boundary_no_global_container(ctx, index);
+    nexus_consistency_no_stuttering_name(ctx, index);
+    base_consistency_no_hand_built_declared_error(ctx, index);
+    base_consistency_require_pagination_argument_name(ctx, index);
+    base_correctness_require_orm_column_declare(ctx, index);
+    nexus_consistency_no_for_in(ctx, index);
+    nexus_consistency_no_screaming_snake_case(ctx, index);
+    nexus_consistency_no_utils_folder(ctx, index);
+}

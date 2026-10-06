@@ -135,6 +135,28 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 		typescript.NoUnnecessaryTypeConstraint,
 		typescript.PreferNamespaceKeyword,
 	}, selected...)
+	selected = append([]rule.Rule{
+		rules.DefaultCaseLast,
+		rules.DefaultParamLast,
+		rules.ForDirection,
+		rules.GuardForIn,
+		rules.MaxClassesPerFile,
+		rules.MaxDepth,
+		rules.MaxLines,
+		rules.MaxNestedCallbacks,
+		rules.GroupedAccessorPairs,
+		typescript.DefaultParamLast,
+		typescript.BanTslintComment,
+		typescript.InitDeclarations,
+		base.BoundaryNoGlobalContainer,
+		nexus.ConsistencyNoStutteringName,
+		base.ConsistencyNoHandBuiltDeclaredError,
+		base.ConsistencyRequirePaginationArgumentName,
+		base.CorrectnessRequireOrmColumnDeclare,
+		nexus.ConsistencyNoForIn,
+		nexus.ConsistencyNoScreamingSnakeCase,
+		nexus.ConsistencyNoUtilsFolder,
+	}, selected...)
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
 	for _, subject := range selected {
@@ -162,6 +184,58 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 					break
 				}
 				var decoded rules.NoReturnAssignOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			}
+		}
+		if fields[5] != "" && fields[5] != "null" {
+			switch subject.Name {
+			case "max-classes-per-file":
+				var decoded rules.MaxClassesPerFileOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "max-depth":
+				decoded := rules.DefaultMaxDepthSettings()
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "max-lines":
+				decoded := rules.DefaultMaxLinesOptions()
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "max-nested-callbacks":
+				var decoded rules.MaxNestedCallbacksOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "nexus/consistency-no-stuttering-name":
+				var decoded nexus.ConsistencyNoStutteringNameOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "nexus/consistency-no-screaming-snake-case":
+				var decoded nexus.ConsistencyNoScreamingSnakeCaseOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "grouped-accessor-pairs":
+				decoded := rules.GroupedAccessorPairsOptions{Order: rules.GroupedAccessorPairsAnyOrder}
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "@typescript-eslint/init-declarations":
+				var decoded typescript.InitDeclarationsOptions
 				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
 					panic(err)
 				}
@@ -281,6 +355,23 @@ func main() {
 		panic(err)
 	}
 	countOnly := len(args) > 2 && args[2] == "--count"
+	if len(args) > 2 && args[2] == "--parse-errors" {
+		for _, row := range strings.Split(string(data), "\n") {
+			if row == "" {
+				continue
+			}
+			fields := strings.Split(row, "\t")
+			source, err := os.ReadFile(fields[0])
+			if err != nil {
+				panic(err)
+			}
+			file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: fields[0], Path: tspath.Path(fields[0])}, string(source), core.ScriptKindTS)
+			if len(file.Diagnostics()) != 0 {
+				fmt.Fprintf(out, "%s\t%q\t%v\n", fields[1], string(source), file.Diagnostics())
+			}
+		}
+		return
+	}
 	count, index := 0, 0
 	for _, row := range strings.Split(string(data), "\n") {
 		if row == "" {

@@ -9,6 +9,7 @@ import { isLineBreak, isSpace } from '../../typescript/scanner/characters.ts';
 import { Finding } from './finding.ts';
 import { RuleContext } from './rule_context.ts';
 import { visitBatch2 } from './batch2_registry.ts';
+import { visitBatch4 } from './batch4_registry.ts';
 import { VolumeRules } from './volume.ts';
 import { Scanner as SourceScanner } from '../../typescript/scanner/scanner.ts';
 import type { Settings } from './settings.ts';
@@ -185,12 +186,19 @@ function bitwiseOperator(kind: string): string {
     }
 }
 
+// Go emits whole-file diagnostics before its label and ordinary node listeners.
+function findingPriority(rule: string): number {
+    if(rule === 'max-lines') return -4;
+    if(rule === 'max-classes-per-file') return -3;
+    if(rule === 'nexus/consistency-no-utils-folder') return -2;
+    return rule === 'no-labels' ? -1 : 0;
+}
 function compareFindings(left: Finding, right: Finding): number {
     const position = left.start - right.start;
     if(position !== 0) {
         return position;
     }
-    return (left.rule === 'no-labels' ? -1 : 0) - (right.rule === 'no-labels' ? -1 : 0);
+    return findingPriority(left.rule) - findingPriority(right.rule);
 }
 function compareEdits(left: Finding, right: Finding): number {
     const position = left.editStart - right.editStart;
@@ -261,9 +269,14 @@ export class Linter {
             this.selected,
             this.settings,
         );
+        this.indexParents(this.root, -1);
         this.volume.prepare(this.root);
         this.walk(this.root, -1);
         this.findings.sort(compareFindings);
+    }
+    indexParents(index: number, parent: number): void {
+        this.parents[index] = parent;
+        for(const child of this.node(index).children) this.indexParents(child, index);
     }
     node(index: number): ParseNode {
         return this.parser.node(index);
@@ -470,6 +483,7 @@ export class Linter {
         if(isVariableContainerKind(node.kind) && this.enabled('no-var')) {
             this.variable(index, parent);
         }
+        visitBatch4(this.batch2 ?? panic('missing rule context'), index);
         visitBatch2(this.batch2 ?? panic('missing batch2 context'), index);
         this.additional(index, parent);
         (this.volume ?? panic('missing additional rules')).visit(index);
