@@ -1,0 +1,43 @@
+=== RUN   TestCoverageAgreementAndMutants
+    coverage_test.go:120: controls: 23419 identical finding bytes; findings 52
+    coverage_test.go:128: controls-asan: 23419 identical finding bytes; findings 52
+=== RUN   TestCoverageAgreementAndMutants/before
+    coverage_test.go:152: before: exit 0, Go byte oracle catches byte 54; findings 51
+=== RUN   TestCoverageAgreementAndMutants/cast
+    coverage_test.go:152: cast: exit 0, Go byte oracle catches byte 1548; findings 52
+=== RUN   TestCoverageAgreementAndMutants/methods
+    coverage_test.go:152: methods: exit 0, Go byte oracle catches byte 2189; findings 45
+=== RUN   TestCoverageAgreementAndMutants/coercion
+    coverage_test.go:152: coercion: exit 0, Go byte oracle catches byte 1156; findings 52
+=== RUN   TestCoverageAgreementAndMutants/caller
+    coverage_test.go:152: caller: exit 0, Go byte oracle catches byte 10220; findings 53
+=== RUN   TestCoverageAgreementAndMutants/parameter
+    coverage_test.go:152: parameter: exit 0, Go byte oracle catches byte 366; findings 49
+=== RUN   TestCoverageAgreementAndMutants/invariant
+    coverage_test.go:152: invariant: exit 0, Go byte oracle catches byte 12721; findings 48
+=== RUN   TestCoverageAgreementAndMutants/optional
+    coverage_test.go:152: optional: exit 0, Go byte oracle catches byte 15476; findings 52
+=== RUN   TestCoverageAgreementAndMutants/alias
+    coverage_test.go:152: alias: exit 0, Go byte oracle catches byte 15948; findings 52
+=== RUN   TestCoverageAgreementAndMutants/unused
+    coverage_test.go:152: unused: exit 0, Go byte oracle catches byte 16759; findings 55
+=== NAME  TestCoverageAgreementAndMutants
+    coverage_test.go:160: repository: 85151 identical finding bytes; findings 180
+    coverage_test.go:161: repository-asan: 85151 identical finding bytes; findings 180
+    coverage_test.go:168: compiler: 7120228 identical finding bytes; findings 16589
+    coverage_test.go:169: compiler-asan: 7120228 identical finding bytes; findings 16589
+    coverage_test.go:181: released program queried using a new question: panic 70, invalid or released checker handle
+    coverage_test.go:186: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestCoverageAgreementAndMutants (501.44s)
+    --- PASS: TestCoverageAgreementAndMutants/before (8.92s)
+    --- PASS: TestCoverageAgreementAndMutants/cast (9.10s)
+    --- PASS: TestCoverageAgreementAndMutants/methods (8.72s)
+    --- PASS: TestCoverageAgreementAndMutants/coercion (8.93s)
+    --- PASS: TestCoverageAgreementAndMutants/caller (8.89s)
+    --- PASS: TestCoverageAgreementAndMutants/parameter (8.91s)
+    --- PASS: TestCoverageAgreementAndMutants/invariant (8.87s)
+    --- PASS: TestCoverageAgreementAndMutants/optional (8.78s)
+    --- PASS: TestCoverageAgreementAndMutants/alias (8.93s)
+    --- PASS: TestCoverageAgreementAndMutants/unused (8.97s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	501.447s
