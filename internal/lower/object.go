@@ -35,6 +35,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
 				return nil, l.notYet(name, "a computed field name")
 			}
+			if property.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__" {
+				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
+			}
 			var value ir.Expression
 			var err error
 			if property.Kind == ast.KindPropertyAssignment {
@@ -245,6 +248,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "Number."+name)
 	}
+	// A library declaration proves a prototype member exists, never an own slot. Keep this
+	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
+	if l.inheritedLibraryMember(node) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
+		return nil, l.prototypeRead(node, name)
+	}
 	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration && !isCallee(node) {
 		// A method read off its object, not called: JavaScript loses its this (unbound-method,
 		// docs/0.1.md). A plain call never comes here, since callOrMethod lowers it; object?.method()
@@ -334,6 +342,35 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }
 
+// hasOwnProperty lowers object.hasOwnProperty(key) when the method is the library's, not a field the
+// object declares. The checker puts Object's prototype methods on every object's type. The shape
+// holds only the object's own fields, and reading hasOwnProperty as one of them panics: the field
+// the checker proved is not there.
+func (l *lowering) hasOwnProperty(node *ast.Node, receiver *ast.Node) (ir.Expression, bool, error) {
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	symbol := l.checker.GetSymbolAtLocation(callee)
+	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+		return nil, false, nil
+	}
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) != 1 {
+		return nil, true, l.notYet(node, "hasOwnProperty with other than one argument")
+	}
+	if keyType, _ := l.representation(l.checker.GetTypeAtLocation(arguments[0])); keyType != ir.String {
+		return nil, true, l.notYet(node, "hasOwnProperty with a key that isn't a string")
+	}
+	// JavaScript's order: the object, then the key.
+	object, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	key, err := l.expression(arguments[0])
+	if err != nil {
+		return nil, true, err
+	}
+	return ir.HasOwn{Object: object, Key: key}, true, nil
+}
+
 // isLibraryGlobal reports whether a node names one of the library's globals, rather than something
 // of the program's that happens to share its name.
 func (l *lowering) isLibraryGlobal(node *ast.Node, name string) bool {
@@ -384,6 +421,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	receiver, name := callee.AsPropertyAccessExpression().Expression, callee.Name().Text()
 	if l.isLibraryGlobal(receiver, "Object") {
 		return l.objectCall(node, name)
+	}
+	if lowered, handled, err := l.objectPrototypeCall(node, receiver, name); handled {
+		return lowered, true, err
 	}
 	if l.isLibraryGlobal(receiver, "Number") {
 		return l.numberCall(node, name)
@@ -1327,6 +1367,9 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
 	index := ast.SkipParentheses(access.ArgumentExpression)
+	if l.inheritedLibraryMember(node) {
+		return nil, l.prototypeRead(node, index.Text())
+	}
 	optional := access.QuestionDotToken != nil
 	if !optional && node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		// The rest of a chain after a ?., which short-circuits with it.

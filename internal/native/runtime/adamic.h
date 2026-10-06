@@ -197,6 +197,9 @@ void adamic_region_end(adamic_region *region);
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
 
+// adamic_object_has is object.hasOwnProperty(name).
+bool adamic_object_has(const adamic_object *object, const adamic_string *name);
+
 // adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.

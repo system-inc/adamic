@@ -24,6 +24,19 @@ adamic_object *adamic_object_copy(const adamic_object *source) {
 	return object;
 }
 
+// adamic_object_has is object.hasOwnProperty(name): one of the shape's own names, not a method on a
+// prototype. A shape's names are C strings, so the lengths have to agree before the bytes do.
+bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
+	for (size_t index = 0; index < object->shape->count; index++) {
+		const char *field = object->shape->names[index];
+		size_t length = strlen(field);
+		if (length == name->length && memcmp(field, name->bytes, length) == 0) {
+			return true;
+		}
+	}
+	return false;
+}
+
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	adamic_object *mutable = (adamic_object *)object;
 	for (size_t index = 0; index < object->shape->count; index++) {

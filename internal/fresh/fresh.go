@@ -1329,6 +1329,10 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.MapSize:
 		a.value(expression.Map)
 		return value{}
+	case ir.HasOwn:
+		a.value(expression.Object)
+		a.value(expression.Key)
+		return value{}
 	case ir.SetAdd:
 		holder := a.value(expression.Set)
 		held := a.value(expression.Value)

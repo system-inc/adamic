@@ -315,6 +315,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/library_map_set_zeros.a", true, false},
 	{"internal/oracle/testdata/library_map_set_groupby_keys.a", true, false},
 	{"internal/oracle/testdata/library_map_set_next.a", true, false},
+	// Object.prototype.hasOwnProperty is on every object's type and not in its shape.
+	{"internal/oracle/testdata/has_own.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
