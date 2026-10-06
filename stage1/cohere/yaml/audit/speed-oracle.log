@@ -1,0 +1,45 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a (0.99s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/collections.a (1.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a (0.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a (1.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a (0.77s)
+PASS
+gate cache: native hits=0 misses=27
+gate cache: node hits=0 misses=18
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.777s

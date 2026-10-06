@@ -2,15 +2,65 @@
 // Matching returns possible end offsets so a later branch can backtrack without callbacks.
 import { panic } from 'adamic';
 import { PatternNode } from './patternNode.ts';
+// The borrowed node arena is stable throughout recursive matching. Returning
+// a node through an accessor would give each recursive frame another owner.
+function matchPattern(nodes: readonly PatternNode[], index: number, source: string, position: number): number[] {
+    const result: number[] = [];
+    const node = nodes[index] ?? panic('missing schema pattern node');
+    if(node.kind === 'class') {
+        const character = source.slice(position, position + 1);
+        if(character !== '' && node.characters.includes(character)) result.push(position + 1);
+    }
+    else if(node.kind === 'alternative') {
+        for(const child of node.children)
+            for(const end of matchPattern(nodes, child, source, position)) if(!result.includes(end)) result.push(end);
+    }
+    else if(node.kind === 'concat') {
+        let positions: number[] = [position];
+        for(const child of node.children) {
+            const next: number[] = [];
+            for(const at of positions)
+                for(const end of matchPattern(nodes, child, source, at)) if(!next.includes(end)) next.push(end);
+            positions = next;
+            if(positions.length === 0) break;
+        }
+        for(const end of positions) result.push(end);
+    }
+    else {
+        let positions: number[] = [position];
+        if(node.minimum === 0) result.push(position);
+        const maximum = node.maximum < 0 ? source.length + 1 : node.maximum;
+        for(let count = 1; count <= maximum; count++) {
+            const next: number[] = [];
+            for(const at of positions)
+                for(const end of matchPattern(nodes, node.children[0] ?? -1, source, at))
+                    if(!next.includes(end)) next.push(end);
+            if(next.length === 0) break;
+            positions = next;
+            if(count >= node.minimum) for(const end of positions) if(!result.includes(end)) result.push(end);
+        }
+    }
+    return result;
+}
 export class SchemaPattern {
     pattern: string;
     offset = 0;
     nodes: PatternNode[] = [];
     root = -1;
+    firstCharacters = '';
+    firstMasks: number[] = [0, 0, 0, 0];
     constructor(pattern: string) {
         this.pattern = pattern.slice(1, -1);
         this.root = this.alternative();
         if(this.offset !== this.pattern.length) panic('unconsumed schema pattern');
+        this.firstCharacters = this.leading(this.root);
+        for(let index = 0; index < this.firstCharacters.length; index++) {
+            const code = this.firstCharacters.charCodeAt(index);
+            if(code < 128) {
+                const word = Math.floor(code / 32);
+                this.firstMasks[word] = (this.firstMasks[word] ?? 0) | (1 << (code % 32));
+            }
+        }
     }
     character(): string {
         return this.pattern.slice(this.offset, this.offset + 1);
@@ -110,44 +160,28 @@ export class SchemaPattern {
         return index;
     }
     match(index: number, source: string, position: number): number[] {
-        const result: number[] = [];
+        return matchPattern(this.nodes, index, source, position);
+    }
+    // Only nullable concatenation prefixes contribute possible first units.
+    leading(index: number): string {
         const node = this.node(index);
-        if(node.kind === 'class') {
-            const character = source.slice(position, position + 1);
-            if(character !== '' && node.characters.includes(character)) result.push(position + 1);
+        if(node.kind === 'class') return node.characters;
+        if(node.kind === 'repeat') return this.leading(node.children[0] ?? -1);
+        const parts: string[] = [];
+        for(const child of node.children) {
+            parts.push(this.leading(child));
+            if(node.kind === 'concat' && !this.match(child, '', 0).includes(0)) break;
         }
-        else if(node.kind === 'alternative') {
-            for(const child of node.children)
-                for(const end of this.match(child, source, position)) if(!result.includes(end)) result.push(end);
-        }
-        else if(node.kind === 'concat') {
-            let positions: number[] = [position];
-            for(const child of node.children) {
-                const next: number[] = [];
-                for(const at of positions)
-                    for(const end of this.match(child, source, at)) if(!next.includes(end)) next.push(end);
-                positions = next;
-                if(positions.length === 0) break;
-            }
-            for(const end of positions) result.push(end);
-        }
-        else {
-            let positions: number[] = [position];
-            if(node.minimum === 0) result.push(position);
-            const maximum = node.maximum < 0 ? source.length + 1 : node.maximum;
-            for(let count = 1; count <= maximum; count++) {
-                const next: number[] = [];
-                for(const at of positions)
-                    for(const end of this.match(node.children[0] ?? -1, source, at))
-                        if(!next.includes(end)) next.push(end);
-                if(next.length === 0) break;
-                positions = next;
-                if(count >= node.minimum) for(const end of positions) if(!result.includes(end)) result.push(end);
-            }
-        }
-        return result;
+        return parts.join('');
     }
     test(source: string): boolean {
+        if(source !== '') {
+            const code = source.charCodeAt(0);
+            if(code < 128) {
+                if(((this.firstMasks[Math.floor(code / 32)] ?? 0) & (1 << (code % 32))) === 0) return false;
+            }
+            else if(!this.firstCharacters.includes(source.slice(0, 1))) return false;
+        }
         return this.match(this.root, source, 0).includes(source.length);
     }
 }

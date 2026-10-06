@@ -66,6 +66,46 @@ function wide(code: number): boolean {
     const range = wideRanges[left];
     return range !== undefined && (range[0] ?? panic('missing wide start')) <= code;
 }
+// Epsilon paths have no observable captures in this fixed width pattern.
+// Keep their depth-first branch order, indexed by the first mapped UTF-16 unit.
+function emojiEntries(): Map<number, number[]> {
+    const result = new Map<number, number[]>();
+    const stack: number[] = [emojiStart];
+    while(stack.length > 0) {
+        const instruction = stack.pop() ?? -1;
+        const row = emoji[instruction] ?? panic('missing emoji first instruction');
+        const op = row[0] ?? -1;
+        if(op === 0 || op === 1) {
+            stack.push(row[2] ?? -1);
+            stack.push(row[1] ?? -1);
+        }
+        else if(op === 2 || op === 6) stack.push(row[1] ?? -1);
+        else if(op !== 5) {
+            // This pinned unanchored pattern always consumes a rune first.
+            if(op === 3 || op === 4 || op === 9 || op === 10) panic('unexpected emoji first operation');
+            for(let index = 3; index < row.length; index += row.length === 4 ? 1 : 2) {
+                const first = row[index] ?? 0;
+                const last = row.length === 4 ? first : (row[index + 1] ?? first);
+                for(let code = first; code <= last; code++) {
+                    const entries = result.get(code);
+                    if(entries === undefined) result.set(code, [instruction]);
+                    else entries.push(instruction);
+                }
+            }
+        }
+    }
+    return result;
+}
+const emojiFirst = emojiEntries();
+function matchEmoji(text: string, position: number): number {
+    const entries = emojiFirst.get(mapped(text.charCodeAt(position)));
+    if(entries === undefined) return -1;
+    for(const instruction of entries) {
+        const end = match(emoji, instruction, text, position);
+        if(end >= 0) return end;
+    }
+    return -1;
+}
 export function stringWidth(text: string): number {
     let ascii = true;
     for(let index = 0; index < text.length; index++) {
@@ -80,7 +120,7 @@ export function stringWidth(text: string): number {
     }
     let width = 0;
     for(let index = 0; index < text.length;) {
-        const end = match(emoji, emojiStart, text, index);
+        const end = matchEmoji(text, index);
         if(end > index) {
             const found = text.slice(index, end);
             width += match(narrow, narrowStart, found, 0) === found.length ? 1 : 2;

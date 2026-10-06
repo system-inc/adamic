@@ -212,10 +212,12 @@ export class YAMLPrinter {
         }
         return this.layout.join(this.hard, docs);
     }
+    printChild(index: number, at: number, path: readonly number[], positions: readonly number[]): number {
+        return this.print(this.child(index, at), path, positions.concat([at]));
+    }
     printNode(index: number, path: readonly number[], positions: readonly number[]): number {
         const node = this.node(index);
         const parent = path[path.length - 2] ?? -1;
-        const child = (at: number): number => this.print(this.child(index, at), path, positions.concat([at]));
         if(node.type === 'root') {
             const last = this.node(this.descendant(index));
             const hard = !(['blockLiteral', 'blockFolded'].includes(last.type) && last.chomping === 'keep');
@@ -225,7 +227,7 @@ export class YAMLPrinter {
                 const next = node.children[at + 1] ?? -1;
                 const head = this.child(next, 0);
                 if(at > 0) parts.push(this.hard);
-                parts.push(child(at));
+                parts.push(this.printChild(index, at, path, positions));
                 if(
                     this.node(document).documentEndMarker ||
                     this.node(document).trailingComment >= 0 ||
@@ -259,7 +261,8 @@ export class YAMLPrinter {
                 this.node(head).endComments.length > 0 ||
                 this.node(head).trailingComment >= 0
             ) {
-                if(this.node(head).children.length > 0 || this.node(head).endComments.length > 0) parts.push(child(0));
+                if(this.node(head).children.length > 0 || this.node(head).endComments.length > 0)
+                    parts.push(this.printChild(index, 0, path, positions));
                 const marker: number[] = [this.layout.text('---')];
                 if(this.node(head).trailingComment >= 0)
                     marker.push(
@@ -270,7 +273,8 @@ export class YAMLPrinter {
                     );
                 parts.push(this.layout.concat(marker));
             }
-            if(this.node(body).children.length > 0 || this.node(body).endComments.length > 0) parts.push(child(1));
+            if(this.node(body).children.length > 0 || this.node(body).endComments.length > 0)
+                parts.push(this.printChild(index, 1, path, positions));
             return this.layout.join(this.hard, parts);
         }
         if(node.type === 'documentHead')
@@ -328,9 +332,12 @@ export class YAMLPrinter {
         if(node.type === 'mapping' || node.type === 'sequence')
             return this.layout.join(this.hard, this.list(node.children, path, positions, true));
         if(node.type === 'sequenceItem')
-            return this.layout.concat([this.layout.text('- '), this.layout.align(2, child(0))]);
+            return this.layout.concat([
+                this.layout.text('- '),
+                this.layout.align(2, this.printChild(index, 0, path, positions)),
+            ]);
         if(node.type === 'mappingKey' || node.type === 'mappingValue' || node.type === 'flowSequenceItem')
-            return child(0);
+            return this.printChild(index, 0, path, positions);
         if(node.type === 'mappingItem' || node.type === 'flowMappingItem')
             return this.mapping(index, parent, path, positions);
         if(node.type === 'flowMapping' || node.type === 'flowSequence') return this.flow(index, path, positions);

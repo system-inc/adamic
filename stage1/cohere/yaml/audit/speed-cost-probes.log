@@ -1,0 +1,10 @@
+=== RUN   TestSpeedCostProbes
+=== RUN   TestSpeedCostProbes/stringUnitScan.ts
+    speed_gap_test.go:66: both modes match Node's checksum 52998400000
+=== RUN   TestSpeedCostProbes/arenaNodeRead.ts
+    speed_gap_test.go:66: both modes match Node's checksum 57600000000
+--- PASS: TestSpeedCostProbes (2.58s)
+    --- PASS: TestSpeedCostProbes/stringUnitScan.ts (1.85s)
+    --- PASS: TestSpeedCostProbes/arenaNodeRead.ts (0.73s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	2.585s

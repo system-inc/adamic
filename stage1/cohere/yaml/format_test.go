@@ -276,10 +276,12 @@ func TestFormatterMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []struct{ name, from, to string }{
-		{"root final newline lost", "const hard = !(", "const hard = false && !("},
-		{"colon separation lost", "this.layout.text(': '), printedValue", "this.layout.text(':'), printedValue"},
-		{"flow trailing comma lost", "this.layout.ifBreak(this.layout.text(','), this.empty, -1)", "this.layout.ifBreak(this.layout.text(''), this.empty, -1)"},
+	for _, mutant := range []struct{ name, file, from, to string }{
+		{"root final newline lost", "printer.ts", "const hard = !(", "const hard = false && !("},
+		{"colon separation lost", "printer.ts", "this.layout.text(': '), printedValue", "this.layout.text(':'), printedValue"},
+		{"flow trailing comma lost", "printer.ts", "this.layout.ifBreak(this.layout.text(','), this.empty, -1)", "this.layout.ifBreak(this.layout.text(''), this.empty, -1)"},
+		{"batch backslash scan misses escapes", "main.ts", "text.charCodeAt(index) !== 92", "text.charCodeAt(index) !== 13"},
+		{"emoji first unit range loses endpoint", "width.ts", "code <= last", "code < last"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()
@@ -292,7 +294,7 @@ func TestFormatterMutants(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				if file == "printer.ts" {
+				if file == mutant.file {
 					if strings.Count(string(source), mutant.from) != 1 {
 						t.Fatal("mutation site must occur once")
 					}

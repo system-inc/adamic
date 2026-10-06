@@ -123,6 +123,7 @@ func TestSchemaMutants(t *testing.T) {
 		{"class range loses last character", "code <= last.charCodeAt(0)", "code < last.charCodeAt(0)"},
 		{"plus accepts empty", "minimum = quantifier === '+' ? 1 : 0;", "minimum = quantifier === '+' ? 0 : 0;"},
 		{"optional accepts twice", "maximum = quantifier === '?' ? 1 : -1;", "maximum = quantifier === '?' ? 2 : -1;"},
+		{"nullable prefix loses successors", "node.kind === 'concat' && !this.match(child, '', 0).includes(0)", "node.kind === 'concat'"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()

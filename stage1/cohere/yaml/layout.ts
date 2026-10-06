@@ -84,8 +84,8 @@ export class Layout {
     trailing(text: string, previous: number): number {
         let count = 0;
         for(let index = text.length - 1; index >= 0; index--) {
-            const character = text.slice(index, index + 1);
-            if(character !== ' ' && character !== '\t') return count;
+            const code = text.charCodeAt(index);
+            if(code !== 32 && code !== 9) return count;
             count++;
         }
         return previous + count;
@@ -167,7 +167,7 @@ export class Layout {
         while(this.output.length > 0) {
             const last = this.output.pop() ?? '';
             let end = last.length;
-            while(end > 0 && (last.slice(end - 1, end) === ' ' || last.slice(end - 1, end) === '\t')) end--;
+            while(end > 0 && (last.charCodeAt(end - 1) === 32 || last.charCodeAt(end - 1) === 9)) end--;
             count += last.length - end;
             if(end > 0) {
                 this.output.push(last.slice(0, end));

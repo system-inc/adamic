@@ -7,7 +7,7 @@ function unescaped(text: string): string {
     const parts: string[] = [];
     let start = 0;
     for(let index = 0; index < text.length; index++) {
-        if(text.slice(index, index + 1) !== '\\') continue;
+        if(text.charCodeAt(index) !== 92) continue;
         parts.push(text.slice(start, index));
         index++;
         const character = text.slice(index, index + 1);
