@@ -444,6 +444,14 @@ static uint16_t *regex_input(adamic_string *input, size_t *length) {
 	// Decode immutable WTF-8 once, preserving lone surrogates and pair halves.
 	// Repeated charCodeAt calls otherwise redo UTF-16-to-byte index lookups.
 	uint16_t *units = regex_memory(input->length * sizeof *units);
+	// Cached ASCII strings need only widening, not a branch at every byte. This
+	// loop can be vectorized; the general WTF-8 decoder remains below.
+	if (input->units == input->length + 1) {
+		for (size_t at = 0; at < input->length; at++)
+			units[at] = (unsigned char)input->bytes[at];
+		*length = input->length;
+		return units;
+	}
 	*length = 0;
 	for (size_t at = 0; at < input->length;) {
 		uint32_t point = (unsigned char)input->bytes[at++];
@@ -462,8 +470,9 @@ static uint16_t *regex_input(adamic_string *input, size_t *length) {
 	return units;
 }
 static size_t regex_advance(const uint16_t *units, size_t length, size_t at, bool unicode);
-static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, size_t length,
-								bool force_sticky, uint64_t *steps) {
+static inline __attribute__((always_inline)) ptrdiff_t *
+regex_execute_kernel(adamic_object *regex, const uint16_t *input, size_t length, bool force_sticky,
+					 uint64_t *steps, bool enhanced) {
 	const adamic_regex_program *p = regex_program(regex);
 	regex_workspace workspace;
 	workspace.free_frames = NULL;
@@ -479,7 +488,8 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 			at--;
 		if (p->anchored && at != 0)
 			break;
-		bool regular = p->regular != NULL && regex_step_limit == 0 && regex_regular_mode != 0 &&
+		bool regular = enhanced && p->regular != NULL && regex_step_limit == 0 &&
+					   regex_regular_mode != 0 &&
 					   (regex_regular_mode == 2 || (length >= 2048 && p->fast_ascii == NULL));
 		if (regular) {
 			at = adamic_regex_regular_find(p, input, length, (size_t)at,
@@ -487,7 +497,7 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 			if (at < 0)
 				break;
 		}
-		if (p->before_count != 0 && !((p->flags & 16) || force_sticky)) {
+		if (enhanced && p->before_count != 0 && !((p->flags & 16) || force_sticky)) {
 			size_t scan = (size_t)at > p->before_count ? (size_t)at - p->before_count : 0;
 			bool found_context = false;
 			while (scan + p->before_count <= length) {
@@ -512,7 +522,7 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 		for (size_t k = 0; k < 2 * (p->captures + 1); k++)
 			captures[k] = -1;
 		captures[0] = at;
-		if (!regular && p->before_count == 0 && !p->anchored &&
+		if (!regular && (!enhanced || p->before_count == 0) && !p->anchored &&
 			!((p->flags & 16) || force_sticky)) {
 			while ((size_t)at < length) {
 				uint16_t c = input[at];
@@ -560,6 +570,25 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 	free(captures);
 	regex_workspace_destroy(&workspace);
 	return NULL;
+}
+// Compile separate kernels so short VM searches have no regular-engine or
+// lookbehind-filter checks inside their per-candidate loop.
+static __attribute__((noinline)) ptrdiff_t *regex_execute_vm(adamic_object *regex,
+															 const uint16_t *input, size_t length,
+															 bool force_sticky, uint64_t *steps) {
+	return regex_execute_kernel(regex, input, length, force_sticky, steps, false);
+}
+static __attribute__((noinline)) ptrdiff_t *regex_execute_enhanced(adamic_object *regex,
+																   const uint16_t *input,
+																   size_t length, bool force_sticky,
+																   uint64_t *steps) {
+	return regex_execute_kernel(regex, input, length, force_sticky, steps, true);
+}
+static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, size_t length,
+								bool force_sticky, uint64_t *steps) {
+	if (regex_step_limit == 0 && (length >= 2048 || regex_regular_mode == 2))
+		return regex_execute_enhanced(regex, input, length, force_sticky, steps);
+	return regex_execute_vm(regex, input, length, force_sticky, steps);
 }
 static const char *const match_names[] = {"index", "input", "groups", "indices"};
 static const bool match_references[] = {false, true, true, true};
@@ -659,9 +688,9 @@ adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input) {
 	free(spans);
 	return result;
 }
-bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
+static __attribute__((noinline)) bool regex_test_general(adamic_object *regex, adamic_string *input,
+														 size_t ascii_length) {
 	const adamic_regex_program *p = regex_program(regex);
-	size_t ascii_length = (size_t)adamic_string_length(input);
 	ptrdiff_t first = -2;
 	if (p->first_ascii_position != NULL && !(p->flags & 16) && regex_step_limit == 0 &&
 		input->units == input->length + 1) {
@@ -674,45 +703,6 @@ bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
 		}
 	}
 
-	if (p->fast_ascii != NULL && p->captures < 16 && regex_step_limit == 0 &&
-		input->units == input->length + 1) {
-		bool stateful = (p->flags & 24) != 0;
-		size_t start = stateful ? regex_to_length(regex->slots[1].number) : 0;
-		if (first >= 0)
-			start = (size_t)first;
-		const unsigned char *bytes = (const unsigned char *)input->bytes;
-		ptrdiff_t captures[32];
-		uint64_t steps = 0;
-		while (start <= ascii_length) {
-			if (p->anchored && start != 0)
-				break;
-			if (!p->anchored && !(p->flags & 16)) {
-				if (p->prefix_count != 0) {
-					const unsigned char *found =
-						memchr(bytes + start, (unsigned char)p->prefix[0], ascii_length - start);
-					if (found == NULL)
-						break;
-					start = (size_t)(found - bytes);
-				} else if (p->filter_first) {
-					while (start < ascii_length && !(p->first_ascii[bytes[start] / 64] &
-													 (UINT64_C(1) << (bytes[start] % 64))))
-						start++;
-				}
-			}
-			ptrdiff_t at = (ptrdiff_t)start;
-			if (p->fast_ascii(bytes, ascii_length, &at, captures, &steps)) {
-				if (stateful)
-					regex->slots[1].number = (double)at;
-				return true;
-			}
-			if (p->anchored || (p->flags & 16))
-				break;
-			start++;
-		}
-		if (stateful)
-			regex->slots[1].number = 0;
-		return false;
-	}
 	if (p->regular != NULL && (p->fast_ascii == NULL || regex_regular_mode == 2) &&
 		!(p->flags & 24) && regex_step_limit == 0 && regex_regular_mode != 0 &&
 		(regex_regular_mode == 2 || ascii_length >= 2048) && input->units == input->length + 1) {
@@ -729,6 +719,34 @@ bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
 	free(spans);
 	free(units);
 	return result;
+}
+bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
+	const adamic_regex_program *p = regex_program(regex);
+	size_t ascii_length = input->units != 0 ? input->units - 1 : adamic_string_units(input);
+	if (p->test_ascii != NULL && regex_step_limit == 0 && input->units == input->length + 1) {
+		bool stateful = (p->flags & 24) != 0;
+		ptrdiff_t at = stateful ? (ptrdiff_t)regex_to_length(regex->slots[1].number) : 0;
+		// Reject absent prefixes before the indirect callback. Most literal
+		// searches fail here, so they need no per-pattern call at all.
+		if (p->test_prefix) {
+			const unsigned char *bytes = (const unsigned char *)input->bytes;
+			const unsigned char *found =
+				(size_t)at > ascii_length
+					? NULL
+					: memchr(bytes + at, (unsigned char)p->prefix[0], ascii_length - (size_t)at);
+			if (found == NULL) {
+				if (stateful)
+					regex->slots[1].number = 0;
+				return false;
+			}
+			at = (ptrdiff_t)(found - bytes);
+		}
+		bool matched = p->test_ascii((const unsigned char *)input->bytes, ascii_length, &at);
+		if (stateful)
+			regex->slots[1].number = matched ? (double)at : 0;
+		return matched;
+	}
+	return regex_test_general(regex, input, ascii_length);
 }
 static size_t regex_advance(const uint16_t *units, size_t length, size_t at, bool unicode) {
 	return unicode && at + 1 < length && high(units[at]) && low(units[at + 1]) ? at + 2 : at + 1;

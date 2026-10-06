@@ -43,6 +43,8 @@ typedef struct {
 } adamic_regex_regular;
 struct adamic_regex_program {
 	const adamic_regex_instruction *code;
+	bool (*test_ascii)(const unsigned char *, size_t, ptrdiff_t *);
+	bool test_prefix;
 	size_t captures, repeats;
 	unsigned flags;
 	const adamic_regex_group *groups;

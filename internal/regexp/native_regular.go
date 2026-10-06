@@ -50,6 +50,11 @@ func (p *Program) nativeRegular(name string) (string, string) {
 // Tiny necessary first sets can reject ASCII input before UTF-16 conversion,
 // and jump straight to a candidate in an existing one-pass runner.
 func (p *Program) nativeSparseFirst(name string) (string, string) {
+	if !p.nativeAnchored() {
+		if body := p.nativeLiteralWindow(name); body != "" {
+			return body, name + "_first"
+		}
+	}
 	bits, filter := p.nativeFirstASCII()
 	if !filter || p.nativeAnchored() {
 		return "", "NULL"
@@ -72,4 +77,52 @@ func (p *Program) nativeSparseFirst(name string) (string, string) {
 	}
 	out.WriteString("return first;}\n")
 	return out.String(), name + "_first"
+}
+
+// In an ASCII input every forward scalar set consumes one byte. A literal
+// window after a fixed number of such sets is necessary even when the first
+// set is broad. Stop before any variable-width or branching instruction.
+func (p *Program) nativeLiteralWindow(name string) string {
+	var best, run []rune
+	offset, runOffset, bestOffset := 0, 0, 0
+	for _, i := range p.code {
+		switch i.op {
+		case opSave, opAssert, opLook:
+			continue
+		case opSet:
+			if i.direction != 1 || len(i.set.strings) != 0 {
+				goto finished
+			}
+			if !i.flags.IgnoreCase && len(i.set.ranges) == 1 && i.set.ranges[0].From == i.set.ranges[0].To && i.set.ranges[0].To < 128 {
+				if len(run) == 0 {
+					runOffset = offset
+				}
+				run = append(run, i.set.ranges[0].From)
+				if runOffset > 0 && len(run) > len(best) {
+					best = run
+					bestOffset = runOffset
+				}
+			} else {
+				run = nil
+			}
+			offset++
+		default:
+			goto finished
+		}
+	}
+finished:
+	if len(best) < 2 {
+		return ""
+	}
+	var out strings.Builder
+	out.WriteString("#include <string.h>\n")
+	fmt.Fprintf(&out, "static const unsigned char %s_window[]={", name)
+	for _, c := range best {
+		fmt.Fprintf(&out, "%d,", c)
+	}
+	fmt.Fprintf(&out, "};\nstatic ptrdiff_t %s_first(const unsigned char *input,size_t length,size_t start){\n", name)
+	fmt.Fprintf(&out, "if(start>length||length-start<%d)return -1;size_t scan=start+%d;\n", bestOffset+len(best), bestOffset)
+	fmt.Fprintf(&out, "while(length-scan>=%d){const unsigned char *hit=memchr(input+scan,%d,length-scan-%d+1);if(hit==NULL)return -1;scan=(size_t)(hit-input);\n", len(best), best[0], len(best))
+	fmt.Fprintf(&out, "if(memcmp(hit,%s_window,%d)==0)return (ptrdiff_t)(scan-%d);scan++;}return -1;}\n", name, len(best), bestOffset)
+	return out.String()
 }

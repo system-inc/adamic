@@ -29,6 +29,17 @@ func TestRegExpSearchNode(t *testing.T) {
 		{"(a|(b))+", "", "aba"}, {"(a|(b))+?c", "", "abbac"},
 		{"[\\uDF0D]", "", "🌍"}, {"[\\uDF0D]", "u", "🌍"},
 		{"(a)", "gu", "🌍a"}, {"[a]", "yu", "🌍a"},
+		{"word$", "", "wordx"}, {"a", "y", "xa"}, {"", "g", ""},
+		{"[AEIOUY]", "", "xxxY"}, {"[a-z]", "i", "Z"}, {"\\u00C5", "", "Ł"},
+		{"[a-z]cfg($|[A-Z0-9])", "", "xxacfgA"}, {"([a-z])Ms($|[A-Z])", "", "xxaMsB"},
+		{"[a-z]cfg", "g", "xxacfgacfg"}, {"[a-z]cfg", "y", "xxacfg"},
+		{"a$b", "", "ab"}, {"a$", "y", "xa"},
+		{"[a-z]", "i", "z"}, {"az", "i", "aZ"},
+		{"^(.*):", "", "abc:tail"}, {"^(.*):", "", "abc\n:def"},
+		{"^([a-z]*):", "", "ab:"}, {"^([a-z]*):", "", ":tail"},
+		{"^([a-z]*):", "", "AB:"}, {"^([a-z]*):", "i", "AB:"},
+		{"^(.*):", "g", "a:a:"}, {"^(.*?):", "y", "a:a:"},
+		{"az", "i", "az"}, {"^a", "", "b"},
 	}
 	var cases []regexCase
 	for _, p := range probes {

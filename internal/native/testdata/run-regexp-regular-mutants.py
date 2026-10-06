@@ -4,6 +4,18 @@ import pathlib
 import subprocess
 root = pathlib.Path(__file__).resolve().parents[3]
 mutants = [
+ ('caller-prefix-scan-enabled-for-sticky', 'internal/regexp/native.go', '!p.flags.Sticky && len(prefix) != 0', 'len(prefix) != 0', 'TestRegExpSearchNode'),
+ ('first-predicate-omitted-without-proof', 'internal/regexp/native_search.go', 'firstProven := !endAnchored && !p.nativeAnchored() && !p.flags.Sticky && filter && (first == "NULL" || p.nativeLiteralWindow(name) == "")', 'firstProven := filter', 'TestRegExpSearchNode'),
+ ('one-pass-repeat-skips-body-check', 'internal/regexp/native_search.go', '"if(!(%s_repeat', '"if(false&&!(%s_repeat', 'TestRegExpSearchNode'),
+ ('one-pass-repeat-tail-changed', 'internal/regexp/native_search.go', 'tail := p.code[pc]', 'tail := body', 'TestRegExpSearchNode'),
+ ('one-pass-repeat-selected-for-stateful', 'internal/regexp/native_search.go', 'if p.flags.Global || p.flags.Sticky {', 'if false && (p.flags.Global || p.flags.Sticky) {', 'TestRegExpSearchNode'),
+ ('end-anchored-sticky-start-ignored', 'internal/regexp/native_search.go', 'out.WriteString("if(start!=last)return false;\\n")', 'out.WriteString("start=last;\\n")', 'TestRegExpSearchNode'),
+ ('boolean-minimum-width-wrong', 'internal/regexp/native_search.go', 'minimum++', 'minimum += 2', 'TestRegExpSearchNode'),
+ ('literal-window-offset-changed', 'internal/regexp/native_regular.go', 'name, len(best), bestOffset)', 'name, len(best), bestOffset-1)', 'TestRegExpSearchNode'),
+ ('boolean-fold-omitted', 'internal/regexp/native_search.go', 'fold := canonicalize(c, i.flags)\n\t\t\t\tif i.set.contains(fold)', 'fold := c\n\t\t\t\tif i.set.contains(fold)', 'TestRegExpSearchNode'),
+ ('boolean-end-assertion-removed', 'internal/regexp/native_search.go', 'out.WriteString("if(at!=length)goto failed;\\n")', 'out.WriteString("if(at>length)goto failed;\\n")', 'TestRegExpSearchNode'),
+ ('boolean-sticky-advances', 'internal/regexp/native_search.go', 'if endAnchored || p.nativeAnchored() || p.flags.Sticky {', 'if endAnchored || p.nativeAnchored() {', 'TestRegExpSearchNode'),
+ ('ascii-widening-used-for-non-ascii', 'internal/native/runtime/regexp.c', 'if (input->units == input->length + 1) {', 'if (input->units != 0) {', 'TestRegExpSearchNode'),
  ('ascii-first-filter-omits-candidate', 'internal/regexp/native_regular.go', 'first=hit-input;}\\n", c)', 'first=hit-input;}\\n", c+1)', 'TestRegExpSearchNode'),
  ('search-advance-always-unicode', 'internal/native/runtime/regexp.c', 'start = regex_advance(input, length, (size_t)at, (p->flags & 4) != 0);', 'start = regex_advance(input, length, (size_t)at, true);', 'TestRegExpSearchNode'),
  ('go-latest-start-merged', 'internal/regexp/regular.go', '(next[n.x] < 0 || origin < next[n.x])', '(next[n.x] < 0 || origin > next[n.x])', 'TestRegularPriorityNode'),
