@@ -37,6 +37,12 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	// Small programs documented in docs/memory.md, held to Node and the leak check.
+	{"internal/oracle/testdata/memory_examples/list.a", true, false},
+	{"internal/oracle/testdata/memory_examples/tree.a", true, false},
+	{"internal/oracle/testdata/memory_examples/closures.a", true, false},
+	{"internal/oracle/testdata/memory_examples/regions.a", true, false},
+	{"internal/oracle/testdata/memory_examples/strings.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},
