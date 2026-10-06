@@ -239,7 +239,7 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 // parameter: nothing reads the variable's current value after.
 func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instruction, live map[flow.DeclarationId]bool, read ir.Read) bool {
 	local := program.Locals[read.Local]
-	if local.Captured || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
+	if local.Captured || read.Checked || read.NoMove || readsOf(evaluated(instruction), read.Local) != 1 {
 		return false
 	}
 	if local.Borrowed && !plan.consumed[read.Local] {

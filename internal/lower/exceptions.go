@@ -43,7 +43,16 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	instance := l.errorInstance(l.errorGlobal(created.Expression))
+	name := l.errorGlobal(created.Expression)
+	instance := l.errorInstance(name)
+	// Constant built-in construction has no user constructor effects. Build its
+	// nominal prefix directly, avoiding an allocator return retain and retaining
+	// a cause parameter known to be the constant undefined.
+	_, constantMessage := message.(ir.StringConstant)
+	_, absentCause := cause.(ir.Undefined)
+	if constantMessage && absentCause {
+		return ir.ObjectLiteral{Class: instance.class, Methods: instance.methodList(), Fields: []ir.Field{{Name: "name", Value: ir.StringConstant{Index: l.constant(name)}}, {Name: "message", Value: message}, {Name: "cause", Value: cause}}}, nil
+	}
 	return ir.Call{Function: instance.constructor, Arguments: []ir.Expression{message, cause}, Returns: ir.Object}, nil
 }
 
@@ -97,6 +106,9 @@ func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 // refuses what can't be done yet: a try that can reach a library call whose failure is a panic
 // natively but a throw on Node.
 func (l *lowering) exceptions() error {
+	l.preciseChecks()
+	l.refineExceptionPaths()
+	l.refineExceptionBounds()
 	// Register errors before taking the functions slice: creating a built-in error
 	// adds its allocator and initializer. A ready check is an ordinary throw.
 	register := func(node any) bool {
@@ -249,6 +261,12 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				}
 			}
 		case ir.StringCall:
+			if node.Method == "normalize" {
+				text, bounded := node.Value.(ir.StringConstant)
+				if !bounded || len(l.result.Strings[text.Index]) > 536870888/36 {
+					failing = "normalize expansion"
+				}
+			}
 			switch {
 			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
 				failing = "repeat"

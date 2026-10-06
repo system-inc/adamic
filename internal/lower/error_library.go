@@ -25,7 +25,7 @@ func (l *lowering) checkedLibrary(where *ast.Node, arguments []ir.Expression, bu
 	failure := ir.Call{Function: errorClass.constructor, Returns: ir.Object, Arguments: []ir.Expression{message, ir.Undefined{Of: ir.Union}}}
 	l.result.Functions[index].Returns = operation.Type()
 	l.result.Functions[index].Body = []ir.Statement{ir.If{Condition: invalid, Then: []ir.Statement{ir.Throw{Value: failure}}}, ir.Return{Value: operation}}
-	return ir.Call{Function: index, Returns: operation.Type(), Arguments: arguments}
+	return ir.Call{Function: index, Returns: operation.Type(), Arguments: arguments, Pure: true}
 }
 
 func errorOutside(value ir.Expression, low, high float64) ir.Expression {
@@ -33,6 +33,9 @@ func errorOutside(value ir.Expression, low, high float64) ir.Expression {
 }
 
 func (l *lowering) checkedToFixed(where *ast.Node, value, digits ir.Expression) ir.Expression {
+	if constantWithin(digits, 0, 100) {
+		return ir.ToFixed{Value: value, Digits: digits}
+	}
 	return l.checkedLibrary(where, []ir.Expression{value, digits}, func(args []ir.Expression) (ir.Expression, ir.Expression, ir.Expression) {
 		integer := ir.MathCall{Function: "trunc", Arguments: []ir.Expression{args[1]}}
 		return ir.ToFixed{Value: args[0], Digits: args[1]}, errorOutside(integer, 0, 100), ir.StringConstant{Index: l.constant("toFixed() digits argument must be between 0 and 100")}
@@ -40,7 +43,7 @@ func (l *lowering) checkedToFixed(where *ast.Node, value, digits ir.Expression) 
 }
 
 func (l *lowering) checkedNumberFormat(where *ast.Node, format ir.NumberFormat) ir.Expression {
-	if format.Argument == nil {
+	if format.Argument == nil || constantWithin(format.Argument, formatArguments[format.Method][0], formatArguments[format.Method][1]) {
 		return format
 	}
 	return l.checkedLibrary(where, []ir.Expression{format.Value, format.Argument}, func(args []ir.Expression) (ir.Expression, ir.Expression, ir.Expression) {
@@ -68,6 +71,23 @@ func (l *lowering) checkedNumberFormat(where *ast.Node, format ir.NumberFormat) 
 func (l *lowering) checkedStringCall(where *ast.Node, call ir.StringCall) ir.Expression {
 	if call.Method != "repeat" && call.Method != "normalize" {
 		return call
+	}
+	if call.Method == "normalize" && isNormalizationForm(call.Arguments[0], l.result.Strings) {
+		if text, ok := call.Value.(ir.StringConstant); ok && len(l.result.Strings[text.Index]) <= 536870888/36 {
+			return call
+		}
+	}
+	if call.Method == "repeat" && constantWithin(call.Arguments[0], 0, 1) {
+		return call
+	}
+	if call.Method == "repeat" {
+		if text, ok := call.Value.(ir.StringConstant); ok && constantWithin(call.Arguments[0], 0, math.MaxFloat64) {
+			count := call.Arguments[0].(ir.NumberConstant).Value
+			// UTF-8 byte length is an upper bound on UTF-16 units.
+			if float64(len(l.result.Strings[text.Index]))*math.Trunc(count) <= 536870888 {
+				return call
+			}
+		}
 	}
 	guarded := l.checkedLibrary(where, append([]ir.Expression{call.Value}, call.Arguments...), func(args []ir.Expression) (ir.Expression, ir.Expression, ir.Expression) {
 		var invalid, message ir.Expression

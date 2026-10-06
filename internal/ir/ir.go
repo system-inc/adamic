@@ -198,6 +198,9 @@ type (
 		Local   int
 		Of      Type
 		Checked bool
+		// NoMove preserves a required ownership snapshot of the source slot.
+		// Proving a global initialized does not change its ownership handoff.
+		NoMove bool
 	}
 
 	// Call calls a function. Returns is its result type, 0 for void.
@@ -208,6 +211,12 @@ type (
 
 		// Virtual is a one-based method slot. Function supplies its static signature.
 		Virtual int
+
+		// Pure says the call cannot invalidate borrowed operand reads on its
+		// successful path, and returns its own counted result. A throwing path
+		// stops evaluation and therefore never uses those borrowed reads again.
+		// Generated guards around pure primitives establish this fact.
+		Pure bool
 	}
 
 	// InstanceOf tests nominal identity along a class ancestry chain.
