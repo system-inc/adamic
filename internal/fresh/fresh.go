@@ -1006,7 +1006,7 @@ func (a *analysis) value(expression ir.Expression) value {
 		return value{}
 	}
 	switch expression := expression.(type) {
-	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull:
+	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:
 		return value{}
 	case ir.Read:
 		declared := a.proof.program.Locals[expression.Local]
@@ -1030,6 +1030,23 @@ func (a *analysis) value(expression ir.Expression) value {
 		a.value(expression.Left)
 		a.value(expression.Right)
 		return value{}
+	case ir.IsNull:
+		a.value(expression.Value)
+		return value{}
+	case ir.RegExpNew:
+		for _, argument := range expression.Arguments {
+			a.value(argument)
+		}
+		// Patterns are compiled constants; the runtime object holds only immutable strings.
+		return a.fresh(anyField, value{})
+	case ir.RegExpCall:
+		// Conservatively expose operands and treat mutable results as outside. Regex methods
+		// change lastIndex and iterator state, but never store user references into them.
+		return a.call(a.operands(expression), expression.Type())
+	case ir.RegExpProperty:
+		return a.load(a.value(expression.Array), expression.Name)
+	case ir.RegExpGroup:
+		return a.load(a.value(expression.Object), expression.Name)
 	case ir.JSONStringify:
 		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
 		a.value(expression.Value)

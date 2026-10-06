@@ -4,7 +4,7 @@ function captures(match: RegExpMatchArray | null): string {
 }
 function indexed(match: RegExpExecArray | null): string {
  if (match === null) return 'null';
- return `${match.index}:${captures(match)}`;
+ return `${match.index}:${match.map(value => value ?? 'undefined').join('|')}`;
 }
 const regexes = [/a/, /a/g, /a/y, /a/gy, /(?:)/g, /(?:)/gu, /./g, /./gu,
  /(a)|(b)/g, /(a?)*b/g, /(a|(b))+/g, /(?<word>a)(b)?/g,
