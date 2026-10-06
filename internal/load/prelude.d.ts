@@ -65,3 +65,9 @@ interface ReadonlySetLike<T> {
 	readonly has: (value: T) => boolean;
 	readonly keys: () => Iterator<T>;
 }
+
+// stringify can return undefined. The bundled TypeScript declaration's plain string result
+// is not a proven type, so this overload keeps callers honest about the missing result.
+interface JSON {
+	stringify(value?: unknown, replacer?: unknown, space?: unknown): string | undefined;
+}

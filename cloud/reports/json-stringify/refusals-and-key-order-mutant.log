@@ -1,0 +1,30 @@
+=== RUN   TestJSONStringifyRefusals
+=== PAUSE TestJSONStringifyRefusals
+=== RUN   TestJSONStringifyResultMayBeUndefined
+=== PAUSE TestJSONStringifyResultMayBeUndefined
+=== RUN   TestJSONStringifyOracleCatchesKeyOrder
+=== PAUSE TestJSONStringifyOracleCatchesKeyOrder
+=== CONT  TestJSONStringifyRefusals
+=== RUN   TestJSONStringifyRefusals/parse
+=== CONT  TestJSONStringifyOracleCatchesKeyOrder
+=== CONT  TestJSONStringifyResultMayBeUndefined
+=== RUN   TestJSONStringifyRefusals/hidden_fields
+--- PASS: TestJSONStringifyResultMayBeUndefined (0.35s)
+=== RUN   TestJSONStringifyRefusals/array_of_objects
+=== RUN   TestJSONStringifyRefusals/toJSON
+=== RUN   TestJSONStringifyRefusals/replacer_function
+=== RUN   TestJSONStringifyRefusals/prototype
+=== RUN   TestJSONStringifyRefusals/duplicate
+--- PASS: TestJSONStringifyRefusals (1.46s)
+    --- PASS: TestJSONStringifyRefusals/parse (0.35s)
+    --- PASS: TestJSONStringifyRefusals/hidden_fields (0.17s)
+    --- PASS: TestJSONStringifyRefusals/array_of_objects (0.13s)
+    --- PASS: TestJSONStringifyRefusals/toJSON (0.25s)
+    --- PASS: TestJSONStringifyRefusals/replacer_function (0.25s)
+    --- PASS: TestJSONStringifyRefusals/prototype (0.16s)
+    --- PASS: TestJSONStringifyRefusals/duplicate (0.15s)
+=== NAME  TestJSONStringifyOracleCatchesKeyOrder
+    library_json_stringify_test.go:91: key-order mutant compiled, exited 0, leaked nothing, and Node caught stdout differs
+--- PASS: TestJSONStringifyOracleCatchesKeyOrder (12.64s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	12.688s

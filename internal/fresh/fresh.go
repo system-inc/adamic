@@ -1006,7 +1006,7 @@ func (a *analysis) value(expression ir.Expression) value {
 		return value{}
 	}
 	switch expression := expression.(type) {
-	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined:
+	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull:
 		return value{}
 	case ir.Read:
 		declared := a.proof.program.Locals[expression.Local]
@@ -1029,6 +1029,12 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.Binary:
 		a.value(expression.Left)
 		a.value(expression.Right)
+		return value{}
+	case ir.JSONStringify:
+		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
+		a.value(expression.Value)
+		a.value(expression.Replacer)
+		a.value(expression.Space)
 		return value{}
 	case ir.NumberToString:
 		a.value(expression.Value)

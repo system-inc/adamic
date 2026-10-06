@@ -425,6 +425,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if lowered, handled, err := l.objectPrototypeCall(node, receiver, name); handled {
 		return lowered, true, err
 	}
+	if l.isLibraryGlobal(receiver, "JSON") {
+		return l.jsonCall(node, name)
+	}
 	if l.isLibraryGlobal(receiver, "Number") {
 		return l.numberCall(node, name)
 	}
