@@ -530,6 +530,21 @@ var operators = map[ir.Operator]string{
 // as the IR means, so nesting expressions keeps every order the native backend makes explicit.
 func (e *emitter) value(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.ProcessCall:
+		switch expression.Operation {
+		case "exitCode":
+			return "process.exitCode"
+		case "stdoutTTY":
+			return "process.stdout.isTTY"
+		case "stderrTTY":
+			return "process.stderr.isTTY"
+		case "env":
+			return "process.env[" + e.value(expression.Arguments[0]) + "]"
+		case "setExitCode":
+			return "(process.exitCode = " + e.value(expression.Arguments[0]) + ")"
+		case "exit":
+			return "process.exit(" + e.value(expression.Arguments[0]) + ")"
+		}
 	case ir.RegExpNew:
 		if expression.Arguments != nil {
 			return "new RegExp(" + e.values(expression.Arguments) + ")"
