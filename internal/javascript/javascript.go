@@ -49,6 +49,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString(jsonStringifyRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
@@ -519,6 +520,18 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Value) + "?.length"
 		}
 		return e.value(expression.Value) + ".length"
+	case ir.JSONStringify:
+		value := e.value(expression.Value)
+		replacer, space := "undefined", "undefined"
+		if expression.Replacer != nil {
+			replacer = e.value(expression.Replacer)
+		}
+		if expression.Space != nil {
+			space = e.value(expression.Space)
+		}
+		return "adamicJSONStringify(" + value + ", " + replacer + ", " + space + ")"
+	case ir.JSONNull:
+		return "null"
 	case ir.MathCall:
 		if expression.Spread != nil {
 			return "Math." + expression.Function + "(..." + e.value(expression.Spread) + ")"

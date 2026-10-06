@@ -38,6 +38,9 @@ var fixtures = []struct {
 	checked bool
 }{
 	{"dedication/dedication.a", true, false},
+	{"internal/oracle/testdata/json_stringify_scalars.a", true, false},
+	{"internal/oracle/testdata/json_stringify_values.a", true, false},
+	{"internal/oracle/testdata/json_stringify_options.a", true, false},
 	{"internal/load/testdata/0.1/compile/01_hello.ts", true, false},
 	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true, false},
 	{"internal/load/testdata/0.1/compile/03_shapes.ts", true, false},

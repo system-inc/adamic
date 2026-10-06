@@ -369,6 +369,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	receiver, name := callee.AsPropertyAccessExpression().Expression, callee.Name().Text()
+	if l.isLibraryGlobal(receiver, "JSON") {
+		return l.jsonCall(node, name)
+	}
 	if l.isLibraryGlobal(receiver, "Number") {
 		return l.numberCall(node, name)
 	}
