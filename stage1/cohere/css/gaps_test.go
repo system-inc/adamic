@@ -12,7 +12,6 @@ import (
 
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 	for _, gap := range []struct{ path, stdout, refusal string }{
-		{"gaps/1_regex_and_value_tree.ts", "Parsed\nOk\n", "ir.RegExpCall is a node the cycle finder doesn't know"},
 		{"gaps/2_array_shift.ts", "a\n1\n", ".shift on a value"},
 		{"gaps/3_optional_boolean_condition.ts", "important\n", "a boolean | undefined as a condition"},
 		{"gaps/4_empty_array_union.ts", "0\n", "an array of never"},
@@ -42,21 +41,21 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 		})
 	}
 }
-func TestNativeCompositionIsBlockedByTheRecordedGap(t *testing.T) {
-	path, err := filepath.Abs("compose_main.ts")
-	if err != nil {
-		t.Fatal(err)
+func TestClosedParserRegexGap(t *testing.T) {
+	path, _ := filepath.Abs("gaps/1_regex_and_value_tree.ts")
+	program := lowered(t, path)
+	nativeRun, binary := natively(t, program)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"native", nativeRun}, {"Node", onNode(t, path)}, {"JavaScript backend", onJavaScriptBackend(t, program)},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "Parsed\nOk\n" {
+			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+		}
 	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	if err == nil {
-		t.Fatal("native composition now lowers: enable the native/JS backend/sanitizer comparison")
-	}
-	if !strings.Contains(err.Error(), "ir.RegExpCall is a node the cycle finder doesn't know") {
-		t.Fatalf("a different blocker appeared: %v", err)
-	}
-	t.Logf("%v", err)
 }

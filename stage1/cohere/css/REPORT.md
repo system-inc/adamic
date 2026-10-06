@@ -1,3 +1,6 @@
+Native-composition follow-up: see [NATIVE_REPORT.md](NATIVE_REPORT.md). The
+composition refusal below describes the original parser commit.
+
 CSS and SCSS tokenizer/parser run natively; full slice composition runs on Node.
 24,076 raw and composed answers match Go; raw native sanitizers and leaks pass.
 PostCSS has 24,074 exact agreements and two occurrences of one proved surrogate gap.

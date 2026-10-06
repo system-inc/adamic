@@ -348,9 +348,8 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	return ""
 }
 
-// Native integration is refused by the separately held gap. This test still
-// holds the complete composed implementation against the external Go tree.
-func TestCompositionOnNodeMatchesGo(t *testing.T) {
+// Hold the complete composed implementation against the external Go tree.
+func TestCompositionMatchesGo(t *testing.T) {
 	cases, _ := askedCases(t)
 	directory := t.TempDir()
 	answers := filepath.Join(directory, "answers.txt")
@@ -379,10 +378,25 @@ func TestCompositionOnNodeMatchesGo(t *testing.T) {
 		t.Fatal(err)
 	}
 	source, _ := filepath.Abs("compose_main.ts")
-	result := onNode(t, source, cases)
-	if result.exitCode != 0 || len(result.stderr) != 0 {
-		t.Fatalf("Node composition: exit %d, %s", result.exitCode, result.stderr)
+	program := lowered(t, source)
+	nativeRun, sanitized := natively(t, program, cases)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"native ASan/UBSan", nativeRun}, {"Node", onNode(t, source, cases)}, {"JavaScript backend", onJavaScriptBackend(t, program, cases)},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
+			t.Fatalf("%s: %d %s", side.name, side.result.exitCode, side.result.stderr)
+		}
+		if difference := firstDifference(string(side.result.stdout), string(data)); difference != "" {
+			t.Fatalf("%s: %s", side.name, difference)
+		}
 	}
+	if report := leaks(t, program, sanitized, cases); report != "" {
+		t.Fatal(report)
+	}
+	t.Logf("%d composed trees/error positions agree with Go on native ASan/UBSan, Node and JavaScript backend; LeakSanitizer clean", strings.Count(string(data), "\n")/2)
 	if keep := os.Getenv("ADAMIC_CSS_KEEP_COMPOSED"); keep != "" {
 		if err := os.WriteFile(keep, data, 0644); err != nil {
 			t.Fatal(err)
@@ -401,11 +415,6 @@ func TestCompositionOnNodeMatchesGo(t *testing.T) {
 			}
 			t.Logf("Node composition caught: %s", difference)
 		})
-	}
-	if difference := firstDifference(string(result.stdout), string(data)); difference != "" {
-		t.Errorf("composed Node: %s", difference)
-	} else {
-		t.Logf("%d composed trees/error positions agree with Go", strings.Count(string(data), "\n")/2)
 	}
 }
 
@@ -480,9 +489,20 @@ func TestTheCanonicalRangeChecksCanFail(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result := onNode(t, composed)
-	if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "caught\n" {
-		t.Fatalf("composition Node: exit %d, stdout %q, stderr %q", result.exitCode, result.stdout, result.stderr)
+	composedProgram := lowered(t, composed)
+	composedNative, composedBinary := natively(t, composedProgram)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"composition native", composedNative}, {"composition Node", onNode(t, composed)}, {"composition JavaScript backend", onJavaScriptBackend(t, composedProgram)},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "caught\n" {
+			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+		}
 	}
-	t.Log("public Range corruption caught on raw native, raw Node and composition Node; raw leak clean")
+	if report := leaks(t, composedProgram, composedBinary); report != "" {
+		t.Fatal(report)
+	}
+	t.Log("public Range corruption caught on raw and composed backends; leak clean")
 }

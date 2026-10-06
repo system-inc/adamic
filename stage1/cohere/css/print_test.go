@@ -1,17 +1,16 @@
 package css
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 	"time"
 	"unicode/utf16"
+
+	"github.com/system-inc/adamic/internal/native"
 )
 
 var printerMutants = []mutant{
@@ -52,30 +51,53 @@ func printerAnswers(t *testing.T, cases, mode string) string {
 }
 func TestCSSPrinterAgreesWithGo(t *testing.T) {
 	cases, _ := askedCases(t)
+	directory := portDirectory(t, nil)
+	program := lowered(t, filepath.Join(directory, "print_main.ts"))
 	for _, mode := range []string{"default", "narrow"} {
 		t.Run(mode, func(t *testing.T) {
 			expected := printerAnswers(t, cases, mode)
-			directory := portDirectory(t, nil)
-			output := onNode(t, filepath.Join(directory, "print_main.ts"), cases, "output", "once", mode)
-			if output.exitCode != 0 || len(output.stderr) != 0 {
-				t.Fatalf("Node: %d %s", output.exitCode, output.stderr)
+			arguments := []string{cases, "output", "once", mode}
+			nativeRun, sanitized := natively(t, program, arguments...)
+			for _, side := range []struct {
+				name   string
+				result run
+			}{
+				{"native ASan/UBSan", nativeRun},
+				{"Node", onNode(t, filepath.Join(directory, "print_main.ts"), arguments...)},
+				{"JavaScript backend", onJavaScriptBackend(t, program, arguments...)},
+			} {
+				if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
+					t.Fatalf("%s: %d %s", side.name, side.result.exitCode, side.result.stderr)
+				}
+				if difference := firstDifference(string(side.result.stdout), expected); difference != "" {
+					t.Fatalf("%s: %s", side.name, difference)
+				}
 			}
-			if difference := firstDifference(string(output.stdout), expected); difference != "" {
-				t.Fatal(difference)
+			if report := leaks(t, program, sanitized, arguments...); report != "" {
+				t.Fatal(report)
 			}
+			t.Log("native ASan/UBSan, Node, JavaScript backend and separate LeakSanitizer pass")
 			t.Logf("%d stylesheet formats and refusals agree byte for byte", strings.Count(expected, "\n")/2)
 			for _, mutation := range printerMutants {
 				t.Run("catches "+mutation.name, func(t *testing.T) {
 					mutated := portDirectory(t, &mutation)
-					output := onNode(t, filepath.Join(mutated, "print_main.ts"), cases, "output", "once", mode)
-					if output.exitCode != 0 || len(output.stderr) != 0 {
-						t.Fatalf("mutant must run: %d %s", output.exitCode, output.stderr)
+					mutantProgram := lowered(t, filepath.Join(mutated, "print_main.ts"))
+					for _, side := range []struct {
+						name   string
+						result run
+					}{
+						{"native ASan/UBSan", nativelyRun(t, mutantProgram, arguments...)},
+						{"Node", onNode(t, filepath.Join(mutated, "print_main.ts"), arguments...)},
+					} {
+						if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
+							t.Fatalf("%s mutant must run: %d %s", side.name, side.result.exitCode, side.result.stderr)
+						}
+						difference := firstDifference(string(side.result.stdout), expected)
+						if difference == "" {
+							t.Fatalf("%s printer mutant survived", side.name)
+						}
+						t.Logf("%s caught: %s", side.name, difference)
 					}
-					difference := firstDifference(string(output.stdout), expected)
-					if difference == "" {
-						t.Fatal("printer mutant survived")
-					}
-					t.Logf("Node caught: %s", difference)
 				})
 			}
 			if library := os.Getenv("ADAMIC_CSS_PRINTER_LIBRARY"); library != "" {
@@ -88,29 +110,22 @@ func TestCSSPrinterAgreesWithGo(t *testing.T) {
 		})
 	}
 }
-func TestNativeCSSPrinterHasTheRecordedCompositionGap(t *testing.T) {
-	for _, name := range []string{"gaps/6_printer_regex_tree.ts", "print_main.ts"} {
-		t.Run(name, func(t *testing.T) {
-			path, _ := filepath.Abs(name)
-			if strings.HasPrefix(name, "gaps/") {
-				output := onNode(t, path)
-				if output.exitCode != 0 || len(output.stderr) != 0 || string(output.stdout) != "2\nOk\n" {
-					t.Fatalf("Node proof: %d %q %s", output.exitCode, output.stdout, output.stderr)
-				}
-			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				t.Fatal(err)
-			}
-			_, err = lower.Lower(context.Background(), program)
-			if err == nil {
-				t.Fatal("gap closed: enable native, JS backend, sanitizers, leaks and throughput")
-			}
-			if !strings.Contains(err.Error(), "ir.RegExpNew is a node the cycle finder doesn't know") {
-				t.Fatalf("new blocker: %v", err)
-			}
-			t.Logf("%v", err)
-		})
+func TestClosedPrinterRegexGap(t *testing.T) {
+	path, _ := filepath.Abs("gaps/6_printer_regex_tree.ts")
+	program := lowered(t, path)
+	nativeRun, binary := natively(t, program)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"native", nativeRun}, {"Node", onNode(t, path)}, {"JavaScript backend", onJavaScriptBackend(t, program)},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "2\nOk\n" {
+			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }
 
@@ -223,28 +238,40 @@ func TestCSSPrinterThroughput(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("shared exact-output throughput corpus: %d successful inputs, %d UTF-16 output units per round", count, expectedUnits)
-	want := fmt.Sprintf("%d of %d stylesheets formatted, %d units\n", count*10, count*10, expectedUnits*10)
+	repetitions, repetitionMode := 10, "repeat"
+	if os.Getenv("ADAMIC_CSS_PRINTER_BENCH_ONCE") != "" {
+		repetitions, repetitionMode = 1, "once"
+	}
+	want := fmt.Sprintf("%d of %d stylesheets formatted, %d units\n", count*repetitions, count*repetitions, expectedUnits*repetitions)
 	runner, _ := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	main, _ := filepath.Abs("print_main.ts")
+	program := lowered(t, main)
+	binary := filepath.Join(t.TempDir(), "printer")
+	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+		t.Fatal(err)
+	}
 	for round := 0; round < 3; round++ {
 		for _, side := range []struct {
-			name string
-			args []string
+			name    string
+			command string
+			args    []string
 		}{
-			{"Adamic source on Node", []string{"--disable-warning=ExperimentalWarning", runner, main, sharedPath, "count", "repeat"}},
-			{"Prettier fork on Node", []string{script, fork, sharedPath, "default", "fork", "count"}},
+			{"native", binary, []string{sharedPath, "count", repetitionMode}},
+			{"Adamic source on Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, main, sharedPath, "count", repetitionMode}},
+			{"Prettier fork on Node", "node", []string{script, fork, sharedPath, "default", "fork", "count", repetitionMode}},
+			{"Prettier npm on Node", "node", []string{script, library, sharedPath, "default", "npm", "count", repetitionMode}},
 		} {
 			start := time.Now()
-			output := execute(t, nil, "node", side.args...)
+			output := execute(t, nil, side.command, side.args...)
 			elapsed := time.Since(start)
 			if output.exitCode != 0 || len(output.stderr) != 0 || string(output.stdout) != want {
 				t.Fatalf("%s: %d %q %s, want %q", side.name, output.exitCode, output.stdout, output.stderr, want)
 			}
-			t.Logf("%s round %d: %d stylesheets in %s, %.0f stylesheets/s; %s", side.name, round+1, count*10, elapsed, float64(count*10)/elapsed.Seconds(), output.stdout)
+			t.Logf("%s round %d: %d stylesheets in %s, %.0f stylesheets/s; %s", side.name, round+1, count*repetitions, elapsed, float64(count*repetitions)/elapsed.Seconds(), output.stdout)
 		}
 	}
 	directory := t.TempDir()
-	request, _ := json.Marshal(map[string]string{"Cases": sharedPath})
+	request, _ := json.Marshal(map[string]string{"Cases": sharedPath, "Repeat": repetitionMode})
 	requestPath := filepath.Join(directory, "request.json")
 	if err := os.WriteFile(requestPath, request, 0644); err != nil {
 		t.Fatal(err)
@@ -262,7 +289,7 @@ func TestCSSPrinterThroughput(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Go throughput: %v %s", err, output)
 	}
-	if !strings.Contains(string(output), fmt.Sprintf("%d units", expectedUnits*10)) {
+	if !strings.Contains(string(output), fmt.Sprintf("%d units", expectedUnits*repetitions)) {
 		t.Fatal("Go throughput checksum changed")
 	}
 	t.Logf("%s", output)

@@ -93,7 +93,7 @@ func TestAdamicPrinterCases(t *testing.T) {
 
 // Not parallel: the formatter's throughput is measured without a competing oracle.
 func TestAdamicPrinterThroughput(t *testing.T) {
-	var request struct{ Cases string }
+	var request struct{ Cases, Repeat string }
 	data, err := os.ReadFile(os.Getenv("ADAMIC_PORT_REQUEST"))
 	if err != nil {
 		t.Fatal(err)
@@ -122,10 +122,14 @@ func TestAdamicPrinterThroughput(t *testing.T) {
 		parsers = append(parsers, parser)
 	}
 	options := formatoptions.PrettierDefaults()
+	repetitions := 10
+	if request.Repeat == "once" {
+		repetitions = 1
+	}
 	for round := 0; round < 3; round++ {
 		count, units := 0, 0
 		started := time.Now()
-		for repeat := 0; repeat < 10; repeat++ {
+		for repeat := 0; repeat < repetitions; repeat++ {
 			for index, text := range texts {
 				formatted, err := formatWithParser(text, options, parsers[index])
 				if err != nil {

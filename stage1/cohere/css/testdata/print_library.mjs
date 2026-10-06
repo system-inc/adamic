@@ -16,7 +16,7 @@ const unescape = s => s.replace(/\\([\\nrt])/g,(_,c)=>({n:'\n',r:'\r',t:'\t','\\
 let index = 0; let formattedCount = 0; let units = 0;
 const countOnly = process.argv[6] === 'count';
 const lines = readFileSync(cases,'utf8').split('\n').filter(Boolean).map(line=>({text:unescape(line.slice(2)),scss:line[1]==='S'}));
-for(let round = 0; round < (countOnly ? 10 : 1); round++) {
+for(let round = 0; round < (countOnly && process.argv[7] !== 'once' ? 10 : 1); round++) {
 for(const line of lines) {
   const text = line.text;
   let answer;

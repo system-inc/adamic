@@ -1,3 +1,6 @@
+Native-composition follow-up: see [NATIVE_REPORT.md](NATIVE_REPORT.md). The
+Node-only observations below describe the original printer commit.
+
 The CSS and SCSS printer runs on Node and matches Go cohere on 48,152 cases across two option sets.
 Both pinned Prettier oracles have 4,952 byte-identical formats per option set.
 Three running printer mutants are caught in both option sets.

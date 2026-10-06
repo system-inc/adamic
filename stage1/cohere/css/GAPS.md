@@ -1,37 +1,17 @@
 # CSS slice gaps
 
-The raw CSS and SCSS parsers compile natively. The composed parser matches Go on
-Node but does not compile natively. These are separate observations, held by
-separate tests. No compiler source or existing slice was changed.
+The raw and composed CSS/SCSS parsers and printer now compile natively after
+merging the regex cycle proof `32f8106`. The remaining workaround and
+original-library boundary proofs stay below.
 
-## 1. Native regexp and recursive readonly trees cannot currently compose
+## 1. Native regexp and recursive readonly trees: closed
 
-[gaps/1_regex_and_value_tree.ts](gaps/1_regex_and_value_tree.ts) imports the existing
-selector and value slices and parses `.a` and `red`. Node prints:
-
-```text
-Parsed
-Ok
-```
-
-Adamic refuses `ValueTree.nodes` with:
-
-```text
-ir.RegExpCall is a node the cycle finder doesn't know
-```
-
-The complete `compose_main.ts` build reaches the same refusal, on
-`MediaNode.nodes`, naming the write in `Parser_raw`. The cycle proof falls back
-to refusing recursive readonly child storage when it encounters an IR operation
-it does not recognize. Both recursive slices compile independently; the
-combined native program is refused before clang, rather than compiled incorrectly.
-
-`TestEachGapStandsWhereGapsMdSaysItDoes` holds the small program and its exact
-refusal fragment. `TestNativeCompositionIsBlockedByTheRecordedGap` holds the
-complete program too. Those tests fail when the compiler gap closes, requiring
-native, JavaScript backend, sanitizer and leak agreement to be enabled for
-composition. Merely changing the recursive child fields to Weak would change
-ownership; this unit does not weaken them or edit the compiler.
+The former `ir.RegExpCall` cycle-proof refusal is closed by `32f8106`.
+[gaps/1_regex_and_value_tree.ts](gaps/1_regex_and_value_tree.ts) still prints
+`Parsed` and `Ok`; `TestClosedParserRegexGap` holds it on native ASan/UBSan,
+Node, the JavaScript backend and LeakSanitizer. `TestCompositionMatchesGo`
+holds the full composed tree and error-position corpus on those same backends.
+Readonly recursive ownership is unchanged; no fields were made Weak.
 
 ## 2. Array shift
 
@@ -91,16 +71,14 @@ both supported grammars and compared with those Go and JavaScript parsers.
 Acceptance by a CSS grammar is not a claim of Less parsing. No postcss-less
 oracle or Less composition is implemented here.
 
-## 6. Printer native composition
+## 6. Printer native composition: closed
 
-[gaps/6_printer_regex_tree.ts](gaps/6_printer_regex_tree.ts) constructs a regular
-expression and imports the media tree. Node prints `2` and `Ok`. Lowering
-refuses `ir.RegExpNew is a node the cycle finder doesn't know`. The complete
-`print_main.ts` reaches the same refusal.
-`TestNativeCSSPrinterHasTheRecordedCompositionGap` holds both proving programs
-and fails when the gap closes. The printer is type checked by Adamic and runs
-on Node; native printer output, sanitizer/leak checks and throughput remain
-blocked. This cycle-proof work belongs to the other worker.
+The former `ir.RegExpNew` cycle-proof refusal is closed by `32f8106`.
+[gaps/6_printer_regex_tree.ts](gaps/6_printer_regex_tree.ts) still prints `2`
+and `Ok`, held by `TestClosedPrinterRegexGap` on all backends and LeakSanitizer.
+The complete printer corpus now runs native ASan/UBSan, source Node and the
+JavaScript backend, with separate leak checks and three native output mutants.
+See `NATIVE_REPORT.md` for observed results and native throughput.
 
 ## Printer boundaries against full Prettier
 
