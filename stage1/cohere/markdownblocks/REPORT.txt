@@ -1,0 +1,311 @@
+The requested native Markdown block/parser formatter was not built; this unit stopped at preflight blockers.
+953 documents audited: embedding off matches all; default native Go versus its fork differs on 11 cases, including 7 existing repository files.
+The original target is cohere's pinned Prettier 3.9.6 fork; stock npm Prettier is a separate comparison, not a substitute.
+Three compiling Go output mutants were caught; parser NotYet/Refused probes and the supported recursive callable probe passed.
+Branch codex/stage1-markdown-blocks; preflight 17aeb61d106edd8d5ebda0987dc7b039028c557e; prior inline dependency d7fbf68fe8f591549ccf1dbcf11016eda5db3948.
+
+Status and the boundary of this result
+
+This is a diagnostic/preflight branch, not a finished formatter slice. No new
+Adamic Markdown parser or block printer exists here, and no native full-document
+throughput is claimed. The inherited inline implementation is present as an
+unchanged branch dependency, not wired into a new block formatter. There is no
+main.ts driver pretending to format complete Markdown. The native/parser/block
+work remains incomplete.
+
+Started from origin/main d799ede40af1d947efe8c4a897efbb90c2ef2264. git ls-remote
+confirmed that hash was current main at branch creation. The inline implementation
+was cherry-picked from aa750e6c0e666b71d58aa74372be00050db3683f, producing dependency
+commit d7fbf68fe8f591549ccf1dbcf11016eda5db3948. Go cohere is pinned at
+715ba94f3608a6500086b1076ce5cb7e51b836db; its TypeScript submodule is
+8d550c837c90bd1805b047b7eeccc2baac2d5e7a. No compiler or submodule file was changed.
+
+What was investigated
+
+Read the Markdown entry/core, front-matter parser, mdast node/from-markdown entry,
+micromark types/parse/document initializer/ATX machine, and block printer helpers:
+headings, lists, tables, children, paragraphs, preprocessing, whitespace, sentence,
+ignored content and embedding. Read the actual native dispatch and vendored
+Prettier loader rather than assuming npm was its oracle. This is not a complete
+reading or port of every micromark construct, extension, mdast handler or doc engine.
+CLAUDE.md and README were reread; the language/memory docs remain byte-identical
+to the current main read in the preceding unit. There are no AGENTS.md files here.
+
+The requested all-file default-mode simultaneous target has conflicts
+
+The Go auto baseline invokes cohere/internal/format/native.Formatter, which reaches
+its real Markdown parser, printer and native embedded-language dispatch. This is
+the upstream Go native-printer target; it is not the command/cohere formatter's
+JavaScript-engine output. The fork baseline invokes the exact committed standalone
+and seven plugin bundles directly on Node. Both use the same explicit options:
+tab width 4, print width 120, spaces, semicolons, single quotes, preserved prose
+and the remaining Prettier defaults. Per-repository configurations and ignore
+rules are not applied to this census.
+
+Go native/json.go registers .json, while an embedded jsonc maps to embedded.jsonc.
+The Go Markdown formatter consequently preserves those fenced contents. The fork
+formats them. In the existing TypeScript VS Code README this is a trailing-comma
+difference. gaps/embedded_jsonc.md reduces it to a single field: Go keeps the field
+without a comma and the fork inserts one. Its outputs differ at byte 21.
+
+Six existing Flow fixtures also differ through the Babel/native JavaScript path.
+gaps/embedded_flow.md reduces a formatting difference to an @flow generic function;
+Go preserves its tight parameter/body spelling, while the fork formats it. Its
+outputs differ at byte 39. The state of native JSONC/Flow embedded formatting is
+outside this new stage-1 folder's territory. An Adamic output preserving these Go
+native defaults cannot simultaneously equal the different fork default outputs.
+
+The initial baseline was 873 physical files plus 75 generated inputs: fork auto
+941/948 identical (7 existing file differences), stock npm auto 788/948 identical.
+Both JavaScript off baselines agreed with Go on all 948. The final branch adds its
+GAPS.md and two Markdown witnesses, and checks each witness again as a generated
+case: 876 physical files plus 77 generated cases, 953 total. Fork auto is 942/953
+identical, with 11 named discrepancies: the original 7 plus the 4 witness instances.
+All 953 match in off mode. Stock npm auto is 789/953 identical (164 differences),
+and stock off is 953/953 identical. There were no top-level formatting errors.
+
+This is an observation about these selected entry points/options, not a claim that
+Markdown cannot be implemented in Adamic or that all possible Go Markdown embedding
+callbacks disagree. The existing upstream corpus test can supply the JavaScript
+oracle for embedding to isolate the Markdown core. An explicit embedding-off
+contract would likewise avoid the demonstrated JSONC/Flow target conflict. The
+scope question was presented during work; no answer was received before this report.
+I retained both measurements rather than silently claiming the default target passed.
+
+The parser also needs a representation change before a literal port lowers
+
+Micromark represents a state as func(code Code) State, nil at completion, with
+captured mutable frames and mutually referring state closures. The minimal probes
+separate three facts:
+
+1. gaps/1_recursive_state.ts: Node prints 35 twice. load succeeds; lower returns
+   NotYet with exactly "a function inside a function (a closure)".
+2. gaps/2_state_arrow_cycle.ts: Node prints 35 twice. A mutable arrow-state cell
+   that its closure captures is Refused by Adamic 0.1 as a reference-counting cycle.
+   This is a language refusal, not a compiler feature promised to arrive later.
+3. gaps/3_recursive_callable.ts: noncapturing top-level recursive callable state is
+   supported. Source Node, the JavaScript backend, native ASan/UBSan and native
+   LeakSanitizer all agree on 1 then 0, with zero exit and no stderr/leaks.
+
+The recursive callable type itself is not a blocker. Explicit state/frame IDs,
+owned arenas and appropriate weak back references are a possible porting approach;
+that complete engine transformation was not done. I did not replace the micromark
+parser with an approximate line scanner, hand original parsing off to Node/Go in an
+alleged native formatter, or edit compiler-owned files to hide the representation gaps.
+
+Artifacts and what the tests prove
+
+GAPS.md records the exact contracts, proof programs, scope and reproduction.
+audit_test.go walks every .md/.markdown/.mdown/.mkd file, case-insensitively, in the
+checkout and initialized submodules, skipping only .git. The 77 generated documents
+cover ATX/setext headings, all list marker families through five nesting depths,
+fenced/indented code, block quotes, tables, HTML, thematic breaks, front matter,
+typed fences and the two embedding witnesses. Every document is formatted in
+both auto and off modes by the real Go and JavaScript printers. The off output is
+compared byte for byte. The observed auto discrepancies have a named whitelist;
+closing an old discrepancy, adding one, or losing an input fails the audit.
+The whitelist is evidence of an incomplete contract, not a full-format parity gate.
+
+The original fork was installed in /tmp/adamic-markdown-blocks-fork by copying the
+exact vendored bundles from the pinned cohere checkout. Before every test, each of
+the eight installed bundles is compared byte for byte to the vendored original;
+the Node adapter also checks version 3.9.6. Stock comparison used the previously
+installed exact npm package in /tmp/adamic-markdown-prettier/node_modules/prettier.
+The fork is not npm Prettier with guessed patches. Bundle SHA-256 values follow:
+{
+  "plugins/babel.js": "5249a89653aae718f7a0fb94577a09768f18b865df832cfe68d8158c8207af5c",
+  "plugins/estree.js": "f41f4c066893c7f266203e16346828f7ef994599143b032224d5d33b01912af9",
+  "plugins/graphql.js": "b0faef34893f8033b9adeaad048f4cec9456e95baa05f97b51f8315a5a504fec",
+  "plugins/markdown.js": "c2b90eeee96c3fc37516c34b4ca63bdb498975a30132c7e624b681c5669da6f5",
+  "plugins/postcss.js": "8dd23dad68a8bb34d304e04b2b6493c187150dbaebdfb5b54061007f430e5058",
+  "plugins/typescript.js": "c52c241a19c82df43b15921fb652f034132fd58b9772e99248e3c2a278f8e972",
+  "plugins/yaml.js": "48bbba2bad5d666425fc5b435ab80083c6a77825d614e9a72ff5e9bbb8d428bc",
+  "standalone.js": "0c1acd3ad53d96bb66a4c530e4eb6240693f37dd0ecb81f51920edffa8c05567"
+}
+
+The final retained inputs and complete oracle outputs are in
+/tmp/markdown-blocks-audit-final/{cases,go,fork}.jsonl. The stock outputs from the
+same census are /tmp/markdown-blocks-audit/stock.jsonl. All are reproducible from
+the audit and library adapter; generated observations are not hard-coded outputs.
+
+Three output-only Go-printer mutants (not Adamic block-printer mutants)
+
+Each mutant overlays one real upstream Go source site, builds a Go printer,
+formats the entire census, exits zero with empty stderr and no formatting errors,
+and is caught solely by comparing its off output with the original fork's.
+- Heading prefix: increase printed ATX depth by one. Caught by CLAUDE.md at byte 1.
+- List marker: use + instead of the canonical even-sibling -. Caught by CLAUDE.md
+  at byte 618.
+- Fence length: increase the minimum backtick fence from 3 to 4. Caught by CLAUDE.md
+  at byte 3022.
+The submodule itself was never edited. There were no three native block-printer
+mutants because that printer was not built. The closed callable probe is separately
+held by the three-way compiler oracle and sanitizers, not by these Go mutations.
+
+Measurements, and no native formatter claim
+
+The final preflight recorded Go 111.5 documents/s, 3 process runs 25.642425s, and
+Node running the pinned fork 106.5 documents/s, 3 runs 26.842446s. Each document
+computes both auto and off, and input JSON decoding, formatting, output JSON
+encoding, startup and captured output are included. Builds are excluded; every
+measured result is checked against its corresponding baseline. These are baseline
+measurements on a mixed-size whole-document corpus. They are not Adamic native
+formatter speeds, nor a throughput comparison with one formatting call per text.
+No native full Markdown measurement was possible without a completed implementation.
+
+Checks and limitations
+
+Final complete new-package test passed in 97.291s. go vet ./... and gofmt over
+cmd/internal/the new folder passed with no output. Six existing runtime fixtures
+ran uncached: closures, named_function_values, method_closures, functions,
+closures_throw and closures_throw_uncaught. Native/node cache hits were zero.
+The first fixture command selected only closures because the other guessed
+fixture names did not exist; the corrected command ran the five actual named
+fixtures, and both logs are retained below.
+
+No compiler changes or new global oracle fixtures/count rows were made. The new
+TS programs are intentionally unsupported/closed probes under the existing gaps
+ignore policy; there are no new production TS files for a formatter/style check.
+The unchanged inherited inline unit had already passed on this identical main
+base and toolchain in the prior unit; it was not rerun against the expanded corpus.
+The full repository gate was not repeated: the previous uncached full worker gate
+on this machine took about 16 minutes. This preflight folder and its relevant
+uncached oracle subset were tested; integration still requires its full uncached
+gate before main moves.
+
+Not delivered: the requested native Markdown parser, AST/preprocessing adapter,
+recursive headings/lists/code/quotes/tables/HTML/thematic/front-matter printer,
+document engine, composition of the inline helpers into that printer, raw-file
+formatter driver, full all-oracle native parity, native formatter throughput or
+native formatter mutants. The audit does not resolve these prerequisites or
+alter the current Go/JavaScript target discrepancy.
+
+Commands and actual outputs
+
+Initial commands:
+git fetch origin && git checkout -b codex/stage1-markdown-blocks origin/main
+git ls-remote --heads origin main (d799ede40af1d947efe8c4a897efbb90c2ef2264)
+git cherry-pick aa750e6c0e666b71d58aa74372be00050db3683f (dependency d7fbf68...)
+bash cloud/setup.sh > /tmp/markdown-blocks-setup.log 2>&1
+source /workspace/adamic-tools/env.sh (in every toolchain shell)
+go version go1.27.1 linux/amd64
+setup: go ready (0s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)
+v24.19.0
+setup: node ready (1s)
+setup: submodules ready (1s)
+setup: build cache warm (10s)
+setup: done in 10s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+
+nproc
+5
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork ADAMIC_MARKDOWNBLOCKS_KEEP=/tmp/markdown-blocks-audit-final go test -count=1 -v -timeout=30m ./stage1/cohere/markdownblocks > /tmp/markdown-blocks-test-final.log 2>&1
+=== RUN   TestWholeDocumentOraclePreflight
+=== PAUSE TestWholeDocumentOraclePreflight
+=== RUN   TestParserRepresentationProbes
+=== PAUSE TestParserRepresentationProbes
+=== CONT  TestWholeDocumentOraclePreflight
+=== CONT  TestParserRepresentationProbes
+=== RUN   TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== PAUSE TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== RUN   TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== PAUSE TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== RUN   TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== PAUSE TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== CONT  TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== CONT  TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== CONT  TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+--- PASS: TestParserRepresentationProbes (0.00s)
+    --- PASS: TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts (0.19s)
+    --- PASS: TestParserRepresentationProbes/gaps/1_recursive_state.ts (0.19s)
+    --- PASS: TestParserRepresentationProbes/gaps/3_recursive_callable.ts (0.42s)
+=== NAME  TestWholeDocumentOraclePreflight
+    audit_test.go:196: known auto gap cohere/TypeScript/packages/vscode-typescript/README.md at byte 763, embeds [jsonc]
+    audit_test.go:196: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-hir_fn_type_mismatch_2.expect.md at byte 94, embeds [babel]
+    audit_test.go:196: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-hir_loc_diff_1.expect.md at byte 328, embeds [babel]
+    audit_test.go:196: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-pattern3_type_to_poly.expect.md at byte 312, embeds [babel]
+    audit_test.go:196: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-round2_identifier_diff.expect.md at byte 230, embeds [babel]
+    audit_test.go:196: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-round2_severity_diff.expect.md at byte 300, embeds [babel]
+    audit_test.go:196: known auto gap cohere/internal/lint/rules/react/conformance/testdata/fixtures/error.todo-update-expression-context-variable-via-type-annotation.expect.md at byte 84, embeds [babel]
+    audit_test.go:196: known auto gap stage1/cohere/markdownblocks/gaps/embedded_flow.md at byte 39, embeds [babel]
+    audit_test.go:196: known auto gap stage1/cohere/markdownblocks/gaps/embedded_jsonc.md at byte 21, embeds [jsonc]
+    audit_test.go:196: known auto gap generated/embedded_jsonc.md at byte 21, embeds [jsonc]
+    audit_test.go:196: known auto gap generated/embedded_flow.md at byte 39, embeds [babel]
+=== RUN   TestWholeDocumentOraclePreflight/heading_prefix
+    audit_test.go:240: output-only mutant caught by CLAUDE.md at byte 1
+=== RUN   TestWholeDocumentOraclePreflight/list_marker
+    audit_test.go:240: output-only mutant caught by CLAUDE.md at byte 618
+=== RUN   TestWholeDocumentOraclePreflight/fence_length
+    audit_test.go:240: output-only mutant caught by CLAUDE.md at byte 3022
+=== NAME  TestWholeDocumentOraclePreflight
+    audit_test.go:269: baseline throughput Go whole-document preflight 111.5 documents/s, 3 runs 25.642425s; both auto and off computed per document, startup/I/O included, no Adamic block formatter measured
+    audit_test.go:269: baseline throughput Node pinned-fork whole-document preflight 106.5 documents/s, 3 runs 26.842446s; both auto and off computed per document, startup/I/O included, no Adamic block formatter measured
+    audit_test.go:271: corpus 876 physical repository/submodule Markdown files, 77 generated documents, 953 total; off byte-identical, auto 942/953 identical with 11 named disagreements
+--- PASS: TestWholeDocumentOraclePreflight (97.28s)
+    --- PASS: TestWholeDocumentOraclePreflight/heading_prefix (9.09s)
+    --- PASS: TestWholeDocumentOraclePreflight/list_marker (9.12s)
+    --- PASS: TestWholeDocumentOraclePreflight/fence_length (9.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	97.291s
+
+go vet ./... > /tmp/markdown-blocks-vet-final.log 2>&1
+(exit zero, no output)
+
+gofmt -l cmd internal stage1/cohere/markdownblocks > /tmp/markdown-blocks-gofmt-final.log
+(exit zero, no output)
+
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout=30m ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/^(closures\.a|methods_as_values\.a|optional_functions\.a|function_values\.a)$' > /tmp/markdown-blocks-oracle.log 2>&1
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures.a (0.59s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.607s
+
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout=30m ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/^(named_function_values\.a|method_closures\.a|functions\.a|closures_throw\.a|closures_throw_uncaught\.a)$' > /tmp/markdown-blocks-oracle-values.log 2>&1
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/named_function_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/named_function_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/named_function_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/functions.a (0.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a (0.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a (0.99s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/named_function_values.a (1.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a (1.32s)
+PASS
+gate cache: native hits=0 misses=14
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.349s
+
+Separate stock comparison:
+node stage1/cohere/markdownblocks/testdata/library.mjs /tmp/adamic-markdown-prettier/node_modules/prettier /tmp/markdown-blocks-audit/cases.jsonl > /tmp/markdown-blocks-audit/stock.jsonl 2> /tmp/markdown-blocks-audit/stock.stderr
+exit zero, no stderr; decoded census tally: auto 789 identical / 164 different; off 953 identical.
+
+git diff --cached --check: exit zero, no output.
+Preflight commit: 17aeb61d106edd8d5ebda0987dc7b039028c557e
+Report commit follows; the final response records both commit IDs and the push result.
