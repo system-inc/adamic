@@ -554,3 +554,23 @@ export function typeTokenStart(tokenKind: string): boolean {
         ].includes(tokenKind)
     );
 }
+
+export function typeParameterModifierAhead(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    state.next();
+    const result =
+        (scanner.flags & 1) === 0 &&
+        (kind(scanner) === 'Identifier' ||
+            kind(scanner).endsWith('Keyword') ||
+            [
+                'OpenBracketToken',
+                'OpenBraceToken',
+                'AsteriskToken',
+                'DotDotDotToken',
+                'StringLiteral',
+                'NumericLiteral',
+                'BigIntLiteral',
+            ].includes(kind(scanner)));
+    state.restore();
+    return result;
+}

@@ -4,7 +4,14 @@ import { Scanner } from '../scanner/scanner.ts';
 import { Statements } from './statements.ts';
 import { ParseNode } from './nodes.ts';
 import { modifierKinds, precedence, reservedKinds, tokenSpelling } from './grammar.ts';
-import { arrowAhead, statementAhead, typeArgumentsAhead, typeMemberAhead, typeTokenStart } from './lookahead.ts';
+import {
+    arrowAhead,
+    statementAhead,
+    typeArgumentsAhead,
+    typeMemberAhead,
+    typeTokenStart,
+    typeParameterModifierAhead,
+} from './lookahead.ts';
 import type { ParserStateInterface } from './lookahead.ts';
 import { listDiagnostic, listTerminator } from './recovery.ts';
 import { lexicalMessage } from './lexical.ts';
@@ -63,7 +70,7 @@ export class Parser {
         }
         return (
             this.bindingIdentifier() ||
-            precedence(this.kind()) >= 0 ||
+            (precedence(this.kind()) >= 0 && !(this.kind() === 'InKeyword' && this.disallowIn)) ||
             [
                 'ThisKeyword',
                 'SuperKeyword',
@@ -527,34 +534,45 @@ export class Parser {
             return result;
         }
         this.next();
-        while(
-            this.kind() !== 'GreaterThanToken' &&
-            this.kind() !== 'EndOfFile' &&
-            this.kind() !== 'OpenParenToken' &&
-            this.kind() !== 'OpenBraceToken' &&
-            this.kind() !== 'ExtendsKeyword' &&
-            this.kind() !== 'ImplementsKeyword'
-        ) {
+        this.beginList('typeParameters');
+        while(true) {
+            if(!this.listElement('typeParameters')) {
+                if(this.listTerminator('typeParameters') || this.recoverList('typeParameters')) {
+                    break;
+                }
+                continue;
+            }
             const pos = this.scanner.fullStart;
             const children: number[] = [];
-            while(this.kind() === 'ConstKeyword' || this.kind() === 'InKeyword' || this.kind() === 'OutKeyword') {
+            while(
+                ['ConstKeyword', 'InKeyword', 'OutKeyword'].includes(this.kind()) &&
+                typeParameterModifierAhead(this.scanner)
+            ) {
                 children.push(this.token());
             }
-            children.push(this.identifier());
+            children.push(this.identifier(false));
             if(this.kind() === 'ExtendsKeyword') {
                 this.next();
-                children.push(this.type(0, false));
+                children.push(this.typeStart() || !this.expressionStart() ? this.type() : this.unary());
             }
             if(this.kind() === 'EqualsToken') {
                 this.next();
                 children.push(this.type());
             }
             result.push(this.make('TypeParameter', pos, children));
-            if(this.kind() !== 'CommaToken') {
+            if(this.kind() === 'CommaToken') {
+                this.next();
+                continue;
+            }
+            if(this.listTerminator('typeParameters')) {
                 break;
             }
-            this.next();
+            this.expect('CommaToken');
+            if(pos === this.scanner.fullStart) {
+                this.next();
+            }
         }
+        this.endList('typeParameters');
         this.expect('GreaterThanToken');
         return result;
     }
@@ -1638,22 +1656,14 @@ export class Parser {
         const pos = this.scanner.fullStart;
         this.next();
         const multiLine = (this.scanner.flags & 1) !== 0;
-        const children: number[] = [];
-        let trailing = false;
-        while(this.kind() !== 'EndOfFile' && this.kind() !== 'CloseBracketToken') {
-            children.push(
-                this.kind() === 'CommaToken'
-                    ? this.make('OmittedExpression', this.scanner.fullStart)
-                    : this.kind() === 'DotDotDotToken'
-                      ? this.spread()
-                      : this.assignment(),
-            );
-            trailing = this.kind() === 'CommaToken';
-            if(!trailing) {
-                break;
-            }
-            this.next();
-        }
+        const children = this.delimitedList('array', () =>
+            this.kind() === 'CommaToken'
+                ? this.make('OmittedExpression', this.scanner.fullStart)
+                : this.kind() === 'DotDotDotToken'
+                  ? this.spread()
+                  : this.assignment(),
+        );
+        const trailing = this.lastTrailing;
         this.expect('CloseBracketToken');
         const id = this.make('ArrayLiteralExpression', pos, children);
         this.node(id).list = children.length;

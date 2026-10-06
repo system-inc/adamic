@@ -533,3 +533,16 @@ The wider continuation remains in progress; this is not a full corpus pass.
 Raw continuation commands and their pass/fail output are retained under
 validation/recovery-*.log. Failed development probes and resumed comparisons
 are evidence of the work in progress, not additional green gates or mutants.
+
+## Continued recovery: array and type-parameter lists
+
+Input 1950 (a duplicated array member in checker.ts) now expects a comma and
+continues the array list. The for-in probe caught an incorrect allow-in reset;
+arrays retain Go's inherited restriction, and expression-start recovery
+excludes in when that restriction applies. At input 2545, duplicated type
+parameter defaults recover as additional parameters with the expected comma
+diagnostic. Generic lists now use Go's contexts, modifier lookahead, invalid
+constraint expression handling, and separator recovery. Ten added probes and
+all preceding cases pass in 35.150s; the focused-plus-generic-child-mutant
+verification passes in 52.623s, and cohere passes. The continuation advances
+to input 2575, exposing parameter modifier recovery.
