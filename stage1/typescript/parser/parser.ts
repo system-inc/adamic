@@ -380,6 +380,42 @@ export class Parser {
         }
         return id;
     }
+    functionTypeAhead(): boolean {
+        if(this.kind() === 'LessThanToken') {
+            return true;
+        }
+        const saved = this.mark();
+        this.next();
+        let result = this.kind() === 'CloseParenToken' || this.kind() === 'DotDotDotToken';
+        if(!result) {
+            while(
+                ['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'OverrideKeyword'].includes(
+                    this.kind(),
+                ) &&
+                this.nextIdentifierSameLine()
+            ) {
+                this.next();
+            }
+            let parameter = false;
+            if(this.bindingIdentifier() || this.kind() === 'ThisKeyword') {
+                this.next();
+                parameter = true;
+            }
+            else if(this.kind() === 'OpenBracketToken' || this.kind() === 'OpenBraceToken') {
+                this.bindingName();
+                parameter = this.diagnostics.length === saved.diagnostics;
+            }
+            if(parameter) {
+                result = ['ColonToken', 'CommaToken', 'QuestionToken', 'EqualsToken'].includes(this.kind());
+                if(this.kind() === 'CloseParenToken') {
+                    this.next();
+                    result = this.kind() === 'EqualsGreaterThanToken';
+                }
+            }
+        }
+        this.rewind(saved);
+        return result;
+    }
     type(minimum = 0, conditional = true): number {
         const pos = this.scanner.fullStart;
         if(this.kind() === 'EndOfFile') {
@@ -483,7 +519,7 @@ export class Parser {
             left = this.make('ConstructorType', pos, children);
         }
         else if(this.kind() === 'OpenParenToken' || this.kind() === 'LessThanToken') {
-            if(arrowAhead(this.scanner, true)) {
+            if(this.functionTypeAhead()) {
                 const children = this.typeParameters();
                 for(const parameter of this.parameters()) {
                     children.push(parameter);

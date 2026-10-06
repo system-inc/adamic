@@ -275,3 +275,12 @@ the interpolation's closing brace is absent. The focused comparison passes
 in 16.820s. The wider continuation advances to input 307 in binder.ts,
 where an incomplete function return type must be recognized before its
 arrow token exists. Mutant anchors remain restricted to one exact site.
+
+## Continued recovery: function type recognition
+
+Function types are recognized from Go's unambiguous parameter starts, not
+from the eventual presence of an arrow. Speculation rolls back nodes and
+diagnostics. Incomplete named, rest and generic type signatures now recover
+normally. Focused comparison passes in 16.720s. The wider continuation
+advances through 31 more inputs and reaches input 338: a variable list cut
+immediately after const must stay empty at EOF.
