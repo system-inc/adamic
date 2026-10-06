@@ -1,0 +1,2 @@
+# Validation logs preserve the oracle's exact output, including indented blank lines.
+validation/*.log -whitespace

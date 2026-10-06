@@ -84,6 +84,11 @@ The full repository test gate was not run: the touched package, real cohere
 rule tests, vet and the named filtered oracle were run.
 
 Complete successful logs are committed under [validation/](validation/).
+The initial staged whitespace check caught indented blank lines in raw logs;
+the implementation commit nevertheless proceeded. A follow-up adds a local
+`.gitattributes` exemption only for `validation/*.log`, preserving the actual
+output bytes. Source/document diff checks and the full implementation-commit
+diff then pass. No logs were rewritten to hide that whitespace.
 An earlier full corpus attempt was stopped while native was still processing
 checker.ts: the driver rebuilt a whole source prefix for each finding. Replaced
 that with a line-start table and binary search. Character scans also use
