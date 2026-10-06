@@ -102,8 +102,11 @@ func C(program *ir.Program) string {
 // layout the constructor's object literal has, for an object of that shape: a compare and a load,
 // inline. Any other object is looked up by name through the field cache, as is every other field:
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
-// adamic/nominal-class refuses it, so the shape is checked, never assumed.
+// adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
 func (e *emitter) fieldSlot(object string, name string, class int) string {
+	if slot := e.uniformFieldSlot(object, name); slot != "" {
+		return slot
+	}
 	lookup := fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
 	if class == 0 || !cName.MatchString(object) {
 		return lookup
@@ -209,6 +212,9 @@ type emitter struct {
 
 	// shapes names each object layout already declared, by its fields.
 	shapes map[string]string
+
+	// fieldOffsets proves uniform named slots across the program (fields.go).
+	fieldOffsets map[string]int
 
 	// initialized is every global main declares, in the order their declarations run: modules in
 	// ECMAScript's order, and each module's from the top.
