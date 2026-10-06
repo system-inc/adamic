@@ -1,0 +1,5 @@
+--- FAIL: TestRegExpUncaughtDiagnosticsRefuse (0.14s)
+    regexp_diagnostics_test.go:18: unhandled parser diagnostic must refuse: new RegExp('(');: <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.155s
+FAIL

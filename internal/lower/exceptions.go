@@ -145,7 +145,7 @@ func (l *lowering) exceptions() error {
 			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
 		}
 	}
-	return nil
+	return l.regexpDiagnostics()
 }
 
 // throwsOut reports whether a throw can leave statements: a throw, or a call to a function that can

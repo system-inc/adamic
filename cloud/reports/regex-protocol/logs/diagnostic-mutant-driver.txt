@@ -1,0 +1,2 @@
+unhandled-diagnostic-admitted: caught, exit=1; /tmp/regex-protocol-mutant-unhandled-diagnostic-admitted.log
+regexp_diagnostics_test.go:18: unhandled parser diagnostic must refuse: new RegExp('(');: <nil>
