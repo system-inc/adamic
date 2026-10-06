@@ -88,3 +88,11 @@ The published claim was commit `acb5e0f`, pushed before implementation. Four sep
 - `no-extra-boolean-cast`: custom/unsupported Go target decoder
 - `no-restricted-exports`: regex schema or boundaries extension
 - `object-shorthand`: custom/unsupported Go target decoder
+
+## Next claim: parser-anchored comments
+
+Claimed before implementation on the same branch, following the 46-rule handoff. Territory: new `helpers/comments/` files and this claim. Existing rule entry points and first-unit helper files remain owned by their current workers.
+
+Next bounded dependency bundle: `comments.All` and `comments.ForFile`, with `canBeginAt`, `collectListInteriors`, and `sortByPosition` in separate source files. Together these five symbols serve 24 of the 152 remaining rules and remove the last recorded helper blockers from 16. None removes a last blocker individually; the cache completes this bundle. The next package bundles are JSX (8 rules), imports (7), and property names (5). React has 18 package-only candidates but spans 64 symbols; it needs smaller dependency-set ranking rather than treating its whole family as a single helper.
+
+The claim covers comment collection, source-order deduplication, UTF-8 ranges and byte columns, EOF/shebang/trailing comments, parser-owned empty and trailing-comma list interiors, and a cache explicitly scoped to one immutable parsed file. Compare actual Go cohere helpers on consumer fixtures, Node and sanitized native running identical TypeScript, plus a compiling semantic mutant for each helper file. Unsupported parser shapes must refuse explicitly. No rule is claimed implemented. Publish measured readiness only after those comparisons pass.
