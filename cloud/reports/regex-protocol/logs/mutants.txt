@@ -1,0 +1,26 @@
+syntax-error-is-type-error: caught, exit=1; /tmp/regex-protocol-mutant-syntax-error-is-type-error.log
+oracle_test.go:580: stdout differs
+constructor-is-ancestry: caught, exit=1; /tmp/regex-protocol-mutant-constructor-is-ancestry.log
+oracle_test.go:580: stdout differs
+non-global-matchall-repeats: caught, exit=1; /tmp/regex-protocol-mutant-non-global-matchall-repeats.log
+oracle_test.go:580: stdout differs
+search-loses-negative-zero: caught, exit=1; /tmp/regex-protocol-mutant-search-loses-negative-zero.log
+oracle_test.go:580: stdout differs
+named-indices-omitted: caught, exit=1; /tmp/regex-protocol-mutant-named-indices-omitted.log
+oracle_test.go:580: stdout differs
+dynamic-let-frozen: caught, exit=1; /tmp/regex-protocol-mutant-dynamic-let-frozen.log
+regexp_test.go:27: expected loud NotYet for let pattern = 'a'; pattern = 'b'; new RegExp(pattern).test('a');: <nil>
+harness-constructor-check-omitted: caught, exit=1; /tmp/regex-protocol-mutant-harness-constructor-check-omitted.log
+regexp_test.go:102: wrong constructor accepted: {Path:built-ins/RegExp/wrong-constructor.js Directory:built-ins/RegExp Kind:refused Reason:not yet: constructor-identity assertion in RegExp harness Adaptations:map[]}
+symbol-match-returns-null: caught, exit=1; /tmp/regex-protocol-mutant-symbol-match-returns-null.log
+oracle_test.go:580: stdout differs
+symbol-split-drops-captures: caught, exit=1; /tmp/regex-protocol-mutant-symbol-split-drops-captures.log
+oracle_test.go:580: stdout differs
+symbol-replace-literal-named-group: caught, exit=1; /tmp/regex-protocol-mutant-symbol-replace-literal-named-group.log
+oracle_test.go:580: stdout differs
+replacement-callback-resets-state: caught, exit=1; /tmp/regex-protocol-mutant-replacement-callback-resets-state.log
+oracle_test.go:580: stdout differs
+syntax-error-lacks-exception-edge: caught, exit=1; /tmp/regex-protocol-mutant-syntax-error-lacks-exception-edge.log
+regexp_protocol_test.go:25: missing or spurious exception edge for ir.RegExpNew{Index:0, Source:0, Flags:0, Arguments:[]ir.Expression(nil), Invalid:true, Failure:0}: got false
+regexp-string-drops-flags: caught, exit=1; /tmp/regex-protocol-mutant-regexp-string-drops-flags.log
+oracle_test.go:580: stdout differs

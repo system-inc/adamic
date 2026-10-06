@@ -13,18 +13,30 @@ package main
 //   - SameValue covers string, number (NaN equals NaN, and -0 is not 0), boolean and undefined.
 //     Anything else is not a member of that union, so the checker refuses the call instead of the
 //     runner comparing it wrong.
-//   - assert.throws is assertThrows(name, fn). It checks that an Error was caught, not that the
-//     constructor is the one named: stage 0 only builds `new Error`, and only `instanceof Error`
-//     on a catch lowers. The name is what the failure says when nothing was thrown. This is weaker
-//     than the harness, on both sides equally. A library call that throws on Node panics natively
-//     (docs/0.1.md), and a panic is not caught, so those tests come out fail rather than pass.
+//   - assert.throws is assertThrows(name, fn), with exact builtin constructor
+//     identity checks. Unknown constructor names fail explicitly.
 //   - compareArray is generic over string, number or boolean. An array of a union does not lower;
 //     one copy per element type does. SameValue is the element comparison, as in assert.js.
 //   - Test262Error is a class with a message, not a prototype assignment. `throw new Test262Error`
 //     is still refused (only `throw new Error` lowers). $DONOTEVALUATE throws an Error.
 //   - "use strict" directives are dropped. Every Adamic file is a module, and a string used as a
 //     statement does not lower.
-const prelude = `class Test262Error {
+const prelude = `function requiredCodePoint(point: number | undefined): number {
+	if (point === undefined) { throw new Error("missing code point"); }
+	return point;
+}
+
+function requiredRegexExec(match: RegExpExecArray | null): RegExpExecArray {
+	if (match === null) { throw new Error("missing match result"); }
+	return match;
+}
+
+function requiredRegexMatch(match: RegExpMatchArray | null): RegExpMatchArray {
+	if (match === null) { throw new Error("missing match result"); }
+	return match;
+}
+
+class Test262Error {
 	message: string;
 	constructor(message?: string) {
 		this.message = message ?? "";
@@ -82,7 +94,8 @@ function assertIsSameValue(left: string | number | boolean | undefined, right: s
 	return sameValue(left, right);
 }
 
-function compareArray<T extends string | number | boolean>(actual: readonly T[], expected: readonly T[]): boolean {
+function compareArray<T extends string | number | boolean | undefined>(actual: readonly T[] | null, expected: readonly T[]): boolean {
+	if (actual === null) { return false; }
 	if (actual.length !== expected.length) {
 		return false;
 	}
@@ -94,7 +107,7 @@ function compareArray<T extends string | number | boolean>(actual: readonly T[],
 	return true;
 }
 
-function assertCompareArray<T extends string | number | boolean>(actual: readonly T[], expected: readonly T[], message?: string): void {
+function assertCompareArray<T extends string | number | boolean | undefined>(actual: readonly T[] | null, expected: readonly T[], message?: string): void {
 	if (compareArray(actual, expected)) {
 		return;
 	}
@@ -110,6 +123,16 @@ function assertThrows(expectedName: string, func: () => void, message?: string):
 		if (!(caught instanceof Error)) {
 			throw new Error((message ?? "") + "thrown value was not an Error");
 		}
+		const correct =
+			expectedName === "Error" ? caught.constructor === Error :
+			expectedName === "TypeError" ? caught.constructor === TypeError :
+			expectedName === "SyntaxError" ? caught.constructor === SyntaxError :
+			expectedName === "RangeError" ? caught.constructor === RangeError :
+			expectedName === "ReferenceError" ? caught.constructor === ReferenceError :
+			expectedName === "EvalError" ? caught.constructor === EvalError :
+			expectedName === "URIError" ? caught.constructor === URIError : false;
+		if (!correct) { throw new Error((message ?? "") + "wrong exception constructor"); }
+
 	}
 	if (!threw) {
 		throw new Error((message ?? "") + "Expected " + expectedName + " to be thrown but no exception was thrown at all");

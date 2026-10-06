@@ -1,0 +1,6 @@
+=== RUN   TestRegExpProtocolExceptionEdges
+    regexp_protocol_test.go:25: missing or spurious exception edge for ir.RegExpNew{Index:0, Source:0, Flags:0, Arguments:[]ir.Expression(nil), Invalid:true, Failure:0}: got false
+--- FAIL: TestRegExpProtocolExceptionEdges (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	0.017s
+FAIL

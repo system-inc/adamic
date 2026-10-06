@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -33,17 +34,36 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "RegExp with more than two arguments")
 		}
 		if len(args) > 0 {
-			var ok bool
-			pattern, ok = l.constantPattern(args[0], 0)
-			if !ok {
-				return nil, l.notYet(args[0], "RegExp with a nonconstant pattern")
+			if l.constantUndefined(args[0], 0) {
+				pattern = ""
+			} else if l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(args[0])), "RegExp") {
+				var ok bool
+				pattern, flags, ok = l.constantRegExp(args[0], 0)
+				if !ok {
+					return nil, l.notYet(args[0], "RegExp with a nonconstant RegExp source")
+				}
+				// RegExp(re) preserves identity; new RegExp(re) makes a fresh
+				// object. Only an intrinsic undefined can be omitted without
+				// evaluating a second argument (including its possible TDZ).
+				if node.Kind == ast.KindCallExpression && (len(args) == 1 || l.intrinsicUndefined(args[1])) {
+					return l.expression(args[0])
+				}
+				if node.Kind == ast.KindCallExpression && len(args) == 2 && l.checker.GetTypeAtLocation(args[1]).Flags()&checker.TypeFlagsUndefined != 0 {
+					return nil, l.notYet(node, "RegExp identity construction with an evaluated undefined flag")
+				}
+			} else {
+				var ok bool
+				pattern, ok = l.constantPattern(args[0], 0)
+				if !ok {
+					return nil, l.notYet(args[0], "RegExp with a nonconstant pattern: the native runtime has no ECMAScript pattern compiler")
+				}
 			}
 		}
-		if len(args) > 1 {
+		if len(args) > 1 && !l.constantUndefined(args[1], 0) {
 			var ok bool
 			flags, ok = l.constantPattern(args[1], 0)
 			if !ok {
-				return nil, l.notYet(args[1], "RegExp with nonconstant flags")
+				return nil, l.notYet(args[1], "RegExp with nonconstant flags: the native runtime has no ECMAScript pattern compiler")
 			}
 		}
 		for _, arg := range args {
@@ -56,7 +76,17 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	}
 	program, err := regex.Compile(pattern, flags)
 	if err != nil {
-		return nil, fmt.Errorf("%s: invalid RegExp: %w", l.program.Where(node), err)
+		var syntax *regex.SyntaxError
+		if !errors.As(err, &syntax) {
+			return nil, l.notYet(node, err.Error())
+		}
+		if node.Kind == ast.KindRegularExpressionLiteral {
+			return nil, l.notYet(node, "an invalid regular expression literal: "+err.Error())
+		}
+		if l.regexErrorMessageObserved() {
+			return nil, l.notYet(node, "observing RegExp SyntaxError.message (V8 diagnostic wording is not yet implemented)")
+		}
+		return ir.RegExpNew{Invalid: true, Failure: l.constant(err.Error()), Arguments: evaluated}, nil
 	}
 	index := len(l.result.Regexps)
 	declarations, err := program.NativeDeclarations(fmt.Sprintf("adamic_regex_%d", index))
@@ -82,13 +112,10 @@ func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
 	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
 		return node.Text(), true
 	case ast.KindIdentifier:
-		if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
-			return "", true
-		}
 		symbol := l.symbol(node)
 		if symbol != nil && len(symbol.Declarations) == 1 {
 			declaration := symbol.Declarations[0]
-			if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 && declaration.AsVariableDeclaration().Initializer != nil {
+			if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.AsVariableDeclaration().Initializer != nil && l.regexStableBinding(symbol, declaration) {
 				return l.constantPattern(declaration.AsVariableDeclaration().Initializer, depth+1)
 			}
 		}
@@ -103,6 +130,9 @@ func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
 	return "", false
 }
 func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.regexProtocol(node); known {
+		return value, true, err
+	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if l.isLibraryGlobal(callee, "RegExp") {
 		value, err := l.regexConstant(node)
@@ -123,11 +153,17 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 			result = ir.Boolean
 		} else if name == "exec" {
 			result = ir.Array
+		} else if name == "toString" {
+			result = ir.String
 		} else {
 			return nil, true, l.notYet(node, "RegExp."+name)
 		}
-		if len(args) != 1 {
-			return nil, true, l.notYet(node, "RegExp."+name+" without exactly one string")
+		expected := 1
+		if name == "toString" {
+			expected = 0
+		}
+		if len(args) != expected {
+			return nil, true, l.notYet(node, "RegExp."+name+" with unsupported arity")
 		}
 	case l.isLibraryType(proven, "RegExpStringIterator"):
 		if name != "next" || len(args) != 0 {
@@ -169,8 +205,13 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, l.notYet(node, "RegExp input other than a string")
 	}
 	if name == "replace" || name == "replaceAll" {
-		if len(arguments) != 2 || arguments[1].Type() != ir.String {
-			return nil, true, l.notYet(node, "regex replacement other than a string")
+		if len(arguments) != 2 {
+			return nil, true, l.notYet(node, "regex replacement arity")
+		}
+		if arguments[1].Type() == ir.Closure && l.regexReplacementCallback(args[1]) {
+			method += "Callback"
+		} else if arguments[1].Type() != ir.String {
+			return nil, true, l.notYet(node, "regex replacement callback with unproved capture/index/input/group parameters or result type")
 		}
 	}
 	if name == "split" {

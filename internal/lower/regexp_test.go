@@ -12,10 +12,13 @@ func TestRegExpNativeRefusals(t *testing.T) {
 	for _, source := range []string{
 		"function made(pattern: string): RegExp { return new RegExp(pattern); }",
 		"const matches = /a{18446744073709551616}/.test('a');",
-		"console.log('a'.replace(/a/, (value: string) => value));",
-		"try { console.log('a'.replaceAll(/a/, 'b')); } catch {}",
+		"console.log('a'.replace(/a/, (value: string, capture: string) => capture));",
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
+		"let pattern = 'a'; pattern = 'b'; new RegExp(pattern).test('a');",
+		"let pattern = 'a'; function change(): void { pattern = 'b'; } change(); new RegExp(pattern).test('a');",
+		`let flags: string | undefined = undefined; function change(): void { flags = 's'; } if (flags === undefined) { change(); new RegExp('.', flags).test('\n'); }`,
+		"new RegExp('x' + undefined).test('x');",
 	} {
 		_, err := lowerSource(t, source)
 		var notYet *NotYet
