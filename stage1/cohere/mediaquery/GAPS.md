@@ -17,9 +17,12 @@ Chosen from cohere's internal packages for being self-contained and held by test
 
 ## 1. A generic function isn't instantiated per call (closed by stream P's generic functions (293976f, a1f90d0), in integration 11)
 
-Closed: stage 0 now instantiates a generic function once per set of what its type arguments are held as, and both gap programs print natively what they print on Node. The port's workaround (gap 1) still stands; stream P2 undoes it.
+Closed: stage 0 now instantiates a generic function once per concrete type argument, and both gap
+programs compile and print natively what they print on Node. Their gaps-test entries carry only the
+expected stdout, which is how that test records a closed gap.
 
-docs/0.1.md compiles generics by monomorphization, and generic classes are (`Box<string>` lowers). A generic function is lowered once, so a return or a parameter typed by its type parameter is refused.
+Before this closed, stage 0 lowered a generic function only once, so a return or parameter typed by
+its type parameter was refused even though docs/0.1.md specifies monomorphization.
 
 ```ts
 function identity<Item>(item: Item): Item {

@@ -72,7 +72,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 			continue
 		}
 		substitution[parameterType] = held
-		key += "," + l.checker.TypeToString(concrete)
+		key += "," + l.genericTypeKey(concrete)
 	}
 	if existing, isLowered := l.genericInstances[key]; isLowered {
 		return existing, nil
@@ -103,6 +103,9 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	if len(sources) > 0 {
 		l.typeMapper = newTypeMapper(sources, targets)
 	}
+	if err := l.refuseInstantiatedMutation(declaration); err != nil {
+		return 0, err
+	}
 	l.locals = map[*ast.Symbol]int{}
 	for symbol, local := range outerLocals {
 		if l.result.Locals[local].Global {
@@ -118,6 +121,78 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		return 0, err
 	}
 	return index, nil
+}
+
+// genericTypeKey distinguishes every instantiation whose lowered operations or object layout differ.
+// Containers include how each argument is held, so number[] and string[] differ, while T[], T[][]
+// and deeper arrays reach a fixed point once T itself is an array. Class layouts keep their full
+// concrete type because Box<number> and Box<Box<number>> have different fields.
+func (l *lowering) genericTypeKey(proven *checker.Type) string {
+	held, known := l.representation(proven)
+	if !known {
+		return "unread"
+	}
+	if proven.Flags()&checker.TypeFlagsObject != 0 && proven.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+		(l.checker.IsArrayType(proven) || l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+		key := typeName(held)
+		for _, argument := range l.checker.GetTypeArguments(proven) {
+			argumentHeld, argumentKnown := l.representation(argument)
+			if !argumentKnown {
+				key += ",unread"
+			} else {
+				key += "," + typeName(argumentHeld)
+			}
+		}
+		return key
+	}
+	if isClassInstance(proven) {
+		return l.checker.TypeToString(proven)
+	}
+	return typeName(held)
+}
+
+// refuseInstantiatedMutation checks writes whose safety depends on a type parameter's constraint.
+// TypeScript checks the generic body against the constraint, so Pack extends Animal[] permits a Cat
+// to be pushed. An instantiation with Pack = Dog[] would then put that Cat in a Dog[]; monomorphizing
+// the body must recheck that write against Dog rather than trusting the wider constraint.
+func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
+	var refused error
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if refused != nil {
+			return true
+		}
+		if node.Kind == ast.KindCallExpression {
+			call := node.AsCallExpression()
+			callee := ast.SkipParentheses(call.Expression)
+			if callee.Kind == ast.KindPropertyAccessExpression {
+				receiver := callee.AsPropertyAccessExpression().Expression
+				argumentIndex, typeIndex := -1, -1
+				switch callee.Name().Text() {
+				case "push", "add":
+					argumentIndex, typeIndex = 0, 0
+				case "set":
+					argumentIndex, typeIndex = 1, 1
+				}
+				concrete := l.concrete(l.checker.GetTypeAtLocation(receiver))
+				if argumentIndex < 0 || concrete.Flags()&checker.TypeFlagsObject == 0 || concrete.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+					return node.ForEachChild(visit)
+				}
+				arguments := l.checker.GetTypeArguments(concrete)
+				if argumentIndex >= 0 && argumentIndex < len(call.Arguments.Nodes) && typeIndex < len(arguments) {
+					argument := call.Arguments.Nodes[argumentIndex]
+					from, to := l.concrete(l.checker.GetTypeAtLocation(argument)), arguments[typeIndex]
+					if !l.checker.IsTypeAssignableTo(from, to) {
+						refused = &Refused{Where: l.program.Where(argument), What: "instantiating a generic function makes a value of type " + l.checker.TypeToString(from) + " written where " + l.checker.TypeToString(to) + " is read", Fix: "make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)"}
+						return true
+					}
+				}
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	declaration.ForEachChild(visit)
+	return refused
 }
 
 // inferTypes records what each type parameter in declared stands for, by where it stands in
