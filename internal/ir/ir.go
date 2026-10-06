@@ -711,7 +711,7 @@ func (MathCall) Type() Type        { return Number }
 func (StringFromCodes) Type() Type { return String }
 
 func (c NumberCall) Type() Type {
-	if c.Function == "parseInt" || c.Function == "parseFloat" {
+	if c.Function == "parseInt" || c.Function == "parseFloat" || c.Function == "convert" {
 		return Number
 	}
 	return Boolean
