@@ -17,8 +17,10 @@ strings are outside this prelude's admitted types. Direct calls are supported; s
 its streams, its environment object or its exit function as ordinary object values is NotYet.
 
 Immediate exit flushes Adamic's stdout buffer. Node can discard queued asynchronous pipe writes on
-immediate exit; large writes to a backpressured pipe are not covered by the process fixtures. Use
-exitCode and normal completion for a renderer whose complete output must land. Counts at immediate
+immediate exit. The Linux output probes now expose a known mismatch: with a 4,096-byte
+backpressured pipe, Node writes 4,096 of 204,800 bytes and native writes all 204,800.
+File output and interleaved shared-descriptor order match. See [the output report](process-output-report.md).
+Use exitCode and normal completion for a renderer whose complete output must land. Counts at immediate
 exit record the values still held, as panic counts do; LeakSanitizer's exit hook cannot inspect an
 immediate `_exit`, including one with status 0.
 
