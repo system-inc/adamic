@@ -1,0 +1,38 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a (9.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings.a (10.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a (10.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/collections.a (11.29s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a (11.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a (6.99s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a (6.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a (6.51s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	17.206s
