@@ -80,6 +80,7 @@ export class Statements {
     }
     variableList(): number {
         const pos = this.parser.scanner.fullStart;
+        const flags = this.parser.kind() === 'ConstKeyword' ? 2 : this.parser.kind() === 'LetKeyword' ? 1 : 0;
         this.parser.next();
         const declarations: number[] = [];
         while(true) {
@@ -102,71 +103,326 @@ export class Statements {
             }
             this.parser.next();
         }
-        return this.make('VariableDeclarationList', pos, declarations);
+        const id = this.make('VariableDeclarationList', pos, declarations);
+        this.parser.node(id).semantic = `${flags}`;
+        return id;
     }
-    skipDeclaration(interfaceBody: boolean): void {
-        let braces = 0;
-        let parens = 0;
-        let brackets = 0;
-        let templates = 0;
-        while(this.parser.kind() !== 'EndOfFile') {
-            if(
-                this.parser.kind() === 'TypeOfKeyword' &&
-                this.parser.peek() !== 'ImportKeyword' &&
-                (this.parser.peek() === 'Identifier' || this.parser.peek().endsWith('Keyword'))
-            ) {
-                this.parser.next();
-                const name = this.parser.entityName();
-                if(this.parser.depth() === 0) {
-                    this.parser.roots.push(name);
-                }
-                continue;
-            }
-            if(this.parser.kind() === 'TemplateHead') {
-                templates++;
-                this.parser.next();
-                continue;
-            }
-            if(this.parser.kind() === 'CloseBraceToken' && templates > 0 && braces === 0) {
-                this.parser.scanner.rescanTemplate();
-                if(this.parser.kind() === 'TemplateTail') {
-                    templates--;
-                }
-                this.parser.next();
-                continue;
-            }
-            if(this.parser.kind() === 'OpenBraceToken') {
-                braces++;
-            }
-            else if(this.parser.kind() === 'CloseBraceToken') {
-                braces--;
-                this.parser.next();
-                if(interfaceBody && braces === 0 && parens === 0 && brackets === 0) {
-                    if(this.parser.kind() === 'SemicolonToken') {
-                        this.parser.next();
+    lookahead(offset: number): string {
+        const saved = {
+            pos: this.parser.scanner.pos,
+            start: this.parser.scanner.start,
+            fullStart: this.parser.scanner.fullStart,
+            kind: this.parser.scanner.kind,
+            value: this.parser.scanner.value,
+            flags: this.parser.scanner.flags,
+            errors: this.parser.scanner.errors.length,
+        };
+        for(let index = 0; index < offset; index++) {
+            this.parser.next();
+        }
+        const result = this.parser.kind();
+        this.parser.scanner.pos = saved.pos;
+        this.parser.scanner.start = saved.start;
+        this.parser.scanner.fullStart = saved.fullStart;
+        this.parser.scanner.kind = saved.kind;
+        this.parser.scanner.value = saved.value;
+        this.parser.scanner.flags = saved.flags;
+        this.parser.scanner.errors.splice(saved.errors);
+        return result;
+    }
+    canExportName(): boolean {
+        return (
+            this.parser.kind() === 'Identifier' ||
+            this.parser.kind().endsWith('Keyword') ||
+            this.parser.kind() === 'StringLiteral'
+        );
+    }
+    specifiers(importing: boolean): number {
+        const pos = this.parser.scanner.fullStart;
+        this.parser.expect('OpenBraceToken');
+        const members: number[] = [];
+        while(this.parser.kind() !== 'CloseBraceToken') {
+            const start = this.parser.scanner.fullStart;
+            let name = this.parser.propertyName();
+            let property = -1;
+            let typeOnly = false;
+            let canAs = true;
+            if(this.parser.node(name).kind === 'Identifier' && this.parser.node(name).text === 'type') {
+                if(this.parser.kind() === 'AsKeyword') {
+                    const first = this.parser.identifier();
+                    if(this.parser.kind() === 'AsKeyword') {
+                        const second = this.parser.identifier();
+                        if(this.canExportName()) {
+                            typeOnly = true;
+                            property = first;
+                            name = this.parser.propertyName();
+                        }
+                        else {
+                            property = name;
+                            name = second;
+                        }
+                        canAs = false;
                     }
-                    return;
+                    else if(this.canExportName()) {
+                        property = name;
+                        name = this.parser.propertyName();
+                        canAs = false;
+                    }
+                    else {
+                        typeOnly = true;
+                        name = first;
+                    }
                 }
-                continue;
+                else if(this.canExportName()) {
+                    typeOnly = true;
+                    name = this.parser.propertyName();
+                }
             }
-            else if(this.parser.kind() === 'OpenParenToken') {
-                parens++;
-            }
-            else if(this.parser.kind() === 'CloseParenToken') {
-                parens--;
-            }
-            else if(this.parser.kind() === 'OpenBracketToken') {
-                brackets++;
-            }
-            else if(this.parser.kind() === 'CloseBracketToken') {
-                brackets--;
-            }
-            else if(this.parser.kind() === 'SemicolonToken' && braces === 0 && parens === 0 && brackets === 0) {
+            if(canAs && this.parser.kind() === 'AsKeyword') {
                 this.parser.next();
-                return;
+                property = name;
+                name = this.parser.propertyName();
+            }
+            const children: number[] = [];
+            if(property >= 0) {
+                children.push(property);
+            }
+            children.push(name);
+            const member = this.make(importing ? 'ImportSpecifier' : 'ExportSpecifier', start, children);
+            this.parser.node(member).semantic = typeOnly ? '1' : '0';
+            members.push(member);
+            if(this.parser.kind() !== 'CommaToken') {
+                break;
             }
             this.parser.next();
         }
+        this.parser.expect('CloseBraceToken');
+        return this.make(importing ? 'NamedImports' : 'NamedExports', pos, members);
+    }
+    attributes(): number {
+        const pos = this.parser.scanner.fullStart;
+        const operator = this.parser.kind();
+        this.parser.next();
+        return this.attributeBody(pos, operator);
+    }
+    attributeBody(pos: number, operator: string): number {
+        this.parser.expect('OpenBraceToken');
+        const multiLine = (this.parser.scanner.flags & 1) !== 0;
+        const children: number[] = [];
+        let trailing = false;
+        while(this.parser.kind() !== 'CloseBraceToken') {
+            const start = this.parser.scanner.fullStart;
+            const name = this.parser.propertyName();
+            this.parser.expect('ColonToken');
+            const value = this.parser.rootAssignment();
+            children.push(this.make('ImportAttribute', start, [name, value]));
+            trailing = this.parser.kind() === 'CommaToken';
+            if(!trailing) {
+                break;
+            }
+            this.parser.next();
+        }
+        this.parser.expect('CloseBraceToken');
+        const id = this.make('ImportAttributes', pos, children);
+        const node = this.parser.node(id);
+        node.operator = operator;
+        node.list = children.length;
+        node.trailing = trailing;
+        node.multiLine = multiLine;
+        return id;
+    }
+    importDeclaration(pos: number, prefix: readonly number[]): number {
+        const children = prefix.slice();
+        this.parser.expect('ImportKeyword');
+        const clausePos = this.parser.scanner.fullStart;
+        let name = -1;
+        let phase = 'Unknown';
+        if(
+            this.parser.kind() !== 'StringLiteral' &&
+            this.parser.kind() !== 'AsteriskToken' &&
+            this.parser.kind() !== 'OpenBraceToken'
+        ) {
+            name = this.parser.identifier();
+        }
+        if(
+            name >= 0 &&
+            this.parser.node(name).text === 'type' &&
+            (this.parser.kind() !== 'FromKeyword' ||
+                this.lookahead(1) === 'FromKeyword' ||
+                this.lookahead(1) === 'EqualsToken') &&
+            (this.canExportName() || this.parser.kind() === 'OpenBraceToken' || this.parser.kind() === 'AsteriskToken')
+        ) {
+            phase = 'TypeKeyword';
+            name = -1;
+            if(this.canExportName()) {
+                name = this.parser.identifier();
+            }
+        }
+        else if(
+            name >= 0 &&
+            this.parser.node(name).text === 'defer' &&
+            (this.parser.kind() === 'FromKeyword'
+                ? this.lookahead(1) !== 'StringLiteral'
+                : this.parser.kind() !== 'CommaToken' && this.parser.kind() !== 'EqualsToken')
+        ) {
+            phase = 'DeferKeyword';
+            name = -1;
+            if(this.canExportName()) {
+                name = this.parser.identifier();
+            }
+        }
+        if(name >= 0 && this.parser.kind() === 'EqualsToken') {
+            children.push(name);
+            this.parser.next();
+            if(this.parser.kind() === 'RequireKeyword' && this.parser.peek() === 'OpenParenToken') {
+                const start = this.parser.scanner.fullStart;
+                this.parser.next();
+                this.parser.expect('OpenParenToken');
+                const path = this.parser.propertyName();
+                this.parser.expect('CloseParenToken');
+                children.push(this.make('ExternalModuleReference', start, [path]));
+            }
+            else {
+                children.push(this.parser.entityName());
+            }
+            this.semicolon();
+            const id = this.make('ImportEqualsDeclaration', pos, children);
+            this.parser.node(id).semantic = phase === 'TypeKeyword' ? '1' : '0';
+            return id;
+        }
+        if(name >= 0 || this.parser.kind() === 'AsteriskToken' || this.parser.kind() === 'OpenBraceToken') {
+            const parts: number[] = [];
+            if(name >= 0) {
+                parts.push(name);
+            }
+            if(name < 0 || this.parser.kind() === 'CommaToken') {
+                if(name >= 0) {
+                    this.parser.next();
+                }
+                if(this.parser.kind() === 'AsteriskToken') {
+                    const start = this.parser.scanner.fullStart;
+                    this.parser.next();
+                    this.parser.expect('AsKeyword');
+                    const target = this.parser.identifier();
+                    parts.push(this.make('NamespaceImport', start, [target]));
+                }
+                else {
+                    parts.push(this.specifiers(true));
+                }
+            }
+            const clause = this.make('ImportClause', clausePos, parts);
+            this.parser.node(clause).semantic = phase;
+            children.push(clause);
+            this.parser.expect('FromKeyword');
+        }
+        children.push(this.parser.propertyName());
+        if(this.parser.kind() === 'WithKeyword' || this.parser.kind() === 'AssertKeyword') {
+            children.push(this.attributes());
+        }
+        this.semicolon();
+        return this.make('ImportDeclaration', pos, children);
+    }
+    exportDeclaration(pos: number, prefix: readonly number[]): number {
+        const children = prefix.slice();
+        this.parser.expect('ExportKeyword');
+        if(this.parser.kind() === 'DefaultKeyword' || this.parser.kind() === 'EqualsToken') {
+            const equals = this.parser.kind() === 'EqualsToken';
+            this.parser.next();
+            children.push(this.parser.rootAssignment());
+            this.semicolon();
+            const id = this.make('ExportAssignment', pos, children);
+            this.parser.node(id).semantic = equals ? '1' : '0';
+            return id;
+        }
+        if(this.parser.kind() === 'AsKeyword') {
+            this.parser.next();
+            this.parser.expect('NamespaceKeyword');
+            children.push(this.parser.identifier());
+            this.semicolon();
+            return this.make('NamespaceExportDeclaration', pos, children);
+        }
+        const typeOnly = this.parser.kind() === 'TypeKeyword';
+        if(typeOnly) {
+            this.parser.next();
+        }
+        if(this.parser.kind() === 'AsteriskToken') {
+            const start = this.parser.scanner.fullStart;
+            this.parser.next();
+            if(this.parser.kind() === 'AsKeyword') {
+                this.parser.next();
+                const name = this.parser.propertyName();
+                children.push(this.make('NamespaceExport', start, [name]));
+            }
+            this.parser.expect('FromKeyword');
+            children.push(this.parser.propertyName());
+        }
+        else {
+            children.push(this.specifiers(false));
+            if(this.parser.kind() === 'FromKeyword') {
+                this.parser.next();
+                children.push(this.parser.propertyName());
+            }
+        }
+        if(this.parser.kind() === 'WithKeyword' || this.parser.kind() === 'AssertKeyword') {
+            children.push(this.attributes());
+        }
+        this.semicolon();
+        const id = this.make('ExportDeclaration', pos, children);
+        this.parser.node(id).semantic = typeOnly ? '1' : '0';
+        return id;
+    }
+    moduleDeclaration(pos: number, prefix: readonly number[], keyword: string): number {
+        const children = prefix.slice();
+        children.push(this.parser.propertyName());
+        if(this.parser.kind() === 'WithKeyword') {
+            this.parser.next();
+            children.push(this.parser.typeLiteral());
+        }
+        if(this.parser.kind() === 'DotToken') {
+            this.parser.next();
+            const start = this.parser.scanner.fullStart;
+            const exported = this.make('ExportKeyword', start);
+            this.parser.node(exported).end = start;
+            children.push(this.moduleDeclaration(start, [exported], keyword));
+        }
+        else if(this.parser.kind() === 'OpenBraceToken') {
+            const start = this.parser.scanner.fullStart;
+            this.parser.next();
+            const body: number[] = [];
+            while(this.parser.kind() !== 'CloseBraceToken') {
+                body.push(this.statement());
+            }
+            this.parser.expect('CloseBraceToken');
+            children.push(this.make('ModuleBlock', start, body));
+        }
+        else {
+            this.semicolon();
+        }
+        const id = this.make('ModuleDeclaration', pos, children);
+        this.parser.node(id).operator = keyword;
+        return id;
+    }
+    exportedClauseAhead(): boolean {
+        const after = this.lookahead(1);
+        if(after === 'DefaultKeyword') {
+            const kind = this.lookahead(2);
+            return (
+                kind !== 'ClassKeyword' &&
+                kind !== 'FunctionKeyword' &&
+                kind !== 'InterfaceKeyword' &&
+                kind !== 'AbstractKeyword' &&
+                kind !== 'AsyncKeyword' &&
+                kind !== 'AtToken'
+            );
+        }
+        return (
+            after === 'AsteriskToken' ||
+            after === 'OpenBraceToken' ||
+            after === 'EqualsToken' ||
+            after === 'AsKeyword' ||
+            (after === 'TypeKeyword' &&
+                (this.lookahead(2) === 'OpenBraceToken' || this.lookahead(2) === 'AsteriskToken'))
+        );
     }
     functionDeclaration(pos: number, prefix: readonly number[], async: boolean): number {
         const children = prefix.slice();
@@ -443,6 +699,9 @@ export class Statements {
     }
     statement(): number {
         const pos = this.parser.scanner.fullStart;
+        if(this.parser.kind() === 'ExportKeyword' && this.exportedClauseAhead()) {
+            return this.exportDeclaration(pos, []);
+        }
         if(this.parser.kind() === 'OpenBraceToken') {
             return this.block();
         }
@@ -591,7 +850,7 @@ export class Statements {
                                 parts.push(type);
                             }
                         }
-                        bases.push(this.make('ExpressionWithTypeArguments', startType, parts));
+                        bases.push(this.make('TypeReference', startType, parts));
                         if(this.parser.kind() !== 'CommaToken') {
                             break;
                         }
@@ -634,28 +893,22 @@ export class Statements {
             return this.make('EnumDeclaration', pos, modifiers);
         }
         if(
-            (this.parser.kind() === 'NamespaceKeyword' || this.parser.kind() === 'ModuleKeyword') &&
-            (this.parser.nextIdentifierSameLine() || this.parser.peek() === 'StringLiteral')
+            ((this.parser.kind() === 'NamespaceKeyword' || this.parser.kind() === 'ModuleKeyword') &&
+                (this.parser.nextIdentifierSameLine() || this.parser.peek() === 'StringLiteral')) ||
+            (this.parser.kind() === 'GlobalKeyword' && this.parser.peek() === 'OpenBraceToken')
         ) {
-            this.parser.next();
-            while(this.parser.kind() !== 'OpenBraceToken' && this.parser.kind() !== 'EndOfFile') {
+            const keyword = this.parser.kind();
+            if(keyword !== 'GlobalKeyword') {
                 this.parser.next();
             }
-            modifiers.push(this.block());
-            return this.make('ModuleDeclaration', pos, modifiers);
+            return this.moduleDeclaration(pos, modifiers, keyword);
         }
         if(
-            (this.parser.kind() === 'ImportKeyword' &&
-                this.parser.peek() !== 'OpenParenToken' &&
-                this.parser.peek() !== 'DotToken') ||
-            (modifiers.length > 0 &&
-                (this.parser.kind() === 'OpenBraceToken' || this.parser.kind() === 'AsteriskToken'))
+            this.parser.kind() === 'ImportKeyword' &&
+            this.parser.peek() !== 'OpenParenToken' &&
+            this.parser.peek() !== 'DotToken'
         ) {
-            this.skipDeclaration(false);
-            return this.make('ImportDeclaration', pos);
-        }
-        if(modifiers.length > 0 && this.parser.kind() === 'EqualsToken') {
-            this.parser.next();
+            return this.importDeclaration(pos, modifiers);
         }
         const expression = this.parser.rootExpression();
         this.semicolon();

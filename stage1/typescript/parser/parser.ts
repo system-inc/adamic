@@ -574,7 +574,14 @@ export class Parser {
         while(this.kind() !== 'CloseBraceToken') {
             const start = this.scanner.fullStart;
             const children: number[] = [];
-            if(this.kind() === 'ReadonlyKeyword') {
+            if(
+                this.kind() === 'ReadonlyKeyword' &&
+                (this.peek() === 'Identifier' ||
+                    this.peek().endsWith('Keyword') ||
+                    this.peek() === 'OpenBracketToken' ||
+                    this.peek() === 'StringLiteral' ||
+                    this.peek() === 'NumericLiteral')
+            ) {
                 children.push(this.token());
             }
             let kind = 'PropertySignature';

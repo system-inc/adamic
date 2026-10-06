@@ -40,7 +40,26 @@ func written(text string) string {
 }
 
 func kind(k ast.Kind) string { return strings.TrimPrefix(k.String(), "Kind") }
-func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool, source string) int {
+func semantic(n *ast.Node) string {
+	switch n.Kind {
+	case ast.KindVariableDeclarationList:
+		return fmt.Sprint(n.Flags & ast.NodeFlagsBlockScoped)
+	case ast.KindImportClause:
+		return kind(n.AsImportClause().PhaseModifier)
+	case ast.KindImportSpecifier:
+		return fmt.Sprint(core.IfElse(n.AsImportSpecifier().IsTypeOnly, 1, 0))
+	case ast.KindExportSpecifier:
+		return fmt.Sprint(core.IfElse(n.AsExportSpecifier().IsTypeOnly, 1, 0))
+	case ast.KindExportDeclaration:
+		return fmt.Sprint(core.IfElse(n.AsExportDeclaration().IsTypeOnly, 1, 0))
+	case ast.KindImportEqualsDeclaration:
+		return fmt.Sprint(core.IfElse(n.AsImportEqualsDeclaration().IsTypeOnly, 1, 0))
+	case ast.KindExportAssignment:
+		return fmt.Sprint(core.IfElse(n.AsExportAssignment().IsExportEquals, 1, 0))
+	}
+	return ""
+}
+func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool, source string, whole bool) int {
 	text, operator, raw := "", "", ""
 	flags, list, trailing, multiline := ast.TokenFlags(0), -1, false, false
 	switch n.Kind {
@@ -65,6 +84,14 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool, source stri
 		if n.AsImportTypeNode().IsTypeOf {
 			operator = "TypeOfKeyword"
 		}
+	case ast.KindModuleDeclaration:
+		operator = kind(n.AsModuleDeclaration().Keyword)
+	case ast.KindImportAttributes:
+		a := n.AsImportAttributes()
+		operator = kind(a.Token)
+		list = len(a.Attributes.Nodes)
+		trailing = a.Attributes.HasTrailingComma()
+		multiline = a.MultiLine
 	case ast.KindHeritageClause:
 		operator = kind(n.AsHeritageClause().Token)
 	case ast.KindTypeOperator:
@@ -88,13 +115,17 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool, source stri
 		}
 	}
 	if !countOnly {
-		fmt.Fprintf(out, "%d %s %d %d %d %d %d %d %d\t%s\t%s\t%s\n", depth, kind(n.Kind), n.Pos(), n.End(), n.Flags&ast.NodeFlagsOptionalChain, flags, list, core.IfElse(trailing, 1, 0), core.IfElse(multiline, 1, 0), operator, written(text), written(raw))
+		fmt.Fprintf(out, "%d %s %d %d %d %d %d %d %d\t%s\t%s\t%s", depth, kind(n.Kind), n.Pos(), n.End(), n.Flags&ast.NodeFlagsOptionalChain, flags, list, core.IfElse(trailing, 1, 0), core.IfElse(multiline, 1, 0), operator, written(text), written(raw))
+		if whole {
+			fmt.Fprint(out, "\t", semantic(n))
+		}
+		fmt.Fprintln(out)
 	}
 	count := 1
-	n.ForEachChild(func(child *ast.Node) bool { count += walk(out, child, depth+1, countOnly, source); return false })
+	n.ForEachChild(func(child *ast.Node) bool { count += walk(out, child, depth+1, countOnly, source, whole); return false })
 	return count
 }
-func run(out *bufio.Writer, path string, countOnly bool) int {
+func run(out *bufio.Writer, path string, countOnly bool, whole bool) int {
 	text, err := os.ReadFile(path)
 	if err != nil {
 		panic(err)
@@ -107,6 +138,12 @@ func run(out *bufio.Writer, path string, countOnly bool) int {
 		}
 		os.Exit(1)
 	}
+	if whole {
+		if !countOnly {
+			fmt.Fprintln(out, "file")
+		}
+		return walk(out, f.AsNode(), 0, countOnly, f.Text(), true)
+	}
 	count := 0
 	var visit func(*ast.Node) bool
 	visit = func(n *ast.Node) bool {
@@ -114,7 +151,7 @@ func run(out *bufio.Writer, path string, countOnly bool) int {
 			if !countOnly {
 				fmt.Fprintln(out, "expression")
 			}
-			count += walk(out, n, 0, countOnly, f.Text())
+			count += walk(out, n, 0, countOnly, f.Text(), whole)
 			return false
 		}
 		n.ForEachChild(visit)
@@ -127,15 +164,23 @@ func main() {
 	out := bufio.NewWriterSize(os.Stdout, 65536)
 	defer out.Flush()
 	args := os.Args[1:]
+	whole, countOnly := false, false
+	for _, arg := range args {
+		if arg == "--whole" {
+			whole = true
+		}
+		if arg == "--count" {
+			countOnly = true
+		}
+	}
 	if args[0] != "--manifest" {
-		run(out, args[0], false)
+		run(out, args[0], false, whole)
 		return
 	}
 	data, err := os.ReadFile(args[1])
 	if err != nil {
 		panic(err)
 	}
-	countOnly := len(args) > 2 && args[2] == "--count"
 	count, index := 0, 0
 	for _, path := range strings.Split(string(data), "\n") {
 		if path == "" {
@@ -144,7 +189,7 @@ func main() {
 		if !countOnly {
 			fmt.Fprintf(out, "case %d\n", index)
 		}
-		count += run(out, path, countOnly)
+		count += run(out, path, countOnly, whole)
 		index++
 	}
 	if countOnly {
