@@ -1,6 +1,7 @@
 // parallel.c: structured fork-join, ranges in worker deques, and helping at every join.
 #define _GNU_SOURCE
 #define _POSIX_C_SOURCE 200809L
+#define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include "parallel.h"
 #include <errno.h>

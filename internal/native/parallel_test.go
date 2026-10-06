@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	goruntime "runtime"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 )
@@ -33,7 +34,7 @@ func parallelRun(t *testing.T, binary string, threads string, arguments ...strin
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary, arguments...)
-	command.Env = append(os.Environ(), "ADAMIC_THREADS="+threads, "ASAN_OPTIONS=detect_leaks=1", "TSAN_OPTIONS=halt_on_error=1")
+	command.Env = parallelEnvironment(threads, true)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	if err := command.Run(); err != nil {
@@ -45,7 +46,7 @@ func parallelRun(t *testing.T, binary string, threads string, arguments ...strin
 	return stdout.String(), stderr.String()
 }
 
-func parallelBuilds() []struct {
+func parallelBuilds(t *testing.T) []struct {
 	name    string
 	options Options
 } {
@@ -53,7 +54,7 @@ func parallelBuilds() []struct {
 		name    string
 		options Options
 	}{{"asan", Options{Sanitize: true}}, {"asan_slabs", Options{Sanitize: true, Slabs: true}}, {"count", Options{Count: true}}, {"malloc", Options{Malloc: true}}}
-	if goruntime.GOOS == "linux" {
+	if parallelTSan(t) {
 		builds = append(builds, struct {
 			name    string
 			options Options
@@ -64,10 +65,11 @@ func parallelBuilds() []struct {
 
 func TestParallelMemory(t *testing.T) {
 	t.Parallel()
-	for _, build := range parallelBuilds() {
+	for _, build := range parallelBuilds(t) {
 		t.Run(build.name, func(t *testing.T) {
 			binary := parallelHarness(t, "memory.c", build.options)
 			stdout, _ := parallelRun(t, binary, "4")
+			parallelLeaks(t, binary, build.options, "4")
 			if stdout != "memory clean\n" {
 				t.Fatalf("got %q", stdout)
 			}
@@ -77,13 +79,15 @@ func TestParallelMemory(t *testing.T) {
 
 func TestParallelMap(t *testing.T) {
 	t.Parallel()
-	for _, build := range parallelBuilds() {
+	for _, build := range parallelBuilds(t) {
 		t.Run(build.name, func(t *testing.T) {
 			binary := parallelHarness(t, "map.c", build.options)
 			for _, mode := range []string{"numbers", "strings", "objects", "map", "fresh", "nested", "exception", "nested_exception", "million"} {
 				t.Run(mode, func(t *testing.T) {
 					one, _ := parallelRun(t, binary, "1", mode)
 					many, _ := parallelRun(t, binary, "4", mode)
+					parallelLeaks(t, binary, build.options, "1", mode)
+					parallelLeaks(t, binary, build.options, "4", mode)
 					if one != many {
 						t.Fatalf("one worker %q, four workers %q", one, many)
 					}
@@ -95,13 +99,13 @@ func TestParallelMap(t *testing.T) {
 
 func TestParallelWorkerPanic(t *testing.T) {
 	t.Parallel()
-	for _, build := range parallelBuilds() {
+	for _, build := range parallelBuilds(t) {
 		t.Run(build.name, func(t *testing.T) {
 			binary := parallelHarness(t, "map.c", build.options)
 			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 			defer cancel()
 			command := exec.CommandContext(ctx, binary, "panic")
-			command.Env = append(os.Environ(), "ADAMIC_THREADS=4", "ASAN_OPTIONS=detect_leaks=0", "TSAN_OPTIONS=halt_on_error=1")
+			command.Env = parallelEnvironment("4", false)
 			output, err := command.CombinedOutput()
 			failure, ok := err.(*exec.ExitError)
 			if !ok || failure.ExitCode() != 70 || strings.Count(string(output), "adamic: panic: worker panic\n") != 1 || strings.Contains(string(output), "Sanitizer") || !strings.HasPrefix(string(output), "before worker panic\n") {
@@ -135,8 +139,8 @@ func TestParallelChecksCatchMutants(t *testing.T) {
 	}
 	for _, mutant := range mutants {
 		t.Run(mutant.name, func(t *testing.T) {
-			if mutant.race && goruntime.GOOS != "linux" {
-				t.Skip("TSan mutant proof is Linux only")
+			if mutant.race && !parallelTSan(t) {
+				t.Skip("TSan is unavailable on this platform; see capability probe")
 			}
 			directory := t.TempDir()
 			files, err := fs.ReadDir(runtime, "runtime")
@@ -189,7 +193,7 @@ func TestParallelChecksCatchMutants(t *testing.T) {
 				args = append(args, mutant.mode)
 			}
 			command := exec.CommandContext(ctx, binary, args...)
-			command.Env = append(os.Environ(), "ADAMIC_THREADS="+mutant.threads, "TSAN_OPTIONS=halt_on_error=1")
+			command.Env = parallelEnvironment(mutant.threads, false)
 			output, err := command.CombinedOutput()
 			if err == nil || ctx.Err() != nil || !strings.Contains(string(output), mutant.want) {
 				t.Fatalf("mutant not caught by %q: %v\n%s", mutant.want, err, output)
@@ -217,15 +221,96 @@ func TestParallelChecksCatchMutants(t *testing.T) {
 
 func TestParallelLifecycle(t *testing.T) {
 	t.Parallel()
-	for _, build := range parallelBuilds() {
+	for _, build := range parallelBuilds(t) {
 		t.Run(build.name, func(t *testing.T) {
 			binary := parallelHarness(t, "lifecycle.c", build.options)
 			for _, threads := range []string{"1", "4"} {
 				stdout, _ := parallelRun(t, binary, threads)
+				parallelLeaks(t, binary, build.options, threads)
 				if stdout != "lifecycle clean\n" {
 					t.Fatalf("got %q", stdout)
 				}
 			}
 		})
 	}
+}
+
+// LeakSanitizer is Linux-only. Darwin's leaks tool checks an unsanitized malloc build.
+func parallelEnvironment(threads string, leaks bool) []string {
+	env := []string{}
+	for _, entry := range os.Environ() {
+		if strings.HasPrefix(entry, "ADAMIC_THREADS=") || strings.HasPrefix(entry, "ASAN_OPTIONS=") || strings.HasPrefix(entry, "TSAN_OPTIONS=") {
+			continue
+		}
+		env = append(env, entry)
+	}
+	env = append(env, "ADAMIC_THREADS="+threads, "TSAN_OPTIONS=halt_on_error=1")
+	if goruntime.GOOS == "linux" {
+		value := "0"
+		if leaks {
+			value = "1"
+		}
+		env = append(env, "ASAN_OPTIONS=detect_leaks="+value)
+	}
+	return env
+}
+
+func parallelLeaks(t *testing.T, binary string, options Options, threads string, arguments ...string) {
+	t.Helper()
+	if goruntime.GOOS != "darwin" || !options.Malloc {
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	defer cancel()
+	args := append([]string{"--atExit", "--", binary}, arguments...)
+	command := exec.CommandContext(ctx, "leaks", args...)
+	command.Env = parallelEnvironment(threads, false)
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("Darwin leaks, threads=%s: %v\n%s", threads, err, output)
+	}
+}
+
+var parallelTSanProbe struct {
+	sync.Once
+	available bool
+	reason    string
+}
+
+func parallelTSan(t *testing.T) bool {
+	t.Helper()
+	if goruntime.GOOS == "linux" {
+		return true
+	}
+	if goruntime.GOOS != "darwin" {
+		return false
+	}
+	parallelTSanProbe.Do(func() {
+		directory, err := os.MkdirTemp("", "adamic-tsan-probe-")
+		if err != nil {
+			parallelTSanProbe.reason = err.Error()
+			return
+		}
+		defer os.RemoveAll(directory)
+		source := filepath.Join(directory, "probe.c")
+		binary := filepath.Join(directory, "probe")
+		if err := os.WriteFile(source, []byte("int main(void) { return 0; }\n"), 0600); err != nil {
+			parallelTSanProbe.reason = err.Error()
+			return
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+		if output, err := exec.CommandContext(ctx, "clang", "-fsanitize=thread", source, "-o", binary).CombinedOutput(); err != nil {
+			parallelTSanProbe.reason = fmt.Sprintf("clang -fsanitize=thread: %v: %s", err, output)
+			return
+		}
+		if output, err := exec.CommandContext(ctx, binary).CombinedOutput(); err != nil {
+			parallelTSanProbe.reason = fmt.Sprintf("TSan probe runtime: %v: %s", err, output)
+			return
+		}
+		parallelTSanProbe.available = true
+	})
+	if !parallelTSanProbe.available {
+		t.Logf("Darwin TSan unavailable: %s", parallelTSanProbe.reason)
+	}
+	return parallelTSanProbe.available
 }

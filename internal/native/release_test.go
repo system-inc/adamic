@@ -69,7 +69,7 @@ func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
 			t.Fatalf("clang: %v %s", err, output)
 		}
 		command := exec.Command(binary)
-		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
+		command.Env = parallelEnvironment("1", true)
 		output, err := command.CombinedOutput()
 		if mutant {
 			if err == nil || !bytes.Contains(output, []byte("AddressSanitizer: heap-use-after-free")) {
