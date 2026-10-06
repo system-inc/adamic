@@ -1,0 +1,23 @@
+=== RUN   TestOutputEdges
+=== PAUSE TestOutputEdges
+=== CONT  TestOutputEdges
+=== RUN   TestOutputEdges/signals
+=== PAUSE TestOutputEdges/signals
+=== CONT  TestOutputEdges/signals
+    output_edges_linux_test.go:33: signals SIGTERM [(-15, 39, b''), (-15, 39, b''), (-15, 39, b'')]
+        signals SIGINT [(-2, 39, b''), (-2, 39, b''), (-2, 39, b'')]
+        signals SIGHUP [(-1, 39, b''), (-1, 39, b''), (-1, 39, b'')]
+        signals SIGUSR2 [(-12, 39, b''), (-12, 0, b''), (-12, 39, b'')]
+    output_edges_linux_test.go:35: edge probe: exit 1
+        Traceback (most recent call last):
+          File "/workspace/adamic/internal/oracle/testdata/output_edges/probe.py", line 147, in <module>
+            checked(node, report, (mode, sig.name))
+          File "/workspace/adamic/internal/oracle/testdata/output_edges/probe.py", line 26, in checked
+            assert (other.returncode, other.stdout, other.stderr) == (node.returncode, node.stdout, node.stderr), (
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        AssertionError: (('signals', 'SIGUSR2'), 'Node', -12, 39, b'', 'other', -12, 0, b'', 'stdout prefixes', b'started, about to work for a long time\n', b'')
+--- FAIL: TestOutputEdges (0.00s)
+    --- FAIL: TestOutputEdges/signals (13.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	13.263s
+FAIL
