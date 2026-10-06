@@ -1,0 +1,3 @@
+const method = String.prototype.replace;
+console.log(`${method.call('a$a', 'a', '$$')}`);
+console.log(`${method.apply('a$a', ['a', 'x'])}`);
