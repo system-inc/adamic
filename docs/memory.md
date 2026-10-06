@@ -10,9 +10,11 @@ Status: **draft, written October 5, 2026 by @system_adamic** (#w318mqs), with st
 
 ## Worked examples
 
-Measured at commit `9c04abcc0569eaae387c5cb467201fec3c9f093c` (task #w318mqs).
+Examples 1 to 5 were measured at commit `9c04abcc0569eaae387c5cb467201fec3c9f093c` (task #w318mqs).
+Example 6 was regenerated at merge commit `fb07d6bae0fdd27fbf6066a6f9c2a02dd27391ab`,
+which includes the shared-slice append fix `7b6f986` and its counts row `aeb1708`.
 These are complete programs in `internal/oracle/testdata/memory_examples/`.
-C below is copied from `adamic c <file>` at that commit, with intervening lines
+C below is copied from `adamic c <file>` at the stated commit, with intervening lines
 omitted; identifiers are unchanged. Each row comes from `adamic build <file> -o <binary> --count`
 and one run of the binary, in the same column order as `internal/oracle/counts.md`.
 Allocations count heap values, not allocator buffers; retains and releases count calls,
@@ -22,8 +24,6 @@ without adding a release call to the counter.
 The compiled fixtures are registered with the Node oracle, ASan, UBSan and the leak
 check. The two refused programs run on Node in `TestMemoryExamplesRefused` and must
 be refused before C generation: they have no generated C or counted-build row.
-**Finding:** the string fixture currently fails the Node comparison, detailed below.
-That failure is kept visible; this unit changes no compiler or runtime code.
 
 ### 1. Prepend, walk and map a list
 
@@ -267,7 +267,7 @@ double adamic_temporary_15 = self->cells[0]->value.number;
 |---|---:|---:|---:|---:|---:|---:|
 | internal/oracle/testdata/memory_examples/closures.a | 9 | 9 | 2 | 9 | 7 | 0 |
 
-**Finding:** the requested distinction, "const captured: no cell; let captured: a cell", is not implemented at this commit: even the numeric `const fixed = 7` gets `adamic_cell_new`, just like `let changing`; both closures read `self->cells[0]`.
+The current design uses a cell for both captured `const` and captured `let`: `const fixed = 7` gets `adamic_cell_new`, just like `let changing`, and both closures read `self->cells[0]`, consistent with the [Cycles section](#cycles-found-by-the-compiler-broken-by-weak), which includes captures of either binding kind in its cell-based cycle rule.
 The output is `7 9` then `3`, and nine allocations and frees comprise two cells, two closures and five output strings, with peak seven (four capture values plus the first statement's three strings) and no regions.
 Two retains give the closures ownership of their cells, and nine release calls drop five output strings and four scope owners; the function-declaration fix below allocates no function value or cell for its recursion.
 
@@ -400,11 +400,11 @@ adamic_release(adamic_local_0_text);
 
 | Fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
 |---|---:|---:|---:|---:|---:|---:|
-| internal/oracle/testdata/memory_examples/strings.a | 15 | 15 | 2 | 16 | 7 | 0 |
+| internal/oracle/testdata/memory_examples/strings.a | 16 | 16 | 2 | 17 | 7 | 0 |
 
 Nine owned string allocations grow the 160 one-byte appends geometrically; appends within the available capacity reuse the unique owned string, and `runtime/string_share.c` makes one shared slice header for this 128-byte slice (at least 64 bytes and at least a quarter of the owner).
-**Finding:** the documented promise that appending to a shared slice copies is false at this commit: its capacity is zero, but `runtime/string_append.c` tests `capacity - length >= added` with unsigned `size_t`, which underflows for this unique slice and permits writing its owner's bytes; Node prints `160 129 x !`, native prints `160 129 ! !`, and the oracle fails with `stdout differs` while ASan, UBSan and the leak check report no error because the write stays inside the owner allocation.
-The measured fifteen allocations and frees are nine grown owners, one slice and five output strings (two numbers, two characters and one concatenation), with peak seven, no regions, two retains (initial immortal empty string and slice owner) and sixteen releases (nine replaced strings, five output temporaries and the two locals); a correct append would require owned capacity and copy this slice, adding an allocation, but that is a proposed fix, not the measured behavior.
+Appending to this shared slice copies because its bytes belong to its owner and its capacity is zero: `runtime/string_append.c` requires `length + added <= capacity` before writing in place, fixed in `7b6f986` and held by `shared_slice_append.a`; Node and native now both print `160 129 x !`, with the generated C above unchanged at the merged runtime.
+The sixteen allocations and frees are nine grown owners, one slice header, one owned copy for the slice append and five output strings (two numbers, two characters and one concatenation), with peak seven, no regions, two retains (initial immortal empty string and slice owner) and seventeen releases (nine replaced loop strings, the replaced slice header, five output temporaries and the two locals).
 
 ### Checking the documented counts
 
@@ -436,8 +436,8 @@ All paths below are under `internal/native/runtime/`.
   `adamic.h` defines immortal constants; `string_share.c` holds owners for shared
   slices; `string_append.c` grows owned strings. `string_index.c` keeps UTF-16 length,
   checkpoints, cursor and compact UTF-16-view caches; slices have their own caches,
-  and in-place append invalidates the old index and length. The slice-append finding
-  above qualifies the intended immutability guarantee.
+  and in-place append invalidates the old index and length. Shared-slice append
+  copies into owned storage, preserving the owner's bytes.
 - **Arrays and maps:** `array.c` holds typed elements in a growable buffer; `map.c`
   holds keys and values in an ordered hash table, with typed wrappers in `map_set.c`.
   Their element and entry ownership is released by `heap.c`.
