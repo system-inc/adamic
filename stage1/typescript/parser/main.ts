@@ -2,13 +2,14 @@ import { panic, programArguments, readTextFile, utf8Length } from 'adamic';
 import { Parser } from './parser.ts';
 import { countTree, printTree } from './nodes.ts';
 
-function run(path: string, countOnly: boolean): number {
+function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {
     const source = readTextFile(path);
     if(source.kind === 'Error') {
         panic(source.message);
     }
-    const parser = new Parser(source.text);
-    parser.file();
+    const parser = new Parser(source.text, path);
+    const types: number[] = docTypes ? parser.docTypes() : [];
+    const file = docTypes ? -1 : parser.file();
     const offsets: number[] = [0];
     if(!countOnly) {
         let bytes = 0;
@@ -26,11 +27,13 @@ function run(path: string, countOnly: boolean): number {
         }
     }
     let count = 0;
-    for(const root of parser.roots) {
+    for(const root of docTypes ? types : whole ? [file] : parser.roots) {
         if(!countOnly) {
-            console.log('expression');
+            console.log(docTypes ? 'type' : whole ? 'file' : 'expression');
         }
-        count += countOnly ? countTree(parser.nodes, root) : printTree(parser.nodes, root, offsets);
+        count += countOnly
+            ? countTree(parser.nodes, root)
+            : printTree(parser.nodes, root, offsets, 0, whole || docTypes);
     }
     return count;
 }
@@ -41,7 +44,7 @@ if(first === '--manifest') {
     if(manifest.kind === 'Error') {
         panic(manifest.message);
     }
-    const countOnly = args[2] === '--count';
+    const countOnly = args.includes('--count');
     let count = 0;
     let caseNumber = 0;
     for(const path of manifest.text.split('\n')) {
@@ -51,7 +54,7 @@ if(first === '--manifest') {
         if(!countOnly) {
             console.log(`case ${caseNumber}`);
         }
-        count += run(path, countOnly);
+        count += run(path, countOnly, args.includes('--whole'), args.includes('--doc-types'));
         caseNumber++;
     }
     if(countOnly) {
@@ -59,5 +62,5 @@ if(first === '--manifest') {
     }
 }
 else {
-    run(first, false);
+    run(first, false, args.includes('--whole'), args.includes('--doc-types'));
 }
