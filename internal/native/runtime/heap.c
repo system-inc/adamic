@@ -264,11 +264,7 @@ static void free_one(void *value) {
 		break;
 	case adamic_kind_object: {
 		adamic_object *object = value;
-		for (size_t index = 0; index < object->shape->count; index++) {
-			if (object->shape->references[index]) {
-				let_go(object->slots[index].reference);
-			}
-		}
+		adamic_object_free_children(object, let_go);
 		break;
 	}
 	case adamic_kind_array: {
@@ -278,6 +274,7 @@ static void free_one(void *value) {
 				let_go(array->elements[index].reference);
 			}
 		}
+		let_go(array->properties);
 		free(array->elements);
 		break;
 	}

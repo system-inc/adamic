@@ -72,14 +72,7 @@ func consumes(expression ir.Expression) bool {
 // they're made of being pure too. Anything not on the list, an operation added later included, is
 // not pure.
 func pure(expression ir.Expression) bool {
-	switch expression.(type) {
-	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Read, ir.Undefined,
-		ir.Unary, ir.Binary, ir.NumberToString, ir.BooleanToString, ir.Concat, ir.Length, ir.StringLength,
-		ir.CharCodeAt, ir.StringIndex, ir.ArrayIndex, ir.Property, ir.MapGet, ir.MapHas, ir.MapSize,
-		ir.IsUndefined, ir.Unwrap, ir.MaybeOf, ir.Box, ir.Narrow, ir.TypeOf, ir.Conditional, ir.Coalesce,
-		ir.MathCall, ir.NumberCall, ir.ToFixed, ir.NumberFormat, ir.Trim, ir.StringCall, ir.CodePoints,
-		ir.ArraySearch, ir.CheckedCast, ir.UnionToString, ir.MaybeToString, ir.Defined:
-	default:
+	if !pureKind(expression) {
 		return false
 	}
 	operands := true
@@ -89,6 +82,21 @@ func pure(expression ir.Expression) bool {
 		}
 	})
 	return operands
+}
+
+// pureKind reports whether an expression's own operation is on pure's list, whatever its operands.
+func pureKind(expression ir.Expression) bool {
+	switch expression.(type) {
+	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Read, ir.Undefined,
+		ir.Unary, ir.Binary, ir.NumberToString, ir.BooleanToString, ir.Concat, ir.Length, ir.StringLength,
+		ir.CharCodeAt, ir.StringIndex, ir.ArrayIndex, ir.Property, ir.MapGet, ir.MapHas, ir.MapSize, ir.HasOwn,
+		ir.IsUndefined, ir.Unwrap, ir.MaybeOf, ir.Box, ir.Narrow, ir.TypeOf, ir.Conditional, ir.Coalesce,
+		ir.MathCall, ir.NumberCall, ir.ToFixed, ir.NumberFormat, ir.Trim, ir.StringCall, ir.CodePoints,
+		ir.ArraySearch, ir.CheckedCast, ir.UnionToString, ir.MaybeToString, ir.Defined, ir.InstanceOf:
+	default:
+		return false
+	}
+	return true
 }
 
 // eachOperand visits the expressions an IR node holds directly.

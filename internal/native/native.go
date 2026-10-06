@@ -98,31 +98,15 @@ func Build(source string, output string, options Options) error {
 	}
 	defer os.RemoveAll(directory)
 
-	// The runtime is every file in runtime/, written beside the program and compiled with it.
+	library, err := RuntimeLibrary("", options)
+	if err != nil {
+		return err
+	}
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
-	units := []string{filepath.Join(directory, "main.c")}
-	entries, err := runtime.ReadDir("runtime")
-	if err != nil {
-		return fmt.Errorf("native: %w", err)
-	}
-	for _, entry := range entries {
-		contents, err := runtime.ReadFile("runtime/" + entry.Name())
-		if err != nil {
-			return fmt.Errorf("native: %w", err)
-		}
-		path := filepath.Join(directory, entry.Name())
-		if err := os.WriteFile(path, contents, 0o644); err != nil {
-			return fmt.Errorf("native: %w", err)
-		}
-		if strings.HasSuffix(entry.Name(), ".c") {
-			units = append(units, path)
-		}
-	}
-
-	arguments := append(Flags(options), "-o", output)
-	arguments = append(arguments, units...)
+	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output, filepath.Join(directory, "main.c"))
+	arguments = append(arguments, RuntimeLinkFlags(library)...)
 	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
 	arguments = append(arguments, "-lm")

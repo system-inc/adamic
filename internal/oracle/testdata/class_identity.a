@@ -1,0 +1,16 @@
+class Plain {
+    readonly value = `plain${3}`;
+}
+function copy(): { readonly value: string } {
+    const original = new Plain();
+    return { ...original };
+}
+const copied = copy();
+const instance = new Plain();
+console.log(`${copied.value} ${copied instanceof Plain} ${instance instanceof Plain}`);
+let calls = 0;
+function either(flag: boolean): Plain | string {
+    calls += 1;
+    return flag ? instance : `string${calls}`;
+}
+console.log(`${either(true) instanceof Plain} ${either(false) instanceof Plain} ${calls}`);

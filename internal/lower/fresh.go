@@ -46,7 +46,7 @@ func (f *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, name 
 		if write.Kind == fresh.WriteUnknown {
 			return write
 		}
-		if write.Kind != kind || (kind == fresh.WriteField && write.Name != name) {
+		if write.Kind != kind || (kind == fresh.WriteField && !f.l.cycleFieldMatches(holder, name, write.Name)) {
 			continue
 		}
 		if write.Site == 0 {

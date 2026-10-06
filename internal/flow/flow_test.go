@@ -40,9 +40,11 @@ func programs(t *testing.T) []string {
 	// A program that never ends on its own (stopped from outside by a signal, output_test.go) has no
 	// trace to walk. size_class_churn.a churns 675,000 values through the allocator, and its trace of
 	// every point its loops pass doesn't finish within the trace's five minutes even alone; its loops
-	// are shapes the other programs trace, and its size is what it's for.
+	// are shapes the other programs trace, and its size is what it's for. bitwise_sweep.a records
+	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
+	// and operator shapes here, and the oracle still runs the full sweep.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a"
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))

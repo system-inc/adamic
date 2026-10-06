@@ -72,39 +72,54 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 	if err != nil {
 		t.Fatalf("Lower: %v", err)
 	}
-	var result run
+	given := identity(t)
+	context := cacheKey(given.context, path, fmt.Sprint(input, unreadable, writes), cacheKey(arguments...))
 	if input {
-		shared := sharedDirectory(t)
-		how := inputRun{directory: filepath.Dir(absolute), arguments: arguments}
-		if os.Geteuid() == 0 {
-			how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
-		}
-		if unreadable {
-			path := filepath.Join(shared, "unreadable.txt")
-			if err := os.WriteFile(path, []byte("secret\n"), 0o000); err != nil {
+		context = cacheKey(context, inputIdentity(t))
+	}
+	key := nativeResultKey(native.C(program), given.libraries[2], given.nodeVersion, context)
+	executeCounted := func() recordedRun {
+		var result run
+		if input {
+			shared := sharedDirectory(t)
+			how := inputRun{directory: filepath.Dir(absolute), arguments: arguments}
+			if os.Geteuid() == 0 {
+				how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
+			}
+			if unreadable {
+				path := filepath.Join(shared, "unreadable.txt")
+				if err := os.WriteFile(path, []byte("secret\n"), 0o000); err != nil {
+					t.Fatal(err)
+				}
+				how.arguments = append(append([]string{}, how.arguments...), path)
+			}
+			if writes {
+				how.arguments = append([]string{writable(t, shared, "counted")}, how.arguments...)
+			}
+			binary := filepath.Join(shared, "program")
+			if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
-			how.arguments = append(append([]string{}, how.arguments...), path)
+			name, pinned := pinnedStack(binary, how.arguments...)
+			result = executeInput(t, how, nil, name, pinned...)
+			if result.exitCode != 0 {
+				t.Fatalf("want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit %d, stderr %q", result.exitCode, result.stderr)
+			}
+		} else {
+			binary := filepath.Join(t.TempDir(), "program")
+			if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+				t.Fatal(err)
+			}
+			name, pinned := pinnedStack(binary)
+			result = execute(t, name, pinned...)
 		}
-		if writes {
-			how.arguments = append([]string{writable(t, shared, "counted")}, how.arguments...)
-		}
-		binary := filepath.Join(shared, "program")
-		if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
-			t.Fatal(err)
-		}
-		name, pinned := pinnedStack(binary, how.arguments...)
-		result = executeInput(t, how, nil, name, pinned...)
-		if result.exitCode != 0 {
-			t.Fatalf("want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit %d, stderr %q", result.exitCode, result.stderr)
-		}
+		return record(result)
+	}
+	var result run
+	if *updateCounts {
+		result = executeCounted().run()
 	} else {
-		binary := filepath.Join(t.TempDir(), "program")
-		if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
-			t.Fatal(err)
-		}
-		name, pinned := pinnedStack(binary)
-		result = execute(t, name, pinned...)
+		result = cachedResult(t, given.cache, nativeResults, key, executeCounted).run()
 	}
 	match := countsLine.FindSubmatch(result.stderr)
 	if match == nil {

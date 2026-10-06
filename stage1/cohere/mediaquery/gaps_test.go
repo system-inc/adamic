@@ -15,7 +15,8 @@ import (
 // gaps are GAPS.md's smallest programs, each with what Node prints running it, and where stage 0 stands
 // on it: not yet lowered, with the words GAPS.md records (notYet); refused by a rule of 0.1, with the
 // words it records (refused); lowered to C that clang refuses with the words it records (badC); or
-// closed (none of them), when it must lower and print natively what it prints on Node, leaking nothing.
+// closed (an entry with only stdout), when it must lower and print natively what it prints on Node,
+// leaking nothing.
 // So when a gap moves, this test says so, and the port's workaround for it can go.
 var gaps = []struct {
 	path    string

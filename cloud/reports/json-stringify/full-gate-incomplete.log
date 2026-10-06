@@ -1,0 +1,69 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	59.107s
+ok  	github.com/system-inc/adamic/internal/flow	343.542s
+--- FAIL: TestEveryWriteIsRecordedAndKnown (52.69s)
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONNull is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONNull is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONNull is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONNull is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_options.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONNull is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_scalars.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONNull is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONNull is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONNull is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/json_stringify_values.a: ir.JSONStringify is a node the cycle finder doesn't know
+    fresh_test.go:65: 413 writes in 182 programs, 348 proven not to close a cycle
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	52.743s
+ok  	github.com/system-inc/adamic/internal/fuzz	21.979s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	2.488s
+ok  	github.com/system-inc/adamic/internal/lower	13.249s
+--- FAIL: TestNormalizeMatchesNode (35.08s)
+    --- FAIL: TestNormalizeMatchesNode/points (300.33s)
+        normalize_test.go:225: native "7c1e5 f1bc87a5 f1bc8"
+            Node   "7c1e5 f1bc87a5 f1bc87a5 f1bc87a5 f1bc87a5 61f1bc87a5cc81 61f1bc87a5cc81 61f1bc87a5cc81 61f1bc87a5cc81 f1bc87a5cca3cc81 f1bc87a5cca3cc81 f1bc87a5cca3cc81 f1bc87a5cca3cc81 e18480f1bc87a5 e18480f1bc87a5 e18480f1bc87a5 e18480f1bc87a5 eab080f1bc87a5 e18480e185a1f1bc87a5 eab080f1bc87a5 e18480e185a1f1bc87a5"
+        normalize_test.go:225: after 508390 lines, only one side went on (native false, Node true)
+        case_test.go:304: /tmp/adamic-gate/TestNormalizeMatchesNode2677929345/001/harness: signal: killed
+        case_test.go:304: node: signal: killed
+        normalize_test.go:225: compared 508390 lines, want 1114112
+        normalize_test.go:225: 1 of 508390 lines differ
+        normalize_test.go:225: 508390 lines, 1 mismatches
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	504.374s

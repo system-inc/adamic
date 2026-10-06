@@ -22,7 +22,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindGetAccessor:       {"a getter", "write a method: in 0.1 reading a property is just a read"},
 	ast.KindSetAccessor:       {"a setter", "write a method: in 0.1 writing a property is just a write"},
-	ast.KindForInStatement:    {"for...in", "use a Map and for...of, or read the fields you mean"},
 	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
@@ -75,9 +74,13 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) {
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
+			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
+				found = l.prototypeRead(node, "isPrototypeOf")
+				return true
+			}
 			// Math.random has its own refusal, called or not.
 			isRandom := l.isLibraryGlobal(access.Expression, "Math") && access.Name().Text() == "random"
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 && !isRandom {
@@ -97,7 +100,18 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if err := l.refuseWidening(node); err != nil {
+		if node.Kind == ast.KindClassDeclaration {
+			if err := l.checkOverrides(node, l.checker.GetTypeAtLocation(node.Name())); err != nil {
+				found = err
+				return true
+			}
+		}
+		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
+		if err := l.refuseStringWidening(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.classViewRefusal(node); err != nil {
 			found = err
 			return true
 		}

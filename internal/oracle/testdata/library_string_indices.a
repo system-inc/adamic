@@ -1,0 +1,19 @@
+const text = 'a🌍z';
+for (const position of [0, -0, 1, 2, 3, 4, -1, -4, -5, 1.9, -1.9, NaN, Infinity, -Infinity]) {
+ const at = text.at(position);
+ console.log(`${position}: ${at === undefined} ${(at ?? '').charCodeAt(0)} ${text.codePointAt(position) ?? -1} ${text.charAt(position).charCodeAt(0)}`);
+ for (const end of [-1, 0, 1, 2, 4, 100, NaN, Infinity]) {
+  const part = text.substring(position, end);
+  console.log(`${part.length} ${part.charCodeAt(0)} ${part.charCodeAt(1)}`);
+ }
+}
+console.log(text.charAt(0));
+console.log(text.substring(0));
+console.log(text.substring(2));
+console.log('abc'.concat('d', 'ef', 'g'));
+let order = '';
+function receiver(): string { order = order + 'r'; return 'abc'; }
+function start(): number { order = order + 's'; return 2; }
+function end(): number { order = order + 'e'; return 0; }
+console.log(receiver().substring(start(), end()));
+console.log(order);

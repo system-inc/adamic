@@ -141,6 +141,11 @@ func directlyCalled(program *ir.Program) map[int]bool {
 			}
 		}
 	}
+	for _, class := range program.Classes {
+		for _, method := range class.Methods {
+			delete(direct, method)
+		}
+	}
 	walk(reflect.ValueOf(program.Main))
 	for _, function := range program.Functions {
 		walk(reflect.ValueOf(function.Body))
@@ -1000,8 +1005,11 @@ func (a *analysis) value(expression ir.Expression) value {
 	if expression == nil {
 		return value{}
 	}
+	if held, known := a.libraryLanguage(expression); known {
+		return held
+	}
 	switch expression := expression.(type) {
-	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined:
+	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:
 		return value{}
 	case ir.Read:
 		declared := a.proof.program.Locals[expression.Local]
@@ -1024,6 +1032,29 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.Binary:
 		a.value(expression.Left)
 		a.value(expression.Right)
+		return value{}
+	case ir.IsNull:
+		a.value(expression.Value)
+		return value{}
+	case ir.RegExpNew:
+		for _, argument := range expression.Arguments {
+			a.value(argument)
+		}
+		// Patterns are compiled constants; the runtime object holds only immutable strings.
+		return a.fresh(anyField, value{})
+	case ir.RegExpCall:
+		// Conservatively expose operands and treat mutable results as outside. Regex methods
+		// change lastIndex and iterator state, but never store user references into them.
+		return a.call(a.operands(expression), expression.Type())
+	case ir.RegExpProperty:
+		return a.load(a.value(expression.Array), expression.Name)
+	case ir.RegExpGroup:
+		return a.load(a.value(expression.Object), expression.Name)
+	case ir.JSONStringify:
+		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
+		a.value(expression.Value)
+		a.value(expression.Replacer)
+		a.value(expression.Space)
 		return value{}
 	case ir.NumberToString:
 		a.value(expression.Value)
@@ -1091,6 +1122,8 @@ func (a *analysis) value(expression ir.Expression) value {
 			a.value(argument)
 		}
 		return value{}
+	case ir.ObjectCall:
+		return a.objectCall(expression)
 	case ir.NumberCall:
 		for _, argument := range expression.Arguments {
 			a.value(argument)
@@ -1198,6 +1231,8 @@ func (a *analysis) value(expression ir.Expression) value {
 			elements.merge(held)
 		}
 		return a.fresh(elementKey, elements)
+	case ir.CollectionIterator:
+		return a.fresh(anyField, a.value(expression.Collection))
 	case ir.MapNew:
 		var entries value
 		for _, entry := range expression.Entries {
@@ -1257,6 +1292,9 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ArraySearch:
 		a.value(expression.Array)
 		a.value(expression.Value)
+		if expression.From != nil {
+			a.value(expression.From)
+		}
 		return value{}
 	case ir.ArrayJoin:
 		a.value(expression.Array)
@@ -1317,6 +1355,10 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.MapSize:
 		a.value(expression.Map)
 		return value{}
+	case ir.HasOwn:
+		a.value(expression.Object)
+		a.value(expression.Key)
+		return value{}
 	case ir.SetAdd:
 		holder := a.value(expression.Set)
 		held := a.value(expression.Value)
@@ -1325,12 +1367,15 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.MakeClosure:
 		// What a function value holds is its cells, and what's in a cell has escaped.
 		return outsideValue()
+	case ir.InstanceOf:
+		a.value(expression.Value)
+		return value{}
 	case ir.Call:
 		operands := []value{}
 		for _, argument := range expression.Arguments {
 			operands = append(operands, a.value(argument))
 		}
-		if a.proof.top {
+		if a.proof.top || expression.Virtual != 0 {
 			return a.call(operands, expression.Returns)
 		}
 		if !a.proof.direct[expression.Function] {

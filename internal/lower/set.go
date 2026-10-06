@@ -43,11 +43,24 @@ func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
 	if len(arguments.Nodes) != 1 {
 		return nil, l.notYet(node, "new Set with more than one argument")
 	}
+	if ast.SkipParentheses(arguments.Nodes[0]).Kind == ast.KindArrayLiteralExpression {
+		if values, known, err := l.librarySetLiteral(arguments.Nodes[0], element); known {
+			lowered.Values = values
+			return lowered, err
+		}
+	}
+	if l.libraryEmptyCollectionArgument(arguments.Nodes[0]) {
+		return lowered, nil
+	}
 	// From anything iterable: an array, a string's code points, a Set, a Map's entries, or what keys()
 	// and values() give (collections.go).
 	values, from, err := l.iterated(arguments.Nodes[0])
 	if err != nil {
 		return nil, err
+	}
+	if from == ir.Number && element == ir.MaybeNumber {
+		values = l.libraryOptionalNumbers(arguments.Nodes[0], values)
+		from = element
 	}
 	if from != element {
 		return nil, l.notYet(arguments.Nodes[0], "new Set from elements held otherwise than the Set's")
@@ -59,6 +72,9 @@ func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
 // setMethod lowers set.add, set.has and set.delete. isBuiltin is false for any other method, which
 // is left to be refused as a call stage 0 doesn't know.
 func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	if lowered, known, err := l.librarySetMethod(node, receiver, name); known {
+		return lowered, true, err
+	}
 	if name == "clear" || name == "forEach" {
 		return l.clearOrVisit(node, receiver, name, true)
 	}
@@ -81,8 +97,13 @@ func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	if err != nil {
 		return nil, true, err
 	}
-	if value.Type() != element {
-		return nil, true, l.notYet(arguments[0], "set."+name+" with a value of another type than the elements")
+	// set.has(undefined), written out, which the checker allows only where the elements may be
+	// undefined: a reference's undefined is its null one, which the set holds as any element.
+	_, isUndefined := value.(ir.Undefined)
+	if !isUndefined || !element.IsReference() {
+		if value = fit(value, element); value.Type() != element {
+			return nil, true, l.notYet(arguments[0], "set."+name+" with a value of another type than the elements")
+		}
 	}
 	switch name {
 	case "add":

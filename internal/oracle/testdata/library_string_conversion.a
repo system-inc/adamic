@@ -1,0 +1,22 @@
+console.log(typeof String);
+console.log(typeof String.fromCharCode);
+console.log(`${String()}|${String(undefined)}|${String(null)}|${String(true)}|${String(false)}`);
+for (const number of [0, -0, 42, -42, 1e21, 1e-7, NaN, Infinity]) {
+ console.log(String(number));
+}
+function convert(value: string | number | boolean | undefined): string {
+ return String(value);
+}
+console.log(convert('abc'));
+console.log(convert(42));
+console.log(convert(true));
+console.log(convert(undefined));
+function maybe(value: string | undefined): void { console.log(String(value)); }
+maybe('present');
+maybe(undefined);
+// A same-named local is ordinary program code.
+function local(): string {
+ const String = (value: number): string => `local ${value}`;
+ return String(42);
+}
+console.log(local());
