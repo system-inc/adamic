@@ -48,7 +48,7 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 
 // Node writes each line synchronously to regular files and terminals on POSIX. Match those
 // destinations so a live log reader sees each line. Pipes retain the 64 KiB buffer, flushed before
-// stderr, file operations, panic, exit and catchable terminating signals. Readers get the same bytes
+// stderr, file operations, panic, exit and catchable external stop signals. Readers get the same bytes
 // in larger pieces. SIGKILL cannot be caught, so a pipe's buffered output is lost then.
 //
 // When a write fails (a pipe whose reader is gone, say), the program goes on as it does on Node,
@@ -113,7 +113,7 @@ void adamic_output_flush(void) {
 	flush();
 }
 
-// stopped handles catchable terminating signals: the buffer's whole lines go out, and the
+// stopped handles external stop signals: the buffer's whole lines go out, and the
 // signal is raised again with its default action, so the program ends the way Node's does, killed by
 // it. write, poll, sigaction and raise are async-signal-safe POSIX calls.
 // A signal arriving inside flush finds the buffer already emptied, and
@@ -191,25 +191,17 @@ void adamic_start(int count, char **values) {
 	stop_with(SIGTERM);
 	stop_with(SIGINT);
 	stop_with(SIGHUP);
-	// Signals whose POSIX default action terminates or dumps core. SIGKILL cannot be caught;
-	// SIGPIPE and SIGXFSZ are ignored above, as on Node. Optional platform names stay guarded.
+	// Signals used to stop a process from outside. Leave fault and abort dispositions alone,
+	// especially the sanitizer handlers that report runtime bugs with a stack. SIGKILL cannot
+	// be caught; SIGPIPE and SIGXFSZ are ignored above. Optional names stay guarded.
 	const int fatal[] = {
-		SIGQUIT, SIGILL, SIGTRAP, SIGABRT, SIGBUS, SIGFPE, SIGSEGV, SIGUSR1, SIGUSR2,
+		SIGQUIT, SIGUSR1, SIGUSR2,
 		SIGALRM, SIGXCPU, SIGVTALRM, SIGPROF,
-#ifdef SIGSYS
-		SIGSYS,
-#endif
 #ifdef SIGIO
 		SIGIO,
 #endif
 #ifdef SIGPWR
 		SIGPWR,
-#endif
-#ifdef SIGSTKFLT
-		SIGSTKFLT,
-#endif
-#ifdef SIGEMT
-		SIGEMT,
 #endif
 	};
 	for (size_t index = 0; index < sizeof fatal / sizeof fatal[0]; index++) {

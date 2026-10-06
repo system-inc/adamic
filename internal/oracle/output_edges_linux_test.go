@@ -3,6 +3,7 @@
 package oracle
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"path/filepath"
@@ -100,4 +101,32 @@ func TestRealtimeSignalsLeaveWhatWasPrinted(t *testing.T) {
 			}
 		})
 	}
+}
+
+// UBSan's null-store check would exit before the hardware fault. Disable that check only in
+// crash, leaving ASan enabled, so this tests the sanitizer's SIGSEGV handler after startup.
+func TestStartupPreservesSanitizerSegvReport(t *testing.T) {
+	t.Parallel()
+	binary := filepath.Join(t.TempDir(), "fault")
+	source := `
+#include "adamic.h"
+__attribute__((no_sanitize("undefined"), noinline))
+static void crash(volatile int *pointer) {
+ *pointer = 1;
+}
+int main(int argc, char **argv) {
+ adamic_start(argc, argv);
+ crash(NULL);
+ return 0;
+}
+`
+	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	report := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0:handle_segv=1"}, binary)
+	if report.exitCode == 0 || !bytes.Contains(report.stderr, []byte("ERROR: AddressSanitizer: SEGV")) ||
+		!bytes.Contains(report.stderr, []byte("#0")) || !bytes.Contains(report.stderr, []byte("crash")) {
+		t.Fatalf("want sanitizer SEGV report with crash stack after adamic_start: exit %d, stderr %s", report.exitCode, report.stderr)
+	}
+	t.Logf("sanitizer report: exit %d\n%s", report.exitCode, report.stderr)
 }
