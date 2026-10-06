@@ -396,9 +396,6 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if _, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
 			return nil, l.notYet(node, "a generic function as a value")
 		}
-		if !isLocal && l.isLibraryGlobal(node, "String") {
-			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
-		}
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
