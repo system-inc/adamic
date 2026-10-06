@@ -111,3 +111,10 @@ but the throughput count check catches the wrong count on Node and native.
 `ADAMIC_LINT_BENCH=1`. Set `ADAMIC_TYPESCRIPT_SOURCE` to the pinned checkout.
 See [REPORT.md](REPORT.md) for commands, results and measurement limits, and
 [GAPS.md](GAPS.md) for the proving program and inherited representation gaps.
+
+Performance follow-up: [PERFORMANCE.md](PERFORMANCE.md) records Callgrind cost
+attribution and port changes. `TestProfileArtifacts` saves reproducible snapshots
+when `ADAMIC_LINT_PROFILE_DIR` is set; `TestProfileSnapshotsAgree` checks release,
+debug and Node snapshots when `ADAMIC_LINT_PROFILE_SNAPSHOTS` lists directories.
+`profile.py` measures five interleaved count-mode rounds and checks deterministic
+instruction accounting. `TestCommentFoldMutant` covers scalar case folding.

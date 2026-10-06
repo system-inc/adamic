@@ -1514,16 +1514,12 @@ const folds = new Map<number, number>([
     [125250, 125216],
     [125251, 125217],
 ]);
-export function fold(text: string): string {
-    let result = '';
-    for(let index = 0; index < text.length; index++) {
-        const point = text.codePointAt(index) ?? 0;
-        result += String.fromCodePoint(folds.get(point) ?? point);
-        if(point > 65535) {
-            index++;
-        }
+// ASCII case folding needs no table lookup; other scalars retain Go's cycles.
+export function foldPoint(point: number): number {
+    if(point < 128) {
+        return point >= 97 && point <= 122 ? point - 32 : point;
     }
-    return result;
+    return folds.get(point) ?? point;
 }
 const unprintable: number[] = [
     0, 31, 127, 160, 173, 173, 888, 889, 896, 899, 907, 907, 909, 909, 930, 930, 1328, 1328, 1367, 1368, 1419, 1420,
