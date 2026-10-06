@@ -120,6 +120,17 @@ The new position mutant clears anchor zero after collecting anchors; both Node
 and native lose the first TODO finding at case 100, line 2068. It compiled and
 executed successfully. Cohere, vet and the filtered one-byte core oracle pass.
 
+3. Initialize constant boolean masks with `new Array<boolean>(length).fill(false)`
+   rather than `Array.from` callbacks. Saves 582,826,634 Ir (2.78%) and 154 closure
+   allocations. Native best timing regresses 3.37%, from 2.002988s to 2.070502s;
+   this timing does not support a native speedup. Node improves 1.501 times,
+   from 4,203.20 to 6,309.38 findings/s, reversing its initialization regression.
+   Retained because deterministic native work decreases and Node improves.
+   Load before `0.42 0.63 0.66`, after `0.51 0.64 0.66`. Full sanitized parity:
+   578,745 fixture bytes and 15,550,195 corpus bytes. Release/debug/Node snapshot
+   parity: 16,140,904 bytes. Cohere passes. Memory-domain representation remains
+   the same; fill does not remove the position arrays' larger memory cost.
+
 ## Proposed compiler and runtime units
 
 - Numeric Map/Set hash distribution: use an avalanche with adequate low-bit
@@ -165,6 +176,7 @@ VALGRIND_LIB=/workspace/scratch/scanner-perf/valgrind/usr/libexec/valgrind pytho
 | 1-scalar-comments | 2,941.27 | 16,456.40 | 5,702.12 | 30,937,912,937 | 3,766,027.14 |
 | 2-position-arrays | 4,018.26 | 16,606.44 | 4,083.68 | 20,940,946,893 | 2,549,111.00 |
 | 2b-position-arrays | 4,101.37 | 17,098.74 | 4,203.20 | 20,970,336,919 | 2,552,688.61 |
+| 3-filled-masks | 3,967.64 | 16,847.92 | 6,309.38 | 20,387,510,285 | 2,481,741.97 |
 
 Scalar comparison removes 7,621,599,012 Ir (19.77%), 1,766,845 logical allocations, and improves native throughput 1.175 times. Load before `0.67 0.73 0.46`, after `0.79 0.75 0.48`. Full sanitized parity: 577,682 fixture bytes plus 15,548,752 source-corpus bytes, 16,126,434 total. Cohere passes the changed source.
 
