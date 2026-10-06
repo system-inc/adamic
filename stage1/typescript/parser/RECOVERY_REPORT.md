@@ -364,3 +364,12 @@ recovery shares Go's identifier-expression diagnostic. Focused comparison
 passes in 23.829s and cohere passes. The wider continuation advances to
 input 598: Go suggests 'set Parent' for a duplicated setParent identifier,
 requiring its keyword spelling/spacing suggestion algorithm.
+
+## Continued recovery: keyword spelling and spacing
+
+Identifier-expression diagnostics use Go's weighted edit distance, candidate
+length limits and lexical tie breaker, then its keyword-prefix spacing
+suggestion. Unicode case probes use scalar characters. Focused comparison
+passes in 23.029s and cohere passes. All remaining binder.ts edits pass in
+the continuation, which checks 102 inputs before reaching input 699 in
+builder.ts: an indexed type cut after its bracket is recovered as an ArrayType.

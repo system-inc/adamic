@@ -3,6 +3,7 @@ import { panic } from 'adamic';
 import type { Scanner } from '../scanner/scanner.ts';
 import type { ParseNode } from './nodes.ts';
 import { reservedKinds } from './grammar.ts';
+import { keywordSuggestion } from './spelling.ts';
 
 export interface StatementContextInterface {
     readonly scanner: Scanner;
@@ -110,7 +111,18 @@ export class Statements {
             this.parser.kind() !== 'EndOfFile' &&
             (this.parser.scanner.flags & 1) === 0
         ) {
-            this.parser.errorAt(1434, tokenStart, node.end, 'Unexpected keyword or identifier.');
+            const suggestion = keywordSuggestion(node.text);
+            if(suggestion !== '') {
+                this.parser.errorAt(
+                    1435,
+                    tokenStart,
+                    node.end,
+                    `Unknown keyword or identifier. Did you mean '${suggestion}'?`,
+                );
+            }
+            else {
+                this.parser.errorAt(1434, tokenStart, node.end, 'Unexpected keyword or identifier.');
+            }
         }
         else {
             this.semicolon();
