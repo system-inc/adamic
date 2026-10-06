@@ -29,7 +29,7 @@ func supportedExpression(node *estree.Node) bool {
 	switch node.Type() {
 	case "Identifier", "PrivateIdentifier", "Literal", "ThisExpression", "Super":
 		return true
-	case "ConditionalExpression", "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
+	case "ObjectExpression", "Property", "ConditionalExpression", "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
 	case "TemplateLiteral":
 		return len(node.List("expressions")) == 0
 	case "CallExpression", "NewExpression":
@@ -37,7 +37,7 @@ func supportedExpression(node *estree.Node) bool {
 			return false
 		}
 		for _, arg := range node.List("arguments") {
-			if arg.Is("ArrayExpression") {
+			if arg.Is("ArrayExpression", "ObjectExpression") {
 				return false
 			}
 		}
@@ -85,6 +85,10 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 			if node.Parent != nil && ast.IsExpressionNode(node) {
 				start := scanner.GetTokenPosOfNode(node, fileTree, false)
 				fragment := source[start:node.End()]
+				// An object literal extracted from an initializer/return needs its expression context.
+				if node.Kind == ast.KindObjectLiteralExpression {
+					fragment = "(" + fragment + ")"
+				}
 				if node.Kind != ast.KindSpreadElement && node.Kind != ast.KindOmittedExpression && node.Kind != ast.KindPrivateIdentifier && supportedSyntax(node) && coreBoundaries(node, source) && !strings.Contains(fragment, "/*") && !strings.Contains(fragment, "//") && !hasBlankLine(fragment) && !strings.Contains(fragment, "\r") && !(node.Kind == ast.KindNoSubstitutionTemplateLiteral && strings.Contains(fragment, "\n")) {
 					// Property names and other context-only identifiers may not be valid
 					// standalone expression statements (for example, obj.delete).
@@ -120,6 +124,26 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 	for _, value := range []string{"f?.()", "f?.(x)", "f()", "f(veryLongIdentifierAlpha)", "obj?.x", "obj!.x", "!!x", "++x"} {
 		for _, right := range []string{"g(" + value + ")", "g(" + value + ").x"} {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
+		}
+	}
+	objectValues := []string{"x?.y", "x", "'text'", "a+b+c", "a?b:c", "a??b", "[1,2]", "({nested:1})", "f(x)", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma"}
+	objectKeys := []string{"x", "longPropertyNameAlphaLongPropertyNameBeta", "'x'", "'with space'", "'é'", "'\\u0061'", "0xAF", "[a+b]", "[a?b:c]"}
+	for _, key := range objectKeys {
+		for _, value := range objectValues {
+			for _, object := range []string{"{" + key + ":" + value + "}", "{\n" + key + ":" + value + ",\nother:x\n}", "{...source," + key + ":" + value + ",shorthand}"} {
+				for _, source := range []string{"(" + object + ")", "[" + object + "]", "x=" + object, "(" + object + ").x", "a?" + object + ":fallback", "(" + object + ")+x"} {
+					add("object-composition", source)
+				}
+			}
+		}
+	}
+	for length := 1; length <= 30; length++ {
+		properties := []string{}
+		for index := 0; index < length; index++ {
+			properties = append(properties, fmt.Sprintf("property%d: value%d", index, index))
+		}
+		for _, source := range []string{"({" + strings.Join(properties, ",") + "})", "({\n" + strings.Join(properties, ",\n") + "\n})"} {
+			add("object-width", source)
 		}
 	}
 	conditionalParts := []string{"a", "a+b+c", "a||b||c", "a&&[1,2]", "[1,2]", "f(x)", "obj.x", "(a=b)", "(a,b)", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma + veryLongIdentifierDelta"}
@@ -314,7 +338,7 @@ func hasOptionalSyntax(node *ast.Node) bool {
 
 // Literal continuation and multiline-template layout is outside the expression core.
 func coreBoundaries(node *ast.Node, source string) bool {
-	if node.Kind == ast.KindParenthesizedExpression && hasOptionalSyntax(node) {
+	if node.Kind == ast.KindParenthesizedExpression && node.Expression().Kind != ast.KindObjectLiteralExpression && hasOptionalSyntax(node) {
 		return false
 	}
 	if node.Kind == ast.KindStringLiteral || node.Kind == ast.KindNoSubstitutionTemplateLiteral {
@@ -339,6 +363,17 @@ func supportedSyntax(node *ast.Node) bool {
 	switch node.Kind {
 	case ast.KindIdentifier, ast.KindPrivateIdentifier, ast.KindNumericLiteral, ast.KindBigIntLiteral, ast.KindStringLiteral, ast.KindRegularExpressionLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindThisKeyword, ast.KindSuperKeyword, ast.KindNullKeyword, ast.KindTrueKeyword, ast.KindFalseKeyword, ast.KindOmittedExpression:
 		return true
+	case ast.KindObjectLiteralExpression, ast.KindPropertyAssignment, ast.KindComputedPropertyName, ast.KindSpreadAssignment:
+		valid := true
+		node.ForEachChild(func(child *ast.Node) bool {
+			if !supportedSyntax(child) {
+				valid = false
+			}
+			return false
+		})
+		return valid
+	case ast.KindShorthandPropertyAssignment:
+		return node.AsShorthandPropertyAssignment().ObjectAssignmentInitializer == nil
 	case ast.KindConditionalExpression:
 		item := node.AsConditionalExpression()
 		return supportedSyntax(item.Condition) && supportedSyntax(item.WhenTrue) && supportedSyntax(item.WhenFalse)
@@ -378,7 +413,7 @@ func supportedSyntax(node *ast.Node) bool {
 			return false
 		}
 		for _, child := range node.Arguments() {
-			if child.Kind == ast.KindArrayLiteralExpression || !supportedSyntax(child) {
+			if child.Kind == ast.KindArrayLiteralExpression || child.Kind == ast.KindObjectLiteralExpression || !supportedSyntax(child) {
 				return false
 			}
 		}

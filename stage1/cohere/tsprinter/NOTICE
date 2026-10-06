@@ -10,3 +10,6 @@ Their notices and Unicode's notice are reproduced in licenses/.
 
 The parser imported by this port is the existing Adamic TypeScript parser;
 its separate Microsoft/Apache notice is in stage1/typescript/parser/NOTICE.
+
+Object key ranges are generated from Go 1.27.1 Unicode category tables.
+The Unicode notice is included in licenses/unicode.txt.

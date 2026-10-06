@@ -4,10 +4,6 @@
     "Reason": "ArrowFunction"
   },
   {
-    "Source": "({x:1})",
-    "Reason": "ObjectLiteralExpression"
-  },
-  {
     "Source": "`a${b}`",
     "Reason": "TemplateExpression"
   },
@@ -62,5 +58,9 @@
   {
     "Source": "[a,b]=items",
     "Reason": "assignment-pattern"
+  },
+  {
+    "Source": "({method(){return 1;}})",
+    "Reason": "MethodDeclaration"
   }
 ]

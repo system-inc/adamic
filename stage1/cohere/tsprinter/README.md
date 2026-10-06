@@ -14,7 +14,7 @@ Unknown doc kinds and forward or cyclic edges panic. `width.ts` and `widthTables
 proven JSON slice's Unicode width implementation, copied from `origin/codex/stage1-json-format`.
 
 `expressions.ts` reads the real parser's indexed nodes. It implements literals, ordinary and logical
-binary operators, sequence expressions, assignments, conditionals, precedence and parentheses, unary and update operators, arrays including holes
+binary operators, sequence expressions, assignments, conditionals, object literals, precedence and parentheses, unary and update operators, arrays including holes
 and spreads, property and computed accesses including optional access, non-null assertions, and
 plain-identifier calls and constructors without type arguments or expanded array arguments. It
 includes cohere's logical-tree rebalancing and protection against accidentally making a string
@@ -109,3 +109,11 @@ and alternate chains, member receivers, assignments and nullish branches. The co
 generated combinations and nesting cases up to 20 levels. Flattened binary printing preserves its
 ancestor stack so nested ternaries receive the same grouping as Go. Counts and execution evidence
 are recorded in VALIDATION.md and `results/conditional-coverage.json`.
+
+## Object expression increment
+
+Object values, shorthand properties, computed keys and spreads compose with the existing core.
+Object wrapping preserves a newline after the opening brace; arrays of multi-property objects
+follow cohere's forced-break rule. String keys use cohere's Unicode-category identifier test and
+retain escaped spellings when unquoting is unsafe. Methods and destructuring are explicit gaps.
+Extracted object literals are parenthesized to retain expression context in the fragment oracle.

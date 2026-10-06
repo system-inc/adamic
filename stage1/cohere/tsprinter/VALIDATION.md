@@ -340,3 +340,45 @@ Final ternary gate (exit 0, 392.433 s): 150,832 fragments byte-identical to Go c
 Prettier 3.9.6 and cohere's actual embedded fork; source Node, native ASan/UBSan, JavaScript backend,
 leak detection and native release all pass. Sixteen remaining proving inputs return their exact
 NotYet reasons on every execution. This gate does not cover arbitrary complete source files.
+
+## Object value increment
+
+Object literals compose with the accepted core through properties, shorthand values, computed
+keys and spreads. The port uses Go's property assignment strategies and its short-key exception,
+source-driven object wrapping and forced wrapping for homogeneous arrays of multi-item objects.
+Its ES5 key-name predicate uses Go's Unicode categories directly, not TypeScript's different
+identifier tables. Escaped spellings stay quoted when their printed text differs from the value.
+
+The generator adds 1,680 object cases: nine keys by ten values by three source layouts by six
+contexts, plus 60 growing-width cases. The final corpus has 152,387 maximal fragments from 198
+files, no parse refusals. An extracted root object is explicitly parenthesized in the independent
+Go selector; otherwise it would become a statement block when parsed outside its original return
+or initializer context. No fragment is excluded for a formatting disagreement. Optional values
+inside an object are accepted; the object itself cannot continue an optional chain. Methods and
+expanded object arguments remain loud gaps. Source-only cohere: 276 rules, 9 checked, 100%
+Adamic-ready; vet and whitespace checks pass.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-object-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-object-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-object-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/object' > /tmp/ts-printer-object-mutant.log 2>&1
+```
+
+The property mutant removes the sole property-colon doc. It compiled and ran normally with
+empty stderr and exit 0 on native and Node; both differ at case 251: `({ left undefined, right
+undefined });` instead of `({ left: undefined, right: undefined });`. Subtest 260.74 s, total
+265.928 s. Its 152,220-case corpus preceded the object-spread parentheses correction and the
+167 additional optional-value/boundary fragments; those later changes do not affect its proving
+input or the colon printer. The current unmutated source agrees with Go on that input.
+
+Final object gate: exit 0, 403.666 s; all 152,387 fragments byte-identical to Go, npm Prettier
+3.9.6 and the embedded fork on source Node, native ASan/UBSan, JS backend and native release.
+The separate leak check passes. Sixteen unported proving inputs retain their exact NotYet reasons.

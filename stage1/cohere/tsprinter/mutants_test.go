@@ -10,6 +10,7 @@ import (
 type mutation struct{ name, file, from, to, entry string }
 
 var mutations = []mutation{
+	{"object loses its property colon", "expressions.ts", "this.docs.text(':')", "this.docs.text('')", "main.ts"},
 	{"conditional swaps its separator", "expressions.ts", "this.docs.text('? ')", "this.docs.text(': ')", "main.ts"},
 	{"assignment loses its operator", "expressions.ts", "this.docs.text(` ${this.operator(index)}`)", "this.docs.text(' ')", "main.ts"},
 	{"sequence loses a comma", "expressions.ts", "parts.push(this.docs.text(','));", "parts.push(this.docs.text(''));", "main.ts"},

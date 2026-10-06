@@ -4,6 +4,8 @@ import { Parser } from '../../typescript/parser/parser.ts';
 import { ParseNode } from '../../typescript/parser/nodes.ts';
 import { Documents, type SettingsOptions } from './doc.ts';
 import { numberText, stringText } from './literals.ts';
+import { isKeyName } from './keys.ts';
+import { stringWidth } from './width.ts';
 export type ResultType =
     { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'NotYet'; readonly reason: string };
 const assignmentOperators: readonly string[] = [
@@ -153,7 +155,11 @@ export class Expressions {
         return false;
     }
     unsupported(index: number): string {
-        if(this.node(index).kind === 'ParenthesizedExpression' && this.hasOptional(index))
+        if(
+            this.node(index).kind === 'ParenthesizedExpression' &&
+            this.node(this.unwrapped(index)).kind !== 'ObjectLiteralExpression' &&
+            this.hasOptional(index)
+        )
             return 'optional-chain-parentheses';
         const id = this.unwrapped(index);
         const node = this.node(id);
@@ -181,8 +187,15 @@ export class Expressions {
             case 'VoidExpression':
             case 'TypeOfExpression':
             case 'ArrayLiteralExpression':
+            case 'ObjectLiteralExpression':
+            case 'PropertyAssignment':
+            case 'SpreadAssignment':
+            case 'ComputedPropertyName':
             case 'SpreadElement':
             case 'NonNullExpression':
+                break;
+            case 'ShorthandPropertyAssignment':
+                if(node.children.length !== 1) return 'object-pattern';
                 break;
             case 'ConditionalExpression': {
                 for(const offset of [0, 2, 4]) {
@@ -229,7 +242,8 @@ export class Expressions {
                     return 'type-arguments';
                 for(let position = first; position < node.children.length; position++) {
                     const arg = this.node(this.child(id, position));
-                    if(arg.kind === 'ArrayLiteralExpression') return 'expanded-call-argument';
+                    if(['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(arg.kind))
+                        return 'expanded-call-argument';
                     const reason = this.unsupported(node.children[position] ?? panic('missing argument'));
                     if(reason !== '') return reason;
                 }
@@ -273,8 +287,9 @@ export class Expressions {
         return this.normalize(id);
     }
     parenthesize(index: number, parent: number, role: string): boolean {
-        if(parent < 0) return false;
         const node = this.node(index);
+        if(node.kind === 'ObjectLiteralExpression') return this.leftmost(this.ancestors[0] ?? index) === index;
+        if(parent < 0) return false;
         const outer = this.node(parent);
         if(node.kind === 'NumericLiteral')
             return role === 'object' && ['PropertyAccessExpression', 'ElementAccessExpression'].includes(outer.kind);
@@ -319,6 +334,7 @@ export class Expressions {
                     'TypeOfExpression',
                     'NonNullExpression',
                     'SpreadElement',
+                    'SpreadAssignment',
                 ].includes(outer.kind)
             );
         if(node.kind === 'BinaryExpression') {
@@ -347,10 +363,69 @@ export class Expressions {
                     'TypeOfExpression',
                     'NonNullExpression',
                     'SpreadElement',
+                    'SpreadAssignment',
                 ].includes(outer.kind)
             );
         }
         return false;
+    }
+    leftmost(index: number): number {
+        const node = this.node(index);
+        if(
+            [
+                'BinaryExpression',
+                'ConditionalExpression',
+                'PropertyAccessExpression',
+                'ElementAccessExpression',
+                'NonNullExpression',
+                'PostfixUnaryExpression',
+                'CallExpression',
+                'TaggedTemplateExpression',
+            ].includes(node.kind)
+        )
+            return this.leftmost(this.child(index, 0));
+        return index;
+    }
+    objectDoc(index: number): number {
+        const node = this.node(index);
+        if(node.children.length === 0) return this.docs.group(this.docs.text('{}'));
+        const properties: number[] = [];
+        for(const child of node.children) properties.push(this.print(child, index, 'properties'));
+        const content = this.docs.concat([
+            this.docs.text('{'),
+            this.docs.indent(
+                this.docs.concat([
+                    this.docs.line(),
+                    this.docs.join(this.docs.concat([this.docs.text(','), this.docs.line()]), properties),
+                ]),
+            ),
+            this.docs.ifBreak(this.docs.text(','), this.docs.text('')),
+            this.docs.line(),
+            this.docs.text('}'),
+        ]);
+        const first = this.node(node.children[0] ?? panic('missing object property'));
+        const opening = this.source.indexOf('{', node.pos);
+        const prefix = this.source.slice(opening + 1, first.pos);
+        // The parser's first property position includes leading whitespace.
+        const firstRaw = this.source.slice(first.pos, first.end);
+        const start = firstRaw.length - firstRaw.trimStart().length;
+        const leading = prefix + firstRaw.slice(0, start);
+        return this.docs.group(content, '', leading.includes('\n'));
+    }
+    propertyKey(index: number): number {
+        const keyIndex = this.child(index, 0);
+        const key = this.node(keyIndex);
+        if(key.kind === 'ComputedPropertyName')
+            return this.docs.concat([
+                this.docs.text('['),
+                this.print(this.child(keyIndex, 0), keyIndex, 'expression'),
+                this.docs.text(']'),
+            ]);
+        if(key.kind === 'StringLiteral') {
+            const printed = stringText(this.source.slice(key.pos, key.end).trim(), false);
+            if(printed.slice(1, -1) === key.text && isKeyName(key.text)) return this.docs.text(key.text);
+        }
+        return this.print(keyIndex, index, 'key');
     }
     conditionalDoc(index: number, parent: number, role: string): number {
         const outer = parent < 0 ? '' : this.node(parent).kind;
@@ -440,7 +515,7 @@ export class Expressions {
         return (
             this.node(index).kind === 'BinaryExpression' &&
             ['&&', '||', '??'].includes(this.operator(index)) &&
-            this.node(this.child(index, 2)).kind === 'ArrayLiteralExpression' &&
+            ['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(this.node(this.child(index, 2)).kind) &&
             this.node(this.child(index, 2)).children.length > 0
         );
     }
@@ -502,7 +577,7 @@ export class Expressions {
         }
         return deep && (node.kind === 'Identifier' || node.kind === 'ThisKeyword');
     }
-    breakAfterOperator(index: number): boolean {
+    breakAfterOperator(index: number, shortKey = false): boolean {
         const node = this.node(index);
         if(node.kind === 'BinaryExpression' && !this.isAssignment(index) && !this.inlineLogical(index)) return true;
         if(node.kind === 'ConditionalExpression') {
@@ -514,6 +589,7 @@ export class Expressions {
             )
                 return true;
         }
+        if(shortKey) return false;
         let current = index;
         while(
             [
@@ -529,11 +605,27 @@ export class Expressions {
         return this.node(current).kind === 'StringLiteral' || this.poorlyBreakable(current);
     }
     assignmentDoc(index: number, parent: number, left: number, right: number): number {
-        const rightIndex = this.child(index, 2);
+        return this.valueDoc(
+            index,
+            parent,
+            left,
+            right,
+            this.child(index, 2),
+            this.docs.text(` ${this.operator(index)}`),
+        );
+    }
+    valueDoc(
+        index: number,
+        parent: number,
+        left: number,
+        right: number,
+        rightIndex: number,
+        operator: number,
+        shortKey = false,
+    ): number {
         const tail = !this.isAssignment(rightIndex);
         const ancestor = this.ancestors[this.ancestors.length - 3] ?? -1;
         const chain = this.isAssignment(parent) && (!tail || ancestor >= 0);
-        const operator = this.docs.text(` ${this.operator(index)}`);
         if(chain)
             return this.docs.concat([
                 this.docs.group(left),
@@ -547,7 +639,7 @@ export class Expressions {
             rightNode.kind === 'CallExpression' && this.node(this.child(rightIndex, 0)).text === 'require';
         if(requireCall)
             return this.docs.group(this.docs.concat([this.docs.group(left), operator, this.docs.text(' '), right]));
-        if((!tail && this.isAssignment(this.child(rightIndex, 2))) || this.breakAfterOperator(rightIndex))
+        if((!tail && this.isAssignment(this.child(rightIndex, 2))) || this.breakAfterOperator(rightIndex, shortKey))
             return this.docs.group(
                 this.docs.concat([
                     this.docs.group(left),
@@ -557,7 +649,10 @@ export class Expressions {
             );
         if(
             !this.canBreak(left) &&
-            ['TrueKeyword', 'FalseKeyword', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(rightNode.kind)
+            (shortKey ||
+                ['TrueKeyword', 'FalseKeyword', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(
+                    rightNode.kind,
+                ))
         )
             return this.docs.group(this.docs.concat([this.docs.group(left), operator, this.docs.text(' '), right]));
         const key = `assignment-${index}`;
@@ -597,7 +692,7 @@ export class Expressions {
         else parts.push(this.docs.group(this.print(left, index, 'left')));
         const inline =
             ['&&', '||', '??'].includes(operator) &&
-            this.node(right).kind === 'ArrayLiteralExpression' &&
+            ['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(this.node(right).kind) &&
             this.node(right).children.length > 0;
         let rightDoc = this.docs.concat([
             this.docs.text(operator),
@@ -686,6 +781,31 @@ export class Expressions {
             case 'SpreadElement':
                 result = this.docs.concat([this.docs.text('...'), this.print(this.child(id, 0), id, 'argument')]);
                 break;
+            case 'ObjectLiteralExpression':
+                result = this.objectDoc(id);
+                break;
+            case 'PropertyAssignment': {
+                const left = this.propertyKey(id);
+                const value = this.child(id, 1);
+                const keyDoc = this.docs.get(left);
+                const shortKey = keyDoc.kind === 'text' && stringWidth(keyDoc.text) < this.docs.settings.tabWidth + 3;
+                result = this.valueDoc(
+                    id,
+                    parent,
+                    left,
+                    this.print(value, id, 'value'),
+                    value,
+                    this.docs.text(':'),
+                    shortKey,
+                );
+                break;
+            }
+            case 'ShorthandPropertyAssignment':
+                result = this.print(this.child(id, 0), id, 'value');
+                break;
+            case 'SpreadAssignment':
+                result = this.docs.concat([this.docs.text('...'), this.print(this.child(id, 0), id, 'argument')]);
+                break;
             case 'ConditionalExpression':
                 result = this.conditionalDoc(id, parent, role);
                 break;
@@ -737,7 +857,9 @@ export class Expressions {
                 else {
                     const inline =
                         ['&&', '||', '??'].includes(this.operator(id)) &&
-                        this.node(this.child(id, 2)).kind === 'ArrayLiteralExpression' &&
+                        ['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(
+                            this.node(this.child(id, 2)).kind,
+                        ) &&
                         this.node(this.child(id, 2)).children.length > 0;
                     const coercion =
                         role === 'arguments' &&
@@ -749,6 +871,7 @@ export class Expressions {
                         inline ||
                         coercion ||
                         this.isAssignment(parent) ||
+                        outer === 'PropertyAssignment' ||
                         (outer === 'ConditionalExpression' &&
                             (this.ancestors.length < 3 ||
                                 !['CallExpression', 'NewExpression', 'ReturnStatement', 'ThrowStatement'].includes(
@@ -780,7 +903,12 @@ export class Expressions {
                         )
                     )
                         numeric = false;
-                    if(item.kind !== 'ArrayLiteralExpression' || item.children.length <= 1) nested = false;
+                    if(
+                        !['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(item.kind) ||
+                        item.children.length <= 1 ||
+                        item.kind !== this.node(this.child(id, 0)).kind
+                    )
+                        nested = false;
                     printed.push(this.print(child, id, 'elements'));
                 }
                 if(printed.length === 0) {

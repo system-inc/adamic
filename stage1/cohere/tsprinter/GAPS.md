@@ -1,6 +1,6 @@
 # TypeScript printer gaps
 
-Status: **partly ported**. The shared document engine, expression core, sequence expressions, assignments and conditionals are held to Go cohere and
+Status: **partly ported**. The shared document engine, expression core, sequence expressions, assignments, conditionals and object values are held to Go cohere and
 Prettier 3.9.6. This is not a claim to port all of `internal/format/javascript`, or to format whole
 TypeScript compiler files yet. The composition uses the existing indexed TypeScript parser without
 editing it, the compiler or the runtime.
@@ -14,7 +14,7 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | Input | Reason | Work still needed |
 |---|---|---|
 | `x => x + 1` | `ArrowFunction` | Parameter and arrow-chain layout; block bodies need statements |
-| `({x:1})` | `ObjectLiteralExpression` | Properties, methods, comments and object wrapping |
+| `({method(){return 1;}})` | `MethodDeclaration` | Method parameters and statement bodies |
 | `[a,b]=items` | `assignment-pattern` | Destructuring target patterns and their assignment layout |
 | `` `a${b}` `` | `TemplateExpression` | Substitution alignment, multiline strings and embeds |
 | `(function () {return 1;})` | `FunctionExpression` | Function parameters and statement bodies |
@@ -137,3 +137,16 @@ parentheses and align their broken branches; alternate chains share the outer gr
 coalescing branches keep the parentheses required by Go's printer. Generated proving inputs cover
 all three nesting positions and composition with assignments, sequences, calls and member access.
 This family introduces no new stage-0 gap.
+
+## Object family
+
+Property values, shorthand properties, computed names and object spreads are implemented. The
+property value uses cohere's assignment strategies, including the short-key exception. Numeric
+keys stay numeric in TypeScript, and escaped string keys stay quoted when the printed spelling
+does not equal the decoded value. Unicode key tables come directly from Go's letter, letter-number,
+digit, mark and connector categories; `testdata/generate_keys.go` regenerates them.
+
+Parentheses enclosing an object literal can contain optional property values: the object itself
+cannot be an optional chain. Parentheses around a chain still return the recorded stopping-boundary
+gap. Object methods, accessors and binding/assignment patterns remain unported. No code is passed
+through unchanged.
