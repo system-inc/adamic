@@ -248,6 +248,13 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 				}
 				positions[j] = value;
 			}
+			// A class is a set: equal endpoints are one alternative, including strings
+			// equal after Canonicalize. Repeating duplicate choices is exponential.
+			size_t unique = 0;
+			for (size_t k = 0; k < count; k++)
+				if (unique == 0 || positions[k] != positions[unique - 1])
+					positions[unique++] = positions[k];
+			count = unique;
 			if (count == 0)
 				failed = true;
 			else {
