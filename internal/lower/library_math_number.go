@@ -50,6 +50,9 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 	if _, missing := value.(ir.Undefined); missing {
 		return ir.NumberConstant{Value: math.NaN()}, nil
 	}
+	if value.Type() == ir.String && l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		return ir.DateCall{Method: "nullableNumber", Receiver: value, Returns: ir.Number}, nil
+	}
 	switch value.Type() {
 	case ir.Number:
 		return value, nil

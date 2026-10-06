@@ -1,5 +1,7 @@
 # Deterministic Date library slice
 
+This is the historical first-pass report. See [finish-report.md](finish-report.md) for completed toJSON and dynamic parsing.
+
 Branch `codex/library-date`, from current origin/main `5d4c801`.
 `git fetch origin` and `git checkout -b codex/library-date origin/main` completed.
 The runner branch was fetched and merged before measurement:

@@ -42,6 +42,12 @@ func (e *emitter) dateCall(call ir.DateCall) string {
 	case "toString", "toUTCString", "toDateString", "toTimeString":
 		style := map[string]int{"toString": 0, "toUTCString": 1, "toDateString": 2, "toTimeString": 3}[call.Method]
 		code = fmt.Sprintf("adamic_date_format(%s, %d)", receiver, style)
+	case "toJSON":
+		code = "adamic_date_json(" + receiver + ")"
+	case "nullableTypeOf":
+		code = "(" + receiver + " == NULL ? &adamic_typeof_object : &adamic_typeof_string)"
+	case "nullableNumber":
+		code = "(" + receiver + " == NULL ? 0.0 : adamic_number_from_string(" + receiver + "))"
 	case "toISOString":
 		code = "adamic_date_iso(" + receiver + ")"
 	default:

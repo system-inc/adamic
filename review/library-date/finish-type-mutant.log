@@ -1,0 +1,8 @@
+=== RUN   TestDateJSONRequiresNullHandling
+=== PAUSE TestDateJSONRequiresNullHandling
+=== CONT  TestDateJSONRequiresNullHandling
+    library_date_test.go:7: Load: want a CheckError, got <nil>
+--- FAIL: TestDateJSONRequiresNullHandling (0.49s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.566s
+FAIL
