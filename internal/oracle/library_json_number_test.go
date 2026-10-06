@@ -18,7 +18,7 @@ func TestLibraryJSONGenericInstantiations(t *testing.T) {
 		{"library_json_generic_shared.a", "3\n[1,2]\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.file))
+			path, err := filepath.Abs(filepath.Join(repository, "docs/library-json-number/probes", probe.file))
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -2,7 +2,8 @@
 
 ## 1. Generic bodies
 
-The supplied A and B are preserved in `library_json_generic.a` and
+The supplied A and B are preserved under `docs/library-json-number/probes/` in
+`library_json_generic.a` and
 `library_json_generic_shared.a`. Node prints `"xx"` then `[1,2]` for A,
 and `3` then `[1,2]` for B. Both now receive a compile-time NotYet naming
 per-instantiation container metadata. JSON types are resolved with `l.concrete`.
@@ -56,3 +57,9 @@ a lowering guard. No runtime behavior changed.
 The uncached focused suite passed all eleven stringify fixtures, both generic
 probes and all six remaining refusal probes (1.713s). The six refusal probes
 and two generic probes also passed with their own root filter (0.315s).
+
+The first full Linux gate caught a fixture-location error: flow tests glob all
+root oracle fixtures as compilable programs. The two deliberately refused
+generic probes now live under this unit's docs, and their dedicated test still
+compares Node output and requires the compile-time refusal. No flow test was
+changed or weakened.
