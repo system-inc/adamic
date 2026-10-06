@@ -37,6 +37,14 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/library_date_format.a", true, false},
+	{"internal/oracle/testdata/library_date_construct.a", true, false},
+	{"internal/oracle/testdata/library_date_utc.a", true, false},
+	{"internal/oracle/testdata/library_date_get.a", true, false},
+	{"internal/oracle/testdata/library_date_set.a", true, false},
+	{"internal/oracle/testdata/library_date_iso.a", true, false},
+	{"internal/oracle/testdata/library_date_parse.a", true, false},
+	{"internal/oracle/testdata/library_date_invalid_iso.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},
@@ -359,8 +367,9 @@ func execute(t *testing.T, name string, arguments ...string) run {
 func executeWith(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
 	command := bounded(t, name, arguments...)
+	command.Env = append(os.Environ(), "TZ=UTC")
 	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
+		command.Env = append(command.Env, environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout

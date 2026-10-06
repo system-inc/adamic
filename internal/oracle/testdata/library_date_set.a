@@ -1,0 +1,34 @@
+for (const time of [-8640000000000000, -1, 0, 951782400123, 8640000000000000, NaN]) {
+ const date = new Date(time);
+ console.log(`${date.setUTCFullYear(-1, -13, 32)} ${date.getTime()}`);
+ console.log(`${date.setUTCMonth(13, 0)} ${date.getTime()}`);
+ console.log(`${date.setUTCDate(-1.9)} ${date.getTime()}`);
+ console.log(`${date.setUTCHours(25, -60, 61, -1)} ${date.getTime()}`);
+ console.log(`${date.setUTCMinutes(61, 61, 1001)} ${date.getTime()}`);
+ console.log(`${date.setUTCSeconds(-1, -1)} ${date.getTime()}`);
+ console.log(`${date.setUTCMilliseconds(-1.9)} ${date.getTime()}`);
+ console.log(`${date.setTime(-0)} ${1 / date.valueOf()}`);
+ console.log(`${date.setFullYear(99, -1, 0)}`);
+ console.log(`${date.setMonth(12, 0)}`);
+ console.log(`${date.setDate(32)}`);
+ console.log(`${date.setHours(-1, 61, -1, 999)}`);
+ console.log(`${date.setMinutes(-1, -1, -1)}`);
+ console.log(`${date.setSeconds(-1, 1000)}`);
+ console.log(`${date.setMilliseconds(NaN)}`);
+ console.log(`${date.setUTCMonth(0)}`);
+ console.log(`${date.setFullYear(2000)}`);
+}
+const ordered = new Date(0);
+console.log(`${ordered.setUTCSeconds(ordered.setTime(1234))} ${ordered.getTime()}`);
+
+function mutateLocal(): void {
+ const date = new Date(0);
+ date.setUTCDate(2);
+ console.log(`${date.getTime()}`);
+ date.setUTCHours(1);
+ console.log(`${date.getTime()}`);
+}
+mutateLocal();
+const bound = new Date(0);
+console.log(`${Date.prototype.setUTCFullYear.call(bound, 2000, 1, 29)} ${Date.prototype.getTime.call(bound)}`);
+console.log(Date.prototype.toISOString.call(bound));
