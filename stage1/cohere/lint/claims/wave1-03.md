@@ -28,3 +28,11 @@ branches. The available registration contract is docs/lint-registration.md.
 These rules are reserved by this claim but not implemented or certified.
 The foundation integration must be resolved before this unit can honestly
 provide the requested registered ports and byte-for-byte evidence.
+
+A second independently reproduced blocker: registry.Discover opens rule.ts,
+registry.Render emits imports to rule.ts, and mutant validation accepts only
+.ts modules. A temporary rule.a-only copy of the existing no-debugger rule
+fails generation with exit 1 and a missing rule.ts error. The copied-port
+harness also discovers only .ts files. Supporting .a rule modules requires
+shared registration and harness changes outside these three rule directories.
+See wave1-03-evidence/extension.log and merge.log for observed failures.
