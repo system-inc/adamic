@@ -7,6 +7,7 @@ import { modifierKinds, precedence, reservedKinds, tokenSpelling } from './gramm
 import { arrowAhead, statementAhead, typeArgumentsAhead, typeMemberAhead } from './lookahead.ts';
 import type { ParserStateInterface } from './lookahead.ts';
 import { listDiagnostic, listTerminator } from './recovery.ts';
+import { lexicalMessage } from './lexical.ts';
 
 interface ParseDiagnosticInterface {
     readonly code: number;
@@ -37,8 +38,15 @@ export class Parser {
     kind(): string {
         return this.scanner.kind;
     }
+    scannerErrors(start: number): void {
+        for(const error of this.scanner.errors.slice(start)) {
+            this.errorAt(error.code, error.start, error.start + error.length, lexicalMessage(error.code));
+        }
+    }
     next(): void {
+        const errors = this.scanner.errors.length;
         this.scanner.scan();
+        this.scannerErrors(errors);
     }
     readonly listContexts: string[] = [];
     beginList(context: string): void {
@@ -369,9 +377,12 @@ export class Parser {
             case 'NoSubstitutionTemplateLiteral':
                 return this.literal();
             case 'SlashToken':
-            case 'SlashEqualsToken':
+            case 'SlashEqualsToken': {
+                const errors = this.scanner.errors.length;
                 this.scanner.rescanSlash();
+                this.scannerErrors(errors);
                 return this.literal();
+            }
             case 'ThisKeyword':
             case 'SuperKeyword':
             case 'NullKeyword':
@@ -1419,6 +1430,7 @@ export class Parser {
         const kind = this.kind();
         const flags = this.scanner.flags;
         const errors = this.scanner.errors.length;
+        const diagnostics = this.diagnostics.length;
         this.next();
         const result = this.kind();
         this.scanner.pos = pos;
@@ -1428,6 +1440,7 @@ export class Parser {
         this.scanner.kind = kind;
         this.scanner.flags = flags;
         this.scanner.errors.splice(errors);
+        this.diagnostics.splice(diagnostics);
         return result;
     }
     optionalChain(index: number): boolean {
@@ -1609,7 +1622,9 @@ export class Parser {
     }
     templateSpanLiteral(): number {
         if(this.kind() === 'CloseBraceToken') {
+            const errors = this.scanner.errors.length;
             this.scanner.rescanTemplate();
+            this.scannerErrors(errors);
             return this.templatePart();
         }
         this.expect('CloseBraceToken');

@@ -403,3 +403,14 @@ and its 1443 diagnostic for a tagged template without a statement separator.
 The latter exposes standalone => recovery into an arrow with a missing parameter
 list. The port now preserves these exact shapes and diagnostic ranges. Five
 focused additions pass with all preceding probes in 25.038s; cohere passes.
+
+## Continued recovery: scanner diagnostic delivery
+
+The same malformed-template input exposes the missing delivery of scanner
+errors to parser diagnostics. Normal scans and regex/template rescans now
+deliver new errors immediately through the existing position deduplication,
+and parser lookahead rolls back diagnostics together with scanner state.
+English messages are ported from typescript-go; diagnostics requiring message
+arguments still fail explicitly until implemented rather than fabricating text.
+Four focused additions cover unterminated templates, strings, comments and
+regex literals. All focused comparisons pass in 26.186s; cohere passes.
