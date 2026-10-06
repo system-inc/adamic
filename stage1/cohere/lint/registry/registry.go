@@ -191,9 +191,13 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 	for i := range descriptors {
 		fmt.Fprintf(&ts, "    readonly rule%d: Rule%d;\n", i, i)
 	}
-	ts.WriteString("    constructor(context: RuleContext) {\n        this.context = context;\n")
+	ts.WriteString("    constructor(context: RuleContext")
 	for i := range descriptors {
-		fmt.Fprintf(&ts, "        this.rule%d = create%d(context);\n", i, i)
+		fmt.Fprintf(&ts, ", rule%d: Rule%d", i, i)
+	}
+	ts.WriteString(") {\n        this.context = context;\n")
+	for i := range descriptors {
+		fmt.Fprintf(&ts, "        this.rule%d = rule%d;\n", i, i)
 	}
 	ts.WriteString("    }\n")
 	goSource.WriteString("} }\n")
@@ -235,6 +239,15 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 		ts.WriteString("            break;\n")
 	}
 	ts.WriteString("        default:\n            break;\n    }\n    }\n}\n")
+	ts.WriteString("export function createRuleSet(context: RuleContext): RuleSet {\n")
+	for i := range descriptors {
+		fmt.Fprintf(&ts, "    const rule%d = create%d(context);\n", i, i)
+	}
+	ts.WriteString("    return new RuleSet(context")
+	for i := range descriptors {
+		fmt.Fprintf(&ts, ", rule%d", i)
+	}
+	ts.WriteString(");\n}\n")
 	formatted, err := format.Source([]byte(goSource.String()))
 	if err != nil {
 		panic(fmt.Sprintf("registry generator produced invalid Go: %v", err))

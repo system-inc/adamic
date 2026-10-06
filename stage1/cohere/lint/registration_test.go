@@ -78,6 +78,9 @@ func TestFactoryHooks(t *testing.T) {
     visit(index: number, parent: number): void {
         if(!this.ready) { panic('visit before prepare'); }
         console.log('visit');`, 1)
+	source = strings.Replace(source, "return new Rule(context);", `if(context.node(context.parents.length - 1).kind !== 'SourceFile') { panic('factory before ancestry'); }
+    console.log('factory');
+    return new Rule(context);`, 1)
 	source = "import { panic } from 'adamic';\n" + source
 	if err := os.WriteFile(module, []byte(source), 0644); err != nil {
 		t.Fatal(err)
@@ -108,7 +111,7 @@ func TestFactoryHooks(t *testing.T) {
 		t.Fatal(err)
 	}
 	path := manifest(t, []string{fixture + "\tno-debugger"})
-	expected := []byte("case 0\nprepare\nvisit\nfinish\n")
+	expected := []byte("case 0\nfactory\nprepare\nvisit\nfinish\n")
 	run := func(mutated bool) {
 		for _, side := range []struct {
 			name string
