@@ -13,6 +13,10 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
+  - Object primitive own-name reflection (`runtime/object_names.c`, after
+    src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
+  - Object sealing and extensibility (`runtime/object_integrity.c`, after
+    src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own

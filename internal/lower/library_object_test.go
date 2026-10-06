@@ -56,3 +56,43 @@ func TestObjectUnprovenShapesStayNotYet(t *testing.T) {
 		})
 	}
 }
+
+func TestObjectIntegrityRefusesUnrepresentedDescriptors(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		`Object.seal([1]);`,
+		`Object.preventExtensions(new Map<string, number>());`,
+		`function seal(value: { n?: number }): void { Object.seal(value); }`,
+		`function compare(left: number | null | undefined): boolean { return Object.is(left, undefined); }`,
+		`const tuple: [number] = [1]; Object.isSealed(tuple);`,
+	} {
+		t.Run(source, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, source)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) {
+				t.Fatalf("got %v, want NotYet", err)
+			}
+		})
+	}
+}
+
+func TestObjectReplacedBindingsStayUnproven(t *testing.T) {
+	t.Parallel()
+	for _, write := range []string{
+		`value = hidden;`,
+		`[value] = [hidden];`,
+		`({ value } = { value: hidden });`,
+		`for (value of [hidden]) { }`,
+	} {
+		source := `let value = { n: 1 }; const hidden = { n: 2, extra: 'wrong' }; ` + write + ` Object.values(value);`
+		t.Run(write, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, source)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) {
+				t.Fatalf("got %v, want NotYet", err)
+			}
+		})
+	}
+}

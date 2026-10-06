@@ -149,6 +149,8 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	bool sealed;
+	bool nonextensible;
 	adamic_value slots[];
 } adamic_object;
 
@@ -210,6 +212,8 @@ static inline adamic_value *adamic_object_field(const adamic_object *object, con
 	}
 	return adamic_object_find(object, name, cache);
 }
+
+#include "object_integrity.h"
 
 // Static Object methods (library_object.c). Returned collections and freeze own one reference.
 bool adamic_object_is(const adamic_heap *left, const adamic_heap *right);
