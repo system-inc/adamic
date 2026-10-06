@@ -35,6 +35,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
 				return nil, l.notYet(name, "a computed field name")
 			}
+			if property.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__" {
+				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
+			}
 			var value ir.Expression
 			var err error
 			if property.Kind == ast.KindPropertyAssignment {
@@ -239,6 +242,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "Number."+name)
 	}
+	// A library declaration proves a prototype member exists, never an own slot. Keep this
+	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
+	if l.inheritedLibraryMember(node) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
+		return nil, l.prototypeRead(node, name)
+	}
 	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration {
 		// A method read off its object, not called: JavaScript loses its this (unbound-method,
 		// docs/0.1.md). A call never comes here; callOrMethod lowers it.
@@ -398,6 +406,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	receiver, name := callee.AsPropertyAccessExpression().Expression, callee.Name().Text()
+	if lowered, handled, err := l.objectPrototypeCall(node, receiver, name); handled {
+		return lowered, true, err
+	}
 	if l.isLibraryGlobal(receiver, "Number") {
 		return l.numberCall(node, name)
 	}
@@ -452,11 +463,6 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if receiverType == ir.Object && checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
 		// A tuple is held as an object: called as an object, an array method would be read as a field.
 		return nil, true, l.notYet(node, name+" on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made)")
-	}
-	if receiverType == ir.Object && name == "hasOwnProperty" {
-		if lowered, handled, err := l.hasOwnProperty(node, receiver); handled {
-			return lowered, true, err
-		}
 	}
 	if !isMath && !isToFixed {
 		return nil, false, nil
@@ -1309,6 +1315,9 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
 	index := ast.SkipParentheses(access.ArgumentExpression)
+	if l.inheritedLibraryMember(node) {
+		return nil, l.prototypeRead(node, index.Text())
+	}
 	optional := access.QuestionDotToken != nil
 	if !optional && node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		// The rest of a chain after a ?., which short-circuits with it.

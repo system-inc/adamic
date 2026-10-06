@@ -78,6 +78,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if node.Kind == ast.KindPropertyAccessExpression && !called(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
+			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
+				found = l.prototypeRead(node, "isPrototypeOf")
+				return true
+			}
 			// Math.random has its own refusal, called or not.
 			isRandom := l.isLibraryGlobal(access.Expression, "Math") && access.Name().Text() == "random"
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 && !isRandom {
