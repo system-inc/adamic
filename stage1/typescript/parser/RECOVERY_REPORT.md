@@ -506,3 +506,11 @@ semicolon recovery. Stranded declare/abstract tokens use declaration lookahead
 and unknown scanner tokens retain their scanner error without a fabricated
 identifier error. Ten focused additions and preceding probes pass in
 30.901s; cohere passes after its else-if style correction.
+
+## Continued recovery: missing finally blocks
+
+At input 1644, a checker.ts cutoff inside try, Go retains a missing finally
+Block after reporting the missing closing brace. Try recovery now always
+parses finally when no catch exists, reporting 1472 unless position
+deduplication suppresses it, and retaining the empty block. Six focused
+additions and preceding cases pass in 33.092s; cohere passes.

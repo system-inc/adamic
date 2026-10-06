@@ -913,8 +913,18 @@ export class Statements {
             clause.push(this.block());
             children.push(this.make('CatchClause', start, clause));
         }
-        if(this.parser.kind() === 'FinallyKeyword') {
-            this.parser.next();
+        if(children.length === 1 || this.parser.kind() === 'FinallyKeyword') {
+            if(this.parser.kind() === 'FinallyKeyword') {
+                this.parser.next();
+            }
+            else {
+                this.parser.errorAt(
+                    1472,
+                    this.parser.scanner.start,
+                    this.parser.scanner.pos,
+                    "'catch' or 'finally' expected.",
+                );
+            }
             children.push(this.block());
         }
         return this.make('TryStatement', pos, children);
