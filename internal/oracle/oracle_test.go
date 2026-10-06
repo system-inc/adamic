@@ -257,6 +257,12 @@ var fixtures = []struct {
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
+	// Map and Set visits, SameValueZero keys, ES2025 set arguments, groupBy collisions, and next() after done.
+	{"internal/oracle/testdata/library_map_set_visit.a", true, false},
+	{"internal/oracle/testdata/library_map_set_setops.a", true, false},
+	{"internal/oracle/testdata/library_map_set_zeros.a", true, false},
+	{"internal/oracle/testdata/library_map_set_groupby_keys.a", true, false},
+	{"internal/oracle/testdata/library_map_set_next.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

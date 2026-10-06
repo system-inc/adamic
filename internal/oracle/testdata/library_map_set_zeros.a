@@ -1,0 +1,37 @@
+// NaN, -0 and a present undefined stay distinct keys, and -0 is stored as +0.
+const map = new Map<number | undefined, string>([[-0, 'neg'], [NaN, 'nan'], [undefined, 'hole'], [0, 'pos']]);
+console.log(`${map.size} ${map.has(0)} ${map.has(-0)} ${map.has(undefined)} ${map.has(NaN)} ${map.get(0)} ${map.get(undefined)} ${map.get(NaN)}`);
+const missing = new Map<number | undefined, string>([[NaN, 'nan']]);
+console.log(`${missing.has(undefined)} ${missing.get(undefined) === undefined} ${missing.has(NaN)}`);
+map.set(0 / 0, 'new nan');
+map.set(undefined, 'new hole');
+const seen: string[] = [];
+map.forEach((value: string, key: number | undefined) => {
+	if (key === undefined) {
+		seen.push(`undefined=${value}`);
+	} else if (Number.isNaN(key)) {
+		seen.push(`NaN=${value}`);
+	} else if (key === 0) {
+		seen.push(`${1 / key > 0 ? '+0' : '-0'}=${value}`);
+	} else {
+		seen.push(`${key}=${value}`);
+	}
+});
+console.log(seen.join(','));
+console.log(`${map.delete(0)} ${map.has(-0)} ${map.delete(undefined)} ${map.has(NaN)} ${map.size}`);
+
+const set = new Set<number | undefined>([-0, NaN, undefined, 0, NaN, undefined]);
+const tags: string[] = [];
+for (const value of set) {
+	if (value === undefined) {
+		tags.push('undefined');
+	} else if (Number.isNaN(value)) {
+		tags.push('NaN');
+	} else if (value === 0) {
+		tags.push(1 / value > 0 ? '+0' : '-0');
+	} else {
+		tags.push(`${value}`);
+	}
+}
+console.log(`${set.size} ${tags.join(',')} ${set.has(0)} ${set.has(undefined)} ${set.has(NaN)}`);
+console.log(`${set.delete(-0)} ${set.has(0)} ${set.delete(NaN)} ${set.has(undefined)} ${set.size}`);
