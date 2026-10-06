@@ -9,6 +9,10 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.objectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
@@ -26,7 +30,6 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	if name == "is" || name == "hasOwn" {
 		count = 2
 	}
-	written := node.AsCallExpression().Arguments.Nodes
 	if name == "assign" {
 		if len(written) < 1 {
 			return nil, true, l.notYet(node, "Object.assign without a target")

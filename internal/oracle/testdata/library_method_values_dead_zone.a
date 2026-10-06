@@ -1,0 +1,9 @@
+/* eslint-disable @typescript-eslint/unbound-method -- The intrinsic is called with a proven receiver, and the oracle holds the alias read to Node's temporal dead zone. */
+function readMethod(): number {
+    /* eslint-disable-next-line no-use-before-define -- This fixture deliberately enters the temporal dead zone; Node and the mutant require the ReferenceError. */
+    return search.call([1], 1);
+}
+console.log('before');
+console.log(`${readMethod()}`);
+const search = Array.prototype.indexOf;
+console.log(`${search.call([2], 2)}`);
