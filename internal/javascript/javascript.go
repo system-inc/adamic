@@ -50,6 +50,10 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
+	// object.name(...) through an interface: the object's own function value, or else its class's
+	// method (on the prototype its constructor gave it), called with the object as this.
+	builder.WriteString("const adamicCallee = (object, name) => Object.hasOwn(object, name) ? object[name] : { code: (closure, values) => object[name](object, ...values) };\n")
+	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
 	// map reads the length once, as JavaScript's does; an array the callback shrinks would leave a hole,
@@ -113,6 +117,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	emitter.function = nil
 	emitter.indent = 0
 	builder.WriteString("\n")
+	// Each class's methods, the prototype of the objects its constructor makes, declared before the
+	// program runs; a class's methods are functions, hoisted, so each is there to name.
+	for _, prototype := range emitter.prototypes {
+		builder.WriteString(prototype)
+	}
 	emitter.statements(program.Main)
 	builder.WriteString(emitter.out.String())
 	return builder.String()
@@ -125,6 +134,11 @@ type emitter struct {
 	out      strings.Builder
 	indent   int
 	labels   int
+
+	// prototypes declares each class's methods, in the order the constructors that make them are
+	// emitted, and prototypeNames names each by its constructor's literal.
+	prototypes     []string
+	prototypeNames map[string]string
 
 	// continues holds, innermost last, each open loop's continue label.
 	continues []string
@@ -158,6 +172,25 @@ func readyName(local int) string {
 
 func functionName(program *ir.Program, function int) string {
 	return fmt.Sprintf("function_%d_%s", function, identifier.ReplaceAllString(program.Functions[function].Name, ""))
+}
+
+// prototype names the object holding a class's methods by name, declaring it the first time.
+func (e *emitter) prototype(methods []ir.Method) string {
+	entries := []string{}
+	for _, method := range methods {
+		entries = append(entries, quote(method.Name)+": "+functionName(e.program, method.Function))
+	}
+	key := strings.Join(entries, ", ")
+	if name, isDeclared := e.prototypeNames[key]; isDeclared {
+		return name
+	}
+	if e.prototypeNames == nil {
+		e.prototypeNames = map[string]string{}
+	}
+	name := fmt.Sprintf("methods_%d", len(e.prototypes))
+	e.prototypeNames[key] = name
+	e.prototypes = append(e.prototypes, fmt.Sprintf("const %s = { __proto__: null, %s };\n", name, key))
+	return name
 }
 
 // variable is where a local's value is, from the current function: a cell of its environment, a cell
@@ -486,6 +519,9 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "[" + strings.Join(elements, ", ") + "]"
 		}
 		fields := []string{}
+		if len(expression.Methods) > 0 {
+			fields = append(fields, "__proto__: "+e.prototype(expression.Methods))
+		}
 		if expression.Spread != nil {
 			fields = append(fields, "..."+e.value(expression.Spread))
 		}
@@ -624,6 +660,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s])", functionName(e.program, expression.Function), strings.Join(cells, ", "))
 	case ir.CallClosure:
+		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
+			if property.Optional {
+				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
+				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.values(expression.Arguments) + "])"
+			}
+			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.values(expression.Arguments) + "])"
+		}
 		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
 	case ir.ArrayMap:
 		return "adamicMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"

@@ -114,10 +114,15 @@ extern char adamic_literal_mark;
 #define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, array, 0, ADAMIC_LITERAL_INDEX}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
+//
+// methods are, for the objects a class makes, the class's methods by name, and NULL for any other
+// object: a call through an interface the class implements finds one there (adamic_object_callee).
+typedef struct adamic_methods adamic_methods;
 typedef struct adamic_shape {
 	size_t count;
 	const char *const *names;
 	const bool *references;
+	const adamic_methods *methods;
 } adamic_shape;
 
 // adamic_object is a plain object (object.c). Its shape travels with it, so the same object can be
@@ -134,6 +139,20 @@ typedef struct adamic_slot_cache {
 	const adamic_shape *shape;
 	size_t index;
 } adamic_slot_cache;
+
+// adamic_method is a class's method as a call through an interface calls it: the object as this, and
+// the arguments and the result as adamic_value, as a closure's are (the result owned).
+typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments);
+struct adamic_methods {
+	size_t count;
+	const char *const *names;
+	const adamic_method *code;
+};
+
+// adamic_object_callee finds what object.name(...) calls, where the object is seen through an
+// interface: its own field of that name, a function value, which it returns; or else its class's
+// method of that name, which it puts in *method, returning NULL. The checker proved one is there.
+adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method);
 
 // adamic_object_new makes an object of a shape, its fields zeroed for the caller to fill; a reference
 // stored in a field belongs to the object.

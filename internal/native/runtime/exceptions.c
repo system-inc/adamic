@@ -11,7 +11,7 @@ adamic_object *adamic_thrown;
 
 static const char *const error_names[] = {"name", "message"};
 static const bool error_references[] = {true, true};
-static const adamic_shape error_shape = {2, error_names, error_references};
+static const adamic_shape error_shape = {2, error_names, error_references, NULL};
 static adamic_string error_name = ADAMIC_STRING("Error");
 
 adamic_object *adamic_error_new(adamic_string *message) {

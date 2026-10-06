@@ -789,6 +789,12 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if property, isProperty := closure.(ir.Property); isProperty {
+		// object.name(...) through an interface: the object may be a class's, whose methods aren't
+		// fields (ir.Property's Method).
+		property.Method = true
+		closure = property
+	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		lowered, err := l.expression(argument)

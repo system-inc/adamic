@@ -122,7 +122,7 @@ func (e *emitter) fieldSlot(object string, name string, class int) string {
 	}
 	for index, field := range literal.Fields {
 		if field.Name == name {
-			return fmt.Sprintf("(%s->shape == &%s ? &%s->slots[%d] : %s)", object, e.shape(literal.Fields), object, index, lookup)
+			return fmt.Sprintf("(%s->shape == &%s ? &%s->slots[%d] : %s)", object, e.literalShape(literal), object, index, lookup)
 		}
 	}
 	return lookup
@@ -209,6 +209,8 @@ type emitter struct {
 
 	// shapes names each object layout already declared, by its fields.
 	shapes map[string]string
+	// thunks are the methods whose adamic_method is declared (methodThunk).
+	thunks map[int]bool
 
 	// initialized is every global main declares, in the order their declarations run: modules in
 	// ECMAScript's order, and each module's from the top.
@@ -864,30 +866,50 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return closure
 	case ir.CallClosure:
-		closure := e.value(expression.Closure)
-		arguments := []string{}
-		for _, argument := range expression.Arguments {
-			arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
+		property, isProperty := expression.Closure.(ir.Property)
+		if !isProperty || !property.Method {
+			return e.callThrough(expression, e.value(expression.Closure), "")
 		}
-		packed := "NULL"
-		if len(arguments) > 0 {
-			packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
+		// object.name(...) through an interface. The object stays alive for the call though an
+		// argument may write where it was read from: a call lends nothing (borrow.go), so a read of a
+		// global, a captured variable, a field or an element is retained when it's read, and a local
+		// can't be written in the middle of an expression.
+		receiver := e.value(property.Object)
+		if !property.Optional {
+			return e.callThrough(expression, "", receiver)
 		}
-		call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
-		if expression.Returns == 0 {
-			e.line("%s;", call)
-			e.closureThrown()
-			return "0"
+		// object?.name(...): undefined, the method not looked up and the arguments not evaluated,
+		// where the object is undefined, as JavaScript's chain stops there.
+		text, value, owned := e.asideWith(func() string { return e.callThrough(expression, "", receiver) })
+		result := "0"
+		if expression.Returns != 0 {
+			// Undefined: NULL for a reference, which zero isn't for a string.
+			undefined := "NULL"
+			if !expression.Returns.IsReference() {
+				undefined = zero(expression.Returns)
+			}
+			result = e.temporary()
+			e.line("%s %s = %s;", cType(expression.Returns), result, undefined)
 		}
-		result := e.temporary()
-		e.line("adamic_value %s = %s;", result, call)
-		// A throw gives back a zero value, nothing to let go.
-		e.closureThrown()
+		e.line("if (%s != NULL) {", receiver)
+		e.out.WriteString(text)
+		e.indent++
+		switch {
+		case expression.Returns == 0:
+		case expression.Returns.IsReference():
+			e.line("%s = %s;", result, retained(value))
+		default:
+			e.line("%s = %s;", result, value)
+		}
+		for index := len(owned) - 1; index >= 0; index-- {
+			e.line("adamic_release(%s);", owned[index])
+		}
+		e.indent--
+		e.line("}")
 		if expression.Returns.IsReference() {
-			// A closure's result comes back owned.
-			return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))
+			e.owned = append(e.owned, result)
 		}
-		return e.snapshot(expression.Returns, unslotted(expression.Returns, result+"."+member(expression.Returns)))
+		return result
 	case ir.ArrayMap:
 		if mapped, ok := e.mapped(expression); ok {
 			return mapped
@@ -1490,9 +1512,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	}
 	object := ""
 	if region {
-		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.shape(literal.Fields)))
+		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.literalShape(literal)))
 	} else {
-		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.shape(literal.Fields)))
+		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 	}
 	for index, field := range literal.Fields {
 		value := values[index]
@@ -1519,8 +1541,28 @@ func (e *emitter) shape(fields []ir.Field) string {
 	return e.shapeOf(names, types)
 }
 
+// literalShape is the layout an object literal makes: a class's constructor's has the class's methods
+// too, so it's the class's own, never shared with a literal of the same fields.
+func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
+	if len(literal.Methods) == 0 {
+		return e.shape(literal.Fields)
+	}
+	names, types := []string{}, []ir.Type{}
+	for _, field := range literal.Fields {
+		names = append(names, field.Name)
+		types = append(types, field.Value.Type())
+	}
+	return e.shapeWith(names, types, literal.Methods)
+}
+
 // shapeOf declares a layout by its field names and types.
 func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
+	return e.shapeWith(fieldNames, fieldTypes, nil)
+}
+
+// shapeWith declares a layout by its field names and types, and a class's methods, each called
+// through a thunk that takes what a call through an interface gives (adamic_method).
+func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
 	names, references := []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
@@ -1528,6 +1570,9 @@ func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
 	}
 	fields := fieldNames
 	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	for _, method := range methods {
+		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
+	}
 	if e.shapes == nil {
 		e.shapes = map[string]string{}
 	}
@@ -1536,14 +1581,86 @@ func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
 	}
 	name := fmt.Sprintf("adamic_shape_%d", len(e.shapes))
 	e.shapes[key] = name
+	table := "NULL"
+	methodNames, thunks := []string{}, []string{}
+	for _, method := range methods {
+		if !e.dispatchable(method.Function) {
+			continue
+		}
+		methodNames = append(methodNames, cString(method.Name))
+		thunks = append(thunks, e.methodThunk(method.Function))
+	}
+	if len(thunks) > 0 {
+		e.declarations = append(e.declarations,
+			fmt.Sprintf("static const char *const %s_method_names[] = {%s};", name, strings.Join(methodNames, ", ")),
+			fmt.Sprintf("static const adamic_method %s_method_code[] = {%s};", name, strings.Join(thunks, ", ")),
+			fmt.Sprintf("static const adamic_methods %s_methods = {%d, %s_method_names, %s_method_code};", name, len(thunks), name, name))
+		table = "&" + name + "_methods"
+	}
 	if len(fields) == 0 {
-		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL};", name))
+		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s};", name, table))
 	} else {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const char *const %s_names[] = {%s};", name, strings.Join(names, ", ")),
 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
-			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references};", name, len(fields), name, name))
+			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s};", name, len(fields), name, name, table))
 	}
+	return name
+}
+
+// dispatchable reports whether a class's method can be called through an interface: each value it
+// takes and gives fits an adamic_value. One that doesn't (boolean | undefined, a union) can't be
+// passed to a function value either (lower's callClosure says not yet), so no call through an
+// interface reaches it with one, and it's left out of its class's table.
+func (e *emitter) dispatchable(function int) bool {
+	method := e.program.Functions[function]
+	slotless := func(valueType ir.Type) bool { return valueType == ir.MaybeBoolean || valueType == ir.Union }
+	for index, parameter := range method.Parameters {
+		if index > 0 && slotless(e.program.Locals[parameter].Type) {
+			return false
+		}
+	}
+	return !slotless(method.Returns)
+}
+
+// methodThunk declares, once, the adamic_method that calls a class's method: this from the object,
+// each argument unpacked from its adamic_value, and the result packed into one. A closure's arguments
+// are its caller's, so one the method takes over (reuse.go) is given a count of its own first; and
+// its result, a reference, comes back owned, as a closure's does.
+func (e *emitter) methodThunk(function int) string {
+	name := fmt.Sprintf("adamic_method_%d", function)
+	if e.thunks[function] {
+		return name
+	}
+	if e.thunks == nil {
+		e.thunks = map[int]bool{}
+	}
+	e.thunks[function] = true
+	method := e.program.Functions[function]
+	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments) {", name), "\t(void)arguments;"}
+	values := []string{}
+	for index, parameter := range method.Parameters {
+		local := e.program.Locals[parameter]
+		value := "self"
+		if index > 0 {
+			value = unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index-1, member(local.Type)))
+			if local.Type.IsReference() {
+				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
+			}
+		}
+		if local.Type.IsReference() && e.reuse.consumed[parameter] {
+			value = fmt.Sprintf("adamic_retain(%s)", value)
+		}
+		values = append(values, value)
+	}
+	call := fmt.Sprintf("%s(%s)", e.functionName(function), strings.Join(values, ", "))
+	if method.Returns == 0 {
+		lines = append(lines, "\t"+call+";", "\treturn (adamic_value){.number = 0};")
+	} else {
+		lines = append(lines, fmt.Sprintf("\treturn (adamic_value){.%s = %s};", member(method.Returns), slotted(method.Returns, call)))
+	}
+	lines = append(lines, "}")
+	e.declarations = append(e.declarations, strings.Join(lines, "\n"))
 	return name
 }
 
@@ -1875,17 +1992,61 @@ func (e *emitter) arguments(call ir.Call) []string {
 // aside emits work into a buffer of its own, one level in, with temporaries of its own, and returns
 // the text, the value, and what it owns, so the caller can decide where the work belongs.
 func (e *emitter) aside(expression ir.Expression) (string, string, []string) {
+	return e.asideWith(func() string { return e.value(expression) })
+}
+
+// asideWith is aside for whatever emit emits.
+func (e *emitter) asideWith(emit func() string) (string, string, []string) {
 	savedOut, savedOwned := e.out, e.owned
 	e.out, e.owned = strings.Builder{}, nil
 	// A throw from inside lets go of what the statement owned before the aside too.
 	e.outerOwned = append(e.outerOwned, savedOwned)
 	e.indent++
-	value := e.value(expression)
+	value := emit()
 	e.indent--
 	e.outerOwned = e.outerOwned[:len(e.outerOwned)-1]
 	text, owned := e.out.String(), e.owned
 	e.out, e.owned = savedOut, savedOwned
 	return text, value, owned
+}
+
+// callThrough calls a function value: closure, or for a call through an interface (ir.Property's
+// Method), the receiver's own function value or its class's method, found before the arguments are
+// evaluated, as JavaScript reads object.name first.
+func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string {
+	method := ""
+	if receiver != "" {
+		property := expression.Closure.(ir.Property)
+		method = e.temporary()
+		e.line("adamic_method %s = NULL;", method)
+		closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+	}
+	arguments := []string{}
+	for _, argument := range expression.Arguments {
+		arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
+	}
+	packed := "NULL"
+	if len(arguments) > 0 {
+		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
+	}
+	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+	if receiver != "" {
+		call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+	}
+	if expression.Returns == 0 {
+		e.line("%s;", call)
+		e.closureThrown()
+		return "0"
+	}
+	result := e.temporary()
+	e.line("adamic_value %s = %s;", result, call)
+	// A throw gives back a zero value, nothing to let go.
+	e.closureThrown()
+	if expression.Returns.IsReference() {
+		// A closure's result comes back owned.
+		return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))
+	}
+	return e.snapshot(expression.Returns, unslotted(expression.Returns, result+"."+member(expression.Returns)))
 }
 
 // logical emits && and ||. When the right operand has nothing to run first, C's own operator

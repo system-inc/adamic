@@ -23,7 +23,8 @@ type Program struct {
 	// Main is what the program does, in order.
 	Main []Statement
 
-	// ClosuresMayThrow says a function value somewhere in the program can throw. Which one a call
+	// ClosuresMayThrow says a function value somewhere in the program can throw, or a class's method,
+	// which a call through an interface reaches where it would a function value. Which one a call
 	// through a function value reaches isn't known, so every such call can then throw: one written
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
@@ -229,6 +230,10 @@ type (
 		// lowers reads a tuple only by its fields, which an object answers the same way, new Map's
 		// pairs included: ECMA-262 reads each by "0" and "1".)
 		Tuple bool
+
+		// Methods are, for the object a class's constructor makes, the class's methods, which a call
+		// through an interface the class implements finds by name (Property.Method).
+		Methods []Method
 	}
 
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
@@ -242,6 +247,12 @@ type (
 		// otherwise: the constructor's object has the class's layout, so the field's place in it is
 		// known, for an object that has that layout.
 		Class int
+		// Method says the read is a call's callee, object.name(...), through a type that isn't a
+		// class: an interface or an object type. The object may be a class's, whose methods aren't
+		// fields, so the call takes the object's own function value if it has one and otherwise its
+		// class's method, called with the object as this. A method can't be read any other way
+		// (docs/0.1.md), so only a callee is one.
+		Method bool
 	}
 
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
@@ -633,6 +644,13 @@ type (
 type Field struct {
 	Name  string
 	Value Expression
+}
+
+// Method is one of a class's methods: its name, and the function that is it, whose first parameter
+// is this.
+type Method struct {
+	Name     string
+	Function int
 }
 
 func (NumberConstant) Type() Type  { return Number }

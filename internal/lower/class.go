@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"sort"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -15,6 +17,8 @@ import (
 type instance struct {
 	constructor int
 	methods     map[string]int
+	// static are the methods declared static, which no object of the class has.
+	static map[string]bool
 
 	// thisLocals are the this of its constructor and methods, which every instantiation sharing it
 	// (Box<Tree> and Box<Listener> are both objects) has as its own type, for the cycle finder.
@@ -23,6 +27,23 @@ type instance struct {
 	// templates are the instance's locals and function values with their types as the source writes
 	// them, so an instantiation that shares the instance notes each as its own type makes it.
 	templates []template
+}
+
+// methodList is the instance's methods, static ones aside, by name in order, so the layouts made of them are the same
+// every time.
+func (lowered *instance) methodList() []ir.Method {
+	names := []string{}
+	for name := range lowered.methods {
+		if !lowered.static[name] {
+			names = append(names, name)
+		}
+	}
+	sort.Strings(names)
+	methods := []ir.Method{}
+	for _, name := range names {
+		methods = append(methods, ir.Method{Name: name, Function: lowered.methods[name]})
+	}
+	return methods
 }
 
 // template is a local, or a function value (closure set), and its type with type parameters left in.
@@ -91,7 +112,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	for _, argument := range arguments {
 		name += "_" + typeName(argument)
 	}
-	lowered := &instance{constructor: len(l.result.Functions), methods: map[string]int{}}
+	lowered := &instance{constructor: len(l.result.Functions), methods: map[string]int{}, static: map[string]bool{}}
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_new", Returns: ir.Object})
 	members := declaration.Members()
 	for _, member := range members {
@@ -101,6 +122,9 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 				return nil, l.notYet(member, "a method with a computed name")
 			}
 			lowered.methods[member.Name().Text()] = len(l.result.Functions)
+			if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+				lowered.static[member.Name().Text()] = true
+			}
 			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + member.Name().Text()})
 		case ast.KindPropertyDeclaration, ast.KindConstructor:
 		default:
@@ -189,7 +213,7 @@ func (l *lowering) constructor(index int, declaration *ast.Node) error {
 		fields = append(fields, ir.Field{Name: member.Name().Text(), Value: value})
 	}
 	function := l.result.Functions[index]
-	function.Body = []ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{Fields: fields}}}
+	function.Body = []ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{Fields: fields, Methods: l.instance.methodList()}}}
 	l.result.Functions[index] = function
 	var body *ast.Node
 	for _, member := range declaration.Members() {

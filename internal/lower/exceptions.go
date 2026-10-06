@@ -112,12 +112,21 @@ func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 // natively but a throw on Node.
 func (l *lowering) exceptions() error {
 	functions := l.result.Functions
+	// A class's methods are reached through function values too: a call through an interface the
+	// class implements calls one where it would call the object's own function value (ir.Property's
+	// Method), so a method that can throw makes every such call one that can.
+	dispatched := map[int]bool{}
+	for _, lowered := range l.instances {
+		for _, method := range lowered.methodList() {
+			dispatched[method.Function] = true
+		}
+	}
 	// Whether any function value can throw, and so every call through one, grows with what can, so
 	// the two are worked out together until neither changes.
 	for changed := true; changed; {
 		changed = false
 		for index := range functions {
-			if functions[index].Closure && functions[index].MayThrow && !l.result.ClosuresMayThrow {
+			if (functions[index].Closure || dispatched[index]) && functions[index].MayThrow && !l.result.ClosuresMayThrow {
 				l.result.ClosuresMayThrow = true
 				changed = true
 			}
