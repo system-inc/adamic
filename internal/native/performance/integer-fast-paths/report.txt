@@ -1,0 +1,77 @@
+Built exact integer remainder, bounded ToInt32/ToUint32 casts, and pure nested bitwise emission.
+Implementation commit: 4cc9a5992748c3d30111f8cb5815d524dc8ae04c, from origin/main 50045bd.
+Checks: gofmt clean; go vet ./... exit 0; final native, oracle and fuzz package gate exit 0.
+Mutants: dropped -0, divisor sign, +2^31 accepted as signed int32, signed >>>, fractional integer remainder; Node caught all five, sanitizer clean.
+Not covered: missing parallel_files.a and ahra CLI/profiles; other architectures; a strict zero-regression guarantee on the cloud timings.
+
+Implementation
+- The int32 cast has one magnitude comparison. INT32_MIN and values through 2^53
+  use a guarded int64 cast; C's unsigned conversion gives the low 32 bits.
+  In-range fractions also truncate correctly through the cast. Other numbers use
+  the original trunc/fmod conversion. No out-of-range or nonfinite cast is allowed.
+- Remainder checks both ranges, a nonzero divisor and integer round trips before
+  int64 remainder. A zero result uses the dividend's sign via copysign. Fractions,
+  nonfinite numbers, zero divisors and magnitudes greater than 2^53 still use fmod.
+- Pure, directly nested bitwise expressions stay in uint32. The final number is
+  signed except for >>>. Calls keep the original expression evaluation path.
+  Ordinary numeric locals remain doubles; no inter-statement range analysis.
+- counts.md is byte-for-byte unchanged. The new .a fixture has a separate
+  differential test rather than a new row in that table. All existing rows were checked.
+
+Toolchain
+bash cloud/setup.sh: Go, clang, Node and submodules ready at 0s; cache warm at 87s;
+done in 87s. nproc=5, cgroup cpu.max=400000 100000 (four CPU quota).
+source /workspace/adamic-tools/env.sh
+Go 1.27.1, clang 20.1.8, Node v24.19.0, Linux x86_64.
+
+Commands and outcomes (all test output went directly to logs)
+gofmt -l cmd internal: no output.
+go vet ./...: exit 0.
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...:
+  exit 1. All packages passed except TestFuzzerSharesRuntimeLibrary. A header was
+  edited while this run compiled, so its embedded and disk runtime snapshots differed.
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native ./internal/oracle ./internal/fuzz:
+  exit 0 from a fixed tree. native 247.071s, oracle 220.107s, fuzz 15.322s.
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout 10m ./internal/native ./internal/oracle -run 'TestInteger|TestNativeAgreesWithNode/internal/oracle/testdata/(bitwise.a|bitwise_sweep.a|numbers.a)$':
+  exit 0; runtime 185,992 answers match Node byte for byte. The actual selected
+  oracle fixtures were bitwise.a, bitwise_sweep.a, numbers.a, json_stringify_numbers.a,
+  maybe_numbers.a, narrowed_numbers.a, set_maybe_numbers.a, optional_numbers.a,
+  and the new integer_fast_paths.a. Native release, ASan/UBSan, JavaScript and leaks checked.
+  All five valid-C mutants exited 0 with empty stderr and were caught only by Node stdout.
+
+Measurements
+python3 bench/integer_measure.py --before /tmp/integer-fast-paths/adamic-before --after /tmp/integer-fast-paths/adamic-after --rounds 3 --regressions
+Run once while the long gate finished, then repeat after it ended. The second run
+is results.json; the first is loaded-results.json. Three interleaved runs each;
+wall time, median, native clang -O2 without sanitizers, Node runs the original source.
+Every checksum matched. The full trial values and machine/load metadata are retained.
+
+Quiet medians, seconds          main       final      Node
+integer_bitwise (1.5e9)         21.1854     7.3635     5.9472
+integer_remainder (3e8)          2.9551     2.4041     1.1704
+nbody                           0.3610     0.3481     0.7264
+sort                            0.2159     0.2249     0.6430
+spectral_norm                   0.1681     0.1754     0.2295
+tokenizer                       0.1583     0.1553     0.2765
+trees                           1.7123     1.6711     1.4772
+word_count                      0.1588     0.1525     0.2641
+
+The target gains are 65.2% (2.88x) for bitwise and 18.6% (1.23x) for remainder.
+The requested parallel_files.a is absent, so the second .a benchmark is a focused
+integer remainder loop: total = (total + index * 7) % 1048573.
+
+Observations and limits
+- Before: adamic_bitwise_and calls trunc and fmod for each finite operand. The
+  final target loop uses guarded casts and does not take the slow helper branch.
+- The new remainder helper changes clang's inlining of sort's next function.
+  Both main eight-benchmark runs showed a small sort slowdown (4-5%). A separate
+  three-run follow-up measured main 0.2296s, unchanged final 0.2235s (2.7% faster).
+  A standard C inline hint restored inlining but did not consistently improve
+  times; a branch-free copysign variant slowed the target remainder loop. Neither
+  experimental change is in the implementation. Raw trials are retained.
+- spectral_norm, nbody and trees have identical generated C before and after.
+  spectral_norm's small difference changed direction between the two full runs.
+- These short-program differences overlap measured run-to-run variation. The
+  strict no-regression bar cannot be certified here; do not treat the large target
+  gains as proof that every program gets faster. No correctness or allocation
+  regression was observed. Other architectures were not measured.
