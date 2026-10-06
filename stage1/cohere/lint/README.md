@@ -11,7 +11,9 @@ TypeScript parser and scanner:
 | `no-var` | declaration flags, ambient modifier, module ancestry, loop initializer | none |
 | `no-duplicate-case` | switch-local recursive syntax/token signatures | none |
 
-The runner dispatches these five listeners in one preorder traversal. Child
+The runner discovers descriptors in `rules/*/rule.json` and generates static
+node-kind dispatch for one preorder traversal. Each rule owns its factory,
+implementation, messages, Go oracle adapter, witnesses and mutant. Child
 indexes and a parallel parent-index array retain Go's ancestry queries without
 owning parent/child cycles. Findings carry rule name, message ID and description,
 trimmed range, and a repair category. Suggestions are never applied. There is
@@ -19,7 +21,16 @@ no type checker, binder, inferred type, or symbol lookup.
 
 ## Driver and answer protocol
 
-Build `main.ts` with stage 0, or run the same source through `oracle/node.mjs`.
+Regenerate imports before building `main.ts` with stage 0 or running it on Node:
+
+```sh
+go run ./cmd/lint-registry
+go run ./cmd/adamic build stage1/cohere/lint/main.ts
+```
+
+Tests perform regeneration automatically. Generated output is ignored. See
+[the registration contract](../../../docs/lint-registration.md) to add a rule
+without changing any shared file.
 The driver accepts a source path, or `--manifest <path> [--count]`.
 A manifest row is tab-separated:
 
@@ -73,12 +84,21 @@ checkout stays in scratch. Both tests compare Go, the same TS on Node, and
 native under ASan/UBSan with leak checking. The Go oracle also rejects input
 parse diagnostics; parser recovery is outside this slice.
 
-`TestMutants` changes only a scratch copy of the port. Each mutant must compile,
+`TestMutants` discovers each directory's `mutant.json` and changes only a scratch copy of the port. Each mutant must compile,
 run successfully on Node and sanitized native, and differ from the Go answer:
 
+- Debugger removal suppressed.
 - Suggestion promoted to an automatic fix.
 - Empty function body exemption removed.
 - Duplicate-case membership condition inverted.
+- Variable declaration selection inverted.
+
+`TestOwnedWitnesses` discovers raw TypeScript witnesses for every rule.
+`TestRegistrationMutant` changes a valid node subscription and proves both
+backends disagree with upstream Go. `TestFactoryHooks` verifies stateful factory
+instances and prepare/visit/finish ordering, then kills a removed finish hook.
+The generator tests reject malformed descriptors and duplicate names and verify
+deterministic regeneration without rewriting unchanged files.
 
 `TestNestedConstructorGap` holds the new compiler gap to Node and stage 0.
 `TestThroughput` runs compiler count mode in five interleaved rounds when
