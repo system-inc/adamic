@@ -1,0 +1,11 @@
+case 0
+/tmp/lint-wave1-10-probe/sort-vars.txt:1:8
+  sort-vars  A declaration block in a fixed order is one a reader can scan instead of search. Sort the names, or split the block so each declaration stands where it is used.
+
+panic: unexpected fix shape
+
+goroutine 1 [running]:
+main.run({0x33d3ed037280?, 0x33d3ed1ce880?}, 0x0, 0x33d3ed1ce880)
+	/workspace/adamic/cohere/adamic_wave1_10_oracle.go:62 +0x90b
+main.main()
+	/workspace/adamic/cohere/adamic_wave1_10_oracle.go:143 +0x2f7

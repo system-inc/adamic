@@ -1,3 +1,5 @@
+//go:build lintoracle
+
 package main
 import (
  "github.com/system-inc/cohere/internal/lint/rule"

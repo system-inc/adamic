@@ -1,0 +1,10 @@
+case 0
+panic: invalid corpus /tmp/lint-wave1-10-probe/jsx.txt: [Type expected.]
+
+goroutine 1 [running]:
+main.collect({0xdb7abc21280, 0x20}, {0xdb7abc1aa68?, 0x1?}, {0xdb7abca9c00, 0x5, 0x8})
+	/workspace/adamic/cohere/adamic_wave1_10_oracle.go:91 +0x774
+main.run({0xdb7abc21280?, 0xdb7abd38880?}, 0x0, 0xdb7abd38880)
+	/workspace/adamic/cohere/adamic_wave1_10_oracle.go:45 +0x12f
+main.main()
+	/workspace/adamic/cohere/adamic_wave1_10_oracle.go:143 +0x2f7
