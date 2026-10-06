@@ -163,3 +163,72 @@ query-loop timer. This shorthand belongs only to the probes, not the C API.
 a program with `noImplicitThis` disabled: the special implicit-this diagnostic
 variants are not part of this strict-config port. Refusal is explicit before
 any finding is printed. The original six-rule runner is unaffected.
+
+
+## Inventory coverage questions
+
+The next coverage runner keeps the same ABI, ownership and framing. Symbol IDs
+now join type IDs as separate program-scoped borrowed identity namespaces: they
+are nonzero safe integers, never addresses, never owned independently, and die
+with the program. A symbol ID cannot substitute for a type ID. Every question
+still selects an exact node, even when its additional argument identifies a type.
+
+| Question | Raw checker operation or fact |
+| --- | --- |
+| `binding-declarations`, `alias-declarations` | Identifier symbol declarations; shorthand values use their value symbol; the latter follows aliases |
+| `resolved-name` LF name | Value-name resolution at the selected node and declaration/library origins |
+| `identical-types` LF source-ID LF target-ID | Checker type identity relation |
+| `literal-value` LF ID | Boolean, string or number literal value, without a lint interpretation |
+| `annotation-shape` | Type obtained from the selected type annotation |
+| `symbol-shape` | Global type of the selected node's symbol, not its narrowed location type |
+| `type-metadata` LF ID | ObjectFlags, symbol/target symbol identities, target ObjectFlags, readonly tuple mark |
+| `type-properties` LF ID | Property display names, symbol identities, SymbolFlags, readonly marks and global property types |
+| `property-exists` LF type-ID LF property-symbol-ID | `GetPropertyOfType` using the original internal property key |
+| `function-signatures` LF ID | Call signatures' parameter names/rest marks, return types and global parameter types |
+| `contextual-argument` LF index | A call/new expression argument's contextual type |
+| `annotated-return-shape` | A function-like node's annotated return type, absent when unannotated |
+| `symbol-identities` | Identifier's symbol, alias, unknown-alias mark, locally resolved export symbol and shorthand-value symbol |
+| `node-symbol-details` | Selected node's symbol and full declaration records |
+| `declaration-details` | Selected declaration's full record |
+| `type-symbol-details` LF ID | Type's own symbol and alias symbol, separately |
+| `property-declarations` LF ID LF name | Property symbol and full declaration records |
+| `container-bases` | Declared class/interface base and implemented types |
+| `reference-shape` LF ID | Reference type graph including deferred reference arguments |
+
+`binding-declarations` and `alias-declarations` return presence, SymbolFlags,
+declaration count, then path/kind/untrimmed-byte-start/end per declaration.
+`resolved-name` uses the existing type-origin symbol schema. `identical-types`
+and `property-exists` return one boolean. `literal-value` returns a tag
+(`missing`, `boolean`, `string`, `number`) and a value string. `type-metadata`
+returns ObjectFlags, symbol ID (zero if absent), target ObjectFlags, target symbol
+ID (zero if absent), and readonly-tuple boolean. `type-properties` returns count,
+then display name/symbol ID/SymbolFlags/readonly boolean per property, followed
+by the existing unnamed type-graph fields (without another schema header), whose
+roots are the property types in the same order.
+
+TypeScript has private internal property keys containing invalid UTF-8. Display
+names replace those bytes with U+FFFD so the boundary remains UTF-8. Opaque
+property symbol IDs preserve the original key for `property-exists`; list
+membership and replacement display names are not substitutes for checker lookup.
+`function-signatures` returns signature count, then each signature's parameter
+count and name/rest-mark pairs, followed by existing unnamed graph fields. Roots
+flatten each signature's return type followed by its parameter types.
+
+`symbol-identities` returns own symbol ID, alias ID, unknown-alias boolean,
+resolved local export ID, and shorthand-value ID; absent IDs are zero. A symbol
+record is presence, then ID/SymbolFlags/display-name/declaration-count and its
+declarations. A declaration record is path/kind/start/end/declaration-file mark/
+default-library mark, parent kind/name/start/end, JSDoc tag count, then each tag's
+kind/name/start/end/full raw text, then parameter count and identifier names
+(empty for binding patterns). Native rules interpret tags and inherited contracts;
+the bridge does not recognize exemptions or produce findings.
+
+Shape questions use the existing graph schema; `container-bases` and
+`contextual-argument` retain named records, while `*-shape` records omit names.
+`reference-shape` alone includes
+deferred reference arguments, leaving earlier shape questions unchanged. An
+absent annotated/contextual/symbol type is an absent graph. Argument indexes and
+identities must be canonical and in range. `property-declarations` consumes the
+remaining bytes as its name, including embedded LF. The C ownership checks cover
+these facts through the native coverage suite under ASan/UBSan/LeakSanitizer;
+Go heap accesses remain outside ASan's instrumentation.

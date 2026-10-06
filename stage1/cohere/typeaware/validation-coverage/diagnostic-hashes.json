@@ -1,0 +1,146 @@
+[
+  {
+    "case": "controls",
+    "file": "005-controls-go.stdout",
+    "bytes": 24454,
+    "sha256": "5a0a55052bce1f922c3a2bb62097c03169e3b3a74fd76a94bf58880163c07dc6"
+  },
+  {
+    "case": "controls",
+    "file": "006-controls-native.stdout",
+    "bytes": 24454,
+    "sha256": "5a0a55052bce1f922c3a2bb62097c03169e3b3a74fd76a94bf58880163c07dc6"
+  },
+  {
+    "case": "controls-asan",
+    "file": "009-controls-asan-go.stdout",
+    "bytes": 24454,
+    "sha256": "5a0a55052bce1f922c3a2bb62097c03169e3b3a74fd76a94bf58880163c07dc6"
+  },
+  {
+    "case": "controls-asan",
+    "file": "010-controls-asan-native.stdout",
+    "bytes": 24454,
+    "sha256": "5a0a55052bce1f922c3a2bb62097c03169e3b3a74fd76a94bf58880163c07dc6"
+  },
+  {
+    "case": "repository",
+    "file": "031-repository-go.stdout",
+    "bytes": 85151,
+    "sha256": "24d3e29e8d5eb9f4c89f03de301aa5e0d443ebc61d99afe1afadc94d1f4cbad3"
+  },
+  {
+    "case": "repository",
+    "file": "032-repository-native.stdout",
+    "bytes": 85151,
+    "sha256": "24d3e29e8d5eb9f4c89f03de301aa5e0d443ebc61d99afe1afadc94d1f4cbad3"
+  },
+  {
+    "case": "repository-asan",
+    "file": "033-repository-asan-go.stdout",
+    "bytes": 85151,
+    "sha256": "24d3e29e8d5eb9f4c89f03de301aa5e0d443ebc61d99afe1afadc94d1f4cbad3"
+  },
+  {
+    "case": "repository-asan",
+    "file": "034-repository-asan-native.stdout",
+    "bytes": 85151,
+    "sha256": "24d3e29e8d5eb9f4c89f03de301aa5e0d443ebc61d99afe1afadc94d1f4cbad3"
+  },
+  {
+    "case": "compiler",
+    "file": "035-compiler-go.stdout",
+    "bytes": 7120228,
+    "sha256": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3"
+  },
+  {
+    "case": "compiler",
+    "file": "036-compiler-native.stdout",
+    "bytes": 7120228,
+    "sha256": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3"
+  },
+  {
+    "case": "compiler-asan",
+    "file": "037-compiler-asan-go.stdout",
+    "bytes": 7120228,
+    "sha256": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3"
+  },
+  {
+    "case": "compiler-asan",
+    "file": "038-compiler-asan-native.stdout",
+    "bytes": 7120228,
+    "sha256": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3"
+  },
+  {
+    "case": "old16-controls",
+    "file": "005-controls-go.stdout",
+    "bytes": 24218,
+    "sha256": "14dff08d4b706b49fbd9439eb212172edd1c18dae41a37bb3e35b078c4e795ae"
+  },
+  {
+    "case": "old16-controls",
+    "file": "006-controls-native.stdout",
+    "bytes": 24218,
+    "sha256": "14dff08d4b706b49fbd9439eb212172edd1c18dae41a37bb3e35b078c4e795ae"
+  },
+  {
+    "case": "old16-controls-asan",
+    "file": "009-controls-asan-go.stdout",
+    "bytes": 24218,
+    "sha256": "14dff08d4b706b49fbd9439eb212172edd1c18dae41a37bb3e35b078c4e795ae"
+  },
+  {
+    "case": "old16-controls-asan",
+    "file": "010-controls-asan-native.stdout",
+    "bytes": 24218,
+    "sha256": "14dff08d4b706b49fbd9439eb212172edd1c18dae41a37bb3e35b078c4e795ae"
+  },
+  {
+    "case": "old16-repository",
+    "file": "061-repository-go.stdout",
+    "bytes": 31862,
+    "sha256": "c0af3d521a5c82fc0ff55758dd9922a326a8d81fbb759c3bb91e5d68a1733a0a"
+  },
+  {
+    "case": "old16-repository",
+    "file": "062-repository-native.stdout",
+    "bytes": 31862,
+    "sha256": "c0af3d521a5c82fc0ff55758dd9922a326a8d81fbb759c3bb91e5d68a1733a0a"
+  },
+  {
+    "case": "old16-repository-asan",
+    "file": "063-repository-asan-go.stdout",
+    "bytes": 31862,
+    "sha256": "c0af3d521a5c82fc0ff55758dd9922a326a8d81fbb759c3bb91e5d68a1733a0a"
+  },
+  {
+    "case": "old16-repository-asan",
+    "file": "064-repository-asan-native.stdout",
+    "bytes": 31862,
+    "sha256": "c0af3d521a5c82fc0ff55758dd9922a326a8d81fbb759c3bb91e5d68a1733a0a"
+  },
+  {
+    "case": "old16-compiler",
+    "file": "066-compiler-go.stdout",
+    "bytes": 6717107,
+    "sha256": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59"
+  },
+  {
+    "case": "old16-compiler",
+    "file": "067-compiler-native.stdout",
+    "bytes": 6717107,
+    "sha256": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59"
+  },
+  {
+    "case": "old16-compiler-asan",
+    "file": "068-compiler-asan-go.stdout",
+    "bytes": 6717107,
+    "sha256": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59"
+  },
+  {
+    "case": "old16-compiler-asan",
+    "file": "069-compiler-asan-native.stdout",
+    "bytes": 6717107,
+    "sha256": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59"
+  }
+]
