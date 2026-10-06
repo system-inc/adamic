@@ -46,7 +46,7 @@ func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]i
 
 // The checker permits a default to read a parameter property that has not been copied yet.
 // Node reads undefined there. A declared number slot cannot claim that value, so require an
-// already initialized written field instead. Deferred functions are checked when they are lowered.
+// already initialized written field instead. Calls and deferred captures are checked conservatively.
 func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) error {
 	hasProperties := false
 	available := map[string]bool{}
@@ -60,4 +60,29 @@ func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) 
 		return nil
 	}
 	return l.initializerReads(initializer, available)
+}
+
+// A derived parameter-property declaration defines its own slot after super, resetting any
+// inherited property of the same name before the written field initializers run.
+func (l *lowering) parameterPropertyResets(declaration *ast.Node, this int, available map[string]bool) ([]ir.Statement, error) {
+	if l.instance.base == nil {
+		return nil, nil
+	}
+	statements := []ir.Statement{}
+	for _, parameter := range classMembersWithParameters(declaration) {
+		if !parameterProperty(parameter) {
+			continue
+		}
+		delete(available, parameter.Name().Text())
+		of, err := l.typeOf(parameter.Name())
+		if err != nil {
+			return nil, err
+		}
+		value := zeroValue(of)
+		if of.IsReference() {
+			value = ir.Undefined{Of: of}
+		}
+		statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: parameter.Name().Text(), Value: value, Site: l.writeSite(declaration.Name())})
+	}
+	return statements, nil
 }

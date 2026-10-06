@@ -21,8 +21,8 @@ compiler or every callback return representation now lowers.
 Node's transform declares these slots before the written class fields. Base
 field initializers run first, then parameter defaults, then parameter-property
 stores, then the constructor body. For a derived class: its defaults and code
-before `super` run first; base construction completes; derived field initializers
-run; parameter properties are copied from their current lexical parameters;
+before `super` run first; base construction completes; derived parameter-property declarations reset their
+slots, including inherited names; written derived field initializers run; parameter properties are copied from their current lexical parameters;
 the rest of the derived body runs. A parameter reassigned before `super` is
 copied with its new value. A readonly property does not make that lexical
 parameter readonly.
@@ -44,6 +44,10 @@ undefined. Adamic refuses that default with the initialization explanation.
 Use `y: number = x`, or assign it in the constructor. Defaults and field
 initializers may read only fields already initialized; this proof is conservative
 about methods and deferred callbacks.
+
+Named callbacks with an explicit dynamic `this` parameter remain NotYet, as
+function expressions with such a receiver already were. Use an arrow or pass
+the receiver as an ordinary parameter.
 
 Constructors returning a replacement object, rest/destructured parameters,
 unsupported slot representations and conditional/repeated `super` remain the

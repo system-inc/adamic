@@ -322,6 +322,11 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 			available[field.Name] = true
 		}
 	}
+	resets, err := l.parameterPropertyResets(declaration, this, available)
+	if err != nil {
+		return nil, err
+	}
+	statements = append(statements, resets...)
 	for _, member := range declaration.Members() {
 		if member.Kind != ast.KindPropertyDeclaration || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
