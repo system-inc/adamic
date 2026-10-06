@@ -9,6 +9,7 @@ import (
 	"path"
 	"path/filepath"
 	goruntime "runtime"
+	"slices"
 	"strings"
 	"sync"
 )
@@ -47,7 +48,12 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("native: cache directory: %w", err)
 	}
-	return cachedRuntime(files, Flags(options), compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
+	flags := Flags(options)
+	if options.FusedRuntime {
+		// The later -ffp-contract wins, and the key holds every flag, so this is a library of its own.
+		flags = append(slices.Clone(flags), "-ffp-contract=fast")
+	}
+	return cachedRuntime(files, flags, compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
 }
 
 func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
