@@ -1,3 +1,62 @@
+Native Unicode widths, major printers, prose splitting and entity decoding are green.
+4,813 composed documents and 2,242,268 decoder sources match both original oracles.
+Decoder probe: native 767k texts/s, Go 3.19M, original Node 665k.
+Eighteen new output mutants caught; a compiler miscompile has a proving program.
+Full native parsing and AST preprocessing remain; whitespace composition is testing.
+
+Source-driven micromark decoding slice, October 6, 2026
+
+Previous pushed source splitter: 20ce764cb1b95f870f4d92a3892f636fef02ba90.
+Built decodeString.ts plus four exact generated entity tables and a source-driven
+native probe. This is the complete cohere DecodeString primitive, selected as a
+clean parser dependency: bounded named/numeric references and escapes, no runtime
+RegExp, no parser/Go facts required. It is not the full Markdown tokenizer/mdast.
+Generated entity tables have pinned SHA256 headers, exact 2,125-entry validation
+and formatted byte regeneration checks. Named keys and values split by case
+because lookup is case-sensitive and the combined file exceeded max-lines.
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ go test ./stage1/cohere/markdownblocks -run '^TestMarkdownSourceDecoding$' -count=1 -v -timeout 20m
+/tmp/markdown-decode-final2.log: PASS, 82.814s, 2,242,268 strings: 876 physical
+repository/submodule Markdown files plus original 77 generated documents,
+2,125 named references in six contexts, 256 escape units, all numeric code points
+0 through 0x110020 in decimal/hex and malformed/boundary cases.
+Go's actual exported decoder, actual unchanged private fork function exposed in
+memory, source Node, JS backend and sanitized native agree byte for byte.
+Leak check passes. The scratch fork bundle is first checked against pinned bytes.
+Three sanitized native clones all compile, exit 0, empty stderr and change output:
+control replacement code<9 becomes <8; hex maximum6 becomes7; escaped ASCII
+punctuation starts at34 rather than33. Each caught only by decoded-byte comparison.
+
+The first run failed at byte1936 of CLAUDE.md: native removed `&&`, Go and the
+original fork preserved it. Generated C showed the uninitialized optional string
+initialized to empty. gaps/6_uninitialized_optional_string.ts proves Node prints
+missing, native and JS backend present. An explicit match flag avoids this bug.
+Full final gate above passes. No compiler files or inline dependency changed.
+The intermediate decoder gate passed 62.601s before lint found the 4,256-line data
+file; after splitting the four real data concerns, the complete gate was rerun.
+/tmp/markdown-decode-style-final.log: 276 rules, 6 checked, 100% Adamic-ready,
+zero findings. Generator check is included in the final gate.
+
+Three-process mixed-batch probe, startup/protocol/serialization/stdout included:
+Go 3,186,652.6 texts/s; native O2 766,717.3; actual original Node 664,532.4.
+Native observed 0.24x Go and 1.15x Node. Go output is buffered, native/Node batch
+output. A whitespace gate ran concurrently; these are observed end-to-end probe
+rates, not isolated algorithm speeds or full Markdown formatter benchmarks.
+
+ go test ./stage1/cohere/markdownblocks -run '^(TestParserRepresentationProbes|TestOptionalStringInitializationWitness)$' -count=1 -v
+/tmp/markdown-white-decode-gaps.log: PASS, 0.978s. The optional-string test records
+wrong compiler behavior explicitly; the five ordinary parser gap probes also pass.
+ ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(classes.a|class_as_interface.a|objects.a|maybe_number_slots.a|reuse_arrays.a|maps_and_text.a|array_from.a)$' -count=1 -v -timeout 10m
+/tmp/markdown-whitespace-decoder-oracle.log: PASS, 2.013s; native hits0/misses21,
+Node hits0/misses14. go vet ./... and git diff --check passed with empty logs
+/tmp/markdown-white-decode-vet.log and /tmp/markdown-white-decode-diff.log.
+Full repository gate not run. Full native tokenizer, event/rollback/resolver,
+subtokenization, mdast construction, AST preprocessing and path traversal remain.
+Whole-document layout still uses Go-parsed AST fixtures; common preserved-prose
+options and embedding off remain the contract. The seven original disagreements
+and both complete outputs remain in GAPS.md. Whitespace composition is in flight.
+
 Native Unicode widths, major printers and source prose splitting are green.
 4,813 documents and 1,180,938 splitText sources match both original oracles.
 Widths match on 1,205,496 cases; splitText measured 2.40x Node and 1.70x Go.

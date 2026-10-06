@@ -6,6 +6,31 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native source escape and character-reference decoding
+
+`decodeString.ts` ports micromark's complete source-string decoder: ASCII
+punctuation escapes, semicolon-terminated named references (31-character bound),
+decimal references (7 digits), hexadecimal references (6 digits), and the exact
+invalid-control/surrogate/noncharacter/out-of-range replacement rules. The 2,125
+case-sensitive entities are generated into separate uppercase/lowercase key and
+value tables, with pinned source hashes and byte-checked regeneration.
+There is no runtime regular expression or Go service. All 2,242,268 source
+strings match actual Go DecodeString and the unchanged original fork function,
+including every numeric code point in decimal and hexadecimal, all physical
+Markdown files and generated contexts. Three output-only native mutants fail.
+This closes a parser primitive; it does not implement tokenizer events or mdast.
+
+`gaps/6_uninitialized_optional_string.ts` proves a silent compiler miscompile:
+Node prints `missing`, whereas sanitized native and the JavaScript backend print
+`present`. Generated C initializes an uninitialized `string | undefined` to the
+empty string. The decoder's full oracle caught the production manifestation:
+`&&` was removed in CLAUDE.md. The native decoder now uses an initialized string
+and a separate initialized match flag; every complete decoding oracle passes.
+`optional_gap_test.go` explicitly records the wrong behavior as a gap observation,
+never as the production decoder's oracle. Compiler-owned files are untouched.
+The initial combined entity file exceeded cohere's 2,000-line limit. Splitting
+case-sensitive keys and values into their own data concerns passes all 276 rules.
+
 ## Native source text splitting
 
 `splitText.ts`, `textTokens.ts` and generated `textClasses.ts` port cohere's
