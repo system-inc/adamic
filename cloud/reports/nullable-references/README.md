@@ -69,3 +69,29 @@ The still-active checks were internal Unicode properties and stage-1 cohere JSON
 and parser tests. Their process group was stopped, including children. No failure
 had been reported, but their final results are not known. Integration must run the
 complete uncached gate before main moves.
+
+
+## Added match-result typeof fixture
+
+`nullable_references_typeof_match.a` contains the requested `.match()` and `.exec()`
+probe unchanged. Node exited zero and printed:
+
+```text
+object true
+object
+object
+```
+
+The uncached differential fixture passed in 1.557 seconds, including both backends,
+ASan/UBSan, the release build and LeakSanitizer. The targeted typeof-null mutant
+replaced the nullable typeof helper's `object` constant with `undefined`. This
+fixture alone caught it: both backends printed `undefined true`, `object`,
+`undefined` and exited zero, whereas Node printed the output above. Source was
+restored in a finally block. A build failure was not counted.
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout=30m ./internal/oracle -run '^TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references_typeof_match' > /tmp/nullable-typeof-oracle.log 2>&1
+go test -count=1 -timeout=30m ./internal/oracle -run '^TestCountsAreRecorded$' -args -update-counts > /tmp/nullable-typeof-counts.log 2>&1
+```
+
+This follow-up adds a fifth fixture row. Existing rows remain unchanged.

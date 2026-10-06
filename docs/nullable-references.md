@@ -95,5 +95,9 @@ before proceeding. A compiler or C build failure is rejected as evidence.
 | Ignore nullable views | TestNullableReferenceViewsCannotChangeTheEmptyCase |
 | Treat empty string as truthy | Node stdout comparison |
 
-The four new fixture rows are the only changes to `internal/oracle/counts.md`.
+The five new fixture rows are the only changes to `internal/oracle/counts.md`.
 No existing program's recorded counts changed.
+
+The typeof match fixture also holds null `.match()` and `.exec()` array results
+to Node: the output is `object true`, `object`, `object`. A targeted typeof-null
+mutant makes both backends disagree with that fixture.
