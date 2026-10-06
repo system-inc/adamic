@@ -217,6 +217,8 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			if node.Method == "replaceAll" || node.Method == "matchAll" {
 				failing = "RegExp global-flag validation"
 			}
+		case ir.StringFromCodes:
+			failing = libraryStringCodePointFailure(node)
 		case ir.StringCall:
 			switch {
 			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):

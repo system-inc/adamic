@@ -44,6 +44,10 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "isWellFormed":
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_string_is_well_formed(%s)", value))
+	case "toWellFormed":
+		return e.own(ir.String, fmt.Sprintf("adamic_string_to_well_formed(%s)", value))
 	case "slice":
 		start, end, hasEnd := "0.0", "0.0", false
 		if len(arguments) > 0 {
