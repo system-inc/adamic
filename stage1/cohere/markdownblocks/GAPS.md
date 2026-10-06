@@ -6,6 +6,13 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native code block layout boundary
+
+`codeblocks.ts` prints fenced and indented values with embedding off and computes
+canonical fences without regular expressions. Go supplies AST fields and explicit
+text display widths; parsing and preprocessing remain unported. Embedded JSON,
+YAML, TOML and other languages remain raw, as required by this unit's contract.
+
 ## Native table layout boundary
 
 `tables.ts` builds preserved-prose table rows and renders its child documents in

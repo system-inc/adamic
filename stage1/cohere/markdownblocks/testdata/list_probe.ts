@@ -3,6 +3,7 @@ import { panic, programArguments, readTextFile } from 'adamic';
 import { decode, encode } from '../codec.ts';
 import { DocumentArena, printDocument } from '../document.ts';
 import { printList, type ListBlockInterface, type ListItemInterface } from '../lists.ts';
+import { printCodeBlock } from '../codeblocks.ts';
 import { printTable, type TableCellInterface } from '../tables.ts';
 import { printQuote } from '../quotes.ts';
 import { printWord } from '../../markdowninline/inline.ts';
@@ -79,6 +80,18 @@ for(const line of input.text.split('\n')) {
         );
         documents.push(arena.text(text, integer(fields[3] ?? '')));
     }
+    else if(kind === 'C')
+        documents.push(
+            printCodeBlock(arena, {
+                indented: fields[1] === '1',
+                language: decode(fields[2] ?? ''),
+                metadata: decode(fields[3] ?? ''),
+                languageWidth: integer(fields[4] ?? ''),
+                metadataWidth: integer(fields[5] ?? ''),
+                lineWidths: numbers(fields[6] ?? ''),
+                value: decode(fields[7] ?? ''),
+            }),
+        );
     else if(kind === 'T') {
         const rows: TableCellInterface[][] = [];
         for(const row of (fields[3] ?? '').split(':')) {

@@ -27,6 +27,11 @@ func TestMarkdownTableLayout(t *testing.T) {
 	testBlockLayout(t, "tables")
 }
 
+func TestMarkdownCodeBlockLayout(t *testing.T) {
+	t.Parallel()
+	testBlockLayout(t, "code")
+}
+
 func testBlockLayout(t *testing.T, slice string) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
@@ -62,7 +67,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			}
 		}
 	}
-	if slice == "tables" {
+	if slice != "lists" && slice != "quotes" {
 		for _, align := range []string{"---", ":--", "--:", ":-:"} {
 			for _, cell := range []string{"", "a", "abcde", "abcdef", "中😀", "*a _b_*", "`a|b`", "a\\|b", "[a](/b)", "<em>a</em>"} {
 				for _, prefix := range []string{"", "> ", "- ", "> - "} {
@@ -82,6 +87,33 @@ func testBlockLayout(t *testing.T, slice string) {
 		}
 		for _, text := range []string{"a | b\n- | -\nc\nd | e | f\n", "a | b\n:- | -:\n | \n", "| a |\n| - |\n| x | y |\n", "| 😀 | 中 |\n| :-: | -: |\n| é | 👨‍👩‍👧‍👦 |\n"} {
 			inputs = append(inputs, auditInput{Name: "generated/table-layout/edge/" + text, Text: text})
+		}
+	}
+	if slice == "code" {
+		for _, marker := range []string{"```", "````", "~~~~", "```````"} {
+			for _, info := range []string{"", "js", "json", "yaml", "toml", "css", "html", "text title=foo", "x {#id .class}"} {
+				for _, body := range []string{"", "a", "a\nb", "\n\nx\n", "a  \nb\t", "`a`", "```", "~~~~", "中😀"} {
+					for _, prefix := range []string{"", "> ", "- ", "> - "} {
+						text := marker + info + "\n" + body + "\n" + marker + "\n"
+						lines := strings.Split(strings.TrimSuffix(text, "\n"), "\n")
+						text = prefix + lines[0] + "\n"
+						continuation := prefix
+						if strings.HasSuffix(prefix, "- ") {
+							continuation = strings.TrimSuffix(prefix, "- ") + "  "
+						}
+						for _, line := range lines[1:] {
+							text += continuation + line + "\n"
+						}
+						inputs = append(inputs, auditInput{Name: "generated/code-layout/" + text, Text: text})
+					}
+				}
+			}
+		}
+		for _, indent := range []string{"    ", "\t", "     ", "  \t", "\t "} {
+			for _, body := range []string{"a", "a  \nb\t", "\n\nx\n", "中😀"} {
+				text := indent + strings.ReplaceAll(body, "\n", "\n"+indent) + "\n"
+				inputs = append(inputs, auditInput{Name: "generated/code-layout/indent/" + text, Text: text})
+			}
 		}
 	}
 	dir := t.TempDir()
@@ -225,6 +257,14 @@ func testBlockLayout(t *testing.T, slice string) {
 			{"table alignment", "align === 'right' ? spaces", "align === 'right' ? 0"},
 		}
 	}
+	if slice == "code" {
+		mutantFile = "codeblocks.ts"
+		mutations = []struct{ name, from, to string }{
+			{"fence minimum", "Math.max(3, longest + 1)", "Math.max(4, longest + 1)"},
+			{"fence longest", "longest + 1", "longest"},
+			{"code indentation", "' '.repeat(4)", "' '.repeat(3)"},
+		}
+	}
 	for _, mutation := range mutations {
 		t.Run(mutation.name, func(t *testing.T) {
 			scratch := t.TempDir()
@@ -241,7 +281,7 @@ func testBlockLayout(t *testing.T, slice string) {
 				}
 				write(t, filepath.Join(scratch, "markdowninline", name), content)
 			}
-			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts"} {
+			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts"} {
 				content, err := os.ReadFile(name)
 				if err != nil {
 					t.Fatal(err)
@@ -282,7 +322,7 @@ func testBlockLayout(t *testing.T, slice string) {
 	for _, side := range []struct {
 		name, command string
 		args          []string
-	}{{"Go document layout", goLayout, []string{canonicalCases}}, {"native list/layout component", fast, []string{nativeCases}}, {"source Node list/layout component", "node", []string{"--disable-warning=ExperimentalWarning", runner, main, nativeCases}}, {"original Node document layout", "node", []string{script, fork, canonicalCases}}} {
+	}{{"Go document layout", goLayout, []string{canonicalCases}}, {"native block/layout component", fast, []string{nativeCases}}, {"source Node block/layout component", "node", []string{"--disable-warning=ExperimentalWarning", runner, main, nativeCases}}, {"original Node document layout", "node", []string{script, fork, canonicalCases}}} {
 		var elapsed time.Duration
 		for round := 0; round < 3; round++ {
 			start := time.Now()
@@ -298,6 +338,7 @@ func testBlockLayout(t *testing.T, slice string) {
 		t.Fatal(err)
 	}
 	t.Logf("%d physical files, %d generated, %d whole-document contexts; %d native list frames, %d composed word nodes; Go/source/native/backend/original doc bytes identical", files, len(inputs)-files, len(inputs), bytes.Count(data, []byte("\nL\t")), bytes.Count(data, []byte("\nW\t")))
+	t.Logf("%d native code frames", bytes.Count(data, []byte("\nC\t")))
 	t.Logf("%d native table frames", bytes.Count(data, []byte("\nT\t")))
 	t.Logf("%d native quote frames", bytes.Count(data, []byte("\nQ\t")))
 }

@@ -1,3 +1,85 @@
+Native fenced and indented code block layout is green with embedding off.
+3,804 source documents agree with Go and the pinned fork; native bytes match Go.
+4,218 native code frames compose with tables, quotes, lists and inline words.
+ASan/UBSan/leaks and three native mutants pass; component rate 3,306.1 documents/s.
+Native Markdown parsing, Unicode width and non-default table options remain pending.
+
+Code blocks slice, October 6, 2026
+
+Table slice pushed: 17857cc5a9e72bb92ae5b2d4873f7383b1f456c7.
+codeblocks.ts ports fenced and indented document construction from print.go and
+the fenceStyle scanner: at least three backticks and one more than the longest
+run anywhere in the value. Metadata gets its one separating space. Code text
+is split on LF, with actual hardline behavior including trailing-space trimming,
+and four-space alignment for indented code. Embedded formatting is off throughout.
+There are no regular expressions or parser dependencies in this component.
+Go supplies parsed code value/language/meta fields, explicit line and metadata
+widths, and unported child docs. Native does not receive preprinted code answers.
+Native is still a fixture-based layout component, not a Markdown-file formatter.
+
+953 original + 1,218 list + 153 quote + 164 table + 1,316 code cases = 3,804.
+Code cases cross four fences, nine info strings, nine bodies and four nesting
+contexts (1,296), plus five indent prefixes times four bodies (20). Includes
+empty blocks, fence runs inside text, metadata, Unicode, blank lines, spaces/tabs,
+and JSON/YAML/TOML/CSS/HTML fenced contents held raw under embedding off.
+876 physical files, 2,928 generated. Native: 2,765 lists, 2,489 quotes,
+654 tables, 4,218 code blocks, 221,435 words.
+All source Node/backend/native outputs match actual Go Format. Sanitizers and
+leaks pass. Go/fork canonical doc printers agree; the full pinned-fork Markdown
+parser/layout agrees with Go on all 3,804 original source strings, embedding off.
+
+Commands (source /workspace/adamic-tools/env.sh first):
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-code-final
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownCodeBlockLayout$' -count=1 -v -timeout 15m
+/tmp/markdown-code-test.log: PASS, 94.858s. Inputs/doc streams retained at
+/tmp/markdown-code-final. Cohere --no-cache --no-fix codeblocks.ts and the probe:
+/tmp/markdown-code-style.log: 276 rules, 2 checked, 100% Adamic-ready.
+go vet ./stage1/cohere/markdownblocks and git diff --check: exit 0.
+No compiler changes. Full touched-package gate and fresh scoped oracle follow
+HTML. No full repository gate run for this component.
+
+Three native output-only mutants compile, exit 0, empty stderr:
+minimum fence 3 to 4: CLAUDE.md, byte 3051.
+longest run + 1 to longest: TypeScript autoImportCompletion1.baseline.md, byte 417589.
+indented code alignment 4 to 3: cohere/TypeScript-shim/README.md, byte 437373.
+
+Three process runs with startup/protocol/output included, parsing/builds/fixture
+generation excluded. Go/fork canonical-doc workloads differ from native/source
+component construction. Go docs 7116.6 documents/s (1.603565s), native 3306.1
+(3.451778s), source Node 3384.5 (3.371870s), fork docs 3071.1 (3.715955s).
+No end-to-end formatter speed inference. Setup timing/nproc/pins unchanged.
+
+Actual code block log:
+
+=== RUN   TestMarkdownCodeBlockLayout
+=== PAUSE TestMarkdownCodeBlockLayout
+=== CONT  TestMarkdownCodeBlockLayout
+    lists_test.go:236: original fork full Markdown parsing/layout off agrees on all 3804 source documents
+=== RUN   TestMarkdownCodeBlockLayout/fence_minimum
+    lists_test.go:311: output-only native mutant caught by CLAUDE.md at byte 3051
+=== RUN   TestMarkdownCodeBlockLayout/fence_longest
+    lists_test.go:311: output-only native mutant caught by cohere/TypeScript/tsc/testdata/baselines/reference/fourslash/autoImports/autoImportCompletion1.baseline.md at byte 417589
+=== RUN   TestMarkdownCodeBlockLayout/code_indentation
+    lists_test.go:311: output-only native mutant caught by cohere/TypeScript-shim/README.md at byte 437373
+=== NAME  TestMarkdownCodeBlockLayout
+    lists_test.go:334: component throughput Go document layout 7116.6 documents/s, three runs 1.603565s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:334: component throughput native block/layout component 3306.1 documents/s, three runs 3.451778s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:334: component throughput source Node block/layout component 3384.5 documents/s, three runs 3.371870s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:334: component throughput original Node document layout 3071.1 documents/s, three runs 3.715955s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:340: 876 physical files, 2928 generated, 3804 whole-document contexts; 2765 native list frames, 221435 composed word nodes; Go/source/native/backend/original doc bytes identical
+    lists_test.go:341: 4218 native code frames
+    lists_test.go:342: 654 native table frames
+    lists_test.go:343: 2489 native quote frames
+--- PASS: TestMarkdownCodeBlockLayout (94.85s)
+    --- PASS: TestMarkdownCodeBlockLayout/fence_minimum (11.66s)
+    --- PASS: TestMarkdownCodeBlockLayout/fence_longest (12.70s)
+    --- PASS: TestMarkdownCodeBlockLayout/code_indentation (11.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	94.858s
+
+Prior table report, retained:
+
 Native table layout now composes with quotes, lists and inline words.
 2,488 source documents agree with Go and the pinned fork, embedding off.
 Native/source/backend/doc oracles agree; 654 table frames and three mutants pass.
