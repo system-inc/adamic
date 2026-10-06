@@ -26,10 +26,17 @@ func TestLongArgumentsLeaveTheStackItsLimit(t *testing.T) {
 		// set the top, so only an empty environment leaves the arguments alone to set it. (A panic exits
 		// through _exit, so LeakSanitizer, on by default there, never runs.)
 		alone bool
+
+		// stack, in KiB, lowers the soft stack limit first (ulimit -s), Node's run included. macOS
+		// allows arguments ARG_MAX (1 MiB) whatever the stack, more than the quarter of a lowered one
+		// stack.c once assumed was all they could take, and deep recursion crashed there.
+		stack int
 	}{
-		{"arguments", []string{long, long, long}, nil, false},
-		{"arguments alone", []string{long, long, long}, nil, true},
-		{"environment", nil, []string{"ADAMIC_LONG_1=" + long, "ADAMIC_LONG_2=" + long, "ADAMIC_LONG_3=" + long}, false},
+		{"arguments", []string{long, long, long}, nil, false, 0},
+		{"arguments alone", []string{long, long, long}, nil, true, 0},
+		{"environment", nil, []string{"ADAMIC_LONG_1=" + long, "ADAMIC_LONG_2=" + long, "ADAMIC_LONG_3=" + long}, false, 0},
+		{"a 1 MiB stack and 400 KB of arguments", []string{strings.Repeat("x", 136_000), strings.Repeat("x", 136_000), strings.Repeat("x", 136_000)}, nil, false, 1024},
+		{"a 2 MiB stack and 900 KB of arguments", []string{strings.Repeat("x", 307_000), strings.Repeat("x", 307_000), strings.Repeat("x", 307_000)}, nil, false, 2048},
 	} {
 		t.Run(setting.name, func(t *testing.T) {
 			t.Parallel()
@@ -50,6 +57,10 @@ func TestLongArgumentsLeaveTheStackItsLimit(t *testing.T) {
 					t.Helper()
 					environment := append([]string{}, setting.environment...)
 					environment = append(environment, "ASAN_OPTIONS=detect_leaks=0")
+					if setting.stack > 0 {
+						lowered := append([]string{"-c", fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, setting.stack), name}, arguments...)
+						return executeWith(t, environment, "sh", append(lowered, setting.arguments...)...)
+					}
 					if !setting.alone {
 						return executeWith(t, environment, name, append(arguments, setting.arguments...)...)
 					}
