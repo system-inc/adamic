@@ -40,7 +40,7 @@ func written(text string) string {
 
 func kind(k ast.Kind) string { return strings.TrimPrefix(k.String(), "Kind") }
 func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool) int {
-	text, operator := "", ""
+	text, operator, raw := "", "", ""
 	flags, list, trailing, multiline := ast.TokenFlags(0), -1, false, false
 	switch n.Kind {
 	case ast.KindIdentifier, ast.KindPrivateIdentifier:
@@ -51,6 +51,9 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool) int {
 	case ast.KindNoSubstitutionTemplateLiteral, ast.KindTemplateHead, ast.KindTemplateMiddle, ast.KindTemplateTail:
 		text = n.Text()
 		flags = n.TemplateLiteralLikeData().TemplateFlags
+		if n.Kind != ast.KindNoSubstitutionTemplateLiteral {
+			raw = n.RawText()
+		}
 	case ast.KindPrefixUnaryExpression:
 		operator = kind(n.AsPrefixUnaryExpression().Operator)
 	case ast.KindPostfixUnaryExpression:
@@ -74,7 +77,7 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool) int {
 		}
 	}
 	if !countOnly {
-		fmt.Fprintf(out, "%d %s %d %d %d %d %d %d %d\t%s\t%s\n", depth, kind(n.Kind), n.Pos(), n.End(), n.Flags&ast.NodeFlagsOptionalChain, flags, list, core.IfElse(trailing, 1, 0), core.IfElse(multiline, 1, 0), operator, written(text))
+		fmt.Fprintf(out, "%d %s %d %d %d %d %d %d %d\t%s\t%s\t%s\n", depth, kind(n.Kind), n.Pos(), n.End(), n.Flags&ast.NodeFlagsOptionalChain, flags, list, core.IfElse(trailing, 1, 0), core.IfElse(multiline, 1, 0), operator, written(text), written(raw))
 	}
 	count := 1
 	n.ForEachChild(func(child *ast.Node) bool { count += walk(out, child, depth+1, countOnly); return false })

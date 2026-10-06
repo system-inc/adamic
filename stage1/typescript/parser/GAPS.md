@@ -22,12 +22,20 @@ Workaround: a parse owns an indexed node table. Every node stores child indexes;
 no parent pointer or child pointer owns another node. Traversal starts at root
 indexes. The representation accommodates speculative parse rollback as well.
 
+## 2. Spread into Array.push
+
+`gaps/2_push_spread.ts` prints `1,2,3` on Node; stage 0 refuses
+`a SpreadElement` at the spread argument of push. The parser initially
+appended an argument list with `children.push(...arguments)`, which met this
+same refusal. Workaround: an explicit loop appends each numeric child index.
+This does not limit parsing spread syntax in the source being parsed.
+
 ## Canonical answer protocol
 
 Each expression root starts with `expression`. Nodes follow in preorder, one
 per line: depth, kind, byte position, byte end, optional-chain flag, literal
 flags, argument/element/property count (-1 where absent), trailing comma,
-multiline, a tab, unary/meta operator kind, a tab, cooked text. Children are in
+multiline, a tab, unary/meta operator kind, a tab, cooked text, a tab, template raw text. Children are in
 Go's ForEachChild order. All punctuation children retained by that visitor
 are included, notably binary operator tokens and conditional question/colon.
 
@@ -51,3 +59,15 @@ Not yet covered at this step: compiler file statements, arrow functions,
 member/call/new, arrays/objects/spread, optional chains, template substitutions,
 type assertions/satisfies, parse diagnostics/recovery, and non-UTF-8 source.
 These are grammar coverage limits, not language gaps.
+
+## Green step 2
+
+Adds call/member/element/new, new.target and import.meta, parser-directed regex
+and template rescans, arrays and omitted elements, object properties/shorthand/
+computed names, spread, optional-chain propagation, non-null expressions,
+and cooked plus raw template parts. Thirty generated expressions include
+chained optional calls/accesses, chain boundaries at parentheses, non-null
+propagation, nested new, trailing commas, and Unicode/escape templates.
+The lost optional-chain flag mutant is caught under Node and native.
+
+The file driver still accepts only expression and empty statements at this step.

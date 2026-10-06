@@ -7,6 +7,7 @@ export class ParseNode {
     end: number;
     readonly children: number[];
     text = '';
+    raw = '';
     operator = '';
     optional = false;
     literalFlags = 0;
@@ -36,7 +37,7 @@ export function written(text: string): string {
 export function printTree(nodes: readonly ParseNode[], root: number, offsets: readonly number[], depth = 0): number {
     const node = nodes[root] ?? panic('missing parse node');
     console.log(
-        `${depth} ${node.kind} ${offsets[node.pos] ?? panic('node start outside source')} ${offsets[node.end] ?? panic('node end outside source')} ${node.optional ? 32 : 0} ${node.literalFlags} ${node.list} ${node.trailing ? 1 : 0} ${node.multiLine ? 1 : 0}\t${node.operator}\t${written(node.text)}`,
+        `${depth} ${node.kind} ${offsets[node.pos] ?? panic('node start outside source')} ${offsets[node.end] ?? panic('node end outside source')} ${node.optional ? 32 : 0} ${node.literalFlags} ${node.list} ${node.trailing ? 1 : 0} ${node.multiLine ? 1 : 0}\t${node.operator}\t${written(node.text)}\t${written(node.raw)}`,
     );
     let count = 1;
     for(const child of node.children) {

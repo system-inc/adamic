@@ -158,7 +158,7 @@ func difference(got, want []byte) string {
 }
 
 func TestExpressionsAgree(t *testing.T) {
-	cases := []string{"x;", "  x + y * z;", "a - b - c;", "a ** b ** c;", "(a + b) * c;", "a ? b : c ? d : e;", "a = b = c;", "x++, --y;", "typeof x === \"number\";", "a >> b >= c;", "0xff + 1_000 / 2e3;", "'héllo' + \"😀\";", "/a[b]+/gi;", "/* trivia */ (x) + y;"}
+	cases := []string{"f(x, ...xs,);", "a.b[c](d).e;", "a?.b.c?.[x]?.(y);", "a?.b!.c;", "(a?.b).c;", "new Foo(a).bar();", "new new Foo();", "new Foo; new Foo();", "new.target; import.meta; import('module');", "[x,,y,...xs,];", "[\n1,\n2\n];", "({x, y: 2, [key + 1]: value, ...rest});", "({x = 3,});", "`a${x + y}b${f(z)}c`;", "tag`x${a?.b}y`;", "`a\\r\\n${x}\\u{1f600}`;", "x;", "  x + y * z;", "a - b - c;", "a ** b ** c;", "(a + b) * c;", "a ? b : c ? d : e;", "a = b = c;", "x++, --y;", "typeof x === \"number\";", "a >> b >= c;", "0xff + 1_000 / 2e3;", "'héllo' + \"😀\";", "/a[b]+/gi;", "/* trivia */ (x) + y;"}
 	dir := t.TempDir()
 	var manifest strings.Builder
 	for i, s := range cases {
@@ -199,4 +199,15 @@ func TestExpressionsAgree(t *testing.T) {
 		}
 		t.Logf("%s precedence mutant caught: %s", side.name, difference(side.data, want.output))
 	}
+	optionalMutant := copyPort(t, "parser.ts", "left = this.make('PropertyAccessExpression', pos, children);\n                this.node(left).optional = optional;", "left = this.make('PropertyAccessExpression', pos, children);\n                this.node(left).optional = false;")
+	for _, side := range []struct {
+		name string
+		data []byte
+	}{{"native", execute(t, "", buildPort(t, optionalMutant, true), "--manifest", path).output}, {"Node", node(t, optionalMutant, path, false).output}} {
+		if difference(side.data, want.output) == "" {
+			t.Fatalf("%s optional mutant survived", side.name)
+		}
+		t.Logf("%s optional mutant caught: %s", side.name, difference(side.data, want.output))
+	}
+
 }
