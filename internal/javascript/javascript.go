@@ -68,14 +68,14 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
 	if len(program.Classes) > 0 {
-		builder.WriteString("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot](value, ...args);\n")
+		builder.WriteString("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot](value, ...args);\n")
 		classes := []string{}
 		for _, class := range program.Classes {
 			methods := []string{}
 			for _, method := range class.Methods {
 				methods = append(methods, functionName(program, method))
 			}
-			classes = append(classes, fmt.Sprintf("{base: %d, methods: [%s]}", class.Base, strings.Join(methods, ", ")))
+			classes = append(classes, fmt.Sprintf("{base: %d, methods: [%s], definition: %d}", class.Base, strings.Join(methods, ", "), class.Definition))
 		}
 		fmt.Fprintf(&builder, "const adamicClasses = [%s];\n", strings.Join(classes, ", "))
 	}

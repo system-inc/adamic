@@ -20,10 +20,7 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 		if len(types) != 1 || !ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {
 			return nil, l.notYet(clause, "a computed class base; name the base class directly")
 		}
-		if len(declaration.TypeParameters()) != 0 {
-			return nil, l.notYet(clause, "generic class inheritance")
-		}
-		bases := l.checker.GetBaseTypes(classType)
+		bases := l.classBases(classType)
 		if len(bases) != 1 {
 			return nil, l.notYet(clause, "a class base whose type isn't known")
 		}
@@ -33,9 +30,6 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 			return nil, l.notYet(clause, "a base that isn't a declared class")
 		}
 		base := symbol.Declarations[0]
-		if len(base.TypeParameters()) != 0 {
-			return nil, l.notYet(clause, "generic class inheritance")
-		}
 		return l.instantiate(base, baseType, clause)
 	}
 	return nil, nil
@@ -44,11 +38,12 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 // TypeScript compares methods bivariantly and mutable properties covariantly. Neither is safe
 // through a base reference: arguments flow into the override, and fields can be written through it.
 func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type) error {
-	bases := l.checker.GetBaseTypes(classType)
+	bases := l.classBases(classType)
 	if len(bases) == 0 {
 		return nil
 	}
 	base := bases[0]
+	checkABI := len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
 	for _, member := range declaration.Members() {
 		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
@@ -58,6 +53,9 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 			continue
 		}
 		own := l.checker.GetTypeAtLocation(member.Name())
+		if property := l.checker.GetPropertyOfType(classType, member.Name().Text()); property != nil {
+			own = l.checker.GetTypeOfSymbol(property)
+		}
 		previous := l.checker.GetTypeOfSymbol(inherited)
 		refuse := func(what, fix string) error { return &Refused{Where: l.program.Where(member), What: what, Fix: fix} }
 		if (member.Kind == ast.KindMethodDeclaration) != (inherited.Flags&ast.SymbolFlagsMethod != 0) {
@@ -75,7 +73,7 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 			}
 			from, okFrom := l.representation(previous)
 			to, okTo := l.representation(own)
-			if !okFrom || !okTo || from != to {
+			if checkABI && (!okFrom || !okTo || from != to) {
 				return l.notYet(member, "an inherited field override with a different native representation")
 			}
 		}
@@ -99,7 +97,7 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 			}
 			a, knownA := l.representation(accepts)
 			b, knownB := l.representation(override)
-			if !knownA || !knownB || a != b {
+			if checkABI && (!knownA || !knownB || a != b) {
 				return l.notYet(member, "an override with a different native parameter representation")
 			}
 		}
@@ -110,7 +108,7 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 		}
 		a, knownA := l.representation(oldResult)
 		b, knownB := l.representation(newResult)
-		if oldResult.Flags()&checker.TypeFlagsVoid == 0 && (!knownA || !knownB || a != b) {
+		if checkABI && oldResult.Flags()&checker.TypeFlagsVoid == 0 && (!knownA || !knownB || a != b) {
 			return l.notYet(member, "an override with a different native result representation")
 		}
 	}
@@ -390,16 +388,22 @@ func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
 	if declaration == nil {
 		return nil, l.notYet(node, "instanceof against a value that isn't a declared class")
 	}
-	classType := l.checker.GetTypeAtLocation(declaration.Name())
-	instance, err := l.instantiate(declaration, classType, node)
-	if err != nil {
-		return nil, err
+	identity := 0
+	if len(declaration.TypeParameters()) > 0 {
+		// JavaScript erases type arguments for instanceof, even when native layouts differ.
+		identity = l.classIdentity(declaration)
+	} else {
+		instance, err := l.instantiate(declaration, l.checker.GetTypeAtLocation(declaration.Name()), node)
+		if err != nil {
+			return nil, err
+		}
+		identity = instance.class
 	}
 	value, err := l.expression(binary.Left)
 	if err != nil {
 		return nil, err
 	}
-	return ir.InstanceOf{Value: value, Class: instance.class}, nil
+	return ir.InstanceOf{Value: value, Class: identity}, nil
 }
 
 // Finish calls after lowering discovers every instantiated descendant. The analyses see all
@@ -454,6 +458,19 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 	if target == nil {
 		return nil
 	}
+	// Fresh literals are built as their contextual type; their explicit values are
+	// checked at their own sites. Spreads still need the whole inherited shape checked.
+	if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindArrayLiteralExpression {
+		spread := false
+		for _, child := range literalParts(node) {
+			if child.Kind == ast.KindSpreadAssignment || child.Kind == ast.KindSpreadElement {
+				spread = true
+			}
+		}
+		if !spread && !l.nominalLiteralTarget(target) {
+			return nil
+		}
+	}
 	source := l.checker.GetTypeAtLocation(node)
 	mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{})
 	if mismatch == nil {
@@ -487,7 +504,7 @@ func (l *lowering) nominalAncestor(source, target *checker.Type) bool {
 		}
 		return true
 	}
-	for _, base := range l.checker.GetBaseTypes(source) {
+	for _, base := range l.classBases(source) {
 		if l.nominalAncestor(base, target) {
 			return true
 		}
@@ -711,4 +728,94 @@ func (l *lowering) cycleFieldName(field *ast.Symbol) string {
 		}
 	}
 	return field.Name
+}
+
+// All monomorphizations of a source class have one erased identity. An identity-only
+// descriptor lets instanceof name a generic class before any concrete instance is made.
+func (l *lowering) classDefinition(declaration *ast.Node) int {
+	prefix := l.program.Where(declaration) + ":" + declaration.Name().Text()
+	for key, instance := range l.instances {
+		if key == prefix || strings.HasPrefix(key, prefix+",") {
+			return l.result.Classes[instance.class-1].Definition
+		}
+	}
+	return len(l.result.Classes) + 1
+}
+
+func (l *lowering) classIdentity(declaration *ast.Node) int {
+	definition := l.classDefinition(declaration)
+	for index, class := range l.result.Classes {
+		if class.Definition == definition {
+			return index + 1
+		}
+	}
+	identity := len(l.result.Classes) + 1
+	l.result.Classes = append(l.result.Classes, ir.Class{Name: declaration.Name().Text() + "_identity", Definition: definition, Constructor: -1})
+	if l.instances == nil {
+		l.instances = map[string]*instance{}
+	}
+	key := l.program.Where(declaration) + ":" + declaration.Name().Text() + ",identity"
+	l.instances[key] = &instance{class: identity, constructor: -1, initializer: -1}
+	return identity
+}
+
+// An inherited method's receiver can be a descendant with different type arguments.
+// Find the declaration's actual instantiated view instead of substituting by position.
+func (l *lowering) classView(proven *checker.Type, declaration *ast.Node) *checker.Type {
+	if proven.Symbol() == l.symbol(declaration.Name()) {
+		return proven
+	}
+	for _, base := range l.classBases(proven) {
+		if found := l.classView(base, declaration); found != nil {
+			return found
+		}
+	}
+	return nil
+}
+
+// The checker exposes generic bases on the declaration. Substitute the receiver's
+// actual arguments before choosing a native base layout or proving nominal ancestry.
+func (l *lowering) classBases(proven *checker.Type) []*checker.Type {
+	target := proven
+	if proven.ObjectFlags()&checker.ObjectFlagsReference != 0 && proven.Target() != nil {
+		target = proven.Target()
+	}
+	bases := l.checker.GetBaseTypes(target)
+	declaration := l.classNodeFor(proven)
+	if declaration == nil || declaration.Kind != ast.KindClassDeclaration {
+		return bases
+	}
+	mapper := l.typeMapperOf(declaration, proven)
+	if mapper == nil {
+		return bases
+	}
+	concrete := make([]*checker.Type, len(bases))
+	for index, base := range bases {
+		concrete[index] = instantiateType(l.checker, base, mapper)
+	}
+	return concrete
+}
+
+func literalParts(node *ast.Node) []*ast.Node {
+	if node.Kind == ast.KindObjectLiteralExpression {
+		return node.AsObjectLiteralExpression().Properties.Nodes
+	}
+	return node.AsArrayLiteralExpression().Elements.Nodes
+}
+
+func (l *lowering) nominalLiteralTarget(proven *checker.Type) bool {
+	if weak := l.weakTarget(proven); weak != nil {
+		proven = weak
+	}
+	if isClassInstance(proven) {
+		return true
+	}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range proven.Types() {
+			if l.nominalLiteralTarget(member) {
+				return true
+			}
+		}
+	}
+	return false
 }

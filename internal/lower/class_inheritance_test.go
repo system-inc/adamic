@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -142,7 +143,6 @@ func TestInheritanceRejectsUnsupportedConstructorShapes(t *testing.T) {
 		{"replacement object", `class A {} class B extends A { constructor() { super(); return this; } } const value = new B();`, "replacement value"},
 		{"union dispatch", `class A { value(): number { return 1; } } class B { first(): number { return 0; } value(): number { return 2; } } function choose(flag: boolean): A | B { return flag ? new A() : new B(); } console.log('' + choose(true).value());`, "union of class types"},
 		{"computed base", `class A {} class B extends (() => A)() {} const value = new B();`, "computed class base"},
-		{"generic hierarchy", `class A<T> { value: T; constructor(value: T) { this.value = value; } } class B extends A<number> {} const value = new B(1);`, "generic class inheritance"},
 		{"declare field", `class A { value: number = 1; } class B extends A { declare value: number; } const value = new B();`, "declare or abstract"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -198,5 +198,69 @@ const [, ignored, source] = pair;
 console.log(ignored ? source.read() : 'none');`)
 	if err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestInheritanceGenericMonomorphizations(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, `class Base {}
+class Box<T> extends Base { readonly value: T; constructor(value: T) { super(); this.value = value; } read(): T { return this.value; } }
+class Pair<T> extends Box<T> { readonly other: T; constructor(value: T, other: T) { super(value); this.other = other; } override read(): T { return this.other; } }
+const a = new Pair<number>(1, 2); const b = new Pair<string>('a', 'b');
+const c = new Pair<readonly number[]>([1], [2]); const d = new Pair<{ readonly n: number }>({ n: 1 }, { n: 2 });
+console.log('done');`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	layouts := map[ir.Type]bool{}
+	definition := 0
+	for _, class := range program.Classes {
+		if !strings.HasPrefix(class.Name, "Box_") {
+			continue
+		}
+		if definition == 0 {
+			definition = class.Definition
+		}
+		if definition != class.Definition {
+			t.Error("monomorphizations lost their shared erased identity")
+		}
+		layouts[class.Fields[0].Value.Type()] = true
+	}
+	for _, expected := range []ir.Type{ir.Number, ir.String, ir.Array, ir.Object} {
+		if !layouts[expected] {
+			t.Errorf("missing separate native layout %v", expected)
+		}
+	}
+}
+
+func TestInheritanceRefusesGrowingGenericClasses(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `class Base {}
+class Grow<T> extends Base { readonly value: T; constructor(value: T) { super(); this.value = value; } next(): Grow<readonly T[]> { return new Grow<readonly T[]>([this.value]); } }
+const value = new Grow<number>(1);`)
+	var refusal *Refused
+	if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "polymorphic recursion") || !strings.Contains(err.Error(), "recursive type arguments unchanged") {
+		t.Fatalf("want bounded monomorphization refusal with fix, got %v", err)
+	}
+}
+
+func TestInheritanceGenericSoundness(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, rule string }{
+		{"generic narrowing", `class A<T> { accept(value: T): void {} }
+class B<T> extends A<T> { override accept(value: T & { readonly extra: string }): void {} }
+const b = new B<string>();`, "contravariant-override"},
+		{"generic inherited cycle", `interface Holder { back: Link<Holder> | undefined; }
+class Link<T> { slot: T | undefined = undefined; set(value: T): void { this.slot = value; } }
+class Child<T> extends Link<T> {}
+const child = new Child<Holder>(); const holder: Holder = { back: child }; child.set(holder);`, "cycle-capable"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			_, err := lowerSource(t, probe.source)
+			var refusal *Refused
+			if !errors.As(err, &refusal) || !strings.Contains(err.Error(), probe.rule) {
+				t.Fatalf("want %s refusal, got %v", probe.rule, err)
+			}
+		})
 	}
 }

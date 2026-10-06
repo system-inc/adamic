@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"strconv"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -22,7 +24,7 @@ type instance struct {
 	hasDescendants bool
 
 	// thisLocals are the this of its constructor and methods, which every instantiation sharing it
-	// (Box<Tree> and Box<Listener> are both objects) has as its own type, for the cycle finder.
+	// records at its call sites, for the cycle finder.
 	thisLocals []int
 
 	// templates are the instance's locals and function values with their types as the source writes
@@ -41,6 +43,9 @@ type template struct {
 func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, where *ast.Node) (*instance, error) {
 	// Box<T> inside Maker<Node> is a Box<Node>: what it is, for the cycle finder.
 	classType = l.concrete(classType)
+	if view := l.classView(classType, declaration); view != nil {
+		classType = view
+	}
 	arguments := []ir.Type{}
 	substitution := map[*checker.Type]ir.Type{}
 	parameters := declaration.TypeParameters()
@@ -60,8 +65,8 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		arguments = append(arguments, representation)
 	}
 	key := declaration.Name().Text()
-	for _, argument := range arguments {
-		key += "," + typeName(argument)
+	for _, argument := range typeArguments {
+		key += "," + strconv.Itoa(int(argument.Id()))
 	}
 	key = l.program.Where(declaration) + ":" + key
 	mapper := l.typeMapperOf(declaration, classType)
@@ -85,6 +90,14 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		return existing, nil
 	}
 
+	if len(parameters) > 0 {
+		if l.genericDepth >= maximumGenericDepth {
+			return nil, &Refused{Where: l.program.Where(where), What: "a generic class instantiated without end (polymorphic recursion)", Fix: "keep recursive type arguments unchanged, or write a class per type"}
+		}
+		l.genericDepth++
+		defer func() { l.genericDepth-- }()
+	}
+
 	base, err := l.baseInstance(declaration, classType)
 	if err != nil {
 		return nil, err
@@ -103,7 +116,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	lowered.hasDescendants = l.derivedAncestors[l.symbol(declaration.Name())]
 	lowered.base = base
 	lowered.class = len(l.result.Classes) + 1
-	metadata := ir.Class{Name: name, Constructor: lowered.constructor}
+	metadata := ir.Class{Name: name, Constructor: lowered.constructor, Definition: l.classDefinition(declaration)}
 	if base != nil {
 		metadata.Base = base.class
 		metadata.Fields = append(metadata.Fields, l.result.Classes[base.class-1].Fields...)
@@ -285,7 +298,7 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	// this.method() is the instantiation being lowered: this is the polymorphic this type there,
 	// which carries no type arguments of its own.
 	lowered := l.instance
-	if ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword || lowered == nil {
+	if (ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword && ast.SkipParentheses(receiver).Kind != ast.KindSuperKeyword) || lowered == nil {
 		var err error
 		if lowered, err = l.instantiate(declaration, l.checker.GetTypeAtLocation(receiver), callee); err != nil {
 			return nil, err

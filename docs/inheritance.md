@@ -38,9 +38,21 @@ Mutants that ignored escaping overrides triggered ASan on an object stored beyon
 
 Outside the original lowering/native territory, this continuation updates `internal/oracle/class_inheritance_test.go` to register the memory fixture, `internal/oracle/testdata/class_inheritance_memory.a` to exercise dynamic ownership, and `internal/oracle/counts.md` to record measurements. `internal/native/emit.go` has small integration changes for joined region arguments and constructor allocation, and moves the final field-store temporary rather than retaining and releasing it. `docs/inheritance.md` is the reader-facing report.
 
+## Generic hierarchies
+
+`Box<T> extends Base` and `Pair<T> extends Box<T>` are monomorphized by concrete type argument identity. This avoids sharing a native layout between arrays and objects, or between arguments whose base projections differ. Base layouts and inherited method signatures use the actual substituted base view, including reversed type arguments and concrete subclasses of generic classes.
+
+Every monomorphization retains a distinct descriptor and typed method table, while all descriptors from the same source declaration share one erased identity for `instanceof`. An identity-only descriptor supports testing an as-yet unconstructed generic class. Growing polymorphic recursion is refused with a repair, bounded by the existing depth limit of 32.
+
+The generic oracle covers number, string, boolean, object and array fields, base-typed dispatch, overrides and super methods, a concrete `Pair<string>` subclass, reversed arguments, a Weak parent, and erased identity before construction. It records 64 allocations/frees, 74 retains, 121 releases and peak 24. Tests also reject generic parameter narrowing and a cycle through an inherited generic field.
+
+Collapsing the class cache to representation labels failed the separate-layout assertion for object fields. Comparing descriptors instead of erased identities changed Node/native ancestor results with both exiting successfully. Omitting base substitution failed the generic layout test. Native and lowering package tests, filtered oracles, vet and the complete counts update passed; all 173 pre-branch rows still have no regression.
+
+Additional integration files for this step are `internal/ir/ir.go` (erased identity metadata), `internal/javascript/javascript.go` (matching erased ancestry tests), and `internal/native/runtime/adamic.h` (the descriptor identity). The oracle registration, counts table and new `internal/oracle/testdata/class_inheritance_generic.a` hold the generic fixture. Fresh structural literals are checked through their constituent class values rather than treated as pre-existing mutable views; spreads retain the aggregate check.
+
 ## Current limits
 
-Generic inheritance and conditional or repeated super are pending extensions. Explicit replacement constructor returns, computed base expressions, static members, declare/abstract fields, overloaded overrides and changed native override representations or parameter counts report `NotYet`. Calls through a union of class types require `instanceof` narrowing first. Structural interface method dispatch remains a separate stage-0 gap.
+Conditional or repeated super are pending extensions. Generic class arguments must have known native representations. Explicit replacement constructor returns, computed base expressions, static members, declare/abstract fields, overloaded overrides and changed native override representations or parameter counts report `NotYet`. Calls through a union of class types require `instanceof` narrowing first. Structural interface method dispatch remains a separate stage-0 gap.
 
 Base constructors cannot publish this or call methods while derived fields are uninitialized. Field initializers may read earlier fields and inherited fields after super; future-field reads and arbitrary this escapes are refused. Lexically early captures of this are conservatively refused.
 

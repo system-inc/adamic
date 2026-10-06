@@ -134,6 +134,7 @@ typedef struct adamic_class {
 	size_t own_start;
 	size_t count;
 	const adamic_method *methods;
+	size_t definition;
 } adamic_class;
 
 // adamic_object is a plain object (object.c). Its shape travels with it, so the same object can be
