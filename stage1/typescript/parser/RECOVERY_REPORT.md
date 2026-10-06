@@ -433,3 +433,13 @@ including an empty list when the opening brace is missing. Statement lookahead
 scans without delivering errors, then restores scanner state, so lexical
 diagnostics remain speculative. Four focused additions pass with preceding
 probes in 27.286s; cohere passes.
+
+## Continued recovery: missing element-access arguments
+
+Inputs 1162/1163 expose empty element access while Go resynchronizes malformed
+interface members. Empty [] now produces Go's missing identifier argument and
+zero-width diagnostic 1011, also for optional chains. The type-start token
+table moves to the existing lookahead module to preserve the repository's
+source-size check. Three focused additions and all preceding probes pass
+after extraction in 27.142s; cohere passes. The continuation next retains
+a duplicated union operator and a missing parameter-list closing parenthesis.

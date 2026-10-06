@@ -507,3 +507,50 @@ export function typeMemberAhead(scanner: Scanner): boolean {
     state.restore();
     return result;
 }
+
+// First tokens shared by normal type parsing and parameter recovery.
+export function typeTokenStart(tokenKind: string): boolean {
+    return (
+        tokenKind === 'Identifier' ||
+        (tokenKind.endsWith('Keyword') && !reservedKinds.includes(tokenKind)) ||
+        [
+            'AnyKeyword',
+            'UnknownKeyword',
+            'StringKeyword',
+            'NumberKeyword',
+            'BigIntKeyword',
+            'BooleanKeyword',
+            'ReadonlyKeyword',
+            'SymbolKeyword',
+            'UniqueKeyword',
+            'VoidKeyword',
+            'UndefinedKeyword',
+            'NullKeyword',
+            'ThisKeyword',
+            'TypeOfKeyword',
+            'NeverKeyword',
+            'OpenBraceToken',
+            'OpenBracketToken',
+            'LessThanToken',
+            'BarToken',
+            'AmpersandToken',
+            'NewKeyword',
+            'StringLiteral',
+            'NumericLiteral',
+            'BigIntLiteral',
+            'TrueKeyword',
+            'FalseKeyword',
+            'ObjectKeyword',
+            'AsteriskToken',
+            'QuestionToken',
+            'ExclamationToken',
+            'DotDotDotToken',
+            'InferKeyword',
+            'ImportKeyword',
+            'AssertsKeyword',
+            'NoSubstitutionTemplateLiteral',
+            'TemplateHead',
+            'FunctionKeyword',
+        ].includes(tokenKind)
+    );
+}

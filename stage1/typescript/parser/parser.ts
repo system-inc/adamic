@@ -4,7 +4,7 @@ import { Scanner } from '../scanner/scanner.ts';
 import { Statements } from './statements.ts';
 import { ParseNode } from './nodes.ts';
 import { modifierKinds, precedence, reservedKinds, tokenSpelling } from './grammar.ts';
-import { arrowAhead, statementAhead, typeArgumentsAhead, typeMemberAhead } from './lookahead.ts';
+import { arrowAhead, statementAhead, typeArgumentsAhead, typeMemberAhead, typeTokenStart } from './lookahead.ts';
 import type { ParserStateInterface } from './lookahead.ts';
 import { listDiagnostic, listTerminator } from './recovery.ts';
 import { lexicalMessage } from './lexical.ts';
@@ -136,48 +136,7 @@ export class Parser {
         if(this.kind() === 'MinusToken') {
             return this.peek() === 'NumericLiteral' || this.peek() === 'BigIntLiteral';
         }
-        return (
-            this.bindingIdentifier() ||
-            [
-                'AnyKeyword',
-                'UnknownKeyword',
-                'StringKeyword',
-                'NumberKeyword',
-                'BigIntKeyword',
-                'BooleanKeyword',
-                'ReadonlyKeyword',
-                'SymbolKeyword',
-                'UniqueKeyword',
-                'VoidKeyword',
-                'UndefinedKeyword',
-                'NullKeyword',
-                'ThisKeyword',
-                'TypeOfKeyword',
-                'NeverKeyword',
-                'OpenBraceToken',
-                'OpenBracketToken',
-                'LessThanToken',
-                'BarToken',
-                'AmpersandToken',
-                'NewKeyword',
-                'StringLiteral',
-                'NumericLiteral',
-                'BigIntLiteral',
-                'TrueKeyword',
-                'FalseKeyword',
-                'ObjectKeyword',
-                'AsteriskToken',
-                'QuestionToken',
-                'ExclamationToken',
-                'DotDotDotToken',
-                'InferKeyword',
-                'ImportKeyword',
-                'AssertsKeyword',
-                'NoSubstitutionTemplateLiteral',
-                'TemplateHead',
-                'FunctionKeyword',
-            ].includes(this.kind())
-        );
+        return typeTokenStart(this.kind());
     }
     listTerminator(context: string): boolean {
         return listTerminator(this.kind(), context, (this.scanner.flags & 1) !== 0);
@@ -1534,7 +1493,18 @@ export class Parser {
             }
             if(this.kind() === 'OpenBracketToken' && (question >= 0 || !this.decoratorContext)) {
                 this.next();
-                const argument = this.allowInExpression();
+                if(this.kind() === 'CloseBracketToken') {
+                    this.errorAt(
+                        1011,
+                        this.scanner.fullStart,
+                        this.scanner.fullStart,
+                        'An element access expression should take an argument.',
+                    );
+                }
+                const argument =
+                    this.kind() === 'CloseBracketToken'
+                        ? this.make('Identifier', this.scanner.fullStart)
+                        : this.allowInExpression();
                 this.expect('CloseBracketToken');
                 const children = [left];
                 if(question >= 0) {
