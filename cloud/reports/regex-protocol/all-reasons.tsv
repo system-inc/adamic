@@ -1,0 +1,98 @@
+outcome	reason	before	after
+pass		914	936
+refused	error TS18047: '…' is possibly '…'.	6	6
+refused	error TS18048: '…' is possibly '…'.	8	8
+refused	error TS2300: Duplicate identifier '…'.	2	2
+refused	error TS2304: Cannot find name '…'.	1	1
+refused	error TS2322: Type '…' is not assignable to type '…'.	5	5
+refused	error TS2339: Property '…' does not exist on type '…'.	25	25
+refused	error TS2345: Argument of type '…' is not assignable to parameter of type '…'.	47	47
+refused	error TS2349: This expression is not callable.	2	2
+refused	error TS2351: This expression is not constructable.	3	3
+refused	error TS2416: Property '…' in type '…' is not assignable to the same property in base type '…'.	2	2
+refused	error TS2531: Object is possibly '…'.	10	10
+refused	error TS2532: Object is possibly '…'.	23	23
+refused	error TS2550: Property '…' does not exist on type '…'. Do you need to change your target library? Try changing the '…' compiler option to '…' or later.	14	14
+refused	error TS2551: Property '…' does not exist on type '…'. Did you mean '…'?	36	36
+refused	error TS2554: Expected 1 arguments, but got 0.	3	3
+refused	error TS2683: '…' implicitly has type '…' because it does not have a type annotation.	1	1
+refused	error TS2704: The operand of a '…' operator cannot be a read-only property.	6	6
+refused	error TS2769: No overload matches this call.	24	24
+refused	error TS7006: Parameter '…' implicitly has an '…' type.	4	4
+refused	error TS7034: Variable '…' implicitly has type '…' in some locations where its type cannot be determined.	1	1
+refused	not yet: RegExp with a nonconstant pattern	5	0
+refused	not yet: RegExp with a nonconstant pattern: the native runtime has no ECMAScript pattern compiler	0	5
+refused	not yet: RegExp with nonconstant flags	11	0
+refused	not yet: RegExp with nonconstant flags: the native runtime has no ECMAScript pattern compiler	0	11
+refused	not yet: RegExp.isPrototypeOf	1	1
+refused	not yet: a BinaryExpression with a string and a value	0	41
+refused	not yet: a BinaryExpression with a value and a string	6	6
+refused	not yet: a PrefixUnaryExpression on a value	1	1
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: duplicate capture name x at byte 0	1	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: incomplete quantifier at byte 1	1	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid capture name at byte 3	2	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid character class range at byte 10	3	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid character class range at byte 4	22	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid character class range at byte 5	2	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid character class range at byte 6	15	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid character class range at byte 7	3	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid decimal escape at byte 0	1	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid flag at byte 0	3	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid group at byte 2	24	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid hex escape at byte 0	2	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid modifiers at byte 3	31	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid modifiers at byte 4	17	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid modifiers at byte 5	3	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid modifiers at byte 6	2	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid or duplicate flag at byte 1	1	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: invalid or duplicate flag at byte 3	1	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 0	8	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 2	4	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 3	2	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 4	1	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 5	2	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: nothing to repeat at byte 6	2	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: quantifier range out of order at byte 1	1	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: trailing escape at byte 1	1	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: u and v flags are mutually exclusive at byte 0	1	0
+refused	not yet: a RegExp constructor that throws SyntaxError: regexp: unterminated group at byte 1	1	0
+refused	not yet: a value of type any	1	1
+refused	not yet: an array of never	4	4
+refused	not yet: constructor-identity assertion in RegExp harness	0	94
+refused	not yet: hasOwnProperty on a function (its prototype property depends on whether it was declared or made as an arrow)	2	2
+refused	not yet: instanceof against a value that isn't a declared class	2	2
+refused	not yet: reading RegExp	1	1
+refused	refuses Object.defineProperty	2	2
+refused	refuses a method read as a value (exec would lose its object, and this with it)	5	5
+refused	refuses a method read as a value (test would lose its object, and this with it)	5	5
+refused	refuses a method read as a value (toString would lose its object, and this with it)	4	4
+refused	refuses a number as a condition	3	3
+refused	refuses inherited library member prototype read as an own field	4	4
+refused	refuses isPrototypeOf	2	2
+refused	refuses the void operator	2	2
+refused	refuses var	8	8
+skipped	eval	7	7
+skipped	feature Symbol	17	17
+skipped	feature Symbol.match	51	51
+skipped	feature Symbol.matchAll	8	8
+skipped	feature Symbol.replace	63	63
+skipped	feature Symbol.search	18	18
+skipped	feature Symbol.species	1	1
+skipped	feature Symbol.split	19	19
+skipped	feature cross-realm	10	10
+skipped	features Reflect, cross-realm	1	1
+skipped	features Symbol, Symbol.match	6	6
+skipped	features Symbol, Symbol.search	1	1
+skipped	features Symbol.iterator, Symbol.replace	1	1
+skipped	features Symbol.match, Symbol.matchAll	2	2
+skipped	features Symbol.matchAll, Symbol.species	5	5
+skipped	features Symbol.replace, Symbol.toPrimitive	1	1
+skipped	features Symbol.species, Symbol.split	20	20
+skipped	features Symbol.species, Symbol.split, cross-realm	1	1
+skipped	getters	2	2
+skipped	harness include compareIterator.js	8	8
+skipped	harness include isConstructor.js	12	12
+skipped	harness include propertyHelper.js	67	67
+skipped	harness includes deepEqual.js, propertyHelper.js	2	2
+skipped	negative parse or early error	192	192
+skipped	noStrict (sloppy mode only; Adamic modules are always strict)	1	1
