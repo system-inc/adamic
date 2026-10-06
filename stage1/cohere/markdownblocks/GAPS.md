@@ -6,6 +6,40 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native six-pass AST preprocessing
+
+`astArena.ts`, `astWalk.ts`, `astSource.ts`, `astLists.ts` and `astPreprocess.ts`
+implement all six non-MDX preprocessing passes: raw text capture, continuous-text
+merging, indented-code detection, original image alt text, list alignment and
+sentence splitting with accidental wiki-link protection. The replacement-aware
+preorder walker uses numeric child edges and shared position identities, so the
+native graph has no owning pointer cycle or recursive closure. It is the mapAst
+walker, not the printer's alternating node/name/array AstPath stack.
+
+The standalone oracle starts from Go's parsed but UNPREPROCESSED AST. Native
+preprocessing decides the changes. Comparison projects every field these passes
+read or write, including all source coordinates and shared position identity.
+It does not yet store every other mdast field, parse source Markdown, supply the
+printer path predicates, or replace preprocessing in the existing layout driver.
+The original oracle calls the unchanged pinned fork's exported mdast preprocess.
+Its unused originalLabelText field is outside this projection, as Go drops it.
+Core BOM and CR/CRLF normalization occurs before parsing, as in the layout gate.
+Offsets are converted from Go's UTF-8 bytes to the source's UTF-16 code units.
+
+Coverage includes the accumulated 4,943 layout documents, 155 generated cases
+across five tab widths, and an AST with three adjacent text children. On that
+synthetic AST both original preprocessors lose raw during merging and throw;
+the native result preserves that observed error. The protocol compares errors
+as values, prefixing the original JavaScript exception message with Go's
+`markdown: ` prefix. It does not claim identical process-exit behavior.
+
+`gaps/7_postfix_property.ts` proves that a postfix property increment used as an
+expression is NotYet: Node prints 0 and 1; Adamic reports
+`a PostfixUnaryExpression`. The production pass instead assigns the old counter
+and then increments it in a separate statement. Compiler-owned files are untouched.
+The native tokenizer/event engine, resolvers, rollback/subtokenization, full mdast
+construction and printer AstPath remain unfinished.
+
 ## Native whitespace and preserved reference labels
 
 `whitespace.ts` now makes whitespace document decisions natively: CJ/non-CJK
@@ -37,7 +71,8 @@ Superseded long runs were stopped. The final complete gate passes; no native
 printer decision was replaced by an oracle decision to reduce fixture size.
 
 The native tokenizer/event engine, rollback/resolvers/subtokenization, mdast
-construction, AST preprocessing and AST path walker remain unfinished. The
+construction and printer AST path walker remain unfinished. AST preprocessing is
+now independently native, as recorded above. The
 remaining-printer wording in historical sections below describes earlier slices.
 
 ## Native source escape and character-reference decoding
@@ -95,8 +130,9 @@ has been exercised. Prose remains preserved with common options.
 
 Whitespace dispatch and preserved reference-label content are now native, as
 recorded above. Parent/ancestor facts
-for emphasis and thematic breaks still come from the fixture adapter. A native
-AST path walker, AST preprocessing and the tokenizer/mdast remain unported.
+for emphasis and thematic breaks still come from the fixture adapter. The printer
+AST path walker and tokenizer/mdast remain unported; AST preprocessing is now
+independently native as recorded above.
 
 ## Native root and ignore layout boundary
 

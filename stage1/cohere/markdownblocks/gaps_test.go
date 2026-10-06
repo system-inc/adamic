@@ -19,6 +19,7 @@ func TestParserRepresentationProbes(t *testing.T) {
 		{path: "gaps/3_recursive_callable.ts", stdout: "1\n0\n"},
 		{path: "gaps/4_structural_ranges.ts", stdout: "1\n", refused: "a cycle reference counting can't free"},
 		{path: "gaps/5_conditional_panic.ts", stdout: "T\n", notYet: "reading panic"},
+		{path: "gaps/7_postfix_property.ts", stdout: "0\n1\n", notYet: "a PostfixUnaryExpression"},
 	} {
 		t.Run(gap.path, func(t *testing.T) {
 			t.Parallel()
