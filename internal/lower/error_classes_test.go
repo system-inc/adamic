@@ -9,6 +9,7 @@ func TestErrorBoundariesAreExplicit(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
 		{"normalization expansion", "function normalized(text:string):string {return text.normalize();} try {console.log(normalized('x'));} catch(e) {console.log('caught');}", "native runtime failure cannot unwind"},
+		{"inherited constructor value", "const ctor=new Error('x').constructor;", "an inherited library constructor"},
 		{"inherited method value", "const method=new Error('x').valueOf;", "method read as a value"},
 		{"stack read", "console.log(new Error('x').stack ?? '');", "Error.stack"},
 		{"stack write", "const e=new Error('x'); e.stack='made up';", "writing Error.stack"},

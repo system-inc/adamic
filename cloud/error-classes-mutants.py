@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the error unit's 16 source-check mutants without changing the working tree.
+"""Run the error unit's 17 source-check mutants without changing the working tree.
 
 Source /workspace/adamic-tools/env.sh first. Each mutant must build, reach its
 assertion, and fail there. A compilation failure never counts as a kill.
@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOWER = "./internal/lower"
 PROBE = "TestErrorBoundariesAreExplicit/"
 MUTANTS = [
+ ("inherited-constructor-field", [("internal/lower/object.go", 'name == "constructor" && field != nil', 'false && name == "constructor" && field != nil')], LOWER, PROBE+"inherited_constructor_value$", "want refusal"),
  ("nullable-generic-receiver", [("internal/lower/error_classes.go", 'if value.Type() == ir.Object && l.includesUndefined(l.checker.GetTypeAtLocation(args[0])) {', 'if false && value.Type() == ir.Object && l.includesUndefined(l.checker.GetTypeAtLocation(args[0])) {')], LOWER, PROBE+"nullable_generic_receiver$", "want refusal"),
  ("stack-read", [("internal/lower/object.go", 'if l.errorType(l.checker.GetTypeAtLocation(access.Expression)) && name == "stack" {', 'if false && l.errorType(l.checker.GetTypeAtLocation(access.Expression)) && name == "stack" {')], LOWER, PROBE+"stack_read$", "want refusal"),
  ("stack-write", [("internal/lower/class.go", 'if target.Name().Text() == "stack" && l.errorType(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {', 'if false && target.Name().Text() == "stack" && l.errorType(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {')], LOWER, PROBE+"stack_write$", "want refusal"),

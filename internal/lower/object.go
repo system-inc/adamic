@@ -293,6 +293,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			Fix:   fmt.Sprintf("wrap the call in an arrow function, which keeps its object: (value) => %s.%s(value)", object, name),
 		}
 	}
+	if field := l.checker.GetSymbolAtLocation(node.Name()); name == "constructor" && field != nil && len(field.Declarations) > 0 && load.IsLibrary(ast.GetSourceFileOfNode(field.Declarations[0])) {
+		return nil, l.notYet(node, "an inherited library constructor read as a value; constructors are not own instance fields")
+	}
 	if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && len(field.Declarations) > 0 && field.Declarations[0].Kind == ast.KindMethodSignature && load.IsLibrary(ast.GetSourceFileOfNode(field.Declarations[0])) {
 		return nil, l.notYet(node, "an inherited library method read as a value; it is not an own field")
 	}
