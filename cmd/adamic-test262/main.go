@@ -28,6 +28,8 @@ import (
 	"io"
 	"os"
 	"strings"
+
+	"github.com/system-inc/adamic/internal/nodepin"
 )
 
 func main() {
@@ -35,6 +37,10 @@ func main() {
 }
 
 func run(arguments []string) int {
+	if _, err := nodepin.Check(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return 1
+	}
 	flags := flag.NewFlagSet("adamic-test262", flag.ContinueOnError)
 	flags.SetOutput(os.Stderr)
 	test262 := flags.String("test262", "", "test262 checkout (a clone at a pinned commit, not part of this repo)")
