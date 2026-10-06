@@ -7,8 +7,8 @@ adapted inputs come from that runner, test262 `c8c798898646638cd0c24879f8e0374e8
 adaptation on. Stock TypeScript 6.0.3 independently checks every checker refusal.
 
 The per-input compiler and real tsc ledger leaves 437 refused and 1844
-not-typescript, alongside the previous 191 passes and 610 skips. The full
-runner baseline is running; its completed table will be archived separately.
+not-typescript, alongside the previous 191 passes and 610 skips. The completed runner baseline confirms those counts; its full table is
+archived in second-pass-before.json.
 The 495 figure belongs to pre-first-pass main, not this second pass's base.
 First-blocker families below sum to all 437 remaining refusals. Later blockers
 may be masked. No promised pass count is inferred from a family's size.
@@ -85,25 +85,26 @@ has a one-line reproducer; the ledger supplies every complete adapted test.
 | Count | Feature | One-line reproducer |
 |---:|---|---|
 | 49 | Property descriptors | `Object.defineProperty({x: 1}, "x", {value: 2});` |
-| 46 | Empty or heterogeneous array slots | `const empty: never[] = []; console.log(`${empty.length}`);` |
-| 37 | Truthiness | `console.log(`${[1].some(() => 1)}`);` |
+| 46 | Empty or heterogeneous array slots | ``const empty: never[] = []; console.log(`${empty.length}`);`` |
+| 37 | Truthiness | ``console.log(`${[1].some(() => 1)}`);`` |
 | 26 | Property deletion | `const a = [1]; delete a[0];` |
 | 20 | Prototype mutation | `Array.prototype[0] = 1;` |
-| 18 | Arguments object | `function f(): number { return arguments.length; } console.log(`${f()}`);` |
-| 18 | Sparse array literals | `const a = [1, , 3]; console.log(`${a.length}`);` |
-| 14 | Unproven any, undefined, void or never values | `const a = [1].map(() => {}); console.log(`${a.length}`);` |
-| 13 | Closure registration and hoisting | `function f(): number { return a.length; } const a = [1]; console.log(`${f()}`);` |
-| 8 | Object coercion | `console.log(`${Array.prototype.indexOf.call({0: 1, length: {valueOf: (): number => 1}}, 1)}`);` |
-| 8 | Var declarations | `var n = 1; console.log(`${n}`);` |
-| 6 | Unrepresented intrinsic values | `const f = Math; console.log(`${f.PI}`);` |
-| 4 | Getters | `const o = {get length(): number {return 1;}}; console.log(`${o.length}`);` |
-| 4 | Statements with value expressions | `new Array(1);` |
-| 3 | Structural views hiding primitive slots | `const value = {}; console.log(`${Array.prototype.indexOf.call({0: value, length: 1}, value)}`);` |
+| 18 | Arguments object | ``function f(): number { return arguments.length; } console.log(`${f()}`);`` |
+| 18 | Sparse array literals | ``const a = [1, , 3]; console.log(`${a.length}`);`` |
+| 14 | Unproven any, undefined, void or never values | ``const a = [1].map(() => {}); console.log(`${a.length}`);`` |
+| 13 | Closure registration and hoisting | ``function f(): number { return a.length; } const a = [1]; console.log(`${f()}`);`` |
+| 8 | Object coercion | ``console.log(`${Array.prototype.indexOf.call({0: 1, length: {valueOf: (): number => 1}}, 1)}`);`` |
+| 8 | Var declarations | ``var n = 1; console.log(`${n}`);`` |
+| 6 | Unrepresented intrinsic values | ``const f = Math; console.log(`${f.PI}`);`` |
+| 4 | Getters | ``const o = {get length(): number {return 1;}}; console.log(`${o.length}`);`` |
+| 3 | Statements with value expressions | `new Array(1);` |
+| 3 | Structural views hiding primitive slots | ``const value = {}; console.log(`${Array.prototype.indexOf.call({0: value, length: 1}, value)}`);`` |
+| 1 | Void operator | `void 1;` |
 | 2 | Assignment through a temporary | `({x: 1}).x = 2;` |
 | 2 | Mixed string and number operators | `console.log("x" + 1);` |
 | 1 | Checker diagnostic mismatch | `function f() { return [].concat(arguments); } f();` |
 | 1 | Generic array element slots | `function f<T>(a: T[]): T[] { return a.toSorted(); }` |
-| 1 | In operator | `console.log(`${"x" in {x: 1}}`);` |
+| 1 | In operator | ``console.log(`${"x" in {x: 1}}`);`` |
 | 1 | Non-numeric comparator result | `[1].sort(() => "0");` |
 | 1 | Top-level this | `const target = this;` |
 
