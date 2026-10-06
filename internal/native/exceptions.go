@@ -70,6 +70,11 @@ func (e *emitter) checkThrown(holds ...string) {
 			e.line("adamic_release(%s);", e.outerOwned[outer][index])
 		}
 	}
+	if e.statementRegion != "" {
+		// The statement's region ends on this way out of it too, or its blocks, and what its values
+		// hold on the heap, leak (region.go).
+		e.line("adamic_region_end(&%s);", e.statementRegion)
+	}
 	e.jumpThrown()
 	e.indent--
 	e.line("}")

@@ -1,4 +1,4 @@
-package suppression
+package graphql
 
 import (
 	"context"
@@ -22,8 +22,8 @@ var gaps = []struct {
 	badC   string
 	stdout string
 }{
-	{path: "gaps/1_mutual_recursion.ts", notYet: "a void call used as a value", stdout: "true false\n"},
-	{path: "gaps/2_return_undefined_array.ts", stdout: "true\n"},
+	{path: "gaps/1_throwing_function_value.ts", stdout: "too long: bb\n"},
+	{path: "gaps/2_error_made_elsewhere.ts", notYet: "throwing an Error that isn't made where it's thrown or caught by the catch around it", stdout: "Unexpected token at 3.\n"},
 }
 
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {

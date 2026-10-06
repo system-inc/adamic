@@ -139,6 +139,19 @@ typedef struct adamic_slot_cache {
 // stored in a field belongs to the object.
 adamic_object *adamic_object_new(const adamic_shape *shape);
 
+// adamic_region is a region (region.c): the objects one statement makes that nothing reaches after
+// it, let go of together when it ends. ADAMIC_REGION is an empty one. adamic_object_new_in makes an
+// object in a region (on the heap, as adamic_object_new does, for a NULL region), and
+// adamic_region_end lets go of the region's objects and what they hold.
+typedef struct adamic_region_block adamic_region_block;
+typedef struct adamic_region {
+	adamic_region_block *blocks;
+	size_t count;
+} adamic_region;
+#define ADAMIC_REGION {NULL, 0}
+adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape);
+void adamic_region_end(adamic_region *region);
+
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
 

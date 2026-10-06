@@ -53,6 +53,12 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 	uint64_t hash = 14695981039346656037ull;
 	if (map->string_keys) {
 		const adamic_string *string = key.reference;
+		if (string == NULL) {
+			// undefined, which a string | undefined key holds as NULL. It hashes as the empty string
+			// does, and same_key tells the two apart: adamic_string_equal holds undefined equal only
+			// to itself.
+			return hash;
+		}
 		for (size_t index = 0; index < string->length; index++) {
 			hash = (hash ^ (unsigned char)string->bytes[index]) * 1099511628211ull;
 		}

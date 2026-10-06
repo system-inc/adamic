@@ -126,11 +126,14 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
-		// other keeps the target, so the same object, array or function can't be both. A literal is
+		// other keeps the target, so the same object, array or function can't be both. A tuple is held
+		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 			if own := l.checker.GetTypeAtLocation(node); !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
+			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
+				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
 			}
 		}
 	}
@@ -200,6 +203,55 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		}
 	}
 	return true
+}
+
+// tupleSeenAsArray finds, in a value of type from seen as type to, the first tuple seen as an array:
+// at the top, or as an element, field, map key or value, parameter or result, all the way down as
+// sameKeeping walks. It returns the tuple's type and the array's, or nils.
+func (l *lowering) tupleSeenAsArray(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) (*checker.Type, *checker.Type) {
+	from, to = l.present(from), l.present(to)
+	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
+		return nil, nil
+	}
+	visited[[2]*checker.Type{from, to}] = true
+	if checker.IsTupleType(from) && !checker.IsTupleType(to) {
+		return from, to
+	}
+	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	switch {
+	case len(fromSignatures) > 0 && len(toSignatures) > 0:
+		// A function is handed the other's arguments, and its results are seen as the other's.
+		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
+			if tuple, array := l.tupleSeenAsArray(l.checker.GetTypeOfSymbol(toParameters[index]), l.checker.GetTypeOfSymbol(fromParameters[index]), visited); tuple != nil {
+				return tuple, array
+			}
+		}
+		return l.tupleSeenAsArray(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]), visited)
+	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
+		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
+		if checker.IsTupleType(from) && l.checker.IsArrayType(to) {
+			return from, to
+		}
+		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+			if tuple, array := l.tupleSeenAsArray(fromArguments[index], toArguments[index], visited); tuple != nil {
+				return tuple, array
+			}
+		}
+	default:
+		for _, viewed := range l.checker.GetPropertiesOfType(to) {
+			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
+				continue
+			}
+			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil {
+				if tuple, array := l.tupleSeenAsArray(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed), visited); tuple != nil {
+					return tuple, array
+				}
+			}
+		}
+	}
+	return nil, nil
 }
 
 // present is a type without undefined, and a Weak's narrowing without its brand: the one object,

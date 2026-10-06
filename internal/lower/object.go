@@ -389,6 +389,10 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if _, isKnown := stringMethods[name]; isKnown && receiverType == ir.String {
 		return l.stringCall(node, receiver, name)
 	}
+	if receiverType == ir.Object && checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
+		// A tuple is held as an object: called as an object, an array method would be read as a field.
+		return nil, true, l.notYet(node, name+" on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made)")
+	}
 	if !isMath && !isToFixed {
 		return nil, false, nil
 	}
