@@ -35,3 +35,13 @@ func TestLibraryJSONGenericInstantiations(t *testing.T) {
 		})
 	}
 }
+
+// Register slice fixtures here: oracle_test.go belongs to integration. The common oracle and
+// counts gate then test these programs exactly like its existing fixtures.
+func init() {
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/library_json_gap_nul.a", true, false})
+}
