@@ -64,6 +64,19 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		generator := false
+		switch node.Kind {
+		case ast.KindFunctionDeclaration:
+			generator = node.AsFunctionDeclaration().AsteriskToken != nil
+		case ast.KindFunctionExpression:
+			generator = node.AsFunctionExpression().AsteriskToken != nil
+		case ast.KindMethodDeclaration:
+			generator = node.AsMethodDeclaration().AsteriskToken != nil
+		}
+		if generator {
+			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+			return true
+		}
 		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
 			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model"}
 			return true

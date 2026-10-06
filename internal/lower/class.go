@@ -97,11 +97,12 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	for _, member := range members {
 		switch member.Kind {
 		case ast.KindMethodDeclaration:
-			if !ast.IsIdentifier(member.Name()) {
-				return nil, l.notYet(member, "a method with a computed name")
+			methodName, known := l.methodName(member)
+			if !known || member.Name().Kind == ast.KindStringLiteral {
+				return nil, l.notYet(member, "a method with an unsupported computed name")
 			}
-			lowered.methods[member.Name().Text()] = len(l.result.Functions)
-			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + member.Name().Text()})
+			lowered.methods[methodName] = len(l.result.Functions)
+			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + methodName})
 		case ast.KindPropertyDeclaration, ast.KindConstructor:
 		default:
 			return nil, l.notYet(member, describe(member)+" in a class")
@@ -133,7 +134,8 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		if member.Kind != ast.KindMethodDeclaration {
 			continue
 		}
-		method := lowered.methods[member.Name().Text()]
+		methodName, _ := l.methodName(member)
+		method := lowered.methods[methodName]
 		if err := l.signature(method, member, l.thisLocal(method)); err != nil {
 			return nil, err
 		}
@@ -145,7 +147,8 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		if member.Kind != ast.KindMethodDeclaration {
 			continue
 		}
-		method := lowered.methods[member.Name().Text()]
+		methodName, _ := l.methodName(member)
+		method := lowered.methods[methodName]
 		if err := l.lowerFunction(method, member, -1); err != nil {
 			return nil, err
 		}
@@ -316,6 +319,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
+		return nil, l.notYet(target, "replacing a represented method at runtime")
+	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
 		return nil, err
