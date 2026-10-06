@@ -185,6 +185,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Narrow:
 		return e.narrow(expression)
 	case ir.TypeOf:
+		// Built-in identities are opaque heap headers, not class objects with slots.
+		if _, intrinsic := expression.Value.(ir.LibraryGlobal); intrinsic {
+			return e.typeOf(expression.Value)
+		}
 		if expression.Value.Type() == ir.Object {
 			return fmt.Sprintf("adamic_object_typeof(%s)", e.value(expression.Value))
 		}
