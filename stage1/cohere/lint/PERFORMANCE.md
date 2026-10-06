@@ -4,6 +4,13 @@ Twenty rules, starting at `0e97eeb`, on `codex/typescript-scanner`.
 Changes stay in this directory. Compiler/runtime observations below are proposed
 units; no `internal/` source is changed.
 
+Native improves from 2,504.11 to 4,995.16 findings/s, 1.995 times. Instructions
+fall 59.50%, from 38,559,511,949 to 15,617,555,059, or 4,693,793.30 to
+1,901,102.26 per finding. Final Go is 16,126.20/s and Node 5,873.41/s;
+native remains 3.23 times Go elapsed and 1.176 times Node. Memory increases:
+final native peak RSS is 152,132 KiB versus baseline 100,996 KiB. No additional
+rules are included in this performance follow-up.
+
 ## Method
 
 Pinned TypeScript v6.0.3 `050880ce59e30b356b686bd3144efe24f875ebc8`,
@@ -150,6 +157,48 @@ The next measured hotspot is 13,317,045 calls from `additional` to `enabled`,
 nonapplicable nodes currently pay every rule's selector. This is a port cost,
 not attributed to the compiler/runtime. The following step handles it.
 
+5. Gate rule selection by node kind. Derive equality/bitwise spellings from
+   operator kinds; equality rejects other kinds before operand queries, and
+   bitwise rejects other operators before options/message work. No candidate
+   operator source strings are built. No finding/message work is omitted in
+   count mode. Selector calls from `additional` fall from 13,317,045 to 140,571;
+   the edge falls from 918.88M to 9.70M Ir. `start` scanner calls fall from
+   219,447 to 142,539. Removes another 122,411 allocations, 4,681,797 retains,
+   4,251,601 releases, and 1,470,797,916 Ir (8.61%). Native improves another
+   1.0625 times to 4,995.16/s; Node regresses 4.66% to 5,873.41/s. Load before
+   `0.41 0.22 0.19`, after `0.71 0.30 0.21`. Full initial sanitized parity is
+   577,682 fixture bytes plus 15,552,859 corpus bytes. The original continue
+   mutant's anchor is reordered with the production condition; its semantic
+   mutation is unchanged. Final complete-package proof is recorded below.
+
+Final logical counts: 4,212,758 allocations and frees, 81,800,854 retains,
+80,327,957 releases, peak 738,337 live allocations, zero regions. Compared with
+baseline: 7,205,148 fewer allocations (63.10%), 37,008,933 fewer retains,
+9,989,540 fewer releases. Counts do not measure allocated bytes. Retain/release
+counts need not match: immortal values and destructor child releases follow
+separate counting paths. ASan/UBSan and leak checking are the lifetime proof.
+
+Final disjoint self attribution: release 2.633B plus retain 650.94M (21.03%);
+named allocate/malloc/free/realloc 305.26M (1.95%); locate/usable/unit-at/units/
+char-code 2.204B (14.11%); concat/append/slice/share 145.95M (0.93%);
+number-format/from-number 3.273M (0.021%). Map `find` falls to 576.35M (3.69%).
+Array access/conversion inline header lines 285..310 are 513.11M (3.29%), higher
+than baseline because positions now use arrays; this is not isolated redundant
+bounds cost. `Parser_file`, the outer entry, remains about 6.031B inclusive
+(38.62%). Recursive statement clones in the ranking accumulate overlapping
+traversals: their 91.73% row is not a separate 91.73% parser phase.
+
+Final class/RC evidence in generated C: `Parser_node` retains the array element
+it returns; `Linter_node` retains/releases its parser field around that call.
+Every owned node result must later be released, despite the parser retaining
+the full tree throughout lint traversal. Borrowing needs lifetime/mutation proof,
+not deletion of those operations. Final string equality self is 1.312B (8.40%):
+`string.c` compares lengths/bytes even when both arguments are the same immutable
+string pointer. Investigate an identity fast path and proven kind specialization
+as separate runtime/compiler units. No gains from these unimplemented units are
+claimed. The numeric-hash unit's original 45.42% gain is largely consumed by the
+port representation fix; do not promise that gain again on the final runner.
+
 ## Proposed compiler and runtime units
 
 - Numeric Map/Set hash distribution: use an avalanche with adequate low-bit
@@ -197,6 +246,7 @@ VALGRIND_LIB=/workspace/scratch/scanner-perf/valgrind/usr/libexec/valgrind pytho
 | 2b-position-arrays | 4,101.37 | 17,098.74 | 4,203.20 | 20,970,336,919 | 2,552,688.61 |
 | 3-filled-masks | 3,967.64 | 16,847.92 | 6,309.38 | 20,387,510,285 | 2,481,741.97 |
 | 4-kind-switches | 4,701.32 | 17,111.80 | 6,160.75 | 17,088,352,975 | 2,080,140.35 |
+| 5-kind-dispatch | 4,995.16 | 16,126.20 | 5,873.41 | 15,617,555,059 | 1,901,102.26 |
 
 Scalar comparison removes 7,621,599,012 Ir (19.77%), 1,766,845 logical allocations, and improves native throughput 1.175 times. Load before `0.67 0.73 0.46`, after `0.79 0.75 0.48`. Full sanitized parity: 577,682 fixture bytes plus 15,548,752 source-corpus bytes, 16,126,434 total. Cohere passes the changed source.
 
@@ -261,3 +311,94 @@ both Node and sanitized native lose the first TODO finding at generated case
 one; the summarizer refuses with `callgrind self costs do not sum to summary`.
 Their complete logs are saved. These are wrong-answer/accounting failures,
 not compilation failures.
+
+## Final top twenties
+
+### Inclusive
+
+| Function | Instructions | Share |
+| --- | ---: | ---: |
+| `main` | 15,617,366,880 | 100.00% |
+| `adamic_function_58_run` | 15,600,248,226 | 99.89% |
+| `adamic_function_175_Linter_run` | 14,900,025,884 | 95.41% |
+| `adamic_function_138_Statements_statement'2` | 14,325,690,980 | 91.73% |
+| `adamic_function_188_Linter_walk` | 8,825,760,193 | 56.51% |
+| `adamic_function_120_Statements_block'2` | 8,545,229,878 | 54.72% |
+| `adamic_function_195_Linter_additional` | 7,754,699,398 | 49.65% |
+| `adamic_function_115_Parser_file` | 6,030,990,538 | 38.62% |
+| `adamic_function_138_Statements_statement` | 6,029,866,605 | 38.61% |
+| `adamic_function_133_Statements_functionDeclaration` | 5,251,519,761 | 33.63% |
+| `adamic_function_120_Statements_block` | 5,053,524,521 | 32.36% |
+| `adamic_function_133_Statements_functionDeclaration'2` | 4,648,103,700 | 29.76% |
+| `adamic_function_32_Scanner_scan` | 3,789,059,294 | 24.26% |
+| `adamic_function_111_Parser_assignment` | 3,318,916,256 | 21.25% |
+| `adamic_function_61_Parser_next` | 3,116,970,541 | 19.96% |
+| `adamic_function_110_Parser_binary` | 2,989,938,541 | 19.14% |
+| `adamic_function_111_Parser_assignment'2` | 2,930,948,554 | 18.77% |
+| `adamic_release` | 2,776,480,130 | 17.78% |
+| `adamic_function_109_Parser_unary` | 2,771,398,846 | 17.75% |
+| `adamic_function_205_Linter_commentAnchors` | 2,489,690,413 | 15.94% |
+
+### Self
+
+| Function | Instructions | Share |
+| --- | ---: | ---: |
+| `adamic_release` | 2,632,692,159 | 16.86% |
+| `adamic_string_equal` | 1,311,559,923 | 8.40% |
+| `adamic_function_208_Linter_scanWarnings` | 994,381,663 | 6.37% |
+| `adamic_string_locate` | 976,427,294 | 6.25% |
+| `adamic_function_195_Linter_additional` | 930,110,583 | 5.96% |
+| `adamic_function_21_Scanner_code` | 770,543,169 | 4.93% |
+| `adamic_retain` | 650,941,320 | 4.17% |
+| `adamic_function_32_Scanner_scan` | 578,236,640 | 3.70% |
+| `find` | 576,353,248 | 3.69% |
+| `adamic_string_char_code` | 525,396,975 | 3.36% |
+| `adamic_function_205_Linter_commentAnchors'2` | 420,950,765 | 2.70% |
+| `usable` | 364,049,382 | 2.33% |
+| `adamic_function_62_Parser_node` | 362,318,178 | 2.32% |
+| `adamic_array_filled` | 310,215,576 | 1.99% |
+| `adamic_function_4_isIdentifierStart` | 241,749,762 | 1.55% |
+| `adamic_function_27_Scanner_identifier` | 230,883,599 | 1.48% |
+| `decode` | 225,738,390 | 1.45% |
+| `adamic_function_188_Linter_walk'2` | 208,479,802 | 1.33% |
+| `unit_at` | 170,779,962 | 1.09% |
+| `adamic_string_units` | 166,912,886 | 1.07% |
+
+## Final verification and delivery
+
+The final package suite passed in 431.154s. Its 873 upstream cases and 140
+generated cases produced 578,745 identical bytes; the 161 compiler/stage1 files
+produced 15,552,859. ASan, UBSan and leak checks were enabled for the ordinary
+native comparisons. All seven saved snapshots (including the rejected style
+trial) separately matched the current Go oracle in release native, debug native
+and Node: 16,143,568 bytes per snapshot. Temporary fixture paths account for
+byte-total differences between runs. Findings, repair proposals and applicable
+fixed sources are compared, not just counts.
+
+All 19 existing semantic mutants and both new fold/position mutants were caught
+by executing Node and native. The separate Callgrind accounting mutant was also
+rejected: 21 semantic mutants plus one accounting mutant. All three existing
+language-gap probes passed. No new language gap was introduced. Cohere checked
+the seven port sources with 276 rules, zero findings. `go vet ./...` passed with
+empty output. The filtered core oracle `TestTheOracleCatchesOneByte` passed in
+3.220s; the full repository test gate was not run.
+
+Final commands (each redirected to a file, never piped):
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 ADAMIC_LINT_PROFILE_SNAPSHOTS=/workspace/scratch/lint-perf/baseline:/workspace/scratch/lint-perf/1-scalar-comments:/workspace/scratch/lint-perf/2-position-arrays:/workspace/scratch/lint-perf/2b-position-arrays:/workspace/scratch/lint-perf/3-filled-masks:/workspace/scratch/lint-perf/4-kind-switches:/workspace/scratch/lint-perf/5-kind-dispatch go test ./stage1/cohere/lint -count=1 -v -timeout 30m > /workspace/scratch/lint-perf/final-suite.log 2>&1
+/workspace/scratch/cohere --no-fix --no-cache stage1/cohere/lint/{comments,driver,lint,main,model,unicode,written}.ts > /workspace/scratch/lint-perf/final-cohere.log 2>&1
+go vet ./... > /workspace/scratch/lint-perf/final-vet.log 2>&1
+go test ./internal/oracle -run '^TestTheOracleCatchesOneByte$' -count=1 -v > /workspace/scratch/lint-perf/filtered-oracle.log 2>&1
+```
+
+Green steps were pushed individually: `bc3cc73` (scalar comment comparisons),
+`b6e5cba` (position arrays), `3971119` (filled masks), `41239d4` (kind switches),
+followed by the final kind-dispatch change. Raw timing, accounting, profiling,
+mutant and validation logs are committed under `performance/`.
+
+Coverage remains the same twenty syntax-only rules and their existing recovery,
+BOM and oracle limits described in REPORT.md. No additional twenty rules were
+attempted in this push. Compiler/runtime proposals above are evidence-backed
+follow-up units, not implemented changes.
