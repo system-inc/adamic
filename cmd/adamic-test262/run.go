@@ -127,7 +127,7 @@ func (e *engine) attempt(test classified) result {
 	if err := os.WriteFile(module, []byte(test.Program), 0o644); err != nil {
 		return result{Path: test.Path, Directory: test.Directory, Kind: outcomeCrashed, Reason: err.Error()}
 	}
-	lowered := runCommand(2*time.Minute, nil, e.adamic, "c", typescript)
+	lowered := runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
 	kind, reason := compileClass(lowered.Stderr, lowered.Exit, lowered.TimedOut)
 	if kind == "refused" {
 		base.Kind = outcomeRefused
@@ -175,18 +175,28 @@ func (e *engine) attempt(test classified) result {
 const outputLimit = 256 << 10
 
 func runCommand(timeout time.Duration, extra []string, name string, args ...string) execution {
+	return runCommandWithLimit(timeout, extra, outputLimit, name, args...)
+}
+
+// Generated C is an artifact, not program output: give it room, and never compile a truncated one.
+func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name string, args ...string) execution {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Env = append(os.Environ(), extra...)
 	command.WaitDelay = 2 * time.Second
 	var stdout, stderr limitedBuffer
-	stdout.limit = outputLimit
-	stderr.limit = outputLimit
+	stdout.limit = limit
+	stderr.limit = limit
 	command.Stdout = &stdout
 	command.Stderr = &stderr
 	err := command.Run()
 	result := execution{Stdout: stdout.String(), Stderr: stderr.String()}
+	if stdout.exceeded || stderr.exceeded {
+		result.Exit = -1
+		result.Stderr = "command output exceeded capture limit\n"
+		return result
+	}
 	if ctx.Err() == context.DeadlineExceeded {
 		result.TimedOut = true
 		result.Exit = -1
@@ -217,19 +227,24 @@ func runCommand(timeout time.Duration, extra []string, name string, args ...stri
 // limitedBuffer keeps the start of a stream and drops the rest, so a test that prints without end
 // cannot fill memory before its timeout.
 type limitedBuffer struct {
-	buf   bytes.Buffer
-	limit int
+	buf      bytes.Buffer
+	limit    int
+	exceeded bool
 }
 
 func (buffer *limitedBuffer) Write(data []byte) (int, error) {
+	written := len(data)
 	room := buffer.limit - buffer.buf.Len()
+	if written > room {
+		buffer.exceeded = true
+	}
 	if room > 0 {
 		if len(data) > room {
 			data = data[:room]
 		}
 		_, _ = buffer.buf.Write(data)
 	}
-	return len(data), nil
+	return written, nil
 }
 
 func (buffer *limitedBuffer) String() string { return buffer.buf.String() }

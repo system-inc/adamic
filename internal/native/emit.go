@@ -1026,13 +1026,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ArrayReduce:
 		return e.arrayReduce(expression)
 	case ir.ArraySearch:
-		array := e.value(expression.Array)
-		value := e.value(expression.Value)
-		found := fmt.Sprintf("adamic_array_index_of(%s, %s, %s, %t)", array, borrowed(expression.Element, value), equality(expression.Element), expression.Includes)
-		if expression.Includes {
-			return e.snapshot(ir.Boolean, found+" != -1")
-		}
-		return e.snapshot(ir.Number, found)
+		return e.libraryArraySearch(expression)
 	case ir.ArrayFill:
 		if expression.Array == nil {
 			length := e.value(expression.Length)
@@ -1249,6 +1243,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("double %s = (double)%s->length;", length, array)
 		return length
 	case ir.ArrayJoin:
+		if expression.Depth > 0 {
+			return e.libraryArrayJoin(expression)
+		}
 		array := e.value(expression.Array)
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
@@ -1360,9 +1357,9 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		result = e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", references))
 	case "some", "every":
 		result = e.snapshot(ir.Boolean, strconv.FormatBool(visit.Method == "every"))
-	case "findIndex":
+	case "findIndex", "findLastIndex":
 		result = e.snapshot(ir.Number, "-1.0")
-	case "find":
+	case "find", "findLast":
 		if visit.Type().IsMaybe() {
 			result = e.snapshot(visit.Type(), zero(visit.Type()))
 		} else {
@@ -1371,10 +1368,14 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	}
 	count, index, element, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
 	e.line("size_t %s = %s->length;", count, source)
-	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
+	if visit.Method == "findLast" || visit.Method == "findLastIndex" {
+		e.line("for (size_t %s = %s; %s-- > 0;) {", index, count, index)
+	} else {
+		e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
+	}
 	e.indent++
 	e.line("if (%s >= %s->length) {", index, source)
-	if visit.Method == "find" || visit.Method == "findIndex" {
+	if visit.Method == "find" || visit.Method == "findIndex" || visit.Method == "findLast" || visit.Method == "findLastIndex" {
 		// The other visits skip an index the callback took away, as JavaScript's do; find and
 		// findIndex call it with undefined there, which the element's type can't hold. A panic, the
 		// same in both backends.
@@ -1420,7 +1421,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 			e.line("\tadamic_release(%s.reference);", element)
 		}
 		e.line("}")
-	case "find":
+	case "find", "findLast":
 		e.line("if (%s.boolean) {", answer)
 		if visit.Type().IsMaybe() {
 			found := element + "." + member(visit.Element)
@@ -1442,7 +1443,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		switch visit.Method {
 		case "every":
 			found, value = "!"+found, "false"
-		case "findIndex":
+		case "findIndex", "findLastIndex":
 			value = "(double)" + index
 		}
 		e.line("if (%s) {", found)

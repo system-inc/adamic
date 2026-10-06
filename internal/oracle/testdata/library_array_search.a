@@ -1,0 +1,13 @@
+const values = [1, 2, 1, NaN, -0];
+const starts = [-Infinity, -20, -5, -2.9, -1, -0, 0, 1.9, 3, 5, 20, Infinity, NaN];
+for (const start of starts) {
+	console.log(`${start}: ${values.indexOf(1, start)} ${values.lastIndexOf(1, start)} ${values.includes(NaN, start)} ${values.lastIndexOf(-0, start)}`);
+}
+const empty: number[] = [];
+console.log(`${values.lastIndexOf(1)} ${values.lastIndexOf(1, undefined)} ${values.lastIndexOf(NaN)} ${empty.lastIndexOf(1)}`);
+const optional: (number | undefined)[] = [undefined, 2, undefined, NaN];
+console.log(`${optional.lastIndexOf(undefined)} ${optional.indexOf(undefined, 1)} ${optional.includes(NaN, -1)}`);
+const text = ['a' + 'b', 'c', 'ab'];
+console.log(`${text.lastIndexOf('ab', -2)} ${text.indexOf('ab', 1)}`);
+const object = { value: 1 };
+console.log(`${[object, { value: 1 }, object].lastIndexOf(object, 1)}`);

@@ -61,7 +61,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicMap = (array, callback) => {\n\tconst count = array.length;\n\tconst mapped = [];\n\tfor (let index = 0; index < count; index++) {\n\t\tif (index >= array.length) panic('map: the array shrank while it was being mapped');\n\t\tmapped.push(adamicCall(callback, [array[index], index, array]));\n\t}\n\treturn mapped;\n};\n")
 	// find and findIndex call the callback even at an index the callback took away, with undefined,
 	// which the element's type can't hold: a panic there, the same one native has.
-	builder.WriteString("const adamicFind = (array, method, callback) => {\n\tconst count = array.length;\n\tfor (let index = 0; index < count; index++) {\n\t\tif (index >= array.length) panic(`${method}: the array shrank while it was being searched`);\n\t\tconst element = array[index];\n\t\tif (adamicCall(callback, [element, index, array])) return method === 'find' ? element : index;\n\t}\n\treturn method === 'find' ? undefined : -1;\n};\n")
+	builder.WriteString("const adamicFind = (array, method, callback) => {\n\tconst count = array.length;\n\tconst last = method === 'findLast' || method === 'findLastIndex';\n\tconst valueResult = method === 'find' || method === 'findLast';\n\tfor (let step = 0; step < count; step++) {\n\t\tconst index = last ? count - 1 - step : step;\n\t\tif (index >= array.length) panic(`${method}: the array shrank while it was being searched`);\n\t\tconst element = array[index];\n\t\tif (adamicCall(callback, [element, index, array])) return valueResult ? element : index;\n\t}\n\treturn valueResult ? undefined : -1;\n};\n")
 	// A Map's forEach gives value, key and the map; a Set's gives its element twice and the set.
 	builder.WriteString("const adamicCollectionVisit = (collection, callback) => collection.forEach((value, key, all) => adamicCall(callback, [value, key, all]));\n")
 	builder.WriteString("const adamicFrom = (length, callback) => Array.from({ length }, (element, index) => adamicCall(callback, [element, index]));\n")
@@ -669,7 +669,14 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.Includes {
 			method = ".includes("
 		}
-		return e.value(expression.Array) + method + e.value(expression.Value) + ")"
+		if expression.Last {
+			method = ".lastIndexOf("
+		}
+		arguments := []ir.Expression{expression.Value}
+		if expression.From != nil {
+			arguments = append(arguments, expression.From)
+		}
+		return e.value(expression.Array) + method + e.values(arguments) + ")"
 	case ir.ArrayFrom:
 		return "adamicFrom(" + e.value(expression.Length) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayReverse:
@@ -721,7 +728,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ArrayMap:
 		return "adamicMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayVisit:
-		if expression.Method == "find" || expression.Method == "findIndex" {
+		if expression.Method == "find" || expression.Method == "findIndex" || expression.Method == "findLast" || expression.Method == "findLastIndex" {
 			return "adamicFind(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"
 		}
 		return "adamicVisit(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"

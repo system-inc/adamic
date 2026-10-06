@@ -354,6 +354,7 @@ enum adamic_equality {
 	adamic_equal_maybe_numbers,
 };
 double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
+double adamic_array_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero, double from, bool has_from, bool last);
 
 // adamic_array_from_length is the length Array.from({ length }) makes (array_from.c): ToLength of
 // the number, and a panic where JavaScript throws, past 2^32 - 1.
@@ -406,6 +407,8 @@ enum adamic_join {
 	adamic_join_maybe_numbers,
 };
 struct adamic_string *adamic_array_join(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind);
+
+struct adamic_string *adamic_array_join_nested(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind, size_t depth);
 
 // These return a reference the caller owns.
 adamic_string *adamic_string_from_number(double value);

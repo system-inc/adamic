@@ -1262,6 +1262,9 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ArraySearch:
 		a.value(expression.Array)
 		a.value(expression.Value)
+		if expression.From != nil {
+			a.value(expression.From)
+		}
 		return value{}
 	case ir.ArrayJoin:
 		a.value(expression.Array)
