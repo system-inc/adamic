@@ -1,0 +1,62 @@
+flag provided but not defined: -github
+Usage of /tmp/stage1-go-cohere:
+  -cache-dump
+    	print what the cache table for this project holds, and exit
+  -coverage
+    	name every rule once under the coverage fact that describes it, rather than only counting them
+  -directory string
+    	the project root, which every relative path resolves against (default: the directory of the nearest tsconfig.json or Package.swift at or above the working directory)
+  -explain string
+    	report what every rule did on one file, and why it did or did not run, writing nothing
+  -fix
+    	apply fixes and format, running no other phase (--no-format to leave formatting out)
+  -fix-passes int
+    	how many times a file may be re-linted while fixes keep landing (default 10)
+  -format
+    	format the files not on record as formatted, or the paths named; a bare run, --fix and --no-fix already do, so naming it there changes nothing
+  -format-all
+    	format every file, not only the ones not on record as formatted (implies --format)
+  -format-only
+    	format only, proposing no fixes and running no other phase (implies --format); with --no-fix, the commit gate's format check: every file formatting would change here or in a nested repository is a finding, and so is one the formatter could not read, and the exit is 0 only when there are none
+  -json
+    	print newline-delimited JSON for a program to read, described by schema/CohereOutput.schema.json
+  -lint
+    	run the lint rules only, reporting their findings without fixing them and without TypeScript's diagnostics
+  -lint-config string
+    	the settings file that says which rules apply to which files, relative to --directory or else to where you typed it; unnamed, the file of this name at the project root (default "CohereSettings.json")
+  -no-cache
+    	read nothing from and write nothing to this project's caches (the cache table and the tsconfig's incremental build info), so every phase computes from source
+  -no-fix
+    	mutate no source in the checked project: report what would change, fixes and formatting both, without writing a byte of it, and exit nonzero if anything would (cohere still keeps its own cache in the project's .cache/cohere, unless --no-cache)
+  -no-format
+    	leave formatting out of a bare run, --fix or --no-fix: fix, type-check and lint only
+  -phases
+    	put where the time went first in the footer's parentheses
+  -print-config
+    	print, as JSON in ESLint's --print-config shape, every registered rule's resolved severity and options for one file (the path given, else index.ts at the project root), and exit
+  -profile file
+    	write a Go CPU profile of the run to file, for go tool pprof
+  -rules
+    	print the rules this cohere implements for the project's language, one per line, and exit
+  -rules-enabled
+    	print the rules the lint config resolves for one file (the path given, else index.ts at the project root), with severity, and exit
+  -single-threaded
+    	use one checker instead of several
+  -stdin-filepath string
+    	with --fix, read one file's text from stdin and print what --fix (and --format, if named) would write for the file at this path, writing nothing to disk
+  -timing
+    	report what building the graph cost and the CPU each rule cost, most expensive rule first
+  -tsconfig string
+    	the tsconfig that defines the program, relative to --directory or else to where you typed it; unnamed, the file of this name in --directory, or else the nearest one at or above the working directory (default "tsconfig.json")
+  -types
+    	report TypeScript's own diagnostics only, running no rules and writing no fixes
+  -unused
+    	report code that was written and never used: unreferenced exports, and statements nothing can reach
+  -unused-all
+    	list the unused findings already marked cohere-keep rather than only counting them (implies --unused)
+  -unused-deep
+    	also compute the transitive closure of unused code and group it into islands (implies --unused)
+  -verbose
+    	print everything a run can say: each phase, the coverage summary, overrides, skips, notes, memory and the total
+  -version
+    	print the version, what this binary was built from, and the Swift contract it speaks, and exit

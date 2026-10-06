@@ -1,0 +1,27 @@
+=== RUN   TestOutputRuntimeGaps
+=== RUN   TestOutputRuntimeGaps/exit_status
+    output_gaps_test.go:112: Node: stdout "one finding\n", exit 1
+    output_gaps_test.go:130: stage 0: /workspace/adamic/stage1/cohere/lint/gaps/6_output_exit_status.ts:6:1: stage 0 can't lower a call returning never yet
+=== RUN   TestOutputRuntimeGaps/environment
+    output_gaps_test.go:112: Node: stdout "color disabled\n", exit 0
+    output_gaps_test.go:140: native: stdout "", exit 1, diagnostic /tmp/adamic-gate/adamic-build-918231945/adamic.h:171:30: runtime error: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')
+=== RUN   TestOutputRuntimeGaps/clock
+    output_gaps_test.go:112: Node: stdout "clock available\n", exit 0
+    output_gaps_test.go:120: stage 0: /workspace/adamic/stage1/cohere/lint/gaps/8_output_clock.ts:1:17: error TS2304: Cannot find name 'performance'.
+--- PASS: TestOutputRuntimeGaps (3.78s)
+    --- PASS: TestOutputRuntimeGaps/exit_status (0.10s)
+    --- PASS: TestOutputRuntimeGaps/environment (3.56s)
+    --- PASS: TestOutputRuntimeGaps/clock (0.12s)
+=== RUN   TestOutputWorkaroundMutants
+=== RUN   TestOutputWorkaroundMutants/exit_discarded
+    output_gaps_test.go:181: caught: native stdout "one finding\n", exit 0; original Node stdout "one finding\n", exit 1
+=== RUN   TestOutputWorkaroundMutants/environment_assumed_absent
+    output_gaps_test.go:181: caught: native stdout "color permitted\n", exit 0; original Node stdout "color disabled\n", exit 0
+=== RUN   TestOutputWorkaroundMutants/clock_replaced_with_zero
+    output_gaps_test.go:181: caught: native stdout "clock absent\n", exit 0; original Node stdout "clock available\n", exit 0
+--- PASS: TestOutputWorkaroundMutants (11.35s)
+    --- PASS: TestOutputWorkaroundMutants/exit_discarded (4.09s)
+    --- PASS: TestOutputWorkaroundMutants/environment_assumed_absent (3.63s)
+    --- PASS: TestOutputWorkaroundMutants/clock_replaced_with_zero (3.63s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	15.134s
