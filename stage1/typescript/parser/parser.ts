@@ -20,15 +20,13 @@ export class Parser {
     readonly nodes: ParseNode[] = [];
     readonly roots: number[] = [];
     readonly diagnostics: ParseDiagnosticInterface[] = [];
-    error(code: number, message: string): void {
-        if(this.diagnostics.at(-1)?.start !== this.scanner.start) {
-            this.diagnostics.push({
-                code,
-                start: this.scanner.start,
-                length: this.scanner.pos - this.scanner.start,
-                message,
-            });
+    errorAt(code: number, start: number, end: number, message: string): void {
+        if(this.diagnostics.at(-1)?.start !== start) {
+            this.diagnostics.push({ code, start, length: end - start, message });
         }
+    }
+    error(code: number, message: string): void {
+        this.errorAt(code, this.scanner.start, this.scanner.pos, message);
     }
     constructor(text: string, path = 'source') {
         this.path = path;
@@ -1024,6 +1022,9 @@ export class Parser {
             kind: () => this.kind(),
             next: () => {
                 this.next();
+            },
+            errorAt: (code, start, end, message) => {
+                this.errorAt(code, start, end, message);
             },
             expect: (kind) => {
                 this.expect(kind);

@@ -224,3 +224,12 @@ duplicated export token. The focused comparison passes in 14.255s. The
 broader comparison advances to input nine, removing the asterisk; Go uses
 its expression-statement-specific diagnostic 1434 for the following from
 identifier, which is the next difference under repair.
+
+## Continued recovery: expression-statement diagnostics
+
+A missing semicolon after a nonempty Identifier expression now reports 1434
+at that identifier's range, while other expressions retain the expected
+semicolon diagnostic. Explicit-range diagnostics preserve Go's suppression
+of consecutive diagnostics at the same start. The focused comparison passes
+in 14.756s and cohere reports no findings. The wider run has passed both
+five-token namespace wrappers and reached the main namespace wrapper.

@@ -10,6 +10,7 @@ export interface StatementContextInterface {
     readonly kind: () => string;
     readonly next: () => void;
     readonly expect: (kind: string) => void;
+    readonly errorAt: (code: number, start: number, end: number, message: string) => void;
     readonly node: (index: number) => ParseNode;
     readonly make: (kind: string, pos: number, children: number[]) => number;
     readonly entityName: () => number;
@@ -976,8 +977,22 @@ export class Statements {
         ) {
             return this.importDeclaration(pos, modifiers);
         }
+        const tokenStart = this.parser.scanner.start;
         const expression = this.parser.rootExpression();
-        this.semicolon();
+        const node = this.parser.node(expression);
+        if(
+            node.kind === 'Identifier' &&
+            node.text !== '' &&
+            this.parser.kind() !== 'SemicolonToken' &&
+            this.parser.kind() !== 'CloseBraceToken' &&
+            this.parser.kind() !== 'EndOfFile' &&
+            (this.parser.scanner.flags & 1) === 0
+        ) {
+            this.parser.errorAt(1434, tokenStart, node.end, 'Unexpected keyword or identifier.');
+        }
+        else {
+            this.semicolon();
+        }
         return this.make('ExpressionStatement', pos, [expression]);
     }
 }
