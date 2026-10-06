@@ -41,3 +41,7 @@ The oracle runs parallel fixtures against Node, under ASan and UBSan with a leak
 Every check must be shown able to fail: skipping shared marking must produce a TSan race; plain counting on a shared object must fail TSan or the leak check; accepting a mutable capture must fail a refusal fixture; reordered results must fail the Node comparison; losing the one-worker path must fail its fixture.
 
 The real workload generates a few thousand in-memory file strings deterministically, tokenizes and summarizes each through pure functions, then merges results in order. Report wall time at one, two and every available core, best of five, with load stated. Correctness comes before a speed claim.
+
+## Runtime file claims, part 1
+
+The runtime unit owns these changes on `codex/concurrency`: `internal/native/runtime/adamic.h`, `heap.c`, new `heap_parallel.h`, new `parallel.c` and `parallel.h`, new `share.c`, `count.c`, `count.h`, `string_index.c`, `string_append.c`, `exceptions.c`, `stack.c`, `weak.c`, `adamic.c`, `map.c`, `library_language.c`, and `sort.c`; the field-cache declaration hook in `internal/native/emit_objects.go`; sanitizer and pthread build hooks in `internal/native/native.go` and `runtime_library.go`; and new `internal/native/parallel_test.go` with C harnesses under `internal/native/testdata/parallel`. Further runtime hazards found during the audit will be claimed here before editing. No lowering or JavaScript files belong to this unit.
