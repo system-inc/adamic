@@ -243,6 +243,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions_spread_fresh.a", true, false},
 	{"internal/oracle/testdata/regions_big.a", true, false},
 	{"internal/oracle/testdata/regions_paths.a", true, false},
+	{"internal/oracle/testdata/reduce_undefined_initial.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
