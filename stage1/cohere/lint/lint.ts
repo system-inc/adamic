@@ -46,7 +46,7 @@ const varMessage =
 const duplicateMessage =
     'Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.';
 
-// Kind membership is a switch, so visiting a node allocates no lookup array.
+// These hot kind tests use switches instead of allocating lookup arrays.
 function isFunctionKind(kind: string): boolean {
     switch(kind) {
         case 'FunctionDeclaration':
@@ -132,6 +132,53 @@ function isBracedListKind(kind: string): boolean {
             return true;
         default:
             return false;
+    }
+}
+
+function equalityOperator(kind: string): string {
+    switch(kind) {
+        case 'EqualsEqualsToken':
+            return '==';
+        case 'ExclamationEqualsToken':
+            return '!=';
+        case 'EqualsEqualsEqualsToken':
+            return '===';
+        case 'ExclamationEqualsEqualsToken':
+            return '!==';
+        default:
+            return '';
+    }
+}
+function bitwiseOperator(kind: string): string {
+    switch(kind) {
+        case 'CaretToken':
+            return '^';
+        case 'BarToken':
+            return '|';
+        case 'AmpersandToken':
+            return '&';
+        case 'LessThanLessThanToken':
+            return '<<';
+        case 'GreaterThanGreaterThanToken':
+            return '>>';
+        case 'GreaterThanGreaterThanGreaterThanToken':
+            return '>>>';
+        case 'CaretEqualsToken':
+            return '^=';
+        case 'BarEqualsToken':
+            return '|=';
+        case 'AmpersandEqualsToken':
+            return '&=';
+        case 'LessThanLessThanEqualsToken':
+            return '<<=';
+        case 'GreaterThanGreaterThanEqualsToken':
+            return '>>=';
+        case 'GreaterThanGreaterThanGreaterThanEqualsToken':
+            return '>>>=';
+        case 'TildeToken':
+            return '~';
+        default:
+            return '';
     }
 }
 
@@ -265,7 +312,10 @@ export class Linter {
         const left = children[0] ?? panic('missing left');
         const operator = children[1] ?? panic('missing operator');
         const right = children[2] ?? panic('missing right');
-        const actual = this.source.slice(this.start(operator), this.node(operator).end);
+        const actual = equalityOperator(this.node(operator).kind);
+        if(actual === '') {
+            return;
+        }
         const isNull =
             this.node(this.unwrap(left)).kind === 'NullKeyword' || this.node(this.unwrap(right)).kind === 'NullKeyword';
         const hasTypeOf =
@@ -581,10 +631,10 @@ export class Linter {
     }
     additional(index: number, parent: number): void {
         const node = this.node(index);
-        if(this.enabled('no-warning-comments') && node.kind === 'SourceFile') {
+        if(node.kind === 'SourceFile' && this.enabled('no-warning-comments')) {
             this.warnings();
         }
-        if(this.enabled('unicode-bom') && node.kind === 'SourceFile') {
+        if(node.kind === 'SourceFile' && this.enabled('unicode-bom')) {
             const hasMark = this.source.startsWith('﻿');
             const require = this.settings.read('require', 'never');
             if(require === 'always' && !hasMark) {
@@ -607,7 +657,10 @@ export class Linter {
                 this.findings.push(finding);
             }
         }
-        if(this.enabled('no-labels')) {
+        if(
+            (node.kind === 'LabeledStatement' || node.kind === 'BreakStatement' || node.kind === 'ContinueStatement') &&
+            this.enabled('no-labels')
+        ) {
             if(node.kind === 'LabeledStatement' && !this.allowedLabel(index)) {
                 this.report(index, 'no-labels', 'unexpectedLabel', messageUnexpectedLabel, '', '', '');
             }
@@ -640,7 +693,13 @@ export class Linter {
                 }
             }
         }
-        if(this.enabled('no-sequences') && this.comma(index) && !this.comma(parent) && !this.forSlot(index)) {
+        if(
+            node.kind === 'BinaryExpression' &&
+            this.enabled('no-sequences') &&
+            this.comma(index) &&
+            !this.comma(parent) &&
+            !this.forSlot(index)
+        ) {
             const grandparent = this.parents[parent] ?? -1;
             const parens =
                 parent >= 0 &&
@@ -662,10 +721,10 @@ export class Linter {
                 );
             }
         }
-        if(this.enabled('no-unneeded-ternary') && node.kind === 'ConditionalExpression') {
+        if(node.kind === 'ConditionalExpression' && this.enabled('no-unneeded-ternary')) {
             this.ternary(index);
         }
-        if(this.enabled('no-template-curly-in-string') && node.kind === 'StringLiteral') {
+        if(node.kind === 'StringLiteral' && this.enabled('no-template-curly-in-string')) {
             let from = 0;
             for(;;) {
                 const opening = node.text.indexOf('${', from);
@@ -688,7 +747,7 @@ export class Linter {
                 from = body;
             }
         }
-        if(this.enabled('no-div-regex') && node.kind === 'RegularExpressionLiteral') {
+        if(node.kind === 'RegularExpressionLiteral' && this.enabled('no-div-regex')) {
             const start = this.start(index);
             if(node.end - start >= 2 && this.source[start + 1] === '=') {
                 const finding = new Finding(
@@ -706,61 +765,55 @@ export class Linter {
                 this.findings.push(finding);
             }
         }
-        if(this.enabled('no-bitwise') && (node.kind === 'BinaryExpression' || node.kind === 'PrefixUnaryExpression')) {
-            const operator =
+        if((node.kind === 'BinaryExpression' || node.kind === 'PrefixUnaryExpression') && this.enabled('no-bitwise')) {
+            const operator = bitwiseOperator(
                 node.kind === 'BinaryExpression'
-                    ? this.source.slice(
-                          this.start(node.children[1] ?? panic('operator')),
-                          this.node(node.children[1] ?? panic('operator')).end,
-                      )
-                    : node.operator === 'TildeToken'
-                      ? '~'
-                      : '';
-            const right = node.children[2] ?? -1;
-            const hint =
-                this.settings.read('int32hint', 'false') === 'true' &&
-                operator === '|' &&
-                right >= 0 &&
-                this.node(right).kind === 'NumericLiteral' &&
-                this.node(right).text === '0';
-            if(
-                ['^', '|', '&', '<<', '>>', '>>>', '^=', '|=', '&=', '<<=', '>>=', '>>>=', '~'].includes(operator) &&
-                !this.settings.list('allow', []).includes(operator) &&
-                !hint
-            ) {
-                this.report(
-                    index,
-                    'no-bitwise',
-                    'unexpected',
-                    `Unexpected use of '${operator}'. ${messageBitwise}`,
-                    '',
-                    '',
-                    '',
-                );
+                    ? this.node(node.children[1] ?? panic('operator')).kind
+                    : node.operator,
+            );
+            if(operator !== '') {
+                const right = node.children[2] ?? -1;
+                const hint =
+                    this.settings.read('int32hint', 'false') === 'true' &&
+                    operator === '|' &&
+                    right >= 0 &&
+                    this.node(right).kind === 'NumericLiteral' &&
+                    this.node(right).text === '0';
+                if(!this.settings.list('allow', []).includes(operator) && !hint) {
+                    this.report(
+                        index,
+                        'no-bitwise',
+                        'unexpected',
+                        `Unexpected use of '${operator}'. ${messageBitwise}`,
+                        '',
+                        '',
+                        '',
+                    );
+                }
             }
         }
-        if(this.enabled('no-continue') && node.kind === 'ContinueStatement') {
+        if(node.kind === 'ContinueStatement' && this.enabled('no-continue')) {
             this.report(index, 'no-continue', 'unexpected', messageContinue, '', '', '');
         }
-        if(this.enabled('no-with') && node.kind === 'WithStatement') {
+        if(node.kind === 'WithStatement' && this.enabled('no-with')) {
             const start = this.start(index);
             this.findings.push(new Finding('no-with', 'noWith', messageWith, start, start + 4, '', '', ''));
         }
-        if(this.enabled('no-new') && node.kind === 'ExpressionStatement') {
+        if(node.kind === 'ExpressionStatement' && this.enabled('no-new')) {
             const expression = node.children[0] ?? -1;
             if(expression >= 0 && this.node(this.unwrap(expression)).kind === 'NewExpression') {
                 this.report(index, 'no-new', 'noNewStatement', messageNew, '', '', '');
             }
         }
         if(
-            this.enabled('no-sparse-arrays') &&
             node.kind === 'ArrayLiteralExpression' &&
+            this.enabled('no-sparse-arrays') &&
             !this.assignmentTarget(index) &&
             this.hasKind(index, 'OmittedExpression')
         ) {
             this.report(index, 'no-sparse-arrays', 'unexpectedSparseArray', messageSparse, '', '', '');
         }
-        if(this.enabled('require-yield') && isGeneratorKind(node.kind) && this.hasKind(index, 'AsteriskToken')) {
+        if(isGeneratorKind(node.kind) && this.enabled('require-yield') && this.hasKind(index, 'AsteriskToken')) {
             for(const child of node.children) {
                 if(
                     this.node(child).kind === 'Block' &&
@@ -772,10 +825,10 @@ export class Linter {
             }
         }
         if(
-            this.enabled('no-await-in-loop') &&
             (node.kind === 'AwaitExpression' ||
                 (node.kind === 'ForOfStatement' && this.hasKind(index, 'AwaitKeyword')) ||
                 (node.kind === 'VariableDeclarationList' && node.semantic === '6')) &&
+            this.enabled('no-await-in-loop') &&
             this.awaitedLoop(index)
         ) {
             const subject =
@@ -784,7 +837,7 @@ export class Linter {
                     : index;
             this.report(subject, 'no-await-in-loop', 'unexpectedAwait', messageAwait, '', '', '');
         }
-        if(this.enabled('vars-on-top') && node.kind === 'VariableDeclarationList' && node.semantic === '0') {
+        if(node.kind === 'VariableDeclarationList' && this.enabled('vars-on-top') && node.semantic === '0') {
             this.varsOnTop(index, parent);
         }
     }

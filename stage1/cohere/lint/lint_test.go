@@ -378,7 +378,7 @@ func TestMutants(t *testing.T) {
 		{"suggestion applied as fix", "hasTypeOf || sameType ? 'fix' : 'suggestion'", "hasTypeOf || sameType ? 'fix' : 'fix'"},
 		{"empty function body reported", "if(!functionBody && !(this.allowCatch", "if((functionBody || !functionBody) && !(this.allowCatch"},
 		{"duplicate case suppressed", "if(seen.has(signature))", "if(!seen.has(signature))"},
-		{"control statement omitted", "this.enabled('no-continue') && node.kind === 'ContinueStatement'", "this.enabled('no-continue') && node.kind === 'BreakStatement'"},
+		{"control statement omitted", "node.kind === 'ContinueStatement' && this.enabled('no-continue')", "node.kind === 'BreakStatement' && this.enabled('no-continue')"},
 		{"destructuring hole reported", "!this.assignmentTarget(index) &&", ""},
 		{"nested generator owns outer yield", "].includes(this.node(child).kind)", "].includes('no boundary')"},
 		{"await crosses function boundary", "this.functionLike(parent) ||", " "},

@@ -1,5 +1,8 @@
 # Fifteen-rule continuation
 
+The subsequent performance follow-up is recorded in [PERFORMANCE.md](PERFORMANCE.md):
+2.00 times native throughput, 59.50% fewer instructions, all output preserved.
+
 Added fifteen syntax-only cohere rules on top of commit
 `6636e8f16a932951458030c902cc3c502a6933e9`. The rule inventory and driver protocol
 are in [README.md](README.md). All changes are in `stage1/cohere/lint/`.
