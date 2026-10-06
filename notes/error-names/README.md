@@ -104,6 +104,7 @@ go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-coun
 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_empty_changed.a' -count=1 -v
 
 gofmt -w internal/oracle/oracle_test.go
+gofmt -w internal/flow/flow_test.go
 gofmt -l cmd internal
 go vet ./...
 ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...
@@ -129,3 +130,25 @@ branch's existing error_spread.a and error_spread_view.a. internal/flow/flow_tes
 explicitly excludes those sixteen files from its compiled-program discovery. The oracle
 still asserts each NotYet result; other unexpected lowering failures remain failures.
 After this harness correction, format, vet and the full uncached gate were rerun.
+
+The superseded first gate reported flow failures and a passing oracle package, but was
+stopped (exit 143) after the corrected rerun passed flow. A Python process-tree walk
+checked the original go-test PID 8548, parent 7005 and original log filename, then sent
+SIGTERM to that run and its thirteen remaining descendants. The final rerun was untouched.
+
+## Final verification
+
+The corrected full uncached gate exited 0. All packages passed, including flow,
+native, oracle, Unicode properties and every stage-1 package. gate.log contains the
+full package results. gofmt -l cmd internal and go vet ./... produced no output;
+counts.log records the successful count update. The restored 20-fixture oracle run
+is in oracle.log. No unmutated program produced a differing native output.
+
+Commits and pushes used these commands (the first push succeeded; no retry was needed):
+
+```sh
+git commit -m 'Cover error spreads and uncaught names with oracle programs'
+git push -u origin coverage/error-names
+git commit -m 'Record the complete uncached verification results'
+git push origin coverage/error-names
+```
