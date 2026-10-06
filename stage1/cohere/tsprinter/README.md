@@ -74,7 +74,7 @@ and the JavaScript backend must match Go byte for byte. The actual npm Prettier 
 TypeScript printer are separate comparisons; every selected case must agree with them too. The
 separate unported proving corpus records one anonymous-function spacing difference in `testdata/prettier-differences.json`; accepted cases have
 no exceptions.
-Fourteen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
+Thirteen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
 prove that the same source texts are formatable. Native release output is also compared.
 
 Three mutants must compile and finish normally before a byte mismatch counts as a catch: a group
@@ -133,3 +133,12 @@ Constructor callees retain parentheses when their left chain contains a call. An
 printed only at the link that owns it, separately from the parser's inherited optional-chain flag.
 The corpus contains 137,637 maximal fragments from 198 files; the drop reflects larger accepted
 call parents. The generator adds 2,533 member/curried-call compositions, width and boundary cases.
+
+## Template increment
+
+Interpolated and multiline templates now compose with every accepted expression family. Raw
+quasis keep their bytes and indentation; interpolation docs follow cohere's source-newline and
+absolute-indent rules. Literal newlines break containing groups. Calls with one multiline template
+retain the printer's single-template layout. Parenthesized expressions containing optional arguments
+or branches are accepted; parentheses stopping an active optional chain remain a proving gap.
+The corpus includes 1,538 new template cases and 138,241 maximal fragments from 198 files.

@@ -148,6 +148,14 @@ export class Expressions {
                   : node.operator;
         return operators.get(kind) ?? '';
     }
+    activeOptional(index: number): boolean {
+        const id = this.unwrapped(index);
+        const kind = this.node(id).kind;
+        if(kind === 'NonNullExpression') return this.activeOptional(this.child(id, 0));
+        if(this.memberish(id) || kind === 'CallExpression')
+            return this.ownOptional(id) || this.activeOptional(this.child(id, 0));
+        return false;
+    }
     hasOptional(index: number): boolean {
         const node = this.node(index);
         if(node.kind === 'QuestionDotToken') return true;
@@ -155,11 +163,7 @@ export class Expressions {
         return false;
     }
     unsupported(index: number): string {
-        if(
-            this.node(index).kind === 'ParenthesizedExpression' &&
-            this.node(this.unwrapped(index)).kind !== 'ObjectLiteralExpression' &&
-            this.hasOptional(index)
-        )
+        if(this.node(index).kind === 'ParenthesizedExpression' && this.activeOptional(index))
             return 'optional-chain-parentheses';
         const id = this.unwrapped(index);
         const node = this.node(id);
@@ -176,10 +180,17 @@ export class Expressions {
             case 'FalseKeyword':
             case 'OmittedExpression':
                 return '';
-            case 'StringLiteral':
             case 'NoSubstitutionTemplateLiteral':
-                if(this.source.slice(node.pos, node.end).trim().includes('\n'))
-                    return node.kind === 'StringLiteral' ? 'string-literal-layout' : 'template-literal-layout';
+                return '';
+            case 'StringLiteral':
+                if(this.source.slice(node.pos, node.end).trim().includes('\n')) return 'string-literal-layout';
+                return '';
+            case 'TemplateExpression':
+                for(let position = 1; position < node.children.length; position++) {
+                    const span = this.node(node.children[position] ?? panic('missing template span'));
+                    const reason = this.unsupported(span.children[0] ?? panic('missing template expression'));
+                    if(reason !== '') return reason;
+                }
                 return '';
             case 'PrefixUnaryExpression':
             case 'PostfixUnaryExpression':
@@ -673,9 +684,13 @@ export class Expressions {
         if(
             !this.canBreak(left) &&
             (shortKey ||
-                ['TrueKeyword', 'FalseKeyword', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(
-                    rightNode.kind,
-                ))
+                [
+                    'TrueKeyword',
+                    'FalseKeyword',
+                    'NumericLiteral',
+                    'NoSubstitutionTemplateLiteral',
+                    'TemplateExpression',
+                ].includes(rightNode.kind))
         )
             return this.docs.group(this.docs.concat([this.docs.group(left), operator, this.docs.text(' '), right]));
         const key = `assignment-${index}`;
@@ -692,6 +707,124 @@ export class Expressions {
     ownOptional(index: number): boolean {
         for(const child of this.node(index).children) if(this.node(child).kind === 'QuestionDotToken') return true;
         return false;
+    }
+    templateHasLines(index: number): boolean {
+        const node = this.node(index);
+        if(node.kind === 'NoSubstitutionTemplateLiteral') return this.source.slice(node.pos, node.end).includes('\n');
+        if(node.kind !== 'TemplateExpression') return false;
+        if(this.node(node.children[0] ?? panic('missing quasi head')).raw.includes('\n')) return true;
+        for(let position = 1; position < node.children.length; position++) {
+            const span = this.node(node.children[position] ?? panic('missing quasi span'));
+            if(this.node(span.children[1] ?? panic('missing quasi tail')).raw.includes('\n')) return true;
+        }
+        return false;
+    }
+    templateOwnLine(index: number): boolean {
+        if(!this.templateHasLines(index)) return false;
+        const node = this.node(index);
+        const raw = this.source.slice(node.pos, node.end);
+        let position = node.pos + raw.length - raw.trimStart().length - 1;
+        while(position >= 0 && [9, 32].includes(this.source.charCodeAt(position))) position--;
+        return ![10, 13, 8232, 8233].includes(this.source.charCodeAt(position));
+    }
+    templateRaw(raw: string): number {
+        const parts: number[] = [];
+        const lines = raw.split('\n');
+        for(let index = 0; index < lines.length; index++) {
+            if(index !== 0)
+                parts.push(
+                    this.docs.concat([
+                        this.docs.add('literallineWithoutBreakParent', []),
+                        this.docs.add('breakParent', []),
+                    ]),
+                );
+            parts.push(this.docs.text(lines[index] ?? panic('missing template line')));
+        }
+        return this.docs.concat(parts);
+    }
+    templateDoc(index: number): number {
+        const node = this.node(index);
+        const head = this.node(node.children[0] ?? panic('missing template head'));
+        const parts = [this.docs.add('lineSuffixBoundary', []), this.docs.text('`'), this.templateRaw(head.raw)];
+        let previous = head.raw;
+        let indentSize = 0;
+        for(let position = 1; position < node.children.length; position++) {
+            const span = this.node(node.children[position] ?? panic('missing template span'));
+            const expression = this.unwrapped(span.children[0] ?? panic('missing interpolation'));
+            const literal = this.node(span.children[1] ?? panic('missing template quasi'));
+            let expressionDoc = this.print(expression, index, 'expressions');
+            const tailRaw = this.source.slice(literal.pos, literal.end);
+            const interpolationEnd = literal.pos + tailRaw.length - tailRaw.trimStart().length;
+            let newline = this.source.slice(span.pos, interpolationEnd).includes('\n');
+            if(!newline) {
+                const flatDocs = new Documents({
+                    printWidth: 1e15,
+                    tabWidth: this.docs.settings.tabWidth,
+                    useTabs: this.docs.settings.useTabs,
+                });
+                const flatPrinter = new Expressions(this.parser, this.source, flatDocs);
+                flatPrinter.directive = false;
+                for(const ancestor of this.ancestors) flatPrinter.ancestors.push(ancestor);
+                for(const boundary of this.sequenceBoundaries) flatPrinter.sequenceBoundaries.add(boundary);
+                const rendered = flatDocs.print(flatPrinter.print(expression, index, 'expressions'));
+                if(rendered.includes('\n')) newline = true;
+                else expressionDoc = this.docs.text(rendered);
+            }
+            const expressionKind = this.node(expression).kind;
+            if(
+                newline &&
+                ([
+                    'Identifier',
+                    'PropertyAccessExpression',
+                    'ElementAccessExpression',
+                    'NonNullExpression',
+                    'ConditionalExpression',
+                ].includes(expressionKind) ||
+                    (expressionKind === 'BinaryExpression' && !this.isAssignment(expression)))
+            )
+                expressionDoc = this.docs.concat([
+                    this.docs.indent(this.docs.concat([this.docs.softline(), expressionDoc])),
+                    this.docs.softline(),
+                ]);
+            const lastNewline = previous.lastIndexOf('\n');
+            if(lastNewline >= 0) {
+                indentSize = 0;
+                const remainder = previous.slice(lastNewline + 1);
+                for(let offset = 0; offset < remainder.length; offset++) {
+                    const character = remainder.charCodeAt(offset);
+                    if(character === 32) indentSize++;
+                    else if(character === 9)
+                        indentSize += this.docs.settings.tabWidth - (indentSize % this.docs.settings.tabWidth);
+                    else break;
+                }
+            }
+            if(indentSize > 0) {
+                for(let level = 0; level < Math.floor(indentSize / this.docs.settings.tabWidth); level++)
+                    expressionDoc = this.docs.indent(expressionDoc);
+                expressionDoc = this.docs.add(
+                    'alignWidth',
+                    [expressionDoc],
+                    '',
+                    indentSize % this.docs.settings.tabWidth,
+                );
+                expressionDoc = this.docs.add('dedentToRoot', [expressionDoc]);
+            }
+            else if(previous.endsWith('\n')) expressionDoc = this.docs.add('dedentToRoot', [expressionDoc]);
+            parts.push(
+                this.docs.group(
+                    this.docs.concat([
+                        this.docs.text('${'),
+                        expressionDoc,
+                        this.docs.add('lineSuffixBoundary', []),
+                        this.docs.text('}'),
+                    ]),
+                ),
+            );
+            parts.push(this.templateRaw(literal.raw));
+            previous = literal.raw;
+        }
+        parts.push(this.docs.text('`'));
+        return this.docs.concat(parts);
     }
     memberish(index: number): boolean {
         return ['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.node(index).kind);
@@ -720,6 +853,18 @@ export class Expressions {
         )
             return true;
         if(node.kind === 'NoSubstitutionTemplateLiteral') return !this.source.slice(node.pos, node.end).includes('\n');
+        if(node.kind === 'TemplateExpression') {
+            if(this.node(node.children[0] ?? panic('missing template head')).raw.includes('\n')) return false;
+            for(let position = 1; position < node.children.length; position++) {
+                const span = this.node(node.children[position] ?? panic('missing template span'));
+                if(
+                    this.node(span.children[1] ?? panic('missing quasi')).raw.includes('\n') ||
+                    !this.simpleArgument(this.unwrapped(span.children[0] ?? panic('missing expression')), depth - 1)
+                )
+                    return false;
+            }
+            return true;
+        }
         if(node.kind === 'ObjectLiteralExpression') {
             for(const child of node.children) {
                 const property = this.node(child);
@@ -1000,6 +1145,12 @@ export class Expressions {
         const callee = this.node(this.child(index, 0));
         const name = callee.kind === 'Identifier' ? callee.text : '';
         const firstArg = this.node(this.child(index, first));
+        if(count === 1 && this.templateOwnLine(this.child(index, first)))
+            return this.docs.concat([
+                this.docs.text('('),
+                args[0] ?? panic('missing template argument'),
+                this.docs.text(')'),
+            ]);
         if(
             node.kind === 'CallExpression' &&
             !node.optional &&
@@ -1159,7 +1310,10 @@ export class Expressions {
                 break;
             }
             case 'NoSubstitutionTemplateLiteral':
-                result = this.docs.text(raw);
+                result = this.docs.concat([this.docs.add('lineSuffixBoundary', []), this.templateRaw(raw)]);
+                break;
+            case 'TemplateExpression':
+                result = this.templateDoc(id);
                 break;
             case 'ThisKeyword':
                 result = this.docs.text('this');
@@ -1292,6 +1446,7 @@ export class Expressions {
                         coercion ||
                         this.isAssignment(parent) ||
                         outer === 'PropertyAssignment' ||
+                        outer === 'TemplateExpression' ||
                         (outer === 'ConditionalExpression' &&
                             (this.ancestors.length < 3 ||
                                 !['CallExpression', 'NewExpression', 'ReturnStatement', 'ThrowStatement'].includes(

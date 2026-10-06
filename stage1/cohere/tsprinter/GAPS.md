@@ -16,21 +16,19 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | `x => x + 1` | `ArrowFunction` | Parameter and arrow-chain layout; block bodies need statements |
 | `({method(){return 1;}})` | `MethodDeclaration` | Method parameters and statement bodies |
 | `[a,b]=items` | `assignment-pattern` | Destructuring target patterns and their assignment layout |
-| `` `a${b}` `` | `TemplateExpression` | Substitution alignment, multiline strings and embeds |
+| `` tag`a${b}` `` | `TaggedTemplateExpression` | Tag layout, Jest tables and embedded language reporting |
 | `(function () {return 1;})` | `FunctionExpression` | Function parameters and statement bodies |
 | `f<T>(x)` | `type-arguments` | Type printing and type-argument layout |
 | `a as T` | `AsExpression` | Cast/type composition |
 | `a /* comment */ + b` | `comment-attachment` | Shared comment attachment and printer hooks |
 | `a +` then a blank line then `b` | `source-trivia` | Preserve source-driven empty-line decisions |
 | `a; b` | `expression-file` | Statement and document composition |
-| Multiline template without substitutions | `template-literal-layout` | Literal-line and indentation alignment |
 | String with a backslash-newline continuation | `string-literal-layout` | Multiline raw literal layout |
 | `(a?.b).c` | `optional-chain-parentheses` | Preserve optional-chain stopping boundaries |
 | Numeric array with a whitespace-only blank line | `source-trivia` | Preserve empty lines containing spaces |
 
 Comments are conservatively detected by raw marker substrings. This also declines a marker inside
-a string or regex; it never pretends to attach it. Blank lines, including whitespace-only lines, and CR source are likewise declined. Parenthesized
-subtrees containing optional chains are conservatively declined; removing those parentheses can
+a string or regex; it never pretends to attach it. Blank lines, including whitespace-only lines, and CR source are likewise declined. Parentheses that stop an active optional chain are conservatively declined; removing those parentheses can
 change whether a later property access throws.
 This core does not promise arbitrary multiline literal handling, JSX, function/class expressions,
 tagged templates, yield/await, TypeScript assertion/satisfies expressions or whole-file syntax.
@@ -170,3 +168,11 @@ The placeholder parentheses branch in Go's general printer is dormant for its Ty
 `(PRETTIER_HTML_PLACEHOLDER_0_0_IN_JS)` normalizes to the bare identifier in both Go and npm Prettier.
 The proving cases retain that observed behavior rather than copying a Babel-only condition.
 Comments, typed calls and chain-stopping boundaries remain the recorded gaps.
+
+## Template family
+
+Interpolated and multiline untagged templates are implemented, including interpolation newlines
+before the closing brace, absolute indentation inherited from raw quasis, and literal-line break
+propagation. Long binary interpolations do not add a second indentation level: the template owns
+that indentation. The generated corpus covers leading and trailing interpolation newlines separately.
+Tagged templates remain a separate proving input. No new stage-0 gap was encountered.

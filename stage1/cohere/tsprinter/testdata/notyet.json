@@ -4,10 +4,6 @@
     "Reason": "ArrowFunction"
   },
   {
-    "Source": "`a${b}`",
-    "Reason": "TemplateExpression"
-  },
-  {
     "Source": "(function () {return 1;})",
     "Reason": "FunctionExpression"
   },
@@ -32,10 +28,6 @@
     "Reason": "expression-file"
   },
   {
-    "Source": "`a\nb`",
-    "Reason": "template-literal-layout"
-  },
-  {
     "Source": "'a\\\nb'",
     "Reason": "string-literal-layout"
   },
@@ -54,5 +46,9 @@
   {
     "Source": "({method(){return 1;}})",
     "Reason": "MethodDeclaration"
+  },
+  {
+    "Source": "tag`a${b}`",
+    "Reason": "TaggedTemplateExpression"
   }
 ]

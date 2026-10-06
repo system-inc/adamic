@@ -141,6 +141,6 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 		t.Fatal(err)
 	}
 	compare("native release", execute(t, nil, release, "--cases", cases, "80"))
-	t.Log("14 unported shapes return NotYet on native, Node and backend; Go and Prettier format every proving input")
+	t.Log("13 unported shapes return NotYet on native, Node and backend; Go and Prettier format every proving input")
 	t.Logf("%d expression fragments byte-identical", strings.Count(want, "\n"))
 }

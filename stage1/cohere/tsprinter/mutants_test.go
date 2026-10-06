@@ -10,6 +10,7 @@ import (
 type mutation struct{ name, file, from, to, entry string }
 
 var mutations = []mutation{
+	{"template loses its interpolation dollar", "expressions.ts", "this.docs.text('${')", "this.docs.text('{')", "main.ts"},
 	{"member chain loses its method dot", "expressions.ts", "this.docs.text(this.ownOptional(index) ? '?.' : '.')", "this.docs.text(this.ownOptional(index) ? '?.' : '')", "main.ts"},
 	{"arguments lose their trailing comma", "expressions.ts", "const trailing = this.docs.ifBreak(this.docs.text(','), this.docs.text(''));", "const trailing = this.docs.text('');", "main.ts"},
 	{"object loses its property colon", "expressions.ts", "this.docs.text(':')", "this.docs.text('')", "main.ts"},

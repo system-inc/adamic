@@ -31,7 +31,6 @@ func supportedExpression(node *estree.Node) bool {
 		return true
 	case "ObjectExpression", "Property", "ConditionalExpression", "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
 	case "TemplateLiteral":
-		return len(node.List("expressions")) == 0
 	case "CallExpression", "NewExpression":
 		if node.Child("typeArguments") != nil {
 			return false
@@ -84,7 +83,7 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 				if node.Kind == ast.KindObjectLiteralExpression {
 					fragment = "(" + fragment + ")"
 				}
-				if node.Kind != ast.KindSpreadElement && node.Kind != ast.KindOmittedExpression && node.Kind != ast.KindPrivateIdentifier && supportedSyntax(node) && coreBoundaries(node, source) && !strings.Contains(fragment, "/*") && !strings.Contains(fragment, "//") && !hasBlankLine(fragment) && !strings.Contains(fragment, "\r") && !(node.Kind == ast.KindNoSubstitutionTemplateLiteral && strings.Contains(fragment, "\n")) {
+				if node.Kind != ast.KindSpreadElement && node.Kind != ast.KindOmittedExpression && node.Kind != ast.KindPrivateIdentifier && supportedSyntax(node) && coreBoundaries(node, source) && !strings.Contains(fragment, "/*") && !strings.Contains(fragment, "//") && !hasBlankLine(fragment) && !strings.Contains(fragment, "\r") {
 					// Property names and other context-only identifiers may not be valid
 					// standalone expression statements (for example, obj.delete).
 					if _, _, _, err := estree.ParseTypeScript("expression.ts", fragment+";", nil); err != nil {
@@ -120,6 +119,31 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 		for _, right := range []string{"g(" + value + ")", "g(" + value + ").x"} {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
 		}
+	}
+	templateValues := []string{"x", "a+b+c", "a?b:c", "a??b", "(a,b)", "({x:1})", "{\nx:1,y:2\n}", "[a,b,c]", "f(x)", "obj.x", "obj?.x", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma + veryLongIdentifierDelta"}
+	quasis := []string{"", "raw", "é😀", "\\u0061", "\\`escaped", "start\n  ", "start\n\t", "start\n"}
+	for _, value := range templateValues {
+		for _, quasi := range quasis {
+			for _, interpolation := range []string{value, "\n" + value + "\n", value + "\n"} {
+				literal := "`" + quasi + "${" + interpolation + "}tail`"
+				for _, source := range []string{literal, "f(" + literal + ")", "x=" + literal, "[" + literal + "]", "(" + literal + ").x"} {
+					add("template-interpolation", source)
+				}
+			}
+		}
+	}
+	for length := 1; length <= 30; length++ {
+		literal := "`head"
+		for index := 0; index < length; index++ {
+			literal += fmt.Sprintf("${value%d} middle", index)
+		}
+		literal += "`"
+		for _, source := range []string{literal, "f(" + literal + ")", "x=" + literal} {
+			add("template-width", source)
+		}
+	}
+	for _, source := range []string{"`a\nb`", "`a\n  b\n c`", "`a\\\nb`", "`a${`b${x}c`}d`", "`a${[1,2,3]}b`", "f(`a\nb`)", "f(\n`a\nb`\n)", "x=`a\n  ${veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma}\n  z`"} {
+		add("template-boundary", source)
 	}
 	memberBases := []string{"obj", "this", "Factory", "_", "$$", "longIdentifierName", "namespace.Factory", "f()", "f(x)", "[a,b]", "({a:1})", "(a+b)", "(a?b:c)", "1", "new C()"}
 	memberArguments := []string{"", "x", "x,y", "veryLongIdentifierAlpha,veryLongIdentifierBeta,veryLongIdentifierGamma", "{x:1,y:2}", "[1,2,3]", "[x,y,z]", "f(x)", "a+b"}
@@ -364,17 +388,18 @@ func hasBlankLine(source string) bool {
 	return false
 }
 func hasOptionalSyntax(node *ast.Node) bool {
-	if node.Kind == ast.KindQuestionDotToken {
-		return true
-	}
-	found := false
-	node.ForEachChild(func(child *ast.Node) bool {
-		if hasOptionalSyntax(child) {
-			found = true
-		}
+	switch node.Kind {
+	case ast.KindParenthesizedExpression, ast.KindNonNullExpression:
+		return hasOptionalSyntax(node.Expression())
+	case ast.KindPropertyAccessExpression:
+		return node.AsPropertyAccessExpression().QuestionDotToken != nil || hasOptionalSyntax(node.Expression())
+	case ast.KindElementAccessExpression:
+		return node.AsElementAccessExpression().QuestionDotToken != nil || hasOptionalSyntax(node.Expression())
+	case ast.KindCallExpression:
+		return node.AsCallExpression().QuestionDotToken != nil || hasOptionalSyntax(node.Expression())
+	default:
 		return false
-	})
-	return found
+	}
 }
 
 // Literal continuation and multiline-template layout is outside the expression core.
@@ -382,7 +407,7 @@ func coreBoundaries(node *ast.Node, source string) bool {
 	if node.Kind == ast.KindParenthesizedExpression && node.Expression().Kind != ast.KindObjectLiteralExpression && hasOptionalSyntax(node) {
 		return false
 	}
-	if node.Kind == ast.KindStringLiteral || node.Kind == ast.KindNoSubstitutionTemplateLiteral {
+	if node.Kind == ast.KindStringLiteral {
 		return !strings.Contains(strings.TrimSpace(source[node.Pos():node.End()]), "\n")
 	}
 	valid := true
@@ -415,6 +440,13 @@ func supportedSyntax(node *ast.Node) bool {
 		return valid
 	case ast.KindShorthandPropertyAssignment:
 		return node.AsShorthandPropertyAssignment().ObjectAssignmentInitializer == nil
+	case ast.KindTemplateExpression:
+		for _, span := range node.AsTemplateExpression().TemplateSpans.Nodes {
+			if !supportedSyntax(span.AsTemplateSpan().Expression) {
+				return false
+			}
+		}
+		return true
 	case ast.KindConditionalExpression:
 		item := node.AsConditionalExpression()
 		return supportedSyntax(item.Condition) && supportedSyntax(item.WhenTrue) && supportedSyntax(item.WhenFalse)

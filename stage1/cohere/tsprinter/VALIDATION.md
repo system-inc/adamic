@@ -467,3 +467,46 @@ Final member source gate: exit 0, 410.302 s; all 137,637 fragments byte-identica
 Prettier 3.9.6 and the embedded fork on source Node, ASan/UBSan native, JS backend and native
 release. The separate leak run passes. Fourteen unported proving inputs retain their exact
 NotYet reasons. The pre-cleanup 137,638-case run also passed (412.697 s).
+
+## Template increment
+
+Untagged interpolated and multiline templates now preserve raw quasi bytes, literal-line break
+propagation and absolute indentation. Interpolation expressions collapse to the unlimited-width
+printer only when both source and resulting doc lack newlines. Leading and trailing interpolation
+newlines are tested independently; parser literal positions include trivia, so the closing-brace
+boundary uses the actual token start. Binary interpolations use the template's indentation rather
+than adding a second level. Template assignment/property values remain attached to the operator.
+The independent oracle caught each of these layout mistakes before the final gate.
+
+Parentheses containing optional arguments or branches are accepted. The stopping-boundary guard
+now follows only the active member/call/non-null chain; it does not confuse unrelated optional
+subexpressions with the receiver chain. Actual chain-stopping parentheses retain their loud gap.
+
+The generator adds 1,538 cases: 1,440 expression/quasi/newline/context combinations, 90 growing
+interpolation lists and 8 boundaries. Total 138,241 maximal fragments from 198 files, with no
+parse refusals. Thirteen explicit proving gaps remain. `results/template-coverage.json` records
+counts. Source cohere: 276 rules, 9 checked, 100% Adamic-ready; vet and whitespace checks pass.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-template-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-template-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-template-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/template' > /tmp/ts-printer-template-mutant.log 2>&1
+```
+
+The template mutant removes `$` from `${`. Native and Node compile and finish with empty stderr
+and exit 0, then mismatch at case 99: `console.log(\`{ordered} {checksum.toFixed(3)}\`);` instead
+of the repository's interpolated log. Subtest 255.67 s, complete command 261.491 s. Its corpus
+predates the final binary-interpolation indentation correction; that correction does not change
+the proving input or the mutated dollar printer. The final unmutated corpus includes that input.
+
+Final template gate: exit 0, 406.287 s; all 138,241 fragments byte-identical to Go, npm Prettier
+3.9.6 and the embedded fork on source Node, ASan/UBSan native, JS backend and native release.
+The separate leak run passes. Thirteen unported proving inputs retain their exact NotYet reasons.
