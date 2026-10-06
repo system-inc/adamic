@@ -1,0 +1,48 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a
+    oracle_test.go:581: Lower: /workspace/adamic/internal/oracle/testdata/regexp_native_quantifier_bounds.a:1:16: invalid RegExp: regexp: quantifier range out of order at byte 1
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+    oracle_test.go:583: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+    oracle_test.go:583: gate cache node miss
+    oracle_test.go:583: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+    oracle_test.go:583: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+    oracle_test.go:472: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+    oracle_test.go:472: gate cache native miss
+    oracle_test.go:465: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+    oracle_test.go:465: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a
+    oracle_test.go:604: stdout differs
+        node:   exit 0, stdout "false true\ntrue false\nfalse true\na1#\n", stderr ""
+        native: exit 0, stdout "true false\nfalse true\nfalse true\na#\x01\n", stderr ""
+    oracle_test.go:479: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a
+    oracle_test.go:604: stdout differs
+        node:   exit 0, stdout "100\n110\n10\n1\n11\n10\n10\n10\n1\n01111\n111\n11\n1\n10\n10\n1101\n1101\n", stderr ""
+        native: exit 0, stdout "100\n110\n10\n1\n11\n10\n10\n10\n1\n01111\n101\n11\n1\n01\n01\n1101\n1101\n", stderr ""
+    oracle_test.go:479: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_quantifier_bounds.a (0.09s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_octal.a (17.73s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_class_escapes.a (17.97s)
+FAIL
+gate cache: native hits=2 misses=4
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	17.997s
+FAIL
