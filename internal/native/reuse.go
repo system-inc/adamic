@@ -218,7 +218,10 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 	fieldReads := map[string]int{}
 	for _, field := range literal.Fields {
 		walk(field.Value, func(expression ir.Expression) {
-			if property, ok := expression.(ir.Property); ok {
+			// A field read only reads. A method's callee (Property.Method) calls code with the source
+			// as this, which can keep it or read a field take has moved out, so it stays a read of its
+			// own and the source isn't reused (reuse_spread_method.a, reuse_spread_method_alias.a).
+			if property, ok := expression.(ir.Property); ok && !property.Method {
 				if read, ok := variableRead(property.Object); ok && read.Local == source {
 					inside++
 					fieldReads[property.Name]++
