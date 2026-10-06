@@ -1,0 +1,5 @@
+{
+  "name": "empty function body reported",
+  "from": "if(!functionBody && !(this.context.allowCatch",
+  "to": "if((functionBody || !functionBody) && !(this.context.allowCatch"
+}
