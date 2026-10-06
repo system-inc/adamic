@@ -211,6 +211,10 @@ var fixtures = []struct {
 	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
+	// A narrowed read (ir.Defined) of a global, a field and a captured variable, lent to a call whose
+	// later argument writes the place it was read from (integration's reading of aa17d3c).
+	{"internal/oracle/testdata/borrow_defined_lent.a", true, false},
+	{"internal/oracle/testdata/borrow_defined_lent_field.a", true, false},
 	{"internal/oracle/testdata/writes_in_try.a", true, false},
 	{"internal/oracle/testdata/class_as_interface.a", true, false},
 	{"internal/oracle/testdata/optional_class_method.a", true, false},
