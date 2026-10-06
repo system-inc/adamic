@@ -1,0 +1,7 @@
+class Animal { readonly n = 1; }
+class Dog extends Animal {}
+class Cat extends Animal {}
+class Bird extends Animal {}
+function cast(value: Dog | Cat | Bird): Dog | Cat { return value as Dog | Cat; }
+console.log('casting');
+console.log(`${cast(new Bird()).n}`);
