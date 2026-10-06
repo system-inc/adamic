@@ -331,7 +331,7 @@ export class Statements {
             children.push(clause);
             this.parser.expect('FromKeyword');
         }
-        children.push(this.parser.propertyName());
+        children.push(this.parser.rootExpression());
         if(this.parser.kind() === 'WithKeyword' || this.parser.kind() === 'AssertKeyword') {
             children.push(this.attributes());
         }
@@ -374,13 +374,13 @@ export class Statements {
                 children.push(this.make('NamespaceExport', start, [name]));
             }
             this.parser.expect('FromKeyword');
-            children.push(this.parser.propertyName());
+            children.push(this.parser.rootExpression());
         }
         else {
             children.push(this.specifiers(false));
             if(this.parser.kind() === 'FromKeyword') {
                 this.parser.next();
-                children.push(this.parser.propertyName());
+                children.push(this.parser.rootExpression());
             }
         }
         if(this.parser.kind() === 'WithKeyword' || this.parser.kind() === 'AssertKeyword') {

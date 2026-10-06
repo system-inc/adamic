@@ -82,7 +82,21 @@ export class Parser {
         node.end = this.scanner.fullStart;
         return id;
     }
+    missingIdentifier(code: number, message: string): number {
+        if(this.kind() === 'EndOfFile') {
+            if(this.diagnostics.at(-1)?.start !== this.scanner.fullStart) {
+                this.diagnostics.push({ code, start: this.scanner.fullStart, length: 0, message });
+            }
+        }
+        else {
+            this.error(code, message);
+        }
+        return this.make('Identifier', this.scanner.fullStart);
+    }
     identifier(): number {
+        if(this.kind() !== 'Identifier' && this.kind() !== 'PrivateIdentifier' && !this.kind().endsWith('Keyword')) {
+            return this.missingIdentifier(1003, 'Identifier expected.');
+        }
         const pos = this.scanner.fullStart;
         const text = this.scanner.value;
         this.next();
@@ -180,7 +194,7 @@ export class Parser {
                 if(this.kind() === 'Identifier' || this.kind().endsWith('Keyword')) {
                     return this.identifier();
                 }
-                panic(`parser slice unsupported primary ${this.kind()} at ${this.scanner.start} in ${this.path}`);
+                return this.missingIdentifier(1109, 'Expression expected.');
         }
     }
     bindingIdentifier(): boolean {

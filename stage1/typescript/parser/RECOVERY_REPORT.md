@@ -2,7 +2,7 @@ Fixed the four parser sources underlying all eight reported lint failures.
 Go, Node and sanitized native agree on their recovered trees and diagnostics.
 Three recovery mutants prove diagnostic, child-tree and timeout comparisons.
 All 77 compiler files yield 22,497 planned cutoff/removal/duplication inputs.
-Bare export now agrees; the wider comparison next fails after export *.
+Bare export and incomplete export clauses agree; wider recovery remains active.
 
 ## Built
 
@@ -201,3 +201,12 @@ to implement. The full corpus remains red; no failure is filtered.
 Logs: `validation/recovery-export-step.log`,
 `validation/recovery-export-mutant.log`, and
 `validation/recovery-incomplete-next.log`.
+
+## Continued recovery: missing module expressions
+
+Missing identifiers now have empty text and zero width without consuming the
+unexpected token. Missing expressions report Go's 1109, at the full token
+start for EOF. Import/export module specifiers use expression descent.
+Focused tree and diagnostic comparison passes in 13.884s. All five token
+cuts of the first namespace wrapper now pass. The wider run reaches input
+seven, removing export, and exposes the port's semicolon refusal.
