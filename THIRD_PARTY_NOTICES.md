@@ -13,6 +13,11 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
+  - positioned String affixes (`internal/lower/library_string.go`, after
+    src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
+  - String well-formed Unicode (`runtime/string_wellformed.c`, after
+    src/builtins/string-iswellformed.tq and src/builtins/string-towellformed.tq,
+    adapted to canonical WTF-8 storage);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own

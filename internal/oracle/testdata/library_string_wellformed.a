@@ -1,0 +1,12 @@
+for (const text of ['', 'abc', 'é', '🌍', '\ud800', '\udbff', '\udc00', '\udfff', '\ud800x', 'x\udfff', '\ud800\ud800\udc00', '\udc00\ud800', '\ud800\udc00']) {
+ const result = text.toWellFormed();
+ console.log(`${text.length} ${text.isWellFormed()} ${result.isWellFormed()} ${result.length}`);
+ for (let index = 0; index < result.length; index++) { console.log(`${result.charCodeAt(index)}`); }
+}
+const dynamic = String.fromCharCode(0xd800, 65, 0xdc00, 0xd83c, 0xdf0d);
+console.log(`${dynamic.toWellFormed().isWellFormed()} ${dynamic.isWellFormed()}`);
+console.log(`${String.prototype.isWellFormed.call(42)} ${String.prototype.toWellFormed.call(true)}`);
+const high = String.fromCharCode(0xd800);
+const low = String.fromCharCode(0xdc00);
+const joined = high + low;
+console.log(`${joined.isWellFormed()} ${joined.toWellFormed().length}`);
