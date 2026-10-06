@@ -1,0 +1,59 @@
+# Nullable reference evidence
+
+Built one nullable pointer path with an instantiated static empty case.
+Core commit: 1a9c637cf3556f14462dcf8798cb41ff30bfbb4c; fixtures: b8727ba.
+Validation commands and captured outputs appear below.
+All seven requested mutants and three additional mutants failed semantically.
+Unnarrowed non-string coercion and structural object/class JSON remain NotYet.
+
+## Environment and base
+
+Branch `codex/nullable-references`, based on
+`origin/codex/regex-matcher` at `50a1dc8217f6d715fc27038e6ce12ab429416a30`.
+The regex branch moved from df959ee during this work; the core was rebased before
+its first push. The library-date diff was read, not merged.
+
+`bash cloud/setup.sh` finished in 147 seconds. Its timing lines reported Go, clang,
+Node and submodules at 1 second, build cache warm at 147 seconds, and setup complete
+at 147 seconds. `nproc` returned 5. The toolchain was Go 1.27.1, clang 20.1.8 and
+Node 24.19.0. Commands source `/workspace/adamic-tools/env.sh`.
+
+## Validation
+
+Output is written to log files before being read. The complete worker gate uses
+the permitted oracle cache; the new fixtures also run uncached. The uncached oracle
+compares source Node, emitted JavaScript, native ASan/UBSan, native release and
+LeakSanitizer, including stdout, stderr and exit code.
+
+```sh
+gofmt -l cmd internal > /tmp/nullable-gofmt.log
+go vet ./... > /tmp/nullable-vet.log 2>&1
+go test -count=1 -timeout=30m ./... > /tmp/nullable-final-gate.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout=30m ./internal/oracle -run '^TestNativeAgreesWithNode/internal/oracle/testdata/nullable_references' > /tmp/nullable-final-uncached.log 2>&1
+go test -count=1 -timeout=30m ./internal/oracle -run '^TestCountsAreRecorded$' -args -update-counts > /tmp/nullable-final-counts.log 2>&1
+python3 cloud/reports/nullable-references/run-mutants.py > /tmp/nullable-mutants-final.log 2>&1
+```
+
+`run-mutants.py` checks for the intended semantic failure and rejects build-only
+failures. See `mutants.txt` and the individual mutant logs. The generic-key mutant
+merges nullable string instantiations deliberately; the null/undefined comparison
+mutants independently remove the static-type distinction. The tag mutant disables
+the tag refusals, and the named test detects accepted programs.
+
+Only four new fixture rows were added to `internal/oracle/counts.md`; no existing
+row changed and no old fixture changed lowering status.
+
+## Coverage limits
+
+See `docs/nullable-references.md`. All reference kinds use the same representation,
+and proven empty values of arrays, objects, classes, maps, sets and functions have
+Node comparisons for spelling, Number, typeof and JSON. Present non-string values
+retain the existing NotYet coercion rules. Unnarrowed object/class JSON needs a
+complete-shape and toJSON design. This is an incomplete part of the original brief,
+not a claim that all requested present-value operations are implemented.
+Console array/object formatting was explicitly excluded by the user. Non-null
+assertions, loose equality and non-boolean conditions retain existing refusals.
+
+Observed so far: gofmt and vet produced no output and exited zero. The uncached
+nullable oracle passed in 7.720 seconds. The complete counts update passed in
+83.591 seconds and changed only the four new rows.
