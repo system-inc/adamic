@@ -1,0 +1,5 @@
+const numbers = [3, 20, 100, -1, 2];
+console.log(`${numbers.sort().join(',')}`);
+console.log(`${numbers.join(',')}`);
+console.log(`${[true, false, true].sort().join(',')}`);
+console.log(`${['z'.repeat(2), 'a'.repeat(2), '\u{10000}', '\uE000'].sort().join(',')}`);

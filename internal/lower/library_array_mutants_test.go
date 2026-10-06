@@ -23,6 +23,116 @@ func TestLibraryArrayNewFamilyMutants(t *testing.T) {
 		mutate        func(*ir.Program) bool
 		mutateC       func(string) string
 	}{
+		{name: "constructor argument order", fixture: "library_array_dense_construction.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			walk(program.Main, func(node any) bool {
+				if literal, ok := node.(ir.ArrayLiteral); ok && len(literal.Elements) > 1 {
+					literal.Elements[0], literal.Elements[1] = literal.Elements[1], literal.Elements[0]
+					changed = true
+					return false
+				}
+				return true
+			})
+			return changed
+		}},
+		{name: "reduceRight index stride", fixture: "library_array_reductions.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name != "array_reduceRight" {
+					continue
+				}
+				for _, statement := range function.Body {
+					loop, ok := statement.(ir.Loop)
+					if !ok {
+						continue
+					}
+					advance := loop.Update[0].(ir.Assign)
+					value := advance.Value.(ir.Binary)
+					value.Right = ir.NumberConstant{Value: 2}
+					advance.Value = value
+					loop.Update[0] = advance
+					changed = true
+				}
+			}
+			return changed
+		}},
+		{name: "reduce saved length boundary", fixture: "library_array_reductions.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name != "array_reduce" {
+					continue
+				}
+				for index, statement := range function.Body {
+					loop, ok := statement.(ir.Loop)
+					if !ok {
+						continue
+					}
+					bound := loop.Condition.(ir.Binary)
+					bound.Right = ir.Binary{Operator: ir.Subtract, Left: bound.Right, Right: ir.NumberConstant{Value: 1}}
+					loop.Condition = bound
+					function.Body[index] = loop
+					changed = true
+				}
+			}
+			return changed
+		}},
+		{name: "reduce empty TypeError message", fixture: "library_array_reductions.a", mutate: func(program *ir.Program) bool {
+			for index, text := range program.Strings {
+				if text == "Reduce of empty array with no initial value" {
+					program.Strings[index] = "wrong empty reduction"
+					return true
+				}
+			}
+			return false
+		}},
+		{name: "generic nullish TypeError message", fixture: "library_array_receiver_calls.a", mutate: func(program *ir.Program) bool {
+			for index, text := range program.Strings {
+				if text == "Cannot convert undefined or null to object" {
+					program.Strings[index] = "wrong nullish receiver"
+					return true
+				}
+			}
+			return false
+		}},
+		{name: "generic primitive every result", fixture: "library_array_receiver_calls.a", mutate: func(program *ir.Program) bool {
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name != "array_primitive_every" {
+					continue
+				}
+				last := len(function.Body) - 1
+				returned := function.Body[last].(ir.Return)
+				returned.Value = ir.BooleanConstant{Value: false}
+				function.Body[last] = returned
+				return true
+			}
+			return false
+		}},
+		{name: "from string iteration order", fixture: "library_array_from_string.a", mutate: func(program *ir.Program) bool {
+			for index := range program.Functions {
+				function := &program.Functions[index]
+				if function.Name != "array_from_string" {
+					continue
+				}
+				last := len(function.Body) - 1
+				returned := function.Body[last].(ir.Return)
+				returned.Value = ir.ArrayReverse{Array: returned.Value}
+				function.Body[last] = returned
+				return true
+			}
+			return false
+		}},
+		{name: "string mutation readonly error", fixture: "library_array_string_mutations.a", mutate: func(program *ir.Program) bool {
+			for index, text := range program.Strings {
+				if text == "Cannot assign to read only property 'length' of object '[object String]'" {
+					program.Strings[index] = "wrong readonly string error"
+					return true
+				}
+			}
+			return false
+		}},
 		{name: "generic forward boundary", fixture: "library_array_search.a", mutate: func(program *ir.Program) bool {
 			changed := false
 			for index := range program.Functions {

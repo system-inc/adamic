@@ -9,8 +9,9 @@ import (
 )
 
 // arrayVisit emits forEach, filter, some, every, find and findIndex as one loop. The length is read
-// once and an index the array has lost is skipped, as JavaScript does (0.1's arrays have no holes, so
-// a lost index is one past a shrunken end). Each element is held across its call, since the callback
+// once. Lost indexes are skipped except by the find methods, which pass undefined when the proven
+// element type permits it and otherwise stop with an inserted check. Each element is held across its
+// call, since the callback
 // may take it out of the array; filter and find hand that hold to what they return.
 func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	source := e.temporary()
@@ -40,18 +41,32 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
 	}
 	e.indent++
-	e.line("if (%s >= %s->length) {", index, source)
-	if visit.Method == "find" || visit.Method == "findIndex" || visit.Method == "findLast" || visit.Method == "findLastIndex" {
-		// The other visits skip an index the callback took away, as JavaScript's do; find and
-		// findIndex call it with undefined there, which the element's type can't hold. A panic, the
-		// same in both backends.
-		e.line("\tstatic const char message[] = \"%s: the array shrank while it was being searched\";", visit.Method)
-		e.line("\tadamic_panic(message, sizeof message - 1);")
+	search := visit.Method == "find" || visit.Method == "findIndex" || visit.Method == "findLast" || visit.Method == "findLastIndex"
+	if search && visit.AllowsUndefined {
+		// V8's find loops use Get, not HasProperty: a removed index is undefined.
+		// Numeric optional slots need the packed absent word; references use NULL.
+		missing := "NULL"
+		if visit.Element.IsMaybe() {
+			missing = slotted(visit.Element, zero(visit.Element))
+		}
+		e.line("adamic_value %s;", element)
+		e.line("if (%s >= %s->length) {", index, source)
+		e.line("\t%s = (adamic_value){.%s = %s};", element, member(visit.Element), missing)
+		e.line("} else {")
+		e.line("\t%s = %s->elements[%s];", element, source, index)
+		e.line("}")
 	} else {
-		e.line("\tcontinue;")
+		e.line("if (%s >= %s->length) {", index, source)
+		if search {
+			// Keep the inserted check only when the proven element type cannot hold undefined.
+			e.line("\tstatic const char message[] = \"%s: the array shrank while it was being searched\";", visit.Method)
+			e.line("\tadamic_panic(message, sizeof message - 1);")
+		} else {
+			e.line("\tcontinue;")
+		}
+		e.line("}")
+		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
 	}
-	e.line("}")
-	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
 	if references {
 		e.line("adamic_retain(%s.reference);", element)
 	}

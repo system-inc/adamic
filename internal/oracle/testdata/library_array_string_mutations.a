@@ -1,0 +1,15 @@
+function word(value: string): string {console.log(`word ${value}`); return value.repeat(1);}
+function item(value: number): number {console.log(`item ${value}`); return value;}
+try {Array.prototype.pop.call(word(''));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.pop.call(word('abc'));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.pop.call(word('\u{1F600}'));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.push.call(word(''), item(1));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.push.call(word('abc'));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.shift.call(word(''));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.shift.call(word('a'));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.shift.call(word('abc'));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.unshift.call(word(''), item(1));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.unshift.call(word('abc'));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.unshift.call(word('abc'), item(1));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.unshift.call(word('a'), item(1));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}
+try {Array.prototype.unshift.call(word('abc'), item(1), item(2), item(3));} catch (error) {if (error instanceof Error) {console.log(`${error.name}: ${error.message}`);}}

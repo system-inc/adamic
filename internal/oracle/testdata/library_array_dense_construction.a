@@ -1,0 +1,15 @@
+function number(value: number): number {
+    console.log(`number ${value}`);
+    return value;
+}
+function word(value: string): string {
+    console.log(`word ${value}`);
+    return value;
+}
+console.log(`${new Array(number(3), number(1), number(2)).join(',')}`);
+console.log(`${Array(word('a'.repeat(2)), word('b'.repeat(2))).join(',')}`);
+console.log(`${new Array(word('c'.repeat(2))).join(',')}`);
+console.log(`${Array.of(number(7)).join(',')}`);
+const empty: number[] = new Array<number>();
+const zero: string[] = Array<string>(0);
+console.log(`${empty.length} ${zero.length} ${Array.prototype.length}`);
