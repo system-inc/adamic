@@ -1091,6 +1091,8 @@ func (a *analysis) value(expression ir.Expression) value {
 			a.value(argument)
 		}
 		return value{}
+	case ir.ObjectCall:
+		return a.objectCall(expression)
 	case ir.NumberCall:
 		for _, argument := range expression.Arguments {
 			a.value(argument)

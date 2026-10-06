@@ -191,6 +191,14 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				visited[node.Comparator] = true
 				failing = l.libraryFailure(l.result.Functions[node.Comparator].Body, visited)
 			}
+		case ir.SetProperty:
+			if l.objectCanFreeze() {
+				failing = "a write to a potentially frozen object"
+			}
+		case ir.ObjectCall:
+			if node.Method == "assign" && l.objectCanFreeze() {
+				failing = "Object.assign into a potentially frozen object"
+			}
 		case ir.StringCall:
 			switch {
 			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):

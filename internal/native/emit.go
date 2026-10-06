@@ -491,6 +491,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("\tstatic const char message[] = %s;", cString("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
+		e.line("adamic_object_check_write(%s, %s);", object, cString(statement.Name))
 		slot := e.temporary()
 		e.line("adamic_value *%s = %s;", slot, e.fieldSlot(object, statement.Name, statement.Class))
 		if statement.Value.Type().IsReference() {
@@ -1259,6 +1260,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return e.own(ir.String, function+"(0, NULL)")
 		}
 		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
+	case ir.ObjectCall:
+		return e.objectCall(expression)
 	case ir.NumberCall:
 		arguments := []string{}
 		for _, argument := range expression.Arguments {
