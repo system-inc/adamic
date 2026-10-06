@@ -286,7 +286,7 @@ export class Scanner {
     }
 
     string(): void {
-        const quote = this.code();
+        const quote = this.text.charCodeAt(this.pos);
         if(quote === 39) {
             this.flags |= 65536;
         }
@@ -294,8 +294,8 @@ export class Scanner {
         let start = this.pos;
         const pieces: string[] = [];
         for(;;) {
-            const code = this.code();
-            if(code < 0 || code === 10 || code === 13 || code === quote) {
+            const code = this.text.charCodeAt(this.pos);
+            if(this.pos >= this.text.length || code === 10 || code === 13 || code === quote) {
                 pieces.push(this.text.slice(start, this.pos));
                 if(code === quote) {
                     this.pos++;
@@ -313,7 +313,7 @@ export class Scanner {
                 start = this.pos;
             }
             else {
-                this.advance(code);
+                this.pos++;
             }
         }
         this.kind = 'StringLiteral';
@@ -321,13 +321,13 @@ export class Scanner {
     }
 
     template(report: boolean): void {
-        const backtick = this.code() === 96;
+        const backtick = this.text.charCodeAt(this.pos) === 96;
         this.pos++;
         let start = this.pos;
         const pieces: string[] = [];
         for(;;) {
-            const code = this.code();
-            if(code < 0 || code === 96) {
+            const code = this.text.charCodeAt(this.pos);
+            if(this.pos >= this.text.length || code === 96) {
                 pieces.push(this.text.slice(start, this.pos));
                 if(code === 96) {
                     this.pos++;
@@ -339,7 +339,7 @@ export class Scanner {
                 this.kind = backtick ? 'NoSubstitutionTemplateLiteral' : 'TemplateTail';
                 break;
             }
-            if(code === 36 && this.code(1) === 123) {
+            if(code === 36 && this.text.charCodeAt(this.pos + 1) === 123) {
                 pieces.push(this.text.slice(start, this.pos));
                 this.pos += 2;
                 this.kind = backtick ? 'TemplateHead' : 'TemplateMiddle';
@@ -354,13 +354,13 @@ export class Scanner {
                 pieces.push(this.text.slice(start, this.pos));
                 pieces.push('\n');
                 this.pos++;
-                if(this.code() === 10) {
+                if(this.text.charCodeAt(this.pos) === 10) {
                     this.pos++;
                 }
                 start = this.pos;
             }
             else {
-                this.advance(code);
+                this.pos++;
             }
         }
         this.value = pieces.join('');
@@ -510,11 +510,11 @@ export class Scanner {
             if(code === 47 && this.code(1) === 47) {
                 this.pos += 2;
                 while(this.pos < this.text.length) {
-                    const current = this.code();
+                    const current = this.text.charCodeAt(this.pos);
                     if(isLineBreak(current)) {
                         break;
                     }
-                    this.advance(current);
+                    this.pos++;
                 }
                 continue;
             }
@@ -522,14 +522,14 @@ export class Scanner {
                 this.pos += 2;
                 const jsdoc = this.code() === 42 && this.code(1) !== 47;
                 while(this.pos < this.text.length) {
-                    const current = this.code();
-                    if(current === 42 && this.code(1) === 47) {
+                    const current = this.text.charCodeAt(this.pos);
+                    if(current === 42 && this.text.charCodeAt(this.pos + 1) === 47) {
                         break;
                     }
                     if(isLineBreak(current)) {
                         this.flags |= 1;
                     }
-                    this.advance(current);
+                    this.pos++;
                 }
                 if(this.pos === this.text.length) {
                     this.error(1010);
@@ -565,11 +565,11 @@ export class Scanner {
                 this.pos += 2;
                 if(this.start === 0) {
                     while(this.pos < this.text.length) {
-                        const current = this.code();
+                        const current = this.text.charCodeAt(this.pos);
                         if(isLineBreak(current)) {
                             break;
                         }
-                        this.advance(current);
+                        this.pos++;
                     }
                     continue;
                 }
@@ -588,16 +588,16 @@ export class Scanner {
                 this.pos += 7;
                 if(code === 60 || code === 62) {
                     while(this.pos < this.text.length) {
-                        const current = this.code();
+                        const current = this.text.charCodeAt(this.pos);
                         if(isLineBreak(current)) {
                             break;
                         }
-                        this.advance(current);
+                        this.pos++;
                     }
                 }
                 else {
                     while(this.pos < this.text.length) {
-                        const current = this.code();
+                        const current = this.text.charCodeAt(this.pos);
                         if(
                             (current === 61 || current === 62) &&
                             current !== code &&
@@ -607,7 +607,7 @@ export class Scanner {
                         ) {
                             break;
                         }
-                        this.advance(current);
+                        this.pos++;
                     }
                 }
                 continue;

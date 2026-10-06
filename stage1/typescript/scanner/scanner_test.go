@@ -313,6 +313,10 @@ func askedCorpus(t *testing.T) corpus {
 			add("scan", character+" a"+character+" "+fmt.Sprintf(`\u{%x} a\u{%x}`, point, point))
 		}
 	}
+	for _, text := range []string{`"😀𐐀"`, `'😀𐐀'`, `"😀𐐀`, "`😀𐐀`", "`😀𐐀", "/*😀𐐀*/x", "/*😀𐐀", "//😀𐐀\nx", "//😀\u2028x", "/*😀\u2029*/x", "#!😀\nx"} {
+		add("scan", text)
+	}
+	add("template", "`😀${x}𐐀`")
 	for _, text := range []string{"`a${b}c${d}e`", "`a${b}\\uZZZZ`", "`a${b}\\1`"} {
 		add("template", text)
 	}
