@@ -36,6 +36,7 @@
 
 struct adamic_string_index {
 	// The last code point found: its first unit, and its byte offset.
+	size_t units;
 	size_t cursor_unit;
 	size_t cursor_offset;
 	// checkpoints[k] is where unit k * STEP is: the byte offset of the code point holding it, shifted
@@ -52,32 +53,48 @@ static size_t width(unsigned char lead) {
 	return lead < 0x80 ? 1 : lead < 0xe0 ? 2 : lead < 0xf0 ? 3 : 4;
 }
 
+static struct adamic_string_index *shared_index(const adamic_string *string, size_t units);
+
+static struct adamic_string_index *cached(const adamic_string *string) {
+	return adamic_is_shared(&string->heap) ?
+		__atomic_load_n(&string->index, __ATOMIC_ACQUIRE) : string->index;
+}
+
 size_t adamic_string_units(const adamic_string *string) {
 	if (string->units != 0) { return string->units - 1; }
+	bool shared = adamic_is_shared(&string->heap);
+	if (shared) {
+		struct adamic_string_index *index = cached(string);
+		if (index != NULL && index != ADAMIC_LITERAL_INDEX) { return index->units; }
+	}
 	size_t units = 0;
 	for (size_t offset = 0; offset < string->length;) {
 		size_t size = width((unsigned char)string->bytes[offset]);
 		units += size == 4 ? 2 : 1;
 		offset += size;
 	}
-	// Immortal literals may be read by any worker without going through share. Never mutate them.
-	if (adamic_reference_count(&string->heap) != 0 && !adamic_is_shared(&string->heap)) {
+	if (shared) { return shared_index(string, units)->units; }
+	// Immortal literals may be read by any worker. Their fields remain immutable.
+	if (adamic_reference_count(&string->heap) != 0) {
 		((adamic_string *)string)->units = units + 1;
 	}
 	return units;
 }
 
 static struct adamic_string_index *build(adamic_string *string, size_t units) {
-	size_t count = units / STEP + 1;
+	bool indexed = units != string->length && string->length >= MINIMUM && string->length <= UINT32_MAX >> 1;
+	size_t count = indexed ? units / STEP + 1 : 0;
 	struct adamic_string_index *index = malloc(sizeof *index + count * sizeof index->checkpoints[0]);
 	if (index == NULL) {
 		static const char message[] = "out of memory";
 		adamic_panic(message, sizeof message - 1);
 	}
+	index->units = units;
 	index->cursor_unit = 0;
 	index->cursor_offset = 0;
 	index->count = count;
 	index->bmp = NULL;
+	if (!indexed) { return index; }
 	bool all_bmp = true;
 	size_t checkpoint = 0, unit = 0;
 	for (size_t offset = 0; offset < string->length;) {
@@ -112,8 +129,21 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
 			offset += size;
 		}
 	}
-	string->index = index;
 	return index;
+}
+
+// Publish a complete immutable index with one CAS. A competing builder owns and frees
+// its losing copy. The string's plain units field is never changed after publication.
+static struct adamic_string_index *shared_index(const adamic_string *string, size_t units) {
+	struct adamic_string_index *index = cached(string);
+	if (index != NULL && index != ADAMIC_LITERAL_INDEX) { return index; }
+	struct adamic_string_index *candidate = build((adamic_string *)string, units);
+	struct adamic_string_index *expected = index;
+	if (__atomic_compare_exchange_n(&((adamic_string *)string)->index, &expected, candidate,
+		false, __ATOMIC_RELEASE, __ATOMIC_ACQUIRE)) { return candidate; }
+	free(candidate->bmp);
+	free(candidate);
+	return expected;
 }
 
 char adamic_literal_mark;
@@ -122,14 +152,20 @@ char adamic_literal_mark;
 // short one, an ASCII one, or one made on the stack. A literal (marked by ADAMIC_STRING) is immortal,
 // so its index is built once and kept for as long as the program runs.
 static struct adamic_string_index *usable(const adamic_string *string, size_t units) {
-	struct adamic_string_index *index = string->index;
+	struct adamic_string_index *index = cached(string);
 	if (index != NULL && index != ADAMIC_LITERAL_INDEX) {
-		return index;
+		return index->count != 0 ? index : NULL;
+	}
+	if (adamic_is_shared(&string->heap)) {
+		index = shared_index(string, units);
+		return index->count != 0 ? index : NULL;
 	}
 
 	// Offsets must fit a checkpoint, shifted: every string V8 allows does, by a factor of two.
 	if ((adamic_reference_count(&string->heap) != 0 && !adamic_is_shared(&string->heap)) && units != string->length && string->length >= MINIMUM && string->length <= UINT32_MAX >> 1) {
-		return build((adamic_string *)string, units);
+		index = build((adamic_string *)string, units);
+		((adamic_string *)string)->index = index;
+		return index;
 	}
 	return NULL;
 }
@@ -140,8 +176,8 @@ size_t adamic_string_units_before(const adamic_string *string, size_t offset) {
 		return offset;
 	}
 	// Keep the established-index path local; usable also handles building and unindexed strings.
-	struct adamic_string_index *index = string->index;
-	if (index == NULL || index == ADAMIC_LITERAL_INDEX) {
+	struct adamic_string_index *index = cached(string);
+	if (index == NULL || index == ADAMIC_LITERAL_INDEX || index->count == 0) {
 		index = usable(string, units);
 	}
 	size_t start = 0, at = 0;
@@ -177,8 +213,8 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 		return unit;
 	}
 	// Keep the established-index path local; usable also handles building and unindexed strings.
-	struct adamic_string_index *index = string->index;
-	if (index == NULL || index == ADAMIC_LITERAL_INDEX) {
+	struct adamic_string_index *index = cached(string);
+	if (index == NULL || index == ADAMIC_LITERAL_INDEX || index->count == 0) {
 		index = usable(string, units);
 	}
 	size_t start = 0, offset = 0;
@@ -225,7 +261,7 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 // Private to the string runtime: a cached BMP view, or NULL until locate builds the index.
 // Short strings and stack pieces keep their allocation-free walk.
 const uint16_t *adamic_string_bmp_view(const adamic_string *string) {
-	struct adamic_string_index *index = string->index;
+	struct adamic_string_index *index = cached(string);
 	return index != NULL && index != ADAMIC_LITERAL_INDEX ? index->bmp : NULL;
 }
 
