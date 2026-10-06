@@ -383,3 +383,14 @@ with a missing closing bracket diagnostic. The port now checks Go's type-start
 condition before choosing IndexedAccessType. Three focused cases cover EOF,
 a parameter type, and a semicolon. Focused comparison passes in 24.776s;
 source cohere passes. Wider continuation starts at input 699.
+
+## Continued recovery: object literal lists and bounded workers
+
+The removed comma at builder.ts token 4981 makes a type declaration recover
+into an object expression. Object members now use Go's delimited-list recovery,
+including consuming a same-line semicolon and retaining its trailing separator
+flag. Three focused additions cover semicolons, missing commas, and this type
+recovery path. Focused Go/Node/native comparison passes in 23.585s and cohere
+passes. The same deterministic 22,497-input corpus now runs with four workers,
+unique position-prefixed artifacts, and unchanged independent two-second
+process deadlines. Failures stop new work and preserve all failing inputs.
