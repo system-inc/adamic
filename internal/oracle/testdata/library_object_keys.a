@@ -9,3 +9,16 @@ const flags = { b: false, '2': true, a: false };
 console.log(Object.values(flags).join('|'));
 for (const [key, value] of Object.entries(flags)) console.log(`${key}:${value}`);
 console.log(Object.keys({}).join('|'));
+
+// Own names include a string's non-enumerable length, and indices count UTF-16 units.
+console.log(Object.getOwnPropertyNames(fields).join('|'));
+console.log(Object.getOwnPropertyNames('A' + '🌍').join('|'));
+console.log(Object.keys('A' + '🌍').join('|'));
+console.log(Object.getOwnPropertyNames('').join('|'));
+console.log(`${Object.getOwnPropertyNames(1).length} ${Object.keys(true).length}`);
+let stable = { b: 2, '2': 4, a: 3 };
+console.log(Object.keys(stable).join('|'));
+console.log(Object.getOwnPropertyNames(stable).join('|'));
+const names = Object.getOwnPropertyNames(stable);
+names[0] = 'changed';
+console.log(Object.getOwnPropertyNames(stable).join('|'));
