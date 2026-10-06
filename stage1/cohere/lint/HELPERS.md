@@ -10,4 +10,81 @@ Order and territory:
 
 One public helper per source file. Tests and generation live under `helpers/`; existing lint entry points are not changed. Compare each helper against pinned Go cohere on its consumer rules, run the same Adamic source on Node and sanitized native, and require a compiling semantic mutant for each source helper. Publish exact supported rule lists and conservative residual blockers after validation. Do not mark any rule ported merely because a helper is available.
 
-This claim precedes implementation. Subsequent evidence and measured counts will replace projected counts here.
+This claim precedes implementation. Measured evidence follows; the projection above is retained as the initial claim.
+
+
+## Measured handoff
+
+The published claim was commit `acb5e0f`, pushed before implementation. Four separate files deliver the two highest-yield helper families: the JSON prerequisite, upstream schema validation, strict target validation, and policy rendering. The initial 48-rule projection was reduced to **46**, because `boundaries/dependencies` and `no-extra-boolean-cast` still need custom option work. `helpers/readiness.json` records the 198-rule ledger; the original inventory is unchanged.
+
+| Helper | Supported consumers | Additional fully helper-ready rules |
+|---|---:|---:|
+| OptionsJson | prerequisite for 103 | 0 |
+| OptionSchema | 94 upstream schemas | 0 alone |
+| StrictOptions | 97 Go target types | 30 with JSON/schema prerequisites |
+| PolicyMessage | 54 | 16 after options |
+| Total | overlapping consumers, not a sum | 46; 152 still have listed blockers |
+
+“Helper-ready” means no remaining helper in the frozen inventory list, assuming its common AST adapter. No rule is marked ported. Rule-local defaults, custom decoding, fixes, full fixture parity and integration remain the rule worker's work. Validation and limits are detailed in `helpers/README.md` and `helpers/REPORT.md`.
+
+### Options complete the last recorded shared helper for these 30 rules
+
+- `@typescript-eslint/consistent-type-assertions`
+- `@typescript-eslint/consistent-type-definitions`
+- `@typescript-eslint/init-declarations`
+- `@typescript-eslint/no-explicit-any`
+- `@typescript-eslint/no-inferrable-types`
+- `@typescript-eslint/no-restricted-types`
+- `@typescript-eslint/no-unused-expressions`
+- `@typescript-eslint/unified-signatures`
+- `class-methods-use-this`
+- `consistent-this`
+- `func-name-matching`
+- `max-classes-per-file`
+- `max-depth`
+- `max-nested-callbacks`
+- `no-cond-assign`
+- `no-inner-declarations`
+- `no-restricted-properties`
+- `no-self-assign`
+- `no-underscore-dangle`
+- `no-unsafe-negation`
+- `no-unsafe-optional-chaining`
+- `no-useless-computed-key`
+- `react-hooks/gating`
+- `react/forbid-foreign-prop-types`
+- `react/jsx-no-useless-fragment`
+- `react/no-invalid-html-attribute`
+- `react/no-unescaped-entities`
+- `react/no-unsafe`
+- `react/self-closing-comp`
+- `sort-vars`
+
+### Policy rendering completes 16 more after options
+
+- `adamic/no-definite-assignment`
+- `base/boundary-no-global-container`
+- `base/consistency-no-hand-built-declared-error`
+- `base/consistency-require-pagination-argument-name`
+- `base/correctness-require-orm-column-declare`
+- `nexus/consistency-no-boolean-outcome`
+- `nexus/consistency-no-for-in`
+- `nexus/consistency-no-hand-rolled-delay`
+- `nexus/consistency-no-return-void`
+- `nexus/consistency-no-stuttering-name`
+- `nexus/consistency-no-utils-folder`
+- `nexus/import-require-module-alias`
+- `nexus/import-require-node-namespace`
+- `structure/network-no-invalidate-cache-literal-key`
+- `structure/network-no-string-literal-query`
+- `structure/tailwind-no-physical-direction`
+
+### Remaining option gaps
+
+- `boundaries/dependencies`: custom/unsupported Go target decoder, regex schema or boundaries extension
+- `id-length`: custom/unsupported Go target decoder
+- `nexus/import-require-path-alias`: custom/unsupported Go target decoder
+- `no-constant-condition`: custom/unsupported Go target decoder
+- `no-extra-boolean-cast`: custom/unsupported Go target decoder
+- `no-restricted-exports`: regex schema or boundaries extension
+- `object-shorthand`: custom/unsupported Go target decoder
