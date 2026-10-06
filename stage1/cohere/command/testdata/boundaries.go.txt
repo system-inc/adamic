@@ -1,0 +1,245 @@
+// Added through go test -overlay. Every call in the selected original Go tests compares the port
+// while the original test's temporary files still exist. The original assertions still run.
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/cohere/internal/format/formatfiles"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"sort"
+	"strconv"
+	"strings"
+	"testing"
+	"time"
+)
+
+func adamicCompare(input map[string]any, want string) {
+	raw, err := json.Marshal(input)
+	if err != nil {
+		panic(err)
+	}
+	failures := ""
+	for _, variable := range []string{"ADAMIC_NATIVE_PROBE", "ADAMIC_NODE_PROBE", "ADAMIC_BACKEND_PROBE"} {
+		path := os.Getenv(variable)
+		if path == "" {
+			continue
+		}
+		command := exec.Command(path, string(raw))
+		var stderr strings.Builder
+		command.Stderr = &stderr
+		stdout, err := command.Output()
+		if err != nil || stderr.Len() != 0 || string(stdout) != want {
+			failures += fmt.Sprintf("%s input %s: error %v stderr %s\ngot %q\nwant %q\n", variable, raw, err, stderr.String(), stdout, want)
+		}
+	}
+	if failures != "" {
+		panic(failures)
+	}
+}
+func locateProject(request locationRequest) (projectLocation, error) {
+	result, err := adamicGoLocateProject(request)
+	raw, _ := json.Marshal(request)
+	input := map[string]any{}
+	if err := json.Unmarshal(raw, &input); err != nil {
+		panic(err)
+	}
+	input["kind"] = "location"
+	message, note := "", ""
+	if err != nil {
+		message = err.Error()
+	} else {
+		note = result.rootNote()
+	}
+	want := fmt.Sprintf("%q\t%q\t%q\t%q\t%q\t%t\t%q\t%q\t%q\n", message, result.Root, result.Engine, result.ConfigFileName, result.LintConfigFileName, result.LintConfigFileNameGiven, result.ArgumentBase, result.WorkingDirectory, note)
+	adamicCompare(input, want)
+	return result, err
+}
+func adamicScope(result formatScope, err error) string {
+	message := ""
+	if err != nil {
+		message = err.Error()
+	}
+	text := fmt.Sprintf("%q\t%q\t%t\t%d\t%q\n", message, result.Description, result.Everything, result.DependentCount, result.RequestDescription)
+	for _, file := range result.FileNames {
+		text += strconv.Quote(file) + "\n"
+	}
+	return text
+}
+func namedPathsScope(cwd, root string, names []string) (formatScope, error) {
+	result, err := adamicGoNamedPathsScope(cwd, root, names)
+	adamicCompare(map[string]any{"kind": "named", "cwd": cwd, "root": root, "names": names}, adamicScope(result, err))
+	return result, err
+}
+func (scope formatScope) narrowTo(population map[string]struct{}) formatScope {
+	result := scope.adamicGoNarrowTo(population)
+	var files []string
+	for name := range population {
+		files = append(files, name)
+	}
+	adamicCompare(map[string]any{"kind": "narrow", "files": scope.FileNames, "description": scope.Description, "request": scope.RequestDescription, "everything": scope.Everything, "population": files}, strconv.Quote(scope.Description)+"\n"+adamicScope(result, nil))
+	return result
+}
+func (scope formatScope) narrowToEnumeration(enumeration formatfiles.Enumeration) formatScope {
+	result := scope.adamicGoNarrowToEnumeration(enumeration)
+	var layers, declined []string
+	for name, count := range enumeration.IgnoredByLayer {
+		layers = append(layers, fmt.Sprintf("%s\t%d", name, count))
+	}
+	for name, count := range enumeration.DeclinedExtensions {
+		declined = append(declined, fmt.Sprintf("%s\t%d", name, count))
+	}
+	input := map[string]any{"kind": "enumeration", "files": scope.FileNames, "description": scope.Description, "request": scope.RequestDescription, "everything": scope.Everything, "root": enumeration.Root, "walked": enumeration.Walked, "symbolicLinks": enumeration.SymbolicLinks, "handled": enumeration.Files, "nested": enumeration.NestedRepositories, "layers": layers, "declined": declined, "formattable": len(enumeration.Files)}
+	adamicCompare(input, strconv.Quote(describeEnumeration(enumeration, len(enumeration.Files)))+"\n"+strconv.Quote(scope.Description)+"\n"+adamicScope(result, nil))
+	return result
+}
+
+func resolveOwnership(found *discovery) (ownership, error) {
+	input := map[string]any{"kind": "ownership", "root": found.Root, "projects": append([]discoveredProject(nil), found.Projects...), "refused": found.Refused, "nested": found.NestedRepositories}
+	result, err := adamicGoResolveOwnership(found)
+	message := ""
+	if err != nil {
+		message = err.Error()
+	}
+	text := strconv.Quote(message) + "\n"
+	for _, project := range found.Projects {
+		text += fmt.Sprintf("project\t%q\t%q\t%q\n", project.Directory, project.Engine, project.ConfigFile)
+	}
+	for _, label := range result.Solutions {
+		text += fmt.Sprintf("solution\t%q\n", label)
+	}
+	for _, label := range result.Yielding {
+		text += fmt.Sprintf("yielding\t%q\n", label)
+	}
+	var labels []string
+	for label := range result.Yields {
+		labels = append(labels, label)
+	}
+	sort.Strings(labels)
+	for _, label := range labels {
+		yield := result.Yields[label]
+		text += fmt.Sprintf("yield\t%q\n", label)
+		for _, file := range yield.Files {
+			text += fmt.Sprintf("file\t%q\n", file)
+		}
+		for _, directory := range yield.Directories {
+			text += fmt.Sprintf("directory\t%q\n", directory)
+		}
+	}
+	labels = nil
+	for label := range result.SharedDirectory {
+		labels = append(labels, label)
+	}
+	sort.Strings(labels)
+	for _, label := range labels {
+		text += fmt.Sprintf("shared\t%q\n", label)
+	}
+	adamicCompare(input, text)
+	return result, err
+}
+func childArguments(arguments []string, lintConfig string) []string {
+	result := adamicGoChildArguments(arguments, lintConfig)
+	text := ""
+	for _, argument := range result {
+		text += strconv.Quote(argument) + "\n"
+	}
+	adamicCompare(map[string]any{"kind": "child", "arguments": arguments, "lintConfig": lintConfig}, text)
+	return result
+}
+
+func TestAdamicCommandFilesystemEdges(t *testing.T) {
+	wholeTreeScope().narrowToEnumeration(formatfiles.Enumeration{Root: "/links", Walked: 4, SymbolicLinks: 2, Files: []string{"/links/a.ts", "/links/b.ts"}})
+	root := t.TempDir()
+	writeTree(t, root, map[string]string{"tsconfig.json": "{}", "src/.gitignore": "hidden/\n", "src/hidden/a.ts": "", "src/z.ts": "", "src/é.ts": "", "src/ａ.ts": "", "src/😀.ts": ""})
+	for name, target := range map[string]string{"src/alias": "hidden", "src/dangling": "missing", "directory-link": "src"} {
+		if err := os.Symlink(target, filepath.Join(root, name)); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, names := range [][]string{{"src"}, {"directory-link"}, {"src/z.ts", "src/z.ts", "src/é.ts", "src/😀.ts"}, {".", "missing"}, {"src/dangling"}} {
+		_, _ = namedPathsScope(root, root, names)
+	}
+	for _, config := range []string{
+		`{"files":[],"references":[{"path":"./tsconfig.app.json"},{"path":"./missing.json"},{"path":"./node_modules/blocked.json"}]}`,
+		`{"files":[],"\u0072eferences":[{"path":"./tsconfig.app.json"}]}`,
+	} {
+		writeTree(t, root, map[string]string{"tsconfig.json": config, "tsconfig.app.json": `{"include":["src"],"references":[{"path":"./tsconfig.json"}]}`, "node_modules/blocked.json": `{"include":["../src"]}`})
+		_, _ = ownedDiscoveryForAdamic(root)
+	}
+}
+func ownedDiscoveryForAdamic(root string) (discovery, error) {
+	found, err := discoverProjects(root, nil)
+	if err != nil {
+		return found, err
+	}
+	found.Ownership, err = resolveOwnership(&found)
+	return found, err
+}
+
+func discoveryRoot(location projectLocation, locateError error, cwd string) string {
+	result := adamicGoDiscoveryRoot(location, locateError, cwd)
+	message := ""
+	if locateError != nil {
+		message = locateError.Error()
+	}
+	adamicCompare(map[string]any{"kind": "discovery-root", "root": location.Root, "error": message, "cwd": cwd}, strconv.Quote(result)+"\n")
+	return result
+}
+func discoveryApplies(given map[string]bool, names []string) bool {
+	result := adamicGoDiscoveryApplies(given, names)
+	var keys []string
+	for name, present := range given {
+		if present {
+			keys = append(keys, name)
+		}
+	}
+	adamicCompare(map[string]any{"kind": "discovery-applies", "given": keys, "names": names}, strconv.FormatBool(result)+"\n")
+	return result
+}
+
+func TestAdamicScopeTiming(t *testing.T) {
+	if os.Getenv("ADAMIC_COMMAND_TIMING") == "" {
+		t.Skip("optional enumeration timing")
+	}
+	const count = 512
+	root := t.TempDir()
+	files := map[string]string{}
+	for index := 0; index < count; index++ {
+		files[fmt.Sprintf("files/%04d.ts", index)] = "export {};\n"
+	}
+	writeTree(t, root, files)
+	input := map[string]any{"kind": "named", "cwd": root, "root": root, "names": []string{"files"}}
+	raw, err := json.Marshal(input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	result, err := adamicGoNamedPathsScope(root, root, []string{"files"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := adamicScope(result, nil)
+	adamicCompare(input, want)
+	for round := 0; round < 3; round++ {
+		start := time.Now()
+		answer, err := adamicGoNamedPathsScope(root, root, []string{"files"})
+		output := adamicScope(answer, err)
+		elapsed := time.Since(start)
+		if output != want {
+			t.Fatal("timed Go result changed")
+		}
+		t.Logf("Go scope plus canonical output round %d: %.6fs, %.0f files/s", round, elapsed.Seconds(), count/elapsed.Seconds())
+		start = time.Now()
+		command := exec.Command(os.Getenv("ADAMIC_NATIVE_PROBE"), string(raw))
+		var stderr bytes.Buffer
+		command.Stderr = &stderr
+		actual, err := command.Output()
+		elapsed = time.Since(start)
+		if err != nil || stderr.Len() != 0 || string(actual) != want {
+			t.Fatalf("timed native disagrees: %v %s", err, stderr.String())
+		}
+		t.Logf("native scope plus canonical output and process startup round %d: %.6fs, %.0f files/s", round, elapsed.Seconds(), count/elapsed.Seconds())
+	}
+}
