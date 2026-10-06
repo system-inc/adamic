@@ -23,6 +23,7 @@ type classified struct {
 	NegativePhase string
 	NegativeType  string
 	Program       string
+	Adaptations   map[string]int
 }
 
 // classify decides whether a test is attempted. Skipped tests are the ones Adamic will not learn
@@ -31,7 +32,11 @@ type classified struct {
 // covers both, per INTERPRETING.md; an older "early" is kept), a negative resolution, or a harness
 // include the prelude cannot stand in for. A missing library method is not skipped. It is attempted,
 // and the refusal reason is what the library waves measure.
-func classify(path string, source string) classified {
+//
+// adapt applies the in-memory test262-style rewrites (var to let, callback parameters, strict
+// equality, Test262Error). It never writes the checkout. Without it, the body is only the harness
+// rename the prelude needs.
+func classify(path string, source string, adapt bool) classified {
 	result := classified{Path: path, Directory: directoryOf(path)}
 	meta := parseFrontmatter(source)
 	if reason := negativeSkip(meta); reason != "" {
@@ -56,6 +61,11 @@ func classify(path string, source string) classified {
 	if reason := syntaxSkip(codeOnly(body)); reason != "" {
 		result.Skip = reason
 		return result
+	}
+	if adapt {
+		rewritten := adaptSource(body)
+		body = rewritten.Source
+		result.Adaptations = rewritten.Counts
 	}
 	result.Program = program(rewriteHarnessCalls(body))
 	return result

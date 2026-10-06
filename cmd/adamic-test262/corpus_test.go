@@ -29,7 +29,7 @@ func TestClassifyCorpus(t *testing.T) {
 			t.Fatal(err)
 		}
 		lines := strings.Split(strings.TrimSpace(string(want)), "\n")
-		got := classify(filepath.Base(path), string(source))
+		got := classify(filepath.Base(path), string(source), false)
 		kind := "attempted"
 		if got.Skip != "" {
 			kind = "skipped"
@@ -166,7 +166,7 @@ assert(true);
 	if got.NegativePhase != "runtime" || got.NegativeType != "TypeError" {
 		t.Fatalf("negative %s %s", got.NegativePhase, got.NegativeType)
 	}
-	classified := classify("built-ins/String/x.js", source)
+	classified := classify("built-ins/String/x.js", source, false)
 	if classified.Skip != "" {
 		t.Fatalf("a padStart test was skipped: %s", classified.Skip)
 	}
