@@ -615,3 +615,10 @@ func TestTheOracleCatchesOneByte(t *testing.T) {
 		t.Errorf("got %q, want the mutant caught as \"stdout differs\"", difference)
 	}
 }
+
+// Native concurrency fixtures cannot link before the runtime worker's branch lands.
+// Keep the Node comparison running; skip only the unavailable native half explicitly.
+func concurrencyRuntimePending(t *testing.T) {
+	t.Helper()
+	t.Skip("native parallelMap awaits adamic_parallel_map from codex/concurrency; no stand-in runtime")
+}
