@@ -61,6 +61,7 @@ func tsgo_go_create(config C.tsgo_view, files *C.tsgo_view, count C.size_t, hand
 	if programs.next == (1<<53)-1 {
 		return failed(error, C.TSGO_HANDLE, "handle space exhausted")
 	}
+	startProfile()
 	programs.next++
 	programs.live[programs.next] = program
 	*handle = C.tsgo_handle(programs.next)
@@ -91,6 +92,8 @@ func tsgo_go_type_parts(handle C.tsgo_handle, file C.tsgo_view, start, end C.uin
 	defer recoverFailure(&status, error)
 	programs.Lock()
 	defer programs.Unlock()
+	started := queryStarted()
+	defer queryFinished(started, true)
 	program := programs.live[uint64(handle)]
 	if program == nil {
 		return failed(error, C.TSGO_HANDLE, "invalid or released checker handle")
@@ -108,6 +111,8 @@ func tsgo_go_inspect(handle C.tsgo_handle, file C.tsgo_view, start, end C.uint64
 	defer recoverFailure(&status, error)
 	programs.Lock()
 	defer programs.Unlock()
+	started := queryStarted()
+	defer queryFinished(started, false)
 	program := programs.live[uint64(handle)]
 	if program == nil {
 		return failed(error, C.TSGO_HANDLE, "invalid or released checker handle")
@@ -129,6 +134,9 @@ func tsgo_go_release(handle C.tsgo_handle, error *C.tsgo_buffer) (status C.int) 
 		return failed(error, C.TSGO_HANDLE, "invalid or released checker handle")
 	}
 	delete(programs.live, uint64(handle))
+	if len(programs.live) == 0 {
+		stopProfile()
+	}
 	return C.TSGO_OK
 }
 func main() {}

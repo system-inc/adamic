@@ -22,7 +22,12 @@ export class Types {
         this.records = records;
     }
     type(id: number): TypeFact {
-        return this.records.find((record) => record.id === id) ?? panic('missing checker type identity');
+        for(const record of this.records) {
+            if(record.id === id) {
+                return record;
+            }
+        }
+        panic('missing checker type identity');
     }
     root(index = 0): TypeFact {
         return this.type(this.roots[index] ?? panic('missing checker root'));

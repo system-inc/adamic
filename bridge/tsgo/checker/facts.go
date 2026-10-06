@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"unicode/utf16"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -16,8 +15,28 @@ import (
 // Each field is decimal UTF-16 length LF text. The enclosing C buffer is UTF-8.
 type fields struct{ strings.Builder }
 
-func (f *fields) text(s string)   { fmt.Fprintf(&f.Builder, "%d\n%s", len(utf16.Encode([]rune(s))), s) }
-func (f *fields) number(n uint64) { f.text(strconv.FormatUint(n, 10)) }
+func (f *fields) text(s string) {
+	units := 0
+	for _, r := range s {
+		units++
+		if r > 65535 {
+			units++
+		}
+	}
+	var digits [20]byte
+	f.Write(strconv.AppendInt(digits[:0], int64(units), 10))
+	f.WriteByte('\n')
+	f.WriteString(s)
+}
+func (f *fields) number(n uint64) {
+	var digits [20]byte
+	value := strconv.AppendUint(digits[:0], n, 10)
+	// Numeric fields contain ASCII only; no formatting or rune allocation is needed.
+	var length [2]byte
+	f.Write(strconv.AppendInt(length[:0], int64(len(value)), 10))
+	f.WriteByte('\n')
+	f.Write(value)
+}
 func (f *fields) yes(b bool) {
 	if b {
 		f.number(1)
@@ -75,6 +94,7 @@ type graph struct {
 	checker *checker.Checker
 	records []typeRecord
 	seen    map[*checker.Type]bool
+	names   bool
 }
 
 func (g *graph) id(t *checker.Type) uint64 {
@@ -88,6 +108,7 @@ func (g *graph) id(t *checker.Type) uint64 {
 			panic("type identity space exhausted")
 		}
 		g.program.typeIDs[t] = id
+		g.program.typesByID = append(g.program.typesByID, t)
 	}
 	return id
 }
@@ -100,7 +121,10 @@ func (g *graph) add(t *checker.Type) uint64 {
 	// Reserve before descending so recursive references terminate.
 	index := len(g.records)
 	g.records = append(g.records, typeRecord{})
-	r := typeRecord{id: id, flags: uint64(t.Flags()), name: g.checker.TypeToString(t), tupleFlags: -1}
+	r := typeRecord{id: id, flags: uint64(t.Flags()), tupleFlags: -1}
+	if g.names {
+		r.name = g.checker.TypeToString(t)
+	}
 	r.errorType = t.Flags()&checker.TypeFlagsIntrinsic != 0 && t.AsIntrinsicType().IntrinsicName() == "error"
 	if checker.IsNonDeferredTypeReference(t) {
 		r.target = g.id(t.Target())
@@ -182,6 +206,16 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 			return "", e
 		}
 		out.yes(checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(node), c.GetTypeAtLocation(target)))
+	case "name":
+		split := strings.Split(question, "\n")
+		if len(split) != 2 {
+			return "", fmt.Errorf("name requires a type identity")
+		}
+		id, err := strconv.ParseUint(split[1], 10, 64)
+		if err != nil || id == 0 || id > uint64(len(p.typesByID)) || strconv.FormatUint(id, 10) != split[1] {
+			return "", fmt.Errorf("unknown checker type identity")
+		}
+		out.text(c.TypeToString(p.typesByID[id-1]))
 	case "declarations":
 		if question != mode {
 			return "", fmt.Errorf("unexpected declaration question suffix")
@@ -222,15 +256,15 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 		}
 		write(symbol)
 		write(node.LocalSymbol())
-	case "raw-type", "type", "base-type", "signature":
+	case "raw-type", "type", "base-type", "signature", "raw-shape", "type-shape", "signature-shape":
 		if question != mode {
 			return "", fmt.Errorf("unexpected type question suffix")
 		}
-		g := &graph{program: p, checker: c, seen: make(map[*checker.Type]bool)}
+		g := &graph{program: p, checker: c, seen: make(map[*checker.Type]bool), names: !strings.HasSuffix(mode, "-shape")}
 		var roots []uint64
 		var rest []bool
 		present := true
-		if mode == "signature" {
+		if mode == "signature" || mode == "signature-shape" {
 			switch node.Kind {
 			case ast.KindCallExpression, ast.KindNewExpression, ast.KindTaggedTemplateExpression:
 			default:
@@ -274,7 +308,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 			}
 		} else {
 			t := c.GetTypeAtLocation(node)
-			if mode != "raw-type" {
+			if mode != "raw-type" && mode != "raw-shape" {
 				t = constrained(c, t)
 			}
 			if mode == "base-type" {

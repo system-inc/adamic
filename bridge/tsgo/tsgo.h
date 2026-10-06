@@ -46,11 +46,13 @@ int tsgo_type_parts(tsgo_handle handle, tsgo_view file, uint64_t start, uint64_t
  * question is borrowed UTF-8 with an explicit byte length. Supported questions:
  * raw-type, type (constrained), base-type (constrained and literal-widened),
  * signature (resolved call), declarations (named class/interface symbols),
- * options (SourceFile strictNullChecks), and
+ * options (SourceFile strictNullChecks), raw-shape/type-shape/signature-shape
+ * (the corresponding graph with empty names), name LF type-ID (TypeToString for
+ * a previously returned type ID in this live program), and
  * assignable LF target-start LF target-end LF target-kind in this same file.
  * Unsupported questions and malformed/inexact targets are refused.
  * Facts contain no Go pointers. Type IDs are opaque, program-scoped, borrowed
- * identities, usable only for equality while that program is live. Release
+ * identities, usable for equality and name queries while that program is live. Release
  * invalidates them all. Do not pass them as program handles. */
 int tsgo_inspect(tsgo_handle handle, tsgo_view file, uint64_t start, uint64_t end, tsgo_view kind, tsgo_view question, tsgo_buffer *facts, tsgo_buffer *error);
 int tsgo_release(tsgo_handle handle, tsgo_buffer *error);

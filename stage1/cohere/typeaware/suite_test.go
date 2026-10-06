@@ -71,6 +71,7 @@ func suiteSources(t *testing.T, repository string) []string {
 		"declare const x:symbol|string; declare const nr:number|bigint; x+1; nr+nr; /x/+1; /x/+'s'; declare const i: string & {a:1};i+'s';",
 		"declare const b:boolean; b===true; !(b!==false); (b||b)===false; declare const x:boolean|undefined; x===true;x!==false; declare const y:boolean|string|undefined;y===true;",
 		"/* 世界 🌍 */\r\ninterface é {} export class é {}\r\ndeclare function f(x:'🌍'):void; declare const x:any; f(x);",
+		"function generic<T extends Array<any>>(x:T):void { const take=(v:Array<number>):void=>{};take(x); }",
 		"type R = Array<R>; declare function r(a:R):void; declare const rr:R;r(rr);",
 		"declare function tag(t:TemplateStringsArray,x:number):void; declare const x:any;tag`世界${x}`;",
 	} {
@@ -238,6 +239,8 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	}
 	t.Logf("union-members: production cohere oracle catches byte %d", firstDifference(unionGot.stdout, truth.stdout))
 	for _, change := range []struct{ name, from, to string }{
+		{"type-name", "out.text(c.TypeToString(p.typesByID[id-1]))", "out.text(c.TypeToString(p.typesByID[0]))"},
+		{"raw-shape-constraint", `if mode != "raw-type" && mode != "raw-shape"`, `if mode != "raw-type"`},
 		{"assignability-direction", "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(node), c.GetTypeAtLocation(target))", "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(target), c.GetTypeAtLocation(node))"},
 		{"resolved-signature", "signature := c.GetResolvedSignature(node)", `var firstCall *ast.Node; var findCall func(*ast.Node) bool; findCall = func(n *ast.Node) bool { if n.Kind == ast.KindCallExpression { firstCall = n; return true }; return n.ForEachChild(findCall) }; findCall(source.AsNode()); selected := node; if node.Kind == ast.KindCallExpression && firstCall != nil { selected = firstCall }; signature := c.GetResolvedSignature(selected)`},
 	} {
@@ -311,6 +314,9 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 		{"raw-type", "Identifier", "raw-type", arg, arg + 1},
 		{"nullable", "Identifier", "type", nullable, nullable + 1 + len("nullable")},
 		{"union", "Identifier", "base-type", base, base + 1 + len("nr")},
+		{"signature-shape", "CallExpression", "signature-shape", call, callEnd},
+		{"raw-shape", "Identifier", "raw-shape", arg, arg + 1},
+		{"type-shape", "Identifier", "type-shape", nullable, nullable + 1 + len("nullable")},
 		{"options", "SourceFile", "options", 0, len(costSource)},
 	}
 	for _, probe := range cases {
@@ -494,6 +500,13 @@ func TestInspectRequestRefusals(t *testing.T) {
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	probe := h.write("probe.ts", "-1;\n")
 	h.must("request-valid", exec.Command(binary, config, probe, "0", "2", "PrefixUnaryExpression", "raw-type", "2"))
+	releasedEntry := h.write("released-name.ts", "import {panic,programArguments,tsgoProgram,tsgoInspect,tsgoRelease} from 'adamic'; const a=programArguments(); const config=a[0]??panic('config');const file=a[1]??panic('file');const p=tsgoProgram(config,[file]); console.log(tsgoInspect(p,file,0,2,'PrefixUnaryExpression','raw-shape')); tsgoRelease(p); console.log(tsgoInspect(p,file,0,2,'PrefixUnaryExpression','name\\n1'));\n")
+	released := h.build(stage0, "released-name", releasedEntry, normal, false)
+	stale := h.run("released-name-run", exec.Command(released, config, probe))
+	if code, ok := stale.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(stale.stderr, []byte("invalid or released checker handle")) {
+		t.Fatalf("released name escaped: %v %s", stale.err, stale.stderr)
+	}
+	t.Log("released type-name query: panic 70, invalid or released checker handle")
 	for _, change := range []struct{ name, kind, question, message, from, to string }{
 		{"wrong-kind", "Identifier", "raw-type", "no exact Identifier node", `candidate.Kind.String() == "Kind"+kind`, `kind != ""`},
 		{"unknown-question", "PrefixUnaryExpression", "unknown", "unsupported checker question", `return "", fmt.Errorf("unsupported checker question: %s", question)`, `return out.String(), nil`},

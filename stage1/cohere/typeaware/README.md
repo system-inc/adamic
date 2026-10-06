@@ -113,3 +113,23 @@ fixtures are excluded and counted explicitly.
 The added fact API and ownership are documented in [facts.md](../../../bridge/tsgo/facts.md).
 The six-rule measurements and mutant evidence are in [SIX_RULE_REPORT.md](SIX_RULE_REPORT.md).
 The older [REPORT.md](REPORT.md) remains evidence for the first rule.
+
+## Profiled query costs
+
+The optimized suite requests `raw-shape`, `type-shape` and `signature-shape`
+where a decision needs flags/relations but no display name. It asks `name` for a
+live type identity only while building a reported argument message. Plus still
+requests named facts for its RegExp decision. Numeric frames retain canonical,
+safe-integer and ownership checks while avoiding temporary numeric strings.
+The shared walk avoids empty unary-result slices, metadata searches avoid
+capturing closures, and sorting renders one complete key per finished finding.
+`Diagnostic.written()` remains fresh if a repair is edited later.
+
+Use `ADAMIC_TSGO_PROFILE=/absolute/path/cpu.pprof` on a separate profiling run.
+Go CPU samples, native leaf addresses, C input/call/output intervals and Go
+allocation counts distinguish rendering/serialization from crossing overhead.
+[PROFILE_REPORT.md](PROFILE_REPORT.md) records before/after numbers, source pins,
+mutants, regressions and why the measured result did not justify batching.
+Native phase and leaf tools live in `bridge/tsgo/profile/`; normal builds do not
+instrument native phases. Earlier six-rule measurements remain in
+[SIX_RULE_REPORT.md](SIX_RULE_REPORT.md).

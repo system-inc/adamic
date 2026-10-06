@@ -12,8 +12,8 @@ trivia. `SourceFile` can have the empty span `0:0` only for an empty file. Other
 empty spans, inexact nodes, unsupported questions and inappropriate node kinds
 are errors. Type IDs are nonzero, stable identities within one program, not
 addresses or separately owned handles. Compare IDs only from that same live
-program; releasing it invalidates every ID. Target IDs support equality only and
-need not have records in a particular answer.
+program; releasing it invalidates every ID. Target IDs support identity equality and naming, but need not have records in a
+particular answer.
 
 Questions are these exact UTF-8 strings:
 
@@ -23,6 +23,8 @@ Questions are these exact UTF-8 strings:
 | `type` | That type, replaced by its base constraint when one exists |
 | `base-type` | Constrained type with literals widened by `getBaseTypeOfLiteralType` |
 | `signature` | A call/new/tagged-template's resolved signature, callee type, and parameter types/rest marks |
+| `raw-shape`, `type-shape`, `signature-shape` | The corresponding type/signature graph, with empty name fields and no TypeToString work |
+| `name` LF type-ID | TypeToString for a previously returned identity in this live program |
 | `declarations` | A class/interface's named symbol declarations and its local symbol declarations, separately |
 | `options` | A source file's program `strictNullChecks`, resolved against `strict` |
 | `assignable` LF start LF end LF kind | Whether the selected node's type is assignable to the exact target node's type in the same file |
@@ -36,9 +38,11 @@ Adamic's TypeScript string indexing; the surrounding C buffer always has a UTF-8
 **byte** length. Numeric field texts are canonical decimal integers, booleans
 are `0`/`1`, and list fields are a count followed by that many numeric IDs.
 Every answer starts with numeric schema version `1`, then its question name
-(`assignable` omits its target suffix).
+(`assignable` and `name` omit their argument suffix).
 
 * `options` and `assignable`: one boolean, then end.
+* `name`: one TypeToString text field, then end. Zero, unknown, noncanonical and
+  released type identities are refused; an exact selector remains required.
 * `declarations`: symbol-present boolean, declaration count and records; then
   local-symbol-present boolean, declaration count and records. Each declaration
   is kind, untrimmed byte start, byte end, source path, token-trimmed name start,
@@ -76,3 +80,20 @@ Type resolution remains lazy and its cost belongs to the query that requests it.
 intentionally shares that implementation to measure adapter costs. It is not
 the findings oracle. The production cohere oracle has its own loader and invokes
 the six unchanged rules; it imports no bridge code.
+
+The optimized suite requests shapes for arguments, signatures and boolean
+comparisons. It requests a type name only while rendering an actual finding.
+Plus operands retain full named facts because their RegExp decision needs the
+rendering. No type string is cached across checker operations. Old questions
+and wire schemas retain their meaning. Numeric encoding counts UTF-16 units
+without allocating rune slices or using formatted printing; native numeric
+fields are validated directly in the owned frame without temporary strings.
+
+Set `ADAMIC_TSGO_PROFILE=/absolute/path/cpu.pprof` to collect an opt-in CPU
+profile after load until the last program release. It includes native leaf PCs
+and Go checker/collector CPU. Go reports timed inspect/parts bodies and
+allocation counters; C reports input, public-call and output intervals plus
+fact bytes. These profiling runs are separate from throughput measurements.
+The public-call interval minus Go-body intervals estimates boundary overhead,
+including copies, cgo and timer overhead; it is not a pure cgo latency measure.
+CPU seconds can exceed wall time because background Go collection is concurrent.

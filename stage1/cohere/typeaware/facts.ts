@@ -4,6 +4,15 @@ import { Frames, header } from './frames.ts';
 import { TypeFact } from './type_fact.ts';
 import { Types } from './types.ts';
 
+function contains(records: readonly TypeFact[], id: number): boolean {
+    for(const record of records) {
+        if(record.id === id) {
+            return true;
+        }
+    }
+    return false;
+}
+
 export function types(text: string, question: string): Types {
     const frames = new Frames(text);
     header(frames, question);
@@ -29,7 +38,7 @@ export function types(text: string, question: string): Types {
         const element = frames.natural();
         const parts = frames.ids();
         const arguments_ = frames.ids();
-        if(id === 0 || tuple < -1 || records.some((record) => record.id === id)) {
+        if(id === 0 || tuple < -1 || contains(records, id)) {
             panic('invalid checker type record');
         }
         records.push(

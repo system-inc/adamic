@@ -8,6 +8,7 @@ export class Diagnostic {
     fixStart = -1;
     fixEnd = -1;
     replacement = '';
+    sortKey = '';
     constructor(rule: string, id: string, message: string, start: number, end: number) {
         this.rule = `@typescript-eslint/${rule}`;
         this.id = id;

@@ -61,9 +61,6 @@ function unsafeAssignment(
     }
     return false;
 }
-function describe(type: TypeFact): string {
-    return type.error ? 'error typed' : `\`${type.name}\``;
-}
 
 export class Rules {
     readonly program: number;
@@ -105,6 +102,16 @@ export class Rules {
         const node = this.parser.node(index);
         this.queries++;
         return tsgoInspect(this.program, this.path, this.byte(node.pos), this.byte(node.end), node.kind, question);
+    }
+    name(type: TypeFact, index: number): string {
+        const frames = new Frames(this.ask(index, `name\n${type.id}`));
+        header(frames, 'name');
+        const name = frames.field();
+        frames.end();
+        return name;
+    }
+    describe(type: TypeFact, index: number): string {
+        return type.error ? 'error typed' : `\`${this.name(type, index)}\``;
     }
     add(rule: string, id: string, message: string, index: number): Diagnostic {
         const node = this.parser.node(index);
@@ -352,7 +359,7 @@ export class Rules {
         if(arguments_.length === 0) {
             return;
         }
-        const signature = types(this.ask(index, 'signature'), 'signature');
+        const signature = types(this.ask(index, 'signature-shape'), 'signature-shape');
         if(!signature.present || (signature.root().flags & 1) !== 0) {
             return;
         }
@@ -376,13 +383,13 @@ export class Rules {
             const argument = this.parser.node(argumentIndex);
             if(argument.kind === 'SpreadElement') {
                 const inner = argument.children[0] ?? panic('empty spread');
-                const argumentFacts = types(this.ask(inner, 'raw-type'), 'raw-type');
+                const argumentFacts = types(this.ask(inner, 'raw-shape'), 'raw-shape');
                 const sender = argumentFacts.root();
                 if((sender.flags & 1) !== 0) {
                     this.add(
                         'no-unsafe-argument',
                         'unsafeSpread',
-                        `Unsafe spread of an ${describe(sender)} type.`,
+                        `Unsafe spread of an ${this.describe(sender, argumentIndex)} type.`,
                         argumentIndex,
                     );
                 }
@@ -391,7 +398,9 @@ export class Rules {
                     sender.arguments.length > 0 &&
                     (argumentFacts.type(sender.arguments[0] ?? 0).flags & 1) !== 0
                 ) {
-                    const name = argumentFacts.type(sender.arguments[0] ?? 0).error ? 'error' : describe(sender);
+                    const name = argumentFacts.type(sender.arguments[0] ?? 0).error
+                        ? 'error'
+                        : this.describe(sender, argumentIndex);
                     this.add(
                         'no-unsafe-argument',
                         'unsafeArraySpread',
@@ -411,7 +420,7 @@ export class Rules {
                             this.add(
                                 'no-unsafe-argument',
                                 'unsafeTupleSpread',
-                                `Unsafe spread of a tuple type. The argument is ${type.error ? 'error typed' : `of type \`${type.name}\``} and is assigned to a parameter of type ${describe(receiver)}.`,
+                                `Unsafe spread of a tuple type. The argument is ${type.error ? 'error typed' : `of type \`${this.name(type, argumentIndex)}\``} and is assigned to a parameter of type ${this.describe(receiver, index)}.`,
                                 argumentIndex,
                             );
                         }
@@ -426,7 +435,7 @@ export class Rules {
             if(parameter === 0) {
                 continue;
             }
-            const argumentFacts = types(this.ask(argumentIndex, 'raw-type'), 'raw-type');
+            const argumentFacts = types(this.ask(argumentIndex, 'raw-shape'), 'raw-shape');
             const sender = argumentFacts.root();
             const receiver = signature.type(parameter);
             const callee = argument.children.length > 0 ? this.parser.node(argument.children[0] ?? -1) : argument;
@@ -440,7 +449,7 @@ export class Rules {
                 this.add(
                     'no-unsafe-argument',
                     'unsafeArgument',
-                    `Unsafe argument of type ${describe(sender)} assigned to a parameter of type ${describe(receiver)}.`,
+                    `Unsafe argument of type ${this.describe(sender, argumentIndex)} assigned to a parameter of type ${this.describe(receiver, index)}.`,
                     argumentIndex,
                 );
             }
@@ -464,7 +473,7 @@ export class Rules {
         if(literal.kind !== 'TrueKeyword' && literal.kind !== 'FalseKeyword') {
             return;
         }
-        const facts = types(this.ask(expression, 'type'), 'type');
+        const facts = types(this.ask(expression, 'type-shape'), 'type-shape');
         const type = facts.root();
         const plain = (type.flags & booleanLike) !== 0;
         const parts = facts.parts(type);
@@ -567,8 +576,11 @@ export class Rules {
     walk(index: number): void {
         const node = this.parser.node(index);
         const before = this.unary.findings.length;
-        this.unary.visit(index);
-        for(const unary of this.unary.findings.slice(before)) {
+        if(node.kind === 'PrefixUnaryExpression' && node.operator === 'MinusToken') {
+            this.unary.visit(index);
+        }
+        for(let at = before; at < this.unary.findings.length; at++) {
+            const unary = this.unary.findings[at] ?? panic('missing unary finding');
             this.findings.push(
                 new Diagnostic('no-unsafe-unary-minus', unary.id, unary.message, unary.start, unary.end),
             );
@@ -616,8 +628,10 @@ export class Rules {
         }
         this.walk(root);
         this.queries += this.unary.queries;
-        this.findings.sort((left, right) =>
-            left.written() < right.written() ? -1 : left.written() > right.written() ? 1 : 0,
-        );
+        // Fixes are complete now. Render sort keys once; written() remains live.
+        for(const finding of this.findings) {
+            finding.sortKey = finding.written();
+        }
+        this.findings.sort((left, right) => (left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0));
     }
 }
