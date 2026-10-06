@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -33,6 +34,13 @@ func (l *lowering) libraryArrayConstruct(node *ast.Node) (ir.Expression, bool, e
 	}
 	if !isOf && len(written) == 1 {
 		proven := l.checker.GetTypeAtLocation(written[0])
+		if proven.Flags()&checker.TypeFlagsUnion != 0 {
+			for _, member := range proven.Types() {
+				if member.Flags()&checker.TypeFlagsNumberLike != 0 {
+					return nil, true, l.notYet(node, "single Array argument with an ambiguous numeric length overload")
+				}
+			}
+		}
 		if of, known := l.representation(proven); known && of == ir.Number {
 			value, err := l.expression(written[0])
 			if err != nil {

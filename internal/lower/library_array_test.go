@@ -23,6 +23,8 @@ func TestLibraryArrayHeterogeneousCrashIsRefused(t *testing.T) {
 func TestLibraryArrayGenericRefusals(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
+		{"optional numeric constructor", "function make(value: number | undefined): number { const a = new Array<number | undefined>(value); return a.length; } console.log(`${make(3)}`);", "ambiguous numeric length overload"},
+		{"mixed numeric constructor", "function make(value: number | string): number { const a = new Array<number | string>(value); return a.length; } console.log(`${make(3)}`);", "ambiguous numeric length overload"},
 		{"sparse constructor length", "const values = new Array<number>(3); console.log(`${values.length}`);", "sparse presence"},
 		{"constructor indexed extension", "const values = new Array(1, 2); values[2] = 3;", "outside a proven dense prefix"},
 		{"constructor reassignment holes", "let values = new Array(1, 2); values = []; values[3] = 4;", "outside a proven dense prefix"},
