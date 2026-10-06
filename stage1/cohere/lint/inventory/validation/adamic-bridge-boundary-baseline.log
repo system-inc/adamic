@@ -1,0 +1,5 @@
+=== RUN   TestAdamicCorpusRequiresExplicitBridge
+    adamic_inventory_test.go:175: explicit .a boundary: program: the tsconfig named 1 files but only 0 matched the program's own paths. This is a path-canonicalization mismatch, not an empty project: the compiler lowercases Path() on a case-insensitive filesystem while the config keeps its original casing. Linting the 0 that matched would silently skip the other 1.
+--- PASS: TestAdamicCorpusRequiresExplicitBridge (0.08s)
+PASS
+ok  	command-line-arguments	0.096s

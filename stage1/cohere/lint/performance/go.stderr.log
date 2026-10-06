@@ -1,0 +1,11 @@
+==128655== Callgrind, a call-graph generating cache profiler
+==128655== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==128655== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==128655== Command: /workspace/scratch/lint-perf/baseline/oracle --manifest /workspace/scratch/lint-perf/baseline/compiler.txt --count
+==128655== 
+==128655== For interactive control, run 'callgrind_control -h'.
+==128655== 
+==128655== Events    : Ir
+==128655== Collected : 5301243964
+==128655== 
+==128655== I   refs:      5,301,243,964
