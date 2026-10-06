@@ -1,6 +1,6 @@
 # TypeScript printer gaps
 
-Status: **partly ported**. The shared document engine, expression core, sequence expressions and assignments are held to Go cohere and
+Status: **partly ported**. The shared document engine, expression core, sequence expressions, assignments and conditionals are held to Go cohere and
 Prettier 3.9.6. This is not a claim to port all of `internal/format/javascript`, or to format whole
 TypeScript compiler files yet. The composition uses the existing indexed TypeScript parser without
 editing it, the compiler or the runtime.
@@ -16,7 +16,6 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | `x => x + 1` | `ArrowFunction` | Parameter and arrow-chain layout; block bodies need statements |
 | `({x:1})` | `ObjectLiteralExpression` | Properties, methods, comments and object wrapping |
 | `[a,b]=items` | `assignment-pattern` | Destructuring target patterns and their assignment layout |
-| `a?b:c` | `ConditionalExpression` | Nested ternary layout and conditional indentation |
 | `` `a${b}` `` | `TemplateExpression` | Substitution alignment, multiline strings and embeds |
 | `(function () {return 1;})` | `FunctionExpression` | Function parameters and statement bodies |
 | `a.b()` | `call-callee-layout` | Member-call chain segmentation and grouping |
@@ -130,3 +129,11 @@ Destructuring targets remain an explicit pattern-printer gap: `[a,b]=items` is f
 Prettier, while the port reports `NotYet: assignment-pattern`. The independent Go selector excludes
 such targets, and the proving corpus checks the exact refusal on every execution. No source is
 passed through unchanged.
+
+## Conditional family
+
+Nested conditional tests receive their own parenthesized group; nested consequents retain flat
+parentheses and align their broken branches; alternate chains share the outer group. Nullish
+coalescing branches keep the parentheses required by Go's printer. Generated proving inputs cover
+all three nesting positions and composition with assignments, sequences, calls and member access.
+This family introduces no new stage-0 gap.

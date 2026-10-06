@@ -29,7 +29,7 @@ func supportedExpression(node *estree.Node) bool {
 	switch node.Type() {
 	case "Identifier", "PrivateIdentifier", "Literal", "ThisExpression", "Super":
 		return true
-	case "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
+	case "ConditionalExpression", "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
 	case "TemplateLiteral":
 		return len(node.List("expressions")) == 0
 	case "CallExpression", "NewExpression":
@@ -120,6 +120,32 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 	for _, value := range []string{"f?.()", "f?.(x)", "f()", "f(veryLongIdentifierAlpha)", "obj?.x", "obj!.x", "!!x", "++x"} {
 		for _, right := range []string{"g(" + value + ")", "g(" + value + ").x"} {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
+		}
+	}
+	conditionalParts := []string{"a", "a+b+c", "a||b||c", "a&&[1,2]", "[1,2]", "f(x)", "obj.x", "(a=b)", "(a,b)", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma + veryLongIdentifierDelta"}
+	for _, test := range conditionalParts {
+		for _, yes := range conditionalParts {
+			for _, no := range conditionalParts {
+				value := "(" + test + ")?(" + yes + "):(" + no + ")"
+				for _, source := range []string{value, "f(" + value + ")", "x=" + value, "(" + value + ").x", "!(" + value + ")"} {
+					add("conditional-composition", source)
+				}
+			}
+		}
+	}
+	for length := 1; length <= 20; length++ {
+		alternate := "fallback"
+		consequent := "fallback"
+		test := "fallback"
+		for index := 0; index < length; index++ {
+			alternate = "condition" + fmt.Sprint(index) + "?value" + fmt.Sprint(index) + ":" + alternate
+			consequent = "condition" + fmt.Sprint(index) + "?(" + consequent + "):value" + fmt.Sprint(index)
+			test = "(" + test + ")?value" + fmt.Sprint(index) + ":fallback"
+		}
+		for _, value := range []string{alternate, consequent, test} {
+			for _, source := range []string{value, "f(" + value + ")", "x=(" + value + ").x", "!(" + value + ").x"} {
+				add("conditional-nesting", source)
+			}
 		}
 	}
 	assignmentOps := []string{"=", "+=", "-=", "*=", "/=", "%=", "**=", "<<=", ">>=", ">>>=", "&=", "|=", "^=", "&&=", "||=", "??="}
@@ -313,6 +339,9 @@ func supportedSyntax(node *ast.Node) bool {
 	switch node.Kind {
 	case ast.KindIdentifier, ast.KindPrivateIdentifier, ast.KindNumericLiteral, ast.KindBigIntLiteral, ast.KindStringLiteral, ast.KindRegularExpressionLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindThisKeyword, ast.KindSuperKeyword, ast.KindNullKeyword, ast.KindTrueKeyword, ast.KindFalseKeyword, ast.KindOmittedExpression:
 		return true
+	case ast.KindConditionalExpression:
+		item := node.AsConditionalExpression()
+		return supportedSyntax(item.Condition) && supportedSyntax(item.WhenTrue) && supportedSyntax(item.WhenFalse)
 	case ast.KindPrefixUnaryExpression:
 		return supportedSyntax(node.AsPrefixUnaryExpression().Operand)
 	case ast.KindPostfixUnaryExpression:

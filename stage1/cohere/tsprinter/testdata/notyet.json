@@ -8,10 +8,6 @@
     "Reason": "ObjectLiteralExpression"
   },
   {
-    "Source": "a?b:c",
-    "Reason": "ConditionalExpression"
-  },
-  {
     "Source": "`a${b}`",
     "Reason": "TemplateExpression"
   },

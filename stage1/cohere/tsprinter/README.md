@@ -14,7 +14,7 @@ Unknown doc kinds and forward or cyclic edges panic. `width.ts` and `widthTables
 proven JSON slice's Unicode width implementation, copied from `origin/codex/stage1-json-format`.
 
 `expressions.ts` reads the real parser's indexed nodes. It implements literals, ordinary and logical
-binary operators, sequence expressions, assignments, precedence and parentheses, unary and update operators, arrays including holes
+binary operators, sequence expressions, assignments, conditionals, precedence and parentheses, unary and update operators, arrays including holes
 and spreads, property and computed accesses including optional access, non-null assertions, and
 plain-identifier calls and constructors without type arguments or expanded array arguments. It
 includes cohere's logical-tree rebalancing and protection against accidentally making a string
@@ -74,7 +74,7 @@ and the JavaScript backend must match Go byte for byte. The actual npm Prettier 
 TypeScript printer are separate comparisons; every selected case must agree with them too. The
 separate unported proving corpus records one anonymous-function spacing difference in `testdata/prettier-differences.json`; accepted cases have
 no exceptions.
-Seventeen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
+Sixteen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
 prove that the same source texts are formatable. Native release output is also compared.
 
 Three mutants must compile and finish normally before a byte mismatch counts as a catch: a group
@@ -101,3 +101,11 @@ targets are declined explicitly. The assignment corpus has 150,713 maximal fragm
 same 197 files, including 9,286 generated cases. The 6,871 added assignment cases cover every
 operator, five target layouts, 15 right-hand sides, five outer contexts, and chains up to 20
 segments. A lower total fragment count reflects newly accepted larger parents, not omitted files.
+
+## Conditional expression increment
+
+Ternaries now compose with every supported expression family, including nested tests, consequent
+and alternate chains, member receivers, assignments and nullish branches. The corpus adds 5,240
+generated combinations and nesting cases up to 20 levels. Flattened binary printing preserves its
+ancestor stack so nested ternaries receive the same grouping as Go. Counts and execution evidence
+are recorded in VALIDATION.md and `results/conditional-coverage.json`.

@@ -184,6 +184,13 @@ export class Expressions {
             case 'SpreadElement':
             case 'NonNullExpression':
                 break;
+            case 'ConditionalExpression': {
+                for(const offset of [0, 2, 4]) {
+                    const reason = this.unsupported(node.children[offset] ?? panic('missing conditional operand'));
+                    if(reason !== '') return reason;
+                }
+                return '';
+            }
             case 'BinaryExpression': {
                 if(this.operator(id) === '') return this.node(node.children[1] ?? panic('missing binary token')).kind;
                 if(
@@ -298,10 +305,27 @@ export class Expressions {
                 );
             return role === 'object' || role === 'callee' || outer.kind === 'NonNullExpression';
         }
+        if(node.kind === 'ConditionalExpression')
+            return (
+                role === 'object' ||
+                role === 'callee' ||
+                (outer.kind === 'ConditionalExpression' && role === 'test') ||
+                (outer.kind === 'BinaryExpression' && !this.isAssignment(parent) && this.operator(parent) !== ',') ||
+                [
+                    'PrefixUnaryExpression',
+                    'PostfixUnaryExpression',
+                    'DeleteExpression',
+                    'VoidExpression',
+                    'TypeOfExpression',
+                    'NonNullExpression',
+                    'SpreadElement',
+                ].includes(outer.kind)
+            );
         if(node.kind === 'BinaryExpression') {
             if(this.isAssignment(index)) return !this.isAssignment(parent);
             if(this.operator(index) === ',') return true;
             if(this.isAssignment(parent)) return false;
+            if(outer.kind === 'ConditionalExpression') return this.operator(index) === '??';
             if(outer.kind === 'BinaryExpression') {
                 const operator = this.operator(index);
                 const other = this.operator(parent);
@@ -327,6 +351,86 @@ export class Expressions {
             );
         }
         return false;
+    }
+    conditionalDoc(index: number, parent: number, role: string): number {
+        const outer = parent < 0 ? '' : this.node(parent).kind;
+        const nested = outer === 'ConditionalExpression';
+        const parentTest = nested && role === 'test';
+        const forceNoIndent = nested && !parentTest;
+        let ancestor = this.ancestors.length - 2;
+        let child = index;
+        while(ancestor >= 0) {
+            const current = this.ancestors[ancestor] ?? panic('missing conditional ancestor');
+            if(this.node(current).kind !== 'ConditionalExpression' || this.child(current, 0) === child) break;
+            child = current;
+            ancestor--;
+        }
+        const firstNonConditional = this.ancestors[ancestor] ?? -1;
+        const consequent = this.child(index, 2);
+        const alternate = this.child(index, 4);
+        const consequentConditional = this.node(consequent).kind === 'ConditionalExpression';
+        const alignedConsequent = this.docs.settings.useTabs
+            ? this.docs.indent(this.print(consequent, index, 'consequent'))
+            : this.docs.add('alignWidth', [this.print(consequent, index, 'consequent')], '', 2);
+        const alignedAlternate = this.docs.settings.useTabs
+            ? this.docs.indent(this.print(alternate, index, 'alternate'))
+            : this.docs.add('alignWidth', [this.print(alternate, index, 'alternate')], '', 2);
+        let parts = this.docs.concat([
+            this.docs.line(),
+            this.docs.text('? '),
+            consequentConditional ? this.docs.ifBreak(this.docs.text(''), this.docs.text('(')) : this.docs.text(''),
+            alignedConsequent,
+            consequentConditional ? this.docs.ifBreak(this.docs.text(''), this.docs.text(')')) : this.docs.text(''),
+            this.docs.line(),
+            this.docs.text(': '),
+            alignedAlternate,
+        ]);
+        if(nested && role === 'consequent')
+            parts = this.docs.settings.useTabs
+                ? this.docs.add('alignWidth', [this.docs.indent(parts)], '', -1)
+                : this.docs.add('alignWidth', [parts], '', Math.max(0, this.docs.settings.tabWidth - 2));
+        let test = this.print(this.child(index, 0), index, 'test');
+        if(nested && role === 'alternate') test = this.docs.add('alignWidth', [test], '', 2);
+        let chainChild = index;
+        let chainAncestor = this.ancestors.length - 2;
+        while(chainAncestor >= 0) {
+            const current = this.ancestors[chainAncestor] ?? panic('missing conditional chain ancestor');
+            if(
+                ![
+                    'NonNullExpression',
+                    'PropertyAccessExpression',
+                    'ElementAccessExpression',
+                    'CallExpression',
+                ].includes(this.node(current).kind) ||
+                this.child(current, 0) !== chainChild
+            )
+                break;
+            chainChild = current;
+            chainAncestor--;
+        }
+        const enclosing = this.ancestors[chainAncestor] ?? -1;
+        const extra =
+            chainChild !== index &&
+            enclosing >= 0 &&
+            ((this.isAssignment(enclosing) && this.child(enclosing, 2) === chainChild) ||
+                (['PrefixUnaryExpression', 'DeleteExpression', 'VoidExpression', 'TypeOfExpression'].includes(
+                    this.node(enclosing).kind,
+                ) &&
+                    !['++', '--'].includes(this.operator(enclosing))));
+        let result = this.docs.concat([
+            test,
+            forceNoIndent ? parts : this.docs.indent(parts),
+            outer === 'PropertyAccessExpression' && !extra ? this.docs.softline() : this.docs.text(''),
+        ]);
+        if(parent === firstNonConditional) result = this.docs.group(result);
+        if(parentTest || extra)
+            result = this.docs.group(
+                this.docs.concat([
+                    this.docs.indent(this.docs.concat([this.docs.softline(), result])),
+                    this.docs.softline(),
+                ]),
+            );
+        return result;
     }
     isAssignment(index: number): boolean {
         if(index < 0 || this.node(index).kind !== 'BinaryExpression') return false;
@@ -401,6 +505,15 @@ export class Expressions {
     breakAfterOperator(index: number): boolean {
         const node = this.node(index);
         if(node.kind === 'BinaryExpression' && !this.isAssignment(index) && !this.inlineLogical(index)) return true;
+        if(node.kind === 'ConditionalExpression') {
+            const test = this.child(index, 0);
+            if(
+                this.node(test).kind === 'BinaryExpression' &&
+                rank(this.operator(test)) >= 0 &&
+                !this.inlineLogical(test)
+            )
+                return true;
+        }
         let current = index;
         while(
             [
@@ -477,7 +590,9 @@ export class Expressions {
         const left = this.child(index, 0);
         const right = this.child(index, 2);
         if(this.node(left).kind === 'BinaryExpression' && flatten(operator, this.operator(left))) {
+            this.ancestors.push(left);
             for(const part of this.binaryParts(left, index)) parts.push(part);
+            this.ancestors.pop();
         }
         else parts.push(this.docs.group(this.print(left, index, 'left')));
         const inline =
@@ -571,6 +686,9 @@ export class Expressions {
             case 'SpreadElement':
                 result = this.docs.concat([this.docs.text('...'), this.print(this.child(id, 0), id, 'argument')]);
                 break;
+            case 'ConditionalExpression':
+                result = this.conditionalDoc(id, parent, role);
+                break;
             case 'BinaryExpression': {
                 if(this.isAssignment(id)) {
                     result = this.assignmentDoc(
@@ -628,7 +746,15 @@ export class Expressions {
                         this.node(parent).children.length === 2 &&
                         this.node(this.child(parent, 0)).text === 'Boolean';
                     result =
-                        inline || coercion || this.isAssignment(parent)
+                        inline ||
+                        coercion ||
+                        this.isAssignment(parent) ||
+                        (outer === 'ConditionalExpression' &&
+                            (this.ancestors.length < 3 ||
+                                !['CallExpression', 'NewExpression', 'ReturnStatement', 'ThrowStatement'].includes(
+                                    this.node(this.ancestors[this.ancestors.length - 3] ?? panic('missing grandparent'))
+                                        .kind,
+                                )))
                             ? this.docs.group(this.docs.concat(parts))
                             : this.docs.group(
                                   this.docs.concat([

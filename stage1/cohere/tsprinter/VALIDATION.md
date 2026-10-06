@@ -299,3 +299,44 @@ ok github.com/system-inc/adamic/stage1/cohere/tsprinter 334.674s
 ```
 
 Source Node, ASan/UBSan native, the JS backend, native release and the separate leak run all pass.
+
+## Conditional increment
+
+Conditional expressions compose with the existing expression families, including all three nested
+positions and chained receivers. The generator adds 5,000 Cartesian compositions and 240 nested
+cases (depths 1 through 20). The corpus contains 150,832 maximal fragments from the same 197 files,
+with no full-file parse refusals. Counts are fragments, not whole-file formatting claims.
+
+Two oracle failures guided corrections: `??` inside a conditional branch retains parentheses, and
+flattened binary chains retain their ancestor stack so an enclosed ternary receives its own group.
+Neither failure is excluded from the selector. `results/conditional-coverage.json` preserves the
+complete accepted and rejected counts.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-conditional-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-conditional-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-conditional-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/conditional' > /tmp/ts-printer-conditional-mutant.log 2>&1
+```
+
+Cohere's source-only check (`--no-fix --no-cache stage1/cohere/tsprinter/*.ts`) reports 276 rules,
+8 checked, 100% Adamic-ready; vet and `git diff --check` are clean. A directory-wide cohere check
+also reports formatting in the existing independently maintained JS oracle and evidence files;
+that is not the Adamic source lint scope used here. No compiler or parser file changes.
+
+The ternary mutant changes the sole `? ` separator to `: `. Native and Node both compile/run
+normally, exit 0 with empty stderr, and differ at corpus line 97: `index + (next() < 0.01 :
+next() * 1000 : 0);` instead of the ternary using `?`. Mutant subtest 255.81 s; complete command
+261.705 s. Its catch is an output mismatch, not a compiler or runtime failure.
+
+Final ternary gate (exit 0, 392.433 s): 150,832 fragments byte-identical to Go cohere, npm
+Prettier 3.9.6 and cohere's actual embedded fork; source Node, native ASan/UBSan, JavaScript backend,
+leak detection and native release all pass. Sixteen remaining proving inputs return their exact
+NotYet reasons on every execution. This gate does not cover arbitrary complete source files.
