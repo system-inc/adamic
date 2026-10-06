@@ -12,4 +12,5 @@ For source Node, use `node --disable-warning=ExperimentalWarning oracle/node.mjs
 The parser and printer use Go cohere's default file formatting options. See
 [GAPS.md](GAPS.md) for exact coverage, proving programs, mutants and validation.
 
-[PERFORMANCE.md](PERFORMANCE.md) records reproducible full formatter throughput.
+[PERFORMANCE.md](PERFORMANCE.md) records the original full formatter throughput.
+[SPEED.md](SPEED.md) records profiles, optimizations and the final before/after comparison.

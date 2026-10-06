@@ -240,9 +240,10 @@ func TestLexerMutants(t *testing.T) {
 	}
 	for _, mutant := range []struct{ name, from, to string }{
 		{"keep chomping lost", "this.blockScalarKeep = true;", "this.blockScalarKeep = false;"},
-		{"tab not whitespace", "        case '\\t':\n", ""},
+		{"tab not whitespace", "|| unit === 9;", "|| unit === 8;"},
 		{"BOM not split", "character(line, 0) === '\\ufeff'", "character(line, 0) === 'X'"},
 		{"cached NUL becomes space", "units.push(String.fromCodePoint(code))", "units.push(String.fromCodePoint(code === 0 ? 32 : code))"},
+		{"numeric whitespace excludes space", "return unit === -1 || unit === 32 || unit === 10 || unit === 13 || unit === 9;", "return unit === -1 || unit === 31 || unit === 10 || unit === 13 || unit === 9;"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()

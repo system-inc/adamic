@@ -266,3 +266,95 @@ Logs: [full suite](audit/speed-ascii-suite.log),
 [final validation](audit/speed-ascii-final-suite.log),
 [lint](audit/speed-ascii-lint.log), [format](audit/speed-ascii-format.log),
 [counts](audit/speed-final-counts.log).
+
+## Numeric lexer scans
+
+Seven lexer paths now read numeric UTF-16 units: plain scalars, block scalars,
+block scalar headers, indentation continuation, spaces, newlines and line-end
+checks. Missing units use -1, distinct from a real NUL (0); whitespace and flow
+indicator predicates preserve exactly the original sets. Token slices and all
+state transitions are unchanged. Paths needing strings retain the ASCII cache.
+
+An attempted `case -1` was refused by stage 0 as a nonconstant case.
+[gaps/negativeCase.ts](gaps/negativeCase.ts) proves that refusal while Node prints
+1. The port uses an explicit predicate instead; no lowerer change is needed.
+This brings compiler refusal programs to eleven, separately from the three
+performance probes and the existing shared-slice runtime correctness gap.
+
+String-based tests delegate to that same numeric whitespace predicate, keeping
+all seven paths consistent. The old string-only tab mutant ran for over 79s
+without finishing and was stopped; it is not credited as successful wrong output.
+It is replaced by changing the shared predicate from tab (9) to backspace (8).
+The new numeric-whitespace mutant changes space (32) to unit 31. Both mutations
+finish successfully with empty stderr on native and Node; comparisons catch tab
+at byte 864210 and space at byte 6772. The cache mutant still qualifies (now
+caught at byte 926523). There are 30 qualifying port mutants, six added in this
+speed unit; the tab mutant replaces its former string-based definition.
+
+
+The first numeric suite was stopped during the old tab mutant. It also exposed
+a type-check error in the first negative-case probe (`console.log(number)`).
+The probe now explicitly converts the result with `String`, reaches the intended
+lowering refusal, and passes its separate 0.115s test. A complete suite is rerun
+with both corrections; the interrupted log is retained for transparency.
+
+
+The final counted native build matches Go and reports:
+
+```text
+allocations 5611765 frees 5611765 retains 25357452 releases 23306738 peak 67023 regions 0
+```
+
+Allocations fell 89.0% and retains 68.0% against the original. Compiler/runtime
+files remain unchanged.
+
+The complete suite passed in 306.891s, including all 30 qualifying mutants,
+all external parser/printer oracles, eleven refusal programs, the separately
+held runtime correctness gap, three cost probes and exhaustive Unicode width.
+Lint passed (276 rules, 44 files); formatting requested only joining the block
+header's two-line `else if` onto one line. That whitespace edit was applied and
+all five lexer mutants were rerun. Final lint, format, vet and gofmt checks pass.
+
+```sh
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=30m ./stage1/cohere/yaml > /tmp/stage1-yaml-speed/numeric-final-suite.log 2>&1
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=10m ./stage1/cohere/yaml -run '^TestLexerMutants$' > /tmp/stage1-yaml-speed/numeric-final-mutants.log 2>&1
+```
+
+Logs: [full suite](audit/speed-numeric-suite.log),
+[final lexer mutants](audit/speed-numeric-mutants.log),
+[interrupted attempt](audit/speed-numeric-attempt.log),
+[negative-case probe](audit/speed-negative-case.log),
+[lint](audit/speed-numeric-lint.log), [format](audit/speed-numeric-format.log),
+[counts](audit/speed-numeric-counts.log).
+
+## Reproducing the final throughput comparison
+
+[benchmark_speed.py](benchmark_speed.py) rotates seven driver commands through
+five fresh-process rounds. It times process startup, input, parsing, printing and
+output, then checks every byte against Go and requires empty stderr and exit zero.
+It uses blocking process waits rather than timeout polling in the timed interval.
+No tests or profilers run concurrently with the final comparison. This is the
+mixed successful/error edge corpus described in PERFORMANCE.md, not a production
+workload claim. Source Node means this same port, not published Prettier.
+
+To rebuild the before/after snapshots without changing the working branch:
+
+```sh
+source /workspace/adamic-tools/env.sh
+mkdir -p /tmp/stage1-yaml-speed
+ADAMIC_YAML_ARTIFACTS=/tmp/stage1-yaml-format-artifacts ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run '^TestFormatterMatchesGo$' > /tmp/stage1-yaml-speed/rebuild-corpus.log 2>&1
+for pair in '77327e3 baseline' '26c379e shared-schema' '6385e9e fast-path-maps'; do
+    set -- $pair
+    mkdir -p /tmp/stage1-yaml-speed/$2-source
+    git archive --format=tar --output=/tmp/stage1-yaml-speed/$2.tar $1 stage1/cohere/yaml
+    tar -xf /tmp/stage1-yaml-speed/$2.tar --strip-components=3 -C /tmp/stage1-yaml-speed/$2-source
+    go run ./cmd/adamic build /tmp/stage1-yaml-speed/$2-source/main.ts -o /tmp/stage1-yaml-speed/$2 > /tmp/stage1-yaml-speed/$2-build.log 2>&1
+done
+go run ./cmd/adamic build stage1/cohere/yaml/main.ts -o /tmp/stage1-yaml-speed/final > /tmp/stage1-yaml-speed/final-release-build.log 2>&1
+python3 stage1/cohere/yaml/benchmark_speed.py /tmp/stage1-yaml-format-artifacts /tmp/stage1-yaml-speed --rounds 5 > /tmp/stage1-yaml-speed/final-timing.log 2>&1
+```
+
+The scratch library installation is pinned to yaml 2.9.0, yaml-unist-parser 3.2.0
+and Prettier 3.9.6 as documented in GAPS.md. Toolchain setup timings remain in
+PERFORMANCE.md and audit/setup.log: Go 0s, clang 1s, Node 1s, submodules 1s,
+build cache 78s, total 78s; `nproc` reports 5, with a four-CPU quota.

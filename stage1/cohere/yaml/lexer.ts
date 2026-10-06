@@ -10,6 +10,16 @@ function character(text: string, index: number): string {
     const code = text.charCodeAt(index);
     return code < 128 ? (ascii[code] ?? '') : text.slice(index, index + 1);
 }
+function codeUnit(text: string, index: number): number {
+    return index < 0 || index >= text.length || Number.isNaN(index) ? -1 : text.charCodeAt(index);
+}
+function isEmptyCode(unit: number): boolean {
+    return unit === -1 || unit === 32 || unit === 10 || unit === 13 || unit === 9;
+}
+
+function isFlowIndicatorCode(unit: number): boolean {
+    return unit === 44 || unit === 91 || unit === 93 || unit === 123 || unit === 125;
+}
 function member(set: string, unit: string): boolean {
     return unit !== '' && set.includes(unit);
 }
@@ -81,17 +91,9 @@ plain-scalar(is-flow, min)
   [else] -> plain-scalar(min)
 */
 function isEmpty(unit: string): boolean {
-    switch(unit) {
-        case '':
-        case ' ':
-        case '\n':
-        case '\r':
-        case '\t':
-            return true;
-        default:
-            return false;
-    }
+    return isEmptyCode(unit === '' ? -1 : unit.charCodeAt(0));
 }
+
 const hexDigits = '0123456789ABCDEFabcdef';
 const tagChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-#;/?:@&=+$_.!~*'()";
 const flowIndicatorChars = ',[]{}';
@@ -115,35 +117,35 @@ export class Lexer {
     tokens: string[] = [];
     atLineEnd(): boolean {
         let index = this.pos;
-        let unit = character(this.buffer, index);
-        while(unit === ' ' || unit === '\t') {
+        let unit = codeUnit(this.buffer, index);
+        while(unit === 32 || unit === 9) {
             index += 1;
-            unit = character(this.buffer, index);
+            unit = codeUnit(this.buffer, index);
         }
-        if(unit === '' || unit === '#' || unit === '\n') return true;
-        if(unit === '\r') return character(this.buffer, index + 1) === '\n';
+        if(unit === -1 || unit === 35 || unit === 10) return true;
+        if(unit === 13) return codeUnit(this.buffer, index + 1) === 10;
         return false;
     }
     charAt(count: number): string {
         return character(this.buffer, this.pos + count);
     }
     continueScalar(offset: number): number {
-        let unit = character(this.buffer, offset);
+        let unit = codeUnit(this.buffer, offset);
         if(this.indentNext > 0) {
             let indent = 0;
-            while(unit === ' ') {
+            while(unit === 32) {
                 indent += 1;
-                unit = character(this.buffer, indent + offset);
+                unit = codeUnit(this.buffer, indent + offset);
             }
-            if(unit === '\r') {
-                const next = character(this.buffer, indent + offset + 1);
-                if(next === '\n' || (next === '' && !this.atEnd)) return offset + indent + 1;
+            if(unit === 13) {
+                const next = codeUnit(this.buffer, indent + offset + 1);
+                if(next === 10 || (next === -1 && !this.atEnd)) return offset + indent + 1;
             }
-            return unit === '\n' || indent >= this.indentNext || (unit === '' && !this.atEnd) ? offset + indent : -1;
+            return unit === 10 || indent >= this.indentNext || (unit === -1 && !this.atEnd) ? offset + indent : -1;
         }
-        if(unit === '-' || unit === '.') {
+        if(unit === 45 || unit === 46) {
             const marker = this.buffer.slice(offset, offset + 3);
-            if((marker === '---' || marker === '...') && isEmpty(character(this.buffer, offset + 3))) return -1;
+            if((marker === '---' || marker === '...') && isEmptyCode(codeUnit(this.buffer, offset + 3))) return -1;
         }
         return offset;
     }
@@ -183,9 +185,9 @@ export class Lexer {
         let index = this.pos - 1;
         while(true) {
             index++;
-            const unit = character(this.buffer, index);
-            if(unit === ' ') continue;
-            if(allowTabs && unit === '\t') continue;
+            const unit = codeUnit(this.buffer, index);
+            if(unit === 32) continue;
+            if(allowTabs && unit === 9) continue;
             break;
         }
         const count = index - this.pos;
@@ -196,9 +198,9 @@ export class Lexer {
         return count;
     }
     pushNewline(): number {
-        const unit = character(this.buffer, this.pos);
-        if(unit === '\n') return this.pushCount(1);
-        else if(unit === '\r' && this.charAt(1) === '\n') return this.pushCount(2);
+        const unit = codeUnit(this.buffer, this.pos);
+        if(unit === 10) return this.pushCount(1);
+        else if(unit === 13 && codeUnit(this.buffer, this.pos + 1) === 10) return this.pushCount(2);
         return 0;
     }
     parseBlockStart(): string {
@@ -358,11 +360,10 @@ export class Lexer {
         let index = this.pos;
         while(true) {
             index += 1;
-            const unit = character(this.buffer, index);
-            if(unit === '+') this.blockScalarKeep = true;
-            else if(unit.charCodeAt(0) > 48 && unit.charCodeAt(0) <= 57)
-                this.blockScalarIndent = unit.charCodeAt(0) - 49;
-            else if(unit !== '-') break;
+            const unit = codeUnit(this.buffer, index);
+            if(unit === 43) this.blockScalarKeep = true;
+            else if(unit > 48 && unit <= 57) this.blockScalarIndent = unit - 49;
+            else if(unit !== 45) break;
         }
         return this.pushUntil(true);
     }
@@ -405,23 +406,23 @@ export class Lexer {
     parseBlockScalar(): string {
         let newline = this.pos - 1; // may be -1 if this.pos === 0
         let indent = 0;
-        let unit = '';
+        let unit = -1;
         let scanning = true;
         for(let index = this.pos; scanning; index++) {
-            unit = character(this.buffer, index);
-            if(unit === '') break;
+            unit = codeUnit(this.buffer, index);
+            if(unit === -1) break;
             switch(unit) {
-                case ' ':
+                case 32:
                     indent += 1;
                     break;
-                case '\n':
+                case 10:
                     newline = index;
                     indent = 0;
                     break;
-                case '\r': {
-                    const next = character(this.buffer, index + 1);
-                    if(next === '' && !this.atEnd) return this.setNext('block-scalar');
-                    if(next === '\n') break;
+                case 13: {
+                    const next = codeUnit(this.buffer, index + 1);
+                    if(next === -1 && !this.atEnd) return this.setNext('block-scalar');
+                    if(next === 10) break;
                     scanning = false;
                     break;
                 }
@@ -430,7 +431,7 @@ export class Lexer {
                     break;
             }
         }
-        if(unit === '' && !this.atEnd) return this.setNext('block-scalar');
+        if(unit === -1 && !this.atEnd) return this.setNext('block-scalar');
         if(indent >= this.indentNext) {
             if(this.blockScalarIndent === -1) this.indentNext = indent;
             else {
@@ -449,32 +450,32 @@ export class Lexer {
         // Trailing insufficiently indented tabs are invalid.
         // To catch that during parsing, we include them in the block scalar value.
         let index = newline + 1;
-        unit = character(this.buffer, index);
-        while(unit === ' ') {
+        unit = codeUnit(this.buffer, index);
+        while(unit === 32) {
             index += 1;
-            unit = character(this.buffer, index);
+            unit = codeUnit(this.buffer, index);
         }
-        if(unit === '\t') {
-            while(unit === '\t' || unit === ' ' || unit === '\r' || unit === '\n') {
+        if(unit === 9) {
+            while(unit === 9 || unit === 32 || unit === 13 || unit === 10) {
                 index += 1;
-                unit = character(this.buffer, index);
+                unit = codeUnit(this.buffer, index);
             }
             newline = index - 1;
         }
         else if(!this.blockScalarKeep) {
             while(true) {
                 let lastIndex = newline - 1;
-                let lastUnit = character(this.buffer, lastIndex);
-                if(lastUnit === '\r') {
+                let lastUnit = codeUnit(this.buffer, lastIndex);
+                if(lastUnit === 13) {
                     lastIndex -= 1;
-                    lastUnit = character(this.buffer, lastIndex);
+                    lastUnit = codeUnit(this.buffer, lastIndex);
                 }
                 const lastChar = lastIndex; // Drop the line if last char not more indented
-                while(lastUnit === ' ') {
+                while(lastUnit === 32) {
                     lastIndex -= 1;
-                    lastUnit = character(this.buffer, lastIndex);
+                    lastUnit = codeUnit(this.buffer, lastIndex);
                 }
-                if(lastUnit === '\n' && lastIndex >= this.pos && lastIndex + 1 + indent > lastChar) newline = lastIndex;
+                if(lastUnit === 10 && lastIndex >= this.pos && lastIndex + 1 + indent > lastChar) newline = lastIndex;
                 else break;
             }
         }
@@ -486,39 +487,39 @@ export class Lexer {
         const inFlow = this.flowLevel > 0;
         let end = this.pos - 1;
         let index = this.pos - 1;
-        let unit: string;
+        let unit: number;
         while(true) {
             index++;
-            unit = character(this.buffer, index);
-            if(unit === '') break;
-            if(unit === ':') {
-                const next = character(this.buffer, index + 1);
-                if(isEmpty(next) || (inFlow && member(flowIndicatorChars, next))) break;
+            unit = codeUnit(this.buffer, index);
+            if(unit === -1) break;
+            if(unit === 58) {
+                const next = codeUnit(this.buffer, index + 1);
+                if(isEmptyCode(next) || (inFlow && isFlowIndicatorCode(next))) break;
                 end = index;
             }
-            else if(isEmpty(unit)) {
-                let next = character(this.buffer, index + 1);
-                if(unit === '\r') {
-                    if(next === '\n') {
+            else if(isEmptyCode(unit)) {
+                let next = codeUnit(this.buffer, index + 1);
+                if(unit === 13) {
+                    if(next === 10) {
                         index += 1;
-                        unit = '\n';
-                        next = character(this.buffer, index + 1);
+                        unit = 10;
+                        next = codeUnit(this.buffer, index + 1);
                     }
                     else end = index;
                 }
-                if(next === '#' || (inFlow && member(flowIndicatorChars, next))) break;
-                if(unit === '\n') {
+                if(next === 35 || (inFlow && isFlowIndicatorCode(next))) break;
+                if(unit === 10) {
                     const continuationStart = this.continueScalar(index + 1);
                     if(continuationStart === -1) break;
                     index = Math.max(index, continuationStart - 2); // to advance, but still account for ' #'
                 }
             }
             else {
-                if(inFlow && member(flowIndicatorChars, unit)) break;
+                if(inFlow && isFlowIndicatorCode(unit)) break;
                 end = index;
             }
         }
-        if(unit === '' && !this.atEnd) return this.setNext('plain-scalar');
+        if(unit === -1 && !this.atEnd) return this.setNext('plain-scalar');
         this.tokens.push('\x1f');
         this.pushToIndex(end + 1, true);
         return inFlow ? 'flow' : 'doc';
