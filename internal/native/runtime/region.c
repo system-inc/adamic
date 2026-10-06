@@ -31,7 +31,8 @@ static size_t object_size(size_t count) {
 	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
 }
 
-static adamic_object *object_new(adamic_region *region, const adamic_shape *shape, bool zero) {
+// Keep allocation in each entry point: an out-of-line helper adds a call per object.
+static inline adamic_object *object_new(adamic_region *region, const adamic_shape *shape, bool zero) {
 	if (region == NULL) {
 		return adamic_object_new(shape);
 	}
