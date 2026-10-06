@@ -50,22 +50,22 @@ Bucket (a) requires an actual matching diagnostic code in both compilers, not ju
 | 2 | TS2378 |
 | 1 | TS18046 |
 
-Top observed Adamic reasons:
+Top observed Adamic diagnostic messages, with source locations removed and quoted names normalized:
 
 | count | reason |
 |---:|---|
-| 1 | /tmp/library-array-sources/built-ins/Array/15.4.5-1.js.ts:98:5: error TS7034: Variable 'a' implicitly has type 'any[]' in some locations where its type cannot be determined. |
-| 1 | /tmp/library-array-sources/built-ins/Array/15.4.5.1-5-2.js.ts:99:1: error TS2322: Type 'string' is not assignable to type 'number'. |
-| 1 | /tmp/library-array-sources/built-ins/Array/S15.4.1_A1.1_T1.js.ts:100:19: error TS2339: Property 'myproperty' does not exist on type 'any[]'. |
-| 1 | /tmp/library-array-sources/built-ins/Array/S15.4.1_A1.1_T2.js.ts:103:5: error TS2403: Subsequent variable declarations must have the same type.  Variable 'x' must be of type 'any[]', but here has type 'number[]'. |
-| 1 | /tmp/library-array-sources/built-ins/Array/S15.4.1_A1.2_T1.js.ts:100:19: error TS2339: Property 'getClass' does not exist on type 'any[]'. |
-| 1 | /tmp/library-array-sources/built-ins/Array/S15.4.1_A2.2_T1.js.ts:118:17: error TS2454: Variable 'result' is used before being assigned. |
-| 1 | /tmp/library-array-sources/built-ins/Array/S15.4.2.1_A1.1_T1.js.ts:100:19: error TS2339: Property 'myproperty' does not exist on type 'any[]'. |
-| 1 | /tmp/library-array-sources/built-ins/Array/S15.4.2.1_A1.1_T2.js.ts:103:5: error TS2403: Subsequent variable declarations must have the same type.  Variable 'x' must be of type 'any[]', but here has type 'number[]'. |
-| 1 | /tmp/library-array-sources/built-ins/Array/S15.4.2.1_A1.2_T1.js.ts:100:19: error TS2339: Property 'getClass' does not exist on type 'any[]'. |
-| 1 | /tmp/library-array-sources/built-ins/Array/S15.4.2.1_A2.2_T1.js.ts:118:17: error TS2454: Variable 'result' is used before being assigned. |
-| 1 | /tmp/library-array-sources/built-ins/Array/S15.4.3_A1.1_T1.js.ts:100:23: error TS2339: Property 'myproperty' does not exist on type 'ArrayConstructor'. |
-| 1 | /tmp/library-array-sources/built-ins/Array/S15.4.5.1_A2.1_T1.js.ts:109:1: error TS7005: Variable 'x' implicitly has an 'any[]' type. |
+| 828 | TS7006: Parameter '…' implicitly has an '…' type. |
+| 238 | TS2345: Argument of type '…' is not assignable to parameter of type '…'. |
+| 177 | TS2339: Property '…' does not exist on type '…'. |
+| 135 | TS7009: '…' expression, whose target lacks a construct signature, implicitly has an '…' type. |
+| 70 | TS7005: Variable '…' implicitly has an '…' type. |
+| 53 | TS2769: No overload matches this call. |
+| 32 | TS7053: Element implicitly has an '…' type because expression of type '…' can'…'{}'. |
+| 27 | TS2554: Expected 2-3 arguments, but got 1. |
+| 27 | TS2554: Expected 3 arguments, but got 2. |
+| 24 | TS7034: Variable '…' implicitly has type '…' in some locations where its type cannot be determined. |
+| 22 | TS7053: Element implicitly has an '…' type because expression of type '…' can'…'Object'. |
+| 21 | TS2554: Expected 1-2 arguments, but got 0. |
 
 ## Bucket (b) top features
 
@@ -217,3 +217,15 @@ These reproducers name the language blocker; full adapted test paths and reasons
 ## Setup
 
 Required bash cloud/setup.sh succeeded: go ready (0s); clang ready (1s); node ready (1s); submodules ready (1s); build cache warm (100s); done in 100s on 5 processors, cgroup cpu.max 400000 100000, 17.6 GB. Sourced /workspace/adamic-tools/env.sh. nproc: 5.
+
+## Language blockers exposed while building
+
+The crash reproducer is `const target = {}; [0, target, 2].indexOf(target, 2);`. TypeScript infers an object element type that also admits primitives; native slots require a tagged representation. The reduced negative oracle is in `internal/oracle/testdata/library_array_refused/library_array_heterogeneous.a` and is exercised explicitly by the Array lowering test. The subdirectory follows `fresh_refused/`: top-level oracle files are globbed as positive graph fixtures.
+
+A fixed object view may hide fields: `const full = {0: 1, 2: 9, length: 3}; const view: {0: number; length: number} = full; Array.prototype.indexOf.call(view, 9);`. Search therefore requires a plain literal or its unannotated, unreassigned binding. Structural views need a presence/shape proof before searches can use them.
+
+`const value: {} = [1]; Array.isArray(value);` needs a dynamic object tag; the object type alone cannot prove false. Optional array representations are also refused rather than guessed.
+
+The 50 constructor refusals include length constructors and boxed primitives. Dense native arrays cannot represent the absent elements of `Array(3)`; boxed primitives require runtime object identities and prototype behavior. Extending those representations requires shared IR/emission work outside this unit's allowed dispatch hooks. These remain explicit refusals.
+
+Fixed-shape generic searches also refuse optional/nullable or mixed search representations and field values before strict comparison. For example, `function f(x: number | undefined) { const a = {0: x, length: 1}; return Array.prototype.indexOf.call(a, undefined); }` needs a comparison that preserves the undefined tag. An object field initialized from a structural array view is refused: `const a = [1]; const v: {length: number} = a; Array.prototype.indexOf.call({0: v, length: 1}, a);`. Pure literal object identities remain supported.

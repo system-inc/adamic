@@ -4,7 +4,7 @@ const records=fs.readFileSync('/tmp/library-array-adapted.jsonl','utf8').trim().
 const options={strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,noImplicitReturns:true,noFallthroughCasesInSwitch:true,erasableSyntaxOnly:true,verbatimModuleSyntax:true,allowImportingTsExtensions:true,noEmit:true,module:ts.ModuleKind.ESNext,moduleDetection:ts.ModuleDetectionKind.Force,moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,lib:['lib.es2024.d.ts'],types:[]};
 const host=ts.createCompilerHost(options), getSource=host.getSourceFile.bind(host), libs=new Map();
 host.getSourceFile=(name,...args)=>{if(name.endsWith('.d.ts')){if(!libs.has(name))libs.set(name,getSource(name,...args));return libs.get(name)}return getSource(name,...args)};
-const existing=fs.readFileSync('/tmp/library-array-classified.jsonl','utf8').trim().split('\n').filter(Boolean).map(JSON.parse);
+const existing=fs.existsSync('/tmp/library-array-classified.jsonl') ? fs.readFileSync('/tmp/library-array-classified.jsonl','utf8').trim().split('\n').filter(Boolean).map(JSON.parse) : [];
 const done=new Set(existing.map(r=>r.path));
 const pending=records.filter(r=>!done.has(r.Path));
 const diagnoses=new Map();

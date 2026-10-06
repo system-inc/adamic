@@ -51,6 +51,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			fieldName, known := l.methodName(property)
 			if !known {
+				fieldName, known = l.libraryArrayLikeFieldName(name)
+			}
+			if !known {
 				return nil, l.notYet(name, "a computed field name")
 			}
 			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
@@ -572,6 +575,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, handled, err := l.userMethodCall(node); handled {
+		return value, true, err
+	}
+	if value, known, err := l.libraryArrayGenericCall(node); known {
 		return value, true, err
 	}
 	if value, known, err := l.libraryMathNumberCall(node); known {
