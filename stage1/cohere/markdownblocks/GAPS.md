@@ -6,13 +6,38 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native source preprocessing and quote-prefix recognition
+
+`preprocess.ts` now ports the complete single-call micromark preprocessing stage:
+UTF-16 text chunks, first-unit BOM, NUL replacement, tabs/virtual spaces, CR/LF/
+CRLF and EOF. `quotePrefix.ts` recognizes quote start and continuation prefixes,
+with open-container and code-indented-disabled contexts. It reports consumed
+code count and UTF-16 offset/column after the attempt; failed attempts consume
+nothing. Native receives actual source text, not Go AST or document fixtures.
+
+Actual private Go preprocessing and quote constructs agree with native, source
+Node and the backend on 2,091 sources and 16,728 context combinations. Tests
+compare chunk boundaries/text/code values plus match/consumption/position/open
+facts; they do not compare tokenizer events or claim a complete tokenizer.
+The Go adapter drives real construct attempts, then drains remaining input. The
+native primitive recognizes the prefix and leaves token/event emission to its
+future caller. Their timings therefore measure different workloads. The bundled
+fork does not expose these private chunk/prefix functions; the original public
+Markdown parser/layout remains checked by the full-source embedding-off audit.
+
+The document/container/flow dispatchers, attempt/rollback and event emission,
+resolvers/subtokenization, mdast tree construction and Markdown AST preprocessing
+remain unported. The literal closure representation is still rejected as below;
+these native numeric/context primitives show that a redesign can make progress.
+This is unfinished work, not evidence that a native Markdown parser is impossible.
+
 ## Native HTML layout boundary
 
 `htmlblocks.ts` prints HTML values with comment hardlines and marked-root literal
 lines, and scans final-root JavaScript whitespace without regex. Its inputs still
 come from Go AST/path facts and exact display widths. All five requested layout
 components now compose natively in the fixture driver. This does not close the
-native parser, preprocessing, Unicode-width or complete-block-printer gaps.
+native tokenizer/mdast, AST preprocessing, Unicode-width or complete-block-printer gaps.
 
 ## Native code block layout boundary
 
@@ -123,13 +148,13 @@ exit zero, produce no stderr or formatting errors, and fail the off baseline's
 byte comparison. These prove the preflight comparison catches real output
 changes; they are Go mutants, not mutants of an unbuilt Adamic block printer.
 
-The list printer and the document operations Markdown uses are now ported.
-The complete native Markdown parser, preprocessing, remaining block printers
-and Unicode display-width service remain unfinished. The block unit remains incomplete. The prior inline implementation is
-composed only as a branch dependency, not yet wired into a block formatter.
-The embedding-off contract avoids those embedding dependencies. The remaining
-work is the native parser/frame and document printer, not a change to embedded
-language formatting.
+The list, quote, preserved-prose table, raw code and HTML printers and the doc
+operations Markdown uses are now ported. The prior inline word printer composes
+with them in the fixture driver. Source preprocessing and quote-prefix recognition
+are now native primitives. The complete tokenizer/mdast, AST preprocessing,
+remaining printers and Unicode display-width service are unfinished. The block
+unit remains incomplete: there is no native Markdown-file formatting driver yet.
+The embedding-off contract remains fixed throughout this work.
 
 ## Native front-matter parser stage
 
@@ -155,7 +180,9 @@ space to each prefix line, and remove BOM from the language whitespace class.
 Each lowers, builds and exits zero with no stderr; only its bytes fail the oracle
 comparison. These are native front-matter mutants, not full block-printer mutants.
 The inherited Go heading/list/fence mutants still test the whole-document audit.
-The prior inline printers are not wired into a block formatter yet.
+At the front-matter milestone, inline printers had not yet been wired in. The
+later layout harness now composes native words; other inline leaves remain
+supplied by Go child documents.
 
 ## Native list layout component
 

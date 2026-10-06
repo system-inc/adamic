@@ -1,3 +1,155 @@
+All five requested block layout components are green and pushed.
+4,314 source contexts match Go and the pinned fork with embedding off.
+Native source preprocessing and quote-prefix recognition also pass 2,091 sources.
+18 new native mutants caught; sanitizers/leaks, combined layout gate and vet pass.
+The full native tokenizer/mdast, remaining printers and Unicode width are still unfinished.
+
+Parser primitives and combined gate, October 6, 2026
+
+HTML slice pushed: b05dce32f04b0f9028ffae5b5090b3f9d8ec1a73.
+preprocess.ts ports micromark's complete single-call source preprocessing from
+parse.go: exact UTF-16 text chunk boundaries, first-unit BOM, NUL replacement,
+tab/virtual-space codes, CR/LF/CRLF and EOF. quotePrefix.ts ports start and
+continuation recognition from block_quote.go and factorySpace, with explicit
+open-container and code-indented-disabled flags. Native reports match, consumed
+codes, offset, column and open state. It receives original source, not Go AST
+fixtures. The future caller still must emit tokens/events and run the document,
+container and flow machines, rollback, resolvers, subtokenization and mdast build.
+No complete native Markdown parser or source-file formatting driver is claimed.
+The exact original Go private functions are exposed only by the test overlay;
+Go's actual tokenizer constructs decide the prefix result and rollback position.
+The original fork's private chunks/prefixes are not exported by its bundle, so
+there is no claim of direct private-API parity with it. Its full-source parser
+and layout remain independently checked in the original-source audit.
+
+2,091 sources = original 953 plus 1,138 new cases: 18 short cases, all 729 triples
+of nine source units, 390 indent/marker suffix cases and a full Unicode-scalar
+BMP source with astral symbols. 876 physical files, 1,215 generated in total.
+Eight combinations of start/continuation, open and indentation-disabled flags
+per source give 16,728 quote-prefix observations. Actual Go/source Node/native/
+backend agree on all chunks and prefix fields. ASan/UBSan/leaks pass.
+
+Three native output-only parser primitive mutants compile, exit 0, empty stderr:
+CRLF chunk -3 to -4: TypeScript/.github/pull_request_template.md, byte 329194.
+one extra virtual tab space: vscode-jsonrpc/README.md, byte 390181.
+quote continuation indentation limit 3 to 4: four-space quote case, byte 3119666.
+A cohere no-unmodified-loop-condition finding on the invariant boolean in a loop
+condition was resolved by testing the bound inside the loop. Final cohere has
+zero findings. The tests were rerun after this refactor.
+
+Commands (source /workspace/adamic-tools/env.sh first):
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownParserPrefixes$' -count=1 -v -timeout 15m
+/tmp/markdown-prefix-final.log: PASS, 8.524s.
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ADAMIC_MARKDOWNBLOCKS_KEEP=/tmp/markdown-combined-off
+go test ./stage1/cohere/markdownblocks -count=1 -v -timeout 20m
+/tmp/markdown-blocks-combined.log: PASS, 280.829s. This run began before the new
+prefix test was added, and covers all five final layout components, front matter,
+representation probes and original full-source audit; the prefix test was then
+checked separately by the command above. Front matter remains 4,069 cases;
+the source audit remains 953/953 off matches. It validates all seven original
+witness input hashes and fourteen complete auto-mode outputs stored in GAPS.md.
+The combined gate replays 15 native layout mutants, 3 native front-matter mutants
+and 3 Go full-source audit mutants. Three new native prefix mutants pass separately.
+Formatting and native-mutant log whitespace are escaped/annotated to keep the
+report readable and git diff --check clean; original logs retain actual inputs.
+
+Final checks:
+gofmt -l cmd internal stage1/cohere/markdownblocks: empty /tmp/markdown-final-gofmt.log.
+go vet ./...: exit 0, empty /tmp/markdown-final-vet.log.
+Cohere --no-cache --no-fix on all new components and drivers:
+/tmp/markdown-final-style.log: 276 rules, 14 checked, 100% Adamic-ready, zero findings.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(classes.a|class_as_interface.a|objects.a|maybe_number_slots.a|reuse_arrays.a|maps_and_text.a|array_from.a)$' -count=1 -v -timeout 10m
+/tmp/markdown-final-oracle.log: seven fixtures PASS, 1.851s; native cache misses 21,
+Node misses 14, zero hits. git diff --check: empty /tmp/markdown-final-diff.log.
+The full repository test gate was not run. Only stage1/cohere/markdownblocks was
+edited in these slices, and none of the four reserved compiler files were changed.
+Toolchain setup timing and nproc=5 remain the original lines retained below:
+Go 0s, clang 1s, Node 1s, submodules 1s, cache warm 10s, total 10s.
+
+Primitive timings, three processes, startup/protocol/output included:
+Go actual preprocessing/constructs 6861.6 texts/s (0.914212s), native source
+preprocessing/prefix recognition 12756.2 (0.491760s), source Node 9444.0 (0.664233s).
+Go additionally emits events and drains its tokenizer; native does neither.
+These are different workloads and support no whole-parser or formatter speed
+claim. Isolated final HTML component timing remains 3815.8 documents/s, versus
+Go canonical docs 7530.9, source Node components 3760.4 and fork canonical docs
+3639.7. Native/source construct block docs; Go/fork do not. Full-source Go/fork
+baselines in the concurrent gate were 155.8/118.8 documents/s; no native full
+formatter exists yet to compare against them.
+
+What remains: full native tokenizer/event/mdast and AST preprocessing, Unicode
+width service, root/heading/paragraph/sentence/whitespace/thematic/definition/
+footnote/other inline printers and ignore handling. Non-default options (including
+prose-wrap never compact tables) are not held by this common-options corpus.
+The literal captured-state port is rejected by the checked gap programs; explicit
+frames are feasible, and this source primitive slice begins that redesign.
+
+Actual final parser primitive log:
+
+=== RUN   TestMarkdownParserPrefixes
+=== PAUSE TestMarkdownParserPrefixes
+=== CONT  TestMarkdownParserPrefixes
+=== RUN   TestMarkdownParserPrefixes/CRLF_chunk
+    prefix_test.go:139: output-only native mutant caught in "cohere/TypeScript/.github/pull_request_template.md" at byte 329194
+=== RUN   TestMarkdownParserPrefixes/tab_virtual_spaces
+    prefix_test.go:139: output-only native mutant caught in "cohere/TypeScript/packages/typescript/vendor/vscode-jsonrpc/README.md" at byte 390181
+=== RUN   TestMarkdownParserPrefixes/quote_continuation_limit
+    prefix_test.go:139: output-only native mutant caught in "generated/prefix/short/960" at byte 3119666
+=== NAME  TestMarkdownParserPrefixes
+    prefix_test.go:159: parser primitive throughput actual Go preprocessing/constructs 6861.6 texts/s, three runs 0.914212s; source preprocessing/chunks/prefix recognition and startup/protocol/output included; Go also drains tokenizer and emits construct events, native does not
+    prefix_test.go:159: parser primitive throughput native preprocessing/prefix recognition 12756.2 texts/s, three runs 0.491760s; source preprocessing/chunks/prefix recognition and startup/protocol/output included; Go also drains tokenizer and emits construct events, native does not
+    prefix_test.go:159: parser primitive throughput source Node preprocessing/prefix recognition 9444.0 texts/s, three runs 0.664233s; source preprocessing/chunks/prefix recognition and startup/protocol/output included; Go also drains tokenizer and emits construct events, native does not
+    prefix_test.go:161: 876 physical files, 1215 generated, 2091 sources; exact chunk boundaries/codes and 16728 quote prefix contexts match actual Go/source/native/backend; ASan/UBSan/leaks
+--- PASS: TestMarkdownParserPrefixes (8.51s)
+    --- PASS: TestMarkdownParserPrefixes/CRLF_chunk (1.12s)
+    --- PASS: TestMarkdownParserPrefixes/tab_virtual_spaces (1.16s)
+    --- PASS: TestMarkdownParserPrefixes/quote_continuation_limit (1.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	8.524s
+
+Actual fresh scoped compiler oracle log:
+
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_from.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_from.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_arrays.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_arrays.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_arrays.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_from.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/objects.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_arrays.a (0.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/classes.a (1.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a (1.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/array_from.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a (1.10s)
+PASS
+gate cache: native hits=0 misses=21
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.851s
+
+Prior HTML report, retained:
+
 Lists, block quotes, tables, code and HTML now have native layout components.
 4,314 source contexts agree with Go and the pinned fork, embedding off.
 Native/source/backend bytes match Go; 1,270 HTML frames and three HTML mutants pass.
@@ -51,7 +203,7 @@ canonical docs, so workloads differ. Go docs 7530.9 documents/s (1.718508s),
 native 3815.8 (3.391709s), source Node 3760.4 (3.441625s), fork docs 3639.7
 (3.555781s). No end-to-end formatter speed claim. Setup/nproc/pins unchanged.
 
-Actual HTML log:
+HTML log (two trailing spaces in input lines annotated):
 
 === RUN   TestMarkdownHTMLBlockLayout
 === PAUSE TestMarkdownHTMLBlockLayout
@@ -59,11 +211,11 @@ Actual HTML log:
     lists_test.go:260: original fork full Markdown parsing/layout off agrees on all 4314 source documents
 === RUN   TestMarkdownHTMLBlockLayout/HTML_root_trim
     lists_test.go:343: output-only native mutant caught by generated/html-layout/<div>
-        x  
+        x [two spaces]
         </div> 
          at byte 2832392
 === RUN   TestMarkdownHTMLBlockLayout/HTML_comment_line
-    lists_test.go:343: output-only native mutant caught by generated/html-layout/<!-- a  
+    lists_test.go:343: output-only native mutant caught by generated/html-layout/<!-- a [two spaces]
         b	 -->
          at byte 2836129
 === RUN   TestMarkdownHTMLBlockLayout/HTML_literal_root

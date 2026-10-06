@@ -340,7 +340,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			}
 			offset := firstDifference(string(result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
-			t.Logf("output-only native mutant caught by %s at byte %d", inputs[index].Name, offset)
+			t.Logf("output-only native mutant caught by %q at byte %d", inputs[index].Name, offset)
 		})
 	}
 	fast := filepath.Join(dir, "native-fast")
