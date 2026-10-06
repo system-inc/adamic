@@ -80,6 +80,7 @@ const adamicPrint = (value, seen) => {
 	if (seen.has(value)) return '@' + adamicIdentity(value);
 	seen.add(value);
 	if (typeof value.code === 'function') return 'closure' + adamicIdentity(value);
+	if (value instanceof Date) return 'date(' + String(value.getTime()) + ')';
 	if (value instanceof Map) return 'map(' + [...value].map(([key, entry]) => adamicPrint(key, seen) + '=>' + adamicPrint(entry, seen)).join(',') + ')';
 	if (Array.isArray(value)) return '[' + value.map((element) => adamicPrint(element, seen)).join(',') + ']';
 	return '{' + Object.keys(value).map((key) => key + ':' + adamicPrint(value[key], seen)).join(',') + '}';
