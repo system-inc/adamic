@@ -75,7 +75,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) {
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			// Math.random has its own refusal, called or not.
@@ -104,7 +104,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			}
 		}
 		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
-		if err := l.refuseWidening(node); err != nil {
+		if err := l.refuseStringWidening(node); err != nil {
 			found = err
 			return true
 		}

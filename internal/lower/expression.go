@@ -358,6 +358,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if _, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
 			return nil, l.notYet(node, "a generic function as a value")
 		}
+		if !isLocal && l.isLibraryGlobal(node, "String") {
+			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
+		}
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
@@ -380,6 +383,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindTypeOfExpression:
 		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
 			return ir.StringConstant{Index: l.constant("function")}, nil
+		}
+		if value, intrinsic := l.stringTypeOf(node); intrinsic {
+			return value, nil
 		}
 		operand, err := l.expression(node.AsTypeOfExpression().Expression)
 		if err != nil {
@@ -409,6 +415,8 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
 		return l.combine(node, binary.OperatorToken.Kind, left, right)
+	case ast.KindTaggedTemplateExpression:
+		return l.stringRawTemplate(node)
 	case ast.KindTemplateExpression:
 		return l.template(node)
 	case ast.KindConditionalExpression:

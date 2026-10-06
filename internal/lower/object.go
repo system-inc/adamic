@@ -364,6 +364,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, known, err := l.libraryMathNumberCall(node); known {
 		return value, true, err
 	}
+	if lowered, isString, err := l.libraryString(node); isString {
+		return lowered, true, err
+	}
 	if lowered, isInput, err := l.input(node); isInput {
 		return lowered, true, err
 	}
