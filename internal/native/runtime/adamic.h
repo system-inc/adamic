@@ -210,6 +210,7 @@ typedef struct adamic_map {
 	// boolean_keys is keys that are booleans, compared and hashed as booleans: a boolean set in an
 	// adamic_value leaves the rest of its bytes unspecified, so it's never read as a number.
 	bool boolean_keys;
+	bool maybe_number_keys;
 	bool reference_values;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
@@ -223,9 +224,11 @@ typedef struct adamic_map_iterator {
 	adamic_heap heap;
 	adamic_map *map;
 	size_t next;
+	bool exhausted;
 } adamic_map_iterator;
 
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
+adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
@@ -238,6 +241,9 @@ adamic_map *adamic_map_new_identity(bool reference_values);
 
 // adamic_map_new_booleans is a map whose keys are booleans: true and false, two keys at most.
 adamic_map *adamic_map_new_booleans(bool reference_values);
+adamic_map *adamic_map_new_maybe_numbers(bool reference_values);
+bool adamic_map_maybe_key_equal(double left, double right);
+uint64_t adamic_map_maybe_key_hash(double key);
 
 // adamic_map_clear is map.clear() and set.clear(): every entry deleted, as if one by one, so an
 // iteration open over it goes on with whatever is added after.

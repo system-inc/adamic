@@ -1099,6 +1099,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.stringCall(expression)
 	case ir.Trim:
 		return e.own(ir.String, fmt.Sprintf("adamic_string_trim(%s)", e.value(expression.Value)))
+	case ir.CollectionIterator:
+		return e.collectionIterator(expression)
 	case ir.MapNew:
 		entries := make([][2]string, 0, len(expression.Entries))
 		for _, entry := range expression.Entries {
@@ -1405,6 +1407,9 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 // newMap makes a map, or a Set's map, for its keys: strings by their text, numbers by
 // SameValueZero, booleans as booleans, and anything else held by reference by its identity.
 func newMap(key ir.Type, referenceValues bool) string {
+	if key == ir.MaybeNumber {
+		return fmt.Sprintf("adamic_map_new_maybe_numbers(%t)", referenceValues)
+	}
 	if key == ir.Boolean {
 		return fmt.Sprintf("adamic_map_new_booleans(%t)", referenceValues)
 	}

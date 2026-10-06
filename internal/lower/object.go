@@ -218,6 +218,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	access := node.AsPropertyAccessExpression()
 	name := node.Name().Text()
+	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
+		return nil, l.notYet(node, "a collection iterator property other than next")
+	}
 	if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		// The rest of a chain after a ?., which short-circuits with it.
 		return nil, l.notYet(node, "an optional chain longer than one step")
@@ -372,6 +375,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if l.isLibraryGlobal(receiver, "Number") {
 		return l.numberCall(node, name)
 	}
+	if l.isLibraryGlobal(receiver, "Map") && name == "groupBy" {
+		return l.libraryMapGroupBy(node)
+	}
 	if l.isLibraryGlobal(receiver, "Array") && name == "from" {
 		return l.arrayFrom(node)
 	}
@@ -404,6 +410,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if _, isVisit := visits[name]; receiverType == ir.Array && (isVisit || arrayMethods[name]) {
 		return l.arrayMethod(node, receiver, name)
+	}
+	if receiverType == ir.Map && (name == "keys" || name == "values" || name == "entries") {
+		return l.libraryCollectionIterator(node, receiver, name)
 	}
 	if receiverType == ir.Map && l.isSet(receiver) {
 		return l.setMethod(node, receiver, name)
@@ -588,6 +597,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
+	if element, iterator := l.libraryIteratorElement(iterated); iterator {
+		return l.libraryForOfIterator(node, iterable, element, name)
+	}
 	var element ir.Type
 	switch iterable.Type() {
 	case ir.Array:
@@ -598,6 +610,20 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		// A string's elements are its code points, each a string.
 		element = ir.String
 	case ir.Map:
+		if ast.IsIdentifier(name) && (mapPart == "entries" || (mapPart == "" && !l.isSet(iterated))) {
+			var key, value ir.Type
+			if l.isSet(iterated) {
+				key, err = l.setElement(iterated)
+				value = key
+			} else {
+				key, value, err = l.mapTypes(iterated)
+			}
+			if err != nil {
+				return nil, err
+			}
+			iterator := ir.CollectionIterator{Collection: iterable, Part: "entries", Key: key, Value: value, Set: l.isSet(iterated)}
+			return l.libraryForOfIterator(node, iterator, ir.Object, name)
+		}
 		return l.forOfMap(node, iterable, iterated, mapPart, name)
 	default:
 		return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
@@ -1036,6 +1062,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "new Map with more than one argument")
 	}
 	pairs := ast.SkipParentheses(created.Arguments.Nodes[0])
+	if l.libraryEmptyCollectionArgument(pairs) {
+		return lowered, nil
+	}
 	if !writtenOut(pairs) {
 		// Pairs from anywhere else: an array of them, another Map, its entries() (collections.go).
 		return l.newMapFrom(node, pairs, key, value)
@@ -1055,6 +1084,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		// A number, or undefined, where number | undefined goes is made that pair.
+		entryKey = fit(entryKey, key)
 		entryValue = fit(entryValue, value)
 		if entryKey.Type() != key || entryValue.Type() != value {
 			return nil, l.notYet(pair, "a Map entry whose key or value is of another type than the Map's")
@@ -1101,6 +1131,9 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 			return nil, true, err
 		}
 		arguments = append(arguments, lowered)
+	}
+	if len(arguments) > 0 {
+		arguments[0] = fit(arguments[0], key)
 	}
 	want := 1
 	if name == "set" {
