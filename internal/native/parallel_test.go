@@ -104,7 +104,7 @@ func TestParallelWorkerPanic(t *testing.T) {
 			command.Env = append(os.Environ(), "ADAMIC_THREADS=4", "ASAN_OPTIONS=detect_leaks=0", "TSAN_OPTIONS=halt_on_error=1")
 			output, err := command.CombinedOutput()
 			failure, ok := err.(*exec.ExitError)
-			if !ok || failure.ExitCode() != 70 || strings.Count(string(output), "adamic: panic: worker panic\n") != 1 || strings.Contains(string(output), "Sanitizer") {
+			if !ok || failure.ExitCode() != 70 || strings.Count(string(output), "adamic: panic: worker panic\n") != 1 || strings.Contains(string(output), "Sanitizer") || !strings.HasPrefix(string(output), "before worker panic\n") {
 				t.Fatalf("got %v\n%s", err, output)
 			}
 		})
@@ -210,6 +210,21 @@ func TestParallelChecksCatchMutants(t *testing.T) {
 				}
 			}
 			t.Log(fmt.Sprintf("%s caught: %s (%v)", mutant.name, report, err))
+		})
+	}
+}
+
+func TestParallelLifecycle(t *testing.T) {
+	t.Parallel()
+	for _, build := range parallelBuilds() {
+		t.Run(build.name, func(t *testing.T) {
+			binary := parallelHarness(t, "lifecycle.c", build.options)
+			for _, threads := range []string{"1", "4"} {
+				stdout, _ := parallelRun(t, binary, threads)
+				if stdout != "lifecycle clean\n" {
+					t.Fatalf("got %q", stdout)
+				}
+			}
 		})
 	}
 }

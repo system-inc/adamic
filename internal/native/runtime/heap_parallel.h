@@ -1,5 +1,5 @@
 // Private to heap.c. Chunk addresses never move, including while another thread grows the table.
-// 2^19 pages of 1024 pointers cover 2^29 chunks; the slab's top bit remains the shared bit.
+// 2^19 pages of 1024 pointers cover 2^29 chunks; the slab's region bit remains reserved.
 #define PAGE_SIZE 1024
 #define PAGE_COUNT 524288
 
@@ -27,6 +27,7 @@ static void register_chunk(chunk *each) {
 	if (page == NULL) {
 		chunk_page *fresh = calloc(1, sizeof *fresh);
 		if (fresh == NULL) { adamic_panic("out of memory", sizeof "out of memory" - 1); }
+		for (size_t slot = 0; slot < PAGE_SIZE; slot++) { atomic_init(&fresh->slots[slot], NULL); }
 		chunk_page *empty = NULL;
 		if (!atomic_compare_exchange_strong_explicit(&chunk_pages[number / PAGE_SIZE], &empty, fresh, memory_order_release, memory_order_acquire)) {
 			free(fresh);

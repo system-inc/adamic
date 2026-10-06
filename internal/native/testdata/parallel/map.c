@@ -11,6 +11,7 @@
 enum { numbers, strings, objects, captured_map, fresh, nested, exceptions, million, panic_work, nested_exception };
 static pthread_t caller;
 static bool single;
+static bool timed;
 static pthread_mutex_t first_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t first_ready = PTHREAD_COND_INITIALIZER;
 static size_t first_arrived;
@@ -19,7 +20,7 @@ static _Thread_local bool first_string;
 // Force the first four callbacks to overlap before any result can mark its input owner. Without
 // this rendezvous, a missing items share can be accidentally repaired by the first slice result.
 static void first_string_reads(adamic_string *text) {
-	if (single || first_string) { return; }
+	if (single || timed || first_string) { return; }
 	first_string = true;
 	pthread_mutex_lock(&first_lock);
 	first_arrived++;
@@ -49,6 +50,7 @@ static adamic_value inner_throw(adamic_closure *self, adamic_value *arguments) {
 }
 
 static adamic_value work(adamic_closure *self, adamic_value *arguments) {
+	ADAMIC_CHECK_STACK();
 	if (single && !pthread_equal(caller, pthread_self())) { abort(); }
 	int mode = (int)self->cells[0]->value.number;
 	size_t index = (size_t)arguments[1].number;
@@ -93,7 +95,8 @@ static adamic_value work(adamic_closure *self, adamic_value *arguments) {
 			adamic_string *message = adamic_string_from_number((double)index);
 			adamic_thrown = adamic_error_new(message);
 			adamic_release(message);
-			return (adamic_value){.reference = NULL};
+			// The callback result is owned even when an exception is pending.
+			return (adamic_value){.reference = adamic_object_new(&shape)};
 		}
 		adamic_object *result = adamic_object_new(&shape);
 		result->slots[0].number = arguments[0].number * 2 + arguments[1].number;
@@ -137,7 +140,12 @@ int main(int argc, char **argv) {
 	int mode = -1;
 	for (int i = 0; i < 10; i++) { if (strcmp(argv[1], modes[i]) == 0) { mode = i; } }
 	if (mode < 0) { return 2; }
+	if (mode == panic_work) {
+		static adamic_string preface = ADAMIC_STRING("before worker panic");
+		adamic_write_line(adamic_stdout, &preface);
+	}
 	caller = pthread_self();
+	timed = argc > 2;
 	single = strcmp(getenv("ADAMIC_THREADS") == NULL ? "" : getenv("ADAMIC_THREADS"), "1") == 0;
 	size_t count = mode == million ? 1000000 : mode == strings && argc > 2 ? 32768 : 2048;
 	if (mode == nested_exception) { count = 32; }

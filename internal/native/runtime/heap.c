@@ -242,7 +242,7 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 
 // deallocate gives a value's memory back: to its chunk, or to free.
 static void deallocate(adamic_heap *heap) {
-	uint32_t slab = heap->slab & ~ADAMIC_SHARED;
+	uint32_t slab = heap->slab;
 	if (slab == 0) {
 		free(heap);
 		return;
@@ -254,13 +254,11 @@ void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
 	if (heap != NULL) {
-		if (adamic_is_shared(heap)) {
-			if (__atomic_load_n(&heap->references, __ATOMIC_RELAXED) != 0) {
-				__atomic_fetch_add(&heap->references, 1, __ATOMIC_RELAXED);
-			}
-		} else if (heap->references != 0) {
-			heap->references++;
-		}
+		size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
+		// Clang's native intptr_t conversion makes shared counts negative. One test covers both
+		// sharing and zero, so the ordinary positive-count path keeps one branch and plain stores.
+		if ((intptr_t)count > 0) { heap->references = count + 1; }
+		else if (count != 0 && count != ADAMIC_SHARED) { __atomic_fetch_add(&heap->references, 1, __ATOMIC_RELAXED); }
 	}
 	return value;
 }
@@ -291,13 +289,13 @@ static void list(void *value) {
 static void let_go(void *value) {
 	adamic_heap *heap = value;
 	if (heap == NULL) { return; }
-	if (adamic_is_shared(heap)) {
-		if (__atomic_load_n(&heap->references, __ATOMIC_RELAXED) != 0 &&
-			__atomic_fetch_sub(&heap->references, 1, __ATOMIC_RELEASE) == 1) {
-			__atomic_thread_fence(__ATOMIC_ACQUIRE);
-			list(value);
-		}
-	} else if (heap->references != 0 && --heap->references == 0) {
+	size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
+	if ((intptr_t)count > 0) {
+		heap->references = count - 1;
+		if (count == 1) { list(value); }
+	} else if (count != 0 && count != ADAMIC_SHARED &&
+		__atomic_fetch_sub(&heap->references, 1, __ATOMIC_RELEASE) == ADAMIC_SHARED + 1) {
+		__atomic_thread_fence(__ATOMIC_ACQUIRE);
 		list(value);
 	}
 }
@@ -366,8 +364,9 @@ static void free_one(void *value) {
 void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	let_go(value);
-	if (draining) {
-		// An outer release is already working through the list.
+	if (freeing_count == 0 || draining) {
+		// Usually nothing reached zero. Avoid toggling thread-local draining on every release.
+		// An outer release may already be working through the list.
 		return;
 	}
 	draining = true;

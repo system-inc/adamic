@@ -5,11 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const char *const names[] = {"text"};
-static const bool references[] = {true};
-static const adamic_shape shape = {1, names, references, NULL};
+static const char *const names[] = {"text", "padding"};
+static const bool references[] = {true, true};
+static const adamic_shape shape = {2, names, references, NULL};
 static const char *const reversed_names[] = {"padding", "text"};
-static const bool reversed_references[] = {false, true};
+static const bool reversed_references[] = {true, true};
 static const adamic_shape reversed_shape = {2, reversed_names, reversed_references, NULL};
 static adamic_string literal = ADAMIC_STRING("é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀");
 static adamic_object *objects[2];
@@ -61,6 +61,10 @@ int main(void) {
 	objects[1] = adamic_object_new(&reversed_shape);
 	adamic_string *text = adamic_string_concat(1, (adamic_string *const[]){&literal});
 	objects[0]->slots[0].reference = text;
+	// Both shapes have two valid reference slots. A torn cache must reach TSan rather than crash
+	// on a garbage pointer before the detector can report the race we are proving.
+	objects[0]->slots[1].reference = adamic_retain(text);
+	objects[1]->slots[0].reference = adamic_retain(text);
 	objects[1]->slots[1].reference = adamic_retain(text);
 	adamic_share(objects[0]);
 	adamic_share(objects[1]);

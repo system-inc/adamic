@@ -1,4 +1,5 @@
 // parallel.c: structured fork-join, ranges in worker deques, and helping at every join.
+#define _GNU_SOURCE
 #define _POSIX_C_SOURCE 200809L
 #include "adamic.h"
 #include "parallel.h"
@@ -9,6 +10,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#ifdef __linux__
+#include <sched.h>
+#endif
 
 #define GRAIN 256
 
@@ -50,6 +54,11 @@ static size_t available_threads(void) {
 	long online = sysconf(_SC_NPROCESSORS_ONLN);
 	size_t count = online > 0 ? (size_t)online : 1;
 #ifdef __linux__
+	cpu_set_t affinity;
+	if (sched_getaffinity(0, sizeof affinity, &affinity) == 0) {
+		int allowed = CPU_COUNT(&affinity);
+		if (allowed > 0 && (size_t)allowed < count) { count = (size_t)allowed; }
+	}
 	FILE *quota_file = fopen("/sys/fs/cgroup/cpu.max", "r");
 	if (quota_file != NULL) {
 		unsigned long long quota, period;
@@ -58,6 +67,23 @@ static size_t available_threads(void) {
 			if (limited < count) { count = (size_t)limited; }
 		}
 		fclose(quota_file);
+	} else {
+		static const char *const controllers[] = {"/sys/fs/cgroup/cpu", "/sys/fs/cgroup/cpu,cpuacct", "/sys/fs/cgroup"};
+		for (size_t index = 0; index < sizeof controllers / sizeof controllers[0]; index++) {
+			char path[128];
+			snprintf(path, sizeof path, "%s/cpu.cfs_quota_us", controllers[index]);
+			FILE *quota = fopen(path, "r");
+			snprintf(path, sizeof path, "%s/cpu.cfs_period_us", controllers[index]);
+			FILE *period = fopen(path, "r");
+			long long maximum, interval;
+			if (quota != NULL && period != NULL && fscanf(quota, "%lld", &maximum) == 1 &&
+				fscanf(period, "%lld", &interval) == 1 && maximum > 0 && interval > 0) {
+				unsigned long long limited = (unsigned long long)(maximum / interval + (maximum % interval != 0));
+				if (limited < count) { count = (size_t)limited; }
+			}
+			if (quota != NULL) { fclose(quota); }
+			if (period != NULL) { fclose(period); }
+		}
 	}
 #endif
 	const char *override = getenv("ADAMIC_THREADS");
@@ -134,6 +160,7 @@ static void execute_range(scope *scope, size_t from, size_t end) {
 		if (adamic_thrown != NULL) {
 			adamic_object *error = adamic_thrown;
 			adamic_thrown = NULL;
+			if (scope->results->references) { adamic_release(result.reference); }
 			adamic_share(error);
 			pthread_mutex_lock(&scheduler);
 			if (index < scope->exception_index) {
@@ -224,7 +251,10 @@ adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work) {
 		for (size_t index = 0; index < items->length; index++) {
 			adamic_value arguments[] = {items->elements[index], {.number = (double)index}};
 			adamic_value result = work->code(work, arguments);
-			if (adamic_thrown != NULL) { adamic_release(results); return NULL; }
+			if (adamic_thrown != NULL) {
+				if (results->references) { adamic_release(result.reference); }
+				adamic_release(results); return NULL;
+			}
 			if (results->references) { adamic_share(result.reference); }
 			results->elements[index] = result;
 		}

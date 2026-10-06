@@ -39,14 +39,17 @@ typedef struct adamic_heap {
 	uint32_t slab;
 } adamic_heap;
 
-// The top slab bit is permanent sharing; the lower bits still identify the allocation chunk.
-#define ADAMIC_SHARED UINT32_C(0x80000000)
+// The high count bit records permanent sharing; the remaining bits are the actual count.
+// A relaxed load is a plain machine load on the unshared path; increments and decrements there
+// remain non-atomic. Shared updates are atomic. Zero remains immortal, including region values.
+#define ADAMIC_SHARED ((size_t)1 << (sizeof(size_t) * 8 - 1))
+_Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require two-complement intptr_t conversion");
 #define ADAMIC_REGION_VALUE UINT32_C(0x40000000)
 static inline bool adamic_is_shared(const adamic_heap *heap) {
-	return (__atomic_load_n(&heap->slab, __ATOMIC_RELAXED) & ADAMIC_SHARED) != 0;
+	return (__atomic_load_n(&heap->references, __ATOMIC_RELAXED) & ADAMIC_SHARED) != 0;
 }
 static inline size_t adamic_reference_count(const adamic_heap *heap) {
-	return adamic_is_shared(heap) ? __atomic_load_n(&heap->references, __ATOMIC_ACQUIRE) : heap->references;
+	return __atomic_load_n(&heap->references, __ATOMIC_ACQUIRE) & ~ADAMIC_SHARED;
 }
 void adamic_share(void *value);
 void adamic_heap_thread_end(void);
