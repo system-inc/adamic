@@ -13,6 +13,8 @@ declare module 'adamic' {
 	export function tsgoQuery(program: number, file: string, bytePosition: number): { readonly nodeKind: number; readonly symbolName: string; readonly type: string };
 	// Constrained union parts, framed as documented in tsgo.h. Exact byte span and kind.
 	export function tsgoTypeParts(program: number, file: string, byteStart: number, byteEnd: number, nodeKind: string): string;
+	// Length-framed checker facts. Questions and schema: bridge/tsgo/facts.md.
+	export function tsgoInspect(program: number, file: string, byteStart: number, byteEnd: number, nodeKind: string, question: string): string;
 	export function tsgoRelease(program: number): void;
 
 	export function panic(message: string): never;

@@ -133,10 +133,19 @@ and `queries`, plus `first_query_ns`, to stderr. Native uses a monotonic clock; 
 The optimized native runner and ordinary Go oracle run in three interleaved
 rounds. Timing excludes output formatting and printing, includes native C copies
 and conversion to Adamic values, and includes lazy checker work in the query
-that first asks for it. Create time is program loading, not a full semantic check.
+that first asks for it. Create time is program loading plus checker-pool initialization, not a full semantic check.
 These are API-call timings, not whole-process startup or complete lint timings.
 
 Only Linux amd64 with Go 1.27.1 and clang 20.1.8 was measured here. C archive
 support works on that platform. Windows, macOS, c-shared, concurrent callers,
 allocation-failure injection, full semantic diagnostic retrieval and compiling
 cohere's complete lint engine are not covered by this unit.
+
+## Six-rule facts
+
+The additive `tsgo_inspect` API exposes only the checker questions needed by the
+next five native rules. See [facts.md](facts.md) for framing, identities and
+ownership, and [the six-rule report](../../stage1/cohere/typeaware/SIX_RULE_REPORT.md)
+for complete finding agreement and separate load/query/run measurements.
+`run_ns` now measures wall time between successful create and the start of release;
+existing `query_ns` continues to measure accumulated native adapter intervals.

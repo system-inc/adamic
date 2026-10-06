@@ -41,6 +41,18 @@ int tsgo_query(tsgo_handle handle, tsgo_view file, uint64_t position, tsgo_resul
  * same ownership as every other output. Flags are pinned to this checker.
  * No rule predicate is applied by the bridge. */
 int tsgo_type_parts(tsgo_handle handle, tsgo_view file, uint64_t start, uint64_t end, tsgo_view kind, tsgo_buffer *parts, tsgo_buffer *error);
+/* Six-rule pilot facts, schema version 1, documented in bridge/tsgo/facts.md.
+ * Exact node selection and buffer ownership are identical to tsgo_type_parts.
+ * question is borrowed UTF-8 with an explicit byte length. Supported questions:
+ * raw-type, type (constrained), base-type (constrained and literal-widened),
+ * signature (resolved call), declarations (named class/interface symbols),
+ * options (SourceFile strictNullChecks), and
+ * assignable LF target-start LF target-end LF target-kind in this same file.
+ * Unsupported questions and malformed/inexact targets are refused.
+ * Facts contain no Go pointers. Type IDs are opaque, program-scoped, borrowed
+ * identities, usable only for equality while that program is live. Release
+ * invalidates them all. Do not pass them as program handles. */
+int tsgo_inspect(tsgo_handle handle, tsgo_view file, uint64_t start, uint64_t end, tsgo_view kind, tsgo_view question, tsgo_buffer *facts, tsgo_buffer *error);
 int tsgo_release(tsgo_handle handle, tsgo_buffer *error);
 void tsgo_buffer_free(tsgo_buffer *buffer);
 void tsgo_result_free(tsgo_result *result);

@@ -22,7 +22,10 @@ import (
 
 // Program owns the compiler and its checker pool. Dropping it releases Go's roots.
 // The external checker runs Go's runtime and collector; Adamic values never enter it.
-type Program struct{ Compiler *compiler.Program }
+type Program struct {
+	Compiler *compiler.Program
+	typeIDs  map[*checker.Type]uint64
+}
 type Result struct {
 	Kind         uint32
 	Symbol, Type string
@@ -82,7 +85,12 @@ func Open(configPath string, files []string) (*Program, error) {
 			return nil, fmt.Errorf("checker did not load %s", file)
 		}
 	}
-	return &Program{Compiler: program}, nil
+	// Initialize the checker pool in the load phase. Type resolution stays lazy.
+	if len(config.FileNames()) != 0 {
+		_, release := program.GetTypeCheckerForFile(context.Background(), program.GetSourceFile(config.FileNames()[0]))
+		release()
+	}
+	return &Program{Compiler: program, typeIDs: make(map[*checker.Type]uint64)}, nil
 }
 
 func diagnosticText(diagnostics []*ast.Diagnostic) string {

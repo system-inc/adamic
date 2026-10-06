@@ -15,7 +15,7 @@ import (
 func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
 	callee := node.AsCallExpression().Expression
 	name := ""
-	for _, candidate := range []string{"tsgoProgram", "tsgoQuery", "tsgoRelease", "tsgoTypeParts"} {
+	for _, candidate := range []string{"tsgoProgram", "tsgoQuery", "tsgoRelease", "tsgoTypeParts", "tsgoInspect"} {
 		if l.isPreludeFunction(callee, candidate) {
 			name = candidate
 			break
@@ -40,6 +40,8 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
 	switch name {
 	case "tsgoProgram":
 		types, returns = []ir.Type{ir.String, ir.Array}, ir.Number
+	case "tsgoInspect":
+		types, returns = []ir.Type{ir.Number, ir.String, ir.Number, ir.Number, ir.String, ir.String}, ir.String
 	case "tsgoTypeParts":
 		types, returns = []ir.Type{ir.Number, ir.String, ir.Number, ir.Number, ir.String}, ir.String
 	case "tsgoQuery":
@@ -71,7 +73,7 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
 		switch name {
 		case "tsgoProgram":
 			declared.Body = []ir.Statement{ir.Return{Value: ir.NumberConstant{Value: 0}}}
-		case "tsgoTypeParts":
+		case "tsgoTypeParts", "tsgoInspect":
 			empty := len(l.result.Strings)
 			l.result.Strings = append(l.result.Strings, "")
 			declared.Body = []ir.Statement{ir.Return{Value: ir.StringConstant{Index: empty}}}

@@ -55,7 +55,7 @@ func TSGoC(program *ir.Program) (string, error) {
 				}
 				arguments = append(arguments, emitter.localName(parameter))
 			}
-			runtimeName := map[string]string{"tsgoProgram": "program", "tsgoQuery": "query", "tsgoRelease": "release", "tsgoTypeParts": "type_parts"}[name]
+			runtimeName := map[string]string{"tsgoProgram": "program", "tsgoQuery": "query", "tsgoRelease": "release", "tsgoTypeParts": "type_parts", "tsgoInspect": "inspect"}[name]
 			if inRegion {
 				if name != "tsgoQuery" {
 					return "", fmt.Errorf("native: unexpected region version of %s", name)

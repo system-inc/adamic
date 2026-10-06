@@ -103,6 +103,23 @@ func tsgo_go_type_parts(handle C.tsgo_handle, file C.tsgo_view, start, end C.uin
 	return C.TSGO_OK
 }
 
+//export tsgo_go_inspect
+func tsgo_go_inspect(handle C.tsgo_handle, file C.tsgo_view, start, end C.uint64_t, kind, question C.tsgo_view, facts, error *C.tsgo_buffer) (status C.int) {
+	defer recoverFailure(&status, error)
+	programs.Lock()
+	defer programs.Unlock()
+	program := programs.live[uint64(handle)]
+	if program == nil {
+		return failed(error, C.TSGO_HANDLE, "invalid or released checker handle")
+	}
+	answer, err := program.Inspect(text(file), uint64(start), uint64(end), text(kind), text(question))
+	if err != nil {
+		return failed(error, C.TSGO_CHECKER, err)
+	}
+	*facts = buffer(answer)
+	return C.TSGO_OK
+}
+
 //export tsgo_go_release
 func tsgo_go_release(handle C.tsgo_handle, error *C.tsgo_buffer) (status C.int) {
 	defer recoverFailure(&status, error)

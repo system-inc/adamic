@@ -64,3 +64,52 @@ nested-constructor gap, the driver constructs its Parser and Scanner before
 passing them to UnaryMinus. No protected emitter/lowering files were edited.
 
 See [REPORT.md](REPORT.md) for measurements, commands, mutant results and limits.
+
+## The next five rules
+
+`suite.ts` runs the unary-minus rule and five more production cohere rules under
+**their default options**:
+
+| Rule | Checker question |
+| --- | --- |
+| `related-getter-setter-pairs` | Getter-to-setter assignability |
+| `no-unsafe-declaration-merging` | Named and local symbols' declarations |
+| `no-unsafe-argument` | Resolved signature, rest parameters, argument/reference types |
+| `restrict-plus-operands` | Constrained, widened types and union/intersection parts |
+| `no-unnecessary-boolean-literal-compare` | Boolean/nullable constrained types and strict null checks |
+
+One `tsgoProgram` loads all manifest roots. Adamic parses each file once, builds
+its numeric parent index, and dispatches all six rules in one shared rule walk.
+The checker owns the corresponding Go AST; every query identifies the exact
+Adamic node by kind/span. Generic assignment recursion, tuple/rest consumption,
+accessor pairing, declaration selection, operand tests, nullable defaults,
+messages, spans and fixes are decided by Adamic. No lint verdict comes from Go.
+Nullable boolean comparisons stay silent under the production defaults.
+The command has no rule-option/configuration surface beyond that fixed suite.
+
+```sh
+/tmp/adamic build stage1/cohere/typeaware/suite.ts -o /tmp/suite --tsgo /tmp/tsgo.a
+/tmp/suite /path/tsconfig.json /path/manifest
+ADAMIC_TSGO_TIMING=1 /tmp/suite /path/tsconfig.json /path/manifest --count
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/tsgo-typescript \
+ADAMIC_SIX_ARTIFACTS=/tmp/six-validation \
+ADAMIC_TYPEAWARE_BENCH=1 \
+go test -v -count=1 -timeout 30m ./stage1/cohere/typeaware -run TestSix > /tmp/six.log 2>&1
+```
+
+The six-rule protocol retains file headers and diagnostic fields, appending each
+boolean fix's byte start/end and escaped replacement after the two repair counts.
+Its summary is `findings N`. Lines sort lexically by their complete canonical
+representation, preserving duplicates. Output is diagnostics and proposed fixes;
+no suppression or edit engine is invoked on either side.
+
+`testdata/oracle_six.go` has its own program loader and one shared Go AST walk.
+It calls all six unmodified production `Run` implementations, including each
+rule's declared program view and shared file cache. It compares complete finding
+bytes and fix bytes, not only counts. Table-source extraction is followed by an
+independent Go parse filter: nonsource message strings and intentionally broken
+fixtures are excluded and counted explicitly.
+
+The added fact API and ownership are documented in [facts.md](../../../bridge/tsgo/facts.md).
+The six-rule measurements and mutant evidence are in [SIX_RULE_REPORT.md](SIX_RULE_REPORT.md).
+The older [REPORT.md](REPORT.md) remains evidence for the first rule.

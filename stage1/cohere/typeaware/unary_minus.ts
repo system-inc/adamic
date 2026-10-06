@@ -37,7 +37,7 @@ export class UnaryMinus {
         this.scanner = scanner;
         this.offsets = offsets;
     }
-    walk(index: number): void {
+    visit(index: number): void {
         const node = this.parser.node(index);
         if(node.kind === 'PrefixUnaryExpression' && node.operator === 'MinusToken') {
             const operand = this.parser.node(node.children[0] ?? panic('minus without operand'));
@@ -96,7 +96,10 @@ export class UnaryMinus {
                 );
             }
         }
-        for(const child of node.children) {
+    }
+    walk(index: number): void {
+        this.visit(index);
+        for(const child of this.parser.node(index).children) {
             this.walk(child);
         }
     }
