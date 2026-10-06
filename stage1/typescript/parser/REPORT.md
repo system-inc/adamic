@@ -1,5 +1,8 @@
 # Milestone 2 expression parser slice
 
+Historical expression-slice report. The whole-file continuation is recorded in
+[WHOLE_REPORT.md](WHOLE_REPORT.md).
+
 Built on the existing scanner, in Adamic's subset, compiled through stage 0.
 No compiler, runtime, scanner or other worker's files changed. The branch is
 `codex/typescript-scanner`; green steps were committed and pushed individually.

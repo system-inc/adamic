@@ -14,7 +14,9 @@ import (
 
 // Not parallel: timing the three implementations together would measure their
 // contention. The opt-in benchmark runs after correctness and sanitizers.
-func TestPerformance(t *testing.T) {
+func TestPerformance(t *testing.T)      { performance(t, false) }
+func TestWholePerformance(t *testing.T) { performance(t, true) }
+func performance(t *testing.T, whole bool) {
 	if os.Getenv("ADAMIC_PARSER_BENCH") != "1" {
 		t.Skip("set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing")
 	}
@@ -25,6 +27,21 @@ func TestPerformance(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, false)
+	if whole {
+		want := execute(t, "", oracle, "--manifest", manifest, "--whole").output
+		for _, side := range []struct {
+			name string
+			got  execution
+		}{
+			{"Node", wholeNode(t, directory, manifest, false)},
+			{"release native", execute(t, "", binary, "--manifest", manifest, "--whole")},
+		} {
+			if diff := difference(side.got.output, want); diff != "" {
+				t.Fatalf("%s preflight: %s", side.name, diff)
+			}
+			t.Logf("%s preflight: %d identical whole-tree bytes", side.name, len(want))
+		}
+	}
 	t.Logf("machine: %s/%s logical processors=%d", runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
 	for _, path := range []string{"/proc/cpuinfo", "/sys/fs/cgroup/cpu.max", "/sys/fs/cgroup/memory.max", "/proc/loadavg"} {
 		data, err := os.ReadFile(path)
@@ -47,9 +64,26 @@ func TestPerformance(t *testing.T) {
 		name string
 		run  func() execution
 	}{
-		{"Go", func() execution { return execute(t, "", oracle, "--manifest", manifest, "--count") }},
-		{"Node", func() execution { return node(t, directory, manifest, true) }},
-		{"native", func() execution { return execute(t, "", binary, "--manifest", manifest, "--count") }},
+		{"Go", func() execution {
+			args := []string{"--manifest", manifest, "--count"}
+			if whole {
+				args = append(args, "--whole")
+			}
+			return execute(t, "", oracle, args...)
+		}},
+		{"Node", func() execution {
+			if whole {
+				return wholeNode(t, directory, manifest, true)
+			}
+			return node(t, directory, manifest, true)
+		}},
+		{"native", func() execution {
+			args := []string{"--manifest", manifest, "--count"}
+			if whole {
+				args = append(args, "--whole")
+			}
+			return execute(t, "", binary, args...)
+		}},
 	}
 	var want []byte
 	for _, runner := range runners {

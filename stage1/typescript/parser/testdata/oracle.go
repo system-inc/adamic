@@ -125,18 +125,48 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool, source stri
 	n.ForEachChild(func(child *ast.Node) bool { count += walk(out, child, depth+1, countOnly, source, whole); return false })
 	return count
 }
+
+var docTypes bool
+var obsoleteAssertions bool
+
 func run(out *bufio.Writer, path string, countOnly bool, whole bool) int {
 	text, err := os.ReadFile(path)
 	if err != nil {
 		panic(err)
 	}
 	f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/source.ts"}, string(text), core.ScriptKindTS)
-	if len(f.Diagnostics()) != 0 {
+	obsoleteOnly := obsoleteAssertions && len(f.Diagnostics()) > 0
+	for _, d := range f.Diagnostics() {
+		if d.Code() != 2880 {
+			obsoleteOnly = false
+		}
+	}
+	if obsoleteAssertions && !obsoleteOnly {
+		panic("obsolete assertion probe must emit only diagnostic 2880")
+	}
+	if len(f.Diagnostics()) != 0 && !obsoleteOnly {
 		fmt.Fprintf(os.Stderr, "source: %q\n", text)
 		for _, d := range f.Diagnostics() {
 			fmt.Fprintf(os.Stderr, "parser diagnostic %s %d %d %d\n", path, d.Code(), d.Pos(), d.Len())
 		}
 		os.Exit(1)
+	}
+	if docTypes {
+		count := 0
+		var visit ast.Visitor
+		visit = func(n *ast.Node) bool {
+			if n.Kind == ast.KindJSDocTypeExpression {
+				if !countOnly {
+					fmt.Fprintln(out, "type")
+				}
+				count += walk(out, n.AsJSDocTypeExpression().Type, 0, countOnly, f.Text(), true)
+				return false
+			}
+			ast.ForEachChildAndJSDoc(n, f, visit)
+			return false
+		}
+		visit(f.AsNode())
+		return count
 	}
 	if whole {
 		if !countOnly {
@@ -164,8 +194,22 @@ func main() {
 	out := bufio.NewWriterSize(os.Stdout, 65536)
 	defer out.Flush()
 	args := os.Args[1:]
+	if args[0] == "--type-kinds" {
+		for k := ast.KindUnknown; k <= ast.KindLastJSDocNode; k++ {
+			if ast.IsTypeNodeKind(k) {
+				fmt.Fprintln(out, kind(k))
+			}
+		}
+		return
+	}
 	whole, countOnly := false, false
 	for _, arg := range args {
+		if arg == "--allow-obsolete-assert" {
+			obsoleteAssertions = true
+		}
+		if arg == "--doc-types" {
+			docTypes = true
+		}
 		if arg == "--whole" {
 			whole = true
 		}

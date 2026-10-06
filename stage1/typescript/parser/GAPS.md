@@ -1,4 +1,4 @@
-# Expression parser gaps and coverage
+# TypeScript parser gaps and coverage
 
 The port follows `cohere/TypeScript/tsc/internal/parser/parser.go`, using the
 existing Adamic scanner. Node runs these same TS files; an independently built
@@ -187,3 +187,55 @@ method wrappers supply the defaults explicitly. Callbacks are temporary, never
 stored on Parser, so their references back to Parser do not form an owning
 cycle. They are explicit function properties, avoiding gap 4's class-method
 structural dispatch bug. The original expression corpus remains identical.
+
+## 6. Conditional branches with an unannotated empty array
+
+The whole-file driver initially used `const types = docTypes ? parser.docTypes() : []`.
+Stage 0 refused the empty branch with `an array of never`. The reduced
+`gaps/6_conditional_empty_array.ts` prints `1` on Node, while lowering returns
+`lower.NotYet` with precisely that `What`. `TestConditionalEmptyArrayGap`
+requires both observations. Workaround: annotate the conditional result as
+`number[]`; the empty branch then receives an element type.
+
+## Whole-file continuation
+
+The current driver additionally accepts `--whole`. It compares the SourceFile,
+all statements and declarations, their expression and type children, and the
+end-of-file token. Each file root starts with `file`. The expression protocol
+above remains unchanged. Whole-file lines append a tab and a semantic field:
+variable declaration lists carry the `BlockScoped` bits (let, const, using,
+await using); import clauses carry their phase token kind; import/export
+specifiers and declarations carry `IsTypeOnly`; export assignments carry
+`IsExportEquals`. Module declaration keyword and import attribute token kind
+use the operator field. Import attributes additionally carry element count,
+trailing comma and multiline fields. These fields prevent identical child
+sequences from hiding different declaration meanings.
+
+`TestWholeCompilerAgrees` compares every compiler file as a whole tree.
+Generated files cover every requested declaration and statement family,
+including with, resource declarations, decorators, parameter decorators,
+static blocks, accessors, index signatures, dotted namespaces, ambient modules,
+import equals, contextual type/as, type-only and deferred imports, namespace
+exports and attributes. Unicode comment prefixes and CRLF versions verify
+position conversion. These are syntax probes, not checker acceptance claims.
+The Go oracle refuses source parse diagnostics. Deprecated `assert` import
+attributes trigger Go diagnostic 2880 and are excluded from this clean-source
+corpus; a dedicated obsolete-assertion test compares their trees with an
+explicit oracle option requiring that the only Go diagnostics are 2880. Current
+`with` attributes are compared without that option. Error recovery, diagnostics,
+JSX, full JSDoc comment/tag trees and semantic checking remain outside this
+slice. SourceFile metadata, context/transform flags, parent links, and list
+range/trailing metadata beyond the explicitly printed fields are not canonical
+fields. Agreement concerns the documented canonical answer, not serialization
+of every Go AST field.
+
+`TestEveryTypeNodeKindAgrees` gets its inventory from Go's own
+`ast.IsTypeNodeKind`, rather than a handwritten list: all 42 accepted kinds
+must occur in the generated oracle trees. This includes the 24 ordinary type
+node kinds, twelve keyword types, ExpressionWithTypeArguments and five JSDoc
+wrappers. The optional and variadic wrappers occur only in JSDoc type grammar;
+`--doc-types` compares their types from reduced `/** @type {...} */` annotations
+through Go's lazy JSDoc parser. The Adamic driver extracts those reduced
+annotations and reuses its type parser. This mode does not claim a JSDoc tag
+or comment parser. Ordinary whole-file traversal follows Go's ForEachChild,
+which omits attached JSDoc comments.

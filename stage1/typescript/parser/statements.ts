@@ -36,6 +36,7 @@ export interface StatementContextInterface {
     readonly primary: () => number;
     readonly suffix: (expression: number, call: boolean) => number;
     readonly typeLiteral: () => number;
+    readonly decorator: () => number;
     readonly getAwait: () => boolean;
     readonly setAwait: (value: boolean) => void;
     readonly getYield: () => boolean;
@@ -80,7 +81,19 @@ export class Statements {
     }
     variableList(): number {
         const pos = this.parser.scanner.fullStart;
-        const flags = this.parser.kind() === 'ConstKeyword' ? 2 : this.parser.kind() === 'LetKeyword' ? 1 : 0;
+        const flags =
+            this.parser.kind() === 'ConstKeyword'
+                ? 2
+                : this.parser.kind() === 'LetKeyword'
+                  ? 1
+                  : this.parser.kind() === 'UsingKeyword'
+                    ? 4
+                    : this.parser.kind() === 'AwaitKeyword'
+                      ? 6
+                      : 0;
+        if(flags === 6) {
+            this.parser.next();
+        }
         this.parser.next();
         const declarations: number[] = [];
         while(true) {
@@ -129,6 +142,9 @@ export class Statements {
         this.parser.scanner.flags = saved.flags;
         this.parser.scanner.errors.splice(saved.errors);
         return result;
+    }
+    decorator(): number {
+        return this.parser.decorator();
     }
     canExportName(): boolean {
         return (
@@ -323,6 +339,8 @@ export class Statements {
         return this.make('ImportDeclaration', pos, children);
     }
     exportDeclaration(pos: number, prefix: readonly number[]): number {
+        const oldAwait = this.parser.getAwait();
+        this.parser.setAwait(true);
         const children = prefix.slice();
         this.parser.expect('ExportKeyword');
         if(this.parser.kind() === 'DefaultKeyword' || this.parser.kind() === 'EqualsToken') {
@@ -332,6 +350,7 @@ export class Statements {
             this.semicolon();
             const id = this.make('ExportAssignment', pos, children);
             this.parser.node(id).semantic = equals ? '1' : '0';
+            this.parser.setAwait(oldAwait);
             return id;
         }
         if(this.parser.kind() === 'AsKeyword') {
@@ -339,6 +358,7 @@ export class Statements {
             this.parser.expect('NamespaceKeyword');
             children.push(this.parser.identifier());
             this.semicolon();
+            this.parser.setAwait(oldAwait);
             return this.make('NamespaceExportDeclaration', pos, children);
         }
         const typeOnly = this.parser.kind() === 'TypeKeyword';
@@ -369,6 +389,7 @@ export class Statements {
         this.semicolon();
         const id = this.make('ExportDeclaration', pos, children);
         this.parser.node(id).semantic = typeOnly ? '1' : '0';
+        this.parser.setAwait(oldAwait);
         return id;
     }
     moduleDeclaration(pos: number, prefix: readonly number[], keyword: string): number {
@@ -519,6 +540,9 @@ export class Statements {
                 continue;
             }
             const member: number[] = [];
+            while(this.parser.kind() === 'AtToken') {
+                member.push(this.decorator());
+            }
             let async = false;
             while(
                 this.parser.kind() === 'StaticKeyword' ||
@@ -554,10 +578,31 @@ export class Statements {
                 children.push(this.make('ClassStaticBlockDeclaration', start, [block]));
                 continue;
             }
+            if(this.parser.kind() === 'OpenBracketToken' && this.lookahead(2) === 'ColonToken') {
+                this.parser.next();
+                const parameterPos = this.parser.scanner.fullStart;
+                const parameter = [this.parser.identifier()];
+                this.parser.expect('ColonToken');
+                parameter.push(this.type());
+                member.push(this.make('Parameter', parameterPos, parameter));
+                this.parser.expect('CloseBracketToken');
+                if(this.parser.kind() === 'ColonToken') {
+                    this.parser.next();
+                    member.push(this.type());
+                }
+                this.semicolon();
+                children.push(this.make('IndexSignature', start, member));
+                continue;
+            }
             let methodKind = 'MethodDeclaration';
             if(
                 (this.parser.kind() === 'GetKeyword' || this.parser.kind() === 'SetKeyword') &&
                 this.parser.peek() !== 'OpenParenToken' &&
+                this.parser.peek() !== 'LessThanToken' &&
+                this.parser.peek() !== 'SemicolonToken' &&
+                this.parser.peek() !== 'QuestionToken' &&
+                this.parser.peek() !== 'ExclamationToken' &&
+                this.parser.peek() !== 'CloseBraceToken' &&
                 this.parser.peek() !== 'ColonToken' &&
                 this.parser.peek() !== 'EqualsToken'
             ) {
@@ -612,7 +657,9 @@ export class Statements {
             children.push(
                 this.parser.kind() === 'ConstKeyword' ||
                     this.parser.kind() === 'LetKeyword' ||
-                    this.parser.kind() === 'VarKeyword'
+                    this.parser.kind() === 'VarKeyword' ||
+                    (this.parser.kind() === 'UsingKeyword' && this.parser.nextIdentifierSameLine()) ||
+                    (this.parser.kind() === 'AwaitKeyword' && this.parser.peek() === 'UsingKeyword')
                     ? this.variableList()
                     : this.parser.rootExpression(),
             );
@@ -699,6 +746,13 @@ export class Statements {
     }
     statement(): number {
         const pos = this.parser.scanner.fullStart;
+        if(this.parser.kind() === 'WithKeyword') {
+            this.parser.next();
+            this.parser.expect('OpenParenToken');
+            const expression = this.parser.rootExpression();
+            this.parser.expect('CloseParenToken');
+            return this.make('WithStatement', pos, [expression, this.statement()]);
+        }
         if(this.parser.kind() === 'ExportKeyword' && this.exportedClauseAhead()) {
             return this.exportDeclaration(pos, []);
         }
@@ -727,7 +781,9 @@ export class Statements {
         if(
             (this.parser.kind() === 'ConstKeyword' && this.parser.peek() !== 'EnumKeyword') ||
             this.parser.kind() === 'LetKeyword' ||
-            this.parser.kind() === 'VarKeyword'
+            this.parser.kind() === 'VarKeyword' ||
+            (this.parser.kind() === 'UsingKeyword' && this.parser.nextIdentifierSameLine()) ||
+            (this.parser.kind() === 'AwaitKeyword' && this.parser.peek() === 'UsingKeyword')
         ) {
             const list = this.variableList();
             this.semicolon();
@@ -800,6 +856,7 @@ export class Statements {
         const modifiers: number[] = [];
         let async = false;
         while(
+            this.parser.kind() === 'AtToken' ||
             this.parser.kind() === 'ExportKeyword' ||
             this.parser.kind() === 'DefaultKeyword' ||
             this.parser.kind() === 'DeclareKeyword' ||
@@ -810,7 +867,7 @@ export class Statements {
             if(this.parser.kind() === 'AsyncKeyword') {
                 async = true;
             }
-            modifiers.push(this.parser.token());
+            modifiers.push(this.parser.kind() === 'AtToken' ? this.decorator() : this.parser.token());
         }
         if(this.parser.kind() === 'FunctionKeyword') {
             return this.functionDeclaration(pos, modifiers, async);
@@ -821,7 +878,9 @@ export class Statements {
         if(
             this.parser.kind() === 'ConstKeyword' ||
             this.parser.kind() === 'LetKeyword' ||
-            this.parser.kind() === 'VarKeyword'
+            this.parser.kind() === 'VarKeyword' ||
+            (this.parser.kind() === 'UsingKeyword' && this.parser.nextIdentifierSameLine()) ||
+            (this.parser.kind() === 'AwaitKeyword' && this.parser.peek() === 'UsingKeyword')
         ) {
             modifiers.push(this.variableList());
             this.semicolon();
@@ -867,7 +926,11 @@ export class Statements {
             }
             else {
                 this.parser.expect('EqualsToken');
-                modifiers.push(this.type());
+                modifiers.push(
+                    this.parser.kind() === 'IntrinsicKeyword' && this.parser.peek() !== 'DotToken'
+                        ? this.parser.token()
+                        : this.type(),
+                );
                 this.semicolon();
             }
             return this.make(interface_ ? 'InterfaceDeclaration' : 'TypeAliasDeclaration', pos, modifiers);
