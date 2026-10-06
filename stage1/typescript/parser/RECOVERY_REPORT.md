@@ -714,3 +714,15 @@ Its lease-protected rebase push required the remote branch still to name
 8ce437f114721b0f997a80fbabecde05e98defbb. The report/evidence follow-up
 uses an ordinary fast-forward push. The final report commit is the branch
 tip printed in the five-line handoff.
+
+## Case 2597: modifier-led arrow recovery
+
+The discrepancy survives removal of the surrounding declaration and reduces
+to `(readonly T)`. Go's arrow lookahead commits when the first parameter token
+is a modifier other than async and the following identifier is not as. The
+port lacked that recognition, so its ordinary parenthesized expression
+parsing produced a different tree and diagnostics. The duplicated closing
+parenthesis only exposed the subsequent readonly tuple expression; it was
+not itself the missing recovery mechanism. The lookahead now follows Go,
+including the async and as exceptions. Five additional probes and preceding
+focused cases pass on Go, Node and sanitized native in 35.615s; cohere passes.

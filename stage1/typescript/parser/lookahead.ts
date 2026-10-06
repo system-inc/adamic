@@ -139,7 +139,19 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
         const parameterState = new Speculation(scanner);
         parameterState.next();
         const first = kind(scanner);
+        parameterState.next();
+        const second = kind(scanner);
         parameterState.restore();
+        if(
+            !generic &&
+            modifierKinds.includes(first) &&
+            first !== 'AsyncKeyword' &&
+            second !== 'AsKeyword' &&
+            (second === 'Identifier' || (second.endsWith('Keyword') && !reservedKinds.includes(second)))
+        ) {
+            state.restore();
+            return true;
+        }
         const parameterHead =
             first === 'Identifier' ||
             first === 'ThisKeyword' ||
