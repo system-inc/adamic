@@ -1,4 +1,8 @@
+import type { RepairEdit } from './repair_edit.ts';
+import type { RepairSuggestion } from './repair_suggestion.ts';
 export class Finding {
+    readonly extraFixes: RepairEdit[] = [];
+    readonly suggestions: RepairSuggestion[] = [];
     editStart: number;
     editEnd: number;
     readonly rule: string;
@@ -9,6 +13,9 @@ export class Finding {
     readonly repair: string;
     readonly replacement: string;
     readonly suggestion: string;
+    addSuggestion(suggestion: RepairSuggestion): void {
+        this.suggestions.push(suggestion);
+    }
     constructor(
         rule: string,
         id: string,

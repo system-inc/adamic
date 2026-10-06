@@ -1,3 +1,10 @@
+# Current continuation: remaining frequency-ranked rules
+
+[BATCH3.md](BATCH3.md) records the ten remaining selections from the twenty-rule
+list in [VOLUME.md](VOLUME.md). Forty rules now have implementations; three
+have explicit parser coverage limits. Batch2 tip `c4373c0` ports unrelated
+rules and has no overlap with these ten. The reports below are historical.
+
 # Fifteen-rule continuation
 
 The subsequent performance follow-up is recorded in [PERFORMANCE.md](PERFORMANCE.md):

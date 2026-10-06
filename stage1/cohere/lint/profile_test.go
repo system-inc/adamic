@@ -29,7 +29,13 @@ func TestProfileArtifacts(t *testing.T) {
 	if strings.TrimSpace(string(pin.output)) != compilerCommit {
 		t.Fatal("compiler checkout has the wrong pin")
 	}
-	for _, name := range portFiles {
+	filesToCopy := append([]string(nil), portFiles...)
+	ruleFiles, err := filepath.Glob("rules/*.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	filesToCopy = append(filesToCopy, ruleFiles...)
+	for _, name := range filesToCopy {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -38,13 +44,21 @@ func TestProfileArtifacts(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		text := strings.ReplaceAll(string(data), "../../typescript/", typescript+"/")
+		text := string(data)
+		if strings.HasPrefix(name, "rules/") {
+			text = strings.ReplaceAll(text, "../../../typescript/", typescript+"/")
+		} else {
+			text = strings.ReplaceAll(text, "../../typescript/", typescript+"/")
+		}
+		if err := os.MkdirAll(filepath.Dir(filepath.Join(directory, name)), 0755); err != nil {
+			t.Fatal(err)
+		}
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); err != nil {
 			t.Fatal(err)
 		}
 	}
 	var files []string
-	err := filepath.WalkDir(filepath.Join(sourceRoot, "src/compiler"), func(path string, entry os.DirEntry, err error) error {
+	err = filepath.WalkDir(filepath.Join(sourceRoot, "src/compiler"), func(path string, entry os.DirEntry, err error) error {
 		if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
 			files = append(files, path)
 		}
@@ -181,7 +195,7 @@ func TestPositionIndexMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
-	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;")
+	directory := mutant(t, "this.anchors[0] = true;\n        // Only parser owners", "this.anchors[0] = false;\n        // Only parser owners")
 	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string

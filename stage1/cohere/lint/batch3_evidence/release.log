@@ -1,0 +1,142 @@
+=== RUN   TestBatch3Controls
+    batch3_test.go:61: Go, Node, native identical: 42129 bytes
+--- PASS: TestBatch3Controls (27.05s)
+=== RUN   TestJsxParserGap
+    batch3_test.go:153: Go TSX parser prints true; Node and sanitized native stage1 parser print false
+--- PASS: TestJsxParserGap (16.97s)
+=== RUN   TestNestedConstructorGap
+    gaps_test.go:35: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- PASS: TestNestedConstructorGap (0.13s)
+=== RUN   TestOptionAndComparatorGaps
+=== PAUSE TestOptionAndComparatorGaps
+=== RUN   TestRulesAgree
+    lint_test.go:311: batch3 upstream one-var: 340
+    lint_test.go:311: batch3 upstream @typescript-eslint/no-non-null-assertion: 36
+    lint_test.go:311: batch3 upstream @typescript-eslint/prefer-enum-initializers: 21
+    lint_test.go:311: batch3 upstream nexus/consistency-no-long-line-comment: 16
+    lint_test.go:311: batch3 upstream nexus/consistency-no-ambiguous-identifier: 33
+    lint_test.go:311: batch3 upstream nexus/consistency-no-abbreviated-identifier: 183
+    lint_test.go:311: batch3 upstream nexus/consistency-no-multiline-arrow-function: 40
+    lint_test.go:311: batch3 upstream prefer-destructuring: 113
+    lint_test.go:311: batch3 upstream nexus/consistency-no-single-line-jsdoc: 17
+    lint_test.go:311: batch3 upstream nexus/consistency-no-shouting: 57
+    lint_test.go:313: cohere cases: 2129 unique source/rule/options/filename combinations
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-079/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-079/repository/source/Thing.ts
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-079/repository/source/Thing.ts
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-081/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:344: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-085/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-085/repository/source/Thing.ts
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-085/repository/source/Thing.ts
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-086/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-086/repository/source/Thing.ts
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-086/repository/source/Thing.ts
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-095/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-095/repository/source/Thing.ts
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-095/repository/source/Thing.ts
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-097/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1527569256/047/case-097/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:344: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-099/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1527569256/047/case-099/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-099/repository/source/Thing.ts
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-099/repository/source/Thing.ts
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-100/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1527569256/047/case-100/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-100/repository/source/Thing.ts
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-100/repository/source/Thing.ts
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-503/repository/source/Thing.tsx	nexus/consistency-no-abbreviated-identifier			false		unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: stage1 lint JSX parsing is not supported
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: stage1 lint JSX parsing is not supported
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-504/repository/source/Thing.tsx	nexus/consistency-no-abbreviated-identifier			false		unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 34 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-504/repository/source/Thing.tsx
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 34 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-504/repository/source/Thing.tsx
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-505/repository/source/Thing.tsx	nexus/consistency-no-abbreviated-identifier			false		unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-505/repository/source/Thing.tsx
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-505/repository/source/Thing.tsx
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-506/repository/source/Thing.tsx	nexus/consistency-no-abbreviated-identifier			false		unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-506/repository/source/Thing.tsx
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-506/repository/source/Thing.tsx
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-507/repository/source/Thing.tsx	nexus/consistency-no-abbreviated-identifier			false		unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 41 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-507/repository/source/Thing.tsx
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 41 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-507/repository/source/Thing.tsx
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-557/repository/source/Thing.tsx	nexus/consistency-no-ambiguous-identifier			false		unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-557/repository/source/Thing.tsx
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-557/repository/source/Thing.tsx
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-558/repository/source/Thing.tsx	nexus/consistency-no-ambiguous-identifier			false		unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-558/repository/source/Thing.tsx
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-558/repository/source/Thing.tsx
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-559/repository/source/Thing.tsx	nexus/consistency-no-ambiguous-identifier			false		unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 37 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-559/repository/source/Thing.tsx
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 37 in /tmp/adamic-gate/TestRulesAgree1527569256/047/case-559/repository/source/Thing.tsx
+    lint_test.go:343: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1527569256/047/case-560/repository/source/Thing.tsx	nexus/consistency-no-ambiguous-identifier			false		unsupported-recovery
+    lint_test.go:344: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:344: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1527569256/003/scanner: timeout=false: exit status 70: adamic: panic: stage1 lint JSX parsing is not supported
+    lint_test.go:344: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: stage1 lint JSX parsing is not supported
+    lint_test.go:349: Go, Node, native identical: 1321368 bytes
+--- PASS: TestRulesAgree (48.35s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:385: compiler and stage1: 189 files
+    lint_test.go:386: Go, Node, native identical: 30689034 bytes
+--- PASS: TestCompilerAndStage1Agree (385.99s)
+=== CONT  TestOptionAndComparatorGaps
+=== RUN   TestOptionAndComparatorGaps/2_optional_index.ts
+    gaps_test.go:68: Node prints "1\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/2_optional_index.ts:3:16: stage 0 can't lower ?.[] on a value yet
+=== RUN   TestOptionAndComparatorGaps/3_numeric_or.ts
+    gaps_test.go:68: Node prints "2\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/3_numeric_or.ts:2:12: stage 0 can't lower a BinaryExpression with a number and a number yet
+=== RUN   TestOptionAndComparatorGaps/4_last_index_position.ts
+    gaps_test.go:68: Node prints "1\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/4_last_index_position.ts:7:16: stage 0 can't lower lastIndexOf with these arguments yet
+=== RUN   TestOptionAndComparatorGaps/6_regex_literal.ts
+    gaps_test.go:68: Node prints "true\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/6_regex_literal.ts:1:16: stage 0 can't lower a RegularExpressionLiteral yet
+--- PASS: TestOptionAndComparatorGaps (0.55s)
+    --- PASS: TestOptionAndComparatorGaps/2_optional_index.ts (0.13s)
+    --- PASS: TestOptionAndComparatorGaps/3_numeric_or.ts (0.13s)
+    --- PASS: TestOptionAndComparatorGaps/4_last_index_position.ts (0.16s)
+    --- PASS: TestOptionAndComparatorGaps/6_regex_literal.ts (0.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	479.052s

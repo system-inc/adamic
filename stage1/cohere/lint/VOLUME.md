@@ -1,3 +1,11 @@
+# Current status
+
+All twenty selected names below now have implementations. The ten formerly
+pending rules are in [BATCH3.md](BATCH3.md). Method-signature recovery and JSX
+coverage for two identifier rules remain explicit parser dependencies; full
+fixture parity is not claimed for those three. Checkpoint sections below are
+historical and retain their original measurements.
+
 # Frequency-prioritized twenty-rule continuation
 
 Baseline `e27d185a488c1c23c685ad0ed686b891dc2a8588`. The Go ranking runs

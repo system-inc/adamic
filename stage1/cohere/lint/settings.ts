@@ -18,11 +18,18 @@ export class Settings {
             this.values.set('option', [parser.node(object).text]);
             return;
         }
+        this.object(parser, object, '');
+    }
+    object(parser: Parser, object: number, prefix: string): void {
         for(const property of parser.node(object).children) {
             const children = parser.node(property).children;
-            const name = parser.node(children[0] ?? panic('missing option key')).text.toLowerCase();
+            const name = prefix + parser.node(children[0] ?? panic('missing option key')).text.toLowerCase();
             const value = children[1] ?? panic('missing option value');
             if(parser.node(value).kind === 'NullKeyword') {
+                continue;
+            }
+            if(parser.node(value).kind === 'ObjectLiteralExpression') {
+                this.object(parser, value, `${name}.`);
                 continue;
             }
             const values: string[] = [];

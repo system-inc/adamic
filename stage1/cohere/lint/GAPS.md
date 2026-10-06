@@ -70,8 +70,8 @@ bytes and retain Go quoting, including non-ASCII printable characters.
 
 ## Limits rather than language gaps
 
-Twenty baseline syntax-only rules plus ten implemented continuation rules;
-method-signature-style is not fully covered. Cohere's `no-shadow` and `no-redeclare` declare
+Twenty baseline syntax-only rules plus twenty implemented continuation rules;
+method-signature-style and both identifier rules have parser coverage limits. Cohere's `no-shadow` and `no-redeclare` declare
 `NeedsTypeChecker` and use the binder, so they are excluded. Scope-sensitive
 syntax work here is generator ownership, loop repetition boundaries, label
 resolution and declaration prefixes. General binding/symbol lookup, config
@@ -121,6 +121,33 @@ internal compiler/runtime source is changed here. The malformed bare-arrow
 fixture is handled and compared normally as findings-only. Go's edit engine
 refuses malformed input, so fixed-source parity is unavailable even there.
 
-The continuation therefore does not deliver the requested twenty completely
-verified rules. Nine new rules have full own-fixture coverage, one has the
-valid-source coverage above, and ten selected rules are still unimplemented.
+All twenty frequency-selected names are implemented after batch3. Seventeen
+have full captured own-fixture coverage. Method-signature-style has the eight
+recovery combinations above; the two identifier rules have nine JSX combinations
+below. None of these seventeen combinations contributes to identical-byte totals.
+
+## 6. Regular-expression literal on this branch baseline
+
+[6_regex_literal.ts](gaps/6_regex_literal.ts) prints `true` on Node. Stage0
+returns `lower.NotYet` for `RegularExpressionLiteral` at line1, column16 on
+this scanner branch. `TestOptionAndComparatorGaps` requires both observations.
+Fixed-shape Go regexes in the new rules use literal ASCII scans and the existing
+Go Unicode simple-fold data. No arbitrary configurable regex API is claimed.
+This is a baseline-specific refusal, not a claim about current main.
+
+## 7. JSX parser dependency and explicit lint refusal
+
+[7_jsx_parse.ts](gaps/7_jsx_parse.ts) parses `export const Thing = () =>
+<p>hi</p>;` as Thing.tsx and tests for JsxElement. The actual Go TSX parser
+prints `true`; the stage1 parser running on Node and sanitized native prints
+`false`. `TestJsxParserGap` holds all three answers. Other JSX shapes panic
+when that parser expects an expression. This is an inherited parser defect,
+not a language restriction. No parser source is changed here.
+
+Five abbreviated-identifier and four ambiguous-identifier captured JSX fixtures
+are retained as explicit bounded checks, outside parity totals. In the native
+linter, `.tsx` type-assertion-shaped trees are explicitly refused rather than
+reported as clean. Filename preservation in capture and fix reparsing prevents
+accidentally treating TSX as ordinary TypeScript. Eight new families have full
+captured-fixture coverage; these two have ordinary TypeScript coverage with
+this JSX dependency.

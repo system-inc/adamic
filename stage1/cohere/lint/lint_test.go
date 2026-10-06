@@ -22,7 +22,7 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"finding.ts", "messages.ts", "settings.ts", "comments.ts", "unicode.ts", "lint.ts", "main.ts", "volume.ts", "volume_messages.ts"}
+var portFiles = []string{"finding.ts", "repair_edit.ts", "repair_suggestion.ts", "messages.ts", "settings.ts", "comments.ts", "unicode.ts", "lint.ts", "main.ts", "volume.ts", "volume_messages.ts"}
 
 type execution struct {
 	output   []byte
@@ -213,16 +213,16 @@ func upstream(t *testing.T) []string {
 	}
 	capture := filepath.Join(directory, "capture")
 	t.Setenv("COHERE_DOCS_CAPTURE", capture)
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase|NoContinue|NoWith|NoNew|NoSparseArrays|RequireYield|NoAwaitInLoop|VarsOnTop|NoTemplateCurlyInString|NoDivRegex|NoBitwise|NoLabels|NoSequences|UnicodeBom|NoUnneededTernary|NoWarningComments|NoPlusplus|NoNegatedCondition|NoReturnAssign)", "-count=1", "-timeout=10m")
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/base", "./internal/lint/rules/nexus", "./internal/lint/rules/adamic", "-run", "Test(ConsistencyNoConsole|ConsistencyRequireTypeSuffix|ConsistencyNoEnum|NoTypePredicate)", "-count=1", "-timeout=10m")
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(MethodSignatureStyle|NoWrapperObjectTypes|PreferLiteralEnumMember)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase|NoContinue|NoWith|NoNew|NoSparseArrays|RequireYield|NoAwaitInLoop|VarsOnTop|NoTemplateCurlyInString|NoDivRegex|NoBitwise|NoLabels|NoSequences|UnicodeBom|NoUnneededTernary|NoWarningComments|NoPlusplus|NoNegatedCondition|NoReturnAssign|OneVar|PreferDestructuring)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/base", "./internal/lint/rules/nexus", "./internal/lint/rules/adamic", "-run", "Test(ConsistencyNoConsole|ConsistencyRequireTypeSuffix|ConsistencyNoEnum|NoTypePredicate|ConsistencyNoAmbiguousIdentifier|ConsistencyNoMultilineArrowFunction|ConsistencyNoLongLineComment|ConsistencyNoSingleLineJsDoc|ConsistencyNoAbbreviatedIdentifier|ConsistencyNoShouting)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(MethodSignatureStyle|NoWrapperObjectTypes|PreferLiteralEnumMember|NoNonNullAssertion|PreferEnumInitializers)", "-count=1", "-timeout=10m")
 	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	type record struct {
-		Rule, Source, Outcome, FixedSource string
-		Options                            json.RawMessage
+		Rule, Source, Outcome, FixedSource, File string
+		Options                                  json.RawMessage
 	}
 	unique := map[string]record{}
 	for _, path := range files {
@@ -238,10 +238,10 @@ func upstream(t *testing.T) []string {
 			if err := json.Unmarshal(line, &row); err != nil {
 				t.Fatal(err)
 			}
-			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") {
+			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|@typescript-eslint/no-non-null-assertion|@typescript-eslint/prefer-enum-initializers|nexus/consistency-no-ambiguous-identifier|nexus/consistency-no-multiline-arrow-function|nexus/consistency-no-long-line-comment|nexus/consistency-no-single-line-jsdoc|nexus/consistency-no-abbreviated-identifier|nexus/consistency-no-shouting|one-var|prefer-destructuring|", "|"+row.Rule+"|") {
 				continue
 			}
-			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source)
+			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule+"/"+row.File, row.Options, row.Source)
 			unique[key] = row
 		}
 	}
@@ -253,7 +253,14 @@ func upstream(t *testing.T) []string {
 	var rows []string
 	for i, key := range keys {
 		row := unique[key]
-		path := filepath.Join(directory, fmt.Sprintf("case-%03d.ts", i))
+		fileName := row.File
+		if fileName == "" {
+			fileName = "case.ts"
+		}
+		path := filepath.Join(directory, fmt.Sprintf("case-%03d", i), strings.TrimPrefix(filepath.ToSlash(fileName), "/"))
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
@@ -267,6 +274,12 @@ func upstream(t *testing.T) []string {
 			}
 		}
 		mode := ""
+		if strings.HasSuffix(row.File, ".tsx") && strings.Contains(row.Source, "<") && strings.Contains(row.Source, "/>") {
+			mode = "unsupported-recovery"
+		}
+		if strings.HasSuffix(row.File, ".tsx") && strings.Contains(row.Source, "</") {
+			mode = "unsupported-recovery"
+		}
 		if row.Rule == "@typescript-eslint/method-signature-style" {
 			switch row.Source {
 			case "type T = { m: => void };":
@@ -283,7 +296,21 @@ func upstream(t *testing.T) []string {
 	if len(rows) < 150 {
 		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
 	}
-	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
+	counts := map[string]int{}
+	for _, row := range unique {
+		counts[row.Rule]++
+	}
+	newRules := map[string]bool{}
+	for _, control := range batch3Controls {
+		newRules[control.rule] = true
+	}
+	for rule := range newRules {
+		if counts[rule] == 0 {
+			t.Fatalf("no captured fixtures for %s", rule)
+		}
+		t.Logf("batch3 upstream %s: %d", rule, counts[rule])
+	}
+	t.Logf("cohere cases: %d unique source/rule/options/filename combinations", len(rows))
 	return rows
 }
 func compare(t *testing.T, oracle, binary, directory, path string) []byte {
@@ -310,6 +337,7 @@ func TestRulesAgree(t *testing.T) {
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
 	rows := append(generated(t), volumeGenerated(t)...)
+	rows = append(rows, batch3Generated(t)...)
 	for _, row := range upstream(t) {
 		if strings.HasSuffix(row, "\tunsupported-recovery") {
 			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
@@ -363,7 +391,13 @@ func mutant(t *testing.T, from, to string, targets ...string) string {
 		target = targets[0]
 	}
 	directory := t.TempDir()
-	for _, file := range portFiles {
+	files := append([]string(nil), portFiles...)
+	rules, err := filepath.Glob("rules/*.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	files = append(files, rules...)
+	for _, file := range files {
 		data, err := os.ReadFile(file)
 		if err != nil {
 			t.Fatal(err)
@@ -379,7 +413,14 @@ func mutant(t *testing.T, from, to string, targets ...string) string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		source = strings.ReplaceAll(source, "../../typescript", typescript)
+		if strings.HasPrefix(file, "rules/") {
+			source = strings.ReplaceAll(source, "../../../typescript", typescript)
+		} else {
+			source = strings.ReplaceAll(source, "../../typescript", typescript)
+		}
+		if err := os.MkdirAll(filepath.Dir(filepath.Join(directory, file)), 0755); err != nil {
+			t.Fatal(err)
+		}
 		if err := os.WriteFile(filepath.Join(directory, file), []byte(source), 0644); err != nil {
 			t.Fatal(err)
 		}

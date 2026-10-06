@@ -1,0 +1,869 @@
+=== RUN   TestBatch3Mutants
+=== RUN   TestBatch3Mutants/one-var
+    batch3_test.go:98: one-var caught on Node: case 0 line 2: port "fixed\tvar first=1; var second=2; var third; {let local=1; let other=2;} function nested(){var inside; var more;}\\u000a", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/001/control-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/001/control-0.ts:1:14
+          one-var  Combine this with the previous 'var' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+        
+        range 13 26 combine fix	,		11 12
+        extra-fix 13 16	
+    batch3_test.go:98: one-var caught on native: case 0 line 2: port "fixed\tvar first=1; var second=2; var third; {let local=1; let other=2;} function nested(){var inside; var more;}\\u000a", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/001/control-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/001/control-0.ts:1:14
+          one-var  Combine this with the previous 'var' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+        
+        range 13 26 combine fix	,		11 12
+        extra-fix 13 16	
+=== RUN   TestBatch3Mutants/nexus/consistency-no-ambiguous-identifier
+    batch3_test.go:98: nexus/consistency-no-ambiguous-identifier caught on Node: case 2 line 35: port "fixed\tconst n=1; const _=2; const x=3; items.sort((a,b)=>a-b); try{work();}catch(e){report(e);} const handleClick=(e)=>run(e); this.e; external.e;", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/003/control-2.ts:1:7"
+        Go context:
+          one-var  Split 'const' declarations into multiple statements. This declares several variables in one statement. One binding per statement makes each declaration its own line to move, comment or delete, and keeps a diff that touches one variable from touching the others.
+        
+        range 41 60 split fix	; const		52 53
+        fixed	export declare let first; export declare let second; export declare let third; const one=1; const two=2; for(let first=0, second=1; first<2; first++){}
+        case 2
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/003/control-2.ts:1:7
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "n" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 6 7 noSingleLetter 			6 7
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/003/control-2.ts:1:18
+    batch3_test.go:98: nexus/consistency-no-ambiguous-identifier caught on native: case 2 line 35: port "fixed\tconst n=1; const _=2; const x=3; items.sort((a,b)=>a-b); try{work();}catch(e){report(e);} const handleClick=(e)=>run(e); this.e; external.e;", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/003/control-2.ts:1:7"
+        Go context:
+          one-var  Split 'const' declarations into multiple statements. This declares several variables in one statement. One binding per statement makes each declaration its own line to move, comment or delete, and keeps a diff that touches one variable from touching the others.
+        
+        range 41 60 split fix	; const		52 53
+        fixed	export declare let first; export declare let second; export declare let third; const one=1; const two=2; for(let first=0, second=1; first<2; first++){}
+        case 2
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/003/control-2.ts:1:7
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "n" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 6 7 noSingleLetter 			6 7
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/003/control-2.ts:1:18
+=== RUN   TestBatch3Mutants/nexus/consistency-no-abbreviated-identifier
+    batch3_test.go:98: nexus/consistency-no-abbreviated-identifier caught on Node: case 3 line 65: port "fixed\tconst ctxRequest=1, durationMs=2, originalInitCwd=3, maxAgentsBytes=4; interface ExampleProperties {maxBootBytes:number} function invoke(...args:string[]){use(args);} const props=1;", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/004/control-3.ts:1:7"
+        Go context:
+          nexus/consistency-no-ambiguous-identifier  Variable named "e" is too ambiguous (context unclear). It is the one name that could be an error or an event, and a reader has to find the declaration to learn which. Use "event" or a more descriptive name.
+        
+        range 126 127 noAmbiguousE 			126 127
+        fixed	const n=1; const _=2; const x=3; items.sort((a,b)=>a-b); try{work();}catch(e){report(e);} const handleClick=(e)=>run(e); this.e; external.e;
+        case 3
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/004/control-3.ts:1:7
+          nexus/consistency-no-abbreviated-identifier  Identifier "ctxRequest" should not be abbreviated. Use "contextRequest". A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant.
+        
+        range 6 16 abbreviatedIdentifier 			6 16
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/004/control-3.ts:1:21
+    batch3_test.go:98: nexus/consistency-no-abbreviated-identifier caught on native: case 3 line 65: port "fixed\tconst ctxRequest=1, durationMs=2, originalInitCwd=3, maxAgentsBytes=4; interface ExampleProperties {maxBootBytes:number} function invoke(...args:string[]){use(args);} const props=1;", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/004/control-3.ts:1:7"
+        Go context:
+          nexus/consistency-no-ambiguous-identifier  Variable named "e" is too ambiguous (context unclear). It is the one name that could be an error or an event, and a reader has to find the declaration to learn which. Use "event" or a more descriptive name.
+        
+        range 126 127 noAmbiguousE 			126 127
+        fixed	const n=1; const _=2; const x=3; items.sort((a,b)=>a-b); try{work();}catch(e){report(e);} const handleClick=(e)=>run(e); this.e; external.e;
+        case 3
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/004/control-3.ts:1:7
+          nexus/consistency-no-abbreviated-identifier  Identifier "ctxRequest" should not be abbreviated. Use "contextRequest". A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant.
+        
+        range 6 16 abbreviatedIdentifier 			6 16
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/004/control-3.ts:1:21
+=== RUN   TestBatch3Mutants/@typescript-eslint/no-non-null-assertion
+    batch3_test.go:98: @typescript-eslint/no-non-null-assertion caught on Node: case 4 line 91: port "fixed\tfoo!; foo! /* . comment */ .bar; foo![key]; foo!(); foo!?.bar; foo!.bar=1; delete foo!.bar; [foo!.bar]; let value!:number;", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/005/control-4.ts:1:1"
+        Go context:
+          nexus/consistency-no-abbreviated-identifier  Identifier "props" should not be abbreviated. Use "properties" or a more descriptive name. A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant.
+        
+        range 173 178 abbreviatedIdentifier 			173 178
+        fixed	const ctxRequest=1, durationMs=2, originalInitCwd=3, maxAgentsBytes=4; interface ExampleProperties {maxBootBytes:number} function invoke(...args:string[]){use(args);} const props=1;
+        case 4
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/005/control-4.ts:1:1
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 0 4 noNonNull 			0 4
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/005/control-4.ts:1:7
+    batch3_test.go:98: @typescript-eslint/no-non-null-assertion caught on native: case 4 line 91: port "fixed\tfoo!; foo! /* . comment */ .bar; foo![key]; foo!(); foo!?.bar; foo!.bar=1; delete foo!.bar; [foo!.bar]; let value!:number;", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/005/control-4.ts:1:1"
+        Go context:
+          nexus/consistency-no-abbreviated-identifier  Identifier "props" should not be abbreviated. Use "properties" or a more descriptive name. A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant.
+        
+        range 173 178 abbreviatedIdentifier 			173 178
+        fixed	const ctxRequest=1, durationMs=2, originalInitCwd=3, maxAgentsBytes=4; interface ExampleProperties {maxBootBytes:number} function invoke(...args:string[]){use(args);} const props=1;
+        case 4
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/005/control-4.ts:1:1
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 0 4 noNonNull 			0 4
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/005/control-4.ts:1:7
+=== RUN   TestBatch3Mutants/@typescript-eslint/prefer-enum-initializers
+    batch3_test.go:98: @typescript-eslint/prefer-enum-initializers caught on Node: case 5 line 134: port "fixed\tenum Direction {Left=10, Right, 'quoted', Other=2, Last} const enum OtherDirection {Up,Down}\\u000a", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/006/control-5.ts:1:26"
+        Go context:
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 93 97 noNonNull 			93 97
+        fixed	foo!; foo! /* . comment */ .bar; foo![key]; foo!(); foo!?.bar; foo!.bar=1; delete foo!.bar; [foo!.bar]; let value!:number;
+        case 5
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/006/control-5.ts:1:26
+          @typescript-eslint/prefer-enum-initializers  The value of the member 'Right' should be explicitly defined.
+        
+        range 25 30 defineInitializer suggestion	Right = 1	Can be fixed to Right = 1	25 30
+        suggestion defineInitializerSuggestion	Can be fixed to Right = 1
+    batch3_test.go:98: @typescript-eslint/prefer-enum-initializers caught on native: case 5 line 134: port "fixed\tenum Direction {Left=10, Right, 'quoted', Other=2, Last} const enum OtherDirection {Up,Down}\\u000a", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/006/control-5.ts:1:26"
+        Go context:
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 93 97 noNonNull 			93 97
+        fixed	foo!; foo! /* . comment */ .bar; foo![key]; foo!(); foo!?.bar; foo!.bar=1; delete foo!.bar; [foo!.bar]; let value!:number;
+        case 5
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/006/control-5.ts:1:26
+          @typescript-eslint/prefer-enum-initializers  The value of the member 'Right' should be explicitly defined.
+        
+        range 25 30 defineInitializer suggestion	Right = 1	Can be fixed to Right = 1	25 30
+        suggestion defineInitializerSuggestion	Can be fixed to Right = 1
+=== RUN   TestBatch3Mutants/nexus/consistency-no-long-line-comment
+    batch3_test.go:98: nexus/consistency-no-long-line-comment caught on Node: case 6 line 186: port "fixed\t// alpha\\u000a// beta\\u000a// gamma\\u000a// delta\\u000a// epsilon\\u000alet value=1;\\u000a  // one\\u000a  // two\\u000a  // three\\u000a  // four\\u000a  // five\\u000a", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/007/control-6.ts:1:1"
+        Go context:
+        suggestion-edit 87 91	Down = 2
+        suggestion defineInitializerSuggestion	Can be fixed to Down = 'Down'
+        suggestion-edit 87 91	Down = 'Down'
+        fixed	enum Direction {Left=10, Right, 'quoted', Other=2, Last} const enum OtherDirection {Up,Down}\u000a
+        case 6
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/007/control-6.ts:1:1
+          nexus/consistency-no-long-line-comment  A run of five or more double-slash lines should be a block comment. Past four lines a stack of slashes stops reading as one thought and starts reading as a wall, with no cue where the passage ends. This run is 5 lines.
+        
+        range 0 45 longLineComment fix	/*\u000a * alpha\u000a * beta\u000a * gamma\u000a * delta\u000a * epsilon\u000a */		0 45
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/007/control-6.ts:7:3
+    batch3_test.go:98: nexus/consistency-no-long-line-comment caught on native: case 6 line 186: port "fixed\t// alpha\\u000a// beta\\u000a// gamma\\u000a// delta\\u000a// epsilon\\u000alet value=1;\\u000a  // one\\u000a  // two\\u000a  // three\\u000a  // four\\u000a  // five\\u000a", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/007/control-6.ts:1:1"
+        Go context:
+        suggestion-edit 87 91	Down = 2
+        suggestion defineInitializerSuggestion	Can be fixed to Down = 'Down'
+        suggestion-edit 87 91	Down = 'Down'
+        fixed	enum Direction {Left=10, Right, 'quoted', Other=2, Last} const enum OtherDirection {Up,Down}\u000a
+        case 6
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/007/control-6.ts:1:1
+          nexus/consistency-no-long-line-comment  A run of five or more double-slash lines should be a block comment. Past four lines a stack of slashes stops reading as one thought and starts reading as a wall, with no cue where the passage ends. This run is 5 lines.
+        
+        range 0 45 longLineComment fix	/*\u000a * alpha\u000a * beta\u000a * gamma\u000a * delta\u000a * epsilon\u000a */		0 45
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/007/control-6.ts:7:3
+=== RUN   TestBatch3Mutants/nexus/consistency-no-multiline-arrow-function
+    batch3_test.go:98: nexus/consistency-no-multiline-arrow-function caught on Node: case 8 line 202: port "fixed\tconst calculate=(value:number)=>{\\u000a return value+1;\\u000a}; React.useMemo(()=>({value:1})); target.addEventListener('click',()=>work()); const inherited=()=>{\\u000a return arguments;\\u000a};", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/009/control-8.ts:1:17"
+        Go context:
+          nexus/consistency-no-long-line-comment  A run of five or more double-slash lines should be a block comment. Past four lines a stack of slashes stops reading as one thought and starts reading as a wall, with no cue where the passage ends. This run is 3 lines.
+        
+        range 28 52 longLineComment fix	/*\u000a * three\u000a * four\u000a * five\u000a */		28 52
+        fixed	// one\u000a// two\u000a// @ts-ignore\u000a/*\u000a * three\u000a * four\u000a * five\u000a */\u000a
+        case 8
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/009/control-8.ts:1:17
+          nexus/consistency-no-multiline-arrow-function  Use a regular function instead of a multi-line arrow function. An arrow earns its terseness on a single-line implicit return, and past that a named function declaration reads better and hoists. Arrows that use `this` are exempt, since a function would rebind it.
+        
+        range 16 52 multilineArrow fix	function(value:number) {\u000a return value+1;\u000a}		16 52
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/009/control-8.ts:3:18
+    batch3_test.go:98: nexus/consistency-no-multiline-arrow-function caught on native: case 8 line 202: port "fixed\tconst calculate=(value:number)=>{\\u000a return value+1;\\u000a}; React.useMemo(()=>({value:1})); target.addEventListener('click',()=>work()); const inherited=()=>{\\u000a return arguments;\\u000a};", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/009/control-8.ts:1:17"
+        Go context:
+          nexus/consistency-no-long-line-comment  A run of five or more double-slash lines should be a block comment. Past four lines a stack of slashes stops reading as one thought and starts reading as a wall, with no cue where the passage ends. This run is 3 lines.
+        
+        range 28 52 longLineComment fix	/*\u000a * three\u000a * four\u000a * five\u000a */		28 52
+        fixed	// one\u000a// two\u000a// @ts-ignore\u000a/*\u000a * three\u000a * four\u000a * five\u000a */\u000a
+        case 8
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/009/control-8.ts:1:17
+          nexus/consistency-no-multiline-arrow-function  Use a regular function instead of a multi-line arrow function. An arrow earns its terseness on a single-line implicit return, and past that a named function declaration reads better and hoists. Arrows that use `this` are exempt, since a function would rebind it.
+        
+        range 16 52 multilineArrow fix	function(value:number) {\u000a return value+1;\u000a}		16 52
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/009/control-8.ts:3:18
+=== RUN   TestBatch3Mutants/prefer-destructuring
+    batch3_test.go:98: prefer-destructuring caught on Node: case 9 line 220: port "fixed\tconst foo=object.foo; let index=array[0]; foo=object.foo; const same=(receiver.foo); const other=object['other']; const comments=object./* keep */comments; const wrapped=(left,right).wrapped;", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/010/control-9.ts:1:7"
+        Go context:
+          nexus/consistency-no-multiline-arrow-function  Use a regular function instead of a multi-line arrow function. An arrow earns its terseness on a single-line implicit return, and past that a named function declaration reads better and hoists. Arrows that use `this` are exempt, since a function would rebind it.
+        
+        range 147 173 multilineArrow 			147 173
+        fixed	const calculate=function(value:number) {\u000a return value+1;\u000a}; React.useMemo(function() { return {value:1}; }); target.addEventListener('click',function() { return work(); }); const inherited=()=>{\u000a return arguments;\u000a};
+        case 9
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/010/control-9.ts:1:7
+          prefer-destructuring  Use object destructuring. Pulling one name out of an object or array by hand repeats the name on both sides, so a rename touches two places and the two can drift. Destructuring writes it once.
+        
+        range 6 20 preferDestructuring fix	{foo} = object		6 20
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/010/control-9.ts:1:27
+    batch3_test.go:98: prefer-destructuring caught on native: case 9 line 220: port "fixed\tconst foo=object.foo; let index=array[0]; foo=object.foo; const same=(receiver.foo); const other=object['other']; const comments=object./* keep */comments; const wrapped=(left,right).wrapped;", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/010/control-9.ts:1:7"
+        Go context:
+          nexus/consistency-no-multiline-arrow-function  Use a regular function instead of a multi-line arrow function. An arrow earns its terseness on a single-line implicit return, and past that a named function declaration reads better and hoists. Arrows that use `this` are exempt, since a function would rebind it.
+        
+        range 147 173 multilineArrow 			147 173
+        fixed	const calculate=function(value:number) {\u000a return value+1;\u000a}; React.useMemo(function() { return {value:1}; }); target.addEventListener('click',function() { return work(); }); const inherited=()=>{\u000a return arguments;\u000a};
+        case 9
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/010/control-9.ts:1:7
+          prefer-destructuring  Use object destructuring. Pulling one name out of an object or array by hand repeats the name on both sides, so a rename touches two places and the two can drift. Destructuring writes it once.
+        
+        range 6 20 preferDestructuring fix	{foo} = object		6 20
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/010/control-9.ts:1:27
+=== RUN   TestBatch3Mutants/nexus/consistency-no-single-line-jsdoc
+    batch3_test.go:98: nexus/consistency-no-single-line-jsdoc caught on Node: case 10 line 246: port "fixed\t/** Describes this. */\\u000aconst value=1;\\u000a/** https://example */\\u000a/** Inline. */call();\\u000a/**\\u000a * Multiline.\\u000a */\\u000a", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/011/control-10.ts:1:1"
+        Go context:
+          prefer-destructuring  Use object destructuring. Pulling one name out of an object or array by hand repeats the name on both sides, so a rename touches two places and the two can drift. Destructuring writes it once.
+        
+        range 162 190 preferDestructuring fix	{wrapped} = (left,right)		162 190
+        fixed	const {foo} = object; let index=array[0]; foo=object.foo; const same=(receiver.foo); const other=object['other']; const comments=object./* keep */comments; const {wrapped} = (left,right);
+        case 10
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/011/control-10.ts:1:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 0 22 useSimpleComment fix	// Describes this.		0 22
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/011/control-10.ts:3:1
+    batch3_test.go:98: nexus/consistency-no-single-line-jsdoc caught on native: case 10 line 246: port "fixed\t/** Describes this. */\\u000aconst value=1;\\u000a/** https://example */\\u000a/** Inline. */call();\\u000a/**\\u000a * Multiline.\\u000a */\\u000a", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/011/control-10.ts:1:1"
+        Go context:
+          prefer-destructuring  Use object destructuring. Pulling one name out of an object or array by hand repeats the name on both sides, so a rename touches two places and the two can drift. Destructuring writes it once.
+        
+        range 162 190 preferDestructuring fix	{wrapped} = (left,right)		162 190
+        fixed	const {foo} = object; let index=array[0]; foo=object.foo; const same=(receiver.foo); const other=object['other']; const comments=object./* keep */comments; const {wrapped} = (left,right);
+        case 10
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/011/control-10.ts:1:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 0 22 useSimpleComment fix	// Describes this.		0 22
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/011/control-10.ts:3:1
+=== RUN   TestBatch3Mutants/nexus/consistency-no-shouting
+    batch3_test.go:98: nexus/consistency-no-shouting caught on Node: case 11 line 264: port "fixed\t// NEVER DO THIS REALLY LOUDLY PLEASE\\u000a// JSON USD README are allowed\\u000a// `NEVER` \"REALLY\" 'DO NOT' TODO\\u000a/*\\u000a * @example\\u000a * NEVER SHOUT\\u000a * @returns REALLY important\\u000a */\\u000a", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/012/control-11.ts:1:1"
+        Go context:
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 83 104 useSimpleComment 			83 104
+        fixed	// Describes this.\u000aconst value=1;\u000a/** https://example */\u000a/** Inline. */call();\u000a/**\u000a * Multiline.\u000a */\u000a
+        case 11
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/012/control-11.ts:1:1
+          nexus/consistency-no-shouting  "NEVER", "DO", "THIS", "REALLY" in a comment reads as shouting, and the register spreads: the next reader mirrors it, so emphasis on everything becomes emphasis on nothing. If it is code, put it in backticks. If it is a point, make it in a normal voice, and if the sentence needed the volume to land, it probably needed the reason instead.
+        
+        range 0 37 shoutingInComment 			0 37
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/012/control-11.ts:4:1
+    batch3_test.go:98: nexus/consistency-no-shouting caught on native: case 11 line 264: port "fixed\t// NEVER DO THIS REALLY LOUDLY PLEASE\\u000a// JSON USD README are allowed\\u000a// `NEVER` \"REALLY\" 'DO NOT' TODO\\u000a/*\\u000a * @example\\u000a * NEVER SHOUT\\u000a * @returns REALLY important\\u000a */\\u000a", Go "/tmp/adamic-gate/TestBatch3Mutants1313022182/012/control-11.ts:1:1"
+        Go context:
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 83 104 useSimpleComment 			83 104
+        fixed	// Describes this.\u000aconst value=1;\u000a/** https://example */\u000a/** Inline. */call();\u000a/**\u000a * Multiline.\u000a */\u000a
+        case 11
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/012/control-11.ts:1:1
+          nexus/consistency-no-shouting  "NEVER", "DO", "THIS", "REALLY" in a comment reads as shouting, and the register spreads: the next reader mirrors it, so emphasis on everything becomes emphasis on nothing. If it is code, put it in backticks. If it is a point, make it in a normal voice, and if the sentence needed the volume to land, it probably needed the reason instead.
+        
+        range 0 37 shoutingInComment 			0 37
+        /tmp/adamic-gate/TestBatch3Mutants1313022182/012/control-11.ts:4:1
+--- PASS: TestBatch3Mutants (299.79s)
+    --- PASS: TestBatch3Mutants/one-var (27.62s)
+    --- PASS: TestBatch3Mutants/nexus/consistency-no-ambiguous-identifier (27.38s)
+    --- PASS: TestBatch3Mutants/nexus/consistency-no-abbreviated-identifier (29.05s)
+    --- PASS: TestBatch3Mutants/@typescript-eslint/no-non-null-assertion (35.30s)
+    --- PASS: TestBatch3Mutants/@typescript-eslint/prefer-enum-initializers (31.58s)
+    --- PASS: TestBatch3Mutants/nexus/consistency-no-long-line-comment (33.22s)
+    --- PASS: TestBatch3Mutants/nexus/consistency-no-multiline-arrow-function (28.44s)
+    --- PASS: TestBatch3Mutants/prefer-destructuring (26.17s)
+    --- PASS: TestBatch3Mutants/nexus/consistency-no-single-line-jsdoc (29.25s)
+    --- PASS: TestBatch3Mutants/nexus/consistency-no-shouting (29.42s)
+=== RUN   TestBatch3RepairMutants
+=== RUN   TestBatch3RepairMutants/second_optional-chain_edit_changed
+    batch3_test.go:176: second optional-chain edit changed caught on Node: case 4 line 101: port "suggestion-edit 14 15\t!!", Go "suggestion-edit 14 15\t?."
+        Go context:
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 6 10 noNonNull suggestion		Use the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.	9 10
+        suggestion suggestOptionalChain	Use the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.
+        suggestion-edit 9 10	
+        suggestion-edit 14 15	?.
+        /tmp/adamic-gate/TestBatch3RepairMutants1679141653/005/control-4.ts:1:34
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 33 37 noNonNull suggestion	?.	Use the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.	36 37
+    batch3_test.go:176: second optional-chain edit changed caught on native: case 4 line 101: port "suggestion-edit 14 15\t!!", Go "suggestion-edit 14 15\t?."
+        Go context:
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 6 10 noNonNull suggestion		Use the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.	9 10
+        suggestion suggestOptionalChain	Use the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.
+        suggestion-edit 9 10	
+        suggestion-edit 14 15	?.
+        /tmp/adamic-gate/TestBatch3RepairMutants1679141653/005/control-4.ts:1:34
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 33 37 noNonNull suggestion	?.	Use the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.	36 37
+=== RUN   TestBatch3RepairMutants/third_enum_suggestion_omitted
+    batch3_test.go:176: third enum suggestion omitted caught on Node: case 5 line 142: port "/tmp/adamic-gate/TestBatch3RepairMutants1679141653/006/control-5.ts:1:33", Go "suggestion defineInitializerSuggestion\tCan be fixed to Right = 'Right'"
+        Go context:
+        range 25 30 defineInitializer suggestion	Right = 1	Can be fixed to Right = 1	25 30
+        suggestion defineInitializerSuggestion	Can be fixed to Right = 1
+        suggestion-edit 25 30	Right = 1
+        suggestion defineInitializerSuggestion	Can be fixed to Right = 2
+        suggestion-edit 25 30	Right = 2
+        suggestion defineInitializerSuggestion	Can be fixed to Right = 'Right'
+        suggestion-edit 25 30	Right = 'Right'
+        /tmp/adamic-gate/TestBatch3RepairMutants1679141653/006/control-5.ts:1:33
+          @typescript-eslint/prefer-enum-initializers  The value of the member ''quoted'' should be explicitly defined.
+    batch3_test.go:176: third enum suggestion omitted caught on native: case 5 line 142: port "/tmp/adamic-gate/TestBatch3RepairMutants1679141653/006/control-5.ts:1:33", Go "suggestion defineInitializerSuggestion\tCan be fixed to Right = 'Right'"
+        Go context:
+        range 25 30 defineInitializer suggestion	Right = 1	Can be fixed to Right = 1	25 30
+        suggestion defineInitializerSuggestion	Can be fixed to Right = 1
+        suggestion-edit 25 30	Right = 1
+        suggestion defineInitializerSuggestion	Can be fixed to Right = 2
+        suggestion-edit 25 30	Right = 2
+        suggestion defineInitializerSuggestion	Can be fixed to Right = 'Right'
+        suggestion-edit 25 30	Right = 'Right'
+        /tmp/adamic-gate/TestBatch3RepairMutants1679141653/006/control-5.ts:1:33
+          @typescript-eslint/prefer-enum-initializers  The value of the member ''quoted'' should be explicitly defined.
+=== RUN   TestBatch3RepairMutants/fix_cycle_leaves_partial_source
+    batch3_test.go:176: fix cycle leaves partial source caught on Node: case 23 line 335: port "fixed\tfunction foo() { var bar, baz; var a = true,      b = false; var      c; var     d;}", Go "fixed\tfunction foo() { var bar, baz; var a = true; var b = false; var c, d;}"
+        Go context:
+        
+        range 60 69 combineUninitialized fix	,		58 59
+        extra-fix 60 63	
+        rejected fix-engine 0 0  the pass budget was exhausted before the file converged (10 passes)
+        unconverged one-var
+        fixed	function foo() { var bar, baz; var a = true; var b = false; var c, d;}
+        case 24
+        /tmp/adamic-gate/TestBatch3RepairMutants1679141653/025/control-24.ts:1:20
+          nexus/consistency-no-ambiguous-identifier  Variable named "e" is too ambiguous (appears to be an event). It is the one name that could be an error or an event, and a reader has to find the declaration to learn which. Use "event" or a more descriptive name.
+    batch3_test.go:176: fix cycle leaves partial source caught on native: case 23 line 335: port "fixed\tfunction foo() { var bar, baz; var a = true,      b = false; var      c; var     d;}", Go "fixed\tfunction foo() { var bar, baz; var a = true; var b = false; var c, d;}"
+        Go context:
+        
+        range 60 69 combineUninitialized fix	,		58 59
+        extra-fix 60 63	
+        rejected fix-engine 0 0  the pass budget was exhausted before the file converged (10 passes)
+        unconverged one-var
+        fixed	function foo() { var bar, baz; var a = true; var b = false; var c, d;}
+        case 24
+        /tmp/adamic-gate/TestBatch3RepairMutants1679141653/025/control-24.ts:1:20
+          nexus/consistency-no-ambiguous-identifier  Variable named "e" is too ambiguous (appears to be an event). It is the one name that could be an error or an event, and a reader has to find the declaration to learn which. Use "event" or a more descriptive name.
+--- PASS: TestBatch3RepairMutants (81.08s)
+    --- PASS: TestBatch3RepairMutants/second_optional-chain_edit_changed (25.26s)
+    --- PASS: TestBatch3RepairMutants/third_enum_suggestion_omitted (27.98s)
+    --- PASS: TestBatch3RepairMutants/fix_cycle_leaves_partial_source (24.95s)
+=== RUN   TestMutants
+=== RUN   TestMutants/suggestion_applied_as_fix
+    lint_test.go:464: suggestion applied as fix caught on Node: case 20 line 409: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        
+        range 0 1 noSingleLetter 			0 1
+        /tmp/adamic-gate/TestMutants832909913/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutants832909913/003/generated-2.ts:1:6
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 5 6 noSingleLetter 			5 6
+    lint_test.go:464: suggestion applied as fix caught on native: case 20 line 409: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        
+        range 0 1 noSingleLetter 			0 1
+        /tmp/adamic-gate/TestMutants832909913/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutants832909913/003/generated-2.ts:1:6
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 5 6 noSingleLetter 			5 6
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:464: empty function body reported caught on Node: case 0 line 30: port "/tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:125"
+        Go context:
+        range 71 72 noSingleLetter 			71 72
+        /tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:464: empty function body reported caught on native: case 0 line 30: port "/tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:125"
+        Go context:
+        range 71 72 noSingleLetter 			71 72
+        /tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/duplicate_case_suppressed
+    lint_test.go:464: duplicate case suppressed caught on Node: case 0 line 30: port "/tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:125"
+        Go context:
+        range 71 72 noSingleLetter 			71 72
+        /tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:464: duplicate case suppressed caught on native: case 0 line 30: port "/tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:125"
+        Go context:
+        range 71 72 noSingleLetter 			71 72
+        /tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants832909913/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/control_statement_omitted
+    lint_test.go:464: control statement omitted caught on Node: case 40 line 1318: port "/tmp/adamic-gate/TestMutants832909913/005/generated-4.ts:1:31", Go "/tmp/adamic-gate/TestMutants832909913/005/generated-4.ts:1:42"
+        Go context:
+        range 15 16 noSingleLetter 			15 16
+        /tmp/adamic-gate/TestMutants832909913/005/generated-4.ts:1:19
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 18 19 noSingleLetter 			18 19
+        /tmp/adamic-gate/TestMutants832909913/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutants832909913/005/generated-4.ts:1:42
+    lint_test.go:464: control statement omitted caught on native: case 40 line 1318: port "/tmp/adamic-gate/TestMutants832909913/005/generated-4.ts:1:31", Go "/tmp/adamic-gate/TestMutants832909913/005/generated-4.ts:1:42"
+        Go context:
+        range 15 16 noSingleLetter 			15 16
+        /tmp/adamic-gate/TestMutants832909913/005/generated-4.ts:1:19
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 18 19 noSingleLetter 			18 19
+        /tmp/adamic-gate/TestMutants832909913/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutants832909913/005/generated-4.ts:1:42
+=== RUN   TestMutants/destructuring_hole_reported
+    lint_test.go:464: destructuring hole reported caught on Node: case 60 line 1698: port "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:151", Go "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:153"
+        Go context:
+        range 107 115 noNewStatement 			107 115
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:143
+          no-sparse-arrays  This array literal has a hole: two commas with nothing between them. A hole is not undefined, it is an absent index, and the difference is visible exactly where it is least expected. `map` and `forEach` skip holes while `for...of` and spread produce undefined for them, so the same array reads as two different lengths of data depending on how it is walked. Almost every hole is a typo for one comma. If the absence is deliberate, write undefined and say so.
+        
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:153
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 152 153 noSingleLetter 			152 153
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:156
+    lint_test.go:464: destructuring hole reported caught on native: case 60 line 1698: port "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:151", Go "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:153"
+        Go context:
+        range 107 115 noNewStatement 			107 115
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:143
+          no-sparse-arrays  This array literal has a hole: two commas with nothing between them. A hole is not undefined, it is an absent index, and the difference is visible exactly where it is least expected. `map` and `forEach` skip holes while `for...of` and spread produce undefined for them, so the same array reads as two different lengths of data depending on how it is walked. Almost every hole is a typo for one comma. If the absence is deliberate, write undefined and say so.
+        
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:153
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 152 153 noSingleLetter 			152 153
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:156
+=== RUN   TestMutants/nested_generator_owns_outer_yield
+    lint_test.go:464: nested generator owns outer yield caught on Node: case 60 line 1706: port "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:246", Go "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:160"
+        Go context:
+        range 152 153 noSingleLetter 			152 153
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:156
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 155 156 noSingleLetter 			155 156
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:246
+    lint_test.go:464: nested generator owns outer yield caught on native: case 60 line 1706: port "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:246", Go "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:160"
+        Go context:
+        range 152 153 noSingleLetter 			152 153
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:156
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 155 156 noSingleLetter 			155 156
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:246
+=== RUN   TestMutants/await_crosses_function_boundary
+    lint_test.go:464: await crosses function boundary caught on Node: case 60 line 1682: port "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:81", Go "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:87"
+        Go context:
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:52
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "f" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 51 52 noSingleLetter 			51 52
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:87
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "g" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 86 87 noSingleLetter 			86 87
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:94
+    lint_test.go:464: await crosses function boundary caught on native: case 60 line 1682: port "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:81", Go "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:87"
+        Go context:
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:52
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "f" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 51 52 noSingleLetter 			51 52
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:87
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "g" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 86 87 noSingleLetter 			86 87
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:94
+=== RUN   TestMutants/option_ignored
+    lint_test.go:464: option ignored caught on Node: case 80 line 2454: port "  nexus/consistency-no-ambiguous-identifier  Single-letter identifier \"a\" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.", Go "  no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it."
+        Go context:
+          one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+        
+        range 70 92 combine fix	,		68 69
+        extra-fix 70 75	
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:94
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+    lint_test.go:464: option ignored caught on native: case 80 line 2454: port "  nexus/consistency-no-ambiguous-identifier  Single-letter identifier \"a\" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.", Go "  no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it."
+        Go context:
+          one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+        
+        range 70 92 combine fix	,		68 69
+        extra-fix 70 75	
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:94
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+=== RUN   TestMutants/regex_fix_eats_extra_byte
+    lint_test.go:464: regex fix eats extra byte caught on Node: case 80 line 2447: port "range 61 68 unexpected fix\t[=]\t\t62 64", Go "range 61 68 unexpected fix\t[=]\t\t62 63"
+        Go context:
+        range 49 69 combine fix	,		47 48
+        extra-fix 49 54	
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:71
+          one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+        
+        range 70 92 combine fix	,		68 69
+    lint_test.go:464: regex fix eats extra byte caught on native: case 80 line 2447: port "range 61 68 unexpected fix\t[=]\t\t62 64", Go "range 61 68 unexpected fix\t[=]\t\t62 63"
+        Go context:
+        range 49 69 combine fix	,		47 48
+        extra-fix 49 54	
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:71
+          one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+        
+        range 70 92 combine fix	,		68 69
+=== RUN   TestMutants/boolean_inverse_changed
+    lint_test.go:464: boolean inverse changed caught on Node: case 90 line 3478: port "range 51 72 unnecessaryConditionalExpression fix\ta !== b\t\t51 72", Go "range 51 72 unnecessaryConditionalExpression fix\ta != b\t\t51 72"
+        Go context:
+        range 40 73 combine fix	,		38 39
+        extra-fix 40 45	
+        /tmp/adamic-gate/TestMutants832909913/010/generated-9.ts:1:52
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+        
+        range 51 72 unnecessaryConditionalExpression fix	a != b		51 72
+        /tmp/adamic-gate/TestMutants832909913/010/generated-9.ts:1:52
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 51 52 noSingleLetter 			51 52
+    lint_test.go:464: boolean inverse changed caught on native: case 90 line 3478: port "range 51 72 unnecessaryConditionalExpression fix\ta !== b\t\t51 72", Go "range 51 72 unnecessaryConditionalExpression fix\ta != b\t\t51 72"
+        Go context:
+        range 40 73 combine fix	,		38 39
+        extra-fix 40 45	
+        /tmp/adamic-gate/TestMutants832909913/010/generated-9.ts:1:52
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+        
+        range 51 72 unnecessaryConditionalExpression fix	a != b		51 72
+        /tmp/adamic-gate/TestMutants832909913/010/generated-9.ts:1:52
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 51 52 noSingleLetter 			51 52
+=== RUN   TestMutants/comment_self_directive_exemption_removed
+    lint_test.go:464: comment self directive exemption removed caught on Node: case 104 line 4328: port "/tmp/adamic-gate/TestMutants832909913/011/generated-10.ts:2:104", Go "/tmp/adamic-gate/TestMutants832909913/011/generated-10.ts:3:1"
+        Go context:
+        range 96 97 noSingleLetter 			96 97
+        /tmp/adamic-gate/TestMutants832909913/011/generated-10.ts:2:79
+          no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 100 111 unexpectedComment 			100 111
+        /tmp/adamic-gate/TestMutants832909913/011/generated-10.ts:3:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 170 189 unexpectedComment 			170 189
+        /tmp/adamic-gate/TestMutants832909913/011/generated-10.ts:3:1
+    lint_test.go:464: comment self directive exemption removed caught on native: case 104 line 4328: port "/tmp/adamic-gate/TestMutants832909913/011/generated-10.ts:2:104", Go "/tmp/adamic-gate/TestMutants832909913/011/generated-10.ts:3:1"
+        Go context:
+        range 96 97 noSingleLetter 			96 97
+        /tmp/adamic-gate/TestMutants832909913/011/generated-10.ts:2:79
+          no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 100 111 unexpectedComment 			100 111
+        /tmp/adamic-gate/TestMutants832909913/011/generated-10.ts:3:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 170 189 unexpectedComment 			170 189
+        /tmp/adamic-gate/TestMutants832909913/011/generated-10.ts:3:1
+=== RUN   TestMutants/bom_removes_two_marks
+    lint_test.go:464: bom removes two marks caught on Node: case 110 line 4435: port "range 0 0 unexpected fix\t\t\t0 6", Go "range 0 0 unexpected fix\t\t\t0 3"
+        Go context:
+        fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});
+        case 110
+        /tmp/adamic-gate/TestMutants832909913/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+        
+        range 0 0 unexpected fix			0 3
+        fixed	 // TODO two marks\u000aconst x=1;
+        case 111
+        /tmp/adamic-gate/TestMutants832909913/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+    lint_test.go:464: bom removes two marks caught on native: case 110 line 4435: port "range 0 0 unexpected fix\t\t\t0 6", Go "range 0 0 unexpected fix\t\t\t0 3"
+        Go context:
+        fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});
+        case 110
+        /tmp/adamic-gate/TestMutants832909913/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+        
+        range 0 0 unexpected fix			0 3
+        fixed	 // TODO two marks\u000aconst x=1;
+        case 111
+        /tmp/adamic-gate/TestMutants832909913/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+=== RUN   TestMutants/label_option_widened
+    lint_test.go:464: label option widened caught on Node: case 60 line 1658: port "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:17", Go "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:1"
+        Go context:
+        case 58
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 59
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 60
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:1
+          no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+        
+        range 0 92 unexpectedLabel 			0 92
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:17
+    lint_test.go:464: label option widened caught on native: case 60 line 1658: port "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:17", Go "/tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:1"
+        Go context:
+        case 58
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 59
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 60
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:1
+          no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+        
+        range 0 92 unexpectedLabel 			0 92
+        /tmp/adamic-gate/TestMutants832909913/007/generated-6.ts:1:17
+=== RUN   TestMutants/directive_prefix_ignored
+    lint_test.go:464: directive prefix ignored caught on Node: case 70 line 2086: port "/tmp/adamic-gate/TestMutants832909913/008/generated-7.ts:1:192", Go "/tmp/adamic-gate/TestMutants832909913/008/generated-7.ts:1:201"
+        Go context:
+        range 173 174 noSingleLetter 			173 174
+        /tmp/adamic-gate/TestMutants832909913/008/generated-7.ts:1:192
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 191 198 unexpectedVar 			191 198
+        /tmp/adamic-gate/TestMutants832909913/008/generated-7.ts:1:201
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "f" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 200 201 noSingleLetter 			200 201
+        /tmp/adamic-gate/TestMutants832909913/008/generated-7.ts:1:206
+    lint_test.go:464: directive prefix ignored caught on native: case 70 line 2086: port "/tmp/adamic-gate/TestMutants832909913/008/generated-7.ts:1:192", Go "/tmp/adamic-gate/TestMutants832909913/008/generated-7.ts:1:201"
+        Go context:
+        range 173 174 noSingleLetter 			173 174
+        /tmp/adamic-gate/TestMutants832909913/008/generated-7.ts:1:192
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 191 198 unexpectedVar 			191 198
+        /tmp/adamic-gate/TestMutants832909913/008/generated-7.ts:1:201
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "f" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 200 201 noSingleLetter 			200 201
+        /tmp/adamic-gate/TestMutants832909913/008/generated-7.ts:1:206
+=== RUN   TestMutants/comma_chain_reports_inner
+    lint_test.go:464: comma chain reports inner caught on Node: case 80 line 2501: port "/tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:128", Go "/tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:129"
+        Go context:
+        range 119 120 noSingleLetter 			119 120
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:127
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 126 127 noSingleLetter 			126 127
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:129
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 128 129 noSingleLetter 			128 129
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:131
+    lint_test.go:464: comma chain reports inner caught on native: case 80 line 2501: port "/tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:128", Go "/tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:129"
+        Go context:
+        range 119 120 noSingleLetter 			119 120
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:127
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 126 127 noSingleLetter 			126 127
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:129
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 128 129 noSingleLetter 			128 129
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:131
+=== RUN   TestMutants/empty_placeholder_reported
+    lint_test.go:464: empty placeholder reported caught on Node: case 80 line 2439: port "/tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:43", Go "/tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:50"
+        Go context:
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:31
+          one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+        
+        range 30 48 combine fix	,		28 29
+        extra-fix 30 35	
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:50
+          one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+        
+        range 49 69 combine fix	,		47 48
+        extra-fix 49 54	
+    lint_test.go:464: empty placeholder reported caught on native: case 80 line 2439: port "/tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:43", Go "/tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:50"
+        Go context:
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:31
+          one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+        
+        range 30 48 combine fix	,		28 29
+        extra-fix 30 35	
+        /tmp/adamic-gate/TestMutants832909913/009/generated-8.ts:1:50
+          one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+        
+        range 49 69 combine fix	,		47 48
+        extra-fix 49 54	
+=== RUN   TestMutants/overlap_winner_misreported
+    lint_test.go:464: overlap winner misreported caught on Node: case 90 line 3572: port "rejected no-unneeded-ternary 14 26 all overlaps another fix", Go "rejected no-unneeded-ternary 14 26 no-unneeded-ternary overlaps another fix"
+        Go context:
+        range 212 214 noNonNull 			212 214
+        /tmp/adamic-gate/TestMutants832909913/010/generated-9.ts:1:213
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 212 213 noSingleLetter 			212 213
+        rejected no-unneeded-ternary 14 26 no-unneeded-ternary overlaps another fix
+        fixed	const nested=!((!!a)),  bool=a != b,  same=f()?true:true,  coerced=!!((a + b)),  assertion=!((a as any)),  fallback=a?a:b??c,  nonnull=!!(a!);
+        case 91
+        /tmp/adamic-gate/TestMutants832909913/010/generated-9.ts:1:14
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+    lint_test.go:464: overlap winner misreported caught on native: case 90 line 3572: port "rejected no-unneeded-ternary 14 26 all overlaps another fix", Go "rejected no-unneeded-ternary 14 26 no-unneeded-ternary overlaps another fix"
+        Go context:
+        range 212 214 noNonNull 			212 214
+        /tmp/adamic-gate/TestMutants832909913/010/generated-9.ts:1:213
+          nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+        
+        range 212 213 noSingleLetter 			212 213
+        rejected no-unneeded-ternary 14 26 no-unneeded-ternary overlaps another fix
+        fixed	const nested=!((!!a)),  bool=a != b,  same=f()?true:true,  coerced=!!((a + b)),  assertion=!((a as any)),  fallback=a?a:b??c,  nonnull=!!(a!);
+        case 91
+        /tmp/adamic-gate/TestMutants832909913/010/generated-9.ts:1:14
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+--- PASS: TestMutants (478.58s)
+    --- PASS: TestMutants/suggestion_applied_as_fix (25.92s)
+    --- PASS: TestMutants/empty_function_body_reported (33.52s)
+    --- PASS: TestMutants/duplicate_case_suppressed (27.11s)
+    --- PASS: TestMutants/control_statement_omitted (29.44s)
+    --- PASS: TestMutants/destructuring_hole_reported (27.56s)
+    --- PASS: TestMutants/nested_generator_owns_outer_yield (27.65s)
+    --- PASS: TestMutants/await_crosses_function_boundary (26.25s)
+    --- PASS: TestMutants/option_ignored (26.52s)
+    --- PASS: TestMutants/regex_fix_eats_extra_byte (26.44s)
+    --- PASS: TestMutants/boolean_inverse_changed (26.62s)
+    --- PASS: TestMutants/comment_self_directive_exemption_removed (27.52s)
+    --- PASS: TestMutants/bom_removes_two_marks (29.22s)
+    --- PASS: TestMutants/label_option_widened (28.36s)
+    --- PASS: TestMutants/directive_prefix_ignored (27.90s)
+    --- PASS: TestMutants/comma_chain_reports_inner (27.63s)
+    --- PASS: TestMutants/empty_placeholder_reported (30.77s)
+    --- PASS: TestMutants/overlap_winner_misreported (27.54s)
+=== RUN   TestDecorationOptionMutant
+=== PAUSE TestDecorationOptionMutant
+=== RUN   TestCountGuardMutant
+=== PAUSE TestCountGuardMutant
+=== RUN   TestCommentFoldMutant
+=== PAUSE TestCommentFoldMutant
+=== RUN   TestPositionIndexMutant
+=== PAUSE TestPositionIndexMutant
+=== CONT  TestDecorationOptionMutant
+=== CONT  TestCommentFoldMutant
+=== CONT  TestCountGuardMutant
+=== CONT  TestPositionIndexMutant
+    profile_test.go:210: position mutant caught on Node: case 100 line 4116: port "/tmp/adamic-gate/TestPositionIndexMutant1172029273/011/generated-10.ts:2:26", Go "/tmp/adamic-gate/TestPositionIndexMutant1172029273/011/generated-10.ts:1:1"
+        Go context:
+        case 98
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 99
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 100
+        /tmp/adamic-gate/TestPositionIndexMutant1172029273/011/generated-10.ts:1:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestPositionIndexMutant1172029273/011/generated-10.ts:2:26
+    profile_test.go:210: position mutant caught on native: case 100 line 4116: port "/tmp/adamic-gate/TestPositionIndexMutant1172029273/011/generated-10.ts:2:26", Go "/tmp/adamic-gate/TestPositionIndexMutant1172029273/011/generated-10.ts:1:1"
+        Go context:
+        case 98
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 99
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 100
+        /tmp/adamic-gate/TestPositionIndexMutant1172029273/011/generated-10.ts:1:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestPositionIndexMutant1172029273/011/generated-10.ts:2:26
+--- PASS: TestPositionIndexMutant (33.08s)
+=== NAME  TestCountGuardMutant
+    lint_test.go:515: count check alone caught Node: mutant="4\n" Go="3\n"; ordinary output remains identical
+    lint_test.go:515: count check alone caught native: mutant="4\n" Go="3\n"; ordinary output remains identical
+--- PASS: TestCountGuardMutant (40.25s)
+=== NAME  TestDecorationOptionMutant
+    lint_test.go:486: decoration range collapsed to one character caught on Node: case 127 line 4622: port "fixed\t// \\u017fomething\\u000a// \\u212a\\u000a// \\u017fa\\u000a// \\u03a3 \\u03c3 \\u03c2\\u000a// TODO \\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9 \\u00e9\\u000a// TODO \\u005c quoted \"text\"\\u000a// ABC TODO\\u000a// \\u212a \\u017f TODO\\u000a// -/ TODO\\u000a", Go "/tmp/adamic-gate/TestDecorationOptionMutant4075171313/013/generated-12.ts:7:1"
+        Go context:
+        range 40 91 unexpectedComment 			40 91
+        /tmp/adamic-gate/TestDecorationOptionMutant4075171313/013/generated-12.ts:6:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO \\ quoted \"text\"". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 92 115 unexpectedComment 			92 115
+        /tmp/adamic-gate/TestDecorationOptionMutant4075171313/013/generated-12.ts:7:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "ABC TODO". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 116 127 unexpectedComment 			116 127
+        /tmp/adamic-gate/TestDecorationOptionMutant4075171313/013/generated-12.ts:8:1
+    lint_test.go:486: decoration range collapsed to one character caught on native: case 127 line 4622: port "fixed\t// \\u017fomething\\u000a// \\u212a\\u000a// \\u017fa\\u000a// \\u03a3 \\u03c3 \\u03c2\\u000a// TODO \\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9 \\u00e9\\u000a// TODO \\u005c quoted \"text\"\\u000a// ABC TODO\\u000a// \\u212a \\u017f TODO\\u000a// -/ TODO\\u000a", Go "/tmp/adamic-gate/TestDecorationOptionMutant4075171313/013/generated-12.ts:7:1"
+        Go context:
+        range 40 91 unexpectedComment 			40 91
+        /tmp/adamic-gate/TestDecorationOptionMutant4075171313/013/generated-12.ts:6:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO \\ quoted \"text\"". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 92 115 unexpectedComment 			92 115
+        /tmp/adamic-gate/TestDecorationOptionMutant4075171313/013/generated-12.ts:7:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "ABC TODO". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 116 127 unexpectedComment 			116 127
+        /tmp/adamic-gate/TestDecorationOptionMutant4075171313/013/generated-12.ts:8:1
+--- PASS: TestDecorationOptionMutant (42.38s)
+=== NAME  TestCommentFoldMutant
+    profile_test.go:190: fold mutant caught on Node: case 100 line 4116: port "/tmp/adamic-gate/TestCommentFoldMutant3535785418/011/generated-10.ts:2:26", Go "/tmp/adamic-gate/TestCommentFoldMutant3535785418/011/generated-10.ts:1:1"
+        Go context:
+        case 98
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 99
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 100
+        /tmp/adamic-gate/TestCommentFoldMutant3535785418/011/generated-10.ts:1:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestCommentFoldMutant3535785418/011/generated-10.ts:2:26
+    profile_test.go:190: fold mutant caught on native: case 100 line 4116: port "/tmp/adamic-gate/TestCommentFoldMutant3535785418/011/generated-10.ts:2:26", Go "/tmp/adamic-gate/TestCommentFoldMutant3535785418/011/generated-10.ts:1:1"
+        Go context:
+        case 98
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 99
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 100
+        /tmp/adamic-gate/TestCommentFoldMutant3535785418/011/generated-10.ts:1:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestCommentFoldMutant3535785418/011/generated-10.ts:2:26
+--- PASS: TestCommentFoldMutant (44.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	904.004s

@@ -41,6 +41,7 @@ func TestOptionAndComparatorGaps(t *testing.T) {
 		{"2_optional_index.ts", "1\n", "?.[] on a value"},
 		{"3_numeric_or.ts", "2\n", "a BinaryExpression with a number and a number"},
 		{"4_last_index_position.ts", "1\n", "lastIndexOf with these arguments"},
+		{"6_regex_literal.ts", "true\n", "RegularExpressionLiteral"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join("gaps", probe.file))

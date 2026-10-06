@@ -7,6 +7,9 @@ import type { Scanner } from '../../typescript/scanner/scanner.ts';
 import { matches, quote, selfDirective } from './comments.ts';
 import { isLineBreak, isSpace } from '../../typescript/scanner/characters.ts';
 import { Finding } from './finding.ts';
+import { RuleContext } from './rules/context.ts';
+import { comments } from './rules/comment_ranges.ts';
+import { visitRegistered } from './rules/registry.ts';
 import { VolumeRules } from './volume.ts';
 import { Scanner as SourceScanner } from '../../typescript/scanner/scanner.ts';
 import type { Settings } from './settings.ts';
@@ -213,6 +216,7 @@ export class Linter {
     parents: number[] = [];
     root = -1;
     volume: VolumeRules | undefined = undefined;
+    batch: RuleContext | undefined = undefined;
     readonly selected: string;
     readonly mode: string;
     readonly nullPolicy: string;
@@ -239,6 +243,13 @@ export class Linter {
     }
     run(): void {
         this.root = this.parser.file();
+        if(this.parser.path.endsWith('.tsx')) {
+            for(const node of this.parser.nodes) {
+                if(node.kind === 'TypeAssertionExpression') {
+                    panic('stage1 lint JSX parsing is not supported');
+                }
+            }
+        }
         this.parents = this.parser.nodes.map(() => -1);
         this.volume = new VolumeRules(
             this.source,
@@ -250,6 +261,27 @@ export class Linter {
             this.settings,
         );
         this.volume.prepare(this.root);
+        this.batch = new RuleContext(
+            this.source,
+            this.parser,
+            this.scanner,
+            this.parents,
+            this.findings,
+            this.selected,
+            this.settings,
+        );
+        if(
+            this.enabled('nexus/consistency-no-single-line-jsdoc') ||
+            this.enabled('nexus/consistency-no-long-line-comment') ||
+            this.enabled('nexus/consistency-no-shouting') ||
+            this.enabled('prefer-destructuring')
+        ) {
+            this.literalSpans(this.root);
+            this.anchors = new Array<boolean>(this.source.length + 1).fill(false);
+            this.commentAnchors(this.root);
+            this.anchors[0] = true;
+            this.batch.comments = comments(this.source, this.literalEnds, this.reachableComments(this.anchors));
+        }
         this.walk(this.root, -1);
         this.findings.sort(compareFindings);
     }
@@ -460,6 +492,7 @@ export class Linter {
         }
         this.additional(index, parent);
         (this.volume ?? panic('missing additional rules')).visit(index);
+        visitRegistered(this.batch ?? panic('missing registered rules'), index);
         for(const child of node.children) {
             this.walk(child, index);
         }
@@ -1331,8 +1364,31 @@ export class Linter {
     fixed(): string {
         let current = this.source;
         let findings = this.findings;
+        let lastRules: string[] = [];
         for(let pass = 0; pass < 10; pass++) {
             const proposals = findings.filter((finding) => finding.repair === 'fix');
+            for(const finding of findings) {
+                for(const edit of finding.extraFixes) {
+                    proposals.push(
+                        new Finding(
+                            finding.rule,
+                            finding.id,
+                            finding.message,
+                            edit.start,
+                            edit.end,
+                            'fix',
+                            edit.text,
+                            '',
+                        ),
+                    );
+                }
+            }
+            lastRules = [];
+            for(const proposal of proposals) {
+                if(!lastRules.includes(proposal.rule)) {
+                    lastRules.push(proposal.rule);
+                }
+            }
             proposals.sort(compareEdits);
             const applied: Finding[] = [];
             let previous = -1;
@@ -1360,12 +1416,16 @@ export class Linter {
             if(applied.length === 0) {
                 return current;
             }
-            let result = current;
-            for(let index = applied.length - 1; index >= 0; index--) {
-                const finding = applied[index] ?? panic('missing fix');
-                result = result.slice(0, finding.editStart) + finding.replacement + result.slice(finding.editEnd);
+            const pieces: string[] = [];
+            let cursor = 0;
+            for(const finding of applied) {
+                pieces.push(current.slice(cursor, finding.editStart));
+                pieces.push(finding.replacement);
+                cursor = finding.editEnd;
             }
-            const parser = new Parser(result, 'fixed source');
+            pieces.push(current.slice(cursor));
+            const result = pieces.join('');
+            const parser = new Parser(result, this.parser.path);
             const scanner = new SourceScanner(result);
             const next = new Linter(
                 result,
@@ -1381,6 +1441,10 @@ export class Linter {
             current = result;
             findings = next.findings;
         }
-        panic('fix pass budget exhausted');
+        this.rejected.push(
+            'rejected fix-engine 0 0  the pass budget was exhausted before the file converged (10 passes)',
+        );
+        this.rejected.push(`unconverged ${lastRules.join(',')}`);
+        return this.source;
     }
 }

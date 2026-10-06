@@ -1,0 +1,30 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTheOracleCatchesOneByte
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+--- PASS: TestTheOracleCatchesOneByte (13.00s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a (20.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings.a (21.16s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a (21.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a (21.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/visits.a (13.40s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	26.414s

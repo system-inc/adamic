@@ -65,6 +65,17 @@ function run(row: string, countOnly: boolean): number {
         console.log(
             `range ${start} ${end} ${finding.id} ${finding.repair}\t${written(finding.replacement)}\t${written(finding.suggestion)}\t${offsets[finding.editStart] ?? 0} ${offsets[finding.editEnd] ?? 0}`,
         );
+        for(const edit of finding.extraFixes) {
+            console.log(`extra-fix ${offsets[edit.start] ?? 0} ${offsets[edit.end] ?? 0}\t${written(edit.text)}`);
+        }
+        for(const suggestion of finding.suggestions) {
+            console.log(`suggestion ${suggestion.id}\t${written(suggestion.message)}`);
+            for(const edit of suggestion.edits) {
+                console.log(
+                    `suggestion-edit ${offsets[edit.start] ?? 0} ${offsets[edit.end] ?? 0}\t${written(edit.text)}`,
+                );
+            }
+        }
     }
     if(fields[6] === 'recovery') {
         console.log('recovery findings only');
