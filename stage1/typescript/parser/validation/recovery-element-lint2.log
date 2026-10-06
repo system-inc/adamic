@@ -1,0 +1,2 @@
+/workspace/adamic/stage1/typescript/parser/lookahead.ts:512:32 error @typescript-eslint/no-shadow This binding takes a name that is already bound in an enclosing scope. Every read of the name inside this scope now resolves here instead of to the outer binding, so code written against the outer one silently reads the inner one. Rename the inner binding. The name 'kind' is already declared in the upper scope on line 17 column 10.
+✗ ☠️ 0.1s • 1 finding (276 rules • 14 checked) • 100% Adamic-ready (13 of 13) • ⚠ only 14 of 114 files

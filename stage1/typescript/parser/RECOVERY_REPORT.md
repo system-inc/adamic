@@ -1,8 +1,8 @@
-Fixed the four parser sources underlying all eight reported lint failures.
-Go, Node and sanitized native agree on their recovered trees and diagnostics.
-Three recovery mutants prove diagnostic, child-tree and timeout comparisons.
-All 77 compiler files yield 22,497 planned cutoff/removal/duplication inputs.
-Bare export and incomplete export clauses agree; wider recovery remains active.
+Fixed all eight reported failures and successive export, list and statement recovery gaps.
+Focused Go, Node and sanitized native probes match exact tree and diagnostic bytes.
+Four mutants cover diagnostic codes, child shape, stranded export and nontermination.
+77 compiler files yield 22,497 deterministic cutoff/removal/duplication inputs.
+The wider comparison remains active; its full corpus gate has not passed.
 
 ## Built
 
@@ -529,3 +529,7 @@ The saved timeout input is retained separately at
 /tmp/adamic-parser-timeout-evidence/checker-cut-117218.ts, SHA-256
 ebca5fcd4795f2c463b828006461a8a101bb52d40223a05ad2cf3a69ec0b4281.
 The wider continuation remains in progress; this is not a full corpus pass.
+
+Raw continuation commands and their pass/fail output are retained under
+validation/recovery-*.log. Failed development probes and resumed comparisons
+are evidence of the work in progress, not additional green gates or mutants.

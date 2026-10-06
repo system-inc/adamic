@@ -1,0 +1,53 @@
+=== RUN   TestMethodRecoveryAgrees
+    recovery_test.go:101: Node /tmp/adamic-parser-recovery/method-4.ts:  line 8: port "4 ObjectLiteralExpression 9 19 0 0 1 0 0\t\t\t\t", Go "4 ObjectLiteralExpression 9 19 0 0 1 1 0\t\t\t\t"
+        Go context:
+        0 SourceFile 0 20 0 0 -1 0 0				
+        1 VariableStatement 0 20 0 0 -1 0 0				
+        2 VariableDeclarationList 0 19 0 0 -1 0 0				2
+        3 VariableDeclaration 5 19 0 0 -1 0 0				
+        4 Identifier 5 7 0 0 -1 0 0		x		
+        4 ObjectLiteralExpression 9 19 0 0 1 1 0				
+        5 PropertyAssignment 11 16 0 0 -1 0 0				
+        6 Identifier 11 13 0 0 -1 0 0		a		
+        6 NumericLiteral 14 16 0 0 -1 0 0		1		
+        1 EndOfFile 20 20 0 0 -1 0 0				
+    recovery_test.go:101: native /tmp/adamic-parser-recovery/method-4.ts:  line 8: port "4 ObjectLiteralExpression 9 19 0 0 1 0 0\t\t\t\t", Go "4 ObjectLiteralExpression 9 19 0 0 1 1 0\t\t\t\t"
+        Go context:
+        0 SourceFile 0 20 0 0 -1 0 0				
+        1 VariableStatement 0 20 0 0 -1 0 0				
+        2 VariableDeclarationList 0 19 0 0 -1 0 0				2
+        3 VariableDeclaration 5 19 0 0 -1 0 0				
+        4 Identifier 5 7 0 0 -1 0 0		x		
+        4 ObjectLiteralExpression 9 19 0 0 1 1 0				
+        5 PropertyAssignment 11 16 0 0 -1 0 0				
+        6 Identifier 11 13 0 0 -1 0 0		a		
+        6 NumericLiteral 14 16 0 0 -1 0 0		1		
+        1 EndOfFile 20 20 0 0 -1 0 0				
+    recovery_test.go:101: Node /tmp/adamic-parser-recovery/method-6.ts:  line 19: port "3 ObjectLiteralExpression 22 57 0 0 1 0 0\t\t\t\t", Go "3 ObjectLiteralExpression 22 57 0 0 1 1 0\t\t\t\t"
+        Go context:
+        3 BinaryExpression 15 20 0 0 -1 0 0				
+        4 StringLiteral 15 19 0 0 -1 0 0		b		
+        4 GreaterThanToken 19 20 0 0 -1 0 0				
+        4 Identifier 20 20 0 0 -1 0 0				
+        3 AmpersandToken 20 22 0 0 -1 0 0				
+        3 ObjectLiteralExpression 22 57 0 0 1 1 0				
+        4 PropertyAssignment 24 54 0 0 -1 0 0				
+        5 Identifier 24 26 0 0 -1 0 0		b		
+        5 BinaryExpression 27 54 0 0 -1 0 0				
+        6 BinaryExpression 27 42 0 0 -1 0 0				
+    recovery_test.go:101: native /tmp/adamic-parser-recovery/method-6.ts:  line 19: port "3 ObjectLiteralExpression 22 57 0 0 1 0 0\t\t\t\t", Go "3 ObjectLiteralExpression 22 57 0 0 1 1 0\t\t\t\t"
+        Go context:
+        3 BinaryExpression 15 20 0 0 -1 0 0				
+        4 StringLiteral 15 19 0 0 -1 0 0		b		
+        4 GreaterThanToken 19 20 0 0 -1 0 0				
+        4 Identifier 20 20 0 0 -1 0 0				
+        3 AmpersandToken 20 22 0 0 -1 0 0				
+        3 ObjectLiteralExpression 22 57 0 0 1 1 0				
+        4 PropertyAssignment 24 54 0 0 -1 0 0				
+        5 Identifier 24 26 0 0 -1 0 0		b		
+        5 BinaryExpression 27 54 0 0 -1 0 0				
+        6 BinaryExpression 27 42 0 0 -1 0 0				
+--- FAIL: TestMethodRecoveryAgrees (24.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	24.177s
+FAIL

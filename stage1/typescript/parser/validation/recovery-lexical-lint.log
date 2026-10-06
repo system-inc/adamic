@@ -1,0 +1,2 @@
+/workspace/adamic/stage1/typescript/parser/parser.ts:381:17 error no-case-declarations A `let`, `const`, `class`, or `function` declared directly in a case clause is scoped to the whole switch, not to this arm. Every other arm can see the binding, but only this arm initializes it, so a sibling arm that reaches it throws on a binding that appears to be in scope. Wrap this clause's body in braces to scope the binding to the arm that declares it.
+✗ ☠️ 0.1s • 1 finding (276 rules • 14 checked) • 100% Adamic-ready (13 of 13) • ⚠ only 14 of 114 files
