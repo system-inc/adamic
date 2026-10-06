@@ -44,7 +44,8 @@ static unsigned unit_at(const adamic_string *string, size_t offset, bool low) {
 double adamic_string_char_code(const adamic_string *string, double position) {
 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
 	position = isnan(position) ? 0 : trunc(position);
-	size_t length = string->units != 0 ? string->units - 1 : adamic_string_units(string);
+	size_t known = adamic_string_known_units(string);
+	size_t length = known != 0 ? known - 1 : adamic_string_units(string);
 	if (position < 0 || position >= (double)length) {
 		return NAN;
 	}

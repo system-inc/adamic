@@ -130,11 +130,14 @@ func TestParallelChecksCatchMutants(t *testing.T) {
 		race                                                   bool
 	}{
 		{"skip_items_share", "parallel.c", "adamic_share(items);", "/* mutant: publication without preparation */", "map.c", "strings", "4", "WARNING: ThreadSanitizer: data race", true},
+		{"lazy_cache", "string_index.c", "__atomic_load_n(&string->index, __ATOMIC_ACQUIRE)", "string->index", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"plain_shared_count", "heap.c", "__atomic_fetch_add(&heap->references, 1, __ATOMIC_RELAXED);", "heap->references++;", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
-		{"field_cache", "", "static _Thread_local adamic_slot_cache cache;", "static adamic_slot_cache cache;", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
+		{"field_cache", "adamic.h", "__atomic_load_n(&cache->packed, __ATOMIC_RELAXED)", "cache->packed", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"remote_free", "heap.c", "remote_slot *node = malloc(sizeof *node);", "give_local(slot, each); return; remote_slot *node = malloc(sizeof *node);", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"result_order", "parallel.c", "scope->results->elements[index] = result;", "scope->results->elements[scope->items->length - 1 - index] = result;", "map.c", "numbers", "4", "index 0:", false},
 		{"reused_graph", "share.c", "if (visited(&pending, heap)) { continue; }", "if (shared || visited(&pending, heap)) { continue; }", "lifecycle.c", "", "4", "", false},
+		{"fixed_grain", "parallel.c", "return grain == 0 ? 1 : grain > 256 ? 256 : grain;", "return 256;", "scaling.c", "", "4", "", false},
+		{"eager_strings", "share.c", "if (!shared) {", "if (!shared && heap->kind == adamic_kind_string) { adamic_string_prepare_shared((adamic_string *)heap); } if (!shared) {", "scaling.c", "", "4", "", false},
 		{"one_worker", "parallel.c", "if (thread_count == 1) { return; }", "if (thread_count == 1) { thread_count = 2; }", "map.c", "numbers", "1", "", false},
 	}
 	for _, mutant := range mutants {

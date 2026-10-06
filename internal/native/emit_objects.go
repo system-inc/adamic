@@ -249,6 +249,6 @@ func (e *emitter) methodThunk(function int) string {
 func (e *emitter) cache() string {
 	e.temporaries++
 	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
-	e.declarations = append(e.declarations, fmt.Sprintf("static _Thread_local adamic_slot_cache %s;", name))
+	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
 	return name
 }

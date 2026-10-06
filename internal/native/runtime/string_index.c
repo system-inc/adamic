@@ -34,20 +34,7 @@
 #define CURSOR 1
 #endif
 
-struct adamic_string_index {
-	// The last code point found: its first unit, and its byte offset.
-	size_t units;
-	size_t cursor_unit;
-	size_t cursor_offset;
-	// checkpoints[k] is where unit k * STEP is: the byte offset of the code point holding it, shifted
-	// left once, and 1 when that unit is the low half of a surrogate pair, whose code point starts a
-	// unit earlier.
-	size_t count;
-	// No supplementary points: each unit is a direct read of this compact UTF-16 view.
-	// Lone surrogates are BMP units too. The byte checkpoints still serve slices and searches.
-	uint16_t *bmp;
-	uint32_t checkpoints[];
-};
+
 
 static size_t width(unsigned char lead) {
 	return lead < 0x80 ? 1 : lead < 0xe0 ? 2 : lead < 0xf0 ? 3 : 4;

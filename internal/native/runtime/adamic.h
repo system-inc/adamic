@@ -200,9 +200,14 @@ void adamic_object_free_children(adamic_object *object, void (*release)(void *))
 // adamic_slot_cache remembers, at one place in the program that reads a field, where the field was in
 // the last shape seen there.
 typedef struct adamic_slot_cache {
-	const adamic_shape *shape;
-	size_t index;
+	uint64_t packed;
 } adamic_slot_cache;
+#define ADAMIC_SLOT_SHAPE_MASK UINT64_C(0x0000ffffffffffff)
+_Static_assert(sizeof(uintptr_t) <= sizeof(uint64_t), "slot cache requires pointers of at most 64 bits");
+_Static_assert(__atomic_always_lock_free(sizeof(uint64_t), 0), "slot cache requires lock-free 64-bit atomics");
+// One relaxed word contains both the immutable shape identity and its slot. Large
+// slot indices are simply not cached; shape addresses outside 48 bits are refused.
+void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape, size_t index);
 
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
@@ -246,8 +251,9 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name);
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
-	if (cache->shape == object->shape) {
-		return &((adamic_object *)object)->slots[cache->index];
+	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
+	if ((packed & ADAMIC_SLOT_SHAPE_MASK) == (uintptr_t)object->shape) {
+		return &((adamic_object *)object)->slots[packed >> 48];
 	}
 	return adamic_object_find(object, name, cache);
 }
@@ -511,6 +517,21 @@ double adamic_maybe_number_pack(adamic_maybe_number value);
 adamic_maybe_number adamic_maybe_number_unpack(double packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
 
+struct adamic_string_index {
+	// The last code point found: its first unit, and its byte offset.
+	size_t units;
+	size_t cursor_unit;
+	size_t cursor_offset;
+	// checkpoints[k] is where unit k * STEP is: the byte offset of the code point holding it, shifted
+	// left once, and 1 when that unit is the low half of a surrogate pair, whose code point starts a
+	// unit earlier.
+	size_t count;
+	// No supplementary points: each unit is a direct read of this compact UTF-16 view.
+	// Lone surrogates are BMP units too. The byte checkpoints still serve slices and searches.
+	uint16_t *bmp;
+	uint32_t checkpoints[];
+};
+
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 //
 // length is the count of units, once it's been made, inline; and charCodeAt of an ASCII string (its
@@ -520,11 +541,22 @@ bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean 
 // length truncates to its index as (size_t) does.
 size_t adamic_string_units(const adamic_string *string);
 double adamic_string_char_code(const adamic_string *string, double position);
+// A shared string publishes length and position metadata together in its index.
+// Keep warm length and ASCII reads inline, without writing its plain units field.
+static inline size_t adamic_string_known_units(const adamic_string *string) {
+	if (string->units != 0) { return string->units; }
+	if (adamic_is_shared(&string->heap)) {
+		struct adamic_string_index *index = __atomic_load_n(&string->index, __ATOMIC_ACQUIRE);
+		if (index != NULL && index != ADAMIC_LITERAL_INDEX) { return index->units + 1; }
+	}
+	return 0;
+}
 static inline double adamic_string_length(const adamic_string *string) {
-	return string->units != 0 ? (double)(string->units - 1) : (double)adamic_string_units(string);
+	size_t units = adamic_string_known_units(string);
+	return units != 0 ? (double)(units - 1) : (double)adamic_string_units(string);
 }
 static inline double adamic_string_char_code_at(const adamic_string *string, double position) {
-	if (string->units == string->length + 1 && position >= 0 && position < (double)string->length) {
+	if (adamic_string_known_units(string) == string->length + 1 && position >= 0 && position < (double)string->length) {
 		return (double)(unsigned char)string->bytes[(size_t)position];
 	}
 	return adamic_string_char_code(string, position);
