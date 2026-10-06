@@ -448,7 +448,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 		case reflect.Struct:
 			switch value.Type() {
 			case callType:
-				if program.Functions[int(value.FieldByName("Function").Int())].MayThrow {
+				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true
 				}
 			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:

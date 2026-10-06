@@ -9,11 +9,12 @@ import (
 )
 
 // keyable reports whether values of a type can be a Map's keys or a Set's elements: strings, numbers
-// and booleans, compared as === compares them (numbers by SameValueZero), and objects, arrays, maps
+// and booleans, plus packed number | undefined, compared as === compares them (numbers by
+// SameValueZero), and objects, arrays, maps
 // and functions, each its own key, compared by identity.
 func keyable(valueType ir.Type) bool {
 	switch valueType {
-	case ir.String, ir.Number, ir.Boolean, ir.Object, ir.Array, ir.Map, ir.Closure:
+	case ir.String, ir.Number, ir.Boolean, ir.MaybeNumber, ir.Object, ir.Array, ir.Map, ir.Closure:
 		return true
 	}
 	return false
@@ -24,6 +25,13 @@ func keyable(valueType ir.Type) bool {
 // entries, and map.keys(), map.values(), map.entries(), set.keys() and set.values().
 func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 	node = ast.SkipParentheses(node)
+	if element, iterator := l.libraryIteratorElement(node); iterator {
+		value, err := l.expression(node)
+		if err != nil {
+			return nil, 0, err
+		}
+		return l.libraryIteratorArray(node, value, element), element, nil
+	}
 	if node.Kind == ast.KindCallExpression && len(node.AsCallExpression().Arguments.Nodes) == 0 {
 		if callee := ast.SkipParentheses(node.AsCallExpression().Expression); callee.Kind == ast.KindPropertyAccessExpression {
 			receiver := callee.AsPropertyAccessExpression().Expression
@@ -71,7 +79,11 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 func (l *lowering) collectionPart(node *ast.Node, receiver *ast.Node, part string) (ir.Expression, ir.Type, error) {
 	if l.isSet(receiver) {
 		if part == "entries" {
-			return nil, 0, l.notYet(node, "a Set's entries ([element, element] pairs) outside a for...of")
+			iterator, _, err := l.libraryCollectionIterator(node, receiver, part)
+			if err != nil {
+				return nil, 0, err
+			}
+			return l.libraryIteratorArray(node, iterator, ir.Object), ir.Object, nil
 		}
 		element, err := l.setElement(receiver)
 		if err != nil {
@@ -126,8 +138,15 @@ func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, val
 func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
 	source = ast.SkipParentheses(source)
 	sourceType := l.checker.GetTypeAtLocation(source)
-	if l.checker.IsArrayType(sourceType) {
+	if l.checker.IsArrayType(sourceType) || l.isLibraryType(sourceType, "MapIterator", "SetIterator", "Set", "ReadonlySet") {
 		element := l.checker.GetElementTypeOfArrayType(sourceType)
+		if element == nil {
+			arguments := l.typeArguments(sourceType)
+			if len(arguments) != 1 {
+				return 0, 0, false
+			}
+			element = arguments[0]
+		}
 		if !checker.IsTupleType(element) {
 			return 0, 0, false
 		}
@@ -146,8 +165,12 @@ func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
 		}
 		source = callee.AsPropertyAccessExpression().Expression
 	}
-	if representation, _ := l.representation(l.checker.GetTypeAtLocation(source)); representation != ir.Map || l.isSet(source) {
+	if representation, _ := l.representation(l.checker.GetTypeAtLocation(source)); representation != ir.Map {
 		return 0, 0, false
+	}
+	if l.isSet(source) {
+		element, err := l.setElement(source)
+		return element, element, err == nil
 	}
 	key, value, err := l.mapTypes(source)
 	return key, value, err == nil
@@ -176,6 +199,9 @@ func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string,
 			return nil, true, l.notYet(node, "clear with arguments")
 		}
 		return ir.MapClear{Map: collection}, true, nil
+	}
+	if len(arguments) == 2 {
+		return l.libraryForEachThisArg(node, receiver, set)
 	}
 	if len(arguments) != 1 {
 		return nil, true, l.notYet(node, "forEach with other than one callback")
@@ -279,6 +305,9 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			property := l.checker.GetPropertyOfType(destructured, field)
 			if property == nil {
 				return nil, l.notYet(binding, "destructuring a field the type doesn't name")
+			}
+			if l.inheritedLibrarySymbol(property) {
+				return nil, l.prototypeRead(binding, field)
 			}
 			fieldType = l.checker.GetTypeOfSymbol(property)
 		}

@@ -1,0 +1,13 @@
+const values = [1, 2, 3, 2];
+let visited = '';
+console.log(`${values.findLast((value: number, index: number, all: number[]): boolean => { visited += `${index}:${value}:${all === values}|`; return value === 2; }) ?? -1} ${visited}`);
+visited = '';
+console.log(`${values.findLastIndex((value: number, index: number): boolean => { visited += `${index}|`; return value === 1; })} ${visited}`);
+console.log(`${values.findLast((value: number): boolean => value === 10) ?? -1} ${values.findLastIndex((value: number): boolean => value === 10)}`);
+const empty: number[] = [];
+console.log(`${empty.findLast((value: number): boolean => value > 0) ?? -1} ${empty.findLastIndex((value: number): boolean => value > 0)}`);
+const strings = ['x'.repeat(2), 'y'.repeat(2)];
+const found = strings.findLast((value: string): boolean => { strings.splice(0, 2); return value.length > 0; });
+console.log(found ?? 'absent');
+const change = [1, 2, 3];
+console.log(`${change.findLastIndex((value: number, index: number): boolean => { change[0] = 8; change.push(9); return value === 8; })} ${change.join('|')}`);

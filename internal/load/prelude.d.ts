@@ -6,6 +6,16 @@ declare const console: {
 	error(message: string): void;
 };
 
+// The supported process surface. Environment and stream observations are read-only.
+// Nonterminal streams have no isTTY value, as on Node.
+declare const process: {
+	exitCode: number | undefined;
+	readonly exit: (code?: number) => never;
+	readonly stdout: { readonly isTTY: true | undefined };
+	readonly stderr: { readonly isTTY: true | undefined };
+	readonly env: { readonly [name: string]: string | undefined };
+};
+
 declare module 'adamic' {
 	export function panic(message: string): never;
 
@@ -26,4 +36,48 @@ declare module 'adamic' {
 		readonly adamicWeak?: never;
 	}
 	export type Weak<Target extends object> = (Target & WeakBrand) | undefined;
+}
+
+// ES2025 Set operations. Stage 0 accepts concrete library Sets with matching representations.
+interface Set<T> {
+	union<U>(other: ReadonlySetLike<U>): Set<T | U>;
+	intersection<U>(other: ReadonlySetLike<U>): Set<T & U>;
+	difference<U>(other: ReadonlySetLike<U>): Set<T>;
+	symmetricDifference<U>(other: ReadonlySetLike<U>): Set<T | U>;
+	isSubsetOf<U>(other: ReadonlySetLike<U>): boolean;
+	isSupersetOf<U>(other: ReadonlySetLike<U>): boolean;
+	isDisjointFrom<U>(other: ReadonlySetLike<U>): boolean;
+}
+interface ReadonlySet<T> {
+	union<U>(other: ReadonlySetLike<U>): Set<T | U>;
+	intersection<U>(other: ReadonlySetLike<U>): Set<T & U>;
+	difference<U>(other: ReadonlySetLike<U>): Set<T>;
+	symmetricDifference<U>(other: ReadonlySetLike<U>): Set<T | U>;
+	isSubsetOf<U>(other: ReadonlySetLike<U>): boolean;
+	isSupersetOf<U>(other: ReadonlySetLike<U>): boolean;
+	isDisjointFrom<U>(other: ReadonlySetLike<U>): boolean;
+}
+
+// Built-in collection iterators always provide done, including false on a yielded result.
+// Requiring it here avoids an optional boolean slot while preserving the ECMAScript result union.
+type AdamicCollectionIteratorResult<T> =
+	| { readonly done: false; readonly value: T }
+	| { readonly done: true; readonly value: undefined };
+interface MapIterator<T> {
+	next(): AdamicCollectionIteratorResult<T>;
+}
+interface SetIterator<T> {
+	next(): AdamicCollectionIteratorResult<T>;
+}
+
+interface ReadonlySetLike<T> {
+	readonly size: number;
+	readonly has: (value: T) => boolean;
+	readonly keys: () => Iterator<T>;
+}
+
+// stringify can return undefined. The bundled TypeScript declaration's plain string result
+// is not a proven type, so this overload keeps callers honest about the missing result.
+interface JSON {
+	stringify(value?: unknown, replacer?: unknown, space?: unknown): string | undefined;
 }

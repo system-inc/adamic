@@ -223,27 +223,29 @@ function report(name: string, seen: number, sum: number, sign: number, last: num
 	if err != nil {
 		t.Fatalf("Lower: %v", err)
 	}
-	code := native.C(program)
-	integers := 0
-	for name, integer := range expected {
-		kept := regexp.MustCompile(`int64_t adamic_local_\d+_` + name + ` =`).MatchString(code)
-		if kept != integer {
-			t.Errorf("%s: kept in an integer %t, want %t", name, kept, integer)
+	cacheProbe(t, path, program, "", func() {
+		code := native.C(program)
+		integers := 0
+		for name, integer := range expected {
+			kept := regexp.MustCompile(`int64_t adamic_local_\d+_` + name + ` =`).MatchString(code)
+			if kept != integer {
+				t.Errorf("%s: kept in an integer %t, want %t", name, kept, integer)
+			}
+			if integer {
+				integers++
+			}
 		}
-		if integer {
-			integers++
+		oracle := onNode(t, path)
+		sanitized, _ := natively(t, program)
+		release := released(t, program)
+		if difference := disagreement(oracle, sanitized); difference != "" {
+			t.Errorf("sanitized: %s\n%s", difference, lineDifferences(oracle.stdout, sanitized.stdout))
 		}
-	}
-	oracle := onNode(t, path)
-	sanitized, _ := natively(t, program)
-	release := released(t, program)
-	if difference := disagreement(oracle, sanitized); difference != "" {
-		t.Errorf("sanitized: %s\n%s", difference, lineDifferences(oracle.stdout, sanitized.stdout))
-	}
-	if difference := disagreement(oracle, release); difference != "" {
-		t.Errorf("release: %s\n%s", difference, lineDifferences(oracle.stdout, release.stdout))
-	}
-	t.Logf("%d loops, %d kept in an integer", cases, integers)
+		if difference := disagreement(oracle, release); difference != "" {
+			t.Errorf("release: %s\n%s", difference, lineDifferences(oracle.stdout, release.stdout))
+		}
+		t.Logf("%d loops, %d kept in an integer", cases, integers)
+	})
 }
 
 // lineDifferences is the first few lines where two outputs differ.

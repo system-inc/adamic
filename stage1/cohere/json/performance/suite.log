@@ -1,0 +1,195 @@
+=== RUN   TestUpstreamNumericSeparatorGap
+=== PAUSE TestUpstreamNumericSeparatorGap
+=== RUN   TestUpstreamRepositoryCorpusParity
+=== PAUSE TestUpstreamRepositoryCorpusParity
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants
+=== RUN   TestDocumentedStageZeroGaps
+=== PAUSE TestDocumentedStageZeroGaps
+=== RUN   TestPortMatchesGoCohere
+=== PAUSE TestPortMatchesGoCohere
+=== RUN   TestThreePortMutantsAreCaught
+=== PAUSE TestThreePortMutantsAreCaught
+=== RUN   TestAdditionalJSONBoundaries
+=== PAUSE TestAdditionalJSONBoundaries
+=== RUN   TestSingleFileStdoutDriver
+=== PAUSE TestSingleFileStdoutDriver
+=== CONT  TestUpstreamNumericSeparatorGap
+=== CONT  TestPortMatchesGoCohere
+=== CONT  TestAdditionalJSONBoundaries
+=== CONT  TestSingleFileStdoutDriver
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants
+=== NAME  TestPortMatchesGoCohere
+    port_test.go:200: repository groups: map[Adamic:4 TypeScript:202 cohere:835]; generated 34; total 1075
+=== NAME  TestSingleFileStdoutDriver
+    port_test.go:385: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 2 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.024s
+=== NAME  TestExternalComparisonCatchesThreePrinterMutants
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.029s
+    audit_test.go:176: Prettier: 4 texts in 0.073s
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants/missing_property_space
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants/missing_property_space
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser
+=== CONT  TestDocumentedStageZeroGaps
+=== RUN   TestDocumentedStageZeroGaps/multiplePush.ts
+=== PAUSE TestDocumentedStageZeroGaps/multiplePush.ts
+=== RUN   TestDocumentedStageZeroGaps/emptyFallback.ts
+=== PAUSE TestDocumentedStageZeroGaps/emptyFallback.ts
+=== RUN   TestDocumentedStageZeroGaps/repeatInTry.ts
+=== PAUSE TestDocumentedStageZeroGaps/repeatInTry.ts
+=== CONT  TestUpstreamRepositoryCorpusParity
+=== NAME  TestAdditionalJSONBoundaries
+    port_test.go:331: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 72 texts in 0.002s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.008s
+=== NAME  TestUpstreamNumericSeparatorGap
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 6 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.007s
+=== NAME  TestUpstreamRepositoryCorpusParity
+    audit_test.go:138: repository groups: map[Adamic:4 TypeScript:202 cohere:835]; generated 34; total 1075
+=== NAME  TestUpstreamNumericSeparatorGap
+    audit_test.go:176: Prettier: 6 texts in 0.103s
+    audit_test.go:61: probe.json [1__0]: Go formats "[1__0]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: package.json [1__0]: Go formats "[\n  1__0\n]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: probe.json [1_]: Go formats "[1_]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: package.json [1_]: Go formats "[\n  1_\n]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: probe.json [0x_1]: Go formats "[0x_1]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:4)
+    audit_test.go:61: package.json [0x_1]: Go formats "[\n  0x_1\n]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:4)
+--- PASS: TestUpstreamNumericSeparatorGap (2.90s)
+=== CONT  TestThreePortMutantsAreCaught
+    port_test.go:265: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.006s
+=== RUN   TestThreePortMutantsAreCaught/missing_final_newline
+=== PAUSE TestThreePortMutantsAreCaught/missing_final_newline
+=== RUN   TestThreePortMutantsAreCaught/missing_colon_space
+=== PAUSE TestThreePortMutantsAreCaught/missing_colon_space
+=== RUN   TestThreePortMutantsAreCaught/wrong_filename_parser
+=== PAUSE TestThreePortMutantsAreCaught/wrong_filename_parser
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.024s
+    audit_test.go:176: Prettier: 4 texts in 0.099s
+    audit_test.go:310: caught on package.json: Go "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}", Prettier "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}\n"
+    audit_test.go:310: caught on package.json: Go "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}", Prettier "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}\n"
+=== CONT  TestDocumentedStageZeroGaps/multiplePush.ts
+    gaps_test.go:41: /workspace/adamic/stage1/cohere/json/gaps/multiplePush.ts:2:1: stage 0 can't lower push with other than one value yet; Node "a,b\n"
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.005s
+    audit_test.go:176: Prettier: 4 texts in 0.063s
+    audit_test.go:310: caught on package.json: Go "{ \"a\": 1, \"b\": [2, 3] }\n", Prettier "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}\n"
+    audit_test.go:310: caught on package.json: Go "{ \"text\": \"é😀\", \"escaped\": \"\\u0041\", \"empty\": [] }\n", Prettier "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}\n"
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants/missing_property_space
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.009s
+    audit_test.go:176: Prettier: 4 texts in 0.070s
+    audit_test.go:310: caught on package.json: Go "{\n  \"a\":1,\n  \"b\":[\n    2,\n    3\n  ]\n}\n", Prettier "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}\n"
+    audit_test.go:310: caught on package.json: Go "{\n  \"text\":\"é😀\",\n  \"escaped\":\"\\u0041\",\n  \"empty\":[]\n}\n", Prettier "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}\n"
+--- PASS: TestExternalComparisonCatchesThreePrinterMutants (2.58s)
+    --- PASS: TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline (1.82s)
+    --- PASS: TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser (1.86s)
+    --- PASS: TestExternalComparisonCatchesThreePrinterMutants/missing_property_space (1.95s)
+=== CONT  TestDocumentedStageZeroGaps/emptyFallback.ts
+    gaps_test.go:41: /workspace/adamic/stage1/cohere/json/gaps/emptyFallback.ts:2:29: stage 0 can't lower an array of never yet; Node "0\n"
+=== CONT  TestDocumentedStageZeroGaps/repeatInTry.ts
+    gaps_test.go:41: /workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet; Node "xxx\n"
+=== CONT  TestThreePortMutantsAreCaught/missing_final_newline
+--- PASS: TestDocumentedStageZeroGaps (0.00s)
+    --- PASS: TestDocumentedStageZeroGaps/multiplePush.ts (0.14s)
+    --- PASS: TestDocumentedStageZeroGaps/emptyFallback.ts (0.19s)
+    --- PASS: TestDocumentedStageZeroGaps/repeatInTry.ts (0.13s)
+--- PASS: TestSingleFileStdoutDriver (21.29s)
+=== CONT  TestThreePortMutantsAreCaught/wrong_filename_parser
+--- PASS: TestAdditionalJSONBoundaries (21.92s)
+=== CONT  TestThreePortMutantsAreCaught/missing_colon_space
+=== NAME  TestPortMatchesGoCohere
+    port_test.go:202: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 1075 texts in 18.550s
+        --- PASS: TestAdamicJSONAudit (20.07s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	20.140s
+=== NAME  TestUpstreamRepositoryCorpusParity
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 1075 texts in 18.680s
+        --- PASS: TestAdamicJSONAudit (19.64s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	19.690s
+=== NAME  TestThreePortMutantsAreCaught/missing_final_newline
+    port_test.go:299: Node caught missing final newline on probe.json: "ok\t{ \"a\": 1, \"b\": [2, 3] }"; Go "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"
+    port_test.go:299: Node caught missing final newline on package.json: "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+    port_test.go:299: Node caught missing final newline on package.json: "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+    port_test.go:299: Node caught missing final newline on probe.json: "ok\t[1__0]"; Go "ok\t[1__0]\\n"
+    port_test.go:299: native caught missing final newline on probe.json: "ok\t{ \"a\": 1, \"b\": [2, 3] }"; Go "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"
+    port_test.go:299: native caught missing final newline on package.json: "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+    port_test.go:299: native caught missing final newline on package.json: "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+    port_test.go:299: native caught missing final newline on probe.json: "ok\t[1__0]"; Go "ok\t[1__0]\\n"
+=== NAME  TestThreePortMutantsAreCaught/wrong_filename_parser
+    port_test.go:299: Node caught wrong filename parser on package.json: "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+    port_test.go:299: Node caught wrong filename parser on package.json: "ok\t{ \"text\": \"é😀\", \"empty\": [] }\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+    port_test.go:299: native caught wrong filename parser on package.json: "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+    port_test.go:299: native caught wrong filename parser on package.json: "ok\t{ \"text\": \"é😀\", \"empty\": [] }\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+=== NAME  TestThreePortMutantsAreCaught/missing_colon_space
+    port_test.go:299: Node caught missing colon space on probe.json: "ok\t{ \"a\":1, \"b\":[2, 3] }\\n"; Go "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"
+    port_test.go:299: Node caught missing colon space on package.json: "ok\t{\\n  \"a\":1,\\n  \"b\":[\\n    2,\\n    3\\n  ]\\n}\\n"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+    port_test.go:299: Node caught missing colon space on package.json: "ok\t{\\n  \"text\":\"é😀\",\\n  \"empty\":[]\\n}\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+    port_test.go:299: native caught missing colon space on probe.json: "ok\t{ \"a\":1, \"b\":[2, 3] }\\n"; Go "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"
+    port_test.go:299: native caught missing colon space on package.json: "ok\t{\\n  \"a\":1,\\n  \"b\":[\\n    2,\\n    3\\n  ]\\n}\\n"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+    port_test.go:299: native caught missing colon space on package.json: "ok\t{\\n  \"text\":\"é😀\",\\n  \"empty\":[]\\n}\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+--- PASS: TestThreePortMutantsAreCaught (2.40s)
+    --- PASS: TestThreePortMutantsAreCaught/missing_final_newline (23.77s)
+    --- PASS: TestThreePortMutantsAreCaught/wrong_filename_parser (21.47s)
+    --- PASS: TestThreePortMutantsAreCaught/missing_colon_space (21.34s)
+=== NAME  TestUpstreamRepositoryCorpusParity
+    audit_test.go:176: Prettier: 1075 texts in 31.797s
+    audit_test.go:154: difference: stage1/cohere/json/gaps/numeric-separators.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/12/probe.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/12/package.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/13/probe.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/13/package.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:3)")
+    audit_test.go:154: difference: generated/14/probe.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:4)")
+    audit_test.go:154: difference: generated/14/package.json (Go error="", Prettier error="A numeric separator is only allowed between two digits. (1:4)")
+    audit_test.go:154: difference: generated/16/probe.json (Go error="json: empty input", Prettier error="")
+    audit_test.go:154: difference: generated/16/package.json (Go error="json: empty input", Prettier error="")
+    audit_test.go:172: exactly nine known upstream differences in 1075 texts
+--- PASS: TestUpstreamRepositoryCorpusParity (55.51s)
+=== NAME  TestPortMatchesGoCohere
+    port_test.go:242: round 0 native 1075 texts in 11.045s: 97.33 texts/s
+    port_test.go:247: round 0 Node 1075 texts in 7.205s: 149.20 texts/s
+    port_test.go:252: round 0 Go 1075 texts in 11.116s: 96.71 texts/s
+    port_test.go:242: round 1 native 1075 texts in 11.644s: 92.32 texts/s
+    port_test.go:247: round 1 Node 1075 texts in 10.817s: 99.38 texts/s
+    port_test.go:252: round 1 Go 1075 texts in 13.065s: 82.28 texts/s
+    port_test.go:242: round 2 native 1075 texts in 11.550s: 93.08 texts/s
+    port_test.go:247: round 2 Node 1075 texts in 6.751s: 159.24 texts/s
+    port_test.go:252: round 2 Go 1075 texts in 10.373s: 103.63 texts/s
+    port_test.go:254: initial Node 15.228s; 1075 texts identical on Go, Node, native and JS backend
+--- PASS: TestPortMatchesGoCohere (292.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	292.082s

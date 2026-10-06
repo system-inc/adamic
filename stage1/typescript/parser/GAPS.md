@@ -52,11 +52,11 @@ as methods. Node called them normally, but native exited 70 with
 `compiler bug: a field the checker proved is there is missing`. Changing the
 interface method syntax to strict function properties does not fix dispatch.
 `gaps/4_class_interface_method.ts` reduces this to a class method accessed
-through an interface. `TestClassMethodInterfaceGap` requires Node's `1` and
-native's exact panic under sanitizers. This is an observed compiler/runtime
-bug, not an Adamic language refusal, and internal code is not changed here.
-Workaround: lookahead receives the concrete Scanner class and calls its
-methods directly, with scanner-only save/restore helpers.
+through an interface. Integration 13 closed this gap by preserving the method
+table on constructed class instances. `TestClassMethodInterfaceAgreesWithNode`
+now requires native to print Node's `1` under sanitizers with no stderr.
+The earlier port used the concrete Scanner class with scanner-only save/restore
+helpers; that interface remains in the port.
 
 ## Canonical answer protocol
 

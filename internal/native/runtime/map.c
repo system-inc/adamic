@@ -32,6 +32,7 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->string_keys = string_keys;
 	map->reference_keys = string_keys;
 	map->boolean_keys = false;
+	map->maybe_number_keys = false;
 	map->reference_values = reference_values;
 	map->iterating = 0;
 	return map;
@@ -43,6 +44,12 @@ adamic_map *adamic_map_new_booleans(bool reference_values) {
 	return map;
 }
 
+adamic_map *adamic_map_new_maybe_numbers(bool reference_values) {
+	adamic_map *map = adamic_map_new(false, reference_values);
+	map->maybe_number_keys = true;
+	return map;
+}
+
 adamic_map *adamic_map_new_identity(bool reference_values) {
 	adamic_map *map = adamic_map_new(false, reference_values);
 	map->reference_keys = true;
@@ -50,6 +57,9 @@ adamic_map *adamic_map_new_identity(bool reference_values) {
 }
 
 static uint64_t hash_key(const adamic_map *map, adamic_value key) {
+	if (map->maybe_number_keys) {
+		return adamic_map_maybe_key_hash(key.number);
+	}
 	uint64_t hash = 14695981039346656037ull;
 	if (map->string_keys) {
 		const adamic_string *string = key.reference;
@@ -85,6 +95,9 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 }
 
 static bool same_key(const adamic_map *map, adamic_value left, adamic_value right) {
+	if (map->maybe_number_keys) {
+		return adamic_map_maybe_key_equal(left.number, right.number);
+	}
 	if (map->string_keys) {
 		return adamic_string_equal(left.reference, right.reference);
 	}
@@ -239,11 +252,15 @@ adamic_map_iterator *adamic_map_iterate(adamic_map *map) {
 	adamic_map_iterator *iterator = adamic_allocate(sizeof *iterator, adamic_kind_map_iterator);
 	iterator->map = adamic_retain(map);
 	iterator->next = 0;
+	iterator->exhausted = false;
 	map->iterating++;
 	return iterator;
 }
 
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, adamic_value *key, adamic_value *value) {
+	if (iterator->exhausted) {
+		return false;
+	}
 	// used is read each time, so an entry added since the last step is still ahead.
 	while (iterator->next < iterator->map->used) {
 		const adamic_map_entry *entry = &iterator->map->entries[iterator->next++];
@@ -253,6 +270,7 @@ bool adamic_map_iterator_next(adamic_map_iterator *iterator, adamic_value *key, 
 			return true;
 		}
 	}
+	iterator->exhausted = true;
 	return false;
 }
 

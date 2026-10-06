@@ -1,0 +1,109 @@
+function show(match: RegExpExecArray | null): string {
+ if (match === null) return 'null';
+ return `${match.index}:${match.input}:${match.map((capture) => capture ?? 'undefined').join('|')}`;
+}
+console.log(show(/(a|(b))+/.exec('aba')));
+console.log(show(/(?<=([ab]+)([bc]+))$/.exec('abc')));
+console.log(show(/(?=(a+))a*b\1/.exec('baabac')));
+console.log(show(/\1(a)/.exec('a')));
+console.log(show(/a+?/.exec('aaa')));
+console.log(`${/k/i.test('K')} ${/k/iu.test('K')} ${/s/i.test('ſ')} ${/s/iu.test('ſ')}`);
+console.log(`${/\p{Script_Extensions=Greek}/u.test('͂')} ${/\p{Alphabetic}/u.test('é')}`);
+console.log(show(/[\p{RGI_Emoji}--\q{🌍}]/v.exec('🌍👩‍💻')));
+console.log(show(/./.exec('🌍')));
+console.log(show(/./u.exec('🌍')));
+console.log(show(/\ud800/u.exec('\ud800')));
+console.log(`${/^b.$/ms.test('a\nb\n')}`);
+const pattern = '(?<word>a)(b)?';
+const named = new RegExp(pattern, 'dg');
+const captured = named.exec('a ab');
+if (captured !== null) {
+ console.log(`${captured.groups?.word} ${captured[2]}`);
+ const indices = captured.indices;
+ if (indices !== undefined) {
+  const pair = indices[1];
+  if (pair !== undefined) console.log(`${pair[0]} ${pair[1]}`);
+ }
+}
+console.log(`${named.lastIndex}`);
+console.log(show(named.exec('a ab')));
+console.log(show(named.exec('a ab')));
+console.log(`${named.lastIndex}`);
+const sticky = /a/y;
+sticky.lastIndex = 1;
+console.log(`${sticky.test('ba')} ${sticky.lastIndex} ${sticky.test('ba')} ${sticky.lastIndex}`);
+const search = /b/g;
+search.lastIndex = 9;
+console.log(`${'abc'.search(search)} ${search.lastIndex}`);
+const globalMatch = 'a a'.match(/a/g);
+if (globalMatch !== null) console.log(`${globalMatch.join('|')} ${'bbb'.match(/a/g) === null}`);
+const nonGlobalMatch = 'aba'.match(/(a)|(b)/);
+if (nonGlobalMatch !== null) console.log(`${nonGlobalMatch[2]}`);
+const all = /(?<x>a)(b)?/dg;
+all.lastIndex = 1;
+const iterator = 'a ab a'.matchAll(all);
+all.lastIndex = 99;
+for (const match of iterator) {
+ console.log(`${show(match)} ${match.groups?.x} ${all.lastIndex}`);
+}
+console.log(`${iterator.next().done}`);
+for (const match of '🌍'.matchAll(/(?:)/gu)) console.log(`${match.index}`);
+console.log('aba'.replace(/(?<x>a)|(b)/g, '[$&,$1,$2,$<x>,$<missing>,$$]'));
+console.log('abc'.replace(/(b)/, '$`<$1>$\''));
+console.log('aba'.replaceAll(/(a)/g, '$01-$10-$99-$0'));
+console.log('ab'.replace(/a/, '$<x>'));
+console.log('ab'.replace(/(?<x>a)/, '$<x'));
+console.log('🌍'.replace(/(?:)/gu, '-'));
+console.log('a,b;;c'.split(/([,;])|(z)/).map((value) => value ?? 'undefined').join('|'));
+console.log('abc'.split(/(?:)/).join('|'));
+console.log('🌍'.split(/(?:)/u).join('|'));
+console.log('a,b,c'.split(/(,)/, 3).join('|'));
+console.log(`${''.split(/(?:)/).length} ${''.split(/x/).length}`);
+console.log(`${'abc'.split(/b/, 0).length} ${'abc'.split(/b/, -1).join('|')}`);
+const copied = named;
+console.log(`${copied === named} ${copied.source} ${copied.flags}`);
+function made(): RegExp { return /a/g; }
+console.log(`${made() === made()}`);
+
+console.log(`${new RegExp('\\/').source} ${new RegExp('/').source} ${/\//.source}`);
+console.log(`${/z/.exec('a') === undefined}`);
+function missing(value: string | undefined): boolean { return value === null; }
+console.log(`${missing(undefined)}`);
+
+const absent = /(?<word>a)(?<other>b)?/d.exec('a');
+if (absent !== null) {
+ console.log(`${absent.groups?.missing} ${absent.groups?.['word']} ${absent.groups?.other}`);
+ const positions = absent.indices;
+ if (positions !== undefined) {
+  console.log(`${positions.groups?.missing === undefined}`);
+ }
+}
+
+console.log(`${/(.)\1/i.test('KK')} ${/(.)\1/iu.test('KK')}`);
+for (const m of 'aa'.matchAll(/a/g)) { console.log(`${m.index}`); break; }
+for (const m of 'aa'.matchAll(/a/g)) { if (m.index === 0) continue; console.log(`${m.index}`); }
+function early(): string { for (const m of 'aa'.matchAll(/a/g)) return m[0] ?? 'undefined'; return 'none'; }
+console.log(early());
+
+console.log(new RegExp('\\\n').source);
+console.log(`${new RegExp('a', undefined).test('a')} ${new RegExp('', 'g').source}`);
+function limited(limit?: number): string { return 'a,b,c'.split(/(,)/, limit).join('|'); }
+console.log(`${limited()} ${limited(3)}`);
+
+const direct = 'a a'.matchAll(/a/g);
+const firstValue = direct.next().value;
+if (firstValue !== undefined) console.log(firstValue.map(value => value ?? 'undefined').join('|'));
+console.log(`${direct.next().done} ${direct.next().done}`);
+
+const metadata = 'aba'.match(/(a)|(b)/);
+if (metadata !== null) console.log(`${metadata.index}:${metadata.input}`);
+const globalMetadata = 'aba'.match(/a/g);
+if (globalMetadata !== null) console.log(`${globalMetadata.index}:${globalMetadata.input}`);
+console.log(`${'aba'.match(/a/g)?.index} ${'aba'.match(/a/)?.index} ${'zzz'.match(/a/)?.index}`);
+const plainYield: IteratorYieldResult<number> = {value: 42};
+const reorderedYield: IteratorYieldResult<number> = {value: 42, done: false};
+console.log(`${plainYield.done} ${reorderedYield.done}`);
+
+// Regex objects elsewhere do not change this literal's proven plain-object origin.
+const emptyPlain = {};
+console.log(emptyPlain.toString());

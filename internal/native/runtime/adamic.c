@@ -198,3 +198,10 @@ _Noreturn void adamic_unreachable(void) {
 	static const char message[] = "compiler bug: a function ended without returning";
 	adamic_panic(message, sizeof message - 1);
 }
+
+// An explicit exit does not unwind JavaScript frames or run their finally clauses.
+_Noreturn void adamic_process_exit_now(int code) {
+	flush();
+	ADAMIC_COUNT_REPORT();
+	_exit(code);
+}
