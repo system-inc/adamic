@@ -1,8 +1,83 @@
-Native six-pass AST preprocessing and a numeric preorder walker are green.
-5,099 projected AST contexts agree; 4,943 composed documents still agree.
-Three output mutants caught; ASan, UBSan, leak and compiler checks pass.
-Preprocessing: native 1,116/s, Go 1,306/s, original Node 1,724/s.
+Two native slices are green: AST preprocessing and tokenizer input chunking.
+5,099 AST contexts and 79,873 input-chunk cases agree with Go and the original fork.
+Six new output mutants caught; sanitizer, leak and compiler checks pass.
+Chunking: native 130k, Go 157k, original Node 109k texts/s, transport included.
 Printer AstPath, tokenizer events and full mdast construction remain unfinished.
+
+
+Native tokenizer input chunking slice, October 6, 2026
+
+First green slice committed and pushed:
+644be3eb85c96d24ef6bd4feebeaee477cbb5134 Port Markdown AST preprocessing to native numeric trees
+/tmp/markdown-ast-push.log: origin advanced7963d53..644be3e, exit0.
+
+Built inputChunks.ts and testdata/chunks_probe.ts. Ports micromark/lib/preprocess.js
+single complete call with end=true, state for state, no native regular expressions.
+Numeric UTF-16 input preserves every unit, including lone surrogates. Exact text
+chunk boundaries and negative virtual codes compare. Original null EOF is mapped
+explicitly to Go's EOF code0; real NUL becomes65533. Streaming calls are unported.
+Actual Go private preprocess is called through an overlay bridge; actual pinned
+micromark factory li is exposed by reference inside the unchanged original bundle
+in memory, using checked unique anchors. Bundle bytes match the scratch installed
+fork at /tmp/adamic-markdown-blocks-fork. Function bodies/constants are unchanged.
+
+ ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test ./stage1/cohere/markdownblocks -run '^TestMicromarkInputChunks$' -count=1 -v -timeout 20m
+/tmp/markdown-chunks-green.log PASS22.529s,79,873 cases:
+1empty+4,943layout documents+65,536single units+9,330sequences+63column cases.
+Every physical repository/submodule Markdown file is included (876files).
+Native ASan/UBSan, source Node, JS backend, actual original fork and Go agree.
+Leak check is empty. All three native output-only mutants compile and exit0,
+empty stderr, then fail chunk bytes:
+- initial BOM65279 becomes65278: unit/65278 byte0;
+- tab stop divisor4 becomes3: cohere/TypeScript/packages/typescript/vendor/vscode-jsonrpc/README.md byte3765;
+- CRLF condition LF becomesHTAB: cohere/TypeScript/.github/pull_request_template.md byte15.
+Three-run end-to-end rates, identical numeric input/chunk output transport and
+startup included: actualGo147,288.4/native143,932.7/actualoriginalNode126,172.3
+texts/s. These mixed-corpus measurements include many one-unit probes; they are
+not full Markdown parsing rates. Shared machine with another scoped test running.
+/tmp/markdown-chunks-lint.log:276rules,2checked,zero,100%Adamic-ready.
+
+Full tokenizer events, rollback, resolver/subtokenization machinery, full mdast
+and printer AstPath remain unfinished. AST preprocessing is standalone native;
+it has not replaced the existing layout driver's Go preprocessing/path fixtures.
+All original7embedding disagreements/14outputs remain in GAPS.md, embedding off.
+No compiler-owned or prior inline files changed. No PR.
+
+Final checks on the updated Markdown corpus:
+ ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test ./stage1/cohere/markdownblocks -run '^(TestMicromarkInputChunks|TestWholeDocumentOraclePreflight)$' -count=1 -v -timeout 20m
+/tmp/markdown-chunks-final.log PASS97.338s: chunking PASS22.10s, all79,873 cases
+and all3native mutants; source/backend, actualGo/originalfork, sanitizers/leaks pass.
+Final chunk rates Go156,604.2/native130,285.8/originalNode109,166.8 texts/s.
+Whole-source preflight PASS75.22s:953/953off,942/953auto; all7original witnesses,
+all14complete outputs and source hashes retained.11auto disagreements are named.
+The existing preflight's3output-only mutants also rerun: heading prefix caught
+in CLAUDE.md byte1, list marker byte618, fence length byte3022. These are reruns,
+not counted among the6new native mutants. Full-source Go311.1/Node199.1 docs/s;
+no native full-source parser exists, so those are baselines only.
+
+ ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test ./stage1/cohere/markdownblocks -run '^(TestMarkdownASTPreprocessing|TestMarkdownWhitespaceLayout)$/^$' -count=1 -v -timeout 20m
+/tmp/markdown-ast-chunks-final-regression.log PASS308.052s:
+AST parent PASS144.66s,5,099contexts, all original/native/source/backend/Go facts
+oracles and leak checks. Final AST rates Go1,330.4/native1,156.6/Node1,619.1 docs/s.
+Layout parent PASS163.39s,4,943embedding-off docs;206,948whitespace nodes x6modes,
+225,716words;3,124lists,2,981quotes,717tables,4,236code,1,486HTMLframes.
+All full-source Go/fork, native/source/backend/docs agree, sanitation/leaks pass.
+This filters named mutant subtests; parents execute all other checks despite
+Go's '[no tests to run]' suffix. New output mutants already passed both full gates.
+Final layout components Go6,206.7/native2,880.7/sourceNode3,102.6/originalNode2,581.3
+are different workloads, not a full native Markdown speed comparison.
+/tmp/markdown-ast-harness-final.log also PASS133.979s: same complete parent after
+hardening the comparison's result-count check, before the final GAPS corpus edit.
+
+ /tmp/cssstrings-cohere --no-cache --no-fix stage1/cohere/markdownblocks/ast*.ts stage1/cohere/markdownblocks/inputChunks.ts
+/tmp/markdown-ast-chunks-lint-final.log:276rules,9checked,zero,100%Adamic-ready.
+ go vet ./... -> /tmp/markdown-ast-chunks-vet-final.log: exit0, empty.
+ gofmt -l on all9changed Go files -> /tmp/markdown-ast-chunks-gofmt-final.log: empty.
+ git diff --check: exit0, empty. Full package/repository gates not run.
+Pinned cohere715ba94f3608a6500086b1076ce5cb7e51b836db, fork based on Prettier3.9.6;
+markdown bundle SHA256 c2b90eeee96c3fc37516c34b4ca63bdb498975a30132c7e624b681c5669da6f5.
+The implementation/report commit follows; final reply records its SHA and push.
+
 
 Native AST preprocessing slice, October 6, 2026
 

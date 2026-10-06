@@ -6,6 +6,31 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native tokenizer input chunking
+
+`inputChunks.ts` ports micromark's complete single-input preprocessing call with
+end=true: initial BOM removal, NUL replacement, text chunk boundaries, deferred
+CR/CRLF handling, column resets, horizontal tabs and virtual spaces. Chunks own
+numeric UTF-16 units, so even lone surrogates can be checked without converting
+through UTF-8. The probe checks each input number is a UTF-16 unit. EOF is the
+Go code 0; the actual original JavaScript oracle's null EOF is serialized as that
+same code explicitly. It is not a text NUL, which preprocessing replaces.
+
+All 79,873 cases agree with actual Go private preprocess and the pinned original
+fork's unchanged micromark preprocess factory, exposed by reference in memory.
+Coverage includes every one of the 65,536 units, all special-code sequences of
+length one through five, every accumulated layout document, and column/BOM/NUL/
+CRLF/tab cases. Native/source/backend, ASan/UBSan and leaks agree. Three native
+output mutants change initial BOM, tab stops and CRLF recognition and are caught.
+The original bundle bytes are checked first, including the private-function
+anchor. Original regular expressions remain in that oracle, not the native port.
+
+This primitive accepts one complete input. Streaming incremental calls, the
+state/event engine, rollback, resolvers, subtokenization, full mdast construction
+and printer AstPath are still unported. The existing layout driver continues to
+use Go's parser/preprocess/path fixtures. No full native Markdown formatter or
+full-parser speedup is claimed.
+
 ## Native six-pass AST preprocessing
 
 `astArena.ts`, `astWalk.ts`, `astSource.ts`, `astLists.ts` and `astPreprocess.ts`
