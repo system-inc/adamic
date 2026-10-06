@@ -18,6 +18,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Private UTF-16 cache access, kept in string_index.c with its lifetime.
+const uint16_t *adamic_string_bmp_view(const adamic_string *string);
+
 static size_t sequence(unsigned char lead);
 static unsigned decode(const unsigned char *bytes, size_t size);
 
@@ -168,11 +171,8 @@ static unsigned decode(const unsigned char *bytes, size_t size) {
 	return ((unsigned)(bytes[0] & 0x07) << 18) | ((unsigned)(bytes[1] & 0x3f) << 12) | ((unsigned)(bytes[2] & 0x3f) << 6) | (bytes[3] & 0x3f);
 }
 
-// unit_at is the UTF-16 unit at an index below the length: a code point of the BMP or a lone
-// surrogate, or one half of a pair.
-static unsigned unit_at(const adamic_string *string, size_t index) {
-	bool low;
-	size_t offset = adamic_string_locate(string, index, &low);
+// unit_at is the unit at an already located code point, or one half of a pair.
+static unsigned unit_at(const adamic_string *string, size_t offset, bool low) {
 	size_t size = sequence((unsigned char)string->bytes[offset]);
 	unsigned point = decode((const unsigned char *)string->bytes + offset, size);
 	if (size == 4) {
@@ -184,10 +184,20 @@ static unsigned unit_at(const adamic_string *string, size_t index) {
 double adamic_string_char_code(const adamic_string *string, double position) {
 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
 	position = isnan(position) ? 0 : trunc(position);
-	if (position < 0 || position >= (double)adamic_string_units(string)) {
+	size_t length = string->units != 0 ? string->units - 1 : adamic_string_units(string);
+	if (position < 0 || position >= (double)length) {
 		return NAN;
 	}
-	return (double)unit_at(string, (size_t)position);
+	if (length == string->length) {
+		return (double)(unsigned char)string->bytes[(size_t)position];
+	}
+	const uint16_t *bmp = adamic_string_bmp_view(string);
+	if (bmp != NULL) {
+		return (double)bmp[(size_t)position];
+	}
+	bool low;
+	size_t offset = adamic_string_locate(string, (size_t)position, &low);
+	return (double)unit_at(string, offset, low);
 }
 
 // is_space is JavaScript's WhiteSpace and LineTerminator, which trim removes (ECMA-262).
@@ -363,13 +373,13 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	}
 	builder build = {NULL, 0, 0};
 	if (low) {
-		builder_unit(&build, unit_at(string, first));
+		builder_unit(&build, unit_at(string, offset - 4, true));
 	}
 	if (middle > 0) {
 		builder_add(&build, string->bytes + offset, middle);
 	}
 	if (ends_low) {
-		builder_unit(&build, unit_at(string, last - 1));
+		builder_unit(&build, unit_at(string, stop, false));
 	}
 	return builder_finish(&build);
 }
@@ -387,14 +397,27 @@ adamic_string *adamic_string_at(const adamic_string *string, double index) {
 adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position) {
 	position = isnan(position) ? 0 : trunc(position);
 	adamic_maybe_number missing = {false, 0};
-	if (position < 0 || position >= (double)adamic_string_units(string)) {
+	size_t length = string->units != 0 ? string->units - 1 : adamic_string_units(string);
+	if (position < 0 || position >= (double)length) {
 		return missing;
+	}
+	if (string->units == string->length + 1) {
+		adamic_maybe_number found = {true, (double)(unsigned char)string->bytes[(size_t)position]};
+		return found;
+	}
+	const uint16_t *bmp = adamic_string_bmp_view(string);
+	if (bmp != NULL) {
+		adamic_maybe_number found = {true, (double)bmp[(size_t)position]};
+		return found;
 	}
 	// At the high half of a pair, the whole code point; anywhere else, the unit.
 	bool low;
 	size_t offset = adamic_string_locate(string, (size_t)position, &low);
 	size_t size = sequence((unsigned char)string->bytes[offset]);
-	unsigned point = low || size != 4 ? unit_at(string, (size_t)position) : decode((const unsigned char *)string->bytes + offset, size);
+	unsigned point = decode((const unsigned char *)string->bytes + offset, size);
+	if (low) {
+		point = 0xdc00 + ((point - 0x10000) & 0x3ff);
+	}
 	adamic_maybe_number found = {true, (double)point};
 	return found;
 }
