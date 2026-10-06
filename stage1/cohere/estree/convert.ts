@@ -159,6 +159,872 @@ export class Converter {
         this.set(wrapper, 'expression', childValue(result));
         return wrapper;
     }
+    hasModifier(id: number, kind: string): boolean {
+        for(const child of this.ts(id).children) {
+            if(this.kind(child) === kind) {
+                return true;
+            }
+            if(
+                !this.kind(child).endsWith('Keyword') &&
+                this.kind(child) !== 'Decorator' &&
+                this.kind(child) !== 'AsteriskToken'
+            ) {
+                break;
+            }
+        }
+        return false;
+    }
+    dataChildren(id: number): number[] {
+        const result: number[] = [];
+        for(const child of this.ts(id).children) {
+            if(
+                [
+                    'ExportKeyword',
+                    'DefaultKeyword',
+                    'DeclareKeyword',
+                    'AsyncKeyword',
+                    'AbstractKeyword',
+                    'ConstKeyword',
+                    'PublicKeyword',
+                    'PrivateKeyword',
+                    'ProtectedKeyword',
+                    'ReadonlyKeyword',
+                    'StaticKeyword',
+                    'OverrideKeyword',
+                    'AccessorKeyword',
+                    'Decorator',
+                    'AsteriskToken',
+                ].includes(this.kind(child))
+            ) {
+                continue;
+            }
+            result.push(child);
+        }
+        return result;
+    }
+    accessibility(id: number): Value {
+        return this.hasModifier(id, 'PublicKeyword')
+            ? stringValue('public')
+            : this.hasModifier(id, 'PrivateKeyword')
+              ? stringValue('private')
+              : this.hasModifier(id, 'ProtectedKeyword')
+                ? stringValue('protected')
+                : absent();
+    }
+    exports(id: number, result: number): number {
+        const children = this.ts(id).children;
+        const exported = children[0] ?? -1;
+        if(this.kind(exported) !== 'ExportKeyword') {
+            return result;
+        }
+        const next = children[1] ?? -1;
+        const defaulted = this.kind(next) === 'DefaultKeyword';
+        this.scanner.pos = this.ts(defaulted ? next : exported).end;
+        this.scanner.scan();
+        this.arena.node(result).start = this.byte(this.scanner.start);
+        const wrapper = this.create(id, defaulted ? 'ExportDefaultDeclaration' : 'ExportNamedDeclaration');
+        if(defaulted) {
+            this.set(wrapper, 'declaration', childValue(result));
+            this.set(wrapper, 'exportKind', stringValue('value'));
+        }
+        else {
+            this.set(wrapper, 'attributes', listValue([]));
+            this.set(wrapper, 'declaration', childValue(result));
+            this.set(
+                wrapper,
+                'exportKind',
+                stringValue(
+                    ['TSInterfaceDeclaration', 'TSTypeAliasDeclaration'].includes(this.arena.type(result)) ||
+                        this.arena.node(result).bool('declare')
+                        ? 'type'
+                        : 'value',
+                ),
+            );
+            this.set(wrapper, 'source', absent());
+            this.set(wrapper, 'specifiers', listValue([]));
+        }
+        return wrapper;
+    }
+    wrapper(ids: readonly number[], parameters: boolean): number {
+        if(ids.length === 0) {
+            return -1;
+        }
+        const first = ids[0] ?? panic('missing type list');
+        const last = ids[ids.length - 1] ?? panic('missing type list');
+        const start = this.ts(first).pos - 1;
+        if(this.text.slice(start, start + 1) !== '<') {
+            return panic('ESTree type list start is not represented');
+        }
+        this.scanner.pos = this.ts(last).end;
+        this.scanner.scan();
+        if(this.scanner.kind === 'CommaToken') {
+            this.scanner.scan();
+        }
+        if(this.scanner.kind !== 'GreaterThanToken') {
+            return panic('ESTree type list end is not represented');
+        }
+        const result = this.arena.newNode(
+            parameters ? 'TSTypeParameterDeclaration' : 'TSTypeParameterInstantiation',
+            this.byte(start),
+            this.byte(this.scanner.pos),
+        );
+        this.set(result, 'params', this.list(ids));
+        return result;
+    }
+    parameters(ids: readonly number[]): Value {
+        const result: number[] = [];
+        for(const id of ids) {
+            const converted = this.convert(id);
+            const decorators: number[] = [];
+            for(const child of this.ts(id).children) {
+                if(this.kind(child) === 'Decorator') {
+                    decorators.push(this.convert(child));
+                }
+            }
+            this.set(converted, 'decorators', listValue(decorators));
+            result.push(converted);
+        }
+        return listValue(result);
+    }
+    separated(left: number, right: number, token: string): boolean {
+        if(left < 0 || right < 0) {
+            return false;
+        }
+        this.scanner.pos = this.ts(left).end;
+        this.scanner.scan();
+        return this.scanner.kind === token && this.scanner.start < this.startUnit(right);
+    }
+    parameter(id: number, parent: number): number {
+        const children = this.dataChildren(id);
+        let index = 0;
+        const rest = this.kind(children[index] ?? -1) === 'DotDotDotToken';
+        if(rest) {
+            index++;
+        }
+        const name = children[index] ?? panic('missing parameter name');
+        index++;
+        const question = this.kind(children[index] ?? -1) === 'QuestionToken';
+        if(question) {
+            index++;
+        }
+        let type = -1;
+        if(this.separated(question ? (children[index - 1] ?? -1) : name, children[index] ?? -1, 'ColonToken')) {
+            type = children[index] ?? -1;
+            index++;
+        }
+        const initializer = children[index] ?? -1;
+        let parameter = this.convert(name, false, parent);
+        let result = parameter;
+        if(rest) {
+            parameter = this.create(id, 'RestElement');
+            this.set(parameter, 'argument', this.converted(name));
+            this.patternFields(parameter);
+            this.set(parameter, 'value', absent());
+            result = parameter;
+        }
+        else if(initializer >= 0) {
+            result = this.arena.newNode('AssignmentPattern', this.start(name), this.byte(this.ts(initializer).end));
+            this.set(result, 'decorators', listValue([]));
+            this.set(result, 'left', childValue(parameter));
+            this.set(result, 'optional', boolValue(false));
+            this.set(result, 'right', this.converted(initializer));
+            this.set(result, 'typeAnnotation', absent());
+        }
+        if(type >= 0) {
+            const annotation = this.annotation(type);
+            this.set(parameter, 'typeAnnotation', childValue(annotation));
+            this.arena.node(parameter).end = Math.max(this.arena.node(parameter).end, this.arena.node(annotation).end);
+        }
+        if(question) {
+            this.arena.node(parameter).end = Math.max(
+                this.arena.node(parameter).end,
+                this.byte(this.ts(children[index - (type >= 0 ? 2 : 1)] ?? -1).end),
+            );
+            this.set(parameter, 'optional', boolValue(true));
+        }
+        if(
+            this.hasModifier(id, 'PublicKeyword') ||
+            this.hasModifier(id, 'PrivateKeyword') ||
+            this.hasModifier(id, 'ProtectedKeyword') ||
+            this.hasModifier(id, 'ReadonlyKeyword') ||
+            this.hasModifier(id, 'OverrideKeyword')
+        ) {
+            const wrapper = this.create(id, 'TSParameterProperty');
+            this.set(wrapper, 'accessibility', this.accessibility(id));
+            this.set(wrapper, 'decorators', listValue([]));
+            this.set(wrapper, 'override', boolValue(this.hasModifier(id, 'OverrideKeyword')));
+            this.set(wrapper, 'parameter', childValue(result));
+            this.set(wrapper, 'readonly', boolValue(this.hasModifier(id, 'ReadonlyKeyword')));
+            this.set(wrapper, 'static', boolValue(false));
+            return wrapper;
+        }
+        return result;
+    }
+    functionNode(id: number): number {
+        const children = this.dataChildren(id);
+        const arrow = this.kind(id) === 'ArrowFunction';
+        let index = 0;
+        let name = -1;
+        if(!arrow && this.kind(children[index] ?? -1) === 'Identifier') {
+            name = children[index] ?? -1;
+            index++;
+        }
+        const types: number[] = [];
+        while(this.kind(children[index] ?? -1) === 'TypeParameter') {
+            types.push(children[index] ?? -1);
+            index++;
+        }
+        const params: number[] = [];
+        while(this.kind(children[index] ?? -1) === 'Parameter') {
+            params.push(children[index] ?? -1);
+            index++;
+        }
+        let returnType = -1;
+        if(
+            index < children.length &&
+            this.kind(children[index] ?? -1) !== 'Block' &&
+            this.kind(children[index] ?? -1) !== 'EqualsGreaterThanToken' &&
+            (!arrow || this.kind(children[index + 1] ?? -1) === 'EqualsGreaterThanToken')
+        ) {
+            returnType = children[index] ?? -1;
+            index++;
+        }
+        if(arrow && this.kind(children[index] ?? -1) === 'EqualsGreaterThanToken') {
+            index++;
+        }
+        const body = children[index] ?? -1;
+        const result = this.create(
+            id,
+            arrow
+                ? 'ArrowFunctionExpression'
+                : this.kind(id) === 'FunctionDeclaration'
+                  ? body < 0
+                      ? 'TSDeclareFunction'
+                      : 'FunctionDeclaration'
+                  : 'FunctionExpression',
+        );
+        this.set(result, 'async', boolValue(this.hasModifier(id, 'AsyncKeyword')));
+        this.set(result, 'body', this.converted(body, false, id));
+        if(!arrow) {
+            this.set(
+                result,
+                'declare',
+                boolValue(this.kind(id) === 'FunctionDeclaration' && this.hasModifier(id, 'DeclareKeyword')),
+            );
+        }
+        this.set(result, 'expression', boolValue(arrow && this.kind(body) !== 'Block'));
+        this.set(result, 'generator', boolValue(!arrow && this.hasModifier(id, 'AsteriskToken')));
+        this.set(result, 'id', this.converted(name));
+        this.set(result, 'params', this.parameters(params));
+        this.set(result, 'returnType', childValue(returnType >= 0 ? this.annotation(returnType) : -1));
+        this.set(result, 'typeParameters', childValue(this.wrapper(types, true)));
+        return this.kind(id) === 'FunctionDeclaration' ? this.exports(id, result) : result;
+    }
+    bindingElement(id: number, parent: number): number {
+        const children = this.ts(id).children;
+        if(children.length === 0) {
+            return -1;
+        }
+        let index = 0;
+        const rest = this.kind(children[index] ?? -1) === 'DotDotDotToken';
+        if(rest) {
+            index++;
+        }
+        let name = children[index] ?? -1;
+        index++;
+        const key = name;
+        let shorthand = true;
+        if(this.kind(parent) === 'ObjectBindingPattern' && this.separated(name, children[index] ?? -1, 'ColonToken')) {
+            shorthand = false;
+            name = children[index] ?? -1;
+            index++;
+        }
+        const initializer = children[index] ?? -1;
+        if(this.kind(parent) === 'ArrayBindingPattern') {
+            const item = this.convert(name);
+            if(initializer >= 0) {
+                const result = this.create(id, 'AssignmentPattern');
+                this.set(result, 'decorators', listValue([]));
+                this.set(result, 'left', childValue(item));
+                this.set(result, 'optional', boolValue(false));
+                this.set(result, 'right', this.converted(initializer));
+                this.set(result, 'typeAnnotation', absent());
+                return result;
+            }
+            if(rest) {
+                const result = this.create(id, 'RestElement');
+                this.set(result, 'argument', childValue(item));
+                this.patternFields(result);
+                this.set(result, 'value', absent());
+                return result;
+            }
+            return item;
+        }
+        const result = this.create(id, rest ? 'RestElement' : 'Property');
+        if(rest) {
+            this.set(result, 'argument', this.converted(key));
+            this.patternFields(result);
+            this.set(result, 'value', absent());
+        }
+        else {
+            this.set(result, 'computed', boolValue(!shorthand && this.kind(key) === 'ComputedPropertyName'));
+            this.set(result, 'key', this.converted(key));
+            this.set(result, 'kind', stringValue('init'));
+            this.set(result, 'method', boolValue(false));
+            this.set(result, 'optional', boolValue(false));
+            this.set(result, 'shorthand', boolValue(shorthand));
+            this.set(result, 'value', this.converted(name));
+        }
+        if(initializer >= 0) {
+            const assignment = this.arena.newNode(
+                'AssignmentPattern',
+                this.start(name),
+                this.byte(this.ts(initializer).end),
+            );
+            this.set(assignment, 'decorators', listValue([]));
+            this.set(assignment, 'left', this.converted(name));
+            this.set(assignment, 'optional', boolValue(false));
+            this.set(assignment, 'right', this.converted(initializer));
+            this.set(assignment, 'typeAnnotation', absent());
+            this.set(result, 'value', childValue(assignment));
+        }
+        return result;
+    }
+    bodyStart(id: number, after: number): number {
+        this.scanner.pos = after;
+        this.scanner.scan();
+        while(this.scanner.kind !== 'OpenBraceToken') {
+            if(this.scanner.pos >= this.ts(id).end) {
+                return panic('unrepresented body start');
+            }
+            this.scanner.scan();
+        }
+        return this.byte(this.scanner.start);
+    }
+    entityExpression(id: number): number {
+        if(this.kind(id) !== 'QualifiedName') {
+            return this.convert(id);
+        }
+        const result = this.create(id, 'MemberExpression');
+        this.set(result, 'computed', boolValue(false));
+        this.set(result, 'object', childValue(this.entityExpression(this.child(id, 0))));
+        this.set(result, 'optional', boolValue(false));
+        this.set(result, 'property', this.converted(this.child(id, 1)));
+        return result;
+    }
+    heritage(id: number, interface_: boolean): number {
+        const result = this.create(id, interface_ ? 'TSInterfaceHeritage' : 'TSClassImplements');
+        this.set(result, 'expression', childValue(this.entityExpression(this.child(id, 0))));
+        this.set(result, 'typeArguments', childValue(this.wrapper(this.ts(id).children.slice(1), false)));
+        return result;
+    }
+    classNode(id: number, interface_: boolean): number {
+        const children = this.dataChildren(id);
+        let index = 0;
+        let name = -1;
+        if(this.kind(children[index] ?? -1) === 'Identifier') {
+            name = children[index] ?? -1;
+            index++;
+        }
+        const types: number[] = [];
+        while(this.kind(children[index] ?? -1) === 'TypeParameter') {
+            types.push(children[index] ?? -1);
+            index++;
+        }
+        const extendsTypes: number[] = [];
+        const implementsTypes: number[] = [];
+        let after = index > 0 ? this.ts(children[index - 1] ?? -1).end : this.ts(id).pos;
+        while(this.kind(children[index] ?? -1) === 'HeritageClause') {
+            const clause = this.ts(children[index] ?? -1);
+            for(const type of clause.children) {
+                if(clause.operator === 'ExtendsKeyword') {
+                    extendsTypes.push(type);
+                }
+                else {
+                    implementsTypes.push(type);
+                }
+            }
+            after = clause.end;
+            index++;
+        }
+        const members: number[] = [];
+        for(const child of children.slice(index)) {
+            if(this.kind(child) !== 'SemicolonClassElement') {
+                members.push(child);
+            }
+        }
+        const body = this.arena.newNode(
+            interface_ ? 'TSInterfaceBody' : 'ClassBody',
+            this.bodyStart(id, after),
+            this.byte(this.ts(id).end),
+        );
+        this.set(body, 'body', this.list(members, false, id));
+        const result = this.create(
+            id,
+            interface_
+                ? 'TSInterfaceDeclaration'
+                : this.kind(id) === 'ClassDeclaration'
+                  ? 'ClassDeclaration'
+                  : 'ClassExpression',
+        );
+        if(!interface_) {
+            this.set(result, 'abstract', boolValue(this.hasModifier(id, 'AbstractKeyword')));
+        }
+        this.set(result, 'body', childValue(body));
+        this.set(result, 'declare', boolValue(this.hasModifier(id, 'DeclareKeyword')));
+        const decorators: number[] = [];
+        if(!interface_) {
+            for(const child of this.ts(id).children) {
+                if(this.kind(child) === 'Decorator') {
+                    decorators.push(this.convert(child));
+                }
+            }
+            this.set(result, 'decorators', listValue(decorators));
+        }
+        const convertedHeritage: number[] = [];
+        for(const type of interface_ ? extendsTypes : implementsTypes) {
+            convertedHeritage.push(this.heritage(type, interface_));
+        }
+        if(interface_) {
+            this.set(result, 'extends', listValue(convertedHeritage));
+        }
+        this.set(result, 'id', this.converted(name));
+        if(!interface_) {
+            this.set(result, 'implements', listValue(convertedHeritage));
+            const first = extendsTypes[0] ?? -1;
+            this.set(result, 'superClass', first >= 0 ? this.converted(this.child(first, 0)) : absent());
+            this.set(
+                result,
+                'superTypeArguments',
+                childValue(first >= 0 ? this.wrapper(this.ts(first).children.slice(1), false) : -1),
+            );
+        }
+        this.set(result, 'typeParameters', childValue(this.wrapper(types, true)));
+        return this.exports(id, result);
+    }
+    member(id: number, parent: number): number {
+        const children = this.dataChildren(id);
+        let index = 0;
+        const constructor = this.kind(id) === 'Constructor';
+        const signature =
+            ['MethodSignature', 'PropertySignature', 'IndexSignature'].includes(this.kind(id)) ||
+            ((this.kind(id) === 'GetAccessor' || this.kind(id) === 'SetAccessor') &&
+                ['InterfaceDeclaration', 'TypeLiteral'].includes(this.kind(parent)));
+        const name = constructor || this.kind(id) === 'IndexSignature' ? -1 : (children[index] ?? -1);
+        if(name >= 0) {
+            index++;
+        }
+        const marker = ['QuestionToken', 'ExclamationToken'].includes(this.kind(children[index] ?? -1))
+            ? (children[index] ?? -1)
+            : -1;
+        if(marker >= 0) {
+            index++;
+        }
+        const types: number[] = [];
+        while(this.kind(children[index] ?? -1) === 'TypeParameter') {
+            types.push(children[index] ?? -1);
+            index++;
+        }
+        const params: number[] = [];
+        while(this.kind(children[index] ?? -1) === 'Parameter') {
+            params.push(children[index] ?? -1);
+            index++;
+        }
+        let type = -1;
+        const next = children[index] ?? -1;
+        const previous = index > 0 ? (children[index - 1] ?? -1) : -1;
+        if(
+            next >= 0 &&
+            this.kind(next) !== 'Block' &&
+            ((this.kind(id) !== 'PropertyDeclaration' && this.kind(id) !== 'PropertySignature') ||
+                this.separated(previous, next, 'ColonToken'))
+        ) {
+            type = next;
+            index++;
+        }
+        const initializer = children[index] ?? -1;
+        const property = this.kind(id) === 'PropertyDeclaration' || this.kind(id) === 'PropertySignature';
+        if(property) {
+            const abstract = this.hasModifier(id, 'AbstractKeyword');
+            const accessor = this.hasModifier(id, 'AccessorKeyword');
+            const result = this.create(
+                id,
+                signature
+                    ? 'TSPropertySignature'
+                    : accessor
+                      ? abstract
+                          ? 'TSAbstractAccessorProperty'
+                          : 'AccessorProperty'
+                      : abstract
+                        ? 'TSAbstractPropertyDefinition'
+                        : 'PropertyDefinition',
+            );
+            this.set(result, 'accessibility', this.accessibility(id));
+            this.set(result, 'computed', boolValue(this.kind(name) === 'ComputedPropertyName'));
+            if(!signature) {
+                this.set(result, 'declare', boolValue(this.hasModifier(id, 'DeclareKeyword')));
+                const decorators: number[] = [];
+                for(const child of this.ts(id).children) {
+                    if(this.kind(child) === 'Decorator') {
+                        decorators.push(this.convert(child));
+                    }
+                }
+                this.set(result, 'decorators', listValue(decorators));
+                this.set(result, 'definite', boolValue(this.kind(marker) === 'ExclamationToken'));
+            }
+            this.set(result, 'key', this.converted(name));
+            this.set(result, 'optional', boolValue(this.kind(marker) === 'QuestionToken'));
+            if(!signature) {
+                this.set(result, 'override', boolValue(this.hasModifier(id, 'OverrideKeyword')));
+            }
+            this.set(result, 'readonly', boolValue(this.hasModifier(id, 'ReadonlyKeyword')));
+            this.set(result, 'static', boolValue(this.hasModifier(id, 'StaticKeyword')));
+            this.set(result, 'typeAnnotation', childValue(type >= 0 ? this.annotation(type) : -1));
+            if(!signature) {
+                this.set(result, 'value', abstract ? absent() : this.converted(initializer));
+            }
+            return result;
+        }
+        if(this.kind(id) === 'IndexSignature') {
+            const result = this.create(id, 'TSIndexSignature');
+            this.set(result, 'accessibility', this.accessibility(id));
+            this.set(result, 'parameters', this.list(params));
+            this.set(result, 'readonly', boolValue(this.hasModifier(id, 'ReadonlyKeyword')));
+            this.set(result, 'static', boolValue(this.hasModifier(id, 'StaticKeyword')));
+            this.set(result, 'typeAnnotation', childValue(type >= 0 ? this.annotation(type) : -1));
+            return result;
+        }
+        const kind = this.kind(id) === 'GetAccessor' ? 'get' : this.kind(id) === 'SetAccessor' ? 'set' : 'method';
+        if(signature) {
+            const result = this.create(id, 'TSMethodSignature');
+            this.set(result, 'accessibility', this.accessibility(id));
+            this.set(result, 'computed', boolValue(this.kind(name) === 'ComputedPropertyName'));
+            this.set(result, 'key', this.converted(name));
+            this.set(result, 'kind', stringValue(kind));
+            this.set(result, 'optional', boolValue(this.kind(marker) === 'QuestionToken'));
+            this.set(result, 'params', this.parameters(params));
+            this.set(result, 'readonly', boolValue(this.hasModifier(id, 'ReadonlyKeyword')));
+            this.set(result, 'returnType', childValue(type >= 0 ? this.annotation(type) : -1));
+            this.set(result, 'static', boolValue(this.hasModifier(id, 'StaticKeyword')));
+            this.set(result, 'typeParameters', childValue(this.wrapper(types, true)));
+            return result;
+        }
+        let scanStart = name >= 0 ? this.ts(name).end : this.ts(id).pos;
+        if(constructor) {
+            for(const child of this.ts(id).children) {
+                if(this.kind(child).endsWith('Keyword')) {
+                    scanStart = this.ts(child).end;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        this.scanner.pos = scanStart;
+        this.scanner.scan();
+        const constructorStart = this.scanner.start;
+        const constructorEnd = this.scanner.pos;
+        const constructorKind = this.scanner.kind;
+        while(this.scanner.kind !== 'OpenParenToken') {
+            if(this.scanner.pos >= this.ts(id).end) {
+                return panic('unrepresented method parameter start');
+            }
+            this.scanner.scan();
+        }
+        const functionStart = this.byte(this.scanner.start);
+        const typeParameters = this.wrapper(types, true);
+        const method = this.arena.newNode(
+            initializer < 0 ? 'TSEmptyBodyFunctionExpression' : 'FunctionExpression',
+            typeParameters >= 0 ? Math.min(functionStart, this.arena.node(typeParameters).start) : functionStart,
+            this.byte(this.ts(id).end),
+        );
+        this.set(method, 'async', boolValue(!constructor && this.hasModifier(id, 'AsyncKeyword')));
+        this.set(method, 'body', this.converted(initializer, false, id));
+        this.set(method, 'declare', boolValue(false));
+        this.set(method, 'expression', boolValue(false));
+        this.set(method, 'generator', boolValue(!constructor && this.hasModifier(id, 'AsteriskToken')));
+        this.set(method, 'id', absent());
+        this.set(
+            method,
+            'params',
+            this.kind(parent) === 'ObjectLiteralExpression' ? this.list(params) : this.parameters(params),
+        );
+        this.set(method, 'returnType', childValue(type >= 0 ? this.annotation(type) : -1));
+        this.set(method, 'typeParameters', childValue(typeParameters));
+        let key = this.convert(name);
+        if(constructor) {
+            key = this.arena.newNode(
+                constructorKind === 'StringLiteral' ? 'Literal' : 'Identifier',
+                this.byte(constructorStart),
+                this.byte(constructorEnd),
+            );
+            if(constructorKind === 'StringLiteral') {
+                this.set(key, 'raw', stringValue(this.text.slice(constructorStart, constructorEnd)));
+                this.set(key, 'value', stringValue('constructor'));
+            }
+            else {
+                this.set(key, 'decorators', listValue([]));
+                this.set(key, 'name', stringValue('constructor'));
+                this.set(key, 'optional', boolValue(false));
+                this.set(key, 'typeAnnotation', absent());
+            }
+        }
+        const object = this.kind(parent) === 'ObjectLiteralExpression';
+        const result = this.create(
+            id,
+            object
+                ? 'Property'
+                : this.hasModifier(id, 'AbstractKeyword')
+                  ? 'TSAbstractMethodDefinition'
+                  : 'MethodDefinition',
+        );
+        if(!object) {
+            this.set(result, 'accessibility', this.accessibility(id));
+        }
+        this.set(result, 'computed', boolValue(!constructor && this.kind(name) === 'ComputedPropertyName'));
+        if(!object) {
+            const decorators: number[] = [];
+            if(!constructor) {
+                for(const child of this.ts(id).children) {
+                    if(this.kind(child) === 'Decorator') {
+                        decorators.push(this.convert(child));
+                    }
+                }
+            }
+            this.set(result, 'decorators', listValue(decorators));
+        }
+        this.set(result, 'key', childValue(key));
+        this.set(
+            result,
+            'kind',
+            stringValue(
+                constructor
+                    ? this.hasModifier(id, 'StaticKeyword')
+                        ? 'method'
+                        : 'constructor'
+                    : !object &&
+                        !this.hasModifier(id, 'StaticKeyword') &&
+                        this.kind(name) === 'StringLiteral' &&
+                        this.ts(name).text === 'constructor'
+                      ? 'constructor'
+                      : object && this.kind(id) === 'MethodDeclaration'
+                        ? 'init'
+                        : kind,
+            ),
+        );
+        if(object) {
+            this.set(result, 'method', boolValue(this.kind(id) === 'MethodDeclaration'));
+        }
+        this.set(result, 'optional', boolValue(!constructor && this.kind(marker) === 'QuestionToken'));
+        if(object) {
+            this.set(result, 'shorthand', boolValue(false));
+        }
+        else {
+            this.set(result, 'override', boolValue(!constructor && this.hasModifier(id, 'OverrideKeyword')));
+            this.set(result, 'static', boolValue(this.hasModifier(id, 'StaticKeyword')));
+        }
+        this.set(result, 'value', childValue(method));
+        return result;
+    }
+    importDeclaration(id: number): number {
+        const children = this.dataChildren(id);
+        const clause = this.kind(children[0] ?? -1) === 'ImportClause' ? (children[0] ?? -1) : -1;
+        const source = children[clause >= 0 ? 1 : 0] ?? -1;
+        const attributes = children[clause >= 0 ? 2 : 1] ?? -1;
+        const specifiers: number[] = [];
+        if(clause >= 0) {
+            for(const child of this.ts(clause).children) {
+                if(this.kind(child) === 'Identifier') {
+                    const local = this.convert(child);
+                    const result = this.arena.newNode(
+                        'ImportDefaultSpecifier',
+                        this.arena.node(local).start,
+                        this.arena.node(local).end,
+                    );
+                    this.set(result, 'local', childValue(local));
+                    specifiers.push(result);
+                }
+                else if(this.kind(child) === 'NamespaceImport') {
+                    specifiers.push(this.convert(child));
+                }
+                else if(this.kind(child) === 'NamedImports') {
+                    for(const specifier of this.ts(child).children) {
+                        specifiers.push(this.convert(specifier));
+                    }
+                }
+                else {
+                    return panic('unrepresented import clause');
+                }
+            }
+        }
+        const result = this.create(id, 'ImportDeclaration');
+        this.set(result, 'attributes', attributes >= 0 ? this.list(this.ts(attributes).children) : listValue([]));
+        this.set(
+            result,
+            'importKind',
+            stringValue(clause >= 0 && this.ts(clause).semantic === 'TypeKeyword' ? 'type' : 'value'),
+        );
+        this.set(
+            result,
+            'phase',
+            clause >= 0 && this.ts(clause).semantic === 'DeferKeyword' ? stringValue('defer') : absent(),
+        );
+        this.set(result, 'source', this.converted(source));
+        this.set(result, 'specifiers', listValue(specifiers));
+        return result;
+    }
+    exportDeclaration(id: number): number {
+        const children = this.dataChildren(id);
+        const named = this.kind(children[0] ?? -1) === 'NamedExports';
+        const namespace = this.kind(children[0] ?? -1) === 'NamespaceExport';
+        const source = children[named || namespace ? 1 : 0] ?? -1;
+        const attributes = children[named || namespace ? 2 : 1] ?? -1;
+        const result = this.create(id, named ? 'ExportNamedDeclaration' : 'ExportAllDeclaration');
+        this.set(result, 'attributes', attributes >= 0 ? this.list(this.ts(attributes).children) : listValue([]));
+        if(named) {
+            this.set(result, 'declaration', absent());
+        }
+        else {
+            this.set(result, 'exported', namespace ? this.converted(this.child(children[0] ?? -1, 0)) : absent());
+        }
+        this.set(result, 'exportKind', stringValue(this.ts(id).semantic === '1' ? 'type' : 'value'));
+        this.set(result, 'source', this.converted(source));
+        if(named) {
+            this.set(result, 'specifiers', this.list(this.ts(children[0] ?? -1).children));
+        }
+        return result;
+    }
+    moduleNode(id: number): number {
+        const children = this.dataChildren(id);
+        const name = children[0] ?? -1;
+        const global = this.ts(id).operator === 'GlobalKeyword';
+        let innermost = id;
+        let declare = this.hasModifier(id, 'DeclareKeyword');
+        let body = children[children.length - 1] ?? -1;
+        if(body === name) {
+            body = -1;
+        }
+        let convertedName = this.convert(name);
+        if(!global && this.kind(name) !== 'StringLiteral') {
+            while(this.kind(body) === 'ModuleDeclaration') {
+                innermost = body;
+                if(this.hasModifier(innermost, 'DeclareKeyword')) {
+                    declare = true;
+                }
+                const parts = this.dataChildren(innermost);
+                const right = this.convert(parts[0] ?? -1);
+                const qualified = this.arena.newNode(
+                    'TSQualifiedName',
+                    this.arena.node(convertedName).start,
+                    this.arena.node(right).end,
+                );
+                this.set(qualified, 'left', childValue(convertedName));
+                this.set(qualified, 'right', childValue(right));
+                convertedName = qualified;
+                body = parts[parts.length - 1] ?? -1;
+                if(body === (parts[0] ?? -1)) {
+                    body = -1;
+                }
+            }
+        }
+        const result = this.create(id, 'TSModuleDeclaration');
+        if(global) {
+            this.set(result, 'body', this.converted(body));
+            this.set(result, 'declare', boolValue(declare));
+            this.set(result, 'global', boolValue(true));
+            this.set(result, 'id', childValue(convertedName));
+            this.set(result, 'kind', stringValue('global'));
+        }
+        else if(this.kind(name) === 'StringLiteral') {
+            this.set(result, 'kind', stringValue('module'));
+            if(body >= 0) {
+                this.set(result, 'body', this.converted(body));
+            }
+            this.set(result, 'declare', boolValue(declare));
+            this.set(result, 'global', boolValue(false));
+            this.set(result, 'id', childValue(convertedName));
+        }
+        else {
+            this.set(result, 'body', this.converted(body));
+            this.set(result, 'declare', boolValue(declare));
+            this.set(result, 'global', boolValue(false));
+            this.set(result, 'id', childValue(convertedName));
+            this.set(
+                result,
+                'kind',
+                stringValue(this.ts(innermost).operator === 'NamespaceKeyword' ? 'namespace' : 'module'),
+            );
+        }
+        return this.exports(id, result);
+    }
+    mapped(id: number): number {
+        const children = this.ts(id).children;
+        let index = 0;
+        let readonly: Value = absent();
+        if(['ReadonlyKeyword', 'PlusToken', 'MinusToken'].includes(this.kind(children[index] ?? -1))) {
+            readonly =
+                this.kind(children[index] ?? -1) === 'ReadonlyKeyword'
+                    ? boolValue(true)
+                    : stringValue(this.spellings.get(this.kind(children[index] ?? -1)) ?? '');
+            index++;
+        }
+        const parameter = children[index] ?? -1;
+        index++;
+        let name = -1;
+        this.scanner.pos = this.ts(parameter).end;
+        this.scanner.scan();
+        if(this.scanner.kind === 'AsKeyword') {
+            name = children[index] ?? -1;
+            index++;
+        }
+        let optional: Value = boolValue(false);
+        if(['QuestionToken', 'PlusToken', 'MinusToken'].includes(this.kind(children[index] ?? -1))) {
+            optional =
+                this.kind(children[index] ?? -1) === 'QuestionToken'
+                    ? boolValue(true)
+                    : stringValue(this.spellings.get(this.kind(children[index] ?? -1)) ?? '');
+            index++;
+        }
+        const result = this.create(id, 'TSMappedType');
+        this.set(result, 'constraint', this.converted(this.child(parameter, 1)));
+        this.set(result, 'key', this.converted(this.child(parameter, 0)));
+        this.set(result, 'nameType', this.converted(name));
+        this.set(result, 'optional', optional);
+        this.set(result, 'readonly', readonly);
+        this.set(result, 'typeAnnotation', this.converted(children[index] ?? -1));
+        return result;
+    }
+    forNode(id: number): number {
+        const children = this.ts(id).children;
+        const fields = [-1, -1, -1];
+        let slot = 0;
+        const scan = new Scanner(this.text);
+        scan.pos = this.ts(id).pos;
+        scan.scan();
+        scan.scan();
+        scan.scan();
+        for(const child of children.slice(0, -1)) {
+            const start = this.startUnit(child);
+            while(scan.start < start) {
+                if(scan.kind === 'SemicolonToken') {
+                    slot++;
+                }
+                scan.scan();
+            }
+            if(slot >= 3) {
+                return panic('unrepresented for header');
+            }
+            fields[slot] = child;
+            scan.pos = this.ts(child).end;
+            scan.scan();
+        }
+        const result = this.create(id, 'ForStatement');
+        this.set(result, 'body', this.converted(children[children.length - 1] ?? -1));
+        this.set(result, 'init', this.converted(fields[0] ?? -1));
+        this.set(result, 'test', this.converted(fields[1] ?? -1));
+        this.set(result, 'update', this.converted(fields[2] ?? -1));
+        return result;
+    }
     convert(id: number, pattern = false, parent = -1): number {
         if(id < 0) {
             return -1;
@@ -216,13 +1082,13 @@ export class Converter {
             return result;
         }
         if(node.kind === 'VariableStatement') {
-            if(node.children.length !== 1) {
-                return panic('ESTree converter does not yet represent variable modifiers');
-            }
-            const result = this.convert(first);
+            const children = this.dataChildren(id);
+            const list = children[0] ?? panic('missing variable list');
+            const result = this.convert(list);
             this.arena.node(result).start = this.start(id);
             this.arena.node(result).end = this.byte(node.end);
-            return result;
+            this.set(result, 'declare', boolValue(this.hasModifier(id, 'DeclareKeyword')));
+            return this.exports(id, result);
         }
         if(node.kind === 'VariableDeclarationList') {
             const result = this.create(id, 'VariableDeclaration');
@@ -379,9 +1245,7 @@ export class Converter {
             const args = node.children.slice(node.children.length - count);
             const prefix = node.children.slice(1, node.children.length - count);
             const question = prefix.length > 0 && this.kind(prefix[0] ?? -1) === 'QuestionDotToken';
-            if(prefix.length > (question ? 1 : 0)) {
-                return panic('ESTree converter requires unrepresented type-argument list ranges');
-            }
+            const typeArguments = this.wrapper(prefix.slice(question ? 1 : 0), false);
             const result = this.create(id, node.kind);
             if(this.kind(first) === 'ImportKeyword') {
                 this.arena.node(result).type = 'ImportExpression';
@@ -394,7 +1258,7 @@ export class Converter {
             if(node.kind === 'CallExpression') {
                 this.set(result, 'optional', boolValue(question));
             }
-            this.set(result, 'typeArguments', absent());
+            this.set(result, 'typeArguments', childValue(typeArguments));
             return node.kind === 'CallExpression' ? this.chain(result, id) : result;
         }
         if(
@@ -488,11 +1352,8 @@ export class Converter {
             return result;
         }
         if(node.kind === 'TypeReference') {
-            if(node.children.length !== 1) {
-                return panic('ESTree converter requires unrepresented type-argument list ranges');
-            }
             const result = this.create(id, 'TSTypeReference');
-            this.set(result, 'typeArguments', absent());
+            this.set(result, 'typeArguments', childValue(this.wrapper(node.children.slice(1), false)));
             this.set(result, 'typeName', this.converted(first));
             return result;
         }
@@ -747,6 +1608,318 @@ export class Converter {
                 stringValue(this.spellings.get(node.operator) ?? panic('unknown type operator')),
             );
             this.set(result, 'typeAnnotation', this.converted(first));
+            return result;
+        }
+        if(node.kind === 'FunctionDeclaration' || node.kind === 'FunctionExpression' || node.kind === 'ArrowFunction') {
+            return this.functionNode(id);
+        }
+        if(node.kind === 'Parameter') {
+            return this.parameter(id, parent);
+        }
+        if(node.kind === 'BindingElement') {
+            return this.bindingElement(id, parent);
+        }
+        if(node.kind === 'ArrayBindingPattern' || node.kind === 'ObjectBindingPattern') {
+            const array = node.kind === 'ArrayBindingPattern';
+            const result = this.create(id, array ? 'ArrayPattern' : 'ObjectPattern');
+            this.set(result, 'decorators', listValue([]));
+            if(!array) {
+                this.set(result, 'optional', boolValue(false));
+            }
+            this.set(result, array ? 'elements' : 'properties', this.list(node.children, true, id));
+            if(array) {
+                this.set(result, 'optional', boolValue(false));
+            }
+            this.set(result, 'typeAnnotation', absent());
+            return result;
+        }
+        if(node.kind === 'TypeParameter') {
+            const children = this.dataChildren(id);
+            let index = 0;
+            while(['InKeyword', 'OutKeyword'].includes(this.kind(children[index] ?? -1))) {
+                index++;
+            }
+            const name = children[index] ?? -1;
+            index++;
+            let constraint = -1;
+            if(this.separated(name, children[index] ?? -1, 'ExtendsKeyword')) {
+                constraint = children[index] ?? -1;
+                index++;
+            }
+            const defaultType = children[index] ?? -1;
+            const result = this.create(id, 'TSTypeParameter');
+            this.set(result, 'const', boolValue(this.hasModifier(id, 'ConstKeyword')));
+            this.set(result, 'constraint', this.converted(constraint));
+            this.set(result, 'default', this.converted(defaultType));
+            this.set(result, 'in', boolValue(this.hasModifier(id, 'InKeyword')));
+            this.set(result, 'name', this.converted(name));
+            this.set(result, 'out', boolValue(this.hasModifier(id, 'OutKeyword')));
+            return result;
+        }
+        if(node.kind === 'TypeAliasDeclaration') {
+            const children = this.dataChildren(id);
+            const types: number[] = [];
+            for(const child of children.slice(1, -1)) {
+                if(this.kind(child) !== 'TypeParameter') {
+                    return panic('unexpected type alias child');
+                }
+                types.push(child);
+            }
+            const result = this.create(id, 'TSTypeAliasDeclaration');
+            this.set(result, 'declare', boolValue(this.hasModifier(id, 'DeclareKeyword')));
+            this.set(result, 'id', this.converted(children[0] ?? -1));
+            this.set(result, 'typeAnnotation', this.converted(children[children.length - 1] ?? -1));
+            this.set(result, 'typeParameters', childValue(this.wrapper(types, true)));
+            return this.exports(id, result);
+        }
+        if(node.kind === 'YieldExpression') {
+            const result = this.create(id, 'YieldExpression');
+            const delegate = this.kind(first) === 'AsteriskToken';
+            this.set(result, 'argument', this.converted(delegate ? second : first));
+            this.set(result, 'delegate', boolValue(delegate));
+            return result;
+        }
+        if(node.kind === 'ForInStatement' || node.kind === 'ForOfStatement') {
+            const awaitToken = this.kind(first) === 'AwaitKeyword';
+            const children = awaitToken ? node.children.slice(1) : node.children;
+            const result = this.create(id, node.kind === 'ForOfStatement' ? 'ForOfStatement' : 'ForInStatement');
+            if(node.kind === 'ForOfStatement') {
+                this.set(result, 'await', boolValue(awaitToken));
+            }
+            this.set(result, 'body', this.converted(children[2] ?? -1));
+            this.set(result, 'left', this.converted(children[0] ?? -1, true));
+            this.set(result, 'right', this.converted(children[1] ?? -1));
+            return result;
+        }
+        if(node.kind === 'SwitchStatement') {
+            const result = this.create(id, 'SwitchStatement');
+            this.set(result, 'cases', this.list(this.ts(second).children));
+            this.set(result, 'discriminant', this.converted(first));
+            return result;
+        }
+        if(node.kind === 'CaseClause' || node.kind === 'DefaultClause') {
+            const result = this.create(id, 'SwitchCase');
+            this.set(
+                result,
+                'consequent',
+                this.list(node.kind === 'CaseClause' ? node.children.slice(1) : node.children),
+            );
+            this.set(result, 'test', node.kind === 'CaseClause' ? this.converted(first) : absent());
+            return result;
+        }
+        if(node.kind === 'TryStatement') {
+            const result = this.create(id, 'TryStatement');
+            const handler = this.kind(second) === 'CatchClause' ? second : -1;
+            const finalizer = handler >= 0 ? third : second;
+            this.set(result, 'block', this.converted(first));
+            this.set(result, 'finalizer', this.converted(finalizer));
+            this.set(result, 'handler', this.converted(handler));
+            return result;
+        }
+        if(node.kind === 'CatchClause') {
+            const result = this.create(id, 'CatchClause');
+            const declaration = this.kind(first) === 'VariableDeclaration' ? first : -1;
+            this.set(result, 'body', this.converted(declaration >= 0 ? second : first));
+            this.set(
+                result,
+                'param',
+                childValue(declaration >= 0 ? this.bind(this.child(declaration, 0), this.child(declaration, 1)) : -1),
+            );
+            return result;
+        }
+        if(
+            node.kind === 'ClassDeclaration' ||
+            node.kind === 'ClassExpression' ||
+            node.kind === 'InterfaceDeclaration'
+        ) {
+            return this.classNode(id, node.kind === 'InterfaceDeclaration');
+        }
+        if(
+            [
+                'MethodDeclaration',
+                'MethodSignature',
+                'GetAccessor',
+                'SetAccessor',
+                'Constructor',
+                'PropertyDeclaration',
+                'PropertySignature',
+                'IndexSignature',
+            ].includes(node.kind)
+        ) {
+            return this.member(id, parent);
+        }
+        if(node.kind === 'ClassStaticBlockDeclaration') {
+            const result = this.create(id, 'StaticBlock');
+            this.set(result, 'body', this.body(this.ts(first).children, id, true));
+            return result;
+        }
+        if(node.kind === 'ImportDeclaration') {
+            return this.importDeclaration(id);
+        }
+        if(node.kind === 'ExportDeclaration') {
+            return this.exportDeclaration(id);
+        }
+        if(node.kind === 'NamespaceImport') {
+            const result = this.create(id, 'ImportNamespaceSpecifier');
+            this.set(result, 'local', this.converted(first));
+            return result;
+        }
+        if(node.kind === 'ImportSpecifier' || node.kind === 'ExportSpecifier') {
+            const local = second >= 0 ? second : first;
+            const result = this.create(id, node.kind);
+            this.set(
+                result,
+                node.kind === 'ImportSpecifier' ? 'imported' : 'exported',
+                this.converted(node.kind === 'ImportSpecifier' ? first : local),
+            );
+            this.set(
+                result,
+                node.kind === 'ImportSpecifier' ? 'importKind' : 'exportKind',
+                stringValue(node.semantic === '1' ? 'type' : 'value'),
+            );
+            this.set(result, 'local', this.converted(node.kind === 'ImportSpecifier' ? local : first));
+            return result;
+        }
+        if(node.kind === 'ImportEqualsDeclaration') {
+            const children = this.dataChildren(id);
+            const result = this.create(id, 'TSImportEqualsDeclaration');
+            this.set(result, 'id', this.converted(children[0] ?? -1));
+            this.set(result, 'importKind', stringValue(node.semantic === '1' ? 'type' : 'value'));
+            this.set(result, 'moduleReference', this.converted(children[1] ?? -1));
+            return this.exports(id, result);
+        }
+        if(node.kind === 'ExportAssignment') {
+            const result = this.create(id, node.semantic === '1' ? 'TSExportAssignment' : 'ExportDefaultDeclaration');
+            this.set(result, node.semantic === '1' ? 'expression' : 'declaration', this.converted(first));
+            if(node.semantic !== '1') {
+                this.set(result, 'exportKind', stringValue('value'));
+            }
+            return result;
+        }
+        if(node.kind === 'TypeQuery') {
+            const result = this.create(id, 'TSTypeQuery');
+            this.set(result, 'exprName', this.converted(first));
+            this.set(result, 'typeArguments', childValue(this.wrapper(node.children.slice(1), false)));
+            return result;
+        }
+        if(node.kind === 'ExpressionWithTypeArguments') {
+            const result = this.create(id, 'TSInstantiationExpression');
+            this.set(result, 'expression', this.converted(first));
+            this.set(result, 'typeArguments', childValue(this.wrapper(node.children.slice(1), false)));
+            return result;
+        }
+        if(['FunctionType', 'ConstructorType', 'ConstructSignature', 'CallSignature'].includes(node.kind)) {
+            const children = this.dataChildren(id);
+            const types: number[] = [];
+            const params: number[] = [];
+            let resultType = -1;
+            for(const child of children) {
+                if(this.kind(child) === 'TypeParameter') {
+                    types.push(child);
+                }
+                else if(this.kind(child) === 'Parameter') {
+                    params.push(child);
+                }
+                else {
+                    resultType = child;
+                }
+            }
+            const result = this.create(
+                id,
+                node.kind === 'FunctionType'
+                    ? 'TSFunctionType'
+                    : node.kind === 'ConstructorType'
+                      ? 'TSConstructorType'
+                      : node.kind === 'ConstructSignature'
+                        ? 'TSConstructSignatureDeclaration'
+                        : 'TSCallSignatureDeclaration',
+            );
+            if(node.kind === 'ConstructorType') {
+                this.set(result, 'abstract', boolValue(this.hasModifier(id, 'AbstractKeyword')));
+            }
+            this.set(result, 'params', this.parameters(params));
+            const annotation = resultType >= 0 ? this.annotation(resultType) : -1;
+            if(annotation >= 0 && (node.kind === 'FunctionType' || node.kind === 'ConstructorType')) {
+                this.arena.node(annotation).start = this.byte(this.ts(resultType).pos - 2);
+            }
+            this.set(result, 'returnType', childValue(annotation));
+            this.set(result, 'typeParameters', childValue(this.wrapper(types, true)));
+            return result;
+        }
+        if(node.kind === 'EnumDeclaration') {
+            const children = this.dataChildren(id);
+            const name = children[0] ?? -1;
+            const body = this.arena.newNode('TSEnumBody', this.bodyStart(id, this.ts(name).end), this.byte(node.end));
+            this.set(body, 'members', this.list(children.slice(1)));
+            const result = this.create(id, 'TSEnumDeclaration');
+            this.set(result, 'body', childValue(body));
+            this.set(result, 'const', boolValue(this.hasModifier(id, 'ConstKeyword')));
+            this.set(result, 'declare', boolValue(this.hasModifier(id, 'DeclareKeyword')));
+            this.set(result, 'id', this.converted(name));
+            return this.exports(id, result);
+        }
+        if(node.kind === 'ModuleDeclaration') {
+            return this.moduleNode(id);
+        }
+        if(node.kind === 'MappedType') {
+            return this.mapped(id);
+        }
+        if(node.kind === 'ForStatement') {
+            return this.forNode(id);
+        }
+        if(node.kind === 'NamedTupleMember') {
+            const rest = this.kind(first) === 'DotDotDotToken';
+            const name = rest ? second : first;
+            const question = this.kind(node.children[rest ? 2 : 1] ?? -1) === 'QuestionToken';
+            const type = node.children[node.children.length - 1] ?? -1;
+            const result = this.create(id, 'TSNamedTupleMember');
+            this.set(result, 'elementType', this.converted(type, false, id));
+            this.set(result, 'label', this.converted(name));
+            this.set(result, 'optional', boolValue(question));
+            if(rest) {
+                this.arena.node(result).start = this.start(name);
+                const wrapper = this.create(id, 'TSRestType');
+                this.set(wrapper, 'typeAnnotation', childValue(result));
+                return wrapper;
+            }
+            return result;
+        }
+        if(node.kind === 'TypePredicate') {
+            const asserts = this.kind(first) === 'AssertsKeyword';
+            const name = asserts ? second : first;
+            const type = node.children[asserts ? 2 : 1] ?? -1;
+            const result = this.create(id, 'TSTypePredicate');
+            this.set(result, 'asserts', boolValue(asserts));
+            this.set(result, 'parameterName', this.converted(name));
+            this.set(result, 'typeAnnotation', absent());
+            if(type >= 0) {
+                const annotation = this.annotation(type);
+                const child = this.arena.node(annotation).child('typeAnnotation');
+                this.arena.node(annotation).start = this.arena.node(child).start;
+                this.arena.node(annotation).end = this.arena.node(child).end;
+                this.set(result, 'typeAnnotation', childValue(annotation));
+            }
+            return result;
+        }
+        if(node.kind === 'TaggedTemplateExpression') {
+            const template = node.children[node.children.length - 1] ?? -1;
+            const result = this.create(id, 'TaggedTemplateExpression');
+            this.set(result, 'quasi', this.converted(template));
+            this.set(result, 'tag', this.converted(first));
+            this.set(result, 'typeArguments', childValue(this.wrapper(node.children.slice(1, -1), false)));
+            return result;
+        }
+        if(node.kind === 'MetaProperty') {
+            this.scanner.pos = node.pos;
+            this.scanner.scan();
+            const meta = this.arena.newNode('Identifier', this.byte(this.scanner.start), this.byte(this.scanner.pos));
+            this.set(meta, 'decorators', listValue([]));
+            this.set(meta, 'name', stringValue(this.spellings.get(node.operator) ?? panic('unknown meta keyword')));
+            this.set(meta, 'optional', boolValue(false));
+            this.set(meta, 'typeAnnotation', absent());
+            const result = this.create(id, 'MetaProperty');
+            this.set(result, 'meta', childValue(meta));
+            this.set(result, 'property', this.converted(first));
             return result;
         }
         return panic(`ESTree conversion not yet represented: ${node.kind} at ${this.start(id)}`);

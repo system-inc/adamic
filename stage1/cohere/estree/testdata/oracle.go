@@ -2,6 +2,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	estree "github.com/system-inc/cohere/internal/format/estree"
 	"math"
@@ -9,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 	"unicode/utf16"
+	"unicode/utf8"
 )
 
 func written(text string) string {
@@ -90,7 +92,88 @@ func run(path string) {
 	}
 	fmt.Printf("stripped %s\n", written(stripped.Text()))
 }
+func unitOffsets(text string) []int {
+	offsets := make([]int, len(text)+1)
+	index := 0
+	for start, character := range text {
+		for byte := 0; byte < utf8.RuneLen(character); byte++ {
+			offsets[start+byte] = index
+		}
+		index += len(utf16.Encode([]rune{character}))
+	}
+	offsets[len(text)] = index
+	return offsets
+}
+func jsonValue(value any, offsets []int) any {
+	switch typed := value.(type) {
+	case *estree.Node:
+		if typed == nil {
+			return nil
+		}
+		result := map[string]any{"type": typed.Type(), "range": []int{offsets[typed.Start()], offsets[typed.End()]}}
+		if typed.HasContentEnd {
+			result["__contentEnd"] = offsets[typed.ContentEnd]
+		}
+		for _, key := range typed.Keys() {
+			if key != "comments" && key != "tokens" && !strings.HasPrefix(key, "__") {
+				result[key] = jsonValue(typed.Get(key), offsets)
+			}
+		}
+		return result
+	case []*estree.Node:
+		result := make([]any, len(typed))
+		for index, child := range typed {
+			result[index] = jsonValue(child, offsets)
+		}
+		return result
+	case *estree.Regex:
+		return map[string]any{"pattern": typed.Pattern, "flags": typed.Flags}
+	case *estree.TemplateValue:
+		var cooked any
+		if typed.Cooked != nil {
+			cooked = *typed.Cooked
+		}
+		return map[string]any{"raw": typed.Raw, "cooked": cooked}
+	default:
+		return typed
+	}
+}
+func jsonRun(path string, raw bool) {
+	source, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+	text := string(source)
+	var program *estree.Node
+	var comments []*estree.Node
+	if raw {
+		program, comments, err = estree.Convert(estree.ParseSourceFile(path, estree.ReplaceHashbang(text)), nil)
+	} else {
+		program, comments, _, err = estree.ParseTypeScript(path, text, nil)
+	}
+	if err != nil {
+		panic(err)
+	}
+	offsets := unitOffsets(text)
+	encoded, err := json.Marshal(map[string]any{"ast": jsonValue(program, offsets), "comments": jsonValue(comments, offsets)})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(encoded))
+}
 func main() {
+	if os.Args[1] == "--raw-json" || os.Args[1] == "--json" {
+		data, err := os.ReadFile(os.Args[2])
+		if err != nil {
+			panic(err)
+		}
+		for _, path := range strings.Split(string(data), "\n") {
+			if path != "" {
+				jsonRun(path, os.Args[1] == "--raw-json")
+			}
+		}
+		return
+	}
 	if os.Args[1] == "--manifest" {
 		data, err := os.ReadFile(os.Args[2])
 		if err != nil {

@@ -95,6 +95,34 @@ func onNode(t *testing.T, path string, args ...string) []byte {
 }
 func generated() []string {
 	return []string{
+		"namespace A.B { export let x = 1; } declare module 'x' { export const x: number; } declare global { interface X {} }",
+		"type X<T> = { -readonly [K in keyof T as K]-?: T[K] }; type Y = { [K in A]?: B };",
+		"for(;;) x; for(let i=0;i<3;i++) x; for(;x;) y; for(x;;y) z; for(;x;y) z;",
+		"type T = [a: string, b?: number, ...rest: A[]]; type U = [A?, ...B[]];",
+		"function f(x: unknown): x is string { return true; } function g(x: unknown): asserts x is A {}",
+		"const x = tag<T>`a${b}c`; new.target; import.meta;",
+		"import X, { type A as B, C } from 'x' with { type: 'json' }; import * as N from 'y'; import 'z';",
+		"import type { A } from 'x'; import defer * as X from 'x'; import Y = require('y');",
+		"export { type A as B, C }; export * as X from 'x'; export type * from 'y'; export default x; export = x;",
+		"export declare const x: number; export let y = 1;",
+		"class C extends A<B> implements X.Y<Z> { ; x?: number; y!: string; static readonly z = 1; constructor(public x: number) {} m<T>(a: T): T { return a; } get value() { return 1; } set value(x: number) {} }",
+		"abstract class C { abstract x: number; abstract m(): void; accessor y = 1; static { 'x'; y; } }",
+		"interface X<T> extends A.B<T> { readonly x?: number; m<U>(a: U): T; get value(): string; [x: string]: number; }",
+		"const o = { m<T>(x: T): T { return x; }, get a() { return 1; }, set a(x: number) {} };",
+		"type X<T> = (x: T) => T; type Y = abstract new (x: number) => A; type Z = { (x: number): A; new(): B; };",
+		"enum E { A, B = 2 } export const enum F { X = 'x' }",
+		"f<A, B,>(x); f?.<A>(x); new A<B>(x);",
+		"function f(a: number, b?: string): number { 'use strict'; return a; }",
+		"declare function f<T>(x: T): T; export default function g() {}",
+		"async function* f() { yield* x; await x; }",
+		"let x = (a: number = 1, ...b: string[]) => a; let y = async x => x;",
+		"let [a,,b=1,...c]=d; let {a,b:c=2,...d}=e;",
+		"type X = string; export type Y<T extends A = B> = T[];",
+		"let x: A<B>; let y: A<B<C>, D,>;",
+		"for(const x of y) x; for await(const x of y) x; for(x in y) x;",
+		"switch(x) { case 1: y; break; default: z; }",
+		"try { x; } catch(e: unknown) { y; } finally { z; }",
+		"try {} catch {}",
 		"", "// only\n", "/* only */", "#! /bin/runtime\nx;", "'use strict';\n'a\\x20b'; x; 'no';",
 		"x;", "x /* 😀é */ ;", "x\u00a0;", "x\u2028;", "x\r\n;", "{ 'not a directive'; x; }",
 		"1; 1.5; 0x10; 0b10; 0o10; 1_000; 'é😀'; true; false; null;",
@@ -213,4 +241,84 @@ func TestThreePortMutants(t *testing.T) {
 			t.Logf("sanitized native finished; byte comparison caught %s", diff)
 		})
 	}
+}
+
+func TestOriginalLibraries(t *testing.T) {
+	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
+	if library == "" {
+		t.Skip("set ADAMIC_ESTREE_LIBRARY to the pinned scratch npm installation")
+	}
+	list := manifest(t, generated())
+	oracle := goOracle(t)
+	for _, mode := range []string{"raw", "postprocessed"} {
+		flag := "--raw-json"
+		if mode != "raw" {
+			flag = "--json"
+		}
+		want := strings.Split(strings.TrimSpace(string(execute(t, "", oracle, flag, list))), "\n")
+		script, err := filepath.Abs("testdata/library.mjs")
+		if err != nil {
+			t.Fatal(err)
+		}
+		got := strings.Split(strings.TrimSpace(string(execute(t, "", "node", script, library, mode, list))), "\n")
+		if len(got) != len(want) {
+			t.Fatalf("library %s: %d versus %d files", mode, len(got), len(want))
+		}
+		differences := 0
+		for index := range want {
+			var left, right any
+			if err := json.Unmarshal([]byte(want[index]), &left); err != nil {
+				t.Fatal(err)
+			}
+			if err := json.Unmarshal([]byte(got[index]), &right); err != nil {
+				t.Fatal(err)
+			}
+			leftBytes, _ := json.Marshal(left)
+			rightBytes, _ := json.Marshal(right)
+			if !bytes.Equal(leftBytes, rightBytes) {
+				source := generated()[index]
+				known := mode == "postprocessed" && (source == "x\u00a0;" || source == "x\u2028;" || source == "x\r\n;")
+				if !known {
+					t.Errorf("unrecorded %s case %d: Go %s; library %s", mode, index, leftBytes, rightBytes)
+					continue
+				}
+				ast := left.(map[string]any)["ast"].(map[string]any)
+				statement := ast["body"].([]any)[0].(map[string]any)
+				if source == "x\r\n;" {
+					if !bytes.Equal(mustJSON(t, ast["range"]), []byte("[0,4]")) || !bytes.Equal(mustJSON(t, statement["range"]), []byte("[0,4]")) {
+						t.Fatal("CRLF gap changed")
+					}
+					ast["range"] = []int{0, 3}
+					statement["range"] = []int{0, 3}
+				} else {
+					if statement["__contentEnd"] != float64(2) {
+						t.Fatal("multibyte whitespace gap changed")
+					}
+					statement["__contentEnd"] = 1
+				}
+				if !bytes.Equal(mustJSON(t, left), rightBytes) {
+					t.Fatalf("known gap has additional differences: %s case %d: Go after exact known delta %s; library %s", mode, index, mustJSON(t, left), rightBytes)
+				}
+				differences++
+				t.Logf("proved %s case %d known gap for %q", mode, index, source)
+			}
+		}
+		t.Logf("%s: %d files, %d identical, %d differing", mode, len(want), len(want)-differences, differences)
+		expected := 0
+		if mode == "postprocessed" {
+			expected = 3
+		}
+		if differences != expected {
+			t.Errorf("expected exactly %d documented gaps, got %d", expected, differences)
+		}
+	}
+}
+
+func mustJSON(t *testing.T, value any) []byte {
+	t.Helper()
+	data, err := json.Marshal(value)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return data
 }

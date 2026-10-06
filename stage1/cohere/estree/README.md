@@ -1,8 +1,8 @@
 Ported the indexed ESTree model, visitor keys, locations and TypeScript postprocessing.
-The source driver currently converts expressions, basic statements and selected types.
-47 generated files match 46,768 bytes on Go, source Node, sanitized native and emitted JS.
+Added functions, generics, imports/exports, classes, interfaces, members and namespaces.
+75 generated files match 112,528 bytes on Go, source Node, sanitized native and emitted JS.
 Three wrong-output port mutants finish normally and are caught on Node and native.
-This is a first checkpoint; declaration conversion and repository coverage are pending.
+Raw typescript-estree matches all 75; Prettier postprocess has three proved differences.
 
 # Non-JSON ESTree slice
 
@@ -42,7 +42,8 @@ Compilation failures, sanitizer crashes and nonzero exits do not qualify.
 The focused cohere pass checks all source files and reports 100 percent
 Adamic-ready. Original libraries are installed at pinned versions in scratch:
 `@typescript-eslint/typescript-estree@8.65.0`, `typescript@6.0.3`, and
-`prettier@3.9.6`. Independent library comparisons are pending.
+`prettier@3.9.6`. Raw conversion matches all 75 cases. Postprocessing matches 72, with the three
+exact differences below held by tests.
 
 Setup command: `bash cloud/setup.sh > /tmp/stage1-estree-setup.log 2>&1`, then
 `source /workspace/adamic-tools/env.sh`. `nproc`: 5.
@@ -59,8 +60,30 @@ setup: done in 72s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
 ## Limits
 
 Source extensions other than TypeScript are refused at this checkpoint.
-Unsupported conversion kinds and generic argument wrappers fail explicitly.
+Unrepresented conversion kinds fail explicitly. Generic wrapper positions are
+reconstructed from parser child spans and source tokens, then checked against Go.
 The native parser does not promise diagnostic parity, JSX or full JSDoc
 parsing. Parser list ranges are not part of its current node interface.
 No compiler or runtime files were edited. No complete repository gate or
 throughput measurement has been run yet.
+
+## Checkpoint 2
+
+Expanded to declarations, function/arrow parameters, destructuring and defaults,
+annotations and generic wrappers; class/interface members, heritage, constructors
+and static blocks; imports, exports, enums, modules, mapped and predicate types,
+loops, switch and try/catch. No parser files were changed.
+
+`ADAMIC_ESTREE_LIBRARY=/workspace/scratch/estree-library go test -count=1 -v
+./stage1/cohere/estree > /tmp/stage1-estree-step2.log 2>&1` passed in 68.324s.
+All 75 generated files matched 112,528 canonical bytes in four implementations.
+All three port mutants finished normally on Node and sanitized native and were
+caught again. `TestOriginalLibraries` checks all 75 against the pinned original
+converter and Prettier parser; only the exact three documented deltas are allowed.
+`TestPostfixValueGap` holds the successful Node answer and stage 0's NotYet.
+Full output: `validation/step2.log`; cohere: `validation/step2-cohere.log`.
+
+A complete checkout census found 27,359 JS/TS/Adamic source files: 478 Adamic,
+472 cohere and 26,409 TypeScript, totaling 63,017,023 source bytes. Nine files
+are not UTF-8. This is an inventory, not a claim of successful conversion.
+Whole-checkout agreement and throughput are still pending.
