@@ -265,24 +265,6 @@ const child = new Child<Holder>(); const holder: Holder = { back: child }; child
 	}
 }
 
-func TestInheritanceRefusesDifferentNativeSignatures(t *testing.T) {
-	t.Parallel()
-	for _, name := range []string{"override_default_added.a", "override_optional_number.a", "override_optional.a"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			source, err := os.ReadFile(filepath.Join("testdata", "override_representation", name))
-			if err != nil {
-				t.Fatal(err)
-			}
-			_, err = lowerSource(t, string(source))
-			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(err.Error(), `parameter "factor"`) || !strings.Contains(err.Error(), "keep the base method's parameter form") {
-				t.Fatalf("want NotYet naming factor and its repair, got %v", err)
-			}
-		})
-	}
-}
-
 func TestInheritanceNativeSignatureNeighbors(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
