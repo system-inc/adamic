@@ -216,3 +216,11 @@ seven, removing export, and exposes the port's semicolon refusal.
 Semicolon recovery now reports 1005 and leaves the next token for the next
 statement instead of refusing. The saved removed-export namespace input is
 included in the focused comparison. That comparison passes in 14.322s.
+
+## Continued recovery: modified export clauses
+
+A recovered export clause now retains preceding modifiers, including a
+duplicated export token. The focused comparison passes in 14.255s. The
+broader comparison advances to input nine, removing the asterisk; Go uses
+its expression-statement-specific diagnostic 1434 for the following from
+identifier, which is the next difference under repair.

@@ -857,7 +857,7 @@ export class Statements {
         let async = false;
         while(
             this.parser.kind() === 'AtToken' ||
-            this.parser.kind() === 'ExportKeyword' ||
+            (this.parser.kind() === 'ExportKeyword' && !this.exportedClauseAhead()) ||
             this.parser.kind() === 'DefaultKeyword' ||
             this.parser.kind() === 'DeclareKeyword' ||
             this.parser.kind() === 'AbstractKeyword' ||
@@ -868,6 +868,9 @@ export class Statements {
                 async = true;
             }
             modifiers.push(this.parser.kind() === 'AtToken' ? this.decorator() : this.parser.token());
+        }
+        if(this.parser.kind() === 'ExportKeyword' && this.exportedClauseAhead()) {
+            return this.exportDeclaration(pos, modifiers);
         }
         if(this.parser.kind() === 'FunctionKeyword') {
             return this.functionDeclaration(pos, modifiers, async);
