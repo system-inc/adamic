@@ -496,3 +496,13 @@ Label recognition now follows expression parsing, as in Go, so contextual
 keywords can label statements and await-context expressions cannot. Label
 names are removed from the port's separate expression-root collection. Four
 focused additions and preceding cases pass in 30.164s; cohere passes.
+
+## Continued recovery: keyword-specific statement diagnostics
+
+Removing the interface name at input 1597 now matches Go's diagnostic 1438
+and current-token range. The related interface, namespace, type-alias,
+variable-declaration and type-predicate diagnostics follow Go's missing
+semicolon recovery. Stranded declare/abstract tokens use declaration lookahead
+and unknown scanner tokens retain their scanner error without a fabricated
+identifier error. Ten focused additions and preceding probes pass in
+30.901s; cohere passes after its else-if style correction.

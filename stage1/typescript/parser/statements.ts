@@ -4,6 +4,7 @@ import { Scanner } from '../scanner/scanner.ts';
 import type { ParseNode } from './nodes.ts';
 import { reservedKinds } from './grammar.ts';
 import { keywordSuggestion } from './spelling.ts';
+import { declarationAhead } from './lookahead.ts';
 
 export interface StatementContextInterface {
     readonly scanner: Scanner;
@@ -130,6 +131,9 @@ export class Statements {
             this.parser.kind() !== 'EndOfFile' &&
             (this.parser.scanner.flags & 1) === 0
         ) {
+            if(this.keywordStatementError(node.text, tokenStart, node.end)) {
+                return;
+            }
             const suggestion = keywordSuggestion(node.text);
             if(suggestion !== '') {
                 this.parser.errorAt(
@@ -139,13 +143,54 @@ export class Statements {
                     `Unknown keyword or identifier. Did you mean '${suggestion}'?`,
                 );
             }
-            else {
+            else if(this.parser.kind() !== 'Unknown') {
                 this.parser.errorAt(1434, tokenStart, node.end, 'Unexpected keyword or identifier.');
             }
         }
         else {
             this.semicolon();
         }
+    }
+    keywordStatementError(text: string, start: number, end: number): boolean {
+        if(text === 'declare') {
+            return true;
+        }
+        if(['const', 'let', 'var'].includes(text)) {
+            this.parser.errorAt(1440, start, end, 'Variable declaration not allowed at this location.');
+            return true;
+        }
+        if(text === 'is') {
+            this.parser.errorAt(
+                1228,
+                start,
+                this.parser.scanner.start,
+                'A type predicate is only allowed in return type position for functions and methods.',
+            );
+            return true;
+        }
+        if(['interface', 'module', 'namespace', 'type'].includes(text)) {
+            const label = text === 'interface' ? 'Interface' : text === 'type' ? 'Type alias' : 'Namespace';
+            const empty = this.parser.kind() === (text === 'type' ? 'EqualsToken' : 'OpenBraceToken');
+            const code = empty
+                ? text === 'interface'
+                    ? 1438
+                    : text === 'type'
+                      ? 1439
+                      : 1437
+                : text === 'interface'
+                  ? 2427
+                  : text === 'type'
+                    ? 2457
+                    : 2819;
+            this.parser.errorAt(
+                code,
+                this.parser.scanner.start,
+                this.parser.scanner.pos,
+                empty ? `${label} must be given a name.` : `${label} name cannot be '${this.parser.scanner.value}'.`,
+            );
+            return true;
+        }
+        return false;
     }
     variableList(): number {
         const pos = this.parser.scanner.fullStart;
@@ -1057,8 +1102,8 @@ export class Statements {
             this.parser.kind() === 'AtToken' ||
             (this.parser.kind() === 'ExportKeyword' && !this.exportedClauseAhead()) ||
             this.parser.kind() === 'DefaultKeyword' ||
-            this.parser.kind() === 'DeclareKeyword' ||
-            this.parser.kind() === 'AbstractKeyword' ||
+            ((this.parser.kind() === 'DeclareKeyword' || this.parser.kind() === 'AbstractKeyword') &&
+                declarationAhead(this.parser.scanner)) ||
             (this.parser.kind() === 'AsyncKeyword' && this.parser.peek() === 'FunctionKeyword') ||
             (this.parser.kind() === 'ConstKeyword' && this.parser.peek() === 'EnumKeyword')
         ) {
