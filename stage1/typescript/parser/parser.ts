@@ -924,7 +924,7 @@ export class Parser {
             }
             this.next();
             const children = [left];
-            const array = this.kind() === 'CloseBracketToken';
+            const array = !this.typeStart();
             if(!array) {
                 children.push(this.type());
             }

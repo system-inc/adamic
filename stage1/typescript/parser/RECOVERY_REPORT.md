@@ -375,3 +375,11 @@ loop identifiers and a string template preference); the following correction
 renames the indices and uses a template, and passes cohere. All remaining binder.ts edits pass in
 the continuation, which checks 102 inputs before reaching input 699 in
 builder.ts: an indexed type cut after its bracket is recovered as an ArrayType.
+
+## Continued recovery: incomplete array types
+
+An opening square bracket without a following type is an ArrayType in Go,
+with a missing closing bracket diagnostic. The port now checks Go's type-start
+condition before choosing IndexedAccessType. Three focused cases cover EOF,
+a parameter type, and a semicolon. Focused comparison passes in 24.776s;
+source cohere passes. Wider continuation starts at input 699.
