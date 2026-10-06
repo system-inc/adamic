@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -71,7 +72,7 @@ for (const path of ['walking/link-to-inner', 'walking/dangling', '', 'walking/da
 			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
-			result := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+			result := executeInput(t, how, append(leakOptions(), "UBSAN_OPTIONS=halt_on_error=1"), binary)
 			if result.exitCode != 0 || len(result.stderr) != 0 {
 				t.Fatalf("mutant must run cleanly: %+v", result)
 			}
@@ -174,7 +175,9 @@ for (const path of ` + list + `) {
 	t.Logf("fs.realpathSync reference: %s", want.stdout)
 	if caseMutant {
 		code := strings.ReplaceAll(native.C(program), "adamic_real_path(", "realpath_case_mutant(")
-		code = insertCollectionMutant(code, `extern char *realpath(const char *, char *);
+		code = insertCollectionMutant(code, `#include <stdlib.h>
+#include <string.h>
+extern char *realpath(const char *, char *);
 static adamic_object *realpath_case_mutant(const adamic_string *path) {
  adamic_object *result = adamic_real_path(path);
  if (result->slots[0].reference != NULL) {
@@ -193,7 +196,7 @@ static adamic_object *realpath_case_mutant(const adamic_string *path) {
 		if err := native.Build(code, mutant, native.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
-		result := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1"}, mutant)
+		result := executeInput(t, how, leakOptions(), mutant)
 		if result.exitCode != 0 || len(result.stderr) != 0 {
 			t.Fatalf("mutant must run cleanly: %+v", result)
 		}
@@ -202,4 +205,12 @@ static adamic_object *realpath_case_mutant(const adamic_string *path) {
 		}
 		t.Log("libc realpath mutant caught by case-preserving stdout comparison")
 	}
+}
+
+// leakOptions asks for LeakSanitizer where there is one: macOS's AddressSanitizer aborts when asked.
+func leakOptions() []string {
+	if runtime.GOOS == "linux" {
+		return []string{"ASAN_OPTIONS=detect_leaks=1"}
+	}
+	return nil
 }
