@@ -22,7 +22,7 @@ var gaps = []struct {
 	badC   string
 	stdout string
 }{
-	{path: "gaps/1_mutual_recursion.ts", notYet: "a void call used as a value", stdout: "true false\n"},
+	{path: "gaps/1_mutual_recursion.ts", stdout: "true false\n"},
 	{path: "gaps/2_return_undefined_array.ts", stdout: "true\n"},
 }
 

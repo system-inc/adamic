@@ -6,7 +6,9 @@ Every place stage 0 refused the port is below (gap 5 found at main 4ddd17f, the 
 
 The programs are in `gaps/`, and `gaps_test.go` holds them to this file: an open gap must still be refused with the words recorded here, and a closed one must lower and print natively what it prints on Node, leaking nothing.
 
-## 1. `indexOf` from a position
+## 1. `indexOf` from a position (closed by stream P's indexOf and includes from a position (f34d884), in integration 11)
+
+Closed: `indexOf` and `includes` with a position now lower, and the gap program prints natively what it prints on Node. The port's workaround (gap 1) still stands; stream P2 undoes it.
 
 docs/0.1.md's library has `indexOf`. With one argument it lowers; with the position to search from, it's refused.
 

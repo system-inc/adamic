@@ -12,7 +12,9 @@ The first three slices were parsers: a string in, a tree out, nothing kept. Ahra
 - **A single lint rule's pure core** (runner-up): every rule's fixtures are whole sources run through typescript-go's AST, which a port can't take as input, so a pure core would be held by fixtures of my own extracting, not the rule's. Not the oracle Ahra asked for.
 - **lint/report** (looked at): 125 lines of formatting, too little state.
 
-## 1. Two functions that call each other
+## 1. Two functions that call each other (closed by stream P's signatures before bodies (24142eb), in integration 11)
+
+Closed: stage 0 now writes every function's signature before it lowers any body, so a call knows what a function declared below it returns, and the gap program prints natively what it prints on Node. The port's workaround (gap 1) still stands; stream P2 undoes it.
 
 gitignore's gap 3 is a call to a function declared later, taken for a void call. Its GAPS.md says that taking signatures from the checker up front "would also make mutual recursion possible, which no order can give today", and this is that program:
 

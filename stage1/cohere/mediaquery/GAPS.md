@@ -15,7 +15,9 @@ Chosen from cohere's internal packages for being self-contained and held by test
 - **lint/ecmascript/text** (runner-up): the edit distance and grapheme counting the lint rules use. Pure and small, but held only by unit tests, and too small to tell us much.
 - Looked at and left: format/yaml/cst returns iter.Seq; format/doc's string width matches emoji with regexp; the markdown entity tables are data, and constant data compiles slowly (gitignore's GAPS.md).
 
-## 1. A generic function isn't instantiated per call
+## 1. A generic function isn't instantiated per call (closed by stream P's generic functions (293976f, a1f90d0), in integration 11)
+
+Closed: stage 0 now instantiates a generic function once per set of what its type arguments are held as, and both gap programs print natively what they print on Node. The port's workaround (gap 1) still stands; stream P2 undoes it.
 
 docs/0.1.md compiles generics by monomorphization, and generic classes are (`Box<string>` lowers). A generic function is lowered once, so a return or a parameter typed by its type parameter is refused.
 
@@ -68,7 +70,9 @@ The emitted function is `adamic_object * adamic_temporary_1 = adamic_retain(NULL
 
 **Around it:** the driver's `escapeOf` (main.ts) returns `''` for a character written as itself, where it would return undefined.
 
-## 3. `?.` on an array or a string
+## 3. `?.` on an array or a string (closed by stream P's `?.length` (293976f, a1f90d0), in integration 11)
+
+Closed: `?.length` on an array or a string that may be missing now lowers, and the gap program prints natively what it prints on Node. The port's workaround (gap 3) still stands; stream P2 undoes it.
 
 docs/0.1.md has `?.`. On an object it lowers; on an array or a string it's refused.
 
@@ -87,7 +91,9 @@ On a `string | undefined`, `text?.length` reads `stage 0 can't lower optional ch
 
 **Around it:** the driver's count mode (main.ts) narrows `parsed.value.nodes` into a local and tests it for undefined.
 
-## 4. A tree with mutable child arrays is refused as cycle-capable
+## 4. A tree with mutable child arrays is refused as cycle-capable (closed by stream B3's fresh-write relaxation (8f30be5, 952ccbe), in integration 11)
+
+Closed: the cycle finder lets a cycle-capable slot stand when every write into it is proven not to reach its holder (docs/memory.md, "Relaxing the finder for fresh writes"), and this tree's are. The gap program prints natively what it prints on Node and leaks nothing. The port's workaround (gap 4) still stands; stream P2 undoes it.
 
 Not a NotYet: a rule of 0.1, the cycle finder's (`internal/lower/cycles.go`, docs/memory.md "Cycles"), which landed on main at 4ddd17f and refused this port as first written. A node whose children are a mutable array of nodes can be given itself (`root.nodes.push(root)`), a cycle reference counting can't free:
 
@@ -109,7 +115,9 @@ console.log(`${root.nodes.length}`);
 Adamic 0.1 refuses TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free; declare the elements weak, Weak<TreeNode>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly TreeNode[] (adamic/cycle-capable)        (Node prints 2)
 ```
 
-## 5. ... and so is a tree built from a local array of children
+## 5. ... and so is a tree built from a local array of children (closed by stream B3's fresh-write relaxation (8f30be5, 952ccbe), in integration 11)
+
+Closed, as gap 4: every push of a child into the local array is proven fresh, and the gap program prints natively what it prints on Node and leaks nothing. The port's workaround (gap 5) still stands; stream P2 undoes it.
 
 The same rule refuses the way nearly every parser builds a tree bottom-up: collect the children in a local array, then make the node with them as `readonly nodes`, never writing the array again. The finder reads types, not what happens to a value, so the local `TreeNode[]` is cycle-capable whatever follows:
 
