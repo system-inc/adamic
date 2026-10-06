@@ -16,6 +16,7 @@ func TestV8CompatibilityRefusals(t *testing.T) {
 		{`[\q{a}]`, "iv", "singleton"}, {`[\q{Ss|x}]`, "iv", "singleton"},
 		{`(?i:a)[b]`, "v", "scoped"}, {`(?-i:a)[b]`, "iv", "scoped"},
 		{`(?i:a)\w`, "u", "scoped"}, {`(?i:a)[\w]`, "u", "scoped"},
+		{`(?i:x|[^a-z])`, "", "scoped"},
 		{`[\q{ab|a|}]`, "v", "empty"},
 	} {
 		t.Run(row[0]+"/"+row[1], func(t *testing.T) {
@@ -90,6 +91,8 @@ func TestV8CompatibilityAcceptedNode(t *testing.T) {
 		{`(?i:^)[\w\W]`, "u", "K"}, {`(?-i:^)[\w\W]`, "iu", "ſ"},
 		{`(?s:a).`, "", "a\n"}, {`(?-s:a).`, "s", "a\n"},
 		{`(?m:)^a`, "", "\na"}, {`(?-m:)^a`, "m", "\na"},
+		{`(?i:[^a-z]|x)`, "", "B"}, {`(?i:x|[^0-9])`, "", "B"},
+		{`(?i:x|[^aA])`, "", "A"}, {`(?i:x|[^a-z])`, "u", "B"},
 		{`(?-i:^)[\q{AB}]`, "iv", "ab"},
 		{`(?i:a)\w`, "", "aK"},
 		{`[[\q{ab|a|}]--[\q{}]]`, "v", "a"}, {`[\q{ab|}]`, "v", "a"},

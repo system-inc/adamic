@@ -1,5 +1,37 @@
 # V8 RegExp compatibility unit
 
+## Node 24.19.0 recheck, October 6
+
+Rechecked directly on Linux x64 against explicit spec witnesses; integration
+reports identical output on official darwin-arm64 Node 24.19.0 with the same
+V8 13.6.233.17-node.51. The exact program and `node --version` output are in
+[integration-reproduction.js](integration-reproduction.js) and
+[integration-node2419.txt](integration-node2419.txt). All five drafts reproduce;
+none of the existing refusals was dropped. The uppercase empty-result witness
+is a real mismatch, but does not isolate ordering from singleton folding.
+
+Added the missing scoped legacy negated-class alternative refusal. Lowering
+pins both integration modifier witnesses. No test262 patterns or attributed
+files are lost; the complete 127,369-row and 10,000-random Go oracles still pass.
+C runs all 127,369 test262 rows and 9,911 accepted random rows in metered and
+unlimited modes with zero disagreements. Go package: 11.392s; C: 48.013s.
+
+Commands (output redirected to the archived `node2419-*.txt` files):
+
+```sh
+go test ./internal/regexp ./internal/lower -run 'TestV8|TestRegExpV8' -count=1 -v
+go test ./internal/regexp -count=1 -v -timeout=20m
+go test ./internal/native -run '^TestRegExpBytecode' -count=1 -v -timeout=20m
+go vet ./internal/regexp ./internal/lower
+```
+
+A real mutant omitting the added legacy-alternative refusal fails the explicit
+Node/spec recheck, naming `(?i:x|[^a-z])` with a missing refusal. The mutation
+was run in an isolated copied package; the working tree was not mutated.
+The current native-fixes environment's setup was 122s total/cache, Go 0s,
+clang/Node/submodule 1s each; `nproc` 5, quota 4 CPUs. Native fixes continue on
+their separate branch from current main after this recheck commit.
+
 Branch: `codex/regex-v8-divergences`, cut from `origin/main` at `5d4c801`.
 This unit follows the already pushed literal-object fixture commit `50a1dc8`;
 it does not merge the matcher/protocol branches into main. No runner verdict,
