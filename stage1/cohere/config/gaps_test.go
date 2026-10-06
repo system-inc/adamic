@@ -58,10 +58,8 @@ func TestSettingsBehaviorCensus(t *testing.T) {
 	t.Logf("Go settings and tsconfig behavior:\n%s", got)
 }
 
-// Not a compiler refusal: the typed port explicitly declines a source-contributing directory link.
-// Go's production parser follows links and canonicalizes visits. This counterexample must close when
-// realpath is added, rather than letting a generic failure be counted as the expected gap.
-func TestDirectoryLinkGap(t *testing.T) {
+// Go follows directory links and canonicalizes visits, retaining the first alias spelling.
+func TestDirectoryLinksAgreeWithGoCohere(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()
 	if err := os.Mkdir(filepath.Join(root, "z-target"), 0755); err != nil {
@@ -71,6 +69,12 @@ func TestDirectoryLinkGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(root, "tsconfig.json"), []byte(`{"include":["**/*.ts"]}`), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink("..", filepath.Join(root, "z-target/back")); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink("missing", filepath.Join(root, "dangling")); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.Symlink("z-target", filepath.Join(root, "a-alias")); err != nil {
@@ -89,14 +93,14 @@ func TestDirectoryLinkGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, source)
-	expected := "stage1 tsconfig directory symlink needs realpath: " + filepath.Join(root, "a-alias") + "\n"
+	expected := filepath.Join(root, "a-alias/a.ts") + "\n"
 	for _, side := range []struct {
 		name   string
 		result run
 	}{{"native", nativelyRun(t, program, filepath.Join(root, "tsconfig.json"))}, {"Node", onNode(t, source, filepath.Join(root, "tsconfig.json"))}, {"backend", onJavaScriptBackend(t, program, filepath.Join(root, "tsconfig.json"))}} {
 		if side.result.exitCode != 0 || len(side.result.stderr) > 0 || string(side.result.stdout) != expected {
-			t.Fatalf("%s: directory link gap closed or changed: exit %d stdout %q stderr %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+			t.Fatalf("%s: directory alias differs from Go: exit %d stdout %q stderr %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
 		}
 	}
-	t.Logf("Go follows and deduplicates the directory alias; port explicitly declines: %s", expected)
+	t.Logf("Go and the port follow and deduplicate the directory alias: %s", expected)
 }
