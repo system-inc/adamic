@@ -252,6 +252,8 @@ var fixtures = []struct {
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
+	// Object.prototype.hasOwnProperty is on every object's type and not in its shape.
+	{"internal/oracle/testdata/has_own.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

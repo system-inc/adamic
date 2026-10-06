@@ -327,6 +327,35 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }
 
+// hasOwnProperty lowers object.hasOwnProperty(key) when the method is the library's, not a field the
+// object declares. The checker puts Object's prototype methods on every object's type. The shape
+// holds only the object's own fields, and reading hasOwnProperty as one of them panics: the field
+// the checker proved is not there.
+func (l *lowering) hasOwnProperty(node *ast.Node, receiver *ast.Node) (ir.Expression, bool, error) {
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	symbol := l.checker.GetSymbolAtLocation(callee)
+	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+		return nil, false, nil
+	}
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) != 1 {
+		return nil, true, l.notYet(node, "hasOwnProperty with other than one argument")
+	}
+	if keyType, _ := l.representation(l.checker.GetTypeAtLocation(arguments[0])); keyType != ir.String {
+		return nil, true, l.notYet(node, "hasOwnProperty with a key that isn't a string")
+	}
+	// JavaScript's order: the object, then the key.
+	object, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	key, err := l.expression(arguments[0])
+	if err != nil {
+		return nil, true, err
+	}
+	return ir.HasOwn{Object: object, Key: key}, true, nil
+}
+
 // isLibraryGlobal reports whether a node names one of the library's globals, rather than something
 // of the program's that happens to share its name.
 func (l *lowering) isLibraryGlobal(node *ast.Node, name string) bool {
@@ -423,6 +452,11 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if receiverType == ir.Object && checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
 		// A tuple is held as an object: called as an object, an array method would be read as a field.
 		return nil, true, l.notYet(node, name+" on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made)")
+	}
+	if receiverType == ir.Object && name == "hasOwnProperty" {
+		if lowered, handled, err := l.hasOwnProperty(node, receiver); handled {
+			return lowered, true, err
+		}
 	}
 	if !isMath && !isToFixed {
 		return nil, false, nil

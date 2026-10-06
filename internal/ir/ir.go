@@ -638,6 +638,14 @@ type (
 	// MapSize is map.size.
 	MapSize struct{ Map Expression }
 
+	// HasOwn is object.hasOwnProperty(Key): whether one of the object's own fields has that name.
+	// The method lives on Object's prototype, which a shape does not store, so it is not a read of a
+	// field named hasOwnProperty.
+	HasOwn struct {
+		Object Expression
+		Key    Expression
+	}
+
 	// ArrayJoin is Array.join(Separator), writing each element as String() would.
 	ArrayJoin struct {
 		Array     Expression
@@ -820,6 +828,7 @@ func (MapSet) Type() Type     { return Map }
 func (MapHas) Type() Type     { return Boolean }
 func (MapDelete) Type() Type  { return Boolean }
 func (MapSize) Type() Type    { return Number }
+func (HasOwn) Type() Type     { return Boolean }
 
 func (g MapGet) Type() Type { return Maybe(g.ValueType) }
 

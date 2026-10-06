@@ -687,6 +687,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Map) + ".delete(" + e.value(expression.Key) + ")"
 	case ir.MapSize:
 		return e.value(expression.Map) + ".size"
+	case ir.HasOwn:
+		return e.value(expression.Object) + ".hasOwnProperty(" + e.value(expression.Key) + ")"
 	case ir.ReadTextFile:
 		return "readTextFile(" + e.value(expression.Path) + ")"
 	case ir.ProgramArguments:
