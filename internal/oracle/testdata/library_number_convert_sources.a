@@ -1,0 +1,23 @@
+const nums: number[] = [1.5, -0];
+const flags: boolean[] = [true];
+const texts: string[] = [' 0b11 ', 'x'];
+const counts = new Map<string, number>([['a', -0], ['b', 7]]);
+const names = new Map<string, string>([['a', '0o17'], ['b', '']]);
+const marks = new Map<string, boolean>([['a', true]]);
+for (let index = 0; index < 3; index++) {
+ console.log(`${Number(nums[index])} ${1 / Number(nums[index])} ${Number(flags[index])} ${Number(texts[index])}`);
+}
+for (const key of ['a', 'b', 'c']) {
+ console.log(`${Number(counts.get(key))} ${1 / Number(counts.get(key))} ${Number(names.get(key))} ${Number(marks.get(key))}`);
+}
+interface Box { size?: number; label?: string; }
+const boxes: Box[] = [{ size: -0, label: " 1e3 " }];
+for (const box of boxes) {
+ console.log(`${Number(box.size)} ${1 / Number(box.size)} ${Number(box.label)} ${Number(box.size ?? '12')}`);
+}
+let u: string | number = 'abc';
+console.log(`${+u}`);
+u = 42;
+console.log(`${+u} ${Number(u)}`);
+u = '  0B1 ';
+console.log(`${+u} ${Number(u)}`);

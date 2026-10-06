@@ -54,4 +54,19 @@ func init() {
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/library_json_shapes.a", true, false})
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/library_number_math_edges.a", true, false})
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/library_number_own_names.a", true, false})
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/library_number_convert_sources.a", true, false})
 }

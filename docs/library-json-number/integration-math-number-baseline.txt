@@ -1,0 +1,33 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_number_math_edges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_number_math_edges.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_number_own_names.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_number_own_names.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_number_convert_sources.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_number_convert_sources.a
+=== RUN   TestNativeAgreesWithNode/docs/library-json-number/probes/library_number_optional_field_min.a
+=== PAUSE TestNativeAgreesWithNode/docs/library-json-number/probes/library_number_optional_field_min.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_number_math_edges.a
+=== CONT  TestNativeAgreesWithNode/docs/library-json-number/probes/library_number_optional_field_min.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_number_own_names.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_number_convert_sources.a
+=== NAME  TestNativeAgreesWithNode/docs/library-json-number/probes/library_number_optional_field_min.a
+    oracle_test.go:604: exit codes differ
+        node:   exit 0, stdout "true\n", stderr ""
+        native: exit 70, stdout "", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:617: leaks:
+        exit 70
+        adamic: panic: compiler bug: a field the checker proved is there is missing
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/docs/library-json-number/probes/library_number_optional_field_min.a (0.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_number_own_names.a (0.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_number_math_edges.a (0.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_number_convert_sources.a (0.52s)
+FAIL
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.538s
+FAIL
