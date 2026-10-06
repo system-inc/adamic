@@ -63,7 +63,12 @@ type adamicStructure struct {
 	setext       bool
 	children     []adamicStructureChild
 }
+type adamicRoot struct {
+	source   string
+	children []adamicBlock
+}
 type adamicDocuments struct {
+	roots      []adamicRoot
 	structures []adamicStructure
 	native     bool
 	lines      []string
@@ -244,6 +249,19 @@ func (out *adamicDocuments) serialize(document doc.Doc) int {
 			out.documents++
 			return id
 		}
+		if out.native && strings.HasPrefix(node.Label, "adamic-root:") {
+			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-root:"))
+			frame := out.roots[index]
+			for _, child := range frame.children {
+				id := out.serialize(child.document)
+				n := child.node
+				out.lines = append(out.lines, fmt.Sprintf("J\t%d\t%s\t%d\t%d\t%d\t%d\t%s", id, n.NodeType, n.Position.Start.Line, n.Position.End.Line, utf16Length(frame.source[:n.Position.Start.Offset]), utf16Length(frame.source[:n.Position.End.Offset]), adamicEscape(n.Value)))
+			}
+			out.lines = append(out.lines, "O\t"+adamicEscape(frame.source))
+			id := out.documents
+			out.documents++
+			return id
+		}
 		if out.native && strings.HasPrefix(node.Label, "adamic-structure:") {
 			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-structure:"))
 			frame := out.structures[index]
@@ -294,10 +312,20 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	htmls := []adamicHTML{}
 	words := []adamicWord{}
 	structures := []adamicStructure{}
+	roots := []adamicRoot{}
 	printer := *mdastPrinter
 	printer.Print = func(path *astPath, options *options, print printing.PrintFunc, args any) doc.Doc {
 		original := printMdast(path, options, print, args)
 		node := currentNode(path)
+		if node.NodeType == "root" {
+			frame := adamicRoot{source: options.OriginalText}
+			path.Each(func(childPath *astPath, _ int, _ any) {
+				frame.children = append(frame.children, adamicBlock{currentNode(childPath), print(nil, nil)})
+			}, "children")
+			id := len(roots)
+			roots = append(roots, frame)
+			return doc.NewLabel(fmt.Sprintf("adamic-root:%d", id), original)
+		}
 		if (node.NodeType == "heading" || node.NodeType == "sentence" || node.NodeType == "paragraph") && !shouldRemainTheSameContent(path) {
 			frame := adamicStructure{kind: node.NodeType, depth: node.Depth, setext: isSetextHeading(node)}
 			if node.NodeType == "heading" {
@@ -422,7 +450,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	}
 	// Serialize before Print mutates group break flags, so native propagation is exercised.
 	for _, side := range []bool{true, false} {
-		out := &adamicDocuments{native: side, structures: structures, htmls: htmls, codes: codes, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
+		out := &adamicDocuments{native: side, roots: roots, structures: structures, htmls: htmls, codes: codes, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
 		root := out.serialize(document)
 		out.lines = append(out.lines, fmt.Sprintf("R\t%d\t%d", root, adamicFlag(bom)))
 		stream := strings.Join(out.lines, "\n") + "\n"

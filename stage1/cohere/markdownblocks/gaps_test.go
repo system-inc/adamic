@@ -17,6 +17,7 @@ func TestParserRepresentationProbes(t *testing.T) {
 		{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n", notYet: "a function inside a function (a closure)"},
 		{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n", refused: "a cycle reference counting can't free"},
 		{path: "gaps/3_recursive_callable.ts", stdout: "1\n0\n"},
+		{path: "gaps/4_structural_ranges.ts", stdout: "1\n", refused: "a cycle reference counting can't free"},
 	} {
 		t.Run(gap.path, func(t *testing.T) {
 			t.Parallel()

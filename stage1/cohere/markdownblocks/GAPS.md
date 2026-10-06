@@ -6,6 +6,21 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native root and ignore layout boundary
+
+`root.ts` prints root children, exact blank-line predicates, trailing hardline,
+paired ignore ranges and raw single-node ignores. Go byte offsets become UTF-16
+source offsets in the fixture adapter; native slices and prints source itself.
+All 4,724 accumulated source contexts match both original full-source oracles.
+Go still parses/preprocesses the AST and supplies unported children.
+
+A two-field structural range array was rejected before code generation because
+other structural subtypes can carry child arrays. The minimal witness is
+`gaps/4_structural_ranges.ts`: Node prints 1; Adamic reports Refused with the
+cycle reference-counting diagnostic. Root ignore ranges now use numeric index
+pairs; the complete root gate compiles, runs and leaks nothing. This is a
+representation workaround, not a compiler change or a reason to stop parsing.
+
 ## Native heading, sentence and paragraph boundary
 
 `structure.ts` constructs ATX/setext headings, sentence fills and flattened

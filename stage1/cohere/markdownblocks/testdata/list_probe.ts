@@ -1,3 +1,4 @@
+import { printRoot, type RootChildInterface } from '../root.ts';
 import { printHeading, printParagraph, printSentence, type SentenceChildInterface } from '../structure.ts';
 // Component driver: Go AST/doc fixtures supply unported blocks, not production Markdown input.
 import { panic, programArguments, readTextFile } from 'adamic';
@@ -55,6 +56,7 @@ if(input.kind === 'Error') panic(input.message);
 let arena = new DocumentArena();
 let items: ListItemInterface[] = [];
 let documents: number[] = [];
+let rootChildren: RootChildInterface[] = [];
 for(const line of input.text.split('\n')) {
     if(line === '') continue;
     const fields = line.split('\t');
@@ -70,6 +72,20 @@ for(const line of input.text.split('\n')) {
                 integer(fields[5] ?? ''),
             ),
         );
+    else if(kind === 'J')
+        rootChildren.push({
+            doc: documents[integer(fields[1] ?? '')] ?? panic('root document'),
+            kind: fields[2] ?? '',
+            start: integer(fields[3] ?? ''),
+            end: integer(fields[4] ?? ''),
+            startOffset: integer(fields[5] ?? ''),
+            endOffset: integer(fields[6] ?? ''),
+            value: decode(fields[7] ?? ''),
+        });
+    else if(kind === 'O') {
+        documents.push(printRoot(arena, decode(fields[1] ?? ''), rootChildren));
+        rootChildren = [];
+    }
     else if(kind === 'N') {
         const children: SentenceChildInterface[] = [];
         for(const value of (fields[5] ?? '').split(';')) {

@@ -1,3 +1,62 @@
+Unicode widths and root, heading, sentence and paragraph layout are native.
+4,724 accumulated documents match Go and the pinned fork with embedding off.
+1,205,496 widths agree; nine new output-only mutants have been caught.
+Each green implementation slice is pushed; sanitizer/leak and static checks pass.
+Full native parsing, AST preprocessing, whitespace and other printers remain pending.
+
+Root and ignore layout slice, October 6, 2026
+
+Prior structural slice pushed: 65495839bfe27bdd8a9b9425b03446926d1bfdfb.
+root.ts ports printRoot, root child spacing and paired ignore-range handling.
+It also prints ignored next siblings from exact source spans. The adapter
+converts original Go byte offsets to UTF-16 source offsets; this is AST metadata,
+not a text-width service. Empty roots stay empty, nonempty roots end in hardline.
+HTML ignore markers are recognized with exact JavaScript whitespace trimming.
+All source-width fields remain poisoned. Parsing, AST preprocessing and unported
+children still come from Go fixtures; there is no native file formatter claim.
+
+The first record-based range representation was Refused before code generation:
+IgnoreRangeInterface[] structurally admits types with child arrays. Numeric
+index pairs replace those records. A small independent proving program remains
+in gaps/4_structural_ranges.ts; Node prints 1, lowering refuses the potential
+reference-counting cycle. TestParserRepresentationProbes now checks all four
+representation programs: /tmp/markdown-root-gap.log PASS, 0.657s. A top-level
+state function still compiles, runs and leaks nothing; parser closures remain
+NotYet or Refused as recorded. No compiler-owned files were changed.
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-root-final
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownRootLayout$' -count=1 -v
+/tmp/markdown-root-final.log: PASS, 223.882s, 4,170 source contexts.
+Native/source/backend/canonical Go/fork document printers and both full-source
+oracles agree; ASan/UBSan/leaks pass. Three output-only native mutants compile,
+exit 0, empty stderr, caught by exact output comparison:
+root double-hardline predicate inverted: CLAUDE.md, byte 10.
+ignored source span replaced: generated/list-layout ignore, byte 2778903.
+ignore range closing comment removed: generated/root paired range, byte 2840220.
+
+The unchanged implementation's corpus was then extended to include every earlier
+HTML and Unicode table case (these were accidentally omitted by the test's slice
+selection, not the printer). Final expanded check:
+ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-root-expanded
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownRootLayout$/^$' -count=1 -v
+/tmp/markdown-root-expanded.log: root test PASS, 98.113s, all 4,724 documents,
+including all 953 originals, all accumulated layout cases and 126 new root cases.
+The subtest filter deliberately omits mutant replays already passed above; Go
+prints its no-subtests/no-tests-to-run warning after the executed parent test.
+The parent test did execute all corpus, sanitizer, leak and oracle assertions,
+as its 4,724 context count and comparison logs prove. No new implementation
+change separates these two checks.
+Expanded component rates: Go canonical docs 7,626.4; native components 3,932.4;
+source Node components 4,017.6; original fork docs 3,383.5 documents/s.
+Different workloads, with parsing/fixture generation excluded; not full-formatter
+speed comparisons. Static vet/gofmt logs /tmp/markdown-root-vet.log and
+/tmp/markdown-root-gofmt.log are empty and exit 0. Root/driver cohere full check:
+/tmp/markdown-root-style.log: 276 rules, 2 checked, 100% Adamic-ready, zero findings.
+Full repository tests were not run; seven fresh uncached compiler fixtures passed
+in the immediately prior structural slice. Exact seven disagreement witnesses
+and all fourteen original outputs remain preserved in GAPS.md.
+
 Unicode widths, headings, sentences and paragraphs are native and verified.
 4,598 documents match Go and the pinned fork with embedded formatting off.
 1,205,496 width cases agree; native width measured 2.66x Go in the recorded batch.
