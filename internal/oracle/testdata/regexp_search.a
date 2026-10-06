@@ -1,0 +1,10 @@
+// search ignores lastIndex and reports a code-unit index, including after a supplementary character.
+const global = /b/g;
+global.lastIndex = 9;
+console.log(`${'abc'.search(global)} ${global.lastIndex}`);
+const sticky = /b/y;
+sticky.lastIndex = 1;
+console.log(`${'abc'.search(sticky)} ${sticky.lastIndex}`);
+console.log(`${'abc'.search(/z/)}`);
+console.log(`${'🌍b'.search(/b/)} ${'🌍b'.search(/b/u)} ${'🌍'.search(/b/u)}`);
+console.log(`${'a🌍'.search(/🌍/)} ${'a🌍'.search(/🌍/u)} ${'a🌍'.search(/./u)}`);
