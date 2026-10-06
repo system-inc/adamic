@@ -17,3 +17,10 @@ will be reported to its owner explicitly.
 
 Do not edit internal/native/runtime/, internal/native/emit_objects.go,
 internal/native/emit.go, internal/lower/lower.go or internal/native/native.go.
+
+Inspection additions: internal/load/prelude.d.ts (the public signature),
+oracle/adamic.mjs (the Node sequential witness), and a three-line entry hook in
+internal/lower/refusals.go so task async/effects diagnostics precede general ones.
+Create internal/oracle/concurrency_test.go, internal/lower/parallel_test.go and
+internal/native/parallel_compiler_test.go. Concurrency fixtures use their own
+oracle list until runtime integration, so existing native counts remain intact.
