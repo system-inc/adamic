@@ -10,6 +10,7 @@ import (
 type mutation struct{ name, file, from, to, entry string }
 
 var mutations = []mutation{
+	{"sequence loses a comma", "expressions.ts", "parts.push(this.docs.text(','));", "parts.push(this.docs.text(''));", "main.ts"},
 	{"group ignores width", "doc.ts", "!document.broken &&\n                        this.fits(flat", "!document.broken ||\n                        this.fits(flat", "docMain.ts"},
 	{"fill never packs a pair", "doc.ts", "separatorMode = fitsPair ? 2 : 1;", "separatorMode = 1;", "docMain.ts"},
 	{"expression loses required parentheses", "expressions.ts", "return this.parenthesize(id, parent, role)", "return parent < -1 && this.parenthesize(id, parent, role)", "main.ts"},

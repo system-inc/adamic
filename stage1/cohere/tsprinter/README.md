@@ -80,3 +80,15 @@ prove that the same source texts are formatable. Native release output is also c
 Three mutants must compile and finish normally before a byte mismatch counts as a catch: a group
 ignoring width, fill refusing to pack pairs, and required expression parentheses disappearing.
 See [VALIDATION.md](VALIDATION.md) for commands, results, limitations and timings.
+
+## Sequence expression increment
+
+The printer now includes comma expressions in every supported expression context. Cohere's ESTree
+adapter flattens the left comma spine but keeps explicitly parenthesized sub-sequences. The port
+records those boundaries before removing parser wrappers. Top-level expression statements keep
+sequence parentheses; wrapped lines after the first item are indented. Nested sequences use their
+parent context's indentation. Calls, array items, unary operands and member receivers are covered.
+
+The expanded corpus contains 151,139 fragments from the same 197 source files, including 2,415
+generated cases. Of those, 1,212 are sequence cases: 12 boundaries, 240 width cases, and 960
+compositions with the existing expression families. See the sequence increment in VALIDATION.md.

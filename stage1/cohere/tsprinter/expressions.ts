@@ -7,6 +7,7 @@ import { numberText, stringText } from './literals.ts';
 export type ResultType =
     { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'NotYet'; readonly reason: string };
 const operators = new Map<string, string>([
+    ['CommaToken', ','],
     ['PlusToken', '+'],
     ['MinusToken', '-'],
     ['AsteriskToken', '*'],
@@ -83,6 +84,7 @@ export class Expressions {
     readonly docs: Documents;
     directive = true;
     readonly ancestors: number[] = [];
+    readonly sequenceBoundaries = new Set<number>();
     constructor(parser: Parser, source: string, docs: Documents) {
         this.parser = parser;
         this.source = source;
@@ -193,6 +195,12 @@ export class Expressions {
     }
     normalize(index: number): number {
         const id = this.unwrapped(index);
+        if(
+            this.node(index).kind === 'ParenthesizedExpression' &&
+            this.node(id).kind === 'BinaryExpression' &&
+            this.operator(id) === ','
+        )
+            this.sequenceBoundaries.add(id);
         const node = this.node(id);
         for(let position = 0; position < node.children.length; position++)
             node.children[position] = this.normalize(node.children[position] ?? panic('missing normalization child'));
@@ -247,6 +255,7 @@ export class Expressions {
             return role === 'object' || role === 'callee' || outer.kind === 'NonNullExpression';
         }
         if(node.kind === 'BinaryExpression') {
+            if(this.operator(index) === ',') return true;
             if(outer.kind === 'BinaryExpression') {
                 const operator = this.operator(index);
                 const other = this.operator(parent);
@@ -272,6 +281,12 @@ export class Expressions {
             );
         }
         return false;
+    }
+    // ESTree flattens the left comma spine, stopping at explicit parentheses.
+    sequenceParts(index: number): number[] {
+        if(this.node(index).kind !== 'BinaryExpression' || this.operator(index) !== ',') return [index];
+        const left = this.child(index, 0);
+        return (this.sequenceBoundaries.has(left) ? [left] : this.sequenceParts(left)).concat([this.child(index, 2)]);
     }
     binaryParts(index: number, parent: number): number[] {
         const parts: number[] = [];
@@ -372,6 +387,28 @@ export class Expressions {
                 result = this.docs.concat([this.docs.text('...'), this.print(this.child(id, 0), id, 'argument')]);
                 break;
             case 'BinaryExpression': {
+                if(this.operator(id) === ',') {
+                    const sequence = this.sequenceParts(id);
+                    const parts: number[] = [];
+                    for(let position = 0; position < sequence.length; position++) {
+                        const printed = this.print(
+                            sequence[position] ?? panic('missing sequence item'),
+                            id,
+                            'expressions',
+                        );
+                        if(position === 0) parts.push(printed);
+                        else {
+                            parts.push(this.docs.text(','));
+                            parts.push(
+                                parent < 0
+                                    ? this.docs.indent(this.docs.concat([this.docs.line(), printed]))
+                                    : this.docs.concat([this.docs.line(), printed]),
+                            );
+                        }
+                    }
+                    result = this.docs.group(this.docs.concat(parts));
+                    break;
+                }
                 const parts = this.binaryParts(id, parent);
                 const outer = parent < 0 ? '' : this.node(parent).kind;
                 if(
@@ -584,6 +621,11 @@ export function formatExpression(source: string, settings: SettingsOptions): Res
         printer.node(printer.unwrapped(root)).kind === 'StringLiteral';
     printer.directive = !parenthesizedString;
     let printed = printer.print(printer.normalize(root));
-    if(parenthesizedString) printed = docs.concat([docs.text('('), printed, docs.text(')')]);
+    if(
+        parenthesizedString ||
+        (printer.node(printer.unwrapped(root)).kind === 'BinaryExpression' &&
+            printer.operator(printer.unwrapped(root)) === ',')
+    )
+        printed = docs.concat([docs.text('('), printed, docs.text(')')]);
     return { kind: 'Ok', text: docs.print(docs.concat([printed, docs.text(';'), docs.hardline()])) };
 }

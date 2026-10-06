@@ -167,3 +167,57 @@ and the selected oracle covers the runtime features this port uses. No `internal
 Remaining expression families, comments, source normalization, whole files, statements, declarations,
 types, JSX, embedded printers and non-default expression options remain outside this increment.
 See [GAPS.md](GAPS.md). Test logs stay in `/tmp`, not in the commit.
+
+## Sequence expression family
+
+Continued on the same branch from `f798fd6`. Setup on this unit printed Go/clang/Node/submodules
+ready in 0 s each, cache warm in 15 s, and done in 15 s on 5 processors (four-CPU quota, 17.6 GB).
+`nproc` printed 5. Pins and options are unchanged.
+
+The generator adds 1,212 sequence cases: 12 explicit-boundary/context cases, 240 long sequences,
+and 960 compositions with binary/logical operators, arrays, calls, unary operands and member
+receivers. All 197 files parse in Go; the expanded corpus contains 151,139 fragments including
+2,415 generated cases. `results/sequence-coverage.json` records this increment separately from the
+first increment's baseline. Whole files, unsupported expression families and statements are still
+outside this claim.
+
+Commands (each test's output goes to the named log):
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-sequence-final-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-sequence-final-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-sequence-final.log 2>&1
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/sequence' > /tmp/ts-printer-sequence-mutant.log 2>&1
+```
+
+The sequence mutant replaces its separator comma with an empty string. Native and Node both
+compiled/finished normally (exit 0, empty stderr); the byte comparison caught the missing comma
+between `getJsxNamespace(location)` and the following source-file expression in TypeScript's
+compiler. The mutant run used the earlier 150,179-fragment corpus, before the 960 compositions
+were added, and passed in 260.334 s (native mutant subtest: 255.61 s).
+
+Two failed Node-first comparisons informed the port: top-level sequences require parentheses;
+explicit nested sequences must not be flattened. Both are now generated regression cases, rather
+than removed corpus inputs. The final cohere gate reports 276 rules, 8 checked, 100% Adamic-ready.
+`go vet ./...`, `gofmt -l cmd internal stage1/cohere/tsprinter`, and `git diff --check` are clean.
+The same filtered oracle command above passed all 13 fixtures in 24.062 s. The full repository
+suite was not run; this unit changes only the printer slice and its independent corpus generator.
+
+Final output (exit 0):
+
+```text
+197 files, 0 full-file parse refusals, 151139 supported maximal expression fragments
+17 unported shapes return NotYet on native, Node and backend; Go and Prettier format every proving input
+151139 expression fragments byte-identical
+--- PASS: TestExpressionsAgainstGoAndPrettier (336.28s)
+ok github.com/system-inc/adamic/stage1/cohere/tsprinter 336.285s
+```
+
+This holds the entire expanded corpus to Go and npm Prettier without accepted-case exceptions,
+on source Node, sanitized native, native release and the JS backend; the separate leak run passes.

@@ -29,7 +29,7 @@ func supportedExpression(node *estree.Node) bool {
 	switch node.Type() {
 	case "Identifier", "PrivateIdentifier", "Literal", "ThisExpression", "Super":
 		return true
-	case "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
+	case "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
 	case "TemplateLiteral":
 		return len(node.List("expressions")) == 0
 	case "CallExpression", "NewExpression":
@@ -113,6 +113,29 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 	}
 	for _, item := range []string{"x", "this", "true", "false", "null", "0xAB", "1.0000", "1E+003", ".10", "123.", "1_000n", "0xABn", "'é😀'", "\"double\"", "'don\\'t'", "/foo/mi", "`raw\\u{1f600}`", "+x", "-(a+b)", "+ ++x", "- --x", "x++", "typeof a", "void f()", "delete obj.x", "obj?.x", "a?.[b+c]", "a!.x", "a.b.c.d", "[]", "[1,2,3]", "[1,,]", "[...items,]", "[[1,2],[3,4]]", "f()", "f?.(a,b)", "new C", "new C(a,b)", "a && [1,2,3]", "a * (b % c)", "a + (b % c)", "-(a || b)", "(1).toString", "(0xAF).x", "(1e0).x", "(1)[0]", "veryLongIdentifierAlpha.veryLongPropertyNameBeta!.veryLongPropertyNameGamma", "veryLongIdentifierAlpha.veryLongPropertyNameBeta[index]", "+x++", "++x in obj", "Boolean(veryLongIdentifierAlpha && veryLongIdentifierBeta && veryLongIdentifierGamma && veryLongIdentifierDelta)", "(veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma + veryLongIdentifierDelta)[index]"} {
 		add("edge", item)
+	}
+	for _, item := range []string{"a,b", "a,(b,c)", "(a,b),c", "f((a,b))", "[(a,b),c]", "(a,b).x", "a+(b,c)", "!(a,b)", "(a,b)!", "(a,b)[c]", "a && (b,c)", "(a,b) || c"} {
+		add("sequence", item)
+	}
+	sequenceItems := []string{"a", "a+b+c", "a||b||c", "a*b", "[a,b]", "f(a,b)", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma + veryLongIdentifierDelta", "veryLongIdentifierAlpha && veryLongIdentifierBeta && veryLongIdentifierGamma && veryLongIdentifierDelta"}
+	for _, left := range sequenceItems {
+		for _, right := range sequenceItems {
+			for _, value := range []string{left + "," + right, "(" + left + ",b)," + right, left + ",(" + right + ",c)"} {
+				for _, source := range []string{value, "f((" + value + "))", "[(" + value + ")]", "(" + value + ").x", "!(" + value + ")"} {
+					add("sequence-composition", source)
+				}
+			}
+		}
+	}
+	for length := 1; length <= 60; length++ {
+		parts := []string{}
+		for index := 0; index < length; index++ {
+			parts = append(parts, fmt.Sprintf("sequenceArgument%d", index))
+		}
+		value := strings.Join(parts, ",")
+		for _, source := range []string{value, "f((" + value + "))", "[(" + value + ")]", "(" + value + ").x"} {
+			add("sequence-width", source)
+		}
 	}
 	for length := 1; length <= 60; length++ {
 		names := []string{}
@@ -268,7 +291,7 @@ func supportedSyntax(node *ast.Node) bool {
 	case ast.KindBinaryExpression:
 		item := node.AsBinaryExpression()
 		switch item.OperatorToken.Kind {
-		case ast.KindEqualsToken, ast.KindCommaToken, ast.KindPlusEqualsToken, ast.KindMinusEqualsToken, ast.KindAsteriskEqualsToken, ast.KindSlashEqualsToken, ast.KindPercentEqualsToken, ast.KindAsteriskAsteriskEqualsToken, ast.KindLessThanLessThanEqualsToken, ast.KindGreaterThanGreaterThanEqualsToken, ast.KindGreaterThanGreaterThanGreaterThanEqualsToken, ast.KindAmpersandEqualsToken, ast.KindBarEqualsToken, ast.KindCaretEqualsToken, ast.KindAmpersandAmpersandEqualsToken, ast.KindBarBarEqualsToken, ast.KindQuestionQuestionEqualsToken:
+		case ast.KindEqualsToken, ast.KindPlusEqualsToken, ast.KindMinusEqualsToken, ast.KindAsteriskEqualsToken, ast.KindSlashEqualsToken, ast.KindPercentEqualsToken, ast.KindAsteriskAsteriskEqualsToken, ast.KindLessThanLessThanEqualsToken, ast.KindGreaterThanGreaterThanEqualsToken, ast.KindGreaterThanGreaterThanGreaterThanEqualsToken, ast.KindAmpersandEqualsToken, ast.KindBarEqualsToken, ast.KindCaretEqualsToken, ast.KindAmpersandAmpersandEqualsToken, ast.KindBarBarEqualsToken, ast.KindQuestionQuestionEqualsToken:
 			return false
 		}
 		return supportedSyntax(item.Left) && supportedSyntax(item.Right)

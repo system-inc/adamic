@@ -1,6 +1,6 @@
 # TypeScript printer gaps
 
-Status: **partly ported**. The shared document engine and expression core are held to Go cohere and
+Status: **partly ported**. The shared document engine, expression core and sequence expressions are held to Go cohere and
 Prettier 3.9.6. This is not a claim to port all of `internal/format/javascript`, or to format whole
 TypeScript compiler files yet. The composition uses the existing indexed TypeScript parser without
 editing it, the compiler or the runtime.
@@ -108,3 +108,11 @@ Statements, declarations and types are not implemented. Full-file comment attach
 normalization, embedded-language printers and non-default formatter options are not covered by this
 expression driver. The first green increment is a reusable layout engine plus the expression core;
 remaining expression families come before claiming the entire expression slice complete.
+
+## Sequence normalization
+
+Comma expressions are implemented. `(a,b),c` formats as `((a, b), c);`, while `a,b,c` formats as
+`(a, b, c);`. These are observations of Go cohere and npm Prettier 3.9.6, covered by generated
+proving inputs in `testdata/expressions_side_test.go`. Normalization records the parent's explicit
+sequence boundary before unwrapping it; it never discards a boundary merely because the comma
+operator is associative. There is no new stage-0 gap in this family.
