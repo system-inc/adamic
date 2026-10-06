@@ -20,18 +20,21 @@ function run(path: string, mode: string, countOnly: boolean): number {
     }
     // A single linear mapping makes every reported position a Go byte offset, including diagnostics.
     const offsets: number[] = [0];
-    let bytes = 0;
-    for(let index = 0; index < read.text.length; index++) {
-        const code = read.text.codePointAt(index) ?? 0;
-        if(code > 0xffff) {
+    // Count-only runs do not report byte positions, so they need no offset table.
+    if(!countOnly) {
+        let bytes = 0;
+        for(let index = 0; index < read.text.length; index++) {
+            const code = read.text.codePointAt(index) ?? 0;
+            if(code > 0xffff) {
+                offsets.push(bytes);
+                index++;
+            }
+            bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
             offsets.push(bytes);
-            index++;
         }
-        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
-        offsets.push(bytes);
-    }
-    if(bytes !== utf8Length(read.text)) {
-        panic('source byte mapping differs');
+        if(bytes !== utf8Length(read.text)) {
+            panic('source byte mapping differs');
+        }
     }
     const scanner = new Scanner(read.text);
     let count = 0;
