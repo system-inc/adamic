@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 	"testing"
@@ -380,7 +381,7 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	t.Logf("compiler and stage1: %d files", len(rows))
 	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
 }
-func mutant(t *testing.T, from, to string) string {
+func mutant(t *testing.T, from, to string, targets ...string) string {
 	directory := t.TempDir()
 	changed := 0
 	prepareRegistry(t, ".")
@@ -390,15 +391,17 @@ func mutant(t *testing.T, from, to string) string {
 			t.Fatal(err)
 		}
 		source := string(data)
-		if from != "" && !strings.HasSuffix(file, "mutant.json") && strings.Contains(source, from) {
+		selected := len(targets) == 0 || filepath.Clean(file) == filepath.Clean(targets[0])
+		if from != "" && selected && !strings.HasSuffix(file, "mutant.json") && strings.Contains(source, from) {
+			if strings.Count(source, from) != 1 {
+				t.Fatalf("mutant anchor repeated in %s", file)
+			}
 			source = strings.Replace(source, from, to, 1)
 			changed++
 		}
-		typescript, err := filepath.Abs("../../typescript")
-		if err != nil {
-			t.Fatal(err)
+		if strings.HasSuffix(file, ".ts") {
+			source = rewritePortImports(t, file, source)
 		}
-		source = strings.ReplaceAll(source, "../../typescript", typescript)
 		destination := filepath.Join(directory, file)
 		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
 			t.Fatal(err)
@@ -432,7 +435,7 @@ func mutant(t *testing.T, from, to string) string {
 func TestMutants(t *testing.T) {
 	oracle := goOracle(t)
 	for _, descriptor := range prepareRegistry(t, ".") {
-		var change struct{ Name, From, To string }
+		var change struct{ Name, File, From, To string }
 		data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
 		if err != nil {
 			t.Fatal(err)
@@ -447,7 +450,10 @@ func TestMutants(t *testing.T) {
 			}
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
-			directory := mutant(t, change.From, change.To)
+			if change.File == "" {
+				change.File = "rule.ts"
+			}
+			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
 			for _, side := range []struct {
 				name string
 				run  execution
@@ -537,4 +543,31 @@ func TestThroughput(t *testing.T) {
 	}
 	loadAfter, _ := os.ReadFile("/proc/loadavg")
 	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
+}
+
+var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"]+)(['"])`)
+
+// Preserve imports within the copied port, and resolve outside imports from their
+// original module directory. Rules may be arbitrarily deeper than context.ts.
+func rewritePortImports(t *testing.T, file, source string) string {
+	t.Helper()
+	root, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return portImport.ReplaceAllStringFunc(source, func(declaration string) string {
+		parts := portImport.FindStringSubmatch(declaration)
+		if !strings.HasPrefix(parts[3], ".") {
+			return declaration
+		}
+		absolute := filepath.Clean(filepath.Join(root, filepath.Dir(file), parts[3]))
+		relative, err := filepath.Rel(root, absolute)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			return declaration
+		}
+		return parts[1] + parts[2] + filepath.ToSlash(absolute) + parts[4]
+	})
 }
