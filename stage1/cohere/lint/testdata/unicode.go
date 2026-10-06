@@ -19,7 +19,7 @@ func main() {
 			fmt.Printf("[%d,%d],\n", r, minimum)
 		}
 	}
-	fmt.Println("]);\nexport function fold(text: string): string {\n let result = '';\n for(let index=0;index<text.length;index++) {const point=text.codePointAt(index) ?? 0;result += String.fromCodePoint(folds.get(point) ?? point);if(point>65535){index++;}}\n return result;\n}\nconst unprintable: number[] = [")
+	fmt.Println("]);\n// ASCII case folding needs no table lookup; other scalars retain Go's cycles.\nexport function foldPoint(point: number): number {\n if(point < 128) { return point >= 97 && point <= 122 ? point - 32 : point; }\n return folds.get(point) ?? point;\n}\nconst unprintable: number[] = [")
 	start := -1
 	for r := 0; r <= unicode.MaxRune+1; r++ {
 		bad := r <= unicode.MaxRune && !strconv.IsPrint(rune(r))

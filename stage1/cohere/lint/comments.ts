@@ -1,7 +1,7 @@
 // Matching uses Go's ASCII word boundaries and Unicode simple-fold equivalence.
 // Quoting counts UTF-8 bytes, as cohere does, rather than JS code units.
 import { utf8Length } from 'adamic';
-import { fold, foldedRange, printable } from './unicode.ts';
+import { foldPoint, foldedRange, printable } from './unicode.ts';
 
 export function word(character: string): boolean {
     return (
@@ -93,7 +93,6 @@ export function matches(value: string, term: string, location: string, decoratio
     if(location === 'start' && !validDecoration(decoration)) {
         return false;
     }
-    const folded = fold(term);
     let prefix = 0;
     if(location === 'start') {
         while(prefix < value.length) {
@@ -106,19 +105,21 @@ export function matches(value: string, term: string, location: string, decoratio
         }
     }
     for(let index = 0; index <= (location === 'start' ? prefix : value.length); index++) {
-        // Go's regex matches Unicode code points. Folding can change UTF-16
-        // width, so find the candidate end by the term's rune count.
+        // Compare folded scalars directly, without allocating candidate strings.
         let end = index;
-        for(let cursor = 0; cursor < term.length; cursor++) {
-            const point = term.codePointAt(cursor) ?? 0;
-            if(point > 65535) {
-                cursor++;
+        let equal = true;
+        for(let cursor = 0; cursor < term.length;) {
+            const expected = term.codePointAt(cursor) ?? 0;
+            const actual = value.codePointAt(end);
+            if(actual === undefined || foldPoint(actual) !== foldPoint(expected)) {
+                equal = false;
+                break;
             }
-            end += (value.codePointAt(end) ?? 0) > 65535 ? 2 : 1;
+            cursor += expected > 65535 ? 2 : 1;
+            end += actual > 65535 ? 2 : 1;
         }
         if(
-            end <= value.length &&
-            fold(value.slice(index, end)) === folded &&
+            equal &&
             (location === 'start' ||
                 !word(term[0] ?? '') ||
                 word(value[index - 1] ?? '') !== word(value[index] ?? '')) &&
