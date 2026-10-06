@@ -74,7 +74,7 @@ func C(program *ir.Program) string {
 	emitter.block(program.Main, nil)
 	emitter.releaseGlobals()
 	bodies.WriteString(emitter.out.String())
-	bodies.WriteString("\treturn 0;\n}\n")
+	bodies.WriteString("\treturn adamic_process_status();\n}\n")
 
 	for index := range program.Functions {
 		for _, inRegion := range emitter.regionVariants(index) {

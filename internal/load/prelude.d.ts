@@ -6,6 +6,16 @@ declare const console: {
 	error(message: string): void;
 };
 
+// The supported process surface. Environment and stream observations are read-only.
+// Nonterminal streams have no isTTY value, as on Node.
+declare const process: {
+	exitCode: number | undefined;
+	readonly exit: (code?: number) => never;
+	readonly stdout: { readonly isTTY: true | undefined };
+	readonly stderr: { readonly isTTY: true | undefined };
+	readonly env: { readonly [name: string]: string | undefined };
+};
+
 declare module 'adamic' {
 	export function panic(message: string): never;
 

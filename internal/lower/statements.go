@@ -145,7 +145,7 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if expression == nil {
 		return []ir.Statement{ir.Return{}}, nil
 	}
-	if l.isPanicCall(expression) {
+	if l.isPanicCall(expression) || l.isProcessExit(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
 	}

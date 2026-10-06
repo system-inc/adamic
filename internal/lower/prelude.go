@@ -49,7 +49,7 @@ func (l *lowering) isConsole(callee *ast.Node) bool {
 		return false
 	}
 	symbol := l.checker.GetSymbolAtLocation(callee.AsPropertyAccessExpression().Expression)
-	return symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
+	return symbol != nil && symbol.Name == "console" && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
 // consoleStream is the stream a callee writes to, when it is the prelude's console.log or
@@ -60,7 +60,7 @@ func (l *lowering) consoleStream(callee *ast.Node) (ir.Stream, error) {
 	}
 	object := callee.AsPropertyAccessExpression().Expression
 	symbol := l.checker.GetSymbolAtLocation(object)
-	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+	if symbol == nil || symbol.Name != "console" || len(symbol.Declarations) == 0 || !load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 		return 0, l.notYet(callee, "a method call")
 	}
 	switch callee.Name().Text() {
