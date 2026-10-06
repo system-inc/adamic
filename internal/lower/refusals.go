@@ -47,6 +47,9 @@ var refusedOperators = map[ast.Kind]refusal{
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
+	if err := l.parallelPreflight(module); err != nil {
+		return err
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
