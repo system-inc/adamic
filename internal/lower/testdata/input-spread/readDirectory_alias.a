@@ -1,0 +1,3 @@
+import { readDirectory as door } from 'adamic';
+const args: [string] = ['.'];
+door(...args);

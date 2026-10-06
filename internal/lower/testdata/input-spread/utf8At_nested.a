@@ -1,0 +1,3 @@
+import { utf8At } from 'adamic';
+const args: [string, number] = ['é', 1];
+utf8At(...[...args] as const);
