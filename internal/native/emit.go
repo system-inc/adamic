@@ -85,6 +85,7 @@ func C(program *ir.Program) string {
 	if len(program.Functions) > 0 {
 		builder.WriteString("\n")
 	}
+	emitter.prepareClassShapes()
 	// After the prototypes: a sort's comparator adapter calls one of the program's functions.
 	for _, declaration := range emitter.declarations {
 		builder.WriteString(declaration)
@@ -463,7 +464,11 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		if call, isCall := statement.Value.(ir.Call); isCall && call.Returns == 0 {
-			e.line("%s;", e.callCode(call, e.arguments(call)))
+			if call.Accessor != "" {
+				e.accessorCall(call)
+			} else {
+				e.line("%s;", e.callCode(call, e.arguments(call)))
+			}
 			if e.program.CallMayThrow(call) {
 				e.checkThrown()
 			}
@@ -797,6 +802,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return e.binary(expression.Operator, expression.Left.Type(), e.value(expression.Left), e.value(expression.Right))
 	case ir.Call:
+		if expression.Accessor != "" {
+			result := e.accessorCall(expression)
+			if e.program.CallMayThrow(expression) {
+				e.checkThrown()
+			}
+			return result
+		}
 		region := e.regionFor(expression)
 		arguments := e.arguments(expression)
 		call := e.callCode(expression, arguments)
@@ -816,6 +828,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.checkThrown()
 		}
 		return result
+	case ir.HasAccessor:
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_accessor_find(%s, %s) != NULL", e.value(expression.Object), cString(expression.Name)))
+	case ir.ObjectKeys:
+		return e.own(ir.Array, fmt.Sprintf("adamic_object_keys(%s)", e.value(expression.Object)))
 	case ir.InstanceOf:
 		value := e.value(expression.Value)
 		if !expression.Value.Type().IsReference() {
@@ -1553,6 +1569,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		// spread's fields first, so a field's expression that writes one of them (a call that sets
 		// it) must not show in the result.
 		source := e.value(literal.Spread)
+		if literal.NoReuse {
+			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
+		}
 		object := e.own(ir.Object, e.spreadCopy(literal, source))
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))

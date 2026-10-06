@@ -62,6 +62,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, err
 	}
 	lowering.noteInheritance(modules)
+	lowering.noteAccessorNames(modules)
 	for _, module := range modules {
 		if err := lowering.refuse(module); err != nil {
 			return nil, err
@@ -84,7 +85,13 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	}
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
+	if err := lowering.finishAccessors(); err != nil {
+		return nil, err
+	}
 	if err := lowering.exceptions(); err != nil {
+		return nil, err
+	}
+	if err := lowering.checkAccessorSpreads(); err != nil {
 		return nil, err
 	}
 	if err := lowering.findCycles(modules); err != nil {
@@ -185,7 +192,9 @@ type lowering struct {
 	instantiated []*checker.Type
 
 	// writeSites is every write into a slot lowering made, by its IR node's Site less one (fresh.go).
-	writeSites []writeSite
+	writeSites       []writeSite
+	accessorCaptures []accessorCapture
+	accessorNames    map[string]bool
 }
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
@@ -563,8 +572,8 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		if l.function != nil {
 			return nil, l.notYet(node, "a class inside a function")
 		}
-		// Lowered at each instantiation, by instantiate.
-		return nil, nil
+		// Instance members lower at each instantiation; static initialization cannot be dropped.
+		return nil, l.checkStaticDeclaration(node)
 	case ast.KindReturnStatement:
 		return l.returnStatement(node)
 	case ast.KindExpressionStatement:

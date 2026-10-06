@@ -140,14 +140,17 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	members := declaration.Members()
 	for _, member := range members {
 		switch member.Kind {
-		case ast.KindMethodDeclaration:
-			if !ast.IsIdentifier(member.Name()) {
+		case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
+			if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier {
 				return nil, l.notYet(member, "a method with a computed name")
 			}
 			if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 				return nil, l.notYet(member, "a static class method")
 			}
-			methodName := member.Name().Text()
+			methodName := methodKey(member, lowered.class)
+			if accessorMember(member) {
+				l.registerAccessor(lowered.class, member, len(l.result.Functions))
+			}
 			lowered.methods[methodName] = len(l.result.Functions)
 			meta := &l.result.Classes[lowered.class-1]
 			slot, exists := lowered.slots[methodName]
@@ -186,11 +189,14 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	// Every method's signature is written before any body is lowered, the constructor's included, so a
 	// method can call one declared below it, and two can call each other.
 	for _, member := range members {
-		if member.Kind != ast.KindMethodDeclaration {
+		if !classFunction(member) {
 			continue
 		}
-		method := lowered.methods[member.Name().Text()]
+		method := lowered.methods[methodKey(member, lowered.class)]
 		if err := l.signature(method, member, l.thisLocal(method)); err != nil {
+			return nil, err
+		}
+		if err := l.validateAccessorSignature(member, method); err != nil {
 			return nil, err
 		}
 	}
@@ -198,10 +204,10 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		return nil, err
 	}
 	for _, member := range members {
-		if member.Kind != ast.KindMethodDeclaration {
+		if !classFunction(member) {
 			continue
 		}
-		method := lowered.methods[member.Name().Text()]
+		method := lowered.methods[methodKey(member, lowered.class)]
 		if member.Body() == nil {
 			continue
 		}
@@ -347,8 +353,8 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		}
 		arguments = append(arguments, value)
 	}
-	function := lowered.methods[callee.Name().Text()]
-	virtual := lowered.slots[callee.Name().Text()] + 1
+	function := lowered.methods[l.fieldName(callee.Name())]
+	virtual := lowered.slots[l.fieldName(callee.Name())] + 1
 	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
 		virtual = 0
 	}
@@ -357,6 +363,12 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if call, handled, err := l.superAccessor(target, valueNode); handled {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: call}}, nil
+	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
 		return nil, err
@@ -399,9 +411,12 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 		return nil, err
 	}
 	statements := []ir.Statement{}
-	if _, isRead := object.(ir.Read); !isRead {
+	field := l.checker.GetSymbolAtLocation(target.Name())
+	_, isRead := object.(ir.Read)
+	if !isRead || (field != nil && accessorSymbol(field)) {
 		held := len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "object", Type: ir.Object, Function: l.functionIndex})
+		l.noteLocal(held, l.concrete(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)), target)
 		statements = append(statements, ir.Declare{Local: held, Value: object})
 		object = ir.Read{Local: held, Of: ir.Object}
 	}

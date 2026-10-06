@@ -27,7 +27,7 @@ func (e *emitter) classDeclarations(builder *strings.Builder) {
 		if class.Base != 0 {
 			base = fmt.Sprintf("&adamic_class_%d", class.Base)
 		}
-		fmt.Fprintf(builder, "static const adamic_class adamic_class_%d = {%s, %d, %d, %s, %d};\n", index+1, base, class.OwnStart, len(class.Fields), methods, class.Definition)
+		fmt.Fprintf(builder, "static const adamic_class adamic_class_%d = {%s, %d, %d, %s, %d, &%s, %s, %d};\n", index+1, base, class.OwnStart, len(class.Fields), methods, class.Definition, e.publicClassShape(class), e.accessorDeclarations(builder, index+1, class), len(class.Accessors))
 	}
 }
 

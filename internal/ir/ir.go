@@ -39,13 +39,21 @@ type Program struct {
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
 	// Definition is the erased source identity, shared by distinct native layouts.
-	Definition  int
-	Name        string
-	Base        int
-	Constructor int
-	Fields      []Field
-	OwnStart    int
-	Methods     []int
+	Definition   int
+	Name         string
+	Base         int
+	Constructor  int
+	Fields       []Field
+	OwnStart     int
+	Methods      []int
+	Accessors    []Accessor
+	Literal      bool
+	PublicFields []Field
+}
+
+type Accessor struct {
+	Name           string
+	Getter, Setter int
 }
 
 // Function is a function declaration.
@@ -197,8 +205,18 @@ type (
 		Returns   Type
 
 		// Virtual is a one-based method slot. Function supplies its static signature.
-		Virtual int
+		Virtual  int
+		Accessor string
+		Setter   bool
 	}
+
+	HasAccessor struct {
+		Object Expression
+		Name   string
+	}
+
+	// ObjectKeys enumerates public own property names.
+	ObjectKeys struct{ Object Expression }
 
 	// InstanceOf tests nominal identity along a class ancestry chain.
 	InstanceOf struct {
@@ -250,6 +268,7 @@ type (
 		Class                int
 		Spread               Expression
 		Fields               []Field
+		NoReuse              bool
 		SpreadMaybeUndefined bool
 		Empty                []Field
 
@@ -704,11 +723,14 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
-	Name  string
-	Value Expression
+	Name    string
+	Value   Expression
+	Private bool
 }
 
-func (InstanceOf) Type() Type { return Boolean }
+func (InstanceOf) Type() Type  { return Boolean }
+func (HasAccessor) Type() Type { return Boolean }
+func (ObjectKeys) Type() Type  { return Array }
 
 func (NumberConstant) Type() Type  { return Number }
 func (BooleanConstant) Type() Type { return Boolean }

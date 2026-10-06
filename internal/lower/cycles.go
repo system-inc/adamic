@@ -228,7 +228,7 @@ func (f *cycleFinder) template(proven *checker.Type) bool {
 func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 	fields := []*ast.Symbol{}
 	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
-		if property.Flags&ast.SymbolFlagsMethod == 0 {
+		if property.Flags&ast.SymbolFlagsMethod == 0 && !accessorSymbol(property) {
 			fields = append(fields, property)
 		}
 	}
@@ -403,6 +403,13 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 				queue = append(queue, cycleNode{proven: argument})
 			}
 		default:
+			for _, accessor := range f.l.accessorCaptures {
+				if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
+					for _, local := range f.l.result.Functions[accessor.function].Environment {
+						queue = append(queue, cycleNode{cell: local + 1})
+					}
+				}
+			}
 			for _, field := range f.fields(proven) {
 				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 			}

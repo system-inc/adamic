@@ -128,6 +128,13 @@ typedef struct adamic_shape {
 	const bool *references;
 } adamic_shape;
 
+typedef struct adamic_object adamic_object;
+typedef struct adamic_accessor {
+	const char *name;
+	adamic_value (*get)(adamic_object *);
+	void (*set)(adamic_object *, adamic_value, int);
+	int type;
+} adamic_accessor;
 typedef void (*adamic_method)(void);
 typedef struct adamic_class {
 	const struct adamic_class *base;
@@ -135,6 +142,9 @@ typedef struct adamic_class {
 	size_t count;
 	const adamic_method *methods;
 	size_t definition;
+	const adamic_shape *public_shape;
+	const adamic_accessor *accessors;
+	size_t accessor_count;
 } adamic_class;
 
 // adamic_object is a plain object (object.c). Its shape travels with it, so the same object can be
@@ -198,6 +208,11 @@ typedef struct adamic_array {
 } adamic_array;
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
+size_t adamic_public_index(const adamic_shape *shape, size_t position);
+adamic_array *adamic_object_keys(const adamic_object *object);
+const adamic_accessor *adamic_accessor_find(const adamic_object *object, const char *name);
+adamic_value adamic_accessor_get(adamic_object *object, const char *name);
+void adamic_accessor_set(adamic_object *object, const char *name, adamic_value value, int type);
 
 // adamic_array_push appends; a reference pushed belongs to the array.
 void adamic_array_push(adamic_array *array, adamic_value value);

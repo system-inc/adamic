@@ -61,6 +61,39 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 		if (member.Kind == ast.KindMethodDeclaration) != (inherited.Flags&ast.SymbolFlagsMethod != 0) {
 			return refuse("an inherited method replaced by a field, or a field replaced by a method", "keep the inherited member kind; use a different name for the new member")
 		}
+		if accessorMember(member) {
+			ownGet, ownSet, baseGet, baseSet := false, false, false, false
+			for _, candidate := range declaration.Members() {
+				if candidate.Name() != nil && candidate.Name().Text() == member.Name().Text() {
+					ownGet = ownGet || candidate.Kind == ast.KindGetAccessor
+					ownSet = ownSet || candidate.Kind == ast.KindSetAccessor
+				}
+			}
+			for _, candidate := range inherited.Declarations {
+				baseGet = baseGet || candidate.Kind == ast.KindGetAccessor
+				baseSet = baseSet || candidate.Kind == ast.KindSetAccessor
+			}
+			if (baseGet && !ownGet) || (baseSet && !ownSet) {
+				return refuse("an accessor override that hides the inherited getter or setter", "override both halves of the inherited descriptor; delegate an unchanged half to super")
+			}
+			if member.Kind == ast.KindSetAccessor {
+				for _, candidate := range inherited.Declarations {
+					if candidate.Kind != ast.KindSetAccessor {
+						continue
+					}
+					old := l.checker.GetSignatureFromDeclaration(candidate)
+					next := l.checker.GetSignatureFromDeclaration(member)
+					accepts := instantiateType(l.checker, l.checker.GetTypeOfSymbol(old.Parameters()[0]), l.typeMapperOf(candidate.Parent, base))
+					override := instantiateType(l.checker, l.checker.GetTypeOfSymbol(next.Parameters()[0]), l.typeMapperOf(declaration, classType))
+					if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
+						return refuse("an accessor override that narrows a setter parameter (adamic/contravariant-override)", "accept the base setter's parameter type or a wider type; narrow it inside the setter")
+					}
+				}
+			}
+			if ownGet && (!l.classAssignable(own, previous) || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
+				return refuse("an accessor override with an unsafe read or write type (adamic/invariant-mutable)", "keep the inherited accessor type; narrow values inside the accessor")
+			}
+		}
 		if member.Kind == ast.KindPropertyDeclaration {
 			if !l.checker.IsReadonlySymbol(inherited) && (!l.classAssignable(previous, own) || !l.classAssignable(own, previous) || l.widened(previous, own, map[[2]*checker.Type]bool{}) != nil || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
 				return refuse("a mutable inherited field redeclared with a different type (adamic/invariant-mutable)", "keep the base field's type; narrow a local after reading it, or make the field readonly in the base")
@@ -172,7 +205,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if slotless(of) {
 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
 		}
-		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of)}
+		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier}
 		// An uninitialized reference still has its declared representation for the shape bitmap.
 		if of.IsReference() {
 			field.Value = ir.Undefined{Of: of}

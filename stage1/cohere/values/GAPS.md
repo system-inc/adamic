@@ -66,9 +66,9 @@ A `const` string is refused the same way. A literal lowers.
 
 **Around it:** the tokenizer's big switch writes each case as its character code with the constant's name beside it, `case 0x0a: // newline`. The constants are still declared and used in the `if`s, as upstream's are.
 
-## 4. A `#private` method
+## 4. A `#private` method (closed by class features)
 
-docs/0.1.md has `#private` among a class's members. A `#private` field lowers; a `#private` method is refused, and the message calls it a computed name, which it isn't.
+Closed: private methods now lower, and the gap program agrees with Node under the sanitizers and leak check. The parser now uses `#private` methods and fields. The following records the original refusal.
 
 ```ts
 class Counter {
@@ -91,7 +91,7 @@ stage 0 can't lower a method with a computed name yet        (Node prints 2)
 
 A `private step()` lowers.
 
-**Around it:** the parser's fields are `#private`, as the gitignore port's are, and its methods are `private`.
+**Original workaround, removed:** the parser used TypeScript `private` methods with `#private` fields.
 
 ## 5. An empty array literal as a default
 
