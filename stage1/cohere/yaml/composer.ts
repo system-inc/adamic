@@ -11,6 +11,9 @@ import { ComposedDocument } from './composedDocument.ts';
 import { Directives } from './directives.ts';
 import { ComposeError } from './composeError.ts';
 import { schemaTags } from './schemaTags.ts';
+// Schema patterns are fixed and matching only reads their compiled trees.
+const coreTags = schemaTags('1.2');
+const legacyTags = schemaTags('1.1');
 export class Composer {
     parser: CSTParser;
     nodes: ComposedNode[] = [];
@@ -23,8 +26,8 @@ export class Composer {
     atRoot = true;
     atKey = false;
     scalar: ScalarResolver;
-    coreTags = schemaTags('1.2');
-    legacyTags = schemaTags('1.1');
+    coreTags = coreTags;
+    legacyTags = legacyTags;
     constructor(parser: CSTParser) {
         this.parser = parser;
         this.scalar = new ScalarResolver(parser);
