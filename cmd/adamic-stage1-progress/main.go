@@ -496,7 +496,11 @@ func main() {
 		writer := tabwriter.NewWriter(os.Stdout, 0, 4, 2, ' ', 0)
 		fmt.Fprintln(writer, "GO LINES\tPORTED\tSTATUS\tPACKAGE\tEVIDENCE")
 		for _, row := range report.Packages {
-			fmt.Fprintf(writer, "%d\t%d\t%s\t%s\t%s\n", row.GoLines, row.PortedLines, row.Status, row.Package, strings.Join(row.Evidence, ", "))
+			fmt.Fprintf(writer, "%d\t%d\t%s\t%s", row.GoLines, row.PortedLines, row.Status, row.Package)
+			if len(row.Evidence) != 0 {
+				fmt.Fprintf(writer, "\t%s", strings.Join(row.Evidence, ", "))
+			}
+			fmt.Fprintln(writer)
 		}
 		writer.Flush()
 		fmt.Printf("TOTAL %d/%d Go lines = %.4f%% conservative credited coverage; %d complete, %d partial, %d not started packages\n", report.Ported, report.Total, report.Percent, report.Complete, report.Partial, report.NotStarted)

@@ -50,6 +50,11 @@ Already integrated refs, excluded from the pending set by Git ancestry:
 * `origin/codex/stage1-formatter-slice` at `f69f6a5`.
 * `origin/codex/stage1-json-format` at `67796a5`.
 
+The saved census predates creation of this dashboard's own
+`codex/stage1-progress` branch. Later `--pending` runs also list that branch until
+integration; it carries the same stage 1 coverage as its main base and contributes
+no new cohere lines. Saved reports retain the original measured ref pins.
+
 These integrated slices still contribute to main. The scanner's latest branch
 has new commits and is pending even though its earlier work was integrated.
 
@@ -147,3 +152,8 @@ source unchanged; all compile and fail only their metric/evidence assertions:
 
 Setup succeeded: Go 0s, clang 0s, Node 1s, submodules 1s, build-cache warm 78s,
 total 78s. `nproc` reports 5; cgroup quota is 4 CPUs, memory 17.6 GB.
+
+The generated table renderer was corrected in a follow-up commit to omit blank
+trailing evidence columns. Both saved tables have no trailing whitespace; the
+package tests pass after that presentation-only change. Source credit, branch
+pins and the saved JSON metrics are unchanged.

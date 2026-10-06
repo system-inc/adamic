@@ -1,127 +1,127 @@
 
 origin/main 1a4e29984b0b1727b063e76fe01c2aa11dfa56c7 | cohere 715ba94f3608a6500086b1076ce5cb7e51b836db
-GO LINES  PORTED  STATUS                          PACKAGE                                                          EVIDENCE
-376       0       not started                     internal/benchresults                                            
-206       0       not started                     internal/benchresults/tools/record                               
-34        0       not started                     internal/benchresults/tools/runoutput                            
-154       0       not started                     internal/corpus                                                  
-2097      0       not started                     internal/differential                                            
-1168      0       not started                     internal/docsdata                                                
-93        0       not started                     internal/docsdata/capture                                        
-279       0       not started                     internal/docsdata/tools/generate                                 
-1303      0       not started                     internal/edit                                                    
-154       0       not started                     internal/format/arena                                            
-133       0       not started                     internal/format/comparison                                       
-4188      273     partly ported                   internal/format/css                                              stage1/cohere/cssstrings/GAPS.md, stage1/cohere/cssnumbers/GAPS.md
-589       589     ported and held byte-identical  internal/format/css/mediaquery                                   stage1/cohere/mediaquery/GAPS.md
-2328      0       not started                     internal/format/css/postcss                                      
-1286      409     partly ported                   internal/format/css/selector                                     stage1/cohere/selector/GAPS.md
-1202      1202    ported and held byte-identical  internal/format/css/values                                       stage1/cohere/values/GAPS.md
-410       0       not started                     internal/format/differential                                     
-1900      0       partly ported                   internal/format/doc                                              stage1/cohere/json/GAPS.md
-247       0       not started                     internal/format/doc/tools/generate_string_width                  
-4206      532     partly ported                   internal/format/estree                                           stage1/cohere/json/GAPS.md
-388       104     partly ported                   internal/format/formatfiles                                      stage1/cohere/formatfiles/GAPS.md
-540       0       not started                     internal/format/formatoptions                                    
-3238      2435    partly ported                   internal/format/graphql                                          stage1/cohere/graphql/GAPS.md
-14113     113     partly ported                   internal/format/javascript                                       stage1/cohere/json/GAPS.md
-2954      0       not started                     internal/format/markdown                                         
-1448      0       not started                     internal/format/markdown/mdast                                   
-12914     0       not started                     internal/format/markdown/micromark                               
-166       0       not started                     internal/format/markdown/micromark/tools/generate_characters     
-137       0       not started                     internal/format/markdown/micromark/tools/generate_entities       
-253       0       not started                     internal/format/markdown/tools/generate_classes                  
-144       0       not started                     internal/format/markdown/tools/generate_languages                
-391       0       not started                     internal/format/native                                           
-221       0       not started                     internal/format/oracletest                                       
-629       0       not started                     internal/format/prettier                                         
-1628      0       not started                     internal/format/printing                                         
-1587      0       not started                     internal/format/yaml                                             
-3988      0       not started                     internal/format/yaml/compose                                     
-2282      0       not started                     internal/format/yaml/cst                                         
-2024      0       not started                     internal/format/yaml/unist                                       
-844       844     ported and held byte-identical  internal/gitignore                                               stage1/cohere/gitignore/GAPS.md
-1818      0       not started                     internal/lint/checking                                           
-789       0       not started                     internal/lint/checking/flow                                      
-2930      0       not started                     internal/lint/configuration                                      
-121       0       not started                     internal/lint/ecmascript/binding                                 
-137       0       not started                     internal/lint/ecmascript/classmembers                            
-549       0       not started                     internal/lint/ecmascript/comments                                
-577       0       not started                     internal/lint/ecmascript/consistentreturn                        
-2914      0       not started                     internal/lint/ecmascript/control_flow_graph                      
-169       0       not started                     internal/lint/ecmascript/decorators                              
-176       0       not started                     internal/lint/ecmascript/descriptor                              
-319       319     ported and held byte-identical  internal/lint/ecmascript/directives                              stage1/cohere/suppression/GAPS.md
-469       0       not started                     internal/lint/ecmascript/dotnotation                             
-27463     0       not started                     internal/lint/ecmascript/high_level_intermediate_representation  
-373       0       not started                     internal/lint/ecmascript/imports                                 
-176       0       not started                     internal/lint/ecmascript/jsx                                     
-178       0       not started                     internal/lint/ecmascript/literal                                 
-276       0       not started                     internal/lint/ecmascript/module                                  
-334       0       not started                     internal/lint/ecmascript/module_roots                            
-422       0       not started                     internal/lint/ecmascript/nextjs                                  
-190       0       not started                     internal/lint/ecmascript/property                                
-867       0       not started                     internal/lint/ecmascript/react                                   
-960       0       not started                     internal/lint/ecmascript/reference                               
-1512      0       not started                     internal/lint/ecmascript/regexp                                  
-755       0       not started                     internal/lint/ecmascript/regexpattern                            
-687       0       not started                     internal/lint/ecmascript/regexsyntax                             
-175       0       not started                     internal/lint/ecmascript/scope                                   
-653       0       not started                     internal/lint/ecmascript/text                                    
-71        0       not started                     internal/lint/ecmascript/tokens                                  
-139       0       not started                     internal/lint/housesets                                          
-86        0       not started                     internal/lint/linter                                             
-897       0       not started                     internal/lint/optionschema                                       
-118       0       not started                     internal/lint/registry                                           
-125       0       not started                     internal/lint/report                                             
-2161      0       not started                     internal/lint/rule                                               
-901       0       not started                     internal/lint/rules/adamic                                       
-3573      0       not started                     internal/lint/rules/base                                         
-652       0       not started                     internal/lint/rules/boundaries                                   
-70011     830     partly ported                   internal/lint/rules/core                                         stage1/cohere/lint/GAPS.md
-4777      0       not started                     internal/lint/rules/next                                         
-22467     0       not started                     internal/lint/rules/nexus                                        
-48898     0       not started                     internal/lint/rules/react                                        
-2054      0       not started                     internal/lint/rules/react/conformance                            
-526       0       not started                     internal/lint/rules/react/conformance/score                      
-382       0       not started                     internal/lint/rules/react/tools/vendor_fixtures                  
-7629      0       not started                     internal/lint/rules/structure                                    
-6759      0       not started                     internal/lint/rules/tailwind                                     
-17450     0       not started                     internal/lint/rules/tailwind/collapse                            
-156       0       not started                     internal/lint/rules/tailwind/tools/generate_candidate            
-299       0       not started                     internal/lint/rules/tailwind/tools/generate_class_order          
-702       0       not started                     internal/lint/rules/tailwind/tools/generate_collapse             
-148       0       not started                     internal/lint/rules/tailwind/tools/generate_css_parser           
-118       0       not started                     internal/lint/rules/tailwind/tools/generate_data_type            
-728       0       not started                     internal/lint/rules/tailwind/tools/generate_descriptor_base      
-474       0       not started                     internal/lint/rules/tailwind/tools/generate_descriptor_table     
-620       0       not started                     internal/lint/rules/tailwind/tools/generate_framework_variants   
-289       0       not started                     internal/lint/rules/tailwind/tools/generate_statics              
-139       0       not started                     internal/lint/rules/tailwind/tools/generate_syntax_tree          
-164       0       not started                     internal/lint/rules/tailwind/tools/generate_theme                
-154       0       not started                     internal/lint/rules/tailwind/tools/generate_utility              
-126       0       not started                     internal/lint/rules/tailwind/tools/generate_value_parser         
-315       0       not started                     internal/lint/rules/tailwind/tools/generate_variant              
-37        0       not started                     internal/lint/rules/tailwind/tools/tooldirectory                 
-48574     0       not started                     internal/lint/rules/typescript                                   
-658       658     partly ported                   internal/lint/suppression                                        stage1/cohere/suppression/GAPS.md
-913       0       not started                     internal/lint/testing                                            
-367       0       not started                     internal/release/changelog                                       
-2571      0       not started                     internal/release/dispatch                                        
-184       0       not started                     internal/release/gocache                                         
-814       0       not started                     internal/release/notices                                         
-2411      0       not started                     internal/release/packaging                                       
-78        0       not started                     internal/release/tools/build_dispatcher_package                  
-66        0       not started                     internal/release/tools/changelog                                 
-38        0       not started                     internal/release/tools/notices                                   
-1228      0       not started                     internal/rename                                                  
-62        0       not started                     internal/replace                                                 
-525       0       not started                     internal/settingsschema                                          
-59        0       not started                     internal/settingsschema/tools/generate                           
-222       0       not started                     internal/testpolicy                                              
-9403      0       not started                     internal/types/program                                           
-715       0       not started                     internal/types/tools/generate_shims                              
-1540      0       not started                     internal/unused_exports                                          
+GO LINES  PORTED  STATUS                          PACKAGE  EVIDENCE
+376       0       not started                     internal/benchresults
+206       0       not started                     internal/benchresults/tools/record
+34        0       not started                     internal/benchresults/tools/runoutput
+154       0       not started                     internal/corpus
+2097      0       not started                     internal/differential
+1168      0       not started                     internal/docsdata
+93        0       not started                     internal/docsdata/capture
+279       0       not started                     internal/docsdata/tools/generate
+1303      0       not started                     internal/edit
+154       0       not started                     internal/format/arena
+133       0       not started                     internal/format/comparison
+4188      273     partly ported                   internal/format/css             stage1/cohere/cssstrings/GAPS.md, stage1/cohere/cssnumbers/GAPS.md
+589       589     ported and held byte-identical  internal/format/css/mediaquery  stage1/cohere/mediaquery/GAPS.md
+2328      0       not started                     internal/format/css/postcss
+1286      409     partly ported                   internal/format/css/selector  stage1/cohere/selector/GAPS.md
+1202      1202    ported and held byte-identical  internal/format/css/values    stage1/cohere/values/GAPS.md
+410       0       not started                     internal/format/differential
+1900      0       partly ported                   internal/format/doc  stage1/cohere/json/GAPS.md
+247       0       not started                     internal/format/doc/tools/generate_string_width
+4206      532     partly ported                   internal/format/estree       stage1/cohere/json/GAPS.md
+388       104     partly ported                   internal/format/formatfiles  stage1/cohere/formatfiles/GAPS.md
+540       0       not started                     internal/format/formatoptions
+3238      2435    partly ported                   internal/format/graphql     stage1/cohere/graphql/GAPS.md
+14113     113     partly ported                   internal/format/javascript  stage1/cohere/json/GAPS.md
+2954      0       not started                     internal/format/markdown
+1448      0       not started                     internal/format/markdown/mdast
+12914     0       not started                     internal/format/markdown/micromark
+166       0       not started                     internal/format/markdown/micromark/tools/generate_characters
+137       0       not started                     internal/format/markdown/micromark/tools/generate_entities
+253       0       not started                     internal/format/markdown/tools/generate_classes
+144       0       not started                     internal/format/markdown/tools/generate_languages
+391       0       not started                     internal/format/native
+221       0       not started                     internal/format/oracletest
+629       0       not started                     internal/format/prettier
+1628      0       not started                     internal/format/printing
+1587      0       not started                     internal/format/yaml
+3988      0       not started                     internal/format/yaml/compose
+2282      0       not started                     internal/format/yaml/cst
+2024      0       not started                     internal/format/yaml/unist
+844       844     ported and held byte-identical  internal/gitignore  stage1/cohere/gitignore/GAPS.md
+1818      0       not started                     internal/lint/checking
+789       0       not started                     internal/lint/checking/flow
+2930      0       not started                     internal/lint/configuration
+121       0       not started                     internal/lint/ecmascript/binding
+137       0       not started                     internal/lint/ecmascript/classmembers
+549       0       not started                     internal/lint/ecmascript/comments
+577       0       not started                     internal/lint/ecmascript/consistentreturn
+2914      0       not started                     internal/lint/ecmascript/control_flow_graph
+169       0       not started                     internal/lint/ecmascript/decorators
+176       0       not started                     internal/lint/ecmascript/descriptor
+319       319     ported and held byte-identical  internal/lint/ecmascript/directives  stage1/cohere/suppression/GAPS.md
+469       0       not started                     internal/lint/ecmascript/dotnotation
+27463     0       not started                     internal/lint/ecmascript/high_level_intermediate_representation
+373       0       not started                     internal/lint/ecmascript/imports
+176       0       not started                     internal/lint/ecmascript/jsx
+178       0       not started                     internal/lint/ecmascript/literal
+276       0       not started                     internal/lint/ecmascript/module
+334       0       not started                     internal/lint/ecmascript/module_roots
+422       0       not started                     internal/lint/ecmascript/nextjs
+190       0       not started                     internal/lint/ecmascript/property
+867       0       not started                     internal/lint/ecmascript/react
+960       0       not started                     internal/lint/ecmascript/reference
+1512      0       not started                     internal/lint/ecmascript/regexp
+755       0       not started                     internal/lint/ecmascript/regexpattern
+687       0       not started                     internal/lint/ecmascript/regexsyntax
+175       0       not started                     internal/lint/ecmascript/scope
+653       0       not started                     internal/lint/ecmascript/text
+71        0       not started                     internal/lint/ecmascript/tokens
+139       0       not started                     internal/lint/housesets
+86        0       not started                     internal/lint/linter
+897       0       not started                     internal/lint/optionschema
+118       0       not started                     internal/lint/registry
+125       0       not started                     internal/lint/report
+2161      0       not started                     internal/lint/rule
+901       0       not started                     internal/lint/rules/adamic
+3573      0       not started                     internal/lint/rules/base
+652       0       not started                     internal/lint/rules/boundaries
+70011     830     partly ported                   internal/lint/rules/core  stage1/cohere/lint/GAPS.md
+4777      0       not started                     internal/lint/rules/next
+22467     0       not started                     internal/lint/rules/nexus
+48898     0       not started                     internal/lint/rules/react
+2054      0       not started                     internal/lint/rules/react/conformance
+526       0       not started                     internal/lint/rules/react/conformance/score
+382       0       not started                     internal/lint/rules/react/tools/vendor_fixtures
+7629      0       not started                     internal/lint/rules/structure
+6759      0       not started                     internal/lint/rules/tailwind
+17450     0       not started                     internal/lint/rules/tailwind/collapse
+156       0       not started                     internal/lint/rules/tailwind/tools/generate_candidate
+299       0       not started                     internal/lint/rules/tailwind/tools/generate_class_order
+702       0       not started                     internal/lint/rules/tailwind/tools/generate_collapse
+148       0       not started                     internal/lint/rules/tailwind/tools/generate_css_parser
+118       0       not started                     internal/lint/rules/tailwind/tools/generate_data_type
+728       0       not started                     internal/lint/rules/tailwind/tools/generate_descriptor_base
+474       0       not started                     internal/lint/rules/tailwind/tools/generate_descriptor_table
+620       0       not started                     internal/lint/rules/tailwind/tools/generate_framework_variants
+289       0       not started                     internal/lint/rules/tailwind/tools/generate_statics
+139       0       not started                     internal/lint/rules/tailwind/tools/generate_syntax_tree
+164       0       not started                     internal/lint/rules/tailwind/tools/generate_theme
+154       0       not started                     internal/lint/rules/tailwind/tools/generate_utility
+126       0       not started                     internal/lint/rules/tailwind/tools/generate_value_parser
+315       0       not started                     internal/lint/rules/tailwind/tools/generate_variant
+37        0       not started                     internal/lint/rules/tailwind/tools/tooldirectory
+48574     0       not started                     internal/lint/rules/typescript
+658       658     partly ported                   internal/lint/suppression  stage1/cohere/suppression/GAPS.md
+913       0       not started                     internal/lint/testing
+367       0       not started                     internal/release/changelog
+2571      0       not started                     internal/release/dispatch
+184       0       not started                     internal/release/gocache
+814       0       not started                     internal/release/notices
+2411      0       not started                     internal/release/packaging
+78        0       not started                     internal/release/tools/build_dispatcher_package
+66        0       not started                     internal/release/tools/changelog
+38        0       not started                     internal/release/tools/notices
+1228      0       not started                     internal/rename
+62        0       not started                     internal/replace
+525       0       not started                     internal/settingsschema
+59        0       not started                     internal/settingsschema/tools/generate
+222       0       not started                     internal/testpolicy
+9403      0       not started                     internal/types/program
+715       0       not started                     internal/types/tools/generate_shims
+1540      0       not started                     internal/unused_exports
 TOTAL 8308/382804 Go lines = 2.1703% conservative credited coverage; 4 complete, 9 partial, 108 not started packages
 SCOPE stage1/cohere/gitignore credited=true: Matcher and glob implementation; recorded native/Node/Go corpus, UTF-8 scope. | GAPS: The port beside this file is cohere's `internal/gitignore` (gitignore.go and glob.go) written as 0.1 Adamic. Every place stage 0 refused it is below, as the smallest program that shows it, stage 0's own message, and the way the port went around it. Each workaround is marked in the port with its gap number, so when a gap closes, the place to undo it can be found with `grep -n "gap N" *.ts`.
 SCOPE stage1/cohere/mediaquery credited=true: Media-query parser; recorded canonical tree parity, not full CSS formatting. | GAPS: The port beside this file is cohere's `internal/format/css/mediaquery` (index.go, nodes.go, parsers.go and whitespace.go), itself a port of postcss-media-query-parser 0.2.3, written as 0.1 Adamic. It is stage 1's second slice; the first is `stage1/cohere/gitignore`, whose GAPS.md this one follows and refers to.
