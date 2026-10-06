@@ -1,0 +1,6 @@
+function absent<T extends RegExpExecArray | null>(value: T): boolean {
+ return value === null;
+}
+const match = /a/.exec('a');
+if (match !== null) { console.log(`${absent<RegExpExecArray>(match)}`); }
+console.log(`${absent<RegExpExecArray | null>(null)}`);

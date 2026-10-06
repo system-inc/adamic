@@ -119,11 +119,12 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 }
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsUndefined != 0
 	}
 	for _, member := range proven.Types() {
-		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+		if l.includesUndefined(member) {
 			return true
 		}
 	}
@@ -131,6 +132,7 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 }
 
 func (l *lowering) includesNull(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsNull != 0
 	}
