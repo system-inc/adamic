@@ -1,5 +1,0 @@
---- FAIL: TestInputTupleSpreadsAreNotYet (0.07s)
-    input_edges_test.go:18: want NotYet with where and SpreadElement, got lower: /tmp/adamic-gate/TestInputTupleSpreadsAreNotYet4027844684/001/main.a:1:130: writeTextFile takes a path and a text, and the checker let another count through
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.071s
-FAIL

@@ -22,11 +22,12 @@ def without(text, start, end):
 
 
 mutants = [
+    ('sanitizer-segv', runtime, base.replace('SIGQUIT, SIGUSR1, SIGUSR2,', 'SIGQUIT, SIGSEGV, SIGUSR1, SIGUSR2,'), './internal/oracle', 'TestStartupPreservesSanitizerSegvReport$'),
     ('1-sigxfsz', runtime, base.replace('\tsignal(SIGXFSZ, SIG_IGN);\n', ''), './internal/oracle', 'TestOutputEdges/(fsize|fsize_out)$'),
     ('2-eagain', runtime, without(base, '\t\t\tif (errno == EAGAIN', '\t\t\treturn -1;'), './internal/oracle', 'TestOutputEdges/nonblock$'),
     ('3-closed', runtime, without(base, '\t// Node opens /dev/null', '\tadamic_arguments_save'), './internal/oracle', 'TestOutputEdges/closed$'),
     ('4-inherited', runtime, base.replace('(current.sa_handler == SIG_IGN && signal_number != SIGINT && signal_number != SIGHUP && signal_number != SIGTERM)', 'current.sa_handler == SIG_IGN'), './internal/oracle', 'TestOutputEdges/ignored$'),
-    ('5-fatal', runtime, without(base, '\t// Signals whose POSIX default', '\n}\n\nvoid adamic_write_line'), './internal/oracle', 'TestOutputEdges/signals$'),
+    ('5-fatal', runtime, without(base, '\t// Signals used to stop a process', '\n}\n\nvoid adamic_write_line'), './internal/oracle', 'TestOutputEdges/signals$'),
     ('6-surrogate', runtime, base.replace('write_text(adamic_stderr, message, length);', '(void)write_all(adamic_stderr, message, length);'), './internal/oracle', 'TestOutputEdges/panic$'),
     ('7-spread', lower, originals[lower].replace('''		for _, argument := range arguments {
 			if argument.Kind == ast.KindSpreadElement {

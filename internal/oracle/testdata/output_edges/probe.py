@@ -135,9 +135,8 @@ elif mode == 'closed':
 elif mode in ('signals', 'ignored', 'realtime'):
     signals = [signal.SIGINT, signal.SIGHUP, signal.SIGTERM] if mode == 'ignored' else [
         signal.SIGTERM, signal.SIGINT, signal.SIGHUP, signal.SIGUSR2,
-        signal.SIGALRM, signal.SIGXCPU, signal.SIGQUIT, signal.SIGABRT, signal.SIGFPE,
-        signal.SIGILL, signal.SIGSEGV, signal.SIGBUS, signal.SIGTRAP, signal.SIGSYS,
-        signal.SIGVTALRM, signal.SIGPROF, signal.SIGIO, signal.SIGPWR, signal.SIGSTKFLT]
+        signal.SIGALRM, signal.SIGXCPU, signal.SIGQUIT,
+        signal.SIGVTALRM, signal.SIGPROF, signal.SIGIO, signal.SIGPWR]
     if mode == 'realtime':
         signals = [int(sys.argv[3])]
     for sig in signals:
