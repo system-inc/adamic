@@ -1,0 +1,20 @@
+=== RUN   TestRealtimeSignalsLeaveWhatWasPrinted
+=== PAUSE TestRealtimeSignalsLeaveWhatWasPrinted
+=== CONT  TestRealtimeSignalsLeaveWhatWasPrinted
+=== RUN   TestRealtimeSignalsLeaveWhatWasPrinted/34
+=== PAUSE TestRealtimeSignalsLeaveWhatWasPrinted/34
+=== CONT  TestRealtimeSignalsLeaveWhatWasPrinted/34
+    output_edges_linux_test.go:97: realtime SIGRT(34) [(-34, 39, b''), (-34, 0, b''), (-34, 39, b'')]
+    output_edges_linux_test.go:99: realtime probe: exit 1
+        Traceback (most recent call last):
+          File "/workspace/adamic/internal/oracle/testdata/output_edges/probe.py", line 150, in <module>
+            checked(node, report, (mode, name))
+          File "/workspace/adamic/internal/oracle/testdata/output_edges/probe.py", line 26, in checked
+            assert (other.returncode, other.stdout, other.stderr) == (node.returncode, node.stdout, node.stderr), (
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        AssertionError: (('realtime', 'SIGRT(34)'), 'Node', -34, 39, b'', 'other', -34, 0, b'', 'stdout prefixes', b'started, about to work for a long time\n', b'')
+--- FAIL: TestRealtimeSignalsLeaveWhatWasPrinted (4.55s)
+    --- FAIL: TestRealtimeSignalsLeaveWhatWasPrinted/34 (2.30s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	6.848s
+FAIL

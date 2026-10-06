@@ -1,0 +1,22 @@
+=== RUN   TestOutputEdges
+=== PAUSE TestOutputEdges
+=== CONT  TestOutputEdges
+=== RUN   TestOutputEdges/nonblock
+=== PAUSE TestOutputEdges/nonblock
+=== CONT  TestOutputEdges/nonblock
+    output_edges_linux_test.go:33: nonblock node 0 1660112 b'stderr, unbuffered\n'
+        nonblock /tmp/adamic-gate/TestOutputEdgesnonblock1059998326/001/program 70 65520 b'stderr, unbuffered\n'
+        nonblock node 0 1660112 b'stderr, unbuffered\n'
+    output_edges_linux_test.go:35: edge probe: exit 1
+        Traceback (most recent call last):
+          File "/workspace/adamic/internal/oracle/testdata/output_edges/probe.py", line 121, in <module>
+            checked(reports[0], report, mode)
+          File "/workspace/adamic/internal/oracle/testdata/output_edges/probe.py", line 26, in checked
+            assert (other.returncode, other.stdout, other.stderr) == (node.returncode, node.stdout, node.stderr), (
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        AssertionError: ('nonblock', 'Node', 0, 1660112, b'stderr, unbuffered\n', 'other', 70, 65520, b'stderr, unbuffered\n', 'stdout prefixes', b'0 a\xef\xbf\xbdb \xef\xbf\xbd\n1 y\n2 yy\n3 yyy\n4 yyyy\n5 yyyyy\n6 yyyyyy\n7 a\xef\xbf\xbdb xxxxxxx\xef\xbf\xbd\n8 yyyyyyyy\n9 yyyyyyyyy\n10 yyyy', b'0 a\xef\xbf\xbdb \xef\xbf\xbd\n1 y\n2 yy\n3 yyy\n4 yyyy\n5 yyyyy\n6 yyyyyy\n7 a\xef\xbf\xbdb xxxxxxx\xef\xbf\xbd\n8 yyyyyyyy\n9 yyyyyyyyy\n10 yyyy')
+--- FAIL: TestOutputEdges (0.00s)
+    --- FAIL: TestOutputEdges/nonblock (6.35s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	6.356s
+FAIL

@@ -1,0 +1,20 @@
+=== RUN   TestOutputEdges
+=== PAUSE TestOutputEdges
+=== CONT  TestOutputEdges
+=== RUN   TestOutputEdges/ignored
+=== PAUSE TestOutputEdges/ignored
+=== CONT  TestOutputEdges/ignored
+    output_edges_linux_test.go:33: ignored SIGINT [(-2, 39, b''), (124, 0, b''), (-2, 39, b'')]
+    output_edges_linux_test.go:35: edge probe: exit 1
+        Traceback (most recent call last):
+          File "/workspace/adamic/internal/oracle/testdata/output_edges/probe.py", line 147, in <module>
+            checked(node, report, (mode, sig.name))
+          File "/workspace/adamic/internal/oracle/testdata/output_edges/probe.py", line 26, in checked
+            assert (other.returncode, other.stdout, other.stderr) == (node.returncode, node.stdout, node.stderr), (
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        AssertionError: (('ignored', 'SIGINT'), 'Node', -2, 39, b'', 'other', 124, 0, b'', 'stdout prefixes', b'started, about to work for a long time\n', b'')
+--- FAIL: TestOutputEdges (0.00s)
+    --- FAIL: TestOutputEdges/ignored (9.57s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	9.570s
+FAIL

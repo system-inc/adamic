@@ -1,0 +1,20 @@
+=== RUN   TestOutputEdges
+=== PAUSE TestOutputEdges
+=== CONT  TestOutputEdges
+=== RUN   TestOutputEdges/panic
+=== PAUSE TestOutputEdges/panic
+=== CONT  TestOutputEdges/panic
+    output_edges_linux_test.go:33: panic [(70, b'printed \xef\xbf\xbd first\n', b'adamic: panic: lone \xef\xbf\xbd here\n'), (70, b'printed \xef\xbf\xbd first\n', b'adamic: panic: lone \xed\xa0\x80 here\n'), (70, b'printed \xef\xbf\xbd first\n', b'adamic: panic: lone \xef\xbf\xbd here\n')]
+    output_edges_linux_test.go:35: edge probe: exit 1
+        Traceback (most recent call last):
+          File "/workspace/adamic/internal/oracle/testdata/output_edges/probe.py", line 160, in <module>
+            checked(node, report, mode)
+          File "/workspace/adamic/internal/oracle/testdata/output_edges/probe.py", line 26, in checked
+            assert (other.returncode, other.stdout, other.stderr) == (node.returncode, node.stdout, node.stderr), (
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        AssertionError: ('panic', 'Node', 70, 18, b'adamic: panic: lone \xef\xbf\xbd here\n', 'other', 70, 18, b'adamic: panic: lone \xed\xa0\x80 here\n', 'stdout prefixes', b'printed \xef\xbf\xbd first\n', b'printed \xef\xbf\xbd first\n')
+--- FAIL: TestOutputEdges (0.00s)
+    --- FAIL: TestOutputEdges/panic (4.38s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	4.386s
+FAIL

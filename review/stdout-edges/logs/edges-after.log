@@ -1,0 +1,133 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestOutputEdges
+=== PAUSE TestOutputEdges
+=== RUN   TestOutputLinesArriveWhileRunning
+=== PAUSE TestOutputLinesArriveWhileRunning
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== CONT  TestOutputLinesArriveWhileRunning
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== CONT  TestOutputEdges
+=== RUN   TestOutputEdges/fsize
+=== PAUSE TestOutputEdges/fsize
+=== RUN   TestOutputEdges/fsize_out
+=== PAUSE TestOutputEdges/fsize_out
+=== RUN   TestOutputEdges/nonblock
+=== PAUSE TestOutputEdges/nonblock
+=== RUN   TestOutputEdges/closed
+=== PAUSE TestOutputEdges/closed
+=== RUN   TestOutputEdges/signals
+=== PAUSE TestOutputEdges/signals
+=== RUN   TestOutputEdges/ignored
+=== PAUSE TestOutputEdges/ignored
+=== RUN   TestOutputEdges/panic
+=== PAUSE TestOutputEdges/panic
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== RUN   TestOutputLinesArriveWhileRunning/terminal
+    output_edges_linux_test.go:70: terminal node 0 arrivals [0.026, 0.176, 0.326, 0.477, 0.627, 0.778, 0.929, 1.08, 1.23, 1.381] b''
+        terminal /tmp/adamic-gate/TestOutputLinesArriveWhileRunning1420993778/001/timed 0 arrivals [0.002, 0.152, 0.302, 0.454, 0.605, 0.755, 0.905, 1.055, 1.205, 1.355] b''
+=== RUN   TestOutputLinesArriveWhileRunning/file
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+    input_test.go:111: gate cache probe miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== CONT  TestOutputEdges/fsize
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+    input_test.go:111: gate cache probe miss
+=== CONT  TestOutputEdges/panic
+=== NAME  TestOutputEdges/fsize
+    output_edges_linux_test.go:33: fsize node 0 b'cannot write <dir>/big.txt: failed\n' b'after\n' 102400
+        fsize /tmp/adamic-gate/TestOutputEdgesfsize3969864833/001/program 0 b'cannot write <dir>/big.txt: failed\n' b'after\n' 102400
+        fsize node 0 b'cannot write <dir>/big.txt: failed\n' b'after\n' 102400
+=== CONT  TestOutputEdges/ignored
+=== CONT  TestOutputEdges/signals
+=== NAME  TestOutputEdges/panic
+    output_edges_linux_test.go:33: panic [(70, b'printed \xef\xbf\xbd first\n', b'adamic: panic: lone \xef\xbf\xbd here\n'), (70, b'printed \xef\xbf\xbd first\n', b'adamic: panic: lone \xef\xbf\xbd here\n'), (70, b'printed \xef\xbf\xbd first\n', b'adamic: panic: lone \xef\xbf\xbd here\n')]
+=== CONT  TestOutputEdges/closed
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/read_files.a (9.28s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a (9.27s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/walk.a (9.32s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/write_files.a (9.39s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/arguments.a (0.45s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a (0.56s)
+=== CONT  TestOutputEdges/nonblock
+=== NAME  TestOutputLinesArriveWhileRunning/file
+    output_edges_linux_test.go:70: file node 0 arrivals [0.041, 0.182, 0.334, 0.486, 0.638, 0.79, 0.942, 1.094, 1.245, 1.387] b''
+        file /tmp/adamic-gate/TestOutputLinesArriveWhileRunning1420993778/001/timed 0 arrivals [0.024, 0.169, 0.324, 0.477, 0.626, 0.776, 0.919, 1.076, 1.22, 1.373] b''
+--- PASS: TestOutputLinesArriveWhileRunning (10.34s)
+    --- PASS: TestOutputLinesArriveWhileRunning/terminal (3.07s)
+    --- PASS: TestOutputLinesArriveWhileRunning/file (3.09s)
+=== CONT  TestOutputEdges/fsize_out
+=== NAME  TestOutputEdges/closed
+    output_edges_linux_test.go:33: closed (0,) [(0, b'to stdout\n', b'to stderr\n'), (0, b'to stdout\n', b'to stderr\n'), (0, b'to stdout\n', b'to stderr\n')]
+        closed (1,) [(0, b'', b'to stderr\n'), (0, b'', b'to stderr\n'), (0, b'', b'to stderr\n')]
+        closed (2,) [(0, b'to stdout\n', b''), (0, b'to stdout\n', b''), (0, b'to stdout\n', b'')]
+        closed (0, 1, 2) [(0, b'', b''), (0, b'', b''), (0, b'', b'')]
+=== NAME  TestOutputEdges/fsize_out
+    output_edges_linux_test.go:33: fsize_out node 70 102400 b'after\n'
+        fsize_out /tmp/adamic-gate/TestOutputEdgesfsize_out1621504060/001/program 70 102400 b'after\n'
+        fsize_out node 70 102400 b'after\n'
+=== NAME  TestOutputEdges/nonblock
+    output_edges_linux_test.go:33: nonblock node 0 1660112 b'stderr, unbuffered\n'
+        nonblock /tmp/adamic-gate/TestOutputEdgesnonblock3021457718/001/program 0 1660112 b'stderr, unbuffered\n'
+        nonblock node 0 1660112 b'stderr, unbuffered\n'
+=== NAME  TestOutputEdges/ignored
+    output_edges_linux_test.go:33: ignored SIGINT [(-2, 39, b''), (-2, 39, b''), (-2, 39, b'')]
+        ignored SIGHUP [(-1, 39, b''), (-1, 39, b''), (-1, 39, b'')]
+=== NAME  TestOutputEdges/signals
+    output_edges_linux_test.go:33: signals SIGTERM [(-15, 39, b''), (-15, 39, b''), (-15, 39, b'')]
+        signals SIGINT [(-2, 39, b''), (-2, 39, b''), (-2, 39, b'')]
+        signals SIGHUP [(-1, 39, b''), (-1, 39, b''), (-1, 39, b'')]
+        signals SIGUSR2 [(-12, 39, b''), (-12, 39, b''), (-12, 39, b'')]
+        signals SIGALRM [(-14, 39, b''), (-14, 39, b''), (-14, 39, b'')]
+        signals SIGXCPU [(-24, 39, b''), (-24, 39, b''), (-24, 39, b'')]
+        signals SIGQUIT [(-3, 39, b''), (-3, 39, b''), (-3, 39, b'')]
+        signals SIGABRT [(-6, 39, b''), (-6, 39, b''), (-6, 39, b'')]
+        signals SIGFPE [(-8, 39, b''), (-8, 39, b''), (-8, 39, b'')]
+        signals SIGILL [(-4, 39, b''), (-4, 39, b''), (-4, 39, b'')]
+        signals SIGSEGV [(-11, 39, b''), (-11, 39, b''), (-11, 39, b'')]
+        signals SIGBUS [(-7, 39, b''), (-7, 39, b''), (-7, 39, b'')]
+        signals SIGTRAP [(-5, 39, b''), (-5, 39, b''), (-5, 39, b'')]
+        signals SIGSYS [(-31, 39, b''), (-31, 39, b''), (-31, 39, b'')]
+        signals SIGVTALRM [(-26, 39, b''), (-26, 39, b''), (-26, 39, b'')]
+        signals SIGPROF [(-27, 39, b''), (-27, 39, b''), (-27, 39, b'')]
+        signals SIGIO [(-29, 39, b''), (-29, 39, b''), (-29, 39, b'')]
+        signals SIGPWR [(-30, 39, b''), (-30, 39, b''), (-30, 39, b'')]
+        signals SIGSTKFLT [(-16, 39, b''), (-16, 39, b''), (-16, 39, b'')]
+        cpu limit [(-24, 39), (-24, 39), (-24, 39)]
+--- PASS: TestOutputEdges (0.00s)
+    --- PASS: TestOutputEdges/fsize (0.39s)
+    --- PASS: TestOutputEdges/panic (0.37s)
+    --- PASS: TestOutputEdges/closed (0.71s)
+    --- PASS: TestOutputEdges/fsize_out (0.45s)
+    --- PASS: TestOutputEdges/nonblock (2.56s)
+    --- PASS: TestOutputEdges/ignored (4.77s)
+    --- PASS: TestOutputEdges/signals (46.94s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=6
+ok  	github.com/system-inc/adamic/internal/oracle	56.666s
