@@ -212,3 +212,41 @@ func TestMiniRunner(t *testing.T) {
 		t.Fatalf("var fixture reason: %+v", refused.RefusalReasons)
 	}
 }
+
+// A large sort previously reached clang with its C cut at 256 KiB, falsely blaming the emitter.
+func TestLargeCompilerOutputIsComplete(t *testing.T) {
+	root := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(root, "test"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	source := strings.Repeat("assert.sameValue(1, 1);\n", 1800)
+	if err := os.WriteFile(filepath.Join(root, "test", "large.js"), []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	engine, err := prepare("../..", root, t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	report, err := engine.runFilter("large.js", 0, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if report.Pass != 1 {
+		t.Fatalf("large program: %+v", report)
+	}
+	generated, err := os.ReadFile(filepath.Join(engine.work, "program.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(generated) <= outputLimit || generated[len(generated)-1] != '\n' {
+		t.Fatalf("fixture must exceed old limit and end with newline: %d bytes", len(generated))
+	}
+}
+
+func TestOutputOverflowIsReported(t *testing.T) {
+	buffer := limitedBuffer{limit: 3}
+	written, err := buffer.Write([]byte("abcdef"))
+	if err != nil || written != 6 || !buffer.exceeded || buffer.String() != "abc" {
+		t.Fatalf("overflow: written=%d error=%v buffer=%+v", written, err, buffer)
+	}
+}
