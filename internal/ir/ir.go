@@ -49,6 +49,9 @@ type Class struct {
 	Accessors    []Accessor
 	Literal      bool
 	PublicFields []Field
+	Static       bool
+	StaticParent int   // one-based hidden parent slot, zero for a root
+	StaticFlags  []int // one-based presence slot for each data slot, zero for internal storage
 }
 
 type Accessor struct {
@@ -222,6 +225,7 @@ type (
 	InstanceOf struct {
 		Value Expression
 		Class int
+		Exact bool
 	}
 
 	// Unary is -, + and ! on its operand.
@@ -987,7 +991,8 @@ type (
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
-		Site int
+		Site   int
+		Define bool // class field initialization defines an own data property
 	}
 
 	// Return leaves the function, with Value unless it returns void.

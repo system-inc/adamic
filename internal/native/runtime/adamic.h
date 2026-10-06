@@ -145,6 +145,9 @@ typedef struct adamic_class {
 	const adamic_shape *public_shape;
 	const adamic_accessor *accessors;
 	size_t accessor_count;
+	bool is_static;
+	size_t static_parent;
+	const size_t *static_flags;
 } adamic_class;
 
 // adamic_object is a plain object (object.c). Its shape travels with it, so the same object can be
@@ -191,7 +194,12 @@ adamic_object *adamic_object_copy(const adamic_object *source);
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_string *adamic_static_union_typeof(const adamic_heap *value);
+adamic_string *adamic_object_typeof(const adamic_object *object);
+adamic_value *adamic_static_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
 	if (cache->shape == object->shape) {
 		return &((adamic_object *)object)->slots[cache->index];
 	}

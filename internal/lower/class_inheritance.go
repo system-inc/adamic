@@ -42,10 +42,13 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 	if len(bases) == 0 {
 		return nil
 	}
-	base := bases[0]
-	checkABI := len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
+	return l.checkMemberOverrides(declaration, classType, bases[0], false)
+}
+
+func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {
+	checkABI := static || len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
 	for _, member := range declaration.Members() {
-		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) != static {
 			continue
 		}
 		inherited := l.checker.GetPropertyOfType(base, member.Name().Text())
@@ -61,10 +64,13 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 		if (member.Kind == ast.KindMethodDeclaration) != (inherited.Flags&ast.SymbolFlagsMethod != 0) {
 			return refuse("an inherited method replaced by a field, or a field replaced by a method", "keep the inherited member kind; use a different name for the new member")
 		}
+		if accessorMember(member) != accessorSymbol(inherited) {
+			return refuse("an inherited data property replaced by an accessor, or an accessor replaced by data", "keep the inherited member kind; use another name for the new property")
+		}
 		if accessorMember(member) {
 			ownGet, ownSet, baseGet, baseSet := false, false, false, false
 			for _, candidate := range declaration.Members() {
-				if candidate.Name() != nil && candidate.Name().Text() == member.Name().Text() {
+				if candidate.Name() != nil && candidate.Name().Text() == member.Name().Text() && ast.HasSyntacticModifier(candidate, ast.ModifierFlagsStatic) == static {
 					ownGet = ownGet || candidate.Kind == ast.KindGetAccessor
 					ownSet = ownSet || candidate.Kind == ast.KindSetAccessor
 				}
@@ -83,8 +89,12 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 					}
 					old := l.checker.GetSignatureFromDeclaration(candidate)
 					next := l.checker.GetSignatureFromDeclaration(member)
-					accepts := instantiateType(l.checker, l.checker.GetTypeOfSymbol(old.Parameters()[0]), l.typeMapperOf(candidate.Parent, base))
-					override := instantiateType(l.checker, l.checker.GetTypeOfSymbol(next.Parameters()[0]), l.typeMapperOf(declaration, classType))
+					accepts := l.checker.GetTypeOfSymbol(old.Parameters()[0])
+					override := l.checker.GetTypeOfSymbol(next.Parameters()[0])
+					if !static {
+						accepts = instantiateType(l.checker, accepts, l.typeMapperOf(candidate.Parent, base))
+						override = instantiateType(l.checker, override, l.typeMapperOf(declaration, classType))
+					}
 					if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
 						return refuse("an accessor override that narrows a setter parameter (adamic/contravariant-override)", "accept the base setter's parameter type or a wider type; narrow it inside the setter")
 					}
@@ -193,7 +203,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 			return l.notYet(member, "a declare or abstract class field")
 		}
 		if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
-			return l.notYet(member, "a static field")
+			continue
 		}
 		if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier {
 			return l.notYet(member, "a field with a computed name")
@@ -554,6 +564,11 @@ func (l *lowering) fieldName(name *ast.Node) string {
 	symbol := l.checker.GetSymbolAtLocation(name)
 	if symbol != nil && len(symbol.Declarations) > 0 {
 		class := symbol.Declarations[0].Parent
+		if class != nil && ast.HasSyntacticModifier(symbol.Declarations[0], ast.ModifierFlagsStatic) {
+			if lowered := l.statics[l.symbol(class.Name())]; lowered != nil {
+				return memberKey(name, lowered.class)
+			}
+		}
 		if class != nil && class.Kind == ast.KindClassDeclaration {
 			if l.instance != nil && l.classNode != nil && l.classNode.Parent == class {
 				return name.Text() + "@" + strconv.Itoa(l.instance.class)
@@ -613,6 +628,17 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 			return l.nominalMismatch(constraint, to, seen)
 		}
 		return nil
+	}
+	if l.isStaticType(to) {
+		wanted := l.staticClass(to, nil)
+		actual := l.staticClass(from, nil)
+		for actual != nil {
+			if actual == wanted {
+				return nil
+			}
+			actual = l.staticBase(actual)
+		}
+		return to
 	}
 	if isClassInstance(to) {
 		if symbol := to.Symbol(); symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
@@ -721,6 +747,11 @@ func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string
 		return false
 	}
 	class := property.Declarations[0].Parent
+	if ast.HasSyntacticModifier(property.Declarations[0], ast.ModifierFlagsStatic) {
+		if lowered := l.statics[l.symbol(class.Name())]; lowered != nil {
+			return written == memberKey(name, lowered.class)
+		}
+	}
 	prefix := l.program.Where(class) + ":" + class.Name().Text()
 	for key, instance := range l.instances {
 		if key != prefix && !strings.HasPrefix(key, prefix+",") {

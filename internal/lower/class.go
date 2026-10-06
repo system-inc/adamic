@@ -13,6 +13,7 @@ import (
 // Each instantiation has one nominal identity and one prefix layout. A virtual call keeps its
 // static signature while selecting the implementation from the object's dynamic table.
 type instance struct {
+	static         bool
 	constructor    int
 	methods        map[string]int
 	slots          map[string]int
@@ -145,7 +146,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 				return nil, l.notYet(member, "a method with a computed name")
 			}
 			if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
-				return nil, l.notYet(member, "a static class method")
+				continue
 			}
 			methodName := methodKey(member, lowered.class)
 			if accessorMember(member) {
@@ -161,7 +162,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 			}
 			meta.Methods[slot] = len(l.result.Functions)
 			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + member.Name().Text()})
-		case ast.KindPropertyDeclaration, ast.KindConstructor:
+		case ast.KindPropertyDeclaration, ast.KindConstructor, ast.KindClassStaticBlockDeclaration:
 		default:
 			return nil, l.notYet(member, describe(member)+" in a class")
 		}
@@ -189,7 +190,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	// Every method's signature is written before any body is lowered, the constructor's included, so a
 	// method can call one declared below it, and two can call each other.
 	for _, member := range members {
-		if !classFunction(member) {
+		if !classFunction(member) || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
 		method := lowered.methods[methodKey(member, lowered.class)]
@@ -204,7 +205,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		return nil, err
 	}
 	for _, member := range members {
-		if !classFunction(member) {
+		if !classFunction(member) || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
 		method := lowered.methods[methodKey(member, lowered.class)]
@@ -283,7 +284,7 @@ func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expressi
 			arguments = append(arguments, value)
 		}
 	}
-	return ir.Call{Function: lowered.constructor, Arguments: arguments, Returns: ir.Object}, nil
+	return l.staticConstruct(node, declaration, lowered.constructor, arguments), nil
 }
 
 // callOrMethod lowers a call to one of the module's functions, or to a method of one of its classes.
@@ -306,6 +307,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 			method = actual
 		}
 	}
+	if len(l.staticGlobals) > 0 && method != nil && len(method.Declarations) > 0 && method.Declarations[0].Kind == ast.KindMethodSignature {
+		return nil, l.notYet(node, "a method call through a structural signature in a program with statics; use typeof the declaring class")
+	}
 	if method == nil || len(method.Declarations) == 0 || method.Declarations[0].Kind != ast.KindMethodDeclaration {
 		return l.call(node)
 	}
@@ -320,7 +324,15 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	// this.method() is the instantiation being lowered: this is the polymorphic this type there,
 	// which carries no type arguments of its own.
 	lowered := l.instance
-	if (ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword && ast.SkipParentheses(receiver).Kind != ast.KindSuperKeyword) || lowered == nil {
+	if ast.HasSyntacticModifier(method.Declarations[0], ast.ModifierFlagsStatic) {
+		var err error
+		if lowered == nil || !lowered.static || (ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword && ast.SkipParentheses(receiver).Kind != ast.KindSuperKeyword) {
+			lowered, err = l.staticInstance(l.staticClass(receiverType, declaration))
+			if err != nil {
+				return nil, err
+			}
+		}
+	} else if (ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword && ast.SkipParentheses(receiver).Kind != ast.KindSuperKeyword) || lowered == nil {
 		var err error
 		if lowered, err = l.instantiate(declaration, receiverType, callee); err != nil {
 			return nil, err
@@ -345,6 +357,7 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	object = l.privateStaticReceiver(callee.Name(), object, false)
 	arguments := []ir.Expression{object}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
 		value, err := l.expression(argument)
@@ -390,6 +403,9 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
+	if call, handled := l.privateStaticStore(target, object, value); handled {
+		return []ir.Statement{ir.Evaluate{Value: call}}, nil
+	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
 	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
 }
@@ -410,6 +426,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	if err != nil {
 		return nil, err
 	}
+	object = l.privateStaticReceiver(target.Name(), object, false)
 	statements := []ir.Statement{}
 	field := l.checker.GetSymbolAtLocation(target.Name())
 	_, isRead := object.(ir.Read)
@@ -449,6 +466,9 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 func (l *lowering) classOf(access *ast.Node) int {
 	field := l.checker.GetSymbolAtLocation(access.Name())
 	if field == nil || len(field.Declarations) != 1 || field.Declarations[0].Kind != ast.KindPropertyDeclaration {
+		return 0
+	}
+	if ast.HasSyntacticModifier(field.Declarations[0], ast.ModifierFlagsStatic) {
 		return 0
 	}
 	class := field.Declarations[0].Parent

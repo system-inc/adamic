@@ -498,7 +498,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		slot := e.temporary()
-		e.line("adamic_value *%s = %s;", slot, e.fieldSlot(object, statement.Name, statement.Class))
+		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), e.cache())
 		if statement.Value.Type().IsReference() {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
@@ -838,6 +838,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.line("(void)%s;", value)
 			return e.snapshot(ir.Boolean, "false")
 		}
+		if expression.Exact {
+			return e.snapshot(ir.Boolean, fmt.Sprintf("(%s != NULL && ((adamic_object *)%s)->class == &adamic_class_%d)", value, value, expression.Class))
+		}
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_instanceof(%s, &adamic_class_%d)", value, expression.Class))
 	case ir.NumberToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", e.value(expression.Value)))
@@ -927,6 +930,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Narrow:
 		return e.narrow(expression)
 	case ir.TypeOf:
+		if expression.Value.Type() == ir.Object {
+			return fmt.Sprintf("adamic_object_typeof(%s)", e.value(expression.Value))
+		}
+		if expression.Value.Type() == ir.Union {
+			return fmt.Sprintf("adamic_static_union_typeof(%s)", e.value(expression.Value))
+		}
 		return e.typeOf(expression.Value)
 	case ir.UnionToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_union_to_string(%s)", e.value(expression.Value)))

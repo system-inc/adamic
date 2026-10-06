@@ -64,6 +64,28 @@ func (l *lowering) superAccessor(target *ast.Node, valueNode *ast.Node) (ir.Expr
 	}
 	index, exists := l.instance.base.methods[prefix+l.fieldName(target.Name())]
 	if !exists {
+		if l.instance.static {
+			symbol := l.checker.GetSymbolAtLocation(target.Name())
+			if symbol != nil && len(symbol.Declarations) > 0 && symbol.Declarations[0].Kind == ast.KindPropertyDeclaration {
+				of, err := l.typeOfSymbol(target, symbol)
+				if err != nil {
+					return nil, true, err
+				}
+				if valueNode == nil {
+					parent := l.staticBase(l.classNode.Parent)
+					return ir.Property{Object: ir.Read{Local: l.staticGlobals[l.symbol(parent.Name())], Of: ir.Object, Checked: true}, Name: l.fieldName(target.Name()), Of: of}, true, nil
+				}
+				value, err := l.expression(valueNode)
+				if err != nil {
+					return nil, true, err
+				}
+				index := len(l.result.Functions)
+				self := len(l.result.Locals)
+				l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index}, ir.Local{Name: "value", Type: of, Function: index})
+				l.result.Functions = append(l.result.Functions, ir.Function{Name: "super_static_set", Parameters: []int{self, self + 1}, Body: []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.fieldName(target.Name()), Value: ir.Read{Local: self + 1, Of: of}, Site: l.staticWriteSite(target)}}})
+				return ir.Call{Function: index, Arguments: []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}, fit(value, of)}}, true, nil
+			}
+		}
 		return nil, true, l.notYet(target, "super of a member without the requested accessor")
 	}
 	arguments := []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}}
@@ -284,7 +306,7 @@ func (l *lowering) finishAccessors() error {
 					node = ir.Call{Function: index, Arguments: []ir.Expression{expression.Object}, Returns: expression.Of}
 				}
 			case ir.SetProperty:
-				if names[expression.Name] {
+				if names[expression.Name] && !expression.Define {
 					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site)
 					node = ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{expression.Object, expression.Value}}}
 				}
@@ -354,7 +376,7 @@ func (l *lowering) checkAccessorSpreads() error {
 			}
 		}
 	}
-	if !throwing && !setterOnly {
+	if !throwing && !setterOnly && len(l.staticGlobals) == 0 {
 		return nil
 	}
 	spread := false
@@ -367,6 +389,9 @@ func (l *lowering) checkAccessorSpreads() error {
 	walk(l.result.Main, check)
 	for _, function := range l.result.Functions {
 		walk(function.Body, check)
+	}
+	if spread && len(l.staticGlobals) > 0 {
+		return &NotYet{Where: l.result.Source, What: "spreading in a program with static constructor objects"}
 	}
 	if spread && setterOnly {
 		return &NotYet{Where: l.result.Source, What: "spreading a setter-only property, whose read value is undefined"}

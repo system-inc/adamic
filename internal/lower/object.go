@@ -220,6 +220,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if err := l.staticProperty(node); err != nil {
+		return nil, err
+	}
 	if call, handled, err := l.superAccessor(node, nil); handled {
 		return call, err
 	}
@@ -271,6 +274,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	object = l.privateStaticReceiver(node.Name(), object, false)
 	if access.QuestionDotToken != nil && (object.Type() == ir.Array || object.Type() == ir.String) && name == "length" {
 		// words?.length and text?.length: undefined where the array or string is, a number | undefined.
 		if object.Type() == ir.Array {

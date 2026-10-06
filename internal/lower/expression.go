@@ -346,6 +346,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
 		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
 	case ast.KindIdentifier:
+		if value, handled := l.staticClassRead(node); handled {
+			return value, nil
+		}
 		local, isLocal := l.local(node)
 		if !isLocal && node.Text() == "undefined" {
 			return ir.Undefined{}, nil

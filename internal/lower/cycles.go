@@ -228,7 +228,7 @@ func (f *cycleFinder) template(proven *checker.Type) bool {
 func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 	fields := []*ast.Symbol{}
 	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
-		if property.Flags&ast.SymbolFlagsMethod == 0 && !accessorSymbol(property) {
+		if property.Flags&ast.SymbolFlagsMethod == 0 && !accessorSymbol(property) && !(f.l.isStaticType(proven) && property.Name == "prototype") {
 			fields = append(fields, property)
 		}
 	}
@@ -240,7 +240,7 @@ func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 // as a field of the instance type and isn't one a program can set; seen as an object, that prototype
 // read as a mutable field reaching back, and every class made with new was refused.
 func (f *cycleFinder) isFunction(proven *checker.Type) bool {
-	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0
+	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
 }
 
 // weak reports whether a slot's type is a Weak<Target>, which holds nothing.
@@ -388,6 +388,15 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		}
 		switch {
 		case f.isFunction(proven):
+			// Construct signatures can hide constructor objects behind an interface.
+			if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+				for symbol := range f.l.statics {
+					actual := f.l.checker.GetTypeOfSymbol(symbol)
+					if f.l.checker.IsTypeAssignableTo(actual, proven) {
+						queue = append(queue, cycleNode{proven: actual})
+					}
+				}
+			}
 			// What a function value holds is what it captured: the cells of every function value the
 			// program makes that can be seen as this type.
 			for _, closure := range f.l.closureRecords {
@@ -403,6 +412,11 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 				queue = append(queue, cycleNode{proven: argument})
 			}
 		default:
+			if f.l.isStaticType(proven) {
+				if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
+					queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
+				}
+			}
 			for _, accessor := range f.l.accessorCaptures {
 				if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
 					for _, local := range f.l.result.Functions[accessor.function].Environment {

@@ -45,13 +45,3 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	return ir.ObjectKeys{Object: value}, true, nil
 }
-
-// A class declaration executes static initialization even if no instance is ever constructed.
-func (l *lowering) checkStaticDeclaration(node *ast.Node) error {
-	for _, member := range node.Members() {
-		if member.Kind == ast.KindClassStaticBlockDeclaration || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
-			return l.notYet(member, "static class members and static blocks")
-		}
-	}
-	return nil
-}

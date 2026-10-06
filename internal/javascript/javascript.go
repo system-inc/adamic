@@ -68,7 +68,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
 	if len(program.Classes) > 0 {
-		builder.WriteString("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { const metadata = adamicClasses[id - 1]; if (metadata.literal) { const result = {}; for (const name of metadata.publicKeys) { const descriptor = metadata.accessors[name]; if (descriptor) Object.defineProperty(result, name, {enumerable: true, get: descriptor.get === undefined ? undefined : () => adamicGetAccessor(result, name), set: descriptor.set === undefined ? undefined : (next) => adamicSetAccessor(result, name, next)}); else result[name] = value[name]; } for (const name of metadata.privateFields) Object.defineProperty(result, name, {value: value[name], enumerable: false}); value = result; } else for (const name of metadata.privateFields) Object.defineProperty(value, name, {enumerable: false}); adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot](value, ...args);\n")
+		builder.WriteString("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { const metadata = adamicClasses[id - 1]; if (metadata.literal) { const result = {}; for (const name of metadata.publicKeys) { const descriptor = metadata.accessors[name]; if (descriptor) Object.defineProperty(result, name, {enumerable: true, get: descriptor.get === undefined ? undefined : () => adamicGetAccessor(result, name), set: descriptor.set === undefined ? undefined : (next) => adamicSetAccessor(result, name, next)}); else result[name] = value[name]; } for (const name of metadata.privateFields) Object.defineProperty(result, name, {value: value[name], enumerable: false}); value = result; } else for (const name of metadata.privateFields) Object.defineProperty(value, name, {enumerable: false}); if (metadata.static) { const storage = value; value = function () {}; if (metadata.parent) Object.setPrototypeOf(value, storage[metadata.parent]); for (const name of metadata.privateFields) Object.defineProperty(value, name, {value: storage[name], writable: true, configurable: true}); } adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot](value, ...args);\n")
 		builder.WriteString("const adamicFindAccessor = (value, name) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { const found = adamicClasses[id - 1].accessors[name]; if (found) return found; } };\nconst adamicGetAccessor = (value, name) => { const get = adamicFindAccessor(value, name).get; return typeof get === 'string' ? adamicCall(value[get], [value]) : get(value); };\nconst adamicSetAccessor = (value, name, next) => { const set = adamicFindAccessor(value, name).set; return typeof set === 'string' ? adamicCall(value[set], [value, next]) : set(value, next); };\n")
 		classes := []string{}
 		for _, class := range program.Classes {
@@ -103,7 +103,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 				}
 				accessors = append(accessors, fmt.Sprintf("[%s]: {get: %s, set: %s}", quote(accessor.Name), getter, setter))
 			}
-			classes = append(classes, fmt.Sprintf("{base: %d, methods: [%s], definition: %d, privateFields: [%s], literal: %t, publicKeys: [%s], accessors: {%s}}", class.Base, strings.Join(methods, ", "), class.Definition, strings.Join(hidden, ", "), class.Literal, strings.Join(publicKeys, ", "), strings.Join(accessors, ", ")))
+			parent := ""
+			if class.StaticParent != 0 {
+				parent = class.Fields[class.StaticParent-1].Name
+			}
+			classes = append(classes, fmt.Sprintf("{static: %t, parent: %s, base: %d, methods: [%s], definition: %d, privateFields: [%s], literal: %t, publicKeys: [%s], accessors: {%s}}", class.Static, quote(parent), class.Base, strings.Join(methods, ", "), class.Definition, strings.Join(hidden, ", "), class.Literal, strings.Join(publicKeys, ", "), strings.Join(accessors, ", ")))
 		}
 		fmt.Fprintf(&builder, "const adamicClasses = [%s];\n", strings.Join(classes, ", "))
 	}
@@ -316,7 +320,11 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
-		e.line("%s[%s] = %s;", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+		if statement.Define {
+			e.line("Object.defineProperty(%s, %s, {value: %s, writable: true, enumerable: %t, configurable: true});", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"))
+		} else {
+			e.line("%s[%s] = %s;", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+		}
 	case ir.SetIndex:
 		e.line("adamicSetIndex(%s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))
 	case ir.Return:
@@ -506,6 +514,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ObjectKeys:
 		return "Object.keys(" + e.value(expression.Object) + ")"
 	case ir.InstanceOf:
+		if expression.Exact {
+			return fmt.Sprintf("adamicClassIdentities.get(%s) === %d", e.value(expression.Value), expression.Class)
+		}
 		return fmt.Sprintf("adamicInstanceOf(%s, %d)", e.value(expression.Value), expression.Class)
 	case ir.Call:
 		if expression.Accessor != "" {

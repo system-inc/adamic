@@ -1,6 +1,6 @@
 # Class features
 
-This is the first step of task zek5q21, on codex/class-features, based on inheritance tip 7b30af6. **The full task remains open: static fields, methods, accessors and blocks are not implemented.** Static declarations now produce a diagnostic even if the class is never instantiated, so initialization effects cannot silently disappear.
+Task zek5q21, on codex/class-features, builds on inheritance tip 7b30af6. Instance accessors, private members and readonly fields were added in 7860a06. The next step adds static fields, methods, accessors and blocks, including private statics.
 
 ## Implemented
 
@@ -16,9 +16,24 @@ Override checks reject narrower setter parameters, unsafe getter results and ove
 
 Cohere's CSS values parser now uses private identifiers for its methods. Its private-method gap is marked closed and exercised against Node, sanitizers and the leak check.
 
+## Static members
+
+Constructor objects have their own class descriptors and method tables. Instance generic type arguments do not duplicate static storage. Static methods and accessors are installed before initialization; field initializers and blocks execute in source order, even if the class is never constructed. `this` is the current constructor object. Virtual calls through `typeof Base` keep the derived receiver; `super` selects the base implementation with that receiver. Super data reads search the base constructor, while writes create an own property on the current receiver.
+
+Inherited data remains live until an own write shadows it. Presence slots distinguish inherited data from shadowing data, including numeric zero and undefined. Own keys follow the order in which properties are created, and inherited fields, methods, accessors and internal storage are excluded. Each derived constructor owns its parent constructor; the normal derived-to-base destructor chain releases its own values and that parent once.
+
+A class body's inner name refers to its constructor during initialization. The outer declaration binding is published after initialization finishes. Constructor lookup precedes evaluating new arguments and checks declaration readiness. Outside helpers cannot read that binding during its temporal dead zone. TypeScript rejects rebinding class declarations. Use a separate variable for constructor values. Override checks apply to both instance and static members. The cycle finder follows static fields and the strong constructor-parent edge, including constructor values held through construct-signature interfaces. It excludes the checker's synthetic prototype property.
+
+Initializers cannot treat a future field as its nonnullable declared type. Direct reads, static methods, accessors and module helpers are examined; unknown indirect calls and callbacks are diagnosed until initialization finishes. This is conservative: JavaScript permits reading undefined where the source annotation claims a string or number, while Adamic requires that annotation to stay true.
+
+Private static fields, methods and accessors use an exact declaring-class brand. A derived constructor cannot access its base's private members through an inherited method's this. Brand checks are IR calls with exception edges; private writes evaluate their RHS before checking the brand. Qualified storage stays out of enumeration, and a derived private Weak reference to its parent constructor does not count toward a cycle.
+
 ## Current limits
 
-- Static members and blocks remain unsupported. Constructor objects need a separate inheritance and initialization model, including inherited static data and exact private brands.
+- Computed and quoted static names, implicit constructor properties such as prototype/name/length, ambient static declarations and construction through constructor values report NotYet.
+- Structural method signatures in programs with statics are conservatively diagnosed; use typeof the declaring class for static method views.
+- Spreads in programs using static constructor objects are conservatively diagnosed until spread can materialize their changing own shapes.
+- Uninitialized nonnullable static fields are diagnosed. Give them an initializer; indirect initialization calls need a declaration the safety check can examine.
 - Optional accessor reads, accessor literals containing spreads, computed names and ordinary methods inside accessor literals report NotYet.
 - Accessors sharing a name need compatible native representations; this conservatively excludes some generic instantiations and overrides.
 - Reading setter-only descriptors and writing getter-only descriptors report NotYet. Conservative dispatch can also reject unrelated same-name members.
@@ -94,3 +109,80 @@ The original territory is new files under internal/lower and internal/native, pl
 | stage1/cohere/values/GAPS.md | Document closure and removed workaround. |
 | stage1/cohere/values/parser.ts | Replace private-method workaround and its calls with private identifiers. |
 | docs/class-features.md | Publish implementation, verification and remaining scope. |
+
+## Static verification
+
+The static fixture covers three levels, static fields and blocks interleaved through observable side effects, static field and block this, static super methods/accessors/data, dispatch through typeof Base, live inherited data, shadow writes, enumeration, unused classes, empty ancestors, shared generic statics, class inner names, inherited reference reads whose RHS replaces the base field, and caught exceptions with allocated strings. The private static fixture covers exact brands, inherited private failures, RHS-before-brand order, private enumeration and a Weak parent constructor. It runs against source Node, generated JavaScript, native release and ASan/UBSan with leak checks.
+
+Setup: Go 0s, clang 0s, Node 0s, submodules 1s, build cache 31s, total 31s; nproc 5. The first package run passed lower in 7.355s, native in 61.331s and fresh in 18.686s. The initial full counts run passed in 133.599s and compared all 182 existing rows with regressions: []. The full gate later passed every other package and failed its count check because the static fixture grew while the table still recorded an earlier version: measured 105/105/66/157/28/0, recorded 101/101/61/148/28/0. The oracle package took 916.826s and native 357.800s. Final verification refreshes the full table and runs the touched packages plus filtered static oracles, following the cloud gate fallback for a slow machine.
+
+Static mutants are restored after each run. Wrong field values, static method dispatch, getter-as-data, skipped setter, skipped blocks and wrong inherited reads changed oracle stdout. Reordering a block and the following field changed abicdef to aibcdef with normal exit 0 on both backends. Skipping the base destructor leaked 133 bytes in two allocations under ASan. Omitting future-read checks and treating constructor types as code accepted unsafe programs in the lowering tests.
+
+Additional integration files in this step:
+
+| File | Why |
+|---|---|
+| internal/ir/ir.go | Static descriptors, presence slots and own-definition writes. |
+| internal/javascript/javascript.go | Constructor objects, prototypes and own field definitions. |
+| internal/lower/lower.go | Register constructor storage and execute static declarations. |
+| internal/lower/expression.go | Resolve the inner class binding separately from the outer declaration. |
+| internal/lower/object.go | Diagnose implicit constructor properties. |
+| internal/lower/class_inheritance.go | Share override checks with static members and require constructor ancestry. |
+| internal/lower/class_accessors.go | Preserve own definitions, static super data and conservative spread safety. |
+| internal/lower/class_features.go | Remove the obsolete blanket static diagnostic. |
+| internal/lower/class_features_test.go | Exercise static effects and soundness refusals. |
+| internal/lower/cycles.go | Follow constructor fields and strong parent edges. |
+| internal/native/class_inheritance.go | Emit static descriptor metadata. |
+| internal/native/emit.go | Write own static slots and emit constructor typeof. |
+| internal/native/runtime/adamic.h | Declare static lookup, presence metadata and typeof helpers. |
+| internal/native/runtime/class_features.c | Enumerate current own static keys. |
+| internal/oracle/class_inheritance_test.go | Register the static oracle. |
+| internal/oracle/testdata/class_features_static.a | Hold static semantics and ownership to Node. |
+| internal/oracle/testdata/class_features_static_private.a | Hold private brands, write order and Weak ownership to Node. |
+| internal/oracle/counts.md | Record measured costs. |
+| docs/class-features.md | Publish the static implementation and its limits. |
+
+New implementation files: internal/lower/class_static.go, internal/lower/class_static_private.go and internal/native/runtime/class_static.c.
+
+The additional constructor-binding and private mutants bypass outside-helper temporal dead zone checks, skip static override soundness, replace exact private brands with ancestry, expose private static fields, check private write brands before the RHS, read the outer class binding inside its body, skip the constructor-parent edge and ignore constructors held behind construct-signature interfaces. Each is held by its dedicated lowering test or a Node oracle. An initial inner-binding mutation failed at compilation because it left an unused Go local; that attempt does not count. The corrected mutation preserves the local and must fail through the oracle.
+
+| Static mutant | What caught it |
+|---|---|
+| Replace field initializers with wrong strings | Both oracle backends changed values and initialization trace, with exit 0. |
+| Dispatch static methods by the declared type | The typeof Base parameter printed the base label instead of the leaf label. |
+| Read a static getter as data | Native printed 2/3/3 instead of 2/4/8 and lost getter effects. |
+| Skip a static setter | Native values and setter trace differed from Node. |
+| Skip static blocks | Oracle output lost block effects and the unused-class block. |
+| Ignore own shadow fields when reading inherited data | Native shadow values differed from Node. |
+| Skip the base destructor | ASan reported 133 bytes leaked in two allocations. |
+| Omit future-field initialization checks | TestClassFeaturesStaticSoundness accepted unsafe direct/helper/alias reads. |
+| Treat constructor values as fieldless code | TestClassFeaturesStaticSoundness accepted public and private constructor cycles. |
+| Swap a block and its following field | Both backends printed aibcdef instead of abicdef, with exit 0. |
+| Ignore outside-helper temporal dead zones | TestClassFeaturesStaticSoundness accepted a helper reading the unfinished class declaration. |
+| Skip static override checks | TestClassFeaturesStaticSoundness accepted a narrower method parameter and mutable field. |
+| Use ancestry for private static brands | The private oracle hit a null string read under UBSan instead of catching the required TypeError. |
+| Check private write brands before the RHS | Both backends printed s3/abs instead of s5/abwss, with exit 0. |
+| Enumerate private static fields | Native Object.keys exposed #value and #parent storage names. |
+| Resolve inner class names to the outer binding | Both backends panicked on StaticName's temporal dead zone while Node succeeded. |
+| Omit the constructor-parent edge | TestClassFeaturesStaticParentCycle accepted a cycle hidden by different constructor signatures. |
+| Ignore constructors behind interfaces | TestClassFeaturesStaticInterfaceCycle accepted the same strong cycle through a construct-signature view. |
+
+Final verification commands, with each test's output redirected to its log:
+
+    source /workspace/adamic-tools/env.sh
+    go test -count=1 -timeout 30m ./internal/lower ./internal/native ./internal/fresh > /tmp/adamic-static-packages-final.log 2>&1
+    go test -count=1 -timeout 30m ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/class_features' > /tmp/adamic-static-oracles-final.log 2>&1
+    go test -count=1 -timeout 30m ./internal/oracle -run TestCountsAreRecorded -args -update-counts > /tmp/adamic-static-counts-green.log 2>&1
+    go vet ./... > /tmp/adamic-static-vet-final.log 2>&1
+    gofmt -l cmd internal > /tmp/adamic-static-format-final.log 2>&1
+
+Final results: class-feature Node/release/ASan/UBSan/leak oracles passed in 19.235s; counts refresh passed in 135.501s. Native passed in 91.593s and fresh in 21.733s. Lowering initially found that the computed-base diagnostic no longer contained its expected wording. Restoring that wording gave a green full lower package in 2.549s. Vet, formatting and git diff checks were clean. The counts comparisons printed Compared 182 pre-branch rows; regressions: [] and Compared 173 pre-branch rows; regressions: []. The table now contains 184 rows.
+
+| New fixture | Allocations | Frees | Retains | Releases | Peak | In regions |
+|---|---:|---:|---:|---:|---:|---:|
+| class_features_static.a | 110 | 110 | 84 | 191 | 28 | 0 |
+| class_features_static_private.a | 42 | 42 | 71 | 112 | 12 | 0 |
+
+The diagnostic-only repair was verified with:
+
+    go test -count=1 -timeout 30m ./internal/lower > /tmp/adamic-static-lower-green.log 2>&1

@@ -87,14 +87,37 @@ func TestClassFeaturesAccessorRefusals(t *testing.T) {
 	}
 }
 
-func TestClassFeaturesStaticDeclarationsAreDiagnosed(t *testing.T) {
+func TestClassFeaturesStaticDeclarationsExecute(t *testing.T) {
 	for _, source := range []string{
 		`class Box { static { console.log('static side effect'); } } console.log('done');`,
-		`class Box { static value = console.log('static initializer'); } console.log('done');`,
+		`class Box { static value = 'initialized'; static { console.log(this.value); } } console.log('done');`,
+	} {
+		program, err := lowerSource(t, source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(program.Classes) == 0 || !program.Classes[0].Static || len(program.Main) < 2 {
+			t.Fatal("static initialization was dropped")
+		}
+	}
+}
+
+func TestClassFeaturesStaticSoundness(t *testing.T) {
+	for _, source := range []string{
+		`class Box { static first = this.read(); static later = 'ready'; static read(): string { return this.later; } } console.log(Box.first);`,
+		`class Box { static first = read(); static later = 'ready'; } function read(): string { return Box.later; } console.log(Box.first);`,
+		`class Box { static first = read(); static later = 'ready'; } function read(): string { const alias=Box; return alias.later; } console.log(Box.first);`,
+		`const read=():string=>Box.later; class Box { static first=Array.from({length:1},read); static later='ready'; } console.log('done');`,
+		`class Base { static method(value: string): string { return value; } } class Child extends Base { static override method(value: 'one'): string { return value; } } console.log(Child.method('one'));`,
+		`class Base { static field: string = 'one'; } class Child extends Base { static override field: 'one' = 'one'; } console.log(Child.field);`,
+		`class Box { static value: typeof Box | undefined = undefined; } Box.value = Box;`,
+		`class Box { static value='ready'; static { read(); } } function read(): void { console.log(Box.value); }`,
+		`class Base { static child: typeof Child | undefined = undefined; } class Child extends Base {} Base.child = Child;`,
+		`class Box { static #value: typeof Box | undefined = undefined; static set(): void { this.#value=this; } } Box.set();`,
 	} {
 		_, err := lowerSource(t, source)
-		if err == nil || !strings.Contains(err.Error(), "static class") {
-			t.Fatalf("static initialization was dropped: %v", err)
+		if err == nil {
+			t.Errorf("unsafe static program accepted: %s", source)
 		}
 	}
 }
@@ -115,5 +138,19 @@ func TestClassFeaturesNarrowedAccessor(t *testing.T) {
 	_, err := lowerSource(t, `let calls = 0; const source: { readonly value: string | undefined } = { get value(): string | undefined { calls++; return calls === 1 ? 'first' : undefined; } }; if (source.value !== undefined) console.log(source.value);`)
 	if err == nil || !strings.Contains(err.Error(), "narrowed accessor reread") {
 		t.Fatalf("want changing getter reread refused, got %v", err)
+	}
+}
+
+func TestClassFeaturesStaticParentCycle(t *testing.T) {
+	_, err := lowerSource(t, `class Base { static child: typeof Child | undefined = undefined; } class Child extends Base { readonly tag='child'; constructor(required: string) { super(); console.log(required); } } Base.child=Child;`)
+	if err == nil || !strings.Contains(err.Error(), "cycle") {
+		t.Fatalf("constructor parent cycle accepted: %v", err)
+	}
+}
+
+func TestClassFeaturesStaticInterfaceCycle(t *testing.T) {
+	_, err := lowerSource(t, `type Constructable={new(required:string):Child}; class Base { static child: Constructable | undefined = undefined; } class Child extends Base { readonly tag='child'; constructor(required: string) { super(); console.log(required); } } Base.child=Child;`)
+	if err == nil || !strings.Contains(err.Error(), "cycle") {
+		t.Fatalf("constructor interface cycle accepted: %v", err)
 	}
 }

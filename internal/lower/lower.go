@@ -130,6 +130,8 @@ type lowering struct {
 	// classes maps each module class's symbol to its declaration, and instances each instantiation
 	// already lowered (class.go).
 	classes          map[*ast.Symbol]*ast.Node
+	statics          map[*ast.Symbol]*instance
+	staticGlobals    map[*ast.Symbol]int
 	instances        map[string]*instance
 	derivedAncestors map[*ast.Symbol]bool
 
@@ -286,6 +288,17 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.classes = map[*ast.Symbol]*ast.Node{}
 			}
 			l.classes[l.symbol(statement.Name())] = statement
+			if l.needsStatics(statement) {
+				if l.staticGlobals == nil {
+					l.staticGlobals = map[*ast.Symbol]int{}
+				}
+				local, err := l.declareLocal(statement.Name())
+				if err != nil {
+					return err
+				}
+				l.result.Locals[local].Global = true
+				l.staticStorage(statement)
+			}
 		case ast.KindFunctionDeclaration:
 			symbol := l.symbol(statement.Name())
 			if len(statement.TypeParameters()) > 0 {
@@ -307,6 +320,13 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 	for _, declaration := range declarations {
 		if err := l.signature(l.functions[l.symbol(declaration.Name())], declaration, -1); err != nil {
 			return err
+		}
+	}
+	for _, statement := range statements {
+		if statement.Kind == ast.KindClassDeclaration && l.needsStatics(statement) {
+			if _, err := l.staticInstance(statement); err != nil {
+				return err
+			}
 		}
 	}
 	for _, declaration := range declarations {
@@ -572,8 +592,7 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		if l.function != nil {
 			return nil, l.notYet(node, "a class inside a function")
 		}
-		// Instance members lower at each instantiation; static initialization cannot be dropped.
-		return nil, l.checkStaticDeclaration(node)
+		return l.staticDeclaration(node)
 	case ast.KindReturnStatement:
 		return l.returnStatement(node)
 	case ast.KindExpressionStatement:
