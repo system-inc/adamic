@@ -1,0 +1,2 @@
+const object = { '#public': 1 };
+console.log(`${object.hasOwnProperty('#public')} ${object.propertyIsEnumerable('#public')}`);

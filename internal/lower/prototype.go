@@ -234,6 +234,10 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 				}
 				if name == "hasOwnProperty" || name == "propertyIsEnumerable" {
 					for _, field := range l.checker.GetPropertiesOfType(shape) {
+						if strings.HasPrefix(field.Name, "#") {
+							reason = "a public # name collides with private native slot names"
+							return true
+						}
 						if strings.ContainsRune(field.Name, 0) {
 							reason = "a field name contains NUL, which native shape names cannot represent"
 							return true

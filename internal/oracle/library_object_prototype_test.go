@@ -16,6 +16,10 @@ func init() {
 		lowers  bool
 		checked bool
 	}{
+		{"internal/oracle/testdata/library_object_public_hash.a", false, false},
+		{"internal/oracle/testdata/library_object_iterator_view.a", false, false},
+		{"internal/oracle/testdata/library_object_try_assign.a", false, false},
+		{"internal/oracle/testdata/library_object_prefix_names.a", true, false},
 		{"internal/oracle/testdata/library_object_groups_proto2.a", false, false},
 		{"internal/oracle/testdata/library_object_groups_proto.a", false, false},
 		{"internal/oracle/testdata/library_object_iterator_own.a", true, false},
@@ -54,6 +58,21 @@ func TestObjectGroupsHaveNoPrototype(t *testing.T) {
 	for _, fixture := range []string{"library_object_groups_proto.a", "library_object_groups_proto2.a"} {
 		t.Run(fixture, func(t *testing.T) {
 			assertObjectPrototypeRefusal(t, fixture, "null prototype")
+		})
+	}
+}
+
+func TestObjectAssignFailureStaysRefused(t *testing.T) {
+	assertObjectPrototypeRefusal(t, "library_object_try_assign.a", "Object.assign into a potentially frozen object")
+}
+
+func TestObjectPrototypeRepresentationsStayDistinct(t *testing.T) {
+	for _, probe := range []struct{ fixture, reason string }{
+		{"library_object_public_hash.a", "public # name"},
+		{"library_object_iterator_view.a", "collection iterator may be hidden"},
+	} {
+		t.Run(probe.fixture, func(t *testing.T) {
+			assertObjectPrototypeRefusal(t, probe.fixture, probe.reason)
 		})
 	}
 }

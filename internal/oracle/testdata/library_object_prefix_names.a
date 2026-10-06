@@ -1,0 +1,4 @@
+const object = { a: 1, ab: 2 };
+for (const key of ['a', 'ab', 'abc', 'ac']) {
+	console.log(`${key}: ${object.hasOwnProperty(key)} ${object.propertyIsEnumerable(key)}`);
+}
