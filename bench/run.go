@@ -247,9 +247,6 @@ func availableRuntimes(threads, modules string) []runtimeKind {
 	}})
 	if _, err := exec.LookPath("bun"); err == nil {
 		runtimes = append(runtimes, runtimeKind{name: "bun", environment: []string{"NODE_PATH=" + modules}, command: func(program program) []string {
-			if filepath.Ext(program.source) == ".a" {
-				return []string{"bun", "--preload", filepath.Join(filepath.Dir(program.source), "bun.mjs"), program.source}
-			}
 			return []string{"bun", program.source}
 		}})
 	}
