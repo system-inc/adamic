@@ -59,26 +59,33 @@ adamicLeave, followed by the exit callback also failing. Node exits 70 and canno
 write its trace. The original sweep is a complete, valid Date program; the trace
 array is too large for V8. The oracle is right to require the trace file.
 
-The full 4001-year day sweep is preserved byte-for-byte at
-internal/oracle/testdata/date_sweeps/library_date_days.a and remains explicitly
-registered in the oracle and counts table. Flow discovery scans root fixture
-files, so it instead receives a bounded root library_date_days.a. It samples
-26 years, all months, first/middle/last days and the original three times of day,
-including negative years, year zero, leap centuries and 1970. Its hash and visit
-functions are unchanged. No missing trace is treated as success and no generic
-trace/oracle code was changed.
+The maintainer's requested fix is isolated in `06fc424` on
+`codex/grok-date-coverage-flow`, directly based on `39fb2e7`. It adds
+library_date_days.a beside size_class_churn.a and bitwise_sweep.a in the flow
+program exclusion, explaining that the sweep's size is its purpose and the
+other library_date_*.a fixtures cover its shapes. The full flow package on that
+branch passes in 82.374s, including TestEveryPathNodeTakesIsInTheGraph,
+TestEveryMutationIsInItsRange and TestLivenessHoldsOnEveryPath. Its output is in
+grok-flow.log.
 
-The former failing flow test now passes in 1.030s: 538,726 points and 738,263
-events. All Date flow checks pass in 8.829s. The preserved full sweep passes the
-uncached oracle on the final runtime in 67.092s, with source Node, JavaScript
-backend, sanitized native, release native and leak checks.
+That fix is merged into the refusals branch in `50c029a`. The complete 4001-year
+sweep is restored byte-for-byte from `39fb2e7` at its original path,
+internal/oracle/testdata/library_date_days.a. Its ordinary oracle registration
+and original counts remain. The earlier bounded root fixture and relocated
+full-sweep copy are removed; no duplicate exhaustive fixture remains. No
+missing trace is treated as success and no tracing implementation is changed.
 
-One concurrent full-sweep attempt returned partial sanitized/backend outputs and
-exit -1 at the oracle's one-minute child deadline. The same uncached check passed
-in isolation without changing the fixture or implementation. This is evidence
-of load-sensitive timing, not a behavior fix. The unrelated complete flow corpus
-was stopped after 270.769s; its Date fixtures were then run explicitly. The full
-repository gate was not run.
+The earlier bounded-fixture flow and relocated-sweep logs are retained as
+historical evidence. Final integrated flow, original-path oracle and counts
+checks pass in 87.138s, 63.461s and 31.026s, respectively, and are recorded in
+flow-integrated.log, sweep-restored.log and counts-restored.log. The test262 measurements are unchanged because these
+follow-up changes affect only fixture discovery, fixture location and review
+records. Compiler and runner implementation are unchanged.
+
+One earlier concurrent full-sweep attempt returned partial sanitized/backend
+outputs and exit -1 at the oracle's one-minute child deadline. The same check
+passed in isolation without an implementation change. The full repository gate
+was not run.
 
 ## Refusal audit and implementation
 
@@ -161,21 +168,24 @@ Go 1.27.1, clang 20.1.8, Node 24.19.0. setup.log contains the full output.
 
 | Check | Command / result |
 |---|---|
-| Ordinary Date fixtures | Uncached TestNativeAgreesWithNode filtered to library_date: 17 fixtures, PASS 11.362s; date-oracle.log |
-| Full preserved sweep | Uncached TestNativeAgreesWithNode filtered to date_sweeps: PASS 67.092s; full-sweep-after.log |
+| Initial ordinary Date fixtures | Uncached TestNativeAgreesWithNode filtered to library_date: 17 fixtures, PASS 11.362s; date-oracle.log |
+| Historical relocated sweep | Uncached TestNativeAgreesWithNode filtered to date_sweeps: PASS 67.092s; full-sweep-after.log |
 | Date mutants | Uncached go test ./internal/oracle -run '^TestDateOracleCatchesMutants$' -count=1 -v: PASS 14.771s; mutants.log |
 | Counts | go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts: PASS 90.963s |
 | Lower/native/load | Complete package tests: PASS 76.635s / 416.061s / 7.436s; JavaScript backend compiles, no package tests |
-| Date flow | Path, mutation-range and liveness checks plus TestDate checks: PASS 8.829s; flow.log |
+| Initial Date flow | Path, mutation-range and liveness checks plus TestDate checks: PASS 8.829s; flow.log |
+| Final grok flow branch | Complete go test ./internal/flow -count=1 -timeout 30m -v: PASS 82.374s; grok-flow.log |
+| Final integrated flow | Same full package command: PASS 87.138s; flow-integrated.log |
+| Restored original sweep | Uncached TestNativeAgreesWithNode at library_date_days.a: PASS 63.461s; sweep-restored.log |
+| Restored counts | Complete TestCountsAreRecorded without updating the table: PASS 31.026s; counts-restored.log |
 | Runner | Complete go test ./cmd/adamic-test262 -count=1: PASS 37.450s; runner-tests.log |
 | Final source audit | 324 ordinary sources byte-identical; 324 adapted sources recompiled: PASS 39.258s; audit.log |
 | Static | go vet on runner/lower/native/javascript: exit 0, empty output; vet.log |
 
-The counts update changes only the bounded fixture row and adds metadata,
-Number(Date), and preserved-full-sweep rows. The full sweep's original allocation
-counts are unchanged: 4,400,010 allocations and frees. Bounded sweep: 3,102;
-metadata: 36; Number(Date): 43. Each new ordinary fixture balances allocations
-and frees, with no values left in regions.
+The final counts changes add metadata and Number(Date) rows. The full sweep's
+original row and path are restored unchanged: 4,400,010 allocations and frees.
+Metadata: 36; Number(Date): 43. Both new fixtures balance allocations and frees,
+with no values left in regions.
 
 All 18 native Date mutants compiled valid C, exited 0 with empty sanitizer stderr,
 and were caught solely by Node's differing stdout. Each is an actual subtest in
