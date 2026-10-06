@@ -51,9 +51,8 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, name.Text()) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, name.Text()); declared == ir.MaybeNumber || declared == ir.Weak {
-				// Where the field is number | undefined, what it's given is packed as one; where it's
-				// a Weak, what it's given is kept weakly.
+			if declared := l.declaredField(node, name.Text()); declared != 0 && !slotless(declared) {
+				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
 			if slotless(value.Type()) {
@@ -118,6 +117,27 @@ func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
 	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
 	if contextual == nil {
 		return 0
+	}
+	if contextual.Flags()&checker.TypeFlagsUnion != 0 {
+		// The union's combined property can hold unrelated types. The literal belongs to a
+		// member, whose fields are what reads after discriminant narrowing expect.
+		made := l.checker.GetTypeAtLocation(literal)
+		var shared ir.Type
+		for _, member := range contextual.Types() {
+			if !l.checker.IsTypeAssignableTo(made, member) {
+				continue
+			}
+			field := l.checker.GetPropertyOfType(member, name)
+			if field == nil {
+				continue
+			}
+			declared, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+			if shared != 0 && shared != declared {
+				return 0
+			}
+			shared = declared
+		}
+		return shared
 	}
 	field := l.checker.GetPropertyOfType(contextual, name)
 	if field == nil {
