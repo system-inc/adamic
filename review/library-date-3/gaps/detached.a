@@ -1,0 +1,1 @@
+const f = new Date(0).toString; console.log(f.call(new Date(0)));

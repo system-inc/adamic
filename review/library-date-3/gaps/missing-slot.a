@@ -1,0 +1,1 @@
+try { Date.prototype.toISOString.call({}); } catch (e) { console.log(e instanceof Error); }
