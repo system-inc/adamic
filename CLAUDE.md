@@ -30,10 +30,17 @@ You're working on Adamic: TypeScript whose types are true, compiled to native co
 ```
 gofmt -l cmd internal
 go vet ./...
-go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
 ```
 
-On a 4-core cloud machine the oracle alone takes four to six minutes, close to Go's default ten-minute timeout, hence `-timeout 30m`. The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable (for example /tmp/adamic-gate, mode 1777) and Node must not live under /root. A new fixture needs its row in internal/oracle/counts.md: `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`.
+The oracle caches fixture observations under the user cache directory. It still regenerates C and
+JavaScript and rechecks ordinary comparisons and recorded counts. Timed stream and permission probes
+reuse successful checks only with the same full harness and inputs. Changing a fixture, compiler output,
+runtime library, Node version or test harness invalidates the affected observations.
+`ADAMIC_GATE_UNCACHED=1` bypasses all oracle result caches. **Integration always runs uncached before
+main moves.** Ordinary worker gates may use the cache. Keep `-timeout 30m` for the complete gate.
+
+The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable (for example /tmp/adamic-gate, mode 1777) and Node must not live under /root. A new fixture needs its row in internal/oracle/counts.md: `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`.
 
 Send test output to a log and read the log. Never pipe a test run into `head` or `tail`: it kills the run mid-way and can orphan the fixtures' processes. Tests are parallel by default; a test that can't be says why in a "Not parallel:" comment.
 

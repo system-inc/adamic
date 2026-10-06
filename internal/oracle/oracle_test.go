@@ -282,7 +282,9 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	rememberRun(t, result)
+	return result
 }
 
 // bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
@@ -304,7 +306,9 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 // onNode runs a program's source on Node: the oracle.
 func onNode(t *testing.T, path string) run {
 	t.Helper()
-	return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
+	return cachedNode(t, path, func() run {
+		return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
+	})
 }
 
 // onJavaScriptBackend runs a lowered program through the JavaScript backend, on Node.
@@ -324,6 +328,13 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 	if err != nil {
 		t.Fatalf("Load: %v", err)
 	}
+	absolute, err := filepath.Abs(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range program.Files() {
+		rememberImports(absolute, file.Text(), program)
+	}
 	return lower.Lower(context.Background(), program)
 }
 
@@ -335,6 +346,28 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 // here and the leak check is a run of its own. macOS's ASan has no leak detection to turn off.
 // released builds a lowered program as a user's build is made, without sanitizers, and runs it.
 func released(t *testing.T, program *ir.Program) run {
+	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+		identity(t).cache.misses[nativeResults].Add(1)
+		return releasedUncached(t, program)
+	}
+	return cachedNative(t, program, true).Run.run()
+}
+func natively(t *testing.T, program *ir.Program) (run, string) {
+	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+		identity(t).cache.misses[nativeResults].Add(1)
+		return nativelyUncached(t, program)
+	}
+	return cachedNative(t, program, false).Run.run(), ""
+}
+func leaks(t *testing.T, program *ir.Program, sanitized string) string {
+	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+		identity(t).cache.misses[nativeResults].Add(1)
+		return leaksUncached(t, program, sanitized)
+	}
+	return string(cachedNative(t, program, false).LeakReport)
+}
+
+func releasedUncached(t *testing.T, program *ir.Program) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "release")
 	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
@@ -343,7 +376,7 @@ func released(t *testing.T, program *ir.Program) run {
 	return execute(t, binary)
 }
 
-func natively(t *testing.T, program *ir.Program) (run, string) {
+func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
@@ -362,7 +395,7 @@ func natively(t *testing.T, program *ir.Program) (run, string) {
 //
 // macOS has the leaks tool; Linux has LeakSanitizer, part of ASan there, run on the sanitized binary
 // the comparison already built.
-func leaks(t *testing.T, program *ir.Program, sanitized string) string {
+func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
