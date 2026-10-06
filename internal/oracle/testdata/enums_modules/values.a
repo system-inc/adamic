@@ -1,0 +1,4 @@
+console.log('enum dependency');
+export enum Token { Empty, Word = 8, Alias = Word, Next }
+export enum Direction { Left = 'left', Right = 'right' }
+export const enum Width { Small = 2, Large = Small * 4 }

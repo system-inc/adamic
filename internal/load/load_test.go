@@ -108,7 +108,6 @@ func TestAdamicOptionsAreOn(t *testing.T) {
 		{"exactOptionalPropertyTypes", "const point: { x?: number } = { x: undefined };\n", "TS2375"},
 		// Unannotated, so strict's own TS2366 (a declared return type with a missing return) can't stand in.
 		{"noImplicitReturns", "function sign(value: number) {\n\tif (value > 0) {\n\t\treturn 1;\n\t}\n}\n", "TS7030"},
-		{"erasableSyntaxOnly", "enum Color {\n\tRed,\n}\n", "TS1294"},
 		{"lib is es2024, not the DOM", "const element = document.body;\n", "TS2584"},
 	} {
 		t.Run(probe.option, func(t *testing.T) {

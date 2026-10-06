@@ -498,7 +498,7 @@ func (l *lowering) nominalAncestor(source, target *checker.Type) bool {
 			return false
 		}
 		for index := range from {
-			if !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) {
+			if !l.enumAssignable(from[index], to[index]) || !l.enumAssignable(to[index], from[index]) || !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) {
 				return false
 			}
 		}

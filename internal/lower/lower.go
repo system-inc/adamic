@@ -62,6 +62,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, err
 	}
 	lowering.noteInheritance(modules)
+	if err := lowering.enumInitialization(modules); err != nil {
+		return nil, err
+	}
 	for _, module := range modules {
 		if err := lowering.refuse(module); err != nil {
 			return nil, err
@@ -270,6 +273,14 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 					}
 					l.result.Locals[local].Global = true
 				}
+			}
+		case ast.KindEnumDeclaration:
+			if !ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst) {
+				local, err := l.enumLocal(statement)
+				if err != nil {
+					return err
+				}
+				l.result.Locals[local].Global = true
 			}
 		case ast.KindClassDeclaration:
 			if l.classes == nil {
@@ -558,6 +569,8 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		// Lowered already, by declareModule.
 		return nil, nil
+	case ast.KindEnumDeclaration:
+		return l.enumDeclaration(node)
 	case ast.KindClassDeclaration:
 		if l.function != nil {
 			return nil, l.notYet(node, "a class inside a function")

@@ -1,0 +1,43 @@
+enum Kind { First, Second, Fourth = 1 << 2, Alias = Fourth, Negative = -1, Fraction = 1.5 }
+enum Text { First = 'first', Second = 'second', Again = First }
+function label(value: Kind): string {
+ switch (value) {
+  case Kind.First: return 'zero';
+  case Kind.Second: return 'one';
+  case Kind.Fourth: return 'four';
+  case Kind.Negative: return 'negative';
+  case Kind.Fraction: return 'fraction';
+ }
+}
+const values: readonly Kind[] = [Kind.First, Kind.Second, Kind.Fourth, Kind.Negative, Kind.Fraction];
+for (const value of values) { console.log(`${value}: ${label(value)} ${Kind[value] ?? 'missing'}`); }
+console.log(`${Text.First} ${Text.Second} ${Text.Again}`);
+console.log(Object.keys(Kind).join(','));
+console.log(Object.keys(Text).join(','));
+function member(value: Kind.Fourth): Kind.Fourth { return value; }
+console.log(`${member(Kind.Alias)}`);
+let calls = 0;
+function index(): number { calls += 1; return 4; }
+console.log(`${Kind[index()] ?? 'missing'} ${calls} ${Kind[123] ?? 'missing'}`);
+const same: typeof Kind = Kind;
+console.log(`${same === Kind} ${same.First} ${same[4] ?? 'missing'}`);
+function word(value: Text): string {
+ switch (value) { case Text.First: return 'a'; case Text.Second: return 'b'; }
+}
+console.log(word(Text.Again));
+enum Mixed { Number = 7, Text = 'seven' }
+console.log(`${Mixed.Number} ${Mixed.Text} ${Mixed[7] ?? 'none'}`);
+console.log(Object.keys(Mixed).join(','));
+enum Large { Exponent = 1e21, Tiny = 1e-7, NegativeZero = -0 }
+console.log(`${Large[1e21] ?? 'none'} ${Large[1e-7] ?? 'none'} ${Large[0] ?? 'none'}`);
+console.log(Object.keys(Large).join(','));
+const forwardNames: readonly ('First' | 'Second')[] = ['First', 'Second'];
+for (const name of forwardNames) { console.log(`${Kind[name]}`); }
+const words: readonly ('First' | 'Second')[] = ['First', 'Second'];
+for (const word of words) { console.log(Text[word]); }
+let namedCalls = 0;
+function namedKey(): 'First' { namedCalls += 1; return 'First'; }
+console.log(`${Kind[namedKey()]} ${namedCalls}`);
+function optionalNumber(value: typeof Kind | undefined): number { return value?.First ?? 99; }
+function optionalText(value: typeof Text | undefined): string { return value?.First ?? 'missing'; }
+console.log(`${optionalNumber(Kind)} ${optionalNumber(undefined)} ${optionalText(Text)} ${optionalText(undefined)}`);
