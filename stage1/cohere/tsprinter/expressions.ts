@@ -241,9 +241,6 @@ export class Expressions {
                 )
                     return 'type-arguments';
                 for(let position = first; position < node.children.length; position++) {
-                    const arg = this.node(this.child(id, position));
-                    if(['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(arg.kind))
-                        return 'expanded-call-argument';
                     const reason = this.unsupported(node.children[position] ?? panic('missing argument'));
                     if(reason !== '') return reason;
                 }
@@ -666,6 +663,129 @@ export class Expressions {
             ]),
         );
     }
+    willBreak(index: number): boolean {
+        const doc = this.docs.get(index);
+        if(
+            (['group', 'conditionalGroup'].includes(doc.kind) && doc.broken) ||
+            ['breakParent', 'hardlineWithoutBreakParent', 'literallineWithoutBreakParent'].includes(doc.kind)
+        )
+            return true;
+        const count = doc.kind === 'conditionalGroup' ? Math.min(1, doc.parts.length) : doc.parts.length;
+        for(let position = 0; position < count; position++)
+            if(this.willBreak(doc.parts[position] ?? panic('missing break child'))) return true;
+        return false;
+    }
+    numericArray(index: number): boolean {
+        const node = this.node(index);
+        if(node.kind !== 'ArrayLiteralExpression' || node.children.length === 0) return false;
+        for(const child of node.children) {
+            const item = this.node(this.unwrapped(child));
+            if(
+                item.kind !== 'NumericLiteral' &&
+                !(
+                    item.kind === 'PrefixUnaryExpression' &&
+                    ['+', '-'].includes(this.operator(child)) &&
+                    this.node(this.child(child, 0)).kind === 'NumericLiteral'
+                )
+            )
+                return false;
+        }
+        return true;
+    }
+    argumentsDoc(index: number, parent: number): number {
+        const node = this.node(index);
+        const count = Math.max(node.list, 0);
+        if(count === 0) return this.docs.group(this.docs.text('()'));
+        const first = node.children.length - count;
+        const args: number[] = [];
+        for(let position = first; position < node.children.length; position++)
+            args.push(this.print(this.child(index, position), index, 'arguments'));
+        const callee = this.node(this.child(index, 0));
+        const name = callee.kind === 'Identifier' ? callee.text : '';
+        const firstArg = this.node(this.child(index, first));
+        if(
+            node.kind === 'CallExpression' &&
+            !node.optional &&
+            ((name === 'require' && (count > 1 || firstArg.kind === 'StringLiteral')) ||
+                (name === 'define' &&
+                    parent < 0 &&
+                    (count === 1 ||
+                        (count === 2 && firstArg.kind === 'ArrayLiteralExpression') ||
+                        (count === 3 &&
+                            firstArg.kind === 'StringLiteral' &&
+                            this.node(this.child(index, first + 1)).kind === 'ArrayLiteralExpression'))))
+        )
+            return this.docs.concat([
+                this.docs.text('('),
+                this.docs.join(this.docs.text(', '), args),
+                this.docs.text(')'),
+            ]);
+        const printed: number[] = [];
+        for(let position = 0; position < args.length; position++)
+            printed.push(
+                position === args.length - 1
+                    ? (args[position] ?? panic('missing last arg'))
+                    : this.docs.concat([args[position] ?? panic('missing arg'), this.docs.text(','), this.docs.line()]),
+            );
+        const trailing = this.docs.ifBreak(this.docs.text(','), this.docs.text(''));
+        const lastIndex = this.child(index, node.children.length - 1);
+        const last = this.node(lastIndex);
+        const previousKind = count > 1 ? this.node(this.child(index, node.children.length - 2)).kind : '';
+        const expanded =
+            ['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(last.kind) &&
+            last.children.length > 0 &&
+            previousKind !== last.kind &&
+            !(count > 1 && this.numericArray(lastIndex));
+        let anyBroken = false;
+        let headBroken = false;
+        for(let position = 0; position < printed.length; position++)
+            if(this.willBreak(printed[position] ?? panic('missing printed arg'))) {
+                anyBroken = true;
+                if(position !== printed.length - 1) headBroken = true;
+            }
+        const allBroken = this.docs.group(
+            this.docs.concat([
+                this.docs.text('('),
+                this.docs.indent(this.docs.concat([this.docs.line(), this.docs.concat(printed)])),
+                trailing,
+                this.docs.line(),
+                this.docs.text(')'),
+            ]),
+            '',
+            true,
+        );
+        if(expanded) {
+            if(headBroken) return allBroken;
+            const head = this.docs.concat(printed.slice(0, -1));
+            const lastDoc = args[args.length - 1] ?? panic('missing expanded arg');
+            const expandedDoc = this.docs.concat([
+                this.docs.text('('),
+                head,
+                this.docs.group(lastDoc, '', true),
+                this.docs.text(')'),
+            ]);
+            const states: number[] = [];
+            if(!this.willBreak(lastDoc))
+                states.push(this.docs.concat([this.docs.text('('), head, lastDoc, this.docs.text(')')]));
+            states.push(expandedDoc);
+            states.push(allBroken);
+            const conditional = this.docs.add('conditionalGroup', states);
+            return this.willBreak(lastDoc)
+                ? this.docs.concat([this.docs.add('breakParent', []), conditional])
+                : conditional;
+        }
+        return this.docs.group(
+            this.docs.concat([
+                this.docs.text('('),
+                this.docs.indent(this.docs.concat([this.docs.softline(), this.docs.concat(printed)])),
+                trailing,
+                this.docs.softline(),
+                this.docs.text(')'),
+            ]),
+            '',
+            anyBroken,
+        );
+    }
     canBreak(index: number): boolean {
         const doc = this.docs.get(index);
         if(['line', 'softline', 'hardlineWithoutBreakParent', 'literallineWithoutBreakParent'].includes(doc.kind))
@@ -1027,30 +1147,8 @@ export class Expressions {
             case 'CallExpression':
             case 'NewExpression': {
                 const count = Math.max(node.list, 0);
-                const args: number[] = [];
-                for(let position = node.children.length - count; position < node.children.length; position++)
-                    args.push(this.print(this.child(id, position), id, 'arguments'));
                 const optional = node.children.length - count === 2 ? '?.' : '';
-                const argumentDoc =
-                    args.length === 0
-                        ? this.docs.text('()')
-                        : this.docs.group(
-                              this.docs.concat([
-                                  this.docs.text('('),
-                                  this.docs.indent(
-                                      this.docs.concat([
-                                          this.docs.softline(),
-                                          this.docs.join(
-                                              this.docs.concat([this.docs.text(','), this.docs.line()]),
-                                              args,
-                                          ),
-                                      ]),
-                                  ),
-                                  this.docs.ifBreak(this.docs.text(','), this.docs.text('')),
-                                  this.docs.softline(),
-                                  this.docs.text(')'),
-                              ]),
-                          );
+                const argumentDoc = this.argumentsDoc(id, parent);
                 result = this.docs.concat([
                     this.docs.text(node.kind === 'NewExpression' ? 'new ' : ''),
                     this.print(this.child(id, 0), id, 'callee'),

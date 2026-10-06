@@ -382,3 +382,41 @@ input or the colon printer. The current unmutated source agrees with Go on that 
 Final object gate: exit 0, 403.666 s; all 152,387 fragments byte-identical to Go, npm Prettier
 3.9.6 and the embedded fork on source Node, native ASan/UBSan, JS backend and native release.
 The separate leak check passes. Sixteen unported proving inputs retain their exact NotYet reasons.
+
+## Call argument increment
+
+Expanded object and array arguments now compose with every accepted expression family. Layout uses
+cohere's flat, last-argument-expanded and all-arguments-broken states. Adjacent arguments of the
+same type disable expansion, as do concise numeric arrays in multi-argument calls. Required broken
+arguments propagate to outer groups; trailing commas, numeric fills and CommonJS/AMD special
+layouts are held to the original printers.
+
+The generator adds 2,784 call-layout cases: 2,304 combinations of twelve argument shapes and
+480 growing-width cases through four callee spellings. The existing seed contributes all 500 random
+expressions, including the 94 previously declined for array arguments. Total 154,822 maximal
+fragments, 19,084 generated, from 198 files; no parse refusals. Fifteen explicit gaps remain.
+`results/arguments-coverage.json` preserves counts. Source-only cohere reports 276 rules, 9 checked,
+100% Adamic-ready; vet and whitespace checks pass.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-arguments-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-arguments-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-arguments-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/arguments' > /tmp/ts-printer-arguments-mutant.log 2>&1
+```
+
+The argument mutant replaces the call's conditional trailing comma by an empty doc. Native and
+Node compile/run normally, exit 0 with empty stderr, and differ at case 10 (the repository's
+n-body constructor array): long `new Body(...)` argument lists lose their final comma. Both use
+the final 154,822-case corpus. Mutant subtest 263.21 s; complete command 269.398 s.
+
+Final argument gate: exit 0, 417.315 s; all 154,822 fragments byte-identical to Go, npm Prettier
+3.9.6 and the embedded fork on source Node, ASan/UBSan native, JS backend and native release.
+The separate leak run passes. Fifteen unported proving inputs retain their exact NotYet reasons.

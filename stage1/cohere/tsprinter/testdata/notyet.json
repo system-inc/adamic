@@ -16,10 +16,6 @@
     "Reason": "call-callee-layout"
   },
   {
-    "Source": "f([1,2])",
-    "Reason": "expanded-call-argument"
-  },
-  {
     "Source": "f<T>(x)",
     "Reason": "type-arguments"
   },

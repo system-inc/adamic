@@ -36,11 +36,6 @@ func supportedExpression(node *estree.Node) bool {
 		if !node.Child("callee").Is("Identifier") || node.Child("typeArguments") != nil {
 			return false
 		}
-		for _, arg := range node.List("arguments") {
-			if arg.Is("ArrayExpression", "ObjectExpression") {
-				return false
-			}
-		}
 	default:
 		return false
 	}
@@ -124,6 +119,27 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 	for _, value := range []string{"f?.()", "f?.(x)", "f()", "f(veryLongIdentifierAlpha)", "obj?.x", "obj!.x", "!!x", "++x"} {
 		for _, right := range []string{"g(" + value + ")", "g(" + value + ").x"} {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
+		}
+	}
+	callValues := []string{"[]", "[1,2]", "[a,b]", "[[1,2],[3,4]]", "[1,,]", "[...items]", "{}", "{a:1}", "{a:x,b:y}", "{\na:x,\nb:y\n}", "{...items}", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma"}
+	for _, left := range callValues {
+		for _, right := range callValues {
+			for _, arguments := range []string{left, left + "," + right, "x," + left + "," + right, left + ",'text'"} {
+				for _, source := range []string{"f(" + arguments + ")", "f?.(" + arguments + ")", "new C(" + arguments + ")", "x=f(" + arguments + ")"} {
+					add("expanded-arguments", source)
+				}
+			}
+		}
+	}
+	for _, name := range []string{"f", "require", "define", "new C"} {
+		for length := 1; length <= 40; length++ {
+			arguments := []string{}
+			for index := 0; index < length; index++ {
+				arguments = append(arguments, fmt.Sprintf("argumentName%d", index))
+			}
+			add("argument-width", name+"("+strings.Join(arguments, ",")+")")
+			add("argument-width", name+"({"+strings.Join(arguments, ",")+"})")
+			add("argument-width", name+"(["+strings.Join(arguments, ",")+"])")
 		}
 	}
 	objectValues := []string{"x?.y", "x", "'text'", "a+b+c", "a?b:c", "a??b", "[1,2]", "({nested:1})", "f(x)", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma"}
@@ -413,7 +429,7 @@ func supportedSyntax(node *ast.Node) bool {
 			return false
 		}
 		for _, child := range node.Arguments() {
-			if child.Kind == ast.KindArrayLiteralExpression || child.Kind == ast.KindObjectLiteralExpression || !supportedSyntax(child) {
+			if !supportedSyntax(child) {
 				return false
 			}
 		}

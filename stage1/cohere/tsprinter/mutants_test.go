@@ -10,6 +10,7 @@ import (
 type mutation struct{ name, file, from, to, entry string }
 
 var mutations = []mutation{
+	{"arguments lose their trailing comma", "expressions.ts", "const trailing = this.docs.ifBreak(this.docs.text(','), this.docs.text(''));", "const trailing = this.docs.text('');", "main.ts"},
 	{"object loses its property colon", "expressions.ts", "this.docs.text(':')", "this.docs.text('')", "main.ts"},
 	{"conditional swaps its separator", "expressions.ts", "this.docs.text('? ')", "this.docs.text(': ')", "main.ts"},
 	{"assignment loses its operator", "expressions.ts", "this.docs.text(` ${this.operator(index)}`)", "this.docs.text(' ')", "main.ts"},

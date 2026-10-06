@@ -16,7 +16,7 @@ proven JSON slice's Unicode width implementation, copied from `origin/codex/stag
 `expressions.ts` reads the real parser's indexed nodes. It implements literals, ordinary and logical
 binary operators, sequence expressions, assignments, conditionals, object literals, precedence and parentheses, unary and update operators, arrays including holes
 and spreads, property and computed accesses including optional access, non-null assertions, and
-plain-identifier calls and constructors without type arguments or expanded array arguments. It
+plain-identifier calls and constructors without type arguments, including expanded object and array arguments. It
 includes cohere's logical-tree rebalancing and protection against accidentally making a string
 expression a directive. Formatting defaults to width 120, four spaces, single quotes, semicolons,
 and trailing commas. The first differential expression corpus uses width 80.
@@ -74,7 +74,7 @@ and the JavaScript backend must match Go byte for byte. The actual npm Prettier 
 TypeScript printer are separate comparisons; every selected case must agree with them too. The
 separate unported proving corpus records one anonymous-function spacing difference in `testdata/prettier-differences.json`; accepted cases have
 no exceptions.
-Sixteen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
+Fifteen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
 prove that the same source texts are formatable. Native release output is also compared.
 
 Three mutants must compile and finish normally before a byte mismatch counts as a catch: a group
@@ -117,3 +117,10 @@ Object wrapping preserves a newline after the opening brace; arrays of multi-pro
 follow cohere's forced-break rule. String keys use cohere's Unicode-category identifier test and
 retain escaped spellings when unquoting is unsafe. Methods and destructuring are explicit gaps.
 Extracted object literals are parenthesized to retain expression context in the fragment oracle.
+
+## Call argument increment
+
+Plain-identifier calls and constructors now include object/array argument expansion, conditional
+layout states, numeric-array packing, broken-argument propagation, trailing commas and the
+CommonJS/AMD special layouts. The corpus contains 154,822 maximal fragments from 198 files,
+including 19,084 generated cases. Member-call chains remain the next distinct printer family.

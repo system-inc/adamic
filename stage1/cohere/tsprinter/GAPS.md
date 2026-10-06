@@ -19,7 +19,6 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | `` `a${b}` `` | `TemplateExpression` | Substitution alignment, multiline strings and embeds |
 | `(function () {return 1;})` | `FunctionExpression` | Function parameters and statement bodies |
 | `a.b()` | `call-callee-layout` | Member-call chain segmentation and grouping |
-| `f([1,2])` | `expanded-call-argument` | Expanded and conditional argument-group states |
 | `f<T>(x)` | `type-arguments` | Type printing and type-argument layout |
 | `a as T` | `AsExpression` | Cast/type composition |
 | `a /* comment */ + b` | `comment-attachment` | Shared comment attachment and printer hooks |
@@ -150,3 +149,12 @@ Parentheses enclosing an object literal can contain optional property values: th
 cannot be an optional chain. Parentheses around a chain still return the recorded stopping-boundary
 gap. Object methods, accessors and binding/assignment patterns remain unported. No code is passed
 through unchanged.
+
+## Call arguments
+
+Calls and constructors with a plain identifier callee support expanded object/array arguments.
+Last-argument expansion uses cohere's conditional states; homogeneous adjacent argument kinds
+and numeric arrays in multi-argument calls disable expansion as in Go. Multiline arguments break
+outer groups when required. `require` and top-level `define` special layouts are ported. The
+independent selector now accepts these argument shapes and all previously rejected seeded random
+argument cases. Member-call chains, function/arrow arguments and type arguments remain gaps.
