@@ -586,6 +586,25 @@ Two mutants, each run against `regions.a` and each caught:
 | A heap call to a fresh function is taken as in a region (its result uncounted) | the leak check |
 | A region literal holds every field without a retain, its heap strings included | ASan heap-use-after-free, on a label string the region's end let go of |
 
+### Cheaper statement-region end (region-end)
+
+This unit starts from main `50045bd`, separately from the unmerged iteration
+arenas. Territory: region.go, emit_objects.go, runtime/region.c,
+runtime/weak.c and declarations in runtime/adamic.h. New .a witnesses and
+native region tests hold cleanup and initialization; the oracle fixture list,
+weak probe list and counts table receive small hooks. heap.c and count.c stay
+unchanged. Measurements below will compare trees and the fixed CSS/JSON
+corpora with this main, not with iteration arenas.
+
+The region records whether any object may hold a counted outside reference.
+Literal stores mark it; a consumer that might later write a reference forces
+cleanup conservatively before the call. Class allocation keeps zeroing and
+cleanup because constructor writes and throws happen after allocation.
+Ordinary literals evaluate all field expressions first, then allocate and
+write every slot with nonthrowing stores/retains before publishing the object.
+Only that path may skip zeroing. Weak handles are checked in one batch before
+blocks go away, independently of whether child cleanup is needed.
+
 ### No retain of the constant undefined
 
 Retain passes over the null pointer, but each `adamic_retain(NULL)` was still a call. Every place the emitter retains a value it keeps now goes through `retained` (`emit.go`). When the value's C is the null pointer constant, however it's parenthesized or cast (an `undefined`, a missing argument, `undefined` boxed into a union), it is kept as it is, with no call. Before this, the 0.1 fixtures and the oracle's held 50 such calls: 27 into object fields, 13 into globals and locals, 4 into array elements, 6 elsewhere. None are left.
