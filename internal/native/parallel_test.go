@@ -130,6 +130,7 @@ func TestParallelChecksCatchMutants(t *testing.T) {
 		{"field_cache", "", "static _Thread_local adamic_slot_cache cache;", "static adamic_slot_cache cache;", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"remote_free", "heap.c", "remote_slot *node = malloc(sizeof *node);", "give_local(slot, each); return; remote_slot *node = malloc(sizeof *node);", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"result_order", "parallel.c", "scope->results->elements[index] = result;", "scope->results->elements[scope->items->length - 1 - index] = result;", "map.c", "numbers", "4", "index 0:", false},
+		{"reused_graph", "share.c", "if (visited(&pending, heap)) { continue; }", "if (shared || visited(&pending, heap)) { continue; }", "lifecycle.c", "", "4", "", false},
 		{"one_worker", "parallel.c", "if (thread_count == 1) { return; }", "if (thread_count == 1) { thread_count = 2; }", "map.c", "numbers", "1", "", false},
 	}
 	for _, mutant := range mutants {

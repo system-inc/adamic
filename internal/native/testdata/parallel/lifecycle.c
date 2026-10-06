@@ -21,13 +21,13 @@ static adamic_value region_text(adamic_closure *self, adamic_value *arguments) {
 int main(void) {
 	adamic_array *empty = adamic_array_new(0, false);
 	adamic_closure *callback = adamic_closure_new(scalar, 0);
-	adamic_array *mapped = adamic_parallel_map(empty, callback);
+	adamic_array *mapped = adamic_parallel_map(empty, callback, false);
 	if (mapped->length != 0) { abort(); }
 	adamic_release(mapped); adamic_release(empty); adamic_release(callback);
 	adamic_array *one = adamic_array_new(1, false);
 	adamic_array_push(one, (adamic_value){.number = 17});
 	callback = adamic_closure_new(scalar, 0);
-	mapped = adamic_parallel_map(one, callback);
+	mapped = adamic_parallel_map(one, callback, false);
 	if (mapped->length != 1 || mapped->elements[0].number != 17) { abort(); }
 	adamic_release(mapped); adamic_release(one); adamic_release(callback);
 
@@ -37,8 +37,8 @@ int main(void) {
 	object->slots[0].reference = adamic_string_concat(1, (adamic_string *const[]){&text});
 	adamic_array *items = adamic_array_new(1, true);
 	adamic_array_push(items, (adamic_value){.reference = object});
-	callback = adamic_closure_new(region_text, 0); callback->result_references = true;
-	mapped = adamic_parallel_map(items, callback);
+	callback = adamic_closure_new(region_text, 0);
+	mapped = adamic_parallel_map(items, callback, true);
 	if (!adamic_is_shared(mapped->elements[0].reference) || adamic_reference_count(&object->heap) != 0) { abort(); }
 	adamic_release(mapped); adamic_release(items); adamic_release(callback); adamic_region_end(&region);
 	adamic_share(adamic_library_identity(4)); // An immortal identity has only a header, no object slots.
@@ -51,6 +51,18 @@ int main(void) {
 	unique = adamic_string_append(unique, 1, (adamic_string *const[]){&text});
 	if (unique != before || adamic_reference_count(&unique->heap) != 1 || !adamic_is_shared(&unique->heap) || adamic_string_length(unique) != 168) { abort(); }
 	adamic_release(unique);
+
+	// Reused shared containers must publish fresh descendants on their next crossing.
+	items = adamic_array_new(2, true);
+	adamic_array_push(items, (adamic_value){.reference = adamic_string_concat(1, (adamic_string *const[]){&text})});
+	adamic_share(items);
+	adamic_string *fresh = adamic_string_repeat(&text, 40);
+	adamic_array_push(items, (adamic_value){.reference = fresh});
+	adamic_retain(items); // A new alias after reuse must not hide the fresh descendant.
+	adamic_share(items);
+	adamic_release(items);
+	if (!adamic_is_shared(&fresh->heap)) { abort(); }
+	adamic_release(items);
 
 	void *chain = adamic_string_concat(1, (adamic_string *const[]){&text});
 	for (size_t index = 0; index < 50000; index++) {
