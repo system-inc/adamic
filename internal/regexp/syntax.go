@@ -1,8 +1,5 @@
-// Package regexp parses ECMAScript regular expression patterns.
-//
-// It deliberately does not compile or execute expressions. The tree retains the
-// spelling of characters and escapes so later compiler stages can choose their
-// own representation without losing JavaScript semantics.
+// Package regexp parses and executes ECMAScript regular expression patterns.
+// The compiler preserves JavaScript backtracking semantics in portable bytecode.
 package regexp
 
 import "math/big"
@@ -101,6 +98,7 @@ type CharacterClass struct {
 
 type ClassExpression interface{ classExpression() }
 
+type ClassNegation struct{ Operand ClassExpression }
 type ClassUnion struct{ Operands []ClassExpression }
 type ClassIntersection struct{ Left, Right ClassExpression }
 type ClassSubtraction struct{ Left, Right ClassExpression }
@@ -119,6 +117,7 @@ func (*Quantifier) regexpNode()             {}
 func (*Group) regexpNode()                  {}
 func (*Backreference) regexpNode()          {}
 func (*CharacterClass) regexpNode()         {}
+func (*ClassNegation) classExpression()     {}
 func (*ClassUnion) classExpression()        {}
 func (*ClassIntersection) classExpression() {}
 func (*ClassSubtraction) classExpression()  {}

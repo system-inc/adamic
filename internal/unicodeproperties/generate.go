@@ -2,13 +2,16 @@
 
 // generate writes tables.go from the Unicode Character Database of the version
 // Node reports (process.versions.unicode). Node 24 says 17.0, and the files
-// for that version are published as 17.0.0.
+// for that version are published as 17.0.0. The same run writes
+// canonicalize_tables.go: simple case folding for the u and v flags, and the
+// legacy single-code-unit Canonicalize for the i flag without them.
 //
 //	go run generate.go              downloads the files into a scratch directory
 //	go run generate.go -data DIR    reads them from DIR instead
 //
-// The scratch directory is not the repository: only tables.go is written, and
-// each input is pinned by SHA-256 so a different file cannot be silent.
+// The scratch directory is not the repository: only the two Go files are
+// written, and each input is pinned by SHA-256 so a different file cannot be
+// silent.
 package main
 
 import (
@@ -37,6 +40,8 @@ const unicodeVersion = "17.0.0"
 // onto different copies of Unicode 17.
 var pinned = map[string]string{
 	"UnicodeData.txt":               "2e1efc1dcb59c575eedf5ccae60f95229f706ee6d031835247d843c11d96470c",
+	"CaseFolding.txt":               "ff8d8fefbf123574205085d6714c36149eb946d717a0c585c27f0f4ef58c4183",
+	"SpecialCasing.txt":             "efc25faf19de21b92c1194c111c932e03d2a5eaf18194e33f1156e96de4c9588",
 	"PropList.txt":                  "130dcddcaadaf071008bdfce1e7743e04fdfbc910886f017d9f9ac931d8c64dd",
 	"DerivedCoreProperties.txt":     "24c7fed1195c482faaefd5c1e7eb821c5ee1fb6de07ecdbaa64b56a99da22c08",
 	"DerivedNormalizationProps.txt": "71fd6a206a2c0cdd41feb6b7f656aa31091db45e9cedc926985d718397f9e488",
@@ -51,6 +56,8 @@ var pinned = map[string]string{
 
 var sourceURL = map[string]string{
 	"UnicodeData.txt":               "https://www.unicode.org/Public/17.0.0/ucd/UnicodeData.txt",
+	"CaseFolding.txt":               "https://www.unicode.org/Public/17.0.0/ucd/CaseFolding.txt",
+	"SpecialCasing.txt":             "https://www.unicode.org/Public/17.0.0/ucd/SpecialCasing.txt",
 	"PropList.txt":                  "https://www.unicode.org/Public/17.0.0/ucd/PropList.txt",
 	"DerivedCoreProperties.txt":     "https://www.unicode.org/Public/17.0.0/ucd/DerivedCoreProperties.txt",
 	"DerivedNormalizationProps.txt": "https://www.unicode.org/Public/17.0.0/ucd/DerivedNormalizationProps.txt",
@@ -252,6 +259,7 @@ func main() {
 	if err := os.WriteFile(*output, formatted, 0o644); err != nil {
 		log.Fatal(err)
 	}
+	writeCanonicalize(filepath.Join(filepath.Dir(*output), "canonicalize_tables.go"), files["CaseFolding.txt"], files["SpecialCasing.txt"], files["UnicodeData.txt"])
 }
 
 func download(url string, path string) error {
@@ -992,4 +1000,357 @@ func writeTables(out *bytes.Buffer, categories []categoryValue, scripts []script
 	for _, name := range stringPropertyNames {
 		fmt.Fprintf(os.Stderr, "%s sequences %d\n", name, len(sequences[name]))
 	}
+}
+
+// writeCanonicalize writes canonicalize_tables.go. Unicode mode is simple case
+// folding: CaseFolding.txt status C and S, which the file's own header says is
+// how to fold when a string must not grow. Legacy mode is the full uppercase of
+// one UTF-16 code unit (UnicodeData.txt's simple uppercase, overridden by
+// SpecialCasing.txt where the uppercase is more than one code point), dropped
+// when that uppercase is not a single code unit or when it would turn a
+// non-ASCII unit into ASCII.
+func writeCanonicalize(path string, caseFolding, specialCasing, unicodeData []byte) {
+	if !bytes.HasPrefix(caseFolding, []byte("# CaseFolding-"+unicodeVersion+".txt")) {
+		log.Fatalf("CaseFolding.txt is not version %s", unicodeVersion)
+	}
+	if !bytes.HasPrefix(specialCasing, []byte("# SpecialCasing-"+unicodeVersion+".txt")) {
+		log.Fatalf("SpecialCasing.txt is not version %s", unicodeVersion)
+	}
+
+	fold := simpleCaseFold(caseFolding)
+	legacy := legacyCanonical(unicodeData, specialCasing)
+
+	type pair struct{ from, to uint32 }
+	unicodePairs := make([]pair, 0, len(fold))
+	for from, to := range fold {
+		unicodePairs = append(unicodePairs, pair{from, to})
+	}
+	sort.Slice(unicodePairs, func(i, j int) bool { return unicodePairs[i].from < unicodePairs[j].from })
+	for _, mapping := range unicodePairs {
+		if next, mapped := fold[mapping.to]; mapped && next != mapping.to {
+			log.Fatalf("simple case fold of U+%04X is U+%04X, which itself folds to U+%04X", mapping.from, mapping.to, next)
+		}
+	}
+
+	type class struct {
+		canon   uint32
+		members []uint32
+	}
+	unicodeGroups := map[uint32][]uint32{}
+	for _, mapping := range unicodePairs {
+		unicodeGroups[mapping.to] = append(unicodeGroups[mapping.to], mapping.from)
+	}
+	unicodeClasses := make([]class, 0, len(unicodeGroups))
+	for canon, members := range unicodeGroups {
+		members = append(members, canon)
+		sort.Slice(members, func(i, j int) bool { return members[i] < members[j] })
+		unicodeClasses = append(unicodeClasses, class{canon, members})
+	}
+	sort.Slice(unicodeClasses, func(i, j int) bool { return unicodeClasses[i].canon < unicodeClasses[j].canon })
+
+	legacyPairs := make([]pair, 0)
+	legacyGroups := map[uint32][]uint32{}
+	for cu := uint32(0); cu <= 0xFFFF; cu++ {
+		canon := uint32(legacy[cu])
+		if canon == cu {
+			continue
+		}
+		legacyPairs = append(legacyPairs, pair{cu, canon})
+		legacyGroups[canon] = append(legacyGroups[canon], cu)
+	}
+	keptASCII := legacyASCIIKept(unicodeData, specialCasing)
+	legacyClasses := make([]class, 0, len(legacyGroups))
+	for canon, members := range legacyGroups {
+		members = append(members, canon)
+		sort.Slice(members, func(i, j int) bool { return members[i] < members[j] })
+		legacyClasses = append(legacyClasses, class{canon, members})
+	}
+	sort.Slice(legacyClasses, func(i, j int) bool { return legacyClasses[i].canon < legacyClasses[j].canon })
+
+	var out bytes.Buffer
+	fmt.Fprintf(&out, "// Code generated by generate.go from Unicode %s. Do not edit.\n", unicodeVersion)
+	fmt.Fprintf(&out, "// Run go generate in internal/unicodeproperties.\n")
+	fmt.Fprintf(&out, "//\n")
+	fmt.Fprintf(&out, "// Canonicalize (ECMA-262 22.2.2.7.3). unicodeFold is simple case folding,\n")
+	fmt.Fprintf(&out, "// the C and S lines of CaseFolding.txt, used when the u or v flag is set.\n")
+	fmt.Fprintf(&out, "// legacyFold is the i flag without them: full uppercase of one UTF-16 code\n")
+	fmt.Fprintf(&out, "// unit, kept only when that uppercase is one code unit and does not map a\n")
+	fmt.Fprintf(&out, "// non-ASCII unit to ASCII. Each class lists every code point that shares a\n")
+	fmt.Fprintf(&out, "// canonical value, which is what a character class under i has to close over.\n")
+	fmt.Fprintf(&out, "//\n")
+	for _, name := range []string{"CaseFolding.txt", "SpecialCasing.txt", "UnicodeData.txt"} {
+		fmt.Fprintf(&out, "// %s SHA-256 %s\n", name, pinned[name])
+	}
+	fmt.Fprintf(&out, "//\n")
+	if len(keptASCII) == 0 {
+		fmt.Fprintf(&out, "// No code unit has an uppercase in ASCII that the non-ASCII filter kept.\n")
+	} else {
+		fmt.Fprintf(&out, "// Non-ASCII code units whose uppercase is ASCII, kept unchanged:")
+		for _, cu := range keptASCII {
+			fmt.Fprintf(&out, " U+%04X", cu)
+		}
+		fmt.Fprintf(&out, ".\n")
+	}
+	fmt.Fprintf(&out, "\npackage unicodeproperties\n\n")
+
+	fmt.Fprintf(&out, "// unicodeFold is from, to. Only mappings that change the code point are stored.\n")
+	fmt.Fprintf(&out, "var unicodeFold = [][2]uint32{\n")
+	for _, mapping := range unicodePairs {
+		fmt.Fprintf(&out, "\t{0x%04X, 0x%04X},\n", mapping.from, mapping.to)
+	}
+	fmt.Fprintf(&out, "}\n\n")
+
+	fmt.Fprintf(&out, "// unicodeClassCanon[i] is the simple case fold shared by unicodeClass[i].\n")
+	fmt.Fprintf(&out, "var unicodeClassCanon = []uint32{\n")
+	for _, group := range unicodeClasses {
+		fmt.Fprintf(&out, "\t0x%04X,\n", group.canon)
+	}
+	fmt.Fprintf(&out, "}\n\n")
+	fmt.Fprintf(&out, "var unicodeClass = [][]uint32{\n")
+	for _, group := range unicodeClasses {
+		fmt.Fprintf(&out, "\t{")
+		for index, member := range group.members {
+			if index > 0 {
+				fmt.Fprintf(&out, ", ")
+			}
+			fmt.Fprintf(&out, "0x%04X", member)
+		}
+		fmt.Fprintf(&out, "},\n")
+	}
+	fmt.Fprintf(&out, "}\n\n")
+
+	fmt.Fprintf(&out, "// legacyFold is from, to, for one UTF-16 code unit. Identity is not stored.\n")
+	fmt.Fprintf(&out, "var legacyFold = [][2]uint16{\n")
+	for _, mapping := range legacyPairs {
+		fmt.Fprintf(&out, "\t{0x%04X, 0x%04X},\n", mapping.from, mapping.to)
+	}
+	fmt.Fprintf(&out, "}\n\n")
+
+	fmt.Fprintf(&out, "// legacyClassCanon[i] is the legacy canonical value shared by legacyClass[i].\n")
+	fmt.Fprintf(&out, "var legacyClassCanon = []uint16{\n")
+	for _, group := range legacyClasses {
+		fmt.Fprintf(&out, "\t0x%04X,\n", group.canon)
+	}
+	fmt.Fprintf(&out, "}\n\n")
+	fmt.Fprintf(&out, "var legacyClass = [][]uint16{\n")
+	for _, group := range legacyClasses {
+		fmt.Fprintf(&out, "\t{")
+		for index, member := range group.members {
+			if index > 0 {
+				fmt.Fprintf(&out, ", ")
+			}
+			fmt.Fprintf(&out, "0x%04X", member)
+		}
+		fmt.Fprintf(&out, "},\n")
+	}
+	fmt.Fprintf(&out, "}\n")
+
+	formatted, err := format.Source(out.Bytes())
+	if err != nil {
+		log.Fatalf("canonicalize_tables.go does not format: %v", err)
+	}
+	if err := os.WriteFile(path, formatted, 0o644); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Fprintf(os.Stderr, "simple case folds %d, unicode classes %d\n", len(unicodePairs), len(unicodeClasses))
+	fmt.Fprintf(os.Stderr, "legacy non-identity %d, legacy classes %d, non-ASCII-to-ASCII kept %d\n", len(legacyPairs), len(legacyClasses), len(keptASCII))
+}
+
+// simpleCaseFold is CaseFolding.txt's C and S mappings, which together are the
+// simple case folding. F grows the string and T is Turkic; neither is Canonicalize.
+func simpleCaseFold(contents []byte) map[uint32]uint32 {
+	fold := map[uint32]uint32{}
+	counts := map[string]int{}
+	for _, fields := range dataLines(contents) {
+		if len(fields) < 3 {
+			log.Fatalf("CaseFolding.txt: %q", fields)
+		}
+		status := fields[1]
+		counts[status]++
+		switch status {
+		case "C", "S", "F", "T":
+		default:
+			log.Fatalf("CaseFolding.txt: status %q", status)
+		}
+		if status != "C" && status != "S" {
+			continue
+		}
+		from := point(fields[0])
+		parts := strings.Fields(fields[2])
+		if len(parts) != 1 {
+			log.Fatalf("CaseFolding.txt: %s mapping of U+%04X is not one code point: %q", status, from, fields[2])
+		}
+		to := point(parts[0])
+		if _, exists := fold[from]; exists {
+			log.Fatalf("CaseFolding.txt: two simple mappings for U+%04X", from)
+		}
+		if to != from {
+			fold[from] = to
+		}
+	}
+	if counts["C"] == 0 || counts["S"] == 0 {
+		log.Fatalf("CaseFolding.txt: expected both C and S mappings, got %v", counts)
+	}
+	return fold
+}
+
+// legacyCanonical is Canonicalize of every UTF-16 code unit. Full uppercase
+// comes from SpecialCasing.txt when that mapping has more than one code point,
+// and from UnicodeData.txt's simple uppercase otherwise. A single-code-point
+// unconditional line in SpecialCasing.txt has to agree with UnicodeData.txt;
+// the generator stops rather than pick one.
+func legacyCanonical(unicodeData, specialCasing []byte) []uint16 {
+	simple := simpleUpper(unicodeData)
+	full := specialUpper(specialCasing, simple)
+	canon := make([]uint16, 0x10000)
+	for cu := uint32(0); cu <= 0xFFFF; cu++ {
+		mapped, expanded := full[cu]
+		if !expanded {
+			if upper, has := simple[cu]; has {
+				mapped = []uint32{upper}
+			} else {
+				mapped = []uint32{cu}
+			}
+		}
+		canon[cu] = uint16(keepLegacyUpper(cu, mapped))
+	}
+	for cu := uint32(0); cu <= 0xFFFF; cu++ {
+		next := canon[cu]
+		if canon[next] != next {
+			log.Fatalf("legacy Canonicalize is not idempotent: U+%04X -> U+%04X -> U+%04X", cu, next, canon[next])
+		}
+	}
+	return canon
+}
+
+func simpleUpper(contents []byte) map[uint32]uint32 {
+	upper := map[uint32]uint32{}
+	for _, fields := range dataLines(contents) {
+		if len(fields) != 15 {
+			log.Fatalf("UnicodeData.txt: %d fields in %q", len(fields), fields)
+		}
+		if fields[12] == "" {
+			continue
+		}
+		name := fields[1]
+		if strings.HasSuffix(name, ", First>") || strings.HasSuffix(name, ", Last>") {
+			log.Fatalf("UnicodeData.txt: %s carries an uppercase mapping; a range would have to be expanded", name)
+		}
+		upper[point(fields[0])] = point(fields[12])
+	}
+	return upper
+}
+
+// specialUpper is SpecialCasing.txt's unconditional uppercase mappings of more
+// than one code point. Conditional lines are the language tailoring (lt, tr,
+// az) and Final_Sigma, which is a lowercase context; toUpperCase uses none of
+// them. Anything else stops the generator instead of being skipped quietly.
+func specialUpper(contents []byte, simple map[uint32]uint32) map[uint32][]uint32 {
+	full := map[uint32][]uint32{}
+	finalSigma := false
+	for _, fields := range dataLines(contents) {
+		if len(fields) < 4 {
+			log.Fatalf("SpecialCasing.txt: %q", fields)
+		}
+		code := point(fields[0])
+		condition := ""
+		if len(fields) >= 5 {
+			condition = fields[4]
+		}
+		if condition != "" {
+			language := strings.Fields(condition)[0]
+			if language == strings.ToLower(language) && len(language) <= 3 {
+				continue
+			}
+			if condition == "Final_Sigma" && code == 0x03A3 {
+				finalSigma = true
+				continue
+			}
+			log.Fatalf("SpecialCasing.txt: a condition the legacy mapping doesn't know: %q", fields)
+		}
+		mapped := codePoints(fields[3])
+		if len(mapped) == 0 {
+			log.Fatalf("SpecialCasing.txt: empty uppercase %q", fields)
+		}
+		if len(mapped) == 1 {
+			want := code
+			if upper, has := simple[code]; has {
+				want = upper
+			}
+			if mapped[0] != want {
+				log.Fatalf("SpecialCasing.txt: U+%04X uppercases to U+%04X where UnicodeData.txt says U+%04X", code, mapped[0], want)
+			}
+			continue
+		}
+		full[code] = mapped
+	}
+	if !finalSigma {
+		log.Fatal("SpecialCasing.txt: no Final_Sigma mapping for U+03A3")
+	}
+	return full
+}
+
+func codePoints(field string) []uint32 {
+	parts := strings.Fields(field)
+	mapped := make([]uint32, len(parts))
+	for index, part := range parts {
+		mapped[index] = point(part)
+	}
+	return mapped
+}
+
+// keepLegacyUpper applies the two filters in Canonicalize: an uppercase that is
+// not exactly one UTF-16 code unit is dropped, and so is one that maps a
+// non-ASCII code unit into ASCII. Otherwise the single code unit is the result.
+func keepLegacyUpper(cu uint32, mapped []uint32) uint32 {
+	units := 0
+	for _, cp := range mapped {
+		if cp > 0xFFFF {
+			units += 2
+		} else {
+			units++
+		}
+	}
+	if units != 1 {
+		return cu
+	}
+	upper := mapped[0]
+	if cu >= 128 && upper < 128 {
+		return cu
+	}
+	return upper
+}
+
+// legacyASCIIKept is every non-ASCII code unit whose full uppercase is a single
+// ASCII code unit. Canonicalize keeps the original. The list is sorted.
+func legacyASCIIKept(unicodeData, specialCasing []byte) []uint32 {
+	simple := simpleUpper(unicodeData)
+	full := specialUpper(specialCasing, simple)
+	var kept []uint32
+	for cu := uint32(128); cu <= 0xFFFF; cu++ {
+		mapped, expanded := full[cu]
+		if !expanded {
+			upper, has := simple[cu]
+			if !has {
+				continue
+			}
+			mapped = []uint32{upper}
+		}
+		if keepLegacyUpper(cu, mapped) == cu && utf16Units(mapped) == 1 && mapped[0] < 128 {
+			kept = append(kept, cu)
+		}
+	}
+	return kept
+}
+
+func utf16Units(mapped []uint32) int {
+	units := 0
+	for _, cp := range mapped {
+		if cp > 0xFFFF {
+			units += 2
+		} else {
+			units++
+		}
+	}
+	return units
 }

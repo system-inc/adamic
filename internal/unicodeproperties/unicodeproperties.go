@@ -13,6 +13,11 @@
 // \P is the complement of what Lookup returns, over every code point from 0 to
 // U+10FFFF, surrogates included. A property of strings has no code-point
 // complement; the caller rejects \P of one, which the spec makes a syntax error.
+//
+// Case-insensitive matching is Canonicalize (ECMA-262 22.2.2.7.3), not these
+// sets. CanonicalizeUnicode and CanonicalizeLegacy are that operation for the
+// u or v flag and for the flagless i, and UnicodeEquivalents and
+// LegacyEquivalents are the sets a character class has to close over.
 package unicodeproperties
 
 // tables.go is generated from the Unicode Character Database. TestVersionMatchesNode
