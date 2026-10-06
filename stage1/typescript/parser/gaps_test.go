@@ -127,3 +127,27 @@ func TestClassMethodInterfaceGap(t *testing.T) {
 		t.Fatalf("GAPS.md records native structural method dispatch panic, got %v %q", err, stderr.String())
 	}
 }
+
+func TestOptionalFunctionValueGap(t *testing.T) {
+	path, err := filepath.Abs("gaps/5_optional_function_value.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	result := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path)
+	if string(result.output) != "1\n" {
+		t.Fatalf("Node gap result %q", result.output)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), program)
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || notYet.What != "a function value with an optional parameter" {
+		t.Fatalf("GAPS.md records optional function value NotYet, got %v", err)
+	}
+}

@@ -173,3 +173,17 @@ fail. It changes only countTree's per-node contribution from 1 to 0. The mutant
 finishes successfully on Node and sanitized native and prints exactly the same
 AST bytes as Go in tree mode, but reports 0 nodes instead of Go's 18 in count
 mode. Only the count check catches it. See `validation/count-mutant.log`.
+
+## Whole-file continuation: function values with optional parameters
+
+Moving declarations into a separate module exposed another stage-0 limit:
+function values with optional parameters report `NotYet: a function value with
+an optional parameter`. Default parameters on ordinary class methods are
+already supported, but default parameters on the callback arrows were not.
+`gaps/5_optional_function_value.ts` prints `1` on Node and is refused with this
+exact NotYet; `TestOptionalFunctionValueGap` requires both observations.
+The statement callback interface now requires every argument. Small class
+method wrappers supply the defaults explicitly. Callbacks are temporary, never
+stored on Parser, so their references back to Parser do not form an owning
+cycle. They are explicit function properties, avoiding gap 4's class-method
+structural dispatch bug. The original expression corpus remains identical.

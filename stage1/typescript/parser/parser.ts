@@ -1,6 +1,7 @@
 // Expression descent follows cohere/TypeScript/tsc/internal/parser/parser.go.
 import { panic } from 'adamic';
 import { Scanner } from '../scanner/scanner.ts';
+import { Statements } from './statements.ts';
 import { ParseNode } from './nodes.ts';
 import { precedence, reservedKinds } from './grammar.ts';
 import { arrowAhead, typeArgumentsAhead } from './lookahead.ts';
@@ -828,585 +829,65 @@ export class Parser {
         this.yieldContext = oldYield;
         return this.make('FunctionExpression', pos, children);
     }
-    block(): number {
-        const pos = this.scanner.fullStart;
-        this.expect('OpenBraceToken');
-        const children: number[] = [];
-        while(this.kind() !== 'CloseBraceToken') {
-            children.push(this.statement());
-        }
-        this.expect('CloseBraceToken');
-        return this.make('Block', pos, children);
-    }
-    semicolon(): void {
-        if(this.kind() === 'SemicolonToken') {
-            this.next();
-        }
-        else if(this.kind() !== 'CloseBraceToken' && this.kind() !== 'EndOfFile' && (this.scanner.flags & 1) === 0) {
-            panic(`parser slice expected semicolon at ${this.scanner.start} in ${this.path}`);
-        }
-    }
-    variableList(): number {
-        const pos = this.scanner.fullStart;
-        this.next();
-        const declarations: number[] = [];
-        while(true) {
-            const start = this.scanner.fullStart;
-            const children = [this.bindingName()];
-            if(this.kind() === 'ExclamationToken') {
-                children.push(this.token());
-            }
-            if(this.kind() === 'ColonToken') {
-                this.next();
-                children.push(this.type());
-            }
-            if(this.kind() === 'EqualsToken') {
-                this.next();
-                children.push(this.rootAssignment());
-            }
-            declarations.push(this.make('VariableDeclaration', start, children));
-            if(this.kind() !== 'CommaToken') {
-                break;
-            }
-            this.next();
-        }
-        return this.make('VariableDeclarationList', pos, declarations);
-    }
     disallowIn = false;
-    skipDeclaration(interfaceBody: boolean): void {
-        let braces = 0;
-        let parens = 0;
-        let brackets = 0;
-        let templates = 0;
-        while(this.kind() !== 'EndOfFile') {
-            if(
-                this.kind() === 'TypeOfKeyword' &&
-                this.peek() !== 'ImportKeyword' &&
-                (this.peek() === 'Identifier' || this.peek().endsWith('Keyword'))
-            ) {
+    statements(): Statements {
+        return new Statements({
+            scanner: this.scanner,
+            path: this.path,
+            roots: this.roots,
+            kind: () => this.kind(),
+            next: () => {
                 this.next();
-                const name = this.entityName();
-                if(this.expressionDepth === 0) {
-                    this.roots.push(name);
-                }
-                continue;
-            }
-            if(this.kind() === 'TemplateHead') {
-                templates++;
-                this.next();
-                continue;
-            }
-            if(this.kind() === 'CloseBraceToken' && templates > 0 && braces === 0) {
-                this.scanner.rescanTemplate();
-                if(this.kind() === 'TemplateTail') {
-                    templates--;
-                }
-                this.next();
-                continue;
-            }
-            if(this.kind() === 'OpenBraceToken') {
-                braces++;
-            }
-            else if(this.kind() === 'CloseBraceToken') {
-                braces--;
-                this.next();
-                if(interfaceBody && braces === 0 && parens === 0 && brackets === 0) {
-                    if(this.kind() === 'SemicolonToken') {
-                        this.next();
-                    }
-                    return;
-                }
-                continue;
-            }
-            else if(this.kind() === 'OpenParenToken') {
-                parens++;
-            }
-            else if(this.kind() === 'CloseParenToken') {
-                parens--;
-            }
-            else if(this.kind() === 'OpenBracketToken') {
-                brackets++;
-            }
-            else if(this.kind() === 'CloseBracketToken') {
-                brackets--;
-            }
-            else if(this.kind() === 'SemicolonToken' && braces === 0 && parens === 0 && brackets === 0) {
-                this.next();
-                return;
-            }
-            this.next();
-        }
+            },
+            expect: (kind) => {
+                this.expect(kind);
+            },
+            node: (index) => this.node(index),
+            make: (kind, pos, children) => this.make(kind, pos, children),
+            entityName: () => this.entityName(),
+            identifier: () => this.identifier(),
+            token: () => this.token(),
+            type: (minimum, conditional) => this.type(minimum, conditional),
+            typeArguments: () => this.typeArguments(),
+            typeParameters: () => this.typeParameters(),
+            parameters: () => this.parameters(),
+            returnType: () => this.returnType(),
+            bindingName: () => this.bindingName(),
+            rootAssignment: () => this.rootAssignment(),
+            rootExpression: () => this.rootExpression(),
+            peek: () => this.peek(),
+            nextIdentifierSameLine: () => this.nextIdentifierSameLine(),
+            propertyName: () => this.propertyName(),
+            methodBody: (pos, prefix, kind, async, generator) => this.methodBody(pos, prefix, kind, async, generator),
+            primary: () => this.primary(),
+            suffix: (expression, call) => this.suffix(expression, call),
+            typeLiteral: () => this.typeLiteral(),
+            getAwait: () => this.awaitContext,
+            setAwait: (value) => {
+                this.awaitContext = value;
+            },
+            getYield: () => this.yieldContext,
+            setYield: (value) => {
+                this.yieldContext = value;
+            },
+            getIn: () => this.disallowIn,
+            setIn: (value) => {
+                this.disallowIn = value;
+            },
+            depth: () => this.expressionDepth,
+        });
     }
-    functionDeclaration(pos: number, prefix: readonly number[], async: boolean): number {
-        const children = prefix.slice();
-        this.expect('FunctionKeyword');
-        const generator = this.kind() === 'AsteriskToken';
-        if(generator) {
-            children.push(this.token());
-        }
-        if(this.kind() !== 'OpenParenToken' && this.kind() !== 'LessThanToken') {
-            children.push(this.identifier());
-        }
-        const oldAwait = this.awaitContext;
-        const oldYield = this.yieldContext;
-        this.awaitContext = async;
-        this.yieldContext = generator;
-        const oldIn = this.disallowIn;
-        this.disallowIn = false;
-        for(const type of this.typeParameters()) {
-            children.push(type);
-        }
-        for(const parameter of this.parameters()) {
-            children.push(parameter);
-        }
-        if(this.kind() === 'ColonToken') {
-            this.next();
-            children.push(this.returnType());
-        }
-        if(this.kind() === 'OpenBraceToken') {
-            children.push(this.block());
-        }
-        else {
-            this.semicolon();
-        }
-        this.disallowIn = oldIn;
-        this.awaitContext = oldAwait;
-        this.yieldContext = oldYield;
-        return this.make('FunctionDeclaration', pos, children);
-    }
-    classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
-        const children = prefix.slice();
-        this.expect('ClassKeyword');
-        if(
-            this.kind() === 'Identifier' ||
-            (this.kind().endsWith('Keyword') && this.kind() !== 'ExtendsKeyword' && this.kind() !== 'ImplementsKeyword')
-        ) {
-            children.push(this.identifier());
-        }
-        for(const type of this.typeParameters()) {
-            children.push(type);
-        }
-        while(this.kind() === 'ExtendsKeyword' || this.kind() === 'ImplementsKeyword') {
-            const start = this.scanner.fullStart;
-            const extending = this.kind() === 'ExtendsKeyword';
-            const operator = this.kind();
-            this.next();
-            const types: number[] = [];
-            while(true) {
-                const target = extending ? this.suffix(this.primary(), true) : this.type();
-                let item = target;
-                if(extending && this.node(target).kind !== 'ExpressionWithTypeArguments') {
-                    const arguments_ = [target];
-                    if(this.kind() === 'LessThanToken') {
-                        for(const type of this.typeArguments()) {
-                            arguments_.push(type);
-                        }
-                    }
-                    item = this.make('ExpressionWithTypeArguments', this.node(target).pos, arguments_);
-                }
-                types.push(item);
-                if(extending && this.expressionDepth === 0) {
-                    this.roots.push(
-                        this.node(target).kind === 'ExpressionWithTypeArguments'
-                            ? (this.node(target).children[0] ?? panic('empty heritage'))
-                            : target,
-                    );
-                }
-                if(this.kind() !== 'CommaToken') {
-                    break;
-                }
-                this.next();
-            }
-            const heritage = this.make('HeritageClause', start, types);
-            this.node(heritage).operator = operator;
-            children.push(heritage);
-        }
-        this.expect('OpenBraceToken');
-        while(this.kind() !== 'CloseBraceToken') {
-            const start = this.scanner.fullStart;
-            if(this.kind() === 'SemicolonToken') {
-                this.next();
-                children.push(this.make('SemicolonClassElement', start));
-                continue;
-            }
-            const member: number[] = [];
-            let async = false;
-            while(
-                this.kind() === 'StaticKeyword' ||
-                this.kind() === 'PublicKeyword' ||
-                this.kind() === 'PrivateKeyword' ||
-                this.kind() === 'ProtectedKeyword' ||
-                this.kind() === 'ReadonlyKeyword' ||
-                this.kind() === 'AbstractKeyword' ||
-                this.kind() === 'DeclareKeyword' ||
-                this.kind() === 'OverrideKeyword' ||
-                this.kind() === 'AsyncKeyword' ||
-                this.kind() === 'AccessorKeyword'
-            ) {
-                if(
-                    this.peek() === 'ColonToken' ||
-                    this.peek() === 'EqualsToken' ||
-                    this.peek() === 'OpenParenToken' ||
-                    this.peek() === 'SemicolonToken'
-                ) {
-                    break;
-                }
-                if(this.kind() === 'AsyncKeyword') {
-                    async = true;
-                }
-                member.push(this.token());
-            }
-            if(
-                this.kind() === 'OpenBraceToken' &&
-                member.length > 0 &&
-                this.node(member[0] ?? -1).kind === 'StaticKeyword'
-            ) {
-                const block = this.block();
-                children.push(this.make('ClassStaticBlockDeclaration', start, [block]));
-                continue;
-            }
-            let methodKind = 'MethodDeclaration';
-            if(
-                (this.kind() === 'GetKeyword' || this.kind() === 'SetKeyword') &&
-                this.peek() !== 'OpenParenToken' &&
-                this.peek() !== 'ColonToken' &&
-                this.peek() !== 'EqualsToken'
-            ) {
-                methodKind = this.kind() === 'GetKeyword' ? 'GetAccessor' : 'SetAccessor';
-                this.next();
-            }
-            const generator = this.kind() === 'AsteriskToken';
-            if(generator) {
-                member.push(this.token());
-            }
-            const constructor = this.kind() === 'ConstructorKeyword';
-            if(constructor) {
-                this.next();
-                methodKind = 'Constructor';
-            }
-            else {
-                member.push(this.propertyName());
-            }
-            if(this.kind() === 'QuestionToken' || this.kind() === 'ExclamationToken') {
-                member.push(this.token());
-            }
-            if(this.kind() === 'OpenParenToken' || this.kind() === 'LessThanToken') {
-                children.push(this.methodBody(start, member, methodKind, async, generator));
-            }
-            else {
-                if(this.kind() === 'ColonToken') {
-                    this.next();
-                    member.push(this.type());
-                }
-                if(this.kind() === 'EqualsToken') {
-                    this.next();
-                    member.push(this.rootAssignment());
-                }
-                this.semicolon();
-                children.push(this.make('PropertyDeclaration', start, member));
-            }
-        }
-        this.expect('CloseBraceToken');
-        return this.make(expression ? 'ClassExpression' : 'ClassDeclaration', pos, children);
-    }
-    forStatement(): number {
-        const pos = this.scanner.fullStart;
-        this.next();
-        const children: number[] = [];
-        if(this.kind() === 'AwaitKeyword') {
-            children.push(this.token());
-        }
-        this.expect('OpenParenToken');
-        const old = this.disallowIn;
-        this.disallowIn = true;
-        if(this.kind() !== 'SemicolonToken') {
-            children.push(
-                this.kind() === 'ConstKeyword' || this.kind() === 'LetKeyword' || this.kind() === 'VarKeyword'
-                    ? this.variableList()
-                    : this.rootExpression(),
-            );
-        }
-        this.disallowIn = old;
-        if(this.kind() === 'OfKeyword' || this.kind() === 'InKeyword') {
-            const of = this.kind() === 'OfKeyword';
-            this.next();
-            children.push(of ? this.rootAssignment() : this.rootExpression());
-            this.expect('CloseParenToken');
-            children.push(this.statement());
-            return this.make(of ? 'ForOfStatement' : 'ForInStatement', pos, children);
-        }
-        this.expect('SemicolonToken');
-        if(this.kind() !== 'SemicolonToken') {
-            children.push(this.rootExpression());
-        }
-        this.expect('SemicolonToken');
-        if(this.kind() !== 'CloseParenToken') {
-            children.push(this.rootExpression());
-        }
-        this.expect('CloseParenToken');
-        children.push(this.statement());
-        return this.make('ForStatement', pos, children);
-    }
-    switchStatement(): number {
-        const pos = this.scanner.fullStart;
-        this.next();
-        this.expect('OpenParenToken');
-        const expression = this.rootExpression();
-        this.expect('CloseParenToken');
-        const start = this.scanner.fullStart;
-        this.expect('OpenBraceToken');
-        const clauses: number[] = [];
-        while(this.kind() !== 'CloseBraceToken') {
-            const clausePos = this.scanner.fullStart;
-            const isCase = this.kind() === 'CaseKeyword';
-            this.next();
-            const statements: number[] = [];
-            if(isCase) {
-                statements.push(this.rootExpression());
-            }
-            this.expect('ColonToken');
-            while(
-                this.kind() !== 'CaseKeyword' &&
-                this.kind() !== 'DefaultKeyword' &&
-                this.kind() !== 'CloseBraceToken'
-            ) {
-                statements.push(this.statement());
-            }
-            clauses.push(this.make(isCase ? 'CaseClause' : 'DefaultClause', clausePos, statements));
-        }
-        this.expect('CloseBraceToken');
-        const block = this.make('CaseBlock', start, clauses);
-        return this.make('SwitchStatement', pos, [expression, block]);
-    }
-    tryStatement(): number {
-        const pos = this.scanner.fullStart;
-        this.next();
-        const children = [this.block()];
-        if(this.kind() === 'CatchKeyword') {
-            const start = this.scanner.fullStart;
-            this.next();
-            const clause: number[] = [];
-            if(this.kind() === 'OpenParenToken') {
-                this.next();
-                const declarationPos = this.scanner.fullStart;
-                const parts = [this.bindingName()];
-                if(this.kind() === 'ColonToken') {
-                    this.next();
-                    parts.push(this.type());
-                }
-                clause.push(this.make('VariableDeclaration', declarationPos, parts));
-                this.expect('CloseParenToken');
-            }
-            clause.push(this.block());
-            children.push(this.make('CatchClause', start, clause));
-        }
-        if(this.kind() === 'FinallyKeyword') {
-            this.next();
-            children.push(this.block());
-        }
-        return this.make('TryStatement', pos, children);
+    block(): number {
+        return this.statements().block();
     }
     statement(): number {
-        const pos = this.scanner.fullStart;
-        if(this.kind() === 'OpenBraceToken') {
-            return this.block();
-        }
-        if(this.kind() === 'SemicolonToken') {
-            this.next();
-            return this.make('EmptyStatement', pos);
-        }
-        if(this.kind() === 'ReturnKeyword' || this.kind() === 'ThrowKeyword') {
-            const returning = this.kind() === 'ReturnKeyword';
-            this.next();
-            const children: number[] = [];
-            if(
-                this.kind() !== 'CloseBraceToken' &&
-                this.kind() !== 'SemicolonToken' &&
-                this.kind() !== 'EndOfFile' &&
-                (this.scanner.flags & 1) === 0
-            ) {
-                children.push(this.rootExpression());
-            }
-            this.semicolon();
-            return this.make(returning ? 'ReturnStatement' : 'ThrowStatement', pos, children);
-        }
-        if(
-            (this.kind() === 'ConstKeyword' && this.peek() !== 'EnumKeyword') ||
-            this.kind() === 'LetKeyword' ||
-            this.kind() === 'VarKeyword'
-        ) {
-            const list = this.variableList();
-            this.semicolon();
-            return this.make('VariableStatement', pos, [list]);
-        }
-        if(this.kind() === 'IfKeyword' || this.kind() === 'WhileKeyword') {
-            const conditional = this.kind() === 'IfKeyword';
-            this.next();
-            this.expect('OpenParenToken');
-            const condition = this.rootExpression();
-            this.expect('CloseParenToken');
-            const body = this.statement();
-            const children = [condition, body];
-            if(conditional && this.kind() === 'ElseKeyword') {
-                this.next();
-                children.push(this.statement());
-            }
-            return this.make(conditional ? 'IfStatement' : 'WhileStatement', pos, children);
-        }
-        if(this.kind() === 'ForKeyword') {
-            return this.forStatement();
-        }
-        if(this.kind() === 'SwitchKeyword') {
-            return this.switchStatement();
-        }
-        if(this.kind() === 'TryKeyword') {
-            return this.tryStatement();
-        }
-        if(this.kind() === 'DoKeyword') {
-            this.next();
-            const body = this.statement();
-            this.expect('WhileKeyword');
-            this.expect('OpenParenToken');
-            const condition = this.rootExpression();
-            this.expect('CloseParenToken');
-            if(this.kind() === 'SemicolonToken') {
-                this.next();
-            }
-            return this.make('DoStatement', pos, [body, condition]);
-        }
-        if(this.kind() === 'BreakKeyword' || this.kind() === 'ContinueKeyword' || this.kind() === 'DebuggerKeyword') {
-            const kind =
-                this.kind() === 'BreakKeyword'
-                    ? 'BreakStatement'
-                    : this.kind() === 'ContinueKeyword'
-                      ? 'ContinueStatement'
-                      : 'DebuggerStatement';
-            this.next();
-            const children: number[] = [];
-            if(kind !== 'DebuggerStatement' && this.kind() === 'Identifier' && (this.scanner.flags & 1) === 0) {
-                children.push(this.identifier());
-            }
-            this.semicolon();
-            return this.make(kind, pos, children);
-        }
-        if(this.kind() === 'Identifier' && this.peek() === 'ColonToken') {
-            const name = this.identifier();
-            this.next();
-            const body = this.statement();
-            return this.make('LabeledStatement', pos, [name, body]);
-        }
-        const modifiers: number[] = [];
-        let async = false;
-        while(
-            this.kind() === 'ExportKeyword' ||
-            this.kind() === 'DefaultKeyword' ||
-            this.kind() === 'DeclareKeyword' ||
-            this.kind() === 'AbstractKeyword' ||
-            (this.kind() === 'AsyncKeyword' && this.peek() === 'FunctionKeyword') ||
-            (this.kind() === 'ConstKeyword' && this.peek() === 'EnumKeyword')
-        ) {
-            if(this.kind() === 'AsyncKeyword') {
-                async = true;
-            }
-            modifiers.push(this.token());
-        }
-        if(this.kind() === 'FunctionKeyword') {
-            return this.functionDeclaration(pos, modifiers, async);
-        }
-        if(this.kind() === 'ClassKeyword') {
-            return this.classDeclaration(pos, modifiers, false);
-        }
-        if(this.kind() === 'ConstKeyword' || this.kind() === 'LetKeyword' || this.kind() === 'VarKeyword') {
-            modifiers.push(this.variableList());
-            this.semicolon();
-            return this.make('VariableStatement', pos, modifiers);
-        }
-        if((this.kind() === 'TypeKeyword' || this.kind() === 'InterfaceKeyword') && this.nextIdentifierSameLine()) {
-            const interface_ = this.kind() === 'InterfaceKeyword';
-            this.next();
-            modifiers.push(this.identifier());
-            for(const type of this.typeParameters()) {
-                modifiers.push(type);
-            }
-            if(interface_) {
-                if(this.kind() === 'ExtendsKeyword') {
-                    const start = this.scanner.fullStart;
-                    this.next();
-                    const bases: number[] = [];
-                    while(true) {
-                        const startType = this.scanner.fullStart;
-                        const parts = [this.entityName()];
-                        if(this.kind() === 'LessThanToken') {
-                            for(const type of this.typeArguments()) {
-                                parts.push(type);
-                            }
-                        }
-                        bases.push(this.make('ExpressionWithTypeArguments', startType, parts));
-                        if(this.kind() !== 'CommaToken') {
-                            break;
-                        }
-                        this.next();
-                    }
-                    const heritage = this.make('HeritageClause', start, bases);
-                    this.node(heritage).operator = 'ExtendsKeyword';
-                    modifiers.push(heritage);
-                }
-                const body = this.typeLiteral();
-                for(const member of this.node(body).children) {
-                    modifiers.push(member);
-                }
-            }
-            else {
-                this.expect('EqualsToken');
-                modifiers.push(this.type());
-                this.semicolon();
-            }
-            return this.make(interface_ ? 'InterfaceDeclaration' : 'TypeAliasDeclaration', pos, modifiers);
-        }
-        if(this.kind() === 'EnumKeyword') {
-            this.next();
-            modifiers.push(this.identifier());
-            this.expect('OpenBraceToken');
-            while(this.kind() !== 'CloseBraceToken') {
-                const start = this.scanner.fullStart;
-                const member = [this.propertyName()];
-                if(this.kind() === 'EqualsToken') {
-                    this.next();
-                    member.push(this.rootAssignment());
-                }
-                modifiers.push(this.make('EnumMember', start, member));
-                if(this.kind() !== 'CommaToken') {
-                    break;
-                }
-                this.next();
-            }
-            this.expect('CloseBraceToken');
-            return this.make('EnumDeclaration', pos, modifiers);
-        }
-        if(
-            (this.kind() === 'NamespaceKeyword' || this.kind() === 'ModuleKeyword') &&
-            (this.nextIdentifierSameLine() || this.peek() === 'StringLiteral')
-        ) {
-            this.next();
-            while(this.kind() !== 'OpenBraceToken' && this.kind() !== 'EndOfFile') {
-                this.next();
-            }
-            modifiers.push(this.block());
-            return this.make('ModuleDeclaration', pos, modifiers);
-        }
-        if(
-            (this.kind() === 'ImportKeyword' && this.peek() !== 'OpenParenToken' && this.peek() !== 'DotToken') ||
-            (modifiers.length > 0 && (this.kind() === 'OpenBraceToken' || this.kind() === 'AsteriskToken'))
-        ) {
-            this.skipDeclaration(false);
-            return this.make('ImportDeclaration', pos);
-        }
-        if(modifiers.length > 0 && this.kind() === 'EqualsToken') {
-            this.next();
-        }
-        const expression = this.rootExpression();
-        this.semicolon();
-        return this.make('ExpressionStatement', pos, [expression]);
+        return this.statements().statement();
+    }
+    semicolon(): void {
+        this.statements().semicolon();
+    }
+    classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+        return this.statements().classDeclaration(pos, prefix, expression);
     }
     lastTrailing = false;
     peek(): string {
@@ -1954,9 +1435,17 @@ export class Parser {
         }
         return left;
     }
-    file(): void {
+    file(): number {
+        const parser = this.statements();
+        const children: number[] = [];
         while(this.kind() !== 'EndOfFile') {
-            this.statement();
+            children.push(parser.statement());
         }
+        const eof = this.make('EndOfFile', this.scanner.fullStart);
+        children.push(eof);
+        this.node(eof).end = this.scanner.text.length;
+        const root = this.make('SourceFile', 0, children);
+        this.node(root).end = this.scanner.text.length;
+        return root;
     }
 }
