@@ -3,8 +3,37 @@
 The Adamic lexer, CST parser, scalar and property resolvers and comparison drivers are implemented.
 All 36 repository files and generated cases match Go, with 9,272 scalar cases.
 Native sanitizers, Node source, emitted JavaScript and yaml 2.9.0 all agree.
-Twelve port mutants are caught; nine compiler refusals and one runtime bug have proving programs.
+Fifteen port mutants are caught; nine compiler refusals and one runtime bug have proving programs.
 Document composition, unist conversion, the printer and formatting driver remain unfinished.
+
+## Green schema-test step
+
+`schemaPattern.ts` implements only the fixed anchored tests that core and YAML
+1.1 schema resolution require: alternatives, concatenation, ASCII character
+classes and bounded/unbounded repetition. `schemaTags.ts` carries the exact
+patterns and ordering from pinned Go cohere. This avoids dependence on RegExp,
+which is outside the current Adamic library, without changing the tag tests.
+
+9,388 inputs produced 271,142 identical answer bytes on Go, native under
+ASan/UBSan/LeakSanitizer, source Node, emitted JavaScript and original yaml 2.9.0.
+The inputs include all 36 repository files, the earlier generated corpus and
+656 targeted schema spellings. The standalone pattern driver trims its input;
+this specifically tests trimmed candidate values. It does not establish parity
+for untrimmed quoted scalar values or numeric/date/binary value resolution.
+
+The schema comparison and three successful wrong-output mutants passed in
+7.390s. Native and Node both caught class-range endpoint loss at byte 260024,
+plus repetition accepting empty at byte 968, and optional repetition accepting
+twice at byte 262914. Cohere reported 276 rules and 100% Adamic-ready; package
+vet passed. No compiler or cohere implementation file changed.
+
+```sh
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run TestSchema > /tmp/stage1-yaml-schema-final.log 2>&1
+```
+
+Logs: [suite](audit/schema-suite.log), [lint](audit/schema-lint.log).
+Document composition is being implemented but is not yet a green checkpoint.
+The printer, comment attachment and formatting driver remain unfinished.
 
 ## Green property step
 
