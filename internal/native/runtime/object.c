@@ -35,6 +35,10 @@ adamic_object *adamic_object_copy(const adamic_object *source) {
 bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
 	for (size_t index = 0; index < object->shape->count; index++) {
 		const char *field = object->shape->names[index];
+		// Private slots use mangled shape names, but are not JavaScript properties.
+		if (field[0] == '#') {
+			continue;
+		}
 		size_t length = strlen(field);
 		if (length == name->length && memcmp(field, name->bytes, length) == 0) {
 			return true;
