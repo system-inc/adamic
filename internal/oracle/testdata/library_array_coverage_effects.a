@@ -1,0 +1,12 @@
+let trace = '';
+const values = [1, 2, 3];
+function receiver(): number[] { trace += 'r'; return values; }
+function target(): number { trace += 't'; values.push(4); return 0; }
+function start(): number { trace += 's'; values[2] = 8; return 2; }
+function end(): number | undefined { trace += 'e'; values.push(5); return undefined; }
+console.log(`${receiver().copyWithin(target(), start(), end()).join('|')} ${trace}`);
+const generic = {0: 1, 1: 2, 2: 7, length: 2};
+function needle(): number { trace += 'n'; generic.length = 3; return 7; }
+function from(): number { trace += 'f'; generic.length = 1; return 0; }
+console.log(`${Array.prototype.indexOf.call(generic, needle(), from())} ${trace}`);
+console.log(`${Array.prototype.lastIndexOf.call(generic, needle(), from())} ${trace}`);

@@ -1,0 +1,17 @@
+type Item = {label: string};
+const first = {label: 'a'.repeat(2)};
+const second = {label: 'b'.repeat(2)};
+const objects = [first, second, {label: 'c'.repeat(2)}];
+const returned = objects.copyWithin(1, 0, undefined).copyWithin(-3, -2, undefined);
+console.log(`${returned === objects} ${objects.map((item: Item): string => item.label).join('|')} ${objects[0] === first}`);
+objects.splice(0, objects.length);
+console.log(`${first.label} ${second.label}`);
+function copy(end: number | undefined): void {
+ const values: (number | undefined)[] = [undefined, 2, undefined, 4];
+ console.log(values.copyWithin(-2, 0, end).copyWithin(0, -2, undefined).join('|'));
+}
+for (const end of [undefined, -Infinity, -9, -1.9, 0, 2.9, 9, Infinity, NaN]) copy(end);
+const emptyObjects: Item[] = [];
+const emptyOptional: (number | undefined)[] = [];
+const emptyStrings: string[] = [];
+console.log(`${emptyObjects.copyWithin(-1, 20, undefined).length} ${emptyOptional.copyWithin(20, -1, undefined).length} ${emptyStrings.copyWithin(0, 0, undefined).length}`);

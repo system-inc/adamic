@@ -1,0 +1,30 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	0.821s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	64.802s
+ok  	github.com/system-inc/adamic/internal/flow	110.536s
+ok  	github.com/system-inc/adamic/internal/fresh	33.350s
+ok  	github.com/system-inc/adamic/internal/fuzz	8.983s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	1.955s
+ok  	github.com/system-inc/adamic/internal/lower	25.536s
+ok  	github.com/system-inc/adamic/internal/native	296.412s
+ok  	github.com/system-inc/adamic/internal/oracle	234.507s
+ok  	github.com/system-inc/adamic/internal/regexp	9.603s
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	772.044s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	206.228s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	33.577s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	60.495s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	46.381s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	112.366s
+ok  	github.com/system-inc/adamic/stage1/cohere/json	481.319s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	284.485s
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	29.713s
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	56.604s
+ok  	github.com/system-inc/adamic/stage1/cohere/suppression	49.665s
+ok  	github.com/system-inc/adamic/stage1/cohere/values	61.258s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	206.235s
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	57.278s

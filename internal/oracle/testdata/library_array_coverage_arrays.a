@@ -1,0 +1,17 @@
+const numbers = [1, 2, 1, NaN, -0];
+const starts = [-Infinity, -20, -2.9, -0, 0, 1.9, 5, Infinity, NaN];
+for (const start of starts) {
+ console.log(`${Array.prototype.indexOf.call(numbers, 1, start)} ${Array.prototype.lastIndexOf.call(numbers, 1, start)}`);
+}
+const strings = ['x'.repeat(2), 'y'.repeat(2), 'x'.repeat(2)];
+const item = {label: 'z'.repeat(2)};
+const objects = [item, {label: 'zz'}, item];
+const optional: (number | undefined)[] = [undefined, 2, undefined, NaN];
+console.log(`${Array.prototype.indexOf.call(strings, 'xx')} ${Array.prototype.lastIndexOf.call(strings, 'xx', -2)}`);
+console.log(`${Array.prototype.indexOf.call(objects, item)} ${Array.prototype.lastIndexOf.call(objects, item)} ${objects.includes({label: 'zz'})}`);
+console.log(`${Array.prototype.indexOf.call(optional, undefined)} ${Array.prototype.lastIndexOf.call(optional, undefined)} ${Array.prototype.lastIndexOf.call(optional, undefined, undefined)}`);
+console.log(`${Array.prototype.indexOf.call(optional, NaN)} ${optional.includes(NaN)}`);
+const empty: number[] = [];
+console.log(`${Array.prototype.indexOf.call(empty, 1)} ${Array.prototype.lastIndexOf.call(empty, 1)}`);
+const readonlyValues: readonly number[] = [4, 5, 4];
+console.log(`${(Array.prototype.indexOf).call(readonlyValues, 4)} ${(Array.prototype.lastIndexOf).call(readonlyValues, 4)}`);

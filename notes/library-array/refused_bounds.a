@@ -1,0 +1,2 @@
+const values = {0: 'x', length: 1};
+console.log(`${Array.prototype.indexOf.call(values, 'x', '0')}`);

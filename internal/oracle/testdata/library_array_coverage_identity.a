@@ -1,0 +1,21 @@
+let calls = 0;
+function text(): string { calls += 1; return 'x'.repeat(3); }
+function missing(): number | undefined { calls += 1; return undefined; }
+const strings = ['a', 'b'];
+const objects = [{value: 1}];
+const optional: (number | undefined)[] = [undefined, 2];
+const pair: readonly [number, string] = [1, 'a'];
+console.log(`${Array.isArray(strings)} ${Array.isArray(objects)} ${Array.isArray(optional)} ${Array.isArray(pair)}`);
+console.log(`${Array.isArray(text())} ${Array.isArray({value: 1})} ${Array.isArray(missing())} ${calls}`);
+console.log(`${Array.isArray(Object)} ${Array.isArray(String)} ${Array.isArray(Number)} ${Array.isArray(Map)} ${Array.isArray(Set)}`);
+console.log(`${(Array.isArray)(strings.copyWithin(0, 1, undefined).copyWithin(1, 0, undefined))} ${strings.join('|')}`);
+console.log(`${Array.isArray.name} ${Array.isArray.length} ${typeof (Array.isArray)}`);
+function callback(value: number): number { return value + 1; }
+console.log(`${Array.isArray(callback)} ${Array.isArray((value: number): number => value + 2)}`);
+function optionalFacts(flag: boolean | undefined, text: string | undefined): void {
+ console.log(`${Array.isArray(flag)} ${Array.isArray(text)}`);
+}
+optionalFacts(undefined, undefined);
+optionalFacts(false, 'owned'.repeat(2));
+let plain = {value: 1};
+console.log(`${Array.isArray(plain)}`);

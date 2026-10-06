@@ -1,0 +1,22 @@
+type Item = {label: string};
+const objects = [{label: 'a'.repeat(2)}, {label: 'b'.repeat(2)}, {label: 'c'.repeat(2)}];
+let trace = '';
+const found = objects.findLast((value: Item, index: number, all: Item[]): boolean => {
+ trace += `${index}:${value.label}|`;
+ if (index === 2) { all.copyWithin(0, 1, undefined); all.push({label: 'd'.repeat(2)}); }
+ return index === 0;
+});
+console.log(`${found?.label ?? 'none'} ${trace} ${objects.map((item: Item): string => item.label).join('|')}`);
+const strings = ['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2)];
+console.log(strings.flatMap((value: string, index: number, all: string[]): string[] => {
+ if (index === 0) { all.copyWithin(1, 0, undefined); all.push('d'.repeat(2)); }
+ return [value, value];
+}).copyWithin(0, -2, undefined).toReversed().join('|'));
+const optional: (number | undefined)[] = [undefined, 2, 3];
+trace = '';
+console.log(`${optional.findLastIndex((value: number | undefined, index: number, all: (number | undefined)[]): boolean => {
+ trace += `${index}:${value}|`;
+ if (index === 2) all.copyWithin(0, 1, undefined);
+ return value === 2;
+})} ${trace}`);
+console.log(`${[1, 2, 3].copyWithin(1, 0, undefined).toReversed().copyWithin(0, 1, undefined).indexOf(1)}`);
