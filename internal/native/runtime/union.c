@@ -4,8 +4,8 @@
 
 #include <math.h>
 
-adamic_boolean_box adamic_box_true = {{0, adamic_kind_boolean}, true};
-adamic_boolean_box adamic_box_false = {{0, adamic_kind_boolean}, false};
+adamic_boolean_box adamic_box_true = {{0, adamic_kind_boolean, 0}, true};
+adamic_boolean_box adamic_box_false = {{0, adamic_kind_boolean, 0}, false};
 
 adamic_string adamic_typeof_number = ADAMIC_STRING("number");
 adamic_string adamic_typeof_string = ADAMIC_STRING("string");

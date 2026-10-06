@@ -1,0 +1,25 @@
+// A throw from a function value that nothing catches leaves map's loop, and the function around it
+// with its finally run, and ends the program as a panic, exit 70, with what was printed before out.
+function labels(count: number): string[] {
+	const made: string[] = [];
+	for (let index = 0; index < count; index++) {
+		made.push(`item${index}`);
+	}
+	return made;
+}
+function shout(items: string[]): string[] {
+	try {
+		return items.map((item) => {
+			if (item.endsWith('3')) {
+				throw new Error(`${item} is too loud`);
+			}
+			return item.toUpperCase();
+		});
+	} finally {
+		console.log('shout finally');
+	}
+}
+console.log('start');
+console.log(shout(labels(3)).join(','));
+console.log(shout(labels(5)).join(','));
+console.log('never printed');

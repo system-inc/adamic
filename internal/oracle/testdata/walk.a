@@ -19,6 +19,14 @@ function walk(path: string, depth: number): void {
 	}
 	console.log(`${'  '.repeat(depth)}${shown(path)}: ${listing.names.length} names, ${listing.names.join(' ')}`);
 	for (const name of listing.names) {
+		if (name.includes('\uFFFD')) {
+			// A name that wasn't valid UTF-8 comes back with U+FFFD for the bad byte, and that name no
+			// longer reaches the file, on Node as here. (Where the file system won't hold such a name,
+			// the oracle makes the file under the decoded name instead, which would reach it; it isn't
+			// looked up, so every machine prints and counts the same.)
+			console.log(`${'  '.repeat(depth + 1)}${name}: not looked up`);
+			continue;
+		}
 		const inside = `${path}/${name}`;
 		const status = fileStatus(inside);
 		if (status.kind === 'Error') {

@@ -45,7 +45,9 @@ A generic function that only reads an array's length (`function count<Item>(list
 
 **Around it:** the port checks the Go's in-range indexes with `list[index] ?? panic(...)` through one helper per element type, `nodeAt` and `modeAt` (parsers.ts), where one generic `element<Item>` would do.
 
-## 2. `return undefined` from a function returning `string | undefined` is bad C
+## 2. `return undefined` from a function returning `string | undefined` is bad C (closed by stream B2's af5e41e, in integration 10)
+
+Closed: stage 0 now returns undefined as a string's, and the program prints natively what it prints on Node. The port's workaround (main.ts, gap 2) still stands; stream P2 undoes it.
 
 This one isn't refused: stage 0 lowers it, and the C it writes returns an `adamic_object *` from a function declared to return `adamic_string *`. clang refuses it under `-Werror`, so it never runs, but it is the one thing stage 0 promises never to do: reach clang with C that's wrong.
 

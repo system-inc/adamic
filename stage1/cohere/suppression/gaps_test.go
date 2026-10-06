@@ -23,7 +23,7 @@ var gaps = []struct {
 	stdout string
 }{
 	{path: "gaps/1_mutual_recursion.ts", stdout: "true false\n"},
-	{path: "gaps/2_return_undefined_array.ts", badC: "incompatible pointer types returning 'adamic_object *' (aka 'struct adamic_object *') from a function with result type 'adamic_array *'", stdout: "true\n"},
+	{path: "gaps/2_return_undefined_array.ts", stdout: "true\n"},
 }
 
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {

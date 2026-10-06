@@ -371,7 +371,7 @@ Measured, on a shared 4-vCPU cloud container (Intel Xeon @ 2.80GHz, load about 1
 
 ### The first cut
 
-`throw new Error(message)`, a caught error thrown again, and `try` with `catch`, `finally` or both, wherever statements go (functions, methods, constructors and the top level). A `catch` may leave its binding out. Still NotYet: a function value (an arrow function) that can throw, since the runtime calls them from inside its own loops (`map`, `sort`) where a throw would have to unwind C it doesn't own; and `return`, `break` or `continue` inside a `finally`, which in JavaScript overrides what the `try` was doing.
+`throw new Error(message)`, a caught error thrown again, and `try` with `catch`, `finally` or both, wherever statements go (functions, methods, constructors and the top level). A `catch` may leave its binding out. A function value (an arrow function) may throw, and so may a sort's comparator, named or written in place. Which function value a call reaches isn't known, so when any function value in the program can throw, every call through one is followed by the test of the word (`ir.Program.ClosuresMayThrow`, worked out with `MayThrow` until neither changes). The loops the emitter writes around a callback (`map`, `filter`, `find`, `some`, `forEach`, `reduce`, `Array.from`, and `Map` and `Set` `forEach`) test it after each call and let go of the element they hold across it; what they made so far is the statement's temporary and goes with the rest. `map` never writes over its array in place for a callback that can throw. The sort is the one loop in C: a comparator that throws `longjmp`s out of the sort's own frames, which hold no references, to a `setjmp` in a frame whose locals nothing changes after it, and the sort lets go of the references it took (a snapshot, since a merge halfway done may hold one twice and another not at all) and writes nothing back, so the array is as it was, as V8 leaves it. `return`, `break` and `continue` inside a `finally` override what the `try` was doing, a return, a throw, a break or a continue: the held result and the pending error each wait in a scope of the finally's, so leaving it lets go of them, and the flow graph routes the jump out from the finally's own block. Held by `closures_throw.a`, `closures_throw_uncaught.a` and `finally_leaves.a`.
 
 ### Exceptions in the graph
 
@@ -381,7 +381,13 @@ The analyses that move and reuse values (`internal/flow`, and reuse in place on 
 - **What reuse learned.** A variable that a statement assigns is only overwritten (and its old value dead) when the statement can't throw; one that can throw leaves the old value for whoever takes the throw. A global is never moved into a call in a statement that can throw: a catch, in this function or a caller, may read it and find it NULL. And a temporary handed to a consumed parameter stays the statement's own to let go until every argument is evaluated, since an argument after it can throw and then the call is never made.
 - **How it's held.** The trace check's runtime stops at a panic (a Node panic is a throw a catch could take, so the trace after it isn't native's), and the graph's paths must include every path Node took through `try`, `catch` and `finally`. R's probe `move_throw.a` is a fixture: a global moved into a call that throws, a local the catch reads, a spread whose field throws, a dead-looking local the catch reads, and a field taken out of a reused spread before a later field throws. The mutant that drops the `MayThrow` edges fails it under UBSan (a NULL read in the catch) and fails `internal/flow`'s own tests.
 
-**When regions meet exceptions (R, round 8; regions aren't on this branch yet).** A statement with a region that a throw leaves must end the region on its cleanup path, the same way it lets go of its temporaries in `checkThrown`, or the region's blocks and the heap values its objects hold leak. When the two merge, that's a fixture (a fresh call that throws mid-statement, inside a `try` and out of a function) and a mutant that leaves the region open on the throw path, caught by the leak check.
+**When regions meet exceptions (R, round 8).** A statement with a region that a throw leaves ends the region on its way out. `checkThrown` lets go of the statement's temporaries, then ends the statement's region, then jumps. Otherwise the region's blocks, and the heap strings its values hold, leak. Bringing the two together turned up three joins that broke without a word:
+
+- A call handed a region returned early, before the test of the pending exception that follows any call that can throw. A throw out of a region version went unseen: native went on with a NULL result, and the program printed the wrong totals.
+- The region's escape analysis didn't know `ir.Defined`, and took a narrowed parameter's field reads as keeping it. No region was planned anywhere.
+- Lent reads didn't count `ir.Defined` as pure, so an operand under it was retained. The counts table showed it: `regions.a` went to 0 in regions, and lent reads went quiet across the table.
+
+`regions_throw.a` throws out of a region version mid-statement, after nodes are made in the region: at the top level inside a `try`, out of a function into its caller's catch, and through a `finally`, each followed by a region that finishes. Mutant: no region end on the throw path, caught by the leak check (8,627 bytes in 9 allocations: the region's blocks and its label strings).
 
 ## Arenas
 
@@ -389,7 +395,7 @@ Some work allocates a lot and frees it all at once: one request, one file checke
 
 ### The design (#272q6cv, on paper)
 
-Status: **designed October 5, 2026, by stream A2; not built.** The benchmark it answers is `bench/trees.ts`. It makes 68,332,244 objects, each its own `malloc` and `free`. Node and Bun bump-allocate them in a young generation and drop each dead tree at once. Reuse in place can't help: nothing there is consumed to build its own shape.
+Status: **built** (`internal/native/region.go`, `runtime/region.c`), as designed below. What building it measured is at the end of this section. The benchmark it answers is `bench/trees.ts`. It makes 68,332,244 objects, each its own `malloc` and `free`. Node and Bun bump-allocate them in a young generation and drop each dead tree at once. Reuse in place can't help: nothing there is consumed to build its own shape.
 
 **What lives in a region.** A region is scoped to one statement, alive while it runs and freed when it ends. It holds the values the statement creates, directly or through calls, that are dead when it ends. In `total += check(build(depth))`, every node `build` makes is read by `check`, which keeps none of them, and nothing holds the tree after the statement. All of them can be allocated in the statement's region and freed with it: no `free` per node, no count reaching zero node by node.
 
@@ -425,12 +431,124 @@ Each needs a fixture that builds its strings and objects at runtime. Each must f
 - **Retains and releases:** unchanged as calls. On a region value they cost a branch and touch no count. Removing the calls for values statically known to be in a region is a later step.
 - **Peak live:** unchanged. A region frees at the statement's end, which is when each of those trees died anyway.
 
+**What building it measured.** The design held, with one correction to its prediction. On `bench/trees.ts`, counted:
+
+| | allocations | frees | in regions | retains | releases | peak live |
+|---|---:|---:|---:|---:|---:|---:|
+| Before | 68,332,244 | 68,332,244 | 0 | 272,979,306 | 204,647,140 | 2,097,149 |
+| After | 68,332,244 | 1,572,900 | 66,759,344 | 272,979,306 | 204,647,140 | 2,097,149 |
+
+- **In regions:** 66,759,344 is exactly the nodes of every `check(build(depth))`. It's the sum of the counts the program prints for its eight depths.
+- **The correction:** the prediction above (66,759,382 in regions and 1,572,862 frees) took every allocation besides the two long-lived trees for a node. It forgot the 38 strings the program builds to print, which are freed one at a time.
+- **Unchanged, as designed:** retains, releases and peak.
+
+**Time barely moved.** `go run ./bench -only trees -rounds 5`, best of 5, in the noisy cloud container (load about 4):
+
+| | native | Node | native vs Node |
+|---|---:|---:|---:|
+| Before | 2.727 s | 1.602 s | 1.70x |
+| After | 2.519 s | 1.464 s | 1.72x |
+
+Native's 8% is the same as Node's own run-to-run swing. Native's memory stayed at 97.9 MB, because the two long-lived trees are on the heap.
+
+So 66.8 million `malloc`s and `free`s were cheap here: glibc's small-object cache serves same-sized nodes quickly. What's left is, by inference rather than profiling, the 273 million retain calls. Each is a call into the runtime even when it does nothing for a region value, plus the recursion itself. Not emitting retains and releases on values statically known to be in a region is the next step for this benchmark.
+
+**How it's held.** `regions.a` puts one honest region beside every way a value could outlive its statement:
+
+- A callee keeps its parameter, keeps something read out of it, returns it, or stores it into another object.
+- A function keeps what it makes as well as returning it, or keeps a fresh value it doesn't return.
+- A fresh value is declared into a variable.
+- One statement has a region and also makes a value that escapes.
+
+Each kept value is read after its statement. Mutants, against the whole oracle:
+
+| Mutant | Caught by |
+|---|---|
+| No parameter escapes | ASan heap-use-after-free |
+| A fresh function hands its region to calls that don't feed its return | ASan heap-use-after-free |
+| Every fresh call in a statement that has a region gets it | ASan heap-use-after-free, on the one-statement-two-values line |
+| Every statement with a fresh call gets a region | ASan, in `regions.a` and the existing `weak_parent.a` and `08_results.ts` |
+| A region's end doesn't release what its values hold | the leak check |
+| A region's end doesn't free its blocks | the leak check |
+
+Freeing the blocks at the region's end is what poisons them: the blocks are ordinary `malloc` blocks, so ASan sees any later read as a use after free.
+
 **What it leaves for later.**
 
 - A region per loop iteration, per function call (a value made and dropped inside one call), and per request (stage 1's cohere, a file at a time).
 - Arrays in regions. Their element buffers grow by `realloc`, which a bump allocator can't do in place.
-- Not emitting retains and releases on values statically known to be in a region.
 
+### Region values, uncounted
+
+A value in a region needs no count, but a fresh function can't know whether its caller handed it a region or the heap, so every retain and release on what it makes was still a call, a branch inside the runtime that did nothing. So a fresh function is now emitted twice (`region.go`, `regionVariants`):
+
+- **The heap version** is the function as it was before regions: plain `adamic_object_new`, its calls to the heap versions of other fresh functions. A call handed no region calls it.
+- **The region version** (`_in`) takes a region that is never NULL. Its returned literal is made there, and the calls feeding that literal, or its return, go to region versions in turn. So every one of those values is statically in the region. Each is held in a temporary the statement doesn't own (`regionValue`), so it takes no release at the statement's end, a field holding it is written without a retain, and returning it takes none. Anything else a region literal holds, such as a heap string, is still retained, and the region's end releases it.
+- **The statement that has a region** calls the region version with `&region`, and doesn't own what it returns either.
+
+Measured on `bench/trees.ts`, counted:
+
+| | allocations | frees | in regions | retains | releases | peak live |
+|---|---:|---:|---:|---:|---:|---:|
+| Before | 68,332,244 | 1,572,900 | 66,759,344 | 272,979,306 | 204,647,140 | 2,097,149 |
+| After | 68,332,244 | 1,572,900 | 66,759,344 | 139,810,138 | 71,128,452 | 2,097,149 |
+
+Retains and releases each fell by about 133 million. That's three of each per inner node (two fields and the return, against the two call results and the literal) and one per leaf (the return, against the literal), over the 66.8 million region nodes. Nothing else moved. What's left of the retains is mostly `retain(NULL)` for a leaf's two `undefined` fields, plus the long-lived trees, which are on the heap.
+
+Time, `go run ./bench -only trees -rounds 5`, best of 5 at load about 2.6: native 1.968 s against Node's 1.423 s, so **1.38x Node, down from 1.72x**. Interleaved against the previous commit's binary, best of 5: 2.504 s before, 2.004 s after. Memory is unchanged at 97.9 MB.
+
+In the oracle's table, only `regions.a` moved: retains 624 to 517, releases 708 to 596.
+
+Two mutants, each run against `regions.a` and each caught:
+
+| Mutant | Caught by |
+|---|---|
+| A heap call to a fresh function is taken as in a region (its result uncounted) | the leak check |
+| A region literal holds every field without a retain, its heap strings included | ASan heap-use-after-free, on a label string the region's end let go of |
+
+### No retain of the constant undefined
+
+Retain passes over the null pointer, but each `adamic_retain(NULL)` was still a call. Every place the emitter retains a value it keeps now goes through `retained` (`emit.go`). When the value's C is the null pointer constant, however it's parenthesized or cast (an `undefined`, a missing argument, `undefined` boxed into a union), it is kept as it is, with no call. Before this, the 0.1 fixtures and the oracle's held 50 such calls: 27 into object fields, 13 into globals and locals, 4 into array elements, 6 elsewhere. None are left.
+
+Measured on `bench/trees.ts`, counted, against 926feae:
+
+| | retains | releases |
+|---|---:|---:|
+| Before | 71,827,454 | 3,145,768 |
+| After | 3,145,726 | 3,145,768 |
+
+That's 68,681,728 fewer retains: the two `undefined` children of every leaf. Nothing else moved. The merge of main had already taken `trees` from 139,810,138 retains and 71,128,452 releases to the "before" row: lent reads now see through `ir.Defined`, so `check` reads its tree's children without a count.
+
+**Releases didn't fall, on any row, and can't.** 22 rows of the oracle's table moved, each by retains alone, from 1 (`main.ts`) to 112 (`regions.a`). Allocations, frees and peak moved on none. A retain of the null constant has no counted release to match. When it went into a field or an element, the slot is let go of by the runtime when its holder is freed (`let_go` in `heap.c`), which isn't a counted release. When it went into a variable or a global, the release that comes later is of whatever the variable holds by then, and that release still happens.
+
+Two mutants:
+
+| Mutant | Result |
+|---|---|
+| Any C containing `NULL` taken for the constant | changes no fixture's C: no value that reaches `retained` contains `NULL` but the constant, so it proves nothing |
+| Any cast pointer, `((T *)(name))`, taken for the constant | changes only `unions.a`, where a string or object boxed into a union loses its retain: ASan heap-use-after-free |
+
+### Moving a statement's temporary into what keeps it
+
+With regions uncounted and `undefined` free, what was left on `trees` was the heap version of `build`, for the two long-lived trees. Measured first: 3,145,722 of the 3,145,726 retains were its own. Each inner node retained its two children's call results into its fields and itself into its return, three retains, then let go of the three temporaries when the statement ended, three releases. Each leaf did it once, for its return. 786,430 inner nodes times 3 plus 786,432 leaves is exactly that.
+
+A temporary the statement owns, handed to a place that keeps it, is now moved there with its count (`kept` in `emit.go`): no retain, and the statement doesn't let go of it at its end. Only two places qualify, because they can't let go of what they hold before the statement ends:
+
+- **A field of an object literal**, which the statement made and owns. This covers a spread, reused or copied, too.
+- **What a function returns.**
+
+A variable or a global doesn't qualify. A call later in the same statement could assign it, letting go of the value while the statement still reads it.
+
+On `trees`, counted: retains 3,145,726 to 4, releases 3,145,768 to 46, the same 3,145,722 off each. Allocations, frees and peak didn't move. In the oracle's table 63 rows moved, every one by equal retains and releases, 1,001,548 of each in all.
+
+Time, `go run ./bench -only trees -rounds 5`, best of 5 at load about 3: native 1.512 s, Node 1.518 s, **1.00x Node**, at a third of Node's memory (98.0 MB against 300.9). Interleaved against the commit before this one: 1.625 s to 1.559 s.
+
+Two mutants, each run against the whole oracle and each caught by ASan alone:
+
+| Mutant | Caught by |
+|---|---|
+| A value the statement doesn't own is moved too, so nothing retains it | heap-use-after-free, in 28 fixtures |
+| An owned temporary is moved but still let go of at the statement's end | heap-use-after-free, in 63 fixtures |
 
 ## Strings, specifically
 

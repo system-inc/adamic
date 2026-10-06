@@ -389,6 +389,10 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if _, isKnown := stringMethods[name]; isKnown && receiverType == ir.String {
 		return l.stringCall(node, receiver, name)
 	}
+	if receiverType == ir.Object && checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
+		// A tuple is held as an object: called as an object, an array method would be read as a field.
+		return nil, true, l.notYet(node, name+" on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made)")
+	}
 	if !isMath && !isToFixed {
 		return nil, false, nil
 	}
@@ -951,7 +955,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	key, keyKnown := l.representation(arguments[0])
 	value, valueKnown := l.kept(arguments[1])
 	if !keyKnown || !keyable(key) {
-		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, objects, arrays, maps or functions")
+		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
 	if !valueKnown || slotless(value) {
@@ -1227,9 +1231,18 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
 	index := ast.SkipParentheses(access.ArgumentExpression)
+	optional := access.QuestionDotToken != nil
+	if !optional && node.Flags&ast.NodeFlagsOptionalChain != 0 {
+		// The rest of a chain after a ?., which short-circuits with it.
+		return nil, l.notYet(node, "an optional chain longer than one step")
+	}
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if optional && object.Type() != ir.Object {
+		// text?.[0] on a string that may be missing: indexing it as a string would read a null one.
+		return nil, l.notYet(node, "?.[] on a "+typeName(object.Type()))
 	}
 	if object.Type() == ir.String {
 		position, err := l.expression(access.ArgumentExpression)
@@ -1254,6 +1267,10 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "an array index that isn't a number")
 		}
 		return ir.ArrayIndex{Array: object, Index: position, Element: element}, nil
+	}
+	// pairs[0]?.[0]: the tuple may be missing, and the read is undefined then (collections.go).
+	if optional {
+		return l.optionalTupleElement(node, object, index)
 	}
 	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
 		return nil, l.notYet(node, describe(node))

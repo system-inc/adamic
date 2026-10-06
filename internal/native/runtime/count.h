@@ -20,6 +20,9 @@ typedef struct adamic_counts {
 	// live is allocations less frees, and peak the most that were ever live at once.
 	size_t live;
 	size_t peak;
+	// regions is the values let go of with their region rather than freed one at a time (region.c):
+	// a finished program's allocations are its frees and its regions.
+	size_t regions;
 } adamic_counts;
 
 extern adamic_counts adamic_counted;
@@ -27,7 +30,7 @@ extern adamic_counts adamic_counted;
 void adamic_count_allocation(void);
 
 // adamic_count_report writes the counts to stderr, as one line the oracle reads:
-// adamic: counts: allocations 3 frees 3 retains 7 releases 10 peak 2
+// adamic: counts: allocations 3 frees 3 retains 7 releases 10 peak 2 regions 0
 void adamic_count_report(void);
 
 #ifdef ADAMIC_COUNT
@@ -36,12 +39,14 @@ void adamic_count_report(void);
 #define ADAMIC_COUNT_RETAIN() (adamic_counted.retains++)
 #define ADAMIC_COUNT_RELEASE() (adamic_counted.releases++)
 #define ADAMIC_COUNT_REPORT() adamic_count_report()
+#define ADAMIC_COUNT_REGION(count) (adamic_counted.regions += (count), adamic_counted.live -= (count))
 #else
 #define ADAMIC_COUNT_ALLOCATION() ((void)0)
 #define ADAMIC_COUNT_FREE() ((void)0)
 #define ADAMIC_COUNT_RETAIN() ((void)0)
 #define ADAMIC_COUNT_RELEASE() ((void)0)
 #define ADAMIC_COUNT_REPORT() ((void)0)
+#define ADAMIC_COUNT_REGION(count) ((void)(count))
 #endif
 
 #endif

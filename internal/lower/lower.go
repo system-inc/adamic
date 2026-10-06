@@ -87,6 +87,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, err
 	}
 	borrow(lowering.result)
+	counters(lowering.result)
 	return lowering.result, nil
 }
 
@@ -136,9 +137,8 @@ type lowering struct {
 
 	// caught are the variables a catch binds, each always an Error; tries are the try statements
 	// lowered (exceptions.go).
-	caught        map[*ast.Symbol]bool
-	tries         []tryRecord
-	functionNodes map[int]*ast.Node
+	caught map[*ast.Symbol]bool
+	tries  []tryRecord
 
 	// initializing is the variables whose initializers are being lowered, by where each is declared.
 	initializing map[int]*ast.Node
@@ -217,8 +217,9 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				continue // statements() refuses var where it stands
 			}
 			for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
-				// A module's const [a, b] = tuple declares globals too, each name its own.
-				if declaration.Name().Kind == ast.KindArrayBindingPattern {
+				// A module's const [a, b] = tuple, or { x, y } = object, declares globals too, each name
+				// its own.
+				if declaration.Name().Kind == ast.KindArrayBindingPattern || declaration.Name().Kind == ast.KindObjectBindingPattern {
 					for _, binding := range declaration.Name().AsBindingPattern().Elements.Nodes {
 						if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil || !ast.IsIdentifier(binding.Name()) {
 							continue
@@ -250,10 +251,6 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.functions = map[*ast.Symbol]int{}
 			}
 			l.functions[symbol] = len(l.result.Functions)
-			if l.functionNodes == nil {
-				l.functionNodes = map[int]*ast.Node{}
-			}
-			l.functionNodes[len(l.result.Functions)] = statement
 			l.result.Functions = append(l.result.Functions, ir.Function{Name: statement.Name().Text()})
 			declarations = append(declarations, statement)
 		}
@@ -336,8 +333,23 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 		initializer     *ast.Node
 	}
 	defaults := []defaulted{}
+	// A destructured parameter, ([key, value]) or ({ x, y }), arrives whole in a parameter of its own,
+	// and its names are declared from it before the body runs.
+	type patterned struct {
+		pattern   *ast.Node
+		parameter *ast.Node
+		incoming  int
+	}
+	patterns := []patterned{}
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
+		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
+			incoming := len(l.result.Locals)
+			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: index})
+			function.Parameters = append(function.Parameters, incoming)
+			patterns = append(patterns, patterned{pattern: name, parameter: parameter, incoming: incoming})
+			continue
+		}
 		if !ast.IsIdentifier(parameter.Name()) || declared.DotDotDotToken != nil {
 			return l.notYet(parameter, "a parameter that isn't a plain name")
 		}
@@ -386,7 +398,25 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 	// Defaults run before the body, in order, after a constructor's fields, as JavaScript runs them.
 	var prologue, lowered []ir.Statement
 	var err error
+	if len(patterns) > 0 && len(defaults) > 0 {
+		// JavaScript binds parameters in order, a default perhaps reading a name destructured
+		// before it; the two together aren't lowered yet.
+		err = l.notYet(declaration, "a destructured parameter beside a parameter with a default")
+	}
+	for _, parameter := range patterns {
+		if err != nil {
+			break
+		}
+		var destructured []ir.Statement
+		patternType := l.checker.GetTypeAtLocation(parameter.parameter)
+		heldAs, _ := l.representation(patternType)
+		destructured, err = l.destructureFrom(parameter.pattern, patternType, heldAs, parameter.incoming)
+		prologue = append(prologue, destructured...)
+	}
 	for _, parameter := range defaults {
+		if err != nil {
+			break
+		}
 		var fallback ir.Expression
 		if fallback, err = l.expression(parameter.initializer); err != nil {
 			break
@@ -577,8 +607,8 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 	statements := []ir.Statement{}
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
 		name := declaration.Name()
-		if name.Kind == ast.KindArrayBindingPattern {
-			// const [a, b] = tuple (collections.go).
+		if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
+			// const [a, b] = tuple, and const { x, y } = object (collections.go).
 			destructured, err := l.destructure(name, declaration.AsVariableDeclaration().Initializer)
 			if err != nil {
 				return nil, err

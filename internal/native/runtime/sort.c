@@ -10,6 +10,7 @@
 
 #include "adamic.h"
 
+#include <setjmp.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,10 +29,19 @@ typedef struct {
 	ptrdiff_t base[85];
 	ptrdiff_t length[85];
 	ptrdiff_t runs;
+	// stop is where a comparator that throws sends the sort, out of however deep in a merge it is:
+	// V8 sorts a copy and writes it back only once it's done, so a throw leaves the array as it was,
+	// and the work in progress, perhaps halfway through a merge, is dropped.
+	jmp_buf stop;
 } sort_state;
 
 static int order(sort_state *state, adamic_value left, adamic_value right) {
-	return state->compare(left, right, state->context);
+	int ordered = state->compare(left, right, state->context);
+	if (adamic_thrown != NULL) {
+		// Only the sort's own frames lie between here and stop, none holding a reference.
+		longjmp(state->stop, 1);
+	}
+	return ordered;
 }
 
 // copy moves count values, the right way round when the source and destination overlap.
@@ -461,10 +471,41 @@ static void merge_force_collapse(sort_state *state) {
 	}
 }
 
-void adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_value, adamic_value, void *), void *context) {
+// sorted is the sort itself, which a comparator that throws leaves by stop.
+static void sorted(sort_state *state, ptrdiff_t length) {
+	ptrdiff_t remaining = length, low = 0;
+	ptrdiff_t shortest = minimum_run(remaining);
+	while (remaining != 0) {
+		ptrdiff_t run = count_run(state, low, low + remaining);
+		if (run < shortest) {
+			ptrdiff_t forced = shortest < remaining ? shortest : remaining;
+			binary_insertion(state, low, low + run, low + forced);
+			run = forced;
+		}
+		state->base[state->runs] = low;
+		state->length[state->runs] = run;
+		state->runs++;
+		merge_collapse(state);
+		low += run;
+		remaining -= run;
+	}
+	merge_force_collapse(state);
+}
+
+// sorted_or_stopped runs the sort, and says false when a comparator threw. The setjmp is in a frame
+// of its own, whose locals nothing changes after it, so none is left indeterminate by the longjmp.
+static bool sorted_or_stopped(sort_state *state, ptrdiff_t length) {
+	if (setjmp(state->stop) != 0) {
+		return false;
+	}
+	sorted(state, length);
+	return true;
+}
+
+bool adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_value, adamic_value, void *), void *context) {
 	ptrdiff_t length = (ptrdiff_t)count;
 	if (length < 2) {
-		return;
+		return true;
 	}
 	sort_state state = {.work = work, .compare = compare, .context = context, .minimum_gallop = minimum_gallop};
 	state.temporary = malloc(count * sizeof *work);
@@ -472,22 +513,7 @@ void adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_valu
 		static const char message[] = "out of memory";
 		adamic_panic(message, sizeof message - 1);
 	}
-	ptrdiff_t remaining = length, low = 0;
-	ptrdiff_t shortest = minimum_run(remaining);
-	while (remaining != 0) {
-		ptrdiff_t run = count_run(&state, low, low + remaining);
-		if (run < shortest) {
-			ptrdiff_t forced = shortest < remaining ? shortest : remaining;
-			binary_insertion(&state, low, low + run, low + forced);
-			run = forced;
-		}
-		state.base[state.runs] = low;
-		state.length[state.runs] = run;
-		state.runs++;
-		merge_collapse(&state);
-		low += run;
-		remaining -= run;
-	}
-	merge_force_collapse(&state);
+	bool finished = sorted_or_stopped(&state, length);
 	free(state.temporary);
+	return finished;
 }

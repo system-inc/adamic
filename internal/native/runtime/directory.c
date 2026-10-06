@@ -35,7 +35,7 @@ static adamic_string other_type = ADAMIC_STRING("other");
 // on every platform. The JavaScript runtime says the same (oracle/adamic.mjs), from Node's error
 // codes, which are these errno names.
 static adamic_object *failure(const char *prefix, size_t prefix_length, const adamic_string *path, int error, bool listing) {
-	adamic_string before = {{0, adamic_kind_string}, prefix_length, prefix, 0, NULL};
+	adamic_string before = {{0, adamic_kind_string, 0}, prefix_length, prefix, 0, NULL};
 	static adamic_string missing_file = ADAMIC_STRING(": no such file");
 	static adamic_string missing_directory = ADAMIC_STRING(": no such directory");
 	static adamic_string not_directory = ADAMIC_STRING(": not a directory");
@@ -66,6 +66,8 @@ static int compare_names(const void *left, const void *right) {
 
 adamic_object *adamic_read_directory(const adamic_string *path) {
 	static const char prefix[] = "cannot read directory ";
+	// What was printed comes first, as on Node, before anything of the file system is looked at.
+	adamic_output_flush();
 	char *name = adamic_path_bytes(path);
 	if (name == NULL) {
 		return failure(prefix, sizeof prefix - 1, path, 0, true);
@@ -129,6 +131,9 @@ adamic_object *adamic_read_directory(const adamic_string *path) {
 
 adamic_object *adamic_file_status(const adamic_string *path) {
 	static const char prefix[] = "cannot read status of ";
+	// What was printed comes first, as on Node: the path may be stdout itself, its size what's
+	// been written.
+	adamic_output_flush();
 	char *name = adamic_path_bytes(path);
 	if (name == NULL) {
 		return failure(prefix, sizeof prefix - 1, path, 0, false);

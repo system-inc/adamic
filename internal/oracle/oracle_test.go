@@ -124,7 +124,14 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/exceptions_empty.a", true, false},
 	{"internal/oracle/testdata/declared_later.a", true, false},
 	{"internal/oracle/testdata/exceptions_made_elsewhere.a", true, false},
+	{"internal/oracle/testdata/closures_throw.a", true, false},
+	{"internal/oracle/testdata/closures_throw_uncaught.a", true, false},
+	{"internal/oracle/testdata/finally_leaves.a", true, false},
 	{"internal/oracle/testdata/panic_in_try.a", true, false},
+	{"internal/oracle/testdata/invariance_readonly.a", true, false},
+	{"internal/oracle/testdata/tuples_kept.a", true, false},
+	{"internal/oracle/testdata/undefined_keys.a", true, false},
+	{"internal/oracle/testdata/undefined_strings.a", true, false},
 	{"internal/oracle/testdata/maybe_booleans.a", true, false},
 	{"internal/oracle/testdata/maybe_boolean_panic.a", true, false},
 	{"internal/oracle/testdata/unions.a", true, false},
@@ -147,6 +154,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_positions.a", true, false},
 	{"internal/oracle/testdata/long_literals.a", true, false},
 	{"internal/oracle/testdata/class_layouts.a", true, false},
+	{"internal/oracle/testdata/ascii_scan.a", true, false},
+	{"internal/oracle/testdata/size_class_churn.a", true, false},
 	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
@@ -164,6 +173,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_global_sibling.a", true, false},
 	{"internal/oracle/testdata/reuse_weak_during_spread.a", true, false},
 	{"internal/oracle/testdata/reuse_weak_after_reuse.a", true, false},
+	// Regions: a statement's fresh values let go of together, and every way one could escape kept off it.
+	{"internal/oracle/testdata/regions.a", true, false},
+	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
+	{"internal/oracle/testdata/regions_throw.a", true, false},
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
 	// was moved or spread.
 	{"internal/oracle/testdata/move_throw.a", true, false},
@@ -192,6 +205,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/write_stderr_order.a", true, false},
 	{"internal/oracle/testdata/prompt_then_read.a", true, false},
 	{"internal/oracle/testdata/collections.a", true, false},
+	{"internal/oracle/testdata/gaps.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
@@ -202,6 +216,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
+	// and a counted loop inside one.
+	{"internal/oracle/testdata/try_assignments.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
@@ -283,6 +300,16 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 // On Linux, ASan carries LeakSanitizer and runs it at exit by default. This run is the comparison, and
 // a program that panics exits 70 holding what it held, which isn't a leak, so leak detection is off
 // here and the leak check is a run of its own. macOS's ASan has no leak detection to turn off.
+// released builds a lowered program as a user's build is made, without sanitizers, and runs it.
+func released(t *testing.T, program *ir.Program) run {
+	t.Helper()
+	binary := filepath.Join(t.TempDir(), "release")
+	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+		t.Fatal(err)
+	}
+	return execute(t, binary)
+}
+
 func natively(t *testing.T, program *ir.Program) (run, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program")
@@ -377,6 +404,12 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			}
 			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
 			native, sanitized := natively(t, program)
+			// The build a user gets (clang -O2, no sanitizers, heap values from the size-class
+			// allocator rather than malloc) must say exactly what the sanitized one did.
+			if released := released(t, program); disagreement(native, released) != "" {
+				t.Errorf("the release build: %s\nsanitized: exit %d, stdout %q, stderr %q\nrelease:   exit %d, stdout %q, stderr %q",
+					disagreement(native, released), native.exitCode, native.stdout, native.stderr, released.exitCode, released.stdout, released.stderr)
+			}
 			if fixture.checked {
 				// The check fires, so the source on Node goes on where Adamic stops: hold native to the
 				// backend that carries the same check, and make sure the check really did fire.

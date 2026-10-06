@@ -22,6 +22,12 @@ type Program struct {
 
 	// Main is what the program does, in order.
 	Main []Statement
+
+	// ClosuresMayThrow says a function value somewhere in the program can throw. Which one a call
+	// through a function value reaches isn't known, so every such call can then throw: one written
+	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
+	// callers test for it after each.
+	ClosuresMayThrow bool
 }
 
 // Function is a function declaration.
@@ -139,6 +145,11 @@ type Local struct {
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
 	Borrowed bool
+
+	// Counter is a for loop's counter proven to hold only whole numbers no larger than 2^53, each a
+	// double exactly, so the native backend keeps it in an integer and reads it as the same double
+	// (internal/lower/counters.go). Only the loop's update ever writes it.
+	Counter bool
 }
 
 // Expression is a value. Evaluating a String expression yields a reference its consumer owns: the
@@ -195,6 +206,10 @@ type (
 	Conditional struct {
 		Condition         Expression
 		WhenTrue, WhenNot Expression
+
+		// Of, when set, is what the conditional gives where its branches' own types don't say:
+		// flag ? text : undefined is a string that may be missing, though one branch is undefined.
+		Of Type
 	}
 
 	// ObjectLiteral makes an object. With Spread, it's { ...Spread, fields }: a copy of Spread's
@@ -626,8 +641,13 @@ func (StringConstant) Type() Type  { return String }
 func (NumberToString) Type() Type  { return String }
 func (BooleanToString) Type() Type { return String }
 func (Concat) Type() Type          { return String }
-func (c Conditional) Type() Type   { return c.WhenTrue.Type() }
-func (ObjectLiteral) Type() Type   { return Object }
+func (c Conditional) Type() Type {
+	if c.Of != 0 {
+		return c.Of
+	}
+	return c.WhenTrue.Type()
+}
+func (ObjectLiteral) Type() Type { return Object }
 func (p Property) Type() Type {
 	if p.Optional {
 		return Maybe(p.Of)

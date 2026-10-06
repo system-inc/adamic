@@ -24,7 +24,7 @@ func (l *lowering) setElement(node *ast.Node) (ir.Type, error) {
 	}
 	element, isKnown := l.representation(arguments[0])
 	if !isKnown || !keyable(element) {
-		return 0, l.notYet(node, "a Set of "+l.checker.TypeToString(arguments[0])+" (a Set holds strings, numbers, objects, arrays, maps or functions so far)")
+		return 0, l.notYet(node, "a Set of "+l.checker.TypeToString(arguments[0])+" (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)")
 	}
 	return element, nil
 }

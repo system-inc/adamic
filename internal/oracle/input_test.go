@@ -200,9 +200,14 @@ func writable(t *testing.T, shared string, name string) string {
 		t.Fatal(err)
 	}
 	// A file whose name isn't valid UTF-8, which Node lists decoded, the bad byte as U+FFFD. Linux
-	// keeps any bytes; macOS's file system refuses such a name, so there it isn't made, and the case
+	// keeps any bytes; macOS's file system refuses such a name, so there the file is named what Node
+	// reads it back as, which lists, sorts among the rest and counts the same, and only the decoding
 	// goes unasked.
-	_ = os.WriteFile(filepath.Join(directory, "bad\xff name"), nil, 0o644)
+	if err := os.WriteFile(filepath.Join(directory, "bad\xff name"), nil, 0o644); err != nil {
+		if err := os.WriteFile(filepath.Join(directory, "bad\uFFFD name"), nil, 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
 	// And two a walk can't go into: unlisted can be passed through but not listed, and closed not
 	// even passed through. Mkdir's mode passes through the umask, so each is set whole.
 	for name, mode := range map[string]os.FileMode{"unlisted": 0o311, "closed": 0o000} {

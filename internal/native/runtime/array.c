@@ -99,7 +99,7 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 			length += size;
 		}
 	}
-	adamic_string piece = {{0, adamic_kind_string}, length, buffer, 0, NULL};
+	adamic_string piece = {{0, adamic_kind_string, 0}, length, buffer, 0, NULL};
 	adamic_string *joined = adamic_string_concat(1, (adamic_string *const[]){&piece});
 	free(buffer);
 	return joined;
@@ -151,7 +151,30 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 			adamic_retain(work[index].reference);
 		}
 	}
-	adamic_timsort(work, length, compare, context);
+	// The references just taken, as they were taken: a comparator that throws leaves the work copy
+	// halfway through a merge, perhaps holding one twice and another not at all, so it's these that
+	// are let go then.
+	adamic_value *taken = NULL;
+	if (references) {
+		taken = malloc(length * sizeof *taken);
+		if (taken == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		memcpy(taken, work, length * sizeof *taken);
+	}
+	if (!adamic_timsort(work, length, compare, context)) {
+		// A comparator threw: the array stays as it was, as V8 leaves it, and the throw goes on.
+		if (references) {
+			for (size_t index = 0; index < length; index++) {
+				adamic_release(taken[index].reference);
+			}
+		}
+		free(taken);
+		free(work);
+		return;
+	}
+	free(taken);
 	// Written back as V8 does, index by index: each held reference becomes the array's, and what it
 	// held there is let go. Past a length the comparator shrank, the array grows again.
 	for (size_t index = 0; index < length; index++) {

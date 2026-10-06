@@ -33,6 +33,9 @@ enum adamic_kind {
 typedef struct adamic_heap {
 	size_t references;
 	enum adamic_kind kind;
+	// slab is the number of the chunk the value's memory came from, plus one, or 0 for memory from
+	// malloc and for a value never freed (heap.c). It fills what was padding.
+	uint32_t slab;
 } adamic_heap;
 
 // adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
@@ -105,10 +108,10 @@ extern char adamic_literal_mark;
 #define ADAMIC_LITERAL_INDEX ((struct adamic_string_index *)&adamic_literal_mark)
 
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
-#define ADAMIC_STRING(text) {{0, adamic_kind_string}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX}
+#define ADAMIC_STRING(text) {{0, adamic_kind_string, 0}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX}
 
 // ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
-#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string}, size, array, 0, ADAMIC_LITERAL_INDEX}
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, array, 0, ADAMIC_LITERAL_INDEX}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 typedef struct adamic_shape {
@@ -135,6 +138,19 @@ typedef struct adamic_slot_cache {
 // adamic_object_new makes an object of a shape, its fields zeroed for the caller to fill; a reference
 // stored in a field belongs to the object.
 adamic_object *adamic_object_new(const adamic_shape *shape);
+
+// adamic_region is a region (region.c): the objects one statement makes that nothing reaches after
+// it, let go of together when it ends. ADAMIC_REGION is an empty one. adamic_object_new_in makes an
+// object in a region (on the heap, as adamic_object_new does, for a NULL region), and
+// adamic_region_end lets go of the region's objects and what they hold.
+typedef struct adamic_region_block adamic_region_block;
+typedef struct adamic_region {
+	adamic_region_block *blocks;
+	size_t count;
+} adamic_region;
+#define ADAMIC_REGION {NULL, 0}
+adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape);
+void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
@@ -183,6 +199,9 @@ typedef struct adamic_map {
 	// reference_keys is keys that are counted references: strings, compared by their text, or, when
 	// string_keys isn't set, objects, arrays, maps and functions, compared by identity, as === does.
 	bool reference_keys;
+	// boolean_keys is keys that are booleans, compared and hashed as booleans: a boolean set in an
+	// adamic_value leaves the rest of its bytes unspecified, so it's never read as a number.
+	bool boolean_keys;
 	bool reference_values;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
@@ -208,6 +227,9 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values);
 // adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
 // key, found by identity (map.c).
 adamic_map *adamic_map_new_identity(bool reference_values);
+
+// adamic_map_new_booleans is a map whose keys are booleans: true and false, two keys at most.
+adamic_map *adamic_map_new_booleans(bool reference_values);
 
 // adamic_map_clear is map.clear() and set.clear(): every entry deleted, as if one by one, so an
 // iteration open over it goes on with whatever is added after.
@@ -248,6 +270,15 @@ void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
 // trunc(index) exactly (below 2^53 the conversion is exact, and from there every double is whole), so
 // a fraction is caught without calling trunc, which on x86-64 without SSE4.1 is a call into libm on
 // every read. -0 is index 0, as JavaScript reads it.
+// adamic_array_at_integer is array[index] for an index that's a whole number already, a loop counter
+// kept in an integer (lower/counters.go): the same answer, with only the bounds to check.
+static inline adamic_value *adamic_array_at_integer(const adamic_array *array, int64_t index) {
+	if (index < 0 || (uint64_t)index >= array->length) {
+		return NULL;
+	}
+	return &array->elements[index];
+}
+
 static inline adamic_value *adamic_array_at(const adamic_array *array, double index) {
 	if (!(index >= 0) || index >= (double)array->length) {
 		return NULL;
@@ -309,8 +340,9 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
-// adamic_timsort sorts count values in place by V8's algorithm (sort.c).
-void adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_value, adamic_value, void *), void *context);
+// adamic_timsort sorts count values in place by V8's algorithm (sort.c). It says false, the values
+// in some order of the sort's half done, when the comparator threw (adamic_thrown set).
+bool adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_value, adamic_value, void *), void *context);
 
 // adamic_array_sort_undefined_last sorts an array of number | undefined as JavaScript does: every
 // undefined goes to the end, never passed to the comparator (sort_undefined.c).
@@ -360,8 +392,23 @@ adamic_maybe_number adamic_maybe_number_unpack(double packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
-double adamic_string_length(const adamic_string *string);
-double adamic_string_char_code_at(const adamic_string *string, double position);
+//
+// length is the count of units, once it's been made, inline; and charCodeAt of an ASCII string (its
+// units are its bytes) at an index inside it is that byte, inline, which is what a scanner's loop
+// does. NaN, a negative, past the end, a non-ASCII string (through its index, string_index.c) and a
+// length not yet counted go to adamic_string_char_code, out of line. A position from 0 up to the
+// length truncates to its index as (size_t) does.
+size_t adamic_string_units(const adamic_string *string);
+double adamic_string_char_code(const adamic_string *string, double position);
+static inline double adamic_string_length(const adamic_string *string) {
+	return string->units != 0 ? (double)(string->units - 1) : (double)adamic_string_units(string);
+}
+static inline double adamic_string_char_code_at(const adamic_string *string, double position) {
+	if (string->units == string->length + 1 && position >= 0 && position < (double)string->length) {
+		return (double)(unsigned char)string->bytes[(size_t)position];
+	}
+	return adamic_string_char_code(string, position);
+}
 adamic_string *adamic_string_trim(adamic_string *string);
 
 // for...of over a string walks code points: adamic_string_next is the byte size of the one at offset,

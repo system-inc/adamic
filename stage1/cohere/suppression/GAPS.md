@@ -34,7 +34,9 @@ stage 0 can't lower a void call used as a value yet        (Node prints true fal
 
 **Around it, until it closed:** scan.go's `scanCode` calls `skipTemplate` for a template literal, and `skipTemplate` calls `scanCode` for each `${...}`, because an interpolation is code. The port writes `skipTemplate`'s loop inside `scanCode`'s template case (scan.ts), where the recursion is a function calling itself, which lowers. Now that the gap is closed, scan.ts has `skipTemplate` as its own function again, after `scanCode`, as scan.go has it.
 
-## 2. `return undefined` from a function returning an array or undefined
+## 2. `return undefined` from a function returning an array or undefined (closed by stream B2's af5e41e, in integration 10)
+
+Closed: the program prints natively what it prints on Node. The port's workarounds (directives.ts and main.ts, gap 2) still stand; stream P2 undoes them.
 
 mediaquery's gap 2 is `return undefined` from a function returning `string | undefined`, which lowers to C that clang refuses. It is not only strings: an array does the same.
 

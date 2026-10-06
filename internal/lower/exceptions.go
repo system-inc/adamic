@@ -168,41 +168,14 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 	}
 	if block := statement.FinallyBlock; block != nil {
 		lowered.HasFinally = true
-		if leaving := leavesFinally(block); leaving != nil {
-			// JavaScript lets these override whatever the try was doing, a throw or a return included.
-			return nil, l.notYet(leaving, describe(leaving)+" that leaves a finally")
-		}
+		// A return, break or continue out of the finally overrides whatever the try was doing, a
+		// throw or a return included: the emitter lets go of the pending error or the held result on
+		// the way out, as the scopes they wait in are left.
 		if lowered.Finally, err = l.statements(block.AsBlock().Statements.Nodes); err != nil {
 			return nil, err
 		}
 	}
 	return []ir.Statement{lowered}, nil
-}
-
-// leavesFinally finds a return, or a break or continue out of the finally block, in it.
-func leavesFinally(block *ast.Node) *ast.Node {
-	var found *ast.Node
-	var visit func(node *ast.Node, loops int) bool
-	visit = func(node *ast.Node, loops int) bool {
-		if found != nil || ast.IsFunctionLike(node) {
-			return found != nil
-		}
-		switch node.Kind {
-		case ast.KindReturnStatement:
-			found = node
-			return true
-		case ast.KindBreakStatement, ast.KindContinueStatement:
-			if loops == 0 {
-				found = node
-				return true
-			}
-		case ast.KindForStatement, ast.KindForOfStatement, ast.KindWhileStatement, ast.KindDoStatement, ast.KindSwitchStatement:
-			loops++
-		}
-		return node.ForEachChild(func(child *ast.Node) bool { return visit(child, loops) })
-	}
-	block.ForEachChild(func(child *ast.Node) bool { return visit(child, 0) })
-	return found
 }
 
 // caughtInstanceOfError lowers error instanceof Error on what a catch took, which is always an Error.
@@ -217,38 +190,23 @@ func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 }
 
 // exceptions works out which functions a throw can leave, once every function is lowered, and
-// refuses what the first cut can't do yet: a function value that can throw, and a try that can reach
-// a library call whose failure is a panic natively but a throw on Node.
+// refuses what can't be done yet: a try that can reach a library call whose failure is a panic
+// natively but a throw on Node.
 func (l *lowering) exceptions() error {
 	functions := l.result.Functions
+	// Whether any function value can throw, and so every call through one, grows with what can, so
+	// the two are worked out together until neither changes.
 	for changed := true; changed; {
 		changed = false
 		for index := range functions {
+			if functions[index].Closure && functions[index].MayThrow && !l.result.ClosuresMayThrow {
+				l.result.ClosuresMayThrow = true
+				changed = true
+			}
 			if !functions[index].MayThrow && l.throwsOut(functions[index].Body) {
 				functions[index].MayThrow = true
 				changed = true
 			}
-		}
-	}
-	for _, closure := range l.closureRecords {
-		if functions[closure.function].MayThrow {
-			return l.notYet(closure.node, "a function value that can throw (the runtime calls them from its own loops, which a throw would have to leave)")
-		}
-	}
-	bodies := [][]ir.Statement{l.result.Main}
-	for index := range functions {
-		bodies = append(bodies, functions[index].Body)
-	}
-	for _, body := range bodies {
-		var throwing *ir.ArraySort
-		walk(body, func(node any) bool {
-			if sort, isSort := node.(ir.ArraySort); isSort && sort.Callback == nil && functions[sort.Comparator].MayThrow {
-				throwing = &sort
-			}
-			return throwing == nil
-		})
-		if throwing != nil {
-			return l.notYet(l.functionNodes[throwing.Comparator], "a sort comparator that can throw (the runtime's sort calls it, which a throw would have to leave)")
 		}
 	}
 	for _, record := range l.tries {
@@ -260,7 +218,8 @@ func (l *lowering) exceptions() error {
 }
 
 // throwsOut reports whether a throw can leave statements: a throw, or a call to a function that can
-// throw, that isn't inside a try's body with a catch.
+// throw (through a function value too, a sort's comparator among them), that isn't inside a try's
+// body with a catch.
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
 	walk(statements, func(node any) bool {
@@ -275,6 +234,15 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = true
 		case ir.Call:
 			if l.result.Functions[node.Function].MayThrow {
+				found = true
+			}
+		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+			// A call through a function value, written out or made by the runtime's loop.
+			if l.result.ClosuresMayThrow {
+				found = true
+			}
+		case ir.ArraySort:
+			if (node.Callback != nil && l.result.ClosuresMayThrow) || (node.Callback == nil && l.result.Functions[node.Comparator].MayThrow) {
 				found = true
 			}
 		}
@@ -296,7 +264,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				visited[node.Function] = true
 				failing = l.libraryFailure(l.result.Functions[node.Function].Body, visited)
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce:
+		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
 			callsClosures = true
 		case ir.ArraySort:
 			if node.Callback != nil {
