@@ -1,0 +1,2 @@
+const iterator: Pick<MapIterator<[string, number]>, 'next'> = new Map<string, number>([['a', 1]]).entries();
+console.log(iterator.toString());

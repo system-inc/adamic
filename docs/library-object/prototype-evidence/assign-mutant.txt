@@ -1,0 +1,8 @@
+--- FAIL: TestObjectAssignFailureStaysRefused (0.31s)
+    library_object_prototype_test.go:64: exit codes differ: node exit 0 stdout "caught\n1\n"; native exit 70 stdout ""
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.319s
+FAIL
