@@ -1,7 +1,9 @@
 # TypeScript compiler strictness survey
 
-For Kirk and Ahra's design decision. Surveyed 2026-10-06; no language, compiler,
-or adapter behavior changed.
+For Kirk and Ahra's design decision. The original survey was completed
+2026-10-06 without changing the language, compiler, or adapter. The subsequent
+[in-memory adapter implementation and re-measurement](tsc-strictness-adaptation.md)
+are recorded separately.
 
 The evidence favors keeping both strictness rules. In the exact-optional sample,
 96/100 findings describe values the implementation deliberately stores; honest
@@ -264,6 +266,9 @@ undefined diagnostics are bugs.
 
 ## Reproduction and validation
 
+The population above records the meter at the pinned main revision. On this
+branch, `--adapt` also performs the subsequent optional adaptation; the included
+exporter defaults to import-only adaptation to reproduce the original sample.
 Run from the Adamic repository. Use a fresh scratch directory rather than
 installing dependencies in the repository:
 

@@ -27,7 +27,10 @@ func TestExportStrictnessSurvey(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, baseline := load.Load(paths)
-	overlay, rewrites, err := adaptations(paths, baseline)
+	overlay, rewrites, err := importAdaptations(paths, baseline)
+	if os.Getenv("ADAMIC_SURVEY_OPTIONAL") == "1" {
+		overlay, rewrites, err = adaptations(paths, baseline)
+	}
 	if err != nil {
 		t.Fatal(err)
 	}
