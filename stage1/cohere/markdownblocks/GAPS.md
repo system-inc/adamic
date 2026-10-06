@@ -6,6 +6,15 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native table layout boundary
+
+`tables.ts` builds preserved-prose table rows and renders its child documents in
+native code. Cell and full-row display widths are explicit inputs from Go's
+Unicode width service. The compact `proseWrap: never` alternative is not ported.
+The shared test now checks the original fork's complete Markdown parser/layout
+with embedding off for all accumulated source cases, as well as doc printers.
+Parsing/preprocessing and other unported children remain supplied by Go fixtures.
+
 ## Native quote layout boundary
 
 `quotes.ts` constructs quotes and their child spacing from explicit AST facts.

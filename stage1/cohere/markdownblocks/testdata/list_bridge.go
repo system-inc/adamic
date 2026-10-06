@@ -28,6 +28,15 @@ type adamicList struct {
 	next            *Node
 	items           []adamicItem
 }
+type adamicCell struct {
+	document doc.Doc
+	width    int
+}
+type adamicTable struct {
+	rows      [][]adamicCell
+	align     []string
+	rowWidths []int
+}
 type adamicWord struct {
 	value, previous, next string
 	flags                 int
@@ -38,6 +47,7 @@ type adamicDocuments struct {
 	lines     []string
 	documents int
 	items     int
+	tables    []adamicTable
 	quotes    [][]adamicBlock
 	lists     []adamicList
 	words     []adamicWord
@@ -166,6 +176,26 @@ func (out *adamicDocuments) serialize(document doc.Doc) int {
 			out.documents++
 			return id
 		}
+		if out.native && strings.HasPrefix(node.Label, "adamic-table:") {
+			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-table:"))
+			frame := out.tables[index]
+			rows := []string{}
+			for _, row := range frame.rows {
+				cells := []string{}
+				for _, cell := range row {
+					cells = append(cells, fmt.Sprintf("%d,%d", out.serialize(cell.document), cell.width))
+				}
+				rows = append(rows, strings.Join(cells, ";"))
+			}
+			widths := []string{}
+			for _, width := range frame.rowWidths {
+				widths = append(widths, strconv.Itoa(width))
+			}
+			out.lines = append(out.lines, fmt.Sprintf("T\t%s\t%s\t%s", strings.Join(frame.align, ","), strings.Join(widths, ","), strings.Join(rows, ":")))
+			id := out.documents
+			out.documents++
+			return id
+		}
 		if out.native && strings.HasPrefix(node.Label, "adamic-word:") {
 			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-word:"))
 			word := out.words[index]
@@ -199,6 +229,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	}
 	lists := []adamicList{}
 	quotes := [][]adamicBlock{}
+	tables := []adamicTable{}
 	words := []adamicWord{}
 	printer := *mdastPrinter
 	printer.Print = func(path *astPath, options *options, print printing.PrintFunc, args any) doc.Doc {
@@ -223,6 +254,24 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 			id := len(words)
 			words = append(words, adamicWord{node.Value, previous, next, adamicFlag(found) + 2*adamicFlag(leading) + 4*adamicFlag(pseudo), doc.StringWidth(string(printed))})
 			return doc.NewLabel(fmt.Sprintf("adamic-word:%d", id), original)
+		}
+		if node.NodeType == "table" {
+			frame := adamicTable{align: node.Align}
+			path.Each(func(rowPath *astPath, _ int, _ any) {
+				cells := []adamicCell{}
+				rowPath.Each(func(_ *astPath, _ int, _ any) {
+					document := print(nil, nil)
+					cellText := doc.Print(document, doc.Options{PrintWidth: 120, TabWidth: 4})
+					cells = append(cells, adamicCell{document, doc.StringWidth(cellText)})
+				}, "children")
+				frame.rows = append(frame.rows, cells)
+			}, "children")
+			for _, line := range strings.Split(doc.Print(original, doc.Options{PrintWidth: 120, TabWidth: 4}), "\n") {
+				frame.rowWidths = append(frame.rowWidths, doc.StringWidth(line))
+			}
+			id := len(tables)
+			tables = append(tables, frame)
+			return doc.NewLabel(fmt.Sprintf("adamic-table:%d", id), original)
 		}
 		if node.NodeType == "blockquote" {
 			blocks := []adamicBlock{}
@@ -266,7 +315,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	}
 	// Serialize before Print mutates group break flags, so native propagation is exercised.
 	for _, side := range []bool{true, false} {
-		out := &adamicDocuments{native: side, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
+		out := &adamicDocuments{native: side, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
 		root := out.serialize(document)
 		out.lines = append(out.lines, fmt.Sprintf("R\t%d\t%d", root, adamicFlag(bom)))
 		stream := strings.Join(out.lines, "\n") + "\n"

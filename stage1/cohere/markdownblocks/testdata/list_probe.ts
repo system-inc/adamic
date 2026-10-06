@@ -3,6 +3,7 @@ import { panic, programArguments, readTextFile } from 'adamic';
 import { decode, encode } from '../codec.ts';
 import { DocumentArena, printDocument } from '../document.ts';
 import { printList, type ListBlockInterface, type ListItemInterface } from '../lists.ts';
+import { printTable, type TableCellInterface } from '../tables.ts';
 import { printQuote } from '../quotes.ts';
 import { printWord } from '../../markdowninline/inline.ts';
 function integer(text: string): number {
@@ -77,6 +78,30 @@ for(const line of input.text.split('\n')) {
             decode(fields[5] ?? ''),
         );
         documents.push(arena.text(text, integer(fields[3] ?? '')));
+    }
+    else if(kind === 'T') {
+        const rows: TableCellInterface[][] = [];
+        for(const row of (fields[3] ?? '').split(':')) {
+            const cells: TableCellInterface[] = [];
+            if(row !== '') {
+                for(const cell of row.split(';')) {
+                    const parts = cell.split(',');
+                    cells.push({
+                        doc: documents[integer(parts[0] ?? '')] ?? panic('table cell document'),
+                        width: integer(parts[1] ?? ''),
+                    });
+                }
+            }
+            rows.push(cells);
+        }
+        documents.push(
+            printTable(
+                arena,
+                { rows, align: (fields[1] ?? '').split(','), rowWidths: numbers(fields[2] ?? '') },
+                120,
+                4,
+            ),
+        );
     }
     else if(kind === 'Q') documents.push(printQuote(arena, blocks(fields[1] ?? '', documents)));
     else if(kind === 'I') {

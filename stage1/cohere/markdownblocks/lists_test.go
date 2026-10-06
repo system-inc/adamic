@@ -14,15 +14,20 @@ import (
 
 func TestMarkdownListLayout(t *testing.T) {
 	t.Parallel()
-	testBlockLayout(t, false)
+	testBlockLayout(t, "lists")
 }
 
 func TestMarkdownQuoteLayout(t *testing.T) {
 	t.Parallel()
-	testBlockLayout(t, true)
+	testBlockLayout(t, "quotes")
 }
 
-func testBlockLayout(t *testing.T, quotes bool) {
+func TestMarkdownTableLayout(t *testing.T) {
+	t.Parallel()
+	testBlockLayout(t, "tables")
+}
+
+func testBlockLayout(t *testing.T, slice string) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -49,12 +54,34 @@ func testBlockLayout(t *testing.T, quotes bool) {
 	} {
 		inputs = append(inputs, auditInput{Name: "generated/list-layout/edge/" + text, Text: text})
 	}
-	if quotes {
+	if slice != "lists" {
 		for _, prefix := range []string{">", "> ", " > ", "  >  ", "   >\t", "> > ", ">> ", "> > > ", ">\t> "} {
 			for _, body := range []string{"", "text", "a\nb", "a\n\nb", "# h\n\na", "a\n---", "- a\n- b", "1. a\n\n   - b", "- [x] a", "```js\nlet x=1;\n```", "    x\n    y", "<div>\nx\n</div>", "a\n<div>\nx", "[a]: /x\n[b]: /y", "| a | b |\n| - | - |\n| x | y |", "<!-- prettier-ignore -->\n+    a", "中😀 _a*b*_"} {
 				text := prefix + strings.ReplaceAll(body, "\n", "\n"+prefix) + "\n"
 				inputs = append(inputs, auditInput{Name: "generated/quote-layout/" + text, Text: text})
 			}
+		}
+	}
+	if slice == "tables" {
+		for _, align := range []string{"---", ":--", "--:", ":-:"} {
+			for _, cell := range []string{"", "a", "abcde", "abcdef", "中😀", "*a _b_*", "`a|b`", "a\\|b", "[a](/b)", "<em>a</em>"} {
+				for _, prefix := range []string{"", "> ", "- ", "> - "} {
+					text := "| a | b |\n| " + align + " | " + align + " |\n| " + cell + " | x |\n| long text | y |\n"
+					lines := strings.Split(strings.TrimSuffix(text, "\n"), "\n")
+					text = prefix + lines[0] + "\n"
+					continuation := prefix
+					if strings.HasSuffix(prefix, "- ") {
+						continuation = strings.TrimSuffix(prefix, "- ") + "  "
+					}
+					for _, line := range lines[1:] {
+						text += continuation + line + "\n"
+					}
+					inputs = append(inputs, auditInput{Name: "generated/table-layout/" + text, Text: text})
+				}
+			}
+		}
+		for _, text := range []string{"a | b\n- | -\nc\nd | e | f\n", "a | b\n:- | -:\n | \n", "| a |\n| - |\n| x | y |\n", "| 😀 | 中 |\n| :-: | -: |\n| é | 👨‍👩‍👧‍👦 |\n"} {
+			inputs = append(inputs, auditInput{Name: "generated/table-layout/edge/" + text, Text: text})
 		}
 	}
 	dir := t.TempDir()
@@ -159,18 +186,43 @@ func testBlockLayout(t *testing.T, quotes bool) {
 	original := execute(t, nil, "node", script, fork, canonicalCases)
 	clean(t, "original document printer", original)
 	equal(t, "original document printer", original.stdout, want.stdout)
+	markdownScript, err := filepath.Abs("testdata/library.mjs")
+	if err != nil {
+		t.Fatal(err)
+	}
+	sourceAnswers := auditResults(t, "original Markdown parser/layout", execute(t, nil, "node", markdownScript, fork, cases, "fork", "off-only"))
+	if len(sourceAnswers) != len(inputs) {
+		t.Fatal("original Markdown oracle lost a document")
+	}
+	encodeOutput := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
+	wantLines := strings.Split(strings.TrimSuffix(string(want.stdout), "\n"), "\n")
+	for index, answer := range sourceAnswers {
+		if answer.Name != inputs[index].Name || encodeOutput.Replace(answer.Off) != wantLines[index] {
+			t.Fatalf("original Markdown parser/layout disagreed with Go in %s: got %q, Go encoded %q", inputs[index].Name, answer.Off, wantLines[index])
+		}
+	}
+	t.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
+
 	mutations := []struct{ name, from, to string }{
 		{"unordered marker", "frame.sibling % 2 === 0 ? '- ' : '* '", "frame.sibling % 2 === 0 ? '+ ' : '* '"},
 		{"task box", "'[x] '", "'[X] '"},
 		{"ordered cap", "999999999", "999999998"},
 	}
 	mutantFile := "lists.ts"
-	if quotes {
+	if slice == "quotes" {
 		mutantFile = "quotes.ts"
 		mutations = []struct{ name, from, to string }{
 			{"quote marker", "arena.text('> ', 2)", "arena.text('>> ', 3)"},
 			{"quote alignment", "arena.align('> ',", "arena.align('',"},
 			{"quote blank line", "!overlapping && !definitions", "!overlapping && definitions"},
+		}
+	}
+	if slice == "tables" {
+		mutantFile = "tables.ts"
+		mutations = []struct{ name, from, to string }{
+			{"table minimum", "widths.push(3)", "widths.push(4)"},
+			{"table center", "Math.floor(spaces / 2)", "Math.ceil(spaces / 2)"},
+			{"table alignment", "align === 'right' ? spaces", "align === 'right' ? 0"},
 		}
 	}
 	for _, mutation := range mutations {
@@ -189,7 +241,7 @@ func testBlockLayout(t *testing.T, quotes bool) {
 				}
 				write(t, filepath.Join(scratch, "markdowninline", name), content)
 			}
-			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts"} {
+			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts"} {
 				content, err := os.ReadFile(name)
 				if err != nil {
 					t.Fatal(err)
@@ -246,5 +298,6 @@ func testBlockLayout(t *testing.T, quotes bool) {
 		t.Fatal(err)
 	}
 	t.Logf("%d physical files, %d generated, %d whole-document contexts; %d native list frames, %d composed word nodes; Go/source/native/backend/original doc bytes identical", files, len(inputs)-files, len(inputs), bytes.Count(data, []byte("\nL\t")), bytes.Count(data, []byte("\nW\t")))
+	t.Logf("%d native table frames", bytes.Count(data, []byte("\nT\t")))
 	t.Logf("%d native quote frames", bytes.Count(data, []byte("\nQ\t")))
 }

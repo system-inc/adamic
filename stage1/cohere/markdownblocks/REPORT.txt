@@ -1,3 +1,93 @@
+Native table layout now composes with quotes, lists and inline words.
+2,488 source documents agree with Go and the pinned fork, embedding off.
+Native/source/backend/doc oracles agree; 654 table frames and three mutants pass.
+Native component measures 2,079.8 documents/s, with parsing excluded.
+Native Markdown parsing, Unicode width and prose-wrap never tables remain unfinished.
+
+Tables slice, October 6, 2026
+
+Previous quote slice pushed: 07fbb727644bd2d3d275b91faadd7ee5e6447a03.
+tables.ts ports cell-doc rendering, column maxima, minimum width three,
+left/right/center padding, delimiter colons, header/delimiter cardinality and row
+construction from cohere table.go. It covers the common preserved-prose option
+set; the prose-wrap never compact alternative is still pending. Native code
+renders each cell document itself, composing the existing word component.
+Cell and complete row display widths are explicit service inputs, currently
+supplied by Go StringWidth. Native computes the row text; no Go row text is
+passed into native as an answer. Go still parses/preprocesses and prints other
+children. No native source formatter or parser is claimed.
+
+The original 953 plus 1,218 list, 153 quote and 164 table cases total 2,488.
+Table cases cross four alignments, ten cell contents and four list/quote contexts,
+plus uneven rows, extra cells and Unicode combining/emoji examples.
+876 physical files, 1,612 generated; native frames: 2,117 lists, 1,841 quotes,
+654 tables and 221,366 words. The full-source pinned-fork check was added to the
+shared harness. It agrees with actual Go Format on every source with embedding
+off. Canonical Go/fork doc printers, source Node, native ASan/UBSan and the
+JavaScript backend independently match. LeakSanitizer passes.
+
+Commands (source /workspace/adamic-tools/env.sh first):
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-table-final
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownTableLayout$' -count=1 -v -timeout 15m
+/tmp/markdown-table-final.log: PASS, 95.760s. Retained inputs and doc streams in
+/tmp/markdown-table-final. Initial doc-only run also passed in 92.756s.
+/tmp/cssstrings-cohere --no-cache --no-fix tables.ts testdata/list_probe.ts:
+/tmp/markdown-table-style.log: 276 rules, 2 checked, 100% Adamic-ready.
+go vet ./stage1/cohere/markdownblocks and git diff --check: exit 0.
+No compiler code was changed; the prior quote slice's four uncached oracle
+fixtures passed. The full touched package and fresh compiler oracle follow after
+remaining layout components. No full repository gate was run.
+
+An attempted scratch copy after the first run found its temporary files already
+removed. The resulting zero-case comparison was invalid and discarded. The
+retained second run above checks the actual source count explicitly and passes
+all 2,488 through the original parser, not just its doc printer.
+
+Three output-only native table mutants compile and exit 0 with empty stderr:
+minimum width 3 to 4: TypeScript compiler-and-fourslash-tests/SKILL.md, byte 309581.
+center padding floor to ceil: generated center/abcdef table, byte 2790079.
+right padding spaces to zero: bench/README.md, byte 24209.
+
+Three process runs with protocol decoding/output/startup, parsing/builds/fixture
+generation excluded. Workloads differ: native/source construct components too;
+Go/fork receive canonical docs. Go docs 5085.2 documents/s (1.467801s), native
+2079.8 (3.588826s), source Node 2290.0 (3.259423s), fork docs 2207.5 (3.381182s).
+This is not an end-to-end formatter benchmark. Setup timing/nproc/pins unchanged.
+
+Actual final table log:
+
+=== RUN   TestMarkdownTableLayout
+=== PAUSE TestMarkdownTableLayout
+=== CONT  TestMarkdownTableLayout
+    lists_test.go:204: original fork full Markdown parsing/layout off agrees on all 2488 source documents
+=== RUN   TestMarkdownTableLayout/table_minimum
+    lists_test.go:271: output-only native mutant caught by cohere/TypeScript/.github/skills/compiler-and-fourslash-tests/SKILL.md at byte 309581
+=== RUN   TestMarkdownTableLayout/table_center
+    lists_test.go:271: output-only native mutant caught by generated/table-layout/| a | b |
+        | :-: | :-: |
+        | abcdef | x |
+        | long text | y |
+         at byte 2790079
+=== RUN   TestMarkdownTableLayout/table_alignment
+    lists_test.go:271: output-only native mutant caught by bench/README.md at byte 24209
+=== NAME  TestMarkdownTableLayout
+    lists_test.go:294: component throughput Go document layout 5085.2 documents/s, three runs 1.467801s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:294: component throughput native list/layout component 2079.8 documents/s, three runs 3.588826s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:294: component throughput source Node list/layout component 2290.0 documents/s, three runs 3.259423s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:294: component throughput original Node document layout 2207.5 documents/s, three runs 3.381182s; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded
+    lists_test.go:300: 876 physical files, 1612 generated, 2488 whole-document contexts; 2117 native list frames, 221366 composed word nodes; Go/source/native/backend/original doc bytes identical
+    lists_test.go:301: 654 native table frames
+    lists_test.go:302: 1841 native quote frames
+--- PASS: TestMarkdownTableLayout (95.75s)
+    --- PASS: TestMarkdownTableLayout/table_minimum (11.20s)
+    --- PASS: TestMarkdownTableLayout/table_center (11.42s)
+    --- PASS: TestMarkdownTableLayout/table_alignment (11.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	95.760s
+
+Prior quote report, retained:
+
 Native block quote layout now composes with lists and inline words.
 2,324 whole-document contexts match Go, source Node, backend and pinned-fork doc output.
 1,761 native quote frames; ASan, UBSan, leaks and three output-only mutants pass.
