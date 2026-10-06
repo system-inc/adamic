@@ -253,6 +253,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/shared_slices.a", true, false},
 	{"internal/oracle/testdata/string_append.a", true, false},
 	{"internal/oracle/testdata/search_from_sweep.a", true, false},
+	// Numbers as text around the integer fast path: every power of two and of ten, their neighbors
+	// and negatives, -0, and the safe range's edges.
+	{"internal/oracle/testdata/integer_format.a", true, false},
 	// Reuse meeting exceptions, narrowing and lending (integration 7): a throw after a move, a narrowed
 	// field emptied in place, and a lent global moved under its borrower.
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
