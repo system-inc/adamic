@@ -52,11 +52,14 @@ type reusePlan struct {
 	// by a map that writes its results in place, or by a literal that spreads it first and appends
 	// the rest to it.
 	arrays map[*ir.Statement]map[int]bool
+
+	// lending are the arrays a variable borrows an element from (planElementBorrows), never moved.
+	lending map[int]bool
 }
 
 // planReuse makes the plan for a program.
-func planReuse(program *ir.Program) *reusePlan {
-	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}}
+func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
+	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending}
 	comparators := map[int]bool{}
 	walkExpressions(program, func(expression ir.Expression) {
 		if sort, ok := expression.(ir.ArraySort); ok {
@@ -240,6 +243,11 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instruction, live map[flow.DeclarationId]bool, read ir.Read) bool {
 	local := program.Locals[read.Local]
 	if local.Captured || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
+		return false
+	}
+	if plan.lending[read.Local] {
+		// A variable borrows an element of this array, with no count of its own: moving the array
+		// to a callee that lets go of it would free the element under the borrower.
 		return false
 	}
 	if local.Borrowed && !plan.consumed[read.Local] {
