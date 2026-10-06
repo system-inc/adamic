@@ -20,6 +20,7 @@ func TestLexerGaps(t *testing.T) {
 		{"prefixIncrement.ts", "1\n", "a PrefixUnaryExpression on a number"},
 		{"assignmentValue.ts", "1\n", "a BinaryExpression with a number and a number"},
 		{"stringPresence.ts", "false\n", "a PrefixUnaryExpression on a string"},
+		{"emptyAlternative.ts", "1\n", "an array of never"},
 	} {
 		t.Run(gap.file, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join("gaps", gap.file))

@@ -1,10 +1,46 @@
-# YAML port: lexer checkpoint
+# YAML port: lexer and CST checkpoints
 
-The Adamic lexer and its lexical comparison driver are implemented.
+The Adamic lexer, CST parser, and their comparison drivers are implemented.
 All 36 repository files and 8,696 generated/chunked cases match Go byte for byte.
 Native sanitizers, Node source, emitted JavaScript and yaml 2.9.0 all agree.
-Three lexer mutants are caught on native and Node; three stage 0 gaps have proving programs.
-CST parsing, composition, unist conversion, the printer and formatting driver remain unfinished.
+Six parser-layer mutants are caught on native and Node; four stage 0 gaps have proving programs.
+Composition, unist conversion, the printer and formatting driver remain unfinished.
+
+## Green CST step
+
+`cstParser.ts`, `cst.ts` and `collectionItem.ts` port the CST parser, token
+classification and collection item representation. `cst_main.ts` serializes the
+entire tree with field presence, UTF-16 sources and offsets, and line starts.
+Children are numeric indexes into a parser-owned token arena. Optional arrays
+and keys have separate presence flags; empty separator arrays remain present,
+and an explicit null key remains distinct from an absent key.
+
+The same 8,732 cases produced 8,198,809 exact bytes from Go, native with
+ASan/UBSan/LeakSanitizer, raw Node source, emitted JavaScript and yaml 2.9.0.
+The combined lexer/CST/gap/mutant suite passed in 41.094s; the CST comparison
+itself took 13.60s. Three additional mutants compile and exit zero with empty
+stderr on native and Node, and the byte comparison catches each:
+
+| Mutation | First differing output byte |
+| --- | ---: |
+| Key presence lost, including explicit null keys | 8086 |
+| Source token offset advanced by one | 15 |
+| Recorded line start shifted back by one | 180490 |
+
+[emptyAlternative.ts](gaps/emptyAlternative.ts) proves the additional
+`lower.NotYet` observation `an array of never`: an untyped empty array in a
+conditional branch does not lower, though Node prints `1`. The workaround is a
+separately initialized, explicitly typed array followed by conditional assignment.
+The earlier GraphQL-era forward class method limitation is closed on this main:
+a scratch forward-method probe compiled successfully. No new refusal is claimed
+for that behavior.
+
+Cohere lint/type passed on all four new files, 276 rules, 100% Adamic-ready.
+In-place list and token updates have explicit `@mutates` ownership contracts;
+the output builder owns its parts. No cohere, compiler or runtime source changed.
+Logs: [combined suite](audit/cst-suite.log), [CST lint](audit/cst-lint.log).
+The existing throughput section still measures only lexical drivers.
+Document composition and printing have not been implemented or measured yet.
 
 ## Green lexer step
 
