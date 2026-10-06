@@ -14,6 +14,10 @@ export class Settings {
         const statement = parser.node(root).children[0] ?? panic('missing option statement');
         const outer = parser.node(statement).children[0] ?? panic('missing options');
         const object = parser.node(outer).children[0] ?? panic('missing option object');
+        if(parser.node(object).kind === 'StringLiteral') {
+            this.values.set('option', [parser.node(object).text]);
+            return;
+        }
         for(const property of parser.node(object).children) {
             const children = parser.node(property).children;
             const name = parser.node(children[0] ?? panic('missing option key')).text.toLowerCase();

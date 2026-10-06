@@ -16,6 +16,7 @@ import (
 	base "github.com/system-inc/cohere/internal/lint/rules/base"
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 	nexus "github.com/system-inc/cohere/internal/lint/rules/nexus"
+	typescript "github.com/system-inc/cohere/internal/lint/rules/typescript"
 	"os"
 	"sort"
 	"strings"
@@ -109,9 +110,9 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 func collect(path, source string, fields []string) []rule.Diagnostic {
 	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, core.ScriptKindTS)
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
-		panic(fmt.Sprintf("invalid corpus %s: %v", path, file.Diagnostics()))
+		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate}
+	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
 	for _, subject := range selected {
@@ -120,6 +121,31 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 		}
 		ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
 		var options any
+		if fields[5] != "" {
+			switch subject.Name {
+			case "@typescript-eslint/method-signature-style":
+				var decoded typescript.MethodSignatureStyleOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "@typescript-eslint/prefer-literal-enum-member":
+				var decoded typescript.PreferLiteralEnumMemberOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "no-return-assign":
+				if fields[5][0] != '"' {
+					break
+				}
+				var decoded rules.NoReturnAssignOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			}
+		}
 		if subject.Name == "no-plusplus" && fields[5] != "" {
 			var decoded rules.NoPlusplusOptions
 			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
