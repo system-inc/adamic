@@ -113,6 +113,28 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
 	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
+	selected = append([]rule.Rule{
+		rules.NoCaller,
+		rules.NoEqNull,
+		rules.NoEmptyStaticBlock,
+		rules.NoProto,
+		rules.NoScriptUrl,
+		rules.NoSelfCompare,
+		rules.NoDeleteVar,
+		rules.NoIterator,
+		rules.NoCompareNegZero,
+		rules.NoAsyncPromiseExecutor,
+		rules.NoEmptyPattern,
+		rules.NoConstructorReturn,
+		rules.NoMultiAssign,
+		rules.NoUselessCatch,
+		rules.NoUnsafeFinally,
+		rules.NoUselessConcat,
+		rules.NoEmptyCharacterClass,
+		rules.NoExAssign,
+		typescript.NoUnnecessaryTypeConstraint,
+		typescript.PreferNamespaceKeyword,
+	}, selected...)
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
 	for _, subject := range selected {
@@ -145,6 +167,20 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 				}
 				options = decoded
 			}
+		}
+		if subject.Name == "no-empty-pattern" && fields[5] != "" {
+			var decoded rules.NoEmptyPatternOptions
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+			options = decoded
+		}
+		if subject.Name == "no-multi-assign" && fields[5] != "" {
+			var decoded rules.NoMultiAssignOptions
+			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+				panic(err)
+			}
+			options = decoded
 		}
 		if subject.Name == "no-plusplus" && fields[5] != "" {
 			var decoded rules.NoPlusplusOptions

@@ -7,6 +7,8 @@ import type { Scanner } from '../../typescript/scanner/scanner.ts';
 import { matches, quote, selfDirective } from './comments.ts';
 import { isLineBreak, isSpace } from '../../typescript/scanner/characters.ts';
 import { Finding } from './finding.ts';
+import { RuleContext } from './rule_context.ts';
+import { visitBatch2 } from './batch2_registry.ts';
 import { VolumeRules } from './volume.ts';
 import { Scanner as SourceScanner } from '../../typescript/scanner/scanner.ts';
 import type { Settings } from './settings.ts';
@@ -213,6 +215,7 @@ export class Linter {
     parents: number[] = [];
     root = -1;
     volume: VolumeRules | undefined = undefined;
+    batch2: RuleContext | undefined = undefined;
     readonly selected: string;
     readonly mode: string;
     readonly nullPolicy: string;
@@ -241,6 +244,15 @@ export class Linter {
         this.root = this.parser.file();
         this.parents = this.parser.nodes.map(() => -1);
         this.volume = new VolumeRules(
+            this.source,
+            this.parser,
+            this.scanner,
+            this.parents,
+            this.findings,
+            this.selected,
+            this.settings,
+        );
+        this.batch2 = new RuleContext(
             this.source,
             this.parser,
             this.scanner,
@@ -458,6 +470,7 @@ export class Linter {
         if(isVariableContainerKind(node.kind) && this.enabled('no-var')) {
             this.variable(index, parent);
         }
+        visitBatch2(this.batch2 ?? panic('missing batch2 context'), index);
         this.additional(index, parent);
         (this.volume ?? panic('missing additional rules')).visit(index);
         for(const child of node.children) {

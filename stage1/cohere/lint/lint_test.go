@@ -216,13 +216,14 @@ func upstream(t *testing.T) []string {
 	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase|NoContinue|NoWith|NoNew|NoSparseArrays|RequireYield|NoAwaitInLoop|VarsOnTop|NoTemplateCurlyInString|NoDivRegex|NoBitwise|NoLabels|NoSequences|UnicodeBom|NoUnneededTernary|NoWarningComments|NoPlusplus|NoNegatedCondition|NoReturnAssign)", "-count=1", "-timeout=10m")
 	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/base", "./internal/lint/rules/nexus", "./internal/lint/rules/adamic", "-run", "Test(ConsistencyNoConsole|ConsistencyRequireTypeSuffix|ConsistencyNoEnum|NoTypePredicate)", "-count=1", "-timeout=10m")
 	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(MethodSignatureStyle|NoWrapperObjectTypes|PreferLiteralEnumMember)", "-count=1", "-timeout=10m")
+	captureBatch2(t, root, overlayPath)
 	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	type record struct {
-		Rule, Source, Outcome, FixedSource string
-		Options                            json.RawMessage
+		Rule, Source, Outcome, FixedSource, File string
+		Options                                  json.RawMessage
 	}
 	unique := map[string]record{}
 	for _, path := range files {
@@ -238,12 +239,22 @@ func upstream(t *testing.T) []string {
 			if err := json.Unmarshal(line, &row); err != nil {
 				t.Fatal(err)
 			}
-			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") {
+			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") && !batch2Selected(row.Rule) {
 				continue
 			}
-			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source)
+			key := fmt.Sprintf("%s\t%+v\t%s\t%s", row.Rule, row.Options, row.Source, batch2Extension(row.Rule, row.File))
 			unique[key] = row
 		}
+	}
+	counts := map[string]int{}
+	for _, row := range unique {
+		counts[row.Rule]++
+	}
+	for _, name := range batch2Names {
+		if counts[name] == 0 {
+			t.Fatalf("upstream capture lost %s", name)
+		}
+		t.Logf("batch2 upstream %s: %d cases", name, counts[name])
 	}
 	var keys []string
 	for key := range unique {
@@ -253,7 +264,7 @@ func upstream(t *testing.T) []string {
 	var rows []string
 	for i, key := range keys {
 		row := unique[key]
-		path := filepath.Join(directory, fmt.Sprintf("case-%03d.ts", i))
+		path := filepath.Join(directory, fmt.Sprintf("case-%03d%s", i, batch2Extension(row.Rule, row.File)))
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
@@ -266,7 +277,7 @@ func upstream(t *testing.T) []string {
 				t.Fatal(err)
 			}
 		}
-		mode := ""
+		mode := batch2Recovery(row.Rule, row.Source)
 		if row.Rule == "@typescript-eslint/method-signature-style" {
 			switch row.Source {
 			case "type T = { m: => void };":
@@ -504,6 +515,8 @@ func TestThroughput(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, false)
+	// Prove release findings and fixes before measuring count-mode throughput.
+	compare(t, oracle, binary, directory, path)
 	machine := execute(t, "", "uname", "-a")
 	cpu, err := os.ReadFile("/proc/cpuinfo")
 	if err != nil {
