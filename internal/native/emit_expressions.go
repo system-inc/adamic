@@ -59,6 +59,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return e.binary(expression.Operator, expression.Left.Type(), e.value(expression.Left), e.value(expression.Right))
 	case ir.Call:
+		if expression.Accessor != "" {
+			result := e.accessorCall(expression)
+			if e.program.CallMayThrow(expression) {
+				e.checkThrown()
+			}
+			return result
+		}
 		region := e.regionFor(expression)
 		arguments := e.arguments(expression)
 		call := e.callCode(expression, arguments)
@@ -78,11 +85,16 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.checkThrown()
 		}
 		return result
+	case ir.HasAccessor:
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_accessor_find(%s, %s) != NULL", e.value(expression.Object), cString(expression.Name)))
 	case ir.InstanceOf:
 		value := e.value(expression.Value)
 		if !expression.Value.Type().IsReference() {
 			e.line("(void)%s;", value)
 			return e.snapshot(ir.Boolean, "false")
+		}
+		if expression.Exact {
+			return e.snapshot(ir.Boolean, fmt.Sprintf("(%s != NULL && ((adamic_object *)%s)->class == &adamic_class_%d)", value, value, expression.Class))
 		}
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_instanceof(%s, &adamic_class_%d)", value, expression.Class))
 	case ir.NumberToString:
@@ -159,7 +171,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Box:
 		return e.box(expression.Value)
 	case ir.MakeError:
-		return e.own(ir.Object, fmt.Sprintf("adamic_error_new(%s)", e.value(expression.Message)))
+		return e.makeError(expression)
 	case ir.WeakOf:
 		return e.own(ir.Weak, fmt.Sprintf("adamic_weak_of(%s)", e.value(expression.Value)))
 	case ir.WeakTarget:
@@ -173,6 +185,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Narrow:
 		return e.narrow(expression)
 	case ir.TypeOf:
+		if expression.Value.Type() == ir.Object {
+			return fmt.Sprintf("adamic_object_typeof(%s)", e.value(expression.Value))
+		}
+		if expression.Value.Type() == ir.Union {
+			return fmt.Sprintf("adamic_static_union_typeof(%s)", e.value(expression.Value))
+		}
 		return e.typeOf(expression.Value)
 	case ir.UnionToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_union_to_string(%s)", e.value(expression.Value)))

@@ -14,6 +14,9 @@ import (
 // objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields },
 // where every field replaces one the source's type already has.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+	if literal, handled, err := l.accessorLiteral(node); handled {
+		return literal, err
+	}
 	literal := ir.ObjectLiteral{}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
@@ -28,6 +31,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if spread.Type() != ir.Object {
 				return nil, l.notYet(property, "spreading a "+typeName(spread.Type()))
 			}
+			literal.NoReuse = l.hasPrivateStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) || l.hasAccessorStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 			literal.Spread = spread
 			literal.SpreadMaybeUndefined = l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
@@ -225,6 +229,12 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if err := l.staticProperty(node); err != nil {
+		return nil, err
+	}
+	if call, handled, err := l.superAccessor(node, nil); handled {
+		return call, err
+	}
 	access := node.AsPropertyAccessExpression()
 	name := l.fieldName(node.Name())
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
@@ -317,6 +327,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return ir.RegExpCall{Value: object, Method: "iteratorDone", Returns: of}, e
 		}
 	}
+	object = l.privateStaticReceiver(node.Name(), object, false)
 	if access.QuestionDotToken != nil && (object.Type() == ir.Array || object.Type() == ir.String) && name == "length" {
 		// words?.length and text?.length: undefined where the array or string is, a number | undefined.
 		if object.Type() == ir.Array {
@@ -367,6 +378,13 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.Weak {
 				// The field keeps a handle, whatever the checker narrowed the read to.
 				return ir.Property{Object: object, Name: name, Of: ir.Weak, Optional: access.QuestionDotToken != nil}, nil
+			}
+		}
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && (accessorSymbol(field) || (l.accessorNames[node.Name().Text()] && !isClassInstance(l.checker.GetTypeAtLocation(access.Expression)) && ast.SkipParentheses(access.Expression).Kind != ast.KindThisKeyword)) {
+			declared := l.checker.GetTypeOfSymbol(field)
+			observed := l.checker.GetTypeAtLocation(node)
+			if !l.classAssignable(declared, observed) {
+				return nil, &Refused{Where: l.program.Where(node), What: "a narrowed accessor reread, which can return a different value", Fix: "read the getter into a local once, then narrow and use that local"}
 			}
 		}
 		of, err := l.typeOf(node)
@@ -470,6 +488,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return lowered, true, err
 	}
 	if value, matched, err := l.regexBuiltin(node); matched {
+		return value, true, err
+	}
+	if value, handled, err := l.objectKeys(node); handled {
 		return value, true, err
 	}
 	if lowered, isInput, err := l.input(node); isInput {

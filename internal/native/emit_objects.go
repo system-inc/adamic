@@ -55,6 +55,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		// spread's fields first, so a field's expression that writes one of them (a call that sets
 		// it) must not show in the result.
 		source := e.value(literal.Spread)
+		if literal.NoReuse {
+			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
+		}
 		object := e.own(ir.Object, e.spreadCopy(literal, source))
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))

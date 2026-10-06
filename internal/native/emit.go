@@ -86,6 +86,7 @@ func C(program *ir.Program) string {
 	if len(program.Functions) > 0 {
 		builder.WriteString("\n")
 	}
+	emitter.prepareClassShapes()
 	// After the prototypes: a sort's comparator adapter calls one of the program's functions.
 	for _, declaration := range emitter.declarations {
 		builder.WriteString(declaration)
