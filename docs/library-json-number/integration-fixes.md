@@ -45,3 +45,14 @@ counts gate. The uncached Node/native/backend/release/leak comparison passed
 The script `run-stringify-mutants.py` runs them independently, records complete
 logs under `/tmp/library-json-number-shapes-mutants/`, and restores the runtime
 in a finally block. No mutated source is committed.
+
+## 4. Unreachable duplicate-literal check
+
+Removed the lowering duplicate-key branch and the test case that returned
+success on TS1117 before reaching it. TypeScript continues to reject repeated
+literal property names; that checker behavior is not claimed as evidence for
+a lowering guard. No runtime behavior changed.
+
+The uncached focused suite passed all eleven stringify fixtures, both generic
+probes and all six remaining refusal probes (1.713s). The six refusal probes
+and two generic probes also passed with their own root filter (0.315s).

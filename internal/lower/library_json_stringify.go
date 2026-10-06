@@ -84,11 +84,6 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 			if name == "toJSON" || name == "__proto__" {
 				return l.notYet(v, "JSON.stringify a literal with "+name+" semantics")
 			}
-			for _, f := range literal.Fields {
-				if f.Name == name {
-					return l.notYet(v, "JSON.stringify duplicate literal keys")
-				}
-			}
 			value, child, err := l.jsonInput(v)
 			if err != nil {
 				return err
