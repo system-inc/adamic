@@ -8,7 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// This inspects generated code without linking an unavailable runtime ABI.
+// Inspect both counted-reference ABI cases; the oracle executes the generated programs.
 func TestParallelMapCompilerABI(t *testing.T) {
 	t.Parallel()
 	for _, result := range []ir.Type{ir.Number, ir.String} {

@@ -12,7 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Separate from counted native fixtures until codex/concurrency supplies the ABI.
+// Check inference and the independent sequential witness; the main oracle runs native variants.
 func TestConcurrencyAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/*.a"))
@@ -41,21 +41,7 @@ func TestConcurrencyAgreesWithNode(t *testing.T) {
 			if difference := disagreement(oracle, backend); difference != "" {
 				t.Fatalf("%s: Node %d %q %q, backend %d %q %q", difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
 			}
-			t.Run("native", func(t *testing.T) {
-				concurrencyRuntimePending(t)
-				observed, sanitized := natively(t, program)
-				if difference := disagreement(oracle, observed); difference != "" {
-					t.Fatalf("%s: Node %d %q %q, native %d %q %q", difference, oracle.exitCode, oracle.stdout, oracle.stderr, observed.exitCode, observed.stdout, observed.stderr)
-				}
-				if difference := disagreement(oracle, released(t, program)); difference != "" {
-					t.Fatal("release build: " + difference)
-				}
-				if oracle.exitCode == 0 {
-					if report := leaks(t, program, sanitized); report != "" {
-						t.Fatal(report)
-					}
-				}
-			})
+
 		})
 	}
 }

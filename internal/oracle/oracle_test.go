@@ -595,6 +595,13 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				t.Fatalf("Lower: %v", err)
 			}
 			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
+			if usesParallelMap(program) {
+				if difference := disagreement(oracle, backend); difference != "" {
+					t.Fatalf("JavaScript backend: %s", difference)
+				}
+				checkParallelVariants(t, program, oracle)
+				return
+			}
 			native, sanitized := natively(t, program)
 			// The build a user gets (clang -O2, no sanitizers, heap values from the size-class
 			// allocator rather than malloc) must say exactly what the sanitized one did.
@@ -657,14 +664,4 @@ func TestTheOracleCatchesOneByte(t *testing.T) {
 	if difference := disagreement(onNode(t, path), native); difference != "stdout differs" {
 		t.Errorf("got %q, want the mutant caught as \"stdout differs\"", difference)
 	}
-}
-
-// Native concurrency fixtures cannot link before the runtime worker's branch lands.
-// Keep the Node comparison running; skip only the unavailable native half explicitly.
-func concurrencyRuntimePending(t *testing.T) {
-	t.Helper()
-	if os.Getenv("ADAMIC_CONCURRENCY_RUNTIME") == "1" {
-		return
-	}
-	t.Skip("native parallelMap awaits adamic_parallel_map from codex/concurrency; no stand-in runtime")
 }
