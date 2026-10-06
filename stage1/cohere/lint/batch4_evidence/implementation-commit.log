@@ -1,0 +1,27 @@
+[codex/stage1-lint-batch4 526954a] Port twenty TypeScript syntax lint rules and preserve Go edit output
+ 32 files changed, 1933 insertions(+), 26 deletions(-)
+ create mode 100644 stage1/cohere/lint/adjacent_overload_signatures.ts
+ create mode 100644 stage1/cohere/lint/ban_tslint_comment.ts
+ create mode 100644 stage1/cohere/lint/batch4_context.ts
+ create mode 100644 stage1/cohere/lint/batch4_registry.ts
+ create mode 100644 stage1/cohere/lint/batch4_test.go
+ create mode 100644 stage1/cohere/lint/consistent_type_definitions.ts
+ create mode 100644 stage1/cohere/lint/default_param_last.ts
+ create mode 100644 stage1/cohere/lint/extra_edit.ts
+ create mode 100644 stage1/cohere/lint/init_declarations.ts
+ create mode 100644 stage1/cohere/lint/no_dupe_class_members.ts
+ create mode 100644 stage1/cohere/lint/no_duplicate_enum_values.ts
+ create mode 100644 stage1/cohere/lint/no_dynamic_delete.ts
+ create mode 100644 stage1/cohere/lint/no_explicit_any.ts
+ create mode 100644 stage1/cohere/lint/no_extra_non_null_assertion.ts
+ create mode 100644 stage1/cohere/lint/no_import_type_side_effects.ts
+ create mode 100644 stage1/cohere/lint/no_inferrable_types.ts
+ create mode 100644 stage1/cohere/lint/no_misused_new.ts
+ create mode 100644 stage1/cohere/lint/no_non_null_asserted_optional_chain.ts
+ create mode 100644 stage1/cohere/lint/no_this_alias.ts
+ create mode 100644 stage1/cohere/lint/no_unnecessary_parameter_property_assignment.ts
+ create mode 100644 stage1/cohere/lint/no_unsafe_function_type.ts
+ create mode 100644 stage1/cohere/lint/no_useless_empty_export.ts
+ create mode 100644 stage1/cohere/lint/prefer_as_const.ts
+ create mode 100644 stage1/cohere/lint/testdata/batch4_rules.json
+ create mode 100644 stage1/cohere/lint/triple_slash_reference.ts

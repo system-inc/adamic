@@ -1,0 +1,51 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0s)
+v24.19.0
+setup: node ready (0s)
+setup: submodules ready (0s)
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	0.003s [no tests to run]
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	0.008s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/flow	0.026s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/fresh	0.015s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/fuzz	0.012s [no tests to run]
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	0.012s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/lower	0.036s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/native	0.010s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/oracle	0.010s [no tests to run]
+chdir /workspace/adamic/internal/regexp: no such file or directory
+FAIL	github.com/system-inc/adamic/internal/regexp	0.000s
+chdir /workspace/adamic/internal/unicodeproperties: no such file or directory
+FAIL	github.com/system-inc/adamic/internal/unicodeproperties	0.000s
+github.com/system-inc/adamic/stage1/cohere/cssnumbers: /workspace/adamic-tools/go/pkg/tool/linux_amd64/vet: chdir /workspace/adamic/stage1/cohere/cssnumbers: no such file or directory
+github.com/system-inc/adamic/stage1/cohere/cssstrings: /workspace/adamic-tools/go/pkg/tool/linux_amd64/vet: chdir /workspace/adamic/stage1/cohere/cssstrings: no such file or directory
+# github.com/system-inc/adamic/stage1/cohere/json [github.com/system-inc/adamic/stage1/cohere/json.test]
+open stage1/cohere/json/audit_test.go: no such file or directory
+# github.com/system-inc/adamic/stage1/cohere/lint [github.com/system-inc/adamic/stage1/cohere/lint.test]
+stage1/cohere/lint/lint_test.go:312:31: undefined: volumeGenerated
+stage1/cohere/lint/lint_test.go:316:4: undefined: checkRecoveryRefusal
+FAIL	github.com/system-inc/adamic/stage1/cohere/cssnumbers [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/cssstrings [build failed]
+# github.com/system-inc/adamic/stage1/cohere/selector [github.com/system-inc/adamic/stage1/cohere/selector.test]
+open stage1/cohere/selector/gaps_test.go: no such file or directory
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	0.011s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	0.012s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	0.019s [no tests to run]
+FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+# github.com/system-inc/adamic/stage1/typescript/parser.test
+$WORK/b283/_testmain.go:27:51: undefined: _test.TestClassMethodInterfaceAgreesWithNode
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	0.005s [no tests to run]
+FAIL	github.com/system-inc/adamic/stage1/cohere/selector [build failed]
+ok  	github.com/system-inc/adamic/stage1/cohere/suppression	0.009s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/values	0.011s [no tests to run]
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser [build failed]
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	0.004s [no tests to run]
+FAIL

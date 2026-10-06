@@ -1,0 +1,516 @@
+=== RUN   TestBatch4Mutants
+=== RUN   TestBatch4Mutants/@typescript-eslint/adjacent-overload-signatures
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 0 line 2: port "fixed\tfunction f(a: string): void; const x=1; function f(a: number): void;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/001/control.ts:1:41"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch4Mutants765475984/001/control.ts:1:41
+          @typescript-eslint/adjacent-overload-signatures  This signature for f is separated from the others by unrelated members, so a reader scrolling the declaration sees an overload set that looks complete and is not. Move every signature for f together, in the order the compiler resolves them, so the whole set can be read at once.
+        
+        range 40 68 adjacentSignature 			40 68
+        fixed	function f(a: string): void; const x=1; function f(a: number): void;
+    batch4_test.go:127: selected-rule listener omission caught on native: case 0 line 2: port "fixed\tfunction f(a: string): void; const x=1; function f(a: number): void;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/001/control.ts:1:41"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch4Mutants765475984/001/control.ts:1:41
+          @typescript-eslint/adjacent-overload-signatures  This signature for f is separated from the others by unrelated members, so a reader scrolling the declaration sees an overload set that looks complete and is not. Move every signature for f together, in the order the compiler resolves them, so the whole set can be read at once.
+        
+        range 40 68 adjacentSignature 			40 68
+        fixed	function f(a: string): void; const x=1; function f(a: number): void;
+=== RUN   TestBatch4Mutants/@typescript-eslint/ban-tslint-comment
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 1 line 8: port "fixed\t// tslint:disable-next-line\\u000aconst x=1;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/002/control.ts:1:1"
+        Go context:
+          @typescript-eslint/adjacent-overload-signatures  This signature for f is separated from the others by unrelated members, so a reader scrolling the declaration sees an overload set that looks complete and is not. Move every signature for f together, in the order the compiler resolves them, so the whole set can be read at once.
+        
+        range 40 68 adjacentSignature 			40 68
+        fixed	function f(a: string): void; const x=1; function f(a: number): void;
+        case 1
+        /tmp/adamic-gate/TestBatch4Mutants765475984/002/control.ts:1:1
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable-next-line. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 27 commentDetected fix			0 28
+        fixed	const x=1;
+    batch4_test.go:127: selected-rule listener omission caught on native: case 1 line 8: port "fixed\t// tslint:disable-next-line\\u000aconst x=1;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/002/control.ts:1:1"
+        Go context:
+          @typescript-eslint/adjacent-overload-signatures  This signature for f is separated from the others by unrelated members, so a reader scrolling the declaration sees an overload set that looks complete and is not. Move every signature for f together, in the order the compiler resolves them, so the whole set can be read at once.
+        
+        range 40 68 adjacentSignature 			40 68
+        fixed	function f(a: string): void; const x=1; function f(a: number): void;
+        case 1
+        /tmp/adamic-gate/TestBatch4Mutants765475984/002/control.ts:1:1
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable-next-line. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 27 commentDetected fix			0 28
+        fixed	const x=1;
+=== RUN   TestBatch4Mutants/@typescript-eslint/consistent-type-definitions
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 2 line 14: port "fixed\ttype Shape = { value: number };", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/003/control.ts:1:6"
+        Go context:
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable-next-line. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 27 commentDetected fix			0 28
+        fixed	const x=1;
+        case 2
+        /tmp/adamic-gate/TestBatch4Mutants765475984/003/control.ts:1:6
+          @typescript-eslint/consistent-type-definitions  Use an `interface` instead of a `type` here. Both describe the same object shape, but an interface is the one this project writes: it can be reopened by a later declaration, it shows up under its own name in compiler errors rather than being expanded inline, and mixing the two spellings for the same job makes a reader ask whether the difference was meant.
+        
+        range 5 10 interfaceOverType fix	interface		0 4
+        edit 10 13	 
+    batch4_test.go:127: selected-rule listener omission caught on native: case 2 line 14: port "fixed\ttype Shape = { value: number };", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/003/control.ts:1:6"
+        Go context:
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable-next-line. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 27 commentDetected fix			0 28
+        fixed	const x=1;
+        case 2
+        /tmp/adamic-gate/TestBatch4Mutants765475984/003/control.ts:1:6
+          @typescript-eslint/consistent-type-definitions  Use an `interface` instead of a `type` here. Both describe the same object shape, but an interface is the one this project writes: it can be reopened by a later declaration, it shows up under its own name in compiler errors rather than being expanded inline, and mixing the two spellings for the same job makes a reader ask whether the difference was meant.
+        
+        range 5 10 interfaceOverType fix	interface		0 4
+        edit 10 13	 
+=== RUN   TestBatch4Mutants/@typescript-eslint/default-param-last
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 3 line 22: port "fixed\tfunction f(a=1,b:number){}", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/004/control.ts:1:12"
+        Go context:
+        range 5 10 interfaceOverType fix	interface		0 4
+        edit 10 13	 
+        edit 30 31	
+        fixed	interface Shape { value: number }
+        case 3
+        /tmp/adamic-gate/TestBatch4Mutants765475984/004/control.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b:number){}
+    batch4_test.go:127: selected-rule listener omission caught on native: case 3 line 22: port "fixed\tfunction f(a=1,b:number){}", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/004/control.ts:1:12"
+        Go context:
+        range 5 10 interfaceOverType fix	interface		0 4
+        edit 10 13	 
+        edit 30 31	
+        fixed	interface Shape { value: number }
+        case 3
+        /tmp/adamic-gate/TestBatch4Mutants765475984/004/control.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b:number){}
+=== RUN   TestBatch4Mutants/@typescript-eslint/init-declarations
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 4 line 28: port "fixed\tlet missing: number;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/005/control.ts:1:5"
+        Go context:
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b:number){}
+        case 4
+        /tmp/adamic-gate/TestBatch4Mutants765475984/005/control.ts:1:5
+          @typescript-eslint/init-declarations  Variable 'missing' should be initialized on declaration.
+        
+        range 4 11 initialized 			4 11
+        fixed	let missing: number;
+    batch4_test.go:127: selected-rule listener omission caught on native: case 4 line 28: port "fixed\tlet missing: number;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/005/control.ts:1:5"
+        Go context:
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b:number){}
+        case 4
+        /tmp/adamic-gate/TestBatch4Mutants765475984/005/control.ts:1:5
+          @typescript-eslint/init-declarations  Variable 'missing' should be initialized on declaration.
+        
+        range 4 11 initialized 			4 11
+        fixed	let missing: number;
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-dupe-class-members
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 5 line 34: port "fixed\tclass C { value=1; value=2; }", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/006/control.ts:1:20"
+        Go context:
+          @typescript-eslint/init-declarations  Variable 'missing' should be initialized on declaration.
+        
+        range 4 11 initialized 			4 11
+        fixed	let missing: number;
+        case 5
+        /tmp/adamic-gate/TestBatch4Mutants765475984/006/control.ts:1:20
+          @typescript-eslint/no-dupe-class-members  This class already declares a member named string:value. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+        
+        range 19 24 noDupeClassMembers 			19 24
+        fixed	class C { value=1; value=2; }
+    batch4_test.go:127: selected-rule listener omission caught on native: case 5 line 34: port "fixed\tclass C { value=1; value=2; }", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/006/control.ts:1:20"
+        Go context:
+          @typescript-eslint/init-declarations  Variable 'missing' should be initialized on declaration.
+        
+        range 4 11 initialized 			4 11
+        fixed	let missing: number;
+        case 5
+        /tmp/adamic-gate/TestBatch4Mutants765475984/006/control.ts:1:20
+          @typescript-eslint/no-dupe-class-members  This class already declares a member named string:value. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+        
+        range 19 24 noDupeClassMembers 			19 24
+        fixed	class C { value=1; value=2; }
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-duplicate-enum-values
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 6 line 40: port "fixed\tenum E { A=1, B=1, C='a', D='a' }", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/007/control.ts:1:12"
+        Go context:
+          @typescript-eslint/no-dupe-class-members  This class already declares a member named string:value. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+        
+        range 19 24 noDupeClassMembers 			19 24
+        fixed	class C { value=1; value=2; }
+        case 6
+        /tmp/adamic-gate/TestBatch4Mutants765475984/007/control.ts:1:12
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 11 12 noDuplicateEnumValues 			11 12
+        /tmp/adamic-gate/TestBatch4Mutants765475984/007/control.ts:1:22
+    batch4_test.go:127: selected-rule listener omission caught on native: case 6 line 40: port "fixed\tenum E { A=1, B=1, C='a', D='a' }", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/007/control.ts:1:12"
+        Go context:
+          @typescript-eslint/no-dupe-class-members  This class already declares a member named string:value. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+        
+        range 19 24 noDupeClassMembers 			19 24
+        fixed	class C { value=1; value=2; }
+        case 6
+        /tmp/adamic-gate/TestBatch4Mutants765475984/007/control.ts:1:12
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 11 12 noDuplicateEnumValues 			11 12
+        /tmp/adamic-gate/TestBatch4Mutants765475984/007/control.ts:1:22
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-dynamic-delete
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 7 line 50: port "fixed\tdelete object[key];", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/008/control.ts:1:15"
+        Go context:
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 21 24 noDuplicateEnumValues 			21 24
+        fixed	enum E { A=1, B=1, C='a', D='a' }
+        case 7
+        /tmp/adamic-gate/TestBatch4Mutants765475984/008/control.ts:1:15
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 14 17 dynamicDelete 			14 17
+        fixed	delete object[key];
+    batch4_test.go:127: selected-rule listener omission caught on native: case 7 line 50: port "fixed\tdelete object[key];", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/008/control.ts:1:15"
+        Go context:
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 21 24 noDuplicateEnumValues 			21 24
+        fixed	enum E { A=1, B=1, C='a', D='a' }
+        case 7
+        /tmp/adamic-gate/TestBatch4Mutants765475984/008/control.ts:1:15
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 14 17 dynamicDelete 			14 17
+        fixed	delete object[key];
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-extra-non-null-assertion
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 8 line 56: port "fixed\tvalue!!; value!?.field;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/009/control.ts:1:1"
+        Go context:
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 14 17 dynamicDelete 			14 17
+        fixed	delete object[key];
+        case 8
+        /tmp/adamic-gate/TestBatch4Mutants765475984/009/control.ts:1:1
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 0 6 noExtraNonNullAssertion fix			5 6
+        /tmp/adamic-gate/TestBatch4Mutants765475984/009/control.ts:1:10
+    batch4_test.go:127: selected-rule listener omission caught on native: case 8 line 56: port "fixed\tvalue!!; value!?.field;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/009/control.ts:1:1"
+        Go context:
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 14 17 dynamicDelete 			14 17
+        fixed	delete object[key];
+        case 8
+        /tmp/adamic-gate/TestBatch4Mutants765475984/009/control.ts:1:1
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 0 6 noExtraNonNullAssertion fix			5 6
+        /tmp/adamic-gate/TestBatch4Mutants765475984/009/control.ts:1:10
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-import-type-side-effects
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 9 line 66: port "fixed\timport { type A, type B as C } from 'module';", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/010/control.ts:1:1"
+        Go context:
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 9 15 noExtraNonNullAssertion fix			14 15
+        fixed	value!; value?.field;
+        case 9
+        /tmp/adamic-gate/TestBatch4Mutants765475984/010/control.ts:1:1
+          @typescript-eslint/no-import-type-side-effects  Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+        
+        range 0 45 useTopLevelQualifier fix			9 14
+        edit 17 22	
+    batch4_test.go:127: selected-rule listener omission caught on native: case 9 line 66: port "fixed\timport { type A, type B as C } from 'module';", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/010/control.ts:1:1"
+        Go context:
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 9 15 noExtraNonNullAssertion fix			14 15
+        fixed	value!; value?.field;
+        case 9
+        /tmp/adamic-gate/TestBatch4Mutants765475984/010/control.ts:1:1
+          @typescript-eslint/no-import-type-side-effects  Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+        
+        range 0 45 useTopLevelQualifier fix			9 14
+        edit 17 22	
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-misused-new
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 10 line 74: port "fixed\tinterface I { new(): I; constructor(): void; } declare class C { new(): C; }", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/011/control.ts:1:15"
+        Go context:
+        range 0 45 useTopLevelQualifier fix			9 14
+        edit 17 22	
+        edit 6 6	 type
+        fixed	import type { A, B as C } from 'module';
+        case 10
+        /tmp/adamic-gate/TestBatch4Mutants765475984/011/control.ts:1:15
+          @typescript-eslint/no-misused-new  This construct signature returns the interface that declares it, which describes a constructor whose instances are more constructors. An interface describing a static class object should have its `new` signature return the instance type being constructed, not the constructor interface itself.
+        
+        range 14 17 interfaceConstruct 			14 17
+        /tmp/adamic-gate/TestBatch4Mutants765475984/011/control.ts:1:25
+    batch4_test.go:127: selected-rule listener omission caught on native: case 10 line 74: port "fixed\tinterface I { new(): I; constructor(): void; } declare class C { new(): C; }", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/011/control.ts:1:15"
+        Go context:
+        range 0 45 useTopLevelQualifier fix			9 14
+        edit 17 22	
+        edit 6 6	 type
+        fixed	import type { A, B as C } from 'module';
+        case 10
+        /tmp/adamic-gate/TestBatch4Mutants765475984/011/control.ts:1:15
+          @typescript-eslint/no-misused-new  This construct signature returns the interface that declares it, which describes a constructor whose instances are more constructors. An interface describing a static class object should have its `new` signature return the instance type being constructed, not the constructor interface itself.
+        
+        range 14 17 interfaceConstruct 			14 17
+        /tmp/adamic-gate/TestBatch4Mutants765475984/011/control.ts:1:25
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-non-null-asserted-optional-chain
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 11 line 88: port "fixed\tvalue?.field!; (value?.field)!;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/012/control.ts:1:1"
+        Go context:
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 65 68 classNew 			65 68
+        fixed	interface I { new(): I; constructor(): void; } declare class C { new(): C; }
+        case 11
+        /tmp/adamic-gate/TestBatch4Mutants765475984/012/control.ts:1:1
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 0 13 noNonNullOptionalChain suggestion		Remove the non-null assertion.	12 13
+        /tmp/adamic-gate/TestBatch4Mutants765475984/012/control.ts:1:16
+    batch4_test.go:127: selected-rule listener omission caught on native: case 11 line 88: port "fixed\tvalue?.field!; (value?.field)!;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/012/control.ts:1:1"
+        Go context:
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 65 68 classNew 			65 68
+        fixed	interface I { new(): I; constructor(): void; } declare class C { new(): C; }
+        case 11
+        /tmp/adamic-gate/TestBatch4Mutants765475984/012/control.ts:1:1
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 0 13 noNonNullOptionalChain suggestion		Remove the non-null assertion.	12 13
+        /tmp/adamic-gate/TestBatch4Mutants765475984/012/control.ts:1:16
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-this-alias
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 12 line 98: port "fixed\tconst receiver=this;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/013/control.ts:1:7"
+        Go context:
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 15 30 noNonNullOptionalChain suggestion		Remove the non-null assertion.	29 30
+        fixed	value?.field!; (value?.field)!;
+        case 12
+        /tmp/adamic-gate/TestBatch4Mutants765475984/013/control.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 14 thisAssignment 			6 14
+        fixed	const receiver=this;
+    batch4_test.go:127: selected-rule listener omission caught on native: case 12 line 98: port "fixed\tconst receiver=this;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/013/control.ts:1:7"
+        Go context:
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 15 30 noNonNullOptionalChain suggestion		Remove the non-null assertion.	29 30
+        fixed	value?.field!; (value?.field)!;
+        case 12
+        /tmp/adamic-gate/TestBatch4Mutants765475984/013/control.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 14 thisAssignment 			6 14
+        fixed	const receiver=this;
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-unnecessary-parameter-property-assignment
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 13 line 104: port "fixed\tclass C { constructor(public value:number) { this.value=value; } }", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/014/control.ts:1:46"
+        Go context:
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 14 thisAssignment 			6 14
+        fixed	const receiver=this;
+        case 13
+        /tmp/adamic-gate/TestBatch4Mutants765475984/014/control.ts:1:46
+          @typescript-eslint/no-unnecessary-parameter-property-assignment  A constructor parameter carrying `public`, `private`, `protected`, `readonly` or `override` is already assigned to the matching property before the constructor body runs. Writing it again does nothing, and it invites the next reader to believe the two names could diverge. Delete the assignment.
+        
+        range 45 61 unnecessaryAssign suggestion		Remove the unnecessary assignment.	45 62
+        fixed	class C { constructor(public value:number) { this.value=value; } }
+    batch4_test.go:127: selected-rule listener omission caught on native: case 13 line 104: port "fixed\tclass C { constructor(public value:number) { this.value=value; } }", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/014/control.ts:1:46"
+        Go context:
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 14 thisAssignment 			6 14
+        fixed	const receiver=this;
+        case 13
+        /tmp/adamic-gate/TestBatch4Mutants765475984/014/control.ts:1:46
+          @typescript-eslint/no-unnecessary-parameter-property-assignment  A constructor parameter carrying `public`, `private`, `protected`, `readonly` or `override` is already assigned to the matching property before the constructor body runs. Writing it again does nothing, and it invites the next reader to believe the two names could diverge. Delete the assignment.
+        
+        range 45 61 unnecessaryAssign suggestion		Remove the unnecessary assignment.	45 62
+        fixed	class C { constructor(public value:number) { this.value=value; } }
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-unsafe-function-type
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 14 line 110: port "fixed\tlet value: Function;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/015/control.ts:1:12"
+        Go context:
+          @typescript-eslint/no-unnecessary-parameter-property-assignment  A constructor parameter carrying `public`, `private`, `protected`, `readonly` or `override` is already assigned to the matching property before the constructor body runs. Writing it again does nothing, and it invites the next reader to believe the two names could diverge. Delete the assignment.
+        
+        range 45 61 unnecessaryAssign suggestion		Remove the unnecessary assignment.	45 62
+        fixed	class C { constructor(public value:number) { this.value=value; } }
+        case 14
+        /tmp/adamic-gate/TestBatch4Mutants765475984/015/control.ts:1:12
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 11 19 bannedFunctionType 			11 19
+        fixed	let value: Function;
+    batch4_test.go:127: selected-rule listener omission caught on native: case 14 line 110: port "fixed\tlet value: Function;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/015/control.ts:1:12"
+        Go context:
+          @typescript-eslint/no-unnecessary-parameter-property-assignment  A constructor parameter carrying `public`, `private`, `protected`, `readonly` or `override` is already assigned to the matching property before the constructor body runs. Writing it again does nothing, and it invites the next reader to believe the two names could diverge. Delete the assignment.
+        
+        range 45 61 unnecessaryAssign suggestion		Remove the unnecessary assignment.	45 62
+        fixed	class C { constructor(public value:number) { this.value=value; } }
+        case 14
+        /tmp/adamic-gate/TestBatch4Mutants765475984/015/control.ts:1:12
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 11 19 bannedFunctionType 			11 19
+        fixed	let value: Function;
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-useless-empty-export
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 15 line 116: port "fixed\timport 'module'; export {};", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/016/control.ts:1:18"
+        Go context:
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 11 19 bannedFunctionType 			11 19
+        fixed	let value: Function;
+        case 15
+        /tmp/adamic-gate/TestBatch4Mutants765475984/016/control.ts:1:18
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 17 27 uselessEmptyExport fix			17 27
+        fixed	import 'module'; 
+    batch4_test.go:127: selected-rule listener omission caught on native: case 15 line 116: port "fixed\timport 'module'; export {};", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/016/control.ts:1:18"
+        Go context:
+          @typescript-eslint/no-unsafe-function-type  The `Function` type accepts any function-like value, so it constrains nothing beyond callability: it says nothing about parameters, nothing about the return type, and a value typed this way can be called with any arguments and produces `any`. That is the opposite of what a type annotation is for. Write the signature the value actually has, such as `(input: string) => number`, or `() => void` when it takes nothing and returns nothing.
+        
+        range 11 19 bannedFunctionType 			11 19
+        fixed	let value: Function;
+        case 15
+        /tmp/adamic-gate/TestBatch4Mutants765475984/016/control.ts:1:18
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 17 27 uselessEmptyExport fix			17 27
+        fixed	import 'module'; 
+=== RUN   TestBatch4Mutants/@typescript-eslint/prefer-as-const
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 16 line 122: port "fixed\tlet value: 'a' = 'a'; const literal = 'b' as 'b';", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/017/control.ts:1:12"
+        Go context:
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 17 27 uselessEmptyExport fix			17 27
+        fixed	import 'module'; 
+        case 16
+        /tmp/adamic-gate/TestBatch4Mutants765475984/017/control.ts:1:12
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 11 14 preferAsConst fix			9 14
+        edit 20 20	 as const
+    batch4_test.go:127: selected-rule listener omission caught on native: case 16 line 122: port "fixed\tlet value: 'a' = 'a'; const literal = 'b' as 'b';", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/017/control.ts:1:12"
+        Go context:
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 17 27 uselessEmptyExport fix			17 27
+        fixed	import 'module'; 
+        case 16
+        /tmp/adamic-gate/TestBatch4Mutants765475984/017/control.ts:1:12
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 11 14 preferAsConst fix			9 14
+        edit 20 20	 as const
+=== RUN   TestBatch4Mutants/@typescript-eslint/triple-slash-reference
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 17 line 133: port "fixed\t/// <reference path=\"module\" />\\u000aconst value=1;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/018/control.ts:1:1"
+        Go context:
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 45 48 preferAsConst fix	const		45 48
+        fixed	let value = 'a' as const; const literal = 'b' as const;
+        case 17
+        /tmp/adamic-gate/TestBatch4Mutants765475984/018/control.ts:1:1
+          @typescript-eslint/triple-slash-reference  This file pulls in `module` with a triple-slash reference directive. A directive is a global instruction to the compiler with no binding and no local name, so nothing in the file records that the dependency is used here and no tool can follow it the way it follows an import. Write an `import` instead, which names what it brings in and participates in module resolution.
+        
+        range 0 31 tripleSlashReference 			0 31
+        fixed	/// <reference path="module" />\u000aconst value=1;
+    batch4_test.go:127: selected-rule listener omission caught on native: case 17 line 133: port "fixed\t/// <reference path=\"module\" />\\u000aconst value=1;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/018/control.ts:1:1"
+        Go context:
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 45 48 preferAsConst fix	const		45 48
+        fixed	let value = 'a' as const; const literal = 'b' as const;
+        case 17
+        /tmp/adamic-gate/TestBatch4Mutants765475984/018/control.ts:1:1
+          @typescript-eslint/triple-slash-reference  This file pulls in `module` with a triple-slash reference directive. A directive is a global instruction to the compiler with no binding and no local name, so nothing in the file records that the dependency is used here and no tool can follow it the way it follows an import. Write an `import` instead, which names what it brings in and participates in module resolution.
+        
+        range 0 31 tripleSlashReference 			0 31
+        fixed	/// <reference path="module" />\u000aconst value=1;
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-explicit-any
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 18 line 139: port "fixed\tlet value: any;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/019/control.ts:1:12"
+        Go context:
+          @typescript-eslint/triple-slash-reference  This file pulls in `module` with a triple-slash reference directive. A directive is a global instruction to the compiler with no binding and no local name, so nothing in the file records that the dependency is used here and no tool can follow it the way it follows an import. Write an `import` instead, which names what it brings in and participates in module resolution.
+        
+        range 0 31 tripleSlashReference 			0 31
+        fixed	/// <reference path="module" />\u000aconst value=1;
+        case 18
+        /tmp/adamic-gate/TestBatch4Mutants765475984/019/control.ts:1:12
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 11 14 unexpectedAny 			11 14
+        fixed	let value: any;
+    batch4_test.go:127: selected-rule listener omission caught on native: case 18 line 139: port "fixed\tlet value: any;", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/019/control.ts:1:12"
+        Go context:
+          @typescript-eslint/triple-slash-reference  This file pulls in `module` with a triple-slash reference directive. A directive is a global instruction to the compiler with no binding and no local name, so nothing in the file records that the dependency is used here and no tool can follow it the way it follows an import. Write an `import` instead, which names what it brings in and participates in module resolution.
+        
+        range 0 31 tripleSlashReference 			0 31
+        fixed	/// <reference path="module" />\u000aconst value=1;
+        case 18
+        /tmp/adamic-gate/TestBatch4Mutants765475984/019/control.ts:1:12
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 11 14 unexpectedAny 			11 14
+        fixed	let value: any;
+=== RUN   TestBatch4Mutants/@typescript-eslint/no-inferrable-types
+    batch4_test.go:127: selected-rule listener omission caught on Node: case 19 line 145: port "fixed\tlet value: number=1; function f(value: boolean=true){}", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/020/control.ts:1:5"
+        Go context:
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 11 14 unexpectedAny 			11 14
+        fixed	let value: any;
+        case 19
+        /tmp/adamic-gate/TestBatch4Mutants765475984/020/control.ts:1:5
+          @typescript-eslint/no-inferrable-types  Type `number` is trivially inferred from a `number` literal, so the annotation restates what the initializer already says. Remove it and the declaration means exactly the same thing with one fewer place to keep in sync.
+        
+        range 4 19 noInferrableType fix			9 17
+        /tmp/adamic-gate/TestBatch4Mutants765475984/020/control.ts:1:33
+    batch4_test.go:127: selected-rule listener omission caught on native: case 19 line 145: port "fixed\tlet value: number=1; function f(value: boolean=true){}", Go "/tmp/adamic-gate/TestBatch4Mutants765475984/020/control.ts:1:5"
+        Go context:
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 11 14 unexpectedAny 			11 14
+        fixed	let value: any;
+        case 19
+        /tmp/adamic-gate/TestBatch4Mutants765475984/020/control.ts:1:5
+          @typescript-eslint/no-inferrable-types  Type `number` is trivially inferred from a `number` literal, so the annotation restates what the initializer already says. Remove it and the declaration means exactly the same thing with one fewer place to keep in sync.
+        
+        range 4 19 noInferrableType fix			9 17
+        /tmp/adamic-gate/TestBatch4Mutants765475984/020/control.ts:1:33
+--- PASS: TestBatch4Mutants (357.33s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/adjacent-overload-signatures (17.52s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/ban-tslint-comment (17.02s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/consistent-type-definitions (17.63s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/default-param-last (17.42s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/init-declarations (17.57s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-dupe-class-members (17.99s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-duplicate-enum-values (17.45s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-dynamic-delete (17.93s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-extra-non-null-assertion (17.98s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-import-type-side-effects (17.18s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-misused-new (19.05s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-non-null-asserted-optional-chain (17.70s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-this-alias (17.76s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-unnecessary-parameter-property-assignment (17.31s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-unsafe-function-type (17.63s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-useless-empty-export (17.63s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/prefer-as-const (18.63s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/triple-slash-reference (17.53s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-explicit-any (17.49s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/no-inferrable-types (18.90s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	357.345s

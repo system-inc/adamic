@@ -1,0 +1,51 @@
+=== RUN   TestBatch4UnicodeWhitespace
+    batch4_test.go:238: Go, Node, native identical: 1656 bytes
+=== RUN   TestBatch4UnicodeWhitespace/JavaScript_trim_replaces_Go_trim
+    batch4_test.go:253: Unicode whitespace mutant caught on Node: case 0 line 3: port "  @typescript-eslint/ban-tslint-comment  This file carries the tslint directive /* tslint:disable \u0085 */. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.", Go "  @typescript-eslint/ban-tslint-comment  This file carries the tslint directive /* tslint:disable */. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch4UnicodeWhitespace3631093322/001/unicode.ts:1:1
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive /* tslint:disable */. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 22 commentDetected fix			0 22
+        fixed	
+        case 1
+    batch4_test.go:253: Unicode whitespace mutant caught on native: case 0 line 3: port "  @typescript-eslint/ban-tslint-comment  This file carries the tslint directive /* tslint:disable \u0085 */. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.", Go "  @typescript-eslint/ban-tslint-comment  This file carries the tslint directive /* tslint:disable */. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch4UnicodeWhitespace3631093322/001/unicode.ts:1:1
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive /* tslint:disable */. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 22 commentDetected fix			0 22
+        fixed	
+        case 1
+=== RUN   TestBatch4UnicodeWhitespace/JavaScript_whitespace_replaces_Go_Fields
+    batch4_test.go:253: Unicode whitespace mutant caught on Node: case 2 line 14: port "recovery findings only", Go "/tmp/adamic-gate/TestBatch4UnicodeWhitespace3631093322/003/reference.ts:1:1"
+        Go context:
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive /* tslint:disable ﻿ */. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 23 commentDetected fix			0 23
+        fixed	
+        case 2
+        /tmp/adamic-gate/TestBatch4UnicodeWhitespace3631093322/003/reference.ts:1:1
+          @typescript-eslint/triple-slash-reference  This file pulls in `module` with a triple-slash reference directive. A directive is a global instruction to the compiler with no binding and no local name, so nothing in the file records that the dependency is used here and no tool can follow it the way it follows an import. Write an `import` instead, which names what it brings in and participates in module resolution.
+        
+        range 0 40 tripleSlashReference 			0 40
+        recovery findings only
+    batch4_test.go:253: Unicode whitespace mutant caught on native: case 2 line 14: port "recovery findings only", Go "/tmp/adamic-gate/TestBatch4UnicodeWhitespace3631093322/003/reference.ts:1:1"
+        Go context:
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive /* tslint:disable ﻿ */. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 23 commentDetected fix			0 23
+        fixed	
+        case 2
+        /tmp/adamic-gate/TestBatch4UnicodeWhitespace3631093322/003/reference.ts:1:1
+          @typescript-eslint/triple-slash-reference  This file pulls in `module` with a triple-slash reference directive. A directive is a global instruction to the compiler with no binding and no local name, so nothing in the file records that the dependency is used here and no tool can follow it the way it follows an import. Write an `import` instead, which names what it brings in and participates in module resolution.
+        
+        range 0 40 tripleSlashReference 			0 40
+        recovery findings only
+--- PASS: TestBatch4UnicodeWhitespace (56.64s)
+    --- PASS: TestBatch4UnicodeWhitespace/JavaScript_trim_replaces_Go_trim (17.93s)
+    --- PASS: TestBatch4UnicodeWhitespace/JavaScript_whitespace_replaces_Go_Fields (18.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	56.643s

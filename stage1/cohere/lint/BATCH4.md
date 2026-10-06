@@ -284,12 +284,13 @@ Implementation and tests:
 `526954ab4cff2101fb7195433bdf60e9cc9a9469`,
 `Port twenty TypeScript syntax lint rules and preserve Go edit output`.
 A separate evidence commit adds this report and
-[the raw logs](batch4_evidence/). Both are pushed on
-`codex/stage1-lint-batch4`; no pull request is opened.
+[the raw logs](batch4_evidence/). The requested remote `codex/stage1-lint-batch4` already contains another
+worker's a-to-m batch at `d486b03a15f3202acc317dc81c40cc21818e21f7`, based
+on batch2. The first push was rejected without changing remote history.
+Publication is handled separately to preserve that worker's commits; no pull
+request is opened.
 
 Raw oracle whitespace is preserved through the local `.gitattributes` entry.
 Source/document and staged whitespace checks pass. The retained failed setup
 and regression logs are labeled as initial attempts and are not claimed as
 successful checks.
-
-

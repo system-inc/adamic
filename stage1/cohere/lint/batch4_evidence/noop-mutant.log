@@ -1,0 +1,22 @@
+=== RUN   TestBatch4NoopReasonMutant
+    batch4_test.go:216: rejection-metadata check alone caught wrong no-op reason on Node: case 0 line 8: port "rejected @typescript-eslint/consistent-type-definitions 30 30  the fix was ignored", Go "rejected @typescript-eslint/consistent-type-definitions 30 30  the fix replaces text with itself"
+        Go context:
+          @typescript-eslint/consistent-type-definitions  Use an `interface` instead of a `type` here. Both describe the same object shape, but an interface is the one this project writes: it can be reopened by a later declaration, it shows up under its own name in compiler errors rather than being expanded inline, and mixing the two spellings for the same job makes a reader ask whether the difference was meant.
+        
+        range 5 10 interfaceOverType fix	interface		0 4
+        edit 10 13	 
+        edit 30 30	
+        rejected @typescript-eslint/consistent-type-definitions 30 30  the fix replaces text with itself
+        fixed	interface Shape { value: number }
+    batch4_test.go:216: rejection-metadata check alone caught wrong no-op reason on native: case 0 line 8: port "rejected @typescript-eslint/consistent-type-definitions 30 30  the fix was ignored", Go "rejected @typescript-eslint/consistent-type-definitions 30 30  the fix replaces text with itself"
+        Go context:
+          @typescript-eslint/consistent-type-definitions  Use an `interface` instead of a `type` here. Both describe the same object shape, but an interface is the one this project writes: it can be reopened by a later declaration, it shows up under its own name in compiler errors rather than being expanded inline, and mixing the two spellings for the same job makes a reader ask whether the difference was meant.
+        
+        range 5 10 interfaceOverType fix	interface		0 4
+        edit 10 13	 
+        edit 30 30	
+        rejected @typescript-eslint/consistent-type-definitions 30 30  the fix replaces text with itself
+        fixed	interface Shape { value: number }
+--- PASS: TestBatch4NoopReasonMutant (19.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	19.969s

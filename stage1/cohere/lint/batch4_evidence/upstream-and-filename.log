@@ -1,0 +1,109 @@
+=== RUN   TestBatch4UpstreamAgree
+    lint_test.go:320: cohere cases: 2601 unique source/rule/options combinations
+    batch4_test.go:84: @typescript-eslint/adjacent-overload-signatures: 107 captured cases
+    batch4_test.go:84: @typescript-eslint/ban-tslint-comment: 42 captured cases
+    batch4_test.go:84: @typescript-eslint/consistent-type-definitions: 50 captured cases
+    batch4_test.go:84: @typescript-eslint/default-param-last: 117 captured cases
+    batch4_test.go:84: @typescript-eslint/init-declarations: 92 captured cases
+    batch4_test.go:84: @typescript-eslint/no-dupe-class-members: 30 captured cases
+    batch4_test.go:84: @typescript-eslint/no-duplicate-enum-values: 57 captured cases
+    batch4_test.go:84: @typescript-eslint/no-dynamic-delete: 42 captured cases
+    batch4_test.go:84: @typescript-eslint/no-extra-non-null-assertion: 19 captured cases
+    batch4_test.go:84: @typescript-eslint/no-import-type-side-effects: 26 captured cases
+    batch4_test.go:84: @typescript-eslint/no-misused-new: 45 captured cases
+    batch4_test.go:84: @typescript-eslint/no-non-null-asserted-optional-chain: 24 captured cases
+    batch4_test.go:84: @typescript-eslint/no-this-alias: 40 captured cases
+    batch4_test.go:84: @typescript-eslint/no-unnecessary-parameter-property-assignment: 92 captured cases
+    batch4_test.go:84: @typescript-eslint/no-unsafe-function-type: 25 captured cases
+    batch4_test.go:84: @typescript-eslint/no-useless-empty-export: 64 captured cases
+    batch4_test.go:84: @typescript-eslint/prefer-as-const: 69 captured cases
+    batch4_test.go:84: @typescript-eslint/triple-slash-reference: 70 captured cases
+    batch4_test.go:84: @typescript-eslint/no-explicit-any: 207 captured cases
+    batch4_test.go:84: @typescript-eslint/no-inferrable-types: 111 captured cases
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/adjacent-overload-signatures
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/ban-tslint-comment
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/consistent-type-definitions
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/default-param-last
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/init-declarations
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-dupe-class-members
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-duplicate-enum-values
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-dynamic-delete
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-extra-non-null-assertion
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-import-type-side-effects
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-misused-new
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-non-null-asserted-optional-chain
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-this-alias
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-unnecessary-parameter-property-assignment
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-unsafe-function-type
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-useless-empty-export
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/prefer-as-const
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/triple-slash-reference
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-explicit-any
+=== RUN   TestBatch4UpstreamAgree/@typescript-eslint/no-inferrable-types
+=== NAME  TestBatch4UpstreamAgree
+    batch4_test.go:104: Go recovered output: case 0
+        /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/003/case-749.ts:1:46
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 45 48 unexpectedAny 			45 48
+        recovery findings only
+    batch4_test.go:104: explicit unsupported recovery: /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/007/scanner: timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 54 in /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/003/case-749.ts
+    batch4_test.go:104: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 54 in /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/003/case-749.ts
+    batch4_test.go:104: Go recovered output: case 0
+        /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/003/case-775.ts:1:39
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 38 41 unexpectedAny 			38 41
+        recovery findings only
+    batch4_test.go:104: explicit unsupported recovery: /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/007/scanner: timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 47 in /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/003/case-775.ts
+    batch4_test.go:104: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 47 in /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/003/case-775.ts
+    batch4_test.go:104: Go recovered output: case 0
+        recovery findings only
+    batch4_test.go:104: explicit unsupported recovery: /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/007/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected CloseParenToken, got OpenBraceToken at 33 in /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/003/case-1199.ts
+    batch4_test.go:104: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected CloseParenToken, got OpenBraceToken at 33 in /tmp/adamic-gate/TestBatch4UpstreamAgree1418782633/003/case-1199.ts
+    batch4_test.go:106: Go, Node, native identical: 460313 bytes
+--- PASS: TestBatch4UpstreamAgree (30.44s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/adjacent-overload-signatures (0.15s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/ban-tslint-comment (0.15s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/consistent-type-definitions (0.14s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/default-param-last (0.14s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/init-declarations (0.18s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-dupe-class-members (0.14s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-duplicate-enum-values (0.14s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-dynamic-delete (0.14s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-extra-non-null-assertion (0.14s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-import-type-side-effects (0.13s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-misused-new (0.13s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-non-null-asserted-optional-chain (0.15s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-this-alias (0.15s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-unnecessary-parameter-property-assignment (0.16s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-unsafe-function-type (0.13s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-useless-empty-export (0.14s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/prefer-as-const (0.14s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/triple-slash-reference (0.16s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-explicit-any (0.16s)
+    --- PASS: TestBatch4UpstreamAgree/@typescript-eslint/no-inferrable-types (0.14s)
+=== RUN   TestBatch4FilenameMutant
+    batch4_test.go:176: Go, Node, native identical: 509 bytes
+    batch4_test.go:189: fixed-source check alone caught lost declaration-file gate on Node: case 0 line 6: port "fixed\t import 'module'; ", Go "fixed\t import 'module'; export {};"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch4FilenameMutant3142046378/001/definition.d.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix			0 9
+        fixed	 import 'module'; export {};
+    batch4_test.go:189: fixed-source check alone caught lost declaration-file gate on native: case 0 line 6: port "fixed\t import 'module'; ", Go "fixed\t import 'module'; export {};"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch4FilenameMutant3142046378/001/definition.d.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix			0 9
+        fixed	 import 'module'; export {};
+--- PASS: TestBatch4FilenameMutant (37.23s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:362: set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3
+--- SKIP: TestCompilerAndStage1Agree (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	67.683s
