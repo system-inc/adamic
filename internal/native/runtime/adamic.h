@@ -204,6 +204,8 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name);
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+// Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
+adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	if (cache->shape == object->shape) {
 		return &((adamic_object *)object)->slots[cache->index];

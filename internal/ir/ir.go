@@ -275,6 +275,8 @@ type (
 		Name     string
 		Of       Type
 		Optional bool
+		// Absent is an optional own field: a shape without it reads as undefined.
+		Absent bool
 		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
 		// otherwise: the constructor's object has the class's layout, so the field's place in it is
 		// known, for an object that has that layout.

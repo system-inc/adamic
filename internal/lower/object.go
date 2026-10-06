@@ -366,7 +366,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 			if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.Weak {
 				// The field keeps a handle, whatever the checker narrowed the read to.
-				return ir.Property{Object: object, Name: name, Of: ir.Weak, Optional: access.QuestionDotToken != nil}, nil
+				return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Weak, Optional: access.QuestionDotToken != nil}), nil
 			}
 		}
 		of, err := l.typeOf(node)
@@ -384,7 +384,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			// box?.size is number | undefined because box may be; the field itself is what's stored.
 			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 				if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == of.Present() {
-					return ir.Property{Object: object, Name: name, Of: stored, Optional: true, Class: l.classOf(node)}, nil
+					return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: true, Class: l.classOf(node)}), nil
 				}
 			}
 		}
@@ -394,14 +394,30 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if of == ir.MaybeNumber {
 			// number | undefined, whether the field holds it or ?. makes it: the packed word, or
 			// undefined when the object is.
-			return ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional, Class: l.classOf(node)}, nil
+			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional, Class: l.classOf(node)}), nil
 		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
-		return l.defined(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
+		return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
+}
+
+// readObjectField keeps an optional own field distinct from optional chaining of its receiver.
+// Absence is a read result, never a synthetic own field: hasOwnProperty and object spread still see
+// the shape that was actually made. A narrowed number checks the declared optional representation.
+func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
+	field := l.checker.GetSymbolAtLocation(node.Name())
+	if field == nil || field.Flags&ast.SymbolFlagsOptional == 0 {
+		return property
+	}
+	property.Absent = true
+	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.MaybeNumber && property.Of == ir.Number {
+		property.Of = ir.MaybeNumber
+		return fit(property, ir.Number)
+	}
+	return property
 }
 
 // hasOwnProperty lowers object.hasOwnProperty(key) when the method is the library's, not a field the

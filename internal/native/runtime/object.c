@@ -79,3 +79,21 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 	*method = shape->methods->code[cache->index - shape->count];
 	return NULL;
 }
+
+// Cache absence too, with count as the index, without adding a field to the object's shape.
+adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (cache->shape != object->shape) {
+		cache->shape = object->shape;
+		cache->index = object->shape->count;
+		for (size_t index = 0; index < object->shape->count; index++) {
+			if (strcmp(object->shape->names[index], name) == 0) {
+				cache->index = index;
+				break;
+			}
+		}
+	}
+	if (cache->index == object->shape->count) {
+		return NULL;
+	}
+	return &((adamic_object *)object)->slots[cache->index];
+}
