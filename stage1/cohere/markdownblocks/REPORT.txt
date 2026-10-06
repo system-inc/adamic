@@ -1,3 +1,60 @@
+Native Unicode widths, major printers and source prose splitting are green.
+4,813 documents and 1,180,938 splitText sources match both original oracles.
+Widths match on 1,205,496 cases; splitText measured 2.40x Node and 1.70x Go.
+Fifteen new output-only mutants caught; each completed slice is pushed.
+Full native parsing, AST preprocessing and whitespace/reference-label printing remain.
+
+Source-driven prose splitting slice, October 6, 2026
+
+Prior dispatch slice pushed: 9f58587f99acb0921bf2f64479014aad1c98cff3.
+splitText.ts is cohere utilities.go's complete splitText primitive, with an owned
+TextTokens builder and generated exact Unicode classes from classes_generated.go.
+It normalizes ASCII whitespace runs, splits CJK code points with optional BMP or
+astral selectors, classifies Korean/non-CJK/CJ/punctuation words and inserts fake
+empty whitespace exactly as Go and the fork do. There is no runtime RegExp.
+The numeric class tables record the pinned source SHA256; regeneration is
+byte-checked after cohere formatting. Input is source text, not parsed AST facts.
+
+The original Node oracle exposes the private splitText function in the exact
+pinned fork bundle in memory, inserting only a function-reference export before
+its unchanged declaration. All original code, regexes and constants execute.
+The test first compares the scratch markdown bundle byte for byte with the
+repository's pinned copy. This is the original library's actual implementation,
+not the port source on Node or an independently rewritten splitter.
+Go's actual private splitText is exposed through a test-only overlay.
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownTextSplitting$' -count=1 -v
+/tmp/markdown-text-final.log: PASS, 299.007s. 1,180,938 source texts: every Unicode
+scalar, 876 repository/submodule files and their source lines, 2,197 triples
+of 13 CJK/ASCII/space/selector atoms and 192 BMP/astral selector combinations.
+Exact token type/value/kind/CJ/leading/trailing flags match Go, the original fork,
+source Node, backend and sanitized native. Leak check passes.
+Three native output-only mutants compile, exit 0, empty stderr, all caught by
+token-field differences: fake-whitespace boundary predicate inverted;
+Korean word kind becomes CJ-letter; variation-selector test inverted.
+A clone keeps these experiments outside the real source tree.
+
+The first probe emitted one console.log per case. Go, actual original fork and
+sanitized native matched, but source Node exited 70 with empty stderr. An exec
+transport also disconnected transiently. The Node runtime exits 70 on stream
+errors; the specific underlying stream failure was not isolated. Batching the
+probe output into one console.log avoided it and the entire final gate above
+passed, including source/backend/leaks/all mutants. This is a harness output
+change; native splitter semantics and the oracle were not changed.
+
+Three processes, startup/protocol/field serialization/output included:
+Go 156,937.6 texts/s; native O2 266,281.3; actual original Node 110,878.8.
+Native measured 1.70x Go and 2.40x original Node in this observed mixed batch.
+Native/Node batch output, while the Go adapter prints each case individually;
+these are end-to-end probe rates, not isolated algorithm or full-parser speeds.
+Cohere --no-cache --no-fix, /tmp/markdown-text-style-final.log: 276 rules,
+4 checked, 100% Adamic-ready, zero findings. go vet ./... passes, empty
+/tmp/markdown-text-vet.log. Full repository gate not run. None of the reserved
+compiler files or the prior inline dependency changed. Full tokenizer/mdast,
+AST preprocessing and native AST path dispatch still remain unported; whitespace
+and raw reference-label printing are the next prepared composition work.
+
 Native Unicode widths and the major Markdown block and inline dispatch compose.
 4,813 documents match Go and the pinned fork with embedded formatting off.
 1,205,496 width cases agree; twelve new output-only mutants have been caught.

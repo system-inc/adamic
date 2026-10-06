@@ -6,6 +6,23 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native source text splitting
+
+`splitText.ts`, `textTokens.ts` and generated `textClasses.ts` port cohere's
+source-driven prose splitting. This receives source strings directly: normalized
+ASCII whitespace runs, CJK code-point/selector splitting, Korean/CJ/non-CJK
+classification, punctuation flags and synthetic empty whitespace are native.
+Go's actual private splitText and the actual fork's private function agree with
+native/source/backend on 1,180,938 source cases, including every Unicode scalar.
+The fork function is exposed in memory without changing its body or constants;
+the bundle bytes are checked against the pinned repository copy first.
+
+This is a completed preprocessing primitive. It has not yet replaced the full
+AST preprocessing walk or micromark/mdast parser. Initial million-line source
+Node output exited 70 with empty stderr; batching probe stdout avoided that
+failure, and all complete oracle/sanitizer/leak/mutant checks then passed.
+The underlying stream failure was not isolated; no semantic mismatch was observed.
+
 ## Native dispatch composed with prior inline leaves
 
 `leaves.ts` composes the previously verified inline-code, wiki-link, URL, title,
