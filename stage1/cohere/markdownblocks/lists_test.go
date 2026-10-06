@@ -37,6 +37,8 @@ func TestMarkdownHTMLBlockLayout(t *testing.T) {
 	testBlockLayout(t, "html")
 }
 
+func TestMarkdownStructureLayout(t *testing.T) { testBlockLayout(t, "structure") }
+
 func testBlockLayout(t *testing.T, slice string) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
@@ -94,7 +96,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			inputs = append(inputs, auditInput{Name: "generated/table-layout/edge/" + text, Text: text})
 		}
 	}
-	if slice == "code" || slice == "html" {
+	if slice == "code" || (slice == "html" || slice == "structure") {
 		for _, marker := range []string{"```", "````", "~~~~", "```````"} {
 			for _, info := range []string{"", "js", "json", "yaml", "toml", "css", "html", "text title=foo", "x {#id .class}"} {
 				for _, body := range []string{"", "a", "a\nb", "\n\nx\n", "a  \nb\t", "`a`", "```", "~~~~", "中😀"} {
@@ -121,7 +123,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			}
 		}
 	}
-	if slice == "html" {
+	if slice == "html" || slice == "structure" {
 		for _, body := range []string{"<div>\nx  \n</div>", "<script>\nx  \n</script>", "<style>\nx\t\n</style>", "<pre>\nx  \n</pre>", "<!-- a  \nb\t -->", "<!-->", "<!--->", "<!--a-->", "<?xml\nx  \n?>", "<!DOCTYPE html>", "<![CDATA[\nx  \n]]>", "<table>\n<tr>\nx\n</tr>\n</table>", "<x-a a='b'>\nx\n</x-a>", "a <em>\nx  \n</em> b", "<div>\n\n# h\n\n</div>", "<!-- prettier-ignore -->\n<div>  \nx\n</div>", "<div>中😀</div>"} {
 			for _, prefix := range []string{"", "> ", "> > ", "- ", "> - "} {
 				for _, ending := range []string{"", "  ", "\t", "\u00a0", "\u2000", "\ufeff"} {
@@ -140,11 +142,29 @@ func testBlockLayout(t *testing.T, slice string) {
 			}
 		}
 	}
-	if slice == "html" {
+	if slice == "html" || slice == "structure" {
 		for _, cell := range []string{"中", "Ａ", "α", "é", "©", "©️", "👩🏽‍⚕️", "👨🏻‍❤️‍💋‍👨🏿", "🧑🏿‍🦽‍➡️", "🏳️‍🌈", "🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f"} {
 			for _, align := range []string{"---", ":--", "--:", ":-:"} {
 				text := "| " + cell + " | a |\n| " + align + " | --- |\n| a | " + cell + " |\n"
 				inputs = append(inputs, auditInput{Name: "generated/native-width/table/" + text, Text: text})
+			}
+		}
+	}
+	if slice == "structure" {
+		for depth := 1; depth <= 6; depth++ {
+			for _, body := range []string{"", "a", "*a _b_*", "中 👩🏽‍⚕️", "[a](/b)", "a #", "`a  b`"} {
+				for _, prefix := range []string{"", "> ", "- ", "> - "} {
+					text := prefix + strings.Repeat("#", depth) + " " + body + "\n"
+					inputs = append(inputs, auditInput{Name: "generated/structure/atx/" + text, Text: text})
+				}
+			}
+		}
+		for _, marker := range []string{"=", "===", "---", "-----"} {
+			for _, body := range []string{"a", "a\nb", "*a _b_*", "中\n文", "a\n\ntext", "[x](/y)"} {
+				for _, spacing := range []string{"", "  ", "\t"} {
+					text := body + "\n" + marker + spacing + "\n"
+					inputs = append(inputs, auditInput{Name: "generated/structure/setext/" + text, Text: text})
+				}
 			}
 		}
 	}
@@ -336,12 +356,20 @@ func testBlockLayout(t *testing.T, slice string) {
 			{"code indentation", "' '.repeat(4)", "' '.repeat(3)"},
 		}
 	}
-	if slice == "html" {
+	if slice == "html" || slice == "structure" {
 		mutantFile = "htmlblocks.ts"
 		mutations = []struct{ name, from, to string }{
 			{"HTML root trim", "if(frame.rootLast)", "if(false)"},
 			{"HTML comment line", "value.startsWith('<!--')", "!value.startsWith('<!--')"},
 			{"HTML literal root", "arena.add('r', '', 0, [literal])", "arena.add('d', '', 0, [literal])"},
+		}
+	}
+	if slice == "structure" {
+		mutantFile = "structure.ts"
+		mutations = []struct{ name, from, to string }{
+			{"heading depth", "'#'.repeat(depth)", "'#'.repeat(depth + 1)"},
+			{"sentence separator", "parts.push(child.doc)", "parts.push(arena.text(''))"},
+			{"paragraph fill tail", "for(let index = 1; index < node.children.length", "for(let index = 2; index < node.children.length"},
 		}
 	}
 	for _, mutation := range mutations {
@@ -360,7 +388,7 @@ func testBlockLayout(t *testing.T, slice string) {
 				}
 				write(t, filepath.Join(scratch, "markdowninline", name), content)
 			}
-			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts"} {
+			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "structure.ts"} {
 				content, err := os.ReadFile(name)
 				if err != nil {
 					t.Fatal(err)

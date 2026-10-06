@@ -1,3 +1,4 @@
+import { printHeading, printParagraph, printSentence, type SentenceChildInterface } from '../structure.ts';
 // Component driver: Go AST/doc fixtures supply unported blocks, not production Markdown input.
 import { panic, programArguments, readTextFile } from 'adamic';
 import { decode, encode } from '../codec.ts';
@@ -69,6 +70,26 @@ for(const line of input.text.split('\n')) {
                 integer(fields[5] ?? ''),
             ),
         );
+    else if(kind === 'N') {
+        const children: SentenceChildInterface[] = [];
+        for(const value of (fields[5] ?? '').split(';')) {
+            if(value === '') continue;
+            const pair = value.split(',');
+            children.push({
+                doc: documents[integer(pair[0] ?? '')] ?? panic('structural child'),
+                whitespace: pair[1] === '1',
+            });
+        }
+        const ids = children.map((child) => child.doc);
+        const name = fields[1] ?? '';
+        documents.push(
+            name === 'sentence'
+                ? printSentence(arena, children)
+                : name === 'paragraph'
+                  ? printParagraph(arena, ids)
+                  : printHeading(arena, ids, integer(fields[2] ?? ''), fields[3] === '1', decode(fields[4] ?? '')),
+        );
+    }
     else if(kind === 'W') {
         const flags = integer(fields[2] ?? '');
         const text = printWord(

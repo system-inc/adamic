@@ -1,3 +1,48 @@
+Unicode widths, headings, sentences and paragraphs are native and verified.
+4,598 documents match Go and the pinned fork with embedded formatting off.
+1,205,496 width cases agree; native width measured 2.66x Go in the recorded batch.
+Six new output-only mutants caught; sanitizer/leak, lint, vet and scoped oracle pass.
+Full native parsing, AST preprocessing and the remaining printers are unfinished.
+
+Heading, sentence and paragraph slice, October 6, 2026
+
+Previous green Unicode slice pushed: 8a5215388eaf6ee8cec196578c9a9b55be5dd55d.
+`structure.ts` ports heading.go, sentence.go and paragraph.go. Paragraph flattening
+uses an explicit owned stack of document IDs, avoiding the original recursive
+closure. Headings choose ATX or preserved setext underline from source spans.
+Sentences create alternating content/separator fills; paragraphs flatten concat
+and fill children into one fill. All compose with native words, lists, quotes,
+tables, code, HTML and Unicode widths. Go text-width slots remain poisoned.
+The pipeline still uses Go parsing/preprocessing and unported child printers.
+This slice covers proseWrap preserve and the common format options, not all modes.
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork
+ADAMIC_MARKDOWNLISTS_KEEP=/tmp/markdown-structure-final
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownStructureLayout$' -count=1 -v
+/tmp/markdown-structure-test.log: PASS, 211.671s. 4,598 source contexts: all 953
+original documents plus accumulated layout cases and 240 new heading cases.
+3,942 heading frames, 32,904 sentences, 10,639 paragraphs in retained native DSL.
+Go actual formatter, full-source original fork off, native, source Node, backend,
+canonical Go doc printer and original doc printer agree byte for byte.
+Sanitizers and leak detection pass. Three output-only native mutants compile,
+exit 0, empty stderr, and are caught in CLAUDE.md:
+heading depth +1: byte 1.
+sentence separator replaced by empty text: byte 3296.
+paragraph fill tail skips its first separator: byte 3296.
+
+Component timings include startup, protocol and output; Markdown parsing and
+fixture generation excluded. Go canonical docs 7,497.7; native block components
+3,630.4; source Node components 4,023.5; original fork docs 3,236.8 documents/s.
+The canonical-document and component-construction workloads differ; no whole
+native Markdown parser/formatter timing is claimed.
+Cohere --no-cache --no-fix, /tmp/markdown-structure-style.log: 276 rules,
+2 changed files checked, 100% Adamic-ready, zero findings.
+go vet ./..., /tmp/markdown-structure-vet.log: exit 0, empty.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(classes.a|class_as_interface.a|objects.a|maybe_number_slots.a|reuse_arrays.a|maps_and_text.a|array_from.a)$' -count=1 -v -timeout 10m
+/tmp/markdown-structure-oracle.log: seven fixtures PASS, 1.596s, zero cache hits,
+21 native misses and 14 Node misses. The full repository gate was not run.
+No reserved compiler files or the dependency slice were edited.
+
 Native Unicode widths now compose with all five block layout slices.
 1,205,496 widths match Go, pinned dependency packages and actual fork group fits.
 All Unicode scalars, repository documents/lines and generated sequences covered.

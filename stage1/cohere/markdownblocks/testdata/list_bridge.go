@@ -53,19 +53,30 @@ type adamicWord struct {
 	flags                 int
 	width                 int
 }
+type adamicStructureChild struct {
+	document   doc.Doc
+	whitespace bool
+}
+type adamicStructure struct {
+	kind, source string
+	depth        int
+	setext       bool
+	children     []adamicStructureChild
+}
 type adamicDocuments struct {
-	native    bool
-	lines     []string
-	documents int
-	items     int
-	htmls     []adamicHTML
-	codes     []adamicCode
-	tables    []adamicTable
-	quotes    [][]adamicBlock
-	lists     []adamicList
-	words     []adamicWord
-	groups    map[*doc.Group]int
-	ids       map[*doc.GroupID]int
+	structures []adamicStructure
+	native     bool
+	lines      []string
+	documents  int
+	items      int
+	htmls      []adamicHTML
+	codes      []adamicCode
+	tables     []adamicTable
+	quotes     [][]adamicBlock
+	lists      []adamicList
+	words      []adamicWord
+	groups     map[*doc.Group]int
+	ids        map[*doc.GroupID]int
 }
 
 func adamicEscape(text string) string {
@@ -233,6 +244,18 @@ func (out *adamicDocuments) serialize(document doc.Doc) int {
 			out.documents++
 			return id
 		}
+		if out.native && strings.HasPrefix(node.Label, "adamic-structure:") {
+			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-structure:"))
+			frame := out.structures[index]
+			children := []string{}
+			for _, child := range frame.children {
+				children = append(children, fmt.Sprintf("%d,%d", out.serialize(child.document), adamicFlag(child.whitespace)))
+			}
+			out.lines = append(out.lines, fmt.Sprintf("N\t%s\t%d\t%d\t%s\t%s", frame.kind, frame.depth, adamicFlag(frame.setext), adamicEscape(frame.source), strings.Join(children, ";")))
+			id := out.documents
+			out.documents++
+			return id
+		}
 		if out.native && strings.HasPrefix(node.Label, "adamic-word:") {
 			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-word:"))
 			word := out.words[index]
@@ -270,10 +293,23 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	codes := []adamicCode{}
 	htmls := []adamicHTML{}
 	words := []adamicWord{}
+	structures := []adamicStructure{}
 	printer := *mdastPrinter
 	printer.Print = func(path *astPath, options *options, print printing.PrintFunc, args any) doc.Doc {
 		original := printMdast(path, options, print, args)
 		node := currentNode(path)
+		if (node.NodeType == "heading" || node.NodeType == "sentence" || node.NodeType == "paragraph") && !shouldRemainTheSameContent(path) {
+			frame := adamicStructure{kind: node.NodeType, depth: node.Depth, setext: isSetextHeading(node)}
+			if node.NodeType == "heading" {
+				frame.source = options.OriginalText[node.Position.Start.Offset:node.Position.End.Offset]
+			}
+			path.Each(func(childPath *astPath, _ int, _ any) {
+				frame.children = append(frame.children, adamicStructureChild{print(nil, nil), currentNode(childPath).NodeType == "whitespace"})
+			}, "children")
+			id := len(structures)
+			structures = append(structures, frame)
+			return doc.NewLabel(fmt.Sprintf("adamic-structure:%d", id), original)
+		}
 		if node.NodeType == "word" && !shouldRemainTheSameContent(path) {
 			emphasis, found := path.FindAncestor(func(n *Node) bool { return n.NodeType == "emphasis" || n.NodeType == "strong" })
 			grandparent, _ := path.Grandparent()
@@ -386,7 +422,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	}
 	// Serialize before Print mutates group break flags, so native propagation is exercised.
 	for _, side := range []bool{true, false} {
-		out := &adamicDocuments{native: side, htmls: htmls, codes: codes, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
+		out := &adamicDocuments{native: side, structures: structures, htmls: htmls, codes: codes, tables: tables, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
 		root := out.serialize(document)
 		out.lines = append(out.lines, fmt.Sprintf("R\t%d\t%d", root, adamicFlag(bom)))
 		stream := strings.Join(out.lines, "\n") + "\n"

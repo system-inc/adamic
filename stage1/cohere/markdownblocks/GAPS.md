@@ -6,6 +6,17 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native heading, sentence and paragraph boundary
+
+`structure.ts` constructs ATX/setext headings, sentence fills and flattened
+paragraph fills. Its stack of document IDs replaces the recursive flattening
+closure with owned acyclic data. The bridge supplies parsed/preprocessed children
+and source spans, and the native implementation constructs these three document
+forms. All 4,598 source contexts match Go and the original fork with embedding
+off, including 3,942 headings, 32,904 sentences and 10,639 paragraphs. This
+closes these printer components under preserved prose; the tokenizer, mdast,
+AST preprocessing, whitespace decisions and other child printers remain pending.
+
 ## Unicode width gap closed
 
 `width.ts` computes cohere's StringWidth natively. It uses the pinned East Asian
