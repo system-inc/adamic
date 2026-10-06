@@ -104,7 +104,6 @@ func run(out *bufio.Writer, path string, countOnly bool) int {
 		fmt.Fprintf(os.Stderr, "source: %q\n", text)
 		for _, d := range f.Diagnostics() {
 			fmt.Fprintf(os.Stderr, "parser diagnostic %s %d %d %d\n", path, d.Code(), d.Pos(), d.Len())
-
 		}
 		os.Exit(1)
 	}
@@ -115,7 +114,7 @@ func run(out *bufio.Writer, path string, countOnly bool) int {
 			if !countOnly {
 				fmt.Fprintln(out, "expression")
 			}
-			count += walk(out, n, 0, countOnly, string(text))
+			count += walk(out, n, 0, countOnly, f.Text())
 			return false
 		}
 		n.ForEachChild(visit)

@@ -153,3 +153,17 @@ never exposed the difference. Random nesting uses the first ten operators;
 all twenty-five operators are covered independently in the pair matrix.
 Every input must parse without a diagnostic in the Go oracle. Generated inputs
 are not filtered after comparison failures.
+
+## Measured count-only parsing
+
+All implementations count 557,010 selected-tree nodes from the same 77 files.
+Best of five after one warm-up: Go 3,636,623 nodes/s, Node 981,532 nodes/s,
+native 803,210 nodes/s. Native takes 4.528 times Go's time and 1.222 times
+Node's. Linux amd64, EPYC 9V74, nproc 5, four-core cgroup quota, 16 GiB cgroup
+memory limit; host one-minute load 1.81 to 1.88. Native uses stage 0's normal
+clang -O2 flags without sanitizers. Timings include startup, reads, scanning,
+parsing and tree counting, but exclude printing, byte mapping and build time.
+All samples print the same count. See `validation/performance.log` and the
+opt-in `TestPerformance` for exact samples and reproduction. This comparison
+is a whole-file parser workload with equivalent selected-node counts, not a
+claim of identical AST representation, parser recovery or declaration work.
