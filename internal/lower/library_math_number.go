@@ -4,6 +4,7 @@ import (
 	"math"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -49,6 +50,19 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 	}
 	if _, missing := value.(ir.Undefined); missing {
 		return ir.NumberConstant{Value: math.NaN()}, nil
+	}
+	proven := l.concrete(l.checker.GetTypeAtLocation(node))
+	if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		constant := ir.NumberConstant{Value: math.NaN()}
+		if proven.Flags()&checker.TypeFlagsNull != 0 {
+			constant.Value = 0
+		}
+		return l.nullableObservation("number_empty", value, constant, func(ir.Expression) ir.Expression { return constant }), nil
+	}
+	if value.Type() == ir.String && l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		return l.nullableObservation("number", value, ir.NumberConstant{}, func(read ir.Expression) ir.Expression {
+			return ir.NumberCall{Function: "convert", Arguments: []ir.Expression{read}}
+		}), nil
 	}
 	switch value.Type() {
 	case ir.Number:

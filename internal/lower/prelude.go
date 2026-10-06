@@ -23,6 +23,13 @@ func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
+	if _, null := value.(ir.Null); null {
+		value = ir.StringConstant{Index: l.constant("null")}
+	} else if _, undefined := value.(ir.Undefined); undefined {
+		value = ir.StringConstant{Index: l.constant("undefined")}
+	} else {
+		value = l.spelled(arguments[0], value)
+	}
 	return ir.WriteLine{Stream: stream, Value: value}, nil
 }
 

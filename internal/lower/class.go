@@ -313,7 +313,7 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a method of a class stage 0 doesn't have")
 	}
 	receiver := callee.AsPropertyAccessExpression().Expression
-	if receiverType := l.checker.GetTypeAtLocation(receiver); len(l.definedMembers(receiverType)) > 1 {
+	if receiverType := l.checker.GetTypeAtLocation(receiver); len(l.definedMembers(l.checker.GetNonNullableType(l.concrete(receiverType)))) > 1 {
 		return nil, l.notYet(receiver, "a method call through a union of class types; narrow with instanceof first")
 	}
 	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
