@@ -276,7 +276,7 @@ export class Parser {
     typeArguments(): number[] {
         const result: number[] = [];
         this.expect('LessThanToken');
-        while(this.kind() !== 'GreaterThanToken') {
+        while(this.kind() !== 'EndOfFile' && this.kind() !== 'GreaterThanToken') {
             result.push(this.type());
             if(this.kind() !== 'CommaToken') {
                 break;
@@ -372,6 +372,9 @@ export class Parser {
     }
     type(minimum = 0, conditional = true): number {
         const pos = this.scanner.fullStart;
+        if(this.kind() === 'EndOfFile') {
+            return this.make('TypeReference', pos, [this.missingIdentifier(1110, 'Type expected.')]);
+        }
         let left: number;
         if(this.kind() === 'BarToken' || this.kind() === 'AmpersandToken') {
             const union = this.kind() === 'BarToken';
@@ -495,7 +498,7 @@ export class Parser {
         else if(this.kind() === 'OpenBracketToken') {
             this.next();
             const children: number[] = [];
-            while(this.kind() !== 'CloseBracketToken') {
+            while(this.kind() !== 'EndOfFile' && this.kind() !== 'CloseBracketToken') {
                 const start = this.scanner.fullStart;
                 const rest = this.kind() === 'DotDotDotToken' ? this.token() : -1;
                 if(this.tupleNameAhead()) {
@@ -852,7 +855,7 @@ export class Parser {
         const object = this.kind() === 'OpenBraceToken';
         this.next();
         const children: number[] = [];
-        while(this.kind() !== (object ? 'CloseBraceToken' : 'CloseBracketToken')) {
+        while(this.kind() !== 'EndOfFile' && this.kind() !== (object ? 'CloseBraceToken' : 'CloseBracketToken')) {
             const start = this.scanner.fullStart;
             if(this.kind() === 'CommaToken') {
                 children.push(this.make('BindingElement', start));
@@ -1124,7 +1127,7 @@ export class Parser {
         this.expect('OpenParenToken');
         const result: number[] = [];
         let trailing = false;
-        while(this.kind() !== 'CloseParenToken') {
+        while(this.kind() !== 'EndOfFile' && this.kind() !== 'CloseParenToken') {
             result.push(this.kind() === 'DotDotDotToken' ? this.spread() : this.allowInAssignment());
             trailing = this.kind() === 'CommaToken';
             if(!trailing) {
@@ -1320,7 +1323,7 @@ export class Parser {
         const multiLine = (this.scanner.flags & 1) !== 0;
         const children: number[] = [];
         let trailing = false;
-        while(this.kind() !== 'CloseBracketToken') {
+        while(this.kind() !== 'EndOfFile' && this.kind() !== 'CloseBracketToken') {
             children.push(
                 this.kind() === 'CommaToken'
                     ? this.make('OmittedExpression', this.scanner.fullStart)
@@ -1392,7 +1395,7 @@ export class Parser {
         const multiLine = (this.scanner.flags & 1) !== 0;
         const properties: number[] = [];
         let trailing = false;
-        while(this.kind() !== 'CloseBraceToken') {
+        while(this.kind() !== 'EndOfFile' && this.kind() !== 'CloseBraceToken') {
             const start = this.scanner.fullStart;
             if(this.kind() === 'DotDotDotToken') {
                 this.next();

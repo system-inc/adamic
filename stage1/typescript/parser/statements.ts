@@ -62,7 +62,7 @@ export class Statements {
         const pos = this.parser.scanner.fullStart;
         this.parser.expect('OpenBraceToken');
         const children: number[] = [];
-        while(this.parser.kind() !== 'CloseBraceToken') {
+        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
             children.push(this.statement());
         }
         this.parser.expect('CloseBraceToken');
@@ -158,7 +158,7 @@ export class Statements {
         const pos = this.parser.scanner.fullStart;
         this.parser.expect('OpenBraceToken');
         const members: number[] = [];
-        while(this.parser.kind() !== 'CloseBraceToken') {
+        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
             const start = this.parser.scanner.fullStart;
             let name = this.parser.propertyName();
             let property = -1;
@@ -227,7 +227,7 @@ export class Statements {
         const multiLine = (this.parser.scanner.flags & 1) !== 0;
         const children: number[] = [];
         let trailing = false;
-        while(this.parser.kind() !== 'CloseBraceToken') {
+        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
             const start = this.parser.scanner.fullStart;
             const name = this.parser.propertyName();
             this.parser.expect('ColonToken');
@@ -411,7 +411,7 @@ export class Statements {
             const start = this.parser.scanner.fullStart;
             this.parser.next();
             const body: number[] = [];
-            while(this.parser.kind() !== 'CloseBraceToken') {
+            while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
                 body.push(this.statement());
             }
             this.parser.expect('CloseBraceToken');
@@ -533,7 +533,7 @@ export class Statements {
             children.push(heritage);
         }
         this.parser.expect('OpenBraceToken');
-        while(this.parser.kind() !== 'CloseBraceToken') {
+        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
             const start = this.parser.scanner.fullStart;
             if(this.parser.kind() === 'SemicolonToken') {
                 this.parser.next();
@@ -695,7 +695,7 @@ export class Statements {
         const start = this.parser.scanner.fullStart;
         this.parser.expect('OpenBraceToken');
         const clauses: number[] = [];
-        while(this.parser.kind() !== 'CloseBraceToken') {
+        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
             const clausePos = this.parser.scanner.fullStart;
             const isCase = this.parser.kind() === 'CaseKeyword';
             this.parser.next();
@@ -707,7 +707,8 @@ export class Statements {
             while(
                 this.parser.kind() !== 'CaseKeyword' &&
                 this.parser.kind() !== 'DefaultKeyword' &&
-                this.parser.kind() !== 'CloseBraceToken'
+                this.parser.kind() !== 'CloseBraceToken' &&
+                this.parser.kind() !== 'EndOfFile'
             ) {
                 statements.push(this.statement());
             }
@@ -943,7 +944,7 @@ export class Statements {
             this.parser.next();
             modifiers.push(this.parser.identifier());
             this.parser.expect('OpenBraceToken');
-            while(this.parser.kind() !== 'CloseBraceToken') {
+            while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
                 const start = this.parser.scanner.fullStart;
                 const member = [this.parser.propertyName()];
                 if(this.parser.kind() === 'EqualsToken') {

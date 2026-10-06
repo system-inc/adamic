@@ -242,3 +242,12 @@ lookahead distinguishes import declarations from import expressions and
 handles contextual modifiers. Focused comparison passes in 14.596s. The
 wider comparison reaches input 220: an import specifier list cut at EOF
 needs an empty remaining list and a missing closing-brace diagnostic.
+
+## Continued recovery: EOF in open lists
+
+All bracketed lists now stop at EOF instead of inventing a final element or
+looping. Missing types produce diagnostic 1110 and an empty TypeReference
+name. Focused comparison passes in 16.280s across import/export lists,
+arguments, arrays, objects, bindings, classes and function bodies. The wider
+run passes 286 inputs and reaches a duplicated import token at input 287;
+Go leaves that second reserved word for the next import declaration.
