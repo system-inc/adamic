@@ -1,0 +1,35 @@
+These strings do not run. Stage 0 refuses them before a binary exists, so they are not oracle fixtures. Every program that does lower agrees with Node under TZ=UTC, including the day sweep.
+
+Date.parse('2020-02-29T12:00:00.Z')
+Node: NaN
+native: stage 0 can't lower Date parsing outside a constant ISO format (V8 legacy parsing is not built)
+
+Date.parse('2020-02-29T12:00:00+5:00')
+Node: NaN
+native: stage 0 can't lower Date parsing outside a constant ISO format (V8 legacy parsing is not built)
+
+Date.parse('2020-02-29T12:00:00Z ')
+Node: NaN
+native: stage 0 can't lower Date parsing outside a constant ISO format (V8 legacy parsing is not built)
+
+Date.parse('2020-02-29T00:00:00.123Zx')
+Node: NaN
+native: stage 0 can't lower Date parsing outside a constant ISO format (V8 legacy parsing is not built)
+
+Date.parse('2020-2-29')
+Node: 1582934400000
+native: stage 0 can't lower Date parsing outside a constant ISO format (V8 legacy parsing is not built)
+
+Date.parse(' 2020-02-29')
+Node: 1582934400000
+native: stage 0 can't lower Date parsing outside a constant ISO format (V8 legacy parsing is not built)
+
+Date.parse('-000000-01-01')
+Node: 978307200000
+native: stage 0 can't lower Date negative-zero date-only legacy parsing
+
+Date.parse('-000000-03-31')
+Node: 985996800000
+native: stage 0 can't lower Date negative-zero date-only legacy parsing
+
+The two legacy successes are the date-only forms V8 accepts and the ISO grammar here does not. An empty fraction, a one-digit offset, trailing space and trailing junk are NaN on Node and refused before lowering.

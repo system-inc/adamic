@@ -1,0 +1,55 @@
+const date = new Date(0);
+let hashA = 0;
+let hashB = 0;
+function mix(value: number): void {
+    const piece = value !== value ? -1 : value % 1000000007;
+    hashA = (hashA * 33 + piece) % 1000000007;
+    hashB = (hashB * 131 + piece) % 1000000009;
+}
+function mixText(text: string): void {
+    for (let index = 0; index < text.length; index++) mix(text.charCodeAt(index));
+}
+function daysIn(year: number, month: number): number {
+    if (month === 1) {
+        if (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) return 29;
+        return 28;
+    }
+    if (month === 3 || month === 5 || month === 8 || month === 10) return 30;
+    return 31;
+}
+function visit(year: number, month: number, day: number, hour: number, minute: number, second: number, milli: number): void {
+    const utc = Date.UTC(year, month, day, hour, minute, second, milli);
+    mix(utc);
+    date.setTime(utc);
+    if (year >= 0 && year <= 99) {
+        date.setUTCFullYear(year, month, day);
+        date.setUTCHours(hour, minute, second, milli);
+    }
+    mix(date.getTime());
+    mix(date.getUTCFullYear());
+    mix(date.getUTCMonth());
+    mix(date.getUTCDate());
+    mix(date.getUTCDay());
+    mix(date.getUTCHours());
+    mix(date.getUTCMinutes());
+    mix(date.getUTCSeconds());
+    mix(date.getUTCMilliseconds());
+    const iso = date.toISOString();
+    mixText(iso);
+    if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month || date.getUTCDate() !== day || date.getUTCHours() !== hour || date.getUTCMinutes() !== minute || date.getUTCSeconds() !== second || date.getUTCMilliseconds() !== milli) {
+        console.log(`bad ${year} ${month} ${day} ${hour} ${minute} ${second} ${milli} ${date.getUTCFullYear()} ${date.getUTCMonth()} ${date.getUTCDate()} ${date.getUTCHours()} ${iso}`);
+    }
+}
+for (let year = -1000; year <= 3000; year++) {
+    hashA = 0;
+    hashB = 0;
+    for (let month = 0; month < 12; month++) {
+        const last = daysIn(year, month);
+        for (let day = 1; day <= last; day++) {
+            visit(year, month, day, 0, 0, 0, 0);
+            visit(year, month, day, 12, 34, 56, 789);
+            visit(year, month, day, 23, 59, 59, 999);
+        }
+    }
+    console.log(`${year} ${hashA} ${hashB}`);
+}
