@@ -1,0 +1,602 @@
+[
+  {
+    "path": "built-ins/Date/S15.9.3.1_A1_T1.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:104:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:110:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:118:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:124:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:132:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:138:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:146:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:152:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:160:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:166:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:174:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:180:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:188:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:194:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:202:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:208:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:216:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:222:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:230:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:236:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:244:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:250:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:258:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:264:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": ");\n\nassertNotSameValue(new Date(1899, 11), undefined, 'new Date(1899, 11) is expected to not equal ``undefined``');\n\nvar x13 = new Date(1899, 11);\nassertSameValue(typeof x13, \"object\", 'The value of `typeof x13` is expected to be \"object\"');"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A1_T2.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:104:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:110:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:118:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:124:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:132:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:138:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:146:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:152:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:160:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:166:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:174:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:180:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:188:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:194:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:202:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:208:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:216:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:222:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:230:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:236:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:244:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:250:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:258:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:264:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": ");\n\nassertNotSameValue(new Date(1899, 11, 31), undefined, 'new Date(1899, 11, 31) is expected to not equal ``undefined``');\n\nvar x13 = new Date(1899, 11, 31);\nassertSameValue(typeof x13, \"object\", 'The value of `typeof x13` is expected to be \"object\"');"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A1_T3.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:104:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:113:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:122:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:131:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:139:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:145:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:154:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:163:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:172:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:181:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:189:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:195:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:204:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:213:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:222:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:231:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:239:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:245:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:254:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:263:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:272:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:281:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:289:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:295:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "\nassertNotSameValue(\n  new Date(1899, 11, 31, 23),\n  undefined,\n  'new Date(1899, 11, 31, 23) is expected to not equal ``undefined``'\n);"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A1_T4.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:104:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:113:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:122:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:131:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:140:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:149:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:158:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:167:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:176:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:185:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:194:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:203:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:212:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:221:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:230:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:239:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:248:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:257:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:266:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:275:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:284:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:293:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:302:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:311:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "\nassertNotSameValue(\n  new Date(1899, 11, 31, 23, 59),\n  undefined,\n  'new Date(1899, 11, 31, 23, 59) is expected to not equal ``undefined``'\n);"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A1_T5.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:104:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:113:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:122:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:131:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:140:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:149:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:158:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:167:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:176:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:185:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:194:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:203:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:212:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:221:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:230:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:239:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:248:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:257:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:266:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:275:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:284:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:293:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:302:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:311:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "\nassertNotSameValue(\n  new Date(1899, 11, 31, 23, 59, 59),\n  undefined,\n  'new Date(1899, 11, 31, 23, 59, 59) is expected to not equal ``undefined``'\n);"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A1_T6.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:104:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:113:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:122:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:131:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:140:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:149:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:158:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:167:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:176:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:185:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:194:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:203:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:212:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:221:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:230:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:239:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:248:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:257:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:266:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:275:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:284:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:293:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:302:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:311:20: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "\nassertNotSameValue(\n  new Date(1899, 11, 31, 23, 59, 59, 999),\n  undefined,\n  'new Date(1899, 11, 31, 23, 59, 59, 999) is expected to not equal ``undefined``'\n);"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T1.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:131:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:150:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:169:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:188:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:207:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:226:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:245:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:264:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:283:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:302:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:321:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "\nassertSameValue(\n  Date.prototype,\n  x13.constructor.prototype,\n  'The value of Date.prototype is expected to equal the value of x13.constructor.prototype'\n);"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T2.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:131:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:150:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:169:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:188:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:207:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:226:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:245:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:264:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:283:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:302:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:321:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "\nassertSameValue(\n  Date.prototype,\n  x13.constructor.prototype,\n  'The value of Date.prototype is expected to equal the value of x13.constructor.prototype'\n);"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T3.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:131:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:150:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:169:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:188:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:207:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:226:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:245:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:264:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:283:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:302:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:321:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "\nassertSameValue(\n  Date.prototype,\n  x13.constructor.prototype,\n  'The value of Date.prototype is expected to equal the value of x13.constructor.prototype'\n);"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T4.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:131:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:150:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:169:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:188:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:207:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:226:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:245:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:264:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:283:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:302:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:321:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "\nassertSameValue(\n  Date.prototype,\n  x13.constructor.prototype,\n  'The value of Date.prototype is expected to equal the value of x13.constructor.prototype'\n);"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T5.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:131:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:150:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:169:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:188:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:207:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:226:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:245:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:264:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:283:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:302:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:321:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "\nassertSameValue(\n  Date.prototype,\n  x13.constructor.prototype,\n  'The value of Date.prototype is expected to equal the value of x13.constructor.prototype'\n);"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T6.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:131:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:150:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:169:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:188:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:207:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:226:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:245:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:264:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:283:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:302:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:321:3: error TS2345: Argument of type 'Date' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "\nassertSameValue(\n  Date.prototype,\n  x13.constructor.prototype,\n  'The value of Date.prototype is expected to equal the value of x13.constructor.prototype'\n);"
+  },
+  {
+    "path": "built-ins/Date/coercion-errors.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:103:12: error TS2345: Argument of type '{ toString: () => never; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:108:15: error TS2345: Argument of type '{ toString: () => never; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:113:18: error TS2345: Argument of type '{ toString: () => never; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:118:21: error TS2345: Argument of type '{ toString: () => never; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:123:24: error TS2345: Argument of type '{ toString: () => never; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:130:27: error TS2345: Argument of type '{ toString: () => never; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:137:30: error TS2345: Argument of type '{ toString: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  new Date(thrower, counter);\n}, 'year');\nassertSameValue(callCount, 0, 'coercion halts following error from \"year\"');\n"
+  },
+  {
+    "path": "built-ins/Date/coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:107:10: error TS2345: Argument of type '{ toString: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "var ms = { toString: function() { log += 'ms'; return 0; } };\n\nnew Date(year, month, date, hours,minutes, seconds, ms);\n\nassertSameValue(log, 'yearmonthdatehoursminutessecondsms');\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setDate/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:32: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setDate(arg);\n\nassertSameValue(callCount, 1, 'ToNumber invoked exactly once');\nassertSameValue(returnValue, NaN, 'argument is ignored when `this` is an invalid date');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setDate/arg-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:16: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setDate(obj);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setDate/arg-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:118:28: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:122:28: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:126:28: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:130:28: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:134:20: error TS2554: Expected 1 arguments, but got 0.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setDate(arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setDate/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:25: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setDate(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setDate/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:25: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setDate(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setDate/this-value-non-date.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:20: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:20: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:120:22: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"TypeError\", function() {\n  setDate.call({}, arg);\n}, 'ordinary object');\n\nassertThrows(\"TypeError\", function() {"
+  },
+  {
+    "path": "built-ins/Date/prototype/setFullYear/arg-date-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:26: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setFullYear(0, 0, obj);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setFullYear/arg-date-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:41: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:41: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number | undefined'.\n/tmp/date-ts2345-audit.ts:128:41: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:136:41: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:144:41: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setFullYear(2016, 6, arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setFullYear/arg-month-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:23: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setFullYear(0, obj, counter);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setFullYear/arg-month-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:38: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:38: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number | undefined'.\n/tmp/date-ts2345-audit.ts:128:38: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:136:38: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:144:38: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setFullYear(2016, arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setFullYear/arg-year-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:20: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setFullYear(obj, counter, counter);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setFullYear/arg-year-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:32: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:32: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:32: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:136:32: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:144:32: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:152:20: error TS2554: Expected 1-3 arguments, but got 0.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setFullYear(arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setFullYear/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:29: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setFullYear(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setFullYear/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:29: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setFullYear(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setFullYear/this-value-non-date.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:24: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:24: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:120:26: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"TypeError\", function() {\n  setFullYear.call({}, arg);\n}, 'ordinary object');\n\nassertThrows(\"TypeError\", function() {"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:124:33: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:20: error TS7005: Variable 'effects' implicitly has an 'any[]' type.\n/tmp/date-ts2345-audit.ts:98:5: error TS7034: Variable 'effects' implicitly has type 'any[]' in some locations where its type cannot be determined.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setHours(argHour, argMin, argSec, argMs);\n\nvar expectedEffects = ['valueOf hour', 'valueOf min', 'valueOf sec', 'valueOf ms'];\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/arg-hour-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:17: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setHours(obj, counter, counter, counter);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/arg-hour-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:29: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:29: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:124:29: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:29: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:132:29: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:136:20: error TS2554: Expected 1-4 arguments, but got 0.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setHours(arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/arg-min-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:20: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setHours(0, obj, counter, counter);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/arg-min-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:32: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:32: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number | undefined'.\n/tmp/date-ts2345-audit.ts:124:32: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:32: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:132:32: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:136:20: error TS2554: Expected 1-4 arguments, but got 0.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setHours(0, arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/arg-ms-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:26: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setHours(0, 0, 0, obj);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/arg-ms-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:38: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:38: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number | undefined'.\n/tmp/date-ts2345-audit.ts:124:38: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:130:38: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:134:38: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:140:20: error TS2554: Expected 1-4 arguments, but got 0.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setHours(0, 0, 0, arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/arg-sec-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:23: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setHours(0, 0, obj, counter);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/arg-sec-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:35: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:35: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number | undefined'.\n/tmp/date-ts2345-audit.ts:124:35: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:35: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:132:35: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:138:20: error TS2554: Expected 1-4 arguments, but got 0.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setHours(0, 0, arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:26: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setHours(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:26: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setHours(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setHours/this-value-non-date.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:21: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:21: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:120:23: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"TypeError\", function() {\n  setHours.call({}, arg);\n}, 'ordinary object');\n\nassertThrows(\"TypeError\", function() {"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMilliseconds/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:40: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setMilliseconds(arg);\n\nassertSameValue(callCount, 1, 'ToNumber invoked exactly once');\nassertSameValue(returnValue, NaN, 'argument is ignored when `this` is an invalid date');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMilliseconds/arg-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:24: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setMilliseconds(obj);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMilliseconds/arg-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:36: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:36: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:124:36: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:130:36: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:134:36: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:140:20: error TS2554: Expected 1 arguments, but got 0.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setMilliseconds(arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMilliseconds/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:33: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setMilliseconds(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMilliseconds/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:33: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setMilliseconds(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMilliseconds/this-value-non-date.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:120:30: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"TypeError\", function() {\n  setMilliseconds.call({}, arg);\n}, 'ordinary object');\n\nassertThrows(\"TypeError\", function() {"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMinutes/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:118:35: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:122:20: error TS7005: Variable 'effects' implicitly has an 'any[]' type.\n/tmp/date-ts2345-audit.ts:98:5: error TS7034: Variable 'effects' implicitly has type 'any[]' in some locations where its type cannot be determined.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setMinutes(argMin, argSec, argMs);\n\nvar expectedEffects = ['valueOf min', 'valueOf sec', 'valueOf ms'];\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMinutes/arg-min-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:19: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setMinutes(obj, counter, counter);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMinutes/arg-min-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:31: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:31: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:124:31: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:31: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:132:31: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:136:20: error TS2554: Expected 1-3 arguments, but got 0.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setMinutes(arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMinutes/arg-ms-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:25: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setMinutes(0, 0, obj);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMinutes/arg-ms-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:37: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:37: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number | undefined'.\n/tmp/date-ts2345-audit.ts:124:37: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:130:37: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:134:37: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setMinutes(0, 0, arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMinutes/arg-sec-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:34: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:34: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number | undefined'.\n/tmp/date-ts2345-audit.ts:124:34: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:34: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:132:34: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setMinutes(0, arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMinutes/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:28: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setMinutes(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMinutes/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:28: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setMinutes(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMinutes/this-value-non-date.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:23: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:23: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:120:25: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"TypeError\", function() {\n  setMinutes.call({}, arg);\n}, 'ordinary object');\n\nassertThrows(\"TypeError\", function() {"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMonth/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:33: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:20: error TS7005: Variable 'effects' implicitly has an 'any[]' type.\n/tmp/date-ts2345-audit.ts:98:5: error TS7034: Variable 'effects' implicitly has type 'any[]' in some locations where its type cannot be determined.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setMonth(argMonth, argDate);\n\nvar expectedEffects = ['valueOf month', 'valueOf date'];\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMonth/arg-date-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:20: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setMonth(0, obj);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMonth/arg-date-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:32: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:32: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number | undefined'.\n/tmp/date-ts2345-audit.ts:128:32: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:136:32: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:144:32: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setMonth(6, arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMonth/arg-month-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:17: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setMonth(obj, counter);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMonth/arg-month-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:29: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:29: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:29: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:136:29: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:144:29: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:152:29: error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setMonth(arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMonth/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:26: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setMonth(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMonth/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:114:26: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setMonth(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setMonth/this-value-non-date.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:21: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:21: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:120:23: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"TypeError\", function() {\n  setMonth.call({}, arg);\n}, 'ordinary object');\n\nassertThrows(\"TypeError\", function() {"
+  },
+  {
+    "path": "built-ins/Date/prototype/setSeconds/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:35: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:20: error TS7005: Variable 'effects' implicitly has an 'any[]' type.\n/tmp/date-ts2345-audit.ts:98:5: error TS7034: Variable 'effects' implicitly has type 'any[]' in some locations where its type cannot be determined.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setSeconds(argSec, argMs);\n\nvar expectedEffects = ['valueOf sec', 'valueOf ms'];\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setSeconds/arg-ms-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:22: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setSeconds(0, obj);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setSeconds/arg-ms-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:34: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:34: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number | undefined'.\n/tmp/date-ts2345-audit.ts:124:34: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:130:34: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:134:34: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setSeconds(0, arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setSeconds/arg-sec-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:19: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setSeconds(obj, counter);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setSeconds/arg-sec-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:31: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:120:31: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:124:31: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:31: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:132:31: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:138:20: error TS2554: Expected 1-2 arguments, but got 0.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setSeconds(arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setSeconds/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:28: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setSeconds(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setSeconds/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:28: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setSeconds(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setSeconds/this-value-non-date.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:23: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:23: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:120:25: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"TypeError\", function() {\n  setSeconds.call({}, arg);\n}, 'ordinary object');\n\nassertThrows(\"TypeError\", function() {"
+  },
+  {
+    "path": "built-ins/Date/prototype/setTime/arg-to-number-err.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:16: error TS2345: Argument of type '{ valueOf: () => never; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"Test262Error\", function() {\n  date.setTime(obj);\n});\n\nassertSameValue(date.getTime(), originalValue);"
+  },
+  {
+    "path": "built-ins/Date/prototype/setTime/arg-to-number.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:109:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:112:17: error TS2454: Variable 'args' is used before being assigned.\n/tmp/date-ts2345-audit.ts:113:28: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:116:28: error TS2345: Argument of type 'null' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:120:28: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:124:28: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:28: error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:132:20: error TS2554: Expected 1 arguments, but got 0.\n",
+    "sourceContext": "var args, thisValue, returnValue;\n\nreturnValue = date.setTime(arg);\n\nassertSameValue(callCount, 1, 'invoked exactly once');\nassertSameValue(args.length, 0, 'invoked without arguments');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setTime/this-value-non-date.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:20: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:20: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:120:22: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "\nassertThrows(\"TypeError\", function() {\n  setTime.call({}, arg);\n}, 'ordinary object');\n\nassertThrows(\"TypeError\", function() {"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCDate/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:35: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setUTCDate(arg);\n\nassertSameValue(callCount, 1, 'ToNumber invoked exactly once');\nassertSameValue(returnValue, NaN, 'argument is ignored when `this` is an invalid date');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCDate/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:28: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCDate(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCDate/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:28: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCDate(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCFullYear/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:32: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCFullYear(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCFullYear/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:32: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCFullYear(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCHours/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:124:36: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:128:20: error TS7005: Variable 'effects' implicitly has an 'any[]' type.\n/tmp/date-ts2345-audit.ts:98:5: error TS7034: Variable 'effects' implicitly has type 'any[]' in some locations where its type cannot be determined.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setUTCHours(argHour, argMin, argSec, argMs);\n\nvar expectedEffects = ['valueOf hour', 'valueOf min', 'valueOf sec', 'valueOf ms'];\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCHours/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:29: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCHours(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCHours/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:29: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCHours(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCMilliseconds/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:106:43: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setUTCMilliseconds(arg);\n\nassertSameValue(callCount, 1, 'ToNumber invoked exactly once');\nassertSameValue(returnValue, NaN, 'argument is ignored when `this` is an invalid date');"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCMilliseconds/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:36: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCMilliseconds(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCMilliseconds/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:36: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCMilliseconds(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCMinutes/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:118:38: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:122:20: error TS7005: Variable 'effects' implicitly has an 'any[]' type.\n/tmp/date-ts2345-audit.ts:98:5: error TS7034: Variable 'effects' implicitly has type 'any[]' in some locations where its type cannot be determined.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setUTCMinutes(argMin, argSec, argMs);\n\nvar expectedEffects = ['valueOf min', 'valueOf sec', 'valueOf ms'];\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCMinutes/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:31: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCMinutes(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCMinutes/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:31: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCMinutes(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCMonth/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:36: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:20: error TS7005: Variable 'effects' implicitly has an 'any[]' type.\n/tmp/date-ts2345-audit.ts:98:5: error TS7034: Variable 'effects' implicitly has type 'any[]' in some locations where its type cannot be determined.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setUTCMonth(argMonth, argDate);\n\nvar expectedEffects = ['valueOf month', 'valueOf date'];\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCMonth/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:29: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCMonth(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCMonth/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:29: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCMonth(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCSeconds/arg-coercion-order.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:112:38: error TS2345: Argument of type '{ valueOf: () => number; }' is not assignable to parameter of type 'number'.\n/tmp/date-ts2345-audit.ts:116:20: error TS7005: Variable 'effects' implicitly has an 'any[]' type.\n/tmp/date-ts2345-audit.ts:98:5: error TS7034: Variable 'effects' implicitly has type 'any[]' in some locations where its type cannot be determined.\n",
+    "sourceContext": "};\n\nvar returnValue = date.setUTCSeconds(argSec, argMs);\n\nvar expectedEffects = ['valueOf sec', 'valueOf ms'];\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCSeconds/date-value-read-before-tonumber-when-date-is-invalid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:31: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCSeconds(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/setUTCSeconds/date-value-read-before-tonumber-when-date-is-valid.js",
+    "category": "language: object numeric coercion",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:110:31: error TS2345: Argument of type '{ valueOf(): number; }' is not assignable to parameter of type 'number'.\n",
+    "sourceContext": "};\n\nvar result = dt.setUTCSeconds(value);\n\nassertSameValue(valueOfCalled, 1, \"valueOf called exactly once\");\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/toDateString/format.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:100:20: error TS2345: Argument of type 'null' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:104:20: error TS2345: Argument of type 'null' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "let dateRegExp = /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{2} [0-9]{4}$/\nlet match = dateRegExp.exec(new Date(0).toDateString());\nassertNotSameValue(null, match);\n\n// Years are padded to the left with zeroes\nmatch = dateRegExp.exec(new Date('0020-01-01T00:00:00Z').toDateString());"
+  },
+  {
+    "path": "built-ins/Date/prototype/toJSON/invoke-result.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:102:3: error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string | number | boolean | undefined'.\n  Type 'null' is not assignable to type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:98:17: error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string | number | boolean | undefined'.\n  Type 'null' is not assignable to type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "var result = {};\nassertSameValue(\n  Date.prototype.toJSON.call({\n    toISOString: function() { return result; },  \n  }),\n  result"
+  },
+  {
+    "path": "built-ins/Date/prototype/toString/format.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:100:20: error TS2345: Argument of type 'null' is not assignable to parameter of type 'string | number | boolean | undefined'.\n/tmp/date-ts2345-audit.ts:104:20: error TS2345: Argument of type 'null' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "let stringRegExp = /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{4}( \\(.+\\))?$/\nlet match = stringRegExp.exec(new Date(0).toString());\nassertNotSameValue(null, match);\n\n// Years are padded to the left with zeroes\nmatch = stringRegExp.exec(new Date('0020-01-01T00:00:00Z').toString());"
+  },
+  {
+    "path": "built-ins/Date/prototype/toTimeString/format.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:100:20: error TS2345: Argument of type 'null' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "let timeRegExp = /^[0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{4}( \\(.+\\))?$/\nlet match = timeRegExp.exec(new Date(0).toTimeString());\nassertNotSameValue(null, match);\n"
+  },
+  {
+    "path": "built-ins/Date/prototype/toUTCString/format.js",
+    "category": "runner: assertion operand domain",
+    "diagnostic": "/tmp/date-ts2345-audit.ts:100:20: error TS2345: Argument of type 'null' is not assignable to parameter of type 'string | number | boolean | undefined'.\n",
+    "sourceContext": "let utcRegExp = /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/\nlet match = utcRegExp.exec(new Date(0).toUTCString());\nassertNotSameValue(null, match);\n\n// Years are padded to the left with zeroes\nassertSameValue('Wed, 01 Jan 0020 00:00:00 GMT', new Date('0020-01-01T00:00:00Z').toUTCString());"
+  }
+]
