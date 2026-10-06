@@ -285,6 +285,11 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		// Made as the type it's written into, held by nothing else: its own parts are sites.
 		return nil
 	}
+	if pattern := destructuringTarget(node); pattern != nil {
+		// [a, b] = tuple keeps nothing of the pattern: each element is read out and stored into its
+		// name, so each element is the view, seen as its name's type, and the pattern isn't one.
+		return l.refuseElementWidening(node, pattern)
+	}
 	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
 	if contextual == nil {
 		return nil
@@ -301,4 +306,46 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		fix = "take it as " + l.checker.TypeToString(found.source) + ", or constrain " + l.checker.TypeToString(found.target) + " to something readonly, which can't write (adamic/invariant-mutable)"
 	}
 	return &Refused{Where: l.program.Where(node), What: what, Fix: fix}
+}
+
+// destructuringTarget is the array pattern a value is assigned into, [a, b] = value, or nil.
+func destructuringTarget(node *ast.Node) *ast.Node {
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	if parent := node.Parent; parent != nil && parent.Kind == ast.KindBinaryExpression {
+		binary := parent.AsBinaryExpression()
+		if binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node && binary.Left.Kind == ast.KindArrayLiteralExpression {
+			return binary.Left
+		}
+	}
+	return nil
+}
+
+// refuseElementWidening refuses [a, b] = tuple when an element is seen through its name's type as
+// a view that can write what the element can't hold: [animals] = [dogs] puts a Dog[] in an
+// Animal[]. A value that isn't a tuple is judged whole, as anywhere.
+func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) error {
+	own := l.checker.GetTypeAtLocation(node)
+	if !checker.IsTupleType(own) {
+		contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		if contextual == nil {
+			return nil
+		}
+		if found := l.widened(own, contextual, map[[2]*checker.Type]bool{}); found != nil {
+			return &Refused{Where: l.program.Where(node), What: "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
+		}
+		return nil
+	}
+	elements := l.checker.GetTypeArguments(own)
+	for index, target := range pattern.AsArrayLiteralExpression().Elements.Nodes {
+		if index >= len(elements) || target.Kind == ast.KindOmittedExpression {
+			continue
+		}
+		to := l.checker.GetTypeAtLocation(target)
+		if found := l.widened(elements[index], to, map[[2]*checker.Type]bool{}); found != nil {
+			return &Refused{Where: l.program.Where(target), What: "a value of type " + l.checker.TypeToString(elements[index]) + " seen as " + l.checker.TypeToString(to) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
+		}
+	}
+	return nil
 }

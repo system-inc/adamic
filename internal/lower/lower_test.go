@@ -263,6 +263,20 @@ weakly.v = undefined;
 	return animals.push({ name: 'Tom' });
 }
 `, "main.a:12:28: Adamic 0.1 refuses a value of type Dog[] & Tag seen as Animal[], which can write Animal where Dog is read"},
+		{"a destructuring assignment's element seen wider", `function pack(dogs: Dog[]): readonly [Dog[], number] {
+	return [dogs, dogs.length];
+}
+let animals: Animal[] = [];
+let count = 0;
+[animals, count] = pack([{ name: 'Rex', bark: 'woof' }]);
+`, "main.a:16:2: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a destructuring assignment's element seen wider inside a readonly array", `function pack(packs: Dog[][]): readonly [Dog[][], number] {
+	return [packs, packs.length];
+}
+let packs: readonly Animal[][] = [];
+let count = 0;
+[packs, count] = pack([[{ name: 'Rex', bark: 'woof' }]]);
+`, "main.a:16:2: Adamic 0.1 refuses a value of type Dog[][] seen as readonly Animal[][], which can write Animal where Dog is read"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -284,6 +298,14 @@ func TestAViewThatCantWriteIsNotRefused(t *testing.T) {
 		name   string
 		source string
 	}{
+		{"a destructuring assignment's elements going into wider names", `function swap(pair: readonly [string, number]): readonly [number, string] {
+	return [pair[1], pair[0]];
+}
+let either: string | number = 0;
+let maybeCount: number | undefined = undefined;
+[maybeCount, either] = swap(['twelve', 12]);
+console.log(` + "`${maybeCount ?? -1} ${either}`" + `);
+`},
 		{"an array seen as a readonly wider array", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const animals: readonly Animal[] = dogs;
 console.log(` + "`${animals.length}`" + `);
