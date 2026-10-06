@@ -3,6 +3,7 @@ package native
 import (
 	"os/exec"
 	"path/filepath"
+	goruntime "runtime"
 	"strconv"
 	"strings"
 	"testing"
@@ -77,9 +78,11 @@ static adamic_string *items[20000];
 int main(int count, char **arguments) {
 	(void)count;
 	bool churn = strcmp(arguments[1], "churn") == 0;
-	static const size_t lengths[] = {8, 40, 72, 104, 136, 168, 200, 168, 136, 104, 72, 40, 8, 200, 8};
+	static const size_t lengths[] = {8, 40, 72, 104, 136, 168, 192, 168, 136, 104, 72, 40, 8, 192, 8};
 	for (size_t round = 0; round < sizeof lengths / sizeof lengths[0]; round++) {
-		size_t length = churn ? lengths[round] : 200;
+		size_t length = churn ? lengths[round] : 192;
+		// The control must use a slab too: 200 bytes plus the string header exceeds 256.
+		if (sizeof(adamic_string) + length > 256) { return 2; }
 		for (size_t index = 0; index < 20000; index++) {
 			items[index] = adamic_string_allocate(length);
 			memset((char *)items[index]->bytes, 'a' + (int)(index % 26), length);
@@ -103,7 +106,9 @@ int main(int count, char **arguments) {
 		t.Fatal(err)
 	}
 	peak := func(mode string) int {
-		output, err := exec.Command(binary, mode).CombinedOutput()
+		// Fork from a small shell after exec, so the child's high-water mark doesn't inherit
+		// the Go test process's changing resident set while other tests run in parallel.
+		output, err := exec.Command("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary, mode).CombinedOutput()
 		if err != nil {
 			t.Fatalf("%s: %v\n%s", mode, err, output)
 		}
@@ -111,12 +116,34 @@ int main(int count, char **arguments) {
 		if err != nil {
 			t.Fatalf("%s: %q", mode, output)
 		}
-		return kilobytes
+		return residentKibibytes(kilobytes, goruntime.GOOS)
 	}
 	control, churn := peak("control"), peak("churn")
 	// Fifteen generations at up to fourteen sizes: kept apart, they'd peak several times the control.
 	if churn > control*3/2 {
-		t.Errorf("the churn through every class peaked at %d KB, the same churn at one size at %d KB: the classes aren't sharing their chunks", churn, control)
+		t.Errorf("the churn through every class peaked at %d KiB, the same churn at one size at %d KiB: the classes aren't sharing their chunks", churn, control)
 	}
-	t.Logf("peak %d KB through every class, %d KB at one size", churn, control)
+	t.Logf("peak %d KiB through every class, %d KiB at one size", churn, control)
+}
+
+// getrusage reports bytes on macOS and KiB on Linux. Normalize before reporting or comparing.
+func residentKibibytes(value int, operatingSystem string) int {
+	if operatingSystem == "darwin" {
+		return value / 1024
+	}
+	return value
+}
+
+func TestResidentSetUnits(t *testing.T) {
+	t.Parallel()
+	for _, given := range []struct {
+		operatingSystem string
+		value           int
+	}{
+		{"linux", 8192}, {"darwin", 8192 * 1024},
+	} {
+		if got := residentKibibytes(given.value, given.operatingSystem); got != 8192 {
+			t.Errorf("%s: got %d KiB, want 8192", given.operatingSystem, got)
+		}
+	}
 }

@@ -286,3 +286,35 @@ func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
 	}
 	return nil
 }
+
+// These library fields have explicit native storage. Other library members remain inherited
+// prototype reads, so recognizing regex metadata must not admit arbitrary own-field loads.
+func (l *lowering) regexRuntimeProperty(receiver *ast.Node, name string) bool {
+	if l.regexGroups(receiver) {
+		// Named-group dictionaries have dynamic own keys; regexGroups lowering checks their value type.
+		return true
+	}
+	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
+	switch {
+	case l.isLibraryType(proven, "RegExp"):
+		switch name {
+		case "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll":
+			return true
+		}
+	case l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray"):
+		return name == "index" || name == "input" || name == "groups" || name == "indices"
+	}
+	if name != "done" && name != "value" {
+		return false
+	}
+	members := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	}
+	for _, member := range members {
+		if !l.isLibraryType(member, "IteratorYieldResult", "IteratorReturnResult") {
+			return false
+		}
+	}
+	return true
+}

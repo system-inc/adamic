@@ -380,7 +380,7 @@ func (n *inference) value(expression ir.Expression) shape {
 	}
 	// Everything else: the effects of what it evaluates, field by field, and then, as cohere assumes
 	// of a call it has no signature for, that it mutates and may return any of them. That covers
-	// the methods that call a callback (map, forEach, reduce, sort, Array.from), the ones that write
+	// the methods that call a callback (map, forEach, a Map's or Set's forEach, reduce, sort, Array.from), the ones that write
 	// (splice, fill, set, delete), and a node added to the IR after this was written, which is then
 	// treated as the most it could be rather than as nothing.
 	operands := n.operands(expression)
@@ -431,7 +431,7 @@ func writes(expression ir.Expression) bool {
 // callsBack reports whether an IR node calls a function value it's handed.
 func callsBack(expression ir.Expression) bool {
 	switch expression.(type) {
-	case ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
+	case ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 		return true
 	}
 	return false

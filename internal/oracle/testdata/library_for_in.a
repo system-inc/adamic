@@ -1,0 +1,33 @@
+const original = { z: 1, '10': 10, '2': 2, '0': 0, '01': 1, '-0': 1, '4294967294': 4, '4294967295': 5, '99999999999999999999999999999999': 6, alpha: 7, '#visible': 8, missing: undefined };
+const narrower: { readonly z: number } = original;
+const keys: string[] = [];
+for (const key in narrower) {
+	keys.push(key);
+}
+console.log(keys.join('|'));
+const spread = { ...original, z: 99 };
+const callbacks: (() => string)[] = [];
+for (let key in spread) {
+	callbacks.push(function (): string { return key; });
+}
+console.log(callbacks.map((call) => call()).join('|'));
+let assigned = 'untouched';
+for (assigned in original) {
+	if (assigned === '0') {
+		continue;
+	}
+	console.log(assigned);
+	if (assigned === '10') {
+		break;
+	}
+}
+console.log(assigned);
+const empty = {};
+for (const key in empty) {
+	console.log(`unexpected:${key}`);
+}
+let object = { b: 1, a: 2 };
+for (const key in object) {
+	object = { b: 3, a: 4 };
+	console.log(key);
+}

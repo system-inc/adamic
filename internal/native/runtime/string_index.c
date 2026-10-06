@@ -5,9 +5,10 @@
 // tokenizer's loop over a non-ASCII file quadratic. So a string keeps its length in units once it's
 // known (an ASCII string's units are its bytes, and need nothing more), and a long non-ASCII string
 // built at runtime gets an index the first time it's asked: a checkpoint every STEP units, and a
-// cursor at the last code point found. A position just ahead of the cursor (the next index in a loop)
-// is walked to from the cursor, and any other from the checkpoint below it, so either is at most STEP
-// code points away. The index is built once, in one pass, and freed with the string.
+// cursor at the last code point found. Nearby positions are walked to in either direction from
+// that cursor, with backward reads choosing the closer of the cursor and checkpoint, so at most STEP
+// code points are visited. The checkpoints are built once, in one pass, and freed with the string.
+// BMP-only indexed strings also decode a compact UTF-16 view once for direct unit reads.
 //
 // A string is immutable, so nothing cached can go stale while it lives, and a string's memory comes
 // back from allocate with nothing cached. The program's literals are immortal, and so is the index a
@@ -41,6 +42,9 @@ struct adamic_string_index {
 	// left once, and 1 when that unit is the low half of a surrogate pair, whose code point starts a
 	// unit earlier.
 	size_t count;
+	// No supplementary points: each unit is a direct read of this compact UTF-16 view.
+	// Lone surrogates are BMP units too. The byte checkpoints still serve slices and searches.
+	uint16_t *bmp;
 	uint32_t checkpoints[];
 };
 
@@ -72,9 +76,12 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
 	index->cursor_unit = 0;
 	index->cursor_offset = 0;
 	index->count = count;
+	index->bmp = NULL;
+	bool all_bmp = true;
 	size_t checkpoint = 0, unit = 0;
 	for (size_t offset = 0; offset < string->length;) {
 		size_t size = width((unsigned char)string->bytes[offset]);
+		all_bmp = all_bmp && size != 4;
 		size_t next = unit + (size == 4 ? 2 : 1);
 		// Every checkpoint this code point holds: its first unit, or the low half of a pair.
 		for (; checkpoint < count && checkpoint * STEP < next; checkpoint++) {
@@ -86,6 +93,23 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
 	// A checkpoint at the very end (units a multiple of STEP) is the end.
 	for (; checkpoint < count; checkpoint++) {
 		index->checkpoints[checkpoint] = (uint32_t)(string->length << 1);
+	}
+	if (all_bmp) {
+		index->bmp = malloc(units * sizeof *index->bmp);
+		if (index->bmp == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		size_t at = 0;
+		for (size_t offset = 0; offset < string->length;) {
+			const unsigned char *bytes = (const unsigned char *)string->bytes + offset;
+			size_t size = width(bytes[0]);
+			unsigned point = size == 1 ? bytes[0] : size == 2 ?
+				((unsigned)(bytes[0] & 0x1f) << 6) | (bytes[1] & 0x3f) :
+				((unsigned)(bytes[0] & 0x0f) << 12) | ((unsigned)(bytes[1] & 0x3f) << 6) | (bytes[2] & 0x3f);
+			index->bmp[at++] = (uint16_t)point;
+			offset += size;
+		}
 	}
 	string->index = index;
 	return index;
@@ -110,11 +134,15 @@ static struct adamic_string_index *usable(const adamic_string *string, size_t un
 }
 
 size_t adamic_string_units_before(const adamic_string *string, size_t offset) {
-	size_t units = adamic_string_units(string);
+	size_t units = string->units != 0 ? string->units - 1 : adamic_string_units(string);
 	if (units == string->length) {
 		return offset;
 	}
-	struct adamic_string_index *index = usable(string, units);
+	// Keep the established-index path local; usable also handles building and unindexed strings.
+	struct adamic_string_index *index = string->index;
+	if (index == NULL || index == ADAMIC_LITERAL_INDEX) {
+		index = usable(string, units);
+	}
 	size_t start = 0, at = 0;
 	if (index != NULL) {
 		// The last checkpoint at or before offset, by its offset (checkpoints never go backward), and
@@ -141,15 +169,20 @@ size_t adamic_string_units_before(const adamic_string *string, size_t offset) {
 }
 
 size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low) {
-	size_t units = adamic_string_units(string);
+	size_t units = string->units != 0 ? string->units - 1 : adamic_string_units(string);
 	if (units == string->length) {
 		// Every code point is one byte.
 		*low = false;
 		return unit;
 	}
-	struct adamic_string_index *index = usable(string, units);
+	// Keep the established-index path local; usable also handles building and unindexed strings.
+	struct adamic_string_index *index = string->index;
+	if (index == NULL || index == ADAMIC_LITERAL_INDEX) {
+		index = usable(string, units);
+	}
 	size_t start = 0, offset = 0;
 	if (index != NULL) {
+		// Sequential reads need no checkpoint load. A near forward read remains bounded by STEP.
 		if (CURSOR && unit >= index->cursor_unit && unit - index->cursor_unit < STEP) {
 			start = index->cursor_unit;
 			offset = index->cursor_offset;
@@ -157,6 +190,18 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 			uint32_t checkpoint = index->checkpoints[unit / STEP];
 			start = unit / STEP * STEP - (checkpoint & 1);
 			offset = checkpoint >> 1;
+			if (CURSOR && index->cursor_unit > unit && index->cursor_unit - unit <= unit - start) {
+				start = index->cursor_unit;
+				offset = index->cursor_offset;
+				// The cursor names a code point's first unit. Step back over continuation bytes,
+				// subtracting two units for a supplementary point and one for a lone surrogate.
+				while (start > unit) {
+					do {
+						offset--;
+					} while (((unsigned char)string->bytes[offset] & 0xc0) == 0x80);
+					start -= width((unsigned char)string->bytes[offset]) == 4 ? 2 : 1;
+				}
+			}
 		}
 	}
 	for (;;) {
@@ -176,6 +221,17 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 	return offset;
 }
 
+// Private to the string runtime: a cached BMP view, or NULL until locate builds the index.
+// Short strings and stack pieces keep their allocation-free walk.
+const uint16_t *adamic_string_bmp_view(const adamic_string *string) {
+	struct adamic_string_index *index = string->index;
+	return index != NULL && index != ADAMIC_LITERAL_INDEX ? index->bmp : NULL;
+}
+
 void adamic_string_free_index(adamic_string *string) {
+	if (string->index == NULL || string->index == ADAMIC_LITERAL_INDEX) {
+		return;
+	}
+	free(string->index->bmp);
 	free(string->index);
 }

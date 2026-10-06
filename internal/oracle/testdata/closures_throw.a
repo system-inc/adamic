@@ -180,7 +180,7 @@ attempt('call', () => `${word('left', 1)} ${outer()} ${word('right', 2)}`);
 function passes(): string {
 	return words.map((value) => (value === 'b2' ? failing() : value)).join('');
 }
-attempt('through a function', () => passes());
+attempt('through a function', passes);
 attempt('finally inside', () => {
 	try {
 		return failing();

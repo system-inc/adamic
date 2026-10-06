@@ -103,3 +103,7 @@ console.log(`${'aba'.match(/a/g)?.index} ${'aba'.match(/a/)?.index} ${'zzz'.matc
 const plainYield: IteratorYieldResult<number> = {value: 42};
 const reorderedYield: IteratorYieldResult<number> = {value: 42, done: false};
 console.log(`${plainYield.done} ${reorderedYield.done}`);
+
+// Regex objects elsewhere do not change this literal's proven plain-object origin.
+const emptyPlain = {};
+console.log(emptyPlain.toString());

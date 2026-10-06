@@ -31,7 +31,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
 		}
-		return 0, false
+		return l.objectIntersection(proven)
 	}
 	switch {
 	case flags&checker.TypeFlagsNumberLike != 0:
@@ -363,6 +363,9 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if observed, known := l.libraryArrayObservation(node); known {
+		return observed, nil
+	}
 	switch node.Kind {
 	case ast.KindNullKeyword:
 		return ir.Null{}, nil
@@ -375,6 +378,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
 		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
 	case ast.KindIdentifier:
+		if value, known, err := l.libraryGlobalValue(node); known {
+			return value, err
+		}
 		local, isLocal := l.local(node)
 		if !isLocal && node.Text() == "undefined" {
 			return ir.Undefined{}, nil
@@ -387,6 +393,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		}
 		if _, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
 			return nil, l.notYet(node, "a generic function as a value")
+		}
+		if !isLocal && l.isLibraryGlobal(node, "String") {
+			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
 		}
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
@@ -408,6 +417,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
+		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
+			return ir.StringConstant{Index: l.constant("function")}, nil
+		}
+		if value, intrinsic := l.stringTypeOf(node); intrinsic {
+			return value, nil
+		}
 		operand, err := l.expression(node.AsTypeOfExpression().Expression)
 		if err != nil {
 			return nil, err
@@ -422,7 +437,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 			if lowered, isCaught := l.caughtInstanceOfError(node); isCaught {
 				return lowered, nil
 			}
-			return nil, l.notYet(node, "instanceof, but on what a catch caught, against Error")
+			return l.classInstanceOf(node)
 		}
 		left, err := l.expression(binary.Left)
 		if err != nil {
@@ -436,6 +451,8 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
 		return l.combine(node, binary.OperatorToken.Kind, left, right)
+	case ast.KindTaggedTemplateExpression:
+		return l.stringRawTemplate(node)
 	case ast.KindTemplateExpression:
 		return l.template(node)
 	case ast.KindConditionalExpression:
@@ -464,7 +481,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindAsExpression:
 		return l.cast(node)
 	case ast.KindFunctionExpression:
-		return nil, l.notYet(node, "a function expression (an arrow function captures this as written)")
+		return l.functionExpression(node)
 	case ast.KindCallExpression:
 		if err := l.optionalCall(node); err != nil {
 			return nil, err
@@ -491,8 +508,8 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 // fit makes a value fit where a value of type to goes: a number or a boolean, or undefined, where
-// number | undefined or boolean | undefined goes, since that is two words and they are one. Anything
-// else is left as it is.
+// number | undefined or boolean | undefined goes, since that is two words and they are one. It also
+// unwraps a maybe value the checker narrowed to its present type. Anything else is left as it is.
 func fit(value ir.Expression, to ir.Type) ir.Expression {
 	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
 		return ir.WeakOf{Value: value}
@@ -509,6 +526,9 @@ func fit(value ir.Expression, to ir.Type) ir.Expression {
 		return ir.Undefined{Of: to}
 	}
 	if !to.IsMaybe() || value == nil {
+		if value != nil && value.Type().IsMaybe() && value.Type().Present() == to {
+			return ir.Unwrap{Value: value}
+		}
 		return value
 	}
 	if value.Type() == to.Present() {
@@ -536,6 +556,9 @@ func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 	prefix := node.AsPrefixUnaryExpression()
+	if prefix.Operator == ast.KindPlusToken {
+		return l.libraryNumber(prefix.Operand)
+	}
 	operand, err := l.expression(prefix.Operand)
 	if err != nil {
 		return nil, err
@@ -947,13 +970,22 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 }
 
 // optionalCall refuses a call in an optional chain, text?.toUpperCase() or run?.(): the receiver has
-// to be evaluated once and tested before the call, which stage 0 doesn't lower yet. Lowered as a
-// plain call, it ran the method on undefined.
+// to be evaluated once and tested before the call, which stage 0 doesn't lower yet for the library's
+// methods or a function value called directly. Lowered as a plain call, it ran the method on
+// undefined. The one form lowered is object?.method(...) on a method the program declares (a
+// class's, an interface's, or a function value in a field): the call goes through the object's
+// methods, which stops at undefined as JavaScript's chain does (ir.Property's Method).
 func (l *lowering) optionalCall(call *ast.Node) error {
-	if call.Flags&ast.NodeFlagsOptionalChain != 0 {
-		return l.notYet(call, "a call through ?. (an optional call)")
+	if call.Flags&ast.NodeFlagsOptionalChain == 0 {
+		return nil
 	}
-	return nil
+	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
+	if callee.Kind == ast.KindPropertyAccessExpression && callee.AsPropertyAccessExpression().QuestionDotToken != nil && call.AsCallExpression().QuestionDotToken == nil {
+		if method := l.checker.GetSymbolAtLocation(callee); method != nil && len(method.Declarations) > 0 && !load.IsLibrary(ast.GetSourceFileOfNode(method.Declarations[0])) {
+			return nil
+		}
+	}
+	return l.notYet(call, "a call through ?. (an optional call)")
 }
 
 // callClosure lowers a call through a function value.
@@ -961,6 +993,12 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	closure, err := l.expression(node.AsCallExpression().Expression)
 	if err != nil {
 		return nil, err
+	}
+	if property, isProperty := closure.(ir.Property); isProperty {
+		// object.name(...) through an interface: the object may be a class's, whose methods aren't
+		// fields (ir.Property's Method).
+		property.Method = true
+		closure = property
 	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {

@@ -1,0 +1,46 @@
+// Inheritance keeps named methods for interface and optional calls as well as virtual class slots.
+// Runtime strings make the receiver's ownership and the inherited destructor observable to ASan.
+interface Reader {
+	read(prefix: string): string;
+	inherited(): string;
+}
+
+class Base implements Reader {
+	readonly name: string;
+	constructor(index: number) {
+		this.name = ['reader', `${index}`].join('-');
+	}
+	read(prefix: string): string {
+		return `${prefix}:${this.name}`;
+	}
+	inherited(): string {
+		return this.name;
+	}
+}
+
+class Child extends Base {
+	override read(prefix: string): string {
+		return `${super.read(prefix)}:child`;
+	}
+}
+
+class Grandchild extends Child {
+	override inherited(): string {
+		return `${this.name}:grandchild`;
+	}
+}
+
+const readers: Reader[] = [new Base(0), new Child(1), new Grandchild(2)];
+for (let index = 0; index <= readers.length; index++) {
+	console.log(readers[index]?.read(`interface${index}`) ?? 'missing');
+	console.log(readers[index]?.inherited() ?? 'missing');
+}
+
+function maybe(index: number): Base | undefined {
+	return index > 0 ? new Grandchild(index) : undefined;
+}
+for (const index of [0, 3]) {
+	const reader = maybe(index);
+	console.log(reader?.read('optional') ?? 'missing');
+	console.log(reader?.inherited() ?? 'missing');
+}

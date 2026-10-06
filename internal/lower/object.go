@@ -35,6 +35,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
 				return nil, l.notYet(name, "a computed field name")
 			}
+			if property.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__" {
+				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
+			}
 			var value ir.Expression
 			var err error
 			if property.Kind == ast.KindPropertyAssignment {
@@ -223,10 +226,16 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	access := node.AsPropertyAccessExpression()
-	name := node.Name().Text()
+	name := l.fieldName(node.Name())
+	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
+		return nil, l.notYet(node, "a collection iterator property other than next")
+	}
 	if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		// The rest of a chain after a ?., which short-circuits with it.
 		return nil, l.notYet(node, "an optional chain longer than one step")
+	}
+	if value, known := l.libraryMathNumberProperty(node); known {
+		return value, nil
 	}
 	if l.isLibraryGlobal(access.Expression, "Math") {
 		switch name {
@@ -245,9 +254,15 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "Number."+name)
 	}
-	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration {
+	// A library declaration proves a prototype member exists, never an own slot. Keep this
+	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
+	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
+		return nil, l.prototypeRead(node, name)
+	}
+	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration && !isCallee(node) {
 		// A method read off its object, not called: JavaScript loses its this (unbound-method,
-		// docs/0.1.md). A call never comes here; callOrMethod lowers it.
+		// docs/0.1.md). A plain call never comes here, since callOrMethod lowers it; object?.method()
+		// reads it as its call's callee, through the object's methods, and keeps its this.
 		object := "object"
 		if receiver := ast.SkipParentheses(access.Expression); ast.IsIdentifier(receiver) {
 			object = receiver.Text()
@@ -389,6 +404,35 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }
 
+// hasOwnProperty lowers object.hasOwnProperty(key) when the method is the library's, not a field the
+// object declares. The checker puts Object's prototype methods on every object's type. The shape
+// holds only the object's own fields, and reading hasOwnProperty as one of them panics: the field
+// the checker proved is not there.
+func (l *lowering) hasOwnProperty(node *ast.Node, receiver *ast.Node) (ir.Expression, bool, error) {
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	symbol := l.checker.GetSymbolAtLocation(callee)
+	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+		return nil, false, nil
+	}
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) != 1 {
+		return nil, true, l.notYet(node, "hasOwnProperty with other than one argument")
+	}
+	if keyType, _ := l.representation(l.checker.GetTypeAtLocation(arguments[0])); keyType != ir.String {
+		return nil, true, l.notYet(node, "hasOwnProperty with a key that isn't a string")
+	}
+	// JavaScript's order: the object, then the key.
+	object, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	key, err := l.expression(arguments[0])
+	if err != nil {
+		return nil, true, err
+	}
+	return ir.HasOwn{Object: object, Key: key}, true, nil
+}
+
 // isLibraryGlobal reports whether a node names one of the library's globals, rather than something
 // of the program's that happens to share its name.
 func (l *lowering) isLibraryGlobal(node *ast.Node, name string) bool {
@@ -419,6 +463,12 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.libraryMathNumberCall(node); known {
+		return value, true, err
+	}
+	if lowered, isString, err := l.libraryString(node); isString {
+		return lowered, true, err
+	}
 	if value, matched, err := l.regexBuiltin(node); matched {
 		return value, true, err
 	}
@@ -434,8 +484,20 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	receiver, name := callee.AsPropertyAccessExpression().Expression, callee.Name().Text()
+	if l.isLibraryGlobal(receiver, "Object") {
+		return l.objectCall(node, name)
+	}
+	if lowered, handled, err := l.objectPrototypeCall(node, receiver, name); handled {
+		return lowered, true, err
+	}
+	if l.isLibraryGlobal(receiver, "JSON") {
+		return l.jsonCall(node, name)
+	}
 	if l.isLibraryGlobal(receiver, "Number") {
 		return l.numberCall(node, name)
+	}
+	if l.isLibraryGlobal(receiver, "Map") && name == "groupBy" {
+		return l.libraryMapGroupBy(node)
 	}
 	if l.isLibraryGlobal(receiver, "Array") && name == "from" {
 		return l.arrayFrom(node)
@@ -467,8 +529,14 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		return ir.ArrayPop{Array: array, Element: element}, true, nil
 	}
+	if receiverType == ir.Array && libraryArrayMethods[name] {
+		return l.libraryArrayMethod(node, receiver, name)
+	}
 	if _, isVisit := visits[name]; receiverType == ir.Array && (isVisit || arrayMethods[name]) {
 		return l.arrayMethod(node, receiver, name)
+	}
+	if receiverType == ir.Map && (name == "keys" || name == "values" || name == "entries") {
+		return l.libraryCollectionIterator(node, receiver, name)
 	}
 	if receiverType == ir.Map && l.isSet(receiver) {
 		return l.setMethod(node, receiver, name)
@@ -615,6 +683,9 @@ var numberConstants = map[string]float64{
 
 // forOf lowers for (const element of array).
 func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
+	if statements, known, err := l.libraryArrayForOf(node); known {
+		return statements, err
+	}
 	statement := node.AsForInOrOfStatement()
 	if statement.AwaitModifier != nil {
 		return nil, l.notYet(node, "for await")
@@ -653,6 +724,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
+	if element, iterator := l.libraryIteratorElement(iterated); iterator {
+		return l.libraryForOfIterator(node, iterable, element, name)
+	}
 	var element ir.Type
 	switch iterable.Type() {
 	case ir.Array:
@@ -663,6 +737,20 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		// A string's elements are its code points, each a string.
 		element = ir.String
 	case ir.Map:
+		if ast.IsIdentifier(name) && (mapPart == "entries" || (mapPart == "" && !l.isSet(iterated))) {
+			var key, value ir.Type
+			if l.isSet(iterated) {
+				key, err = l.setElement(iterated)
+				value = key
+			} else {
+				key, value, err = l.mapTypes(iterated)
+			}
+			if err != nil {
+				return nil, err
+			}
+			iterator := ir.CollectionIterator{Collection: iterable, Part: "entries", Key: key, Value: value, Set: l.isSet(iterated)}
+			return l.libraryForOfIterator(node, iterator, ir.Object, name)
+		}
 		return l.forOfMap(node, iterable, iterated, mapPart, name)
 	case ir.Object:
 		if !l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(iterated)), "RegExpStringIterator") {
@@ -1109,6 +1197,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "new Map with more than one argument")
 	}
 	pairs := ast.SkipParentheses(created.Arguments.Nodes[0])
+	if l.libraryEmptyCollectionArgument(pairs) {
+		return lowered, nil
+	}
 	if !writtenOut(pairs) {
 		// Pairs from anywhere else: an array of them, another Map, its entries() (collections.go).
 		return l.newMapFrom(node, pairs, key, value)
@@ -1128,6 +1219,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		// A number, or undefined, where number | undefined goes is made that pair.
+		entryKey = fit(entryKey, key)
 		entryValue = fit(entryValue, value)
 		if entryKey.Type() != key || entryValue.Type() != value {
 			return nil, l.notYet(pair, "a Map entry whose key or value is of another type than the Map's")
@@ -1174,6 +1266,9 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 			return nil, true, err
 		}
 		arguments = append(arguments, lowered)
+	}
+	if len(arguments) > 0 {
+		arguments[0] = fit(arguments[0], key)
 	}
 	want := 1
 	if name == "set" {
@@ -1348,6 +1443,9 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	access := node.AsElementAccessExpression()
 	index := ast.SkipParentheses(access.ArgumentExpression)
+	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, index.Text()) {
+		return nil, l.prototypeRead(node, index.Text())
+	}
 	optional := access.QuestionDotToken != nil
 	if !optional && node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		// The rest of a chain after a ?., which short-circuits with it.
@@ -1664,4 +1762,64 @@ func (l *lowering) pairwiseTupleWhereArrayGoes(values []*checker.Type, targets [
 		}
 	}
 	return false
+}
+
+// updateIndex lowers array[index] op= value. The array and index are held before the element is
+// read, and that read is held before the right side runs, exactly once each and in JavaScript's
+// order. The final SetIndex uses those same held values even when the right side changes their source.
+func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+	access := target.AsElementAccessExpression()
+	array, err := l.expression(access.Expression)
+	if err != nil {
+		return nil, err
+	}
+	if array.Type() != ir.Array {
+		return nil, l.notYet(target, "assigning an element of a "+typeName(array.Type()))
+	}
+	element, err := l.elementType(access.Expression)
+	if err != nil {
+		return nil, err
+	}
+	if element != ir.Number {
+		return nil, l.notYet(target, "updating an array element of type "+typeName(element))
+	}
+	index, err := l.expression(access.ArgumentExpression)
+	if err != nil {
+		return nil, err
+	}
+	if index.Type() != ir.Number {
+		return nil, l.notYet(target, "an array index that isn't a number")
+	}
+
+	arrayLocal := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "array", Type: ir.Array, Function: l.functionIndex})
+	indexLocal := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "index", Type: ir.Number, Function: l.functionIndex})
+	currentLocal := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "element", Type: ir.Number, Function: l.functionIndex})
+	arrayRead := ir.Read{Local: arrayLocal, Of: ir.Array}
+	indexRead := ir.Read{Local: indexLocal, Of: ir.Number}
+	current := ir.Unwrap{Value: ir.ArrayIndex{Array: arrayRead, Index: indexRead, Element: ir.Number}}
+	right, err := l.expression(valueNode)
+	if err != nil {
+		return nil, err
+	}
+	updated, err := l.combine(node, operator, ir.Read{Local: currentLocal, Of: ir.Number}, right)
+	if err != nil {
+		return nil, err
+	}
+	return []ir.Statement{ir.Block{Body: []ir.Statement{
+		ir.Declare{Local: arrayLocal, Value: array},
+		ir.Declare{Local: indexLocal, Value: index},
+		ir.Declare{Local: currentLocal, Value: current},
+		ir.SetIndex{Array: arrayRead, Index: indexRead, Value: updated, Element: ir.Number, Site: l.writeSite(access.Expression)},
+	}}}, nil
+}
+
+// isCallee reports whether a property read is the expression a call calls, parentheses aside.
+func isCallee(node *ast.Node) bool {
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	return node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && node.Parent.AsCallExpression().Expression == node
 }
