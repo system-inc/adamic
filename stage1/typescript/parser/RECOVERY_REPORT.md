@@ -423,3 +423,13 @@ elements, except function, minus and opening-parenthesis tokens. The port now
 uses that predicate, preserving missing parameter nodes and consuming invalid
 tokens through Go's zero-progress recovery. Three focused probes pass with
 all prior cases in 24.708s; cohere passes.
+
+## Continued recovery: import and export specifier separators
+
+The continuation advances through builder.ts and builderPublic.ts cuts, then
+retains missing/duplicated import commas at inputs 1153/1154. Specifier lists
+now use Go's list contexts, separator expectations and invalid-token recovery,
+including an empty list when the opening brace is missing. Statement lookahead
+scans without delivering errors, then restores scanner state, so lexical
+diagnostics remain speculative. Four focused additions pass with preceding
+probes in 27.286s; cohere passes.

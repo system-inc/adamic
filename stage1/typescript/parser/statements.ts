@@ -218,7 +218,7 @@ export class Statements {
             errors: this.parser.scanner.errors.length,
         };
         for(let index = 0; index < offset; index++) {
-            this.parser.next();
+            this.parser.scanner.scan();
         }
         const result = this.parser.kind();
         this.parser.scanner.pos = saved.pos;
@@ -242,9 +242,18 @@ export class Statements {
     }
     specifiers(importing: boolean): number {
         const pos = this.parser.scanner.fullStart;
-        this.parser.expect('OpenBraceToken');
         const members: number[] = [];
-        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
+        if(!this.parser.expect('OpenBraceToken')) {
+            return this.make(importing ? 'NamedImports' : 'NamedExports', pos, members);
+        }
+        this.parser.beginList('specifiers');
+        while(true) {
+            if(!this.parser.listElement('specifiers')) {
+                if(this.parser.listTerminator('specifiers') || this.parser.recoverList('specifiers')) {
+                    break;
+                }
+                continue;
+            }
             const start = this.parser.scanner.fullStart;
             let name = this.parser.propertyName();
             let property = -1;
@@ -294,11 +303,19 @@ export class Statements {
             const member = this.make(importing ? 'ImportSpecifier' : 'ExportSpecifier', start, children);
             this.parser.node(member).semantic = typeOnly ? '1' : '0';
             members.push(member);
-            if(this.parser.kind() !== 'CommaToken') {
+            if(this.parser.kind() === 'CommaToken') {
+                this.parser.next();
+                continue;
+            }
+            if(this.parser.listTerminator('specifiers')) {
                 break;
             }
-            this.parser.next();
+            this.parser.expect('CommaToken');
+            if(start === this.parser.scanner.fullStart) {
+                this.parser.next();
+            }
         }
+        this.parser.endList('specifiers');
         this.parser.expect('CloseBraceToken');
         return this.make(importing ? 'NamedImports' : 'NamedExports', pos, members);
     }
