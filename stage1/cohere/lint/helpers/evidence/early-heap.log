@@ -1,0 +1,23 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:93: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/helpers/main.ts /tmp/adamic-gate/TestHelpersMatchCohere2641471409/005/cases.json /workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json]: signal: aborted
+        
+        <--- Last few GCs --->
+        
+        [32719:0xba2e000]    41175 ms: Scavenge (interleaved) 4079.3 (4084.7) -> 4077.9 (4094.2) MB, pooled: 0 MB, 5.92 / 0.00 ms  (average mu = 0.261, current mu = 0.217) allocation failure; 
+        [32719:0xba2e000]    44061 ms: Mark-Compact (reduce) 4090.3 (4099.7) -> 4083.6 (4086.7) MB, pooled: 0 MB, 1775.44 / 0.00 ms  (+ 498.2 ms in 196 steps since start of marking, biggest step 21.7 ms, walltime since start of marking 2296 ms) (average mu = 0.24
+        FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+        ----- Native stack trace -----
+        
+         1: 0x75356c node::OOMErrorHandler(char const*, v8::OOMDetails const&) [node]
+         2: 0xc52cd0  [node]
+         3: 0xc52dbf  [node]
+         4: 0xef6695  [node]
+         5: 0xef66c2  [node]
+         6: 0xef69ba  [node]
+         7: 0xf076ba  [node]
+         8: 0xf0ba60  [node]
+         9: 0x199e0d1  [node]
+--- FAIL: TestHelpersMatchCohere (62.33s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	62.344s
+FAIL
