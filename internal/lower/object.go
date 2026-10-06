@@ -1303,3 +1303,55 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 	}
 	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element}}, nil
 }
+
+// updateIndex lowers array[index] op= value. The array and index are held before the element is
+// read, and that read is held before the right side runs, exactly once each and in JavaScript's
+// order. The final SetIndex uses those same held values even when the right side changes their source.
+func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+	access := target.AsElementAccessExpression()
+	array, err := l.expression(access.Expression)
+	if err != nil {
+		return nil, err
+	}
+	if array.Type() != ir.Array {
+		return nil, l.notYet(target, "assigning an element of a "+typeName(array.Type()))
+	}
+	element, err := l.elementType(access.Expression)
+	if err != nil {
+		return nil, err
+	}
+	if element != ir.Number {
+		return nil, l.notYet(target, "updating an array element of type "+typeName(element))
+	}
+	index, err := l.expression(access.ArgumentExpression)
+	if err != nil {
+		return nil, err
+	}
+	if index.Type() != ir.Number {
+		return nil, l.notYet(target, "an array index that isn't a number")
+	}
+
+	arrayLocal := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "array", Type: ir.Array, Function: l.functionIndex})
+	indexLocal := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "index", Type: ir.Number, Function: l.functionIndex})
+	currentLocal := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "element", Type: ir.Number, Function: l.functionIndex})
+	arrayRead := ir.Read{Local: arrayLocal, Of: ir.Array}
+	indexRead := ir.Read{Local: indexLocal, Of: ir.Number}
+	current := ir.Unwrap{Value: ir.ArrayIndex{Array: arrayRead, Index: indexRead, Element: ir.Number}}
+	right, err := l.expression(valueNode)
+	if err != nil {
+		return nil, err
+	}
+	updated, err := l.combine(node, operator, ir.Read{Local: currentLocal, Of: ir.Number}, right)
+	if err != nil {
+		return nil, err
+	}
+	return []ir.Statement{ir.Block{Body: []ir.Statement{
+		ir.Declare{Local: arrayLocal, Value: array},
+		ir.Declare{Local: indexLocal, Value: index},
+		ir.Declare{Local: currentLocal, Value: current},
+		ir.SetIndex{Array: arrayRead, Index: indexRead, Value: updated, Element: ir.Number},
+	}}}, nil
+}

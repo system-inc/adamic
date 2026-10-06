@@ -438,6 +438,8 @@ var operators = map[ir.Operator]string{
 	ir.Add: "+", ir.Subtract: "-", ir.Multiply: "*", ir.Divide: "/", ir.Remainder: "%", ir.Power: "**",
 	ir.Less: "<", ir.LessOrEqual: "<=", ir.Greater: ">", ir.GreaterOrEqual: ">=",
 	ir.Equal: "===", ir.NotEqual: "!==", ir.And: "&&", ir.Or: "||",
+	ir.BitwiseAnd: "&", ir.BitwiseOr: "|", ir.BitwiseXor: "^",
+	ir.ShiftLeft: "<<", ir.ShiftRight: ">>", ir.ShiftRightUnsigned: ">>>",
 }
 
 // value is a JavaScript expression for a value. JavaScript evaluates left to right and short-circuits
@@ -456,7 +458,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return e.variable(expression.Local)
 	case ir.Unary:
-		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "!"}[expression.Operator]
+		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "!", ir.BitwiseNot: "~"}[expression.Operator]
 		return "(" + operator + e.value(expression.Operand) + ")"
 	case ir.Binary:
 		return "(" + e.value(expression.Left) + " " + operators[expression.Operator] + " " + e.value(expression.Right) + ")"

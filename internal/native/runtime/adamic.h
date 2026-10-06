@@ -50,6 +50,15 @@ typedef union adamic_value {
 	void *reference;
 } adamic_value;
 
+// Bitwise operations use ECMAScript's ToInt32 and ToUint32 conversions (bitwise.c).
+double adamic_bitwise_and(double left, double right);
+double adamic_bitwise_or(double left, double right);
+double adamic_bitwise_xor(double left, double right);
+double adamic_bitwise_not(double value);
+double adamic_shift_left(double left, double right);
+double adamic_shift_right(double left, double right);
+double adamic_shift_right_unsigned(double left, double right);
+
 // adamic_maybe_number is number | undefined: present, and the number when it is.
 typedef struct adamic_maybe_number {
 	bool present;

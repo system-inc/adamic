@@ -438,6 +438,8 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 		return ir.Unary{Operator: ir.Plus, Operand: operand}, nil
 	case prefix.Operator == ast.KindExclamationToken && operand.Type() == ir.Boolean:
 		return ir.Unary{Operator: ir.Not, Operand: operand}, nil
+	case prefix.Operator == ast.KindTildeToken && operand.Type() == ir.Number:
+		return ir.Unary{Operator: ir.BitwiseNot, Operand: operand}, nil
 	}
 	return nil, l.notYet(node, describe(node)+" on a "+typeName(operand.Type()))
 }
@@ -458,6 +460,15 @@ var comparisons = map[ast.Kind]ir.Operator{
 	ast.KindGreaterThanEqualsToken: ir.GreaterOrEqual,
 }
 
+var bitwise = map[ast.Kind]ir.Operator{
+	ast.KindAmpersandToken:                         ir.BitwiseAnd,
+	ast.KindBarToken:                               ir.BitwiseOr,
+	ast.KindCaretToken:                             ir.BitwiseXor,
+	ast.KindLessThanLessThanToken:                  ir.ShiftLeft,
+	ast.KindGreaterThanGreaterThanToken:            ir.ShiftRight,
+	ast.KindGreaterThanGreaterThanGreaterThanToken: ir.ShiftRightUnsigned,
+}
+
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
@@ -465,6 +476,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
 	}
 	if lowered, isArithmetic := arithmetic[operator]; isArithmetic && both(ir.Number) {
+		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	}
+	if lowered, isBitwise := bitwise[operator]; isBitwise && both(ir.Number) {
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
 	if lowered, isComparison := comparisons[operator]; isComparison && (both(ir.Number) || both(ir.String)) {

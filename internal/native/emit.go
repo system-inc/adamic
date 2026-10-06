@@ -673,6 +673,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return "(+" + operand + ")"
 		case ir.Not:
 			return "(!" + operand + ")"
+		case ir.BitwiseNot:
+			return "adamic_bitwise_not(" + operand + ")"
 		}
 	case ir.Binary:
 		if expression.Operator == ir.And || expression.Operator == ir.Or {
@@ -1847,6 +1849,18 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 		return fmt.Sprintf("fmod(%s, %s)", left, right)
 	case operator == ir.Power:
 		return fmt.Sprintf("adamic_power(%s, %s)", left, right)
+	case operator == ir.BitwiseAnd:
+		return fmt.Sprintf("adamic_bitwise_and(%s, %s)", left, right)
+	case operator == ir.BitwiseOr:
+		return fmt.Sprintf("adamic_bitwise_or(%s, %s)", left, right)
+	case operator == ir.BitwiseXor:
+		return fmt.Sprintf("adamic_bitwise_xor(%s, %s)", left, right)
+	case operator == ir.ShiftLeft:
+		return fmt.Sprintf("adamic_shift_left(%s, %s)", left, right)
+	case operator == ir.ShiftRight:
+		return fmt.Sprintf("adamic_shift_right(%s, %s)", left, right)
+	case operator == ir.ShiftRightUnsigned:
+		return fmt.Sprintf("adamic_shift_right_unsigned(%s, %s)", left, right)
 	case operandType == ir.String && (operator == ir.Less || operator == ir.LessOrEqual || operator == ir.Greater || operator == ir.GreaterOrEqual):
 		return fmt.Sprintf("(adamic_string_compare(%s, %s) %s 0)", left, right, cOperators[operator])
 	case operandType == ir.String && operator == ir.Equal:
