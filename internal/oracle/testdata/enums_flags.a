@@ -1,0 +1,61 @@
+enum Flags {
+    None = 0,
+    A = 1 << 0,
+    B = 1 << 1,
+    C = 1 << 2,
+    High = 1 << 30,
+    Pair = A | B,
+}
+
+function combine(left: Flags, right: Flags): Flags {
+    return left | right;
+}
+function mask(flags: Flags, number: number): Flags {
+    return flags & number;
+}
+function maskRight(number: number, flags: Flags): Flags {
+    return number & flags;
+}
+function remove(flags: Flags): Flags {
+    return flags & ~Flags.A;
+}
+function toggle(flags: Flags): Flags {
+    return flags ^ Flags.C;
+}
+function describe(flags: Flags): string {
+    switch (flags) {
+        case Flags.None: return 'none';
+        case Flags.A: return 'a';
+        default: return 'combination';
+    }
+}
+const flags: Flags = combine(Flags.A, Flags.C);
+const box: { flags: Flags } = { flags: Flags.A | Flags.C };
+box.flags = box.flags | Flags.High;
+class Holder {
+    flags: Flags = Flags.A | Flags.C;
+    set(flags: Flags): Flags {
+        this.flags = flags;
+        return this.flags;
+    }
+}
+const holder = new Holder();
+const values: Flags[] = [Flags.A | Flags.C, Flags.High | Flags.B];
+values.push(toggle(flags));
+values[0] = remove(flags);
+const map = new Map<string, Flags>([['first', Flags.A | Flags.C]]);
+map.set('high', box.flags ^ Flags.A);
+console.log(`${flags} ${remove(flags)} ${toggle(flags)} ${mask(flags, -1)} ${maskRight(-1, flags)}`);
+console.log(`${box.flags} ${holder.set(Flags.High | Flags.C)} ${values.join(',')} ${map.get('high') ?? Flags.None}`);
+console.log(`${(flags & Flags.A) !== 0} ${(flags & Flags.B) !== 0} ${describe(flags)} ${describe(Flags.None)}`);
+console.log(`${Flags[flags] ?? 'missing'} ${Flags[Flags.Pair] ?? 'missing'} ${Flags[Flags.High] ?? 'missing'}`);
+console.log(`${mask(Flags.High, -1)} ${maskRight(-1, Flags.High)} ${toggle(Flags.High)} ${remove(Flags.A)}`);
+
+let updated: Flags = Flags.A;
+updated |= Flags.C;
+updated ^= Flags.High;
+updated &= ~Flags.A;
+console.log(`${updated}`);
+const inferred = Flags.A | Flags.C;
+const stored: Flags = inferred;
+console.log(`${stored}`);

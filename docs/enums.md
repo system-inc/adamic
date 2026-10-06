@@ -242,3 +242,118 @@ passed in 22.854s; the final whole-oracle run also verified the recorded table.
 Vet, formatting and whitespace logs were empty. The compiler guard mutation
 runs recorded `CAUGHT` for all 16 guard mutants, after restoring each edit.
 Together with the seven runtime mutants, this gives 23 killed mutants.
+
+## Flag enums
+
+Decision by @system_adamic: opt in by initializer shape, never by the evaluated
+values. Every member must have an explicit initializer: `0`, `1 << n` with a
+numeric literal `n` from 0 to 30, or an `|` expression whose leaves are members
+of this same enum. Parentheses do not change the shape. Implicit `0, 1, 2`,
+bare nonzero literals, direct member aliases and arithmetic initializers keep
+an enum closed and switch-exhaustive under the preceding rules.
+
+```ts
+enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30 }
+const combined: Flags = Flags.A | Flags.B;
+const masked: Flags = combined & ~Flags.A;
+const toggled: Flags = masked ^ Flags.High;
+```
+
+A flag enum's domain is the non-negative int32 values whose bits are a subset
+of the union of its declared member bits. Values retain declaration identity.
+`x & y` has a domain proof when either operand has that enum's proof; `x | y`
+and `x ^ y` require both. This admits `flags & ~Flags.A` without admitting
+`~Flags.A` alone. A bare number gains no enum identity just because its bits
+fit. Complement, arithmetic, shifts, increment and decrement leave the domain.
+Their results belong in a `number`, and cannot be stored into a flag slot.
+Bitwise compound assignments follow the same proofs. Compound arithmetic and
+compound shifts are refused. Immutable aliases preserve an expression's proof;
+an inferred mutable number variable does not.
+
+The same writes are checked in fields, arrays, Map values, arguments and returns,
+including imports and const enums. Writable views retain the preceding invariant
+container checks. An enum member type still denotes that member, so a combination
+cannot be stored as `Flags.A`. Excluding other members does not prove that a flag
+is the last remaining member: it could be a combination. Such a narrowed full
+flag slot is conservatively refused when stored into a member-specific slot;
+return the explicit member after validation instead.
+
+Every switch on a flag enum requires a `default`, even if it lists every declared
+member. Combinations and zero are values too. Reverse lookup of an undeclared
+combination returns `undefined`, with type `string | undefined`.
+A closed non-flag enum switch that covers all its possible values may use
+`default: { const unreachable: never = value; ... }`. Its proven unreachable
+default body is omitted locally during switch lowering; flag defaults are kept.
+
+These programs are refused, with a rule and a fix in the diagnostic:
+
+| Program | Reason |
+| --- | --- |
+| `const value: Flags = ~Flags.A` | Complement has no flag domain proof. |
+| `const value: Flags = Flags.A + 1` | Arithmetic produces a number. |
+| `flags++` | Increment writes an unproven number into a flag slot. |
+| `flags <<= 1` | A compound shift leaves the domain. |
+| `enum Bad { A = 1 << 31 }` | The sign bit exceeds the non-negative int32 bound. |
+| `enum Color { Red, Green, Blue }; const c: Color = Color.Red | Color.Green` | Implicit initializers do not opt into flags. |
+| A flag switch without `default` | Declared cases do not cover the flag domain. |
+| `const value: Flags = Flags.A | Other.B` | OR requires two operands from this enum. |
+| `const value: Other = Flags.A | Other.B` | Declaration identity also excludes the other target. |
+
+The new fixtures are `enums_flags.a`, `enums_flags_modules/main.a` and
+`enums_flags_never_default.a`. They cover combinations, masking in both operand
+orders, bit tests, fields, arrays, Map values, function parameters and returns,
+ordinary and const enums across modules, the high bit at position 30, reverse
+lookup of combinations, default switches and the never-default idiom. Node is
+the independent source oracle for stdout and exit code; both generated backends,
+native release, ASan/UBSan and LeakSanitizer are checked.
+
+One guard mutant per rule was run against a named lowering test and restored.
+All 16 below were caught by assertion failures; no Go or clang build failure
+counts as a caught mutant. The mutation runner initially misparsed the trailing
+`$` in the never-default test filter. After fixing that parser, every mutant was
+rerun and all 16 were reported caught in the fresh run.
+
+| Mutant | Named catch |
+| --- | --- |
+| Classify by numeric values instead of initializer shape | `TestFlagEnumsRefused/implicit` |
+| Require both AND operands to be flags | `TestFlagEnumsDomain/and_left` |
+| Admit OR with only one flag operand | `TestFlagEnumsRefused/or_number` |
+| Admit XOR with only one flag operand | `TestFlagEnumsRefused/xor_number` |
+| Preserve the operand's domain through complement | `TestFlagEnumsRefused/complement` |
+| Give addition a flag proof | `TestFlagEnumsRefused/arithmetic` |
+| Give shifts a flag proof | `TestFlagEnumsRefused/shift_result` |
+| Permit increment of a flag slot | `TestFlagEnumsRefused/increment` |
+| Permit compound shift of a flag slot | `TestFlagEnumsRefused/shift_update` |
+| Drop the flag switch default requirement | `TestFlagEnumsRefused/switch_default` |
+| Drop the non-negative int32 initializer bound | `TestFlagEnumsRefused/sign_bit` |
+| Ignore operand enum identity | `TestFlagEnumsRefused/cross_enum_left` and `cross_enum_right` |
+| Trust inferred mutable number aliases | `TestFlagEnumsRefused/mutable_alias` |
+| Trust exclusion narrowing into a member slot | `TestFlagEnumsRefused/narrowed_member` |
+| Permit bitwise compound updates with an open number | `TestFlagEnumsRefused/compound_or_number` |
+| Lower a proven unreachable never-default body | `TestEnumNeverDefault` |
+
+Setup reported Go, clang, Node and submodules ready at 1s, build cache warm at
+122s, and total 122s. `nproc` reported 5; the cgroup quota was four CPUs.
+The new fixture counts are:
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak | In regions |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| enums_flags.a | 44 | 44 | 23 | 64 | 11 | 0 |
+| enums_flags_never_default.a | 2 | 2 | 6 | 6 | 2 | 0 |
+| enums_flags_modules/main.a | 9 | 9 | 6 | 12 | 5 | 0 |
+
+Final restored-source validation passed with the commands below. Lowering took
+39.028s, the uncached three-fixture oracle took 2.492s, and counts verification
+took 17.832s. Vet, formatting and whitespace logs were empty. This unit ran the
+full touched lowering package and a filtered oracle, not the full repository
+gate or a compilation of TypeScript's compiler.
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower -count=1 -timeout 30m > /tmp/flag-enums-final-lower.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags' -count=1 -v -timeout 30m > /tmp/flag-enums-final-oracle.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m > /tmp/flag-enums-final-counts.log 2>&1
+go vet ./... > /tmp/flag-enums-final-vet.log 2>&1
+gofmt -l cmd internal > /tmp/flag-enums-final-format.log
+git diff --check > /tmp/flag-enums-final-diff.log
+```

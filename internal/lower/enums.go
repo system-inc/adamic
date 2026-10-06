@@ -316,6 +316,11 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		if ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient) {
 			return l.notYet(node, "an ambient enum without a runtime definition")
 		}
+		for _, member := range node.AsEnumDeclaration().Members.Nodes {
+			if err := l.flagInitializerBound(member.AsEnumMember().Initializer); err != nil {
+				return err
+			}
+		}
 		_, err := l.enumFields(node)
 		return err
 	}
@@ -335,6 +340,12 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		}
 	}
 	if updated != nil && l.checker.GetTypeAtLocation(updated).Flags()&checker.TypeFlagsEnumLike != 0 {
+		if l.flagUpdate(node, updated) {
+			return nil
+		}
+		if l.flagEnum(l.enumIdentity(l.checker.GetTypeAtLocation(updated))) {
+			return l.flagWriteRefusal(node, l.checker.GetTypeAtLocation(updated))
+		}
 		return &Refused{Where: l.program.Where(node), What: "arithmetic assigned back into an enum; the result need not be one of its members", Fix: "assign a declared member, or keep arithmetic results in a number (adamic/enum-members)"}
 	}
 	return nil
@@ -360,6 +371,9 @@ func (l *lowering) enumSwitch(node *ast.Node) error {
 			covered[value.AsLiteralType().Value()] = true
 		}
 	}
+	if l.flagEnum(l.enumIdentity(proven)) {
+		return &Refused{Where: l.program.Where(node), What: "a flag-enum switch without a default", Fix: "add a default for combinations and zero (adamic/enum-flags)"}
+	}
 	members := []*checker.Type{proven}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		members = proven.Types()
@@ -373,4 +387,36 @@ func (l *lowering) enumSwitch(node *ast.Node) error {
 		}
 	}
 	return nil
+}
+
+// A closed enum default is unreachable only when every possible runtime value has a case.
+// This permits the never-default idiom without inventing a machine representation for never.
+func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
+	statement := node.AsSwitchStatement()
+	proven := l.checker.GetTypeAtLocation(statement.Expression)
+	if proven.Flags()&checker.TypeFlagsEnumLike == 0 || l.flagEnum(l.enumIdentity(proven)) {
+		return false
+	}
+	covered := map[any]bool{}
+	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
+		if clause.Kind == ast.KindDefaultClause {
+			continue
+		}
+		test := clause.AsCaseOrDefaultClause().Expression
+		if member := l.enumMember(test); member != nil {
+			covered[l.checker.GetConstantValue(member)] = true
+		} else if value := l.checker.GetTypeAtLocation(test); value.Flags()&checker.TypeFlagsLiteral != 0 {
+			covered[value.AsLiteralType().Value()] = true
+		}
+	}
+	members := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsLiteral == 0 || !covered[member.AsLiteralType().Value()] {
+			return false
+		}
+	}
+	return true
 }

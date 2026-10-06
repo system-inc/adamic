@@ -868,6 +868,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 			}
 		}
 		isDefault := clause.Kind == ast.KindDefaultClause
+		if isDefault && len(tests) == 0 && l.enumDefaultUnreachable(node) {
+			continue
+		}
 		if !isDefault {
 			test, err := l.expression(clause.AsCaseOrDefaultClause().Expression)
 			if err != nil {
