@@ -9,11 +9,12 @@ import (
 )
 
 // keyable reports whether values of a type can be a Map's keys or a Set's elements: strings, numbers
-// and booleans, compared as === compares them (numbers by SameValueZero), and objects, arrays, maps
+// and booleans, plus packed number | undefined, compared as === compares them (numbers by
+// SameValueZero), and objects, arrays, maps
 // and functions, each its own key, compared by identity.
 func keyable(valueType ir.Type) bool {
 	switch valueType {
-	case ir.String, ir.Number, ir.Boolean, ir.Object, ir.Array, ir.Map, ir.Closure:
+	case ir.String, ir.Number, ir.Boolean, ir.MaybeNumber, ir.Object, ir.Array, ir.Map, ir.Closure:
 		return true
 	}
 	return false

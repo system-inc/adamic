@@ -461,8 +461,8 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 // fit makes a value fit where a value of type to goes: a number or a boolean, or undefined, where
-// number | undefined or boolean | undefined goes, since that is two words and they are one. Anything
-// else is left as it is.
+// number | undefined or boolean | undefined goes, since that is two words and they are one. It also
+// unwraps a maybe value the checker narrowed to its present type. Anything else is left as it is.
 func fit(value ir.Expression, to ir.Type) ir.Expression {
 	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
 		return ir.WeakOf{Value: value}
@@ -476,6 +476,9 @@ func fit(value ir.Expression, to ir.Type) ir.Expression {
 		return ir.Undefined{Of: to}
 	}
 	if !to.IsMaybe() || value == nil {
+		if value != nil && value.Type().IsMaybe() && value.Type().Present() == to {
+			return ir.Unwrap{Value: value}
+		}
 		return value
 	}
 	if value.Type() == to.Present() {
