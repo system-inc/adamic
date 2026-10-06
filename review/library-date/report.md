@@ -292,4 +292,3 @@ separately from the native behavior comparisons.
 | built-ins/Date/prototype/toTimeString | 1 | 0 | 1 | 0 | 4 | 6 |
 | built-ins/Date/prototype/toUTCString | 3 | 0 | 2 | 0 | 4 | 9 |
 | built-ins/Date/prototype/valueOf | 0 | 0 | 2 | 0 | 4 | 6 |
-
