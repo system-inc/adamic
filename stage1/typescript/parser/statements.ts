@@ -1051,12 +1051,6 @@ export class Statements {
             this.semicolon();
             return this.make(kind, pos, children);
         }
-        if(this.parser.kind() === 'Identifier' && this.parser.peek() === 'ColonToken') {
-            const name = this.parser.identifier();
-            this.parser.next();
-            const body = this.statement();
-            return this.make('LabeledStatement', pos, [name, body]);
-        }
         const modifiers: number[] = [];
         let async = false;
         while(
@@ -1165,6 +1159,14 @@ export class Statements {
         }
         const tokenStart = this.parser.scanner.start;
         const expression = this.parser.rootExpression();
+        if(this.parser.node(expression).kind === 'Identifier' && this.parser.kind() === 'ColonToken') {
+            if(this.parser.depth() === 0) {
+                this.parser.roots.pop();
+            }
+            this.parser.next();
+            return this.make('LabeledStatement', pos, [expression, this.statement()]);
+        }
+
         this.expressionSemicolon(expression, tokenStart);
         return this.make('ExpressionStatement', pos, [expression]);
     }

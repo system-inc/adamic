@@ -488,3 +488,11 @@ lists now recover in Go's active context, diagnose missing separators with
 opening brace. Enum expressions use Go's allow-in and cleared await/yield
 contexts. Four focused probes and all preceding cases pass in 30.015s;
 cohere passes.
+
+## Continued recovery: contextual keyword labels
+
+The duplicated undefined at input 1499 makes undefined: a recovered label.
+Label recognition now follows expression parsing, as in Go, so contextual
+keywords can label statements and await-context expressions cannot. Label
+names are removed from the port's separate expression-root collection. Four
+focused additions and preceding cases pass in 30.164s; cohere passes.
