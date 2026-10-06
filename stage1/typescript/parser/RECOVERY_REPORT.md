@@ -454,3 +454,13 @@ non-identifier property names. Object and array bindings use Go's delimited
 list recovery and allow-in context, preserving missing commas and invalid
 object separators. Eight focused additions and preceding probes pass in
 28.578s; cohere passes.
+
+## Continued recovery: function declaration binding names
+
+Duplicated function keywords at inputs 1190/1192 now retain a missing binding
+name and diagnostic 1359; non-default functions always parse a binding name,
+while anonymous default exports keep their optional name. Four focused
+additions and preceding probes pass in 29.184s; cohere passes. Its suggested
+logical assignment shorthand is refused by Adamic 0.1, so the modifier flag
+uses a plain if. The continuation reaches input 1236, a namespace missing
+its opening brace.

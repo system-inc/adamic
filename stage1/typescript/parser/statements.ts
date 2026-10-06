@@ -552,8 +552,18 @@ export class Statements {
         if(generator) {
             children.push(this.parser.token());
         }
-        if(this.parser.kind() !== 'OpenParenToken' && this.parser.kind() !== 'LessThanToken') {
-            children.push(this.parser.identifier());
+        let defaulted = false;
+        for(const modifier of prefix) {
+            if(this.parser.node(modifier).kind === 'DefaultKeyword') {
+                defaulted = true;
+            }
+        }
+        if(
+            !defaulted ||
+            this.parser.kind() === 'Identifier' ||
+            (this.parser.kind().endsWith('Keyword') && !reservedKinds.includes(this.parser.kind()))
+        ) {
+            children.push(this.parser.bindingIdentifier());
         }
         const oldAwait = this.parser.getAwait();
         const oldYield = this.parser.getYield();
