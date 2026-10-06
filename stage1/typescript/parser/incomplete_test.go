@@ -78,6 +78,15 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 	}
 	t.Logf("planned all %d compiler files: %d inputs", files, planned)
 	checked := 0
+	start := 0
+	if value := os.Getenv("ADAMIC_RECOVERY_START"); value != "" {
+		start, err = strconv.Atoi(value)
+		if err != nil || start < 0 || start >= planned {
+			t.Fatalf("invalid ADAMIC_RECOVERY_START %q", value)
+		}
+		t.Logf("debug continuation skips first %d inputs; this is not a full corpus gate", start)
+	}
+	position := 0
 	for _, sourcePath := range strings.Fields(string(data)) {
 		source, err := os.ReadFile(sourcePath)
 		if err != nil {
@@ -91,6 +100,10 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		}
 		t.Logf("%s: %d tokens, cutoff stride %d", sourcePath, len(tokens), stride)
 		compare := func(mode string, index int, input []byte) {
+			position++
+			if position <= start {
+				return
+			}
 			path := filepath.Join(artifacts, fmt.Sprintf("%s-%s-%d.ts", filepath.Base(sourcePath), mode, index))
 			if err := os.WriteFile(path, input, 0644); err != nil {
 				t.Fatal(err)
@@ -115,7 +128,14 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 			}
 			checked++
 			if t.Failed() {
-				t.Fatalf("comparison stopped after %d inputs; first failure retained", checked)
+				t.Fatalf("comparison stopped at input %d after checking %d inputs; first failure retained", position, checked)
+			}
+			// Successful artifacts are reproducible from the pin and point selection.
+			// Retain every failed input and both output streams, not gigabytes of successes.
+			for _, suffix := range []string{"", ".go.stdout", ".go.stderr", ".Node.stdout", ".Node.stderr", ".native.stdout", ".native.stderr"} {
+				if err := os.Remove(path + suffix); err != nil {
+					t.Fatal(err)
+				}
 			}
 		}
 		compare("cut", 0, nil)
@@ -138,5 +158,9 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 			compare("duplicate", i+1, duplicated)
 		}
 	}
-	t.Logf("%d compiler files, %d incomplete inputs: Go, Node and sanitized native identical", files, checked)
+	if start != 0 {
+		t.Logf("debug continuation: %d inputs checked, %d skipped; full corpus gate not run", checked, start)
+	} else {
+		t.Logf("%d compiler files, %d incomplete inputs: Go, Node and sanitized native identical", files, checked)
+	}
 }

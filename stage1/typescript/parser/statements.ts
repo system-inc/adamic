@@ -2,6 +2,7 @@
 import { panic } from 'adamic';
 import type { Scanner } from '../scanner/scanner.ts';
 import type { ParseNode } from './nodes.ts';
+import { reservedKinds } from './grammar.ts';
 
 export interface StatementContextInterface {
     readonly scanner: Scanner;
@@ -255,9 +256,8 @@ export class Statements {
         let name = -1;
         let phase = 'Unknown';
         if(
-            this.parser.kind() !== 'StringLiteral' &&
-            this.parser.kind() !== 'AsteriskToken' &&
-            this.parser.kind() !== 'OpenBraceToken'
+            this.parser.kind() === 'Identifier' ||
+            (this.parser.kind().endsWith('Keyword') && !reservedKinds.includes(this.parser.kind()))
         ) {
             name = this.parser.identifier();
         }

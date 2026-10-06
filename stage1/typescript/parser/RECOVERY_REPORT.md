@@ -251,3 +251,17 @@ name. Focused comparison passes in 16.280s across import/export lists,
 arguments, arrays, objects, bindings, classes and function bodies. The wider
 run passes 286 inputs and reaches a duplicated import token at input 287;
 Go leaves that second reserved word for the next import declaration.
+
+## Continued recovery: duplicated imports
+
+Reserved import tokens are no longer consumed as default-import names.
+Import in a primary-expression position is accepted only for calls and
+meta-properties; otherwise it creates a missing expression without advance.
+Focused comparison passes in 16.526s; cohere passes. The wider continuation
+checks inputs 287 through 297 and first fails in binder.ts on a conditional
+expression cut after its question mark.
+
+The harness can resume at an explicitly logged ADAMIC_RECOVERY_START while
+investigating, but reports such runs as partial. The default gate still
+checks every planned input. Successful input/output artifacts are removed;
+failed inputs and both output streams remain saved.

@@ -171,7 +171,10 @@ export class Parser {
                     this.node(id).operator = 'ImportKeyword';
                     return id;
                 }
-                return this.token();
+                if(this.peek() === 'OpenParenToken' || this.peek() === 'LessThanToken') {
+                    return this.token();
+                }
+                return this.missingIdentifier(1109, 'Expression expected.');
             }
             case 'ClassKeyword':
                 return this.classDeclaration(pos, [], true);
@@ -189,7 +192,7 @@ export class Parser {
                 return this.make('ParenthesizedExpression', pos, [expression]);
             }
             default:
-                if(this.kind() === 'Identifier' || this.kind().endsWith('Keyword')) {
+                if(this.bindingIdentifier()) {
                     return this.identifier();
                 }
                 return this.missingIdentifier(1109, 'Expression expected.');
