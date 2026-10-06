@@ -388,7 +388,7 @@ Final commands (each redirected to a file, never piped):
 ```sh
 source /workspace/adamic-tools/env.sh
 ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 ADAMIC_LINT_PROFILE_SNAPSHOTS=/workspace/scratch/lint-perf/baseline:/workspace/scratch/lint-perf/1-scalar-comments:/workspace/scratch/lint-perf/2-position-arrays:/workspace/scratch/lint-perf/2b-position-arrays:/workspace/scratch/lint-perf/3-filled-masks:/workspace/scratch/lint-perf/4-kind-switches:/workspace/scratch/lint-perf/5-kind-dispatch go test ./stage1/cohere/lint -count=1 -v -timeout 30m > /workspace/scratch/lint-perf/final-suite.log 2>&1
-/workspace/scratch/cohere --no-fix --no-cache stage1/cohere/lint/{comments,driver,lint,main,model,unicode,written}.ts > /workspace/scratch/lint-perf/final-cohere.log 2>&1
+/workspace/scratch/cohere --no-fix --no-cache stage1/cohere/lint/{comments,finding,lint,main,messages,settings,unicode}.ts > /workspace/scratch/lint-perf/final-cohere.log 2>&1
 go vet ./... > /workspace/scratch/lint-perf/final-vet.log 2>&1
 go test ./internal/oracle -run '^TestTheOracleCatchesOneByte$' -count=1 -v > /workspace/scratch/lint-perf/filtered-oracle.log 2>&1
 ```
