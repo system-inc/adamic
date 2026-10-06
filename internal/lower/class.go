@@ -343,7 +343,10 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	var object ir.Expression
 	var err error
 	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
-		object = ir.Read{Local: l.this, Of: ir.Object}
+		if err = l.useOfThis(ast.SkipParentheses(receiver)); err == nil {
+			l.touch(l.this)
+			object = ir.Read{Local: l.this, Of: ir.Object}
+		}
 	} else {
 		object, err = l.expression(receiver)
 	}
@@ -509,8 +512,37 @@ func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
 // object of a field it reads or writes: a method it calls, or a function it's handed to, could read a
 // field not set yet.
 func (l *lowering) useOfThis(node *ast.Node) error {
+	path := "this"
+	if node.Kind == ast.KindSuperKeyword {
+		path = "super"
+	}
+	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression {
+		path += "." + parent.Name().Text()
+		if parent.Parent != nil && parent.Parent.Kind == ast.KindCallExpression {
+			path += "(...)"
+		}
+	}
+
 	if l.instance != nil && l.instance.beforeSuper != 0 && node.Pos() < l.instance.beforeSuper {
 		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super(...) before using this"}
+	}
+	// An arrow captures this when it is created, even if its body only reads a field.
+	// Use the outermost arrow's position: nested arrows can run while fields are unset too.
+	var closure *ast.Node
+	for parent := node.Parent; parent != nil; parent = parent.Parent {
+		if parent.Kind == ast.KindArrowFunction {
+			closure = parent
+		}
+		if parent.Kind == ast.KindConstructor || parent.Kind == ast.KindMethodDeclaration || parent.Kind == ast.KindFunctionDeclaration || parent.Kind == ast.KindFunctionExpression {
+			break
+		}
+	}
+	if closure != nil && ((l.unsetUntil != 0 && closure.Pos() < l.unsetUntil) || (l.instance != nil && l.instance.constructing && l.instance.hasDescendants)) {
+		name := "an arrow closure"
+		if parent := closure.Parent; parent != nil && parent.Kind == ast.KindVariableDeclaration {
+			name = "closure " + parent.Name().Text()
+		}
+		return &Refused{Where: l.program.Where(closure), What: "this captured by " + name + " before every field is set", Fix: "create the closure after the fields are set, or pass the value in"}
 	}
 	if l.instance != nil && l.instance.constructing && l.instance.hasDescendants {
 		if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression {
@@ -518,7 +550,7 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 				return nil
 			}
 		}
-		return &Refused{Where: l.program.Where(node), What: "this escaping a base constructor before derived fields are initialized", Fix: "use this only to read or write initialized base fields; call methods and publish the object after construction"}
+		return &Refused{Where: l.program.Where(node), What: path + " escaping a base constructor before derived fields are initialized", Fix: "use this only to read or write initialized base fields; call methods and publish the object after construction"}
 	}
 	if l.unsetUntil == 0 || node.Pos() >= l.unsetUntil {
 		return nil
@@ -528,5 +560,5 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 			return nil
 		}
 	}
-	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}
+	return &Refused{Where: l.program.Where(node), What: path + " escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}
 }
