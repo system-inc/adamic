@@ -1,0 +1,10 @@
+// Later sources overwrite earlier ones. A field no source mentions stays, and the key order stays the target's.
+const target = { b: 1, '10': 0, a: 2, '2': 3, keep: 7 };
+const first = { a: 8, '2': 9 };
+const second = { '10': 10, b: 4 };
+const third = { a: 5, b: 6 };
+const result = Object.assign(target, first, second, third);
+console.log(`${Object.is(result, target)}`);
+console.log(Object.keys(target).join('|'));
+console.log(Object.values(target).join('|'));
+console.log(Object.keys(first).join('|'));

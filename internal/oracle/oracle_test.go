@@ -43,6 +43,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/library_object_assign.a", true, false},
 	{"internal/oracle/testdata/library_object_freeze.a", true, false},
 	{"internal/oracle/testdata/library_object_freeze_write.a", true, false},
+	{"internal/oracle/testdata/library_object_order.a", true, false},
+	{"internal/oracle/testdata/library_object_assign_fields.a", true, false},
+	{"internal/oracle/testdata/library_object_freeze_alias.a", true, false},
+	{"internal/oracle/testdata/library_object_freeze_assign.a", true, false},
+	{"internal/oracle/testdata/library_object_same.a", true, false},
+	{"internal/oracle/testdata/library_object_own.a", true, false},
 	{"dedication/dedication.a", true, false},
 	// October 6 coverage: deeper dispatch, field order, ownership and subclass holders.
 	{"internal/oracle/testdata/class_oct6_deep.a", true, false},
