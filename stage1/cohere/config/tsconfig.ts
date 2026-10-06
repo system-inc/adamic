@@ -1,5 +1,5 @@
 // ReadProjectConfig's file discovery and extends. Source files are never decoded by a host bridge.
-import { fileStatus, panic, readDirectory, readTextFile } from 'adamic';
+import { fileStatus, panic, readDirectory, readTextFile, realPath } from 'adamic';
 import { clean, dir } from '../gitignore/path.ts';
 import { compareCodePoints, join } from '../formatfiles/golang.ts';
 import { JsonDocument, parseJson } from './json.ts';
@@ -127,8 +127,10 @@ function includedIndex(path: string, includes: readonly TsGlob[], excludes: read
 	return -1;
 }
 function visit(path: string, includes: readonly TsGlob[], excludes: readonly TsGlob[], extensions: readonly string[], buckets: readonly Bucket[], visited: Map<string, boolean>): string {
-	if (visited.has(path)) { return ''; }
-	visited.set(path, true);
+	const resolved = realPath(path);
+	const canonical = resolved.kind === 'Ok' ? resolved.path : path;
+	if (visited.has(canonical)) { return ''; }
+	visited.set(canonical, true);
 	const entries = readDirectory(path);
 	if (entries.kind === 'Error') { return ''; }
 	const directories: string[] = [];
@@ -138,17 +140,7 @@ function visit(path: string, includes: readonly TsGlob[], excludes: readonly TsG
 		if (status.kind === 'Error') { continue; }
 		if (status.type === 'directory') {
 			if (includedIndex(absolute, includes, excludes, true) < 0) { continue; }
-			if (status.symbolicLink) {
-				// No matching extension and no subdirectory means this link cannot affect file output or
-				// a later visit to its target. Otherwise canonical visitation requires the missing API.
-				const linked = readDirectory(absolute);
-				let canOffer = false;
-				if (linked.kind === 'Ok') {
-					for (const entry of linked.names) { const child = fileStatus(join(absolute, entry)); if (child.kind === 'Ok' && (child.type === 'directory' || (child.type === 'file' && extensions.some((extension) => entry.endsWith(extension))))) { canOffer = true; } }
-				}
-				if (canOffer) { return `stage1 tsconfig directory symlink needs realpath: ${absolute}`; }
-				continue;
-			}
+
 			directories.push(name);
 		} else if (status.type === 'file' && extensions.some((extension) => name.endsWith(extension))) {
 			const index = includedIndex(absolute, includes, excludes, false);
