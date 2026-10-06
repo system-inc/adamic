@@ -720,6 +720,16 @@ type (
 		Depth     int
 	}
 
+	// ParallelMap is structured fork-join; the callback takes item then index.
+	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
+	ParallelMap struct {
+		Items, Work Expression
+		// Shared includes immutable reference globals read by the task's call graph.
+		// They are marking roots, not extra evaluations in the sequential witness.
+		Shared []Expression
+		Result Type
+	}
+
 	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
 	// Node's readFileSync(path, 'utf8') decodes them, in { kind: 'Ok', text }, or what went wrong in
 	// { kind: 'Error', message }, a message in Adamic's own words.
@@ -1156,3 +1166,5 @@ func (p *Program) HasInheritance() bool {
 	}
 	return false
 }
+
+func (ParallelMap) Type() Type { return Array }

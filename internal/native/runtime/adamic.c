@@ -7,6 +7,7 @@
 #include "count.h"
 
 #include <errno.h>
+#include <pthread.h>
 #include <signal.h>
 #include <stdatomic.h>
 #include <stdlib.h>
@@ -57,6 +58,8 @@ static int output_mode;
 
 // broken is the stream a write to has failed, from then on dropped; 0 while none has.
 static bool broken[3];
+static pthread_mutex_t output_lock = PTHREAD_MUTEX_INITIALIZER;
+static atomic_flag panicking = ATOMIC_FLAG_INIT;
 
 static void output_failed(enum adamic_stream stream) {
 	broken[stream] = true;
@@ -99,7 +102,9 @@ static void buffer(const char *bytes, size_t length) {
 }
 
 void adamic_output_flush(void) {
+	pthread_mutex_lock(&output_lock);
 	flush();
+	pthread_mutex_unlock(&output_lock);
 }
 
 // stopped is the handler for SIGTERM, SIGINT and SIGHUP: the buffer's whole lines go out, and the
@@ -163,6 +168,7 @@ void adamic_start(int count, char **values) {
 }
 
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
+	pthread_mutex_lock(&output_lock);
 	if (output_mode == 0) {
 		output_mode = isatty(adamic_stdout) ? 2 : 1;
 		atexit(finish);
@@ -180,9 +186,15 @@ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
 	if (stream == adamic_stdout && output_mode == 2) {
 		flush();
 	}
+	pthread_mutex_unlock(&output_lock);
 }
 
 _Noreturn void adamic_panic(const char *message, size_t length) {
+	// Losing panics must not terminate the process before the winner finishes its one message.
+	if (atomic_flag_test_and_set_explicit(&panicking, memory_order_relaxed)) {
+		for (;;) { pause(); }
+	}
+	pthread_mutex_lock(&output_lock);
 	static const char prefix[] = "adamic: panic: ";
 	// Everything the program printed comes first, as on Node.
 	flush();

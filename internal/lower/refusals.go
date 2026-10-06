@@ -58,6 +58,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		line, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())
 		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error"}
 	}
+	if err := l.parallelPreflight(module); err != nil {
+		return err
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {

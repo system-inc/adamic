@@ -1409,6 +1409,9 @@ func (a *analysis) value(expression ir.Expression) value {
 			operands = append(operands, a.value(argument))
 		}
 		return a.call(operands, expression.Returns)
+	case ir.ParallelMap:
+		// Tasks have a separate effect proof; results may alias shared inputs.
+		return a.call([]value{a.value(expression.Items), a.value(expression.Work)}, ir.Array)
 	case ir.ArrayMap:
 		return a.call([]value{a.value(expression.Array), a.value(expression.Callback)}, ir.Array)
 	case ir.ArrayVisit:
