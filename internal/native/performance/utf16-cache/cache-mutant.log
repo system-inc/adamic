@@ -12,7 +12,7 @@
             #4 0x7f9b3591dca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
             #5 0x7f9b3591dd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
             #6 0x5633a4a44440 in _start (/tmp/adamic-gate/TestStringIndexCacheStatesMatchNode3816047289/001/cache-states+0x40440)
-        
+
         0x5633a55412d0 is located 48 bytes before global variable 'table_count' defined in '/tmp/adamic-gate/adamic-build-731565303/weak.c:39' (0x5633a5541300) of size 8
         0x5633a55412d0 is located 15 bytes after global variable 'adamic_literal_mark' defined in '/tmp/adamic-gate/adamic-build-731565303/string_index.c:94' (0x5633a55412c0) of size 1
           'adamic_literal_mark' is ascii string ''
@@ -31,7 +31,7 @@
           0x5633a5541500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
         Shadow byte legend (one shadow byte represents 8 application bytes):
           Addressable:           00
-          Partially addressable: 01 02 03 04 05 06 07 
+          Partially addressable: 01 02 03 04 05 06 07
           Heap left redzone:       fa
           Freed heap region:       fd
           Stack left redzone:      f1
