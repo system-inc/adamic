@@ -1629,7 +1629,7 @@ func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Ki
 		ir.Declare{Local: arrayLocal, Value: array},
 		ir.Declare{Local: indexLocal, Value: index},
 		ir.Declare{Local: currentLocal, Value: current},
-		ir.SetIndex{Array: arrayRead, Index: indexRead, Value: updated, Element: ir.Number},
+		ir.SetIndex{Array: arrayRead, Index: indexRead, Value: updated, Element: ir.Number, Site: l.writeSite(access.Expression)},
 	}}}, nil
 }
 
