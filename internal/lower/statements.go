@@ -43,7 +43,11 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		if l.function != nil {
 			return nil, l.notYet(node, "a class inside a function")
 		}
-		// Lowered at each instantiation, by instantiate.
+		// The static receiver becomes available when the declaration runs, not when it is lowered.
+		if local, exists := l.locals[l.symbol(node.Name())]; exists {
+			return []ir.Statement{ir.Declare{Local: local, Value: ir.Undefined{Of: ir.Object}}}, nil
+		}
+		// Instance layouts are lowered at each instantiation, by instantiate.
 		return nil, nil
 	case ast.KindReturnStatement:
 		return l.returnStatement(node)

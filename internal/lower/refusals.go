@@ -100,7 +100,22 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		if node.Kind == ast.KindPropertyAccessExpression {
+			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) > 0 {
+				field := symbol.Declarations[0]
+				if field.Kind == ast.KindPropertyDeclaration && ast.HasSyntacticModifier(field, ast.ModifierFlagsStatic) {
+					found = l.notYet(node, staticFieldName(field))
+					return true
+				}
+			}
+		}
 		if node.Kind == ast.KindClassDeclaration {
+			for _, member := range node.Members() {
+				if member.Kind == ast.KindPropertyDeclaration && ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+					found = l.notYet(member, staticFieldName(member))
+					return true
+				}
+			}
 			if err := l.checkOverrides(node, l.checker.GetTypeAtLocation(node.Name())); err != nil {
 				found = err
 				return true
@@ -137,4 +152,12 @@ func scannedText(node *ast.Node) string {
 		return "this"
 	}
 	return node.Text()
+}
+
+func staticFieldName(field *ast.Node) string {
+	name := "static field "
+	if field.Parent != nil && field.Parent.Name() != nil {
+		name += field.Parent.Name().Text() + "."
+	}
+	return name + scannedText(field.Name())
 }

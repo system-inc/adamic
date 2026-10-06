@@ -378,6 +378,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
 		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
 	case ast.KindIdentifier:
+		if symbol := l.symbol(node); symbol != nil && len(symbol.Declarations) == 1 && l.staticClassAlias(symbol.Declarations[0]) {
+			return nil, l.notYet(node, "reading a class constructor or class alias as a runtime value")
+		}
+		if proven := l.checker.GetTypeAtLocation(node); proven.Symbol() != nil && proven.Symbol().Flags&ast.SymbolFlagsClass != 0 && !isClassInstance(proven) {
+			return nil, l.notYet(node, "reading a class constructor or class alias as a runtime value")
+		}
 		if value, known, err := l.libraryGlobalValue(node); known {
 			return value, err
 		}

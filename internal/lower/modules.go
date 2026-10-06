@@ -96,6 +96,14 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.classes = map[*ast.Symbol]*ast.Node{}
 			}
 			l.classes[l.symbol(statement.Name())] = statement
+			if l.classHasStaticMethods(statement) {
+				local, err := l.declareLocal(statement.Name())
+				if err != nil {
+					return err
+				}
+				l.result.Locals[local].Global = true
+				l.noteLocal(local, l.checker.GetTypeOfSymbol(l.symbol(statement.Name())), statement.Name())
+			}
 		case ast.KindFunctionDeclaration:
 			symbol := l.symbol(statement.Name())
 			if len(statement.TypeParameters()) > 0 {

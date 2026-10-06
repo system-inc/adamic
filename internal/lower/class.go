@@ -63,6 +63,9 @@ type template struct {
 func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, where *ast.Node) (*instance, error) {
 	// Box<T> inside Maker<Node> is a Box<Node>: what it is, for the cycle finder.
 	classType = l.concrete(classType)
+	if classType == nil || !isClassInstance(classType) {
+		return nil, l.notYet(where, "instantiating a class from its constructor type instead of an instance type")
+	}
 	if view := l.classView(classType, declaration); view != nil {
 		classType = view
 	}
@@ -158,7 +161,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 			if !ast.IsIdentifier(member.Name()) {
 				return nil, l.notYet(member, "a method with a computed name")
 			}
-			methodName := member.Name().Text()
+			methodName := classMethodKey(member)
 			lowered.methods[methodName] = len(l.result.Functions)
 			lowered.static[methodName] = ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic)
 			if !lowered.static[methodName] {
@@ -203,8 +206,16 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		if member.Kind != ast.KindMethodDeclaration {
 			continue
 		}
-		method := lowered.methods[member.Name().Text()]
-		if err := l.signature(method, member, l.thisLocal(method)); err != nil {
+		method := lowered.methods[classMethodKey(member)]
+		this := -1
+		if lowered.static[classMethodKey(member)] {
+			if containsThis(member) {
+				return nil, l.notYet(member, "this in static method "+declaration.Name().Text()+"."+member.Name().Text()+" (the class constructor has no runtime value yet)")
+			}
+		} else {
+			this = l.thisLocal(method)
+		}
+		if err := l.signature(method, member, this); err != nil {
 			return nil, err
 		}
 	}
@@ -215,7 +226,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		if member.Kind != ast.KindMethodDeclaration {
 			continue
 		}
-		method := lowered.methods[member.Name().Text()]
+		method := lowered.methods[classMethodKey(member)]
 		if member.Body() == nil {
 			continue
 		}
@@ -308,11 +319,29 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		return l.call(node)
 	}
 	class := method.Declarations[0].Parent
+	if class == nil || class.Name() == nil {
+		return nil, l.notYet(node, "a method of an anonymous class")
+	}
 	declaration, isClass := l.classes[l.symbol(class.Name())]
 	if !isClass {
 		return nil, l.notYet(node, "a method of a class stage 0 doesn't have")
 	}
 	receiver := callee.AsPropertyAccessExpression().Expression
+	if ast.HasSyntacticModifier(method.Declarations[0], ast.ModifierFlagsStatic) {
+		if len(declaration.TypeParameters()) > 0 {
+			return nil, l.notYet(node, "static method "+declaration.Name().Text()+"."+callee.Name().Text()+" on a generic class (static methods need lowering once per declaration)")
+		}
+		if l.staticClassReceiver(receiver) == nil {
+			return nil, l.notYet(receiver, "a static method receiver other than a class name or a const class alias")
+		}
+		// typeof Class is a constructor, not an instance type. Statics have no this argument.
+		lowered, err := l.instantiate(declaration, l.checker.GetDeclaredTypeOfSymbol(l.symbol(declaration.Name())), callee)
+		if err != nil {
+			return nil, err
+		}
+		function := lowered.methods[classMethodKey(method.Declarations[0])]
+		return l.staticAliasCall(node, ast.SkipParentheses(receiver), function)
+	}
 	if receiverType := l.checker.GetTypeAtLocation(receiver); len(l.definedMembers(receiverType)) > 1 {
 		return nil, l.notYet(receiver, "a method call through a union of class types; narrow with instanceof first")
 	}
@@ -529,4 +558,89 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 		}
 	}
 	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}
+}
+
+// staticClassReceiver resolves class names and const aliases. Runtime alias reads still evaluate
+// their initialization marker, so a call across functions preserves the temporal dead zone.
+func (l *lowering) staticClassReceiver(node *ast.Node) *ast.Node {
+	node = ast.SkipParentheses(node)
+	if !ast.IsIdentifier(node) {
+		return nil
+	}
+	symbol := l.symbol(node)
+	if declaration := l.classes[symbol]; declaration != nil {
+		return declaration
+	}
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return nil
+	}
+	alias := symbol.Declarations[0]
+	if alias.Kind != ast.KindVariableDeclaration || alias.Parent.Flags&ast.NodeFlagsConst == 0 || alias.AsVariableDeclaration().Initializer == nil {
+		return nil
+	}
+	return l.staticClassReceiver(alias.AsVariableDeclaration().Initializer)
+}
+
+// staticAliasCall evaluates the class or alias before the arguments, including its initialization check.
+// The forwarder discards that marker and calls the ordinary static function without a receiver.
+func (l *lowering) staticAliasCall(node, receiver *ast.Node, target int) (ir.Expression, error) {
+	local, known := l.local(receiver)
+	if !known {
+		return nil, l.notYet(receiver, "a class alias used before its declaration")
+	}
+	arguments := []ir.Expression{ir.Read{Local: local, Of: ir.Object, Checked: l.checked(local)}}
+	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+		value, err := l.expression(argument)
+		if err != nil {
+			return nil, err
+		}
+		arguments = append(arguments, value)
+	}
+	index := len(l.result.Functions)
+	callee := l.result.Functions[target]
+	forwarder := ir.Function{Name: callee.Name + "_alias", Returns: callee.Returns}
+	marker := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "classAlias", Type: ir.Object, Function: index})
+	forwarder.Parameters = append(forwarder.Parameters, marker)
+	forwarded := []ir.Expression{}
+	for _, parameter := range callee.Parameters {
+		original := l.result.Locals[parameter]
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: original.Name, Type: original.Type, Function: index})
+		forwarder.Parameters = append(forwarder.Parameters, local)
+		forwarded = append(forwarded, ir.Read{Local: local, Of: original.Type})
+	}
+	call := ir.Call{Function: target, Arguments: forwarded, Returns: callee.Returns}
+	if callee.Returns == 0 {
+		forwarder.Body = []ir.Statement{ir.Evaluate{Value: call}}
+	} else {
+		forwarder.Body = []ir.Statement{ir.Return{Value: call}}
+	}
+	l.result.Functions = append(l.result.Functions, forwarder)
+	return ir.Call{Function: index, Arguments: arguments, Returns: callee.Returns}, nil
+}
+
+// Static and instance methods may share a source name, but never a function or dispatch slot.
+func classMethodKey(method *ast.Node) string {
+	if ast.HasSyntacticModifier(method, ast.ModifierFlagsStatic) {
+		return "static:" + method.Name().Text()
+	}
+	return method.Name().Text()
+}
+
+// These declarations hold only an initialization marker; ordinary runtime reads are refused,
+// including reads through a wider constructor interface that has lost the class's type symbol.
+func (l *lowering) staticClassAlias(declaration *ast.Node) bool {
+	return declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst != 0 && declaration.AsVariableDeclaration().Initializer != nil && l.staticClassReceiver(declaration.AsVariableDeclaration().Initializer) != nil
+}
+
+// Only classes with static methods need a runtime initialization marker for static calls.
+func (l *lowering) classHasStaticMethods(declaration *ast.Node) bool {
+	constructor := l.checker.GetTypeOfSymbol(l.symbol(declaration.Name()))
+	for _, property := range l.checker.GetPropertiesOfType(constructor) {
+		if property.Flags&ast.SymbolFlagsMethod != 0 {
+			return true
+		}
+	}
+	return false
 }
