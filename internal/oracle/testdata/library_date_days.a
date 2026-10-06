@@ -40,15 +40,12 @@ function visit(year: number, month: number, day: number, hour: number, minute: n
         console.log(`bad ${year} ${month} ${day} ${hour} ${minute} ${second} ${milli} ${date.getUTCFullYear()} ${date.getUTCMonth()} ${date.getUTCDate()} ${date.getUTCHours()} ${iso}`);
     }
 }
-// The full 4001-year sweep lives in date_sweeps/library_date_days.a.
-// Flow records each executed point in memory, so this fixture samples the same
-// branches, century rules and boundaries without a billion-event trace.
-for (const year of [-1000, -999, -800, -400, -100, -4, -1, 0, 1, 4, 99, 100, 400, 1600, 1700, 1800, 1900, 1969, 1970, 1999, 2000, 2001, 2100, 2400, 3000]) {
+for (let year = -1000; year <= 3000; year++) {
     hashA = 0;
     hashB = 0;
     for (let month = 0; month < 12; month++) {
         const last = daysIn(year, month);
-        for (const day of [1, 15, last]) {
+        for (let day = 1; day <= last; day++) {
             visit(year, month, day, 0, 0, 0, 0);
             visit(year, month, day, 12, 34, 56, 789);
             visit(year, month, day, 23, 59, 59, 999);
