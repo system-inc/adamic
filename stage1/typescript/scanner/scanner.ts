@@ -62,7 +62,12 @@ export class Scanner {
         this.text = text;
     }
     code(offset = 0): number {
-        return this.text.codePointAt(this.pos + offset) ?? -1;
+        const unit = this.text.charCodeAt(this.pos + offset);
+        // Most reads need one BMP unit. Only a high surrogate can start a pair.
+        if(unit >= 0xd800 && unit <= 0xdbff) {
+            return this.text.codePointAt(this.pos + offset) ?? -1;
+        }
+        return Number.isNaN(unit) ? -1 : unit;
     }
     advance(code: number): void {
         this.pos += code > 0xffff ? 2 : 1;
