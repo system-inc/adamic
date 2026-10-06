@@ -516,8 +516,15 @@ export class Statements {
             this.parser.expect('CloseBraceToken');
             children.push(this.make('ModuleBlock', start, body));
         }
-        else {
+        else if(
+            keyword === 'GlobalKeyword' ||
+            this.parser.node(children[prefix.length] ?? panic('missing module name')).kind === 'StringLiteral'
+        ) {
             this.semicolon();
+        }
+        else {
+            this.parser.expect('OpenBraceToken');
+            children.push(this.make('ModuleBlock', this.parser.scanner.fullStart));
         }
         const id = this.make('ModuleDeclaration', pos, children);
         this.parser.node(id).operator = keyword;

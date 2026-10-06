@@ -464,3 +464,10 @@ additions and preceding probes pass in 29.184s; cohere passes. Its suggested
 logical assignment shorthand is refused by Adamic 0.1, so the modifier flag
 uses a plain if. The continuation reaches input 1236, a namespace missing
 its opening brace.
+
+## Continued recovery: missing namespace blocks
+
+A namespace cut after its name (input 1236) now retains an empty ModuleBlock
+and the missing-opening-brace diagnostic. Nested dotted namespaces use the
+same recovery; ambient external modules retain their allowed semicolon.
+Four focused additions and all preceding probes pass in 30.714s; cohere passes.
