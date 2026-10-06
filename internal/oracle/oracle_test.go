@@ -238,6 +238,13 @@ var fixtures = []struct {
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
 	// was moved or spread.
 	{"internal/oracle/testdata/move_throw.a", true, false},
+	// An assignment that throws never gives its variable a value, so the statement before it can't
+	// take that variable's old value while a catch, a finally or the code after a swallowing catch
+	// reads it; and a field or element write whose value throws.
+	{"internal/oracle/testdata/throw_keeps_old_value.a", true, false},
+	{"internal/oracle/testdata/throw_keeps_old_value_variants.a", true, false},
+	{"internal/oracle/testdata/throw_in_writes.a", true, false},
+	{"internal/oracle/testdata/throw_global_move.a", true, false},
 	// Reviewer R's round 8b: a spread of a value that may be undefined is {} with the literal's fields.
 	{"internal/oracle/testdata/spread_undefined.a", true, false},
 	// A read lent without a count, beside a call that reassigns what was read.
