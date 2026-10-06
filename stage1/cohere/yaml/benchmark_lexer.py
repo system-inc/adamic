@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Time complete lexer drivers; every measured output must equal Go's bytes."""
+"""Time complete YAML layer drivers; every measured output must equal Go's bytes."""
 import argparse
 from pathlib import Path
 import statistics
@@ -9,18 +9,20 @@ import time
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('artifacts', type=Path)
 parser.add_argument('library', type=Path)
+parser.add_argument('--layer', choices=['lexer', 'scalar'], default='lexer')
 parser.add_argument('--rounds', type=int, default=5)
 args = parser.parse_args()
 artifacts = args.artifacts.resolve()
 root = Path(__file__).resolve().parents[3]
-cases = str(artifacts / 'lexer-cases.txt')
-expected = (artifacts / 'lexer-expected.txt').read_bytes()
-count = (artifacts / 'lexer-cases.txt').read_bytes().count(b'\n')
+layer = args.layer
+cases = str(artifacts / f'{layer}-cases.txt')
+expected = (artifacts / f'{layer}-expected.txt').read_bytes()
+count = (artifacts / f'{layer}-cases.txt').read_bytes().count(b'\n')
 commands = {
-    'native': [str(artifacts / 'native-lexer'), cases],
-    'Node source': ['node', '--disable-warning=ExperimentalWarning', str(root / 'oracle/node.mjs'), str(root / 'stage1/cohere/yaml/lex_main.ts'), cases],
-    'Go': [str(artifacts / 'go-lexer'), cases],
-    'yaml 2.9.0': ['node', str(root / 'stage1/cohere/yaml/testdata/lexer_library.mjs'), str(args.library.resolve()), cases],
+    'native': [str(artifacts / f'native-{layer}'), cases],
+    'Node source': ['node', '--disable-warning=ExperimentalWarning', str(root / 'oracle/node.mjs'), str(root / f'stage1/cohere/yaml/{"lex" if layer == "lexer" else layer}_main.ts'), cases],
+    'Go': [str(artifacts / f'go-{layer}'), cases],
+    'yaml 2.9.0': ['node', str(root / f'stage1/cohere/yaml/testdata/{layer}_library.mjs'), str(args.library.resolve()), cases],
 }
 samples = {name: [] for name in commands}
 for round_number in range(args.rounds):
@@ -37,4 +39,4 @@ for round_number in range(args.rounds):
         print(f'round {round_number + 1} {name}: {elapsed:.6f}s, {count / elapsed:.2f} texts/s; exact Go bytes', flush=True)
 for name, times in samples.items():
     print(f'{name}: median {count / statistics.median(times):.2f} texts/s; seconds {times}')
-print(f'{count} lexical cases; {len(expected)} answer bytes; startup, input and output included')
+print(f'{count} {layer} cases; {len(expected)} answer bytes; startup, input and output included')

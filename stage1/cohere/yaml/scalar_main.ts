@@ -1,0 +1,77 @@
+// Resolve every scalar in the CST, including invalid inputs, under both root contexts.
+import { panic, programArguments, readTextFile } from 'adamic';
+import { CSTParser } from './cstParser.ts';
+import { ScalarResolver } from './scalar.ts';
+function unescaped(text: string): string {
+    const parts: string[] = [];
+    let start = 0;
+    for(let index = 0; index < text.length; index++) {
+        if(text.slice(index, index + 1) !== '\\') continue;
+        parts.push(text.slice(start, index));
+        index++;
+        const character = text.slice(index, index + 1);
+        parts.push(character === 'n' ? '\n' : character === 'r' ? '\r' : character === 't' ? '\t' : character);
+        start = index + 1;
+    }
+    parts.push(text.slice(start));
+    return parts.join('');
+}
+function hex(text: string): string {
+    const parts: string[] = [];
+    for(let index = 0; index < text.length; index++) parts.push(text.charCodeAt(index).toString(16).padStart(4, '0'));
+    return parts.join('');
+}
+class ScalarOutline {
+    parser: CSTParser;
+    resolver: ScalarResolver;
+    constructor(parser: CSTParser) {
+        this.parser = parser;
+        this.resolver = new ScalarResolver(parser);
+    }
+    visit(index: number): void {
+        if(index < 0) return;
+        const token = this.parser.get(index);
+        if(
+            token.type === 'scalar' ||
+            token.type === 'single-quoted-scalar' ||
+            token.type === 'double-quoted-scalar' ||
+            token.type === 'block-scalar'
+        ) {
+            for(const atRoot of [true, false]) {
+                const resolved =
+                    token.type === 'block-scalar' ? this.resolver.block(token, atRoot) : this.resolver.flow(token);
+                const errors: string[] = [];
+                for(const error of resolved.errors)
+                    errors.push(`${error.start},${error.end},${error.code},${hex(error.message)}`);
+                console.log(
+                    `${token.type}|${token.offset}|${atRoot ? 1 : 0}|${hex(resolved.value)}|${resolved.type}|${resolved.range.join(',')}|${hex(resolved.comment)}|${errors.join(';')}`,
+                );
+            }
+        }
+        this.visit(token.value);
+        for(const item of token.items) {
+            this.visit(item.key);
+            this.visit(item.value);
+        }
+    }
+}
+const path = programArguments()[0] ?? panic('usage: scalar_main.ts <cases>');
+const read = readTextFile(path);
+if(read.kind === 'Error') panic(read.message);
+let number = 0;
+for(const line of read.text.split('\n')) {
+    if(line === '') continue;
+    const tab = line.indexOf('\t');
+    const size = Number(line.slice(0, tab));
+    const text = unescaped(line.slice(tab + 1));
+    const parser = new CSTParser();
+    console.log(`case ${number}`);
+    number++;
+    if(size === 0) parser.parse(text);
+    else {
+        for(let start = 0; start < text.length; start += size) parser.parse(text.slice(start, start + size), true);
+        parser.parse('', false);
+    }
+    const writer = new ScalarOutline(parser);
+    for(const root of parser.roots) writer.visit(root);
+}

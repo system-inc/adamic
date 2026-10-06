@@ -1,10 +1,91 @@
-# YAML port: lexer and CST checkpoints
+# YAML port: lexer, CST and scalar checkpoints
 
-The Adamic lexer, CST parser, and their comparison drivers are implemented.
-All 36 repository files and 8,696 generated/chunked cases match Go byte for byte.
+The Adamic lexer, CST parser, scalar resolver and comparison drivers are implemented.
+All 36 repository files and generated cases match Go, with 9,272 scalar cases.
 Native sanitizers, Node source, emitted JavaScript and yaml 2.9.0 all agree.
-Six parser-layer mutants are caught on native and Node; four stage 0 gaps have proving programs.
-Composition, unist conversion, the printer and formatting driver remain unfinished.
+Nine port mutants are caught; eight compiler refusals and one runtime bug have proving programs.
+Document composition, unist conversion, the printer and formatting driver remain unfinished.
+
+## Green scalar step
+
+`scalar.ts` resolves plain, single-quoted, double-quoted, literal and folded
+scalars. Its supporting classes have separate files. Resolution preserves
+UTF-16 values, lone surrogates from escapes, CRLF behavior, indentation,
+chomping, comments, all three range positions, and exact error codes, messages
+and positions. `scalar_main.ts` walks each CST and resolves scalars under both
+root contexts. This is a comparison driver, not a formatter.
+
+The 8,732 parser inputs plus 540 targeted scalar texts produced 8,415,462
+identical answer bytes on Go, native with ASan/UBSan/LeakSanitizer, source Node,
+emitted JavaScript and original yaml 2.9.0. The targeted cases include every
+escape, invalid hex and code points, lone surrogates, folded whitespace,
+header permutations, more-indented content, blank lines and all chomping modes.
+The focused suite passed in 28.285s. The complete lexer/CST/scalar/gap/mutant
+package passed in 68.537s; its log is [all parser layers](audit/parser-layers-suite.log). Cohere passed 276 rules on seven files;
+`go vet ./stage1/cohere/yaml` passed.
+
+Three further mutants compile, exit zero and have empty stderr on native and
+Node. Only exact answer comparison catches them:
+
+| Mutation | First differing output byte |
+| --- | ---: |
+| Escaped line feed becomes carriage return | 1431265 |
+| Strip chomping adds a final newline | 1390653 |
+| Flow line break becomes newline rather than space | 1395121 |
+
+Additional compiler gap programs, held by `TestLexerGaps`:
+
+| Program | Node stdout | Observed `lower.NotYet` | Workaround |
+| --- | --- | --- | --- |
+| [stringFallback.ts](gaps/stringFallback.ts) | one space | `a BinaryExpression with a string and a string` | Explicit empty-string comparison |
+| [valuePresence.ts](gaps/valuePresence.ts) | `false` | `a PrefixUnaryExpression on a value` | Explicit undefined comparison |
+| [valueConjunction.ts](gaps/valueConjunction.ts) | `true` | `a BinaryExpression with a value and a boolean` | Separate presence and value branches |
+| [multiplePush.ts](gaps/multiplePush.ts) | `2` | `push with other than one value` | Push one value per call |
+
+### Native runtime gap
+
+[sharedSliceAppend.ts](gaps/sharedSliceAppend.ts) is a successful compilation
+with wrong behavior, not a refusal. Node prints `a\nx\n`; release native prints
+`x\nx\n`. A second argument selects a slice ending at its owner's end, and
+ASan reports `heap-buffer-overflow`. `TestSharedSliceAppendGap` holds both
+observations. The initial scalar comparison independently caught the overflow.
+
+Observation: a local append to a long shared string slice modifies the owner's
+bytes. Inspection suggests `string_append.c` subtracts the slice length from
+its zero capacity before checking available capacity, allowing unsigned
+underflow. No compiler or runtime file was edited. The port avoids this path:
+flow folding collects string pieces in an owned array and joins them once.
+The full scalar comparison passes with that workaround. Updating main's runtime
+should close the proving test and allow reconsidering the workaround.
+
+### Scalar driver throughput
+
+Five interleaved fresh-process rounds. Every measured answer equals Go, with
+zero exit and empty stderr. Startup, reading, chunked CST parsing, resolving
+both contexts and writing 8,415,462 answer bytes are included; compilation is
+excluded. These numbers do not measure the unfinished formatter.
+
+| Driver | Median texts/s |
+| --- | ---: |
+| Native release | 6780.09 |
+| Port source on Node | 12923.48 |
+| Go cohere | 22352.18 |
+| Original yaml 2.9.0 on Node | 9123.67 |
+
+Native is 3.30 times slower than Go and 1.91 times slower than source Node.
+Go uses buffered output; the port uses `console.log`.
+
+```sh
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library ADAMIC_YAML_ARTIFACTS=/tmp/stage1-yaml-artifacts go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run 'TestScalar|TestSharedSliceAppendGap|TestLexerGaps' > /tmp/stage1-yaml-scalars-final.log 2>&1
+go run ./cmd/adamic build stage1/cohere/yaml/scalar_main.ts -o /tmp/stage1-yaml-artifacts/native-scalar > /tmp/stage1-yaml-scalar-release-build.log 2>&1
+python3 stage1/cohere/yaml/benchmark_lexer.py /tmp/stage1-yaml-artifacts /tmp/stage1-yaml-library --layer scalar > /tmp/stage1-yaml-scalar-timing.log 2>&1
+```
+
+The Go test overlay adds an adapter to an unchanged Go source snapshot, calling
+cohere's actual private scalar resolvers. The original library oracle imports
+its private resolver modules at the installed pinned path; no port code is
+shared with either oracle. Logs: [suite](audit/scalar-suite.log),
+[throughput](audit/scalar-timing.log), [lint](audit/scalar-lint.log).
 
 ## Green CST step
 
