@@ -698,6 +698,26 @@ It's marked like a borrowed parameter, and reuse already refuses those.
 
 Each probe must keep its count (be refused borrowing). A mutant that drops each rule from the list must fail the probe it guards, by ASan, the leak check, or stdout for probe 7.
 
+**Built** (`element_borrow.go`). The plan runs before reuse's, marks each borrowing variable `Borrowed`, and the declaration is emitted as the element itself with no count. Writing the probes found one thing about the probes themselves: in one function, each probe's later neighbours were changes too, which refused the borrow on their own. So the first run of the mutants left five rules uncaught. Each probe is now a function of its own.
+
+In `borrow_element.a`, probes 1 to 6 are refused. Probes 7 and 8 borrow, and are held by reuse and moves refusing a `Borrowed` variable. Probe 9 and `total`'s loop borrow. One mutant per rule, each caught on that fixture:
+
+| Mutant | Caught by |
+|---|---|
+| A store into an element isn't a change (probe 1) | ASan heap-use-after-free |
+| `splice` and `pop` aren't changes (probe 2) | ASan heap-use-after-free |
+| A call is never a change, whatever its callee does (probe 3) | ASan heap-use-after-free |
+| A call through a function value isn't a change (probe 4) | ASan heap-use-after-free |
+| The array's variable may be assigned (probe 5) | ASan heap-use-after-free |
+| `map` isn't a change (probe 6) | ASan heap-use-after-free |
+| Reuse takes over a borrowed variable (probe 7) | stdout: `7 item0* item0*`, the array's object written over |
+| A borrowed variable is moved into a consumed parameter (probe 8) | ASan heap-use-after-free |
+| The fallback's owner isn't let go of (probe 9) | the leak check |
+
+On `nbody`, counted: retains 22,000,050 to 7,000,019. Releases stayed at 22,000,054: the fallback's owner is let go of once per declaration, NULL every time here. No other row of the oracle's table moved, and the other benchmarks didn't either. Time, best of 5 interleaved against 4636a33 at load about 2.5: 0.235 s to 0.222 s, small enough that the noise could hide it. The release of an owner that is NULL is the next thing to take out of `nbody`'s loop.
+
+**The owner's release, only when it holds something.** The scope now lets go of a fallback's owner behind a test for NULL (`mostlyNull` in `emit.go`, read by `releaseScopes`, so the throw path does the same). `nbody`, counted: releases 22,000,054 to 7,000,023, now level with its 7,000,019 retains. In the oracle's table only `borrow_element.a` moved: releases 134 to 129, its five owners that stayed NULL. Time, best of 5 interleaved against 73bbae9 at load about 3: 0.237 s to 0.220 s, again inside what the noise could hide. Mutant: the test inverted (`== NULL`), so an owner holding a fallback is never let go of. Caught by the leak check on probe 9.
+
 ## Strings, specifically
 
 UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.

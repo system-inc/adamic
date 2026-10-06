@@ -72,6 +72,20 @@ func consumes(expression ir.Expression) bool {
 // they're made of being pure too. Anything not on the list, an operation added later included, is
 // not pure.
 func pure(expression ir.Expression) bool {
+	if !pureKind(expression) {
+		return false
+	}
+	operands := true
+	eachOperand(expression, func(operand ir.Expression) {
+		if !pure(operand) {
+			operands = false
+		}
+	})
+	return operands
+}
+
+// pureKind reports whether an expression's own operation is on pure's list, whatever its operands.
+func pureKind(expression ir.Expression) bool {
 	switch expression.(type) {
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Read, ir.Undefined,
 		ir.Unary, ir.Binary, ir.NumberToString, ir.BooleanToString, ir.Concat, ir.Length, ir.StringLength,
@@ -82,13 +96,7 @@ func pure(expression ir.Expression) bool {
 	default:
 		return false
 	}
-	operands := true
-	eachOperand(expression, func(operand ir.Expression) {
-		if !pure(operand) {
-			operands = false
-		}
-	})
-	return operands
+	return true
 }
 
 // eachOperand visits the expressions an IR node holds directly.
