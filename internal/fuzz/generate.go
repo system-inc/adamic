@@ -3,6 +3,7 @@ package fuzz
 import (
 	"fmt"
 	"math/rand/v2"
+	"strconv"
 	"strings"
 )
 
@@ -13,7 +14,9 @@ import (
 // plain object, a class, closures, and the Array and string methods the runtime has. It is also
 // what makes the oracle exact: no Math.random, no time, no input, loops with a bound the program
 // can't change, no recursion (a function only calls the ones declared before it), and growth that
-// stops (a push only below a length, a string written back cut to a length).
+// stops (a push only below a length, a string written back cut to a length). Strings are often long
+// enough that a slice can share its owner's bytes, and one function appends to such a slice while
+// that owner is still live.
 //
 // The richest vein is calls with side effects inside expressions: every function writes to the
 // globals and the holder, and calls go everywhere a value can, so the order of reads and calls in
@@ -47,6 +50,7 @@ var Features = []string{
 	"optional-chains",  // ?. and ?? through a linked list that may end anywhere
 	"number-formats",   // toExponential and toPrecision
 	"array-from",       // Array.from({ length }, callback)
+	"shared-slices",    // long strings, slices that share their owner's bytes, and += on those slices
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -222,6 +226,13 @@ func (g *generator) program() *Program {
 
 	for range 2 + g.random.IntN(4) {
 		add(g.function())
+	}
+	// A shared slice lives in a function, not a global: += on a global is never an append in place.
+	// The call sits here so the append runs, with the owner and the other slice still to be printed.
+	if g.allowed("shared-slices") {
+		declaration, call := g.sharedSliceProbe()
+		add(declaration)
+		add(call)
 	}
 
 	for range 6 + g.random.IntN(14) {
@@ -557,12 +568,21 @@ func (g *generator) bounded(value *Expression) *Expression {
 	return compose(String, "(@e).slice(0, 40)", value)
 }
 
-// short is a short string: a literal, or a number in a template.
+// short is a short string: a literal, or a number in a template. Appends use it so a loop that
+// writes a string back grows by a little each time, not by another copy of a long string.
 func (g *generator) short() *Expression {
 	if g.chance(1, 2) {
-		return g.literal(String)
+		return g.briefString()
 	}
 	return compose(String, "`${@e}`", g.expression(Number, 1))
+}
+
+// briefString is a string literal of a few characters, the ones comparisons and array elements use.
+func (g *generator) briefString() *Expression {
+	if g.allowed("surrogates") && g.chance(1, 4) {
+		return text(String, g.pick("'\\uD83C'", "'\\uDF0D'", "'a\\uD83C'", "'\\uDF0Db'", "'🌍b'", "'ß'", "'İ'", "'ǅ'", "'ﬀ'"))
+	}
+	return text(String, g.pick("''", "'a'", "'b'", "'xy'", "'hello'", "'a,b'", "' pad '", "'é'", "'世界'", "'🌍'", "'10'", "'3.5'"))
 }
 
 // literal is a constant of a type.
@@ -574,7 +594,10 @@ func (g *generator) literal(t Type) *Expression {
 		if g.allowed("surrogates") && g.chance(1, 4) {
 			return text(String, g.pick("'\\uD83C'", "'\\uDF0D'", "'a\\uD83C'", "'\\uDF0Db'", "'🌍b'", "'ß'", "'İ'", "'ǅ'", "'ﬀ'"))
 		}
-		return text(String, g.pick("''", "'a'", "'b'", "'xy'", "'hello'", "'a,b'", "' pad '", "'é'", "'世界'", "'🌍'", "'10'", "'3.5'"))
+		if g.allowed("shared-slices") && g.chance(1, 5) {
+			return g.longConstant()
+		}
+		return g.briefString()
 	case Boolean:
 		return text(Boolean, g.pick("true", "false"))
 	case NumberArray:
@@ -759,6 +782,14 @@ func (g *generator) number(depth int) *Expression {
 }
 
 func (g *generator) string(depth int) *Expression {
+	// Often a long string, or a slice long enough to share the bytes it was cut from. Built from
+	// literals and fixed repeats, not from another long string, so the length stays a few hundred.
+	if g.allowed("shared-slices") && g.chance(2, 5) {
+		if g.chance(1, 3) {
+			return g.sharingSlice()
+		}
+		return g.longString()
+	}
 	next := depth - 1
 	switch g.random.IntN(22) {
 	case 0, 1, 2:
@@ -940,4 +971,336 @@ func (g *generator) stringArray(depth int) *Expression {
 		return compose(StringArray, "[@e, @e]", g.short(), g.short())
 	}
 	return g.leaf(StringArray)
+}
+
+// bytesShared is string_share.c's rule. A slice reads its owner's bytes only when it is at least 64
+// bytes and at least a quarter of that owner (the runtime divides the owner's length by four), and
+// it is not the whole owner: that slice is the owner itself, retained, and its capacity is the
+// owner's. A shared slice's own capacity is 0, which is what an append in place has to notice.
+func bytesShared(sliceBytes, ownerBytes int) bool {
+	if sliceBytes <= 0 || sliceBytes >= ownerBytes {
+		return false
+	}
+	return sliceBytes >= 64 && sliceBytes >= ownerBytes/4
+}
+
+func mustShare(sliceBytes, ownerBytes int) {
+	if !bytesShared(sliceBytes, ownerBytes) {
+		panic(fmt.Sprintf("fuzz: a slice of %d bytes does not share an owner of %d", sliceBytes, ownerBytes))
+	}
+}
+
+// shareCut is one shared-slice scene: an owner of a known length, two slices that share it, and
+// where the second is cut from the first instead of from the owner.
+type shareCut struct {
+	owner                  *Expression
+	ownerUnits, ownerBytes int
+	align                  int
+	keptStart, keptEnd     int
+	keptBytes              int
+	pieceStart, pieceEnd   int
+	pieceBytes             int
+	nested                 bool
+	// constant is an owner whose bytes are a program literal. A slice of one has no owner pointer
+	// (the literal's reference count stays 0), so a further slice is judged against the outer slice,
+	// not against the literal.
+	constant bool
+	needle   string
+}
+
+func (c shareCut) check() {
+	if c.align < 1 || c.ownerUnits < 1 || c.owner == nil {
+		panic("fuzz: shared slice has no owner")
+	}
+	for _, bound := range []int{c.keptStart, c.keptEnd, c.pieceStart, c.pieceEnd} {
+		if bound%c.align != 0 {
+			panic(fmt.Sprintf("fuzz: slice bound %d is not on a code point boundary of %d", bound, c.align))
+		}
+	}
+	if c.keptStart < 0 || c.pieceStart < 0 || c.keptStart >= c.keptEnd || c.pieceStart >= c.pieceEnd || c.keptEnd > c.ownerUnits || c.pieceEnd > c.ownerUnits {
+		panic("fuzz: shared slice bounds fall outside their owner")
+	}
+	mustShare(c.keptBytes, c.ownerBytes)
+	if c.nested {
+		if c.pieceStart < c.keptStart || c.pieceEnd > c.keptEnd || (c.pieceStart == c.keptStart && c.pieceEnd == c.keptEnd) {
+			panic("fuzz: inner slice is not a proper slice of the outer one")
+		}
+		if c.constant {
+			mustShare(c.pieceBytes, c.keptBytes)
+		} else {
+			mustShare(c.pieceBytes, c.ownerBytes)
+		}
+		return
+	}
+	mustShare(c.pieceBytes, c.ownerBytes)
+}
+
+// uniformLength is count copies of a group, and how many bytes and units that is. align is the
+// group's units, so a cut on a multiple of it never splits a code point: a slice that did would be
+// built, not shared.
+type uniformLength struct {
+	units, bytes, align int
+}
+
+func measureGroup(groupUnits, groupBytes, count int) uniformLength {
+	if groupUnits < 1 || groupBytes < groupUnits || count < 1 || groupBytes%groupUnits != 0 {
+		panic("fuzz: a repeated group has no uniform width")
+	}
+	return uniformLength{units: count * groupUnits, bytes: count * groupBytes, align: groupUnits}
+}
+
+func (m uniformLength) sliceBytes(start, end int) int {
+	return (end - start) * m.bytes / m.units
+}
+
+func repeatedFixed(unit string, count int) *Expression {
+	return compose(String, "@e.repeat(@e)", text(String, "'"+unit+"'"), text(Number, strconv.Itoa(count)))
+}
+
+func uniformCut(unit string, count int, constant, nested bool, keptStart, keptEnd, pieceStart, pieceEnd int, needle string, groupUnits, groupBytes int) shareCut {
+	measured := measureGroup(groupUnits, groupBytes, count)
+	owner := repeatedFixed(unit, count)
+	if constant {
+		owner = text(String, "'"+strings.Repeat(unit, count)+"'")
+	}
+	cut := shareCut{
+		owner: owner, ownerUnits: measured.units, ownerBytes: measured.bytes, align: measured.align,
+		keptStart: keptStart, keptEnd: keptEnd, keptBytes: measured.sliceBytes(keptStart, keptEnd),
+		pieceStart: pieceStart, pieceEnd: pieceEnd, pieceBytes: measured.sliceBytes(pieceStart, pieceEnd),
+		nested: nested, constant: constant, needle: needle,
+	}
+	cut.check()
+	return cut
+}
+
+// allShareCuts is every owner the probe appends through. Each one is checked as it's built: the
+// slices share, and no cut falls between the halves of a surrogate pair.
+func allShareCuts() []shareCut {
+	return []shareCut{
+		// 128 a's. [0, 96) and [16, 112) are each 96 bytes, in the middle of the owner.
+		uniformCut("a", 128, false, false, 0, 96, 16, 112, "'a'", 1, 1),
+		// 192 b's. The appended slice runs to the owner's last byte.
+		uniformCut("b", 192, false, false, 8, 96, 48, 192, "'b'", 1, 1),
+		// 256 c's. The inner slice is cut from the outer one, and both share the repeat.
+		uniformCut("c", 256, false, true, 32, 224, 48, 208, "'c'", 1, 1),
+		// 80 é is 160 bytes. Non-ASCII, so the slice's unit cache and position index get built.
+		uniformCut("é", 80, false, false, 0, 64, 8, 72, "'é'", 1, 2),
+		uniformCut("é", 100, false, false, 4, 80, 20, 100, "'é'", 1, 2),
+		// 48 emoji is 96 units and 192 bytes. Cuts stay on even units, so neither half of a pair splits.
+		uniformCut("🌍", 48, false, false, 4, 84, 16, 96, "'🌍'", 2, 4),
+		// é🌍 is 3 units and 6 bytes. Cuts on multiples of 3 stay between code points.
+		uniformCut("é🌍", 36, false, false, 6, 96, 15, 105, "'é'", 3, 6),
+		uniformCut("a", 160, true, false, 0, 100, 24, 120, "'a'", 1, 1),
+		uniformCut("é", 90, true, false, 0, 72, 18, 90, "'é'", 1, 2),
+		// A slice of a slice of a literal. The outer slice has no owner pointer, so the inner one is
+		// shared against the outer slice's length, and its bytes are still the literal's.
+		uniformCut("🌍", 40, true, true, 4, 76, 8, 72, "'🌍'", 2, 4),
+		templateShareCut(),
+		joinShareCut(),
+	}
+}
+
+// templateShareCut is 96 a's then 48 é, written as a template. The appended slice is the é and ends
+// where the owner ends; the other slice is the first 80 a's.
+func templateShareCut() shareCut {
+	cut := shareCut{
+		owner:      compose(String, "`${@e}${@e}`", repeatedFixed("a", 96), repeatedFixed("é", 48)),
+		ownerUnits: 144, ownerBytes: 192, align: 1,
+		keptStart: 0, keptEnd: 80, keptBytes: 80,
+		pieceStart: 96, pieceEnd: 144, pieceBytes: 96,
+		needle: "'é'",
+	}
+	cut.check()
+	return cut
+}
+
+// joinShareCut joins 80 a's, 40 é and 48 b's. [72, 160) is 8 a's, the é and 40 b's: 128 bytes.
+func joinShareCut() shareCut {
+	cut := shareCut{
+		owner:      compose(String, "[@e, @e, @e].join('')", repeatedFixed("a", 80), repeatedFixed("é", 40), repeatedFixed("b", 48)),
+		ownerUnits: 168, ownerBytes: 208, align: 1,
+		keptStart: 0, keptEnd: 80, keptBytes: 80,
+		pieceStart: 72, pieceEnd: 160, pieceBytes: 128,
+		needle: "'é'",
+	}
+	cut.check()
+	return cut
+}
+
+// shareCut picks an owner and two slices that share its bytes.
+func (g *generator) shareCut() shareCut {
+	cuts := allShareCuts()
+	return cuts[g.random.IntN(len(cuts))]
+}
+
+func sliceCall(name string, start, end, length int) *Expression {
+	if end >= length {
+		return compose(String, name+".slice(@e)", text(Number, strconv.Itoa(start)))
+	}
+	return compose(String, name+".slice(@e, @e)", text(Number, strconv.Itoa(start)), text(Number, strconv.Itoa(end)))
+}
+
+// shareIndex is a unit inside the slice, past the first position-index checkpoint when the slice is
+// long enough, and on a code point boundary.
+func shareIndex(units, align int) int {
+	if align < 1 {
+		align = 1
+	}
+	if units <= 36 {
+		return 0
+	}
+	index := 0
+	for index < 32 {
+		index += align
+	}
+	if index >= units {
+		return 0
+	}
+	return index
+}
+
+func shareFrom(units, align int) int {
+	if align < 1 {
+		align = 1
+	}
+	if units <= 24 {
+		return 0
+	}
+	from := 0
+	for from < 8 {
+		from += align
+	}
+	if from >= units {
+		return 0
+	}
+	return from
+}
+
+func cacheLog(name string, index, from int, needle string) *Statement {
+	return statement("console.log(`${" + name + ".length} ${" + name + ".charCodeAt(" + strconv.Itoa(index) + ")} ${" + name + ".indexOf(" + needle + ", " + strconv.Itoa(from) + ")}`);")
+}
+
+func (g *generator) appendLoop(piece string) *Statement {
+	round := g.name("round")
+	bound := 4 + g.random.IntN(5)
+	return statement(fmt.Sprintf("for (let %s = 0; %s < %d; %s++) @b", round, round, bound, round), &Block{Statements: []*Statement{
+		statement(piece + " += `${" + round + " % 10}`;"),
+	}})
+}
+
+// probeBody is the function that appends to a shared slice. The reads happen before the append, so
+// the slice's unit count and position index are cached, and the owner and the other slice are
+// printed after, still in scope, so a write into the owner's bytes is visible.
+func (g *generator) probeBody(cut shareCut, mode int) *Block {
+	source, kept, piece := g.name("source"), g.name("kept"), g.name("piece")
+	body := &Block{}
+	add := func(written *Statement) { body.Statements = append(body.Statements, written) }
+	add(statement("const "+source+": string = @e;", cut.owner))
+	add(statement("const "+kept+": string = @e;", sliceCall(source, cut.keptStart, cut.keptEnd, cut.ownerUnits)))
+	pieceSlice := sliceCall(source, cut.pieceStart, cut.pieceEnd, cut.ownerUnits)
+	if cut.nested {
+		pieceSlice = sliceCall(kept, cut.pieceStart-cut.keptStart, cut.pieceEnd-cut.keptStart, cut.keptEnd-cut.keptStart)
+	}
+	add(statement("let "+piece+": string = @e;", pieceSlice))
+	units := cut.pieceEnd - cut.pieceStart
+	index, from := shareIndex(units, cut.align), shareFrom(units, cut.align)
+	add(cacheLog(piece, index, from, cut.needle))
+	add(cacheLog(kept, 0, 0, cut.needle))
+	add(statement("console.log(`${" + source + ".length} ${" + source + ".charCodeAt(" + strconv.Itoa(index) + ")} ${" + source + ".indexOf(" + cut.needle + ", " + strconv.Itoa(from) + ")}`);"))
+	// mode 0 appends once, mode 1 only in a loop, mode 2 both. The loop's first append is the one
+	// that meets a shared slice; the ones after it append to the copy.
+	if mode != 1 {
+		add(statement(piece+" += @e;", text(String, g.pick("'x'", "'Q'", "'ü'"))))
+	}
+	if mode != 0 {
+		add(g.appendLoop(piece))
+	}
+	add(cacheLog(piece, index, from, cut.needle))
+	add(statement("console.log(`${" + piece + ".length} ${" + piece + ".charCodeAt(" + piece + ".length - 1)}`);"))
+	add(statement("console.log(@e);", text(String, source)))
+	add(statement("console.log(@e);", text(String, kept)))
+	add(statement("console.log(@e);", text(String, piece)))
+	return body
+}
+
+// sharedSliceProbe is a function that holds a shared slice and appends to it, and the call that runs
+// that function. The slice is a local, so the append is in place when the runtime believes the
+// bytes have room.
+func (g *generator) sharedSliceProbe() (*Statement, *Statement) {
+	name := g.name("share")
+	cut := g.shareCut()
+	mode := g.random.IntN(3)
+	body := g.probeBody(cut, mode)
+	return statement("function "+name+"(): void @b", body), statement(name + "();")
+}
+
+// repeated is a short literal repeated into the 64 to a few hundred byte range.
+func (g *generator) repeated() *Expression {
+	switch g.random.IntN(5) {
+	case 0:
+		return compose(String, "@e.repeat(@e)", text(String, g.pick("'a'", "'b'", "'e'")), text(Number, g.pick("64", "96", "128", "160", "192", "256")))
+	case 1:
+		return compose(String, "@e.repeat(@e)", text(String, "'xy'"), text(Number, g.pick("40", "64", "80", "96")))
+	case 2:
+		return compose(String, "@e.repeat(@e)", text(String, "'é'"), text(Number, g.pick("40", "64", "80", "96", "120")))
+	case 3:
+		return compose(String, "@e.repeat(@e)", text(String, "'🌍'"), text(Number, g.pick("20", "32", "40", "48")))
+	default:
+		return compose(String, "@e.repeat(@e)", text(String, "'é🌍'"), text(Number, g.pick("16", "24", "32", "40")))
+	}
+}
+
+// longConstant is a string literal of 64 to a few hundred bytes, ASCII or not.
+func (g *generator) longConstant() *Expression {
+	switch g.random.IntN(4) {
+	case 0:
+		return text(String, "'"+strings.Repeat("a", []int{72, 96, 128, 160, 192, 240}[g.random.IntN(6)])+"'")
+	case 1:
+		return text(String, "'"+strings.Repeat("é", []int{40, 56, 72, 96}[g.random.IntN(4)])+"'")
+	case 2:
+		return text(String, "'"+strings.Repeat("🌍", []int{18, 24, 32, 48}[g.random.IntN(4)])+"'")
+	default:
+		return text(String, "'"+strings.Repeat("é🌍", []int{12, 20, 28, 36}[g.random.IntN(4)])+"'")
+	}
+}
+
+// longString is a string expression in the range where a slice of it can share. It does not call
+// back into string expressions, so repeats don't multiply.
+func (g *generator) longString() *Expression {
+	switch g.random.IntN(5) {
+	case 0:
+		return g.repeated()
+	case 1:
+		return g.longConstant()
+	case 2:
+		return compose(String, "`${@e}${@e}`", g.repeated(), g.repeated())
+	case 3:
+		return compose(String, "[@e, @e, @e].join(@e)", g.repeated(), g.repeated(), g.repeated(), text(String, g.pick("''", "','", "'-'")))
+	default:
+		return compose(String, "(@e + @e)", g.repeated(), g.longConstant())
+	}
+}
+
+// sharingSlice is a slice whose bounds meet string_share.c, including a slice of a slice. The owner
+// here is a temporary; the probe is what appends to a slice whose owner is still live.
+func (g *generator) sharingSlice() *Expression {
+	switch g.random.IntN(5) {
+	case 0:
+		mustShare(96, 128)
+		return compose(String, "(@e).slice(@e, @e)", repeatedFixed("a", 128), text(Number, "16"), text(Number, "112"))
+	case 1:
+		mustShare(144, 160)
+		return compose(String, "(@e).slice(@e)", repeatedFixed("é", 80), text(Number, "8"))
+	case 2:
+		mustShare(128, 160)
+		return compose(String, "(@e).slice(@e, @e)", repeatedFixed("🌍", 40), text(Number, "8"), text(Number, "72"))
+	case 3:
+		mustShare(144, 192)
+		return compose(String, "(@e).slice(@e, @e)", text(String, "'"+strings.Repeat("é", 96)+"'"), text(Number, "12"), text(Number, "84"))
+	default:
+		mustShare(192, 256)
+		mustShare(160, 256)
+		outer := compose(String, "(@e).slice(@e, @e)", repeatedFixed("c", 256), text(Number, "32"), text(Number, "224"))
+		return compose(String, "(@e).slice(@e, @e)", outer, text(Number, "16"), text(Number, "176"))
+	}
 }
