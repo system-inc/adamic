@@ -663,6 +663,41 @@ Three mutants, each run against the whole oracle and each caught by ASan alone:
 | `??` passes its left operand on, and the statement still lets go of it | heap-use-after-free, in 19 fixtures |
 | `??` passes its fallback on, and still lets go of it | heap-use-after-free, in 3 fixtures |
 
+### A variable borrowed from an array (designed)
+
+What's left on `nbody` is one retain and one release per element a variable is given: `const other = bodies[j] ?? new Body(...)` keeps a count on the object for as long as `other` lives. The array already holds that object, so if nothing can take it out of the array while `other` lives, the variable can borrow it as a parameter borrows from its caller.
+
+**What is borrowed.** A local `v`, declared with `const` or never assigned after its declaration, not captured by a closure, whose initializer is `a[i]` or `a[i] ?? fallback`. Here `a` is a local or parameter of the same function that is never assigned anywhere in it and isn't captured, so `a` names the same array, alive, for the whole function. A global or a captured `a` doesn't qualify: a call can assign either.
+
+**The proof: nothing in `v`'s live range can change the array.** `v`'s live range is the rest of the block that declares it, every nested statement included. Every expression and statement there must be one that can't take an element out of any array, through any alias. That's a fixed list, never a guess about what's safe:
+
+- **Allowed:** what `pure` in `borrow.go` allows (reads, arithmetic, field and element reads, string work); a field store into an object (`SetProperty`, which lets go of the field's old value, never an array's slot); declarations and assignments of other variables; a `push` (it adds, and moving the buffer doesn't move the objects); and calls to named functions whose bodies, and everything they call, are made only of allowed things.
+- **A change, which stops the borrow:** a store into an element (`SetIndex`); `pop`, `shift`, `splice` (also discarded, `adamic_array_remove`), `fill`, `sort`, `reverse`; anything reuse could do in place to an array (`map`, a spread of an array, `[...a, x]`); any call through a function value, and every runtime operation that calls one (`map`, `forEach`, `reduce`, `filter`, `find`, a `sort` comparator, `Array.from` with a function); a call to a named function that does any of these, at any depth; and an assignment to `a` itself.
+- **A throw.** A throw out of the live range ends `v` without a release. A borrowed `v` has none to give, so a throw path needs nothing. A call that can throw is judged by what it does, like any other.
+
+**What else must know.** A borrowed `v` holds no count, so nothing may treat it as owned:
+- reuse in place must not take it over (its object's count is the array's, so it looks unique);
+- a call must not move it into a consumed parameter;
+- its scope must not release it.
+
+It's marked like a borrowed parameter, and reuse already refuses those.
+
+**The fallback.** With `a[i] ?? fallback`, when the element is missing `v` is the fallback, which is fresh and owned. A hidden owner holds it, NULL when the element was there, and the scope lets go of the owner. So a borrowed `v` with a fallback still costs a release call per declaration, of NULL in the common case, but no retain and no count traffic on the object.
+
+**Probes, each a use-after-free or wrong output if the proof is wrong** (`borrow_element.a`, strings built at runtime):
+
+1. `a[0] = other` while `v = a[0]` lives, then `v.label` read.
+2. `a.splice(0, 1)`, and `a.pop()`, while `v` lives.
+3. A named function that stores into the array, two calls deep, called while `v` lives.
+4. A closure that stores into the array, called while `v` lives.
+5. `a` reassigned while `v` lives, with the old array's last count in `a`.
+6. `a.map(...)` while `v` lives, where `a` is dead after, so reuse maps it in place.
+7. `{ ...v, label }` while `v` lives: reuse in place would write into the array's own object. The result is wrong output, not a sanitizer report, so the oracle's stdout catches it.
+8. `v` handed to a function that consumes its parameter.
+9. The fallback taken, so the owner has something to let go of (the leak check).
+
+Each probe must keep its count (be refused borrowing). A mutant that drops each rule from the list must fail the probe it guards, by ASan, the leak check, or stdout for probe 7.
+
 ## Strings, specifically
 
 UTF-8 bytes, immutable, counted. JavaScript programs see UTF-16 (`length`, indexes, `<`), so the runtime keeps UTF-16 behavior over UTF-8 storage: an ASCII-only flag makes the common case free, and other strings compute the mapping when first asked. Lone surrogates (which UTF-8 can't hold) are stored as WTF-8 and written out as U+FFFD, as Node does. Program 10 in docs/0.1.md is the fixture for all of it.
