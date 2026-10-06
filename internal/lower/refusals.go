@@ -75,7 +75,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) {
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.stringMethodObservation(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			// Math.random has its own refusal, called or not.
@@ -97,7 +97,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if err := l.refuseWidening(node); err != nil {
+		if err := l.refuseStringWidening(node); err != nil {
 			found = err
 			return true
 		}

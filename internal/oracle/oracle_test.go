@@ -252,6 +252,11 @@ var fixtures = []struct {
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
+	{"internal/oracle/testdata/library_string_conversion.a", true, false},
+	{"internal/oracle/testdata/library_string_prototype.a", true, false},
+	{"internal/oracle/testdata/library_string_indices.a", true, false},
+	{"internal/oracle/testdata/library_string_raw.a", true, false},
+	{"internal/oracle/testdata/library_string_existing.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
