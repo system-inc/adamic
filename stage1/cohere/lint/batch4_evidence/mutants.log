@@ -1,0 +1,571 @@
+=== RUN   TestBatch4Mutants
+=== RUN   TestBatch4Mutants/default-case-last
+=== PAUSE TestBatch4Mutants/default-case-last
+=== RUN   TestBatch4Mutants/default-param-last
+=== PAUSE TestBatch4Mutants/default-param-last
+=== RUN   TestBatch4Mutants/for-direction
+=== PAUSE TestBatch4Mutants/for-direction
+=== RUN   TestBatch4Mutants/guard-for-in
+=== PAUSE TestBatch4Mutants/guard-for-in
+=== RUN   TestBatch4Mutants/max-classes-per-file
+=== PAUSE TestBatch4Mutants/max-classes-per-file
+=== RUN   TestBatch4Mutants/max-depth
+=== PAUSE TestBatch4Mutants/max-depth
+=== RUN   TestBatch4Mutants/max-lines
+=== PAUSE TestBatch4Mutants/max-lines
+=== RUN   TestBatch4Mutants/max-nested-callbacks
+=== PAUSE TestBatch4Mutants/max-nested-callbacks
+=== RUN   TestBatch4Mutants/grouped-accessor-pairs
+=== PAUSE TestBatch4Mutants/grouped-accessor-pairs
+=== RUN   TestBatch4Mutants/@typescript-eslint/default-param-last
+=== PAUSE TestBatch4Mutants/@typescript-eslint/default-param-last
+=== RUN   TestBatch4Mutants/@typescript-eslint/ban-tslint-comment
+=== PAUSE TestBatch4Mutants/@typescript-eslint/ban-tslint-comment
+=== RUN   TestBatch4Mutants/@typescript-eslint/init-declarations
+=== PAUSE TestBatch4Mutants/@typescript-eslint/init-declarations
+=== RUN   TestBatch4Mutants/base/boundary-no-global-container
+=== PAUSE TestBatch4Mutants/base/boundary-no-global-container
+=== RUN   TestBatch4Mutants/nexus/consistency-no-stuttering-name
+=== PAUSE TestBatch4Mutants/nexus/consistency-no-stuttering-name
+=== RUN   TestBatch4Mutants/base/consistency-no-hand-built-declared-error
+=== PAUSE TestBatch4Mutants/base/consistency-no-hand-built-declared-error
+=== RUN   TestBatch4Mutants/base/consistency-require-pagination-argument-name
+=== PAUSE TestBatch4Mutants/base/consistency-require-pagination-argument-name
+=== RUN   TestBatch4Mutants/base/correctness-require-orm-column-declare
+=== PAUSE TestBatch4Mutants/base/correctness-require-orm-column-declare
+=== RUN   TestBatch4Mutants/nexus/consistency-no-for-in
+=== PAUSE TestBatch4Mutants/nexus/consistency-no-for-in
+=== RUN   TestBatch4Mutants/nexus/consistency-no-screaming-snake-case
+=== PAUSE TestBatch4Mutants/nexus/consistency-no-screaming-snake-case
+=== RUN   TestBatch4Mutants/nexus/consistency-no-utils-folder
+=== PAUSE TestBatch4Mutants/nexus/consistency-no-utils-folder
+=== CONT  TestBatch4Mutants/default-case-last
+=== CONT  TestBatch4Mutants/@typescript-eslint/ban-tslint-comment
+=== CONT  TestBatch4Mutants/base/consistency-require-pagination-argument-name
+=== NAME  TestBatch4Mutants/@typescript-eslint/ban-tslint-comment
+    batch4_test.go:168: compiled listener omission caught on Node: case 10 line 62: port "fixed\t// tslint:disable\\u000alet x=1;", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/011/source/control.ts:1:1"
+        Go context:
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b){}
+        case 10
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/011/source/control.ts:1:1
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 17 commentDetected fix			0 18
+        fixed	let x=1;
+    batch4_test.go:168: compiled listener omission caught on native: case 10 line 62: port "fixed\t// tslint:disable\\u000alet x=1;", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/011/source/control.ts:1:1"
+        Go context:
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b){}
+        case 10
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/011/source/control.ts:1:1
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 17 commentDetected fix			0 18
+        fixed	let x=1;
+=== CONT  TestBatch4Mutants/nexus/consistency-no-utils-folder
+=== NAME  TestBatch4Mutants/default-case-last
+    batch4_test.go:168: compiled listener omission caught on Node: case 0 line 2: port "fixed\tswitch(x){default: f(); case 1: break;}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/001/source/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/001/source/control.ts:1:11
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 10 23 notLast 			10 23
+        fixed	switch(x){default: f(); case 1: break;}
+    batch4_test.go:168: compiled listener omission caught on native: case 0 line 2: port "fixed\tswitch(x){default: f(); case 1: break;}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/001/source/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/001/source/control.ts:1:11
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 10 23 notLast 			10 23
+        fixed	switch(x){default: f(); case 1: break;}
+=== CONT  TestBatch4Mutants/nexus/consistency-no-screaming-snake-case
+=== NAME  TestBatch4Mutants/base/consistency-require-pagination-argument-name
+    batch4_test.go:168: compiled listener omission caught on Node: case 15 line 100: port "fixed\tclass C{m(@GraphQlArgument(\"bad\") p: PaginationInput){}}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/016/source/control.ts:1:28"
+        Go context:
+          base/consistency-no-hand-built-declared-error  Do not build a BaseError that names a declared failure. Call the tier that declares it: 'AccountModule.error(identifier, data, cause)', 'ApiWorker.error(...)', or 'Base.error(...)'. The status comes from the declaration, so writing it here is how one failure ends up answering two.
+        
+        range 0 40 consistencyNoHandBuiltDeclaredError 			0 40
+        fixed	new BaseError("x",{identifier:"Broken"});
+        case 15
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/016/source/control.ts:1:28
+          base/consistency-require-pagination-argument-name  A GraphQlArgument of PaginationInput type must be named "pagination", or end with "Pagination" when a query takes more than one paginator and the names have to be told apart. A caller reads the argument name to know which paginator it is driving, and a name outside that convention makes them guess.
+        
+        range 27 32 invalidName 			27 32
+        fixed	class C{m(@GraphQlArgument("bad") p: PaginationInput){}}
+    batch4_test.go:168: compiled listener omission caught on native: case 15 line 100: port "fixed\tclass C{m(@GraphQlArgument(\"bad\") p: PaginationInput){}}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/016/source/control.ts:1:28"
+        Go context:
+          base/consistency-no-hand-built-declared-error  Do not build a BaseError that names a declared failure. Call the tier that declares it: 'AccountModule.error(identifier, data, cause)', 'ApiWorker.error(...)', or 'Base.error(...)'. The status comes from the declaration, so writing it here is how one failure ends up answering two.
+        
+        range 0 40 consistencyNoHandBuiltDeclaredError 			0 40
+        fixed	new BaseError("x",{identifier:"Broken"});
+        case 15
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/016/source/control.ts:1:28
+          base/consistency-require-pagination-argument-name  A GraphQlArgument of PaginationInput type must be named "pagination", or end with "Pagination" when a query takes more than one paginator and the names have to be told apart. A caller reads the argument name to know which paginator it is driving, and a name outside that convention makes them guess.
+        
+        range 27 32 invalidName 			27 32
+        fixed	class C{m(@GraphQlArgument("bad") p: PaginationInput){}}
+=== CONT  TestBatch4Mutants/nexus/consistency-no-for-in
+    batch4_test.go:168: compiled listener omission caught on Node: case 3 line 24: port "/tmp/adamic-gate/TestBatch4Mutants3351085364/004/source/control.ts:1:1", Go "fixed\tfor(const key in object) use(key);"
+        Go context:
+        case 3
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/004/source/control.ts:1:1
+          guard-for-in  This `for-in` loop visits inherited properties as well as the object's own. `for-in` walks the whole prototype chain, so anything added to `Object.prototype` by a library, a polyfill, or older code shows up as another iteration, and the body runs on a key the object never declared. The usual symptom is a serializer emitting a phantom field or a counter that is one too high, on a machine where some other package loaded first. Guard the body with `if (Object.prototype.hasOwnProperty.call(o, key))`, or use `Object.keys(o)`, which returns own enumerable keys and needs no guard.
+        
+        range 0 34 wrap 			0 34
+        fixed	for(const key in object) use(key);
+        case 4
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/005/source/control.ts:1:1
+          max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.
+    batch4_test.go:168: compiled listener omission caught on native: case 3 line 24: port "/tmp/adamic-gate/TestBatch4Mutants3351085364/004/source/control.ts:1:1", Go "fixed\tfor(const key in object) use(key);"
+        Go context:
+        case 3
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/004/source/control.ts:1:1
+          guard-for-in  This `for-in` loop visits inherited properties as well as the object's own. `for-in` walks the whole prototype chain, so anything added to `Object.prototype` by a library, a polyfill, or older code shows up as another iteration, and the body runs on a key the object never declared. The usual symptom is a serializer emitting a phantom field or a counter that is one too high, on a machine where some other package loaded first. Guard the body with `if (Object.prototype.hasOwnProperty.call(o, key))`, or use `Object.keys(o)`, which returns own enumerable keys and needs no guard.
+        
+        range 0 34 wrap 			0 34
+        fixed	for(const key in object) use(key);
+        case 4
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/005/source/control.ts:1:1
+          max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.
+=== CONT  TestBatch4Mutants/base/correctness-require-orm-column-declare
+=== NAME  TestBatch4Mutants/nexus/consistency-no-utils-folder
+    batch4_test.go:168: compiled listener omission caught on Node: case 19 line 128: port "fixed\tlet x=1;", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/020/utils/control.ts:1:1"
+        Go context:
+          nexus/consistency-no-screaming-snake-case  Constant "HTTP_TIMEOUT" is exported and should be PascalCase ("HttpTimeout"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+        
+        range 38 50 noScreamingSnakeCaseExported 			38 50
+        fixed	const MAX_RETRY_COUNT=3; export const HTTP_TIMEOUT=5;
+        case 19
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/020/utils/control.ts:1:1
+          nexus/consistency-no-utils-folder  Folder name "utils" is not allowed. Use "utilities" instead.
+        
+        range 0 0 noUtils 			0 0
+        fixed	let x=1;
+    batch4_test.go:168: compiled listener omission caught on native: case 19 line 128: port "fixed\tlet x=1;", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/020/utils/control.ts:1:1"
+        Go context:
+          nexus/consistency-no-screaming-snake-case  Constant "HTTP_TIMEOUT" is exported and should be PascalCase ("HttpTimeout"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+        
+        range 38 50 noScreamingSnakeCaseExported 			38 50
+        fixed	const MAX_RETRY_COUNT=3; export const HTTP_TIMEOUT=5;
+        case 19
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/020/utils/control.ts:1:1
+          nexus/consistency-no-utils-folder  Folder name "utils" is not allowed. Use "utilities" instead.
+        
+        range 0 0 noUtils 			0 0
+        fixed	let x=1;
+=== CONT  TestBatch4Mutants/max-depth
+=== NAME  TestBatch4Mutants/nexus/consistency-no-screaming-snake-case
+    batch4_test.go:168: compiled listener omission caught on Node: case 18 line 118: port "fixed\tconst MAX_RETRY_COUNT=3; export const HTTP_TIMEOUT=5;", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/019/source/control.ts:1:7"
+        Go context:
+          nexus/consistency-no-for-in  Iterate an object with `for (const [key, value] of Object.entries(object))`, or `Object.keys(object)` when only the key matters, rather than `for...in`. `for...in` walks the prototype chain, so it needs a guard to be correct, and a guard is a line someone forgets; it also hands back every key as a bare `string`, which is why these loops grow `key as keyof typeof object` casts to read the value. `Object.entries` returns own keys only, with the value already in hand, so there is nothing to guard and nothing to cast, and every loop over an object has one shape.
+        
+        range 0 26 forIn 			0 26
+        fixed	for(const key in object){}
+        case 18
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/019/source/control.ts:1:7
+          nexus/consistency-no-screaming-snake-case  Constant "MAX_RETRY_COUNT" is file-local and should be camelCase ("maxRetryCount"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+        
+        range 6 21 noScreamingSnakeCaseLocal 			6 21
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/019/source/control.ts:1:39
+    batch4_test.go:168: compiled listener omission caught on native: case 18 line 118: port "fixed\tconst MAX_RETRY_COUNT=3; export const HTTP_TIMEOUT=5;", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/019/source/control.ts:1:7"
+        Go context:
+          nexus/consistency-no-for-in  Iterate an object with `for (const [key, value] of Object.entries(object))`, or `Object.keys(object)` when only the key matters, rather than `for...in`. `for...in` walks the prototype chain, so it needs a guard to be correct, and a guard is a line someone forgets; it also hands back every key as a bare `string`, which is why these loops grow `key as keyof typeof object` casts to read the value. `Object.entries` returns own keys only, with the value already in hand, so there is nothing to guard and nothing to cast, and every loop over an object has one shape.
+        
+        range 0 26 forIn 			0 26
+        fixed	for(const key in object){}
+        case 18
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/019/source/control.ts:1:7
+          nexus/consistency-no-screaming-snake-case  Constant "MAX_RETRY_COUNT" is file-local and should be camelCase ("maxRetryCount"). `const` already tells the reader and the compiler the value is immutable, so shouting adds no information. The casing is free to signal scope instead, the way Go does it: PascalCase means the value came from somewhere else, camelCase means it lives in this file. Reserve the shouting form for values that mirror an external system's grammar, where matching the upstream spelling keeps the value greppable across a boundary you do not control.
+        
+        range 6 21 noScreamingSnakeCaseLocal 			6 21
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/019/source/control.ts:1:39
+=== CONT  TestBatch4Mutants/@typescript-eslint/default-param-last
+=== NAME  TestBatch4Mutants/base/correctness-require-orm-column-declare
+    batch4_test.go:168: compiled listener omission caught on Node: case 16 line 106: port "fixed\tclass C{@OrmColumn() id: number;}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/017/source/control.ts:1:22"
+        Go context:
+          base/consistency-require-pagination-argument-name  A GraphQlArgument of PaginationInput type must be named "pagination", or end with "Pagination" when a query takes more than one paginator and the names have to be told apart. A caller reads the argument name to know which paginator it is driving, and a name outside that convention makes them guess.
+        
+        range 27 32 invalidName 			27 32
+        fixed	class C{m(@GraphQlArgument("bad") p: PaginationInput){}}
+        case 16
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/017/source/control.ts:1:22
+          base/correctness-require-orm-column-declare  Property 'id' decorated with @OrmColumn() must use 'declare' (e.g. `declare id: ...`)
+        
+        range 21 23 missingDeclare 			21 23
+        fixed	class C{@OrmColumn() id: number;}
+    batch4_test.go:168: compiled listener omission caught on native: case 16 line 106: port "fixed\tclass C{@OrmColumn() id: number;}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/017/source/control.ts:1:22"
+        Go context:
+          base/consistency-require-pagination-argument-name  A GraphQlArgument of PaginationInput type must be named "pagination", or end with "Pagination" when a query takes more than one paginator and the names have to be told apart. A caller reads the argument name to know which paginator it is driving, and a name outside that convention makes them guess.
+        
+        range 27 32 invalidName 			27 32
+        fixed	class C{m(@GraphQlArgument("bad") p: PaginationInput){}}
+        case 16
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/017/source/control.ts:1:22
+          base/correctness-require-orm-column-declare  Property 'id' decorated with @OrmColumn() must use 'declare' (e.g. `declare id: ...`)
+        
+        range 21 23 missingDeclare 			21 23
+        fixed	class C{@OrmColumn() id: number;}
+=== CONT  TestBatch4Mutants/grouped-accessor-pairs
+=== NAME  TestBatch4Mutants/@typescript-eslint/default-param-last
+    batch4_test.go:168: compiled listener omission caught on Node: case 1 line 12: port "/tmp/adamic-gate/TestBatch4Mutants3351085364/002/source/control.ts:1:12", Go "fixed\tfunction f(a=1,b){}"
+        Go context:
+        case 1
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/002/source/control.ts:1:12
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b){}
+        case 2
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/003/source/control.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+    batch4_test.go:168: compiled listener omission caught on native: case 1 line 12: port "/tmp/adamic-gate/TestBatch4Mutants3351085364/002/source/control.ts:1:12", Go "fixed\tfunction f(a=1,b){}"
+        Go context:
+        case 1
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/002/source/control.ts:1:12
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b){}
+        case 2
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/003/source/control.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+=== CONT  TestBatch4Mutants/max-nested-callbacks
+=== NAME  TestBatch4Mutants/max-depth
+    batch4_test.go:168: compiled listener omission caught on Node: case 5 line 32: port "fixed\tif(a){if(b){if(c){if(d){if(e) f();}}}}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/006/source/control.ts:1:25"
+        Go context:
+          max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.
+        
+        range 0 19 maximumExceeded 			0 19
+        fixed	class A{} class B{}
+        case 5
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/006/source/control.ts:1:25
+          max-depth  Blocks are nested too deeply (5). Maximum allowed is 4. Each level of nesting is another condition the reader has to hold in their head to know whether this line runs at all. Lift a branch into a named function, return early to flatten the happy path, or invert a condition so the exceptional case exits first.
+        
+        range 24 26 tooDeeply 			24 26
+        fixed	if(a){if(b){if(c){if(d){if(e) f();}}}}
+    batch4_test.go:168: compiled listener omission caught on native: case 5 line 32: port "fixed\tif(a){if(b){if(c){if(d){if(e) f();}}}}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/006/source/control.ts:1:25"
+        Go context:
+          max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.
+        
+        range 0 19 maximumExceeded 			0 19
+        fixed	class A{} class B{}
+        case 5
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/006/source/control.ts:1:25
+          max-depth  Blocks are nested too deeply (5). Maximum allowed is 4. Each level of nesting is another condition the reader has to hold in their head to know whether this line runs at all. Lift a branch into a named function, return early to flatten the happy path, or invert a condition so the exceptional case exits first.
+        
+        range 24 26 tooDeeply 			24 26
+        fixed	if(a){if(b){if(c){if(d){if(e) f();}}}}
+=== CONT  TestBatch4Mutants/max-lines
+=== NAME  TestBatch4Mutants/grouped-accessor-pairs
+    batch4_test.go:168: compiled listener omission caught on Node: case 8 line 50: port "fixed\tclass C { get a(){} b(){} set a(v){} }", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/009/source/control.ts:1:27"
+        Go context:
+          max-nested-callbacks  Too many nested callbacks (2). Maximum allowed is 1. Each layer of callback moves the code that runs later further from the code that decided to run it, so by this depth the order of execution can no longer be read off the page. Name the inner functions and call them by name, or move to promises.
+        
+        range 18 20 exceed 			18 20
+        fixed	outer(()=>inner(()=>f()));
+        case 8
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/009/source/control.ts:1:27
+          grouped-accessor-pairs  Accessor pair getter 'a' and setter 'a' should be grouped.
+        
+        range 26 31 notGrouped 			26 31
+        fixed	class C { get a(){} b(){} set a(v){} }
+    batch4_test.go:168: compiled listener omission caught on native: case 8 line 50: port "fixed\tclass C { get a(){} b(){} set a(v){} }", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/009/source/control.ts:1:27"
+        Go context:
+          max-nested-callbacks  Too many nested callbacks (2). Maximum allowed is 1. Each layer of callback moves the code that runs later further from the code that decided to run it, so by this depth the order of execution can no longer be read off the page. Name the inner functions and call them by name, or move to promises.
+        
+        range 18 20 exceed 			18 20
+        fixed	outer(()=>inner(()=>f()));
+        case 8
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/009/source/control.ts:1:27
+          grouped-accessor-pairs  Accessor pair getter 'a' and setter 'a' should be grouped.
+        
+        range 26 31 notGrouped 			26 31
+        fixed	class C { get a(){} b(){} set a(v){} }
+=== CONT  TestBatch4Mutants/nexus/consistency-no-stuttering-name
+=== NAME  TestBatch4Mutants/max-nested-callbacks
+    batch4_test.go:168: compiled listener omission caught on Node: case 7 line 44: port "fixed\touter(()=>inner(()=>f()));", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/008/source/control.ts:1:19"
+        Go context:
+          max-lines  File has too many lines (3). Maximum allowed is 1. A file this long holds more than one concern, and a reader has to hold all of them to change any. Split it along a real seam, a concern, a table, a command group, never by line count, and have every caller import the new home directly.
+        
+        range 5 14 exceed 			5 14
+        fixed	a();\u000ab();\u000ac();
+        case 7
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/008/source/control.ts:1:19
+          max-nested-callbacks  Too many nested callbacks (2). Maximum allowed is 1. Each layer of callback moves the code that runs later further from the code that decided to run it, so by this depth the order of execution can no longer be read off the page. Name the inner functions and call them by name, or move to promises.
+        
+        range 18 20 exceed 			18 20
+        fixed	outer(()=>inner(()=>f()));
+    batch4_test.go:168: compiled listener omission caught on native: case 7 line 44: port "fixed\touter(()=>inner(()=>f()));", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/008/source/control.ts:1:19"
+        Go context:
+          max-lines  File has too many lines (3). Maximum allowed is 1. A file this long holds more than one concern, and a reader has to hold all of them to change any. Split it along a real seam, a concern, a table, a command group, never by line count, and have every caller import the new home directly.
+        
+        range 5 14 exceed 			5 14
+        fixed	a();\u000ab();\u000ac();
+        case 7
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/008/source/control.ts:1:19
+          max-nested-callbacks  Too many nested callbacks (2). Maximum allowed is 1. Each layer of callback moves the code that runs later further from the code that decided to run it, so by this depth the order of execution can no longer be read off the page. Name the inner functions and call them by name, or move to promises.
+        
+        range 18 20 exceed 			18 20
+        fixed	outer(()=>inner(()=>f()));
+=== CONT  TestBatch4Mutants/base/consistency-no-hand-built-declared-error
+=== NAME  TestBatch4Mutants/max-lines
+    batch4_test.go:168: compiled listener omission caught on Node: case 6 line 38: port "fixed\ta();\\u000ab();\\u000ac();", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/007/source/control.ts:2:1"
+        Go context:
+          max-depth  Blocks are nested too deeply (5). Maximum allowed is 4. Each level of nesting is another condition the reader has to hold in their head to know whether this line runs at all. Lift a branch into a named function, return early to flatten the happy path, or invert a condition so the exceptional case exits first.
+        
+        range 24 26 tooDeeply 			24 26
+        fixed	if(a){if(b){if(c){if(d){if(e) f();}}}}
+        case 6
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/007/source/control.ts:2:1
+          max-lines  File has too many lines (3). Maximum allowed is 1. A file this long holds more than one concern, and a reader has to hold all of them to change any. Split it along a real seam, a concern, a table, a command group, never by line count, and have every caller import the new home directly.
+        
+        range 5 14 exceed 			5 14
+        fixed	a();\u000ab();\u000ac();
+    batch4_test.go:168: compiled listener omission caught on native: case 6 line 38: port "fixed\ta();\\u000ab();\\u000ac();", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/007/source/control.ts:2:1"
+        Go context:
+          max-depth  Blocks are nested too deeply (5). Maximum allowed is 4. Each level of nesting is another condition the reader has to hold in their head to know whether this line runs at all. Lift a branch into a named function, return early to flatten the happy path, or invert a condition so the exceptional case exits first.
+        
+        range 24 26 tooDeeply 			24 26
+        fixed	if(a){if(b){if(c){if(d){if(e) f();}}}}
+        case 6
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/007/source/control.ts:2:1
+          max-lines  File has too many lines (3). Maximum allowed is 1. A file this long holds more than one concern, and a reader has to hold all of them to change any. Split it along a real seam, a concern, a table, a command group, never by line count, and have every caller import the new home directly.
+        
+        range 5 14 exceed 			5 14
+        fixed	a();\u000ab();\u000ac();
+=== CONT  TestBatch4Mutants/guard-for-in
+=== NAME  TestBatch4Mutants/nexus/consistency-no-stuttering-name
+    batch4_test.go:168: compiled listener omission caught on Node: case 13 line 80: port "fixed\toutcome.outcome; result.result; outcome?.outcome; user.user;", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/014/source/control.ts:1:9"
+        Go context:
+          base/boundary-no-global-container  Usage of 'getGlobalContainer' is not allowed.
+        
+        range 0 18 boundaryNoGlobalContainer 			0 18
+        fixed	getGlobalContainer();
+        case 13
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/014/source/control.ts:1:9
+          nexus/consistency-no-stuttering-name  "outcome.outcome" stutters, which means the name is carrying nothing: it repeats the field instead of saying which outcome this is. Rename the value for what it holds, the type it came back as or whatever distinguishes it from another outcome in this scope, so a reader forty lines down does not have to find the declaration.
+        
+        range 8 15 stutteringName 			8 15
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/014/source/control.ts:1:25
+    batch4_test.go:168: compiled listener omission caught on native: case 13 line 80: port "fixed\toutcome.outcome; result.result; outcome?.outcome; user.user;", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/014/source/control.ts:1:9"
+        Go context:
+          base/boundary-no-global-container  Usage of 'getGlobalContainer' is not allowed.
+        
+        range 0 18 boundaryNoGlobalContainer 			0 18
+        fixed	getGlobalContainer();
+        case 13
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/014/source/control.ts:1:9
+          nexus/consistency-no-stuttering-name  "outcome.outcome" stutters, which means the name is carrying nothing: it repeats the field instead of saying which outcome this is. Rename the value for what it holds, the type it came back as or whatever distinguishes it from another outcome in this scope, so a reader forty lines down does not have to find the declaration.
+        
+        range 8 15 stutteringName 			8 15
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/014/source/control.ts:1:25
+=== CONT  TestBatch4Mutants/max-classes-per-file
+=== NAME  TestBatch4Mutants/base/consistency-no-hand-built-declared-error
+    batch4_test.go:168: compiled listener omission caught on Node: case 14 line 94: port "fixed\tnew BaseError(\"x\",{identifier:\"Broken\"});", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/015/source/control.ts:1:1"
+        Go context:
+          nexus/consistency-no-stuttering-name  "outcome.outcome" stutters, which means the name is carrying nothing: it repeats the field instead of saying which outcome this is. Rename the value for what it holds, the type it came back as or whatever distinguishes it from another outcome in this scope, so a reader forty lines down does not have to find the declaration.
+        
+        range 41 48 stutteringName 			41 48
+        fixed	outcome.outcome; result.result; outcome?.outcome; user.user;
+        case 14
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/015/source/control.ts:1:1
+          base/consistency-no-hand-built-declared-error  Do not build a BaseError that names a declared failure. Call the tier that declares it: 'AccountModule.error(identifier, data, cause)', 'ApiWorker.error(...)', or 'Base.error(...)'. The status comes from the declaration, so writing it here is how one failure ends up answering two.
+        
+        range 0 40 consistencyNoHandBuiltDeclaredError 			0 40
+        fixed	new BaseError("x",{identifier:"Broken"});
+    batch4_test.go:168: compiled listener omission caught on native: case 14 line 94: port "fixed\tnew BaseError(\"x\",{identifier:\"Broken\"});", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/015/source/control.ts:1:1"
+        Go context:
+          nexus/consistency-no-stuttering-name  "outcome.outcome" stutters, which means the name is carrying nothing: it repeats the field instead of saying which outcome this is. Rename the value for what it holds, the type it came back as or whatever distinguishes it from another outcome in this scope, so a reader forty lines down does not have to find the declaration.
+        
+        range 41 48 stutteringName 			41 48
+        fixed	outcome.outcome; result.result; outcome?.outcome; user.user;
+        case 14
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/015/source/control.ts:1:1
+          base/consistency-no-hand-built-declared-error  Do not build a BaseError that names a declared failure. Call the tier that declares it: 'AccountModule.error(identifier, data, cause)', 'ApiWorker.error(...)', or 'Base.error(...)'. The status comes from the declaration, so writing it here is how one failure ends up answering two.
+        
+        range 0 40 consistencyNoHandBuiltDeclaredError 			0 40
+        fixed	new BaseError("x",{identifier:"Broken"});
+=== CONT  TestBatch4Mutants/base/boundary-no-global-container
+=== NAME  TestBatch4Mutants/guard-for-in
+    batch4_test.go:168: compiled listener omission caught on Node: case 3 line 20: port "fixed\tfor(const key in object) use(key);", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/004/source/control.ts:1:1"
+        Go context:
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 23 incorrectDirection 			0 23
+        fixed	for(let i=0;i<10;i--){}
+        case 3
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/004/source/control.ts:1:1
+          guard-for-in  This `for-in` loop visits inherited properties as well as the object's own. `for-in` walks the whole prototype chain, so anything added to `Object.prototype` by a library, a polyfill, or older code shows up as another iteration, and the body runs on a key the object never declared. The usual symptom is a serializer emitting a phantom field or a counter that is one too high, on a machine where some other package loaded first. Guard the body with `if (Object.prototype.hasOwnProperty.call(o, key))`, or use `Object.keys(o)`, which returns own enumerable keys and needs no guard.
+        
+        range 0 34 wrap 			0 34
+        fixed	for(const key in object) use(key);
+    batch4_test.go:168: compiled listener omission caught on native: case 3 line 20: port "fixed\tfor(const key in object) use(key);", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/004/source/control.ts:1:1"
+        Go context:
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 23 incorrectDirection 			0 23
+        fixed	for(let i=0;i<10;i--){}
+        case 3
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/004/source/control.ts:1:1
+          guard-for-in  This `for-in` loop visits inherited properties as well as the object's own. `for-in` walks the whole prototype chain, so anything added to `Object.prototype` by a library, a polyfill, or older code shows up as another iteration, and the body runs on a key the object never declared. The usual symptom is a serializer emitting a phantom field or a counter that is one too high, on a machine where some other package loaded first. Guard the body with `if (Object.prototype.hasOwnProperty.call(o, key))`, or use `Object.keys(o)`, which returns own enumerable keys and needs no guard.
+        
+        range 0 34 wrap 			0 34
+        fixed	for(const key in object) use(key);
+=== CONT  TestBatch4Mutants/for-direction
+=== NAME  TestBatch4Mutants/max-classes-per-file
+    batch4_test.go:168: compiled listener omission caught on Node: case 4 line 26: port "fixed\tclass A{} class B{}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/005/source/control.ts:1:1"
+        Go context:
+          guard-for-in  This `for-in` loop visits inherited properties as well as the object's own. `for-in` walks the whole prototype chain, so anything added to `Object.prototype` by a library, a polyfill, or older code shows up as another iteration, and the body runs on a key the object never declared. The usual symptom is a serializer emitting a phantom field or a counter that is one too high, on a machine where some other package loaded first. Guard the body with `if (Object.prototype.hasOwnProperty.call(o, key))`, or use `Object.keys(o)`, which returns own enumerable keys and needs no guard.
+        
+        range 0 34 wrap 			0 34
+        fixed	for(const key in object) use(key);
+        case 4
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/005/source/control.ts:1:1
+          max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.
+        
+        range 0 19 maximumExceeded 			0 19
+        fixed	class A{} class B{}
+    batch4_test.go:168: compiled listener omission caught on native: case 4 line 26: port "fixed\tclass A{} class B{}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/005/source/control.ts:1:1"
+        Go context:
+          guard-for-in  This `for-in` loop visits inherited properties as well as the object's own. `for-in` walks the whole prototype chain, so anything added to `Object.prototype` by a library, a polyfill, or older code shows up as another iteration, and the body runs on a key the object never declared. The usual symptom is a serializer emitting a phantom field or a counter that is one too high, on a machine where some other package loaded first. Guard the body with `if (Object.prototype.hasOwnProperty.call(o, key))`, or use `Object.keys(o)`, which returns own enumerable keys and needs no guard.
+        
+        range 0 34 wrap 			0 34
+        fixed	for(const key in object) use(key);
+        case 4
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/005/source/control.ts:1:1
+          max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.
+        
+        range 0 19 maximumExceeded 			0 19
+        fixed	class A{} class B{}
+=== CONT  TestBatch4Mutants/@typescript-eslint/init-declarations
+=== NAME  TestBatch4Mutants/base/boundary-no-global-container
+    batch4_test.go:168: compiled listener omission caught on Node: case 12 line 74: port "fixed\tgetGlobalContainer();", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/013/source/control.ts:1:1"
+        Go context:
+          @typescript-eslint/init-declarations  Variable 'x' should be initialized on declaration.
+        
+        range 4 5 initialized 			4 5
+        fixed	let x; let y=1;
+        case 12
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/013/source/control.ts:1:1
+          base/boundary-no-global-container  Usage of 'getGlobalContainer' is not allowed.
+        
+        range 0 18 boundaryNoGlobalContainer 			0 18
+        fixed	getGlobalContainer();
+    batch4_test.go:168: compiled listener omission caught on native: case 12 line 74: port "fixed\tgetGlobalContainer();", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/013/source/control.ts:1:1"
+        Go context:
+          @typescript-eslint/init-declarations  Variable 'x' should be initialized on declaration.
+        
+        range 4 5 initialized 			4 5
+        fixed	let x; let y=1;
+        case 12
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/013/source/control.ts:1:1
+          base/boundary-no-global-container  Usage of 'getGlobalContainer' is not allowed.
+        
+        range 0 18 boundaryNoGlobalContainer 			0 18
+        fixed	getGlobalContainer();
+=== CONT  TestBatch4Mutants/default-param-last
+=== NAME  TestBatch4Mutants/for-direction
+    batch4_test.go:168: compiled listener omission caught on Node: case 2 line 14: port "fixed\tfor(let i=0;i<10;i--){}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/003/source/control.ts:1:1"
+        Go context:
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b){}
+        case 2
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/003/source/control.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 23 incorrectDirection 			0 23
+        fixed	for(let i=0;i<10;i--){}
+    batch4_test.go:168: compiled listener omission caught on native: case 2 line 14: port "fixed\tfor(let i=0;i<10;i--){}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/003/source/control.ts:1:1"
+        Go context:
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b){}
+        case 2
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/003/source/control.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 23 incorrectDirection 			0 23
+        fixed	for(let i=0;i<10;i--){}
+=== NAME  TestBatch4Mutants/@typescript-eslint/init-declarations
+    batch4_test.go:168: compiled listener omission caught on Node: case 11 line 68: port "fixed\tlet x; let y=1;", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/012/source/control.ts:1:5"
+        Go context:
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 17 commentDetected fix			0 18
+        fixed	let x=1;
+        case 11
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/012/source/control.ts:1:5
+          @typescript-eslint/init-declarations  Variable 'x' should be initialized on declaration.
+        
+        range 4 5 initialized 			4 5
+        fixed	let x; let y=1;
+    batch4_test.go:168: compiled listener omission caught on native: case 11 line 68: port "fixed\tlet x; let y=1;", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/012/source/control.ts:1:5"
+        Go context:
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 17 commentDetected fix			0 18
+        fixed	let x=1;
+        case 11
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/012/source/control.ts:1:5
+          @typescript-eslint/init-declarations  Variable 'x' should be initialized on declaration.
+        
+        range 4 5 initialized 			4 5
+        fixed	let x; let y=1;
+=== NAME  TestBatch4Mutants/default-param-last
+    batch4_test.go:168: compiled listener omission caught on Node: case 1 line 8: port "fixed\tfunction f(a=1,b){}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/002/source/control.ts:1:12"
+        Go context:
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 10 23 notLast 			10 23
+        fixed	switch(x){default: f(); case 1: break;}
+        case 1
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/002/source/control.ts:1:12
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b){}
+    batch4_test.go:168: compiled listener omission caught on native: case 1 line 8: port "fixed\tfunction f(a=1,b){}", Go "/tmp/adamic-gate/TestBatch4Mutants3351085364/002/source/control.ts:1:12"
+        Go context:
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 10 23 notLast 			10 23
+        fixed	switch(x){default: f(); case 1: break;}
+        case 1
+        /tmp/adamic-gate/TestBatch4Mutants3351085364/002/source/control.ts:1:12
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 14 shouldBeLast 			11 14
+        fixed	function f(a=1,b){}
+--- PASS: TestBatch4Mutants (3.02s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/ban-tslint-comment (41.41s)
+    --- PASS: TestBatch4Mutants/default-case-last (45.75s)
+    --- PASS: TestBatch4Mutants/base/consistency-require-pagination-argument-name (49.74s)
+    --- PASS: TestBatch4Mutants/nexus/consistency-no-for-in (45.14s)
+    --- PASS: TestBatch4Mutants/nexus/consistency-no-utils-folder (68.40s)
+    --- PASS: TestBatch4Mutants/nexus/consistency-no-screaming-snake-case (67.16s)
+    --- PASS: TestBatch4Mutants/base/correctness-require-orm-column-declare (86.30s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/default-param-last (73.73s)
+    --- PASS: TestBatch4Mutants/max-depth (85.10s)
+    --- PASS: TestBatch4Mutants/grouped-accessor-pairs (74.56s)
+    --- PASS: TestBatch4Mutants/max-nested-callbacks (71.69s)
+    --- PASS: TestBatch4Mutants/max-lines (75.92s)
+    --- PASS: TestBatch4Mutants/nexus/consistency-no-stuttering-name (76.99s)
+    --- PASS: TestBatch4Mutants/base/consistency-no-hand-built-declared-error (82.87s)
+    --- PASS: TestBatch4Mutants/guard-for-in (76.96s)
+    --- PASS: TestBatch4Mutants/max-classes-per-file (41.86s)
+    --- PASS: TestBatch4Mutants/base/boundary-no-global-container (42.43s)
+    --- PASS: TestBatch4Mutants/for-direction (36.94s)
+    --- PASS: TestBatch4Mutants/@typescript-eslint/init-declarations (37.76s)
+    --- PASS: TestBatch4Mutants/default-param-last (33.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	419.818s

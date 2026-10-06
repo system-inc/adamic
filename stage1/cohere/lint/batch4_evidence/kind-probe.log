@@ -1,0 +1,7 @@
+=== RUN   TestBatch4KindProbe
+    batch4_perf_probe_test.go:33: kind predicate probe round 0: 15385 findings in 10.71258289s
+    batch4_perf_probe_test.go:33: kind predicate probe round 1: 15385 findings in 11.000524643s
+    batch4_perf_probe_test.go:33: kind predicate probe round 2: 15385 findings in 12.411531534s
+--- PASS: TestBatch4KindProbe (51.12s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	51.131s

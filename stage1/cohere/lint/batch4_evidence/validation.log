@@ -1,0 +1,98 @@
+=== RUN   TestBatch4Controls
+    batch4_test.go:146: Go, Node, native identical: 16103 bytes
+--- PASS: TestBatch4Controls (35.64s)
+=== RUN   TestBatch4UpstreamAgree
+    lint_test.go:261: upstream no-caller: 8 cases
+    lint_test.go:261: upstream no-eq-null: 14 cases
+    lint_test.go:261: upstream no-empty-static-block: 9 cases
+    lint_test.go:261: upstream no-proto: 14 cases
+    lint_test.go:261: upstream no-script-url: 29 cases
+    lint_test.go:261: upstream no-self-compare: 25 cases
+    lint_test.go:261: upstream no-delete-var: 9 cases
+    lint_test.go:261: upstream no-iterator: 10 cases
+    lint_test.go:261: upstream no-compare-neg-zero: 56 cases
+    lint_test.go:261: upstream no-async-promise-executor: 24 cases
+    lint_test.go:261: upstream no-empty-pattern: 44 cases
+    lint_test.go:261: upstream no-constructor-return: 53 cases
+    lint_test.go:261: upstream no-multi-assign: 70 cases
+    lint_test.go:261: upstream no-useless-catch: 23 cases
+    lint_test.go:261: upstream no-unsafe-finally: 61 cases
+    lint_test.go:261: upstream no-useless-concat: 40 cases
+    lint_test.go:261: upstream no-empty-character-class: 43 cases
+    lint_test.go:261: upstream no-ex-assign: 19 cases
+    lint_test.go:261: upstream @typescript-eslint/no-unnecessary-type-constraint: 43 cases
+    lint_test.go:261: upstream @typescript-eslint/prefer-namespace-keyword: 22 cases
+    lint_test.go:261: upstream default-case-last: 38 cases
+    lint_test.go:261: upstream default-param-last: 128 cases
+    lint_test.go:261: upstream for-direction: 46 cases
+    lint_test.go:261: upstream guard-for-in: 20 cases
+    lint_test.go:261: upstream max-classes-per-file: 29 cases
+    lint_test.go:261: upstream max-depth: 38 cases
+    lint_test.go:261: upstream max-lines: 15 cases
+    lint_test.go:261: upstream max-nested-callbacks: 36 cases
+    lint_test.go:261: upstream grouped-accessor-pairs: 160 cases
+    lint_test.go:261: upstream @typescript-eslint/default-param-last: 117 cases
+    lint_test.go:261: upstream @typescript-eslint/ban-tslint-comment: 42 cases
+    lint_test.go:261: upstream @typescript-eslint/init-declarations: 92 cases
+    lint_test.go:261: upstream base/boundary-no-global-container: 13 cases
+    lint_test.go:261: upstream nexus/consistency-no-stuttering-name: 17 cases
+    lint_test.go:261: upstream base/consistency-no-hand-built-declared-error: 14 cases
+    lint_test.go:261: upstream base/consistency-require-pagination-argument-name: 29 cases
+    lint_test.go:261: upstream base/correctness-require-orm-column-declare: 22 cases
+    lint_test.go:261: upstream nexus/consistency-no-for-in: 18 cases
+    lint_test.go:261: upstream nexus/consistency-no-screaming-snake-case: 23 cases
+    lint_test.go:261: upstream nexus/consistency-no-utils-folder: 8 cases
+    lint_test.go:310: cohere cases: 2793 unique source/rule/options combinations
+    batch4_test.go:181: batch4 upstream compared: 905
+    batch4_test.go:182: Go, Node, native identical: 765692 bytes
+--- PASS: TestBatch4UpstreamAgree (67.34s)
+=== RUN   TestBatch4RecoveryCensus
+    lint_test.go:261: upstream no-caller: 8 cases
+    lint_test.go:261: upstream no-eq-null: 14 cases
+    lint_test.go:261: upstream no-empty-static-block: 9 cases
+    lint_test.go:261: upstream no-proto: 14 cases
+    lint_test.go:261: upstream no-script-url: 29 cases
+    lint_test.go:261: upstream no-self-compare: 25 cases
+    lint_test.go:261: upstream no-delete-var: 9 cases
+    lint_test.go:261: upstream no-iterator: 10 cases
+    lint_test.go:261: upstream no-compare-neg-zero: 56 cases
+    lint_test.go:261: upstream no-async-promise-executor: 24 cases
+    lint_test.go:261: upstream no-empty-pattern: 44 cases
+    lint_test.go:261: upstream no-constructor-return: 53 cases
+    lint_test.go:261: upstream no-multi-assign: 70 cases
+    lint_test.go:261: upstream no-useless-catch: 23 cases
+    lint_test.go:261: upstream no-unsafe-finally: 61 cases
+    lint_test.go:261: upstream no-useless-concat: 40 cases
+    lint_test.go:261: upstream no-empty-character-class: 43 cases
+    lint_test.go:261: upstream no-ex-assign: 19 cases
+    lint_test.go:261: upstream @typescript-eslint/no-unnecessary-type-constraint: 43 cases
+    lint_test.go:261: upstream @typescript-eslint/prefer-namespace-keyword: 22 cases
+    lint_test.go:261: upstream default-case-last: 38 cases
+    lint_test.go:261: upstream default-param-last: 128 cases
+    lint_test.go:261: upstream for-direction: 46 cases
+    lint_test.go:261: upstream guard-for-in: 20 cases
+    lint_test.go:261: upstream max-classes-per-file: 29 cases
+    lint_test.go:261: upstream max-depth: 38 cases
+    lint_test.go:261: upstream max-lines: 15 cases
+    lint_test.go:261: upstream max-nested-callbacks: 36 cases
+    lint_test.go:261: upstream grouped-accessor-pairs: 160 cases
+    lint_test.go:261: upstream @typescript-eslint/default-param-last: 117 cases
+    lint_test.go:261: upstream @typescript-eslint/ban-tslint-comment: 42 cases
+    lint_test.go:261: upstream @typescript-eslint/init-declarations: 92 cases
+    lint_test.go:261: upstream base/boundary-no-global-container: 13 cases
+    lint_test.go:261: upstream nexus/consistency-no-stuttering-name: 17 cases
+    lint_test.go:261: upstream base/consistency-no-hand-built-declared-error: 14 cases
+    lint_test.go:261: upstream base/consistency-require-pagination-argument-name: 29 cases
+    lint_test.go:261: upstream base/correctness-require-orm-column-declare: 22 cases
+    lint_test.go:261: upstream nexus/consistency-no-for-in: 18 cases
+    lint_test.go:261: upstream nexus/consistency-no-screaming-snake-case: 23 cases
+    lint_test.go:261: upstream nexus/consistency-no-utils-folder: 8 cases
+    lint_test.go:310: cohere cases: 2793 unique source/rule/options combinations
+    batch4_test.go:227: Go parser recovery census:
+        @typescript-eslint/ban-tslint-comment	"/*"	['*/' expected.]
+        @typescript-eslint/ban-tslint-comment	"/* tslint:disable"	['*/' expected.]
+        @typescript-eslint/ban-tslint-comment	"/**"	['*/' expected.]
+        @typescript-eslint/ban-tslint-comment	"/*/"	['*/' expected.]
+--- PASS: TestBatch4RecoveryCensus (35.18s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	138.186s

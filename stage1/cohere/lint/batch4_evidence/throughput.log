@@ -1,0 +1,25 @@
+=== RUN   TestThroughput
+    lint_test.go:532: Go, Node, native identical: 18250983 bytes
+    lint_test.go:546: machine Linux 55f663deaed4 6.18.44 #1 SMP Sat Sep 26 20:02:31 UTC 2026 x86_64 GNU/Linux; model name	: INTEL(R) XEON(R) PLATINUM 8573C; load before 0.77 1.42 1.73 1/203 28578
+    lint_test.go:569: round 1 Go 1.486771744s findings=15385
+    lint_test.go:569: round 1 native 9.143800087s findings=15385
+    lint_test.go:569: round 1 Node 3.858283066s findings=15385
+    lint_test.go:569: round 2 Go 1.54462621s findings=15385
+    lint_test.go:569: round 2 native 10.554722901s findings=15385
+    lint_test.go:569: round 2 Node 4.316515264s findings=15385
+    lint_test.go:569: round 3 Go 1.853803018s findings=15385
+    lint_test.go:569: round 3 native 10.410612646s findings=15385
+    lint_test.go:569: round 3 Node 3.858320911s findings=15385
+    lint_test.go:569: round 4 Go 1.559777382s findings=15385
+    lint_test.go:569: round 4 native 10.334377582s findings=15385
+    lint_test.go:569: round 4 Node 4.315460665s findings=15385
+    lint_test.go:569: round 5 Go 1.531246009s findings=15385
+    lint_test.go:569: round 5 native 11.87115403s findings=15385
+    lint_test.go:569: round 5 Node 4.244296633s findings=15385
+    lint_test.go:577: best of 5 Go: 1.486772s, 10347.92 findings/s (77 files, 15385 findings)
+    lint_test.go:577: best of 5 native: 9.143800s, 1682.56 findings/s (77 files, 15385 findings)
+    lint_test.go:577: best of 5 Node: 3.858283s, 3987.52 findings/s (77 files, 15385 findings)
+    lint_test.go:580: load after 1.07 1.34 1.67 1/204 28709
+--- PASS: TestThroughput (145.93s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	145.949s
