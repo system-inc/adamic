@@ -28,9 +28,9 @@ Lookaround runs a compiled assertion subprogram and commits only its first
 successful result. Negative lookaround restores the incoming captures. A
 lookbehind subprogram emits terms in reverse order and consumes code points or
 code units backwards; alternatives keep their source order. No syntax tree or
-Go predicate callback is retained in the executor. Instruction targets, range
-sets, strings, registers, flags and assertion subprograms can be encoded for a
-future C executor. C emission and native-runtime integration are not built here.
+Go predicate callback is retained in the executor. NativeDeclarations serializes instruction targets, range sets, strings, registers,
+flags and assertion subprograms for the same backtracking C interpreter in
+internal/native/runtime/regexp.c. Stage 0 compiles patterns before emitting C.
 
 Canonicalize uses generated Unicode 17.0.0 tables, matching Node 24: C/S simple
 case-fold mappings for `u`/`v`, and full uppercase without expansions or
@@ -165,3 +165,137 @@ one-second timeout is `character-class-escape-non-whitespace.js`.
 The initial ordinary quadratic search in `S15.10.2_A1_T1.js` exceeded a one-million
 step budget. It completes with the documented ten-million budget. Results were
 not changed to avoid backtracking. Production execution is unlimited by default.
+
+## Complete property integration and the native door
+
+Merged origin/cloud/grok-regex-canonicalize at 26e4e76 and switched the default
+provider at 6766c9d. Both commits were pushed before starting native emission.
+The Go matcher rerun compared all 127,369 extracted executions, including all
+881 previously unavailable properties: zero disagreements, zero skips. Its
+10,000 randomized pairs, 5,403 folding probes, 94 controls, 53 exact UTF-16
+probes and parser baseline also passed. Seven Go mutants were caught again.
+
+The imported unicodeproperties package passed in 603.433 seconds. It checked
+1,715 property expressions over 1,114,112 code points (1,910,702,080 observations),
+7,906 property-of-strings sequences, all legacy canonicalization values and
+4,294,967,296 legacy equivalence comparisons. Its Unicode equivalence checks
+examined 5,653,004,288 code points, including iu/iv classes. No disagreements.
+These are observations from its Node oracle, separate from matcher coverage.
+
+Stage 0 now lowers regexp literals and constant-pattern RegExp constructors
+(including const string aliases and concatenation). Patterns compile to immutable
+C descriptors at compile time. Constructors still evaluate their arguments, so
+initialization checks are retained. Runtime instances own their lastIndex,
+source and ordered flags. The C interpreter consumes UTF-16, snapshots captures
+and repetition registers for backtracking, and executes compiled lookaround
+subprograms. Unicode properties and v strings are compiled into descriptors;
+the runtime does not load Unicode data or parse patterns.
+
+Native test and exec, String.match, lazy matchAll and its next/for-of iteration,
+string-replacement replace/replaceAll, split and search are implemented. Results
+retain captures, index, input, named groups and d indices. Undefined captures
+stay undefined, including split captures. Compiler library declarations are
+corrected before checking, so unsafe use of a capture as a string is rejected.
+Named dictionary keys not present in the pattern return undefined. Counted
+ownership covers metadata, iterators and early exit from loops.
+
+The sanitized C interpreter compared all 127,369 extracted executions and
+10,000 generated pairs (seed 0x875): zero disagreements in capture values,
+indices, named indices and lastIndex. The stage 0 regexp.a and failure fixtures compare
+source Node, the JavaScript backend, sanitized C and release C, with a separate
+leak run. It covers every added method, replacement tokens including named
+and missing groups, Unicode and lone surrogates, null results, .source escapes,
+iterator cloning, direct next values, early exits, non-global validation and
+null narrowing. A separate methods sweep (testdata/sweeps/regexp_methods.a) covers 63,960
+wrapper probes: 25 patterns, 10 inputs, six
+lastIndex values, 16 replacements and seven split limits. Native budget failure is a loud exit 70;
+production matching remains unlimited.
+
+Reproduce the new checks with output redirected:
+
+```sh
+go test -v -count=1 -timeout 10m -run '^TestRegExp' ./internal/native ./internal/load ./internal/lower > /tmp/regex-native-all.log 2>&1
+go test -v -count=1 -timeout 5m -run 'TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a' ./internal/oracle > /tmp/regex-native-fixture.log 2>&1
+python3 internal/native/testdata/run-regexp-mutants.py > /tmp/regex-native-mutants.log 2>&1
+python3 internal/regexp/testdata/generate-native-folds.py
+```
+
+Native scope is typed built-in operations with string inputs and string
+replacements. Replacement callbacks, computed named-group keys, dynamic
+patterns or flags, custom exec/iterator methods, property-descriptor/prototype
+semantics and generic coercion are not implemented. Unsupported source uses
+are refused; this is not a general JavaScript object runtime. C quantifier
+bounds above uint64 are refused at compile time rather than truncated. Nullable
+match arrays are supported; a union holding both null and undefined requires
+a representation tag and is refused. The test262 extraction omissions described
+above remain; comparing every recorded execution does not mean every test262
+file or String wrapper assertion has been compiled by stage 0.
+
+All fourteen native-path mutants were run and restored. Greedy-as-lazy,
+no capture reset, forward lookbehind and folding without the u distinction
+failed Node stdout comparison. The runtime folding witness uses `(.)\\1`
+on `KK` with i and iu; a literal-capture witness was masked by the compiled
+set and was strengthened before claiming the check. Starting matchAll at zero
+and corrupting restored search lastIndex also failed Node stdout comparison.
+Leaking array metadata failed the leak check. Turning the native budget error
+into a failed match failed its required exit-70 check. Removing undefined from
+exec capture types failed TestRegExpCaptureTypes. Reading an iterator result
+by the value slot failed its missing/reordered-field test. Treating a global
+match index as always present failed Node stdout comparison. Escaping a slash
+inside a class, or changing source bytes, failed the Node source oracle. Merging
+distinct lone-surrogate pattern keys failed the C capture/index oracle. The mutation runner requires
+the intended result witness, so a compiler error does not count as detection.
+
+The first wrapper sweep timed out on Node. The minimal reproducer on Node
+24.19.0 was `const r=/[\\q{ab|a|}]/gv; const [zero]=[0,NaN];
+r.lastIndex=zero; "🌍a🌍".replace(r, "")`: timeout exited 124 after three
+seconds. With a literal zero lastIndex it returned normally. This is an
+observed Node replacement slow-path hang, not a matcher capture disagreement.
+The completed wrapper sweep uses the nonempty v alternatives `ab|a`; empty v
+strings remain covered by the Go and C execution oracles. This is an explained
+Node-oracle coverage gap, not a skipped execution from the 127,369-case corpus.
+
+The wrapper sweep lives below testdata/sweeps so the flow tests' single-directory
+fixture glob does not instrument all 63,960 library probes. That instrumented sweep grew beyond 5 GB while collecting events, and the
+flow run failed with missing temporary trace files; the ordinary regexp.a
+fixture and failure fixtures still exercise the added IR in the flow suite.
+
+Final regression commands (logs remain in /tmp):
+
+```sh
+go test -count=1 -timeout 15m -parallel 4 ./internal/load ./internal/lower ./internal/ir ./internal/javascript ./internal/regexp ./internal/flow > /tmp/regex-native-packages.log 2>&1
+go test -count=1 -timeout 15m -parallel 4 ./internal/lower > /tmp/regex-native-lower.log 2>&1
+go test -v -count=1 -timeout 15m -parallel 4 ./internal/native > /tmp/regex-native-package-full.log 2>&1
+go test -count=1 -timeout 15m -parallel 4 ./internal/flow > /tmp/regex-native-flow-final.log 2>&1
+go test -v -count=1 -timeout 5m -parallel 4 -run 'TestNativeAgreesWithNode/internal/oracle/testdata/regexp' ./internal/oracle > /tmp/regex-native-oracle-final.log 2>&1
+go test -v -count=1 -timeout 5m -run 'TestNativeAgreesWithNode/internal/oracle/testdata/sweeps/regexp_methods.a' ./internal/oracle > /tmp/regex-native-wrappers-final.log 2>&1
+go test -v -count=1 -timeout 20m -parallel 4 -run '^TestCountsAreRecorded$' ./internal/oracle -args -update-counts > /tmp/regex-native-counts.log 2>&1
+```
+
+The first combined package command failed on test-source type errors while new
+fixtures were being tightened. Those sources were corrected and lower/flow
+reruns passed. Load and regexp passed in the combined run; ir and javascript
+have no direct tests. The complete native package passed in 231.477 seconds,
+including 1,114,112 normalization points with zero mismatches; flow passed in
+133.198 seconds. The filtered stage 0 oracle passed every ordinary regex and
+failure fixture. The wrapper sweep passed source Node, backend, sanitized C,
+release C and leak checking with zero disagreements. The repository-wide gate
+was not rerun for this native step; the changed packages, filtered oracle and
+complete counted-fixture gate are the selected validation. Vet, gofmt and
+whitespace checks produced empty logs.
+
+The final ordinary regexp fixture also checks optional match index/input
+metadata, global-match metadata absence, and user IteratorYieldResult objects
+with missing or reordered done fields. The final count gate passed in 311.871
+seconds: regexp.a allocated/freed 454 values, the wrapper sweep allocated/freed
+448,046, and all prior recorded rows stayed unchanged. The final flow rerun
+passed in 110.758 seconds. The full native package run remains the earlier
+231.477-second run; after the final helpers, the RegExp-specific package checks,
+Node fixtures, source oracle and counted-fixture gate were rerun.
+
+TestRegExpSourceNode compares 13 source/flag combinations to Node and preserves
+one raw lone-surrogate byte sequence, including solidus escaping within regular
+and nested v classes and line terminators. The C execution harness keys patterns
+by their original UTF-16 units when supplied, so lossy JSON string decoding
+cannot merge different lone-surrogate patterns. A two-pattern C regression and
+its mutation demonstrate that distinction.

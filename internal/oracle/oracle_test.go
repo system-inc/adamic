@@ -326,6 +326,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/library_map_set_next.a", true, false},
 	// Object.prototype.hasOwnProperty is on every object's type and not in its shape.
 	{"internal/oracle/testdata/has_own.a", true, false},
+	{"internal/oracle/testdata/regexp.a", true, false},
+	{"internal/oracle/testdata/sweeps/regexp_methods.a", true, false},
+	{"internal/oracle/testdata/regexp_matchall_nonglobal.a", true, false},
+	{"internal/oracle/testdata/regexp_replaceall_nonglobal.a", true, false},
+	{"internal/oracle/testdata/regexp_null_narrowed.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

@@ -1,0 +1,64 @@
+#ifndef ADAMIC_REGEXP_H
+#define ADAMIC_REGEXP_H
+
+// Kept in the same opcode order as internal/regexp/matcher.go.
+typedef struct {
+	uint32_t first, last;
+} adamic_regex_range;
+typedef struct {
+	const uint32_t *points;
+	size_t count;
+} adamic_regex_text;
+typedef struct {
+	const char *name;
+	const size_t *captures;
+	size_t count;
+} adamic_regex_group;
+typedef struct adamic_regex_program adamic_regex_program;
+typedef struct {
+	int op, x, y, direction;
+	unsigned flags;
+	int assertion;
+	bool negative, greedy, unbounded;
+	uint64_t minimum, maximum;
+	const adamic_regex_range *ranges;
+	size_t range_count;
+	const adamic_regex_text *strings;
+	size_t string_count;
+	const size_t *ids;
+	size_t id_count;
+	const adamic_regex_program *look;
+} adamic_regex_instruction;
+struct adamic_regex_program {
+	const adamic_regex_instruction *code;
+	size_t captures, repeats;
+	unsigned flags;
+	const adamic_regex_group *groups;
+	size_t group_count;
+	const adamic_shape *group_shape;
+	uint64_t first_ascii[2];
+	bool filter_first;
+	const uint16_t *prefix;
+	size_t prefix_count;
+	bool (*fast)(const uint16_t *, size_t, ptrdiff_t *, ptrdiff_t *, uint64_t *);
+	bool anchored;
+	bool (*fast_ascii)(const unsigned char *, size_t, ptrdiff_t *, ptrdiff_t *, uint64_t *);
+};
+
+adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_string *source,
+								adamic_string *flags);
+bool adamic_regex_test(adamic_object *regex, adamic_string *input);
+adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input);
+adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex);
+adamic_object *adamic_regex_match_all(adamic_string *input, adamic_object *regex);
+adamic_array *adamic_regex_iterator_step(adamic_object *iterator);
+adamic_object *adamic_regex_next(adamic_object *iterator);
+adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
+									adamic_string *replacement, bool require_global);
+adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit);
+double adamic_regex_search(adamic_string *input, adamic_object *regex);
+adamic_value adamic_regex_property(adamic_array *array, const char *name);
+adamic_maybe_boolean adamic_regex_done(adamic_object *object);
+void *adamic_regex_group_lookup(adamic_object *object, const char *name, bool optional);
+void adamic_regex_set_step_limit(uint64_t limit);
+#endif

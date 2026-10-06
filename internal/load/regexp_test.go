@@ -1,0 +1,13 @@
+package load
+
+import "testing"
+
+func TestRegExpCaptureTypes(t *testing.T) {
+	for _, expression := range []string{"'ab'.split(/(a)|(z)/).map(value => value.toUpperCase())", "'ab'.match(/(a)|(z)/)?.map(value => value.toUpperCase())", "/(a)|(z)/.exec('ab')?.map(value => value.toUpperCase())", "/(?<x>a)/.exec('a')?.groups?.x.toUpperCase()"} {
+		t.Log(expression)
+		diagnostics := checkErrors(t, writeProgram(t, [2]string{"main.a", expression + ";"}))
+		if len(diagnostics) == 0 {
+			t.Fatal("undefined capture accepted as a string")
+		}
+	}
+}

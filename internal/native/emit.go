@@ -42,6 +42,9 @@ func C(program *ir.Program) string {
 		builder.WriteString("\n")
 	}
 
+	for _, regex := range program.Regexps {
+		builder.WriteString(regex.Declarations)
+	}
 	globals := false
 	for index, local := range program.Locals {
 		if !local.Global {
@@ -789,6 +792,27 @@ func (e *emitter) loop(statement ir.Loop) {
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.RegExpNew:
+		for _, argument := range expression.Arguments {
+			e.value(argument)
+		}
+		return e.own(ir.Object, fmt.Sprintf("adamic_regex_new(&adamic_regex_%d, &adamic_string_%d, &adamic_string_%d)", expression.Index, expression.Source, expression.Flags))
+	case ir.RegExpCall:
+		return e.regexCall(expression)
+	case ir.RegExpGroup:
+		object := e.value(expression.Object)
+		value := fmt.Sprintf("(%s)adamic_regex_group_lookup(%s, %s, %t)", cType(expression.Of), object, cString(expression.Name), expression.Optional)
+		return e.own(expression.Of, "adamic_retain("+value+")")
+	case ir.RegExpProperty:
+		return e.regexProperty(expression)
+	case ir.Null:
+		return "NULL"
+	case ir.IsNull:
+		if expression.AlwaysFalse {
+			e.value(expression.Value)
+			return "false"
+		}
+		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
 	case ir.BooleanConstant:
@@ -1891,6 +1915,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	held := e.temporary()
 	overString := statement.Iterable.Type() == ir.String
 	overMap := statement.MapPart != ""
+	overRegex := statement.RegexIterator
 	if overMap {
 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
 	} else {
@@ -1906,6 +1931,9 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	if overMap {
 		e.line("adamic_value %s, %s;", entryKey, entryValue)
 		e.line("while (adamic_map_iterator_next(%s, &%s, &%s)) {", held, entryKey, entryValue)
+	} else if overRegex {
+		e.line("adamic_array *%s;", entryValue)
+		e.line("while ((%s = adamic_regex_iterator_step(%s)) != NULL) {", entryValue, held)
 	} else if overString {
 		// A code point at a time: size is its byte length, and the element is a string of it.
 		e.line("for (size_t %s = 0, %s = 0; %s < %s->length; %s += %s) {", index, size, index, held, index, size)
@@ -1957,6 +1985,8 @@ func (e *emitter) forOf(statement ir.ForOf) {
 			}
 			e.declareLocal(binding.Local, field, false)
 		}
+	} else if overRegex {
+		e.declareLocal(statement.Local, entryValue, true)
 	} else if overString {
 		e.declareLocal(statement.Local, fmt.Sprintf("adamic_string_slice_bytes(%s, %s, %s)", held, index, size), true)
 	} else {

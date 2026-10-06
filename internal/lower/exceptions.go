@@ -213,6 +213,10 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			if node.Method == "assign" && l.objectCanFreeze() {
 				failing = "Object.assign into a potentially frozen object"
 			}
+		case ir.RegExpCall:
+			if node.Method == "replaceAll" || node.Method == "matchAll" {
+				failing = "RegExp global-flag validation"
+			}
 		case ir.StringCall:
 			switch {
 			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
