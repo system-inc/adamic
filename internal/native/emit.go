@@ -95,6 +95,7 @@ func C(program *ir.Program) string {
 	if len(emitter.declarations) > 0 {
 		builder.WriteString("\n")
 	}
+	emitter.classDeclarations(&builder)
 	builder.WriteString(bodies.String())
 	return builder.String()
 }
@@ -479,8 +480,8 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		if call, isCall := statement.Value.(ir.Call); isCall && call.Returns == 0 {
-			e.line("%s(%s);", e.functionName(call.Function), strings.Join(e.arguments(call), ", "))
-			if e.program.Functions[call.Function].MayThrow {
+			e.line("%s;", e.callCode(call, e.arguments(call)))
+			if e.program.CallMayThrow(call) {
 				e.checkThrown()
 			}
 		} else {
@@ -514,8 +515,8 @@ func (e *emitter) statement(statement ir.Statement) {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = %s;", slot, retained(value))
-			e.line("adamic_release(%s);", old)
+			e.line("%s->reference = %s;", slot, e.kept(value))
+			e.line("if (%s != NULL) adamic_release(%s);", old, old)
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
@@ -675,6 +676,11 @@ func (e *emitter) returnStatement(statement ir.Return) {
 			e.regionLiteralDepth = e.depth + 1
 		}
 		value = e.handRegion(statement.Value, "region")
+		if read, ok := statement.Value.(ir.Read); ok {
+			if local, known := e.regions.classObjects[e.functionIndex]; known && local == read.Local {
+				e.regionValues[value] = true
+			}
+		}
 		e.regionLiteralDepth = 0
 	} else {
 		value = e.value(statement.Value)
@@ -810,7 +816,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Call:
 		region := e.regionFor(expression)
 		arguments := e.arguments(expression)
-		call := fmt.Sprintf("%s(%s)", e.functionName(expression.Function), strings.Join(arguments, ", "))
+		call := e.callCode(expression, arguments)
 		var result string
 		switch {
 		case region != "":
@@ -822,11 +828,18 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			result = e.temporary()
 			e.line("%s %s = %s;", cType(expression.Returns), result, call)
 		}
-		if e.program.Functions[expression.Function].MayThrow {
+		if e.program.CallMayThrow(expression) {
 			// A throw left the call: the result is the zero value it returned, owned like any.
 			e.checkThrown()
 		}
 		return result
+	case ir.InstanceOf:
+		value := e.value(expression.Value)
+		if !expression.Value.Type().IsReference() {
+			e.line("(void)%s;", value)
+			return e.snapshot(ir.Boolean, "false")
+		}
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_instanceof(%s, &adamic_class_%d)", value, expression.Class))
 	case ir.NumberToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", e.value(expression.Value)))
 	case ir.BooleanToString:
@@ -1601,6 +1614,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	// The literal a fresh function returns is made in the region it was handed, and so are the
 	// fresh values its fields are (region.go).
 	region := e.regionLiteralDepth != 0 && e.regionLiteralDepth == e.depth
+	if literal.Class != 0 && e.inRegion && e.program.Classes[literal.Class-1].Constructor == e.functionIndex {
+		region = true
+	}
 	e.regionLiteralDepth = 0
 	values := make([]string, 0, len(literal.Fields))
 	for _, field := range literal.Fields {
@@ -1615,6 +1631,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.literalShape(literal)))
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
+	}
+	if literal.Class != 0 {
+		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
 	}
 	for index, field := range literal.Fields {
 		value := values[index]
@@ -2056,7 +2075,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 			continue
 		}
 		value := ""
-		if e.statementRegion != "" && !e.regions.escapes[call.Function][index] {
+		if e.statementRegion != "" && !e.regions.callEscapes(call, index) {
 			// A parameter that flows nowhere: a fresh value handed to it lives in the statement's region.
 			value = e.handRegion(argument, "&"+e.statementRegion)
 		} else {

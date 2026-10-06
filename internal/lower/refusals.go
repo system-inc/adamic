@@ -97,6 +97,16 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		if node.Kind == ast.KindClassDeclaration {
+			if err := l.checkOverrides(node, l.checker.GetTypeAtLocation(node.Name())); err != nil {
+				found = err
+				return true
+			}
+		}
+		if err := l.classViewRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.refuseWidening(node); err != nil {
 			found = err
 			return true

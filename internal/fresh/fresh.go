@@ -141,6 +141,11 @@ func directlyCalled(program *ir.Program) map[int]bool {
 			}
 		}
 	}
+	for _, class := range program.Classes {
+		for _, method := range class.Methods {
+			delete(direct, method)
+		}
+	}
 	walk(reflect.ValueOf(program.Main))
 	for _, function := range program.Functions {
 		walk(reflect.ValueOf(function.Body))
@@ -1325,12 +1330,15 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.MakeClosure:
 		// What a function value holds is its cells, and what's in a cell has escaped.
 		return outsideValue()
+	case ir.InstanceOf:
+		a.value(expression.Value)
+		return value{}
 	case ir.Call:
 		operands := []value{}
 		for _, argument := range expression.Arguments {
 			operands = append(operands, a.value(argument))
 		}
-		if a.proof.top {
+		if a.proof.top || expression.Virtual != 0 {
 			return a.call(operands, expression.Returns)
 		}
 		if !a.proof.direct[expression.Function] {

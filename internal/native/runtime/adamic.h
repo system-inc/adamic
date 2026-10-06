@@ -133,13 +133,27 @@ typedef struct adamic_shape {
 	const adamic_methods *methods;
 } adamic_shape;
 
+typedef void (*adamic_virtual_method)(void);
+typedef struct adamic_class {
+	const struct adamic_class *base;
+	size_t own_start;
+	size_t count;
+	const adamic_virtual_method *methods;
+	size_t definition;
+} adamic_class;
+
 // adamic_object is a plain object (object.c). Its shape travels with it, so the same object can be
 // seen through any type it satisfies, as JavaScript allows, without ever being copied.
 typedef struct adamic_object {
 	adamic_heap heap;
 	const adamic_shape *shape;
+	const adamic_class *class;
 	adamic_value slots[];
 } adamic_object;
+
+bool adamic_instanceof(const void *value, const adamic_class *wanted);
+adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);
+void adamic_object_free_children(adamic_object *object, void (*release)(void *));
 
 // adamic_slot_cache remembers, at one place in the program that reads a field, where the field was in
 // the last shape seen there.

@@ -104,6 +104,29 @@ func planReuse(program *ir.Program) *reusePlan {
 			}
 		})
 	}
+	// Virtual implementations share an ownership convention. If one consumes a position,
+	// every implementation takes a count, including those that only read and then release it.
+	for changed := true; changed; {
+		changed = false
+		for signature, targets := range program.MethodTargets {
+			for position, parameter := range program.Functions[signature].Parameters {
+				consumed := plan.consumed[parameter]
+				for _, target := range targets {
+					consumed = consumed || plan.consumed[program.Functions[target].Parameters[position]]
+				}
+				if !consumed {
+					continue
+				}
+				for _, target := range append([]int{signature}, targets...) {
+					local := program.Functions[target].Parameters[position]
+					if !plan.consumed[local] {
+						plan.consumed[local] = true
+						changed = true
+					}
+				}
+			}
+		}
+	}
 	for _, each := range functions {
 		forEachInstruction(each.graph, func(instruction *flow.Instruction) {
 			walk(evaluated(instruction), func(expression ir.Expression) {
@@ -244,8 +267,10 @@ func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instructio
 	walk(evaluated(instruction), func(expression ir.Expression) {
 		switch expression := expression.(type) {
 		case ir.Call:
-			if touches(program, expression.Function, read.Local, map[int]bool{}) {
-				reached = true
+			for _, target := range program.CallTargets(expression) {
+				if touches(program, target, read.Local, map[int]bool{}) {
+					reached = true
+				}
 			}
 		case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
 			// A Map's or Set's forEach is void, so it's never in the value an assignment evaluates;
@@ -280,8 +305,10 @@ func touches(program *ir.Program, function int, global int, seen map[int]bool) b
 						found = true
 					}
 				case ir.Call:
-					if touches(program, expression.Function, global, seen) {
-						found = true
+					for _, target := range program.CallTargets(expression) {
+						if touches(program, target, global, seen) {
+							found = true
+						}
 					}
 				case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 					found = true
@@ -506,6 +533,8 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 			e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 		}
 	}
+	// A spread produces a plain object, even when its source allocation is reused.
+	e.line("%s->class = NULL;", object)
 	return object, true
 }
 

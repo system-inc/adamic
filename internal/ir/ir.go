@@ -22,6 +22,10 @@ type Program struct {
 	// Functions are the module's function declarations, callable from anywhere in it.
 	Functions []Function
 
+	// Classes carry nominal identity, prefix field layouts and method slots. IDs are one-based.
+	Classes       []Class
+	MethodTargets map[int][]int
+
 	// Main is what the program does, in order.
 	Main []Statement
 
@@ -31,6 +35,18 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+}
+
+// Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
+type Class struct {
+	// Definition is the erased source identity, shared by distinct native layouts.
+	Definition  int
+	Name        string
+	Base        int
+	Constructor int
+	Fields      []Field
+	OwnStart    int
+	Methods     []int
 }
 
 // Function is a function declaration.
@@ -180,6 +196,15 @@ type (
 		Function  int
 		Arguments []Expression
 		Returns   Type
+
+		// Virtual is a one-based method slot. Function supplies its static signature.
+		Virtual int
+	}
+
+	// InstanceOf tests nominal identity along a class ancestry chain.
+	InstanceOf struct {
+		Value Expression
+		Class int
 	}
 
 	// Unary is -, +, ! and ~ on its operand.
@@ -222,6 +247,8 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		// Class is the nominal class ID, or zero for a plain object.
+		Class                int
 		Spread               Expression
 		Fields               []Field
 		SpreadMaybeUndefined bool
@@ -699,6 +726,8 @@ type Method struct {
 	Function int
 }
 
+func (InstanceOf) Type() Type { return Boolean }
+
 func (NumberConstant) Type() Type  { return Number }
 func (BooleanConstant) Type() Type { return Boolean }
 func (StringConstant) Type() Type  { return String }
@@ -1057,3 +1086,29 @@ func (Break) statement()       {}
 func (Continue) statement()    {}
 func (Throw) statement()       {}
 func (Try) statement()         {}
+
+// CallTargets names every implementation a virtual call may reach, or its direct callee.
+func (p *Program) CallTargets(call Call) []int {
+	if call.Virtual != 0 {
+		return p.MethodTargets[call.Function]
+	}
+	return []int{call.Function}
+}
+
+func (p *Program) CallMayThrow(call Call) bool {
+	for _, target := range p.CallTargets(call) {
+		if p.Functions[target].MayThrow {
+			return true
+		}
+	}
+	return false
+}
+
+func (p *Program) HasInheritance() bool {
+	for _, class := range p.Classes {
+		if class.Base != 0 {
+			return true
+		}
+	}
+	return false
+}

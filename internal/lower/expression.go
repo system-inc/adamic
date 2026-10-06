@@ -392,7 +392,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 			if lowered, isCaught := l.caughtInstanceOfError(node); isCaught {
 				return lowered, nil
 			}
-			return nil, l.notYet(node, "instanceof, but on what a catch caught, against Error")
+			return l.classInstanceOf(node)
 		}
 		left, err := l.expression(binary.Left)
 		if err != nil {

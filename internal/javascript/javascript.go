@@ -71,6 +71,18 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
+	if len(program.Classes) > 0 {
+		builder.WriteString("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot](value, ...args);\n")
+		classes := []string{}
+		for _, class := range program.Classes {
+			methods := []string{}
+			for _, method := range class.Methods {
+				methods = append(methods, functionName(program, method))
+			}
+			classes = append(classes, fmt.Sprintf("{base: %d, methods: [%s], definition: %d}", class.Base, strings.Join(methods, ", "), class.Definition))
+		}
+		fmt.Fprintf(&builder, "const adamicClasses = [%s];\n", strings.Join(classes, ", "))
+	}
 	for index, local := range program.Locals {
 		if local.Global {
 			fmt.Fprintf(&builder, "let %s;\nlet %s = false;\n", emitter.name(index), readyName(index))
@@ -494,7 +506,16 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(" + operator + e.value(expression.Operand) + ")"
 	case ir.Binary:
 		return "(" + e.value(expression.Left) + " " + operators[expression.Operator] + " " + e.value(expression.Right) + ")"
+	case ir.InstanceOf:
+		return fmt.Sprintf("adamicInstanceOf(%s, %d)", e.value(expression.Value), expression.Class)
 	case ir.Call:
+		if expression.Virtual != 0 {
+			arguments := []string{e.value(expression.Arguments[0]), strconv.Itoa(expression.Virtual - 1)}
+			for _, argument := range expression.Arguments[1:] {
+				arguments = append(arguments, e.value(argument))
+			}
+			return "adamicVirtual(" + strings.Join(arguments, ", ") + ")"
+		}
 		return functionName(e.program, expression.Function) + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberToString:
 		return "String(" + e.value(expression.Value) + ")"
@@ -529,7 +550,11 @@ func (e *emitter) value(expression ir.Expression) string {
 		for _, field := range expression.Fields {
 			fields = append(fields, quote(field.Name)+": "+e.value(field.Value))
 		}
-		return "({" + strings.Join(fields, ", ") + "})"
+		object := "({" + strings.Join(fields, ", ") + "})"
+		if expression.Class != 0 {
+			return fmt.Sprintf("adamicClass(%s, %d)", object, expression.Class)
+		}
+		return object
 	case ir.Property:
 		if expression.Optional {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
