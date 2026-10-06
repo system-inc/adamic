@@ -1,0 +1,70 @@
+[
+  {
+    "Source": "x => x + 1",
+    "Reason": "ArrowFunction"
+  },
+  {
+    "Source": "({x:1})",
+    "Reason": "ObjectLiteralExpression"
+  },
+  {
+    "Source": "a=b",
+    "Reason": "EqualsToken"
+  },
+  {
+    "Source": "a?b:c",
+    "Reason": "ConditionalExpression"
+  },
+  {
+    "Source": "`a${b}`",
+    "Reason": "TemplateExpression"
+  },
+  {
+    "Source": "(function () {return 1;})",
+    "Reason": "FunctionExpression"
+  },
+  {
+    "Source": "a.b()",
+    "Reason": "call-callee-layout"
+  },
+  {
+    "Source": "f([1,2])",
+    "Reason": "expanded-call-argument"
+  },
+  {
+    "Source": "f<T>(x)",
+    "Reason": "type-arguments"
+  },
+  {
+    "Source": "a as T",
+    "Reason": "AsExpression"
+  },
+  {
+    "Source": "a /* comment */ + b",
+    "Reason": "comment-attachment"
+  },
+  {
+    "Source": "a +\n\n b",
+    "Reason": "source-trivia"
+  },
+  {
+    "Source": "a; b",
+    "Reason": "expression-file"
+  },
+  {
+    "Source": "`a\nb`",
+    "Reason": "template-literal-layout"
+  },
+  {
+    "Source": "'a\\\nb'",
+    "Reason": "string-literal-layout"
+  },
+  {
+    "Source": "(a?.b).c",
+    "Reason": "optional-chain-parentheses"
+  },
+  {
+    "Source": "[1,\n    \n2]",
+    "Reason": "source-trivia"
+  }
+]

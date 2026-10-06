@@ -1,0 +1,40 @@
+{
+  "texts": 149852,
+  "width": 80,
+  "runs": 3,
+  "method": "sequential complete batch processes including input, output and startup",
+  "samples": {
+    "native": {
+      "seconds": [
+        1.8025663860025816,
+        1.8001595130044734,
+        1.7818374959970242
+      ],
+      "median_texts_per_second": 83243.73418991988
+    },
+    "Node": {
+      "seconds": [
+        1.3271028750023106,
+        1.4308061990013812,
+        1.4194149339964497
+      ],
+      "median_texts_per_second": 105573.07550518897
+    },
+    "Go": {
+      "seconds": [
+        1.8747809090054943,
+        1.8166025890022865,
+        1.7753990549972514
+      ],
+      "median_texts_per_second": 82490.2490545836
+    },
+    "Prettier": {
+      "seconds": [
+        42.6537730140044,
+        42.86927121599729,
+        42.12347436800337
+      ],
+      "median_texts_per_second": 3513.2179268361438
+    }
+  }
+}

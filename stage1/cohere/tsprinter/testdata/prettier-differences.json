@@ -1,0 +1,8 @@
+[
+  {
+    "Label": "FunctionExpression",
+    "Source": "(function () {return 1;})",
+    "Go": "(function() {\n    return 1;\n});\n",
+    "Prettier": "(function () {\n    return 1;\n});\n"
+  }
+]
