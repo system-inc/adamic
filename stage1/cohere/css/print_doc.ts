@@ -5,7 +5,12 @@ import { wideStarts, wideEnds, emojiPatternSource, narrowEmojiPatternSource } fr
 const emojis = new RegExp(emojiPatternSource, 'gu');
 const narrow = new RegExp(narrowEmojiPatternSource, 'u');
 export function stringWidth(text: string): number {
-    if(!/[^\x20-\x7f]/.test(text)) return text.length;
+    let ascii = true;
+    for(let i = 0; i < text.length; i++) {
+        const c = text.charCodeAt(i);
+        if(c < 0x20 || c > 0x7f) { ascii = false; break; }
+    }
+    if(ascii) return text.length;
     let mapped = '';
     for(let i = 0; i < text.length; i++) {
         const c = text.charCodeAt(i);
@@ -42,8 +47,13 @@ export class DocNode {
     readonly parts: number[];
     readonly text: string;
     broken: boolean;
+    private cachedWidth = -1;
     constructor(kind: string, parts: number[], text: string = '', broken: boolean = false) {
         this.kind = kind; this.parts = parts; this.text = text; this.broken = broken;
+    }
+    width(): number {
+        if(this.cachedWidth < 0) this.cachedWidth = stringWidth(this.text);
+        return this.cachedWidth;
     }
 }
 type Command = { readonly doc: number; readonly indent: number; readonly flat: boolean; readonly offset: number };
@@ -89,15 +99,13 @@ export class Documents {
         return broken;
     }
     fits(next: Command, rest: readonly Command[], remaining: number, suffix: boolean, mustFlat: boolean): boolean {
-        const stack: Command[] = [next]; let ri = rest.length; let pending = false; let trailing = 0;
+        const stack: Command[] = [next]; let ri = rest.length; let pending = false;
         while(remaining >= 0) {
             if(stack.length === 0) { if(ri === 0) return true; ri--; stack.push(rest[ri] ?? panic('fit rest')); continue; }
             const c = stack.pop() ?? panic('fit command'); const n = this.at(c.doc);
             if(n.kind === 'text') {
-                if(n.text !== '') { if(pending) { trailing++; remaining--; pending = false; }
-                    let end = n.text.length; while(end > 0 && /[ \t]/.test(n.text.slice(end - 1, end))) end--;
-                    trailing = end === 0 ? trailing + n.text.length : n.text.length - end;
-                    remaining -= stringWidth(n.text);
+                if(n.text !== '') { if(pending) { remaining--; pending = false; }
+                    remaining -= n.width();
                 }
             } else if(n.kind === 'group') {
                 if(mustFlat && n.broken) return false;
@@ -120,7 +128,7 @@ export class Documents {
         let result = ''; let column = 0; let remeasure = false;
         while(stack.length > 0) {
             const c = stack.pop() ?? panic('print command'); const n = this.at(c.doc);
-            if(n.kind === 'text') { result += n.text; if(stack.length > 0) column += stringWidth(n.text); }
+            if(n.kind === 'text') { result += n.text; if(stack.length > 0) column += n.width(); }
             else if(n.kind === 'indent' || n.kind === 'dedent') stack.push(command(n.parts[0] ?? 0, Math.max(0, c.indent + (n.kind === 'indent' ? 1 : -1)), c.flat));
             else if(n.kind === 'group') {
                 let flat = c.flat && !remeasure && !n.broken;
@@ -148,7 +156,13 @@ export class Documents {
                     if(c.flat) remeasure = true;
                     if(suffix.length > 0) { stack.push(c); for(let i = suffix.length - 1; i >= 0; i--) stack.push(suffix[i] ?? panic('suffix')); suffix.splice(0); }
                     else if(n.kind === 'literal') { result += '\n'; column = 0; }
-                    else { result = result.replace(/[ \t]+$/, ''); result += '\n' + repeatText(tabs ? '\t' : ' ', c.indent * (tabs ? 1 : tabWidth)); column = c.indent * tabWidth; }
+                    else { let end = result.length;
+                        while(end > 0 && (result.charCodeAt(end - 1) === 32 || result.charCodeAt(end - 1) === 9)) end--;
+                        // Concatenate directly after trimming: appending to a shared slice currently
+                        // underflows the runtime's capacity check (gaps/7_shared_slice_append.ts).
+                        const newline = '\n' + repeatText(tabs ? '\t' : ' ', c.indent * (tabs ? 1 : tabWidth));
+                        if(end !== result.length) result = result.slice(0, end) + newline;
+                        else result += newline; column = c.indent * tabWidth; }
                 }
             } else if(n.kind !== 'break') { for(let i = n.parts.length - 1; i >= 0; i--) stack.push(command(n.parts[i] ?? 0, c.indent, c.flat)); }
             if(stack.length === 0 && suffix.length > 0) { for(let i = suffix.length - 1; i >= 0; i--) stack.push(suffix[i] ?? panic('suffix')); suffix.splice(0); }

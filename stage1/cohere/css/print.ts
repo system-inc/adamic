@@ -10,6 +10,7 @@ import { Documents } from './print_doc.ts';
 import { Node, Path, lower, maybeLower, inlineLast, emptyBefore, control, placeholder, operator, word, valueWord, inlineValue, pair, parenPair, parens, mapItem, breakList, precedeSoft, hasNewline, nextEmpty } from './print_utilities.ts';
 export type PrintOptions = { readonly width: number; readonly tabWidth: number; readonly tabs: boolean; readonly single: boolean; readonly trailingComma: string };
 export const defaults: PrintOptions = {width: 80, tabWidth: 2, tabs: false, single: false, trailingComma: 'all'};
+const knownUnits: readonly string[] = 'em rem ex rex cap rcap ch rch ic ric lh rlh vw svw lvw dvw vh svh lvh dvh vi svi lvi dvi vb svb lvb dvb vmin svmin lvmin dvmin vmax svmax lvmax dvmax cm mm q in pt pc px deg grad rad turn s ms hz khz dpi dpcm dppx x cqw cqh cqi cqb cqmin cqmax fr'.split(' ');
 export class Printer {
     readonly tree: Tree;
     readonly text: string;
@@ -117,7 +118,7 @@ export class Printer {
                 number = number.replace(/\.0($|e)/, '$1');
                 const rawUnit = n.string('unit');
                 const lowerUnit = lower(rawUnit);
-                const known = 'em rem ex rex cap rcap ch rch ic ric lh rlh vw svw lvw dvw vh svh lvh dvh vi svi lvi dvi vb svb lvb dvb vmin svmin lvmin dvmin vmax svmax lvmax dvmax cm mm q in pt pc px deg grad rad turn s ms hz khz dpi dpcm dppx x cqw cqh cqi cqb cqmin cqmax fr'.split(' ');
+                const known = knownUnits;
                 const unit = !known.includes(lowerUnit) ? rawUnit : lowerUnit === 'q' ? 'Q' : lowerUnit === 'hz' ? 'Hz' : lowerUnit === 'khz' ? 'kHz' : lowerUnit;
                 return d.text(number + unit);
             }

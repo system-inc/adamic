@@ -240,9 +240,12 @@ export function byteSlice(text: string, start: number, end: number = utf8Length(
     const length = utf8Length(text);
     start = start < 0 ? Math.max(0, length + start) : Math.min(start, length);
     end = end < 0 ? Math.max(0, length + end) : Math.min(end, length);
+    if(end <= start) return '';
+    if(length === text.length) return text.slice(start, end);
     let offset = 0;
     let result = '';
     for(const character of text) {
+        if(offset >= end) break;
         const next = offset + utf8Length(character);
         if(offset >= start && next <= end) {
             result += character;

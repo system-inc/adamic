@@ -99,3 +99,21 @@ nonbreaking space 2, YAML 28. Error messages from Prettier's public API include
 code frames and are not compared with Go's internal error API. Go errors and
 positions are held exactly. JSON escaping differences are decoded before
 comparing formatted string bytes. No arbitrary invalid-UTF-8 output is promised.
+
+## 7. Appending to a shared string slice
+
+[gaps/7_shared_slice_append.ts](gaps/7_shared_slice_append.ts) prints `1152`
+on Node. Native ASan reports `heap-buffer-overflow` in `adamic_string_put`,
+called by `adamic_string_append`. The append must occur inside a function:
+top-level globals currently concatenate rather than use the append fast path.
+`TestSharedSliceAppendGap` proves both observations and fails if the gap closes.
+
+The runtime condition in `internal/native/runtime/string_append.c` subtracts
+`length` from unsigned `capacity` without first checking `capacity >= length`.
+A shared slice has capacity zero and positive length. That subtraction wraps,
+so its sole reference incorrectly permits a write into the owner's bytes.
+The CSS printer concatenates the trimmed slice and newline directly, then
+continues appending to the new owned string. The runtime is unchanged in this
+unit. The unsafe candidate was rejected; its apparent profile speedup is not
+reported as a valid result. See `PERFORMANCE.md` for sanitizer evidence and a
+proposed runtime fix.
