@@ -1379,7 +1379,8 @@ export class Parser {
             peek: () => this.peek(),
             nextIdentifierSameLine: () => this.nextIdentifierSameLine(),
             propertyName: () => this.propertyName(),
-            methodBody: (pos, prefix, kind, async, generator) => this.methodBody(pos, prefix, kind, async, generator),
+            methodBody: (pos, prefix, kind, async, generator) =>
+                this.methodBody(pos, prefix, kind, async, generator, true),
             primary: () => this.primary(),
             suffix: (expression, call) => this.suffix(expression, call),
             typeLiteral: () => this.typeLiteral(),
@@ -1696,7 +1697,14 @@ export class Parser {
         }
         return this.identifier();
     }
-    methodBody(pos: number, prefix: readonly number[], kind: string, async: boolean, generator: boolean): number {
+    methodBody(
+        pos: number,
+        prefix: readonly number[],
+        kind: string,
+        async: boolean,
+        generator: boolean,
+        classMember: boolean,
+    ): number {
         const children = prefix.slice();
         const oldAwait = this.awaitContext;
         const oldYield = this.yieldContext;
@@ -1717,8 +1725,20 @@ export class Parser {
         if(this.kind() === 'OpenBraceToken') {
             children.push(this.block());
         }
-        else {
+        else if(
+            this.kind() === 'SemicolonToken' ||
+            this.kind() === 'CloseBraceToken' ||
+            this.kind() === 'EndOfFile' ||
+            (this.scanner.flags & 1) !== 0
+        ) {
             this.semicolon();
+        }
+        else if(classMember) {
+            this.error(1144, "'{' or ';' expected.");
+            children.push(this.make('Block', this.scanner.fullStart));
+        }
+        else {
+            children.push(this.block());
         }
         this.disallowIn = oldIn;
         this.awaitContext = oldAwait;
@@ -1772,7 +1792,7 @@ export class Parser {
             children.push(this.token());
         }
         if(this.kind() === 'OpenParenToken' || this.kind() === 'LessThanToken') {
-            return this.methodBody(start, children, methodKind, async, generator);
+            return this.methodBody(start, children, methodKind, async, generator, false);
         }
 
         const assignment = !identifier || this.kind() === 'ColonToken';

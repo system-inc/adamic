@@ -563,3 +563,10 @@ Input 2578 skipped tokens after the last recovered object member. Go computes
 HasTrailingComma from the last node end versus the list end, rather than from
 the last literal comma. Delimited lists now use the same comparison. Four
 additional recovery probes and preceding cases pass in 34.917s; cohere passes.
+
+## Continued recovery: missing method bodies
+
+Inputs 2578 through 2581 exposed empty method-body nodes after malformed
+signatures. Methods now distinguish automatic semicolons from required
+bodies and retain the missing Block, with the object/class diagnostic choice.
+Four added probes and preceding cases pass in 36.039s; cohere passes.
