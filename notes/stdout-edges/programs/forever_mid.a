@@ -1,0 +1,7 @@
+// Lines forever, so a signal can arrive while lines are still being written.
+let line = 0;
+while (line >= 0) {
+	console.log(`line ${line}`);
+	console.error(`err ${line}`);
+	line += 1;
+}

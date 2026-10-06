@@ -1,0 +1,6 @@
+// The text argument alone is a spread. The path is a plain string.
+import { writeTextFile } from 'adamic';
+
+const text: [string] = ['text'];
+const result = writeTextFile('/tmp/adamic-spread-text.txt', ...text);
+console.log(result.kind === 'Ok' ? 'ok' : result.message);
