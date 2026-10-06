@@ -1,0 +1,4 @@
+/*---
+features: [Proxy]
+---*/
+new Proxy({}, {});
