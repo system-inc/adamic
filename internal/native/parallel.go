@@ -15,6 +15,7 @@ func (e *emitter) parallelMap(expression ir.ParallelMap) string {
 	adapter := e.temporary() + "_parallel"
 	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_value %s(adamic_closure *self, adamic_value *arguments) {\n\tadamic_closure *work = self->cells[0]->value.reference;\n\treturn work->code(work, arguments);\n}\n", adapter))
 	work := e.own(ir.Closure, fmt.Sprintf("adamic_closure_new(%s, %d)", adapter, len(expression.Shared)+1))
+	e.line("%s->result_references = %t;", work, expression.Result.IsReference())
 	e.line("%s->cells[0] = adamic_cell_new((adamic_value){.reference = %s}, true);", work, retained(original))
 	for index, global := range expression.Shared {
 		value := e.value(global)

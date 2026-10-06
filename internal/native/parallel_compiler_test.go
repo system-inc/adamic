@@ -17,6 +17,9 @@ func TestParallelMapCompilerABI(t *testing.T) {
 	if !strings.Contains(code, "work->code(work, arguments)") {
 		t.Fatal("adapter must call the original closure with its original self")
 	}
+	if !strings.Contains(code, "->result_references = false;") {
+		t.Fatal("numeric result metadata missing")
+	}
 	if strings.Count(code, "adamic_parallel_map(") != 1 {
 		t.Fatal("want exactly one runtime call")
 	}

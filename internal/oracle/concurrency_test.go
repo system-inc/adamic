@@ -41,7 +41,21 @@ func TestConcurrencyAgreesWithNode(t *testing.T) {
 			if difference := disagreement(oracle, backend); difference != "" {
 				t.Fatalf("%s: Node %d %q %q, backend %d %q %q", difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
 			}
-			t.Run("native", func(t *testing.T) { concurrencyRuntimePending(t) })
+			t.Run("native", func(t *testing.T) {
+				concurrencyRuntimePending(t)
+				observed, sanitized := natively(t, program)
+				if difference := disagreement(oracle, observed); difference != "" {
+					t.Fatalf("%s: Node %d %q %q, native %d %q %q", difference, oracle.exitCode, oracle.stdout, oracle.stderr, observed.exitCode, observed.stdout, observed.stderr)
+				}
+				if difference := disagreement(oracle, released(t, program)); difference != "" {
+					t.Fatal("release build: " + difference)
+				}
+				if oracle.exitCode == 0 {
+					if report := leaks(t, program, sanitized); report != "" {
+						t.Fatal(report)
+					}
+				}
+			})
 		})
 	}
 }
