@@ -7,6 +7,9 @@ parser = argparse.ArgumentParser(description="Compare runtime concurrency agains
 parser.add_argument("baseline", type=Path)
 parser.add_argument("output", type=Path)
 parser.add_argument("--threads", default="1,2,4")
+parser.add_argument("--programs", default="nbody,trees,spectral_norm,sort,word_count,tokenizer")
+parser.add_argument("--prepare-only", action="store_true")
+parser.add_argument("--noise", action="store_true", help="Measure baseline against itself, two interleaved sets of five")
 args = parser.parse_args()
 root = Path(__file__).resolve().parents[4]
 baseline = args.baseline.resolve()
@@ -17,7 +20,7 @@ for version, checkout in [("main", baseline), ("concurrency", root)]:
     subprocess.run(["go", "build", "-buildvcs=false", "-o", str(out / (version + ".compiler")), "./cmd/adamic"], cwd=checkout, check=True)
 flags=['clang','-std=c11','-O2','-pthread','-ffp-contract=off','-fno-optimize-sibling-calls','-I',str(root/'internal/native/runtime'),str(root/'internal/native/testdata/parallel/map.c')]+[str(f) for f in (root/'internal/native/runtime').glob('*.c')]+['-lm','-o',str(out/'map')]
 subprocess.run(flags,check=True)
-for name in ['nbody','trees','spectral_norm','sort','word_count','tokenizer']:
+for name in args.programs.split(","):
  for version in ['main','concurrency']:
   compiler=str(out / (version + '.compiler'))
   for counted in [False,True]:
@@ -26,6 +29,9 @@ for name in ['nbody','trees','spectral_norm','sort','word_count','tokenizer']:
    if counted:cmd+=['--count']
    subprocess.run(cmd,check=True)
  print('prepared',name,flush=True)
+
+if args.prepare_only:
+ raise SystemExit(0)
 
 base=out
 
@@ -43,7 +49,7 @@ for mode in ['million','strings']:
    print('parallel',mode,'round',round+1,'threads',threads,'map',measured,'wall',elapsed,flush=True)
  if len(set(outputs.values()))!=1:raise RuntimeError('parallel outputs disagree')
  data['parallel'][mode]={'samples':samples,'stdout':next(iter(outputs.values()))}
-for name in ['nbody','trees','spectral_norm','sort','word_count','tokenizer']:
+for name in args.programs.split(","):
  samples={version:[] for version in ['main','concurrency']};outputs={};counts={}
  for round in range(5):
   for version in ['main','concurrency'] if round%2==0 else ['concurrency','main']:
@@ -56,6 +62,17 @@ for name in ['nbody','trees','spectral_norm','sort','word_count','tokenizer']:
   counts[version]=r.stderr.strip();print('counts',name,version,r.stderr.strip(),flush=True)
  if counts['main']!=counts['concurrency']:raise RuntimeError(name+' counts disagree')
  data['sequential'][name]={'samples':samples,'counts':counts['main'],'stdout':outputs['main']}
+if args.noise:
+ data['noise'] = {}
+ for name in args.programs.split(","):
+  samples = {label: [] for label in ['a', 'b']}
+  for round in range(5):
+   for label in ['a', 'b'] if round % 2 == 0 else ['b', 'a']:
+    before = time.perf_counter()
+    subprocess.run([str(base / (name + '.main'))], capture_output=True, check=True, timeout=120)
+    samples[label].append(time.perf_counter() - before)
+  data['noise'][name] = samples
+  print('noise', name, samples, flush=True)
 data['load_after']=load()
 (base/'measurements.json').write_text(json.dumps(data,indent=2))
 print('load before',data['load_before'],'load after',data['load_after'])
@@ -80,4 +97,12 @@ for harness, mode in [("retain", []), ("weak_cost", []), ("weak_cost", ["held"])
  label = harness + ("_held" if mode else "")
  data[label] = {"samples": samples, "load_before": before_load, "load_after": load()}
  print(label, "best", {v: min(s) for v, s in samples.items()}, flush=True)
+ if args.noise and harness == "retain":
+  noise = {label: [] for label in ["a", "b"]}
+  for round in range(5):
+   for sample in ["a", "b"] if round % 2 == 0 else ["b", "a"]:
+    result = subprocess.run([str(out / (harness + ".main"))], capture_output=True, text=True, check=True)
+    noise[sample].append(float(result.stdout))
+  data[label]["noise"] = noise
+  print('noise retain', noise, flush=True)
 (base / "measurements.json").write_text(json.dumps(data, indent=2))

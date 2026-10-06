@@ -135,3 +135,7 @@ On the 16-core Mac, pass `--threads 1,2,16` and use its Go/clang toolchain for b
 - The final evidence commit adds this report, raw samples, the Weak cost harness and portable runner.
 
 Everything is pushed on `codex/concurrency`; no PR opened. This runtime unit does not implement Shareable/purity checks, Node/front-end handling, native source lowering, the parallel oracle variant, or the cohere-shaped source benchmark. Those remain with the other worker/third pass by agreement. Existing oracle fixtures pass, but the new parallel behaviors are proven here from C, not from Node comparisons. macOS, cgroup v1 fallback and nested cgroup mount layouts were not validated on this machine; TSan evidence is Linux only. A whole-repository `go test ./...` and a contended Weak performance measurement were not run.
+
+## Inline count follow-up
+
+The original timing regressions above are historical. The requested branch merges, inline count path, new slab controls and repeat measurements are recorded in [concurrency-inline.md](concurrency-inline.md).
