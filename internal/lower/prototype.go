@@ -84,6 +84,9 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 	default:
 		return nil, false, nil
 	}
+	if l.regexGroups(receiver) {
+		return nil, true, l.notYet(node, name+" on RegExp named groups (the dictionary has a null prototype, so inherited Object methods throw TypeError on Node)")
+	}
 	if name == "isPrototypeOf" {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant"}
 	}

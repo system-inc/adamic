@@ -31,3 +31,16 @@ Both supplied fixtures passed uncached Node/native/release/backend comparison
 (0.439s). Mutant returning the native own-slot answer again: stdout differs
 on both native and JavaScript backend. Node prints `false false`, `true true`,
 `false false false`; mutant prints `true true`, `true true`, `true false false`.
+
+## 3. Null-prototype named groups
+
+Known RegExp named-group dictionaries now refuse inherited Object calls with
+an explicit NotYet reason: null prototype and Node TypeError. Both supplied
+probes are registered as refusals and independently require that reason.
+When the guard is mutated away, the refusal check executes the accepted
+artifact against Node. Both probes fail only by behavior comparison:
+Node exits 70 through the oracle wrapper's TypeError handling; native exits 0
+printing `true` and `[object Object]`, or just `[object Object]`.
+Uncached targeted tests passed (0.123s); mutant caught in 1.290s.
+This does not implement catchable native TypeError or arbitrary prototype
+chains. No RegExp runtime or lowering file changed.
