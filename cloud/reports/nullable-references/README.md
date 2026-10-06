@@ -2,7 +2,7 @@
 
 Built one nullable pointer path with an instantiated static empty case.
 Core commit: 1a9c637cf3556f14462dcf8798cb41ff30bfbb4c; fixtures: b8727ba.
-Validation commands and captured outputs appear below.
+Validation: touched packages passed; the full gate was stopped after 19 minutes.
 All seven requested mutants and three additional mutants failed semantically.
 Unnarrowed non-string coercion and structural object/class JSON remain NotYet.
 
@@ -54,6 +54,18 @@ not a claim that all requested present-value operations are implemented.
 Console array/object formatting was explicitly excluded by the user. Non-null
 assertions, loose equality and non-boolean conditions retain existing refusals.
 
-Observed so far: gofmt and vet produced no output and exited zero. The uncached
+Observed: gofmt and vet produced no output and exited zero. The uncached
 nullable oracle passed in 7.720 seconds. The complete counts update passed in
 83.591 seconds and changed only the four new rows.
+
+
+The full worker command was stopped deliberately with SIGTERM after 19 minutes
+(exit 143), using the brief's allowance for a slow full gate. This is not a green
+complete gate. `worker-gate.log` records completed packages: lowering passed in
+45.969 seconds, native in 654.029 seconds, the complete oracle in 299.294 seconds,
+and loading in 5.456 seconds. IR and JavaScript built and have no package tests.
+Flow, freshness, fuzz, regexp and the test262 command package also passed.
+The still-active checks were internal Unicode properties and stage-1 cohere JSON
+and parser tests. Their process group was stopped, including children. No failure
+had been reported, but their final results are not known. Integration must run the
+complete uncached gate before main moves.
