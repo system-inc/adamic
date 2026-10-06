@@ -38,6 +38,12 @@ var fixtures = []struct {
 	checked bool
 }{
 	{"dedication/dedication.a", true, false},
+	// October 6 coverage: deeper dispatch, field order, ownership and subclass holders.
+	{"internal/oracle/testdata/class_oct6_deep.a", true, false},
+	{"internal/oracle/testdata/class_oct6_parameters.a", true, false},
+	{"internal/oracle/testdata/class_oct6_release.a", true, false},
+	{"internal/oracle/testdata/class_oct6_subclass_holder.a", true, false},
+
 	{"internal/load/testdata/0.1/compile/01_hello.ts", true, false},
 	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true, false},
 	{"internal/load/testdata/0.1/compile/03_shapes.ts", true, false},

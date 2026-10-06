@@ -1,0 +1,15 @@
+class Base {
+    readonly base = `base${1}`;
+    constructor() { this.report(); }
+    report(): void { console.log(`base report ${this.base}`); }
+}
+class Middle extends Base {
+    readonly middle = `middle${2}`;
+    override report(): void { console.log(`middle report ${this.base}/${this.middle}`); }
+}
+class Leaf extends Middle {
+    readonly leaf = `leaf${3}`;
+    override report(): void { console.log(`leaf report ${this.base}/${this.middle}/${this.leaf}`); }
+}
+const leaf = new Leaf();
+leaf.report();
