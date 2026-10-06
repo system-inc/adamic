@@ -103,11 +103,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if err := l.classViewRefusal(node); err != nil {
+		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
+		if err := l.refuseWidening(node); err != nil {
 			found = err
 			return true
 		}
-		if err := l.refuseWidening(node); err != nil {
+		if err := l.classViewRefusal(node); err != nil {
 			found = err
 			return true
 		}
