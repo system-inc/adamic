@@ -28,7 +28,8 @@ func (l *lowering) narrowedAway(node *ast.Node) bool {
 	if symbol == nil {
 		return false
 	}
-	return l.includesUndefined(l.checker.GetTypeOfSymbol(symbol)) && !l.includesUndefined(l.checker.GetTypeAtLocation(node))
+	declared, here := l.checker.GetTypeOfSymbol(symbol), l.checker.GetTypeAtLocation(node)
+	return (l.includesUndefined(declared) && !l.includesUndefined(here)) || (l.includesNull(declared) && !l.includesNull(here))
 }
 
 // defined checks a reference the checker narrowed undefined out of. Read through a property next,
@@ -38,16 +39,28 @@ func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
 	if !value.Type().IsReference() || value.Type() == ir.Union || !l.narrowedAway(node) || comparedWithUndefined(node) {
 		return value
 	}
-	message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
+	null := false
+	at := node
+	if node.Kind == ast.KindPropertyAccessExpression {
+		at = node.Name()
+	}
+	if symbol := l.checker.GetSymbolAtLocation(at); symbol != nil {
+		null = l.includesNull(l.checker.GetTypeOfSymbol(symbol))
+	}
+	absent := "undefined"
+	if null {
+		absent = "null"
+	}
+	message := absent + " where the checker narrowed it away: a call since the narrowing put it back"
 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
 		if written := parent.Parent; written != nil && written.Kind == ast.KindBinaryExpression && written.AsBinaryExpression().Left == parent && written.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 			// object.name = value: JavaScript evaluates the value first and throws at the write, so
 			// the check is the write's own (native checks the object there; JavaScript throws).
 			return value
 		}
-		message = "TypeError: Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
+		message = "TypeError: Cannot read properties of " + absent + " (reading '" + parent.Name().Text() + "')"
 	}
-	return ir.Defined{Value: value, Message: message}
+	return ir.Defined{Value: value, Message: message, Null: null}
 }
 
 // comparedWithUndefined reports whether node is one side of === or !== with undefined on the other:
@@ -70,5 +83,5 @@ func comparedWithUndefined(node *ast.Node) bool {
 		other = binary.Left
 	}
 	other = ast.SkipParentheses(other)
-	return other.Kind == ast.KindIdentifier && other.Text() == "undefined"
+	return other.Kind == ast.KindNullKeyword || (other.Kind == ast.KindIdentifier && other.Text() == "undefined")
 }

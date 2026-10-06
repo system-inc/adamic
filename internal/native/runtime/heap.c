@@ -278,6 +278,7 @@ static void free_one(void *value) {
 				let_go(array->elements[index].reference);
 			}
 		}
+		let_go(array->properties);
 		free(array->elements);
 		break;
 	}

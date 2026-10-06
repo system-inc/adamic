@@ -16,6 +16,9 @@ type Program struct {
 	// Strings are the program's string constants, as UTF-8, in first-use order.
 	Strings []string
 
+	// Regexps contain immutable C bytecode compiled during lowering.
+	Regexps []RegExpProgram
+
 	// Locals are every variable the program declares, each its own, so shadowing is already resolved.
 	Locals []Local
 
@@ -327,6 +330,7 @@ type (
 	// Unwrap: undefined there panics with Message. Where the value is about to be read through a
 	// property, Message is the TypeError JavaScript throws there, so the check is what Node does.
 	Defined struct {
+		Null    bool
 		Value   Expression
 		Message string
 	}
@@ -977,6 +981,9 @@ type (
 		// Pattern, when set, destructures each element, a tuple, into locals: for (const [a, b] of
 		// pairs). Local is unused then.
 		Pattern []Binding
+
+		// RegexIterator consumes lazy RegExp matchAll results.
+		RegexIterator bool
 
 		// Over a Map, MapPart is what each step gives: "entries" ([key, value], destructured by
 		// Pattern), "keys" or "values" (in Local), with Key and Value the map's types.

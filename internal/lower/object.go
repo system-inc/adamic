@@ -187,7 +187,13 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
-	arrayType := l.checker.GetTypeAtLocation(node)
+	arrayType := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))
+	if l.isLibraryType(arrayType, "RegExpExecArray", "RegExpMatchArray") {
+		return ir.String, nil
+	}
+	if l.isLibraryType(arrayType, "RegExpIndicesArray") {
+		return ir.Object, nil
+	}
 	if literal := ast.SkipParentheses(node); literal.Kind == ast.KindArrayLiteralExpression {
 		// [] is never[] to the checker; what it will hold is the type it's written into, as in
 		// const values: number[] = []. So is [node] written into a Weak<Node>[]: its elements are
@@ -264,12 +270,68 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if object.Type() == ir.Object && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "RegExp") {
+		switch name {
+		case "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll":
+		default:
+			return nil, l.notYet(node, "a prototype property on a RegExp")
+		}
+	}
+	if object.Type() == ir.Object && l.regexGroups(access.Expression) {
+		of, err := l.typeOf(node)
+		if err != nil {
+			return nil, err
+		}
+		if of != ir.String && of != ir.Object {
+			return nil, l.notYet(node, "a named-group key with an Object-prototype type")
+		}
+		return ir.RegExpGroup{Object: object, Name: name, Of: of, Optional: access.QuestionDotToken != nil}, nil
+	}
+	if object.Type() == ir.Object && name == "done" {
+		proven := l.checker.GetTypeAtLocation(access.Expression)
+		members := []*checker.Type{proven}
+		if proven.Flags()&checker.TypeFlagsUnion != 0 {
+			members = proven.Types()
+		}
+		iterator := true
+		for _, member := range members {
+			iterator = iterator && l.isLibraryType(member, "IteratorYieldResult", "IteratorReturnResult")
+		}
+		if iterator {
+			of, e := l.typeOf(node)
+			return ir.RegExpCall{Value: object, Method: "iteratorDone", Returns: of}, e
+		}
+	}
 	if access.QuestionDotToken != nil && (object.Type() == ir.Array || object.Type() == ir.String) && name == "length" {
 		// words?.length and text?.length: undefined where the array or string is, a number | undefined.
 		if object.Type() == ir.Array {
 			return ir.Length{Array: object, Optional: true}, nil
 		}
 		return ir.StringLength{Value: object, Optional: true}, nil
+	}
+	if object.Type() == ir.Array && name != "length" && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
+		of, e := l.typeOf(node)
+		if e != nil {
+			return nil, e
+		}
+		switch name {
+		case "index", "input", "groups", "indices":
+		default:
+			return nil, l.notYet(node, "a prototype property on a RegExp result")
+		}
+		stored := of
+		if name == "index" {
+			if l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "RegExpMatchArray") {
+				stored = ir.MaybeNumber
+			} else {
+				stored = ir.Number
+			}
+		}
+		result := ir.Expression(ir.RegExpProperty{Array: object, Name: name, Of: stored, Optional: access.QuestionDotToken != nil})
+		if stored == ir.MaybeNumber && of == ir.Number {
+			result = ir.Unwrap{Value: result}
+		}
+		return result, nil
 	}
 	if access.QuestionDotToken != nil && object.Type() != ir.Object {
 		return nil, l.notYet(node, "optional chaining to ."+name+" on a "+typeName(object.Type()))
@@ -357,6 +419,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, matched, err := l.regexBuiltin(node); matched {
+		return value, true, err
+	}
 	if lowered, isInput, err := l.input(node); isInput {
 		return lowered, true, err
 	}
@@ -599,10 +664,15 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		element = ir.String
 	case ir.Map:
 		return l.forOfMap(node, iterable, iterated, mapPart, name)
+	case ir.Object:
+		if !l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(iterated)), "RegExpStringIterator") {
+			return nil, l.notYet(iterated, "for...of over an object")
+		}
+		element = ir.Array
 	default:
 		return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
 	}
-	lowered := ir.ForOf{Iterable: iterable, Element: element}
+	lowered := ir.ForOf{Iterable: iterable, Element: element, RegexIterator: iterable.Type() == ir.Object}
 	if ast.IsIdentifier(name) {
 		if lowered.Local, err = l.declareLocal(name); err != nil {
 			return nil, err
@@ -1011,6 +1081,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
+		return l.regexConstant(node)
+	}
 	created := node.AsNewExpression()
 	if declaration, isClass := l.classes[l.symbol(ast.SkipParentheses(created.Expression))]; isClass {
 		return l.construct(node, declaration)
@@ -1283,6 +1356,19 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if object.Type() == ir.Object && l.regexGroups(access.Expression) {
+		if index.Kind != ast.KindStringLiteral {
+			return nil, l.notYet(node, "a computed named-group key")
+		}
+		of, err := l.typeOf(node)
+		if err != nil {
+			return nil, err
+		}
+		if of != ir.String && of != ir.Object {
+			return nil, l.notYet(node, "a named-group key with an Object-prototype type")
+		}
+		return ir.RegExpGroup{Object: object, Name: index.Text(), Of: of, Optional: optional}, nil
 	}
 	if optional && object.Type() != ir.Object {
 		// text?.[0] on a string that may be missing: indexing it as a string would read a null one.

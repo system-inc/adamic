@@ -40,7 +40,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.String, true
 	case flags&checker.TypeFlagsBooleanLike != 0:
 		return ir.Boolean, true
-	case flags&checker.TypeFlagsObject != 0 && l.checker.IsArrayType(proven):
+	case flags&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(proven) || l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray")):
 		return ir.Array, true
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		// A Set is held as a Map whose values aren't used (set.go).
@@ -51,10 +51,21 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
+		if l.includesNull(proven) {
+			// A nullable match result uses NULL. A type also holding undefined needs a tag.
+			if l.includesUndefined(proven) {
+				return 0, false
+			}
+			for _, member := range proven.Types() {
+				if member.Flags()&checker.TypeFlagsNull == 0 && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray") {
+					return 0, false
+				}
+			}
+		}
 		var shared ir.Type
 		mixed, weak := false, false
 		for _, member := range proven.Types() {
-			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
 				// undefined joins a union of references as a null pointer; it's checked below that
 				// the rest are references.
 				continue
@@ -119,9 +130,24 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 	return false
 }
 
+func (l *lowering) includesNull(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsUnion == 0 {
+		return proven.Flags()&checker.TypeFlagsNull != 0
+	}
+	for _, member := range proven.Types() {
+		if l.includesNull(member) {
+			return true
+		}
+	}
+	return false
+}
+
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if err := l.regexUnsupportedUse(node); err != nil {
+		return nil, err
+	}
 	value, err := l.value(node)
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
@@ -267,7 +293,7 @@ func (l *lowering) present(proven *checker.Type) *checker.Type {
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		var only *checker.Type
 		for _, member := range proven.Types() {
-			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
 				continue
 			}
 			if only != nil {
@@ -338,6 +364,10 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
 	switch node.Kind {
+	case ast.KindNullKeyword:
+		return ir.Null{}, nil
+	case ast.KindRegularExpressionLiteral:
+		return l.regexConstant(node)
 	case ast.KindNumericLiteral:
 		return l.numericLiteral(node)
 	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
@@ -470,6 +500,9 @@ func fit(value ir.Expression, to ir.Type) ir.Expression {
 	if to == ir.Union && value != nil && value.Type() != ir.Union {
 		return ir.Box{Value: value}
 	}
+	if _, isNull := value.(ir.Null); isNull && to.IsReference() && to != ir.Union {
+		return ir.Null{Of: to}
+	}
 	if _, isUndefined := value.(ir.Undefined); isUndefined && to.IsReference() && to != ir.Union {
 		// undefined going where a string, an array or a function may be missing is that reference,
 		// missing: typed as it, so the C holding it is.
@@ -563,6 +596,26 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
 	if operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken {
+		_, leftNull := left.(ir.Null)
+		_, rightNull := right.(ir.Null)
+		if leftNull != rightNull {
+			value := left
+			if leftNull {
+				value = right
+			}
+			if !value.Type().IsReference() {
+				return nil, l.notYet(node, "null comparison with a scalar")
+			}
+			operand := node.AsBinaryExpression().Left
+			if leftNull {
+				operand = node.AsBinaryExpression().Right
+			}
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			if operator == ast.KindExclamationEqualsEqualsToken {
+				test = ir.Unary{Operator: ir.Not, Operand: test}
+			}
+			return test, nil
+		}
 		// x === undefined tests for a missing reference, whatever x's type.
 		_, leftUndefined := left.(ir.Undefined)
 		_, rightUndefined := right.(ir.Undefined)
@@ -580,6 +633,13 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 				return nil, l.notYet(node, "comparing a "+typeName(value.Type())+" with undefined")
 			}
 			test := ir.Expression(ir.IsUndefined{Value: value})
+			operand := node.AsBinaryExpression().Left
+			if leftUndefined {
+				operand = node.AsBinaryExpression().Right
+			}
+			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+				test = ir.IsNull{Value: value, AlwaysFalse: true}
+			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}

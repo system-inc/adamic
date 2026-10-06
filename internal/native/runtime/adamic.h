@@ -181,6 +181,8 @@ typedef struct adamic_array {
 	size_t capacity;
 	bool references;
 	adamic_value *elements;
+	// Extra fields of RegExp result arrays, owned and released with the array.
+	adamic_object *properties;
 } adamic_array;
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
@@ -708,5 +710,7 @@ _Noreturn void adamic_stack_overflow(void);
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.
 _Noreturn void adamic_unreachable(void);
+
+#include "regexp.h"
 
 #endif

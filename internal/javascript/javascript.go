@@ -61,6 +61,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// A Map's forEach gives value, key and the map; a Set's gives its element twice and the set.
 	builder.WriteString("const adamicCollectionVisit = (collection, callback) => collection.forEach((value, key, all) => adamicCall(callback, [value, key, all]));\n")
 	builder.WriteString("const adamicFrom = (length, callback) => Array.from({ length }, (element, index) => adamicCall(callback, [element, index]));\n")
+	builder.WriteString("const adamicDefinedNull = (value, message) => value === null ? panic(message) : value;\n")
 	builder.WriteString("const adamicDefined = (value, message) => value === undefined ? panic(message) : value;\n")
 	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
@@ -405,7 +406,7 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 	switch {
 	case statement.MapPart == "keys" || statement.MapPart == "values":
 		e.line("for (const %s of %s.%s()) {", index, held, statement.MapPart)
-	case statement.Iterable.Type() == ir.String || statement.MapPart != "":
+	case statement.Iterable.Type() == ir.String || statement.MapPart != "" || statement.RegexIterator:
 		// A string's code points, or a map's [key, value] entries.
 		e.line("for (const %s of %s) {", index, held)
 	default:
@@ -445,6 +446,35 @@ var operators = map[ir.Operator]string{
 // as the IR means, so nesting expressions keeps every order the native backend makes explicit.
 func (e *emitter) value(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.RegExpNew:
+		if expression.Arguments != nil {
+			return "new RegExp(" + e.values(expression.Arguments) + ")"
+		}
+		r := e.program.Regexps[expression.Index]
+		return "new RegExp(" + quote(r.Pattern) + ", " + quote(r.Flags) + ")"
+	case ir.RegExpCall:
+		if expression.Method == "iteratorDone" {
+			return e.value(expression.Value) + ".done"
+		}
+		return e.value(expression.Value) + "." + expression.Method + "(" + e.values(expression.Arguments) + ")"
+	case ir.RegExpGroup:
+		operator := "["
+		if expression.Optional {
+			operator = "?.["
+		}
+		return e.value(expression.Object) + operator + quote(expression.Name) + "]"
+	case ir.RegExpProperty:
+		if expression.Optional {
+			return e.value(expression.Array) + "?.[" + quote(expression.Name) + "]"
+		}
+		return e.value(expression.Array) + "[" + quote(expression.Name) + "]"
+	case ir.Null:
+		return "null"
+	case ir.IsNull:
+		if expression.AlwaysFalse {
+			return "(" + e.value(expression.Value) + ", false)"
+		}
+		return "(" + e.value(expression.Value) + " === null)"
 	case ir.NumberConstant:
 		return number(expression.Value)
 	case ir.BooleanConstant:
@@ -551,6 +581,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
 	case ir.Defined:
+		if expression.Null {
+			return "adamicDefinedNull(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
+		}
 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
 	case ir.MaybeOf:
 		if expression.Value == nil {

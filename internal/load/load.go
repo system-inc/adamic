@@ -99,7 +99,7 @@ func Load(paths []string) (*Program, error) {
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
-	fileSystem := cachedvfs.From(bundled.WrapFS(fs))
+	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
 	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, tspath.ComparePathsOptions{
 		UseCaseSensitiveFileNames: fileSystem.UseCaseSensitiveFileNames(),
 		CurrentDirectory:          currentDirectory,
