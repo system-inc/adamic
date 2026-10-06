@@ -24,7 +24,22 @@ package main
 //     is still refused (only `throw new Error` lowers). $DONOTEVALUATE throws an Error.
 //   - "use strict" directives are dropped. Every Adamic file is a module, and a string used as a
 //     statement does not lower.
-const prelude = `class Test262Error {
+const prelude = `function requiredCodePoint(point: number | undefined): number {
+	if (point === undefined) { throw new Error("missing code point"); }
+	return point;
+}
+
+function requiredRegexExec(match: RegExpExecArray | null): RegExpExecArray {
+	if (match === null) { throw new Error("missing match result"); }
+	return match;
+}
+
+function requiredRegexMatch(match: RegExpMatchArray | null): RegExpMatchArray {
+	if (match === null) { throw new Error("missing match result"); }
+	return match;
+}
+
+class Test262Error {
 	message: string;
 	constructor(message?: string) {
 		this.message = message ?? "";
@@ -82,7 +97,8 @@ function assertIsSameValue(left: string | number | boolean | undefined, right: s
 	return sameValue(left, right);
 }
 
-function compareArray<T extends string | number | boolean>(actual: readonly T[], expected: readonly T[]): boolean {
+function compareArray<T extends string | number | boolean | undefined>(actual: readonly T[] | null, expected: readonly T[]): boolean {
+	if (actual === null) { return false; }
 	if (actual.length !== expected.length) {
 		return false;
 	}
@@ -94,7 +110,7 @@ function compareArray<T extends string | number | boolean>(actual: readonly T[],
 	return true;
 }
 
-function assertCompareArray<T extends string | number | boolean>(actual: readonly T[], expected: readonly T[], message?: string): void {
+function assertCompareArray<T extends string | number | boolean | undefined>(actual: readonly T[] | null, expected: readonly T[], message?: string): void {
 	if (compareArray(actual, expected)) {
 		return;
 	}

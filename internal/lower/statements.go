@@ -86,7 +86,7 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 }
 
 // expressionStatement lowers an expression used as a statement: a console call, an assignment, or
-// ++ and --. Any other expression's value would be thrown away, and stage 0 doesn't lower that yet.
+// ++ and --. A discarded RegExp still evaluates construction and its arguments.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
 	expression = ast.SkipParentheses(expression)
 	switch expression.Kind {
@@ -132,6 +132,14 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return l.assignment(expression)
 	case ast.KindPrefixUnaryExpression, ast.KindPostfixUnaryExpression:
 		return l.increment(expression)
+	case ast.KindRegularExpressionLiteral, ast.KindNewExpression:
+		if expression.Kind == ast.KindRegularExpressionLiteral || l.isLibraryGlobal(expression.AsNewExpression().Expression, "RegExp") {
+			value, err := l.expression(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
 	}
 	return nil, l.notYet(expression, describe(expression)+" as a statement")
 }

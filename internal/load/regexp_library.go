@@ -12,6 +12,9 @@ type regexpLibraryFS struct{ vfs.FS }
 func (s *regexpLibraryFS) ReadFile(path string) (string, bool) {
 	text, ok := s.FS.ReadFile(path)
 	if strings.HasSuffix(path, "/lib.es5.d.ts") {
+		// ECMAScript permits an omitted pattern; the stock declaration omits
+		// these overloads although lowering already compiles the empty pattern.
+		text = strings.ReplaceAll(text, "interface RegExpConstructor {", "interface RegExpConstructor {\n    new (): RegExp;\n    (): RegExp;\n    new (pattern: undefined, flags?: string): RegExp;\n    (pattern: undefined, flags?: string): RegExp;")
 		text = strings.ReplaceAll(text, "interface RegExpExecArray extends Array<string>", "interface RegExpExecArray extends Array<string | undefined>")
 		text = strings.ReplaceAll(text, "interface RegExpMatchArray extends Array<string>", "interface RegExpMatchArray extends Array<string | undefined>")
 		text = strings.ReplaceAll(text, "split(separator: string | RegExp, limit?: number): string[];", "split(separator: string, limit?: number): string[];\n    split(separator: RegExp, limit?: number): (string | undefined)[];")
