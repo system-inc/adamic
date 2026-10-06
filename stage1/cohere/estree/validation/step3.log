@@ -1,0 +1,53 @@
+=== RUN   TestGeneratedAgreement
+    estree_test.go:193: 78 generated files: 120355 identical bytes on Go, source Node, sanitized native, emitted JS
+--- PASS: TestGeneratedAgreement (17.41s)
+=== RUN   TestThreePortMutants
+=== RUN   TestThreePortMutants/member-computed
+    estree_test.go:237: source Node finished; byte comparison caught line 3810: Go "3 .computed bool 0", port "3 .computed bool 1"
+    estree_test.go:244: sanitized native finished; byte comparison caught line 3810: Go "3 .computed bool 0", port "3 .computed bool 1"
+=== RUN   TestThreePortMutants/logical-rebalance
+    estree_test.go:237: source Node finished; byte comparison caught line 3543: Go "3 LogicalExpression 0 13 0 0 0 0 13 0", port "3 Identifier 0 1 0 0 0 0 1 0"
+    estree_test.go:244: sanitized native finished; byte comparison caught line 3543: Go "3 LogicalExpression 0 13 0 0 0 0 13 0", port "3 Identifier 0 1 0 0 0 0 1 0"
+=== RUN   TestThreePortMutants/merged-jsdoc-value
+    estree_test.go:237: source Node finished; byte comparison caught line 4661: Go "0 .value string *\\u000a * one\\u000a *//**\\u000a * two\\u000a ", port "0 .value string *\\u000a * one\\u000a */ /**\\u000a * two\\u000a "
+    estree_test.go:244: sanitized native finished; byte comparison caught line 4661: Go "0 .value string *\\u000a * one\\u000a *//**\\u000a * two\\u000a ", port "0 .value string *\\u000a * one\\u000a */ /**\\u000a * two\\u000a "
+--- PASS: TestThreePortMutants (51.95s)
+    --- PASS: TestThreePortMutants/member-computed (17.19s)
+    --- PASS: TestThreePortMutants/logical-rebalance (17.08s)
+    --- PASS: TestThreePortMutants/merged-jsdoc-value (17.04s)
+=== RUN   TestOriginalLibraries
+    estree_test.go:309: raw: 78 files, 78 identical, 0 differing
+    estree_test.go:306: proved postprocessed case 38 known gap for "x\u00a0;"
+    estree_test.go:306: proved postprocessed case 39 known gap for "x\u2028;"
+    estree_test.go:306: proved postprocessed case 40 known gap for "x\r\n;"
+    estree_test.go:309: postprocessed: 78 files, 75 identical, 3 differing
+--- PASS: TestOriginalLibraries (1.42s)
+=== RUN   TestPostfixValueGap
+    gaps_test.go:33: Node 7, 1; lowering: /workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts:3:23: stage 0 can't lower a PostfixUnaryExpression yet
+--- PASS: TestPostfixValueGap (0.12s)
+=== RUN   TestMethodReplacementGap
+    gaps_test.go:52: Node replacement/original; Adamic: /workspace/adamic/stage1/cohere/estree/gaps/methodReplacement.ts:11:1: Adamic 0.1 refuses a method read as a value (next would lose its object, and this with it); call it in an arrow that keeps the object: () => first.next() (unbound-method)
+--- PASS: TestMethodReplacementGap (0.13s)
+=== RUN   TestRawInputGap
+    gaps_test.go:86: Equal size, readTextFile text and utf8Length on Node/native/emitted JS: "8:8://�\nx;\n"; Go distinguishes: line 17: Go "0 .value string \\ufffd\\ufffd\\ufffd", port "0 .value string \\ufffd"
+--- PASS: TestRawInputGap (1.16s)
+=== RUN   TestParserRecoveryGap
+    gaps_test.go:110: node: unported parser recovery does not terminate within 1s
+    gaps_test.go:110: /tmp/adamic-gate/TestParserRecoveryGap2579017338/001/port: unported parser recovery does not terminate within 1s
+--- PASS: TestParserRecoveryGap (12.46s)
+=== RUN   TestParserBoundaryRefusals
+=== RUN   TestParserBoundaryRefusals/modifier.ts
+    gaps_test.go:153: Go accepts "class C { readonly!: number; }"; source Node, sanitized native and emitted JS explicitly refuse: recovered an identifier
+=== RUN   TestParserBoundaryRefusals/surrogate.ts
+    gaps_test.go:153: Go accepts "'\\ud800a\\udc00';"; source Node, sanitized native and emitted JS explicitly refuse: unpaired surrogates
+=== RUN   TestParserBoundaryRefusals/jsx.tsx
+    gaps_test.go:153: Go accepts "const node = <A/>;"; source Node, sanitized native and emitted JS explicitly refuse: unported JSX
+--- PASS: TestParserBoundaryRefusals (17.23s)
+    --- PASS: TestParserBoundaryRefusals/modifier.ts (0.19s)
+    --- PASS: TestParserBoundaryRefusals/surrogate.ts (0.20s)
+    --- PASS: TestParserBoundaryRefusals/jsx.tsx (0.16s)
+=== RUN   TestThroughput
+    throughput_test.go:16: set ADAMIC_ESTREE_BENCHMARK=1 for full-output throughput
+--- SKIP: TestThroughput (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	101.899s

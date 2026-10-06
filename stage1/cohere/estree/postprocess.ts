@@ -3,7 +3,7 @@ import { panic, utf8Length } from 'adamic';
 import type { Arena } from './arena.ts';
 import { absent, childValue, stringValue } from './values.ts';
 import { locStart, locEnd, shouldAddContentEnd } from './location.ts';
-import { StrippedText, byteUnit, unitOffsets, trimEndGo } from './strippedText.ts';
+import { StrippedText, byteUnit, trimEndGo } from './strippedText.ts';
 import { visitorKeys } from './visitorKeys.ts';
 export function indentableLines(arena: Arena, id: number): string[] {
     const comment = arena.node(id);
@@ -64,7 +64,7 @@ export class Postprocessor {
         }
         // Strip first, then map the byte slice in that text's own UTF-16 coordinates.
         const stripped = this.stripped.text();
-        const offsets = unitOffsets(stripped);
+        const offsets = this.stripped.strippedOffsets;
         const before = stripped.slice(byteUnit(offsets, locStart(this.arena, id)), byteUnit(offsets, node.end - 1));
         node.contentEnd = node.end - 1 - (utf8Length(before) - utf8Length(trimEndGo(before)));
         node.hasContentEnd = true;

@@ -53,3 +53,11 @@ plausible incomplete tree. Three successful wrong-output mutants must be caught
 by byte comparisons. Compiler/runtime gaps get minimal programs, with observed
 behavior separated from inference. Throughput and coverage will be reported for
 the implemented boundary without claiming complete JavaScript formatting.
+
+## Current checkpoint status
+
+The generated 78-file gate is green, but the claim's whole-checkout validation
+contract is not met. The complete source Node audit has 92 output mismatches and
+983 acceptance disagreements; raw input loss and parser recovery stalls have
+minimal proving programs. This branch remains an incomplete ESTree port, not a
+completed format slice. See `stage1/cohere/estree/README.md` and `GAPS.md`.

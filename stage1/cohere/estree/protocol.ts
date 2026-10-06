@@ -1,10 +1,21 @@
 // Canonical traversal includes every own field, ordered keys and printer-visible locations.
+import { panic } from 'adamic';
 import type { Arena } from './arena.ts';
 import { ignoredSemicolon, locStart, locEnd } from './location.ts';
 export function written(text: string): string {
     let result = '';
     for(let index = 0; index < text.length; index++) {
         const unit = text.charCodeAt(index);
+        if(
+            (unit >= 0xd800 &&
+                unit <= 0xdbff &&
+                !(text.charCodeAt(index + 1) >= 0xdc00 && text.charCodeAt(index + 1) <= 0xdfff)) ||
+            (unit >= 0xdc00 &&
+                unit <= 0xdfff &&
+                !(text.charCodeAt(index - 1) >= 0xd800 && text.charCodeAt(index - 1) <= 0xdbff))
+        ) {
+            return panic('ESTree cannot represent Go cooked strings containing unpaired surrogates');
+        }
         result +=
             unit >= 32 && unit <= 126 && unit !== 92
                 ? text.slice(index, index + 1)

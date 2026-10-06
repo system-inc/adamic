@@ -95,6 +95,9 @@ func onNode(t *testing.T, path string, args ...string) []byte {
 }
 func generated() []string {
 	return []string{
+		"type X = import('x').A<T>; type Y = typeof import('x', { with: { type: 'json' } }).A; type Z = typeof this.a;",
+		"const x = tag`\\xZ`; const y = tag`\\uZZZZ`; const z = tag`\\u{61}`;",
+		"let x: [A?, ...B[]]; type X = unique symbol; type Y<in T, out U> = T & U;",
 		"namespace A.B { export let x = 1; } declare module 'x' { export const x: number; } declare global { interface X {} }",
 		"type X<T> = { -readonly [K in keyof T as K]-?: T[K] }; type Y = { [K in A]?: B };",
 		"for(;;) x; for(let i=0;i<3;i++) x; for(;x;) y; for(x;;y) z; for(;x;y) z;",

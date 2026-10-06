@@ -1,8 +1,8 @@
 Ported the indexed ESTree model, visitor keys, locations and TypeScript postprocessing.
 Added functions, generics, imports/exports, classes, interfaces, members and namespaces.
-75 generated files match 112,528 bytes on Go, source Node, sanitized native and emitted JS.
+78 generated files match 120,355 bytes on Go, source Node, sanitized native and emitted JS.
 Three wrong-output port mutants finish normally and are caught on Node and native.
-Raw typescript-estree matches all 75; Prettier postprocess has three proved differences.
+Raw typescript-estree matches all 78; whole-checkout parity remains blocked.
 
 # Non-JSON ESTree slice
 
@@ -87,3 +87,38 @@ A complete checkout census found 27,359 JS/TS/Adamic source files: 478 Adamic,
 472 cohere and 26,409 TypeScript, totaling 63,017,023 source bytes. Nine files
 are not UTF-8. This is an inventory, not a claim of successful conversion.
 Whole-checkout agreement and throughput are still pending.
+
+## Checkpoint 3
+
+Added import-type options, `typeof this` qualifiers, tagged invalid escapes,
+Go numeric parsing and arbitrary precision bigint spelling; JavaScript extensions
+use the Babel boundary and closure type-cast comments. Added the pure `answer`
+pipeline, parent indexes and cached UTF-8 offsets for stripped ContentEnd lookups.
+Literal conversion, simple node mappings and template escape validation have
+separate homes. No parser, compiler or runtime files were changed.
+
+The generated gate passed in 101.899s: 78 files, 120,355 canonical bytes, source
+Node, ASan/UBSan native and emitted JS all match Go. Three qualifying mutants
+finished normally and were caught on both source Node and sanitized native.
+The pinned raw original library matches 78/78; the postprocessed wrapper matches
+75/78 with only the three previously proved deltas. Gap tests hold information
+loss in the input API, parser recovery stalls and explicit refusals for malformed
+recovered identifiers, unpaired cooked surrogates and JSX.
+
+The final snapshot audit examined 27,366 files. Source Node matched Go on 14,697;
+860 Go-accepted inputs were refused, 123 Go-refused inputs were accepted, 92
+outputs differed, and both refused 11,594. The audit alone instruments the parser
+with a repeated-scan guard to classify 13 stalls without exhausting the Node heap.
+The actual source driver imports the unchanged parser and can still stall. This
+is an incomplete port and does not meet the whole-checkout validation contract.
+The frozen inventory and every audit disposition are retained under `validation/`.
+The optional repository test independently checks the identical subset with the
+uninstrumented driver, sanitized native and emitted JS; it does not turn exclusions
+or mismatches into passes.
+
+A failed interface-based converter refactor also exposed a compiler gap. Its
+minimal program is `gaps/interfaceDefault.ts`: source Node and emitted JS print 5;
+ASan reports a stack-buffer-overflow in native. The release build happened to print
+4, an observation of undefined behavior, not a portable expectation. The port
+uses concrete model classes and simple tables instead. See `GAPS.md` and the
+retained gap-test log. This gap is not one of the three qualifying port mutants.

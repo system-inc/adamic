@@ -1,3 +1,6 @@
+import { keywordTypes, unaryTypes } from './simpleTypes.ts';
+import { validTemplate } from './templateValidation.ts';
+import { literalFields, literalKinds } from './literal.ts';
 // Conversion reads indexed TypeScript nodes. Unrepresented syntax fails before output.
 import { panic } from 'adamic';
 import type { Parser } from '../../typescript/parser/parser.ts';
@@ -5,8 +8,9 @@ import { Scanner } from '../../typescript/scanner/scanner.ts';
 import { keywords, punctuators } from '../../typescript/scanner/tokens.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
 import { Arena } from './arena.ts';
-import { Value, absent, boolValue, childValue, listValue, numberValue, stringValue, templateValue } from './values.ts';
-import { unitOffsets } from './strippedText.ts';
+import type { Value } from './values.ts';
+import { absent, boolValue, childValue, listValue, stringValue, templateValue } from './values.ts';
+import { byteUnit, unitOffsets } from './strippedText.ts';
 
 export class Converter {
     readonly parser: Parser;
@@ -14,13 +18,23 @@ export class Converter {
     readonly text: string;
     readonly offsets: readonly number[];
     readonly scanner: Scanner;
-    readonly starts: number[] = [];
+    readonly parents: number[] = [];
+    readonly typeCastEnds: number[] = [];
+    babel = false;
     readonly spellings = new Map<string, string>();
     constructor(parser: Parser, text: string) {
         this.parser = parser;
         this.text = text;
         this.offsets = unitOffsets(text);
         this.scanner = new Scanner(text);
+        for(let remaining = parser.nodes.length; remaining > 0; remaining--) {
+            this.parents.push(-1);
+        }
+        for(let index = 0; index < parser.nodes.length; index++) {
+            for(const child of this.ts(index).children) {
+                this.parents[child] = index;
+            }
+        }
         for(const [spelling, kind] of keywords) {
             this.spellings.set(kind, spelling);
         }
@@ -69,6 +83,13 @@ export class Converter {
         return listValue(result);
     }
     identifier(id: number): number {
+        if(this.ts(id).text === '') {
+            return panic('ESTree parser recovery produced an empty identifier');
+        }
+        this.startUnit(id);
+        if(this.scanner.kind !== 'Identifier' && !this.scanner.kind.endsWith('Keyword')) {
+            return panic('ESTree parser recovered an identifier from a different token');
+        }
         const result = this.create(id, 'Identifier');
         this.set(result, 'decorators', listValue([]));
         this.set(result, 'name', stringValue(this.ts(id).text));
@@ -1025,9 +1046,96 @@ export class Converter {
         this.set(result, 'update', this.converted(fields[2] ?? -1));
         return result;
     }
-    convert(id: number, pattern = false, parent = -1): number {
+    unit(byte: number): number {
+        return byteUnit(this.offsets, byte);
+    }
+    importType(id: number): number {
+        const children = this.ts(id).children;
+        const argument = children[0] ?? -1;
+        let index = 1;
+        const attributes = this.kind(children[index] ?? -1) === 'ImportAttributes' ? (children[index] ?? -1) : -1;
+        if(attributes >= 0) {
+            index++;
+        }
+        const qualifier = ['Identifier', 'QualifiedName'].includes(this.kind(children[index] ?? -1))
+            ? (children[index] ?? -1)
+            : -1;
+        if(qualifier >= 0) {
+            index++;
+        }
+        let options = -1;
+        if(attributes >= 0) {
+            const properties: number[] = [];
+            for(const attribute of this.ts(attributes).children) {
+                const property = this.create(attribute, 'Property');
+                this.set(property, 'computed', boolValue(false));
+                this.set(property, 'key', this.converted(this.child(attribute, 0)));
+                this.set(property, 'kind', stringValue('init'));
+                this.set(property, 'method', boolValue(false));
+                this.set(property, 'optional', boolValue(false));
+                this.set(property, 'shorthand', boolValue(false));
+                this.set(property, 'value', this.converted(this.child(attribute, 1)));
+                properties.push(property);
+            }
+            const value = this.create(attributes, 'ObjectExpression');
+            this.set(value, 'properties', listValue(properties));
+            this.scanner.pos = this.ts(argument).end;
+            this.scanner.scan();
+            this.scanner.scan();
+            const open = this.scanner.start;
+            this.scanner.scan();
+            const keyStart = this.scanner.start;
+            const keyEnd = this.scanner.pos;
+            const keyName = this.scanner.kind === 'AssertKeyword' ? 'assert' : 'with';
+            this.scanner.pos = this.ts(attributes).end;
+            this.scanner.scan();
+            if(this.scanner.kind === 'CommaToken') {
+                this.scanner.scan();
+            }
+            const close = this.scanner.pos;
+            const key = this.arena.newNode('Identifier', this.byte(keyStart), this.byte(keyEnd));
+            this.set(key, 'decorators', listValue([]));
+            this.set(key, 'name', stringValue(keyName));
+            this.set(key, 'optional', boolValue(false));
+            this.set(key, 'typeAnnotation', absent());
+            const property = this.arena.newNode('Property', this.byte(keyStart), this.byte(this.ts(attributes).end));
+            this.set(property, 'computed', boolValue(false));
+            this.set(property, 'key', childValue(key));
+            this.set(property, 'kind', stringValue('init'));
+            this.set(property, 'method', boolValue(false));
+            this.set(property, 'optional', boolValue(false));
+            this.set(property, 'shorthand', boolValue(false));
+            this.set(property, 'value', childValue(value));
+            options = this.arena.newNode('ObjectExpression', this.byte(open), this.byte(close));
+            this.set(options, 'properties', listValue([property]));
+        }
+        const result = this.create(id, 'TSImportType');
+        if(this.ts(id).operator === 'TypeOfKeyword') {
+            this.scanner.pos = this.ts(id).pos;
+            this.scanner.scan();
+            this.scanner.scan();
+            this.arena.node(result).start = this.byte(this.scanner.start);
+        }
+        this.set(result, 'options', childValue(options));
+        this.set(result, 'qualifier', this.converted(qualifier));
+        const convertedArgument = this.convert(argument);
+        this.set(result, 'source', this.arena.node(convertedArgument).get('literal'));
+        this.set(result, 'typeArguments', childValue(this.wrapper(children.slice(index), false)));
+        if(this.ts(id).operator === 'TypeOfKeyword') {
+            const query = this.create(id, 'TSTypeQuery');
+            this.set(query, 'exprName', childValue(result));
+            this.set(query, 'typeArguments', absent());
+            return query;
+        }
+        return result;
+    }
+    convert(id: number, pattern = false, parentInput = -1): number {
+        let parent = parentInput;
         if(id < 0) {
             return -1;
+        }
+        if(parent < 0) {
+            parent = this.parents[id] ?? -1;
         }
         const node = this.ts(id);
         const first = this.child(id, 0);
@@ -1058,6 +1166,17 @@ export class Converter {
             return result;
         }
         if(node.kind === 'Identifier') {
+            if(node.text === 'this') {
+                let current = id;
+                let ancestor = this.parents[current] ?? -1;
+                while(this.kind(ancestor) === 'QualifiedName' && this.child(ancestor, 0) === current) {
+                    current = ancestor;
+                    ancestor = this.parents[current] ?? -1;
+                }
+                if(this.kind(ancestor) === 'TypeQuery') {
+                    return this.create(id, 'ThisExpression');
+                }
+            }
             return this.identifier(id);
         }
         if(node.kind === 'PrivateIdentifier') {
@@ -1073,6 +1192,20 @@ export class Converter {
             node.kind === 'ParenthesizedType' ||
             node.kind === 'ComputedPropertyName'
         ) {
+            if(node.kind === 'ParenthesizedExpression' && this.babel) {
+                const start = this.start(id);
+                let preceding = -1;
+                for(const end of this.typeCastEnds) {
+                    if(end <= start) {
+                        preceding = end;
+                    }
+                }
+                if(preceding >= 0 && this.text.slice(this.unit(preceding), this.startUnit(id)).trim() === '') {
+                    const result = this.create(id, 'ParenthesizedExpression');
+                    this.set(result, 'expression', this.converted(first, false, parent));
+                    return result;
+                }
+            }
             return this.convert(first, false, parent);
         }
         if(node.kind === 'ExpressionStatement') {
@@ -1285,39 +1418,11 @@ export class Converter {
             this.set(result, 'prefix', boolValue(node.kind !== 'PostfixUnaryExpression'));
             return result;
         }
-        if(
-            node.kind === 'StringLiteral' ||
-            node.kind === 'NumericLiteral' ||
-            node.kind === 'BigIntLiteral' ||
-            node.kind === 'RegularExpressionLiteral' ||
-            node.kind === 'TrueKeyword' ||
-            node.kind === 'FalseKeyword' ||
-            node.kind === 'NullKeyword'
-        ) {
+        if(literalKinds.includes(node.kind)) {
             const result = this.create(id, 'Literal');
-            const raw = this.raw(id);
-            if(node.kind === 'BigIntLiteral') {
-                this.set(result, 'bigint', stringValue(node.text.slice(0, -1)));
+            for(const field of literalFields(node, this.raw(id))) {
+                this.set(result, field.key, field.value);
             }
-            this.set(result, 'raw', stringValue(raw));
-            if(node.kind === 'RegularExpressionLiteral') {
-                const value = new Value('regex');
-                const slash = raw.lastIndexOf('/');
-                value.text = raw.slice(1, slash);
-                value.cooked = raw.slice(slash + 1);
-                this.set(result, 'regex', value);
-            }
-            this.set(
-                result,
-                'value',
-                node.kind === 'StringLiteral'
-                    ? stringValue(node.text)
-                    : node.kind === 'NumericLiteral'
-                      ? numberValue(Number(node.text))
-                      : node.kind === 'TrueKeyword' || node.kind === 'FalseKeyword'
-                        ? boolValue(node.kind === 'TrueKeyword')
-                        : absent(),
-            );
             return result;
         }
         if(
@@ -1383,24 +1488,12 @@ export class Converter {
             this.set(result, 'right', this.converted(this.child(id, 1), false, id));
             return result;
         }
-        if(node.kind === 'ReturnStatement') {
-            const result = this.create(id, 'ReturnStatement');
-            this.set(result, 'argument', this.converted(this.child(id, 0), false, id));
-            return result;
-        }
         if(node.kind === 'ThrowStatement') {
+            if(first < 0) {
+                return panic('ESTree throw statement requires an expression');
+            }
             const result = this.create(id, 'ThrowStatement');
             this.set(result, 'argument', this.converted(this.child(id, 0), false, id));
-            return result;
-        }
-        if(node.kind === 'BreakStatement') {
-            const result = this.create(id, 'BreakStatement');
-            this.set(result, 'label', this.converted(this.child(id, 0), false, id));
-            return result;
-        }
-        if(node.kind === 'ContinueStatement') {
-            const result = this.create(id, 'ContinueStatement');
-            this.set(result, 'label', this.converted(this.child(id, 0), false, id));
             return result;
         }
         if(node.kind === 'IfStatement') {
@@ -1441,20 +1534,20 @@ export class Converter {
             this.set(result, 'test', this.converted(this.child(id, 0), false, id));
             return result;
         }
-        if(node.kind === 'AwaitExpression') {
-            const result = this.create(id, 'AwaitExpression');
-            this.set(result, 'argument', this.converted(this.child(id, 0), false, id));
+        const keywordType = keywordTypes.get(node.kind);
+        if(keywordType !== undefined) {
+            return this.create(id, keywordType);
+        }
+        const unary = unaryTypes.get(node.kind);
+        if(unary !== undefined) {
+            const result = this.create(id, unary[0] ?? panic('missing unary type'));
+            this.set(result, unary[1] ?? panic('missing unary key'), this.converted(first, false, id));
             return result;
         }
         if(node.kind === 'NonNullExpression') {
             const result = this.create(id, 'TSNonNullExpression');
             this.set(result, 'expression', this.converted(this.child(id, 0), false, id));
             return this.chain(result, id);
-        }
-        if(node.kind === 'ArrayType') {
-            const result = this.create(id, 'TSArrayType');
-            this.set(result, 'elementType', this.converted(this.child(id, 0), false, id));
-            return result;
         }
         if(node.kind === 'IndexedAccessType') {
             const result = this.create(id, 'TSIndexedAccessType');
@@ -1488,36 +1581,6 @@ export class Converter {
             this.set(result, 'typeAnnotation', this.converted(this.child(id, 0), false, id));
             return result;
         }
-        if(node.kind === 'OptionalType') {
-            const result = this.create(id, 'TSOptionalType');
-            this.set(result, 'typeAnnotation', this.converted(this.child(id, 0), false, id));
-            return result;
-        }
-        if(node.kind === 'RestType') {
-            const result = this.create(id, 'TSRestType');
-            this.set(result, 'typeAnnotation', this.converted(this.child(id, 0), false, id));
-            return result;
-        }
-        if(node.kind === 'InferType') {
-            const result = this.create(id, 'TSInferType');
-            this.set(result, 'typeParameter', this.converted(this.child(id, 0), false, id));
-            return result;
-        }
-        if(node.kind === 'Decorator') {
-            const result = this.create(id, 'Decorator');
-            this.set(result, 'expression', this.converted(this.child(id, 0), false, id));
-            return result;
-        }
-        if(node.kind === 'ExternalModuleReference') {
-            const result = this.create(id, 'TSExternalModuleReference');
-            this.set(result, 'expression', this.converted(this.child(id, 0), false, id));
-            return result;
-        }
-        if(node.kind === 'NamespaceExportDeclaration') {
-            const result = this.create(id, 'TSNamespaceExportDeclaration');
-            this.set(result, 'id', this.converted(this.child(id, 0), false, id));
-            return result;
-        }
         if(node.kind === 'ImportAttribute') {
             const result = this.create(id, 'ImportAttribute');
             this.set(result, 'key', this.converted(this.child(id, 0), false, id));
@@ -1529,45 +1592,6 @@ export class Converter {
             this.set(result, 'id', this.converted(this.child(id, 0), false, id));
             this.set(result, 'initializer', this.converted(this.child(id, 1), false, id));
             return result;
-        }
-        if(node.kind === 'AnyKeyword') {
-            return this.create(id, 'TSAnyKeyword');
-        }
-        if(node.kind === 'BigIntKeyword') {
-            return this.create(id, 'TSBigIntKeyword');
-        }
-        if(node.kind === 'BooleanKeyword') {
-            return this.create(id, 'TSBooleanKeyword');
-        }
-        if(node.kind === 'NeverKeyword') {
-            return this.create(id, 'TSNeverKeyword');
-        }
-        if(node.kind === 'NumberKeyword') {
-            return this.create(id, 'TSNumberKeyword');
-        }
-        if(node.kind === 'ObjectKeyword') {
-            return this.create(id, 'TSObjectKeyword');
-        }
-        if(node.kind === 'StringKeyword') {
-            return this.create(id, 'TSStringKeyword');
-        }
-        if(node.kind === 'SymbolKeyword') {
-            return this.create(id, 'TSSymbolKeyword');
-        }
-        if(node.kind === 'UnknownKeyword') {
-            return this.create(id, 'TSUnknownKeyword');
-        }
-        if(node.kind === 'VoidKeyword') {
-            return this.create(id, 'TSVoidKeyword');
-        }
-        if(node.kind === 'UndefinedKeyword') {
-            return this.create(id, 'TSUndefinedKeyword');
-        }
-        if(node.kind === 'IntrinsicKeyword') {
-            return this.create(id, 'TSIntrinsicKeyword');
-        }
-        if(node.kind === 'AbstractKeyword') {
-            return this.create(id, 'TSAbstractKeyword');
         }
         if(node.kind === 'LiteralType') {
             if(this.kind(first) === 'NullKeyword') {
@@ -1922,12 +1946,19 @@ export class Converter {
             this.set(result, 'property', this.converted(first));
             return result;
         }
+        if(node.kind === 'ImportType') {
+            return this.importType(id);
+        }
         return panic(`ESTree conversion not yet represented: ${node.kind} at ${this.start(id)}`);
     }
     template(id: number, tail: boolean): number {
         const result = this.create(id, 'TemplateElement');
         this.set(result, 'tail', boolValue(tail));
-        this.set(result, 'value', templateValue(this.ts(id).raw, this.ts(id).text, true));
+        this.set(
+            result,
+            'value',
+            templateValue(this.ts(id).raw, this.ts(id).text, validTemplate(id, this.parser.nodes, this.parents)),
+        );
         return result;
     }
 }

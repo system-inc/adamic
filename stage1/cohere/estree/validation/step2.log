@@ -1,0 +1,29 @@
+=== RUN   TestGeneratedAgreement
+    estree_test.go:190: 75 generated files: 112528 identical bytes on Go, source Node, sanitized native, emitted JS
+--- PASS: TestGeneratedAgreement (16.66s)
+=== RUN   TestThreePortMutants
+=== RUN   TestThreePortMutants/member-computed
+    estree_test.go:234: source Node finished; byte comparison caught line 3484: Go "3 .computed bool 0", port "3 .computed bool 1"
+    estree_test.go:241: sanitized native finished; byte comparison caught line 3484: Go "3 .computed bool 0", port "3 .computed bool 1"
+=== RUN   TestThreePortMutants/logical-rebalance
+    estree_test.go:234: source Node finished; byte comparison caught line 3217: Go "3 LogicalExpression 0 13 0 0 0 0 13 0", port "3 Identifier 0 1 0 0 0 0 1 0"
+    estree_test.go:241: sanitized native finished; byte comparison caught line 3217: Go "3 LogicalExpression 0 13 0 0 0 0 13 0", port "3 Identifier 0 1 0 0 0 0 1 0"
+=== RUN   TestThreePortMutants/merged-jsdoc-value
+    estree_test.go:234: source Node finished; byte comparison caught line 4335: Go "0 .value string *\\u000a * one\\u000a *//**\\u000a * two\\u000a ", port "0 .value string *\\u000a * one\\u000a */ /**\\u000a * two\\u000a "
+    estree_test.go:241: sanitized native finished; byte comparison caught line 4335: Go "0 .value string *\\u000a * one\\u000a *//**\\u000a * two\\u000a ", port "0 .value string *\\u000a * one\\u000a */ /**\\u000a * two\\u000a "
+--- PASS: TestThreePortMutants (50.32s)
+    --- PASS: TestThreePortMutants/member-computed (16.91s)
+    --- PASS: TestThreePortMutants/logical-rebalance (16.44s)
+    --- PASS: TestThreePortMutants/merged-jsdoc-value (16.40s)
+=== RUN   TestOriginalLibraries
+    estree_test.go:306: raw: 75 files, 75 identical, 0 differing
+    estree_test.go:303: proved postprocessed case 35 known gap for "x\u00a0;"
+    estree_test.go:303: proved postprocessed case 36 known gap for "x\u2028;"
+    estree_test.go:303: proved postprocessed case 37 known gap for "x\r\n;"
+    estree_test.go:306: postprocessed: 75 files, 72 identical, 3 differing
+--- PASS: TestOriginalLibraries (1.22s)
+=== RUN   TestPostfixValueGap
+    gaps_test.go:29: Node 7, 1; lowering: /workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts:3:23: stage 0 can't lower a PostfixUnaryExpression yet
+--- PASS: TestPostfixValueGap (0.11s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	68.324s

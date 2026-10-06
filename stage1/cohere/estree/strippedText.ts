@@ -19,10 +19,19 @@ export function unitOffsets(text: string): number[] {
     return offsets;
 }
 export function byteUnit(offsets: readonly number[], byte: number): number {
-    for(let index = 0; index < offsets.length; index++) {
-        if(offsets[index] === byte) {
-            return index;
+    let left = 0;
+    let right = offsets.length;
+    while(left < right) {
+        const middle = Math.floor((left + right) / 2);
+        if((offsets[middle] ?? -1) < byte) {
+            left = middle + 1;
         }
+        else {
+            right = middle;
+        }
+    }
+    if(offsets[left] === byte) {
+        return left;
     }
     return panic('ESTree position inside UTF-8 character');
 }
@@ -33,6 +42,7 @@ export class StrippedText {
     readonly offsets: readonly number[];
     made = false;
     stripped = '';
+    strippedOffsets: number[] = [];
     constructor(source: string, arena: Arena, comments: readonly number[], offsets: readonly number[]) {
         this.source = source;
         this.arena = arena;
@@ -57,6 +67,7 @@ export class StrippedText {
             }
             parts.push(this.source.slice(previous));
             this.stripped = parts.join('');
+            this.strippedOffsets = unitOffsets(this.stripped);
             this.made = true;
         }
         return this.stripped;
