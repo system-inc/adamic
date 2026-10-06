@@ -239,9 +239,10 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "Number."+name)
 	}
-	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration {
+	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration && !isCallee(node) {
 		// A method read off its object, not called: JavaScript loses its this (unbound-method,
-		// docs/0.1.md). A call never comes here; callOrMethod lowers it.
+		// docs/0.1.md). A plain call never comes here, since callOrMethod lowers it; object?.method()
+		// reads it as its call's callee, through the object's methods, and keeps its this.
 		object := "object"
 		if receiver := ast.SkipParentheses(access.Expression); ast.IsIdentifier(receiver) {
 			object = receiver.Text()
@@ -1630,4 +1631,12 @@ func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Ki
 		ir.Declare{Local: currentLocal, Value: current},
 		ir.SetIndex{Array: arrayRead, Index: indexRead, Value: updated, Element: ir.Number},
 	}}}, nil
+}
+
+// isCallee reports whether a property read is the expression a call calls, parentheses aside.
+func isCallee(node *ast.Node) bool {
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	return node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && node.Parent.AsCallExpression().Expression == node
 }

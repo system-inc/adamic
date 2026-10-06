@@ -887,13 +887,22 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 }
 
 // optionalCall refuses a call in an optional chain, text?.toUpperCase() or run?.(): the receiver has
-// to be evaluated once and tested before the call, which stage 0 doesn't lower yet. Lowered as a
-// plain call, it ran the method on undefined.
+// to be evaluated once and tested before the call, which stage 0 doesn't lower yet for the library's
+// methods or a function value called directly. Lowered as a plain call, it ran the method on
+// undefined. The one form lowered is object?.method(...) on a method the program declares (a
+// class's, an interface's, or a function value in a field): the call goes through the object's
+// methods, which stops at undefined as JavaScript's chain does (ir.Property's Method).
 func (l *lowering) optionalCall(call *ast.Node) error {
-	if call.Flags&ast.NodeFlagsOptionalChain != 0 {
-		return l.notYet(call, "a call through ?. (an optional call)")
+	if call.Flags&ast.NodeFlagsOptionalChain == 0 {
+		return nil
 	}
-	return nil
+	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
+	if callee.Kind == ast.KindPropertyAccessExpression && callee.AsPropertyAccessExpression().QuestionDotToken != nil && call.AsCallExpression().QuestionDotToken == nil {
+		if method := l.checker.GetSymbolAtLocation(callee); method != nil && len(method.Declarations) > 0 && !load.IsLibrary(ast.GetSourceFileOfNode(method.Declarations[0])) {
+			return nil
+		}
+	}
+	return l.notYet(call, "a call through ?. (an optional call)")
 }
 
 // callClosure lowers a call through a function value.
@@ -901,6 +910,12 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	closure, err := l.expression(node.AsCallExpression().Expression)
 	if err != nil {
 		return nil, err
+	}
+	if property, isProperty := closure.(ir.Property); isProperty {
+		// object.name(...) through an interface: the object may be a class's, whose methods aren't
+		// fields (ir.Property's Method).
+		property.Method = true
+		closure = property
 	}
 	arguments := []ir.Expression{}
 	for _, argument := range node.AsCallExpression().Arguments.Nodes {
