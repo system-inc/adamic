@@ -1,6 +1,6 @@
 // Speculation saves and restores scanner state without building a tree.
 import type { Scanner } from '../scanner/scanner.ts';
-import { precedence, reservedKinds } from './grammar.ts';
+import { modifierKinds, precedence, reservedKinds } from './grammar.ts';
 
 export interface ParserStateInterface {
     readonly pos: number;
@@ -464,4 +464,43 @@ export function statementAhead(scanner: Scanner): boolean {
         current === 'Identifier' ||
         (current.endsWith('Keyword') && !reservedKinds.includes(current))
     );
+}
+
+export function typeMemberAhead(scanner: Scanner): boolean {
+    if(['OpenParenToken', 'LessThanToken', 'GetKeyword', 'SetKeyword'].includes(kind(scanner))) {
+        return true;
+    }
+    const state = new Speculation(scanner);
+    let identifier = false;
+    while(modifierKinds.includes(kind(scanner))) {
+        identifier = true;
+        state.next();
+    }
+    if(kind(scanner) === 'OpenBracketToken') {
+        state.restore();
+        return true;
+    }
+    if(
+        kind(scanner) === 'Identifier' ||
+        kind(scanner).endsWith('Keyword') ||
+        ['StringLiteral', 'NumericLiteral', 'BigIntLiteral'].includes(kind(scanner))
+    ) {
+        identifier = true;
+        state.next();
+    }
+    const result =
+        identifier &&
+        ([
+            'OpenParenToken',
+            'LessThanToken',
+            'QuestionToken',
+            'ColonToken',
+            'CommaToken',
+            'SemicolonToken',
+            'CloseBraceToken',
+            'EndOfFile',
+        ].includes(kind(scanner)) ||
+            (scanner.flags & 1) !== 0);
+    state.restore();
+    return result;
 }

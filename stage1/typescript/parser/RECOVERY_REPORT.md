@@ -293,3 +293,18 @@ instead of an EOF token. Focused comparison passes in 17.941s. All remaining
 binder.ts cutoffs pass in the continuation, which checks 208 inputs in
 77.350s before reaching a removed interface property name at input 545.
 That failure needs type-member recognition and outer-list resynchronization.
+
+## Continued recovery: type member resynchronization
+
+Type-member lookahead now follows Go's modifier and property scan. Invalid
+members report 1131 and resume the outer statement list when its element
+starts; member separators report missing semicolons. Focused comparison
+passes in 19.997s and cohere passes. The continuation checks four inputs and
+reaches input 548: a duplicated call argument needs missing-comma recovery.
+
+All four current mutants pass in 54.694s on Node and sanitized native.
+The termination mutant now makes EOF appear as an Identifier; removing only
+the old type-member loop guard no longer causes nontermination because
+resynchronization also recognizes EOF. Both mutant runs hit the two-second
+deadline specifically. Diagnostic and child mutants still finish normally.
+Current raw logs are retained under validation/recovery-*.log.

@@ -72,7 +72,7 @@ func TestMethodRecoveryAgrees(t *testing.T) {
 		t.Fatal(err)
 	}
 	cases := append([]string(nil), recoveryCases...)
-	cases = append(cases, "* from \"../moduleSpecifiers.js\";", "export export * from \"../moduleSpecifiers.js\";", "export from \"../moduleSpecifiers.js\";", "import import * as p from \"p.js\";", "import", "import\r\n  ", "}", ") ;", "x ?", "x ? y", "x ? y :", "x?.", "`x${", "`x${y", "type T = `x${", "export {", "import {", "f(", "[", "({", "function f() {", "class C {", "type T =", "type T = A<", "type T = (x:", "type T = ()", "type T = <", "function f(): (x: T, y:", "const {", "const", "function f() { const", "const f = (x:", "const f = (...", "const f = ():", "const f = () {}", "export *", "export * from", "export * from\r\n  ", "export default", "export =", "export", "export\r\n  ", "export export", "export\nconst x = 1;", "export x;", "/* π 💡 */\r\nexport")
+	cases = append(cases, "* from \"../moduleSpecifiers.js\";", "export export * from \"../moduleSpecifiers.js\";", "export from \"../moduleSpecifiers.js\";", "import import * as p from \"p.js\";", "import", "import\r\n  ", "}", ") ;", "x ?", "x ? y", "x ? y :", "x?.", "`x${", "`x${y", "type T = `x${", "interface I { : I | undefined; name: string; }", "interface I { x: T y: U }", "export {", "import {", "f(", "[", "({", "function f() {", "class C {", "type T =", "type T = A<", "type T = (x:", "type T = ()", "type T = <", "function f(): (x: T, y:", "const {", "const", "function f() { const", "const f = (x:", "const f = (...", "const f = ():", "const f = () {}", "export *", "export * from", "export * from\r\n  ", "export default", "export =", "export", "export\r\n  ", "export export", "export\nconst x = 1;", "export x;", "/* π 💡 */\r\nexport")
 	for _, source := range recoveryCases {
 		cases = append(cases, "/* π 💡 */\r\n"+source, source+"\r\n  ")
 	}
@@ -123,7 +123,7 @@ func TestRecoveryMutants(t *testing.T) {
 		{"diagnostic-code", "this.error(1005, `'${tokenSpelling(kind)}' expected.`);\n            return false;", "this.error(1006, `'${tokenSpelling(kind)}' expected.`);\n            return false;", recoveryCases[0], false},
 		{"stranded-export", "this.error(1128,", "this.error(1129,", "export", false},
 		{"generic-child", "result.push(this.make('TypeParameter', pos, children));", "result.push(this.make('TypeParameter', pos, children.slice(0, 0)));", recoveryCases[3], false},
-		{"eof-loop", "while(this.kind() !== 'CloseBraceToken' && this.kind() !== 'EndOfFile')", "while(this.kind() !== 'CloseBraceToken')", recoveryCases[1], true},
+		{"eof-loop", "return this.scanner.kind;", "return this.scanner.kind === 'EndOfFile' ? 'Identifier' : this.scanner.kind;", recoveryCases[1], true},
 	}
 	for _, mutation := range mutations {
 		t.Run(mutation.name, func(t *testing.T) {

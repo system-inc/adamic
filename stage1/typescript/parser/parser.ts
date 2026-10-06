@@ -4,7 +4,7 @@ import { Scanner } from '../scanner/scanner.ts';
 import { Statements } from './statements.ts';
 import { ParseNode } from './nodes.ts';
 import { precedence, reservedKinds, tokenSpelling } from './grammar.ts';
-import { arrowAhead, statementAhead, typeArgumentsAhead } from './lookahead.ts';
+import { arrowAhead, statementAhead, typeArgumentsAhead, typeMemberAhead } from './lookahead.ts';
 import type { ParserStateInterface } from './lookahead.ts';
 
 interface ParseDiagnosticInterface {
@@ -771,6 +771,14 @@ export class Parser {
             return this.make('TypeLiteral', pos, members);
         }
         while(this.kind() !== 'CloseBraceToken' && this.kind() !== 'EndOfFile') {
+            if(!typeMemberAhead(this.scanner)) {
+                this.error(1131, 'Property or signature expected.');
+                if(this.kind() === 'EndOfFile' || (this.kind() !== 'SemicolonToken' && statementAhead(this.scanner))) {
+                    break;
+                }
+                this.next();
+                continue;
+            }
             const start = this.scanner.fullStart;
             const children: number[] = [];
             if(
@@ -838,8 +846,11 @@ export class Parser {
                 this.next();
                 children.push(this.returnType());
             }
-            if(this.kind() === 'SemicolonToken' || this.kind() === 'CommaToken') {
+            if(this.kind() === 'CommaToken') {
                 this.next();
+            }
+            else {
+                this.semicolon();
             }
             members.push(this.make(kind, start, children));
         }

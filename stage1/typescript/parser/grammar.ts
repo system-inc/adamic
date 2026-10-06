@@ -125,3 +125,21 @@ export function tokenSpelling(kind: string): string {
             return panic('missing expected-token spelling');
     }
 }
+
+export const modifierKinds: readonly string[] = [
+    'AbstractKeyword',
+    'AccessorKeyword',
+    'AsyncKeyword',
+    'ConstKeyword',
+    'DeclareKeyword',
+    'DefaultKeyword',
+    'ExportKeyword',
+    'InKeyword',
+    'PrivateKeyword',
+    'ProtectedKeyword',
+    'PublicKeyword',
+    'ReadonlyKeyword',
+    'OutKeyword',
+    'OverrideKeyword',
+    'StaticKeyword',
+];
