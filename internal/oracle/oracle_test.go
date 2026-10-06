@@ -233,6 +233,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions.a", true, false},
 	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
 	{"internal/oracle/testdata/regions_throw.a", true, false},
+	// A constructor whose object a closure captures, kept in a global (integration's reading of
+	// fa49e43): the object outlives its statement, so no region.
+	{"internal/oracle/testdata/regions_constructor_capture.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
