@@ -315,9 +315,10 @@ static void free_one(void *value) {
 	ADAMIC_COUNT_FREE();
 }
 
-void adamic_release(void *value) {
-	ADAMIC_COUNT_RELEASE();
-	let_go(value);
+// Keep the draining frame out of the common release path. Clang otherwise saves
+// its registers even when dropping a reference leaves the value alive.
+__attribute__((noinline)) static void release_last(void *value) {
+	list(value);
 	if (draining) {
 		// An outer release is already working through the list.
 		return;
@@ -327,4 +328,15 @@ void adamic_release(void *value) {
 		free_one(freeing[--freeing_count]);
 	}
 	draining = false;
+}
+
+void adamic_release(void *value) {
+	ADAMIC_COUNT_RELEASE();
+	adamic_heap *heap = value;
+	// Nothing can be waiting outside a drain: the outermost release empties the
+	// queue before it returns. A value still held needs no queue or drain work.
+	if (heap == NULL || heap->references == 0 || --heap->references != 0) {
+		return;
+	}
+	release_last(value);
 }
