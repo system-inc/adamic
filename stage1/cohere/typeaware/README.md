@@ -178,3 +178,17 @@ compiler questions and their ownership are in
 [facts.md](../../../bridge/tsgo/facts.md). The fixed suite accepts default rule
 options and uses the original strict configs for both measured corpora. It explicitly
 refuses `noImplicitThis: false` until those special diagnostic variants are ported.
+
+## Profiling the sixteen-rule suite
+
+The span index in the Go bridge caches parsed AST locations, with source-file
+identity, both byte bounds and exact kind preserved. It does not cache checker
+facts. The native shadow rule indexes candidate scopes by binding name, keeping
+scope order, containment and the first binding in a scope. The supported rule
+defaults and diagnostic protocol are unchanged.
+
+[Volume profile report](VOLUME_PROFILE_REPORT.md) records disjoint phase costs,
+bridge overhead, before/after/Go measurements, byte comparisons and mutants.
+`bridge/tsgo/profile/volume_phases.py` instruments scratch generated C only;
+`volume_bench.py --before /path/unchanged-native` measures an unchanged baseline
+alongside the current native binary and independent production Go oracle.

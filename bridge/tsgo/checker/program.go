@@ -23,9 +23,10 @@ import (
 // Program owns the compiler and its checker pool. Dropping it releases Go's roots.
 // The external checker runs Go's runtime and collector; Adamic values never enter it.
 type Program struct {
-	Compiler  *compiler.Program
-	typeIDs   map[*checker.Type]uint64
-	typesByID []*checker.Type
+	Compiler    *compiler.Program
+	typeIDs     map[*checker.Type]uint64
+	typesByID   []*checker.Type
+	exactRanges map[*ast.SourceFile]map[nodeRange][]*ast.Node
 }
 type Result struct {
 	Kind         uint32

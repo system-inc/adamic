@@ -9,6 +9,7 @@ export class Shadow {
     readonly rules: Rules;
     readonly ordered: number[] = [];
     readonly scopes: Scope[] = [];
+    readonly namedScopes = new Map<string, number[]>();
     readonly lineStarts: number[] = [];
     constructor(rules: Rules) {
         this.rules = rules;
@@ -108,19 +109,20 @@ export class Shadow {
         const container = this.rules.parser.node(this.scopes[scopeIndex]?.container ?? -1);
         let outerScope = -1;
         let outerIndex = -1;
-        for(let candidate = scopeIndex - 1; candidate >= 0 && outerIndex < 0; candidate--) {
+        const candidates = this.namedScopes.get(binding.name) ?? panic('missing binding index');
+        for(let at = candidates.length - 2; at >= 0; at -= 2) {
+            const candidate = candidates[at] ?? -1;
+            if(candidate >= scopeIndex) {
+                continue;
+            }
             const scope = this.scopes[candidate] ?? panic('missing scope');
             const node = this.rules.parser.node(scope.container);
             if(node.pos > container.pos || node.end < container.end) {
                 continue;
             }
-            for(let at = 0; at < scope.bindings.length; at++) {
-                if(scope.bindings[at]?.name === binding.name) {
-                    outerScope = candidate;
-                    outerIndex = at;
-                    break;
-                }
-            }
+            outerScope = candidate;
+            outerIndex = candidates[at + 1] ?? -1;
+            break;
         }
         if(outerIndex < 0) {
             const own = this.scopes[scopeIndex] ?? panic('missing scope');
@@ -390,6 +392,23 @@ export class Shadow {
             const y = this.rules.parser.node(b.container);
             return x.pos === y.pos ? y.end - x.end : x.pos - y.pos;
         });
+        // Keep the first binding in each scope, matching the original scan.
+        // Candidate order is scope order, not declaration order or a name sort.
+        for(let at = 0; at < this.scopes.length; at++) {
+            const scope = this.scopes[at] ?? panic('missing scope');
+            for(let slot = 0; slot < scope.bindings.length; slot++) {
+                const binding = scope.bindings[slot] ?? panic('missing binding');
+                if(!this.namedScopes.has(binding.name)) {
+                    const fresh: number[] = [];
+                    this.namedScopes.set(binding.name, fresh);
+                }
+                const candidates = this.namedScopes.get(binding.name) ?? panic('missing binding index');
+                if(candidates[candidates.length - 2] !== at) {
+                    candidates.push(at);
+                    candidates.push(slot);
+                }
+            }
+        }
         for(let at = 0; at < this.scopes.length; at++) {
             const scope = this.scopes[at] ?? panic('missing scope');
             for(const binding of scope.bindings) {

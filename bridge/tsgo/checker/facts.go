@@ -51,6 +51,12 @@ func (f *fields) ids(ids []uint64) {
 	}
 }
 
+// Only immutable AST locations are indexed. Checker facts are recomputed on
+// every request, and the index belongs to this program's source-file identity.
+type nodeRange struct {
+	start, end uint64
+}
+
 func (p *Program) exact(file string, start, end uint64, kind string) (*ast.SourceFile, *ast.Node, error) {
 	path, err := Path(file)
 	if err != nil {
@@ -63,23 +69,33 @@ func (p *Program) exact(file string, start, end uint64, kind string) (*ast.Sourc
 	if (start >= end && !(start == 0 && end == 0 && kind == "SourceFile" && len(source.Text()) == 0)) || end > uint64(len(source.Text())) {
 		return nil, nil, fmt.Errorf("invalid node range")
 	}
-	var node *ast.Node
-	var find func(*ast.Node) bool
-	find = func(candidate *ast.Node) bool {
-		if uint64(candidate.Pos()) > start || uint64(candidate.End()) < end {
-			return false
-		}
-		if uint64(candidate.Pos()) == start && uint64(candidate.End()) == end && candidate.Kind.String() == "Kind"+kind {
-			node = candidate
-			return true
-		}
-		return candidate.ForEachChild(find)
+	// Root-only metadata requests need no descendant index. In particular, a
+	// large literal table with no operand queries should not pay for one.
+	if start == uint64(source.Pos()) && end == uint64(source.End()) && kind == "SourceFile" {
+		return source, source.AsNode(), nil
 	}
-	find(source.AsNode())
-	if node == nil {
-		return nil, nil, fmt.Errorf("no exact %s node at %d:%d in %s", kind, start, end, file)
+	ranges := p.exactRanges[source]
+	if ranges == nil {
+		ranges = make(map[nodeRange][]*ast.Node)
+		var index func(*ast.Node)
+		index = func(candidate *ast.Node) {
+			span := nodeRange{uint64(candidate.Pos()), uint64(candidate.End())}
+			ranges[span] = append(ranges[span], candidate)
+			candidate.ForEachChild(func(child *ast.Node) bool { index(child); return false })
+		}
+		// Preorder preserves the original first-match semantics for equal spans.
+		index(source.AsNode())
+		if p.exactRanges == nil {
+			p.exactRanges = make(map[*ast.SourceFile]map[nodeRange][]*ast.Node)
+		}
+		p.exactRanges[source] = ranges
 	}
-	return source, node, nil
+	for _, candidate := range ranges[nodeRange{start, end}] {
+		if candidate.Kind.String() == "Kind"+kind {
+			return source, candidate, nil
+		}
+	}
+	return nil, nil, fmt.Errorf("no exact %s node at %d:%d in %s", kind, start, end, file)
 }
 
 type typeRecord struct {

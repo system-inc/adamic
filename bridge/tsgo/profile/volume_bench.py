@@ -17,6 +17,7 @@ def main():
     parser.add_argument("--corpus", nargs=3, action="append", required=True,
                         metavar=("NAME", "CONFIG", "MANIFEST"))
     parser.add_argument("--rounds", type=int, default=3)
+    parser.add_argument("--before", help="Optional unchanged native baseline binary")
     args = parser.parse_args()
     args.directory.mkdir(parents=True, exist_ok=True)
     records = []
@@ -24,6 +25,8 @@ def main():
     for name, config, manifest in args.corpus:
         for round_number in range(1, args.rounds + 1):
             order = [("go", args.oracle), ("native", args.native)]
+            if args.before:
+                order.append(("before", args.before))
             if round_number % 2 == 0:
                 order.reverse()
             expected = None
