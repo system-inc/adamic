@@ -85,6 +85,27 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 			classes = append(classes, fmt.Sprintf("{base: %d, methods: [%s], definition: %d}", class.Base, strings.Join(methods, ", "), class.Definition))
 		}
 		fmt.Fprintf(&builder, "const adamicClasses = [%s];\n", strings.Join(classes, ", "))
+		// Node's stack check throws a real built-in error. Attach the nominal
+		// identity when catch receives it, preserving the same error object.
+		builtins := []string{}
+		baseError := ""
+		for index, class := range program.Classes {
+			if class.Definition < 1<<30 || class.Definition > (1<<30)+6 {
+				continue
+			}
+			entry := fmt.Sprintf("[globalThis.%s, %d]", class.Name, index+1)
+			if class.Name == "Error" {
+				baseError = entry
+			} else {
+				builtins = append(builtins, entry)
+			}
+		}
+		if baseError != "" {
+			builtins = append(builtins, baseError)
+		}
+		fmt.Fprintf(&builder, "const adamicCaughtErrors = [%s];\n", strings.Join(builtins, ", "))
+		builder.WriteString("const adamicCatch = (value) => { if (value instanceof globalThis.Error && !adamicClassIdentities.has(value)) { for (const [constructor, id] of adamicCaughtErrors) { if (value instanceof constructor) return adamicClass(value, id); } } return value; };\n")
+
 	}
 	for index, local := range program.Locals {
 		if local.Global {
@@ -395,7 +416,11 @@ func (e *emitter) statement(at *ir.Statement) {
 			// Part 1 of a try is its catch taking the error (flow.Instruction.Part).
 			e.markLine(at, 1)
 			if statement.CatchLocal >= 0 {
-				e.declare(statement.CatchLocal, caught)
+				value := caught
+				if len(e.program.Classes) > 0 {
+					value = fmt.Sprintf("adamicCatch(%s)", caught)
+				}
+				e.declare(statement.CatchLocal, value)
 			}
 			e.statements(statement.Catch)
 			e.indent--
@@ -525,6 +550,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(" + e.value(expression.Value) + " === null)"
 	case ir.NumberConstant:
 		return number(expression.Value)
+	case ir.StackExceeded:
+		return "false"
 	case ir.BooleanConstant:
 		return strconv.FormatBool(expression.Value)
 	case ir.StringConstant:

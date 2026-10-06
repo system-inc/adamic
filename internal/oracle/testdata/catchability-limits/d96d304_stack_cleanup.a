@@ -1,0 +1,12 @@
+// Live heap strings cross recursive calls; catching stack exhaustion must release them.
+function heldDepth(count: number): number {
+    const held = 'live'.repeat(2);
+    return count === 0 ? 0 : heldDepth(count - 1) + held.length;
+}
+try {
+    console.log(`${heldDepth(1e9)}`);
+}
+catch(error) {
+    console.log(error instanceof RangeError ? 'caught with cleanup' : 'wrong error class');
+}
+console.log('after');

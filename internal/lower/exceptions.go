@@ -93,6 +93,11 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 			return nil, err
 		}
 	}
+	// A catch is protected by its own finally even without an outer catch.
+	// Its library failures and recursive callees must unwind through that cleanup.
+	if lowered.HasCatch && lowered.HasFinally {
+		l.tries = append(l.tries, tryRecord{node: node, body: lowered.Catch})
+	}
 	return []ir.Statement{lowered}, nil
 }
 
@@ -139,6 +144,8 @@ func (l *lowering) exceptions() error {
 	for index := 0; index < len(l.result.Functions); index++ {
 		walk(l.result.Functions[index].Body, register)
 	}
+	l.guardRuntimeRanges()
+	l.finishClassCalls()
 	functions := l.result.Functions
 	// A class's methods are reached through function values too: a call through an interface the
 	// class implements calls one where it would call the object's own function value (ir.Property's
@@ -268,8 +275,15 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				}
 			}
 			switch {
-			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
-				failing = "repeat"
+			case node.Method == "repeat":
+				safe := constantWithin(node.Arguments[0], 0, 1)
+				if constantWithin(node.Arguments[0], 0, math.MaxFloat64) {
+					count := math.Trunc(node.Arguments[0].(ir.NumberConstant).Value)
+					safe = safe || l.stringLengthBounds()(node.Value)*count <= maximumStringLength
+				}
+				if !safe {
+					failing = "repeat length or count"
+				}
 			case node.Method == "normalize" && len(node.Arguments) > 0 && !isNormalizationForm(node.Arguments[0], l.result.Strings):
 				failing = "normalize"
 			}

@@ -152,3 +152,68 @@ console.log(format());
 	}
 	t.Fatal("missing format function")
 }
+
+func TestProtectedStringGuardPrecision(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, `
+function bounded(value: number): string {
+    try { return 'value ' + String(value); } catch { return 'caught'; }
+}
+function finished(): string {
+    let result = '';
+    for (let index = 0; index < 6; index++) {
+        try { console.log(bounded(index)); } finally { result += String(index) + ' '; }
+    }
+    return result;
+}
+console.log(finished());
+`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := 0
+	for _, function := range program.Functions {
+		if function.Name == "bounded" || function.Name == "finished" {
+			found++
+			if function.MayThrow {
+				t.Errorf("%s cannot throw on this bounded protected path", function.Name)
+			}
+		}
+	}
+	if found != 2 {
+		t.Fatalf("found %d source functions, want 2", found)
+	}
+}
+
+func TestStringLengthBoundsIncludeUnknownObjects(t *testing.T) {
+	t.Parallel()
+	for _, producer := range []ir.Expression{
+		ir.ObjectLiteral{Spread: ir.Read{Local: 0, Of: ir.Object}},
+		ir.ObjectCall{Method: "fromEntries", Returns: ir.Object},
+	} {
+		t.Run("unknown producer", func(t *testing.T) {
+			program := &ir.Program{Strings: []string{"small"}, Main: []ir.Statement{
+				ir.Evaluate{Value: ir.ObjectLiteral{Fields: []ir.Field{{Name: "text", Value: ir.StringConstant{Index: 0}}}}},
+				ir.Evaluate{Value: producer},
+			}}
+			lowering := &lowering{result: program}
+			bound := lowering.stringLengthBounds()(ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "text", Of: ir.String})
+			if bound != maximumStringLength {
+				t.Fatalf("unknown object must retain the full string bound, got %v", bound)
+			}
+		})
+	}
+}
+
+func TestRepeatRefusalChecksResultLength(t *testing.T) {
+	t.Parallel()
+	lowering := &lowering{result: &ir.Program{Strings: []string{"ab"}}}
+	operation := ir.StringCall{Method: "repeat", Value: ir.StringConstant{Index: 0}, Arguments: []ir.Expression{ir.NumberConstant{Value: 268435456}}}
+	if failing := lowering.libraryFailure([]ir.Statement{ir.Evaluate{Value: operation}}, map[int]bool{}); failing != "repeat length or count" {
+		t.Fatalf("oversized constant repeat must remain a named refusal without its guard, got %q", failing)
+	}
+	operation.Arguments[0] = ir.NumberConstant{Value: 2}
+	if failing := lowering.libraryFailure([]ir.Statement{ir.Evaluate{Value: operation}}, map[int]bool{}); failing != "" {
+		t.Fatalf("small constant repeat is safe, got %q", failing)
+	}
+}

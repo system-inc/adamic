@@ -67,7 +67,7 @@ func (l *lowering) errorInstance(name string) *instance {
 		metadata.OwnStart = len(fields)
 	}
 	l.result.Classes = append(l.result.Classes, metadata)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_new", Returns: ir.Object}, ir.Function{Name: name + "_initialize"})
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_new", Returns: ir.Object}, ir.Function{Name: name + "_initialize", LibraryGuarded: true})
 	parameter := func(owner int, name string, of ir.Type) int {
 		local := len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: owner})
@@ -78,6 +78,9 @@ func (l *lowering) errorInstance(name string) *instance {
 	initCause := parameter(lowered.initializer, "cause", ir.Union)
 	l.result.Functions[lowered.initializer].Parameters = []int{initThis, initMessage, initCause}
 	message := ir.Coalesce{Value: ir.Read{Local: initMessage, Of: ir.String}, Fallback: ir.StringConstant{Index: l.constant("")}, Of: ir.String}
+	// The built-in initializer is called only on a newly allocated error or a
+	// fresh subclass receiver, before user code can freeze it. LibraryGuarded
+	// keeps these internal writes out of the frozen-object refusal boundary.
 	// A synthesized initializer has no source receiver whose checker type can be
 	// recorded. Keep the holder unknown, conservatively, and let the existing
 	// interprocedural proof establish that construction writes into a fresh object.

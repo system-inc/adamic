@@ -35,6 +35,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
+	case ir.StackExceeded:
+		return "((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit)"
 	case ir.BooleanConstant:
 		return strconv.FormatBool(expression.Value)
 	case ir.StringConstant:
