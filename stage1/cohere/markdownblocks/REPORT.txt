@@ -6,6 +6,18 @@ The full native tokenizer/mdast, remaining printers and Unicode width are still 
 
 Parser primitives and combined gate, October 6, 2026
 
+Commit index, each slice pushed green to codex/stage1-markdown-blocks:
+324923ea318761f38f56eda2fdc0e4050ed21093 lists and document arenas.
+8ced94b40ec4cef3f8cdd3fd128817bcd63491d5 list conformance report.
+07fbb727644bd2d3d275b91faadd7ee5e6447a03 block quotes.
+17857cc5a9e72bb92ae5b2d4873f7383b1f456c7 tables and full-source fork checks.
+174d3c063d93233d7f1891edc740b1715f9d2894 raw code blocks.
+b05dce32f04b0f9028ffae5b5090b3f9d8ec1a73 HTML blocks.
+7707f0d4e05cffe91e77bfb096a8dbcfd786c54a source preprocessing and quote prefixes.
+This final report/index commit follows those implementation commits.
+Current nproc rerun prints 5; working tree was clean after the primitive push.
+
+
 HTML slice pushed: b05dce32f04b0f9028ffae5b5090b3f9d8ec1a73.
 preprocess.ts ports micromark's complete single-call source preprocessing from
 parse.go: exact UTF-16 text chunk boundaries, first-unit BOM, NUL replacement,
