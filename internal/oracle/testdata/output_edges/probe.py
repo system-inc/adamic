@@ -153,6 +153,27 @@ elif mode in ('signals', 'ignored', 'realtime'):
         assert reports[0].returncode == -signal.SIGXCPU and reports[0].stdout
         for report in reports[1:]:
             checked(reports[0], report, 'cpu limit')
+elif mode == 'usr1':
+    # Node starts its inspector on SIGUSR1 and goes on, saying so on stderr; natively it's ignored and
+    # the program goes on. Exit status and stdout must match; Node's stderr is its inspector's notice.
+    reports = []
+    for command in commands:
+        child = subprocess.Popen(command, env=environment, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            time.sleep(0.3)
+            assert child.poll() is None, ('child ended before signal', child.returncode)
+            child.send_signal(signal.SIGUSR1)
+            output, errors = child.communicate(timeout=30)
+            reports.append(subprocess.CompletedProcess(command, child.returncode, output, errors))
+        finally:
+            if child.poll() is None:
+                child.kill()
+            child.wait()
+    print(mode, [(r.returncode, r.stdout, r.stderr[:80]) for r in reports], flush=True)
+    node = reports[0]
+    assert node.returncode == 0 and node.stdout.startswith(b'started') and b'finished' in node.stdout
+    for report in reports[1:]:
+        assert (report.returncode, report.stdout) == (node.returncode, node.stdout), (mode, report.returncode, report.stdout, report.stderr[:200])
 elif mode == 'panic':
     reports = [run(command) for command in commands]
     node = reports[0]

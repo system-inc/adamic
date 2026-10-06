@@ -186,6 +186,9 @@ void adamic_start(int count, char **values) {
 	signal(SIGPIPE, SIG_IGN);
 	// Node also ignores file-size-limit signals: writes report EFBIG instead.
 	signal(SIGXFSZ, SIG_IGN);
+	// SIGUSR1 starts Node's inspector, and the program goes on. There's no inspector here, but the
+	// program goes on too.
+	signal(SIGUSR1, SIG_IGN);
 	default_action.sa_handler = SIG_DFL;
 	sigemptyset(&default_action.sa_mask);
 	stop_with(SIGTERM);
@@ -193,9 +196,9 @@ void adamic_start(int count, char **values) {
 	stop_with(SIGHUP);
 	// Signals used to stop a process from outside. Leave fault and abort dispositions alone,
 	// especially the sanitizer handlers that report runtime bugs with a stack. SIGKILL cannot
-	// be caught; SIGPIPE and SIGXFSZ are ignored above. Optional names stay guarded.
+	// be caught; SIGPIPE, SIGXFSZ and SIGUSR1 are ignored above. Optional names stay guarded.
 	const int fatal[] = {
-		SIGQUIT, SIGUSR1, SIGUSR2,
+		SIGQUIT, SIGUSR2,
 		SIGALRM, SIGXCPU, SIGVTALRM, SIGPROF,
 #ifdef SIGIO
 		SIGIO,

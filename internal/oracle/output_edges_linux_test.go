@@ -24,6 +24,7 @@ func TestOutputEdges(t *testing.T) {
 		{"closed", "output_edges/closed.a"},
 		{"signals", "killed_after_output.a"},
 		{"ignored", "killed_after_output.a"},
+		{"usr1", "output_edges/usr1.a"},
 		{"panic", "output_edges/panic_surrogate.a"},
 	} {
 		t.Run(probe.mode, func(t *testing.T) {
