@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"class_octal", "class_escapes", "quantifier_bounds", "class_string_duplicates"} {
+	for _, name := range []string{"class_octal", "class_escapes", "quantifier_bounds", "class_string_duplicates", "quadratic_exec", "quadratic_matchall", "quadratic_test", "input_cache"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -25,7 +25,7 @@ func init() {
 // Not parallel: these deadlines guard algorithmic complexity, not throughput under contention.
 // Compile time is excluded. The unfixed duplicate-alternative probe takes about a minute.
 func TestRegExpNativeTiming(t *testing.T) {
-	for _, name := range []string{"class_string_duplicates"} {
+	for _, name := range []string{"class_string_duplicates", "quadratic_exec", "quadratic_matchall", "quadratic_test"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/regexp_native_"+name+".a"))
 			if err != nil {
@@ -40,6 +40,7 @@ func TestRegExpNativeTiming(t *testing.T) {
 				t.Fatal(err)
 			}
 			want := onNode(t, path)
+			best := 3 * time.Second
 			for trial := 0; trial < 5; trial++ {
 				ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 				start := time.Now()
@@ -53,7 +54,26 @@ func TestRegExpNativeTiming(t *testing.T) {
 					t.Fatalf("Node=%q native=%q", want.stdout, got)
 				}
 				t.Logf("trial %d native=%s", trial+1, elapsed)
+				if elapsed < best {
+					best = elapsed
+				}
 			}
+			t.Logf("native best of 5=%s", best)
+			best = 3 * time.Second
+			for trial := 0; trial < 5; trial++ {
+				ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+				start := time.Now()
+				got, err := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path).Output()
+				elapsed := time.Since(start)
+				cancel()
+				if err != nil || !bytes.Equal(got, want.stdout) {
+					t.Fatalf("Node timing control: %v stdout=%q", err, got)
+				}
+				if elapsed < best {
+					best = elapsed
+				}
+			}
+			t.Logf("Node best of 5=%s (includes process startup and oracle loader)", best)
 		})
 	}
 }

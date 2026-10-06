@@ -571,6 +571,8 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 // point: indexOf's answer, found through the index rather than by counting from the start.
 size_t adamic_string_units_before(const adamic_string *string, size_t offset);
 void adamic_string_free_index(adamic_string *string);
+// Borrowed until the string is freed or appended to; NULL for ownerless stack pieces.
+const uint16_t *adamic_string_utf16_view(adamic_string *string);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
