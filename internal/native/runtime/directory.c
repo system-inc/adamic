@@ -203,7 +203,8 @@ static char *real_path_input(char *name) {
 	return name;
 }
 
-// realpath allocates the canonical spelling. Its bytes become an owned Adamic string.
+// Ported from Node v24.14.1 lib/fs.js realpathSync, for POSIX paths.
+// The root and ordinary components keep their input spelling. Links alone replace it.
 adamic_object *adamic_real_path(const adamic_string *path) {
 	static const char prefix[] = "cannot resolve path ";
 	static const char *const names[] = {"kind", "path"};
@@ -213,10 +214,61 @@ adamic_object *adamic_real_path(const adamic_string *path) {
 	if (name == NULL) { return failure(prefix, sizeof prefix - 1, path, 0, false); }
 	name = real_path_input(name);
 	if (name == NULL) { return failure(prefix, sizeof prefix - 1, path, errno, false); }
-	char *resolved = realpath(name, NULL);
-	int error = errno;
-	free(name);
-	if (resolved == NULL) { return failure(prefix, sizeof prefix - 1, path, error, false); }
+	size_t position = 1;
+	int error = 0;
+	while (name[position] != '\0') {
+		size_t previous = position;
+		while (name[position] != '\0' && name[position] != '/') { position++; }
+		char separator = name[position];
+		name[position] = '\0';
+		struct stat status;
+		if (lstat(name, &status) != 0) { error = errno; break; }
+		if (!S_ISLNK(status.st_mode)) {
+			name[position] = separator;
+			if (separator != '\0') { position++; }
+			continue;
+		}
+		// Node stats the target first: the OS supplies ENOENT or ELOOP.
+		if (stat(name, &status) != 0) { error = errno; break; }
+		size_t capacity = 256;
+		char *target = NULL;
+		ssize_t length;
+		for (;;) {
+			char *grown = realloc(target, capacity + 1);
+			if (grown == NULL) {
+				static const char message[] = "out of memory";
+				adamic_panic(message, sizeof message - 1);
+			}
+			target = grown;
+			length = readlink(name, target, capacity);
+			if (length < 0 || (size_t)length < capacity) { break; }
+			capacity *= 2;
+		}
+		if (length < 0) { error = errno; free(target); break; }
+		target[length] = '\0';
+		name[position] = separator;
+		const char *rest = name + position + (separator != '\0');
+		size_t base_length = target[0] == '/' ? 0 : previous;
+		size_t target_length = (size_t)length, rest_length = strlen(rest);
+		char *replacement = malloc(base_length + target_length + rest_length + 2);
+		if (replacement == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		memcpy(replacement, name, base_length);
+		memcpy(replacement + base_length, target, target_length + 1);
+		free(target);
+		// Resolve the target against the link's directory, then resolve the rest.
+		replacement = real_path_input(replacement);
+		size_t resolved_length = strlen(replacement);
+		replacement[resolved_length] = '/';
+		memcpy(replacement + resolved_length + 1, rest, rest_length + 1);
+		free(name);
+		name = real_path_input(replacement);
+		position = 1;
+	}
+	if (error != 0) { free(name); return failure(prefix, sizeof prefix - 1, path, error, false); }
+	char *resolved = name;
 	adamic_object *result = adamic_object_new(&shape);
 	result->slots[0].reference = &ok_kind;
 	result->slots[1].reference = adamic_decode_utf8((const unsigned char *)resolved, strlen(resolved));
