@@ -1,0 +1,25 @@
+round 1 native: 1.066295s, 8189.10 texts/s; exact Go bytes
+round 1 Node source: 0.615546s, 14185.78 texts/s; exact Go bytes
+round 1 Go: 0.214244s, 40757.35 texts/s; exact Go bytes
+round 1 yaml 2.9.0: 0.766494s, 11392.13 texts/s; exact Go bytes
+round 2 native: 1.066730s, 8185.77 texts/s; exact Go bytes
+round 2 Node source: 0.615338s, 14190.59 texts/s; exact Go bytes
+round 2 Go: 0.214467s, 40714.98 texts/s; exact Go bytes
+round 2 yaml 2.9.0: 0.767156s, 11382.30 texts/s; exact Go bytes
+round 3 native: 1.067743s, 8178.00 texts/s; exact Go bytes
+round 3 Node source: 0.618224s, 14124.33 texts/s; exact Go bytes
+round 3 Go: 0.217791s, 40093.55 texts/s; exact Go bytes
+round 3 yaml 2.9.0: 0.767635s, 11375.20 texts/s; exact Go bytes
+round 4 native: 1.067161s, 8182.46 texts/s; exact Go bytes
+round 4 Node source: 0.616961s, 14153.25 texts/s; exact Go bytes
+round 4 Go: 0.214729s, 40665.17 texts/s; exact Go bytes
+round 4 yaml 2.9.0: 0.766493s, 11392.14 texts/s; exact Go bytes
+round 5 native: 1.066847s, 8184.87 texts/s; exact Go bytes
+round 5 Node source: 0.616868s, 14155.37 texts/s; exact Go bytes
+round 5 Go: 0.214267s, 40752.93 texts/s; exact Go bytes
+round 5 yaml 2.9.0: 0.769117s, 11353.28 texts/s; exact Go bytes
+native: median 8184.87 texts/s; seconds [1.0662951760000396, 1.0667297990003135, 1.0677425950002544, 1.0671607670001322, 1.0668470309997247]
+Node source: median 14155.37 texts/s; seconds [0.6155458590001217, 0.6153375489998325, 0.6182238119999965, 0.6169607880001422, 0.6168682349998562]
+Go: median 40714.98 texts/s; seconds [0.21424356499983332, 0.21446653800012427, 0.2177906410001924, 0.21472923700002866, 0.2142668000001322]
+yaml 2.9.0: median 11382.30 texts/s; seconds [0.7664941870002622, 0.7671561550000661, 0.7676348859999962, 0.7664931419999448, 0.7691169830000035]
+8732 lexical cases; 4181796 answer bytes; startup, input and output included

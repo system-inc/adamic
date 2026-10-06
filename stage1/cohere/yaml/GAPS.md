@@ -1,4 +1,98 @@
-# YAML baseline audit: port incomplete
+# YAML port: lexer checkpoint
+
+The Adamic lexer and its lexical comparison driver are implemented.
+All 36 repository files and 8,696 generated/chunked cases match Go byte for byte.
+Native sanitizers, Node source, emitted JavaScript and yaml 2.9.0 all agree.
+Three lexer mutants are caught on native and Node; three stage 0 gaps have proving programs.
+CST parsing, composition, unist conversion, the printer and formatting driver remain unfinished.
+
+## Green lexer step
+
+`lexer.ts` ports yaml 2.9.0's lexer using the same UTF-16 units as Go cohere.
+Eager token arrays replace generators. Scalar calls remain eager: a block header
+at end of input must emit an empty scalar even after the last source unit has
+been consumed. A first rewrite incorrectly made those calls deferred states;
+the generated comparison caught the missing token and the final port restores it.
+
+`lex_main.ts` reads an escaped batch and prints token units in hexadecimal.
+This is a lexer comparison driver, not the requested file-formatting driver.
+Each generated input is also parsed in chunks of one, two and seven UTF-16 units;
+these exercise splits through quoted escapes, markers and astral characters.
+The deterministic seed is 20261006. The corpus walk excludes only `.git`,
+includes submodules, and fails on invalid UTF-8 rather than replacing it.
+
+The final suite passed in 19.029s: 8,732 lexical cases, 4,181,796 output bytes.
+Native ran with ASan, UBSan and LeakSanitizer enabled; stderr was empty.
+The exact comparisons also passed on raw source Node, emitted JavaScript, and
+scratch-installed yaml 2.9.0. The external oracle imports only the pinned
+library. Go's lexer driver is built through an overlay; cohere is unmodified.
+
+### Mutants
+
+Each mutant compiles, exits zero, and has empty stderr on native and Node.
+Only the wrong token bytes catch it:
+
+| Mutation | First differing output byte | Control reached |
+| --- | ---: | --- |
+| Keep chomping becomes clip | 859077 | `a: |+` with trailing blank lines |
+| Tab is removed from whitespace classification | 864210 | Tab after a mapping colon |
+| BOM is no longer split as its own token | 858065 | BOM-only input |
+
+### Stage 0 gap programs
+
+All three programs print the recorded behavior on Node and refuse with
+`lower.NotYet` before clang. `TestLexerGaps` holds these observations so a
+closed gap requires updating the workaround.
+
+| Program | Node stdout | Observed refusal | Port workaround |
+| --- | --- | --- | --- |
+| [prefixIncrement.ts](gaps/prefixIncrement.ts) | `1` | `a PrefixUnaryExpression on a number` | Increment in a separate statement |
+| [assignmentValue.ts](gaps/assignmentValue.ts) | `1` | `a BinaryExpression with a number and a number` | Assign before reading the result |
+| [stringPresence.ts](gaps/stringPresence.ts) | `false` | `a PrefixUnaryExpression on a string` | Compare the character sentinel with the empty string |
+
+Labels and logical assignment operators are explicit 0.1 refusals, not newly
+observed language gaps. The port uses ordinary loop control and assignments.
+The npm library's ISC license accompanies its adapted lexer in `LICENSE-yaml`.
+
+### Lexer throughput
+
+Five interleaved fresh-process rounds, after tests and builds had finished.
+Each reads the same 1,189,637-byte input and writes 4,181,796 token bytes.
+Each measured answer is compared to Go; exit zero and empty stderr are required.
+Startup, file input, chunk handling and output are included; compilation is excluded.
+Chunked cases count as texts. This does not measure the unfinished formatter.
+
+| Driver | Median texts/s |
+| --- | ---: |
+| Native release | 8184.87 |
+| Port source on Node | 14155.37 |
+| Go cohere | 40714.98 |
+| Original yaml 2.9.0 on Node | 11382.30 |
+
+The native driver is 4.97 times slower than Go and 1.73 times slower than Node
+on these inputs. This includes different output implementations: buffered Go
+`fmt.Fprintf` versus token-by-token `console.log` on native and Node.
+
+### Commands and evidence
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library ADAMIC_YAML_ARTIFACTS=/tmp/stage1-yaml-artifacts go test -v -count=1 -timeout 30m ./stage1/cohere/yaml > /tmp/stage1-yaml-lexer-final.log 2>&1
+go run ./cmd/adamic build stage1/cohere/yaml/lex_main.ts -o /tmp/stage1-yaml-artifacts/native-lexer > /tmp/stage1-yaml-lexer-build.log 2>&1
+python3 stage1/cohere/yaml/benchmark_lexer.py /tmp/stage1-yaml-artifacts /tmp/stage1-yaml-library > /tmp/stage1-yaml-lexer-timing.log 2>&1
+go test -v -count=1 -timeout 30m ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(strings|strings_more|collections|exceptions|bitwise)\.a$' > /tmp/stage1-yaml-filtered-oracle.log 2>&1
+/tmp/stage1-yaml-cohere --no-fix --format-only --format-all stage1/cohere/yaml/lexer.ts stage1/cohere/yaml/lex_main.ts > /tmp/stage1-yaml-format-check.log 2>&1
+/tmp/stage1-yaml-cohere --no-fix --no-format stage1/cohere/yaml/lexer.ts stage1/cohere/yaml/lex_main.ts > /tmp/stage1-yaml-lint.log 2>&1
+```
+
+The filtered oracle passed in 4.097s. Cohere reported 276 rules, two files
+checked, 100% Adamic-ready. No compiler or runtime implementation changed.
+Logs: [suite](audit/lexer-suite.log), [throughput](audit/lexer-timing.log),
+[filtered oracle](audit/lexer-oracle.log), [lint](audit/lexer-lint.log).
+The complete repository gate was not run. Formatter parity and formatter
+throughput remain pending; this checkpoint must not be treated as a finished YAML slice.
+
+# Baseline audit before the lexer port
 
 No Adamic YAML parser, printer, or stdout driver was built.
 This directory records baseline evidence, not a completed stage 1 slice.

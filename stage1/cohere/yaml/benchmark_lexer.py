@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+"""Time complete lexer drivers; every measured output must equal Go's bytes."""
+import argparse
+from pathlib import Path
+import statistics
+import subprocess
+import time
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('artifacts', type=Path)
+parser.add_argument('library', type=Path)
+parser.add_argument('--rounds', type=int, default=5)
+args = parser.parse_args()
+artifacts = args.artifacts.resolve()
+root = Path(__file__).resolve().parents[3]
+cases = str(artifacts / 'lexer-cases.txt')
+expected = (artifacts / 'lexer-expected.txt').read_bytes()
+count = (artifacts / 'lexer-cases.txt').read_bytes().count(b'\n')
+commands = {
+    'native': [str(artifacts / 'native-lexer'), cases],
+    'Node source': ['node', '--disable-warning=ExperimentalWarning', str(root / 'oracle/node.mjs'), str(root / 'stage1/cohere/yaml/lex_main.ts'), cases],
+    'Go': [str(artifacts / 'go-lexer'), cases],
+    'yaml 2.9.0': ['node', str(root / 'stage1/cohere/yaml/testdata/lexer_library.mjs'), str(args.library.resolve()), cases],
+}
+samples = {name: [] for name in commands}
+for round_number in range(args.rounds):
+    for name, command in commands.items():
+        stdout = artifacts / (name + '.timed.stdout')
+        stderr = artifacts / (name + '.timed.stderr')
+        with stdout.open('wb') as out, stderr.open('wb') as err:
+            start = time.perf_counter()
+            subprocess.run(command, stdout=out, stderr=err, check=True, timeout=300)
+            elapsed = time.perf_counter() - start
+        if stdout.read_bytes() != expected or stderr.stat().st_size:
+            raise RuntimeError(f'{name}: bytes or stderr differ from Go')
+        samples[name].append(elapsed)
+        print(f'round {round_number + 1} {name}: {elapsed:.6f}s, {count / elapsed:.2f} texts/s; exact Go bytes', flush=True)
+for name, times in samples.items():
+    print(f'{name}: median {count / statistics.median(times):.2f} texts/s; seconds {times}')
+print(f'{count} lexical cases; {len(expected)} answer bytes; startup, input and output included')
