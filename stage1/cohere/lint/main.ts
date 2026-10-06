@@ -21,9 +21,9 @@ function run(row: string, countOnly: boolean): number {
         parser,
         scanner,
         fields[1] ?? 'all',
-        fields[2] ?? '',
-        fields[3] ?? '',
-        fields[4] === 'true',
+        settings.read('mode', fields[2] ?? ''),
+        settings.read('null', fields[3] ?? ''),
+        settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true',
         settings,
     );
     linter.run();
