@@ -24,3 +24,7 @@ internal/lower/refusals.go so task async/effects diagnostics precede general one
 Create internal/oracle/concurrency_test.go, internal/lower/parallel_test.go and
 internal/native/parallel_compiler_test.go. Concurrency fixtures use their own
 oracle list until runtime integration, so existing native counts remain intact.
+
+Exception propagation requires adding ParallelMap beside ArrayMap in
+internal/lower/exceptions.go's closure-call case. This is a one-token hook;
+without it a throwing task's caller would not carry the exception onward.
