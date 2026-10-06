@@ -64,22 +64,26 @@ export class Statements {
     type(minimum = 0, conditional = true): number {
         return this.parser.type(minimum, conditional);
     }
-    block(): number {
-        const pos = this.parser.scanner.fullStart;
+    statementList(context: string): number[] {
+        this.parser.beginList(context);
         const children: number[] = [];
-        if(!this.parser.expect('OpenBraceToken')) {
-            return this.make('Block', pos, children);
-        }
-        this.parser.beginList('block');
-        while(!this.parser.listTerminator('block')) {
-            if(this.parser.listElement('block')) {
+        while(!this.parser.listTerminator(context)) {
+            if(this.parser.listElement(context)) {
                 children.push(this.statement());
             }
-            else if(this.parser.recoverList('block')) {
+            else if(this.parser.recoverList(context)) {
                 break;
             }
         }
-        this.parser.endList('block');
+        this.parser.endList(context);
+        return children;
+    }
+    block(): number {
+        const pos = this.parser.scanner.fullStart;
+        if(!this.parser.expect('OpenBraceToken')) {
+            return this.make('Block', pos);
+        }
+        const children = this.statementList('block');
         this.parser.expect('CloseBraceToken');
         return this.make('Block', pos, children);
     }
@@ -424,10 +428,7 @@ export class Statements {
         else if(this.parser.kind() === 'OpenBraceToken') {
             const start = this.parser.scanner.fullStart;
             this.parser.next();
-            const body: number[] = [];
-            while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
-                body.push(this.statement());
-            }
+            const body = this.statementList('block');
             this.parser.expect('CloseBraceToken');
             children.push(this.make('ModuleBlock', start, body));
         }
@@ -709,7 +710,14 @@ export class Statements {
         const start = this.parser.scanner.fullStart;
         this.parser.expect('OpenBraceToken');
         const clauses: number[] = [];
-        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
+        this.parser.beginList('switch');
+        while(!this.parser.listTerminator('switch')) {
+            if(!this.parser.listElement('switch')) {
+                if(this.parser.recoverList('switch')) {
+                    break;
+                }
+                continue;
+            }
             const clausePos = this.parser.scanner.fullStart;
             const isCase = this.parser.kind() === 'CaseKeyword';
             this.parser.next();
@@ -718,16 +726,12 @@ export class Statements {
                 statements.push(this.parser.rootExpression());
             }
             this.parser.expect('ColonToken');
-            while(
-                this.parser.kind() !== 'CaseKeyword' &&
-                this.parser.kind() !== 'DefaultKeyword' &&
-                this.parser.kind() !== 'CloseBraceToken' &&
-                this.parser.kind() !== 'EndOfFile'
-            ) {
-                statements.push(this.statement());
+            for(const statement of this.statementList('switchStatements')) {
+                statements.push(statement);
             }
             clauses.push(this.make(isCase ? 'CaseClause' : 'DefaultClause', clausePos, statements));
         }
+        this.parser.endList('switch');
         this.parser.expect('CloseBraceToken');
         const block = this.make('CaseBlock', start, clauses);
         return this.make('SwitchStatement', pos, [expression, block]);

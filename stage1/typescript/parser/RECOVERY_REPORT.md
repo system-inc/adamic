@@ -322,3 +322,11 @@ Focused comparison passes in 21.386s and cohere passes after its style fixes.
 The continuation advances to input 552, where a duplicated switch-case
 colon still stalls the old switch-clause statement loop. This is the next
 list to migrate to the same recovery mechanism.
+
+## Continued recovery: switch and module statement lists
+
+Switch clauses and module blocks now use active statement-list recovery.
+Duplicated colons report the same statement diagnostic and advance without
+inventing an extra statement or stalling. Focused comparison passes in
+22.667s. The continuation advances to input 554, duplicating const, where
+Go reports 1389 and leaves the keyword to start another variable statement.
