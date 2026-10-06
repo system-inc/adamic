@@ -7,6 +7,8 @@ func init() {
 		lowers  bool
 		checked bool
 	}{
+		{"internal/oracle/testdata/library_object_iterator_own.a", true, false},
+		{"internal/oracle/testdata/library_object_iterator_tag.a", true, false},
 		{"internal/oracle/testdata/library_object_private_mangled.a", true, false},
 	} {
 		fixtures = append(fixtures, fixture)
