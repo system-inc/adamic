@@ -44,7 +44,7 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 	}
 	base := bases[0]
 	checkABI := len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
-	for _, member := range declaration.Members() {
+	for _, member := range classMembersWithParameters(declaration) {
 		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
@@ -61,7 +61,7 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 		if (member.Kind == ast.KindMethodDeclaration) != (inherited.Flags&ast.SymbolFlagsMethod != 0) {
 			return refuse("an inherited method replaced by a field, or a field replaced by a method", "keep the inherited member kind; use a different name for the new member")
 		}
-		if member.Kind == ast.KindPropertyDeclaration {
+		if member.Kind == ast.KindPropertyDeclaration || parameterProperty(member) {
 			if !l.checker.IsReadonlySymbol(inherited) && (!l.classAssignable(previous, own) || !l.classAssignable(own, previous) || l.widened(previous, own, map[[2]*checker.Type]bool{}) != nil || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
 				return refuse("a mutable inherited field redeclared with a different type (adamic/invariant-mutable)", "keep the base field's type; narrow a local after reading it, or make the field readonly in the base")
 			}
@@ -152,8 +152,8 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 	}
 	// The layout contains inherited fields first, but only this class's initializers run here.
 	fields := append([]ir.Field{}, l.result.Classes[instance.class-1].Fields...)
-	for _, member := range declaration.Members() {
-		if member.Kind != ast.KindPropertyDeclaration {
+	for _, member := range classMembersWithParameters(declaration) {
+		if member.Kind != ast.KindPropertyDeclaration && !parameterProperty(member) {
 			continue
 		}
 		if ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract) {
@@ -379,7 +379,9 @@ func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	return append(statements, initialized...), nil
+	statements = append(statements, initialized...)
+	assigned, err := l.parameterPropertyStores(declaration, l.this)
+	return append(statements, assigned...), err
 }
 
 func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
