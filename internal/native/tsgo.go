@@ -21,7 +21,7 @@ func UsesTSGo(program *ir.Program) bool {
 	return false
 }
 
-// TSGoC replaces only the three compiler-generated library bodies. Kept here so
+// TSGoC replaces only the compiler-generated library bodies. Kept here so
 // this unit does not edit the shared emitter. Signatures, calls, snapshots and
 // cleanup remain the ordinary emitter's output. The library contracts borrow
 // inputs, mutate no Adamic value and return fresh values, as the IR bodies say.
@@ -55,7 +55,7 @@ func TSGoC(program *ir.Program) (string, error) {
 				}
 				arguments = append(arguments, emitter.localName(parameter))
 			}
-			runtimeName := map[string]string{"tsgoProgram": "program", "tsgoQuery": "query", "tsgoRelease": "release"}[name]
+			runtimeName := map[string]string{"tsgoProgram": "program", "tsgoQuery": "query", "tsgoRelease": "release", "tsgoTypeParts": "type_parts"}[name]
 			if inRegion {
 				if name != "tsgoQuery" {
 					return "", fmt.Errorf("native: unexpected region version of %s", name)

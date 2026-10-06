@@ -6,10 +6,12 @@ import (
 	"fmt"
 	"path/filepath"
 	"strings"
+	"unicode/utf16"
 	"unicode/utf8"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/bundled"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/locale"
@@ -115,4 +117,55 @@ func (p *Program) Query(file string, position uint64) (Result, error) {
 		result.Symbol = ast.EscapeAllInternalSymbolNames(ast.SymbolName(symbol))
 	}
 	return result, nil
+}
+
+// TypeParts identifies an exact AST node, rather than the deepest token at a
+// position. A mismatch between parsers is refused instead of querying a neighbor.
+// Frames are flags LF UTF-16-length LF TypeToString, with no trailing separator.
+func (p *Program) TypeParts(file string, start, end uint64, kind string) (string, error) {
+	file, err := Path(file)
+	if err != nil {
+		return "", err
+	}
+	source := p.Compiler.GetSourceFile(file)
+	if source == nil {
+		return "", fmt.Errorf("file is not in this program: %s", file)
+	}
+	if start >= end || end > uint64(len(source.Text())) {
+		return "", fmt.Errorf("invalid node range")
+	}
+	// GetNodeAtPosition deliberately skips token kinds (including identifiers).
+	// Descend by ranges ourselves so an operand token is selectable too.
+	var node *ast.Node
+	var find func(*ast.Node) bool
+	find = func(candidate *ast.Node) bool {
+		if uint64(candidate.Pos()) > start || uint64(candidate.End()) < end {
+			return false
+		}
+		if uint64(candidate.Pos()) == start && uint64(candidate.End()) == end && strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind {
+			node = candidate
+			return true
+		}
+		return candidate.ForEachChild(find)
+	}
+	find(source.AsNode())
+	if node == nil {
+		return "", fmt.Errorf("no exact %s node at %d:%d in %s", kind, start, end, file)
+	}
+	typeChecker, release := p.Compiler.GetTypeCheckerForFile(context.Background(), source)
+	defer release()
+	actual := typeChecker.GetTypeAtLocation(node)
+	if constraint := checker.Checker_getBaseConstraintOfType(typeChecker, actual); constraint != nil {
+		actual = constraint
+	}
+	parts := []*checker.Type{actual}
+	if actual.Flags()&checker.TypeFlagsUnion != 0 {
+		parts = actual.Types()
+	}
+	var framed strings.Builder
+	for _, part := range parts {
+		name := typeChecker.TypeToString(part)
+		fmt.Fprintf(&framed, "%d\n%d\n%s", part.Flags(), len(utf16.Encode([]rune(name))), name)
+	}
+	return framed.String(), nil
 }

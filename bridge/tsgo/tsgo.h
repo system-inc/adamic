@@ -32,6 +32,15 @@ typedef struct { uint32_t kind; tsgo_buffer symbol; tsgo_buffer type; } tsgo_res
 enum tsgo_status { TSGO_OK = 0, TSGO_ARGUMENT = 1, TSGO_HANDLE = 2, TSGO_CHECKER = 3, TSGO_MEMORY = 4 };
 int tsgo_create(tsgo_view config, const tsgo_view *files, size_t count, tsgo_handle *handle, tsgo_buffer *error);
 int tsgo_query(tsgo_handle handle, tsgo_view file, uint64_t position, tsgo_result *result, tsgo_buffer *error);
+/* Exact node lookup: kind is the TypeScript kind name without "Kind"; start
+ * includes leading trivia. A nonexistent kind/span is a checker error.
+ * Return the constrained type's union parts (or one nonunion part), in checker
+ * order. Each frame is decimal TypeFlags LF decimal UTF-16 units LF type text.
+ * Frame text may contain newlines; consume its stated units before the next
+ * frame. The enclosing buffer is UTF-8 with an explicit BYTE length and the
+ * same ownership as every other output. Flags are pinned to this checker.
+ * No rule predicate is applied by the bridge. */
+int tsgo_type_parts(tsgo_handle handle, tsgo_view file, uint64_t start, uint64_t end, tsgo_view kind, tsgo_buffer *parts, tsgo_buffer *error);
 int tsgo_release(tsgo_handle handle, tsgo_buffer *error);
 void tsgo_buffer_free(tsgo_buffer *buffer);
 void tsgo_result_free(tsgo_result *result);

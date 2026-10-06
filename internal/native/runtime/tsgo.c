@@ -9,7 +9,7 @@
 #include <time.h>
 #include <inttypes.h>
 
-static uint64_t loaded_ns, queried_ns;
+static uint64_t loaded_ns, queried_ns, first_query_ns;
 static size_t query_count;
 static bool timing(void) { return getenv("ADAMIC_TSGO_TIMING") != NULL; }
 static uint64_t now_ns(void) {
@@ -96,7 +96,25 @@ adamic_object *adamic_tsgo_query_in(adamic_region *region, double handle, const 
  answer->slots[1].reference = adamic_decode_utf8((const unsigned char *)result.symbol.data, result.symbol.length);
  answer->slots[2].reference = adamic_decode_utf8((const unsigned char *)result.type.data, result.type.length);
  tsgo_result_free(&result);
- if (timing()) { queried_ns += now_ns() - started; query_count++; }
+ if (timing()) { uint64_t elapsed = now_ns() - started;
+  if (query_count == 0) first_query_ns = elapsed;
+  queried_ns += elapsed; query_count++; }
+ return answer;
+}
+adamic_string *adamic_tsgo_type_parts(double handle, const adamic_string *file, double start, double end, const adamic_string *kind) {
+ uint64_t started = timing() ? now_ns() : 0;
+ uint64_t id = integer(handle), first = integer(start), last = integer(end);
+ tsgo_view path = path_view(file), name = path_view(kind);
+ tsgo_buffer parts = {0}, error = {0};
+ int status = tsgo_type_parts(id, path, first, last, name, &parts, &error);
+ free((void *)path.data); free((void *)name.data);
+ if (status != TSGO_OK) tsgo_buffer_free(&parts);
+ checked(status, &error);
+ adamic_string *answer = adamic_decode_utf8((const unsigned char *)parts.data, parts.length);
+ tsgo_buffer_free(&parts);
+ if (timing()) { uint64_t elapsed = now_ns() - started;
+  if (query_count == 0) first_query_ns = elapsed;
+  queried_ns += elapsed; query_count++; }
  return answer;
 }
 void adamic_tsgo_release(double handle) {
@@ -104,8 +122,8 @@ void adamic_tsgo_release(double handle) {
  checked(tsgo_release(integer(handle), &error), &error);
  if (timing()) {
   adamic_output_flush();
-  fprintf(stderr, "tsgo: load_ns=%" PRIu64 " query_ns=%" PRIu64 " queries=%zu\n", loaded_ns, queried_ns, query_count);
-  loaded_ns = 0; queried_ns = 0; query_count = 0;
+  fprintf(stderr, "tsgo: load_ns=%" PRIu64 " query_ns=%" PRIu64 " queries=%zu first_query_ns=%" PRIu64 "\n", loaded_ns, queried_ns, query_count, first_query_ns);
+  loaded_ns = 0; queried_ns = 0; first_query_ns = 0; query_count = 0;
  }
 }
 #else

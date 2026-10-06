@@ -11,7 +11,7 @@ func Name(function string) (string, bool) {
 		return "", false
 	}
 	switch name {
-	case "tsgoProgram", "tsgoQuery", "tsgoRelease":
+	case "tsgoProgram", "tsgoQuery", "tsgoRelease", "tsgoTypeParts":
 		return name, true
 	}
 	return "", false

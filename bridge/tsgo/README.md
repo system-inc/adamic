@@ -35,7 +35,7 @@ refused during lowering. JavaScript and the ordinary C command cannot compile
 bridge calls. The library calls are direct calls; taking them as function values
 is not implemented. A checker failure panics with its reason and exit 70.
 
-`internal/native/tsgo.go` supplies linking and replaces the bodies of the three
+`internal/native/tsgo.go` supplies linking and replaces the bodies of the four
 reserved compiler-generated functions, including the query's region version.
 Their signatures, calls, argument snapshots and cleanup come from the existing
 emitter. Body boundaries and borrowed parameters are checked before replacement.
@@ -43,6 +43,12 @@ The placeholder bodies panic if an opted-in IR is accidentally sent to an
 ordinary backend. This keeps the unit out of the four compiler files owned by
 other workers. A future general external-library IR can replace this isolated
 renderer.
+
+For the first type-aware rule, `tsgoTypeParts(program, file, byteStart,
+byteEnd, nodeKind)` selects an exact node by its trivia-inclusive byte span and
+kind name, including identifier tokens. It returns the constrained type's union
+parts as flags and TypeToString frames, documented in `tsgo.h`. Adamic decides
+the rule predicate. See [the type-aware lint driver](../../stage1/cohere/typeaware/README.md).
 
 ## C contract
 
@@ -123,7 +129,7 @@ The tests require the relevant sanitizer report, assertion or oracle failure,
 so a compilation failure does not count as catching a mutant.
 
 `ADAMIC_TSGO_TIMING=1` makes native release print `load_ns`, accumulated `query_ns`
-and `queries` to stderr. Native uses a monotonic clock; Go uses `time.Since`.
+and `queries`, plus `first_query_ns`, to stderr. Native uses a monotonic clock; Go uses `time.Since`.
 The optimized native runner and ordinary Go oracle run in three interleaved
 rounds. Timing excludes output formatting and printing, includes native C copies
 and conversion to Adamic values, and includes lazy checker work in the query

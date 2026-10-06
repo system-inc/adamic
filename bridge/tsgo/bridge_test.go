@@ -205,7 +205,7 @@ func TestBridge(t *testing.T) {
 		t.Fatalf("released handle mutant escaped: %v\n%s", err, output)
 	}
 	t.Log("released handle kept live: stale-handle assertion catches it")
-	wrongOverlay := overlay("wrong-position", "bridge/tsgo/checker/program.go", "typeChecker.GetTypeAtLocation(node)", "typeChecker.GetTypeAtLocation(source.AsNode())")
+	wrongOverlay := overlay("wrong-position", "bridge/tsgo/checker/program.go", "Type: typeChecker.TypeToString(typeChecker.GetTypeAtLocation(node))", "Type: typeChecker.TypeToString(typeChecker.GetTypeAtLocation(source.AsNode()))")
 	wrongArchive := filepath.Join(scratch, "wrong.a")
 	buildArchive("wrong-build", wrongArchive, wrongOverlay, false)
 	wrongBinary := filepath.Join(scratch, "wrong-native")

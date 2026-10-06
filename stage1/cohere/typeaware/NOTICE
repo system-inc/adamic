@@ -1,0 +1,5 @@
+The unary-minus rule predicate and message reproduce cohere's
+internal/lint/rules/typescript/no_unsafe_unary_minus.go at
+715ba94f3608a6500086b1076ce5cb7e51b836db. That rule records its origin in
+tsgolint at 05b7fbc under the MIT license. The checker and oracle use the pinned
+typescript-go shim already supplied by the cohere submodule.
