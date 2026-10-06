@@ -245,7 +245,9 @@ export class Scanner {
     identifier(prefix: number): boolean {
         const start = this.pos;
         this.pos += prefix;
-        let result = this.text.slice(start, this.pos);
+        let result = '';
+        let segment = start;
+        let escaped = false;
         let first = true;
         for(;;) {
             let code = this.code();
@@ -258,10 +260,12 @@ export class Scanner {
                     this.flags = flags;
                     break;
                 }
+                result += this.text.slice(segment, saved);
                 result += String.fromCodePoint(code);
+                segment = this.pos;
+                escaped = true;
             }
             else if(first ? isIdentifierStart(code) : isIdentifierPart(code)) {
-                result += String.fromCodePoint(code);
                 this.advance();
             }
             else {
@@ -272,7 +276,7 @@ export class Scanner {
         if(first) {
             return false;
         }
-        this.value = result;
+        this.value = escaped ? result + this.text.slice(segment, this.pos) : this.text.slice(start, this.pos);
         return true;
     }
 
