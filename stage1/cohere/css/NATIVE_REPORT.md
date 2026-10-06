@@ -160,6 +160,26 @@ This measures entire stylesheet formatting, not printing an already built tree.
 ADAMIC_CSS_PRINTER_BENCH=1 ADAMIC_CSS_PRINTER_BENCH_ONCE=1 go test -v -count=1 -timeout=30m ./stage1/cohere/css -run '^TestCSSPrinterThroughput$'
 ```
 
+Final throughput PASS in 77.697s. Every measured round formats 4,952
+stylesheets and produces the expected 510,298 output units.
+
+| Runtime | Round 1 / s | Round 2 / s | Round 3 / s | Median / s |
+|---|---:|---:|---:|---:|
+| native | 790 | 758 | 741 | 758 |
+| Go | 5870 | 5875 | 5799 | 5870 |
+| Adamic source on Node | 1430 | 1406 | 872 | 1406 |
+| Prettier fork on Node | 1291 | 1424 | 1293 | 1293 |
+| Prettier npm on Node | 1313 | 1362 | 1279 | 1313 |
+
+Native is slower on this corpus: approximately 7.7 times below Go's
+measured throughput. This is an observation, not a diagnosis of the cause;
+no performance profile was collected. The one-pass comparison includes
+startup for native and Node but excludes it for Go, as described above.
+
+Native verification commit: `a45ffb7`; cycle-proof merge: `7ef0344`.
+This throughput report and log are committed separately. Logs have trailing
+whitespace trimmed for review. The working tree is pushed without a pull request.
+
 # Scope
 
 CSS/SCSS only: Less files are exercised through those supported grammars, not
