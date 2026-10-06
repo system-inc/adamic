@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdatomic.h>
 
 #include <math.h>
 
@@ -37,6 +38,19 @@ typedef struct adamic_heap {
 	// malloc and for a value never freed (heap.c). It fills what was padding.
 	uint32_t slab;
 } adamic_heap;
+
+// The top slab bit is permanent sharing; the lower bits still identify the allocation chunk.
+#define ADAMIC_SHARED UINT32_C(0x80000000)
+#define ADAMIC_REGION_VALUE UINT32_C(0x40000000)
+static inline bool adamic_is_shared(const adamic_heap *heap) {
+	return (__atomic_load_n(&heap->slab, __ATOMIC_RELAXED) & ADAMIC_SHARED) != 0;
+}
+static inline size_t adamic_reference_count(const adamic_heap *heap) {
+	return adamic_is_shared(heap) ? __atomic_load_n(&heap->references, __ATOMIC_ACQUIRE) : heap->references;
+}
+void adamic_share(void *value);
+void adamic_heap_thread_end(void);
+void adamic_heap_end(void);
 
 // adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
 void *adamic_retain(void *value);
@@ -83,6 +97,8 @@ struct adamic_closure {
 	adamic_heap heap;
 	adamic_code code;
 	size_t count;
+	// Native lowering sets this from R before parallelMap can publish the closure.
+	bool result_references;
 	adamic_cell *cells[];
 };
 
@@ -234,6 +250,9 @@ typedef struct adamic_array {
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
 
+// Structured fork-join. Arguments are borrowed until the join; the result is owned.
+adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work);
+
 // adamic_array_push appends; a reference pushed belongs to the array.
 void adamic_array_push(adamic_array *array, adamic_value value);
 
@@ -265,7 +284,7 @@ typedef struct adamic_map {
 	bool reference_values;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
-	size_t iterating;
+	_Atomic size_t iterating;
 } adamic_map;
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
@@ -571,6 +590,7 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 // point: indexOf's answer, found through the index rather than by counting from the start.
 size_t adamic_string_units_before(const adamic_string *string, size_t offset);
 void adamic_string_free_index(adamic_string *string);
+void adamic_string_prepare_shared(adamic_string *string);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
@@ -629,7 +649,7 @@ bool adamic_weak_held(const void *target);
 // adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
 // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
-extern adamic_object *adamic_thrown;
+extern _Thread_local adamic_object *adamic_thrown;
 adamic_object *adamic_error_new(adamic_string *message);
 _Noreturn void adamic_uncaught(void);
 
@@ -764,7 +784,8 @@ _Noreturn void adamic_panic(const char *message, size_t length);
 // nearly gone, and that's a panic, as Node's RangeError is, rather than a segfault (stack.c). The
 // stack grows down on every processor Adamic targets. __builtin_frame_address is the real frame even
 // when the address sanitizer keeps locals elsewhere.
-extern uintptr_t adamic_stack_limit;
+extern _Thread_local uintptr_t adamic_stack_limit;
+void adamic_stack_thread_start(void);
 _Noreturn void adamic_stack_overflow(void);
 #define ADAMIC_CHECK_STACK() \
 	do { \

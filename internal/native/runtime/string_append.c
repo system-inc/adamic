@@ -55,7 +55,7 @@ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_
 		itself = itself || parts[index] == string;
 	}
 	adamic_string *result = string;
-	if (string->heap.references == 1 && !itself && string->capacity - length >= added) {
+	if (adamic_reference_count(&string->heap) == 1 && !itself && string->capacity - length >= added) {
 		// The bytes are about to change, so what was cached about the old ones goes: the length in
 		// units, and the position index (string_index.c).
 		adamic_string_free_index(string);

@@ -47,6 +47,9 @@ type Options struct {
 	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
 	Sanitize bool
 
+	// ThreadSanitize is a separate Linux race-check build, never combined with ASan.
+	ThreadSanitize bool
+
 	// Count makes the binary count its allocations, frees, retains and releases, and write them to
 	// stderr as it exits (runtime/count.h). Only a counted build does; the counts table is made of them.
 	Count bool
@@ -70,7 +73,7 @@ func Flags(options Options) []string {
 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
-	flags = append(flags, "-ffp-contract=off")
+	flags = append(flags, "-ffp-contract=off", "-pthread")
 	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
 	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
 	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
@@ -83,6 +86,12 @@ func Flags(options Options) []string {
 	}
 	if options.cpu != "" {
 		flags = append(flags, "-march="+options.cpu)
+	}
+	if options.Sanitize && options.ThreadSanitize {
+		panic("native: ASan and TSan cannot be combined")
+	}
+	if options.ThreadSanitize {
+		return append(flags, "-O1", "-g", "-fsanitize=thread")
 	}
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
