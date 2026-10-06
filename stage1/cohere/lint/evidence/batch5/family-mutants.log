@@ -1,0 +1,185 @@
+=== RUN   TestBatch5Mutants
+    batch5_test.go:91: batch5 generated: 131 cases
+=== RUN   TestBatch5Mutants/@typescript-eslint/no-dynamic-delete
+    batch5_test.go:104: caught on Node: case 0 line 2: port "fixed\tdelete obj[key]; delete obj['x']; delete obj[-1]; delete obj?.[key];", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/003/batch5-0.ts:1:12"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/003/batch5-0.ts:1:12
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 11 14 dynamicDelete 			11 14
+        fixed	delete obj[key]; delete obj['x']; delete obj[-1]; delete obj?.[key];
+    batch5_test.go:104: caught on native: case 0 line 2: port "fixed\tdelete obj[key]; delete obj['x']; delete obj[-1]; delete obj?.[key];", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/003/batch5-0.ts:1:12"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/003/batch5-0.ts:1:12
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 11 14 dynamicDelete 			11 14
+        fixed	delete obj[key]; delete obj['x']; delete obj[-1]; delete obj?.[key];
+=== RUN   TestBatch5Mutants/@typescript-eslint/no-import-type-side-effects
+    batch5_test.go:104: caught on Node: case 0 line 2: port "fixed\timport { type A as B, type C } from 'module'; import type { D } from 'm'; import { E, type F } from 'n';", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/004/batch5-1.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/004/batch5-1.ts:1:1
+          @typescript-eslint/no-import-type-side-effects  Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+        
+        range 0 45 useTopLevelQualifier fix			9 14
+        extra-fix 22 27	
+    batch5_test.go:104: caught on native: case 0 line 2: port "fixed\timport { type A as B, type C } from 'module'; import type { D } from 'm'; import { E, type F } from 'n';", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/004/batch5-1.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/004/batch5-1.ts:1:1
+          @typescript-eslint/no-import-type-side-effects  Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+        
+        range 0 45 useTopLevelQualifier fix			9 14
+        extra-fix 22 27	
+=== RUN   TestBatch5Mutants/@typescript-eslint/no-misused-new
+    batch5_test.go:104: caught on Node: case 0 line 2: port "fixed\tinterface I { new(): I; constructor(): void; } declare class C { new(): C; }", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/005/batch5-2.ts:1:15"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/005/batch5-2.ts:1:15
+          @typescript-eslint/no-misused-new  This construct signature returns the interface that declares it, which describes a constructor whose instances are more constructors. An interface describing a static class object should have its `new` signature return the instance type being constructed, not the constructor interface itself.
+        
+        range 14 17 interfaceConstruct 			14 17
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/005/batch5-2.ts:1:25
+    batch5_test.go:104: caught on native: case 0 line 2: port "fixed\tinterface I { new(): I; constructor(): void; } declare class C { new(): C; }", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/005/batch5-2.ts:1:15"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/005/batch5-2.ts:1:15
+          @typescript-eslint/no-misused-new  This construct signature returns the interface that declares it, which describes a constructor whose instances are more constructors. An interface describing a static class object should have its `new` signature return the instance type being constructed, not the constructor interface itself.
+        
+        range 14 17 interfaceConstruct 			14 17
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/005/batch5-2.ts:1:25
+=== RUN   TestBatch5Mutants/@typescript-eslint/no-this-alias
+    batch5_test.go:104: caught on Node: case 0 line 2: port "fixed\tconst self = this; const {x} = this; const safe = this; self += this; const parenthesized = (this);", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/006/batch5-3.ts:1:7"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/006/batch5-3.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment 			6 10
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/006/batch5-3.ts:1:26
+    batch5_test.go:104: caught on native: case 0 line 2: port "fixed\tconst self = this; const {x} = this; const safe = this; self += this; const parenthesized = (this);", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/006/batch5-3.ts:1:7"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/006/batch5-3.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment 			6 10
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/006/batch5-3.ts:1:26
+=== RUN   TestBatch5Mutants/@typescript-eslint/prefer-as-const
+    batch5_test.go:104: caught on Node: case 0 line 2: port "fixed\tconst a: 'x' = 'x'; let b = 2 as 2; const c: 1 = 2; class C { p: 3 = 3; }", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/007/batch5-4.ts:1:10"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/007/batch5-4.ts:1:10
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 9 12 preferAsConst fix			7 12
+        extra-fix 18 18	 as const
+    batch5_test.go:104: caught on native: case 0 line 2: port "fixed\tconst a: 'x' = 'x'; let b = 2 as 2; const c: 1 = 2; class C { p: 3 = 3; }", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/007/batch5-4.ts:1:10"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/007/batch5-4.ts:1:10
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 9 12 preferAsConst fix			7 12
+        extra-fix 18 18	 as const
+=== RUN   TestBatch5Mutants/@typescript-eslint/no-confusing-non-null-assertion
+    batch5_test.go:104: caught on Node: case 0 line 2: port "fixed\ta! == b; a! === b; a! = b; a! in b; a! instanceof B; (a!) == b;", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/008/batch5-5.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/008/batch5-5.ts:1:1
+          @typescript-eslint/no-confusing-non-null-assertion  Confusing combination of non-null assertion and equality test like `a! == b`, which looks very similar to `a !== b`.
+        
+        range 0 7 confusingEqual suggestion		Remove unnecessary non-null assertion (!) in equality test.	1 2
+        suggestion notNeedInEqualTest	Remove unnecessary non-null assertion (!) in equality test.
+    batch5_test.go:104: caught on native: case 0 line 2: port "fixed\ta! == b; a! === b; a! = b; a! in b; a! instanceof B; (a!) == b;", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/008/batch5-5.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/008/batch5-5.ts:1:1
+          @typescript-eslint/no-confusing-non-null-assertion  Confusing combination of non-null assertion and equality test like `a! == b`, which looks very similar to `a !== b`.
+        
+        range 0 7 confusingEqual suggestion		Remove unnecessary non-null assertion (!) in equality test.	1 2
+        suggestion notNeedInEqualTest	Remove unnecessary non-null assertion (!) in equality test.
+=== RUN   TestBatch5Mutants/@typescript-eslint/no-extra-non-null-assertion
+    batch5_test.go:104: caught on Node: case 0 line 2: port "fixed\ta!!!; (b!)!; c!?.d; e!?.(); f!;", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/009/batch5-6.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/009/batch5-6.ts:1:1
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 0 3 noExtraNonNullAssertion fix			2 3
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/009/batch5-6.ts:1:1
+    batch5_test.go:104: caught on native: case 0 line 2: port "fixed\ta!!!; (b!)!; c!?.d; e!?.(); f!;", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/009/batch5-6.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/009/batch5-6.ts:1:1
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 0 3 noExtraNonNullAssertion fix			2 3
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/009/batch5-6.ts:1:1
+=== RUN   TestBatch5Mutants/@typescript-eslint/no-duplicate-enum-values
+    batch5_test.go:104: caught on Node: case 0 line 2: port "fixed\tenum E { A=1, B=1.0, C=1, D='x', F='x', G='x', H=-1, I=-1 }", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/010/batch5-7.ts:1:12"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/010/batch5-7.ts:1:12
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 11 12 noDuplicateEnumValues 			11 12
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/010/batch5-7.ts:1:12
+    batch5_test.go:104: caught on native: case 0 line 2: port "fixed\tenum E { A=1, B=1.0, C=1, D='x', F='x', G='x', H=-1, I=-1 }", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/010/batch5-7.ts:1:12"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/010/batch5-7.ts:1:12
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 11 12 noDuplicateEnumValues 			11 12
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/010/batch5-7.ts:1:12
+=== RUN   TestBatch5Mutants/@typescript-eslint/no-explicit-any
+    batch5_test.go:104: caught on Node: case 0 line 2: port "fixed\tlet x: any; function f(...a: Array<any>): any { return x; } let y: unknown;", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/011/batch5-8.ts:1:8"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/011/batch5-8.ts:1:8
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 7 10 unexpectedAny fix	unknown		7 10
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/011/batch5-8.ts:1:43
+    batch5_test.go:104: caught on native: case 0 line 2: port "fixed\tlet x: any; function f(...a: Array<any>): any { return x; } let y: unknown;", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/011/batch5-8.ts:1:8"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/011/batch5-8.ts:1:8
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 7 10 unexpectedAny fix	unknown		7 10
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/011/batch5-8.ts:1:43
+=== RUN   TestBatch5Mutants/@typescript-eslint/no-useless-empty-export
+    batch5_test.go:104: caught on Node: case 0 line 2: port "fixed\timport 'm'; export {}; export type {}; export {} from 'n';", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/012/batch5-9.ts:1:13"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/012/batch5-9.ts:1:13
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 12 22 uselessEmptyExport fix			12 22
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/012/batch5-9.ts:1:24
+    batch5_test.go:104: caught on native: case 0 line 2: port "fixed\timport 'm'; export {}; export type {}; export {} from 'n';", Go "/tmp/adamic-gate/TestBatch5Mutants2429028340/012/batch5-9.ts:1:13"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/012/batch5-9.ts:1:13
+          @typescript-eslint/no-useless-empty-export  An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.
+        
+        range 12 22 uselessEmptyExport fix			12 22
+        /tmp/adamic-gate/TestBatch5Mutants2429028340/012/batch5-9.ts:1:24
+--- PASS: TestBatch5Mutants (159.28s)
+    --- PASS: TestBatch5Mutants/@typescript-eslint/no-dynamic-delete (14.91s)
+    --- PASS: TestBatch5Mutants/@typescript-eslint/no-import-type-side-effects (15.14s)
+    --- PASS: TestBatch5Mutants/@typescript-eslint/no-misused-new (18.78s)
+    --- PASS: TestBatch5Mutants/@typescript-eslint/no-this-alias (15.53s)
+    --- PASS: TestBatch5Mutants/@typescript-eslint/prefer-as-const (16.59s)
+    --- PASS: TestBatch5Mutants/@typescript-eslint/no-confusing-non-null-assertion (15.24s)
+    --- PASS: TestBatch5Mutants/@typescript-eslint/no-extra-non-null-assertion (16.14s)
+    --- PASS: TestBatch5Mutants/@typescript-eslint/no-duplicate-enum-values (15.53s)
+    --- PASS: TestBatch5Mutants/@typescript-eslint/no-explicit-any (14.66s)
+    --- PASS: TestBatch5Mutants/@typescript-eslint/no-useless-empty-export (14.31s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	159.289s

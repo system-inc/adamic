@@ -1,10 +1,13 @@
 // Five syntax-only cohere rules. Node indexes keep the visitor's ancestry acyclic.
-import { panic } from 'adamic';
+import { panic, utf8Length } from 'adamic';
 import { Parser } from '../../typescript/parser/parser.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
-import type { Scanner } from '../../typescript/scanner/scanner.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
 
 import { Finding } from './finding.ts';
+import { Settings } from './settings.ts';
+import { Batch5Context } from './batch5_context.ts';
+import { visitBatch5 } from './batch5_registry.ts';
 
 const debuggerMessage =
     'A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.';
@@ -21,11 +24,26 @@ const varMessage =
 const duplicateMessage =
     'Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.';
 
+function compareEdits(left: Finding, right: Finding): number {
+    const position = left.editStart - right.editStart;
+    if(position !== 0) {
+        return position;
+    }
+    const end = left.editEnd - right.editEnd;
+    if(end !== 0) {
+        return end;
+    }
+    return left.rule < right.rule ? -1 : left.rule > right.rule ? 1 : 0;
+}
+
 export class Linter {
     readonly source: string;
     readonly parser: Parser;
     readonly scanner: Scanner;
     readonly findings: Finding[] = [];
+    readonly rejected: string[] = [];
+    readonly settings: Settings;
+    context: Batch5Context | undefined;
     parents: number[] = [];
     root = -1;
     readonly selected: string;
@@ -40,11 +58,13 @@ export class Linter {
         mode: string,
         nullPolicy: string,
         allowCatch: boolean,
+        settings: Settings = new Settings(),
     ) {
+        this.settings = settings;
         this.source = source;
         this.parser = parser;
         this.scanner = scanner;
-        this.selected = selected;
+        this.selected = selected === '' ? 'all' : selected;
         this.mode = mode === '' ? 'Always' : mode;
         this.nullPolicy = this.mode === 'Always' ? (nullPolicy === '' ? 'Always' : nullPolicy) : 'Ignore';
         this.allowCatch = allowCatch;
@@ -52,6 +72,17 @@ export class Linter {
     run(): void {
         this.root = this.parser.file();
         this.parents = this.parser.nodes.map(() => -1);
+        const context = new Batch5Context(
+            this.source,
+            this.parser,
+            this.scanner,
+            this.parents,
+            this.findings,
+            this.selected,
+            this.settings,
+        );
+        this.context = context;
+        context.ancestry(this.root, -1);
         this.walk(this.root, -1);
         this.findings.sort((left, right) => left.start - right.start);
     }
@@ -268,29 +299,95 @@ export class Linter {
         ) {
             this.variable(index, parent);
         }
+        visitBatch5(this.context ?? panic('missing rule context'), index);
         for(const child of node.children) {
             this.walk(child, index);
         }
     }
     fixed(): string {
-        let result = this.source;
-        let previous = this.source.length;
-        for(let index = this.findings.length - 1; index >= 0; index--) {
-            const finding = this.findings[index] ?? panic('missing finding');
-            if(finding.repair !== 'fix') {
-                continue;
+        let current = this.source;
+        let findings = this.findings;
+        let lastRules: string[] = [];
+        for(let pass = 0; pass < 10; pass++) {
+            const proposals = findings.filter((finding) => finding.repair === 'fix');
+            for(const finding of findings) {
+                for(const edit of finding.extraFixes) {
+                    proposals.push(
+                        new Finding(
+                            finding.rule,
+                            finding.id,
+                            finding.message,
+                            edit.start,
+                            edit.end,
+                            'fix',
+                            edit.text,
+                            '',
+                        ),
+                    );
+                }
             }
-            if(finding.end > previous) {
-                panic('overlapping fixes');
+            lastRules = [];
+            for(const proposal of proposals) {
+                if(!lastRules.includes(proposal.rule)) {
+                    lastRules.push(proposal.rule);
+                }
             }
-            result = result.slice(0, finding.start) + finding.replacement + result.slice(finding.end);
-            previous = finding.start;
+            proposals.sort(compareEdits);
+            const applied: Finding[] = [];
+            let previous = -1;
+            let winner = '';
+            for(const finding of proposals) {
+                if(
+                    finding.editStart < previous ||
+                    (finding.editStart === previous && finding.editStart === finding.editEnd)
+                ) {
+                    this.rejected.push(
+                        `rejected ${finding.rule} ${utf8Length(current.slice(0, finding.editStart))} ${utf8Length(current.slice(0, finding.editEnd))} ${winner} overlaps another fix`,
+                    );
+                    continue;
+                }
+                if(finding.editStart < 0 || finding.editEnd < finding.editStart || finding.editEnd > current.length) {
+                    panic('invalid fix range');
+                }
+                if(current.slice(finding.editStart, finding.editEnd) === finding.replacement) {
+                    panic('nonprogressing fix');
+                }
+                applied.push(finding);
+                previous = finding.editEnd;
+                winner = finding.rule;
+            }
+            if(applied.length === 0) {
+                return current;
+            }
+            const pieces: string[] = [];
+            let cursor = 0;
+            for(const finding of applied) {
+                pieces.push(current.slice(cursor, finding.editStart));
+                pieces.push(finding.replacement);
+                cursor = finding.editEnd;
+            }
+            pieces.push(current.slice(cursor));
+            const result = pieces.join('');
+            const parser = new Parser(result, this.parser.path);
+            const scanner = new Scanner(result);
+            const next = new Linter(
+                result,
+                parser,
+                scanner,
+                this.selected,
+                this.mode,
+                this.nullPolicy,
+                this.allowCatch,
+                this.settings,
+            );
+            next.run();
+            current = result;
+            findings = next.findings;
         }
-        // Selected rules propose disjoint edits; parse every rewrite before exposing it.
-        if(result !== this.source) {
-            const checked = new Parser(result, 'fixed source');
-            checked.file();
-        }
-        return result;
+        this.rejected.push(
+            'rejected fix-engine 0 0  the pass budget was exhausted before the file converged (10 passes)',
+        );
+        this.rejected.push(`unconverged ${lastRules.join(',')}`);
+        return this.source;
     }
 }

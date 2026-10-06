@@ -1,0 +1,64 @@
+=== RUN   TestBatch5Controls
+    batch5_test.go:85: batch5 generated: 131 cases
+    batch5_test.go:85: Go, Node, native identical: 75283 bytes
+--- PASS: TestBatch5Controls (21.79s)
+=== RUN   TestBatch5RecoveryGaps
+    batch5_test.go:186: EXPLICIT LIMIT: Go recovered: case 0
+        /workspace/adamic/stage1/cohere/lint/gaps/2_interface_method_body.ts:1:46
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 45 48 unexpectedAny 			45 48
+        recovery findings only
+    batch5_test.go:186: parser recovery gap: /tmp/adamic-gate/TestBatch5RecoveryGaps3708168358/003/scanner timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 54 in /workspace/adamic/stage1/cohere/lint/gaps/2_interface_method_body.ts
+    batch5_test.go:186: parser recovery gap: node timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 54 in /workspace/adamic/stage1/cohere/lint/gaps/2_interface_method_body.ts
+    batch5_test.go:186: EXPLICIT LIMIT: Go recovered: case 0
+        /workspace/adamic/stage1/cohere/lint/gaps/3_type_method_body.ts:1:39
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 38 41 unexpectedAny 			38 41
+        recovery findings only
+    batch5_test.go:186: parser recovery gap: /tmp/adamic-gate/TestBatch5RecoveryGaps3708168358/003/scanner timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 47 in /workspace/adamic/stage1/cohere/lint/gaps/3_type_method_body.ts
+    batch5_test.go:186: parser recovery gap: node timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 47 in /workspace/adamic/stage1/cohere/lint/gaps/3_type_method_body.ts
+--- PASS: TestBatch5RecoveryGaps (19.15s)
+=== RUN   TestNestedConstructorGap
+    gaps_test.go:35: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- PASS: TestNestedConstructorGap (0.17s)
+=== RUN   TestRulesAgree
+    lint_test.go:312: batch5 generated: 131 cases
+    lint_test.go:284: batch5 upstream @typescript-eslint/no-dynamic-delete: 42
+    lint_test.go:284: batch5 upstream @typescript-eslint/no-import-type-side-effects: 26
+    lint_test.go:284: batch5 upstream @typescript-eslint/no-misused-new: 45
+    lint_test.go:284: batch5 upstream @typescript-eslint/no-this-alias: 40
+    lint_test.go:284: batch5 upstream @typescript-eslint/prefer-as-const: 69
+    lint_test.go:284: batch5 upstream @typescript-eslint/no-confusing-non-null-assertion: 28
+    lint_test.go:284: batch5 upstream @typescript-eslint/no-extra-non-null-assertion: 19
+    lint_test.go:284: batch5 upstream @typescript-eslint/no-duplicate-enum-values: 57
+    lint_test.go:284: batch5 upstream @typescript-eslint/no-explicit-any: 207
+    lint_test.go:284: batch5 upstream @typescript-eslint/no-useless-empty-export: 64
+    lint_test.go:286: cohere cases: 815 unique source/rule/options combinations
+    lint_test.go:315: EXPLICIT LIMIT: Go recovered: case 0
+        /tmp/adamic-gate/TestRulesAgree2148591008/141/case-235/repository/source/Thing.ts:1:46
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 45 48 unexpectedAny 			45 48
+        recovery findings only
+    lint_test.go:315: parser recovery gap: /tmp/adamic-gate/TestRulesAgree2148591008/003/scanner timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 54 in /tmp/adamic-gate/TestRulesAgree2148591008/141/case-235/repository/source/Thing.ts
+    lint_test.go:315: parser recovery gap: node timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 54 in /tmp/adamic-gate/TestRulesAgree2148591008/141/case-235/repository/source/Thing.ts
+    lint_test.go:315: EXPLICIT LIMIT: Go recovered: case 0
+        /tmp/adamic-gate/TestRulesAgree2148591008/141/case-260/repository/source/Thing.ts:1:39
+          @typescript-eslint/no-explicit-any  This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all.
+        
+        range 38 41 unexpectedAny 			38 41
+        recovery findings only
+    lint_test.go:315: parser recovery gap: /tmp/adamic-gate/TestRulesAgree2148591008/003/scanner timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 47 in /tmp/adamic-gate/TestRulesAgree2148591008/141/case-260/repository/source/Thing.ts
+    lint_test.go:315: parser recovery gap: node timeout=false: exit status 70: adamic: panic: parser slice unsupported primary CloseBraceToken at 47 in /tmp/adamic-gate/TestRulesAgree2148591008/141/case-260/repository/source/Thing.ts
+    lint_test.go:320: Go, Node, native identical: 414115 bytes
+--- PASS: TestRulesAgree (24.50s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:339: EXPLICIT LIMIT: recovery proving program tested separately: ../../../stage1/cohere/lint/gaps/2_interface_method_body.ts
+    lint_test.go:339: EXPLICIT LIMIT: recovery proving program tested separately: ../../../stage1/cohere/lint/gaps/3_type_method_body.ts
+    lint_test.go:359: compiler and stage1: 198 files
+    lint_test.go:360: Go, Node, native identical: 12640839 bytes
+--- PASS: TestCompilerAndStage1Agree (41.95s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	107.571s

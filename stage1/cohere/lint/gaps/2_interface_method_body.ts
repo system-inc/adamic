@@ -1,0 +1,1 @@
+interface Greeter { constructor(param: Array<any>) {} }

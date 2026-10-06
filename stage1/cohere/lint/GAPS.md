@@ -40,11 +40,33 @@ and `TestStrongAstParentGap`; see
 Finding classes avoid the parser's observed structural-interface method bug;
 this slice adds no new interface-method workaround.
 
+## 2 and 3. Illegal method bodies in an interface or type literal
+
+The unchanged Go rule tests contain these two malformed inputs:
+
+- [2_interface_method_body.ts](gaps/2_interface_method_body.ts)
+- [3_type_method_body.ts](gaps/3_type_method_body.ts)
+
+Go's parser recovers a parameter whose `any` produces `unexpectedAny` at byte
+ranges 45..48 and 38..41 respectively. The Adamic parser running on Node and
+sanitized native exits 70 with `parser slice unsupported primary CloseBraceToken`
+at offsets 54 and 47. `TestBatch5RecoveryGaps` runs the proving programs through
+the actual driver and compares those observations, with a two-second process
+bound. `TestRulesAgree` identifies precisely the same two upstream inputs and
+checks their refusal; it never counts them among agreeing bytes.
+
+Observed: both backends refuse promptly rather than timing out. Inference: the
+parser's type-literal member loop does not recover an illegal signature body in
+Go's way. The parser is outside this unit's ownership and remains unchanged.
+
 ## Limits rather than language gaps
 
-These five rules require no type information. Other lint rules, suppression,
-config decoding, JSX, JSDoc lint traversal, malformed-source recovery, and a
-fix engine resolving competing edits are outside this unit. The current parser
-accepts TS source files used by the corpus; the Go oracle rejects diagnostics
-before comparing. Non-UTF-8 input is not covered. No finding or repair from an
-unsupported additional rule is claimed.
+These fifteen rules require no type information. Config, suppression, binder and
+type checker integration, general JSX parsing, and general malformed-source
+recovery are outside this unit. The selected rules' decoded options are supported;
+this is not the ESLint configuration decoder. Non-UTF-8 input is not covered.
+The fix engine compares complete valid proposals and final sources. Its bounded
+loop preserves the earlier batch's overlap and pass-budget machinery; these ten
+rules do not supply a competing or oscillating edit control. Behavior for arbitrary
+invalid third-party proposals is not claimed. Strong parent ownership and the inherited constructor proof gap
+remain represented by numeric ancestry and by driver-side object construction.

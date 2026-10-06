@@ -1,0 +1,89 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+    oracle_test.go:448: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+    oracle_test.go:448: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+    oracle_test.go:448: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+    oracle_test.go:448: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a
+    oracle_test.go:448: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+    oracle_test.go:441: gate cache native miss
+    oracle_test.go:455: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+    oracle_test.go:441: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+    oracle_test.go:559: gate cache node miss
+    oracle_test.go:559: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+    oracle_test.go:441: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+    oracle_test.go:455: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+    oracle_test.go:448: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+    oracle_test.go:441: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+    oracle_test.go:455: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+    oracle_test.go:455: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+    oracle_test.go:441: gate cache native miss
+    oracle_test.go:455: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a
+    oracle_test.go:441: gate cache native miss
+    oracle_test.go:455: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a (1.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a (1.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a (1.82s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/collections.a (2.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/classes.a (1.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a (2.72s)
+PASS
+gate cache: native hits=6 misses=12
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.733s

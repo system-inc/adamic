@@ -22,7 +22,7 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"finding.ts", "lint.ts", "main.ts"}
+var portFiles = []string{"batch5_context.ts", "batch5_helpers.ts", "batch5_messages.ts", "batch5_registry.ts", "no_useless_empty_export.ts", "finding.ts", "lint.ts", "main.ts", "no_confusing_non_null_assertion.ts", "no_duplicate_enum_values.ts", "no_dynamic_delete.ts", "no_explicit_any.ts", "no_extra_non_null_assertion.ts", "no_import_type_side_effects.ts", "no_misused_new.ts", "no_this_alias.ts", "prefer_as_const.ts", "repair_edit.ts", "repair_suggestion.ts", "settings.ts"}
 
 type execution struct {
 	output   []byte
@@ -206,16 +206,14 @@ func upstream(t *testing.T) []string {
 	capture := filepath.Join(directory, "capture")
 	t.Setenv("COHERE_DOCS_CAPTURE", capture)
 	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(NoDynamicDelete|NoImportTypeSideEffects|NoMisusedNew|NoThisAlias|PreferAsConst|NoConfusingNonNullAssertion|NoExtraNonNullAssertion|NoDuplicateEnumValues|NoExplicitAny|NoUselessEmptyExport)", "-count=1", "-timeout=10m")
 	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	type record struct {
-		Rule, Source, Outcome, FixedSource string
-		Options                            struct {
-			Mode, Null      string
-			AllowEmptyCatch bool
-		}
+		Rule, Source, Outcome, FixedSource, File string
+		Options                                  json.RawMessage
 	}
 	unique := map[string]record{}
 	for _, path := range files {
@@ -231,10 +229,10 @@ func upstream(t *testing.T) []string {
 			if err := json.Unmarshal(line, &row); err != nil {
 				t.Fatal(err)
 			}
-			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|", "|"+row.Rule+"|") {
+			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|@typescript-eslint/no-useless-empty-export|@typescript-eslint/no-dynamic-delete|@typescript-eslint/no-import-type-side-effects|@typescript-eslint/no-misused-new|@typescript-eslint/no-this-alias|@typescript-eslint/prefer-as-const|@typescript-eslint/no-confusing-non-null-assertion|@typescript-eslint/no-extra-non-null-assertion|@typescript-eslint/no-duplicate-enum-values|@typescript-eslint/no-explicit-any|", "|"+row.Rule+"|") {
 				continue
 			}
-			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source)
+			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule+"/"+row.File, row.Options, row.Source)
 			unique[key] = row
 		}
 	}
@@ -246,14 +244,44 @@ func upstream(t *testing.T) []string {
 	var rows []string
 	for i, key := range keys {
 		row := unique[key]
-		path := filepath.Join(directory, fmt.Sprintf("case-%03d.ts", i))
+		fileName := row.File
+		if fileName == "" {
+			fileName = "case.ts"
+		}
+		path := filepath.Join(directory, fmt.Sprintf("case-%03d", i), strings.TrimPrefix(filepath.ToSlash(fileName), "/"))
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t", path, row.Rule, row.Options.Mode, row.Options.Null, row.Options.AllowEmptyCatch))
+		var legacy struct {
+			Mode, Null      string
+			AllowEmptyCatch bool
+		}
+		if len(row.Options) > 0 && row.Options[0] == '{' {
+			if err := json.Unmarshal(row.Options, &legacy); err != nil {
+				t.Fatal(err)
+			}
+		}
+		mode := ""
+		if row.Rule == "@typescript-eslint/no-explicit-any" && (row.Source == "interface Greeter { constructor(param: Array<any>) {} }" || row.Source == "type obj = { constructor(param: Array<any>) {} }") {
+			mode = "unsupported-recovery"
+		}
+		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
 	}
 	if len(rows) < 150 {
 		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
+	}
+	counts := map[string]int{}
+	for _, row := range unique {
+		counts[row.Rule]++
+	}
+	for _, rule := range batch5Rules {
+		if counts[rule] == 0 {
+			t.Fatalf("no captured fixtures for %s", rule)
+		}
+		t.Logf("batch5 upstream %s: %d", rule, counts[rule])
 	}
 	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
 	return rows
@@ -272,6 +300,8 @@ func compare(t *testing.T, oracle, binary, directory, path string) []byte {
 	t.Logf("Go, Node, native identical: %d bytes", len(want.output))
 	return want.output
 }
+
+// Not parallel: upstream capture sets a process-wide fixture capture directory.
 func TestRulesAgree(t *testing.T) {
 	directory, err := filepath.Abs(".")
 	if err != nil {
@@ -279,7 +309,14 @@ func TestRulesAgree(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
-	rows := append(generated(t), upstream(t)...)
+	rows := append(generated(t), batch5Generated(t)...)
+	for _, row := range upstream(t) {
+		if strings.HasSuffix(row, "\tunsupported-recovery") {
+			checkBatch5RecoveryRefusal(t, oracle, binary, directory, row)
+		} else {
+			rows = append(rows, row)
+		}
+	}
 	compare(t, oracle, binary, directory, manifest(t, rows))
 }
 func TestCompilerAndStage1Agree(t *testing.T) {
@@ -296,6 +333,11 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 			if err != nil {
 				return err
+			}
+			// Invalid-source proving programs are exercised by TestBatch5RecoveryGaps.
+			if strings.HasSuffix(filepath.ToSlash(path), "/cohere/lint/gaps/2_interface_method_body.ts") || strings.HasSuffix(filepath.ToSlash(path), "/cohere/lint/gaps/3_type_method_body.ts") {
+				t.Logf("EXPLICIT LIMIT: recovery proving program tested separately: %s", path)
+				return nil
 			}
 			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
 				absolute, err := filepath.Abs(path)
@@ -317,7 +359,11 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	t.Logf("compiler and stage1: %d files", len(rows))
 	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
 }
-func mutant(t *testing.T, from, to string) string {
+func mutant(t *testing.T, from, to string, target ...string) string {
+	changed := "lint.ts"
+	if len(target) > 0 {
+		changed = target[0]
+	}
 	directory := t.TempDir()
 	for _, file := range portFiles {
 		data, err := os.ReadFile(file)
@@ -325,7 +371,7 @@ func mutant(t *testing.T, from, to string) string {
 			t.Fatal(err)
 		}
 		source := string(data)
-		if file == "lint.ts" {
+		if file == changed {
 			if strings.Count(source, from) != 1 {
 				t.Fatalf("mutant anchor count for %q", from)
 			}

@@ -1,0 +1,157 @@
+=== RUN   TestBatch5RepairPayloadMutants
+    batch5_test.go:148: batch5 generated: 131 cases
+=== RUN   TestBatch5RepairPayloadMutants/additional_automatic_edit_lost
+    batch5_test.go:168: caught on Node: case 0 line 6: port "extra-fix 6 6\t type", Go "extra-fix 22 27\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5RepairPayloadMutants1879549868/004/batch5-1.ts:1:1
+          @typescript-eslint/no-import-type-side-effects  Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+        
+        range 0 45 useTopLevelQualifier fix			9 14
+        extra-fix 22 27	
+        extra-fix 6 6	 type
+        fixed	import type { A as B, C } from 'module'; import type { D } from 'm'; import { E, type F } from 'n';
+    batch5_test.go:168: caught on native: case 0 line 6: port "extra-fix 6 6\t type", Go "extra-fix 22 27\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5RepairPayloadMutants1879549868/004/batch5-1.ts:1:1
+          @typescript-eslint/no-import-type-side-effects  Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+        
+        range 0 45 useTopLevelQualifier fix			9 14
+        extra-fix 22 27	
+        extra-fix 6 6	 type
+        fixed	import type { A as B, C } from 'module'; import type { D } from 'm'; import { E, type F } from 'n';
+=== RUN   TestBatch5RepairPayloadMutants/second_suggestion_lost
+    batch5_test.go:168: caught on Node: case 0 line 26: port "/tmp/adamic-gate/TestBatch5RepairPayloadMutants1879549868/008/batch5-5.ts:1:37", Go "suggestion wrapUpLeft\tWrap the left-hand side in parentheses to avoid confusion with \"in\" operator."
+        Go context:
+          @typescript-eslint/no-confusing-non-null-assertion  Confusing combination of non-null assertion and `in` operator like `a! in b`, which might be misinterpreted as `!(a in b)`.
+        
+        range 27 34 confusingOperator suggestion		Remove possibly unnecessary non-null assertion (!) in the left operand of the `in` operator.	28 29
+        suggestion notNeedInOperator	Remove possibly unnecessary non-null assertion (!) in the left operand of the `in` operator.
+        suggestion-edit 28 29	
+        suggestion wrapUpLeft	Wrap the left-hand side in parentheses to avoid confusion with "in" operator.
+        suggestion-edit 27 27	(
+        suggestion-edit 29 29	)
+        /tmp/adamic-gate/TestBatch5RepairPayloadMutants1879549868/008/batch5-5.ts:1:37
+          @typescript-eslint/no-confusing-non-null-assertion  Confusing combination of non-null assertion and `instanceof` operator like `a! instanceof b`, which might be misinterpreted as `!(a instanceof b)`.
+    batch5_test.go:168: caught on native: case 0 line 26: port "/tmp/adamic-gate/TestBatch5RepairPayloadMutants1879549868/008/batch5-5.ts:1:37", Go "suggestion wrapUpLeft\tWrap the left-hand side in parentheses to avoid confusion with \"in\" operator."
+        Go context:
+          @typescript-eslint/no-confusing-non-null-assertion  Confusing combination of non-null assertion and `in` operator like `a! in b`, which might be misinterpreted as `!(a in b)`.
+        
+        range 27 34 confusingOperator suggestion		Remove possibly unnecessary non-null assertion (!) in the left operand of the `in` operator.	28 29
+        suggestion notNeedInOperator	Remove possibly unnecessary non-null assertion (!) in the left operand of the `in` operator.
+        suggestion-edit 28 29	
+        suggestion wrapUpLeft	Wrap the left-hand side in parentheses to avoid confusion with "in" operator.
+        suggestion-edit 27 27	(
+        suggestion-edit 29 29	)
+        /tmp/adamic-gate/TestBatch5RepairPayloadMutants1879549868/008/batch5-5.ts:1:37
+          @typescript-eslint/no-confusing-non-null-assertion  Confusing combination of non-null assertion and `instanceof` operator like `a! instanceof b`, which might be misinterpreted as `!(a instanceof b)`.
+=== RUN   TestBatch5RepairPayloadMutants/suggestion_promoted_to_automatic_edit
+    batch5_test.go:168: caught on Node: case 0 line 5: port "range 0 7 confusingEqual fix\t\tRemove unnecessary non-null assertion (!) in equality test.\t1 2", Go "range 0 7 confusingEqual suggestion\t\tRemove unnecessary non-null assertion (!) in equality test.\t1 2"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5RepairPayloadMutants1879549868/008/batch5-5.ts:1:1
+          @typescript-eslint/no-confusing-non-null-assertion  Confusing combination of non-null assertion and equality test like `a! == b`, which looks very similar to `a !== b`.
+        
+        range 0 7 confusingEqual suggestion		Remove unnecessary non-null assertion (!) in equality test.	1 2
+        suggestion notNeedInEqualTest	Remove unnecessary non-null assertion (!) in equality test.
+        suggestion-edit 1 2	
+        /tmp/adamic-gate/TestBatch5RepairPayloadMutants1879549868/008/batch5-5.ts:1:10
+          @typescript-eslint/no-confusing-non-null-assertion  Confusing combination of non-null assertion and equality test like `a! == b`, which looks very similar to `a !== b`.
+    batch5_test.go:168: caught on native: case 0 line 5: port "range 0 7 confusingEqual fix\t\tRemove unnecessary non-null assertion (!) in equality test.\t1 2", Go "range 0 7 confusingEqual suggestion\t\tRemove unnecessary non-null assertion (!) in equality test.\t1 2"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch5RepairPayloadMutants1879549868/008/batch5-5.ts:1:1
+          @typescript-eslint/no-confusing-non-null-assertion  Confusing combination of non-null assertion and equality test like `a! == b`, which looks very similar to `a !== b`.
+        
+        range 0 7 confusingEqual suggestion		Remove unnecessary non-null assertion (!) in equality test.	1 2
+        suggestion notNeedInEqualTest	Remove unnecessary non-null assertion (!) in equality test.
+        suggestion-edit 1 2	
+        /tmp/adamic-gate/TestBatch5RepairPayloadMutants1879549868/008/batch5-5.ts:1:10
+          @typescript-eslint/no-confusing-non-null-assertion  Confusing combination of non-null assertion and equality test like `a! == b`, which looks very similar to `a !== b`.
+--- PASS: TestBatch5RepairPayloadMutants (47.95s)
+    --- PASS: TestBatch5RepairPayloadMutants/additional_automatic_edit_lost (15.34s)
+    --- PASS: TestBatch5RepairPayloadMutants/second_suggestion_lost (14.70s)
+    --- PASS: TestBatch5RepairPayloadMutants/suggestion_promoted_to_automatic_edit (14.83s)
+=== RUN   TestMutants
+=== RUN   TestMutants/suggestion_applied_as_fix
+    lint_test.go:409: suggestion applied as fix caught on Node: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutants1276014850/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutants1276014850/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+    lint_test.go:409: suggestion applied as fix caught on native: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutants1276014850/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutants1276014850/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:409: empty function body reported caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:409: empty function body reported caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/duplicate_case_suppressed
+    lint_test.go:409: duplicate case suppressed caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:409: duplicate case suppressed caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants1276014850/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+--- PASS: TestMutants (47.48s)
+    --- PASS: TestMutants/suggestion_applied_as_fix (15.89s)
+    --- PASS: TestMutants/empty_function_body_reported (15.02s)
+    --- PASS: TestMutants/duplicate_case_suppressed (14.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	95.446s

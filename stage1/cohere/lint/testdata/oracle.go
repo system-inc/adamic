@@ -3,6 +3,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
@@ -12,6 +13,7 @@ import (
 	"github.com/system-inc/cohere/internal/lint/report"
 	"github.com/system-inc/cohere/internal/lint/rule"
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
+	typescript "github.com/system-inc/cohere/internal/lint/rules/typescript"
 	"os"
 	"sort"
 	"strings"
@@ -34,7 +36,7 @@ func written(text string) string {
 }
 func run(row string, countOnly bool, out *bufio.Writer) int {
 	fields := strings.Split(row, "\t")
-	for len(fields) < 5 {
+	for len(fields) < 7 {
 		fields = append(fields, "")
 	}
 	path := fields[0]
@@ -59,39 +61,75 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 		fmt.Fprint(out, display[:footer])
 		repair, replacement, suggestion := "", "", ""
 		if len(d.Fixes) > 0 {
-			if len(d.Fixes) != 1 || d.Fixes[0].Range != d.Range {
-				panic("unexpected fix shape")
-			}
 			repair = "fix"
 			replacement = d.Fixes[0].Text
 		}
 		if len(d.Suggestions) > 0 {
 			s := d.Suggestions[0]
-			if len(d.Suggestions) != 1 || len(s.Fixes) != 1 || s.Fixes[0].Range != d.Range {
-				panic("unexpected suggestion shape")
-			}
 			repair = "suggestion"
 			replacement = s.Fixes[0].Text
 			suggestion = s.Message.Description
 		}
-		fmt.Fprintf(out, "range %d %d %s %s\t%s\t%s\n", start, end, d.Message.Id, repair, written(replacement), written(suggestion))
+		editStart, editEnd := start, end
+		if len(d.Fixes) > 0 {
+			editStart = d.Fixes[0].Range.Pos()
+			editEnd = d.Fixes[0].Range.End()
+		}
+		if len(d.Suggestions) > 0 {
+			editStart = d.Suggestions[0].Fixes[0].Range.Pos()
+			editEnd = d.Suggestions[0].Fixes[0].Range.End()
+		}
+		fmt.Fprintf(out, "range %d %d %s %s\t%s\t%s\t%d %d\n", start, end, d.Message.Id, repair, written(replacement), written(suggestion), editStart, editEnd)
+		if len(d.Fixes) > 1 {
+			for _, fix := range d.Fixes[1:] {
+				fmt.Fprintf(out, "extra-fix %d %d\t%s\n", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+			}
+		}
+		if strings.HasPrefix(d.RuleName, "@typescript-eslint/") {
+			for _, suggestion := range d.Suggestions {
+				fmt.Fprintf(out, "suggestion %s\t%s\n", suggestion.Message.Id, written(suggestion.Message.Description))
+				for _, fix := range suggestion.Fixes {
+					fmt.Fprintf(out, "suggestion-edit %d %d\t%s\n", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+				}
+			}
+		}
+	}
+	if fields[6] == "recovery" {
+		fmt.Fprintln(out, "recovery findings only")
+		return len(diagnostics)
 	}
 	result, err := edit.FixText(path, source, func(fileName, text string) ([]edit.Proposal, error) {
 		return edit.ProposalsFrom(collect(fileName, text, fields)), nil
 	}, 10)
-	if err != nil || len(result.Rejected) != 0 || !result.Converged {
+	if err != nil {
 		panic(fmt.Sprintf("fix failed: %v %+v", err, result))
+	}
+	for _, rejection := range result.Rejected {
+		fmt.Fprintf(out, "rejected %s %d %d %s %s\n", rejection.Proposal.RuleName, rejection.Proposal.Fix.Range.Pos(), rejection.Proposal.Fix.Range.End(), rejection.ConflictsWith, rejection.Reason)
+	}
+	if !result.Converged {
+		fmt.Fprintf(out, "unconverged %s\n", strings.Join(result.UnconvergedRules, ","))
 	}
 	fixed := result.Text
 	fmt.Fprintf(out, "fixed\t%s\n", written(fixed))
 	return len(diagnostics)
 }
 func collect(path, source string, fields []string) []rule.Diagnostic {
-	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, core.ScriptKindTS)
-	if len(file.Diagnostics()) != 0 {
-		panic(fmt.Sprintf("invalid corpus %s: %v", path, file.Diagnostics()))
+	kind := core.ScriptKindTS
+	if strings.HasSuffix(path, ".tsx") {
+		kind = core.ScriptKindTSX
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase}
+	if strings.HasSuffix(path, ".js") || strings.HasSuffix(path, ".mjs") || strings.HasSuffix(path, ".cjs") {
+		kind = core.ScriptKindJS
+	}
+	if strings.HasSuffix(path, ".jsx") {
+		kind = core.ScriptKindJSX
+	}
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, kind)
+	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
+		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
+	}
+	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, typescript.NoDynamicDelete, typescript.NoImportTypeSideEffects, typescript.NoMisusedNew, typescript.NoThisAlias, typescript.PreferAsConst, typescript.NoConfusingNonNullAssertion, typescript.NoExtraNonNullAssertion, typescript.NoDuplicateEnumValues, typescript.NoExplicitAny, typescript.NoUselessEmptyExport}
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
 	for _, subject := range selected {
@@ -100,6 +138,22 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 		}
 		ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
 		var options any
+		if fields[5] != "" {
+			switch subject.Name {
+			case "@typescript-eslint/no-this-alias":
+				var decoded typescript.NoThisAliasOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			case "@typescript-eslint/no-explicit-any":
+				var decoded typescript.NoExplicitAnyOptions
+				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
+					panic(err)
+				}
+				options = decoded
+			}
+		}
 		if subject.Name == "eqeqeq" {
 			options = rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}
 		}

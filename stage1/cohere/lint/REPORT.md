@@ -1,3 +1,8 @@
+> Batch 5 now adds ten rules on main's five-rule baseline. See
+> [BATCH5.md](BATCH5.md) for its reservation, branch checks, corpus, mutants and
+> final gate evidence. The report below records the original five-rule unit and
+> its historical timing; those rates are not batch 5 measurements.
+
 # Syntax-only lint verification
 
 The recovered tree is intact. The final parent-array initialization change is

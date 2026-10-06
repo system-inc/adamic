@@ -1,0 +1,492 @@
+[
+  {
+    "rule": "@typescript-eslint/no-dynamic-delete",
+    "time_utc": "2026-10-06T18:21:54.020239+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "published": false
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-extra-non-null-assertion",
+    "time_utc": "2026-10-06T18:21:55.239700+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "published": false
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-import-type-side-effects",
+    "time_utc": "2026-10-06T18:21:56.160718+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "published": false
+      }
+    }
+  },
+  {
+    "rule": "default-case-last",
+    "time_utc": "2026-10-06T18:21:57.096776+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "published": false
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-explicit-any",
+    "time_utc": "2026-10-06T18:21:58.326669+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "published": false
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-enum-values",
+    "time_utc": "2026-10-06T18:21:59.459435+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "published": false
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-this-alias",
+    "time_utc": "2026-10-06T18:22:00.151396+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "published": false
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-misused-new",
+    "time_utc": "2026-10-06T18:22:02.249073+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "published": false
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/prefer-as-const",
+    "time_utc": "2026-10-06T18:22:03.823557+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "published": false
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-confusing-non-null-assertion",
+    "time_utc": "2026-10-06T18:22:05.015240+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "published": false
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-dynamic-delete",
+    "time_utc": "2026-10-06T18:36:18.457385+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-unnecessary-type-constraint",
+    "time_utc": "2026-10-06T18:40:12.509141+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": true,
+        "paths": [
+          "origin/codex/stage1-lint-batch2:stage1/cohere/lint/BATCH2.md",
+          "origin/codex/stage1-lint-batch2:stage1/cohere/lint/no_unnecessary_type_constraint.ts"
+        ]
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": true,
+        "paths": [
+          "origin/codex/stage1-lint-batch4:stage1/cohere/lint/BATCH2.md",
+          "origin/codex/stage1-lint-batch4:stage1/cohere/lint/no_unnecessary_type_constraint.ts"
+        ]
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-useless-empty-export",
+    "time_utc": "2026-10-06T18:40:51.121934+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-useless-empty-export",
+    "time_utc": "2026-10-06T18:41:50.385935+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-confusing-non-null-assertion",
+    "time_utc": "2026-10-06T18:43:09.480881+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-enum-values",
+    "time_utc": "2026-10-06T18:43:10.818190+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-dynamic-delete",
+    "time_utc": "2026-10-06T18:43:12.974030+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-explicit-any",
+    "time_utc": "2026-10-06T18:43:13.810755+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-extra-non-null-assertion",
+    "time_utc": "2026-10-06T18:43:15.296236+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-import-type-side-effects",
+    "time_utc": "2026-10-06T18:43:16.475362+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-misused-new",
+    "time_utc": "2026-10-06T18:43:18.017172+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-this-alias",
+    "time_utc": "2026-10-06T18:43:18.976888+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/no-useless-empty-export",
+    "time_utc": "2026-10-06T18:43:20.164337+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  },
+  {
+    "rule": "@typescript-eslint/prefer-as-const",
+    "time_utc": "2026-10-06T18:43:21.183178+00:00",
+    "checks": {
+      "codex/stage1-lint-batch2": {
+        "tip": "c4373c05259c7235cf1202d5cd4138c16d498caa",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch3": {
+        "tip": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+        "overlap": false,
+        "paths": []
+      },
+      "codex/stage1-lint-batch4": {
+        "tip": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+        "overlap": false,
+        "paths": []
+      }
+    }
+  }
+]
