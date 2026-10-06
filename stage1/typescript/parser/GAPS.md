@@ -167,3 +167,9 @@ All samples print the same count. See `validation/performance.log` and the
 opt-in `TestPerformance` for exact samples and reproduction. This comparison
 is a whole-file parser workload with equivalent selected-node counts, not a
 claim of identical AST representation, parser recovery or declaration work.
+
+`TestNodeCountCheckCatchesMutant` separately proves the timing count guard can
+fail. It changes only countTree's per-node contribution from 1 to 0. The mutant
+finishes successfully on Node and sanitized native and prints exactly the same
+AST bytes as Go in tree mode, but reports 0 nodes instead of Go's 18 in count
+mode. Only the count check catches it. See `validation/count-mutant.log`.

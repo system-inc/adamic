@@ -102,3 +102,49 @@ func TestPerformance(t *testing.T) {
 		t.Log(fmt.Sprintf("artifacts: %s", destination))
 	}
 }
+
+// This mutant leaves every printed AST byte unchanged. Only the node-count
+// check used by the benchmark can catch it, not the ordinary tree comparison.
+func TestNodeCountCheckCatchesMutant(t *testing.T) {
+	directory := t.TempDir()
+	source := filepath.Join(directory, "expressions.ts")
+	if err := os.WriteFile(source, []byte("x + y * z; a?.b(x); (x) => x;"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	manifest := filepath.Join(directory, "manifest")
+	if err := os.WriteFile(manifest, []byte(source+"\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	wantCount := execute(t, "", oracle, "--manifest", manifest, "--count").output
+	wantTree := execute(t, "", oracle, "--manifest", manifest).output
+	absolute, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	baseline := buildPort(t, absolute, true)
+	for _, result := range []execution{execute(t, "", baseline, "--manifest", manifest, "--count"), node(t, absolute, manifest, true)} {
+		if !bytes.Equal(result.output, wantCount) {
+			t.Fatalf("baseline count %q differs from Go %q", result.output, wantCount)
+		}
+	}
+	from := "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 1;"
+	to := strings.Replace(from, "let count = 1;", "let count = 0;", 1)
+	mutant := copyPort(t, "nodes.ts", from, to)
+	binary := buildPort(t, mutant, true)
+	for _, runner := range []struct {
+		name        string
+		tree, count execution
+	}{
+		{"native", execute(t, "", binary, "--manifest", manifest), execute(t, "", binary, "--manifest", manifest, "--count")},
+		{"Node", node(t, mutant, manifest, false), node(t, mutant, manifest, true)},
+	} {
+		if !bytes.Equal(runner.tree.output, wantTree) {
+			t.Fatalf("%s count mutant also changed AST output", runner.name)
+		}
+		if bytes.Equal(runner.count.output, wantCount) {
+			t.Fatalf("%s count mutant survived count comparison", runner.name)
+		}
+		t.Logf("%s count mutant finished with identical AST bytes; count %q differs from Go %q", runner.name, runner.count.output, wantCount)
+	}
+}
