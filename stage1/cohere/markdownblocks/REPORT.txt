@@ -1,3 +1,82 @@
+Native block quote layout now composes with lists and inline words.
+2,324 whole-document contexts match Go, source Node, backend and pinned-fork doc output.
+1,761 native quote frames; ASan, UBSan, leaks and three output-only mutants pass.
+Native component measured 2,018.3 documents/s; parsing is excluded from this measurement.
+Full native Markdown parsing and Unicode display width remain unfinished.
+
+Block quotes slice, October 6, 2026
+
+quotes.ts ports the blockquote constructor and quote child spacing from print.go
+and children.go, including inline-node suppression, overlapping source spans,
+definition sequences, ignore-next and adjacent HTML. Lists and eligible words
+remain native. The Go overlay now captures quote child docs and AST facts, and
+native replaces every quote label, including recursively nested quotes.
+Go still supplies parsing, preprocessing, unported child printers and text widths.
+No fixture-based result is claimed as native Markdown-file formatting.
+
+The 2,324 contexts comprise the original 953, 1,218 list cases and 153 quote cases.
+Nine marker/indent forms times 17 bodies cover empty quotes, lazy continuation,
+nesting, headings, definitions, lists/tasks, tables, raw code, HTML and Unicode.
+Counts: 876 physical files, 1,448 generated, 2,036 list frames, 204,297 words.
+The actual Go Markdown formatter remains the byte oracle with embedding off.
+Source Node and the JavaScript backend agree with native; the pinned original
+fork's document printer independently agrees on the canonical document stream.
+The 953-case whole-source Go/fork audit and seven complete witness pairs remain
+covered by audit_test.go; its code and the recorded witnesses were unchanged.
+
+Commands (source /workspace/adamic-tools/env.sh first):
+go test ./stage1/cohere/markdownblocks -run '^TestMarkdownQuoteLayout$' -count=1 -v -timeout 15m
+Output saved to /tmp/markdown-quote-test.log: PASS, 89.197s.
+/tmp/cssstrings-cohere --no-cache --no-fix quotes.ts testdata/list_probe.ts
+Output saved to /tmp/markdown-quote-style.log: 276 rules, 2 checked, 100% Adamic-ready.
+go vet ./stage1/cohere/markdownblocks and git diff --check: empty logs, exit 0.
+Filtered uncached compiler oracle: TestNativeAgreesWithNode on classes.a,
+class_as_interface.a, objects.a and maybe_number_slots.a. Log follows below.
+An initial command accidentally filtered TestOracle, which does not exist; its
+'no tests to run' was detected and replaced by the actual four-fixture run.
+No full repository gate was run for this component slice.
+
+Native quote mutants all compile, exit 0 and have empty stderr; bytes alone kill:
+1. marker '> ' to '>> ': CLAUDE.md, byte 13.
+2. quote alignment '> ' to '': cohere/TypeScript/packages/vscode-typescript-nightly/README.md, byte 350120.
+3. double-hardline predicate !definitions to definitions: same README, byte 350121.
+
+Three fresh-process runs, protocol decoding/output/startup included; parsing,
+fixture generation and builds excluded. Go/fork consume canonical docs; native
+and source Node construct quotes/lists/words too, so these workloads differ.
+Go doc layout 4032.0 documents/s (1.729156s); native 2018.3 (3.454337s);
+source Node component 2295.4 (3.037343s); original fork docs 1549.7 (4.498831s).
+This is not an end-to-end formatter benchmark.
+Toolchain setup timing/nproc/pins are unchanged and retained in the prior report.
+
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/objects.a (1.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/classes.a (1.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a (1.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a (1.77s)
+PASS
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.793s
+
+Prior list report, retained:
+
 Native list construction and Markdown document layout are green on Go trees.
 2,171 whole-document contexts match Go, source Node, backend and the pinned fork's doc printer.
 1,998 list frames compose with 204,131 native word nodes; ASan/UBSan/leaks pass.

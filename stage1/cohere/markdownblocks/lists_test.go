@@ -14,6 +14,15 @@ import (
 
 func TestMarkdownListLayout(t *testing.T) {
 	t.Parallel()
+	testBlockLayout(t, false)
+}
+
+func TestMarkdownQuoteLayout(t *testing.T) {
+	t.Parallel()
+	testBlockLayout(t, true)
+}
+
+func testBlockLayout(t *testing.T, quotes bool) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -39,6 +48,14 @@ func TestMarkdownListLayout(t *testing.T) {
 		"- a\n\n  [^x]: footnote\n\n- [^x]\n", "1.    中😀\n1.    _a*b*_\n",
 	} {
 		inputs = append(inputs, auditInput{Name: "generated/list-layout/edge/" + text, Text: text})
+	}
+	if quotes {
+		for _, prefix := range []string{">", "> ", " > ", "  >  ", "   >\t", "> > ", ">> ", "> > > ", ">\t> "} {
+			for _, body := range []string{"", "text", "a\nb", "a\n\nb", "# h\n\na", "a\n---", "- a\n- b", "1. a\n\n   - b", "- [x] a", "```js\nlet x=1;\n```", "    x\n    y", "<div>\nx\n</div>", "a\n<div>\nx", "[a]: /x\n[b]: /y", "| a | b |\n| - | - |\n| x | y |", "<!-- prettier-ignore -->\n+    a", "中😀 _a*b*_"} {
+				text := prefix + strings.ReplaceAll(body, "\n", "\n"+prefix) + "\n"
+				inputs = append(inputs, auditInput{Name: "generated/quote-layout/" + text, Text: text})
+			}
+		}
 	}
 	dir := t.TempDir()
 	var batch bytes.Buffer
@@ -142,11 +159,21 @@ func TestMarkdownListLayout(t *testing.T) {
 	original := execute(t, nil, "node", script, fork, canonicalCases)
 	clean(t, "original document printer", original)
 	equal(t, "original document printer", original.stdout, want.stdout)
-	for _, mutation := range []struct{ name, from, to string }{
+	mutations := []struct{ name, from, to string }{
 		{"unordered marker", "frame.sibling % 2 === 0 ? '- ' : '* '", "frame.sibling % 2 === 0 ? '+ ' : '* '"},
 		{"task box", "'[x] '", "'[X] '"},
 		{"ordered cap", "999999999", "999999998"},
-	} {
+	}
+	mutantFile := "lists.ts"
+	if quotes {
+		mutantFile = "quotes.ts"
+		mutations = []struct{ name, from, to string }{
+			{"quote marker", "arena.text('> ', 2)", "arena.text('>> ', 3)"},
+			{"quote alignment", "arena.align('> ',", "arena.align('',"},
+			{"quote blank line", "!overlapping && !definitions", "!overlapping && definitions"},
+		}
+	}
+	for _, mutation := range mutations {
 		t.Run(mutation.name, func(t *testing.T) {
 			scratch := t.TempDir()
 			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
@@ -162,12 +189,12 @@ func TestMarkdownListLayout(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, "markdowninline", name), content)
 			}
-			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts"} {
+			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts"} {
 				content, err := os.ReadFile(name)
 				if err != nil {
 					t.Fatal(err)
 				}
-				if name == "lists.ts" {
+				if name == mutantFile {
 					if strings.Count(string(content), mutation.from) != 1 {
 						t.Fatal("mutation site count")
 					}
@@ -219,4 +246,5 @@ func TestMarkdownListLayout(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("%d physical files, %d generated, %d whole-document contexts; %d native list frames, %d composed word nodes; Go/source/native/backend/original doc bytes identical", files, len(inputs)-files, len(inputs), bytes.Count(data, []byte("\nL\t")), bytes.Count(data, []byte("\nW\t")))
+	t.Logf("%d native quote frames", bytes.Count(data, []byte("\nQ\t")))
 }

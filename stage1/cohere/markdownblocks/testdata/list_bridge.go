@@ -38,6 +38,7 @@ type adamicDocuments struct {
 	lines     []string
 	documents int
 	items     int
+	quotes    [][]adamicBlock
 	lists     []adamicList
 	words     []adamicWord
 	groups    map[*doc.Group]int
@@ -152,6 +153,19 @@ func (out *adamicDocuments) serialize(document doc.Doc) int {
 			out.documents++
 			return id
 		}
+		if out.native && strings.HasPrefix(node.Label, "adamic-quote:") {
+			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-quote:"))
+			var blocks []string
+			for _, block := range out.quotes[index] {
+				id := out.serialize(block.document)
+				n := block.node
+				blocks = append(blocks, fmt.Sprintf("%s,%d,%d,%d,%d,%d,%d", n.NodeType, id, n.Position.Start.Line, n.Position.End.Line, n.Position.Start.Column, adamicFlag(n.IsIndented), adamicFlag(isPrettierIgnore(n) == "next")))
+			}
+			out.lines = append(out.lines, "Q\t"+strings.Join(blocks, ";"))
+			id := out.documents
+			out.documents++
+			return id
+		}
 		if out.native && strings.HasPrefix(node.Label, "adamic-word:") {
 			index, _ := strconv.Atoi(strings.TrimPrefix(node.Label, "adamic-word:"))
 			word := out.words[index]
@@ -184,6 +198,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 		return "", "", "", err
 	}
 	lists := []adamicList{}
+	quotes := [][]adamicBlock{}
 	words := []adamicWord{}
 	printer := *mdastPrinter
 	printer.Print = func(path *astPath, options *options, print printing.PrintFunc, args any) doc.Doc {
@@ -208,6 +223,15 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 			id := len(words)
 			words = append(words, adamicWord{node.Value, previous, next, adamicFlag(found) + 2*adamicFlag(leading) + 4*adamicFlag(pseudo), doc.StringWidth(string(printed))})
 			return doc.NewLabel(fmt.Sprintf("adamic-word:%d", id), original)
+		}
+		if node.NodeType == "blockquote" {
+			blocks := []adamicBlock{}
+			path.Each(func(blockPath *astPath, _ int, _ any) {
+				blocks = append(blocks, adamicBlock{currentNode(blockPath), print(nil, nil)})
+			}, "children")
+			id := len(quotes)
+			quotes = append(quotes, blocks)
+			return doc.NewLabel(fmt.Sprintf("adamic-quote:%d", id), original)
 		}
 		if node.NodeType != "list" {
 			return original
@@ -242,7 +266,7 @@ func AdamicListFixture(input string) (native, canonical, formatted string, err e
 	}
 	// Serialize before Print mutates group break flags, so native propagation is exercised.
 	for _, side := range []bool{true, false} {
-		out := &adamicDocuments{native: side, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
+		out := &adamicDocuments{native: side, quotes: quotes, lists: lists, words: words, groups: map[*doc.Group]int{}, ids: map[*doc.GroupID]int{}}
 		root := out.serialize(document)
 		out.lines = append(out.lines, fmt.Sprintf("R\t%d\t%d", root, adamicFlag(bom)))
 		stream := strings.Join(out.lines, "\n") + "\n"

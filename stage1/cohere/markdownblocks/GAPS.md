@@ -6,6 +6,15 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native quote layout boundary
+
+`quotes.ts` constructs quotes and their child spacing from explicit AST facts.
+Its native children include lists and eligible words. The fixture bridge supplies
+Go-parsed/preprocessed trees, unported child docs and display widths. Tests cover
+all 953 original contexts plus list and quote cases. This is a native layout
+component, not yet a native Markdown-file parser or formatter. Parser state-frame
+work and Unicode widths remain as described below. No new compiler gap was found.
+
 ## The default full-document oracles disagree
 
 Go cohere's real `native.Formatter` invokes the Markdown parser/printer and its

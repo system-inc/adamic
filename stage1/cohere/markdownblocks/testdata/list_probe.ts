@@ -3,6 +3,7 @@ import { panic, programArguments, readTextFile } from 'adamic';
 import { decode, encode } from '../codec.ts';
 import { DocumentArena, printDocument } from '../document.ts';
 import { printList, type ListBlockInterface, type ListItemInterface } from '../lists.ts';
+import { printQuote } from '../quotes.ts';
 import { printWord } from '../../markdowninline/inline.ts';
 function integer(text: string): number {
     if(text === '' || text === '-') panic('missing fixture integer');
@@ -25,6 +26,24 @@ function documentIDs(text: string, documents: readonly number[]): number[] {
     const values: number[] = [];
     for(const id of numbers(text)) values.push(documents[id] ?? panic('fixture document reference'));
     return values;
+}
+function blocks(serialized: string, documents: readonly number[]): ListBlockInterface[] {
+    const children: ListBlockInterface[] = [];
+    if(serialized !== '') {
+        for(const block of serialized.split(';')) {
+            const parts = block.split(',');
+            children.push({
+                kind: parts[0] ?? '',
+                doc: documents[integer(parts[1] ?? '')] ?? panic('fixture block document'),
+                start: integer(parts[2] ?? ''),
+                end: integer(parts[3] ?? ''),
+                column: integer(parts[4] ?? ''),
+                indented: parts[5] === '1',
+                ignoreNext: parts[6] === '1',
+            });
+        }
+    }
+    return children;
 }
 const args = programArguments();
 const input = readTextFile(args[0] ?? panic('usage: list_probe.ts <component fixtures>'));
@@ -59,23 +78,9 @@ for(const line of input.text.split('\n')) {
         );
         documents.push(arena.text(text, integer(fields[3] ?? '')));
     }
+    else if(kind === 'Q') documents.push(printQuote(arena, blocks(fields[1] ?? '', documents)));
     else if(kind === 'I') {
-        const children: ListBlockInterface[] = [];
-        const serialized = fields[6] ?? '';
-        if(serialized !== '') {
-            for(const block of serialized.split(';')) {
-                const parts = block.split(',');
-                children.push({
-                    kind: parts[0] ?? '',
-                    doc: documents[integer(parts[1] ?? '')] ?? panic('fixture block document'),
-                    start: integer(parts[2] ?? ''),
-                    end: integer(parts[3] ?? ''),
-                    column: integer(parts[4] ?? ''),
-                    indented: parts[5] === '1',
-                    ignoreNext: parts[6] === '1',
-                });
-            }
-        }
+        const children = blocks(fields[6] ?? '', documents);
         items.push({
             marker: decode(fields[1] ?? ''),
             start: integer(fields[2] ?? ''),
