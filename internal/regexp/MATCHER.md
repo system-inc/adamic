@@ -38,14 +38,17 @@ non-ASCII to ASCII conversion otherwise. `testdata/generate-canonicalize.py`
 records source hashes and generates exact Script aliases. The Unicode data
 license is in `testdata/unicode-license.txt`.
 
-`PropertyProvider.Lookup` is the UCD integration seam. It returns inclusive
-ranges and strings. `GoProperties` is explicitly a stand-in using Go's Unicode
-General_Category and Script tables, including their exact aliases. Binary
-properties, Script_Extensions, and properties of strings return a typed
-`UnavailablePropertyError`; they never silently become empty sets. Tests inject
-an emoji provider to exercise property strings with v set intersection,
-subtraction, union and backwards consumption. Set operators operate on compiled
-canonical ranges and strings; alternatives consume longest strings first.
+`PropertyProvider.Lookup` is the UCD integration seam. The default
+`UnicodeProperties` provider uses `internal/unicodeproperties`, merged from
+`origin/cloud/grok-regex-canonicalize`, for every ECMAScript property, including
+binary properties, Script_Extensions and v properties of strings. Compiling
+snapshots every range and string. The old `GoProperties` provider remains an
+explicit opt-in test stand-in for proving unavailable-data errors are loud.
+
+`TestSharedCanonicalize` compared the local sparse maps with Grok's
+CanonicalizeUnicode over all 1,114,112 code points and CanonicalizeLegacy over
+all 65,536 code units: zero differences. Both implement Unicode 17.0.0, so the
+matcher keeps the identical sparse compile-time maps.
 
 A zero `StepLimit` is unlimited. The oracle sets ten million instruction steps
 per execution. `ErrStepLimit` is an error, never a failed match. A separate
@@ -103,8 +106,9 @@ setup: done in 24s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
 ```
 
 The parser baseline agreed on 5,746 test262 patterns and 630 generated cases.
-The matcher corpus contains 127,369 distinct executions: 126,488 compared
-without disagreements, and 881 explicitly refused unavailable properties.
+The matcher corpus contains 127,369 distinct executions: 127,369 compared
+without disagreements, including the 881 formerly refused properties. No
+property executions are skipped.
 These executions span 2,791 distinct pattern/flag combinations. Source
 directories include exec (72 rows), test (15), match (32), matchAll (6),
 replace (56), split (62), and search (2), in addition to the other RegExp tests.

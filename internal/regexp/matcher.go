@@ -62,9 +62,9 @@ type instruction struct {
 	clear      []int
 }
 
-// Compile parses and compiles with the temporary Go Unicode property provider.
+// Compile parses and compiles with the complete Unicode Character Database provider.
 func Compile(pattern, flags string) (*Program, error) {
-	return CompileWithProperties(pattern, flags, GoProperties{})
+	return CompileWithProperties(pattern, flags, UnicodeProperties{})
 }
 
 // CompileWithProperties supplies the Unicode data seam used by UCD tables.
@@ -78,7 +78,7 @@ func CompileWithProperties(pattern, flags string, properties PropertyProvider) (
 
 // CompileUTF16 accepts an exact JavaScript pattern string, including surrogates.
 func CompileUTF16(pattern []uint16, flags string) (*Program, error) {
-	return CompileUTF16WithProperties(pattern, flags, GoProperties{})
+	return CompileUTF16WithProperties(pattern, flags, UnicodeProperties{})
 }
 
 // CompileUTF16WithProperties combines exact pattern strings and the UCD seam.

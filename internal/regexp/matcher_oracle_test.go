@@ -302,7 +302,7 @@ func TestMatcherPropertyProviderStrings(t *testing.T) {
 			t.Errorf("property strings %q got=%+v node=%+v error=%v", c.Pattern, got, expected[i], err)
 		}
 	}
-	_, err := Compile("\\p{ASCII}", "u")
+	_, err := CompileWithProperties("\\p{ASCII}", "u", GoProperties{})
 	var unavailable *UnavailablePropertyError
 	if !errors.As(err, &unavailable) {
 		t.Fatalf("missing property silently compiled: %v", err)
