@@ -124,3 +124,59 @@ func TestSharedSliceCutsShare(t *testing.T) {
 		t.Fatal("leaving shared slices out still wrote the probe")
 	}
 }
+
+// The ownership scenes are the shapes the memory passes get wrong, one per seed on a cadence of
+// eight, and the family around them is in every program. Leaving the feature out drops all of it.
+// Every one of those programs has to lower: a scene the checker refuses tests nothing.
+func TestOwnershipShapes(t *testing.T) {
+	t.Parallel()
+	want := []string{
+		"ownShow(ownGlobal, ownResetGlobal()",
+		"ownShow(ownSlot.box, ownReplaceSlot()",
+		"ownShow(ownLocal, ownDrop()",
+		"ownWorker.run(items)",
+		"super.run(items)",
+		"...ownTree, tag: ownTree.keep()",
+		"ownGrow(ownTree.left), tag: ownTree.peek()",
+		"new OwnMarked(",
+		"ownFamilyMix(ownFamilyText, ownFamilySet())",
+		"ownFamilyReset();",
+		"ownFamilyMap()",
+		"...ownFamilyTree, tag: ownFamilyTree.keep()",
+		"ownFamilyKeep(new OwnFamilyHeld(",
+	}
+	found := map[string]bool{}
+	directory := t.TempDir()
+	for seed := uint64(1); seed <= 8; seed++ {
+		source := Generate(seed).Source()
+		for _, marker := range want {
+			if strings.Contains(source, marker) {
+				found[marker] = true
+			}
+		}
+		if !strings.Contains(source, "interface OwnFamilyBox") {
+			t.Errorf("seed %d: ownership left out the family", seed)
+		}
+		path := filepath.Join(directory, "program.a")
+		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		program, err := load.Load([]string{path})
+		if err != nil {
+			t.Errorf("seed %d: the checker refused it: %v\n%s", seed, err, source)
+			continue
+		}
+		if _, err := lower.Lower(context.Background(), program); err != nil {
+			t.Errorf("seed %d: stage 0 didn't lower it: %v\n%s", seed, err, source)
+		}
+	}
+	for _, marker := range want {
+		if !found[marker] {
+			t.Errorf("seeds 1 to 8 never generated %s", marker)
+		}
+	}
+	without := GenerateWithout(1, []string{"ownership"}).Source()
+	if strings.Contains(without, "OwnFamilyBox") || strings.Contains(without, "OwnMarked") || strings.Contains(without, "ownGlobal") {
+		t.Fatal("leaving ownership out still wrote a scene")
+	}
+}
