@@ -30,6 +30,30 @@ appended an argument list with `children.push(...arguments)`, which met this
 same refusal. Workaround: an explicit loop appends each numeric child index.
 This does not limit parsing spread syntax in the source being parsed.
 
+## 3. Type-only import cycles
+
+Splitting lookahead into its own module first imported the Parser class as a
+TypeScript type. Node accepts that cycle, since the type import is erased.
+Adamic 0.1 refuses an import cycle, including a type-only edge.
+`gaps/3_import_cycle.ts` and its peer print `1` on Node; stage 0 returns
+`lower.Refused` with `What: "an import cycle"`. `TestTypeImportCycleGap`
+requires both observations. Workaround: the lookahead module owns the scanner
+snapshot interface and takes the concrete Scanner class. Parser imports that
+interface and passes its scanner; lookahead does not import Parser.
+
+## 4. Class methods through a structural interface
+
+The first shared cursor interface exposed `kind`, `next`, `mark` and `rewind`
+as methods. Node called them normally, but native exited 70 with
+`compiler bug: a field the checker proved is there is missing`. Changing the
+interface method syntax to strict function properties does not fix dispatch.
+`gaps/4_class_interface_method.ts` reduces this to a class method accessed
+through an interface. `TestClassMethodInterfaceGap` requires Node's `1` and
+native's exact panic under sanitizers. This is an observed compiler/runtime
+bug, not an Adamic language refusal, and internal code is not changed here.
+Workaround: lookahead receives the concrete Scanner class and calls its
+methods directly, with scanner-only save/restore helpers.
+
 ## Canonical answer protocol
 
 Each expression root starts with `expression`. Nodes follow in preorder, one
@@ -87,3 +111,25 @@ parenthesized expression as ArrowFunction in its returned tree.
 The full compiler-file corpus and its declaration/statement traversal are still
 pending at this step. Recovery diagnostics and type grammar beyond the generated
 cases remain outside this green step's coverage.
+
+## Green step 4
+
+The driver now parses whole files, including declarations, class expressions,
+functions and their signatures, loops, switch, try/catch/finally, labels,
+bindings, enums, namespaces, interface/type declarations, mapped and template
+literal types, constructor types and infer. It compares maximal expression
+roots in source traversal order. Every descendant of each selected root is
+included, so arrow/function/class expression bodies retain their statements
+and types. Top-level statement and declaration trees are traversal scaffolding,
+not the claimed comparison target. Static import/export declarations are
+structurally skipped; their binding and module-specifier fields are not checked.
+
+All 77 `.ts` files recursively under TypeScript 6.0.3 `src/compiler` produce
+28,812,163 identical canonical bytes on Go, Node and ASan/UBSan/LeakSanitizer
+native. The checkout is scratch-only and its pinned commit is checked by the
+test. Go's expression predicate includes boolean/null and negative literal
+types as well as type-query operands; these roots are retained.
+
+Only valid, diagnostic-free TS input is covered. The Go oracle rejects parse
+diagnostics; this slice does not promise recovery trees or diagnostic parity.
+JSX, decorators, JSDoc trees and non-UTF-8 source remain outside coverage.

@@ -58,6 +58,12 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool) int {
 		operator = kind(n.AsPrefixUnaryExpression().Operator)
 	case ast.KindPostfixUnaryExpression:
 		operator = kind(n.AsPostfixUnaryExpression().Operator)
+	case ast.KindImportType:
+		if n.AsImportTypeNode().IsTypeOf {
+			operator = "TypeOfKeyword"
+		}
+	case ast.KindHeritageClause:
+		operator = kind(n.AsHeritageClause().Token)
 	case ast.KindTypeOperator:
 		operator = kind(n.AsTypeOperatorNode().Operator)
 	case ast.KindMetaProperty:

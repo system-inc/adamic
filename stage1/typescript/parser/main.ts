@@ -7,7 +7,7 @@ function run(path: string, countOnly: boolean): number {
     if(source.kind === 'Error') {
         panic(source.message);
     }
-    const parser = new Parser(source.text);
+    const parser = new Parser(source.text, path);
     parser.file();
     const offsets: number[] = [0];
     if(!countOnly) {
