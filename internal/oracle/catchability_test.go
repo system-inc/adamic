@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/9984394_lib_dispatch.a", "internal/oracle/testdata/9984394_defined_in_try.a", "internal/oracle/testdata/catchability-limits/d96d304_try_stack.a", "internal/oracle/testdata/catchability-limits/d96d304_try_repeat.a", "internal/oracle/testdata/catchability-limits/d96d304_try_pad.a", "internal/oracle/testdata/catchability-limits/d96d304_try_finally_concat.a", "internal/oracle/testdata/57f2d04_with_frozen.a"} {
+	for _, path := range []string{"internal/oracle/testdata/047cb0d_narrowed_in_try.a", "internal/oracle/testdata/9984394_lib_dispatch.a", "internal/oracle/testdata/9984394_defined_in_try.a", "internal/oracle/testdata/catchability-limits/d96d304_try_stack.a", "internal/oracle/testdata/catchability-limits/d96d304_try_repeat.a", "internal/oracle/testdata/catchability-limits/d96d304_try_pad.a", "internal/oracle/testdata/catchability-limits/d96d304_try_finally_concat.a", "internal/oracle/testdata/57f2d04_with_frozen.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -59,6 +59,15 @@ func TestIntegrationCatchabilityMutants(t *testing.T) {
 	}{
 		{"interface toFixed guard removed", "9984394_lib_dispatch.a", errorGuardMutant("toFixed() digits argument")},
 		{"narrowed TypeError becomes panic", "9984394_defined_in_try.a", func(program *ir.Program) bool {
+			return changeErrorFunction(program, "error_defined", func(value any) any {
+				if thrown, ok := value.(ir.Throw); ok {
+					call := thrown.Value.(ir.Call)
+					return ir.Panic{Message: ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: errorString(program, "TypeError: ")}, call.Arguments[0]}}}
+				}
+				return value
+			})
+		}},
+		{"top-level narrowed TypeError becomes panic", "047cb0d_narrowed_in_try.a", func(program *ir.Program) bool {
 			return changeErrorFunction(program, "error_defined", func(value any) any {
 				if thrown, ok := value.(ir.Throw); ok {
 					call := thrown.Value.(ir.Call)
