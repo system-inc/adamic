@@ -11,7 +11,6 @@ import (
 	"github.com/system-inc/cohere/internal/edit"
 	"github.com/system-inc/cohere/internal/lint/report"
 	"github.com/system-inc/cohere/internal/lint/rule"
-	rules "github.com/system-inc/cohere/internal/lint/rules/core"
 	"os"
 	"sort"
 	"strings"
@@ -91,21 +90,16 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	if len(file.Diagnostics()) != 0 {
 		panic(fmt.Sprintf("invalid corpus %s: %v", path, file.Diagnostics()))
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase}
+	selected := registeredRules()
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
-	for _, subject := range selected {
+	for _, registered := range selected {
+		subject := registered.subject
 		if fields[1] != "" && fields[1] != "all" && fields[1] != subject.Name {
 			continue
 		}
 		ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
-		var options any
-		if subject.Name == "eqeqeq" {
-			options = rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}
-		}
-		if subject.Name == "no-empty" {
-			options = rules.NoEmptyOptions{AllowEmptyCatch: fields[4] == "true"}
-		}
+		options := registered.options(fields)
 		listeners = append(listeners, subject.Run(ctx, options))
 	}
 	var walk func(*ast.Node)
