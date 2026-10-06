@@ -100,6 +100,7 @@ export class Expressions {
                 if(this.source.slice(node.pos, node.end).trim().includes('\n')) return 'string-literal-layout';
                 return '';
             case 'ArrowFunction':
+            case 'FunctionExpression':
                 return this.functionUnsupported(id);
             case 'TemplateExpression':
                 for(let position = 1; position < node.children.length; position++) {
@@ -226,6 +227,13 @@ export class Expressions {
                     (outer.kind === 'NewExpression' || (outer.kind === 'CallExpression' && !this.ownOptional(parent))))
             )
                 return true;
+        }
+        if(node.kind === 'FunctionExpression') {
+            const root =
+                this.state.statementExpressionRoot >= 0
+                    ? this.state.statementExpressionRoot
+                    : (this.ancestors[0] ?? index);
+            return this.leftmost(root) === index || role === 'callee' || role === 'tag';
         }
         if(node.kind === 'ObjectLiteralExpression') {
             const root =
@@ -704,7 +712,10 @@ export class Expressions {
             rest = this.node(this.node(child).children[0] ?? panic('missing parameter')).kind === 'DotDotDotToken';
         }
         if(printed.length === 0) return this.docs.text('()');
-        if(index === this.state.expandedArrow || index === this.state.expandedFirstArrow)
+        if(
+            index === this.state.expandedArrow ||
+            (index === this.state.expandedFirstArrow && this.node(index).kind === 'ArrowFunction')
+        )
             return this.docs.group(
                 this.docs.concat([
                     this.docs.text('('),
@@ -964,10 +975,15 @@ export class Expressions {
     }
     functionUnsupported(index: number): string {
         const node = this.node(index);
+        let named = false;
         for(let position = 0; position < node.children.length - 1; position++) {
             const child = node.children[position] ?? panic('missing function child');
             const item = this.node(child);
-            if(item.kind === 'Identifier' && node.kind === 'ArrowFunction') return 'function-types';
+            if(item.kind === 'Identifier') {
+                if(node.kind === 'ArrowFunction' || this.source.slice(node.pos, item.pos).includes('('))
+                    return 'function-types';
+                named = true;
+            }
             if(['AsyncKeyword', 'AsteriskToken', 'EqualsGreaterThanToken', 'Identifier'].includes(item.kind)) continue;
             if(item.kind !== 'Parameter') return 'function-types';
             let offset = this.node(item.children[0] ?? panic('missing parameter')).kind === 'DotDotDotToken' ? 1 : 0;
@@ -984,6 +1000,7 @@ export class Expressions {
             }
             if(item.children.length > offset) return 'function-types';
         }
+        if(node.kind === 'FunctionExpression' && !named) return 'FunctionExpression';
         const body = node.children[node.children.length - 1] ?? panic('missing function body');
         return this.node(body).kind === 'Block' ? this.statementUnsupported(body) : this.unsupported(body);
     }
@@ -1395,7 +1412,7 @@ export class Expressions {
         const firstBody = firstArg.children[firstArg.children.length - 1];
         const expandFirst =
             count === 2 &&
-            firstArg.kind === 'ArrowFunction' &&
+            functionArgument(this.parser, firstIndex) &&
             firstBody !== undefined &&
             this.node(firstBody).kind === 'Block' &&
             !functionArgument(this.parser, lastIndex) &&
@@ -1438,7 +1455,12 @@ export class Expressions {
             if(headBroken) return allBroken;
             const head = this.docs.concat(printed.slice(0, -1));
             let lastDoc = args[args.length - 1] ?? panic('missing expanded arg');
-            if(last.kind === 'ArrowFunction') {
+            let expandFunctionParameters = true;
+            if(last.kind === 'FunctionExpression')
+                for(const child of last.children)
+                    if(count === 1 && this.node(child).kind === 'Parameter' && this.node(child).children.length !== 1)
+                        expandFunctionParameters = false;
+            if(last.kind === 'ArrowFunction' || (last.kind === 'FunctionExpression' && expandFunctionParameters)) {
                 for(const child of last.children)
                     if(
                         this.node(child).kind === 'Parameter' &&
@@ -1548,6 +1570,9 @@ export class Expressions {
             }
             case 'NoSubstitutionTemplateLiteral':
                 result = this.docs.concat([this.docs.add('lineSuffixBoundary', []), this.templateRaw(raw)]);
+                break;
+            case 'FunctionExpression':
+                result = this.functionDoc(id);
                 break;
             case 'ArrowFunction':
                 result = this.arrowDoc(id, parent, role);

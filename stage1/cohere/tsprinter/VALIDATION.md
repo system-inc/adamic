@@ -737,3 +737,68 @@ python3 stage1/cohere/tsprinter/testdata/measure.py /tmp/ts-printer-optional-cor
 
 Native remains slower than Go and Node on this expanded corpus. The direct-layout controlled
 comparison above did not demonstrate a native improvement; no unsupported causal claim is made.
+
+## Named function increment
+
+Untyped named function expressions now compose ordinary, async and generator forms with supported
+block bodies. Names are recognized before the parameter list so identifier return types remain
+explicitly unsupported. Function callees and expression-statement starts retain parentheses.
+First and last argument signatures use the distinct Go expansion rules.
+
+The generator adds 2,400 cases: four prefixes, six parameter lists, ten body shapes and ten outer
+contexts. A long lone signature exposed a wrong expansion predicate. Adding an outer group did
+not fix it. The independent Go `PrintToDoc` tree showed that the expanded argument signature was
+flat text, while the all-broken alternative retained lines. The Go predicate expands a lone
+signature when **all** parameters are plain identifiers, not when one is non-plain. Correcting
+that predicate passed the full Node-to-Go comparison. Failed exploratory gates are not validation.
+The temporary diagnostic overlay changed no cohere or internal files.
+
+Cohere source checks pass: 276 rules, 10 checked, 100% Adamic-ready. Thirteen proving gaps remain,
+including the existing anonymous-function npm spacing difference. Every accepted case remains a
+strict npm and embedded-fork comparison, without exceptions.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-function-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-function-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-function-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/function' > /tmp/ts-printer-function-mutant.log 2>&1
+```
+
+The function-token mutant removes `function` from its generated prefix. Node and native compile
+and finish normally, exit 0 and empty stderr, then both mismatch at case 114611: `( named() {});`
+instead of `(function named() {});`. Subtest 268.97 s, complete command exit 0, 274.505 s.
+
+Final named-function gate: exit 0, 422.215 s. **142,132 maximal expression fragments from 199
+files**, zero full-file parse refusals, byte-identical to Go, npm Prettier 3.9.6 and the embedded
+fork on source Node, native ASan/UBSan, JavaScript backend and native release. The separate leak
+run passes, as do all 13 exact NotYet proving inputs. Coverage is in
+`results/function-coverage.json`. Cohere, vet and whitespace checks pass. No full-repository gate
+was run, and no internal compiler or parser file changed.
+
+Named-function throughput: three sequential complete batches, 142,132 texts, every sample held
+to all Go expected bytes, normal exit 0 and empty stderr:
+
+| Printer | Median texts/s | Seconds, all three runs |
+|---|---:|---|
+| Native release | 35,331 | 4.040, 3.975, 4.023 |
+| Source Node | 65,664 | 2.165, 2.156, 2.207 |
+| Go cohere | 52,320 | 2.703, 2.717, 2.728 |
+| npm Prettier | 3,122 | 44.958, 45.523, 47.095 |
+
+Precise samples: `results/function-timing.json`. Command:
+
+```sh
+python3 stage1/cohere/tsprinter/testdata/measure.py /tmp/ts-printer-function-corpus \
+  /tmp/ts-printer-function-artifacts/port /tmp/ts-printer-go-oracle \
+  /tmp/graphql-printer-prettier > /tmp/ts-printer-function-timing.json \
+  2> /tmp/ts-printer-function-timing.err
+```
+
+Native remains slower than Go and Node on this workload; no speed improvement is claimed.

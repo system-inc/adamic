@@ -218,3 +218,11 @@ links remove redundant parentheses without losing the original ChainExpression c
 The independent Go selector no longer filters these boundaries. The replacement proving input
 `await value` records `AwaitExpression`: await/yield parsing depends on expression context and is
 not enabled by forcing an async/generator context onto every fragment.
+
+## Named function expressions
+
+Named ordinary, async and generator function expressions are implemented with the existing simple
+body printer. Untyped return positions and call/constructor parentheses are preserved. The name is
+recognized only before the parameter list; a later identifier return type is not mistaken for a
+name. Typed signatures, binding patterns and await/yield bodies still return explicit gaps.
+Anonymous function expressions retain their existing proving program and exact npm spacing report.

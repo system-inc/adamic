@@ -30,7 +30,7 @@ func supportedExpression(node *estree.Node) bool {
 	case "Identifier", "PrivateIdentifier", "Literal", "ThisExpression", "Super":
 		return true
 	case "ObjectExpression", "Property", "ConditionalExpression", "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
-	case "TemplateLiteral", "ArrowFunctionExpression", "AssignmentPattern", "RestElement", "BlockStatement", "ExpressionStatement", "ReturnStatement", "ThrowStatement", "EmptyStatement", "DebuggerStatement", "BreakStatement", "ContinueStatement":
+	case "TemplateLiteral", "FunctionExpression", "ArrowFunctionExpression", "AssignmentPattern", "RestElement", "BlockStatement", "ExpressionStatement", "ReturnStatement", "ThrowStatement", "EmptyStatement", "DebuggerStatement", "BreakStatement", "ContinueStatement":
 	case "CallExpression", "NewExpression":
 		if node.Child("typeArguments") != nil {
 			return false
@@ -80,7 +80,7 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 				start := scanner.GetTokenPosOfNode(node, fileTree, false)
 				fragment := source[start:node.End()]
 				// An object literal extracted from an initializer/return needs its expression context.
-				if node.Kind == ast.KindObjectLiteralExpression {
+				if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindFunctionExpression {
 					fragment = "(" + fragment + ")"
 				}
 				if node.Kind != ast.KindSpreadElement && node.Kind != ast.KindOmittedExpression && node.Kind != ast.KindPrivateIdentifier && supportedSyntax(node) && coreBoundaries(node, source) && !strings.Contains(fragment, "/*") && !strings.Contains(fragment, "//") && !hasBlankLine(fragment) && !strings.Contains(fragment, "\r") {
@@ -125,6 +125,16 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 			value := "(" + chain + ")" + suffix
 			for _, context := range []string{value, "x=" + value, "f(" + value + ")", "[" + value + "]", "x=>" + value, "((" + value + ")).tail"} {
 				add("optional-chain-boundary", context)
+			}
+		}
+	}
+	for _, prefix := range []string{"function named", "async function named", "function* named", "async function* named"} {
+		for _, parameters := range []string{"()", "(x)", "(x,y)", "(x=1)", "(...items)", "(veryLongParameterNameAlpha,veryLongParameterNameBeta,veryLongParameterNameGamma)"} {
+			for _, body := range []string{"{}", "{return x;}", "{f(x);return x;}", "{'use strict';f();'later';}", "{('use strict');return x;}", "{return a?b:c;}", "{return (a,b);}", "{return veryLongIdentifierAlpha+veryLongIdentifierBeta+veryLongIdentifierGamma+veryLongIdentifierDelta;}", "{debugger;throw new Error('failure');}", "{return ({x:1}).x;}"} {
+				value := prefix + parameters + body
+				for _, context := range []string{"(" + value + ")", "x=" + value, "f(" + value + ")", "f(x," + value + ")", "f(" + value + ",x)", "[" + value + "]", "({key:" + value + "})", "(" + value + ")(x)", "(" + value + ").x", "new (" + value + ")(x)"} {
+					add("named-function-composition", context)
+				}
 			}
 		}
 	}
@@ -448,6 +458,19 @@ func supportedSyntax(node *ast.Node) bool {
 		return valid
 	case ast.KindShorthandPropertyAssignment:
 		return node.AsShorthandPropertyAssignment().ObjectAssignmentInitializer == nil
+	case ast.KindFunctionExpression:
+		item := node.AsFunctionExpression()
+		if node.Name() == nil || item.Type != nil || item.TypeParameters != nil {
+			return false
+		}
+		valid := true
+		node.ForEachChild(func(child *ast.Node) bool {
+			if child.Kind != ast.KindAsteriskToken && child.Kind != ast.KindAsyncKeyword && !supportedSyntax(child) {
+				valid = false
+			}
+			return false
+		})
+		return valid
 	case ast.KindArrowFunction:
 		if node.AsArrowFunction().Type != nil || node.AsArrowFunction().TypeParameters != nil {
 			return false

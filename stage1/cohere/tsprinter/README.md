@@ -163,3 +163,10 @@ assertions, assignments and arrows. Normalization records the boundary before re
 wrappers. An optional outer link can remove redundant parentheses while retaining the wrapper's
 call-layout distinction. The generated corpus adds 480 combinations, including long chains and
 nested parentheses. Context-sensitive await/yield values remain an expression gap.
+
+## Named function increment
+
+Untyped named function expressions now compose ordinary, async and generator prefixes, defaults,
+rest and supported block bodies with calls, constructors, objects, arrays and assignments. First
+and last function arguments follow their own signature expansion rules. Anonymous functions remain
+the separately recorded upstream npm spacing difference; accepted cases retain the strict npm oracle.
