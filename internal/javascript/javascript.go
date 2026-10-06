@@ -56,6 +56,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// method (on the prototype its constructor gave it), called with the object as this.
 	builder.WriteString("const adamicCallee = (object, name) => Object.hasOwn(object, name) ? object[name] : { code: (closure, values) => object[name](object, ...values) };\n")
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
+	builder.WriteString("const adamicParallelMap = (items, work) => items.map((item, index) => adamicCall(work, [item, index]));\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
 	// map reads the length once, as JavaScript's does; an array the callback shrinks would leave a hole,
@@ -828,6 +829,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Map) + ".size"
 	case ir.HasOwn:
 		return e.value(expression.Object) + ".hasOwnProperty(" + e.value(expression.Key) + ")"
+	case ir.ParallelMap:
+		return "adamicParallelMap(" + e.value(expression.Items) + ", " + e.value(expression.Work) + ")"
 	case ir.ReadTextFile:
 		return "readTextFile(" + e.value(expression.Path) + ")"
 	case ir.ProgramArguments:

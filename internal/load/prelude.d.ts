@@ -7,6 +7,7 @@ declare const console: {
 };
 
 declare module 'adamic' {
+	export function parallelMap<T, R>(items: readonly T[], work: (item: T, index: number) => R): R[];
 	export function panic(message: string): never;
 
 	// Input, opened in 0.2 (docs/0.1.md). A failure is a value: 0.2 has no exceptions yet.
