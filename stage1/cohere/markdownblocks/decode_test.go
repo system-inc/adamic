@@ -185,7 +185,7 @@ func TestMarkdownSourceDecoding(t *testing.T) {
 		clean(t, "release decoder", result)
 		equal(t, "release decoder", result.stdout, want.stdout)
 	}
-	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_entities", "-check")
+	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_entities", "-check", "-formatter", cohereFormatter(t))
 	command.Dir = root
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("regeneration %v %s", err, output)

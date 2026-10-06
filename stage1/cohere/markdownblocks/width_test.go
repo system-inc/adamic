@@ -158,7 +158,7 @@ func TestMarkdownUnicodeWidths(t *testing.T) {
 		clean(t, "release width", result)
 		equal(t, "release width", result.stdout, want.stdout)
 	}
-	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_width", "-check")
+	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_width", "-check", "-formatter", cohereFormatter(t))
 	command.Dir = root
 	if output, e := command.CombinedOutput(); e != nil {
 		t.Fatalf("regeneration %v %s", e, output)

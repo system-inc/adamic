@@ -26,6 +26,9 @@ const repository = "../../.."
 
 var artifactDirectory string
 var artifacts sync.Map
+var formatterOnce sync.Once
+var formatterBinary string
+var formatterError error
 
 type artifactKey struct {
 	source   [32]byte
@@ -50,6 +53,29 @@ func TestMain(m *testing.M) {
 		code = 1
 	}
 	os.Exit(code)
+}
+
+// TestMain keeps the formatter alive for every regeneration check in this package run.
+func cohereFormatter(t *testing.T) string {
+	t.Helper()
+	formatterOnce.Do(func() {
+		formatterBinary = filepath.Join(artifactDirectory, "cohere")
+		cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
+		if err != nil {
+			formatterError = err
+			return
+		}
+		command := bounded(t, "go", "build", "-o", formatterBinary, "./command/cohere")
+		command.Dir = cohere
+		if output, err := command.CombinedOutput(); err != nil {
+			formatterError = fmt.Errorf("build cohere formatter: %w\n%s", err, output)
+		}
+	})
+	if formatterError != nil {
+		t.Fatal(formatterError)
+	}
+	t.Logf("regeneration formatter: %s", formatterBinary)
+	return formatterBinary
 }
 
 // Reuse compilation only within this package execution, never observations.
