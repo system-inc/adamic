@@ -42,9 +42,11 @@ func programs(t *testing.T) []string {
 	// every point its loops pass doesn't finish within the trace's five minutes even alone; its loops
 	// are shapes the other programs trace, and its size is what it's for. bitwise_sweep.a records
 	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
-	// and operator shapes here, and the oracle still runs the full sweep.
+	// and operator shapes here, and the oracle still runs the full sweep. library_date_days.a
+	// visits about 1.46 million days at three times each, so tracing exceeds the same limit;
+	// its size is the point, and library_date_*.a cover its shapes. The oracle still runs it.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a"
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "library_date_days.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
