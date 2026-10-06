@@ -5,7 +5,7 @@ import type { Scanner } from '../../typescript/scanner/scanner.ts';
 import type { Finding } from './finding.ts';
 import { RuleContext } from './context.ts';
 import type { Settings } from './settings.ts';
-import { RuleSet } from './.generated/registry.ts';
+import { createRuleSet, type RuleSet } from './.generated/registry.ts';
 
 export class Linter {
     readonly context: RuleContext;
@@ -40,7 +40,7 @@ export class Linter {
             this.parents.push(-1);
         });
         this.ancestry(root, -1);
-        const rules = new RuleSet(this.context);
+        const rules = createRuleSet(this.context);
         rules.prepare(root);
         this.walk(root, -1, rules);
         rules.finish(root);
