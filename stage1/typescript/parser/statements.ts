@@ -874,6 +874,58 @@ export class Statements {
         }
         return this.make('TryStatement', pos, children);
     }
+    enumDeclaration(pos: number, prefix: readonly number[]): number {
+        this.parser.next();
+        const children = prefix.slice();
+        children.push(this.parser.bindingIdentifier());
+        if(!this.parser.expect('OpenBraceToken')) {
+            return this.make('EnumDeclaration', pos, children);
+        }
+        const oldAwait = this.parser.getAwait();
+        const oldYield = this.parser.getYield();
+        const oldIn = this.parser.getIn();
+        this.parser.setAwait(false);
+        this.parser.setYield(false);
+        this.parser.setIn(false);
+        this.parser.beginList('enum');
+        while(true) {
+            if(!this.parser.listElement('enum')) {
+                if(this.parser.listTerminator('enum') || this.parser.recoverList('enum')) {
+                    break;
+                }
+                continue;
+            }
+            const start = this.parser.scanner.fullStart;
+            const member = [this.parser.propertyName()];
+            if(this.parser.kind() === 'EqualsToken') {
+                this.parser.next();
+                member.push(this.parser.rootAssignment());
+            }
+            children.push(this.make('EnumMember', start, member));
+            if(this.parser.kind() === 'CommaToken') {
+                this.parser.next();
+                continue;
+            }
+            if(this.parser.listTerminator('enum')) {
+                break;
+            }
+            this.parser.errorAt(
+                1357,
+                this.parser.scanner.start,
+                this.parser.scanner.pos,
+                `An enum member name must be followed by a ',', '=', or '}'.`,
+            );
+            if(start === this.parser.scanner.fullStart) {
+                this.parser.next();
+            }
+        }
+        this.parser.endList('enum');
+        this.parser.setAwait(oldAwait);
+        this.parser.setYield(oldYield);
+        this.parser.setIn(oldIn);
+        this.parser.expect('CloseBraceToken');
+        return this.make('EnumDeclaration', pos, children);
+    }
     letDeclaration(): boolean {
         const next = this.parser.peek();
         return (
@@ -1091,24 +1143,7 @@ export class Statements {
             return this.make(interface_ ? 'InterfaceDeclaration' : 'TypeAliasDeclaration', pos, modifiers);
         }
         if(this.parser.kind() === 'EnumKeyword') {
-            this.parser.next();
-            modifiers.push(this.parser.identifier());
-            this.parser.expect('OpenBraceToken');
-            while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
-                const start = this.parser.scanner.fullStart;
-                const member = [this.parser.propertyName()];
-                if(this.parser.kind() === 'EqualsToken') {
-                    this.parser.next();
-                    member.push(this.parser.rootAssignment());
-                }
-                modifiers.push(this.make('EnumMember', start, member));
-                if(this.parser.kind() !== 'CommaToken') {
-                    break;
-                }
-                this.parser.next();
-            }
-            this.parser.expect('CloseBraceToken');
-            return this.make('EnumDeclaration', pos, modifiers);
+            return this.enumDeclaration(pos, modifiers);
         }
         if(
             ((this.parser.kind() === 'NamespaceKeyword' || this.parser.kind() === 'ModuleKeyword') &&

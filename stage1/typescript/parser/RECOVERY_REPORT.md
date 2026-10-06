@@ -479,3 +479,12 @@ parsing now treats let as a declaration only when followed by a binding
 identifier or destructuring opener, preserving exported declarations and
 Go's distinct for-initializer rule. Six focused probes and preceding cases
 pass in 30.458s; cohere passes.
+
+## Continued recovery: enum lists
+
+Inputs 1470/1471 expose missing and duplicated enum commas. Enum member
+lists now recover in Go's active context, diagnose missing separators with
+1357 and invalid members with 1132, and retain empty lists after a missing
+opening brace. Enum expressions use Go's allow-in and cleared await/yield
+contexts. Four focused probes and all preceding cases pass in 30.015s;
+cohere passes.
