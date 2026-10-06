@@ -1,6 +1,14 @@
 // Adapted from yaml 2.9.0, Copyright Eemeli Aro, `ISC` license.
+function asciiCharacters(): string[] {
+    const units: string[] = [];
+    for(let code = 0; code < 128; code++) units.push(String.fromCodePoint(code));
+    return units;
+}
+const ascii: readonly string[] = asciiCharacters();
 function character(text: string, index: number): string {
-    return index < 0 || index >= text.length ? '' : text.slice(index, index + 1);
+    if(index < 0 || index >= text.length || Number.isNaN(index)) return '';
+    const code = text.charCodeAt(index);
+    return code < 128 ? (ascii[code] ?? '') : text.slice(index, index + 1);
 }
 function member(set: string, unit: string): boolean {
     return unit !== '' && set.includes(unit);

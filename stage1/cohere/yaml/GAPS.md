@@ -3,7 +3,7 @@
 The complete Adamic YAML formatting slice is implemented at Go cohere's default options.
 Go, sanitized native, source Node and emitted JavaScript compare all 36 repository files and generated cases.
 Original Prettier 3.9.6 is compared independently, with 42 proved upstream binary/minification differences.
-Twenty-eight successful wrong-output port mutants are caught; ten compiler refusals and one runtime bug have proving programs.
+Twenty-nine successful wrong-output port mutants are caught; ten compiler refusals and one runtime bug have proving programs.
 Median throughput: native 2,768, source Node 7,300, Go 14,894 texts/s; all green checkpoints are pushed.
 
 ## Speed follow-up

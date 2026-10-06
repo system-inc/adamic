@@ -234,3 +234,35 @@ ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=20m ./
 Logs: [direct-index suite](audit/speed-indexed-suite.log),
 [profile](audit/speed-indexed-profile.log), [header](audit/speed-indexed-profile-header.log),
 [lint](audit/speed-indexed-lint.log), [format](audit/speed-indexed-format.log).
+
+## Reused lexer ASCII units
+
+The lexer now builds its 128 ASCII unit strings once and reuses them for
+character reads. Non-ASCII reads retain the original UTF-16 slice behavior;
+out-of-range and NaN indices still return an empty string. This avoids the
+one-unit allocations demonstrated by `stringUnitScan.ts`, without changing
+the compiler or runtime. The table includes NUL and DEL as ordinary entries.
+
+A fifth speed mutant replaces the cached NUL string with a space. Native and
+source Node finish successfully with empty stderr; comparison catches the
+wrong answer at byte 864537. There are 29 qualifying port mutants total.
+
+The complete YAML suite passed in 316.275s. Lint then rejected the deliberate
+`index !== index` NaN check. It was replaced with `Number.isNaN(index)` and the
+lexer, formatter and direct driver checks were rerun, along with lint, formatting,
+vet and gofmt. The final validation log is linked below.
+
+The final counted build reproduces the 992,282 Go answer bytes and reports:
+
+```text
+allocations 5748774 frees 5748774 retains 28068956 releases 26155251 peak 67023 regions 0
+```
+
+That is 88.7% fewer allocations than the original 50,991,977. The cache trades
+additional references for fewer allocations; retain counts are not reduced by
+every individual optimization. These are object counts, not bytes or RSS.
+
+Logs: [full suite](audit/speed-ascii-suite.log),
+[final validation](audit/speed-ascii-final-suite.log),
+[lint](audit/speed-ascii-lint.log), [format](audit/speed-ascii-format.log),
+[counts](audit/speed-final-counts.log).

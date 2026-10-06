@@ -242,6 +242,7 @@ func TestLexerMutants(t *testing.T) {
 		{"keep chomping lost", "this.blockScalarKeep = true;", "this.blockScalarKeep = false;"},
 		{"tab not whitespace", "        case '\\t':\n", ""},
 		{"BOM not split", "character(line, 0) === '\\ufeff'", "character(line, 0) === 'X'"},
+		{"cached NUL becomes space", "units.push(String.fromCodePoint(code))", "units.push(String.fromCodePoint(code === 0 ? 32 : code))"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()
