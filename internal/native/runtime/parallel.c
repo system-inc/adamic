@@ -48,8 +48,8 @@ static size_t created;
 static bool stopping;
 static _Thread_local size_t worker_index;
 
-// On Linux use the process's cgroup v2 quota when it reduces the online CPU count. On systems
-// without that file, including macOS, online CPUs decide. An explicit override always wins.
+// Linux affinity and cgroup v2/v1 quotas cap online CPUs; macOS uses online CPUs.
+// An explicit override always wins.
 static size_t available_threads(void) {
 	long online = sysconf(_SC_NPROCESSORS_ONLN);
 	size_t count = online > 0 ? (size_t)online : 1;
@@ -240,11 +240,11 @@ static void start(void) {
 size_t adamic_parallel_threads(void) { pthread_once(&started, start); return thread_count; }
 size_t adamic_parallel_workers(void) { pthread_once(&started, start); return created; }
 
-adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work) {
+adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references) {
 	pthread_once(&started, start);
 	adamic_share(items);
 	adamic_share(work);
-	adamic_array *results = adamic_array_new(items->length, work->result_references);
+	adamic_array *results = adamic_array_new(items->length, references);
 	results->length = items->length;
 	if (items->length != 0) { memset(results->elements, 0, items->length * sizeof *results->elements); }
 	if (thread_count == 1) {

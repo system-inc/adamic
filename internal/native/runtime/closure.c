@@ -13,7 +13,6 @@ adamic_closure *adamic_closure_new(adamic_code code, size_t count) {
 	adamic_closure *closure = adamic_allocate(sizeof *closure + count * sizeof closure->cells[0], adamic_kind_closure);
 	closure->code = code;
 	closure->count = count;
-	closure->result_references = false;
 	for (size_t index = 0; index < count; index++) {
 		closure->cells[index] = NULL;
 	}

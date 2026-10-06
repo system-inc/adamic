@@ -109,7 +109,7 @@ static adamic_value work(adamic_closure *self, adamic_value *arguments) {
 		adamic_array *items = adamic_array_new(16, false);
 		for (size_t i = 0; i < 16; i++) { adamic_array_push(items, (adamic_value){.number = (double)i}); }
 		adamic_closure *callback = adamic_closure_new(mode == nested ? inner : inner_throw, 0);
-		adamic_array *results = adamic_parallel_map(items, callback);
+		adamic_array *results = adamic_parallel_map(items, callback, false);
 		adamic_release(callback); adamic_release(items);
 		if (adamic_thrown != NULL) { return (adamic_value){.number = 0}; }
 		double sum = 0;
@@ -152,7 +152,6 @@ int main(int argc, char **argv) {
 	adamic_array *items = adamic_array_new(count, mode == strings || mode == objects);
 	adamic_closure *callback = adamic_closure_new(work, mode == captured_map ? 2 : 1);
 	callback->cells[0] = adamic_cell_new((adamic_value){.number = (double)mode}, false);
-	callback->result_references = mode == strings || mode == fresh || mode == exceptions;
 	adamic_string *texts[2] = {NULL, NULL};
 	if (mode == strings) { texts[0] = long_text(true); texts[1] = long_text(false); }
 	if (mode == captured_map) {
@@ -179,7 +178,7 @@ int main(int argc, char **argv) {
 	adamic_release(texts[0]); adamic_release(texts[1]);
 	struct timespec before, after;
 	clock_gettime(CLOCK_MONOTONIC, &before);
-	adamic_array *results = adamic_parallel_map(items, callback);
+	adamic_array *results = adamic_parallel_map(items, callback, mode == strings || mode == fresh || mode == exceptions);
 	clock_gettime(CLOCK_MONOTONIC, &after);
 	if (single && adamic_parallel_workers() != 0) { abort(); }
 	if (mode == exceptions || mode == nested_exception) {

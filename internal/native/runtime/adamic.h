@@ -100,8 +100,6 @@ struct adamic_closure {
 	adamic_heap heap;
 	adamic_code code;
 	size_t count;
-	// Native lowering sets this from R before parallelMap can publish the closure.
-	bool result_references;
 	adamic_cell *cells[];
 };
 
@@ -254,7 +252,7 @@ typedef struct adamic_array {
 adamic_array *adamic_array_new(size_t capacity, bool references);
 
 // Structured fork-join. Arguments are borrowed until the join; the result is owned.
-adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work);
+adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references);
 
 // adamic_array_push appends; a reference pushed belongs to the array.
 void adamic_array_push(adamic_array *array, adamic_value value);
