@@ -1,0 +1,11 @@
+function read(value: First = First.A): number { return value; }
+function readRequired(value: First): number { return value; }
+const alias = readRequired;
+enum First { A = 3, B = A + 1 }
+enum Last { End = 9 }
+const box: { readonly read: () => number } = { read: (): number => First.B };
+console.log(`${alias(First.A)} ${box.read()}`);
+console.log([First.A, First.B].map((value: First): number => value + read()).join(','));
+class Holder { readonly value: number = read(); }
+console.log(`${new Holder().value}`);
+console.log(`${Last.End}`);

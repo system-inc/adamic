@@ -1,0 +1,15 @@
+enum Features { Low = 1 << 0, Upper = 1 << 29, High = 1 << 30 }
+const box: { flags: Features } = { flags: Features.Low | Features.High };
+box.flags |= Features.Upper;
+box.flags ^= Features.Low;
+box.flags &= -1;
+const values: Features[] = [Features.Low | Features.High];
+values[0] = (values[0] ?? Features.Low) | Features.Upper;
+values[0] = (values[0] ?? Features.Low) ^ Features.Low;
+values[0] = (values[0] ?? Features.Low) & ~Features.High;
+class Holder { flags: Features = Features.Low | Features.High; update(): Features { this.flags ^= Features.Upper; this.flags &= ~Features.Low; return this.flags; } }
+const holder = new Holder();
+console.log(`${box.flags} ${values.join(',')} ${holder.update()}`);
+function zero(flags: Features): Features { return flags ^ flags; }
+function label(flags: Features): string { switch (flags) { case Features.Low: return 'low'; default: return 'mask'; } }
+console.log(`${zero(Features.High)} ${label(zero(Features.High))} ${Features[zero(Features.High)] ?? 'missing'}`);

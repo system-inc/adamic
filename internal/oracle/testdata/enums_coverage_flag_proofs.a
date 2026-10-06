@@ -1,0 +1,9 @@
+enum Features { None = (0x0), Low = (0x1 << 0b0), Upper = (0o1 << 0x1d), High = (1 << 30), All = (Low | Upper) | High }
+function choose(yes: boolean): Features { return yes ? Features.Low | Features.High : Features.Upper ^ Features.High; }
+const first = Features.Low | Features.Upper;
+const second = (first ^ Features.High);
+const third = second;
+const stored: Features = third;
+function optional(flags: Features | undefined = Features.Low | Features.High): number { return flags ?? Features.None; }
+console.log(`${stored} ${choose(true)} ${choose(false)}`);
+console.log(`${optional()} ${optional(undefined)} ${optional(Features.Upper | Features.High)}`);

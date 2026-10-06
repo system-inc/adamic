@@ -1,0 +1,10 @@
+enum Word { Yes = 'yes', No = 'no', Alias = Yes, NaN = 'nan', Infinity = 'infinity' }
+const alias: typeof Word = Word;
+console.log(Object.keys(alias).join(','));
+console.log(Object.values(alias).join(','));
+for (const [key, value] of Object.entries(alias)) console.log(`${key}=${value}`);
+console.log(`${alias.hasOwnProperty('yes')} ${alias.hasOwnProperty('Yes')}`);
+Object.assign(alias, { Yes: Word.Yes });
+console.log(`${alias.Yes} ${alias === Word}`);
+enum Empty {}
+console.log(`${Object.keys(Empty).length}`);

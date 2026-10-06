@@ -1,0 +1,8 @@
+enum Base { Seed = 16 }
+enum Calculated { Start = Base.Seed, Next, Plus = +Base.Seed, Subtract = Start - 3, Divide = Start / 4, Remainder = Start % 3, Right = Start >> 2, Unsigned = Start >>> 1, And = Start & 7, Xor = Start ^ 3, Power = 2 ** 3 }
+console.log(`${Calculated.Start} ${Calculated.Next} ${Calculated.Plus} ${Calculated.Subtract} ${Calculated.Divide} ${Calculated.Remainder} ${Calculated.Right} ${Calculated.Unsigned} ${Calculated.And} ${Calculated.Xor} ${Calculated.Power}`);
+console.log(Object.keys(Calculated).join(','));
+const enum Fractions { Negative = -2, Fraction = 1.25 }
+const enum Words { Yes = 'yes', No = 'no' }
+function word(value: Words.No): Words.No { return value; }
+console.log(`${Fractions.Negative} ${Fractions.Fraction} ${word(Words.No)}`);

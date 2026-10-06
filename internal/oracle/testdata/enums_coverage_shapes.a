@@ -1,0 +1,7 @@
+enum Alias { None = 0, Low = 1 << 0, High = 1 << 30, Again = High }
+enum Literal { None = 0, Low = 1, High = 1 << 30 }
+enum ZeroLeaf { None = 0, Low = 1 << 0, Pair = 0 | Low }
+function alias(value: Alias): string { switch(value) { case Alias.None: return 'zero'; case Alias.Low: return 'low'; case Alias.High: return 'high'; } }
+function literal(value: Literal): string { switch(value) { case Literal.None: return 'zero'; case Literal.Low: return 'low'; case Literal.High: return 'high'; } }
+function zeroLeaf(value: ZeroLeaf): string { switch(value) { case ZeroLeaf.None: return 'zero'; case ZeroLeaf.Low: return 'low'; } }
+console.log(`${alias(Alias.None)} ${alias(Alias.Low)} ${alias(Alias.Again)} ${literal(Literal.None)} ${literal(Literal.Low)} ${literal(Literal.High)} ${zeroLeaf(ZeroLeaf.None)} ${zeroLeaf(ZeroLeaf.Pair)}`);

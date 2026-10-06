@@ -1,0 +1,7 @@
+import { Features as Imported, Word, identity, toggle } from './values.a';
+import type { Features } from './values.a';
+const combined: Features = Imported.Low | Imported.Upper | Imported.High;
+const FEATURES: Features = identity<Features>(combined);
+const map = new Map<Features, Word>([[FEATURES, identity<Word>(Word.Yes)]]);
+const set = new Set<Features>([FEATURES, toggle(FEATURES)]);
+for (const key of set) console.log(`${key} ${map.get(key) ?? Word.No} ${Imported[key] ?? 'missing'}`);

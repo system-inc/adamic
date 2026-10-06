@@ -1,0 +1,11 @@
+enum Rank { Low = -2, High = 2.5, Alias = High }
+let receivers = 0;
+let keys = 0;
+function receiver(): typeof Rank { receivers += 1; return Rank; }
+function key(): number { keys += 1; return keys === 1 ? Rank.High : 99; }
+console.log(`${receiver()[key()] ?? 'missing'} ${receivers} ${keys}`);
+console.log(`${receiver()[key()] ?? 'missing'} ${receivers} ${keys}`);
+function optional(value: typeof Rank | undefined): number { return value?.Low ?? 88; }
+console.log(`${Rank['High']} ${Rank[`Low`]} ${optional(Rank)} ${optional(undefined)}`);
+const objects: readonly (typeof Rank)[] = [Rank, receiver()];
+console.log(`${objects[0]?.High ?? 88} ${objects[1]?.Low ?? 88}`);

@@ -1,0 +1,9 @@
+enum Rank { Low = 2, High = 2.5, Alias = High }
+enum Word { Yes = 'yes', No = 'no', Alias = Yes }
+function numeric(value: Rank): string { switch (value) { case 2: return 'low'; case 2.5: return 'high'; } return 'missing'; }
+function text(value: Word): string { switch (value) { case 'yes': return 'yes'; default: return 'other'; } }
+function visit(value: Word): void { switch (value) { case Word.Yes: console.log('yes'); break; case Word.No: console.log('no'); break; } }
+function partial(value: Rank): string { switch (value) { default: return 'other'; case Rank.Low: return 'low'; } }
+console.log(`${numeric(Rank.Low)} ${numeric(Rank.Alias)} ${text(Word.Alias)} ${text(Word.No)} ${partial(Rank.High)} ${partial(Rank.Low)}`);
+visit(Word.Yes);
+visit(Word.No);

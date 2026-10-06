@@ -1,0 +1,4 @@
+export enum Features { None = 0, Low = 1 << 0, Upper = 1 << 29, High = 1 << 30 }
+export enum Word { Yes = 'yes', No = 'no' }
+export function identity<T>(value: T): T { return value; }
+export function toggle(value: Features): Features { return value ^ Features.High; }

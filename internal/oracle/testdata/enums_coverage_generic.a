@@ -1,0 +1,14 @@
+enum Rank { Low = -2, High = 2.5 }
+enum Word { Yes = 'yes', No = 'no' }
+enum Features { Low = 1 << 0, High = 1 << 30 }
+function identity<T>(value: T): T { return value; }
+function apply<T>(value: T, run: (value: T) => T): T { return run(value); }
+function singleton<T>(value: T): T[] { return [value]; }
+const rank: Rank = identity<Rank>(Rank.High);
+const word: Word = apply<Word>(Word.Yes, (value: Word): Word => value);
+const combined: Features = Features.Low | Features.High;
+const flags: Features = identity<Features>(combined);
+const words = singleton<Word>(Word.No);
+console.log(`${rank} ${word} ${flags} ${words.join(',')}`);
+class Box<T> { readonly value: T; constructor(value: T) { this.value = value; } }
+console.log(`${new Box<Features>(flags).value}`);

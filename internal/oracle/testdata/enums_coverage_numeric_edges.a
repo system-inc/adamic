@@ -1,0 +1,4 @@
+enum Edge { Large = 1e22, Tiny = 1e-8, Negative = -1e22, Zero = -0 }
+const values: readonly Edge[] = [Edge.Large, Edge.Tiny, Edge.Negative, Edge.Zero];
+for (const value of values) console.log(`${value} ${Edge[value] ?? 'missing'}`);
+console.log(Object.keys(Edge).join(','));

@@ -1,0 +1,10 @@
+const enum Features { None = 0, Low = 1 << 0, Upper = 1 << 29, High = 1 << 30, All = Low | Upper | High }
+const FEATURES: Features = Features.Low | Features.Upper;
+let flags: Features = FEATURES ^ Features.High;
+flags ^= Features.Upper;
+flags |= Features.Upper;
+flags &= ~Features.Low;
+function label(value: Features): string { switch (value) { case Features.None: return 'none'; default: return 'mask'; } }
+console.log(`${flags} ${Features.All} ${label(flags)} ${label(Features.None)}`);
+const set = new Set<Features>([flags, Features.High | Features.Upper]);
+console.log(`${set.size} ${set.has(flags)}`);

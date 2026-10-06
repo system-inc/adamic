@@ -1,0 +1,14 @@
+enum Rank { Low = 1, High = 2 }
+enum Word { Yes = 'yes', No = 'no' }
+const ranks: Rank[] = [Rank.Low, Rank.High];
+const numbers: readonly number[] = ranks;
+const words = new Map<Word, Rank>([[Word.Yes, Rank.Low]]);
+const view: ReadonlyMap<Word, number> = words;
+function validate(value: number): Rank | undefined { if (value === Rank.Low) return Rank.Low; if (value === Rank.High) return Rank.High; return undefined; }
+function read(value: Rank | undefined): number { return value ?? -1; }
+const source: { readonly value: Rank } = { value: Rank.High };
+const wider: { readonly value: number } = source;
+console.log(`${numbers.join(',')} ${view.get(Word.Yes) ?? -1} ${read(validate(2))} ${read(validate(99))} ${wider.value}`);
+class Base<T> { readonly value: T; constructor(value: T) { this.value = value; } }
+class Child extends Base<Rank> {}
+console.log(`${new Child(Rank.High).value}`);

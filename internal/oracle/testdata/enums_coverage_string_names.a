@@ -1,0 +1,3 @@
+enum Names { 'with space' = 'space', 'é' = 'unicode', 'line\nname' = 'newline' }
+console.log(`${Names['with space']} ${Names['é']} ${Names['line\nname']}`);
+console.log(Object.keys(Names).join(','));

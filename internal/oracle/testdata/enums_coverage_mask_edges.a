@@ -1,0 +1,9 @@
+enum Features { None = 0, Low = 1 << 0, Upper = 1 << 29, High = 1 << 30 }
+enum Foreign { All = -1 }
+const FEATURES: Features = Features.Low | Features.Upper | Features.High;
+function left(mask: number): Features { return FEATURES & mask; }
+function right(mask: number): Features { return mask & FEATURES; }
+const masks: readonly number[] = [NaN, Infinity, -Infinity, -0, 1.9, -1.9, 2147483647, 2147483648, 4294967295, 4294967296];
+for (const mask of masks) console.log(`${left(mask)} ${right(mask)}`);
+const crossed: Features = FEATURES & Foreign.All;
+console.log(`${crossed}`);

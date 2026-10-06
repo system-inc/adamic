@@ -1,0 +1,9 @@
+enum Features { None = 0, Low = 1 << 0, Upper = 1 << 29, High = 1 << 30, Pair = Upper | High }
+const FEATURES: Features = Features.Low | Features.Upper | Features.High;
+const toggled: Features = FEATURES ^ Features.High;
+const map = new Map<Features, string>([[FEATURES, 'all'], [toggled, 'two']]);
+map.set(Features.Pair | Features.Low, 'replaced');
+const set = new Set<Features>([FEATURES, toggled, Features.Pair | Features.Low]);
+for (const [key, value] of map) console.log(`${key}=${value}`);
+for (const key of set) console.log(`${key} ${set.has(key)} ${map.get(key) ?? 'missing'}`);
+console.log(`${map.delete(FEATURES)} ${set.delete(toggled)} ${map.size} ${set.size}`);
