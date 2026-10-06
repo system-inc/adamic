@@ -405,3 +405,51 @@ process.stdout.write(lines.join('\n') + '\n');
 	}
 	t.Log("43 lines match Node, including literal, stack and in-place append views")
 }
+
+// Exercise the literal sentinel, an unindexed stack string, and a heap cache before and after
+// construction. indexOf runs before any length query, so units_before must accept an empty cache.
+func TestStringIndexCacheStatesMatchNode(t *testing.T) {
+	t.Parallel()
+	text := strings.Repeat("é😀A", 24) + "Z"
+	source := `#include "adamic.h"
+#include <stdio.h>
+static adamic_string literal = ADAMIC_STRING(@TEXT@);
+static adamic_string suffix = ADAMIC_STRING("!");
+static adamic_string needle = ADAMIC_STRING("Z");
+int main(void) {
+    adamic_string stack = literal;
+    stack.index = NULL;
+    adamic_string *heap = adamic_string_concat(2, (adamic_string *const[]){&literal, &suffix});
+    printf("%.0f %.0f %.0f\n", adamic_string_index_of(heap, &needle), adamic_string_index_of(&literal, &needle), adamic_string_index_of(&stack, &needle));
+    const adamic_string *texts[] = {&literal, &stack, heap};
+    for (int pass = 0; pass < 2; pass++) {
+        for (int which = 0; which < 3; which++) {
+            for (double at = adamic_string_length(texts[which]) - 1; at >= 0; at--) {
+                printf("%.0f ", adamic_string_char_code(texts[which], at));
+            }
+            putchar('\n');
+        }
+    }
+    adamic_release(heap);
+    return 0;
+}`
+	binary := filepath.Join(t.TempDir(), "cache-states")
+	if err := Build(strings.ReplaceAll(source, "@TEXT@", cString(text))+"\n", binary, Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	node := `const literal = "é😀A".repeat(24) + "Z";
+const texts = [literal, literal, literal + "!"];
+console.log(texts[2].indexOf("Z"), texts[0].indexOf("Z"), texts[1].indexOf("Z"));
+for (let pass = 0; pass < 2; pass++) {
+    for (const text of texts) {
+        const units = [];
+        for (let at = text.length - 1; at >= 0; at--) units.push(text.charCodeAt(at));
+        console.log(units.join(" ") + " ");
+    }
+}`
+	want := runWithInput(t, "", "node", "--eval", node)
+	got := runWithInput(t, "", binary)
+	if got != want {
+		t.Fatalf("cache states differ: native %q; Node %q", got, want)
+	}
+}

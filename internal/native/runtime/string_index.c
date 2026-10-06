@@ -138,7 +138,11 @@ size_t adamic_string_units_before(const adamic_string *string, size_t offset) {
 	if (units == string->length) {
 		return offset;
 	}
-	struct adamic_string_index *index = usable(string, units);
+	// Keep the established-index path local; usable also handles building and unindexed strings.
+	struct adamic_string_index *index = string->index;
+	if (index == NULL || index == ADAMIC_LITERAL_INDEX) {
+		index = usable(string, units);
+	}
 	size_t start = 0, at = 0;
 	if (index != NULL) {
 		// The last checkpoint at or before offset, by its offset (checkpoints never go backward), and
@@ -171,7 +175,11 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 		*low = false;
 		return unit;
 	}
-	struct adamic_string_index *index = usable(string, units);
+	// Keep the established-index path local; usable also handles building and unindexed strings.
+	struct adamic_string_index *index = string->index;
+	if (index == NULL || index == ADAMIC_LITERAL_INDEX) {
+		index = usable(string, units);
+	}
 	size_t start = 0, offset = 0;
 	if (index != NULL) {
 		// Sequential reads need no checkpoint load. A near forward read remains bounded by STEP.
