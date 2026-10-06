@@ -1,26 +1,36 @@
 # Escape hatches: measurements and decisions
 
+## Decisions
+
+Accepted by @system_adamic on October 6, 2026. These are language decisions; the observations below remain measurements of the recorded main commit, not claims that these changes have landed.
+
+1. **Downcasts:** runtime tag checks on tagged members; refuse casts that cannot be checked.
+2. **Non-null !:** a runtime nullish check that panics loudly and includes the expression's text.
+3. **As written:** any, as unknown as, expando additions, Object.defineProperty and Function are refused. Upcasts and satisfies require proof. Type predicates and assertion functions require proof from their bodies or are refused. Bivariant methods require a proven contravariant relation or are refused.
+4. **Definite assignment:** field!: and let x!: are refused for now; another branch lands that refusal. The target is proven initialization where flow establishes it, otherwise a loud read-before-assignment check like Adamic's temporal dead zone. This is a temporary refusal.
+5. **Index signatures:** NotYet, not a permanent refusal. TypeScript's own source uses string-keyed record objects, and stage 3 must compile it unchanged. A sound map-backed representation needs a separate design. Until then, reject them with a diagnostic pointing at Map.
+
 | Hatch | Today on main | Count / per 1,000 nonblank lines | Proposal | Added cost |
 |---|---|---:|---|---|
-| any | NotYet | 207 / 1.550 | Refused | 0 |
-| as upcast | Sound probe | 184 / 1.378 (relation candidates) | Proven sound relation | 0 |
-| as downcast | Tagged: checked; primitive: refused | 2,884 / 21.598 (relation candidates) | Runtime check for tagged members; refuse uncheckable targets | O(1) for one tag |
-| as unknown as | Refused | 5 / 0.037 chains | Refused | 0 |
-| non-null ! | Refused | 938 / 7.024 | Runtime nullish check | two comparisons + branch |
-| field!: T | Unsound: NaN vs 1 | 0 / 0 | Proven initialization; otherwise refused | 0 |
-| let x!: T | Unsound: NaN vs 1 | 11 / 0.082 | Proven initialization; otherwise refused | 0 |
-| x is T | Refused | 327 / 2.449 | Proven predicate body; otherwise refused | 0 added runtime |
-| asserts x is T | Refused | 16 / 0.120 | Proven normal-return postcondition; otherwise refused | 0 added runtime |
-| expando assignment | Checker error | 0 confirmed; 10 candidates / 0.075 | Refused shape addition | 0 |
-| Object.defineProperty | Refused | 2 / 0.015 | Refused | 0 |
+| any | NotYet | 207 / 1.550 | Decided: refused | 0 |
+| as upcast | Sound probe | 184 / 1.378 (relation candidates) | Decided: proven sound relation | 0 |
+| as downcast | Tagged: checked; primitive: refused | 2,884 / 21.598 (relation candidates) | Decided: runtime tag check; refuse uncheckable targets | O(1) for one tag |
+| as unknown as | Refused | 5 / 0.037 chains | Decided: refused | 0 |
+| non-null ! | Refused | 938 / 7.024 | Decided: runtime nullish check; panic includes expression text | two comparisons + branch |
+| field!: T | Unsound: NaN vs 1 | 0 / 0 | Decided: refused for now; target proven initialization or loud read-before-assignment check | 0 now; target 0 if proven, O(1) check otherwise |
+| let x!: T | Unsound: NaN vs 1 | 11 / 0.082 | Decided: refused for now; target proven initialization or loud read-before-assignment check | 0 now; target 0 if proven, O(1) check otherwise |
+| x is T | Refused | 327 / 2.449 | Decided: proven predicate body or refused | 0 added runtime |
+| asserts x is T | Refused | 16 / 0.120 | Decided: proven assertion body or refused | 0 added runtime |
+| expando assignment | Checker error | 0 confirmed; 10 candidates / 0.075 | Decided: refused shape addition | 0 |
+| Object.defineProperty | Refused | 2 / 0.015 | Decided: refused | 0 |
 | Object.assign(existing, ...) | Adding field: NotYet; fixed fields: sound | 1 / 0.007 (target candidate) | Proven fixed-shape writes; refuse additions | O(fields), existing work |
-| bivariant interface methods | Unsafe relation refused | 1,468 / 10.994 method declarations | Proven contravariant parameter relation | 0 |
-| Function type | Call NotYet | 0 / 0 | Refused | 0 |
+| bivariant interface methods | Unsafe relation refused | 1,468 / 10.994 method declarations | Decided: proven contravariant relation or refused | 0 |
+| Function type | Call NotYet | 0 / 0 | Decided: refused | 0 |
 | @ts-ignore | Unsound: 2 vs true | 0 / 0 | Refused | 0 |
 | @ts-expect-error | Unsound: 2 vs true | 0 / 0 | Refused | 0 |
-| satisfies | NotYet; bad member checker error | 0 / 0 | Proven ordinary type relation | 0 |
+| satisfies | NotYet; bad member checker error | 0 / 0 | Decided: proven ordinary type relation | 0 |
 | ?. on non-optional | String: sound; number: NotYet | 107 / 0.801 (checker candidates) | Proven ordinary optional operation | 0 if redundant |
-| index read typed without undefined | Checker error; signature refused | 214 / 1.603 reads; 11 / 0.082 signatures | Refused index signatures; use Map | 0 added |
+| index read typed without undefined | Checker error; signature refused | 214 / 1.603 reads; 11 / 0.082 signatures | Decided: NotYet; diagnostic points at Map pending map-backed design | 0 now; future representation cost to be designed |
 
 ## Scope and status
 
@@ -91,9 +101,9 @@ The AST walk counted all 38 direct .ts files in src/compiler, declarations and c
 
 **Observation.** Optional-on-nonoptional counts 107 question-dot operations whose immediate receiver the checker reports as neither nullish nor any/unknown, out of 971 optional operations. Index counts include 11 signature declarations and 214 element-read sites backed by non-nullish index value types when noUncheckedIndexedAccess is disabled, excluding arrays, tuples, explicitly declared literal keys and simple assignment destinations. Compound reads still count. It does not prove any particular key absent. Declaration counts and read counts are different units.
 
-## Proposed decisions
+## Decision rationale and remaining recommendations
 
-Everything in this section is **proposal/inference**, not a description of new compiler behavior. “Proven” always means acceptance requires the named proof; failed proof is a compile-time refusal with the obligation named. No proof may rely on the assertion syntax or a diagnostic-suppression directive.
+The Decisions section records the accepted rulings. This section explains their proof obligations and retains the other recommendations as **proposal/inference**. Neither decisions nor recommendations describe new compiler behavior implemented by this document. “Proven” always means acceptance requires the named proof; failed proof is a compile-time refusal with the obligation named. No proof may rely on the assertion syntax or a diagnostic-suppression directive.
 
 ### Failure contract
 
@@ -111,7 +121,7 @@ Stage 1 needs unknown plus typeof/discriminant narrowing at dynamic boundaries, 
 
 An upcast needs Adamic's independent sound relation: immutable covariance, mutable invariance, nominal class identity, safe function variance and optional-field presence/type compatibility. TypeScript assignability alone is insufficient. Erase a proven cast, with zero runtime cost.
 
-For a downcast from a represented union to its represented member/subunion, first establish that each runtime discriminator uniquely selects a member whose fields have already been proven at construction and every write. Check the tag against the target tag set before narrowing. One-tag cost is one load/comparison and a branch; k tags cost up to k comparisons unless a shared tag mask is available. A primitive tag check could support number|string in a future representation, but it is outside this recommendation's accepted set until independently validated. A cast already established by flow narrowing erases.
+For a downcast from a represented union to its represented member/subunion, first establish that each runtime discriminator uniquely selects a member whose fields have already been proven at construction and every write. Check the tag against the target tag set before narrowing. One-tag cost is one load/comparison and a branch; k tags cost up to k comparisons unless a shared tag mask is available. A primitive tag check could support number|string in a future representation, but it is outside the accepted set until independently validated. A cast already established by flow narrowing erases.
 
 Keep the existing exact message template:
 `adamic: panic: cast failed: this <source type> is not a <target type>\n`.
@@ -121,15 +131,19 @@ A structural unknown-to-interface cast, generic predicate, callback-signature ca
 
 ### Non-null !: runtime check
 
-Recommend revisiting the approved refusal in light of 938 sites. Evaluate the operand once; reject **both null and undefined**, not other falsy values (0, false and empty string pass). Return the exact original value after success. If independent flow/alias analysis proves non-nullish at the use, erase the check.
+**Decision.** Replace the refusal with a runtime nullish check that includes the expression's text in its panic. Evaluate the operand once; reject **both null and undefined**, not other falsy values (0, false and empty string pass). Return the exact original value after success. If independent flow/alias analysis proves non-nullish at the use, erase the check.
 
-Failure prints `adamic: panic: non-null assertion failed: value is null or undefined\n`, exit 70. Cost is at most two tag comparisons and one branch, no allocation on success. Mutation through calls/captures must invalidate the proof before elision. The current missing-map-key probe is the failure input; a future implementation must additionally test null, each falsy non-nullish input, side-effectful operands and invalidation across calls. This proposed check has not been implemented or mutant-tested.
+Failure prints `adamic: panic: non-null assertion failed: <expression text> is null or undefined\n`, exit 70. The expression text is the original assertion expression captured at compile time, not a runtime value conversion. For the retained probe, the line is `adamic: panic: non-null assertion failed: m.get('missing')! is null or undefined\n`. Cost is at most two tag comparisons and one branch, no allocation on success. Mutation through calls/captures must invalidate the proof before elision. The current missing-map-key probe is the failure input; a future implementation must additionally test null, each falsy non-nullish input, side-effectful operands and invalidation across calls. This decided check has not been implemented or mutant-tested in this unit.
 
-### Definite assignment: proven, otherwise refused
+### Definite assignment: refused for now; target proof or read check
 
-Ignore ! while checking initialization. For a local, every read must be dominated on every executable control-flow path by a compatible assignment, including loop, closure and exception paths. Captured reads need a verified call-before-initialization analysis or are refused. For a class, every normal constructor return must set each field with a compatible value, and no read or this escape may expose an unset field. Include inherited construction order and callbacks reachable during construction. Then ! is redundant and erases at zero cost.
+**Decision.** Refuse field!: and let x!: for now. Another branch lands that refusal; this document does not implement it. The refusal is temporary. The target is to erase checks where flow proves initialization and otherwise insert a loud read-before-assignment check, following Adamic's temporal-dead-zone approach.
 
-Do not initialize missing numbers to zero: the source value is undefined. No runtime default repairs the lie. Stage 1 uses constructor assignments, initialized locals, explicit T|undefined state narrowed before reads, or builders that produce a complete object. The two assigned controls pass; removing their assignments produces the retained silent-miscompile mutants on main. Those mutants must be refused by the future analysis.
+Ignore ! while proving initialization. For a local, every read must be dominated on every executable control-flow path by a compatible assignment, including loop, closure and exception paths. Captured reads need proof valid at the actual read or retain the runtime initialization check. For a class, account for compatible field assignments, normal constructor returns, inherited construction order and reads through this escapes or callbacks during construction. An unproven read must check initialized state before loading a value as T. The ! syntax itself proves nothing.
+
+A proven read costs zero additional runtime work; an unproven read needs initialized-state tracking and an O(1) test and branch. The exact state representation and failure diagnostic need an implementation design. The accepted target requires a loud read-before-assignment failure, not a silent default value.
+
+Do not initialize missing numbers to zero: the source value is undefined. Stage 1 can use constructor assignments, initialized locals, explicit T|undefined state narrowed before reads, or builders that produce a complete object while the temporary refusal stands. The two assigned controls pass on the measured main; removing their assignments produces the retained silent-miscompile mutants. The interim refusal must reject the ! declarations, and the target must either prove each read safe or stop it with the initialization check.
 
 ### Guards and assertion functions: proven, otherwise refused
 
@@ -165,11 +179,13 @@ satisfies is not an assertion hatch. It checks a relation while retaining the ex
 
 Optional chaining on a receiver proven non-nullish is redundant, not a type lie. Preserve single evaluation, property/call order and method this binding; ordinary optional operations must yield undefined when their receiver is nullish. Elide the nullish branch only with a proof valid at that exact read, including aliases and calls. Zero added cost when redundant; otherwise the ordinary optional-chain branch applies. Main's number result gap is an implementation limitation, not a reason to classify this syntax as unsound. Stage 1 can use an ordinary read only where receiver non-nullishness is independently established.
 
-### Index signatures: refused
+### Index signatures: NotYet pending a map-backed design
 
-Keep index signatures refused in this decision. A finite set of existing keys is not a proof that every string key exists. The current checker enables noUncheckedIndexedAccess, so the unsafe read is already rejected; the fallback control reaches a separate policy refusal. Stage 1 replaces dictionary-shaped objects with Map and treats get as T|undefined, narrowing or using a reasoned panic. Preserve any observed object key-order requirements explicitly; Map insertion order differs from JavaScript's integer-keys-first object order.
+**Decision.** Index signatures are NotYet, not refused forever. TypeScript's own compiler uses string-keyed record objects, and stage 3 must compile its source unchanged. A sound map-backed representation needs its own later design. Until then, reject index signatures with a NotYet diagnostic pointing at Map as the current alternative. The retained policy-refusal text below is a historical observation, not the decided diagnostic classification.
 
-A later dictionary feature should type an unproven lookup T|undefined regardless of TypeScript's tsconfig, with a presence check before a demanded T read. That is a separate design, not an unchecked signature accepted here.
+A finite set of existing keys is not a proof that every string key exists. The current checker enables noUncheckedIndexedAccess, so the unsafe read is already rejected; the fallback control reaches the recorded policy refusal. Stage 1 can temporarily use Map and treat get as T|undefined, narrowing or using a reasoned panic. This workaround is not a permanent rewrite requirement for stage 3.
+
+The later design must preserve TypeScript object behavior, including integer-keys-first key ordering where observable; Map insertion order alone is insufficient. It must provide sound missing-key reads even when TypeScript's tsconfig omits noUncheckedIndexedAccess, and preserve aliasing, writes and ownership without a garbage collector. Representation cost and the exact missing-key check contract remain for that design. No index-signature representation is implemented here.
 
 ## Current behavior, exact probe evidence
 
@@ -794,4 +810,4 @@ Both commands exited 0. lower passed in 6.838s, load in 0.549s. All four selecte
 
 **Observation.** No compiler package was edited, so the full gate, vet and formatting gate were not run. These docs repros are intentionally invalid and live outside the existing tsconfig include list, rather than becoming positive oracle fixtures or weakening repository settings. They are measured witnesses, with an explicit runner, not newly integrated gate assertions. No compiler-mutant edits were made. The known miscompiles were measured on unmodified main, and no lowering fix is claimed.
 
-**Inference / not covered.** The proposed non-null check and body/initialization verifiers have not been implemented, benchmarked or independently mutant-tested. Reported proposed costs are operation counts, not measured timings. The census does not measure dynamic execution, inferred any, aliases of Object APIs, actual unsafe method assignments, all expando additions, or which of the 2,884 downcast candidates have reifiable tags. It uses TypeScript's checker as a classifier, not as a soundness oracle. Future implementation units must run isolated mutants for each accepted proof, every elision condition and every runtime failure, including null inputs, alias invalidation, false-branch guard narrowing and exception paths.
+**Inference / not covered.** The decided non-null check, target initialization checks and body/initialization verifiers have not been implemented, benchmarked or independently mutant-tested. Reported proposed costs are operation counts, not measured timings. The census does not measure dynamic execution, inferred any, aliases of Object APIs, actual unsafe method assignments, all expando additions, or which of the 2,884 downcast candidates have reifiable tags. It uses TypeScript's checker as a classifier, not as a soundness oracle. Future implementation units must run isolated mutants for each accepted proof, every elision condition and every runtime failure, including null inputs, alias invalidation, false-branch guard narrowing and exception paths.
