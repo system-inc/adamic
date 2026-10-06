@@ -239,6 +239,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions_throw.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
+	// A variable borrowed from an array, then the array moved into a consumed parameter of a
+	// function that only reads it, through a virtual call and through super (integration's reading
+	// of aa17d3c): the array is never moved while something borrows from it.
+	{"internal/oracle/testdata/borrow_element_virtual_move.a", true, false},
+	{"internal/oracle/testdata/borrow_element_super_move.a", true, false},
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
 	// was moved or spread.
 	{"internal/oracle/testdata/move_throw.a", true, false},
