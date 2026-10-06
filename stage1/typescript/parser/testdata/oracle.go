@@ -126,6 +126,7 @@ func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool, source stri
 	return count
 }
 
+var recovery bool
 var docTypes bool
 var obsoleteAssertions bool
 
@@ -144,12 +145,17 @@ func run(out *bufio.Writer, path string, countOnly bool, whole bool) int {
 	if obsoleteAssertions && !obsoleteOnly {
 		panic("obsolete assertion probe must emit only diagnostic 2880")
 	}
-	if len(f.Diagnostics()) != 0 && !obsoleteOnly {
+	if len(f.Diagnostics()) != 0 && !obsoleteOnly && !recovery {
 		fmt.Fprintf(os.Stderr, "source: %q\n", text)
 		for _, d := range f.Diagnostics() {
 			fmt.Fprintf(os.Stderr, "parser diagnostic %s %d %d %d\n", path, d.Code(), d.Pos(), d.Len())
 		}
 		os.Exit(1)
+	}
+	if recovery {
+		for _, d := range f.Diagnostics() {
+			fmt.Fprintf(out, "diagnostic %d %d %d %d\t%s\n", d.Code(), d.Pos(), d.Len(), d.Category(), written(d.String()))
+		}
 	}
 	if docTypes {
 		count := 0
@@ -190,10 +196,55 @@ func run(out *bufio.Writer, path string, countOnly bool, whole bool) int {
 	visit(f.AsNode())
 	return count
 }
+
+// Use the real parser's literal locations to direct regex/template rescanning.
+// A lexical guess about a slash or closing brace could count different tokens.
+func tokenSpans(out *bufio.Writer, path string) {
+	text, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+	source := string(text)
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/source.ts"}, source, core.ScriptKindTS)
+	if len(file.Diagnostics()) != 0 {
+		panic("token corpus must be well formed")
+	}
+	literals := map[int]ast.Kind{}
+	var visit ast.Visitor
+	visit = func(n *ast.Node) bool {
+		switch n.Kind {
+		case ast.KindRegularExpressionLiteral, ast.KindTemplateMiddle, ast.KindTemplateTail:
+			literals[scanner.SkipTrivia(source, n.Pos())] = n.Kind
+		}
+		n.ForEachChild(visit)
+		return false
+	}
+	visit(file.AsNode())
+	s := scanner.NewScanner()
+	s.SetText(source)
+	for {
+		k := s.Scan()
+		switch literals[s.TokenStart()] {
+		case ast.KindRegularExpressionLiteral:
+			k = s.ReScanSlashToken(false)
+		case ast.KindTemplateMiddle, ast.KindTemplateTail:
+			k = s.ReScanTemplateToken(false)
+		}
+		if k == ast.KindEndOfFile {
+			break
+		}
+		fmt.Fprintf(out, "%d %d\n", s.TokenStart(), s.TokenEnd())
+	}
+}
+
 func main() {
 	out := bufio.NewWriterSize(os.Stdout, 65536)
 	defer out.Flush()
 	args := os.Args[1:]
+	if args[0] == "--token-spans" {
+		tokenSpans(out, args[1])
+		return
+	}
 	if args[0] == "--type-kinds" {
 		for k := ast.KindUnknown; k <= ast.KindLastJSDocNode; k++ {
 			if ast.IsTypeNodeKind(k) {
@@ -209,6 +260,9 @@ func main() {
 		}
 		if arg == "--doc-types" {
 			docTypes = true
+		}
+		if arg == "--recovery" {
+			recovery = true
 		}
 		if arg == "--whole" {
 			whole = true

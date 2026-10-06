@@ -3,15 +3,33 @@ import { panic } from 'adamic';
 import { Scanner } from '../scanner/scanner.ts';
 import { Statements } from './statements.ts';
 import { ParseNode } from './nodes.ts';
-import { precedence, reservedKinds } from './grammar.ts';
+import { precedence, reservedKinds, tokenSpelling } from './grammar.ts';
 import { arrowAhead, typeArgumentsAhead } from './lookahead.ts';
 import type { ParserStateInterface } from './lookahead.ts';
+
+interface ParseDiagnosticInterface {
+    readonly code: number;
+    readonly start: number;
+    readonly length: number;
+    readonly message: string;
+}
 
 export class Parser {
     readonly scanner: Scanner;
     readonly path: string;
     readonly nodes: ParseNode[] = [];
     readonly roots: number[] = [];
+    readonly diagnostics: ParseDiagnosticInterface[] = [];
+    error(code: number, message: string): void {
+        if(this.diagnostics.at(-1)?.start !== this.scanner.start) {
+            this.diagnostics.push({
+                code,
+                start: this.scanner.start,
+                length: this.scanner.pos - this.scanner.start,
+                message,
+            });
+        }
+    }
     constructor(text: string, path = 'source') {
         this.path = path;
         this.scanner = new Scanner(text);
@@ -36,11 +54,13 @@ export class Parser {
         this.node(id).end = this.scanner.fullStart;
         return id;
     }
-    expect(kind: string): void {
+    expect(kind: string): boolean {
         if(this.kind() !== kind) {
-            panic(`parser slice expected ${kind}, got ${this.kind()} at ${this.scanner.start} in ${this.path}`);
+            this.error(1005, `'${tokenSpelling(kind)}' expected.`);
+            return false;
         }
         this.next();
+        return true;
     }
     literal(): number {
         const id = this.make(this.kind(), this.scanner.fullStart);
@@ -185,6 +205,7 @@ export class Parser {
             flags: this.scanner.flags,
             errors: this.scanner.errors.length,
             nodes: this.nodes.length,
+            diagnostics: this.diagnostics.length,
         };
     }
     rewind(state: ParserStateInterface): void {
@@ -196,6 +217,7 @@ export class Parser {
         this.scanner.flags = state.flags;
         this.scanner.errors.splice(state.errors);
         this.nodes.splice(state.nodes);
+        this.diagnostics.splice(state.diagnostics);
     }
     docTypes(): number[] {
         const types: number[] = [];
@@ -258,7 +280,14 @@ export class Parser {
             return result;
         }
         this.next();
-        while(this.kind() !== 'GreaterThanToken') {
+        while(
+            this.kind() !== 'GreaterThanToken' &&
+            this.kind() !== 'EndOfFile' &&
+            this.kind() !== 'OpenParenToken' &&
+            this.kind() !== 'OpenBraceToken' &&
+            this.kind() !== 'ExtendsKeyword' &&
+            this.kind() !== 'ImplementsKeyword'
+        ) {
             const pos = this.scanner.fullStart;
             const children: number[] = [];
             while(this.kind() === 'ConstKeyword' || this.kind() === 'InKeyword' || this.kind() === 'OutKeyword') {
@@ -676,9 +705,11 @@ export class Parser {
     }
     typeLiteral(): number {
         const pos = this.scanner.fullStart;
-        this.expect('OpenBraceToken');
         const members: number[] = [];
-        while(this.kind() !== 'CloseBraceToken') {
+        if(!this.expect('OpenBraceToken')) {
+            return this.make('TypeLiteral', pos, members);
+        }
+        while(this.kind() !== 'CloseBraceToken' && this.kind() !== 'EndOfFile') {
             const start = this.scanner.fullStart;
             const children: number[] = [];
             if(
@@ -755,9 +786,11 @@ export class Parser {
         return this.make('TypeLiteral', pos, members);
     }
     parameters(): number[] {
-        this.expect('OpenParenToken');
         const result: number[] = [];
-        while(this.kind() !== 'CloseParenToken') {
+        if(!this.expect('OpenParenToken')) {
+            return result;
+        }
+        while(this.kind() !== 'CloseParenToken' && this.kind() !== 'EndOfFile') {
             const pos = this.scanner.fullStart;
             const children: number[] = [];
             while(this.kind() === 'AtToken') {

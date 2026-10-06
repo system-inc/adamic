@@ -11,6 +11,7 @@ export interface ParserStateInterface {
     readonly flags: number;
     readonly errors: number;
     readonly nodes: number;
+    readonly diagnostics: number;
 }
 
 function kind(scanner: Scanner): string {
