@@ -304,6 +304,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/search_from.a", true, false},
 	{"internal/oracle/testdata/shared_slices.a", true, false},
 	{"internal/oracle/testdata/string_append.a", true, false},
+	{"internal/oracle/testdata/shared_slice_append.a", true, false},
 	{"internal/oracle/testdata/search_from_sweep.a", true, false},
 	// Numbers as text around the integer fast path: every power of two and of ten, their neighbors
 	// and negatives, -0, and the safe range's edges.
