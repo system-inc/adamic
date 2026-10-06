@@ -1,0 +1,32 @@
+=== RUN   TestBatch2UpstreamAgree
+    lint_test.go:257: batch2 upstream no-caller: 8 cases
+    lint_test.go:257: batch2 upstream no-eq-null: 14 cases
+    lint_test.go:257: batch2 upstream no-empty-static-block: 9 cases
+    lint_test.go:257: batch2 upstream no-proto: 14 cases
+    lint_test.go:257: batch2 upstream no-script-url: 29 cases
+    lint_test.go:257: batch2 upstream no-self-compare: 25 cases
+    lint_test.go:257: batch2 upstream no-delete-var: 9 cases
+    lint_test.go:257: batch2 upstream no-iterator: 10 cases
+    lint_test.go:257: batch2 upstream no-compare-neg-zero: 56 cases
+    lint_test.go:257: batch2 upstream no-async-promise-executor: 24 cases
+    lint_test.go:257: batch2 upstream no-empty-pattern: 44 cases
+    lint_test.go:257: batch2 upstream no-constructor-return: 53 cases
+    lint_test.go:257: batch2 upstream no-multi-assign: 70 cases
+    lint_test.go:257: batch2 upstream no-useless-catch: 23 cases
+    lint_test.go:257: batch2 upstream no-unsafe-finally: 61 cases
+    lint_test.go:257: batch2 upstream no-useless-concat: 40 cases
+    lint_test.go:257: batch2 upstream no-empty-character-class: 43 cases
+    lint_test.go:257: batch2 upstream no-ex-assign: 19 cases
+    lint_test.go:257: batch2 upstream @typescript-eslint/no-unnecessary-type-constraint: 43 cases
+    lint_test.go:257: batch2 upstream @typescript-eslint/prefer-namespace-keyword: 22 cases
+    lint_test.go:297: cohere cases: 1888 unique source/rule/options combinations
+    batch2_test.go:186: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestBatch2UpstreamAgree3908066895/004/case-411.ts	no-async-promise-executor			false		unsupported-recovery
+    batch2_test.go:187: Go recovered output: case 0
+        recovery findings only
+    batch2_test.go:187: explicit unsupported recovery: /tmp/adamic-gate/TestBatch2UpstreamAgree3908066895/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice unsupported primary AtToken at 12 in /tmp/adamic-gate/TestBatch2UpstreamAgree3908066895/004/case-411.ts
+    batch2_test.go:187: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice unsupported primary AtToken at 12 in /tmp/adamic-gate/TestBatch2UpstreamAgree3908066895/004/case-411.ts
+    batch2_test.go:192: batch2 upstream compared: 615
+    batch2_test.go:193: Go, Node, native identical: 176812 bytes
+--- PASS: TestBatch2UpstreamAgree (63.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	63.257s

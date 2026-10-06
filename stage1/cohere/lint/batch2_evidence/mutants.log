@@ -1,0 +1,516 @@
+=== RUN   TestBatch2Mutants
+=== RUN   TestBatch2Mutants/no-caller
+    batch2_test.go:157: listener omission caught on Node: case 0 line 2: port "fixed\targuments.caller; (arguments).callee; object.callee; arguments[caller];", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/001/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/001/control.ts:1:11
+          no-caller  This uses `arguments.caller`. Both properties throw in strict mode, which every module and class body already is, and they prevent engines from optimizing functions whose callers would otherwise be statically known. Name the function and refer to it by name instead.
+        
+        range 10 16 noCaller 			10 16
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/001/control.ts:1:31
+    batch2_test.go:157: listener omission caught on native: case 0 line 2: port "fixed\targuments.caller; (arguments).callee; object.callee; arguments[caller];", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/001/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/001/control.ts:1:11
+          no-caller  This uses `arguments.caller`. Both properties throw in strict mode, which every module and class body already is, and they prevent engines from optimizing functions whose callers would otherwise be statically known. Name the function and refer to it by name instead.
+        
+        range 10 16 noCaller 			10 16
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/001/control.ts:1:31
+=== RUN   TestBatch2Mutants/no-eq-null
+    batch2_test.go:157: listener omission caught on Node: case 1 line 12: port "fixed\tx == (null); null != x; x === null; x == undefined;", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/002/control.ts:1:1"
+        Go context:
+          no-caller  This uses `arguments.callee`. Both properties throw in strict mode, which every module and class body already is, and they prevent engines from optimizing functions whose callers would otherwise be statically known. Name the function and refer to it by name instead.
+        
+        range 30 36 noCaller 			30 36
+        fixed	arguments.caller; (arguments).callee; object.callee; arguments[caller];
+        case 1
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/002/control.ts:1:1
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 0 11 unexpected 			0 11
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/002/control.ts:1:14
+    batch2_test.go:157: listener omission caught on native: case 1 line 12: port "fixed\tx == (null); null != x; x === null; x == undefined;", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/002/control.ts:1:1"
+        Go context:
+          no-caller  This uses `arguments.callee`. Both properties throw in strict mode, which every module and class body already is, and they prevent engines from optimizing functions whose callers would otherwise be statically known. Name the function and refer to it by name instead.
+        
+        range 30 36 noCaller 			30 36
+        fixed	arguments.caller; (arguments).callee; object.callee; arguments[caller];
+        case 1
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/002/control.ts:1:1
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 0 11 unexpected 			0 11
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/002/control.ts:1:14
+=== RUN   TestBatch2Mutants/no-empty-static-block
+    batch2_test.go:157: listener omission caught on Node: case 2 line 22: port "fixed\tclass C { static {} } class D { static { /* intentional */ } }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/003/control.ts:1:11"
+        Go context:
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 13 22 unexpected 			13 22
+        fixed	x == (null); null != x; x === null; x == undefined;
+        case 2
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/003/control.ts:1:11
+          no-empty-static-block  This static initialization block is empty, so it runs nothing at class definition time and exists only as syntax. Unlike an empty catch, there is no reading where that is deliberate: a static block has no parameter to bind and no error to swallow, so an empty one is a body that was deleted or never written. Remove it, or say in a comment why the class needs an initialization step that does nothing.
+        
+        range 10 19 unexpectedEmptyStaticBlock 			10 19
+        fixed	class C { static {} } class D { static { /* intentional */ } }
+    batch2_test.go:157: listener omission caught on native: case 2 line 22: port "fixed\tclass C { static {} } class D { static { /* intentional */ } }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/003/control.ts:1:11"
+        Go context:
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 13 22 unexpected 			13 22
+        fixed	x == (null); null != x; x === null; x == undefined;
+        case 2
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/003/control.ts:1:11
+          no-empty-static-block  This static initialization block is empty, so it runs nothing at class definition time and exists only as syntax. Unlike an empty catch, there is no reading where that is deliberate: a static block has no parameter to bind and no error to swallow, so an empty one is a body that was deleted or never written. Remove it, or say in a comment why the class needs an initialization step that does nothing.
+        
+        range 10 19 unexpectedEmptyStaticBlock 			10 19
+        fixed	class C { static {} } class D { static { /* intentional */ } }
+=== RUN   TestBatch2Mutants/no-proto
+    batch2_test.go:157: listener omission caught on Node: case 3 line 28: port "fixed\tx.__proto__; x['__proto__']; x[`__proto__`]; x[__proto__];", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/004/control.ts:1:1"
+        Go context:
+          no-empty-static-block  This static initialization block is empty, so it runs nothing at class definition time and exists only as syntax. Unlike an empty catch, there is no reading where that is deliberate: a static block has no parameter to bind and no error to swallow, so an empty one is a body that was deleted or never written. Remove it, or say in a comment why the class needs an initialization step that does nothing.
+        
+        range 10 19 unexpectedEmptyStaticBlock 			10 19
+        fixed	class C { static {} } class D { static { /* intentional */ } }
+        case 3
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/004/control.ts:1:1
+          no-proto  This reads or writes `__proto__`, which reaches an object's prototype through a deprecated accessor. It is normative only for web compatibility, it is slow because writing it deoptimizes the object's shape, and on an object parsed from untrusted input it is the prototype pollution vector. Use `Object.getPrototypeOf` and `Object.setPrototypeOf`, or `Object.create(null)` for a map that has no prototype to reach.
+        
+        range 0 11 unexpectedProto 			0 11
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/004/control.ts:1:14
+    batch2_test.go:157: listener omission caught on native: case 3 line 28: port "fixed\tx.__proto__; x['__proto__']; x[`__proto__`]; x[__proto__];", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/004/control.ts:1:1"
+        Go context:
+          no-empty-static-block  This static initialization block is empty, so it runs nothing at class definition time and exists only as syntax. Unlike an empty catch, there is no reading where that is deliberate: a static block has no parameter to bind and no error to swallow, so an empty one is a body that was deleted or never written. Remove it, or say in a comment why the class needs an initialization step that does nothing.
+        
+        range 10 19 unexpectedEmptyStaticBlock 			10 19
+        fixed	class C { static {} } class D { static { /* intentional */ } }
+        case 3
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/004/control.ts:1:1
+          no-proto  This reads or writes `__proto__`, which reaches an object's prototype through a deprecated accessor. It is normative only for web compatibility, it is slow because writing it deoptimizes the object's shape, and on an object parsed from untrusted input it is the prototype pollution vector. Use `Object.getPrototypeOf` and `Object.setPrototypeOf`, or `Object.create(null)` for a map that has no prototype to reach.
+        
+        range 0 11 unexpectedProto 			0 11
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/004/control.ts:1:14
+=== RUN   TestBatch2Mutants/no-script-url
+    batch2_test.go:157: listener omission caught on Node: case 4 line 42: port "fixed\t'JAVASCRIPT:x'; `javascript:`; tag`javascript:`; 'xjavascript:';", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/005/control.ts:1:1"
+        Go context:
+          no-proto  This reads or writes `__proto__`, which reaches an object's prototype through a deprecated accessor. It is normative only for web compatibility, it is slow because writing it deoptimizes the object's shape, and on an object parsed from untrusted input it is the prototype pollution vector. Use `Object.getPrototypeOf` and `Object.setPrototypeOf`, or `Object.create(null)` for a map that has no prototype to reach.
+        
+        range 29 43 unexpectedProto 			29 43
+        fixed	x.__proto__; x['__proto__']; x[`__proto__`]; x[__proto__];
+        case 4
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/005/control.ts:1:1
+          no-script-url  A `javascript:` URL runs whatever follows the colon as code, so this string is an eval that happens to be spelled as a link. Anything that can reach the value that builds it can execute in the page, and a content security policy that blocks inline script blocks this too, so it tends to fail in production rather than in review. A real handler does the same work without turning a string into a program.
+        
+        range 0 14 unexpectedScriptURL 			0 14
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/005/control.ts:1:17
+    batch2_test.go:157: listener omission caught on native: case 4 line 42: port "fixed\t'JAVASCRIPT:x'; `javascript:`; tag`javascript:`; 'xjavascript:';", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/005/control.ts:1:1"
+        Go context:
+          no-proto  This reads or writes `__proto__`, which reaches an object's prototype through a deprecated accessor. It is normative only for web compatibility, it is slow because writing it deoptimizes the object's shape, and on an object parsed from untrusted input it is the prototype pollution vector. Use `Object.getPrototypeOf` and `Object.setPrototypeOf`, or `Object.create(null)` for a map that has no prototype to reach.
+        
+        range 29 43 unexpectedProto 			29 43
+        fixed	x.__proto__; x['__proto__']; x[`__proto__`]; x[__proto__];
+        case 4
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/005/control.ts:1:1
+          no-script-url  A `javascript:` URL runs whatever follows the colon as code, so this string is an eval that happens to be spelled as a link. Anything that can reach the value that builds it can execute in the page, and a content security policy that blocks inline script blocks this too, so it tends to fail in production rather than in review. A real handler does the same work without turning a string into a program.
+        
+        range 0 14 unexpectedScriptURL 			0 14
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/005/control.ts:1:17
+=== RUN   TestBatch2Mutants/no-self-compare
+    batch2_test.go:157: listener omission caught on Node: case 5 line 52: port "fixed\tfoo.bar() >= foo.bar (); x in x; x === y;", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/006/control.ts:1:1"
+        Go context:
+          no-script-url  A `javascript:` URL runs whatever follows the colon as code, so this string is an eval that happens to be spelled as a link. Anything that can reach the value that builds it can execute in the page, and a content security policy that blocks inline script blocks this too, so it tends to fail in production rather than in review. A real handler does the same work without turning a string into a program.
+        
+        range 16 29 unexpectedScriptURL 			16 29
+        fixed	'JAVASCRIPT:x'; `javascript:`; tag`javascript:`; 'xjavascript:';
+        case 5
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/006/control.ts:1:1
+          no-self-compare  Both sides of this comparison are written identically, so the answer does not depend on the data: it is true, or it is false, every time. The two shapes this is almost always hiding are a typo in one operand, and a deliberate `x !== x` reaching for a NaN check, which `Number.isNaN(x)` says out loud instead.
+        
+        range 0 23 comparingToSelf 			0 23
+        fixed	foo.bar() >= foo.bar (); x in x; x === y;
+    batch2_test.go:157: listener omission caught on native: case 5 line 52: port "fixed\tfoo.bar() >= foo.bar (); x in x; x === y;", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/006/control.ts:1:1"
+        Go context:
+          no-script-url  A `javascript:` URL runs whatever follows the colon as code, so this string is an eval that happens to be spelled as a link. Anything that can reach the value that builds it can execute in the page, and a content security policy that blocks inline script blocks this too, so it tends to fail in production rather than in review. A real handler does the same work without turning a string into a program.
+        
+        range 16 29 unexpectedScriptURL 			16 29
+        fixed	'JAVASCRIPT:x'; `javascript:`; tag`javascript:`; 'xjavascript:';
+        case 5
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/006/control.ts:1:1
+          no-self-compare  Both sides of this comparison are written identically, so the answer does not depend on the data: it is true, or it is false, every time. The two shapes this is almost always hiding are a typo in one operand, and a deliberate `x !== x` reaching for a NaN check, which `Number.isNaN(x)` says out loud instead.
+        
+        range 0 23 comparingToSelf 			0 23
+        fixed	foo.bar() >= foo.bar (); x in x; x === y;
+=== RUN   TestBatch2Mutants/no-delete-var
+    batch2_test.go:157: listener omission caught on Node: case 6 line 58: port "fixed\tdelete (value); delete object.value;", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/007/control.ts:1:1"
+        Go context:
+          no-self-compare  Both sides of this comparison are written identically, so the answer does not depend on the data: it is true, or it is false, every time. The two shapes this is almost always hiding are a typo in one operand, and a deliberate `x !== x` reaching for a NaN check, which `Number.isNaN(x)` says out loud instead.
+        
+        range 0 23 comparingToSelf 			0 23
+        fixed	foo.bar() >= foo.bar (); x in x; x === y;
+        case 6
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/007/control.ts:1:1
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 0 14 unexpectedDeleteVar 			0 14
+        fixed	delete (value); delete object.value;
+    batch2_test.go:157: listener omission caught on native: case 6 line 58: port "fixed\tdelete (value); delete object.value;", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/007/control.ts:1:1"
+        Go context:
+          no-self-compare  Both sides of this comparison are written identically, so the answer does not depend on the data: it is true, or it is false, every time. The two shapes this is almost always hiding are a typo in one operand, and a deliberate `x !== x` reaching for a NaN check, which `Number.isNaN(x)` says out loud instead.
+        
+        range 0 23 comparingToSelf 			0 23
+        fixed	foo.bar() >= foo.bar (); x in x; x === y;
+        case 6
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/007/control.ts:1:1
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 0 14 unexpectedDeleteVar 			0 14
+        fixed	delete (value); delete object.value;
+=== RUN   TestBatch2Mutants/no-iterator
+    batch2_test.go:157: listener omission caught on Node: case 7 line 64: port "fixed\tx.__iterator__; x['__iterator__']; x[__iterator__];", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/008/control.ts:1:1"
+        Go context:
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 0 14 unexpectedDeleteVar 			0 14
+        fixed	delete (value); delete object.value;
+        case 7
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/008/control.ts:1:1
+          no-iterator  This uses the reserved name `__iterator__`. That was SpiderMonkey's pre-standard iteration protocol, removed from Firefox in 2015 and never implemented anywhere else, so the property does nothing in any engine running today. Use `[Symbol.iterator]`, which is the standard protocol that replaced it.
+        
+        range 0 14 noIterator suggestion	[Symbol.iterator]	Replace `__iterator__` with `[Symbol.iterator]`.	1 14
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/008/control.ts:1:17
+    batch2_test.go:157: listener omission caught on native: case 7 line 64: port "fixed\tx.__iterator__; x['__iterator__']; x[__iterator__];", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/008/control.ts:1:1"
+        Go context:
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 0 14 unexpectedDeleteVar 			0 14
+        fixed	delete (value); delete object.value;
+        case 7
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/008/control.ts:1:1
+          no-iterator  This uses the reserved name `__iterator__`. That was SpiderMonkey's pre-standard iteration protocol, removed from Firefox in 2015 and never implemented anywhere else, so the property does nothing in any engine running today. Use `[Symbol.iterator]`, which is the standard protocol that replaced it.
+        
+        range 0 14 noIterator suggestion	[Symbol.iterator]	Replace `__iterator__` with `[Symbol.iterator]`.	1 14
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/008/control.ts:1:17
+=== RUN   TestBatch2Mutants/no-compare-neg-zero
+    batch2_test.go:157: listener omission caught on Node: case 8 line 74: port "fixed\tx === -(0); -0x0 != x; x === -0n;", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/009/control.ts:1:1"
+        Go context:
+          no-iterator  This uses the reserved name `__iterator__`. That was SpiderMonkey's pre-standard iteration protocol, removed from Firefox in 2015 and never implemented anywhere else, so the property does nothing in any engine running today. Use `[Symbol.iterator]`, which is the standard protocol that replaced it.
+        
+        range 16 33 noIterator suggestion	[Symbol.iterator]	Replace `__iterator__` with `[Symbol.iterator]`.	17 33
+        fixed	x.__iterator__; x['__iterator__']; x[__iterator__];
+        case 8
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/009/control.ts:1:1
+          no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+        
+        range 0 10 unexpected 			0 10
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/009/control.ts:1:13
+    batch2_test.go:157: listener omission caught on native: case 8 line 74: port "fixed\tx === -(0); -0x0 != x; x === -0n;", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/009/control.ts:1:1"
+        Go context:
+          no-iterator  This uses the reserved name `__iterator__`. That was SpiderMonkey's pre-standard iteration protocol, removed from Firefox in 2015 and never implemented anywhere else, so the property does nothing in any engine running today. Use `[Symbol.iterator]`, which is the standard protocol that replaced it.
+        
+        range 16 33 noIterator suggestion	[Symbol.iterator]	Replace `__iterator__` with `[Symbol.iterator]`.	17 33
+        fixed	x.__iterator__; x['__iterator__']; x[__iterator__];
+        case 8
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/009/control.ts:1:1
+          no-compare-neg-zero  Comparing against `-0` with `===`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+        
+        range 0 10 unexpected 			0 10
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/009/control.ts:1:13
+=== RUN   TestBatch2Mutants/no-async-promise-executor
+    batch2_test.go:157: listener omission caught on Node: case 9 line 84: port "fixed\tnew Promise(async () => {}); new Promise(() => {}, async () => {});", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/010/control.ts:1:13"
+        Go context:
+          no-compare-neg-zero  Comparing against `-0` with `!=`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+        
+        range 12 21 unexpected 			12 21
+        fixed	x === -(0); -0x0 != x; x === -0n;
+        case 9
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/010/control.ts:1:13
+          no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+        
+        range 12 17 noAsyncPromiseExecutor 			12 17
+        fixed	new Promise(async () => {}); new Promise(() => {}, async () => {});
+    batch2_test.go:157: listener omission caught on native: case 9 line 84: port "fixed\tnew Promise(async () => {}); new Promise(() => {}, async () => {});", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/010/control.ts:1:13"
+        Go context:
+          no-compare-neg-zero  Comparing against `-0` with `!=`: every comparison operator treats `-0` and `0` as the same number, so this is true for positive zero too and does not test what it looks like it tests. `Object.is(x, -0)` is the only comparison that distinguishes them.
+        
+        range 12 21 unexpected 			12 21
+        fixed	x === -(0); -0x0 != x; x === -0n;
+        case 9
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/010/control.ts:1:13
+          no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+        
+        range 12 17 noAsyncPromiseExecutor 			12 17
+        fixed	new Promise(async () => {}); new Promise(() => {}, async () => {});
+=== RUN   TestBatch2Mutants/no-empty-pattern
+    batch2_test.go:157: listener omission caught on Node: case 10 line 90: port "fixed\tconst {} = x; const [] = y; function f({} = {}) {} function g({a:{}}) {}", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/011/control.ts:1:7"
+        Go context:
+          no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+        
+        range 12 17 noAsyncPromiseExecutor 			12 17
+        fixed	new Promise(async () => {}); new Promise(() => {}, async () => {});
+        case 10
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/011/control.ts:1:7
+          no-empty-pattern  This destructuring pattern is empty, so it binds nothing. It reads like an object literal but is a pattern, which is why the mistake survives review: `const {} = foo` declares no variables at all and only asserts that `foo` is not null. Name the properties being pulled out, or drop the destructuring.
+        
+        range 6 8 unexpectedObject 			6 8
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/011/control.ts:1:21
+    batch2_test.go:157: listener omission caught on native: case 10 line 90: port "fixed\tconst {} = x; const [] = y; function f({} = {}) {} function g({a:{}}) {}", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/011/control.ts:1:7"
+        Go context:
+          no-async-promise-executor  This Promise executor is `async`, which silently discards the errors it is there to catch. A rejection thrown inside an async executor becomes a rejection of the executor's own promise, which nothing holds, so the constructed Promise never settles and the error surfaces as an unhandled rejection instead of reaching the `reject` parameter. Needing `await` here usually means the `new Promise` wrapper is unnecessary.
+        
+        range 12 17 noAsyncPromiseExecutor 			12 17
+        fixed	new Promise(async () => {}); new Promise(() => {}, async () => {});
+        case 10
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/011/control.ts:1:7
+          no-empty-pattern  This destructuring pattern is empty, so it binds nothing. It reads like an object literal but is a pattern, which is why the mistake survives review: `const {} = foo` declares no variables at all and only asserts that `foo` is not null. Name the properties being pulled out, or drop the destructuring.
+        
+        range 6 8 unexpectedObject 			6 8
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/011/control.ts:1:21
+=== RUN   TestBatch2Mutants/no-constructor-return
+    batch2_test.go:157: listener omission caught on Node: case 12 line 122: port "fixed\tclass C { constructor(){ return 1; } method(){ return 2; } }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/012/control.ts:1:26"
+        Go context:
+          no-empty-pattern  This destructuring pattern is empty, so it binds nothing. It reads like an object literal but is a pattern, which is why the mistake survives review: `const {} = foo` declares no variables at all and only asserts that `foo` is not null. Name the properties being pulled out, or drop the destructuring.
+        
+        range 65 67 unexpectedObject 			65 67
+        fixed	const {} = x; const [] = y; function f({} = {}) {} function g({a:{}}) {}
+        case 12
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/012/control.ts:1:26
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 25 34 noConstructorReturn 			25 34
+        fixed	class C { constructor(){ return 1; } method(){ return 2; } }
+    batch2_test.go:157: listener omission caught on native: case 12 line 122: port "fixed\tclass C { constructor(){ return 1; } method(){ return 2; } }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/012/control.ts:1:26"
+        Go context:
+          no-empty-pattern  This destructuring pattern is empty, so it binds nothing. It reads like an object literal but is a pattern, which is why the mistake survives review: `const {} = foo` declares no variables at all and only asserts that `foo` is not null. Name the properties being pulled out, or drop the destructuring.
+        
+        range 65 67 unexpectedObject 			65 67
+        fixed	const {} = x; const [] = y; function f({} = {}) {} function g({a:{}}) {}
+        case 12
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/012/control.ts:1:26
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 25 34 noConstructorReturn 			25 34
+        fixed	class C { constructor(){ return 1; } method(){ return 2; } }
+=== RUN   TestBatch2Mutants/no-multi-assign
+    batch2_test.go:157: listener omission caught on Node: case 13 line 128: port "fixed\tlet a = (b = c); x = y = z; class C { field = value = 0; }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/013/control.ts:1:10"
+        Go context:
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 25 34 noConstructorReturn 			25 34
+        fixed	class C { constructor(){ return 1; } method(){ return 2; } }
+        case 13
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/013/control.ts:1:10
+          no-multi-assign  This chains one assignment inside another, so a single statement writes to two names and only one of them is where a reader looks. In `let a = b = c` the `b` is not declared at all, so a chain inside a declaration silently creates or writes an outer binding. Write each assignment on its own line.
+        
+        range 9 14 unexpectedChain 			9 14
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/013/control.ts:1:22
+    batch2_test.go:157: listener omission caught on native: case 13 line 128: port "fixed\tlet a = (b = c); x = y = z; class C { field = value = 0; }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/013/control.ts:1:10"
+        Go context:
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 25 34 noConstructorReturn 			25 34
+        fixed	class C { constructor(){ return 1; } method(){ return 2; } }
+        case 13
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/013/control.ts:1:10
+          no-multi-assign  This chains one assignment inside another, so a single statement writes to two names and only one of them is where a reader looks. In `let a = b = c` the `b` is not declared at all, so a chain inside a declaration silently creates or writes an outer binding. Write each assignment on its own line.
+        
+        range 9 14 unexpectedChain 			9 14
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/013/control.ts:1:22
+=== RUN   TestBatch2Mutants/no-useless-catch
+    batch2_test.go:157: listener omission caught on Node: case 15 line 152: port "fixed\ttry { f(); } catch(e) { throw (e as Error)!; } try { f(); } catch(e) { throw e; } finally { g(); }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/014/control.ts:1:1"
+        Go context:
+          no-multi-assign  This chains one assignment inside another, so a single statement writes to two names and only one of them is where a reader looks. In `let a = b = c` the `b` is not declared at all, so a chain inside a declaration silently creates or writes an outer binding. Write each assignment on its own line.
+        
+        range 46 55 unexpectedChain 			46 55
+        fixed	let a = (b = c); x = y = z; class C { field = value = 0; }
+        case 15
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/014/control.ts:1:1
+          no-useless-catch  This `catch` does nothing but rethrow what it caught, so the whole `try` has no effect: the error propagates exactly as it would with no `try` at all. It reads as if the error is being handled, which is the harm, since the next reader has to check. Delete the `try` and `catch` and keep the body, or handle the error here.
+        
+        range 0 46 unnecessaryCatch 			0 46
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/014/control.ts:1:61
+    batch2_test.go:157: listener omission caught on native: case 15 line 152: port "fixed\ttry { f(); } catch(e) { throw (e as Error)!; } try { f(); } catch(e) { throw e; } finally { g(); }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/014/control.ts:1:1"
+        Go context:
+          no-multi-assign  This chains one assignment inside another, so a single statement writes to two names and only one of them is where a reader looks. In `let a = b = c` the `b` is not declared at all, so a chain inside a declaration silently creates or writes an outer binding. Write each assignment on its own line.
+        
+        range 46 55 unexpectedChain 			46 55
+        fixed	let a = (b = c); x = y = z; class C { field = value = 0; }
+        case 15
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/014/control.ts:1:1
+          no-useless-catch  This `catch` does nothing but rethrow what it caught, so the whole `try` has no effect: the error propagates exactly as it would with no `try` at all. It reads as if the error is being handled, which is the harm, since the next reader has to check. Delete the `try` and `catch` and keep the body, or handle the error here.
+        
+        range 0 46 unnecessaryCatch 			0 46
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/014/control.ts:1:61
+=== RUN   TestBatch2Mutants/no-unsafe-finally
+    batch2_test.go:157: listener omission caught on Node: case 16 line 162: port "fixed\tfunction f(){ try { return 1; } finally { return 2; } } while(x) try {} finally { break; }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/015/control.ts:1:43"
+        Go context:
+          no-useless-catch  This `catch` does nothing but rethrow what it caught, so it changes nothing: the error propagates as it would without it, and the `finally` still runs either way. Delete the `catch` clause and keep `try`/`finally`, or handle the error here.
+        
+        range 60 81 unnecessaryCatchClause 			60 81
+        fixed	try { f(); } catch(e) { throw (e as Error)!; } try { f(); } catch(e) { throw e; } finally { g(); }
+        case 16
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/015/control.ts:1:43
+          no-unsafe-finally  A `return` inside `finally` overrides whatever the `try` or `catch` was about to do. JavaScript suspends a pending return or throw until the finally block completes, so this statement replaces the value that was on its way out and discards a pending exception entirely, with nothing at the call site to show an error was swallowed. Set a variable here and return it after the try statement instead.
+        
+        range 42 51 unsafeReturn 			42 51
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/015/control.ts:1:83
+    batch2_test.go:157: listener omission caught on native: case 16 line 162: port "fixed\tfunction f(){ try { return 1; } finally { return 2; } } while(x) try {} finally { break; }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/015/control.ts:1:43"
+        Go context:
+          no-useless-catch  This `catch` does nothing but rethrow what it caught, so it changes nothing: the error propagates as it would without it, and the `finally` still runs either way. Delete the `catch` clause and keep `try`/`finally`, or handle the error here.
+        
+        range 60 81 unnecessaryCatchClause 			60 81
+        fixed	try { f(); } catch(e) { throw (e as Error)!; } try { f(); } catch(e) { throw e; } finally { g(); }
+        case 16
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/015/control.ts:1:43
+          no-unsafe-finally  A `return` inside `finally` overrides whatever the `try` or `catch` was about to do. JavaScript suspends a pending return or throw until the finally block completes, so this statement replaces the value that was on its way out and discards a pending exception entirely, with nothing at the call site to show an error was swallowed. Set a variable here and return it after the try statement instead.
+        
+        range 42 51 unsafeReturn 			42 51
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/015/control.ts:1:83
+=== RUN   TestBatch2Mutants/no-useless-concat
+    batch2_test.go:157: listener omission caught on Node: case 17 line 172: port "fixed\tfoo + 'a' + ('b' + 'c'); 'a' +\\u000a'b'; `a${x}` + 'b';", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/016/control.ts:1:11"
+        Go context:
+          no-unsafe-finally  A `break` inside `finally` leaves the try statement before the pending return or throw can complete, so the value is discarded and the exception never surfaces. Execution continues after the loop as though nothing had failed.
+        
+        range 82 88 unsafeBreak 			82 88
+        fixed	function f(){ try { return 1; } finally { return 2; } } while(x) try {} finally { break; }
+        case 17
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/016/control.ts:1:11
+          no-useless-concat  These two literals are joined at runtime where the source could have written one literal. Nothing is computed between them, so the concatenation only adds an operator for a reader to follow and a chance for the two halves to drift apart.
+        
+        range 10 11 unexpectedConcat 			10 11
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/016/control.ts:1:18
+    batch2_test.go:157: listener omission caught on native: case 17 line 172: port "fixed\tfoo + 'a' + ('b' + 'c'); 'a' +\\u000a'b'; `a${x}` + 'b';", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/016/control.ts:1:11"
+        Go context:
+          no-unsafe-finally  A `break` inside `finally` leaves the try statement before the pending return or throw can complete, so the value is discarded and the exception never surfaces. Execution continues after the loop as though nothing had failed.
+        
+        range 82 88 unsafeBreak 			82 88
+        fixed	function f(){ try { return 1; } finally { return 2; } } while(x) try {} finally { break; }
+        case 17
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/016/control.ts:1:11
+          no-useless-concat  These two literals are joined at runtime where the source could have written one literal. Nothing is computed between them, so the concatenation only adds an operator for a reader to follow and a chance for the two halves to drift apart.
+        
+        range 10 11 unexpectedConcat 			10 11
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/016/control.ts:1:18
+=== RUN   TestBatch2Mutants/no-empty-character-class
+    batch2_test.go:157: listener omission caught on Node: case 18 line 186: port "fixed\tconst pattern=/[a[[]]]/v; const another=/x[]/; const good=/[\\u005c[]/;", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/017/control.ts:1:19"
+        Go context:
+          no-useless-concat  These two literals are joined at runtime where the source could have written one literal. Nothing is computed between them, so the concatenation only adds an operator for a reader to follow and a chance for the two halves to drift apart.
+        
+        range 44 45 unexpectedConcat 			44 45
+        fixed	foo + 'a' + ('b' + 'c'); 'a' +\u000a'b'; `a${x}` + 'b';
+        case 18
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/017/control.ts:1:19
+          no-empty-character-class  This character class is empty, so it matches nothing and makes the whole pattern unmatchable. Nobody writes an unmatchable pattern on purpose, which is why this is almost always a class whose contents were deleted or never typed. It is worth reporting because the failure is silent: the regex compiles, the code runs, and the branch behind the match simply never fires.
+        
+        range 18 20 unexpectedEmptyCharacterClass 			18 20
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/017/control.ts:1:43
+    batch2_test.go:157: listener omission caught on native: case 18 line 186: port "fixed\tconst pattern=/[a[[]]]/v; const another=/x[]/; const good=/[\\u005c[]/;", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/017/control.ts:1:19"
+        Go context:
+          no-useless-concat  These two literals are joined at runtime where the source could have written one literal. Nothing is computed between them, so the concatenation only adds an operator for a reader to follow and a chance for the two halves to drift apart.
+        
+        range 44 45 unexpectedConcat 			44 45
+        fixed	foo + 'a' + ('b' + 'c'); 'a' +\u000a'b'; `a${x}` + 'b';
+        case 18
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/017/control.ts:1:19
+          no-empty-character-class  This character class is empty, so it matches nothing and makes the whole pattern unmatchable. Nobody writes an unmatchable pattern on purpose, which is why this is almost always a class whose contents were deleted or never typed. It is worth reporting because the failure is silent: the regex compiles, the code runs, and the branch behind the match simply never fires.
+        
+        range 18 20 unexpectedEmptyCharacterClass 			18 20
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/017/control.ts:1:43
+=== RUN   TestBatch2Mutants/no-ex-assign
+    batch2_test.go:157: listener omission caught on Node: case 19 line 196: port "fixed\ttry { f(); } catch(e) { e = x; e++; ++(e); e.prop = x; }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/018/control.ts:1:25"
+        Go context:
+          no-empty-character-class  This character class is empty, so it matches nothing and makes the whole pattern unmatchable. Nobody writes an unmatchable pattern on purpose, which is why this is almost always a class whose contents were deleted or never typed. It is worth reporting because the failure is silent: the regex compiles, the code runs, and the branch behind the match simply never fires.
+        
+        range 42 44 unexpectedEmptyCharacterClass 			42 44
+        fixed	const pattern=/[a[[]]]/v; const another=/x[]/; const good=/[\u005c[]/;
+        case 19
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/018/control.ts:1:25
+          no-ex-assign  This assigns to the caught exception, which discards the only reference to what actually went wrong. Anything after this point in the handler reports the new value rather than the error, so a rethrow rethrows the wrong thing and a log line describes something that never happened. The usual intent is a second binding: declare one instead of overwriting the parameter.
+        
+        range 24 25 unexpectedExceptionAssignment 			24 25
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/018/control.ts:1:32
+    batch2_test.go:157: listener omission caught on native: case 19 line 196: port "fixed\ttry { f(); } catch(e) { e = x; e++; ++(e); e.prop = x; }", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/018/control.ts:1:25"
+        Go context:
+          no-empty-character-class  This character class is empty, so it matches nothing and makes the whole pattern unmatchable. Nobody writes an unmatchable pattern on purpose, which is why this is almost always a class whose contents were deleted or never typed. It is worth reporting because the failure is silent: the regex compiles, the code runs, and the branch behind the match simply never fires.
+        
+        range 42 44 unexpectedEmptyCharacterClass 			42 44
+        fixed	const pattern=/[a[[]]]/v; const another=/x[]/; const good=/[\u005c[]/;
+        case 19
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/018/control.ts:1:25
+          no-ex-assign  This assigns to the caught exception, which discards the only reference to what actually went wrong. Anything after this point in the handler reports the new value rather than the error, so a rethrow rethrows the wrong thing and a log line describes something that never happened. The usual intent is a second binding: declare one instead of overwriting the parameter.
+        
+        range 24 25 unexpectedExceptionAssignment 			24 25
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/018/control.ts:1:32
+=== RUN   TestBatch2Mutants/@typescript-eslint/no-unnecessary-type-constraint
+    batch2_test.go:157: listener omission caught on Node: case 20 line 210: port "fixed\tfunction f<T extends any>(){} const g=<T extends unknown>()=>{};", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/019/control.ts:1:12"
+        Go context:
+          no-ex-assign  This assigns to the caught exception, which discards the only reference to what actually went wrong. Anything after this point in the handler reports the new value rather than the error, so a rethrow rethrows the wrong thing and a log line describes something that never happened. The usual intent is a second binding: declare one instead of overwriting the parameter.
+        
+        range 39 40 unexpectedExceptionAssignment 			39 40
+        fixed	try { f(); } catch(e) { e = x; e++; ++(e); e.prop = x; }
+        case 20
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/019/control.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint suggestion		Remove the constraint that does nothing.	12 24
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/019/control.ts:1:40
+    batch2_test.go:157: listener omission caught on native: case 20 line 210: port "fixed\tfunction f<T extends any>(){} const g=<T extends unknown>()=>{};", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/019/control.ts:1:12"
+        Go context:
+          no-ex-assign  This assigns to the caught exception, which discards the only reference to what actually went wrong. Anything after this point in the handler reports the new value rather than the error, so a rethrow rethrows the wrong thing and a log line describes something that never happened. The usual intent is a second binding: declare one instead of overwriting the parameter.
+        
+        range 39 40 unexpectedExceptionAssignment 			39 40
+        fixed	try { f(); } catch(e) { e = x; e++; ++(e); e.prop = x; }
+        case 20
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/019/control.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint suggestion		Remove the constraint that does nothing.	12 24
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/019/control.ts:1:40
+=== RUN   TestBatch2Mutants/@typescript-eslint/prefer-namespace-keyword
+    batch2_test.go:157: listener omission caught on Node: case 21 line 220: port "fixed\texport declare /* module */ module A.B.module { module C {} } namespace D {}", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/020/control.ts:1:8"
+        Go context:
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 39 40 noUnnecessaryTypeConstraint suggestion		Remove the constraint that does nothing.	40 56
+        fixed	function f<T extends any>(){} const g=<T extends unknown>()=>{};
+        case 21
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/020/control.ts:1:8
+          @typescript-eslint/prefer-namespace-keyword  This declares a namespace with the `module` keyword, which TypeScript has deprecated and plans to make a parse error. It means the same thing as `namespace` and reads as an ECMAScript module, which it is not. Write `namespace` instead.
+        
+        range 7 61 preferNamespaceKeyword fix	namespace		28 34
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/020/control.ts:1:49
+    batch2_test.go:157: listener omission caught on native: case 21 line 220: port "fixed\texport declare /* module */ module A.B.module { module C {} } namespace D {}", Go "/tmp/adamic-gate/TestBatch2Mutants3908975588/020/control.ts:1:8"
+        Go context:
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 39 40 noUnnecessaryTypeConstraint suggestion		Remove the constraint that does nothing.	40 56
+        fixed	function f<T extends any>(){} const g=<T extends unknown>()=>{};
+        case 21
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/020/control.ts:1:8
+          @typescript-eslint/prefer-namespace-keyword  This declares a namespace with the `module` keyword, which TypeScript has deprecated and plans to make a parse error. It means the same thing as `namespace` and reads as an ECMAScript module, which it is not. Write `namespace` instead.
+        
+        range 7 61 preferNamespaceKeyword fix	namespace		28 34
+        /tmp/adamic-gate/TestBatch2Mutants3908975588/020/control.ts:1:49
+--- PASS: TestBatch2Mutants (798.47s)
+    --- PASS: TestBatch2Mutants/no-caller (31.08s)
+    --- PASS: TestBatch2Mutants/no-eq-null (31.46s)
+    --- PASS: TestBatch2Mutants/no-empty-static-block (29.99s)
+    --- PASS: TestBatch2Mutants/no-proto (39.47s)
+    --- PASS: TestBatch2Mutants/no-script-url (38.42s)
+    --- PASS: TestBatch2Mutants/no-self-compare (55.54s)
+    --- PASS: TestBatch2Mutants/no-delete-var (34.81s)
+    --- PASS: TestBatch2Mutants/no-iterator (43.16s)
+    --- PASS: TestBatch2Mutants/no-compare-neg-zero (49.36s)
+    --- PASS: TestBatch2Mutants/no-async-promise-executor (34.05s)
+    --- PASS: TestBatch2Mutants/no-empty-pattern (33.31s)
+    --- PASS: TestBatch2Mutants/no-constructor-return (29.13s)
+    --- PASS: TestBatch2Mutants/no-multi-assign (37.45s)
+    --- PASS: TestBatch2Mutants/no-useless-catch (33.86s)
+    --- PASS: TestBatch2Mutants/no-unsafe-finally (34.07s)
+    --- PASS: TestBatch2Mutants/no-useless-concat (41.49s)
+    --- PASS: TestBatch2Mutants/no-empty-character-class (43.18s)
+    --- PASS: TestBatch2Mutants/no-ex-assign (49.81s)
+    --- PASS: TestBatch2Mutants/@typescript-eslint/no-unnecessary-type-constraint (53.77s)
+    --- PASS: TestBatch2Mutants/@typescript-eslint/prefer-namespace-keyword (50.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	798.483s

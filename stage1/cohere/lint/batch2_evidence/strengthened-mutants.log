@@ -1,0 +1,56 @@
+=== RUN   TestBatch2Mutants
+=== RUN   TestBatch2Mutants/no-self-compare
+    batch2_test.go:165: listener omission caught on Node: case 5 line 52: port "fixed\tfoo.bar() >= foo.bar (); x in x; x === y; /[/*]/ === /[/*]/; [] == [ ];", Go "/tmp/adamic-gate/TestBatch2Mutants642495083/006/control.ts:1:1"
+        Go context:
+          no-script-url  A `javascript:` URL runs whatever follows the colon as code, so this string is an eval that happens to be spelled as a link. Anything that can reach the value that builds it can execute in the page, and a content security policy that blocks inline script blocks this too, so it tends to fail in production rather than in review. A real handler does the same work without turning a string into a program.
+        
+        range 16 29 unexpectedScriptURL 			16 29
+        fixed	'JAVASCRIPT:x'; `javascript:`; tag`javascript:`; 'xjavascript:';
+        case 5
+        /tmp/adamic-gate/TestBatch2Mutants642495083/006/control.ts:1:1
+          no-self-compare  Both sides of this comparison are written identically, so the answer does not depend on the data: it is true, or it is false, every time. The two shapes this is almost always hiding are a typo in one operand, and a deliberate `x !== x` reaching for a NaN check, which `Number.isNaN(x)` says out loud instead.
+        
+        range 0 23 comparingToSelf 			0 23
+        /tmp/adamic-gate/TestBatch2Mutants642495083/006/control.ts:1:43
+    batch2_test.go:165: listener omission caught on native: case 5 line 52: port "fixed\tfoo.bar() >= foo.bar (); x in x; x === y; /[/*]/ === /[/*]/; [] == [ ];", Go "/tmp/adamic-gate/TestBatch2Mutants642495083/006/control.ts:1:1"
+        Go context:
+          no-script-url  A `javascript:` URL runs whatever follows the colon as code, so this string is an eval that happens to be spelled as a link. Anything that can reach the value that builds it can execute in the page, and a content security policy that blocks inline script blocks this too, so it tends to fail in production rather than in review. A real handler does the same work without turning a string into a program.
+        
+        range 16 29 unexpectedScriptURL 			16 29
+        fixed	'JAVASCRIPT:x'; `javascript:`; tag`javascript:`; 'xjavascript:';
+        case 5
+        /tmp/adamic-gate/TestBatch2Mutants642495083/006/control.ts:1:1
+          no-self-compare  Both sides of this comparison are written identically, so the answer does not depend on the data: it is true, or it is false, every time. The two shapes this is almost always hiding are a typo in one operand, and a deliberate `x !== x` reaching for a NaN check, which `Number.isNaN(x)` says out loud instead.
+        
+        range 0 23 comparingToSelf 			0 23
+        /tmp/adamic-gate/TestBatch2Mutants642495083/006/control.ts:1:43
+=== RUN   TestBatch2Mutants/no-constructor-return
+    batch2_test.go:165: listener omission caught on Node: case 12 line 130: port "fixed\tclass C { constructor(){ return 1; } method(){ return 2; } \"constructor\"(){ return 3; } *constructor(){ return 4; } static constructor(){ return 5; } }", Go "/tmp/adamic-gate/TestBatch2Mutants642495083/012/control.ts:1:26"
+        Go context:
+          no-empty-pattern  This destructuring pattern is empty, so it binds nothing. It reads like an object literal but is a pattern, which is why the mistake survives review: `const {} = foo` declares no variables at all and only asserts that `foo` is not null. Name the properties being pulled out, or drop the destructuring.
+        
+        range 65 67 unexpectedObject 			65 67
+        fixed	const {} = x; const [] = y; function f({} = {}) {} function g({a:{}}) {}
+        case 12
+        /tmp/adamic-gate/TestBatch2Mutants642495083/012/control.ts:1:26
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 25 34 noConstructorReturn 			25 34
+        /tmp/adamic-gate/TestBatch2Mutants642495083/012/control.ts:1:77
+    batch2_test.go:165: listener omission caught on native: case 12 line 130: port "fixed\tclass C { constructor(){ return 1; } method(){ return 2; } \"constructor\"(){ return 3; } *constructor(){ return 4; } static constructor(){ return 5; } }", Go "/tmp/adamic-gate/TestBatch2Mutants642495083/012/control.ts:1:26"
+        Go context:
+          no-empty-pattern  This destructuring pattern is empty, so it binds nothing. It reads like an object literal but is a pattern, which is why the mistake survives review: `const {} = foo` declares no variables at all and only asserts that `foo` is not null. Name the properties being pulled out, or drop the destructuring.
+        
+        range 65 67 unexpectedObject 			65 67
+        fixed	const {} = x; const [] = y; function f({} = {}) {} function g({a:{}}) {}
+        case 12
+        /tmp/adamic-gate/TestBatch2Mutants642495083/012/control.ts:1:26
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 25 34 noConstructorReturn 			25 34
+        /tmp/adamic-gate/TestBatch2Mutants642495083/012/control.ts:1:77
+--- PASS: TestBatch2Mutants (104.72s)
+    --- PASS: TestBatch2Mutants/no-self-compare (43.73s)
+    --- PASS: TestBatch2Mutants/no-constructor-return (56.72s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	104.732s
