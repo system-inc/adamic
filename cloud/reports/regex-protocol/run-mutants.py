@@ -9,6 +9,7 @@ root = pathlib.Path(sys.argv[1]).resolve()
 if root == pathlib.Path.cwd().resolve():
     raise SystemExit('Use an isolated checkout; the live survey must not see mutants.')
 mutants = [
+    ('unhandled-diagnostic-admitted', 'internal/lower/regexp_diagnostics.go', 'if l.regexpDiagnosticLeaves(l.result.Main, functions, closures) {', 'if false && l.regexpDiagnosticLeaves(l.result.Main, functions, closures) {', './internal/lower', '^TestRegExpUncaughtDiagnosticsRefuse$', 'unhandled parser diagnostic must refuse'),
     ('syntax-error-is-type-error', 'internal/native/emit_expressions.go', 'adamic_thrown = adamic_builtin_error_new(2,', 'adamic_thrown = adamic_builtin_error_new(1,', './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors', 'stdout differs'),
     ('constructor-is-ancestry', 'internal/native/runtime/exceptions.c', '(!exact && kind == 0)', '(kind == 0)', './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors', 'stdout differs'),
     ('non-global-matchall-repeats', 'internal/native/runtime/regexp.c', 'else if (!(regex_program(regex)->flags & 8))', 'else if (false)', './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol', 'stdout differs'),
