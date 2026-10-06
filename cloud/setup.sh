@@ -113,7 +113,11 @@ export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$P
 export GOTOOLCHAIN=auto
 export TMPDIR=$gate
 ENV
-grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
+if [ "$platform" = darwin ]; then
+	echo "setup: add this to your shell: source $tools/env.sh"
+else
+	grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
+fi
 # shellcheck disable=SC1091
 source "$tools/env.sh"
 
