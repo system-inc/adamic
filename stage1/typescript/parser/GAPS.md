@@ -4,6 +4,10 @@ The port follows `cohere/TypeScript/tsc/internal/parser/parser.go`, using the
 existing Adamic scanner. Node runs these same TS files; an independently built
 Go overlay runs the unmodified typescript-go parser.
 
+The green-step and selected-node measurement sections retain the expression
+slice's history. Current whole-file scope appears in the final continuation
+section and [WHOLE_REPORT.md](WHOLE_REPORT.md).
+
 ## 1. Strong AST parent and child pointers are cycle-capable
 
 Go's `finishNode` gives every child a strong Parent pointer. Go's tracing
@@ -174,7 +178,7 @@ finishes successfully on Node and sanitized native and prints exactly the same
 AST bytes as Go in tree mode, but reports 0 nodes instead of Go's 18 in count
 mode. Only the count check catches it. See `validation/count-mutant.log`.
 
-## Whole-file continuation: function values with optional parameters
+## 5. Function values with optional parameters
 
 Moving declarations into a separate module exposed another stage-0 limit:
 function values with optional parameters report `NotYet: a function value with
