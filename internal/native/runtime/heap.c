@@ -285,19 +285,26 @@ static void list(void *value) {
 	freeing[freeing_count++] = value;
 }
 
-// let_go drops one reference and lists the value if that was its last.
-static void let_go(void *value) {
+// drop_reference never touches the freeing queue unless the last reference went away.
+static bool drop_reference(void *value) {
 	adamic_heap *heap = value;
-	if (heap == NULL) { return; }
+	if (heap == NULL) { return false; }
 	size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 	if ((intptr_t)count > 0) {
 		heap->references = count - 1;
-		if (count == 1) { list(value); }
-	} else if (count != 0 && count != ADAMIC_SHARED &&
+		return count == 1;
+	}
+	if (count != 0 && count != ADAMIC_SHARED &&
 		__atomic_fetch_sub(&heap->references, 1, __ATOMIC_RELEASE) == ADAMIC_SHARED + 1) {
 		__atomic_thread_fence(__ATOMIC_ACQUIRE);
-		list(value);
+		return true;
 	}
+	return false;
+}
+
+// Children are queued for an outer drain, never freed recursively.
+static void let_go(void *value) {
+	if (drop_reference(value)) { list(value); }
 }
 
 static void free_one(void *value) {
@@ -361,19 +368,18 @@ static void free_one(void *value) {
 	ADAMIC_COUNT_FREE();
 }
 
+// Keep the draining frame out of the common release path.
+__attribute__((noinline)) static void release_last(void *value) {
+	list(value);
+	if (draining) { return; }
+	draining = true;
+	while (freeing_count > 0) { free_one(freeing[--freeing_count]); }
+	draining = false;
+}
+
 void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
-	let_go(value);
-	if (freeing_count == 0 || draining) {
-		// Usually nothing reached zero. Avoid toggling thread-local draining on every release.
-		// An outer release may already be working through the list.
-		return;
-	}
-	draining = true;
-	while (freeing_count > 0) {
-		free_one(freeing[--freeing_count]);
-	}
-	draining = false;
+	if (drop_reference(value)) { release_last(value); }
 }
 
 void adamic_heap_thread_end(void) {
