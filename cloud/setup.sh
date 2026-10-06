@@ -32,7 +32,7 @@ export GOTOOLCHAIN=auto
 realGo() { "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
 if ! { command -v go > /dev/null 2>&1 && realGo go; } && [ ! -x "$tools/go/bin/go" ]; then
 	goVersion=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -n 1)
-	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | tar -xz -C "$tools"
+	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | tar --no-same-owner -xz -C "$tools"
 fi
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
 (cd "$repository" && go version)
@@ -60,7 +60,7 @@ done
 if [ -z "$clang" ]; then
 	llvmVersion=${ADAMIC_LLVM_VERSION:-20.1.8}
 	mkdir -p "$tools/llvm"
-	curl -fsSL "https://github.com/llvm/llvm-project/releases/download/llvmorg-$llvmVersion/LLVM-$llvmVersion-Linux-$llvmArchitecture.tar.xz" | tar -xJ -C "$tools/llvm" --strip-components 1
+	curl -fsSL "https://github.com/llvm/llvm-project/releases/download/llvmorg-$llvmVersion/LLVM-$llvmVersion-Linux-$llvmArchitecture.tar.xz" | tar --no-same-owner -xJ -C "$tools/llvm" --strip-components 1
 	saneClang "$tools/llvm/bin/clang" || { echo "setup: LLVM $llvmVersion's sanitizers don't work here" >&2 && exit 1; }
 	clang=$tools/llvm/bin/clang
 fi
@@ -84,7 +84,7 @@ if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
 		install -m 755 "$existing" "$tools/bin/node"
 	else
 		nodeVersion=$(curl -fsSL https://nodejs.org/dist/index.json | python3 -c 'import json, sys; print(next(r["version"] for r in json.load(sys.stdin) if r["version"].startswith("v24.")))')
-		curl -fsSL "https://nodejs.org/dist/$nodeVersion/node-$nodeVersion-linux-$nodeArchitecture.tar.xz" | tar -xJ -C "$tools" --strip-components 2 --wildcards '*/bin/node'
+		curl -fsSL "https://nodejs.org/dist/$nodeVersion/node-$nodeVersion-linux-$nodeArchitecture.tar.xz" | tar --no-same-owner -xJ -C "$tools" --strip-components 2 --wildcards '*/bin/node'
 		mv "$tools/node" "$tools/bin/node"
 	fi
 fi
