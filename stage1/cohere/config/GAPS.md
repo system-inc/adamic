@@ -2,7 +2,7 @@ Strict CohereSettings and JSONC tsconfig loaders are implemented in Adamic.
 Real Adamic, cohere and TypeScript project outputs are compared byte for byte with Go.
 Settings defaults, extends, provenance, per-file overrides and source enumeration are exercised.
 Three loader mutants join three discovery mutants and twelve formatter mutants.
-Source-contributing directory links and advanced tsconfig diagnostics remain explicit gaps.
+Directory-link parity is closed; advanced tsconfig diagnostics remain explicit gaps.
 
 ## What is built
 
@@ -155,8 +155,7 @@ Logs: /tmp/stage1-config-test-final.log and /tmp/stage1-config-setup.log.
 Further validation commands and results are recorded in REPORT.md.
 
 Not covered: command-level ownership; full arbitrary tsconfig diagnostics and
-compiler-option validation; advanced package exports resolution; source-contributing
-directory links without realpath; published-version admissibility (the pinned Go
+compiler-option validation; advanced package exports resolution; published-version admissibility (the pinned Go
 oracle is a dev build); relative loader entry paths; permission/race errors; non-UTF-8 names; macOS or Windows; inherited .gitignore
 read failures the disk adapter cannot faithfully represent; arbitrary filesystem
 errno (the runtime collapses unknown errors). Unknown listing errors are explicitly
@@ -191,15 +190,23 @@ resolution are not claimed by this port. Ordinary file symlinks are followed.
 
 ### Directory-link proving program
 
-`gaps/directory_link.ts` and TestDirectoryLinkGap create a-alias -> z-target with
-a.ts. Go emits a-alias/a.ts once and omits the duplicate target path. The port emits
-`stage1 tsconfig directory symlink needs realpath: PATH/a-alias` on native, Node and
-backend. Adamic's current typed filesystem API exposes link status but no canonical
-path. A matching directory link that provably has no source files or subdirectories
-can be skipped without changing output; this is enough for the existing Adamic
-walking fixture. Source-contributing links are never silently treated as empty.
-An isolated runtime proposal is prepared for review; compiler edits outside this
-unit's territory require the scope approval requested from the user.
+`gaps/directory_link.ts` now runs under TestDirectoryLinksAgreeWithGoCohere.
+The fixture creates a-alias -> z-target with a.ts, a backlink to the root (a cycle),
+and a dangling link. Go and all three Adamic execution paths emit a-alias/a.ts once
+and omit the duplicate target spelling. The previous explicit realpath gap is closed.
+
+The user authorized the runtime proposal as a separate commit. realPath is now a
+typed filesystem primitive with native ownership and JavaScript-backend support.
+Canonical directory keys stop duplicate visits and cycles; returned file paths keep
+the first alias spelling. The direct Node fs.realpathSync fixture covers a directory
+symlink, a dangling link, an empty path, lexical dangling/.. and a file reached through
+a directory alias. Native normalizes the input before POSIX realpath, matching the
+observed distinction between Node's plain and native realpath variants. Two clean
+executable mutants corrupt successful canonical paths and dangling-link errors;
+Node stdout comparison catches both, independently of sanitizers and leak checks.
+
+This closes the measured directory-link cases, not every platform or unusual errno.
+See REPORT.md for commands, outputs, counts and remaining coverage.
 
 ### Loader comparisons and mutants
 
@@ -228,3 +235,9 @@ Final result: 143 settings, 130 tsconfigs and 1,232 source-file records agree ac
 Go, native, Node and backend; final package PASS 124.264 s. Tsconfig-only harness:
 Go 63,542 files/s; native 15,800 to 16,722 files/s. Startup/output boundaries differ;
 see REPORT.md. All three loader and three discovery executable mutants were caught.
+
+Authorized realpath continuation: directory aliases, cycles and dangling links now
+match Go; direct Node canonical-path and error mutants are caught. Final config
+package PASS 120.172 s. Scoped compiler packages, seven uncached input fixtures,
+full allocation counts, ASan/UBSan, LeakSanitizer and vet pass; no full repository
+gate was run. Latest source harness: Go 72,688 files/s, native 15,249 to 16,612.

@@ -1,4 +1,4 @@
-// directory.c: the file system a walk needs, opened in 0.2: readDirectory and fileStatus.
+// directory.c: the file system a walk needs: readDirectory, fileStatus and realPath.
 //
 // Each answers as Node does on the same machine. readdirSync's names come from libuv's scandir,
 // sorted by strcmp on the raw bytes, without . and .., and are decoded as UTF-8 after the sort, so
@@ -7,6 +7,7 @@
 // says whether the path itself is one.
 
 // lstat, S_ISLNK and the directory calls are POSIX's, which strict C11 doesn't show without asking.
+#define _XOPEN_SOURCE 700
 #define _POSIX_C_SOURCE 200809L
 
 #include "adamic.h"
@@ -16,6 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 static const char *const ok_listing_names[] = {"kind", "names"};
 static const char *const ok_status_names[] = {"kind", "type", "size", "symbolicLink"};
@@ -157,5 +159,67 @@ adamic_object *adamic_file_status(const adamic_string *path) {
 	result->slots[1].reference = S_ISREG(status.st_mode) ? &file_type : S_ISDIR(status.st_mode) ? &directory_type : &other_type;
 	result->slots[2].number = (double)status.st_size;
 	result->slots[3].boolean = symbolic;
+	return result;
+}
+
+// fs.realpathSync resolves the input lexically before following links. In particular,
+// an empty path names cwd, and dangling/.. does not inspect the dangling component.
+static char *real_path_input(char *name) {
+	if (name[0] != '/') {
+		char *cwd = getcwd(NULL, 0);
+		if (cwd == NULL) { int error = errno; free(name); errno = error; return NULL; }
+		size_t length = strlen(cwd), rest = strlen(name);
+		char *absolute = malloc(length + rest + 2);
+		if (absolute == NULL) {
+			static const char message[] = "out of memory";
+			adamic_panic(message, sizeof message - 1);
+		}
+		memcpy(absolute, cwd, length);
+		absolute[length] = '/';
+		memcpy(absolute + length + 1, name, rest + 1);
+		free(cwd);
+		free(name);
+		name = absolute;
+	}
+	size_t output = 1;
+	char *cursor = name;
+	while (*cursor != '\0') {
+		while (*cursor == '/') { cursor++; }
+		char *segment = cursor;
+		while (*cursor != '\0' && *cursor != '/') { cursor++; }
+		size_t length = (size_t)(cursor - segment);
+		if (length == 0 || (length == 1 && segment[0] == '.')) { continue; }
+		if (length == 2 && segment[0] == '.' && segment[1] == '.') {
+			while (output > 1 && name[output - 1] != '/') { output--; }
+			if (output > 1) { output--; }
+			continue;
+		}
+		if (output > 1) { name[output++] = '/'; }
+		memmove(name + output, segment, length);
+		output += length;
+	}
+	name[0] = '/';
+	name[output] = '\0';
+	return name;
+}
+
+// realpath allocates the canonical spelling. Its bytes become an owned Adamic string.
+adamic_object *adamic_real_path(const adamic_string *path) {
+	static const char prefix[] = "cannot resolve path ";
+	static const char *const names[] = {"kind", "path"};
+	static const adamic_shape shape = {2, names, two_references, NULL};
+	adamic_output_flush();
+	char *name = adamic_path_bytes(path);
+	if (name == NULL) { return failure(prefix, sizeof prefix - 1, path, 0, false); }
+	name = real_path_input(name);
+	if (name == NULL) { return failure(prefix, sizeof prefix - 1, path, errno, false); }
+	char *resolved = realpath(name, NULL);
+	int error = errno;
+	free(name);
+	if (resolved == NULL) { return failure(prefix, sizeof prefix - 1, path, error, false); }
+	adamic_object *result = adamic_object_new(&shape);
+	result->slots[0].reference = &ok_kind;
+	result->slots[1].reference = adamic_decode_utf8((const unsigned char *)resolved, strlen(resolved));
+	free(resolved);
 	return result;
 }

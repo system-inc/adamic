@@ -2,7 +2,7 @@ Strict CohereSettings and JSONC tsconfig loaders are implemented in stage 1.
 Go production oracles compare canonical settings and ordered files across three backends.
 Discovery reads inherited lint ignores from the Adamic settings loader.
 Three new loader mutants supplement the discovery and formatter mutation checks.
-Remaining directory-link and advanced tsconfig gaps are documented and proved.
+Directory-link parity is closed; advanced tsconfig gaps remain documented.
 
 ## Original discovery and formatter implementation (commit 0272907)
 
@@ -90,7 +90,7 @@ Exact mutant discrepancies from the final log (temporary prefixes retained):
     --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_link_to_nothing_taken_for_nothing (80.81s)
 ```
 
-## Strict settings and JSONC loader continuation
+## Strict settings and JSONC loader continuation (commit 0918aa4, before realpath)
 
 The user confirmed the upstream asymmetry: CohereSettings.json remains strict JSON
 with Go's exact errors; tsconfig.json remains JSONC. GAPS.md records it as an upstream
@@ -202,3 +202,79 @@ expansion, unusual errno, non-UTF-8 filenames and non-Linux platforms are not fu
 covered. No full arbitrary configuration parity claim is made beyond the measured
 real-project and generated corpora. See GAPS.md for exact proving programs and
 upstream observations. No requested code is sent to an external resolver.
+
+## Authorized realpath continuation
+
+The user authorized applying the proposal as its own commit. It adds realPath to the
+typed prelude, IR, input lowering, freshness analysis, native expression emission,
+C filesystem runtime and JavaScript backend/adapter. No protected compiler file was
+changed. Canonical visited-directory keys close the directory-link enumeration gap;
+file output retains the first alias spelling as Go does. The source/target alias,
+backlink cycle and dangling-link fixture emits only a-alias/a.ts on Go, native, Node
+source and backend. Existing project discovery still skips directory links, as Go's
+separate discovery walk does; tsconfig enumeration follows them.
+
+`internal/oracle/testdata/realpath.a` is registered as an input fixture. The dedicated
+TestRealPathAgreesWithNode compares its three execution paths to direct Node
+fs.realpathSync, independently of the Adamic JavaScript adapter. Cases include a
+linked directory, dangling link, empty path, dangling/.. normalization and a file
+through the directory link. Node prints a canonical inner-directory path, the exact
+`Error cannot resolve path walking/dangling: no such file`, cwd for the empty path,
+walking for dangling/.. and walking/B.txt for the file case. Observed plain Node
+fs.realpathSync normalizes empty/dot-segment inputs before filesystem traversal;
+its native variant instead returns ENOENT for empty and dangling/.. inputs. Native
+Adamic now performs lexical input normalization before POSIX realpath.
+
+Two mutants alter only successful canonical paths or only dangling-link errors by
+appending /wrong. Both compile under -Werror, exit 0 with empty stderr and have no
+ASan/UBSan or LeakSanitizer finding. Each is caught by stdout comparison with direct
+Node. The first targeted run passed 4.829 s (two basic cases); expanded final direct
+fixture passed 5.108 s before the combined uncached run. No compilation failure
+counts as a killed mutant. Full configuration regression passed 125.135 s, including
+143 settings, 130 tsconfigs, 1,232 source records and six loader/discovery mutants.
+The enhanced link/cycle/dangling fixture is also run separately below.
+
+Historical proposal: testdata/realpath.patch records the original reviewed diff.
+It has been applied and superseded by the tested lexical normalization and new
+fixtures; do not apply it again. testdata/REALPATH.md records this transition.
+Final commands and outputs follow after the running checks complete.
+
+Final runtime checks (test output redirected to logs, never piped):
+
+- `ADAMIC_GATE_UNCACHED=1 go test -v -count=1 -timeout 30m ./internal/oracle -run '^(TestInputAgreesWithNode|TestCountsAreRecorded|TestRealPathAgreesWithNode)$' -args -update-counts > /tmp/stage1-realpath-oracle-final.log 2>&1`: PASS 50.631 s. Seven uncached input fixtures, full recorded-count corpus and both realpath mutants passed. The new row records allocations/frees 16/16, retains/releases 16/22, peak live values 4 and values freed in regions 0; all older rows are unchanged.
+- `go test -v -count=1 -timeout 30m ./stage1/cohere/config -run '^TestDirectoryLinksAgreeWithGoCohere$' > /tmp/stage1-realpath-links-final.log 2>&1`: PASS 17.299 s. Go emits a-alias/a.ts once despite the backlink cycle and dangling link; native ASan/UBSan, Node and backend match.
+- `go test -v -count=1 -timeout 30m ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/fresh ./internal/flow > /tmp/stage1-realpath-compiler.log 2>&1`: PASS. Package times: load 1.399 s, lower 29.290 s, native 121.184 s, fresh 42.288 s, flow 62.548 s. JavaScript package has no tests; its backend is exercised by the oracle comparisons.
+- `go vet ./... > /tmp/stage1-realpath-vet.log 2>&1`, `gofmt -l cmd internal stage1/cohere/config > /tmp/stage1-realpath-gofmt.log`, and `git diff --check`: PASS, empty outputs.
+
+The full repository gate was not run. Affected compiler packages, complete allocation
+count corpus, uncached input oracle, direct Node mutants and configuration tests are
+the scoped evidence. Advanced tsconfig diagnostic/option validation, package exports,
+command-level ownership, unusual filesystem errors, deleted cwd, symlink targets
+containing unusual dot segments and non-Linux platforms remain outside the measured
+coverage. The directory-link refusal is removed, not merely hidden in the report.
+The prior branch commits 0272907 and 0918aa4 remain intact; this authorized runtime
+continuation is a separate commit. Push is to codex/stage1-config, with no PR.
+
+Final complete configuration command against the finished runtime:
+
+```
+ADAMIC_CONFIG_TIMING=1 go test -v -count=1 -timeout 30m ./stage1/cohere/config > /tmp/stage1-realpath-config-final.log 2>&1
+PASS
+ok github.com/system-inc/adamic/stage1/cohere/config 120.172s
+132 discovery roots, 637 markers, 288 lint glob queries
+143 settings results, 130 tsconfigs, 1,232 source-file records
+Directory alias/cycle/dangling parity: PASS
+Three loader and three discovery executable mutants: caught on native and Node
+Native ASan/UBSan, Node source, JavaScript backend, LeakSanitizer: PASS
+```
+
+Source-file harness timing with realpath applied: Go 0.016949 s, 72,688 files/s;
+native 0.074162/0.074167/0.080792 s, 16,612/16,611/15,249 files/s. Every timed
+output matches Go bytes. The earlier caveats still apply: overlapping project
+records, native process startup/output capture and Go's already-started test process.
+The final loader mutants retain the exact comments, no-shadow inherited-options
+and excluded src/b.ts catches recorded above. Two additional Node realpath mutants
+bring the executable unit mutation evidence to twenty, excluding the imported
+matcher package's independent suite. git diff --check passes; protected files remain
+unchanged. The authorized runtime commit is reported in the final summary and git
+history, separately from 0918aa4.
