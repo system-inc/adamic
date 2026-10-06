@@ -836,6 +836,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if target.Kind == ast.KindArrayLiteralExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
 		return l.destructuringAssignment(target, binary.Right)
 	}
+	if target.Kind == ast.KindElementAccessExpression && isCompound {
+		return l.updateIndex(node, target, operator, binary.Right)
+	}
 	local, isLocal := l.local(target)
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))

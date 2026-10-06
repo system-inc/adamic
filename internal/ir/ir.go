@@ -181,7 +181,7 @@ type (
 		Returns   Type
 	}
 
-	// Unary is -, + and ! on its operand.
+	// Unary is -, +, ! and ~ on its operand.
 	Unary struct {
 		Operator Operator
 		Operand  Expression
@@ -189,7 +189,7 @@ type (
 
 	// Binary is an operator whose operands are already of the types it takes (the checker and
 	// lowering saw to that): arithmetic on numbers, comparison of numbers, equality of like types,
-	// and && and || on booleans, which short-circuit.
+	// bitwise operations on numbers, and && and || on booleans, which short-circuit.
 	Binary struct {
 		Operator    Operator
 		Left, Right Expression
