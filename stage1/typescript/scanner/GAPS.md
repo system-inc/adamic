@@ -57,7 +57,7 @@ Go on both Node and native. Hex bigint tokens keep their Go hex spelling.
 ## Representation choices
 
 Adamic strings use UTF-16 indices; Go scanner strings use byte positions.
-The driver builds a linear UTF-16-to-byte table and checks its final size
+When printing tokens, the driver builds a linear UTF-16-to-byte table and checks its final size
 with `utf8Length`. Unmappable reported positions panic. Supplementary
 identifier characters use code points. Unicode 15.1 range triples are
 copied from the pinned Go generated table, with the same stride semantics.
@@ -77,7 +77,7 @@ representation differences without an observed compiler refusal.
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Without the variable, the test
 clones that tag into a temporary directory. The corpus includes every
 `src/compiler/*.ts` recursively, every repository stage1 `.ts`, and
-18,224 generated inputs. Punctuators, keywords and Unicode range boundaries
+18,236 generated inputs. Punctuators, keywords and Unicode range boundaries
 are generated from the Go source independently of the port's tables.
 The comparison includes token kinds, byte ranges, all flags, values and
 diagnostic codes/ranges. Native uses ASan, UBSan and LeakSanitizer.

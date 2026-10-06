@@ -1,5 +1,8 @@
 # pw720wc: TypeScript scanner slice
 
+This is the initial unit report. The subsequent profiling and optimization
+report is [PERFORMANCE.md](PERFORMANCE.md).
+
 Branch: `codex/typescript-scanner`. Starting main: `fe3b9f2`.
 All implementation, tests, gap probes and notices are confined to
 `stage1/typescript/scanner/`. No core compiler files change.

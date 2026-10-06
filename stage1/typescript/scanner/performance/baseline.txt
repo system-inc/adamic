@@ -1,0 +1,48 @@
+
+Top 20 inclusive instructions (same-name inline records collapsed):
+ 9,322,507,326 100.00% main
+ 9,321,783,208  99.99% adamic_function_9_run
+ 6,752,900,489  72.44% adamic_function_22_Scanner_scan
+ 4,608,743,384  49.44% adamic_string_code_point_at
+ 3,616,276,675  38.79% adamic_function_11_Scanner_code
+ 2,696,020,840  28.92% adamic_function_19_Scanner_template
+ 2,668,688,683  28.63% adamic_string_locate
+ 2,541,482,449  27.26% adamic_function_17_Scanner_identifier
+ 1,992,294,730  21.37% adamic_function_12_Scanner_advance
+ 1,588,551,758  17.04% unit_at
+   722,498,639   7.75% adamic_string_from_code_points
+   569,065,410   6.10% usable
+   551,490,381   5.92% adamic_string_append
+   433,506,484   4.65% adamic_release
+   351,061,298   3.77% adamic_string_concat
+   324,488,745   3.48% adamic_string_slice
+   251,888,985   2.70% adamic_string_units
+   239,745,081   2.57% adamic_string_join_halves
+   226,519,917   2.43% adamic_read_text_file
+   225,777,641   2.42% decode
+
+Top 20 self instructions (same-name inline records collapsed):
+ 2,099,623,273  22.52% adamic_string_locate
+ 1,463,437,128  15.70% adamic_string_code_point_at
+   578,768,909   6.21% adamic_function_11_Scanner_code
+   569,062,855   6.10% usable
+   486,970,422   5.22% adamic_function_9_run
+   378,108,866   4.06% adamic_release
+   373,137,482   4.00% unit_at
+   337,296,436   3.62% adamic_function_12_Scanner_advance
+   251,888,985   2.70% adamic_string_units
+   239,745,081   2.57% adamic_string_join_halves
+   225,747,318   2.42% decode
+   205,020,447   2.20% adamic_string_append
+   187,570,859   2.01% adamic_function_22_Scanner_scan
+   154,446,557   1.66% adamic_array_push
+   150,074,192   1.61% adamic_allocate
+   148,698,157   1.60% free
+   129,927,701   1.39% adamic_function_19_Scanner_template
+   126,736,694   1.36% adamic_string_slice
+   125,392,050   1.35% adamic_string_from_code_points
+   119,583,485   1.28% adamic_string_concat
+
+{
+  "instructions": 9322686277
+}
