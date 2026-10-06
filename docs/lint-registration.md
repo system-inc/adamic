@@ -53,18 +53,27 @@ All prepare hooks run before preorder visitation; all finish hooks run afterward
 Hooks and visits run only for `all` or the exact selected name.
 
 The shared context owns source, initialized parser/scanner, read-only parent
-indexes, the finding destination and main's existing equality/catch options.
+indexes, the finding destination, decoded JSON settings and main's existing equality/catch options.
 It has no link back to Linter or RuleSet. Concrete named imports and typed fields
 avoid interface-method casts and reference cycles. Keep new options decoding
-inside the rule adapter; a genuinely new driver option format is infrastructure
-work, rather than another per-rule switch in a shared file.
+inside the rule adapter. Manifest field 5 carries the complete captured options
+as JSON, without a fixed per-rule capture struct. `context.settings.read` and
+`list` expose scalar/string-array settings with lowercase keys. Empty/null input
+uses defaults. The restricted parser accepts string options or an object of
+booleans, strings, numbers, arrays of those, and null fields. It refuses nested
+objects or executable expressions instead of silently ignoring them. This is the
+scanner branch's existing restricted settings parser, reused on main. Legacy
+fields remain available, and JSON values override them when provided.
 
 The adapter is built through a Go overlay inside cohere, with the generated
 selection file and **all** discovered adapter files passed to `go build`. It
 returns the upstream `rule.Rule` from a uniquely named function and has a second
 function named `<oracle>Options(fields []string) any`. Preserve upstream defaults
 and legacy manifest fields: equality mode/null are fields 2/3, empty-catch is field
-4. Mark the adapter `//go:build lintoracle`: ordinary Adamic package discovery
+4. JSON options are field 5; decode them to the rule's own upstream options
+type in its adapter. For an object, `json.Unmarshal` retains the upstream
+struct's decoded defaults; option validation remains the upstream rule's job.
+Mark the adapter `//go:build lintoracle`: ordinary Adamic package discovery
 must not build cohere's internal imports. The explicit-file overlay build includes
 it. Cohere's rule bodies, messages, formatter and converging fixer stay independent
 from the TS port and unchanged in the submodule.

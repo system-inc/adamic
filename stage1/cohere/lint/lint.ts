@@ -4,6 +4,7 @@ import { Parser } from '../../typescript/parser/parser.ts';
 import type { Scanner } from '../../typescript/scanner/scanner.ts';
 import type { Finding } from './finding.ts';
 import { RuleContext } from './context.ts';
+import type { Settings } from './settings.ts';
 import { RuleSet } from './.generated/registry.ts';
 
 export class Linter {
@@ -18,8 +19,19 @@ export class Linter {
         mode: string,
         nullPolicy: string,
         allowCatch: boolean,
+        settings: Settings,
     ) {
-        this.context = new RuleContext(source, parser, scanner, selected, mode, nullPolicy, allowCatch, this.parents);
+        this.context = new RuleContext(
+            source,
+            parser,
+            scanner,
+            selected,
+            mode,
+            nullPolicy,
+            allowCatch,
+            this.parents,
+            settings,
+        );
         this.findings = this.context.findings;
     }
     run(): void {

@@ -4,9 +4,11 @@ import type { ParseNode } from '../../typescript/parser/nodes.ts';
 import type { Scanner } from '../../typescript/scanner/scanner.ts';
 
 import { Finding } from './finding.ts';
+import type { Settings } from './settings.ts';
 
 export class RuleContext {
     readonly source: string;
+    readonly settings: Settings;
     readonly parser: Parser;
     readonly scanner: Scanner;
     readonly findings: Finding[] = [];
@@ -24,14 +26,18 @@ export class RuleContext {
         nullPolicy: string,
         allowCatch: boolean,
         parents: readonly number[],
+        settings: Settings,
     ) {
         this.source = source;
         this.parser = parser;
         this.scanner = scanner;
+        this.settings = settings;
         this.selected = selected === '' ? 'all' : selected;
-        this.mode = mode === '' ? 'Always' : mode;
-        this.nullPolicy = this.mode === 'Always' ? (nullPolicy === '' ? 'Always' : nullPolicy) : 'Ignore';
-        this.allowCatch = allowCatch;
+        const decodedMode = settings.read('mode', mode);
+        this.mode = decodedMode === '' ? 'Always' : decodedMode;
+        const decodedNull = settings.read('null', nullPolicy);
+        this.nullPolicy = this.mode === 'Always' ? (decodedNull === '' ? 'Always' : decodedNull) : 'Ignore';
+        this.allowCatch = settings.read('allowemptycatch', allowCatch ? 'true' : 'false') === 'true';
         this.parents = parents;
     }
     node(index: number): ParseNode {

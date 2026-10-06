@@ -276,10 +276,7 @@ func upstream(t *testing.T) []string {
 	}
 	type record struct {
 		Rule, Source, Outcome, FixedSource string
-		Options                            struct {
-			Mode, Null      string
-			AllowEmptyCatch bool
-		}
+		Options                            json.RawMessage
 	}
 	unique := map[string]record{}
 	for _, path := range files {
@@ -314,7 +311,22 @@ func upstream(t *testing.T) []string {
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t", path, row.Rule, row.Options.Mode, row.Options.Null, row.Options.AllowEmptyCatch))
+		var legacy struct {
+			Mode, Null      string
+			AllowEmptyCatch bool
+		}
+		// Preserve decoded legacy fields while transporting all options generically.
+		// Other rules' options can be strings or arrays; their adapter owns decoding.
+		if len(row.Options) > 0 && row.Options[0] == '{' {
+			if err := json.Unmarshal(row.Options, &legacy); err != nil {
+				t.Fatal(err)
+			}
+		}
+		options := "null"
+		if len(row.Options) > 0 {
+			options = string(row.Options)
+		}
+		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, options))
 	}
 	if len(rows) < 150 {
 		t.Fatalf("capture unexpectedly small: %d cases", len(rows))

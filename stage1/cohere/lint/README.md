@@ -1,7 +1,8 @@
 # Syntax-only lint slice
 
-Five rules from the pinned cohere submodule, using the existing Adamic
-TypeScript parser and scanner:
+The initial slice ports these five rules from the pinned cohere submodule,
+using the existing Adamic TypeScript parser and scanner. This table records the
+initial slice; list the current discovered set with `go run ./cmd/lint-registry`:
 
 | Rule | Visitor shape | Repair |
 | --- | --- | --- |
@@ -35,10 +36,11 @@ The driver accepts a source path, or `--manifest <path> [--count]`.
 A manifest row is tab-separated:
 
 ```
-source-path    rule-or-all    mode    null-policy    allow-empty-catch
+source-path    rule-or-all    mode    null-policy    allow-empty-catch    decoded-options-json
 ```
 
-The last four fields are optional. Defaults are all five rules, `Always`,
+The fields after the path are optional. JSON options override the legacy fields.
+Capture and adapters transport JSON without per-rule cases in the harness. Defaults are all five rules, `Always`,
 `Always`, and false. Modes and null policies are cohere's decoded option values,
 not ESLint configuration syntax. `Smart` forces the null policy to `Ignore`.
 The driver is a corpus runner, not cohere's config, suppression, file-selection,
