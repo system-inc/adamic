@@ -106,6 +106,26 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
 		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", e.fieldSlot(object, expression.Name, expression.Class), member(expression.Of)))
+		if expression.Of == ir.MaybeNumber {
+			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+		}
+		if expression.Absent {
+			slot := e.temporary()
+			lookup := fmt.Sprintf("adamic_object_optional_field(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+			if expression.Optional {
+				lookup = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, lookup)
+			}
+			e.line("adamic_value *%s = %s;", slot, lookup)
+			undefined := "NULL"
+			if expression.Of.IsMaybe() {
+				undefined = zero(expression.Of)
+			}
+			present := unslotted(expression.Of, fmt.Sprintf("%s->%s", slot, member(expression.Of)))
+			if expression.Of == ir.MaybeNumber {
+				present = field
+			}
+			field = fmt.Sprintf("(%s == NULL ? %s : %s)", slot, undefined, present)
+		}
 		if expression.Of == ir.MaybeNumber && expression.Optional {
 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : %s)", object, zero(ir.MaybeNumber), field))
 		}
