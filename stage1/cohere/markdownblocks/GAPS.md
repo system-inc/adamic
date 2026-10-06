@@ -6,6 +6,92 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Native Markdown printer AstPath
+
+`astPath.ts` ports the alternating node/property/array/index path stack, using
+numeric AST identities and tagged leaf frames. It implements current/root/parent/
+grandparent, siblings and adjacent siblings, names/keys/indexes, array boundaries,
+ancestor lookup, match predicates, scoped call/callParent, each and numeric map.
+The oracle compares full stacks, callback arguments/results and restoration, not
+only the final current node. Negative and out-of-range child indices, missing
+properties and nesting through 32 generated quote levels are included.
+
+The gate covers 4,975 documents: the accumulated 4,943 layout documents plus 32
+path-depth cases, including all 876 physical Markdown files. Go parses and
+preprocesses the input AST. Path decisions are native. Both Go's actual generic
+AstPath methods and the unchanged pinned fork's actual AstPath class decide
+expected observations independently from identical transported ASTs. The fork
+class is exposed by reference inside its actual standalone bundle using a unique
+checked anchor; its body is unchanged and the bundle bytes are checked first.
+Node identity is normalized to numeric preorder IDs. JavaScript's generic getters
+are projected to Go's typed Markdown node API. Children are the traversal field;
+this does not claim arbitrary JavaScript object-property traversal.
+
+The class specializes callbacks to string, number and boolean results; map
+returns numeric results suitable for document IDs. Exception unwinding is not
+claimed: Adamic's fatal panic is not a catchable JavaScript exception. Invalid
+callParent counts beyond the root, arbitrary scalar fields, mutating the child
+array during traversal and attached comment nodes are not covered. The existing
+layout fixture driver still receives its path facts from Go; this independent
+path implementation has not replaced that transport. Tokenizer events, grammar,
+resolvers/subtokenization and full mdast construction remain unfinished.
+
+Three native output-only mutants compile, exit zero with empty stderr and are
+caught by exact path bytes: siblings frame -3 becomes -5 (byte268), the first
+nodeStackIndex step -2 becomes -4 (byte191), and call retains two extra stack
+frames instead of restoring its checkpoint (byte260). Source Node, JavaScript
+backend, sanitized native and leaks pass the unchanged implementation.
+
+### Missing-property key witness
+
+The two actual AstPath oracles differ outside normal Markdown child traversal.
+Starting at an empty root, call through `absent`, `children`, then numeric index
+0. The complete Go output is:
+
+```text
+key="" present=false
+```
+
+The complete pinned fork output is:
+
+```text
+key=0 type=number
+```
+
+The proving programs are `testdata/path_go.go --key-gap` (calling the actual Go
+class through `testdata/path_bridge.go`) and `testdata/path_library.mjs
+<scratch-bundles> --key-gap` (calling the actual fork class). The gate asserts
+both complete outputs. The common-domain path comparison includes a single
+absent property, but does not falsely assert that this deeper witness agrees.
+Native key uses Go's typed optional-string contract. All original seven embedded
+language witnesses and their fourteen complete outputs below remain intact.
+
+### Additional compiler representation witnesses
+
+Each numbered program is executable on source Node and covered by a test:
+
+- `gaps/8_generic_callback_result.ts`: Node prints `value`; lowering a generic
+  callback-result method is NotYet, `a function returning Result`. Production
+  path callbacks use concrete string, number and boolean specializations.
+- `gaps/9_mixed_path_names.ts`: Node prints `children,0`; an array of string or
+  number is NotYet, `an array of string | number`. Production names are tagged
+  property/index frames, with numeric IDs instead of owning graph edges.
+- `gaps/10_multiple_push.ts`: Node prints `1,2`; multiple push arguments are
+  NotYet, `push with other than one value`. Production pushes one frame at a time.
+- `gaps/11_function_expression.ts`: Node prints `value`; a function expression
+  is NotYet, `a function expression (an arrow function captures this as written)`.
+  The production map uses an explicit loop and its supplied callback.
+- `gaps/12_conditional_empty_array.ts`: Node prints `0`; the inferred empty arm
+  is NotYet, `an array of never`. Production empties have explicit array types.
+- `gaps/13_array_growth.ts`: Node prints `1`. Native AND the JavaScript backend
+  compile but exit70 with empty stdout and the complete stderr below. The
+  separate array-growth test records this discrepancy as a gap observation.
+  Production map appends with push. No compiler-owned files were changed.
+
+```text
+adamic: panic: index 0 is outside an array of length 0
+```
+
 ## Native tokenizer input chunking
 
 `inputChunks.ts` ports micromark's complete single-input preprocessing call with

@@ -17,9 +17,15 @@ func TestParserRepresentationProbes(t *testing.T) {
 		{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n", notYet: "a function inside a function (a closure)"},
 		{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n", refused: "a cycle reference counting can't free"},
 		{path: "gaps/3_recursive_callable.ts", stdout: "1\n0\n"},
+		{path: "gaps/14_missing_path_key.ts", stdout: "key=\"\" present=false\n"},
 		{path: "gaps/4_structural_ranges.ts", stdout: "1\n", refused: "a cycle reference counting can't free"},
 		{path: "gaps/5_conditional_panic.ts", stdout: "T\n", notYet: "reading panic"},
 		{path: "gaps/7_postfix_property.ts", stdout: "0\n1\n", notYet: "a PostfixUnaryExpression"},
+		{path: "gaps/8_generic_callback_result.ts", stdout: "value\n", notYet: "a function returning Result"},
+		{path: "gaps/9_mixed_path_names.ts", stdout: "children,0\n", notYet: "an array of string | number"},
+		{path: "gaps/10_multiple_push.ts", stdout: "1,2\n", notYet: "push with other than one value"},
+		{path: "gaps/11_function_expression.ts", stdout: "value\n", notYet: "a function expression (an arrow function captures this as written)"},
+		{path: "gaps/12_conditional_empty_array.ts", stdout: "0\n", notYet: "an array of never"},
 	} {
 		t.Run(gap.path, func(t *testing.T) {
 			t.Parallel()
