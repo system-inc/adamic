@@ -145,3 +145,5 @@ packages (183.043s–345.823s). See gate.log. The gate started before the final 
 capture guard; final focused lowering, ownership and differential checks are reported
 separately above. Final formatting and vet both exit 0 with empty logs; git diff --check
 is clean. The complete normalization rerun passed; the full gate itself is not claimed green.
+
+Implementation commit: `9d0729a873fc31c6a02af064b5759865831e0077`. The requested branch was pushed successfully; no pull request was opened. Validation logs are intentionally tracked in this review directory despite the repository-wide *.log ignore rule.
