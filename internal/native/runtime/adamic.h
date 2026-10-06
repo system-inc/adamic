@@ -556,11 +556,19 @@ static inline double adamic_string_length(const adamic_string *string) {
 	return units != 0 ? (double)(units - 1) : (double)adamic_string_units(string);
 }
 static inline double adamic_string_char_code_at(const adamic_string *string, double position) {
-	if (adamic_string_known_units(string) == string->length + 1 && position >= 0 && position < (double)string->length) {
+	if (string->units == string->length + 1 && position >= 0 && position < (double)string->length) {
 		return (double)(unsigned char)string->bytes[(size_t)position];
+	}
+	if (adamic_is_shared(&string->heap)) {
+		struct adamic_string_index *index = __atomic_load_n(&string->index, __ATOMIC_ACQUIRE);
+		if (index != NULL && index != ADAMIC_LITERAL_INDEX && position >= 0 && position < (double)index->units) {
+			if (index->units == string->length) { return (double)(unsigned char)string->bytes[(size_t)position]; }
+			if (index->bmp != NULL) { return (double)index->bmp[(size_t)position]; }
+		}
 	}
 	return adamic_string_char_code(string, position);
 }
+
 adamic_string *adamic_string_trim(adamic_string *string);
 
 // for...of over a string walks code points: adamic_string_next is the byte size of the one at offset,
