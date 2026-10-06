@@ -26,7 +26,7 @@ func volumeGenerated(t *testing.T) []string {
 	}
 }
 
-// Not parallel: sanitized mutant builds are bounded and completed before timing.
+// Not parallel at the parent: independent mutant children finish before timing.
 func TestVolumeMutants(t *testing.T) {
 	path := manifest(t, volumeGenerated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
@@ -43,6 +43,7 @@ func TestVolumeMutants(t *testing.T) {
 		{"interface accepts type suffix", "? ['Interface', 'Properties', 'Options']", "? ['Type', 'Interface', 'Properties', 'Options']"},
 	} {
 		t.Run(change.name, func(t *testing.T) {
+			t.Parallel()
 			directory := mutant(t, change.from, change.to, "volume.ts")
 			binary := buildPort(t, directory, true)
 			for _, side := range []struct {

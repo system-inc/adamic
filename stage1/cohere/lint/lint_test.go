@@ -47,6 +47,7 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	started := time.Now()
 	err = command.Run()
 	duration := time.Since(started)
+	t.Logf("execution %s: %s", filepath.Base(name), duration)
 	if err != nil || stderr.Len() != 0 {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
@@ -82,20 +83,31 @@ func goOracle(t *testing.T) string {
 	return binary
 }
 
+// Bound full-program clang builds on cloud workers while keeping each mutant isolated.
+var portBuildSlots = make(chan struct{}, 4)
+
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
+	portBuildSlots <- struct{}{}
+	defer func() { <-portBuildSlots }()
+	started := time.Now()
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 	if err != nil {
 		t.Fatal(err)
 	}
+	loaded := time.Now()
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
 		t.Fatal(err)
 	}
+	loweredAt := time.Now()
+	source := native.C(lowered)
+	emitted := time.Now()
 	binary := filepath.Join(t.TempDir(), "scanner")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+	if err := native.Build(source, binary, native.Options{Sanitize: sanitize}); err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("build sanitize=%t: load=%s lower=%s emit=%s clang=%s C-bytes=%d", sanitize, loaded.Sub(started), loweredAt.Sub(loaded), emitted.Sub(loweredAt), time.Since(emitted), len(source))
 	return binary
 }
 
@@ -398,7 +410,7 @@ func mutant(t *testing.T, from, to string, targets ...string) string {
 	return directory
 }
 
-// Not parallel: sanitized rebuilds run in sequence to bound memory and precede timing.
+// Not parallel at the parent: independent mutant children finish before timing.
 func TestMutants(t *testing.T) {
 	path := manifest(t, generated(t))
 	oracle := goOracle(t)
@@ -423,6 +435,7 @@ func TestMutants(t *testing.T) {
 		{"overlap winner misreported", "${winner} overlaps another fix", "${this.selected} overlaps another fix"},
 	} {
 		t.Run(change.name, func(t *testing.T) {
+			t.Parallel()
 			directory := mutant(t, change.from, change.to)
 			for _, side := range []struct {
 				name string

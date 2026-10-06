@@ -144,13 +144,14 @@ func TestBatch2Controls(t *testing.T) {
 	compare(t, oracle, buildPort(t, directory, true), directory, manifest(t, rows))
 }
 
-// Not parallel: sanitized rebuilds precede timing and bound peak memory.
+// Not parallel at the parent: independent mutant children finish before timing.
 func TestBatch2Mutants(t *testing.T) {
 	rows := batch2Generated(t)
 	path := manifest(t, rows)
 	want := execute(t, "", goOracle(t), "--manifest", path).output
 	for i, rule := range batch2Names {
 		t.Run(rule, func(t *testing.T) {
+			t.Parallel()
 			stem := strings.ReplaceAll(strings.TrimPrefix(rule, "@typescript-eslint/"), "-", "_")
 			from := "ctx.enabled('" + rule + "')"
 			directory := mutant(t, from, "ctx.enabled('omitted-batch2-rule')", stem+".ts")
