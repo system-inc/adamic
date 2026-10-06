@@ -11,8 +11,9 @@ candidate shapes stop at lowering; they are preserved here, outside testdata.
 
 Read CLAUDE.md, README.md, docs/0.1.md, docs/memory.md, the requested
 origin/main...origin/codex/parameter-properties-namespaces diff and commit log.
-That range also contains the integration history. Feature implementation is in
-aea3215 (parameter properties) and adc45ca (namespaces); inspected their changed
+The initial origin/main ref was stale at f580438 and included integration
+history. Refreshed origin/main to 50045bd and reread the requested diff/log:
+exactly aea3215 (parameter properties) and adc45ca (namespaces). Inspected their changed
 compiler paths, configuration, documentation, fixtures, and lower/oracle tests.
 Read cloud/grok-params-namespaces-coverage before writing candidates. Its four
 entry programs are comparison coverage, not copied or cherry-picked here.
@@ -170,6 +171,7 @@ was piped into a truncating process. Every Go command below sources
 
 ```sh
 git fetch origin codex/parameter-properties-namespaces:refs/remotes/origin/codex/parameter-properties-namespaces cloud/grok-params-namespaces-coverage:refs/remotes/origin/cloud/grok-params-namespaces-coverage
+git fetch origin main:refs/remotes/origin/main
 git log --oneline origin/main..origin/codex/parameter-properties-namespaces
 git diff origin/main...origin/codex/parameter-properties-namespaces
 git show --format=fuller --stat aea3215 adc45ca
@@ -232,3 +234,22 @@ regeneration 42.173s; both pass. The full gate's native suite passed in 272.723s
 and its oracle suite in 205.369s. Final parenthesized-call addition was also
 built and compared individually using the standalone commands above, followed
 by the same seven-program oracle and counts regeneration commands.
+
+The complete uncached repository gate exited 0: every package passed. Unicode
+properties took 691.063s, cohere/json 425.384s, parser 193.163s, scanner 52.987s.
+Its complete package summary is gate.log. Formatting, vet and diff checks were
+clean. Compiler files match adc45ca; no mutation remains. Seven new counts rows
+are present and all previous rows are unchanged.
+
+Commits and pushes:
+
+```sh
+git commit -m "Cover parameter property ordering and shared namespace values"
+git push -u origin coverage/parameter-properties-namespaces
+git commit -m "Record the full coverage gate and refreshed main comparison"
+git push origin coverage/parameter-properties-namespaces
+git ls-remote --heads origin coverage/parameter-properties-namespaces
+```
+
+The first push succeeded without retry. The second records the final full-gate
+result and corrects the description of the initially stale origin/main ref.
