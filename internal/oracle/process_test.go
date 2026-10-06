@@ -150,9 +150,8 @@ func TestProcessExitOutput(t *testing.T) {
 	}
 }
 
-// Node's asynchronous Linux pipe stream may discard queued writes on immediate exit.
-// This is an explicit known mismatch, not a passing claim of native byte parity.
-func TestProcessLargePipeExitGap(t *testing.T) {
+// Named oracle exception: Adamic preserves output instead of Node's queued-write loss.
+func TestProcessLargePipeExitPreservesOutput(t *testing.T) {
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux backpressured pipe semantics")
 	}
@@ -177,14 +176,104 @@ func TestProcessLargePipeExitGap(t *testing.T) {
 					t.Fatal("normal return must drain output byte for byte")
 				}
 			} else {
-				if len(truth.stdout) == 0 || len(truth.stdout) >= len(expected) || !bytes.HasPrefix(expected, truth.stdout) || disagreement(truth, got) != "stdout differs" {
-					t.Fatal("known immediate-exit pipe gap changed; review Node first")
+				if !bytes.Equal(truth.stdout, expected[:4096]) {
+					t.Fatal("documented raw Node pipe loss changed; review Node first")
 				}
-				if difference := disagreement(truth, backend); difference != "" {
-					t.Fatalf("Node backend pipe loss differs byte for byte: %s", difference)
+				if difference := disagreement(got, backend); difference != "" {
+					t.Fatalf("Adamic backends must preserve all output: %s", difference)
 				}
-				t.Logf("KNOWN GAP: source Node drops %d bytes, backend Node drops %d bytes, native preserves all %d bytes", len(expected)-len(truth.stdout), len(expected)-len(backend.stdout), len(expected))
+				t.Logf("NAMED EXCEPTION: raw Node writes %d bytes; both Adamic backends preserve all %d bytes", len(truth.stdout), len(expected))
+				data, err := os.ReadFile(script)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if strings.Count(string(data), "adamicProcessExit(") != 1 {
+					t.Fatal("JS exit mutant anchor changed")
+				}
+				mutant := filepath.Join(t.TempDir(), "mutant.mjs")
+				if err := os.WriteFile(mutant, []byte(strings.Replace(string(data), "adamicProcessExit(", "process.exit(", 1)), 0o644); err != nil {
+					t.Fatal(err)
+				}
+				bad := processExitOutput(t, "pipe", false, true, "node", "--disable-warning=ExperimentalWarning", runner, mutant)
+				if disagreement(truth, bad) != "" || disagreement(got, bad) != "stdout differs" {
+					t.Fatal("JS exit without draining mutant survived, or failed outside output comparison")
+				}
+				t.Log("JS no-drain mutant runs cleanly with exit 37; caught by missing 200,704 output bytes")
 			}
+		})
+	}
+}
+
+func TestProcessExitDrainsStderr(t *testing.T) {
+	if runtime.GOOS != "linux" {
+		t.Skip("Linux backpressured pipe semantics")
+	}
+	t.Parallel()
+	expected := []byte(strings.Repeat(strings.Repeat("x", 1023)+"\n", 200))
+	path, binary, script := processOutputProgram(t, "const line = 'x'.repeat(1023); for (let index = 0; index < 200; index += 1) { console.error(line); } process.exit(37);", "")
+	runner := filepath.Join(repository, "oracle/node.mjs")
+	truth := processExitOutput(t, "stderr-pipe", false, true, "node", "--disable-warning=ExperimentalWarning", runner, path)
+	if truth.exitCode != 37 || len(truth.stdout) != 0 || !bytes.Equal(truth.stderr, expected[:4096]) {
+		t.Fatal("documented raw Node stderr pipe loss changed")
+	}
+	for _, command := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
+		got := processExitOutput(t, "stderr-pipe", false, true, command...)
+		if got.exitCode != 37 || len(got.stdout) != 0 || !bytes.Equal(got.stderr, expected) {
+			t.Fatal("Adamic must drain stderr too")
+		}
+	}
+}
+
+func TestProcessExitDoesNotUnwind(t *testing.T) {
+	t.Parallel()
+	path, binary, script := processOutputProgram(t, "function end(): void { try { console.log('before'); process.exit(37); } catch { console.log('must not catch'); } finally { console.log('must not finally'); } console.log('must not continue'); } end(); console.log('must not return');", "")
+	runner := filepath.Join(repository, "oracle/node.mjs")
+	truth := processExitOutput(t, "file", false, false, "node", "--disable-warning=ExperimentalWarning", runner, path)
+	if truth.exitCode != 37 || string(truth.stdout) != "before\n" || len(truth.stderr) != 0 {
+		t.Fatal("unexpected Node exit control flow")
+	}
+	for _, command := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
+		if difference := disagreement(truth, processExitOutput(t, "file", false, false, command...)); difference != "" {
+			t.Fatal(difference)
+		}
+	}
+	data, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	instrumented := javascript.JavaScriptWith(program, javascript.Options{
+		Enter: func(int) string { return "undefined" },
+		Leave: func(int) string { return "console.log('must not leave')" },
+	})
+	observed := filepath.Join(t.TempDir(), "instrumented.mjs")
+	if err := os.WriteFile(observed, []byte(instrumented), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if difference := disagreement(truth, processExitOutput(t, "file", false, false, "node", "--disable-warning=ExperimentalWarning", runner, observed)); difference != "" {
+		t.Fatal("exit must also skip instrumentation leave: " + difference)
+	}
+	for _, change := range []struct{ name, before, after, source string }{
+		{"catch guard", "if (adamicProcessExiting()) throw ", "if (false) throw ", string(data)},
+		{"finally guard", "if (!adamicProcessExiting()) {", "if (true) {", string(data)},
+		{"leave guard", "if (!adamicProcessExiting()) { console.log('must not leave'); }", "if (true) { console.log('must not leave'); }", instrumented},
+	} {
+		t.Run(change.name, func(t *testing.T) {
+			if strings.Count(change.source, change.before) != 1 {
+				t.Fatal("exit control-flow mutant anchor changed")
+			}
+			mutant := filepath.Join(t.TempDir(), "mutant.mjs")
+			if err := os.WriteFile(mutant, []byte(strings.Replace(change.source, change.before, change.after, 1)), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			bad := processExitOutput(t, "file", false, false, "node", "--disable-warning=ExperimentalWarning", runner, mutant)
+			if bad.exitCode != 37 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
+				t.Fatal("control-flow mutant must fail only stdout comparison")
+			}
+			t.Logf("caught clean JS mutant: %q instead of %q", bad.stdout, truth.stdout)
 		})
 	}
 }

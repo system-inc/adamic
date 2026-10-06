@@ -12,7 +12,7 @@ destination, shared, backpressure = sys.argv[1:4]
 with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
     reader = writer = None
     capacity = 0
-    if destination == "pipe":
+    if destination in ("pipe", "stderr-pipe"):
         reader, writer = os.pipe()
         if backpressure == "true":
             fcntl.fcntl(writer, fcntl.F_SETPIPE_SZ, 4096)
@@ -20,8 +20,9 @@ with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
     environment = os.environ.copy()
     environment["ASAN_OPTIONS"] = "detect_leaks=1"
     environment.pop("FORCE_COLOR", None)
-    child = subprocess.Popen(sys.argv[4:], stdout=writer if writer is not None else output,
-                             stderr=subprocess.STDOUT if shared == "true" else errors,
+    child = subprocess.Popen(sys.argv[4:], stdout=writer if destination == "pipe" else output,
+                             stderr=subprocess.STDOUT if shared == "true" else
+                             writer if destination == "stderr-pipe" else errors,
                              env=environment)
     pieces = []
     if writer is not None:
@@ -54,7 +55,8 @@ with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
             thread.join(timeout=15)
     output.seek(0)
     errors.seek(0)
-    landed = b"".join(pieces) if reader is not None else output.read()
+    landed = b"".join(pieces) if destination == "pipe" else output.read()
+    landed_errors = b"".join(pieces) if destination == "stderr-pipe" else errors.read()
     print(json.dumps({"stdout": base64.b64encode(landed).decode("ascii"),
-                      "stderr": base64.b64encode(errors.read()).decode("ascii"),
+                      "stderr": base64.b64encode(landed_errors).decode("ascii"),
                       "exitCode": child.returncode, "pipeCapacity": capacity}))
