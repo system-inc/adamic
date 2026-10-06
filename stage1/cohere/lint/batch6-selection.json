@@ -1,0 +1,278 @@
+{
+    "inventory_commit": "73ac2eb",
+    "base_commit": "5d4c8012a0877094134e6c6bac367ff68f9313e8",
+    "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+    "compiler_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "selection": [
+        {
+            "position": 1,
+            "name": "@next/next/no-assign-module-variable",
+            "sources": [
+                {
+                    "path": "cohere/internal/lint/rules/next/no_assign_module_variable.go",
+                    "lines": 85
+                }
+            ],
+            "tests": {
+                "files": ["cohere/internal/lint/rules/next/no_assign_module_variable_test.go"],
+                "harness_invocations": 13,
+                "locations": {
+                    "cohere/internal/lint/rules/next/no_assign_module_variable_test.go:32": 6,
+                    "cohere/internal/lint/rules/next/no_assign_module_variable_test.go:61": 7
+                },
+                "status": "executed harness invocations; family tests passed",
+                "static_run_sites": 2
+            },
+            "needs_type_information": false
+        },
+        {
+            "position": 2,
+            "name": "@typescript-eslint/default-param-last",
+            "sources": [
+                {
+                    "path": "cohere/internal/lint/rules/typescript/default_param_last.go",
+                    "lines": 209
+                },
+                {
+                    "path": "cohere/internal/lint/rules/typescript/default_param_last_register.go",
+                    "lines": 14
+                }
+            ],
+            "tests": {
+                "files": ["cohere/internal/lint/rules/typescript/default_param_last_test.go"],
+                "harness_invocations": 166,
+                "locations": {
+                    "cohere/internal/lint/rules/typescript/default_param_last_test.go:234": 61,
+                    "cohere/internal/lint/rules/typescript/default_param_last_test.go:385": 54,
+                    "cohere/internal/lint/rules/typescript/default_param_last_test.go:573": 50,
+                    "cohere/internal/lint/rules/typescript/default_param_last_test.go:597": 1
+                },
+                "status": "executed harness invocations; family tests passed",
+                "static_run_sites": 4
+            },
+            "needs_type_information": false
+        },
+        {
+            "position": 3,
+            "name": "@typescript-eslint/no-confusing-non-null-assertion",
+            "sources": [
+                {
+                    "path": "cohere/internal/lint/rules/typescript/no_confusing_non_null_assertion.go",
+                    "lines": 232
+                },
+                {
+                    "path": "cohere/internal/lint/rules/typescript/no_confusing_non_null_assertion_register.go",
+                    "lines": 13
+                }
+            ],
+            "tests": {
+                "files": ["cohere/internal/lint/rules/typescript/no_confusing_non_null_assertion_test.go"],
+                "harness_invocations": 28,
+                "locations": {
+                    "cohere/internal/lint/rules/typescript/no_confusing_non_null_assertion_test.go:246": 11,
+                    "cohere/internal/lint/rules/typescript/no_confusing_non_null_assertion_test.go:68": 17
+                },
+                "status": "executed harness invocations; family tests passed",
+                "static_run_sites": 2
+            },
+            "needs_type_information": false
+        },
+        {
+            "position": 4,
+            "name": "@typescript-eslint/no-duplicate-enum-values",
+            "sources": [
+                {
+                    "path": "cohere/internal/lint/rules/typescript/no_duplicate_enum_values.go",
+                    "lines": 172
+                }
+            ],
+            "tests": {
+                "files": ["cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go"],
+                "harness_invocations": 57,
+                "locations": {
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:102": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:116": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:144": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:152": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:186": 6,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:193": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:208": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:213": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:225": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:260": 6,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:273": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:278": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:291": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:295": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:310": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:322": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:49": 25,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:73": 4,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:94": 1,
+                    "cohere/internal/lint/rules/typescript/no_duplicate_enum_values_test.go:98": 1
+                },
+                "status": "executed harness invocations; family tests passed",
+                "static_run_sites": 20
+            },
+            "needs_type_information": false
+        },
+        {
+            "position": 5,
+            "name": "@typescript-eslint/no-dynamic-delete",
+            "sources": [
+                {
+                    "path": "cohere/internal/lint/rules/typescript/no_dynamic_delete.go",
+                    "lines": 159
+                },
+                {
+                    "path": "cohere/internal/lint/rules/typescript/no_dynamic_delete_register.go",
+                    "lines": 14
+                }
+            ],
+            "tests": {
+                "files": ["cohere/internal/lint/rules/typescript/no_dynamic_delete_test.go"],
+                "harness_invocations": 42,
+                "locations": {
+                    "cohere/internal/lint/rules/typescript/no_dynamic_delete_test.go:113": 10,
+                    "cohere/internal/lint/rules/typescript/no_dynamic_delete_test.go:193": 8,
+                    "cohere/internal/lint/rules/typescript/no_dynamic_delete_test.go:280": 12,
+                    "cohere/internal/lint/rules/typescript/no_dynamic_delete_test.go:300": 1,
+                    "cohere/internal/lint/rules/typescript/no_dynamic_delete_test.go:47": 11
+                },
+                "status": "executed harness invocations; family tests passed",
+                "static_run_sites": 5
+            },
+            "needs_type_information": false
+        },
+        {
+            "position": 6,
+            "name": "@typescript-eslint/no-extra-non-null-assertion",
+            "sources": [
+                {
+                    "path": "cohere/internal/lint/rules/typescript/no_extra_non_null_assertion.go",
+                    "lines": 131
+                }
+            ],
+            "tests": {
+                "files": [
+                    "cohere/internal/lint/rules/typescript/absent_optional_nodes_test.go",
+                    "cohere/internal/lint/rules/typescript/no_extra_non_null_assertion_test.go"
+                ],
+                "harness_invocations": 50,
+                "locations": {
+                    "cohere/internal/lint/rules/typescript/absent_optional_nodes_test.go:100": 25,
+                    "cohere/internal/lint/rules/typescript/no_extra_non_null_assertion_test.go:120": 10,
+                    "cohere/internal/lint/rules/typescript/no_extra_non_null_assertion_test.go:38": 8,
+                    "cohere/internal/lint/rules/typescript/no_extra_non_null_assertion_test.go:79": 7
+                },
+                "status": "executed harness invocations; family tests passed",
+                "static_run_sites": 3
+            },
+            "needs_type_information": false
+        },
+        {
+            "position": 7,
+            "name": "@typescript-eslint/no-misused-new",
+            "sources": [
+                {
+                    "path": "cohere/internal/lint/rules/typescript/no_misused_new.go",
+                    "lines": 301
+                }
+            ],
+            "tests": {
+                "files": ["cohere/internal/lint/rules/typescript/no_misused_new_test.go"],
+                "harness_invocations": 53,
+                "locations": {
+                    "cohere/internal/lint/rules/typescript/no_misused_new_test.go:205": 33,
+                    "cohere/internal/lint/rules/typescript/no_misused_new_test.go:240": 6,
+                    "cohere/internal/lint/rules/typescript/no_misused_new_test.go:261": 1,
+                    "cohere/internal/lint/rules/typescript/no_misused_new_test.go:273": 1,
+                    "cohere/internal/lint/rules/typescript/no_misused_new_test.go:93": 12
+                },
+                "status": "executed harness invocations; family tests passed",
+                "static_run_sites": 5
+            },
+            "needs_type_information": false
+        },
+        {
+            "position": 8,
+            "name": "@typescript-eslint/no-unnecessary-parameter-property-assignment",
+            "sources": [
+                {
+                    "path": "cohere/internal/lint/rules/typescript/no_unnecessary_parameter_property_assignment.go",
+                    "lines": 586
+                }
+            ],
+            "tests": {
+                "files": ["cohere/internal/lint/rules/typescript/no_unnecessary_parameter_property_assignment_test.go"],
+                "harness_invocations": 93,
+                "locations": {
+                    "cohere/internal/lint/rules/typescript/no_unnecessary_parameter_property_assignment_test.go:127": 21,
+                    "cohere/internal/lint/rules/typescript/no_unnecessary_parameter_property_assignment_test.go:174": 21,
+                    "cohere/internal/lint/rules/typescript/no_unnecessary_parameter_property_assignment_test.go:231": 1,
+                    "cohere/internal/lint/rules/typescript/no_unnecessary_parameter_property_assignment_test.go:244": 1,
+                    "cohere/internal/lint/rules/typescript/no_unnecessary_parameter_property_assignment_test.go:304": 3,
+                    "cohere/internal/lint/rules/typescript/no_unnecessary_parameter_property_assignment_test.go:390": 9,
+                    "cohere/internal/lint/rules/typescript/no_unnecessary_parameter_property_assignment_test.go:459": 8,
+                    "cohere/internal/lint/rules/typescript/no_unnecessary_parameter_property_assignment_test.go:82": 29
+                },
+                "status": "executed harness invocations; family tests passed",
+                "static_run_sites": 8
+            },
+            "needs_type_information": false
+        },
+        {
+            "position": 9,
+            "name": "@typescript-eslint/prefer-as-const",
+            "sources": [
+                {
+                    "path": "cohere/internal/lint/rules/typescript/prefer_as_const.go",
+                    "lines": 246
+                }
+            ],
+            "tests": {
+                "files": ["cohere/internal/lint/rules/typescript/prefer_as_const_test.go"],
+                "harness_invocations": 91,
+                "locations": {
+                    "cohere/internal/lint/rules/typescript/prefer_as_const_test.go:127": 2,
+                    "cohere/internal/lint/rules/typescript/prefer_as_const_test.go:168": 6,
+                    "cohere/internal/lint/rules/typescript/prefer_as_const_test.go:258": 43,
+                    "cohere/internal/lint/rules/typescript/prefer_as_const_test.go:288": 4,
+                    "cohere/internal/lint/rules/typescript/prefer_as_const_test.go:310": 1,
+                    "cohere/internal/lint/rules/typescript/prefer_as_const_test.go:46": 17,
+                    "cohere/internal/lint/rules/typescript/prefer_as_const_test.go:96": 18
+                },
+                "status": "executed harness invocations; family tests passed",
+                "static_run_sites": 7
+            },
+            "needs_type_information": false
+        },
+        {
+            "position": 10,
+            "name": "default-case-last",
+            "sources": [
+                {
+                    "path": "cohere/internal/lint/rules/core/default_case_last.go",
+                    "lines": 72
+                },
+                {
+                    "path": "cohere/internal/lint/rules/core/default_case_last_register.go",
+                    "lines": 7
+                }
+            ],
+            "tests": {
+                "files": ["cohere/internal/lint/rules/core/default_case_last_test.go"],
+                "harness_invocations": 41,
+                "locations": {
+                    "cohere/internal/lint/rules/core/default_case_last_test.go:121": 3,
+                    "cohere/internal/lint/rules/core/default_case_last_test.go:146": 1,
+                    "cohere/internal/lint/rules/core/default_case_last_test.go:57": 23,
+                    "cohere/internal/lint/rules/core/default_case_last_test.go:89": 14
+                },
+                "status": "executed harness invocations; family tests passed",
+                "static_run_sites": 4
+            },
+            "needs_type_information": false
+        }
+    ]
+}

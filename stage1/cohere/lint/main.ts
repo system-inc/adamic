@@ -27,9 +27,13 @@ function run(row: string, countOnly: boolean): number {
         return linter.findings.length;
     }
     const offsets: number[] = [0];
+    const lines: number[] = [0];
     let bytes = 0;
     for(let index = 0; index < source.text.length; index++) {
         const code = source.text.codePointAt(index) ?? 0;
+        if(code === 10) {
+            lines.push(index + 1);
+        }
         if(code > 65535) {
             offsets.push(bytes);
             index++;
@@ -40,16 +44,44 @@ function run(row: string, countOnly: boolean): number {
     for(const finding of linter.findings) {
         const start = offsets[finding.start] ?? panic('finding outside source');
         const end = offsets[finding.end] ?? panic('finding end outside source');
-        const prefix = source.text.slice(0, finding.start);
-        const line = prefix.split('\n').length;
-        const previous = prefix.lastIndexOf('\n');
-        const column = start - (offsets[previous + 1] ?? 0) + 1;
+        let left = 0;
+        let right = lines.length;
+        while(left < right) {
+            const middle = Math.floor((left + right) / 2);
+            if((lines[middle] ?? 0) <= finding.start) {
+                left = middle + 1;
+            }
+            else {
+                right = middle;
+            }
+        }
+        const line = left;
+        const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 1;
         console.log(`${path}:${line}:${column}\n  ${finding.rule}  ${finding.message}\n`);
         console.log(
-            `range ${start} ${end} ${finding.id} ${finding.repair}\t${written(finding.replacement)}\t${written(finding.suggestion)}`,
+            `range ${start} ${end} ${finding.id} ${finding.repair}\t${written(finding.replacement)}\t${written(finding.suggestion)}\t${offsets[finding.editStart] ?? 0} ${offsets[finding.editEnd] ?? 0}`,
         );
+        if(finding.suggestions.length === 0 && finding.repair === 'suggestion') {
+            const id = finding.rule === 'eqeqeq' ? 'replaceOperator' : 'removeAssignment';
+            console.log(`suggestion ${id}\t${written(finding.suggestion)}`);
+            console.log(
+                `suggestion-edit ${offsets[finding.editStart] ?? 0} ${offsets[finding.editEnd] ?? 0}\t${written(finding.replacement)}`,
+            );
+        }
+        for(const suggestion of finding.suggestions) {
+            console.log(`suggestion ${suggestion.id}\t${written(suggestion.message)}`);
+            for(const edit of suggestion.edits)
+                console.log(
+                    `suggestion-edit ${offsets[edit.start] ?? 0} ${offsets[edit.end] ?? 0}\t${written(edit.text)}`,
+                );
+        }
+        for(const edit of finding.extraEdits) {
+            console.log(`edit ${offsets[edit.start] ?? 0} ${offsets[edit.end] ?? 0}\t${written(edit.text)}`);
+        }
     }
-    console.log(`fixed\t${written(linter.fixed())}`);
+    const fixed = linter.fixed();
+    for(const rejection of linter.rejected) console.log(rejection);
+    console.log(`fixed\t${written(fixed)}`);
     return linter.findings.length;
 }
 

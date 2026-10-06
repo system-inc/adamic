@@ -12,6 +12,8 @@ import (
 	"github.com/system-inc/cohere/internal/lint/report"
 	"github.com/system-inc/cohere/internal/lint/rule"
 	rules "github.com/system-inc/cohere/internal/lint/rules/core"
+	nextrules "github.com/system-inc/cohere/internal/lint/rules/next"
+	tsrules "github.com/system-inc/cohere/internal/lint/rules/typescript"
 	"os"
 	"sort"
 	"strings"
@@ -31,6 +33,12 @@ func written(text string) string {
 		}
 	}
 	return result.String()
+}
+func extraFixes(fixes []rule.Fix) []rule.Fix {
+	if len(fixes) < 2 {
+		return nil
+	}
+	return fixes[1:]
 }
 func run(row string, countOnly bool, out *bufio.Writer) int {
 	fields := strings.Split(row, "\t")
@@ -58,29 +66,39 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 		}
 		fmt.Fprint(out, display[:footer])
 		repair, replacement, suggestion := "", "", ""
+		editStart, editEnd := start, end
 		if len(d.Fixes) > 0 {
-			if len(d.Fixes) != 1 || d.Fixes[0].Range != d.Range {
-				panic("unexpected fix shape")
-			}
 			repair = "fix"
 			replacement = d.Fixes[0].Text
+			editStart, editEnd = d.Fixes[0].Range.Pos(), d.Fixes[0].Range.End()
 		}
 		if len(d.Suggestions) > 0 {
-			s := d.Suggestions[0]
-			if len(d.Suggestions) != 1 || len(s.Fixes) != 1 || s.Fixes[0].Range != d.Range {
-				panic("unexpected suggestion shape")
-			}
+			first := d.Suggestions[0]
 			repair = "suggestion"
-			replacement = s.Fixes[0].Text
-			suggestion = s.Message.Description
+			replacement = first.Fixes[0].Text
+			suggestion = first.Message.Description
+			editStart, editEnd = first.Fixes[0].Range.Pos(), first.Fixes[0].Range.End()
 		}
-		fmt.Fprintf(out, "range %d %d %s %s\t%s\t%s\n", start, end, d.Message.Id, repair, written(replacement), written(suggestion))
+		fmt.Fprintf(out, "range %d %d %s %s\t%s\t%s\t%d %d\n", start, end, d.Message.Id, repair, written(replacement), written(suggestion), editStart, editEnd)
+		for _, suggestion := range d.Suggestions {
+			fmt.Fprintf(out, "suggestion %s\t%s\n", suggestion.Message.Id, written(suggestion.Message.Description))
+			for _, fix := range suggestion.Fixes {
+				fmt.Fprintf(out, "suggestion-edit %d %d\t%s\n", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+			}
+		}
+		for _, fix := range extraFixes(d.Fixes) {
+			fmt.Fprintf(out, "edit %d %d\t%s\n", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+		}
+
 	}
 	result, err := edit.FixText(path, source, func(fileName, text string) ([]edit.Proposal, error) {
 		return edit.ProposalsFrom(collect(fileName, text, fields)), nil
 	}, 10)
-	if err != nil || len(result.Rejected) != 0 || !result.Converged {
+	if err != nil || !result.Converged {
 		panic(fmt.Sprintf("fix failed: %v %+v", err, result))
+	}
+	for _, rejection := range result.Rejected {
+		fmt.Fprintf(out, "rejected %s %d %d %s %s\n", rejection.Proposal.RuleName, rejection.Proposal.Fix.Range.Pos(), rejection.Proposal.Fix.Range.End(), rejection.ConflictsWith, rejection.Reason)
 	}
 	fixed := result.Text
 	fmt.Fprintf(out, "fixed\t%s\n", written(fixed))
@@ -91,7 +109,7 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	if len(file.Diagnostics()) != 0 {
 		panic(fmt.Sprintf("invalid corpus %s: %v", path, file.Diagnostics()))
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase}
+	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, nextrules.NoAssignModuleVariable, tsrules.DefaultParamLast, tsrules.NoConfusingNonNullAssertion, tsrules.NoDuplicateEnumValues, tsrules.NoDynamicDelete, tsrules.NoExtraNonNullAssertion, tsrules.NoMisusedNew, tsrules.NoUnnecessaryParameterPropertyAssignment, tsrules.PreferAsConst, rules.DefaultCaseLast}
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
 	for _, subject := range selected {

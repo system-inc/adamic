@@ -1,4 +1,10 @@
+import type { ExtraEdit } from './extra_edit.ts';
+import type { RepairSuggestion } from './repair_suggestion.ts';
 export class Finding {
+    readonly extraEdits: ExtraEdit[] = [];
+    readonly suggestions: RepairSuggestion[] = [];
+    editStart: number;
+    editEnd: number;
     readonly rule: string;
     readonly id: string;
     readonly message: string;
@@ -17,6 +23,8 @@ export class Finding {
         replacement: string,
         suggestion: string,
     ) {
+        this.editStart = start;
+        this.editEnd = end;
         this.rule = rule;
         this.id = id;
         this.message = message;

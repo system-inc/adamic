@@ -22,7 +22,7 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"finding.ts", "lint.ts", "main.ts"}
+var portFiles = []string{"finding.ts", "lint.ts", "main.ts", "rule_context.ts", "extra_edit.ts", "repair_suggestion.ts", "registry.ts", "no_assign_module_variable.ts", "default_param_last.ts", "no_confusing_non_null_assertion.ts", "no_duplicate_enum_values.ts", "no_dynamic_delete.ts", "no_extra_non_null_assertion.ts", "no_misused_new.ts", "no_unnecessary_parameter_property_assignment.ts", "prefer_as_const.ts", "default_case_last.ts"}
 
 type execution struct {
 	output   []byte
@@ -205,14 +205,16 @@ func upstream(t *testing.T) []string {
 	}
 	capture := filepath.Join(directory, "capture")
 	t.Setenv("COHERE_DOCS_CAPTURE", capture)
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase|DefaultCaseLast)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(DefaultParamLast|NoConfusingNonNullAssertion|NoDuplicateEnumValues|NoDynamicDelete|NoExtraNonNullAssertion|NoMisusedNew|NoUnnecessaryParameterPropertyAssignment|PreferAsConst|NoRuleCrashesOnAbsentOptionalNodes)", "-count=1", "-timeout=10m")
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/next", "-run", "TestNoAssignModuleVariable", "-count=1", "-timeout=10m")
 	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	type record struct {
-		Rule, Source, Outcome, FixedSource string
-		Options                            struct {
+		Rule, Source, Outcome, FixedSource, File string
+		Options                                  struct {
 			Mode, Null      string
 			AllowEmptyCatch bool
 		}
@@ -231,10 +233,10 @@ func upstream(t *testing.T) []string {
 			if err := json.Unmarshal(line, &row); err != nil {
 				t.Fatal(err)
 			}
-			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|", "|"+row.Rule+"|") {
+			if !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|default-case-last|@next/next/no-assign-module-variable|@typescript-eslint/default-param-last|@typescript-eslint/no-confusing-non-null-assertion|@typescript-eslint/no-duplicate-enum-values|@typescript-eslint/no-dynamic-delete|@typescript-eslint/no-extra-non-null-assertion|@typescript-eslint/no-misused-new|@typescript-eslint/no-unnecessary-parameter-property-assignment|@typescript-eslint/prefer-as-const|", "|"+row.Rule+"|") {
 				continue
 			}
-			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source)
+			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source+filepath.Ext(row.File))
 			unique[key] = row
 		}
 	}
@@ -246,14 +248,30 @@ func upstream(t *testing.T) []string {
 	var rows []string
 	for i, key := range keys {
 		row := unique[key]
-		path := filepath.Join(directory, fmt.Sprintf("case-%03d.ts", i))
+		path := filepath.Join(directory, fmt.Sprintf("case-%03d%s", i, filepath.Ext(row.File)))
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t", path, row.Rule, row.Options.Mode, row.Options.Null, row.Options.AllowEmptyCatch))
+		mode := ""
+		if row.Rule == "@typescript-eslint/no-unnecessary-parameter-property-assignment" && row.Source == "class Foo {\n  constructor(public { a }: { a: string }) {\n    this.a = a;\n  }\n}\n" {
+			mode = "unsupported-recovery"
+		}
+		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t\t%s", path, row.Rule, row.Options.Mode, row.Options.Null, row.Options.AllowEmptyCatch, mode))
 	}
 	if len(rows) < 150 {
 		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
+	}
+	for _, name := range batch6Rules {
+		count := 0
+		for _, row := range unique {
+			if row.Rule == name {
+				count++
+			}
+		}
+		if count == 0 {
+			t.Fatalf("missing upstream fixtures for %s", name)
+		}
+		t.Logf("%s: %d upstream cases", name, count)
 	}
 	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
 	return rows
@@ -272,6 +290,8 @@ func compare(t *testing.T, oracle, binary, directory, path string) []byte {
 	t.Logf("Go, Node, native identical: %d bytes", len(want.output))
 	return want.output
 }
+
+// Not parallel: fixture capture sets a process-wide environment variable.
 func TestRulesAgree(t *testing.T) {
 	directory, err := filepath.Abs(".")
 	if err != nil {
@@ -279,7 +299,14 @@ func TestRulesAgree(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
-	rows := append(generated(t), upstream(t)...)
+	rows := append(generated(t), batch6Generated(t)...)
+	for _, row := range upstream(t) {
+		if strings.HasSuffix(row, "\tunsupported-recovery") {
+			checkBatch6Refusal(t, oracle, binary, directory, row)
+		} else {
+			rows = append(rows, row)
+		}
+	}
 	compare(t, oracle, binary, directory, manifest(t, rows))
 }
 func TestCompilerAndStage1Agree(t *testing.T) {
@@ -317,7 +344,8 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	t.Logf("compiler and stage1: %d files", len(rows))
 	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
 }
-func mutant(t *testing.T, from, to string) string {
+func mutant(t *testing.T, from, to string) string { return mutantFile(t, "lint.ts", from, to) }
+func mutantFile(t *testing.T, target, from, to string) string {
 	directory := t.TempDir()
 	for _, file := range portFiles {
 		data, err := os.ReadFile(file)
@@ -325,7 +353,7 @@ func mutant(t *testing.T, from, to string) string {
 			t.Fatal(err)
 		}
 		source := string(data)
-		if file == "lint.ts" {
+		if file == target {
 			if strings.Count(source, from) != 1 {
 				t.Fatalf("mutant anchor count for %q", from)
 			}
@@ -410,6 +438,7 @@ func TestThroughput(t *testing.T) {
 	t.Logf("machine %s; %s; load before %s", strings.TrimSpace(string(machine.output)), model, strings.TrimSpace(string(loadBefore)))
 	best := map[string]time.Duration{}
 	var want []byte
+	compare(t, oracle, binary, directory, path)
 	for round := 0; round < 5; round++ {
 		for _, name := range []string{"Go", "native", "Node"} {
 			var result execution

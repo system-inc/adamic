@@ -1,8 +1,10 @@
-// Five syntax-only cohere rules. Node indexes keep the visitor's ancestry acyclic.
-import { panic } from 'adamic';
+// Fifteen syntax-only cohere rules. Node indexes keep the visitor's ancestry acyclic.
+import { panic, utf8Length } from 'adamic';
 import { Parser } from '../../typescript/parser/parser.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
-import type { Scanner } from '../../typescript/scanner/scanner.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
+import { RuleContext } from './rule_context.ts';
+import { visitRules } from './registry.ts';
 
 import { Finding } from './finding.ts';
 
@@ -21,11 +23,25 @@ const varMessage =
 const duplicateMessage =
     'Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.';
 
+function compareEdits(left: Finding, right: Finding): number {
+    const position = left.editStart - right.editStart;
+    if(position !== 0) {
+        return position;
+    }
+    const end = left.editEnd - right.editEnd;
+    if(end !== 0) {
+        return end;
+    }
+    return left.rule < right.rule ? -1 : left.rule > right.rule ? 1 : 0;
+}
+
 export class Linter {
     readonly source: string;
     readonly parser: Parser;
     readonly scanner: Scanner;
     readonly findings: Finding[] = [];
+    readonly rejected: string[] = [];
+    context: RuleContext | undefined = undefined;
     parents: number[] = [];
     root = -1;
     readonly selected: string;
@@ -52,8 +68,21 @@ export class Linter {
     run(): void {
         this.root = this.parser.file();
         this.parents = this.parser.nodes.map(() => -1);
+        this.indexParents(this.root, -1);
+        this.context = new RuleContext(
+            this.source,
+            this.parser,
+            this.scanner,
+            this.parents,
+            this.findings,
+            this.selected,
+        );
         this.walk(this.root, -1);
         this.findings.sort((left, right) => left.start - right.start);
+    }
+    indexParents(index: number, parent: number): void {
+        this.parents[index] = parent;
+        for(const child of this.node(index).children) this.indexParents(child, index);
     }
     node(index: number): ParseNode {
         return this.parser.node(index);
@@ -268,29 +297,84 @@ export class Linter {
         ) {
             this.variable(index, parent);
         }
+        visitRules(this.context ?? panic('missing rule context'), index);
         for(const child of node.children) {
             this.walk(child, index);
         }
     }
     fixed(): string {
-        let result = this.source;
-        let previous = this.source.length;
-        for(let index = this.findings.length - 1; index >= 0; index--) {
-            const finding = this.findings[index] ?? panic('missing finding');
-            if(finding.repair !== 'fix') {
-                continue;
+        let current = this.source;
+        let findings = this.findings;
+        for(let pass = 0; pass < 10; pass++) {
+            const proposals = findings.filter((finding) => finding.repair === 'fix');
+            for(const finding of findings) {
+                if(finding.repair !== 'fix') continue;
+                for(const edit of finding.extraEdits) {
+                    const proposal = new Finding(
+                        finding.rule,
+                        finding.id,
+                        finding.message,
+                        finding.start,
+                        finding.end,
+                        'fix',
+                        edit.text,
+                        '',
+                    );
+                    proposal.editStart = edit.start;
+                    proposal.editEnd = edit.end;
+                    proposals.push(proposal);
+                }
             }
-            if(finding.end > previous) {
-                panic('overlapping fixes');
+            proposals.sort(compareEdits);
+            const applied: Finding[] = [];
+            let previous = -1;
+            let winner = '';
+            for(const finding of proposals) {
+                if(
+                    finding.editStart < previous ||
+                    (finding.editStart === previous && finding.editStart === finding.editEnd)
+                ) {
+                    this.rejected.push(
+                        `rejected ${finding.rule} ${utf8Length(current.slice(0, finding.editStart))} ${utf8Length(current.slice(0, finding.editEnd))} ${winner} overlaps another fix`,
+                    );
+                    continue;
+                }
+                if(finding.editStart < 0 || finding.editEnd < finding.editStart || finding.editEnd > current.length) {
+                    panic('invalid fix range');
+                }
+                if(current.slice(finding.editStart, finding.editEnd) === finding.replacement) {
+                    this.rejected.push(
+                        `rejected ${finding.rule} ${utf8Length(current.slice(0, finding.editStart))} ${utf8Length(current.slice(0, finding.editEnd))}  the fix replaces text with itself`,
+                    );
+                    continue;
+                }
+                applied.push(finding);
+                previous = finding.editEnd;
+                winner = finding.rule;
             }
-            result = result.slice(0, finding.start) + finding.replacement + result.slice(finding.end);
-            previous = finding.start;
+            if(applied.length === 0) {
+                return current;
+            }
+            let result = current;
+            for(let index = applied.length - 1; index >= 0; index--) {
+                const finding = applied[index] ?? panic('missing fix');
+                result = result.slice(0, finding.editStart) + finding.replacement + result.slice(finding.editEnd);
+            }
+            const parser = new Parser(result, this.parser.path);
+            const scanner = new Scanner(result);
+            const next = new Linter(
+                result,
+                parser,
+                scanner,
+                this.selected,
+                this.mode,
+                this.nullPolicy,
+                this.allowCatch,
+            );
+            next.run();
+            current = result;
+            findings = next.findings;
         }
-        // Selected rules propose disjoint edits; parse every rewrite before exposing it.
-        if(result !== this.source) {
-            const checked = new Parser(result, 'fixed source');
-            checked.file();
-        }
-        return result;
+        panic('fix pass budget exhausted');
     }
 }
