@@ -79,3 +79,17 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 	*method = shape->methods->code[cache->index - shape->count];
 	return NULL;
 }
+
+// A field made as undefined alone holds NULL, whereas number | undefined holds a packed number.
+// The shape decides which union member is live; reading NULL's bits as a double would produce 0.
+adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	adamic_value *slot = adamic_object_field(object, name, cache);
+	if (object->shape->references[cache->index]) {
+		if (slot->reference != NULL) {
+			static const char message[] = "compiler bug: a numeric field holds a reference";
+			adamic_panic(message, sizeof message - 1);
+		}
+		return (adamic_maybe_number){false, 0.0};
+	}
+	return adamic_maybe_number_unpack(slot->number);
+}
