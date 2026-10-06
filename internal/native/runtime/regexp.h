@@ -36,6 +36,13 @@ struct adamic_regex_program {
 	const adamic_regex_group *groups;
 	size_t group_count;
 	const adamic_shape *group_shape;
+	uint64_t first_ascii[2];
+	bool filter_first;
+	const uint16_t *prefix;
+	size_t prefix_count;
+	bool (*fast)(const uint16_t *, size_t, ptrdiff_t *, ptrdiff_t *, uint64_t *);
+	bool anchored;
+	bool (*fast_ascii)(const unsigned char *, size_t, ptrdiff_t *, ptrdiff_t *, uint64_t *);
 };
 
 adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_string *source,

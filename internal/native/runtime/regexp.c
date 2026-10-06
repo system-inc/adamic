@@ -45,6 +45,12 @@ static bool regex_read(const uint16_t *input, size_t length, ptrdiff_t at, int d
 static uint32_t regex_canonical(uint32_t c, unsigned flags) {
 	if (!(flags & 1))
 		return c;
+	if (c < 128) {
+		if (flags & 4)
+			return c >= 'A' && c <= 'Z' ? c + ('a' - 'A') : c;
+		return c >= 'a' && c <= 'z' ? c - ('a' - 'A') : c;
+	}
+
 	const uint32_t (*table)[2] = flags & 4 ? regex_unicode_fold : regex_legacy_fold;
 	size_t count = flags & 4 ? sizeof regex_unicode_fold / sizeof regex_unicode_fold[0]
 							 : sizeof regex_legacy_fold / sizeof regex_legacy_fold[0];
@@ -79,40 +85,102 @@ typedef struct {
 	uint64_t count;
 	ptrdiff_t start;
 } regex_repeat;
+typedef struct regex_workspace regex_workspace;
 typedef struct regex_state {
 	size_t pc;
 	ptrdiff_t position;
 	ptrdiff_t *captures;
 	regex_repeat *repeats;
 	struct regex_state *previous;
+	_Alignas(regex_repeat) bool has_frame;
+	bool allocation_on_heap;
+	size_t register_bytes;
+	regex_workspace *workspace;
 } regex_state;
+// Choice points own their snapshots until popped. Freed frames can be reused
+// across search positions; overflow blocks are released at execution end.
+struct regex_workspace {
+	regex_state *free_frames;
+	union {
+		max_align_t alignment;
+		unsigned char bytes[8192];
+	} arena;
+	size_t used;
+};
+static void regex_workspace_destroy(regex_workspace *workspace) {
+	while (workspace->free_frames != NULL) {
+		regex_state *frame = workspace->free_frames;
+		workspace->free_frames = frame->previous;
+		if (frame->allocation_on_heap)
+			free(frame);
+	}
+}
 static regex_state regex_clone(const regex_state *state, const adamic_regex_program *p) {
 	regex_state result = *state;
-	result.captures = regex_memory(2 * (p->captures + 1) * sizeof *result.captures);
+	// One aligned block holds a choice point and both register snapshots.
+	size_t bytes =
+		2 * (p->captures + 1) * sizeof *result.captures + p->repeats * sizeof *result.repeats;
+	regex_workspace *workspace = state->workspace;
+	regex_state **available = &workspace->free_frames;
+	while (*available != NULL && (*available)->register_bytes < bytes)
+		available = &(*available)->previous;
+	regex_state *frame = *available;
+	if (frame != NULL) {
+		*available = frame->previous;
+		result.register_bytes = frame->register_bytes;
+		result.allocation_on_heap = frame->allocation_on_heap;
+	} else {
+		size_t alignment = _Alignof(regex_state);
+		size_t size = (sizeof *frame + bytes + alignment - 1) / alignment * alignment;
+		if (size <= sizeof workspace->arena.bytes - workspace->used) {
+			frame = (regex_state *)(workspace->arena.bytes + workspace->used);
+			workspace->used += size;
+			result.allocation_on_heap = false;
+		} else {
+			frame = regex_memory(size);
+			result.allocation_on_heap = true;
+		}
+		result.register_bytes = bytes;
+	}
+	result.captures = (ptrdiff_t *)(frame + 1);
+	result.repeats = (regex_repeat *)(result.captures + 2 * (p->captures + 1));
 	memcpy(result.captures, state->captures, 2 * (p->captures + 1) * sizeof *result.captures);
-	result.repeats = regex_memory(p->repeats * sizeof *result.repeats);
-	memcpy(result.repeats, state->repeats, p->repeats * sizeof *result.repeats);
+	if (state->repeats != NULL)
+		memcpy(result.repeats, state->repeats, p->repeats * sizeof *result.repeats);
+	else
+		memset(result.repeats, 0, p->repeats * sizeof *result.repeats);
+	result.has_frame = true;
 	result.previous = NULL;
 	return result;
 }
 static void regex_free(regex_state state) {
-	free(state.captures);
-	free(state.repeats);
+	if (state.has_frame) {
+		regex_state *frame = (regex_state *)state.captures - 1;
+		*frame = state;
+		frame->previous = state.workspace->free_frames;
+		state.workspace->free_frames = frame;
+	}
 }
 static void regex_push(regex_state **stack, regex_state state) {
-	regex_state *frame = regex_memory(sizeof *frame);
+	regex_state *frame = (regex_state *)state.captures - 1;
 	*frame = state;
 	frame->previous = *stack;
 	*stack = frame;
 }
 static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size_t length,
-					  ptrdiff_t *position, ptrdiff_t *captures, uint64_t *steps) {
+					  ptrdiff_t *position, ptrdiff_t *captures, uint64_t *steps,
+					  regex_workspace *workspace) {
 	ADAMIC_CHECK_STACK();
-	regex_state state = {0, *position, captures, NULL, NULL};
-	state.repeats = regex_memory(p->repeats * sizeof *state.repeats);
-	memset(state.repeats, 0, p->repeats * sizeof *state.repeats);
-	state.captures = regex_memory(2 * (p->captures + 1) * sizeof *captures);
-	memcpy(state.captures, captures, 2 * (p->captures + 1) * sizeof *captures);
+	ptrdiff_t local_captures[32];
+	regex_repeat local_repeats[16];
+	regex_state state = {.position = *position, .captures = captures, .workspace = workspace};
+	if (2 * (p->captures + 1) <= 32 && p->repeats <= 16) {
+		state.captures = local_captures;
+		state.repeats = local_repeats;
+		memcpy(state.captures, captures, 2 * (p->captures + 1) * sizeof *captures);
+		memset(state.repeats, 0, p->repeats * sizeof *state.repeats);
+	} else
+		state = regex_clone(&state, p);
 	regex_state *stack = NULL;
 	bool matched = false;
 	for (;;) {
@@ -142,7 +210,10 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 			break;
 		case 1: {
 			// String alternatives are sorted by consumed length, then the code point.
-			ptrdiff_t *positions = regex_memory((i->string_count + 1) * sizeof *positions);
+			ptrdiff_t singleton;
+			ptrdiff_t *positions = i->string_count == 0
+									   ? &singleton
+									   : regex_memory((i->string_count + 1) * sizeof *positions);
 			size_t count = 0;
 			for (size_t k = 0; k < i->string_count; k++) {
 				ptrdiff_t at = state.position;
@@ -188,7 +259,8 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 				}
 				state.position = positions[0];
 			}
-			free(positions);
+			if (i->string_count != 0)
+				free(positions);
 			break;
 		}
 		case 5:
@@ -211,13 +283,16 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 			break;
 		case 6: {
 			ptrdiff_t subposition = state.position;
-			ptrdiff_t *sub = regex_memory(2 * (p->captures + 1) * sizeof *sub);
+			ptrdiff_t local_sub[32];
+			ptrdiff_t *sub =
+				p->captures < 16 ? local_sub : regex_memory(2 * (p->captures + 1) * sizeof *sub);
 			memcpy(sub, state.captures, 2 * (p->captures + 1) * sizeof *sub);
-			bool ok = regex_run(i->look, input, length, &subposition, sub, steps);
+			bool ok = regex_run(i->look, input, length, &subposition, sub, steps, workspace);
 			failed = ok == i->negative;
 			if (ok && !i->negative)
 				memcpy(state.captures, sub, 2 * (p->captures + 1) * sizeof *sub);
-			free(sub);
+			if (sub != local_sub)
+				free(sub);
 			break;
 		}
 		case 7: {
@@ -258,31 +333,29 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 				failed = true;
 				break;
 			}
-			regex_state next = regex_clone(&state, p);
-			next.pc++;
-			next.repeats[i->x].start = state.position;
-			for (size_t k = 0; k < i->id_count; k++) {
-				next.captures[2 * i->ids[k]] = -1;
-				next.captures[2 * i->ids[k] + 1] = -1;
-			}
-			regex_state leave = regex_clone(&state, p);
-			leave.pc = (size_t)i->y;
-			regex_free(state);
 			if (body && exit) {
-				if (i->greedy) {
-					regex_push(&stack, leave);
-					state = next;
-				} else {
-					regex_push(&stack, next);
-					state = leave;
+				regex_state alternate = regex_clone(&state, p);
+				if (i->greedy)
+					alternate.pc = (size_t)i->y;
+				else {
+					alternate.pc++;
+					alternate.repeats[i->x].start = state.position;
+					for (size_t k = 0; k < i->id_count; k++) {
+						alternate.captures[2 * i->ids[k]] = -1;
+						alternate.captures[2 * i->ids[k] + 1] = -1;
+					}
 				}
-			} else if (body) {
-				regex_free(leave);
-				state = next;
-			} else {
-				regex_free(next);
-				state = leave;
+				regex_push(&stack, alternate);
 			}
+			if (body && (!exit || i->greedy)) {
+				state.pc++;
+				state.repeats[i->x].start = state.position;
+				for (size_t k = 0; k < i->id_count; k++) {
+					state.captures[2 * i->ids[k]] = -1;
+					state.captures[2 * i->ids[k] + 1] = -1;
+				}
+			} else
+				state.pc = (size_t)i->y;
 			continue;
 		}
 		case 10: {
@@ -310,7 +383,6 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 			regex_state *frame = stack;
 			state = *frame;
 			stack = frame->previous;
-			free(frame);
 		} else
 			state.pc++;
 	}
@@ -324,7 +396,6 @@ finished:
 		regex_state *frame = stack;
 		stack = frame->previous;
 		regex_free(*frame);
-		free(frame);
 	}
 	return matched;
 }
@@ -356,15 +427,33 @@ static size_t regex_to_length(double value) {
 	return (size_t)fmin(trunc(value), 9007199254740991.0);
 }
 static uint16_t *regex_input(adamic_string *input, size_t *length) {
-	*length = (size_t)adamic_string_length(input);
-	uint16_t *units = regex_memory(*length * sizeof *units);
-	for (size_t k = 0; k < *length; k++)
-		units[k] = (uint16_t)adamic_string_char_code_at(input, (double)k);
+	// Decode immutable WTF-8 once, preserving lone surrogates and pair halves.
+	// Repeated charCodeAt calls otherwise redo UTF-16-to-byte index lookups.
+	uint16_t *units = regex_memory(input->length * sizeof *units);
+	*length = 0;
+	for (size_t at = 0; at < input->length;) {
+		uint32_t point = (unsigned char)input->bytes[at++];
+		if (point >= 128) {
+			size_t extra = point < 0xe0 ? 1 : point < 0xf0 ? 2 : 3;
+			point &= extra == 1 ? 0x1f : extra == 2 ? 0x0f : 0x07;
+			while (extra-- != 0)
+				point = (point << 6) | ((unsigned char)input->bytes[at++] & 0x3f);
+		}
+		if (point > 0xffff) {
+			units[(*length)++] = (uint16_t)(0xd800 + ((point - 0x10000) >> 10));
+			units[(*length)++] = (uint16_t)(0xdc00 + ((point - 0x10000) & 0x3ff));
+		} else
+			units[(*length)++] = (uint16_t)point;
+	}
 	return units;
 }
 static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, size_t length,
 								bool force_sticky, uint64_t *steps) {
 	const adamic_regex_program *p = regex_program(regex);
+	regex_workspace workspace;
+	workspace.free_frames = NULL;
+	workspace.used = 0;
+	ADAMIC_CHECK_STACK();
 	bool stateful = (p->flags & 24) != 0 || force_sticky;
 	size_t start = stateful ? regex_to_length(regex->slots[1].number) : 0;
 	ptrdiff_t *captures = regex_memory(2 * (p->captures + 1) * sizeof *captures);
@@ -373,16 +462,51 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 		if ((p->flags & 4) && at > 0 && (size_t)at < length && high(input[at - 1]) &&
 			low(input[at]))
 			at--;
+		if (p->anchored && at != 0)
+			break;
 		for (size_t k = 0; k < 2 * (p->captures + 1); k++)
 			captures[k] = -1;
 		captures[0] = at;
-		if (regex_run(p, input, length, &at, captures, steps)) {
+		if (!p->anchored && !((p->flags & 16) || force_sticky)) {
+			while ((size_t)at < length) {
+				uint16_t c = input[at];
+				bool possible = !p->filter_first || c >= 128 ||
+								(p->first_ascii[c / 64] & (UINT64_C(1) << (c % 64)));
+				if (possible &&
+					(p->prefix_count == 0 ||
+					 ((size_t)at + p->prefix_count <= length &&
+					  memcmp(input + at, p->prefix, p->prefix_count * sizeof *input) == 0)))
+					break;
+				// memchr skips units lacking the first literal byte. Verify complete
+				// units afterwards, so either byte order and false byte hits are safe.
+				if (p->prefix_count && at + 1 < (ptrdiff_t)length) {
+					const unsigned char *base = (const unsigned char *)(input + at + 1);
+					const unsigned char *found = memchr(base, (unsigned char)p->prefix[0],
+														(length - (size_t)at - 1) * sizeof *input);
+					if (found == NULL) {
+						at = (ptrdiff_t)length;
+						break;
+					}
+					at += 1 + (ptrdiff_t)((found - base) / sizeof *input);
+				} else {
+					uint32_t point;
+					ptrdiff_t next;
+					regex_read(input, length, at, 1, p->flags & 4, &point, &next);
+					at = next;
+				}
+			}
+			captures[0] = at;
+		}
+		if (p->fast != NULL && regex_step_limit == 0
+				? p->fast(input, length, &at, captures, steps)
+				: regex_run(p, input, length, &at, captures, steps, &workspace)) {
 			captures[1] = at;
 			if (stateful)
 				regex->slots[1].number = (double)at;
+			regex_workspace_destroy(&workspace);
 			return captures;
 		}
-		if ((p->flags & 16) || force_sticky)
+		if (p->anchored || (p->flags & 16) || force_sticky)
 			break;
 		uint32_t c;
 		ptrdiff_t next;
@@ -393,6 +517,7 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 	if (stateful)
 		regex->slots[1].number = 0;
 	free(captures);
+	regex_workspace_destroy(&workspace);
 	return NULL;
 }
 static const char *const match_names[] = {"index", "input", "groups", "indices"};
@@ -494,6 +619,45 @@ adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input) {
 	return result;
 }
 bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
+	const adamic_regex_program *p = regex_program(regex);
+	size_t ascii_length = (size_t)adamic_string_length(input);
+	if (p->fast_ascii != NULL && p->captures < 16 && regex_step_limit == 0 &&
+		input->units == input->length + 1) {
+		bool stateful = (p->flags & 24) != 0;
+		size_t start = stateful ? regex_to_length(regex->slots[1].number) : 0;
+		const unsigned char *bytes = (const unsigned char *)input->bytes;
+		ptrdiff_t captures[32];
+		uint64_t steps = 0;
+		while (start <= ascii_length) {
+			if (p->anchored && start != 0)
+				break;
+			if (!p->anchored && !(p->flags & 16)) {
+				if (p->prefix_count != 0) {
+					const unsigned char *found =
+						memchr(bytes + start, (unsigned char)p->prefix[0], ascii_length - start);
+					if (found == NULL)
+						break;
+					start = (size_t)(found - bytes);
+				} else if (p->filter_first) {
+					while (start < ascii_length && !(p->first_ascii[bytes[start] / 64] &
+													 (UINT64_C(1) << (bytes[start] % 64))))
+						start++;
+				}
+			}
+			ptrdiff_t at = (ptrdiff_t)start;
+			if (p->fast_ascii(bytes, ascii_length, &at, captures, &steps)) {
+				if (stateful)
+					regex->slots[1].number = (double)at;
+				return true;
+			}
+			if (p->anchored || (p->flags & 16))
+				break;
+			start++;
+		}
+		if (stateful)
+			regex->slots[1].number = 0;
+		return false;
+	}
 	size_t length;
 	uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;

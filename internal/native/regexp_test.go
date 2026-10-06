@@ -123,13 +123,14 @@ static bool pair_equal(adamic_object *pair,const ptrdiff_t *expected) {
  return pair==NULL?expected[0]<0:expected[0]>=0 && pair->slots[0].number==(double)expected[0] && pair->slots[1].number==(double)expected[1];
 }
 int main(int argc,char **argv) {
- adamic_start(argc,argv);adamic_regex_set_step_limit(10000000);size_t disagreements=0;
+ adamic_start(argc,argv);adamic_regex_set_step_limit(argc>1?0:10000000);size_t disagreements=0;
  for(size_t index=0;index<sizeof probes/sizeof probes[0];index++) {
   const probe *p=&probes[index];double *codes=malloc((p->length+1)*sizeof *codes);if(codes==NULL) abort();
   for(size_t k=0;k<p->length;k++) codes[k]=input_units[p->input+k];
   adamic_string *input=adamic_string_from_char_codes(p->length,codes);free(codes);
   adamic_object *regex=adamic_regex_new(p->program,&adamic_string_empty,&adamic_string_empty);regex->slots[1].number=(double)p->last;
-  adamic_array *match=adamic_regex_exec(regex,input);bool same=(match==NULL)==(p->count==0) && regex->slots[1].number==(double)p->final;
+  bool tested=adamic_regex_test(regex,input);bool same=tested==(p->count!=0) && regex->slots[1].number==(double)p->final;regex->slots[1].number=(double)p->last;
+  adamic_array *match=adamic_regex_exec(regex,input);same=same && (match==NULL)==(p->count==0) && regex->slots[1].number==(double)p->final;
   if(match!=NULL) {
    same=same && match->length==p->count;
    adamic_array *indices=match->properties->slots[3].reference;
@@ -145,7 +146,7 @@ int main(int argc,char **argv) {
    same=same && (groups!=NULL)==(p->program->group_count!=0);
    if(groups!=NULL) for(size_t k=0;k<p->program->group_count;k++) same=same && pair_equal(groups->slots[k].reference,&spans[p->expected+2*p->count+2*k]);
   }
-  if(!same) {printf("DISAGREEMENT case=%zu lastIndex=%.0f expected=%llu captures=%zu expected=%zu\n",index,regex->slots[1].number,(unsigned long long)p->final,match==NULL?0:match->length,p->count);disagreements++;}
+  if(!same) {printf("DISAGREEMENT case=%zu test=%d expected=%d lastIndex=%.0f expected=%llu captures=%zu expected=%zu\n",index,tested,p->count!=0,regex->slots[1].number,(unsigned long long)p->final,match==NULL?0:match->length,p->count);disagreements++;}
   adamic_release(match);adamic_release(regex);adamic_release(input);
  }
  printf("native execution totals: %zu cases, %zu disagreements\n",sizeof probes/sizeof probes[0],disagreements);return disagreements==0?0:1;
@@ -158,16 +159,19 @@ int main(int argc,char **argv) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
-	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
-	output, err := command.CombinedOutput()
-	if err != nil {
-		t.Fatalf("native regex oracle: %v\n%s", err, output)
+	for _, arguments := range [][]string{nil, {"unlimited"}} {
+		command := exec.CommandContext(ctx, binary, arguments...)
+		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
+		output, err := command.CombinedOutput()
+		if err != nil {
+			t.Fatalf("native regex oracle (%v): %v\n%s", arguments, err, output)
+		}
+		if !bytes.Contains(output, []byte("0 disagreements")) {
+			t.Fatalf("native regex oracle missing totals: %s", output)
+		}
+		t.Logf("mode=%v %s", arguments, output)
 	}
-	if !bytes.Contains(output, []byte("0 disagreements")) {
-		t.Fatalf("native regex oracle missing totals: %s", output)
-	}
-	t.Logf("%s", output)
+
 }
 
 func TestRegExpBytecodeRandomNode(t *testing.T) {

@@ -6,8 +6,8 @@ import sys
 root = pathlib.Path(__file__).resolve().parents[3]
 fixture = ['go', 'test', '-v', '-count=1', '-timeout', '90s', '-run', 'TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a', './internal/oracle']
 mutants = [
- ('native-greedy-as-lazy', 'internal/native/runtime/regexp.c', 'if (i->greedy) {', 'if (!i->greedy) {', fixture, 'node:   exit'),
- ('native-captures-not-reset', 'internal/native/runtime/regexp.c', 'for (size_t k = 0; k < i->id_count; k++) {\n\t\t\t\tnext.captures', 'for (size_t k = 0; k < i->id_count && false; k++) {\n\t\t\t\tnext.captures', fixture, 'node:   exit'),
+ ('native-greedy-as-lazy', 'internal/native/runtime/regexp.c', 'i->greedy', '!i->greedy', fixture, 'node:   exit'),
+ ('native-captures-not-reset', 'internal/native/runtime/regexp.c', 'state.captures[2 * i->ids[k]] = -1;', 'state.captures[2 * i->ids[k]] = state.captures[2 * i->ids[k]];', fixture, 'node:   exit'),
  ('native-lookbehind-left-to-right', 'internal/regexp/matcher.go', 'direction = -1', 'direction = 1', fixture, 'node:   exit'),
  ('native-case-fold-without-u-distinction', 'internal/native/runtime/regexp.c', 'flags & 4 ?', 'true ?', fixture, 'node:   exit'),
  ('native-matchall-starts-at-zero', 'internal/native/runtime/regexp.c', 'copy->slots[1].number = (double)regex_to_length(regex->slots[1].number);', 'copy->slots[1].number = 0;', fixture, 'node:   exit'),
@@ -30,12 +30,18 @@ for name, file, old, new, command, witness in mutants:
     target = root / file
     original = target.read_text()
     count = original.count(old)
-    expected = 2 if name == 'native-case-fold-without-u-distinction' else 1
+    expected = 2 if name in ('native-case-fold-without-u-distinction', 'native-greedy-as-lazy') else 1
     if count != expected:
         raise SystemExit(f'{name}: expected {expected} sites, found {count}')
     log = pathlib.Path('/tmp') / (name + '.log')
     try:
-        target.write_text(original.replace(old, new))
+        mutated = original.replace(old, new)
+        if name == 'native-case-fold-without-u-distinction':
+            mutated = mutated.replace('if (flags & 4)\n\t\t\treturn', 'if (true)\n\t\t\treturn')
+        if name == 'native-captures-not-reset':
+            mutated = mutated.replace('state.captures[2 * i->ids[k] + 1] = -1;', 'state.captures[2 * i->ids[k] + 1] = state.captures[2 * i->ids[k] + 1];')
+            mutated = mutated.replace('alternate.captures[2 * i->ids[k]] = -1;', 'alternate.captures[2 * i->ids[k]] = alternate.captures[2 * i->ids[k]];').replace('alternate.captures[2 * i->ids[k] + 1] = -1;', 'alternate.captures[2 * i->ids[k] + 1] = alternate.captures[2 * i->ids[k] + 1];')
+        target.write_text(mutated)
         with log.open('w') as output:
             result = subprocess.run(command, cwd=root, stdout=output, stderr=subprocess.STDOUT)
         observed = log.read_text()
