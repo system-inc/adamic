@@ -1,0 +1,156 @@
+[
+  {
+    "name": "no-use-before-define",
+    "compiler": 7777,
+    "repository": 66,
+    "sources": [
+      {
+        "path": "cohere/internal/lint/rules/core/no_use_before_define.go",
+        "lines": 1079
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_use_before_define_cycle.go",
+        "lines": 177
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_use_before_define_register.go",
+        "lines": 21
+      }
+    ]
+  },
+  {
+    "name": "adamic/no-unchecked-cast",
+    "compiler": 3585,
+    "repository": 1,
+    "sources": [
+      {
+        "path": "cohere/internal/lint/rules/adamic/no_unchecked_cast.go",
+        "lines": 195
+      },
+      {
+        "path": "cohere/internal/lint/rules/adamic/no_unchecked_cast_register.go",
+        "lines": 9
+      }
+    ]
+  },
+  {
+    "name": "@typescript-eslint/method-signature-style",
+    "compiler": 1508,
+    "repository": 0,
+    "sources": [
+      {
+        "path": "cohere/internal/lint/rules/typescript/method_signature_style.go",
+        "lines": 614
+      },
+      {
+        "path": "cohere/internal/lint/rules/typescript/method_signature_style_register.go",
+        "lines": 17
+      }
+    ]
+  },
+  {
+    "name": "no-implicit-coercion",
+    "compiler": 924,
+    "repository": 0,
+    "sources": [
+      {
+        "path": "cohere/internal/lint/rules/core/no_implicit_coercion.go",
+        "lines": 940
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_implicit_coercion_register.go",
+        "lines": 18
+      }
+    ]
+  },
+  {
+    "name": "nexus/correctness-no-caller-data-mutation",
+    "compiler": 760,
+    "repository": 60,
+    "sources": [
+      {
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_caller_data_mutation.go",
+        "lines": 680
+      },
+      {
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_caller_data_mutation_register.go",
+        "lines": 14
+      }
+    ]
+  },
+  {
+    "name": "no-param-reassign",
+    "compiler": 669,
+    "repository": 9,
+    "sources": [
+      {
+        "path": "cohere/internal/lint/rules/core/no_param_reassign.go",
+        "lines": 575
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_param_reassign_register.go",
+        "lines": 14
+      }
+    ]
+  },
+  {
+    "name": "adamic/invariant-mutable",
+    "compiler": 575,
+    "repository": 0,
+    "sources": [
+      {
+        "path": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+        "lines": 119
+      },
+      {
+        "path": "cohere/internal/lint/rules/adamic/invariant_mutable_register.go",
+        "lines": 9
+      }
+    ]
+  },
+  {
+    "name": "adamic/no-optional-widening",
+    "compiler": 287,
+    "repository": 0,
+    "sources": [
+      {
+        "path": "cohere/internal/lint/rules/adamic/no_optional_widening.go",
+        "lines": 134
+      },
+      {
+        "path": "cohere/internal/lint/rules/adamic/no_optional_widening_register.go",
+        "lines": 8
+      }
+    ]
+  },
+  {
+    "name": "nexus/consistency-no-property-alias",
+    "compiler": 258,
+    "repository": 24,
+    "sources": [
+      {
+        "path": "cohere/internal/lint/rules/nexus/consistency_no_property_alias.go",
+        "lines": 588
+      },
+      {
+        "path": "cohere/internal/lint/rules/nexus/consistency_no_property_alias_register.go",
+        "lines": 15
+      }
+    ]
+  },
+  {
+    "name": "@typescript-eslint/no-unused-vars",
+    "compiler": 246,
+    "repository": 20,
+    "sources": [
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_vars.go",
+        "lines": 2425
+      },
+      {
+        "path": "cohere/internal/lint/rules/core/no_unused_vars_fix.go",
+        "lines": 202
+      }
+    ]
+  }
+]
