@@ -227,13 +227,11 @@ export class Parser {
     delimitedList(context: string, parseElement: () => number): number[] {
         this.beginList(context);
         const result: number[] = [];
-        let trailing = false;
         while(true) {
             if(this.listElement(context)) {
                 const start = this.scanner.fullStart;
                 result.push(parseElement());
-                trailing = this.kind() === 'CommaToken';
-                if(trailing) {
+                if(this.kind() === 'CommaToken') {
                     this.next();
                     continue;
                 }
@@ -246,7 +244,6 @@ export class Parser {
                     this.kind() === 'SemicolonToken' &&
                     (this.scanner.flags & 1) === 0
                 ) {
-                    trailing = true;
                     this.next();
                 }
                 if(start === this.scanner.fullStart) {
@@ -259,7 +256,9 @@ export class Parser {
             }
         }
         this.endList(context);
-        this.lastTrailing = trailing;
+        this.lastTrailing =
+            result.length > 0 &&
+            this.node(result[result.length - 1] ?? panic('missing last list element')).end < this.scanner.fullStart;
         return result;
     }
     node(index: number): ParseNode {

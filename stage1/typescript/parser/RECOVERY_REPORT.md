@@ -556,3 +556,10 @@ rules, const permission, duplicate-static stopping, and decorator ordering.
 The recovered export modifier is retained before the reserved function-name
 diagnostic. Four additional probes and preceding cases pass in 34.965s;
 cohere passes. The next failure (input 2578) is a recovered list range flag.
+
+## Continued recovery: trailing list spans
+
+Input 2578 skipped tokens after the last recovered object member. Go computes
+HasTrailingComma from the last node end versus the list end, rather than from
+the last literal comma. Delimited lists now use the same comparison. Four
+additional recovery probes and preceding cases pass in 34.917s; cohere passes.
