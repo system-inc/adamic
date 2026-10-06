@@ -28,7 +28,9 @@ esac
 # Go. Any Go from 1.21 on fetches the version go.mod names by itself (GOTOOLCHAIN=auto), so an
 # installed one is enough; otherwise the newest stable release goes in $tools/go.
 export GOTOOLCHAIN=auto
-if ! command -v go > /dev/null 2>&1 && [ ! -x "$tools/go/bin/go" ]; then
+# Only a go that answers `go version` counts: some images ship an unrelated /usr/bin/go.
+realGo() { "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
+if ! { command -v go > /dev/null 2>&1 && realGo go; } && [ ! -x "$tools/go/bin/go" ]; then
 	goVersion=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -n 1)
 	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | tar -xz -C "$tools"
 fi
