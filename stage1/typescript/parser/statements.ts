@@ -10,7 +10,12 @@ export interface StatementContextInterface {
     readonly roots: number[];
     readonly kind: () => string;
     readonly next: () => void;
-    readonly expect: (kind: string) => void;
+    readonly expect: (kind: string) => boolean;
+    readonly beginList: (context: string) => void;
+    readonly endList: (context: string) => void;
+    readonly listElement: (context: string) => boolean;
+    readonly listTerminator: (context: string) => boolean;
+    readonly recoverList: (context: string) => boolean;
     readonly errorAt: (code: number, start: number, end: number, message: string) => void;
     readonly node: (index: number) => ParseNode;
     readonly make: (kind: string, pos: number, children: number[]) => number;
@@ -61,11 +66,20 @@ export class Statements {
     }
     block(): number {
         const pos = this.parser.scanner.fullStart;
-        this.parser.expect('OpenBraceToken');
         const children: number[] = [];
-        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
-            children.push(this.statement());
+        if(!this.parser.expect('OpenBraceToken')) {
+            return this.make('Block', pos, children);
         }
+        this.parser.beginList('block');
+        while(!this.parser.listTerminator('block')) {
+            if(this.parser.listElement('block')) {
+                children.push(this.statement());
+            }
+            else if(this.parser.recoverList('block')) {
+                break;
+            }
+        }
+        this.parser.endList('block');
         this.parser.expect('CloseBraceToken');
         return this.make('Block', pos, children);
     }

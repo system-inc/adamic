@@ -308,3 +308,17 @@ the old type-member loop guard no longer causes nontermination because
 resynchronization also recognizes EOF. Both mutant runs hit the two-second
 deadline specifically. Diagnostic and child mutants still finish normally.
 Current raw logs are retained under validation/recovery-*.log.
+
+## Continued recovery: delimited call lists and block contexts
+
+Call arguments now use Go's list algorithm: recognize elements, insert a
+missing comma, resynchronize against active outer lists, and advance only
+when no active context accepts the token. Blocks use statement recognition
+and stop recovery at their own closer. Source and type-member lists share
+those contexts. The diagnostic and terminator tables live in recovery.ts,
+a separate grammar concern required by cohere's 2000-line file limit.
+
+Focused comparison passes in 21.386s and cohere passes after its style fixes.
+The continuation advances to input 552, where a duplicated switch-case
+colon still stalls the old switch-clause statement loop. This is the next
+list to migrate to the same recovery mechanism.
