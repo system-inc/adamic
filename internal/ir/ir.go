@@ -383,8 +383,8 @@ type (
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
 	TypeOf struct{ Value Expression }
 
-	// MakeError is new Error(Message): an object with fields name ("Error") and message.
-	MakeError struct{ Message Expression }
+	// MakeError is an Error with Message and an optional Name (nil means "Error").
+	MakeError struct{ Message, Name Expression }
 
 	// WeakOf is Value, a reference, kept weakly: the handle to it, made if it has none yet, or
 	// undefined when Value is.

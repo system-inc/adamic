@@ -157,9 +157,10 @@ type lowering struct {
 	// generics maps each generic module function's symbol to its declaration, and genericInstances
 	// each instantiation already lowered to its function (generic.go). genericDepth counts the
 	// instantiations being lowered inside one another.
-	generics         map[*ast.Symbol]*ast.Node
-	genericInstances map[string]int
-	genericDepth     int
+	generics              map[*ast.Symbol]*ast.Node
+	genericInstances      map[string]int
+	classGenericInstances map[string]map[string]int
+	genericDepth          int
 
 	// caught are the variables a catch binds, each always an Error; tries are the try statements
 	// lowered (exceptions.go).
@@ -606,6 +607,9 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 // ++ and --. Any other expression's value would be thrown away, and stage 0 doesn't lower that yet.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
 	expression = ast.SkipParentheses(expression)
+	if statements, handled, err := l.conditionalSuper(expression); handled {
+		return statements, err
+	}
 	switch expression.Kind {
 	case ast.KindCallExpression:
 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {

@@ -19,7 +19,9 @@ type instance struct {
 	class          int
 	base           *instance
 	initializer    int
-	beforeSuper    int
+	superReady     int
+	unreadyThis    map[*ast.Node]bool
+	superStates    map[*ast.Node]uint8
 	constructing   bool
 	hasDescendants bool
 
@@ -45,6 +47,8 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	classType = l.concrete(classType)
 	if view := l.classView(classType, declaration); view != nil {
 		classType = view
+	} else {
+		return nil, l.notYet(where, "a method receiver without a nominal class view")
 	}
 	arguments := []ir.Type{}
 	substitution := map[*checker.Type]ir.Type{}
@@ -70,6 +74,9 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	}
 	key = l.program.Where(declaration) + ":" + key
 	mapper := l.typeMapperOf(declaration, classType)
+	if err := l.nominalTypeArguments(declaration, typeArguments, mapper, where); err != nil {
+		return nil, err
+	}
 	l.instantiated = append(l.instantiated, classType)
 	if existing, isLowered := l.instances[key]; isLowered {
 		for _, this := range existing.thisLocals {
@@ -111,7 +118,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	for _, argument := range arguments {
 		name += "_" + typeName(argument)
 	}
-	lowered := &instance{constructor: len(l.result.Functions), methods: map[string]int{}, slots: map[string]int{}, initializer: -1}
+	lowered := &instance{constructor: len(l.result.Functions), methods: map[string]int{}, slots: map[string]int{}, initializer: -1, superReady: -1}
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_new", Returns: ir.Object})
 	lowered.hasDescendants = l.derivedAncestors[l.symbol(declaration.Name())]
 	lowered.base = base
@@ -275,6 +282,9 @@ func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expressi
 
 // callOrMethod lowers a call to one of the module's functions, or to a method of one of its classes.
 func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.classGenericCall(node); handled {
+		return value, err
+	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if callee.Kind == ast.KindSuperKeyword {
 		return l.superCall(node)
@@ -282,7 +292,14 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return l.call(node)
 	}
+	receiver := callee.AsPropertyAccessExpression().Expression
+	receiverType := l.concrete(l.checker.GetTypeAtLocation(receiver))
 	method := l.checker.GetSymbolAtLocation(callee)
+	if isClassInstance(receiverType) {
+		if actual := l.checker.GetPropertyOfType(receiverType, callee.Name().Text()); actual != nil {
+			method = actual
+		}
+	}
 	if method == nil || len(method.Declarations) == 0 || method.Declarations[0].Kind != ast.KindMethodDeclaration {
 		return l.call(node)
 	}
@@ -291,8 +308,7 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	if !isClass {
 		return nil, l.notYet(node, "a method of a class stage 0 doesn't have")
 	}
-	receiver := callee.AsPropertyAccessExpression().Expression
-	if receiverType := l.checker.GetTypeAtLocation(receiver); receiverType.Flags()&checker.TypeFlagsUnion != 0 && l.withoutUndefined(receiverType) == nil {
+	if receiverType.Flags()&checker.TypeFlagsUnion != 0 && l.withoutUndefined(receiverType) == nil {
 		return nil, l.notYet(receiver, "a method call through a union of class types; narrow with instanceof first")
 	}
 	// this.method() is the instantiation being lowered: this is the polymorphic this type there,
@@ -300,7 +316,7 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	lowered := l.instance
 	if (ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword && ast.SkipParentheses(receiver).Kind != ast.KindSuperKeyword) || lowered == nil {
 		var err error
-		if lowered, err = l.instantiate(declaration, l.checker.GetTypeAtLocation(receiver), callee); err != nil {
+		if lowered, err = l.instantiate(declaration, receiverType, callee); err != nil {
 			return nil, err
 		}
 	}
@@ -313,6 +329,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	var object ir.Expression
 	var err error
 	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
+		if err := l.useOfThis(receiver); err != nil {
+			return nil, err
+		}
 		object = ir.Read{Local: l.this, Of: ir.Object}
 	} else {
 		object, err = l.expression(receiver)
@@ -479,7 +498,7 @@ func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
 // object of a field it reads or writes: a method it calls, or a function it's handed to, could read a
 // field not set yet.
 func (l *lowering) useOfThis(node *ast.Node) error {
-	if l.instance != nil && l.instance.beforeSuper != 0 && node.Pos() < l.instance.beforeSuper {
+	if l.instance != nil && l.instance.unreadyThis[node] {
 		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super(...) before using this"}
 	}
 	if l.instance != nil && l.instance.constructing && l.instance.hasDescendants {

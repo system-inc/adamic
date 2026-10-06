@@ -216,50 +216,24 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if returnValue != nil {
 			return l.notYet(returnValue, "a constructor returning a replacement value")
 		}
+		state := uint8(0)
 		if instance.base != nil {
-			// Conditional and repeated super need definite-initialization dataflow, not a guessed order.
-			var invalid *ast.Node
-			totalSuper := 0
-			var visit ast.Visitor
-			visit = func(node *ast.Node) bool {
-				if ast.IsFunctionLike(node) {
-					return false
-				}
-				if node.Kind == ast.KindCallExpression && ast.SkipParentheses(node.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
-					totalSuper++
-				}
-				if node.Kind == ast.KindReturnStatement {
-					invalid = node
-					return true
-				}
-				return node.ForEachChild(visit)
-			}
-			constructor.Body().ForEachChild(visit)
-			if invalid != nil {
-				return l.notYet(invalid, "an explicit return from a derived constructor")
-			}
-			count := 0
-			for _, statement := range constructor.Body().AsBlock().Statements.Nodes {
-				if statement.Kind != ast.KindExpressionStatement {
-					continue
-				}
-				call := ast.SkipParentheses(statement.AsExpressionStatement().Expression)
-				if call.Kind == ast.KindCallExpression && ast.SkipParentheses(call.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
-					count++
-					instance.beforeSuper = statement.End()
-				}
-			}
-			if count != 1 || totalSuper != 1 {
-				return l.notYet(constructor, "a derived constructor without exactly one unconditional super(...) statement")
+			var err error
+			state, err = l.prepareSuper(constructor, initializer)
+			if err != nil {
+				return err
 			}
 		}
+
 		outerUnset := l.unsetUntil
 		l.unsetUntil = lastFieldAssignment(declaration, constructor)
 		err := l.lowerFunction(initializer, constructor, this)
 		l.unsetUntil = outerUnset
-		instance.beforeSuper = 0
 		if err != nil {
 			return err
+		}
+		if state&superUninitialized != 0 {
+			l.result.Functions[initializer].Body = append(l.result.Functions[initializer].Body, l.superEnd())
 		}
 	} else if instance.base != nil {
 		arguments := []ir.Expression{}
@@ -369,13 +343,18 @@ func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	statements := []ir.Statement{ir.Evaluate{Value: call}}
+	statements := []ir.Statement{}
+	if l.instance.superStates[node]&superInitialized != 0 {
+		// JavaScript constructs another base object before rejecting a second binding.
+		// Do not overwrite the already initialized object's fields on this path.
+		base := call.(ir.Call)
+		second := ir.Call{Function: l.instance.base.constructor, Arguments: base.Arguments[1:], Returns: ir.Object}
+		statements = append(statements, ir.If{Condition: ir.Read{Local: l.instance.superReady, Of: ir.Boolean}, Then: []ir.Statement{ir.Evaluate{Value: second}, l.superError("Super constructor may only be called once")}})
+	}
+	statements = append(statements, ir.Evaluate{Value: call}, ir.Assign{Local: l.instance.superReady, Value: ir.BooleanConstant{Value: true}})
 	// Fields run only once super has returned, and before the next derived-body statement.
-	before := l.instance.beforeSuper
-	l.instance.beforeSuper = 0
 	declaration := l.classNode.Parent
 	initialized, err := l.fieldInitializers(declaration, l.this)
-	l.instance.beforeSuper = before
 	if err != nil {
 		return nil, err
 	}
@@ -480,7 +459,7 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 	return &Refused{Where: l.program.Where(node), What: "a value without nominal ancestry seen as " + l.checker.TypeToString(target), Fix: "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"}
 }
 
-func (l *lowering) nominalAncestor(source, target *checker.Type) bool {
+func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		if constraint := l.checker.GetBaseConstraintOfType(source); constraint != nil {
 			source = constraint
@@ -498,14 +477,14 @@ func (l *lowering) nominalAncestor(source, target *checker.Type) bool {
 			return false
 		}
 		for index := range from {
-			if !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) {
+			if !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
 				return false
 			}
 		}
 		return true
 	}
 	for _, base := range l.classBases(source) {
-		if l.nominalAncestor(base, target) {
+		if l.nominalAncestor(base, target, seen) {
 			return true
 		}
 	}
@@ -606,7 +585,7 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 		if symbol := to.Symbol(); symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 			return nil
 		}
-		if !l.nominalAncestor(from, to) {
+		if !l.nominalAncestor(from, to, seen) {
 			return to
 		}
 		return nil
@@ -762,6 +741,14 @@ func (l *lowering) classIdentity(declaration *ast.Node) int {
 // An inherited method's receiver can be a descendant with different type arguments.
 // Find the declaration's actual instantiated view instead of substituting by position.
 func (l *lowering) classView(proven *checker.Type, declaration *ast.Node) *checker.Type {
+	if proven.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		if constraint := l.checker.GetBaseConstraintOfType(proven); constraint != nil {
+			proven = constraint
+		}
+	}
+	if weak := l.weakTarget(proven); weak != nil {
+		proven = weak
+	}
 	if proven.Symbol() == l.symbol(declaration.Name()) {
 		return proven
 	}

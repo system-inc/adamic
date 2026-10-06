@@ -10,6 +10,7 @@ func init() {
 		"internal/oracle/testdata/class_identity.a",
 		"internal/oracle/testdata/class_inheritance_memory.a",
 		"internal/oracle/testdata/class_inheritance_generic.a",
+		"internal/oracle/testdata/class_inheritance_conditional.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path    string

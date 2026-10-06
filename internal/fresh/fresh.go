@@ -1175,6 +1175,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		return a.fresh(anyField, value{})
 	case ir.MakeError:
 		a.value(expression.Message)
+		if expression.Name != nil {
+			a.value(expression.Name)
+		}
 		return a.fresh(anyField, value{})
 	case ir.ObjectLiteral:
 		var copied value

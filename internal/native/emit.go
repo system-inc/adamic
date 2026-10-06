@@ -897,7 +897,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Box:
 		return e.box(expression.Value)
 	case ir.MakeError:
-		return e.own(ir.Object, fmt.Sprintf("adamic_error_new(%s)", e.value(expression.Message)))
+		return e.makeError(expression)
 	case ir.WeakOf:
 		return e.own(ir.Weak, fmt.Sprintf("adamic_weak_of(%s)", e.value(expression.Value)))
 	case ir.WeakTarget:

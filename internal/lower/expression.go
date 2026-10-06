@@ -20,6 +20,7 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 }
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+	proven = l.concrete(proven)
 	flags := proven.Flags()
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.

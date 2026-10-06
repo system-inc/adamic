@@ -585,6 +585,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Box:
 		return e.value(expression.Value)
 	case ir.MakeError:
+		if expression.Name != nil {
+			return "Object.assign(new Error(" + e.value(expression.Message) + "), {name: " + e.value(expression.Name) + "})"
+		}
 		return "new Error(" + e.value(expression.Message) + ")"
 	case ir.WeakOf:
 		// A plain reference: Node keeps what it points to as long as anything does, which is what the
