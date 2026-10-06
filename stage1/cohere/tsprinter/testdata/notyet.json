@@ -1,9 +1,5 @@
 [
   {
-    "Source": "x => x + 1",
-    "Reason": "ArrowFunction"
-  },
-  {
     "Source": "(function () {return 1;})",
     "Reason": "FunctionExpression"
   },
@@ -50,5 +46,9 @@
   {
     "Source": "tag`a${b}`",
     "Reason": "TaggedTemplateExpression"
+  },
+  {
+    "Source": "(x: number) => x",
+    "Reason": "function-types"
   }
 ]

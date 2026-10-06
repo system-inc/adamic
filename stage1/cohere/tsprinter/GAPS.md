@@ -13,7 +13,7 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 
 | Input | Reason | Work still needed |
 |---|---|---|
-| `x => x + 1` | `ArrowFunction` | Parameter and arrow-chain layout; block bodies need statements |
+| `(x: number) => x` | `function-types` | Typed signatures belong to the type-printing slice |
 | `({method(){return 1;}})` | `MethodDeclaration` | Method parameters and statement bodies |
 | `[a,b]=items` | `assignment-pattern` | Destructuring target patterns and their assignment layout |
 | `` tag`a${b}` `` | `TaggedTemplateExpression` | Tag layout, Jest tables and embedded language reporting |
@@ -100,7 +100,7 @@ ancestor stack through non-null wrappers and computed-member parents, as cohere'
 
 ## Later slices
 
-Statements, declarations and types are not implemented. Full-file comment attachment, source
+Complete statement composition, declarations and types are not implemented. Supported arrow block bodies already compose the basic statement layouts described below. Full-file comment attachment, source
 normalization, embedded-language printers and non-default formatter options are not covered by this
 expression driver. The first green increment is a reusable layout engine plus the expression core;
 remaining expression families come before claiming the entire expression slice complete.
@@ -176,3 +176,35 @@ before the closing brace, absolute indentation inherited from raw quasis, and li
 propagation. Long binary interpolations do not add a second indentation level: the template owns
 that indentation. The generated corpus covers leading and trailing interpolation newlines separately.
 Tagged templates remain a separate proving input. No new stage-0 gap was encountered.
+
+## Arrow and basic body layouts
+
+Untyped arrows now compose defaults/rest, nested chains, expanded call arguments and simple block
+bodies. The body printer preserves directives and string parentheses, return/throw argument groups,
+object-receiver parentheses and the numeric ancestor stack. Statement composition beyond these
+bodies, binding patterns and typed signatures remain separate slices.
+
+The module split first encountered the intentional refusal of import cycles, including type-only
+cycles. The final layout uses pure syntax helpers instead of a callback contract. Two further observations on this branch's
+scanner/parser base are recorded with standalone programs: these are not claims about current main.
+
+| Program | Node | Stage 0/native observation | Port accommodation |
+|---|---|---|---|
+| [classInterfaceMethod.ts.txt](gaps/classInterfaceMethod.ts.txt) | `17` | Lowering and clang succeed; native exits 70, `compiler bug: a field the checker proved is there is missing` | Keep stateful methods on the concrete printer; the proving workaround constructs explicit function properties |
+| [optionalBooleanFunction.ts.txt](gaps/optionalBooleanFunction.ts.txt) | `absent` | `NotYet`: function value taking `boolean \| undefined` | The proving workaround uses a required boolean parameter; the final layout has no optional callback contract |
+
+`TestClassInterfaceMethodGap` and `TestOptionalBooleanFunctionGap` copy these texts to scratch `.ts`
+files. They assert the Node result and the recorded failure; the working forms run byte-identically
+on Node, native and the JavaScript backend with no leaks. Substituting the working form is also the
+mutant that makes each failure check reject a successful normal run. The `.txt` programs are a
+separate execution-gap corpus, not formatted expression fragments.
+
+The class/interface panic is a compiler implementation bug. A compiler adapter could retain class method metadata through
+the interface view and dispatch `reader.read()` with its original receiver. Arbitrary method
+extraction needs its own Node oracle. Until that call is supported, returning NotYet during lowering
+would be preferable to reaching native with a missing proved field. This is a proposal,
+not an internal change in this port.
+
+A `.some` callback capturing the layout class was also refused because the callback interface can
+reach that captured type. A loop reads the async modifier without creating that function value.
+No language or runtime rule is relaxed, and no internal file is changed.

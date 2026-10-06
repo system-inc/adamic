@@ -510,3 +510,148 @@ the proving input or the mutated dollar printer. The final unmutated corpus incl
 Final template gate: exit 0, 406.287 s; all 138,241 fragments byte-identical to Go, npm Prettier
 3.9.6 and the embedded fork on source Node, ASan/UBSan native, JS backend and native release.
 The separate leak run passes. Thirteen unported proving inputs retain their exact NotYet reasons.
+
+## Arrow and basic body increment
+
+Untyped arrows support defaults/rest, async prefixes, chains through 20 arrows, callee/member
+parentheses and assignment-sensitive signatures. Call arguments implement expanded first/last
+callbacks, multiple-function composition and dependency arrays. The basic body printer composes
+blocks, expression statements, return/throw arguments, empty statements and debugger/jump tokens.
+Protected string expressions preserve their directive status. Numeric ancestor paths include body
+statements and flattened inner arrows; object receivers starting an arrow body keep parentheses.
+Eleven targeted Go/Node probes caught and then closed the missing return-ternary group and missing
+object-receiver parentheses. Their inputs are in the expanded generator.
+
+The generator adds 2,672 cases: 27 body shapes, six parameter lists, two async variants and eight
+contexts (2,592), plus 80 chains. Total 139,235 maximal fragments from 200 files, no parse refusals.
+`results/arrow-coverage.json` records counts. Thirteen explicit proving gaps remain, replacing the
+plain-arrow gap by a typed-signature gap. This is not whole-file statement formatting.
+
+The first layout experiment used `functions.ts` and a third shared-contract module, `functionContext.ts`.
+A type-only import cycle was refused. Viewing class methods through function-property slots then
+revealed a native compiler bug; explicit callback properties work on all three executions. A callback
+parameter inferred as `boolean | undefined` is NotYet, so known callers supply required arguments.
+A `.some` closure capturing the layout class was also Refused; an equivalent loop reads the async
+modifier without capturing that class. No internal, parser or language changes were made.
+Earlier refused/aborted gates and mutants do not count as catches. That intermediate source passed cohere:
+276 rules, 11 checked, 100% Adamic-ready, plus vet and whitespace checks.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-arrow-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-arrow-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-arrow-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/(arrow|return|statement|body|simple)' > /tmp/ts-printer-arrow-mutants.log 2>&1
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^Test(ClassInterfaceMethodGap|OptionalBooleanFunctionGap)$' \
+  > /tmp/ts-printer-interface-gaps-final.log 2>&1
+```
+
+Intermediate callback-layout gate exit 0, 683.056 s, while the five mutants shared the four-CPU quota. All 139,235
+fragments byte-identical to Go, npm Prettier 3.9.6 and the embedded fork on source Node, native
+ASan/UBSan, JS backend and native release; the separate leak run passes. Mutants use this same
+final corpus, compile and finish normally with exit 0 and empty stderr on both Node and native:
+
+| Mutant | First mismatch | Subtest seconds |
+|---|---|---:|
+| Arrow token removed | Case 79, `random.sort((left, right)  left - right)` | 513.13 |
+| Return keyword changed to throw | Case 278, the repository's counter callback | 506.86 |
+| Expression-statement semicolon removed | Case 278, `count += 1` | 511.07 |
+| Block opening brace changed to `[` | Case 278, the counter callback | 502.20 |
+| Debugger removed | Case 114242, generated debugger/return body | 524.99 |
+
+Complete mutant command exit 0, 530.843 s. The two separate execution-gap checks also pass,
+18.166 s: Node prints `17`, class/interface native exits 70 with the missing-field panic; the
+explicit callback prints `17` everywhere, leak-free. Node prints `absent` for the boolean/undefined
+callback; stage 0 records NotYet. Its required-parameter form prints `absent` everywhere, leak-free.
+Each gap check is proven able to reject the corresponding successful workaround as its mutant.
+
+### Direct-layout correction
+
+The callback-layout benchmark regressed: native 35,571, Node 63,922, Go 52,318 and npm Prettier
+3,019 texts/s. `results/arrow-context-timing.json` retains all three samples. Rather than attributing
+the regression to the compiler without a controlled comparison, the port now keeps stateful layout
+in `Expressions`, splits pure AST helpers into `syntax.ts`, and moves document analysis into
+`Documents`. No function-property interface is allocated for each expression. The async-modifier
+loop remains. No internal file or parser changes are involved.
+
+The final source passes cohere: 276 rules, 10 checked, 100% Adamic-ready. A fresh complete oracle
+and the five family mutants are rerun on this source. Before/after throughput uses exactly the
+intermediate 139,235-case corpus, including every expected output byte; fresh source coverage is
+recorded separately because reorganizing the port changes its own maximal expression fragments.
+
+Fresh direct-layout gate: exit 0, 641.856 s. All **139,234 maximal fragments from 199 files**,
+including the 2,672 new arrow compositions, are byte-identical to Go, npm Prettier 3.9.6 and the
+embedded fork on source Node, native ASan/UBSan, the JavaScript backend and native release.
+The separate native leak run passes; all 13 loud NotYet proofs pass. The independent document
+check passes all 5,072 documents in 21.008 s after the document-analysis move.
+`results/arrow-coverage.json` is the final coverage; `arrow-context-coverage.json` preserves the
+intermediate workload used by both throughput measurements.
+
+Final-source output mutants, all exit 0 with empty stderr on both Node and native:
+
+| Mutant | First mismatch | Subtest seconds |
+|---|---|---:|
+| Return becomes throw | Case 278, counter callback | 529.33 |
+| Opening block brace becomes `[` | Case 278, counter callback | 532.78 |
+| Expression statement loses semicolon | Case 278, counter callback | 544.01 |
+| Debugger disappears | Case 114241, generated arrow body | 550.53 |
+| Arrow token disappears | Case 79, random-sort comparator | 476.52 |
+
+The combined command in `/tmp/ts-printer-arrow-direct-mutants.log` exited 1 in 556.741 s:
+its arrow string anchor no longer matched the formatted source, while the other four subtests
+passed. This harness failure is not a catch. The anchor was corrected and the arrow subtest
+rerun separately, exit 0 in 489.029 s, recorded in
+`/tmp/ts-printer-arrow-direct-arrow-mutant.log`. That normal-run mismatch is the arrow catch.
+No refused lowering, crash or sanitizer failure is counted as an output mutant catch.
+
+```sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-arrow-direct-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-arrow-direct-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-arrow-direct-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/arrow' > /tmp/ts-printer-arrow-direct-arrow-mutant.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestDocumentsAgainstGoAndPrettier$' > /tmp/ts-printer-arrow-direct-doc.log 2>&1
+python3 stage1/cohere/tsprinter/testdata/measure.py /tmp/ts-printer-arrow-corpus \
+  /tmp/ts-printer-arrow-direct-artifacts/port /tmp/ts-printer-go-oracle \
+  /tmp/graphql-printer-prettier > /tmp/ts-printer-arrow-direct-timing.json \
+  2> /tmp/ts-printer-arrow-direct-timing.err
+```
+
+The final arrow checks are package-filtered commands listed above, plus cohere source checks,
+`go vet ./stage1/cohere/tsprinter` and `git diff --check`. No full-repository gate was run for this
+port-only increment. Earlier sequence, assignment, conditional, object, argument, member and
+template families were each committed and pushed after their own green oracle gates and output
+mutants; their exact counts and commands remain in the preceding sections.
+
+Controlled direct-layout throughput, three sequential complete processes on the unchanged
+139,235-case intermediate corpus (all output samples byte-identical, exit 0, empty stderr):
+
+| Printer | Median texts/s | Seconds, all three runs |
+|---|---:|---|
+| Native release | 35,415 | 3.932, 4.023, 3.778 |
+| Source Node | 65,528 | 2.127, 2.117, 2.125 |
+| Go cohere | 51,139 | 2.723, 2.761, 2.706 |
+| npm Prettier | 3,063 | 45.461, 43.890, 47.768 |
+
+`results/arrow-timing.json` contains the precise samples. The callback-layout native median was
+35,571: the direct-layout median is 0.44% lower, and the timing ranges overlap. This experiment
+**does not support the callback split as the cause of the native regression**, and no native speed
+improvement is claimed. The final concrete layout avoids the observed interface implementation
+bug and reduces the module coupling, but native is now slower than both Node and Go on this
+expanded workload. Different fragment counts and newly supported larger parents also prevent a
+causal comparison with earlier-family throughput. Diagnosing that cost needs a separate profile;
+no compiler/runtime optimization was attempted in this port.

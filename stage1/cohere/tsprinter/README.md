@@ -142,3 +142,16 @@ absolute-indent rules. Literal newlines break containing groups. Calls with one 
 retain the printer's single-template layout. Parenthesized expressions containing optional arguments
 or branches are accepted; parentheses stopping an active optional chain remain a proving gap.
 The corpus includes 1,538 new template cases and 138,241 maximal fragments from 198 files.
+
+## Arrow and body increment
+
+Untyped arrow parameters (including defaults and rest), nested arrow chains and arrow-sensitive
+argument expansion are implemented. Supported block bodies compose expression statements,
+return/throw arguments, empty statements and debugger/jump statements. Directive prologues retain
+their original status; parenthesized strings do not become directives. This still is an expression
+driver, not a claim to complete statement or whole-file printing.
+
+Stateful layout stays in `Expressions`. `syntax.ts` contains pure AST classification helpers, and
+`Documents` owns document analysis. This avoids callback allocation and interface dispatch in the
+hot path. An earlier callback split exposed two stage-0 gaps; their failing programs and working
+forms remain independently tested in GAPS.md.

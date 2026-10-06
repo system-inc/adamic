@@ -110,6 +110,34 @@ export class Documents {
         }
         return this.concat(joined);
     }
+    willBreak(index: number): boolean {
+        const doc = this.get(index);
+        if(
+            (['group', 'conditionalGroup'].includes(doc.kind) && doc.broken) ||
+            ['breakParent', 'hardlineWithoutBreakParent', 'literallineWithoutBreakParent'].includes(doc.kind)
+        )
+            return true;
+        const count = doc.kind === 'conditionalGroup' ? Math.min(1, doc.parts.length) : doc.parts.length;
+        for(let position = 0; position < count; position++)
+            if(this.willBreak(doc.parts[position] ?? panic('missing break child'))) return true;
+        return false;
+    }
+    removeLines(index: number): number {
+        const doc = this.get(index);
+        if(doc.kind === 'line') return this.text(' ');
+        if(doc.kind === 'softline') return this.text('');
+        if(doc.kind === 'ifBreak') return this.removeLines(doc.parts[1] ?? panic('missing flat branch'));
+        const parts: number[] = [];
+        for(const child of doc.parts) parts.push(this.removeLines(child));
+        return this.add(doc.kind, parts, doc.text, doc.number, doc.key, doc.broken);
+    }
+    canBreak(index: number): boolean {
+        const doc = this.get(index);
+        if(['line', 'softline', 'hardlineWithoutBreakParent', 'literallineWithoutBreakParent'].includes(doc.kind))
+            return true;
+        for(const child of doc.parts) if(this.canBreak(child)) return true;
+        return false;
+    }
     propagate(root: number): void {
         const visited = new Set<number>();
         const groups: number[] = [];

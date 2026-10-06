@@ -30,7 +30,7 @@ func supportedExpression(node *estree.Node) bool {
 	case "Identifier", "PrivateIdentifier", "Literal", "ThisExpression", "Super":
 		return true
 	case "ObjectExpression", "Property", "ConditionalExpression", "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
-	case "TemplateLiteral":
+	case "TemplateLiteral", "ArrowFunctionExpression", "AssignmentPattern", "RestElement", "BlockStatement", "ExpressionStatement", "ReturnStatement", "ThrowStatement", "EmptyStatement", "DebuggerStatement", "BreakStatement", "ContinueStatement":
 	case "CallExpression", "NewExpression":
 		if node.Child("typeArguments") != nil {
 			return false
@@ -118,6 +118,23 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 	for _, value := range []string{"f?.()", "f?.(x)", "f()", "f(veryLongIdentifierAlpha)", "obj?.x", "obj!.x", "!!x", "++x"} {
 		for _, right := range []string{"g(" + value + ")", "g(" + value + ").x"} {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
+		}
+	}
+	arrowBodies := []string{"a=b", "({x:1}).x", "({x:1})?a:b", "{return a?b:c;}", "{return a=b;}", "{throw a=b;}", "{return (a,b);}", "{throw new Error('failure');}", "{debugger;return x;}", "{return (veryLongIdentifierAlpha,veryLongIdentifierBeta,veryLongIdentifierGamma,veryLongIdentifierDelta);}", "(veryLongIdentifierAlpha,veryLongIdentifierBeta,veryLongIdentifierGamma,veryLongIdentifierDelta)", "{('use strict');f();'other';}", "{'use strict';'use asm';f();'later';}", "{({x:1}).x;return x;}", "x", "x+1", "a?b:c", "(a,b)", "({x:1,y:2})", "[a,b,c]", "f(x)", "`a${x}b`", "`a\nb`", "{return x;}", "{return veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma + veryLongIdentifierDelta;}", "{f(x);return x;}", "{}"}
+	for _, parameters := range []string{"x", "()", "(x,y)", "(x=1)", "(...items)", "(veryLongParameterNameAlpha,veryLongParameterNameBeta,veryLongParameterNameGamma)"} {
+		for _, body := range arrowBodies {
+			for _, prefix := range []string{"", "async "} {
+				arrow := prefix + parameters + "=>" + body
+				for _, value := range []string{arrow, "x=" + arrow, "f(" + arrow + ")", "f(x," + arrow + ")", "[" + arrow + "]", "(" + arrow + ")(x)", "(" + arrow + ").x", "({key:" + arrow + "})"} {
+					add("arrow-composition", value)
+				}
+			}
+		}
+	}
+	for length := 1; length <= 20; length++ {
+		arrow := strings.Repeat("(veryLongParameterNameAlpha,veryLongParameterNameBeta)=>", length) + "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma"
+		for _, value := range []string{arrow, "x=" + arrow, "f(" + arrow + ")", "(" + arrow + ")()"} {
+			add("arrow-chain", value)
 		}
 	}
 	templateValues := []string{"x", "a+b+c", "a?b:c", "a??b", "(a,b)", "({x:1})", "{\nx:1,y:2\n}", "[a,b,c]", "f(x)", "obj.x", "obj?.x", "veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma + veryLongIdentifierDelta"}
@@ -440,6 +457,32 @@ func supportedSyntax(node *ast.Node) bool {
 		return valid
 	case ast.KindShorthandPropertyAssignment:
 		return node.AsShorthandPropertyAssignment().ObjectAssignmentInitializer == nil
+	case ast.KindArrowFunction:
+		if node.AsArrowFunction().Type != nil || node.AsArrowFunction().TypeParameters != nil {
+			return false
+		}
+		valid := true
+		node.ForEachChild(func(child *ast.Node) bool {
+			if child.Kind != ast.KindEqualsGreaterThanToken && child.Kind != ast.KindAsyncKeyword && !supportedSyntax(child) {
+				valid = false
+			}
+			return false
+		})
+		return valid
+	case ast.KindParameter:
+		item := node.AsParameterDeclaration()
+		return item.Name().Kind == ast.KindIdentifier && item.Type == nil && item.QuestionToken == nil && supportedSyntax(item.Initializer)
+	case ast.KindBlock, ast.KindExpressionStatement, ast.KindReturnStatement, ast.KindThrowStatement, ast.KindBreakStatement, ast.KindContinueStatement:
+		valid := true
+		node.ForEachChild(func(child *ast.Node) bool {
+			if !supportedSyntax(child) {
+				valid = false
+			}
+			return false
+		})
+		return valid
+	case ast.KindEmptyStatement, ast.KindDebuggerStatement:
+		return true
 	case ast.KindTemplateExpression:
 		for _, span := range node.AsTemplateExpression().TemplateSpans.Nodes {
 			if !supportedSyntax(span.AsTemplateSpan().Expression) {

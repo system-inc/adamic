@@ -6,104 +6,21 @@ import { Documents, type SettingsOptions } from './doc.ts';
 import { numberText, stringText } from './literals.ts';
 import { isKeyName } from './keys.ts';
 import { stringWidth } from './width.ts';
+import {
+    assignmentOperators,
+    syntaxOperator,
+    rank,
+    flatten,
+    simpleArgument,
+    factory,
+    couldExpandArgument,
+    functionArgument,
+    functionComposition,
+    hookArguments,
+    numericArray,
+} from './syntax.ts';
 export type ResultType =
     { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'NotYet'; readonly reason: string };
-const assignmentOperators: readonly string[] = [
-    '=',
-    '+=',
-    '-=',
-    '*=',
-    '/=',
-    '%=',
-    '**=',
-    '<<=',
-    '>>=',
-    '>>>=',
-    '&=',
-    '|=',
-    '^=',
-    '&&=',
-    '||=',
-    '??=',
-];
-const operators = new Map<string, string>([
-    ['CommaToken', ','],
-    ['EqualsToken', '='],
-    ['PlusEqualsToken', '+='],
-    ['MinusEqualsToken', '-='],
-    ['AsteriskEqualsToken', '*='],
-    ['SlashEqualsToken', '/='],
-    ['PercentEqualsToken', '%='],
-    ['AsteriskAsteriskEqualsToken', '**='],
-    ['LessThanLessThanEqualsToken', '<<='],
-    ['GreaterThanGreaterThanEqualsToken', '>>='],
-    ['GreaterThanGreaterThanGreaterThanEqualsToken', '>>>='],
-    ['AmpersandEqualsToken', '&='],
-    ['BarEqualsToken', '|='],
-    ['CaretEqualsToken', '^='],
-    ['AmpersandAmpersandEqualsToken', '&&='],
-    ['BarBarEqualsToken', '||='],
-    ['QuestionQuestionEqualsToken', '??='],
-    ['PlusToken', '+'],
-    ['MinusToken', '-'],
-    ['AsteriskToken', '*'],
-    ['SlashToken', '/'],
-    ['PercentToken', '%'],
-    ['AsteriskAsteriskToken', '**'],
-    ['LessThanToken', '<'],
-    ['GreaterThanToken', '>'],
-    ['LessThanEqualsToken', '<='],
-    ['GreaterThanEqualsToken', '>='],
-    ['EqualsEqualsToken', '=='],
-    ['ExclamationEqualsToken', '!='],
-    ['EqualsEqualsEqualsToken', '==='],
-    ['ExclamationEqualsEqualsToken', '!=='],
-    ['BarToken', '|'],
-    ['CaretToken', '^'],
-    ['AmpersandToken', '&'],
-    ['BarBarToken', '||'],
-    ['AmpersandAmpersandToken', '&&'],
-    ['QuestionQuestionToken', '??'],
-    ['LessThanLessThanToken', '<<'],
-    ['GreaterThanGreaterThanToken', '>>'],
-    ['GreaterThanGreaterThanGreaterThanToken', '>>>'],
-    ['InKeyword', 'in'],
-    ['InstanceOfKeyword', 'instanceof'],
-    ['ExclamationToken', '!'],
-    ['TildeToken', '~'],
-    ['PlusPlusToken', '++'],
-    ['MinusMinusToken', '--'],
-    ['DeleteExpression', 'delete'],
-    ['VoidExpression', 'void'],
-    ['TypeOfExpression', 'typeof'],
-]);
-function rank(operator: string): number {
-    const levels: readonly (readonly string[])[] = [
-        ['??'],
-        ['||'],
-        ['&&'],
-        ['|'],
-        ['^'],
-        ['&'],
-        ['==', '!=', '===', '!=='],
-        ['<', '>', '<=', '>=', 'in', 'instanceof'],
-        ['<<', '>>', '>>>'],
-        ['+', '-'],
-        ['*', '/', '%'],
-        ['**'],
-    ];
-    for(let index = 0; index < levels.length; index++)
-        if((levels[index] ?? panic('missing precedence level')).includes(operator)) return index;
-    return -1;
-}
-function flatten(parent: string, child: string): boolean {
-    if(rank(parent) !== rank(child) || parent === '**') return false;
-    if(['==', '!=', '===', '!=='].includes(parent) && ['==', '!=', '===', '!=='].includes(child)) return false;
-    if(['*', '/', '%'].includes(parent) && ['*', '/', '%'].includes(child) && (parent !== child || parent === '%'))
-        return false;
-    if(['<<', '>>', '>>>'].includes(parent) && ['<<', '>>', '>>>'].includes(child)) return false;
-    return true;
-}
 function hasBlankLine(source: string): boolean {
     let previous = source.indexOf('\n');
     while(previous >= 0) {
@@ -118,9 +35,15 @@ export class Expressions {
     readonly parser: Parser;
     readonly source: string;
     readonly docs: Documents;
-    directive = true;
+    readonly state = {
+        directive: true,
+        expandedArrow: -1,
+        expandedFirstArrow: -1,
+        statementExpressionRoot: -1,
+    };
     readonly ancestors: number[] = [];
     readonly sequenceBoundaries = new Set<number>();
+    readonly protectedStrings = new Set<number>();
     constructor(parser: Parser, source: string, docs: Documents) {
         this.parser = parser;
         this.source = source;
@@ -139,14 +62,7 @@ export class Expressions {
         return this.unwrapped(this.node(index).children[offset] ?? panic('missing expression child'));
     }
     operator(index: number): string {
-        const node = this.node(index);
-        const kind =
-            node.kind === 'BinaryExpression'
-                ? this.node(node.children[1] ?? panic('missing operator')).kind
-                : node.operator === ''
-                  ? node.kind
-                  : node.operator;
-        return operators.get(kind) ?? '';
+        return syntaxOperator(this.parser, index);
     }
     activeOptional(index: number): boolean {
         const id = this.unwrapped(index);
@@ -185,6 +101,8 @@ export class Expressions {
             case 'StringLiteral':
                 if(this.source.slice(node.pos, node.end).trim().includes('\n')) return 'string-literal-layout';
                 return '';
+            case 'ArrowFunction':
+                return this.functionUnsupported(id);
             case 'TemplateExpression':
                 for(let position = 1; position < node.children.length; position++) {
                     const span = this.node(node.children[position] ?? panic('missing template span'));
@@ -274,6 +192,8 @@ export class Expressions {
             this.operator(id) === ','
         )
             this.sequenceBoundaries.add(id);
+        if(this.node(index).kind === 'ParenthesizedExpression' && this.node(id).kind === 'StringLiteral')
+            this.protectedStrings.add(id);
         const node = this.node(id);
         for(let position = 0; position < node.children.length; position++)
             node.children[position] = this.normalize(node.children[position] ?? panic('missing normalization child'));
@@ -296,9 +216,43 @@ export class Expressions {
     }
     parenthesize(index: number, parent: number, role: string): boolean {
         const node = this.node(index);
-        if(node.kind === 'ObjectLiteralExpression') return this.leftmost(this.ancestors[0] ?? index) === index;
+        if(node.kind === 'ObjectLiteralExpression') {
+            const root =
+                this.state.statementExpressionRoot >= 0
+                    ? this.state.statementExpressionRoot
+                    : (this.ancestors[0] ?? index);
+            if(this.leftmost(root) === index) return true;
+            for(let position = this.ancestors.length - 1; position >= 0; position--) {
+                const ancestor = this.ancestors[position] ?? panic('missing object ancestor');
+                const item = this.node(ancestor);
+                if(item.kind !== 'ArrowFunction') continue;
+                const body = this.unwrapped(item.children[item.children.length - 1] ?? panic('missing arrow body'));
+                return (
+                    !this.isAssignment(body) &&
+                    !(this.node(body).kind === 'BinaryExpression' && this.operator(body) === ',') &&
+                    this.leftmost(body) === index
+                );
+            }
+            return false;
+        }
         if(parent < 0) return false;
         const outer = this.node(parent);
+        if(node.kind === 'ArrowFunction')
+            return (
+                role === 'callee' ||
+                role === 'object' ||
+                role === 'tag' ||
+                (outer.kind === 'BinaryExpression' && !this.isAssignment(parent) && this.operator(parent) !== ',') ||
+                (outer.kind === 'ConditionalExpression' && role === 'test') ||
+                [
+                    'PrefixUnaryExpression',
+                    'PostfixUnaryExpression',
+                    'DeleteExpression',
+                    'VoidExpression',
+                    'TypeOfExpression',
+                    'NonNullExpression',
+                ].includes(outer.kind)
+            );
         if(outer.kind === 'NewExpression' && role === 'callee') {
             let current = index;
             while(
@@ -318,7 +272,11 @@ export class Expressions {
             role === 'object' &&
             outer.kind === 'ElementAccessExpression' &&
             !outer.optional &&
-            this.leftmost(this.ancestors[0] ?? index) === index
+            this.leftmost(
+                this.state.statementExpressionRoot >= 0
+                    ? this.state.statementExpressionRoot
+                    : (this.ancestors[0] ?? index),
+            ) === index
         )
             return true;
         if(node.kind === 'NumericLiteral')
@@ -682,7 +640,7 @@ export class Expressions {
                 ]),
             );
         if(
-            !this.canBreak(left) &&
+            !this.docs.canBreak(left) &&
             (shortKey ||
                 [
                     'TrueKeyword',
@@ -707,6 +665,334 @@ export class Expressions {
     ownOptional(index: number): boolean {
         for(const child of this.node(index).children) if(this.node(child).kind === 'QuestionDotToken') return true;
         return false;
+    }
+    parameterDoc(index: number, parent: number): number {
+        const children = this.node(index).children;
+        const rest = this.node(children[0] ?? panic('missing parameter')).kind === 'DotDotDotToken';
+        const name = children[rest ? 1 : 0] ?? panic('missing parameter name');
+        const left = this.docs.text(`${rest ? '...' : ''}${this.node(name).text}`);
+        if(children.length === (rest ? 2 : 1)) return left;
+        const initializer = children[rest ? 2 : 1] ?? panic('missing parameter initializer');
+        return this.valueDoc(
+            index,
+            parent,
+            left,
+            this.print(initializer, index, 'right'),
+            initializer,
+            this.docs.text(' ='),
+            false,
+        );
+    }
+    parametersDoc(index: number): number {
+        const printed: number[] = [];
+        let rest = false;
+        for(const child of this.node(index).children) {
+            if(this.node(child).kind !== 'Parameter') continue;
+            if(printed.length > 0) printed.push(this.docs.concat([this.docs.text(','), this.docs.line()]));
+            printed.push(this.parameterDoc(child, index));
+            rest = this.node(this.node(child).children[0] ?? panic('missing parameter')).kind === 'DotDotDotToken';
+        }
+        if(printed.length === 0) return this.docs.text('()');
+        if(index === this.state.expandedArrow || index === this.state.expandedFirstArrow)
+            return this.docs.group(
+                this.docs.concat([
+                    this.docs.text('('),
+                    this.docs.removeLines(this.docs.concat(printed)),
+                    this.docs.text(')'),
+                ]),
+            );
+        return this.docs.group(
+            this.docs.concat([
+                this.docs.text('('),
+                this.docs.indent(this.docs.concat([this.docs.softline(), ...printed])),
+                rest ? this.docs.text('') : this.docs.ifBreak(this.docs.text(','), this.docs.text('')),
+                this.docs.softline(),
+                this.docs.text(')'),
+            ]),
+        );
+    }
+    arrowDoc(index: number, parent: number, role: string): number {
+        const signatures: number[] = [];
+        let current = index;
+        let forceBreak = false;
+        let body: number;
+        while(true) {
+            const node = this.node(current);
+            let async = false;
+            for(const child of node.children) if(this.node(child).kind === 'AsyncKeyword') async = true;
+            signatures.push(this.docs.concat([this.docs.text(async ? 'async ' : ''), this.parametersDoc(current)]));
+            for(const child of node.children) {
+                if(this.node(child).kind === 'Parameter' && this.node(child).children.length !== 1) forceBreak = true;
+            }
+            body = this.unwrapped(node.children[node.children.length - 1] ?? panic('missing arrow body'));
+            if(this.node(body).kind !== 'ArrowFunction' || index === this.state.expandedArrow) break;
+            current = body;
+            this.ancestors.push(current);
+        }
+        const chain = signatures.length > 1;
+        forceBreak = chain && forceBreak;
+        const callee =
+            role === 'callee' && parent >= 0 && ['CallExpression', 'NewExpression'].includes(this.node(parent).kind);
+        const assigned =
+            parent >= 0 &&
+            (this.isAssignment(parent) ||
+                this.node(parent).kind === 'PropertyAssignment' ||
+                this.node(parent).kind === 'VariableDeclaration' ||
+                this.node(parent).kind === 'Parameter');
+        const kind = this.node(body).kind;
+        const conditional =
+            kind === 'ConditionalExpression' && this.node(this.leftmost(body)).kind !== 'ObjectLiteralExpression';
+        const sameLine =
+            ['ArrayLiteralExpression', 'ObjectLiteralExpression', 'Block', 'ArrowFunction'].includes(kind) ||
+            (kind === 'BinaryExpression' && this.operator(body) === ',') ||
+            this.templateOwnLine(body) ||
+            (!forceBreak && conditional);
+        let printedBody = this.print(body, current, 'body');
+        for(let position = 1; position < signatures.length; position++) this.ancestors.pop();
+        if(sameLine && conditional)
+            printedBody = this.docs.group(
+                this.docs.concat([
+                    this.docs.ifBreak(this.docs.text(''), this.docs.text('(')),
+                    this.docs.indent(this.docs.concat([this.docs.softline(), printedBody])),
+                    this.docs.ifBreak(this.docs.text(''), this.docs.text(')')),
+                    index === this.state.expandedArrow
+                        ? this.docs.ifBreak(this.docs.text(','), this.docs.text(''))
+                        : this.docs.text(''),
+                    index === this.state.expandedArrow ? this.docs.softline() : this.docs.text(''),
+                ]),
+            );
+        printedBody = sameLine
+            ? this.docs.concat([this.docs.text(' '), printedBody])
+            : this.docs.indent(this.docs.concat([this.docs.line(), printedBody]));
+        if(index === this.state.expandedArrow && !sameLine)
+            printedBody = this.docs.concat([
+                printedBody,
+                this.docs.ifBreak(this.docs.text(','), this.docs.text('')),
+                this.docs.softline(),
+            ]);
+        const parts: number[] = [];
+        for(let position = 0; position < signatures.length; position++) {
+            if(position > 0) parts.push(this.docs.concat([this.docs.text(' =>'), this.docs.line()]));
+            parts.push(signatures[position] ?? panic('missing arrow signature'));
+        }
+        let printedSignatures = this.docs.concat(parts);
+        if(
+            chain &&
+            parent >= 0 &&
+            !callee &&
+            (['CallExpression', 'NewExpression'].includes(this.node(parent).kind) ||
+                (this.node(parent).kind === 'BinaryExpression' &&
+                    !this.isAssignment(parent) &&
+                    this.operator(parent) !== ','))
+        ) {
+            printedSignatures = this.docs.concat([
+                signatures[0] ?? panic('missing arrow signature'),
+                this.docs.text(' =>'),
+                this.docs.indent(this.docs.concat([this.docs.line(), this.docs.concat(parts.slice(2))])),
+            ]);
+        }
+        else if(chain && !callee && !assigned) printedSignatures = this.docs.indent(printedSignatures);
+        if(chain) printedSignatures = this.docs.group(printedSignatures, '', forceBreak);
+        if(chain && (callee || assigned))
+            printedSignatures = this.docs.indent(this.docs.concat([this.docs.softline(), printedSignatures]));
+        const key = `arrow-${index}`;
+        return this.docs.group(
+            this.docs.concat([
+                this.docs.group(printedSignatures, key, chain && callee && !sameLine),
+                this.docs.text(' =>'),
+                chain ? this.docs.add('indentIfBreak', [printedBody], '', 0, key) : this.docs.group(printedBody),
+                chain && callee ? this.docs.ifBreak(this.docs.softline(), this.docs.text(''), key) : this.docs.text(''),
+            ]),
+        );
+    }
+    statementUnsupported(index: number): string {
+        const node = this.node(index);
+        switch(node.kind) {
+            case 'Block':
+                for(const child of node.children) {
+                    const reason = this.statementUnsupported(child);
+                    if(reason !== '') return reason;
+                }
+                return '';
+            case 'ExpressionStatement':
+            case 'ReturnStatement':
+            case 'ThrowStatement':
+                for(const child of node.children) {
+                    const reason = this.unsupported(child);
+                    if(reason !== '') return reason;
+                }
+                return '';
+            case 'EmptyStatement':
+            case 'DebuggerStatement':
+                return '';
+            case 'BreakStatement':
+            case 'ContinueStatement':
+                return node.children.length === 0 ||
+                    this.node(node.children[0] ?? panic('missing label')).kind === 'Identifier'
+                    ? ''
+                    : 'statement-label';
+            default:
+                return node.kind;
+        }
+    }
+    statementDoc(index: number, parent: number): number {
+        const pushed = this.ancestors[this.ancestors.length - 1] !== index;
+        if(pushed) this.ancestors.push(index);
+        const result = this.statementBodyDoc(index, parent);
+        if(pushed) this.ancestors.pop();
+        return result;
+    }
+    statementBodyDoc(index: number, parent: number): number {
+        const node = this.node(index);
+        const parts: number[] = [];
+        switch(node.kind) {
+            case 'Block': {
+                let directive = true;
+                for(const child of node.children) {
+                    const statement = this.node(child);
+                    const expression =
+                        statement.kind === 'ExpressionStatement'
+                            ? this.unwrapped(statement.children[0] ?? panic('missing directive'))
+                            : -1;
+                    if(
+                        expression < 0 ||
+                        this.node(expression).kind !== 'StringLiteral' ||
+                        this.protectedStrings.has(expression)
+                    )
+                        directive = false;
+                    if(statement.kind === 'EmptyStatement') continue;
+                    if(parts.length > 0) parts.push(this.docs.hardline());
+                    const previousDirective = this.state.directive;
+                    this.state.directive = directive;
+                    parts.push(this.statementDoc(child, index));
+                    this.state.directive = previousDirective;
+                }
+                if(parts.length === 0) {
+                    const compact =
+                        parent >= 0 &&
+                        [
+                            'ArrowFunction',
+                            'FunctionExpression',
+                            'FunctionDeclaration',
+                            'MethodDeclaration',
+                            'GetAccessor',
+                            'SetAccessor',
+                            'ForStatement',
+                            'WhileStatement',
+                            'DoStatement',
+                        ].includes(this.node(parent).kind);
+                    return this.docs.concat([
+                        this.docs.text('{'),
+                        compact ? this.docs.text('') : this.docs.hardline(),
+                        this.docs.text('}'),
+                    ]);
+                }
+                return this.docs.concat([
+                    this.docs.text('{'),
+                    this.docs.indent(this.docs.concat([this.docs.hardline(), this.docs.concat(parts)])),
+                    this.docs.hardline(),
+                    this.docs.text('}'),
+                ]);
+            }
+            case 'ExpressionStatement': {
+                const expression = this.unwrapped(node.children[0] ?? panic('missing statement expression'));
+                const previousRoot = this.state.statementExpressionRoot;
+                this.state.statementExpressionRoot = expression;
+                let printed = this.print(expression, -1, '');
+                this.state.statementExpressionRoot = previousRoot;
+                if(
+                    (this.node(expression).kind === 'StringLiteral' &&
+                        (!this.state.directive || this.protectedStrings.has(expression))) ||
+                    (this.node(expression).kind === 'BinaryExpression' && this.operator(expression) === ',')
+                )
+                    printed = this.docs.concat([this.docs.text('('), printed, this.docs.text(')')]);
+                return this.docs.concat([printed, this.docs.text(';')]);
+            }
+            case 'ReturnStatement':
+            case 'ThrowStatement': {
+                parts.push(this.docs.text(node.kind === 'ReturnStatement' ? 'return' : 'throw'));
+                if(node.children.length > 0) {
+                    const expression = this.unwrapped(node.children[0] ?? panic('missing return argument'));
+                    let printed = this.print(expression, index, 'argument');
+                    if(
+                        this.node(expression).kind === 'BinaryExpression' &&
+                        !this.isAssignment(expression) &&
+                        this.operator(expression) !== ','
+                    )
+                        printed = this.docs.group(
+                            this.docs.concat([
+                                this.docs.ifBreak(this.docs.text('('), this.docs.text('')),
+                                this.docs.indent(this.docs.concat([this.docs.softline(), printed])),
+                                this.docs.softline(),
+                                this.docs.ifBreak(this.docs.text(')'), this.docs.text('')),
+                            ]),
+                        );
+                    parts.push(this.docs.concat([this.docs.text(' '), printed]));
+                }
+                parts.push(this.docs.text(';'));
+                return this.docs.concat(parts);
+            }
+            case 'BreakStatement':
+            case 'ContinueStatement':
+                return this.docs.concat([
+                    this.docs.text(node.kind === 'BreakStatement' ? 'break' : 'continue'),
+                    this.docs.text(
+                        node.children.length === 0
+                            ? ''
+                            : ` ${this.node(node.children[0] ?? panic('missing label')).text}`,
+                    ),
+                    this.docs.text(';'),
+                ]);
+            case 'DebuggerStatement':
+                return this.docs.text('debugger;');
+            case 'EmptyStatement':
+                return this.docs.text(';');
+            default:
+                panic(`unclassified statement ${node.kind}`);
+        }
+    }
+    functionUnsupported(index: number): string {
+        const node = this.node(index);
+        for(let position = 0; position < node.children.length - 1; position++) {
+            const child = node.children[position] ?? panic('missing function child');
+            const item = this.node(child);
+            if(item.kind === 'Identifier' && node.kind === 'ArrowFunction') return 'function-types';
+            if(['AsyncKeyword', 'AsteriskToken', 'EqualsGreaterThanToken', 'Identifier'].includes(item.kind)) continue;
+            if(item.kind !== 'Parameter') return 'function-types';
+            let offset = this.node(item.children[0] ?? panic('missing parameter')).kind === 'DotDotDotToken' ? 1 : 0;
+            const name = this.node(item.children[offset] ?? panic('missing parameter name'));
+            if(name.kind !== 'Identifier') return 'parameter-pattern';
+            offset++;
+            if(item.children.length > offset) {
+                const initializer = item.children[offset] ?? panic('missing initializer');
+                const preceding = this.source.slice(name.end, this.node(initializer).pos);
+                if(!preceding.includes('=')) return 'function-types';
+                const reason = this.unsupported(initializer);
+                if(reason !== '') return reason;
+                offset++;
+            }
+            if(item.children.length > offset) return 'function-types';
+        }
+        const body = node.children[node.children.length - 1] ?? panic('missing function body');
+        return this.node(body).kind === 'Block' ? this.statementUnsupported(body) : this.unsupported(body);
+    }
+    functionDoc(index: number): number {
+        const node = this.node(index);
+        let async = '';
+        let generator = '';
+        let name = '';
+        for(const child of node.children) {
+            const item = this.node(child);
+            if(item.kind === 'AsyncKeyword') async = 'async ';
+            if(item.kind === 'AsteriskToken') generator = '*';
+            if(item.kind === 'Identifier') name = ` ${item.text}`;
+        }
+        return this.docs.concat([
+            this.docs.text(`${async}function${generator}${name}`),
+            this.parametersDoc(index),
+            this.docs.text(' '),
+            this.statementDoc(node.children[node.children.length - 1] ?? panic('missing function body'), index),
+        ]);
     }
     templateHasLines(index: number): boolean {
         const node = this.node(index);
@@ -763,7 +1049,7 @@ export class Expressions {
                     useTabs: this.docs.settings.useTabs,
                 });
                 const flatPrinter = new Expressions(this.parser, this.source, flatDocs);
-                flatPrinter.directive = false;
+                flatPrinter.state.directive = false;
                 for(const ancestor of this.ancestors) flatPrinter.ancestors.push(ancestor);
                 for(const boundary of this.sequenceBoundaries) flatPrinter.sequenceBoundaries.add(boundary);
                 const rendered = flatDocs.print(flatPrinter.print(expression, index, 'expressions'));
@@ -828,93 +1114,6 @@ export class Expressions {
     }
     memberish(index: number): boolean {
         return ['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.node(index).kind);
-    }
-    simpleArgument(index: number, depth = 2): boolean {
-        if(depth <= 0) return false;
-        const node = this.node(index);
-        if(node.kind === 'NonNullExpression') return this.simpleArgument(this.child(index, 0), depth);
-        if(node.kind === 'RegularExpressionLiteral') {
-            const raw = this.source.slice(node.pos, node.end).trim();
-            return stringWidth(raw.slice(1, raw.lastIndexOf('/'))) <= 5;
-        }
-        if(
-            [
-                'Identifier',
-                'PrivateIdentifier',
-                'ThisKeyword',
-                'SuperKeyword',
-                'NumericLiteral',
-                'BigIntLiteral',
-                'StringLiteral',
-                'NullKeyword',
-                'TrueKeyword',
-                'FalseKeyword',
-            ].includes(node.kind)
-        )
-            return true;
-        if(node.kind === 'NoSubstitutionTemplateLiteral') return !this.source.slice(node.pos, node.end).includes('\n');
-        if(node.kind === 'TemplateExpression') {
-            if(this.node(node.children[0] ?? panic('missing template head')).raw.includes('\n')) return false;
-            for(let position = 1; position < node.children.length; position++) {
-                const span = this.node(node.children[position] ?? panic('missing template span'));
-                if(
-                    this.node(span.children[1] ?? panic('missing quasi')).raw.includes('\n') ||
-                    !this.simpleArgument(this.unwrapped(span.children[0] ?? panic('missing expression')), depth - 1)
-                )
-                    return false;
-            }
-            return true;
-        }
-        if(node.kind === 'ObjectLiteralExpression') {
-            for(const child of node.children) {
-                const property = this.node(child);
-                if(property.kind === 'ShorthandPropertyAssignment') continue;
-                if(
-                    property.kind !== 'PropertyAssignment' ||
-                    this.node(this.child(child, 0)).kind === 'ComputedPropertyName' ||
-                    !this.simpleArgument(this.child(child, 1), depth - 1)
-                )
-                    return false;
-            }
-            return true;
-        }
-        if(node.kind === 'ArrayLiteralExpression') {
-            for(const child of node.children)
-                if(
-                    this.node(child).kind !== 'OmittedExpression' &&
-                    !this.simpleArgument(this.unwrapped(child), depth - 1)
-                )
-                    return false;
-            return true;
-        }
-        if(['CallExpression', 'NewExpression'].includes(node.kind)) {
-            if(!this.simpleArgument(this.child(index, 0), depth) || node.list > depth) return false;
-            for(
-                let position = node.children.length - Math.max(node.list, 0);
-                position < node.children.length;
-                position++
-            )
-                if(!this.simpleArgument(this.child(index, position), depth - 1)) return false;
-            return true;
-        }
-        if(this.memberish(index))
-            return (
-                this.simpleArgument(this.child(index, 0), depth) &&
-                this.simpleArgument(this.child(index, node.children.length - 1), depth)
-            );
-        if(
-            node.kind === 'PostfixUnaryExpression' ||
-            (node.kind === 'PrefixUnaryExpression' && ['!', '-', '+', '~', '++', '--'].includes(this.operator(index)))
-        )
-            return this.simpleArgument(this.child(index, 0), depth);
-        return false;
-    }
-    factory(name: string): boolean {
-        if(name.charCodeAt(0) >= 65 && name.charCodeAt(0) <= 90) return true;
-        if(name === '') return false;
-        for(let index = 0; index < name.length; index++)
-            if(!['_', '$'].includes(name.slice(index, index + 1))) return false;
-        return true;
     }
     memberLookup(index: number): number {
         const node = this.node(index);
@@ -1047,7 +1246,7 @@ export class Expressions {
                 merge =
                     base.kind === 'ThisKeyword' ||
                     (base.kind === 'Identifier' &&
-                        (this.factory(base.text) ||
+                        (factory(base.text) ||
                             (parent < 0 && base.text.length <= this.docs.settings.tabWidth) ||
                             computed));
             }
@@ -1057,7 +1256,7 @@ export class Expressions {
                     panic('missing group-end node');
                 if(this.memberish(last)) {
                     const property = this.node(this.child(last, this.node(last).children.length - 1));
-                    merge = property.kind === 'Identifier' && (this.factory(property.text) || computed);
+                    merge = property.kind === 'Identifier' && (factory(property.text) || computed);
                 }
             }
         }
@@ -1091,48 +1290,19 @@ export class Expressions {
                 calls++;
                 const call = this.node(item);
                 for(let offset = call.children.length - Math.max(0, call.list); offset < call.children.length; offset++)
-                    if(!this.simpleArgument(this.child(item, offset))) complex = true;
+                    if(!simpleArgument(this.parser, this.source, this.child(item, offset))) complex = true;
             }
         let brokenHead = false;
         for(let offset = 0; offset < printedGroups.length - 1; offset++)
-            if(this.willBreak(printedGroups[offset] ?? panic('missing head group'))) brokenHead = true;
+            if(this.docs.willBreak(printedGroups[offset] ?? panic('missing head group'))) brokenHead = true;
         const result =
             (calls > 2 && complex) || brokenHead
                 ? this.docs.group(expanded)
                 : this.docs.concat([
-                      this.willBreak(oneLine) ? this.docs.add('breakParent', []) : this.docs.text(''),
+                      this.docs.willBreak(oneLine) ? this.docs.add('breakParent', []) : this.docs.text(''),
                       this.docs.add('conditionalGroup', [oneLine, expanded]),
                   ]);
         return this.docs.add('label', [result], 'member-chain');
-    }
-    willBreak(index: number): boolean {
-        const doc = this.docs.get(index);
-        if(
-            (['group', 'conditionalGroup'].includes(doc.kind) && doc.broken) ||
-            ['breakParent', 'hardlineWithoutBreakParent', 'literallineWithoutBreakParent'].includes(doc.kind)
-        )
-            return true;
-        const count = doc.kind === 'conditionalGroup' ? Math.min(1, doc.parts.length) : doc.parts.length;
-        for(let position = 0; position < count; position++)
-            if(this.willBreak(doc.parts[position] ?? panic('missing break child'))) return true;
-        return false;
-    }
-    numericArray(index: number): boolean {
-        const node = this.node(index);
-        if(node.kind !== 'ArrayLiteralExpression' || node.children.length === 0) return false;
-        for(const child of node.children) {
-            const item = this.node(this.unwrapped(child));
-            if(
-                item.kind !== 'NumericLiteral' &&
-                !(
-                    item.kind === 'PrefixUnaryExpression' &&
-                    ['+', '-'].includes(this.operator(child)) &&
-                    this.node(this.child(child, 0)).kind === 'NumericLiteral'
-                )
-            )
-                return false;
-        }
-        return true;
     }
     argumentsDoc(index: number, parent: number): number {
         const node = this.node(index);
@@ -1149,6 +1319,12 @@ export class Expressions {
             return this.docs.concat([
                 this.docs.text('('),
                 args[0] ?? panic('missing template argument'),
+                this.docs.text(')'),
+            ]);
+        if(hookArguments(this.parser, index))
+            return this.docs.concat([
+                this.docs.text('('),
+                this.docs.join(this.docs.text(', '), args),
                 this.docs.text(')'),
             ]);
         if(
@@ -1180,14 +1356,14 @@ export class Expressions {
         const last = this.node(lastIndex);
         const previousKind = count > 1 ? this.node(this.child(index, node.children.length - 2)).kind : '';
         const expanded =
-            ['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(last.kind) &&
-            last.children.length > 0 &&
+            couldExpandArgument(this.parser, lastIndex) &&
+            !(count === 2 && previousKind === 'ArrowFunction' && last.kind === 'ArrayLiteralExpression') &&
             previousKind !== last.kind &&
-            !(count > 1 && this.numericArray(lastIndex));
+            !(count > 1 && numericArray(this.parser, lastIndex));
         let anyBroken = false;
         let headBroken = false;
         for(let position = 0; position < printed.length; position++)
-            if(this.willBreak(printed[position] ?? panic('missing printed arg'))) {
+            if(this.docs.willBreak(printed[position] ?? panic('missing printed arg'))) {
                 anyBroken = true;
                 if(position !== printed.length - 1) headBroken = true;
             }
@@ -1202,10 +1378,66 @@ export class Expressions {
             '',
             true,
         );
+        if(functionComposition(this.parser, index)) return allBroken;
+        const firstIndex = this.child(index, first);
+        const firstBody = firstArg.children[firstArg.children.length - 1];
+        const expandFirst =
+            count === 2 &&
+            firstArg.kind === 'ArrowFunction' &&
+            firstBody !== undefined &&
+            this.node(firstBody).kind === 'Block' &&
+            !functionArgument(this.parser, lastIndex) &&
+            last.kind !== 'ConditionalExpression' &&
+            (simpleArgument(this.parser, this.source, lastIndex, 2) ||
+                (last.kind === 'BinaryExpression' &&
+                    simpleArgument(this.parser, this.source, this.child(lastIndex, 0), 1) &&
+                    simpleArgument(this.parser, this.source, this.child(lastIndex, 2), 1))) &&
+            !(last.kind === 'CallExpression' && last.list > 1) &&
+            !couldExpandArgument(this.parser, lastIndex);
+        if(expandFirst) {
+            if(this.docs.willBreak(args[1] ?? panic('missing tail argument'))) return allBroken;
+            for(const child of firstArg.children)
+                if(this.node(child).kind === 'Parameter' && this.docs.willBreak(this.parameterDoc(child, firstIndex)))
+                    return allBroken;
+            const previous = this.state.expandedFirstArrow;
+            this.state.expandedFirstArrow = firstIndex;
+            const firstDoc = this.print(firstIndex, index, 'arguments');
+            this.state.expandedFirstArrow = previous;
+            const tail = args[1] ?? panic('missing tail argument');
+            const flat = this.docs.concat([
+                this.docs.text('('),
+                firstDoc,
+                this.docs.text(', '),
+                tail,
+                this.docs.text(')'),
+            ]);
+            const broken = this.docs.concat([
+                this.docs.text('('),
+                this.docs.group(firstDoc, '', true),
+                this.docs.text(', '),
+                tail,
+                this.docs.text(')'),
+            ]);
+            const states = this.docs.willBreak(firstDoc) ? [broken, allBroken] : [flat, broken, allBroken];
+            const group = this.docs.add('conditionalGroup', states);
+            return this.docs.willBreak(firstDoc) ? this.docs.concat([this.docs.add('breakParent', []), group]) : group;
+        }
         if(expanded) {
             if(headBroken) return allBroken;
             const head = this.docs.concat(printed.slice(0, -1));
-            const lastDoc = args[args.length - 1] ?? panic('missing expanded arg');
+            let lastDoc = args[args.length - 1] ?? panic('missing expanded arg');
+            if(last.kind === 'ArrowFunction') {
+                for(const child of last.children)
+                    if(
+                        this.node(child).kind === 'Parameter' &&
+                        this.docs.willBreak(this.parameterDoc(child, lastIndex))
+                    )
+                        return allBroken;
+                const previous = this.state.expandedArrow;
+                this.state.expandedArrow = lastIndex;
+                lastDoc = this.print(lastIndex, index, 'arguments');
+                this.state.expandedArrow = previous;
+            }
             const expandedDoc = this.docs.concat([
                 this.docs.text('('),
                 head,
@@ -1213,12 +1445,12 @@ export class Expressions {
                 this.docs.text(')'),
             ]);
             const states: number[] = [];
-            if(!this.willBreak(lastDoc))
+            if(!this.docs.willBreak(lastDoc))
                 states.push(this.docs.concat([this.docs.text('('), head, lastDoc, this.docs.text(')')]));
             states.push(expandedDoc);
             states.push(allBroken);
             const conditional = this.docs.add('conditionalGroup', states);
-            return this.willBreak(lastDoc)
+            return this.docs.willBreak(lastDoc)
                 ? this.docs.concat([this.docs.add('breakParent', []), conditional])
                 : conditional;
         }
@@ -1236,13 +1468,6 @@ export class Expressions {
             this.node(parent).list > 0 &&
             node.list > this.node(parent).list;
         return curried ? contents : this.docs.group(contents, '', anyBroken);
-    }
-    canBreak(index: number): boolean {
-        const doc = this.docs.get(index);
-        if(['line', 'softline', 'hardlineWithoutBreakParent', 'literallineWithoutBreakParent'].includes(doc.kind))
-            return true;
-        for(const child of doc.parts) if(this.canBreak(child)) return true;
-        return false;
     }
     // ESTree flattens the left comma spine, stopping at explicit parentheses.
     sequenceParts(index: number): number[] {
@@ -1300,7 +1525,7 @@ export class Expressions {
                 result = this.docs.text(raw.toLowerCase());
                 break;
             case 'StringLiteral':
-                result = this.docs.text(stringText(raw, parent < 0 && this.directive));
+                result = this.docs.text(stringText(raw, parent < 0 && this.state.directive));
                 break;
             case 'RegularExpressionLiteral': {
                 const slash = raw.lastIndexOf('/');
@@ -1311,6 +1536,12 @@ export class Expressions {
             }
             case 'NoSubstitutionTemplateLiteral':
                 result = this.docs.concat([this.docs.add('lineSuffixBoundary', []), this.templateRaw(raw)]);
+                break;
+            case 'ArrowFunction':
+                result = this.arrowDoc(id, parent, role);
+                break;
+            case 'Block':
+                result = this.statementDoc(id, parent);
                 break;
             case 'TemplateExpression':
                 result = this.templateDoc(id);
@@ -1412,7 +1643,22 @@ export class Expressions {
                             );
                         }
                     }
-                    result = this.docs.group(this.docs.concat(parts));
+                    const content = this.docs.concat(parts);
+                    result =
+                        parent >= 0 &&
+                        ((this.node(parent).kind === 'ArrowFunction' && role === 'body') ||
+                            (['ReturnStatement', 'ThrowStatement'].includes(this.node(parent).kind) &&
+                                role === 'argument'))
+                            ? this.docs.group(
+                                  this.docs.ifBreak(
+                                      this.docs.concat([
+                                          this.docs.indent(this.docs.concat([this.docs.softline(), content])),
+                                          this.docs.softline(),
+                                      ]),
+                                      content,
+                                  ),
+                              )
+                            : this.docs.group(content);
                     break;
                 }
                 const parts = this.binaryParts(id, parent);
@@ -1447,6 +1693,9 @@ export class Expressions {
                         this.isAssignment(parent) ||
                         outer === 'PropertyAssignment' ||
                         outer === 'TemplateExpression' ||
+                        outer === 'ReturnStatement' ||
+                        outer === 'ThrowStatement' ||
+                        (outer === 'ArrowFunction' && role === 'body') ||
                         (outer === 'ConditionalExpression' &&
                             (this.ancestors.length < 3 ||
                                 !['CallExpression', 'NewExpression', 'ReturnStatement', 'ThrowStatement'].includes(
@@ -1645,7 +1894,7 @@ export function formatExpression(source: string, settings: SettingsOptions): Res
     const parenthesizedString =
         printer.node(root).kind === 'ParenthesizedExpression' &&
         printer.node(printer.unwrapped(root)).kind === 'StringLiteral';
-    printer.directive = !parenthesizedString;
+    printer.state.directive = !parenthesizedString;
     let printed = printer.print(printer.normalize(root));
     if(
         parenthesizedString ||
