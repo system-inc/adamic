@@ -1,0 +1,5 @@
+let calls = 0;
+function result(): string | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }
+console.log('before');
+console.log(`value ${result()!}`);
+console.log('after');

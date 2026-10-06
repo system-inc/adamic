@@ -1,0 +1,12 @@
+function run(value: number | string | undefined): void {
+    if (typeof value === 'number') { console.log(`${value! + 1}`); }
+    if (typeof value === 'string') { console.log(value! + 'ok'); }
+}
+run(0);
+run('');
+function present(value: number | string): void {
+    if (typeof value === 'number') { console.log(`${value! + 2}`); }
+    if (typeof value === 'string') { console.log(value! + 'present'); }
+}
+present(0);
+present('');

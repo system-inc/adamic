@@ -1,0 +1,12 @@
+function run(): void {
+let value: number | undefined = 0;
+const clear = (): void => { value = undefined; };
+if (value !== undefined) { clear();
+try {
+console.log('before');
+console.log(`value ${value!}`);
+console.log('after');
+} catch { console.log('caught'); } finally { console.log('finally'); }
+}
+}
+run();

@@ -1,0 +1,2120 @@
+[
+  {
+    "program": "internal/oracle/testdata/coverage_non_null_arrays.a",
+    "source": "let reads = 0;\nfunction index(): number { reads += 1; return 0; }\nconst numbers: number[] = [0];\nconst strings: string[] = [''];\nconst booleans: boolean[] = [false];\nconst objects: { readonly name: string }[] = [{ name: 'array' }];\nconsole.log(`${numbers[index()]!} ${reads}`);\nconsole.log(`'${strings[index()]!}' ${reads}`);\nconsole.log(`${booleans[index()]!} ${reads}`);\nconsole.log(`${objects[index()]!.name} ${reads}`);\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_arrays.a"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\narray 4\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_arrays.a",
+        "-o",
+        "/tmp/non-null-check/evidence/coverage_non_null_arrays"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/coverage_non_null_arrays"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\narray 4\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_arrays.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/coverage_non_null_arrays.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/coverage_non_null_arrays.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\narray 4\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_non_null_calls.a",
+    "source": "let calls = 0;\nfunction number(): number | undefined { calls += 1; return 0; }\nfunction text(): string | undefined { calls += 1; return ''; }\nfunction boolean(): boolean | undefined { calls += 1; return false; }\nclass Source {\n    read(): string | undefined { calls += 1; return ''; }\n}\nconst source = new Source();\nconst result = (): number | undefined => { calls += 1; return 0; };\nconsole.log(`${number()!} ${calls}`);\nconsole.log(`'${text()!}' ${calls}`);\nconsole.log(`${boolean()!} ${calls}`);\nconsole.log(`'${source.read()!}' ${calls}`);\nconsole.log(`${result()!} ${calls}`);\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_calls.a"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\n'' 4\n0 5\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_calls.a",
+        "-o",
+        "/tmp/non-null-check/evidence/coverage_non_null_calls"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/coverage_non_null_calls"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\n'' 4\n0 5\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_calls.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/coverage_non_null_calls.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/coverage_non_null_calls.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\n'' 4\n0 5\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_non_null_chains.a",
+    "source": "let calls = 0;\nfunction box(): { readonly n: number; readonly s: string; readonly b: boolean } | undefined {\n    calls += 1;\n    return { n: 0, s: '', b: false };\n}\nconsole.log(`${box()?.n!} ${calls}`);\nconsole.log(`'${box()?.s!}' ${calls}`);\nconsole.log(`${box()?.b!} ${calls}`);\nclass Item { value(): number { return 0; } }\nfunction item(): Item | undefined { calls += 1; return new Item(); }\nconsole.log(`${item()?.value()!} ${calls}`);\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_chains.a"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\n0 4\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_chains.a",
+        "-o",
+        "/tmp/non-null-check/evidence/coverage_non_null_chains"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/coverage_non_null_chains"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\n0 4\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_chains.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/coverage_non_null_chains.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/coverage_non_null_chains.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\n0 4\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_non_null_fields.a",
+    "source": "function run(box: { n?: number; s?: string; readonly object?: { readonly name: string } }): void {\n    console.log(`${box.n!} '${box.s!}' ${box.object!.name}`);\n    if (box.n !== undefined) { console.log(`${(box.n)!}`); }\n    if (box.s !== undefined) { console.log(`'${box.s!}'`); }\n}\nrun({ n: 0, s: '', object: { name: 'field' } });\nlet calls = 0;\nfunction box(): { readonly value?: number } { calls += 1; return { value: 0 }; }\nconsole.log(`${box().value!} ${calls}`);\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_fields.a"
+      ],
+      "exit": 0,
+      "stdout": "0 '' field\n0\n''\n0 1\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_fields.a",
+        "-o",
+        "/tmp/non-null-check/evidence/coverage_non_null_fields"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/coverage_non_null_fields"
+      ],
+      "exit": 0,
+      "stdout": "0 '' field\n0\n''\n0 1\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_fields.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/coverage_non_null_fields.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/coverage_non_null_fields.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0 '' field\n0\n''\n0 1\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_non_null_maps.a",
+    "source": "let calls = 0;\nfunction key(): string { calls += 1; return 'key'; }\nconst numbers = new Map<string, number>([['key', 0]]);\nconst strings = new Map<string, string>([['key', '']]);\nconst booleans = new Map<string, boolean>([['key', false]]);\nconst objects = new Map<string, { readonly name: string }>([['key', { name: 'map' }]]);\nconsole.log(`${numbers.get(key())!} ${calls}`);\nconsole.log(`'${strings.get(key())!}' ${calls}`);\nconsole.log(`${booleans.get(key())!} ${calls}`);\nconsole.log(`${objects.get(key())!.name} ${calls}`);\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_maps.a"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\nmap 4\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_maps.a",
+        "-o",
+        "/tmp/non-null-check/evidence/coverage_non_null_maps"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/coverage_non_null_maps"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\nmap 4\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_maps.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/coverage_non_null_maps.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/coverage_non_null_maps.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\nmap 4\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_non_null_narrowed.a",
+    "source": "function run(n: number | undefined, b: boolean | undefined, s: string | undefined): void {\n    if (n !== undefined) { console.log(`${n!}`); }\n    if (b !== undefined) { console.log(`${b!}`); }\n    if (s !== undefined) { console.log(`'${s!}'`); }\n}\nfunction mixed(value: number | string | boolean | undefined): void {\n    if (typeof value === 'string') { console.log(`'${value!}'`); }\n    if (typeof value === 'boolean') { console.log(`${value!}`); }\n}\nrun(0, false, '');\nmixed('');\nmixed(false);\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_narrowed.a"
+      ],
+      "exit": 0,
+      "stdout": "0\nfalse\n''\n''\nfalse\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_narrowed.a",
+        "-o",
+        "/tmp/non-null-check/evidence/coverage_non_null_narrowed"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/coverage_non_null_narrowed"
+      ],
+      "exit": 0,
+      "stdout": "0\nfalse\n''\n''\nfalse\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_narrowed.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/coverage_non_null_narrowed.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/coverage_non_null_narrowed.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0\nfalse\n''\n''\nfalse\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_non_null_references.a",
+    "source": "let calls = 0;\nfunction array(): number[] | undefined { calls += 1; return [0]; }\nfunction map(): Map<string, string> | undefined { calls += 1; return new Map<string, string>([['key', '']]); }\nfunction closure(): (() => boolean) | undefined { calls += 1; return (): boolean => false; }\nfunction object(): { readonly name: string } | undefined { calls += 1; return { name: `object${calls}` }; }\ntry {\n    console.log(`${array()![0]!} ${calls}`);\n    console.log(`'${map()!.get('key')!}' ${calls}`);\n    console.log(`${closure()!()} ${calls}`);\n    console.log(`${object()!.name} ${calls}`);\n} catch { console.log('caught'); } finally { console.log(`finally ${calls}`); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_references.a"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\nobject4 4\nfinally 4\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_references.a",
+        "-o",
+        "/tmp/non-null-check/evidence/coverage_non_null_references"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/coverage_non_null_references"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\nobject4 4\nfinally 4\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_references.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/coverage_non_null_references.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/coverage_non_null_references.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n'' 2\nfalse 3\nobject4 4\nfinally 4\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_non_null_tuple_null.a",
+    "source": "function tuple(value: readonly [number | undefined, string | undefined]): void {\n    console.log(`${value[0]!} '${value[1]!}'`);\n}\ntuple([0, '']);\nfunction match(value: RegExpMatchArray | null): void {\n    if (value !== null) { console.log((value)![0]!); }\n}\nmatch('a'.match(/a/));\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_tuple_null.a"
+      ],
+      "exit": 0,
+      "stdout": "0 ''\na\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_tuple_null.a",
+        "-o",
+        "/tmp/non-null-check/evidence/coverage_non_null_tuple_null"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/coverage_non_null_tuple_null"
+      ],
+      "exit": 0,
+      "stdout": "0 ''\na\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_tuple_null.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/coverage_non_null_tuple_null.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/coverage_non_null_tuple_null.mjs"
+      ],
+      "exit": 0,
+      "stdout": "0 ''\na\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "internal/oracle/testdata/coverage_non_null_union_narrow.a",
+    "source": "function run(value: number | string | undefined): void {\n    if (typeof value === 'number') { console.log(`${value! + 1}`); }\n    if (typeof value === 'string') { console.log(value! + 'ok'); }\n}\nrun(0);\nrun('');\nfunction present(value: number | string): void {\n    if (typeof value === 'number') { console.log(`${value! + 2}`); }\n    if (typeof value === 'string') { console.log(value! + 'present'); }\n}\npresent(0);\npresent('');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_union_narrow.a"
+      ],
+      "exit": 0,
+      "stdout": "1\nok\n2\npresent\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_union_narrow.a",
+        "-o",
+        "/tmp/non-null-check/evidence/coverage_non_null_union_narrow"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/coverage_non_null_union_narrow"
+      ],
+      "exit": 0,
+      "stdout": "1\nok\n2\npresent\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/coverage_non_null_union_narrow.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/coverage_non_null_union_narrow.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/coverage_non_null_union_narrow.mjs"
+      ],
+      "exit": 0,
+      "stdout": "1\nok\n2\npresent\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "notes/non-null-check/blocked_boolean_field.a",
+    "source": "function run(box: { readonly value?: boolean }): void { console.log(`${box.value!}`); }\nrun({ value: false });\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/blocked_boolean_field.a"
+      ],
+      "exit": 0,
+      "stdout": "false\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/blocked_boolean_field.a",
+        "-o",
+        "/tmp/non-null-check/evidence/blocked_boolean_field"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_boolean_field.a:1:72: stage 0 can't lower a field of type boolean | undefined yet\nexit status 1\n"
+    },
+    "native": null,
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/blocked_boolean_field.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_boolean_field.a:1:72: stage 0 can't lower a field of type boolean | undefined yet\nexit status 1\n"
+    },
+    "backend": null
+  },
+  {
+    "program": "notes/non-null-check/blocked_brackets.a",
+    "source": "let calls = 0;\nfunction box(): { readonly value?: number } { calls += 1; return { value: 0 }; }\nconsole.log(`${box().value!} ${calls}`);\nfunction read(value: { readonly n?: number; readonly s?: string }): void {\n    console.log(`${value['n']!} '${value['s']!}'`);\n    if (value.n !== undefined) { console.log(`${(value['n'])!}`); }\n}\nread({ n: 0, s: '' });\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/blocked_brackets.a"
+      ],
+      "exit": 0,
+      "stdout": "0 1\n0 ''\n0\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/blocked_brackets.a",
+        "-o",
+        "/tmp/non-null-check/evidence/blocked_brackets"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_brackets.a:5:20: stage 0 can't lower an ElementAccessExpression yet\nexit status 1\n"
+    },
+    "native": null,
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/blocked_brackets.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_brackets.a:5:20: stage 0 can't lower an ElementAccessExpression yet\nexit status 1\n"
+    },
+    "backend": null
+  },
+  {
+    "program": "notes/non-null-check/blocked_generic.a",
+    "source": "function unwrap<T>(value: T | undefined): T { return value!; }\nconsole.log(`${unwrap<number>(0)}`);\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/blocked_generic.a"
+      ],
+      "exit": 0,
+      "stdout": "0\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/blocked_generic.a",
+        "-o",
+        "/tmp/non-null-check/evidence/blocked_generic"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_generic.a:1:54: stage 0 can't lower a value of type NonNullable<T> yet\nexit status 1\n"
+    },
+    "native": null,
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/blocked_generic.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_generic.a:1:54: stage 0 can't lower a value of type NonNullable<T> yet\nexit status 1\n"
+    },
+    "backend": null
+  },
+  {
+    "program": "notes/non-null-check/blocked_null_undefined.a",
+    "source": "function run(value: RegExpMatchArray | null | undefined): RegExpMatchArray { return value!; }\nconsole.log(run('a'.match(/a/))[0]!);\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/blocked_null_undefined.a"
+      ],
+      "exit": 0,
+      "stdout": "a\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/blocked_null_undefined.a",
+        "-o",
+        "/tmp/non-null-check/evidence/blocked_null_undefined"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_null_undefined.a:1:14: stage 0 can't lower a value of type RegExpMatchArray | null | undefined yet\nexit status 1\n"
+    },
+    "native": null,
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/blocked_null_undefined.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_null_undefined.a:1:14: stage 0 can't lower a value of type RegExpMatchArray | null | undefined yet\nexit status 1\n"
+    },
+    "backend": null
+  },
+  {
+    "program": "notes/non-null-check/blocked_optional_call.a",
+    "source": "function run(value: (() => number) | undefined): number { return value?.()!; }\nconsole.log(`${run(() => 0)}`);\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/blocked_optional_call.a"
+      ],
+      "exit": 0,
+      "stdout": "0\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/blocked_optional_call.a",
+        "-o",
+        "/tmp/non-null-check/evidence/blocked_optional_call"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_optional_call.a:1:66: stage 0 can't lower a call through ?. (an optional call) yet\nexit status 1\n"
+    },
+    "native": null,
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/blocked_optional_call.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_optional_call.a:1:66: stage 0 can't lower a call through ?. (an optional call) yet\nexit status 1\n"
+    },
+    "backend": null
+  },
+  {
+    "program": "notes/non-null-check/blocked_scalar_null.a",
+    "source": "function run(value: number | null): number { return value!; }\nconsole.log(`${run(0)}`);\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/blocked_scalar_null.a"
+      ],
+      "exit": 0,
+      "stdout": "0\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/blocked_scalar_null.a",
+        "-o",
+        "/tmp/non-null-check/evidence/blocked_scalar_null"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_scalar_null.a:1:14: stage 0 can't lower a value of type number | null yet\nexit status 1\n"
+    },
+    "native": null,
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/blocked_scalar_null.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/non-null-check/blocked_scalar_null.a:1:14: stage 0 can't lower a value of type number | null yet\nexit status 1\n"
+    },
+    "backend": null
+  },
+  {
+    "program": "notes/non-null-check/missing_array_outside.a",
+    "source": "const values: number[] = [];\nlet calls = 0;\nfunction index(): number { calls += 1; console.log(`index ${calls}`); return 0; }\nconsole.log('before');\nconsole.log(`value ${values[index()]!}`);\nconsole.log('after');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_array_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nindex 1\nvalue undefined\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_array_outside.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_array_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_array_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\nindex 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: values[index()]! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_array_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_array_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_array_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nindex 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: values[index()]! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_array_reference_outside.a",
+    "source": "let calls = 0;\nfunction result(): number[] | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }\nconsole.log('before');\nconst value = result()!;\nconsole.log(`${value === undefined}`);\nconsole.log('after');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_array_reference_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nresult 1\ntrue\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_array_reference_outside.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_array_reference_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_array_reference_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_array_reference_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_array_reference_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_array_reference_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_array_reference_try.a",
+    "source": "let calls = 0;\nfunction result(): number[] | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }\ntry {\nconsole.log('before');\nconst value = result()!;\nconsole.log(`${value === undefined}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_array_reference_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nresult 1\ntrue\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_array_reference_try.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_array_reference_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_array_reference_try"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_array_reference_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_array_reference_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_array_reference_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_array_try.a",
+    "source": "const values: number[] = [];\nlet calls = 0;\nfunction index(): number { calls += 1; console.log(`index ${calls}`); return 0; }\ntry {\nconsole.log('before');\nconsole.log(`value ${values[index()]!}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_array_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nindex 1\nvalue undefined\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_array_try.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_array_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_array_try"
+      ],
+      "exit": 70,
+      "stdout": "before\nindex 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: values[index()]! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_array_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_array_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_array_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nindex 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: values[index()]! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_chain_outside.a",
+    "source": "function box(): { readonly value: number } | undefined { console.log('box 1'); return undefined; }\nconsole.log('before');\nconsole.log(`value ${box()?.value!}`);\nconsole.log('after');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_chain_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nbox 1\nvalue undefined\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_chain_outside.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_chain_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_chain_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\nbox 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: box()?.value! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_chain_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_chain_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_chain_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nbox 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: box()?.value! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_chain_try.a",
+    "source": "function box(): { readonly value: number } | undefined { console.log('box 1'); return undefined; }\ntry {\nconsole.log('before');\nconsole.log(`value ${box()?.value!}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_chain_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nbox 1\nvalue undefined\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_chain_try.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_chain_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_chain_try"
+      ],
+      "exit": 70,
+      "stdout": "before\nbox 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: box()?.value! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_chain_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_chain_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_chain_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nbox 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: box()?.value! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_closure_reference_outside.a",
+    "source": "let calls = 0;\nfunction result(): (() => number) | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }\nconsole.log('before');\nconst value = result()!;\nconsole.log(`${value === undefined}`);\nconsole.log('after');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_closure_reference_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nresult 1\ntrue\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_closure_reference_outside.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_closure_reference_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_closure_reference_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_closure_reference_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_closure_reference_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_closure_reference_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_closure_reference_try.a",
+    "source": "let calls = 0;\nfunction result(): (() => number) | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }\ntry {\nconsole.log('before');\nconst value = result()!;\nconsole.log(`${value === undefined}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_closure_reference_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nresult 1\ntrue\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_closure_reference_try.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_closure_reference_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_closure_reference_try"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_closure_reference_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_closure_reference_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_closure_reference_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_field_outside.a",
+    "source": "const box: { value?: string } = {};\nconsole.log('before');\nconsole.log(`value ${box.value!}`);\nconsole.log('after');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_field_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nvalue undefined\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_field_outside.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_field_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_field_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_field_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_field_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_field_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: non-null assertion failed: box.value! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_field_try.a",
+    "source": "const box: { value?: string } = {};\ntry {\nconsole.log('before');\nconsole.log(`value ${box.value!}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_field_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nvalue undefined\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_field_try.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_field_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_field_try"
+      ],
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_field_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_field_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_field_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: non-null assertion failed: box.value! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_map_outside.a",
+    "source": "const values = new Map<string, boolean>();\nlet calls = 0;\nfunction key(): string { calls += 1; console.log(`key ${calls}`); return 'missing'; }\nconsole.log('before');\nconsole.log(`value ${values.get(key())!}`);\nconsole.log('after');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_map_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nkey 1\nvalue undefined\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_map_outside.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_map_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_map_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\nkey 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: values.get(key())! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_map_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_map_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_map_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nkey 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: values.get(key())! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_map_reference_outside.a",
+    "source": "let calls = 0;\nfunction result(): Map<string, number> | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }\nconsole.log('before');\nconst value = result()!;\nconsole.log(`${value === undefined}`);\nconsole.log('after');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_map_reference_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nresult 1\ntrue\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_map_reference_outside.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_map_reference_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_map_reference_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_map_reference_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_map_reference_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_map_reference_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_map_reference_try.a",
+    "source": "let calls = 0;\nfunction result(): Map<string, number> | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }\ntry {\nconsole.log('before');\nconst value = result()!;\nconsole.log(`${value === undefined}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_map_reference_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nresult 1\ntrue\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_map_reference_try.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_map_reference_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_map_reference_try"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_map_reference_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_map_reference_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_map_reference_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_map_try.a",
+    "source": "const values = new Map<string, boolean>();\nlet calls = 0;\nfunction key(): string { calls += 1; console.log(`key ${calls}`); return 'missing'; }\ntry {\nconsole.log('before');\nconsole.log(`value ${values.get(key())!}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_map_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nkey 1\nvalue undefined\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_map_try.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_map_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_map_try"
+      ],
+      "exit": 70,
+      "stdout": "before\nkey 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: values.get(key())! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_map_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_map_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_map_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nkey 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: values.get(key())! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_narrowed_outside.a",
+    "source": "function run(): void {\nlet value: number | undefined = 0;\nconst clear = (): void => { value = undefined; };\nif (value !== undefined) { clear();\nconsole.log('before');\nconsole.log(`value ${value!}`);\nconsole.log('after');\n}\n}\nrun();\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_narrowed_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nvalue undefined\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_narrowed_outside.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_narrowed_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_narrowed_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: non-null assertion failed: value! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_narrowed_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_narrowed_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_narrowed_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: non-null assertion failed: value! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_narrowed_try.a",
+    "source": "function run(): void {\nlet value: number | undefined = 0;\nconst clear = (): void => { value = undefined; };\nif (value !== undefined) { clear();\ntry {\nconsole.log('before');\nconsole.log(`value ${value!}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n}\n}\nrun();\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_narrowed_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nvalue undefined\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_narrowed_try.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_narrowed_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_narrowed_try"
+      ],
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: non-null assertion failed: value! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_narrowed_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_narrowed_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_narrowed_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: non-null assertion failed: value! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_null_outside.a",
+    "source": "let calls = 0;\nfunction result(): RegExpMatchArray | null { calls += 1; console.log(`match ${calls}`); return 'a'.match(/z/); }\nconsole.log('before');\nconst value = result()!;\nconsole.log(`${value === undefined}`);\nconsole.log('after');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_null_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nmatch 1\nfalse\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_null_outside.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_null_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_null_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\nmatch 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_null_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_null_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_null_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nmatch 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_null_try.a",
+    "source": "let calls = 0;\nfunction result(): RegExpMatchArray | null { calls += 1; console.log(`match ${calls}`); return 'a'.match(/z/); }\ntry {\nconsole.log('before');\nconst value = result()!;\nconsole.log(`${value === undefined}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_null_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nmatch 1\nfalse\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_null_try.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_null_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_null_try"
+      ],
+      "exit": 70,
+      "stdout": "before\nmatch 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_null_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_null_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_null_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nmatch 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_object_reference_outside.a",
+    "source": "let calls = 0;\nfunction result(): { readonly name: string } | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }\nconsole.log('before');\nconst value = result()!;\nconsole.log(`${value === undefined}`);\nconsole.log('after');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_object_reference_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nresult 1\ntrue\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_object_reference_outside.a",
+        "-o",
+        "/tmp/non-null-check/object-evidence/missing_object_reference_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/object-evidence/missing_object_reference_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_object_reference_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/object-evidence/missing_object_reference_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/object-evidence/missing_object_reference_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_object_reference_try.a",
+    "source": "let calls = 0;\nfunction result(): { readonly name: string } | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }\ntry {\nconsole.log('before');\nconst value = result()!;\nconsole.log(`${value === undefined}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_object_reference_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nresult 1\ntrue\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_object_reference_try.a",
+        "-o",
+        "/tmp/non-null-check/object-evidence/missing_object_reference_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/object-evidence/missing_object_reference_try"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_object_reference_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/object-evidence/missing_object_reference_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/object-evidence/missing_object_reference_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_result_outside.a",
+    "source": "let calls = 0;\nfunction result(): string | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }\nconsole.log('before');\nconsole.log(`value ${result()!}`);\nconsole.log('after');\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_result_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nresult 1\nvalue undefined\nafter\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_result_outside.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_result_outside"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_result_outside"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_result_outside.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_result_outside.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_result_outside.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  },
+  {
+    "program": "notes/non-null-check/missing_result_try.a",
+    "source": "let calls = 0;\nfunction result(): string | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }\ntry {\nconsole.log('before');\nconsole.log(`value ${result()!}`);\nconsole.log('after');\n} catch { console.log('caught'); } finally { console.log('finally'); }\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/non-null-check/missing_result_try.a"
+      ],
+      "exit": 0,
+      "stdout": "before\nresult 1\nvalue undefined\nafter\nfinally\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/notes/non-null-check/missing_result_try.a",
+        "-o",
+        "/tmp/non-null-check/evidence/missing_result_try"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/non-null-check/evidence/missing_result_try"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    },
+    "javascript": {
+      "command": [
+        "go",
+        "run",
+        "./cmd/adamic",
+        "js",
+        "/workspace/adamic/notes/non-null-check/missing_result_try.a"
+      ],
+      "exit": 0,
+      "stdout": "[generated JavaScript saved in /tmp/non-null-check/evidence/missing_result_try.mjs]",
+      "stderr": ""
+    },
+    "backend": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/non-null-check/evidence/missing_result_try.mjs"
+      ],
+      "exit": 70,
+      "stdout": "before\nresult 1\n",
+      "stderr": "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    }
+  }
+]

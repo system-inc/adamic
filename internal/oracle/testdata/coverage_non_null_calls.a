@@ -1,0 +1,14 @@
+let calls = 0;
+function number(): number | undefined { calls += 1; return 0; }
+function text(): string | undefined { calls += 1; return ''; }
+function boolean(): boolean | undefined { calls += 1; return false; }
+class Source {
+    read(): string | undefined { calls += 1; return ''; }
+}
+const source = new Source();
+const result = (): number | undefined => { calls += 1; return 0; };
+console.log(`${number()!} ${calls}`);
+console.log(`'${text()!}' ${calls}`);
+console.log(`${boolean()!} ${calls}`);
+console.log(`'${source.read()!}' ${calls}`);
+console.log(`${result()!} ${calls}`);

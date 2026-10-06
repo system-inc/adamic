@@ -1,0 +1,6 @@
+let calls = 0;
+function result(): RegExpMatchArray | null { calls += 1; console.log(`match ${calls}`); return 'a'.match(/z/); }
+console.log('before');
+const value = result()!;
+console.log(`${value === undefined}`);
+console.log('after');

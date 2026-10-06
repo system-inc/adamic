@@ -1,0 +1,4 @@
+const box: { value?: string } = {};
+console.log('before');
+console.log(`value ${box.value!}`);
+console.log('after');

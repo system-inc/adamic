@@ -1,0 +1,10 @@
+let calls = 0;
+function key(): string { calls += 1; return 'key'; }
+const numbers = new Map<string, number>([['key', 0]]);
+const strings = new Map<string, string>([['key', '']]);
+const booleans = new Map<string, boolean>([['key', false]]);
+const objects = new Map<string, { readonly name: string }>([['key', { name: 'map' }]]);
+console.log(`${numbers.get(key())!} ${calls}`);
+console.log(`'${strings.get(key())!}' ${calls}`);
+console.log(`${booleans.get(key())!} ${calls}`);
+console.log(`${objects.get(key())!.name} ${calls}`);

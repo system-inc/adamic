@@ -1,0 +1,8 @@
+let calls = 0;
+function box(): { readonly value?: number } { calls += 1; return { value: 0 }; }
+console.log(`${box().value!} ${calls}`);
+function read(value: { readonly n?: number; readonly s?: string }): void {
+    console.log(`${value['n']!} '${value['s']!}'`);
+    if (value.n !== undefined) { console.log(`${(value['n'])!}`); }
+}
+read({ n: 0, s: '' });

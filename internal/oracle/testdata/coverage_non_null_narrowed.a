@@ -1,0 +1,12 @@
+function run(n: number | undefined, b: boolean | undefined, s: string | undefined): void {
+    if (n !== undefined) { console.log(`${n!}`); }
+    if (b !== undefined) { console.log(`${b!}`); }
+    if (s !== undefined) { console.log(`'${s!}'`); }
+}
+function mixed(value: number | string | boolean | undefined): void {
+    if (typeof value === 'string') { console.log(`'${value!}'`); }
+    if (typeof value === 'boolean') { console.log(`${value!}`); }
+}
+run(0, false, '');
+mixed('');
+mixed(false);

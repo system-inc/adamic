@@ -1,0 +1,2 @@
+function run(value: number | null): number { return value!; }
+console.log(`${run(0)}`);

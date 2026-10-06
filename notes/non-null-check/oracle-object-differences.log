@@ -1,0 +1,39 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_try.a
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_outside.a
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_try.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_outside.a
+    oracle_test.go:600: exit codes differ
+        node:   exit 0, stdout "before\nresult 1\ntrue\nafter\n", stderr ""
+        native: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:606: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nresult 1\ntrue\nafter\n", stderr ""
+        backend: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_try.a
+    oracle_test.go:600: exit codes differ
+        node:   exit 0, stdout "before\nresult 1\ntrue\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:606: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nresult 1\ntrue\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:613: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_outside.a
+    oracle_test.go:613: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_try.a (3.02s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_object_reference_outside.a (3.06s)
+FAIL
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.105s
+FAIL

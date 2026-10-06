@@ -1,0 +1,6 @@
+const values = new Map<string, boolean>();
+let calls = 0;
+function key(): string { calls += 1; console.log(`key ${calls}`); return 'missing'; }
+console.log('before');
+console.log(`value ${values.get(key())!}`);
+console.log('after');

@@ -1,0 +1,326 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_arrays.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_arrays.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_calls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_calls.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_chains.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_chains.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_fields.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_fields.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_maps.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_maps.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_narrowed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_narrowed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_references.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_references.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_tuple_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_tuple_null.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_union_narrow.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_union_narrow.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_array_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_array_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_array_reference_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_array_reference_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_array_reference_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_array_reference_try.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_array_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_array_try.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_chain_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_chain_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_chain_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_chain_try.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_closure_reference_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_closure_reference_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_closure_reference_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_closure_reference_try.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_field_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_field_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_field_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_field_try.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_map_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_map_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_map_reference_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_map_reference_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_map_reference_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_map_reference_try.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_map_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_map_try.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_narrowed_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_narrowed_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_narrowed_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_narrowed_try.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_null_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_null_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_null_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_null_try.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_result_outside.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_result_outside.a
+=== RUN   TestNativeAgreesWithNode/notes/non-null-check/missing_result_try.a
+=== PAUSE TestNativeAgreesWithNode/notes/non-null-check/missing_result_try.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_arrays.a
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_closure_reference_outside.a
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_map_try.a
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_map_reference_try.a
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_map_reference_outside.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nresult 1\ntrue\nafter\n", stderr ""
+        native: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nresult 1\ntrue\nafter\n", stderr ""
+        backend: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_map_outside.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_map_try.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nkey 1\nvalue undefined\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\nkey 1\n", stderr "adamic: panic: non-null assertion failed: values.get(key())! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nkey 1\nvalue undefined\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\nkey 1\n", stderr "adamic: panic: non-null assertion failed: values.get(key())! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: values.get(key())! is null or undefined
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_field_try.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_map_reference_try.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nresult 1\ntrue\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nresult 1\ntrue\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_field_outside.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_closure_reference_outside.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nresult 1\ntrue\nafter\n", stderr ""
+        native: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nresult 1\ntrue\nafter\n", stderr ""
+        backend: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_closure_reference_try.a
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_null_try.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_field_try.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nvalue undefined\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\n", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nvalue undefined\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\n", stderr "adamic: panic: non-null assertion failed: box.value! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: compiler bug: a field the checker proved is there is missing
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_result_try.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_map_outside.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nkey 1\nvalue undefined\nafter\n", stderr ""
+        native: exit 70, stdout "before\nkey 1\n", stderr "adamic: panic: non-null assertion failed: values.get(key())! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nkey 1\nvalue undefined\nafter\n", stderr ""
+        backend: exit 70, stdout "before\nkey 1\n", stderr "adamic: panic: non-null assertion failed: values.get(key())! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: values.get(key())! is null or undefined
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_result_outside.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_field_outside.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nvalue undefined\nafter\n", stderr ""
+        native: exit 70, stdout "before\n", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nvalue undefined\nafter\n", stderr ""
+        backend: exit 70, stdout "before\n", stderr "adamic: panic: non-null assertion failed: box.value! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: compiler bug: a field the checker proved is there is missing
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_narrowed_try.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_closure_reference_try.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nresult 1\ntrue\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nresult 1\ntrue\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_null_outside.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_null_try.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nmatch 1\nfalse\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\nmatch 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nmatch 1\nfalse\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\nmatch 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_narrowed_outside.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_result_try.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nresult 1\nvalue undefined\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nresult 1\nvalue undefined\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_union_narrow.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_result_outside.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nresult 1\nvalue undefined\nafter\n", stderr ""
+        native: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nresult 1\nvalue undefined\nafter\n", stderr ""
+        backend: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_maps.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_narrowed_try.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nvalue undefined\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\n", stderr "adamic: panic: non-null assertion failed: value! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nvalue undefined\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\n", stderr "adamic: panic: non-null assertion failed: value! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: value! is null or undefined
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_chain_try.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_null_outside.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nmatch 1\nfalse\nafter\n", stderr ""
+        native: exit 70, stdout "before\nmatch 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nmatch 1\nfalse\nafter\n", stderr ""
+        backend: exit 70, stdout "before\nmatch 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_tuple_null.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_narrowed_outside.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nvalue undefined\nafter\n", stderr ""
+        native: exit 70, stdout "before\n", stderr "adamic: panic: non-null assertion failed: value! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nvalue undefined\nafter\n", stderr ""
+        backend: exit 70, stdout "before\n", stderr "adamic: panic: non-null assertion failed: value! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: value! is null or undefined
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_chain_outside.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_references.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_chain_try.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nbox 1\nvalue undefined\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\nbox 1\n", stderr "adamic: panic: non-null assertion failed: box()?.value! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nbox 1\nvalue undefined\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\nbox 1\n", stderr "adamic: panic: non-null assertion failed: box()?.value! is null or undefined\n"
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_array_try.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_chain_try.a
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: box()?.value! is null or undefined
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_narrowed.a
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_array_reference_try.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_chain_outside.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nbox 1\nvalue undefined\nafter\n", stderr ""
+        native: exit 70, stdout "before\nbox 1\n", stderr "adamic: panic: non-null assertion failed: box()?.value! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nbox 1\nvalue undefined\nafter\n", stderr ""
+        backend: exit 70, stdout "before\nbox 1\n", stderr "adamic: panic: non-null assertion failed: box()?.value! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: box()?.value! is null or undefined
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_array_reference_outside.a
+=== CONT  TestNativeAgreesWithNode/notes/non-null-check/missing_array_outside.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_chains.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_array_reference_outside.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nresult 1\ntrue\nafter\n", stderr ""
+        native: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nresult 1\ntrue\nafter\n", stderr ""
+        backend: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_fields.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_array_reference_try.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nresult 1\ntrue\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nresult 1\ntrue\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\nresult 1\n", stderr "adamic: panic: non-null assertion failed: result()! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: result()! is null or undefined
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_calls.a
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_array_try.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nindex 1\nvalue undefined\nafter\nfinally\n", stderr ""
+        native: exit 70, stdout "before\nindex 1\n", stderr "adamic: panic: non-null assertion failed: values[index()]! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nindex 1\nvalue undefined\nafter\nfinally\n", stderr ""
+        backend: exit 70, stdout "before\nindex 1\n", stderr "adamic: panic: non-null assertion failed: values[index()]! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: values[index()]! is null or undefined
+=== NAME  TestNativeAgreesWithNode/notes/non-null-check/missing_array_outside.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 0, stdout "before\nindex 1\nvalue undefined\nafter\n", stderr ""
+        native: exit 70, stdout "before\nindex 1\n", stderr "adamic: panic: non-null assertion failed: values[index()]! is null or undefined\n"
+    oracle_test.go:624: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "before\nindex 1\nvalue undefined\nafter\n", stderr ""
+        backend: exit 70, stdout "before\nindex 1\n", stderr "adamic: panic: non-null assertion failed: values[index()]! is null or undefined\n"
+    oracle_test.go:631: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed: values[index()]! is null or undefined
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_map_reference_outside.a (10.91s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_map_try.a (10.97s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_map_reference_try.a (10.99s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_closure_reference_outside.a (11.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_arrays.a (11.17s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_field_try.a (0.70s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_map_outside.a (0.86s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_field_outside.a (0.84s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_closure_reference_try.a (0.85s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_null_try.a (1.04s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_result_try.a (0.98s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_result_outside.a (0.91s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_narrowed_try.a (1.00s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_null_outside.a (1.08s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_narrowed_outside.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_union_narrow.a (1.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_maps.a (1.22s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_chain_try.a (1.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_tuple_null.a (1.04s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_chain_outside.a (1.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_references.a (1.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_narrowed.a (1.04s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_array_reference_outside.a (0.98s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_array_reference_try.a (1.10s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_array_try.a (1.22s)
+    --- FAIL: TestNativeAgreesWithNode/notes/non-null-check/missing_array_outside.a (1.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_fields.a (1.24s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_calls.a (1.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_chains.a (1.53s)
+FAIL
+gate cache: native hits=0 misses=87
+gate cache: node hits=0 misses=58
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	16.523s
+FAIL

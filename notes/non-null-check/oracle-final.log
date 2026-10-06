@@ -1,0 +1,45 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_arrays.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_arrays.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_calls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_calls.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_chains.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_chains.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_fields.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_fields.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_maps.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_maps.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_narrowed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_narrowed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_references.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_references.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_tuple_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_tuple_null.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_union_narrow.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_union_narrow.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_arrays.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_narrowed.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_union_narrow.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_tuple_null.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_references.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_fields.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_maps.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_chains.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_calls.a
+--- PASS: TestNativeAgreesWithNode (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_union_narrow.a (3.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_tuple_null.a (4.16s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_arrays.a (4.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_narrowed.a (4.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_references.a (4.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_fields.a (3.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_chains.a (3.16s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_maps.a (3.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_non_null_calls.a (3.25s)
+PASS
+gate cache: native hits=0 misses=27
+gate cache: node hits=0 misses=18
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.861s

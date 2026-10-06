@@ -1,0 +1,11 @@
+let calls = 0;
+function box(): { readonly n: number; readonly s: string; readonly b: boolean } | undefined {
+    calls += 1;
+    return { n: 0, s: '', b: false };
+}
+console.log(`${box()?.n!} ${calls}`);
+console.log(`'${box()?.s!}' ${calls}`);
+console.log(`${box()?.b!} ${calls}`);
+class Item { value(): number { return 0; } }
+function item(): Item | undefined { calls += 1; return new Item(); }
+console.log(`${item()?.value()!} ${calls}`);

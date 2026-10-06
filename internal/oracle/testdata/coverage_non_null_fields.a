@@ -1,0 +1,9 @@
+function run(box: { n?: number; s?: string; readonly object?: { readonly name: string } }): void {
+    console.log(`${box.n!} '${box.s!}' ${box.object!.name}`);
+    if (box.n !== undefined) { console.log(`${(box.n)!}`); }
+    if (box.s !== undefined) { console.log(`'${box.s!}'`); }
+}
+run({ n: 0, s: '', object: { name: 'field' } });
+let calls = 0;
+function box(): { readonly value?: number } { calls += 1; return { value: 0 }; }
+console.log(`${box().value!} ${calls}`);

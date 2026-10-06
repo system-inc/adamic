@@ -1,0 +1,10 @@
+let reads = 0;
+function index(): number { reads += 1; return 0; }
+const numbers: number[] = [0];
+const strings: string[] = [''];
+const booleans: boolean[] = [false];
+const objects: { readonly name: string }[] = [{ name: 'array' }];
+console.log(`${numbers[index()]!} ${reads}`);
+console.log(`'${strings[index()]!}' ${reads}`);
+console.log(`${booleans[index()]!} ${reads}`);
+console.log(`${objects[index()]!.name} ${reads}`);

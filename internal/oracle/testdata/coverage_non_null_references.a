@@ -1,0 +1,11 @@
+let calls = 0;
+function array(): number[] | undefined { calls += 1; return [0]; }
+function map(): Map<string, string> | undefined { calls += 1; return new Map<string, string>([['key', '']]); }
+function closure(): (() => boolean) | undefined { calls += 1; return (): boolean => false; }
+function object(): { readonly name: string } | undefined { calls += 1; return { name: `object${calls}` }; }
+try {
+    console.log(`${array()![0]!} ${calls}`);
+    console.log(`'${map()!.get('key')!}' ${calls}`);
+    console.log(`${closure()!()} ${calls}`);
+    console.log(`${object()!.name} ${calls}`);
+} catch { console.log('caught'); } finally { console.log(`finally ${calls}`); }

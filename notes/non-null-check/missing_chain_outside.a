@@ -1,0 +1,4 @@
+function box(): { readonly value: number } | undefined { console.log('box 1'); return undefined; }
+console.log('before');
+console.log(`value ${box()?.value!}`);
+console.log('after');

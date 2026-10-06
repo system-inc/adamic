@@ -37,6 +37,15 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/coverage_non_null_arrays.a", true, false},
+	{"internal/oracle/testdata/coverage_non_null_calls.a", true, false},
+	{"internal/oracle/testdata/coverage_non_null_chains.a", true, false},
+	{"internal/oracle/testdata/coverage_non_null_fields.a", true, false},
+	{"internal/oracle/testdata/coverage_non_null_maps.a", true, false},
+	{"internal/oracle/testdata/coverage_non_null_narrowed.a", true, false},
+	{"internal/oracle/testdata/coverage_non_null_references.a", true, false},
+	{"internal/oracle/testdata/coverage_non_null_tuple_null.a", true, false},
+	{"internal/oracle/testdata/coverage_non_null_union_narrow.a", true, false},
 	{"internal/oracle/testdata/non_null.a", true, false},
 	{"internal/oracle/testdata/non_null_map.a", true, true},
 	{"internal/oracle/testdata/non_null_catch.a", true, true},

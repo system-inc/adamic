@@ -1,0 +1,55 @@
+coverage_non_null_arrays AGREES
+coverage_non_null_fields AGREES
+coverage_non_null_chains AGREES
+coverage_non_null_calls AGREES
+coverage_non_null_maps AGREES
+coverage_non_null_narrowed AGREES
+coverage_non_null_tuple_null AGREES
+coverage_non_null_references AGREES
+blocked_boolean_field BUILD FAILED
+adamic: /workspace/adamic/notes/non-null-check/blocked_boolean_field.a:1:72: stage 0 can't lower a field of type boolean | undefined yet
+exit status 1
+
+coverage_non_null_union_narrow AGREES
+blocked_brackets BUILD FAILED
+adamic: /workspace/adamic/notes/non-null-check/blocked_brackets.a:5:20: stage 0 can't lower an ElementAccessExpression yet
+exit status 1
+
+blocked_generic BUILD FAILED
+adamic: /workspace/adamic/notes/non-null-check/blocked_generic.a:1:54: stage 0 can't lower a value of type NonNullable<T> yet
+exit status 1
+
+blocked_null_undefined BUILD FAILED
+adamic: /workspace/adamic/notes/non-null-check/blocked_null_undefined.a:1:14: stage 0 can't lower a value of type RegExpMatchArray | null | undefined yet
+exit status 1
+
+blocked_scalar_null BUILD FAILED
+adamic: /workspace/adamic/notes/non-null-check/blocked_scalar_null.a:1:14: stage 0 can't lower a value of type number | null yet
+exit status 1
+
+blocked_optional_call BUILD FAILED
+adamic: /workspace/adamic/notes/non-null-check/blocked_optional_call.a:1:66: stage 0 can't lower a call through ?. (an optional call) yet
+exit status 1
+
+missing_array_outside DIFF
+missing_array_reference_try DIFF
+missing_array_reference_outside DIFF
+missing_array_try DIFF
+missing_chain_outside DIFF
+missing_chain_try DIFF
+missing_closure_reference_outside DIFF
+missing_closure_reference_try DIFF
+missing_field_try DIFF
+missing_field_outside DIFF
+missing_map_outside DIFF
+missing_map_reference_outside DIFF
+missing_map_reference_try DIFF
+missing_map_try DIFF
+missing_narrowed_outside DIFF
+missing_narrowed_try DIFF
+missing_null_outside DIFF
+missing_null_try DIFF
+missing_result_outside DIFF
+missing_result_try DIFF
+missing_object_reference_outside DIFF
+missing_object_reference_try DIFF

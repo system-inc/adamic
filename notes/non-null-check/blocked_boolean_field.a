@@ -1,0 +1,2 @@
+function run(box: { readonly value?: boolean }): void { console.log(`${box.value!}`); }
+run({ value: false });

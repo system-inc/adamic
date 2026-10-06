@@ -1,0 +1,8 @@
+let calls = 0;
+function result(): { readonly name: string } | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }
+try {
+console.log('before');
+const value = result()!;
+console.log(`${value === undefined}`);
+console.log('after');
+} catch { console.log('caught'); } finally { console.log('finally'); }

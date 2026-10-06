@@ -1,0 +1,8 @@
+function tuple(value: readonly [number | undefined, string | undefined]): void {
+    console.log(`${value[0]!} '${value[1]!}'`);
+}
+tuple([0, '']);
+function match(value: RegExpMatchArray | null): void {
+    if (value !== null) { console.log((value)![0]!); }
+}
+match('a'.match(/a/));

@@ -1,0 +1,6 @@
+let calls = 0;
+function result(): number[] | undefined { calls += 1; console.log(`result ${calls}`); return undefined; }
+console.log('before');
+const value = result()!;
+console.log(`${value === undefined}`);
+console.log('after');
