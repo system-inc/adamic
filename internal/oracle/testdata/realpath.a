@@ -1,4 +1,4 @@
-// Canonical directory identity follows a link; a dangling link is an error, not a path.
+// Lexical resolution precedes the component walk; links replace only linked components.
 import { realPath } from 'adamic';
 
 for (const path of ['walking/link-to-inner', 'walking/dangling', '', 'walking/dangling/..', 'walking/link-to-inner/../link-to-file']) {
