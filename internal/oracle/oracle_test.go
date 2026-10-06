@@ -330,6 +330,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	// A method called on a spread's source inside the literal runs code with the source as this
+	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
+	{"internal/oracle/testdata/reuse_spread_method.a", true, false},
+	{"internal/oracle/testdata/reuse_spread_method_alias.a", true, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
