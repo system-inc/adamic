@@ -6,6 +6,7 @@ Wrong-node and released-program mutants are caught; all focused checks pass.
 
 # Milestone 5: the first type-aware rule
 
+Implementation commit: `4e77bbc66a80bd773bd0f8ab6d54be58f2f3b6c5`.
 Continued `codex/tsgo-c-library` from foundation `ae82c7a`. The requested
 `origin/codex/typescript-scanner` head, `6636e8f`, was merged cleanly in
 `ed8c201c491f6a55ac29222069a0d9f423b77fc9`. That brings both the whole-file
