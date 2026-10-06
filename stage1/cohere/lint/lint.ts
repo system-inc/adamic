@@ -71,8 +71,8 @@ export class Linter {
     readonly scanner: Scanner;
     readonly findings: Finding[] = [];
     readonly rejected: string[] = [];
-    readonly literalEnds = new Map<number, number>();
-    readonly anchors = new Set<number>();
+    literalEnds: number[] = [];
+    anchors: boolean[] = [];
     parents: number[] = [];
     root = -1;
     readonly selected: string;
@@ -759,8 +759,8 @@ export class Linter {
         let braces = 0;
         let separators = 0;
         while(this.scanner.scan() !== 'EndOfFile' && this.scanner.start < limit) {
-            const literalEnd = this.literalEnds.get(this.scanner.start);
-            if(literalEnd !== undefined) {
+            const literalEnd = this.literalEnds[this.scanner.start] ?? -1;
+            if(literalEnd >= 0) {
                 this.scanner.pos = literalEnd;
                 continue;
             }
@@ -1008,6 +1008,10 @@ export class Linter {
         }
     }
     literalSpans(index: number): void {
+        if(this.literalEnds.length === 0) {
+            // Positions form a bounded integer domain, so lookup needs no hash table.
+            this.literalEnds = new Array<number>(this.source.length + 1).fill(-1);
+        }
         const node = this.node(index);
         if(
             [
@@ -1019,7 +1023,7 @@ export class Linter {
                 'TemplateTail',
             ].includes(node.kind)
         ) {
-            this.literalEnds.set(this.start(index), node.end);
+            this.literalEnds[this.start(index)] = node.end;
         }
         for(const child of node.children) {
             this.literalSpans(child);
@@ -1027,8 +1031,8 @@ export class Linter {
     }
     commentAnchors(index: number): void {
         const node = this.node(index);
-        this.anchors.add(node.pos);
-        this.anchors.add(node.end);
+        this.anchors[node.pos] = true;
+        this.anchors[node.end] = true;
         const parameterList =
             this.functionLike(index) ||
             [
@@ -1091,17 +1095,17 @@ export class Linter {
                 if(code === opening) {
                     depth++;
                     if(depth === 1) {
-                        this.anchors.add(position + 1);
+                        this.anchors[position + 1] = true;
                     }
                 }
                 if(code === closing) {
                     depth--;
                 }
                 if(code === 44 && depth === 1) {
-                    this.anchors.add(position + 1);
+                    this.anchors[position + 1] = true;
                 }
                 if(caseList && code === 58) {
-                    this.anchors.add(position + 1);
+                    this.anchors[position + 1] = true;
                 }
             }
         }
@@ -1115,12 +1119,20 @@ export class Linter {
             return;
         }
         this.literalSpans(this.root);
+        this.anchors = Array.from({ length: this.source.length + 1 }, () => false);
         this.commentAnchors(this.root);
-        this.anchors.add(0);
+        this.anchors[0] = true;
         // Only parser owners named by cohere's collectListInteriors contribute
         // empty or trailing-comma list anchors; arbitrary punctuation is not an anchor.
-        const reachable = new Set<number>();
-        for(const anchor of this.anchors) {
+        const reachable = this.reachableComments(this.anchors);
+        this.scanWarnings(this.literalEnds, reachable, terms);
+    }
+    reachableComments(anchors: readonly boolean[]): boolean[] {
+        const reachable = Array.from({ length: this.source.length + 1 }, () => false);
+        for(let anchor = 0; anchor < anchors.length; anchor++) {
+            if(anchors[anchor] !== true) {
+                continue;
+            }
             let position = anchor;
             while(
                 position < this.source.length &&
@@ -1149,7 +1161,7 @@ export class Linter {
                 if(opening !== '//' && opening !== '/*') {
                     break;
                 }
-                reachable.add(position);
+                reachable[position] = true;
                 if(opening === '//') {
                     while(position < this.source.length && !isLineBreak(this.source.charCodeAt(position))) {
                         position++;
@@ -1161,9 +1173,12 @@ export class Linter {
                 }
             }
         }
+        return reachable;
+    }
+    scanWarnings(literalEnds: readonly number[], reachable: readonly boolean[], terms: readonly string[]): void {
         for(let cursor = 0; cursor < this.source.length;) {
-            const end = this.literalEnds.get(cursor);
-            if(end !== undefined) {
+            const end = literalEnds[cursor] ?? -1;
+            if(end >= 0) {
                 cursor = end;
                 continue;
             }
@@ -1193,7 +1208,7 @@ export class Linter {
                 bodyEnd = closing < 0 ? this.source.length : closing;
                 cursor = closing < 0 ? this.source.length : closing + 2;
             }
-            if(!reachable.has(start)) {
+            if(reachable[start] !== true) {
                 continue;
             }
             const value = this.source.slice(bodyStart, bodyEnd);

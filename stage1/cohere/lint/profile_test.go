@@ -177,3 +177,23 @@ func TestCommentFoldMutant(t *testing.T) {
 		}
 	}
 }
+func TestPositionIndexMutant(t *testing.T) {
+	t.Parallel()
+	path := manifest(t, generated(t))
+	want := execute(t, "", goOracle(t), "--manifest", path).output
+	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;")
+	binary := buildPort(t, directory, true)
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{
+		{"Node", node(t, directory, path, false)},
+		{"native", execute(t, "", binary, "--manifest", path)},
+	} {
+		if diff := difference(side.run.output, want); diff == "" {
+			t.Fatalf("position mutant survived on %s", side.name)
+		} else {
+			t.Logf("position mutant caught on %s: %s", side.name, diff)
+		}
+	}
+}

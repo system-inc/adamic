@@ -89,6 +89,37 @@ problem in either measured workload.
    candidate substring/string construction. Nothing is deferred or omitted in
    count mode. The Unicode generator emits the same helper.
 
+2. Replace literal-end, anchor and reachable-comment numeric maps/sets with
+   bounded position arrays. Literal ends initialize lazily, so a selected rule
+   with no comment/sequence work does not allocate that array. Helper methods
+   take readonly arrays as explicit visitor parameters, keeping borrowing without
+   violating cohere's property-alias rule. Per-owner small child maps remain.
+
+The first array trial was byte-identical but failed cohere on two property aliases;
+its measurements are retained as `2-position-arrays`. The borrowed-parameter
+adjustment is `2b-position-arrays`: 20,970,336,919 Ir, 2,552,688.61 per finding,
+4,101.37 native findings/s, Go 17,098.74, Node 4,203.20. Compared with scalar
+matching, it removes 9,967,576,018 Ir (32.22%). Load before `0.42 0.70 0.65`,
+after `0.62 0.73 0.66`. The extra method boundaries add 29.39M Ir versus the
+trial (0.14%); the small timing difference does not establish a speed gain.
+
+Arrays require about 24 bytes per UTF-16 position plus headers/capacity. Separate
+child peak-RSS measurements were 100,996 KiB baseline and 152,160 KiB array trial;
+these concurrent runs are not timing samples. `/usr/bin/time` was unavailable,
+so Python `resource.getrusage(RUSAGE_CHILDREN)` in separate worker processes was
+used. Logical allocation peak alone hides these larger array buffers. Node
+regresses from 5,702.12 to 4,203.20 findings/s after the dense initialization.
+This is an explicit memory/Node tradeoff for native lookup performance.
+
+Both array forms pass full sanitized Go/Node/native findings and fixed output.
+The final array form has 578,745 fixture bytes plus 15,550,205 source-corpus bytes.
+Its release/debug/Node snapshot check has 16,140,914 identical bytes. Differences
+between comparison byte counts include changed port source and temporary fixture
+path lengths; each run compares all bytes against Go over the identical inputs.
+The new position mutant clears anchor zero after collecting anchors; both Node
+and native lose the first TODO finding at case 100, line 2068. It compiled and
+executed successfully. Cohere, vet and the filtered one-byte core oracle pass.
+
 ## Proposed compiler and runtime units
 
 - Numeric Map/Set hash distribution: use an avalanche with adequate low-bit
@@ -132,6 +163,8 @@ VALGRIND_LIB=/workspace/scratch/scanner-perf/valgrind/usr/libexec/valgrind pytho
 | --- | ---: | ---: | ---: | ---: | ---: |
 | baseline | 2,504.11 | 16,945.78 | 5,418.16 | 38,559,511,949 | 4,693,793.30 |
 | 1-scalar-comments | 2,941.27 | 16,456.40 | 5,702.12 | 30,937,912,937 | 3,766,027.14 |
+| 2-position-arrays | 4,018.26 | 16,606.44 | 4,083.68 | 20,940,946,893 | 2,549,111.00 |
+| 2b-position-arrays | 4,101.37 | 17,098.74 | 4,203.20 | 20,970,336,919 | 2,552,688.61 |
 
 Scalar comparison removes 7,621,599,012 Ir (19.77%), 1,766,845 logical allocations, and improves native throughput 1.175 times. Load before `0.67 0.73 0.46`, after `0.79 0.75 0.48`. Full sanitized parity: 577,682 fixture bytes plus 15,548,752 source-corpus bytes, 16,126,434 total. Cohere passes the changed source.
 
