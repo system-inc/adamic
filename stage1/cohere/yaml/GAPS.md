@@ -1,10 +1,50 @@
-# YAML port: lexer, CST and scalar checkpoints
+# YAML port: lexer, CST, scalar and property checkpoints
 
-The Adamic lexer, CST parser, scalar resolver and comparison drivers are implemented.
+The Adamic lexer, CST parser, scalar and property resolvers and comparison drivers are implemented.
 All 36 repository files and generated cases match Go, with 9,272 scalar cases.
 Native sanitizers, Node source, emitted JavaScript and yaml 2.9.0 all agree.
-Nine port mutants are caught; eight compiler refusals and one runtime bug have proving programs.
+Twelve port mutants are caught; nine compiler refusals and one runtime bug have proving programs.
 Document composition, unist conversion, the printer and formatting driver remain unfinished.
+
+## Green property step
+
+`propsResolver.ts` and `props.ts` port property resolution: tag and anchor
+presence, whitespace requirements, tab indentation, comment and newline
+folding, document and collection indicators, comma presence, blank-line flags,
+and exact starts and ends. Ambiguous anchors retain the original warning.
+`props_main.ts` resolves the property runs of every CST input with document,
+block collection and flow collection contexts. This does not compose documents.
+
+All 8,732 parser inputs, including the 36 repository YAML files, produce
+1,182,227 identical answer bytes on Go, native under ASan/UBSan/LeakSanitizer,
+source Node, emitted JavaScript and pinned yaml 2.9.0. The property/gap/mutant
+suite passed in 20.930s. Cohere passed 276 rules on all three new files, 100%
+Adamic-ready; `go vet ./stage1/cohere/yaml` passed.
+
+Three more mutants compile and exit zero with empty stderr on native and Node.
+Only the byte comparisons catch them:
+
+| Mutation | First differing output byte |
+| --- | ---: |
+| Collection indicator presence lost | 63 |
+| Anchor and tag separation unchecked | 309370 |
+| Tab indentation accepted | 318861 |
+
+[dynamicCase.ts](gaps/dynamicCase.ts) prints `1` on Node and refuses before
+clang with `lower.NotYet: a case that isn't a constant`. The port compares
+the token type to the contextual indicator before switching over constant types.
+`TestLexerGaps` holds this observation along with the other eight refusals.
+
+```sh
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run 'TestProps|TestLexerGaps' > /tmp/stage1-yaml-props-final.log 2>&1
+/tmp/stage1-yaml-cohere --no-fix stage1/cohere/yaml/props.ts stage1/cohere/yaml/propsResolver.ts stage1/cohere/yaml/props_main.ts > /tmp/stage1-yaml-props-lint.log 2>&1
+go vet ./stage1/cohere/yaml > /tmp/stage1-yaml-props-vet.log 2>&1
+```
+
+Logs: [suite](audit/props-suite.log), [lint](audit/props-lint.log).
+No compiler or cohere implementation files changed. Formatting, its file driver
+and its throughput remain unfinished; the existing speed measurements are
+explicitly lexer/scalar comparison-driver measurements.
 
 ## Green scalar step
 
