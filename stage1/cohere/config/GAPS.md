@@ -1,8 +1,8 @@
-Project discovery, lint globs and formatter lint ignores are ported; this unit is incomplete.
-128 roots, 626 project markers and 288 glob queries agreed with Go cohere.
-Three discovery mutants and twelve formatter mutants were caught on native and Node; sanitizer and leak checks passed.
-Settings resolution and tsconfig source enumeration are not implemented.
-JSON.parse is deliberately refused; CohereSettings is strict JSON in Go, unlike tsconfig.
+Strict CohereSettings and JSONC tsconfig loaders are implemented in Adamic.
+Real Adamic, cohere and TypeScript project outputs are compared byte for byte with Go.
+Settings defaults, extends, provenance, per-file overrides and source enumeration are exercised.
+Three loader mutants join three discovery mutants and twelve formatter mutants.
+Source-contributing directory links and advanced tsconfig diagnostics remain explicit gaps.
 
 ## What is built
 
@@ -18,16 +18,16 @@ os.ReadDir sees it; discovery does not validate its contents.
 The Go reads directories concurrently and sorts the result. The port reads them
 sequentially and sorts by the same segment order, with TypeScript before Swift in one
 directory. It does not implement DirectoryListings reuse, discoveryRoot, project
-ownership, or expansion of solution references. `main.ts` takes absolute roots and
-ignorePatterns as input. It does not read those patterns out of settings or pretend
-that they have been resolved by Adamic.
+ownership, or expansion of solution references. `main.ts` accepts absolute roots and explicit ignorePatterns, or a configured root.
+The configured entry reads strict CohereSettings and inherited ignores through the
+Adamic loader before discovery.
 
 `glob.ts` ports `internal/lint/configuration/glob.go`: nested brace alternatives,
 whole-segment double stars, slash boundaries, ordinary stars and question marks,
 unbalanced braces as literals, and byte matching via utf8At/utf8Length. These are
 lint globs, different from the gitignore glob already ported. formatfiles uses this module for ignorePatterns relative to the settings directory,
-with Go's restricted directory pruning. Settings resolution remains an oracle
-input, not an Adamic settings reader.
+with Go's restricted directory pruning. The formatter differential driver still takes resolved formatter settings from its
+Go oracle. The new settings loader is independent of that formatter driver.
 
 ## The Go front door actually found
 
@@ -47,8 +47,9 @@ At cohere submodule `715ba94f3608a6500086b1076ce5cb7e51b836db`:
 Neither cohere nor its TypeScript submodule has a root tsconfig.json. Their command
 walks discover projects below the root. Tests explicitly exercise Adamic, cohere and
 cohere/TypeScript as separate discovery roots; they do not silently substitute a
-made-up root tsconfig. TypeScript source enumeration still needs to run over the
-individual configs, including solution ownership and references.
+made-up root tsconfig. The new loader corpus enumerates the individual configs and prints their references.
+Command-level project ownership and expansion of solution references remain outside
+this loader; enumerated source records can repeat across overlapping projects.
 
 ## Proving program: JSON parsing
 
@@ -71,17 +72,17 @@ compiler failure. This is a deliberate refusal, not NotYet. An earlier probe sto
 the result as unknown and was refused earlier for that representation; the discarded
 result above isolates the parser itself. No compiler files were changed.
 
-This blocks a direct library-based settings port. It is not proof that a checked
-parser written in Adamic is impossible. Such a parser, its JSON/JSONC diagnostics,
-settings validation/merge and TypeScript configuration semantics are not built here.
-No settings are decoded by a Go bridge and presented as an Adamic implementation.
+This rules out JSON.parse, not a typed parser. `json.ts` now implements a checked
+flat node representation in Adamic and drives both loaders. No host parser or Go
+bridge supplies resolved configuration. The proving program remains useful evidence
+of the library boundary; it no longer blocks these loaders.
 
 ## Measured settings behavior
 
 `TestSettingsBehaviorCensus` overlays a test into Go cohere's command package and calls
 its production `configuration.Load` and `program.ReadProjectConfig`. It replaces only
 the temporary directory prefix with ROOT in the output. The following are actual
-Go observations, not implemented Adamic answers:
+Go observations. The new loader comparisons now require the same Adamic answers:
 
 ```
 comments: parsing lint config ROOT/comments.json: invalid character '/' looking for beginning of object key string
@@ -99,9 +100,10 @@ The last two actual diagnostic strings end with a space after the colon: cohere'
 joinDiagnostics sees empty MessageText there. Exact parity would keep that, rather
 than inventing a more helpful message. The census test logs the original whitespace.
 
-The requested JSONC acceptance for CohereSettings and exact Go parity disagree on
-the first two rows. No behavior was broadened. The census records this discrepancy;
-there is no Adamic settings loader or canonically printed resolved settings yet.
+Upstream observation: the pinned Go cohere uses strict JSON for CohereSettings.json
+and JSONC for tsconfig.json. Comments and trailing commas in CohereSettings are
+rejected with the exact errors above. The stage 1 contract preserves this asymmetry,
+as confirmed by the user, rather than broadening upstream behavior.
 
 ## Differential cases and mutants
 
@@ -135,8 +137,7 @@ native 0.138377 to 0.155937 s (4,014 to 4,524 projects/s). These are discovery
 measurements, not source files checked per second. Native includes process startup
 and output capture; Go times production calls and output construction within its
 already-started test process. Go also reads directories concurrently. They are not
-an isolated same-work throughput comparison. Requested source files/s against Go
-is not measured because the source enumeration port is not built.
+an isolated same-work throughput comparison. The continuation measures tsconfig source files/s separately below.
 
 ## Validation and remaining coverage
 
@@ -153,9 +154,10 @@ Logs: /tmp/stage1-config-test-final.log and /tmp/stage1-config-setup.log.
 
 Further validation commands and results are recorded in REPORT.md.
 
-Not covered: settings loading/defaults/embedded sets or canonical resolved settings;
-tsconfig include/exclude, extensions, files ordering, extends and references in
-Adamic; permission/race errors; non-UTF-8 names; macOS or Windows; inherited .gitignore
+Not covered: command-level ownership; full arbitrary tsconfig diagnostics and
+compiler-option validation; advanced package exports resolution; source-contributing
+directory links without realpath; published-version admissibility (the pinned Go
+oracle is a dev build); relative loader entry paths; permission/race errors; non-UTF-8 names; macOS or Windows; inherited .gitignore
 read failures the disk adapter cannot faithfully represent; arbitrary filesystem
 errno (the runtime collapses unknown errors). Unknown listing errors are explicitly
 named unrepresented filesystem errors; no exact Go parity is claimed for those.
@@ -164,5 +166,65 @@ Formatter integration: 423 trees, 29,366 files offered, 1,970 directories entere
 73 refused walks all agreed in the final run (261.717 s). All twelve formatter
 mutants were caught on native and Node. Go harness timing 1.825032 s (16,090
 files offered/s); native 19.716329 to 22.206697 s (1,322 to 1,489 files offered/s).
-See REPORT.md for commands, exact catches and timing caveats. This still does not
-measure or implement tsconfig source enumeration.
+See REPORT.md for commands, exact catches and timing caveats. This formatter measurement does not measure tsconfig source enumeration.
+
+## Loader continuation
+
+`settings.ts` ports Load/LoadFor, schema validation, embedded sets, extends errors,
+ancestor conflicts, inherited options, reasons/departures, plugin defaults, version
+pin validation and ordered overrides. `house.ts` ports the house variants and
+per-file resolution from typed React/Next/Tailwind detection input. AST detection
+itself is not implemented here. `sets.ts` embeds upstream source JSON, not resolved
+oracle answers. `json.ts` preserves Go's strict syntax errors, Unicode replacement
+and raw option spelling; `quote_table.ts` records pinned Go strconv.IsPrint data.
+The generator is `testdata/quote_table.go`. See NOTICE.md for source licensing.
+
+`tsconfig.ts` implements JSONC, relative/package extends, inherited include/exclude
+and files, configDir substitution, allowJs/resolveJsonModule, output-directory
+excludes, extension priority and include-bucket file order. `tsglob.ts` implements
+TypeScript's matcher, distinct from lint globs. The pinned Go ignores custom
+sourceExtensions for wildcard enumeration; generated cases retain that observation.
+Missing files and cycles preserve Go's error text, including trailing spaces after
+empty TS diagnostic messages. Malformed JSONC diagnostics and contentMappers are
+explicitly declined; complete compiler-option diagnostics and modern package exports
+resolution are not claimed by this port. Ordinary file symlinks are followed.
+
+### Directory-link proving program
+
+`gaps/directory_link.ts` and TestDirectoryLinkGap create a-alias -> z-target with
+a.ts. Go emits a-alias/a.ts once and omits the duplicate target path. The port emits
+`stage1 tsconfig directory symlink needs realpath: PATH/a-alias` on native, Node and
+backend. Adamic's current typed filesystem API exposes link status but no canonical
+path. A matching directory link that provably has no source files or subdirectories
+can be skipped without changing output; this is enough for the existing Adamic
+walking fixture. Source-contributing links are never silently treated as empty.
+An isolated runtime proposal is prepared for review; compiler edits outside this
+unit's territory require the scope approval requested from the user.
+
+### Loader comparisons and mutants
+
+The loader corpus includes all real configs under the three requested projects,
+80 seeded settings chains and 80 seeded tsconfig trees, strict syntax/schema errors,
+Unicode quoting, duplicate fields, unknown keys, missing files, cycles, house variants,
+registered rule aliases, ignores and overrides. Full canonical settings, source
+paths in order, references and errors are compared across Go, Node source, native
+ASan/UBSan and JavaScript backend; native LeakSanitizer runs too. A baseline mismatch
+stops mutation testing. Mutants must compile and run successfully before their
+output differences count.
+
+| Loader mutant | Native and Node catch |
+| --- | --- |
+| Parse CohereSettings as JSONC | Comments accepted instead of Go's exact syntax error |
+| Drop inherited rule options | @typescript-eslint/no-shadow error [] instead of error ["option"] |
+| Disable tsconfig exclusion | src/b.ts appears instead of Go's next selected file |
+
+The first inherited-options mutant lost TypeScript narrowing and did not compile;
+it was rejected as evidence. The corrected mutant changes only the selected options
+value and is caught on both executable sides. Final commands, counts and timings
+are recorded in REPORT.md. Full arbitrary configuration parity is not claimed for
+uncovered behaviors above; real-project and generated-case parity is measured.
+
+Final result: 143 settings, 130 tsconfigs and 1,232 source-file records agree across
+Go, native, Node and backend; final package PASS 124.264 s. Tsconfig-only harness:
+Go 63,542 files/s; native 15,800 to 16,722 files/s. Startup/output boundaries differ;
+see REPORT.md. All three loader and three discovery executable mutants were caught.

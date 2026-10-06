@@ -1,7 +1,7 @@
-// One absolute root per line, followed by tab-separated ignorePatterns. No settings are injected as
-// resolved answers: this driver exercises only the project discovery seam named in discovery.ts.
+// Absolute roots with explicit ignorePatterns, or configured roots whose ignores are loaded here.
+// This driver exercises production project discovery and the typed settings reader.
 import { panic, programArguments, readTextFile } from 'adamic';
-import { discoverProjects } from './discovery.ts';
+import { discoverConfiguredProjects, discoverProjects } from './discovery.ts';
 import { LintGlob } from './glob.ts';
 const input = readTextFile(programArguments()[0] ?? panic('usage: main.ts <cases>'));
 if (input.kind === 'Error') { panic(input.message); }
@@ -13,9 +13,10 @@ for (const line of input.text.split('\n')) {
 		console.log(`glob ${matched ? '1' : '0'}`);
 		continue;
 	}
-	const root = fields[0] ?? panic('no root');
+	const configured = fields[0] === 'configured';
+	const root = fields[configured ? 1 : 0] ?? panic('no root');
 	console.log(`root ${root}`);
-	const answer = discoverProjects(root, fields.slice(1));
+	const answer = configured ? discoverConfiguredProjects(root) : discoverProjects(root, fields.slice(1));
 	if (answer.kind === 'Error') { console.log(`error ${answer.message}`); continue; }
 	const found = answer.found;
 	console.log(`counts ${found.submodules} ${found.ignored} ${found.neverDescended}`);
