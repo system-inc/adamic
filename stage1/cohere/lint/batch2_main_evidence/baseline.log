@@ -1,0 +1,110 @@
+=== RUN   TestBatch2Controls
+    batch2_test.go:136: execution go: 6.280809802s
+    batch2_test.go:139: execution oracle: 14.485882ms
+    batch2_test.go:139: execution oracle: 12.812332ms
+    batch2_test.go:139: execution oracle: 14.566814ms
+    batch2_test.go:139: execution oracle: 36.112754ms
+    batch2_test.go:139: execution oracle: 14.856867ms
+    batch2_test.go:139: execution oracle: 10.976311ms
+    batch2_test.go:139: execution oracle: 14.349132ms
+    batch2_test.go:139: execution oracle: 12.356799ms
+    batch2_test.go:139: execution oracle: 13.850153ms
+    batch2_test.go:139: execution oracle: 12.823188ms
+    batch2_test.go:139: execution oracle: 12.310961ms
+    batch2_test.go:139: execution oracle: 16.541838ms
+    batch2_test.go:139: execution oracle: 11.387152ms
+    batch2_test.go:139: execution oracle: 13.047675ms
+    batch2_test.go:139: execution oracle: 13.664074ms
+    batch2_test.go:139: execution oracle: 15.925969ms
+    batch2_test.go:139: execution oracle: 11.530959ms
+    batch2_test.go:139: execution oracle: 12.075857ms
+    batch2_test.go:139: execution oracle: 22.067448ms
+    batch2_test.go:139: execution oracle: 15.871628ms
+    batch2_test.go:139: execution oracle: 14.88993ms
+    batch2_test.go:139: execution oracle: 58.040287ms
+    batch2_test.go:144: build sanitize=true: load=298.059081ms lower=544.82425ms emit=225.465507ms clang=36.834006688s C-bytes=3379290
+    batch2_test.go:144: execution oracle: 29.586273ms
+    batch2_test.go:144: execution node: 340.615484ms
+    batch2_test.go:144: execution scanner: 54.68186ms
+    batch2_test.go:144: Go, Node, native identical: 23860 bytes
+--- PASS: TestBatch2Controls (45.00s)
+=== RUN   TestBatch2Mutants
+    batch2_test.go:151: execution go: 4.032931709s
+    batch2_test.go:151: execution oracle: 14.68744ms
+=== RUN   TestBatch2Mutants/no-caller
+    batch2_test.go:157: build sanitize=true: load=155.849327ms lower=338.432863ms emit=164.566774ms clang=23.803920702s C-bytes=3379369
+    batch2_test.go:161: execution node: 277.193963ms
+    batch2_test.go:161: execution scanner: 38.605757ms
+    batch2_test.go:165: listener omission caught on Node: case 0 line 2: port "fixed\targuments.caller; (arguments).callee; object.callee; arguments[caller];", Go "/tmp/adamic-gate/TestBatch2Mutants2695091706/001/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch2Mutants2695091706/001/control.ts:1:11
+          no-caller  This uses `arguments.caller`. Both properties throw in strict mode, which every module and class body already is, and they prevent engines from optimizing functions whose callers would otherwise be statically known. Name the function and refer to it by name instead.
+        
+        range 10 16 noCaller 			10 16
+        /tmp/adamic-gate/TestBatch2Mutants2695091706/001/control.ts:1:31
+    batch2_test.go:165: listener omission caught on native: case 0 line 2: port "fixed\targuments.caller; (arguments).callee; object.callee; arguments[caller];", Go "/tmp/adamic-gate/TestBatch2Mutants2695091706/001/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch2Mutants2695091706/001/control.ts:1:11
+          no-caller  This uses `arguments.caller`. Both properties throw in strict mode, which every module and class body already is, and they prevent engines from optimizing functions whose callers would otherwise be statically known. Name the function and refer to it by name instead.
+        
+        range 10 16 noCaller 			10 16
+        /tmp/adamic-gate/TestBatch2Mutants2695091706/001/control.ts:1:31
+=== RUN   TestBatch2Mutants/no-eq-null
+    batch2_test.go:157: build sanitize=true: load=216.1687ms lower=344.605114ms emit=213.679434ms clang=35.103540722s C-bytes=3379369
+    batch2_test.go:161: execution node: 213.230559ms
+    batch2_test.go:161: execution scanner: 39.939486ms
+    batch2_test.go:165: listener omission caught on Node: case 1 line 12: port "fixed\tx == (null); null != x; x === null; x == undefined;", Go "/tmp/adamic-gate/TestBatch2Mutants2695091706/002/control.ts:1:1"
+        Go context:
+          no-caller  This uses `arguments.callee`. Both properties throw in strict mode, which every module and class body already is, and they prevent engines from optimizing functions whose callers would otherwise be statically known. Name the function and refer to it by name instead.
+        
+        range 30 36 noCaller 			30 36
+        fixed	arguments.caller; (arguments).callee; object.callee; arguments[caller];
+        case 1
+        /tmp/adamic-gate/TestBatch2Mutants2695091706/002/control.ts:1:1
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 0 11 unexpected 			0 11
+        /tmp/adamic-gate/TestBatch2Mutants2695091706/002/control.ts:1:14
+    batch2_test.go:165: listener omission caught on native: case 1 line 12: port "fixed\tx == (null); null != x; x === null; x == undefined;", Go "/tmp/adamic-gate/TestBatch2Mutants2695091706/002/control.ts:1:1"
+        Go context:
+          no-caller  This uses `arguments.callee`. Both properties throw in strict mode, which every module and class body already is, and they prevent engines from optimizing functions whose callers would otherwise be statically known. Name the function and refer to it by name instead.
+        
+        range 30 36 noCaller 			30 36
+        fixed	arguments.caller; (arguments).callee; object.callee; arguments[caller];
+        case 1
+        /tmp/adamic-gate/TestBatch2Mutants2695091706/002/control.ts:1:1
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 0 11 unexpected 			0 11
+        /tmp/adamic-gate/TestBatch2Mutants2695091706/002/control.ts:1:14
+=== RUN   TestBatch2Mutants/no-empty-static-block
+    batch2_test.go:157: build sanitize=true: load=150.896465ms lower=337.749782ms emit=139.638808ms clang=26.30814478s C-bytes=3379369
+    batch2_test.go:161: execution node: 318.761814ms
+    batch2_test.go:161: execution scanner: 65.962133ms
+    batch2_test.go:165: listener omission caught on Node: case 2 line 22: port "fixed\tclass C { static {} } class D { static { /* intentional */ } }", Go "/tmp/adamic-gate/TestBatch2Mutants2695091706/003/control.ts:1:11"
+        Go context:
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 13 22 unexpected 			13 22
+        fixed	x == (null); null != x; x === null; x == undefined;
+        case 2
+        /tmp/adamic-gate/TestBatch2Mutants2695091706/003/control.ts:1:11
+          no-empty-static-block  This static initialization block is empty, so it runs nothing at class definition time and exists only as syntax. Unlike an empty catch, there is no reading where that is deliberate: a static block has no parameter to bind and no error to swallow, so an empty one is a body that was deleted or never written. Remove it, or say in a comment why the class needs an initialization step that does nothing.
+        
+        range 10 19 unexpectedEmptyStaticBlock 			10 19
+        fixed	class C { static {} } class D { static { /* intentional */ } }
+    batch2_test.go:165: listener omission caught on native: case 2 line 22: port "fixed\tclass C { static {} } class D { static { /* intentional */ } }", Go "/tmp/adamic-gate/TestBatch2Mutants2695091706/003/control.ts:1:11"
+        Go context:
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 13 22 unexpected 			13 22
+        fixed	x == (null); null != x; x === null; x == undefined;
+        case 2
+        /tmp/adamic-gate/TestBatch2Mutants2695091706/003/control.ts:1:11
+          no-empty-static-block  This static initialization block is empty, so it runs nothing at class definition time and exists only as syntax. Unlike an empty catch, there is no reading where that is deliberate: a static block has no parameter to bind and no error to swallow, so an empty one is a body that was deleted or never written. Remove it, or say in a comment why the class needs an initialization step that does nothing.
+        
+        range 10 19 unexpectedEmptyStaticBlock 			10 19
+        fixed	class C { static {} } class D { static { /* intentional */ } }
+=== RUN   TestBatch2Mutants/no-proto

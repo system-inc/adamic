@@ -1,0 +1,31 @@
+{
+  "load": {
+    "builds": 55,
+    "sum_elapsed_seconds": 22.146,
+    "min_seconds": 0.136,
+    "median_seconds": 0.375,
+    "max_seconds": 1.27
+  },
+  "lower": {
+    "builds": 55,
+    "sum_elapsed_seconds": 33.43,
+    "min_seconds": 0.308,
+    "median_seconds": 0.528,
+    "max_seconds": 1.382
+  },
+  "emit": {
+    "builds": 55,
+    "sum_elapsed_seconds": 18.69,
+    "min_seconds": 0.158,
+    "median_seconds": 0.278,
+    "max_seconds": 1.641
+  },
+  "clang": {
+    "builds": 55,
+    "sum_elapsed_seconds": 2195.891,
+    "min_seconds": 25.331,
+    "median_seconds": 38.358,
+    "max_seconds": 67.511
+  },
+  "clang_share_of_build_phases_percent": 96.73
+}
