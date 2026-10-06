@@ -1,6 +1,6 @@
 Two exact integration probes were fixed before this unit; both now have permanent Node oracle fixtures.
 Implementation commit: 7d4faab; the following audit commit records the final classifications and checks.
-The uncached affected gate, scoped Cohere check and final count regeneration passed; all 267 prior rows are exact.
+The uncached affected gate, scoped Cohere check and final count regeneration passed; all 266 prior fixture rows are exact.
 Four mutants were caught: two native catch-versus-panic comparisons and two precise refusal assertions.
 Not covered: native String.fromCodePoint catchability, the complete repository gate and performance benchmarks.
 
@@ -28,7 +28,7 @@ The executable probes are standard entries in TestNativeAgreesWithNode, so sourc
 
 The permanent IR mutant tests run as part of the oracle gate. Reproduce both source mutants with `python3 cloud/error-catchability-mutants.py` after sourcing the toolchain environment. Overlays never edit the working tree; build failures are not accepted as mutant kills.
 
-Counts were regenerated. All 267 previously recorded fixtures keep all six counts exactly; only the two new executable rows are added. Refused fixtures do not have executable counts. This preserves the prior 63-row audit and every restored non-throwing program:
+Counts were regenerated. All 266 previously recorded fixtures keep all six counts exactly; only the two new executable rows are added. Refused fixtures do not have executable counts. This preserves the prior 63-row audit and every restored non-throwing program:
 
 | New executable fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -61,7 +61,7 @@ Completed checks and commands:
 | `git diff --check` | exit 0, no output | terminal |
 | Focused oracle, boundary and permanent-mutant command below | exit 0; both executable comparisons, both Node/refusal boundaries and both native mutants passed | `/tmp/adamic-catchability-unit-final.log` |
 | `python3 cloud/error-catchability-mutants.py` | exit 0; both final source overlays compiled and failed their intended assertions | `/tmp/adamic-catchability-source-mutants-final.log`, individual logs under `/tmp/adamic-catchability-source-mutants/` |
-| `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts` | exit 0, oracle 52.434s; final table regenerated, all 267 prior rows unchanged | `/tmp/adamic-catchability-counts-final.log` |
+| `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts` | exit 0, oracle 52.434s; final table regenerated, all 266 prior fixture rows unchanged | `/tmp/adamic-catchability-counts-final.log` |
 | Scoped Cohere command below | exit 0, four sources checked; byte-for-byte mirror assertion passed | `/tmp/adamic-catchability-cohere-final.log` |
 
 ```sh
