@@ -3,12 +3,13 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"os"
 	"testing"
 )
 
 func TestFixtureCorpusCountsEveryDiagnosticKind(t *testing.T) {
 	t.Parallel()
-	r, err := measure("testdata/corpus")
+	r, err := measure("testdata/corpus", false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -19,6 +20,46 @@ func TestFixtureCorpusCountsEveryDiagnosticKind(t *testing.T) {
 	if got["Refused"] != 1 || got["NotYet"] != 1 {
 		t.Fatalf("counts = %#v, want one Refused and one NotYet", got)
 	}
+}
+
+func TestAdaptRewritesTypeOnlyImportInMemory(t *testing.T) {
+	t.Parallel()
+	const path = "testdata/adapt/main.ts"
+	before, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	plain, err := measure("testdata/adapt", false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	adapted, err := measure("testdata/adapt", true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if countKind(plain, "mechanical") != 1 {
+		t.Fatalf("plain mechanical diagnostics = %d, want 1", countKind(plain, "mechanical"))
+	}
+	if countKind(adapted, "mechanical") != 0 || len(adapted.Adaptations) != 1 || adapted.Adaptations[0].Removed != 1 {
+		t.Fatalf("adapted report = %#v", adapted)
+	}
+	after, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(before, after) {
+		t.Fatal("--adapt changed the fixture on disk")
+	}
+}
+
+func countKind(r *report, kind string) int {
+	count := 0
+	for _, reason := range r.Reasons {
+		if reason.Kind == kind {
+			count += reason.Count
+		}
+	}
+	return count
 }
 
 func TestJSONIsMachineReadable(t *testing.T) {

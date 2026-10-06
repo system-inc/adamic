@@ -29,10 +29,16 @@ type finding struct {
 }
 
 type report struct {
-	Root              string     `json:"root"`
-	FilesExamined     int        `json:"files_examined"`
-	JavaScriptSkipped int        `json:"javascript_files_skipped"`
-	Reasons           []*finding `json:"reasons"`
+	Root              string       `json:"root"`
+	FilesExamined     int          `json:"files_examined"`
+	JavaScriptSkipped int          `json:"javascript_files_skipped"`
+	Reasons           []*finding   `json:"reasons"`
+	Adaptations       []adaptation `json:"adaptations,omitempty"`
+}
+
+type adaptation struct {
+	Rewrite string `json:"rewrite"`
+	Removed int    `json:"diagnostics_removed"`
 }
 
 func main() { os.Exit(run(os.Args[1:], os.Stdout, os.Stderr)) }
@@ -41,14 +47,15 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 	flags := flag.NewFlagSet("adamic-meter", flag.ContinueOnError)
 	flags.SetOutput(stderr)
 	asJSON := flags.Bool("json", false, "write JSON")
+	adapt := flags.Bool("adapt", false, "apply semantics-preserving rewrites in memory")
 	if err := flags.Parse(arguments); err != nil {
 		return 2
 	}
 	if flags.NArg() != 1 {
-		fmt.Fprintln(stderr, "usage: adamic-meter [--json] <directory>")
+		fmt.Fprintln(stderr, "usage: adamic-meter [--adapt] [--json] <directory>")
 		return 2
 	}
-	r, err := measure(flags.Arg(0))
+	r, err := measure(flags.Arg(0), *adapt)
 	if err != nil {
 		fmt.Fprintf(stderr, "adamic-meter: %v\n", err)
 		return 1
@@ -66,6 +73,9 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 	for _, reason := range r.Reasons {
 		fmt.Fprintf(stdout, "%5d  %5d  %-10s  %s  %s\n", reason.Count, len(reason.Files), reason.Kind, reason.Reason, reason.Example)
 	}
+	for _, adapted := range r.Adaptations {
+		fmt.Fprintf(stdout, "adapted: %s removed %d diagnostics\n", adapted.Rewrite, adapted.Removed)
+	}
 	fmt.Fprintf(stdout, "\n%d TypeScript files examined", r.FilesExamined)
 	if r.JavaScriptSkipped != 0 {
 		fmt.Fprintf(stdout, "; %d JavaScript files skipped (stage 0 accepts only .ts and .a)", r.JavaScriptSkipped)
@@ -74,7 +84,7 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 	return 0
 }
 
-func measure(root string) (*report, error) {
+func measure(root string, adapt bool) (*report, error) {
 	absolute, err := filepath.Abs(root)
 	if err != nil {
 		return nil, err
@@ -131,23 +141,49 @@ func measure(root string) (*report, error) {
 	// TypeScript program once per file. If it checks, lowering still runs once per possible entry,
 	// because stage 0 deliberately accepts exactly one entry root.
 	if len(paths) != 0 {
-		if _, loadErr := load.Load(paths); loadErr != nil {
+		loader := load.Load
+		var overlay map[string]string
+		baseline, baselineErr := load.Load(paths)
+		_ = baseline
+		if adapt {
+			overlay, result.Adaptations, err = adaptations(paths, baselineErr)
+			if err != nil {
+				return nil, err
+			}
+			loader = func(paths []string) (*load.Program, error) { return load.LoadOverlay(paths, overlay) }
+		}
+		if _, loadErr := loader(paths); loadErr != nil {
 			var checkError *load.CheckError
 			if errors.As(loadErr, &checkError) {
+				diagnosed := make(map[string]bool)
 				for _, diagnostic := range checkError.Diagnostics {
 					match := checkerDiagnostic.FindStringSubmatch(diagnostic)
 					if match == nil {
 						add(paths[0], []observation{{"type", "TypeScript diagnostic", diagnostic}})
 						continue
 					}
-					add(diagnosticFile(match[1]), []observation{{typescriptCategory(match[2]), "TypeScript TS" + match[2], match[1]}})
+					file := diagnosticFile(match[1])
+					diagnosed[filepath.Clean(file)] = true
+					add(file, []observation{{typescriptCategory(match[2]), "TypeScript TS" + match[2], match[1]}})
+				}
+				if adapt {
+					for _, path := range paths {
+						if diagnosed[filepath.Clean(path)] {
+							continue
+						}
+						for _, found := range inspect(path, overlay) {
+							if found.Kind == "Refused" || found.Kind == "NotYet" {
+								add(path, []observation{found})
+							}
+						}
+					}
 				}
 			} else {
 				add(paths[0], []observation{{"load", normalize(loadErr.Error()), paths[0]}})
 			}
 		} else {
 			for _, path := range paths {
-				add(path, inspect(path))
+				add(path, inspect(path, overlay))
 			}
 		}
 	}
@@ -178,9 +214,76 @@ func diagnosticFile(where string) string {
 type observation struct{ Kind, Reason, Example string }
 
 var checkerDiagnostic = regexp.MustCompile(`^([^\n]*?): error TS([0-9]+):`)
+var typeOnlyDiagnostic = regexp.MustCompile(`^([^\n]+):([0-9]+):([0-9]+): error TS1484: '([^']+)'`)
 
-func inspect(path string) []observation {
-	program, err := load.Load([]string{path})
+type sourceEdit struct {
+	line, column int
+}
+
+func adaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {
+	var checkError *load.CheckError
+	if !errors.As(baselineErr, &checkError) {
+		return nil, nil, nil
+	}
+	edits := make(map[string][]sourceEdit)
+	for _, diagnostic := range checkError.Diagnostics {
+		match := typeOnlyDiagnostic.FindStringSubmatch(diagnostic)
+		if match == nil {
+			continue
+		}
+		line, _ := strconv.Atoi(match[2])
+		column, _ := strconv.Atoi(match[3])
+		edits[match[1]] = append(edits[match[1]], sourceEdit{line, column})
+	}
+	overlay := make(map[string]string, len(edits))
+	for path, fileEdits := range edits {
+		source, err := os.ReadFile(path)
+		if err != nil {
+			return nil, nil, fmt.Errorf("reading %s to adapt it: %w", path, err)
+		}
+		lines := strings.Split(string(source), "\n")
+		sort.Slice(fileEdits, func(i, j int) bool {
+			if fileEdits[i].line != fileEdits[j].line {
+				return fileEdits[i].line > fileEdits[j].line
+			}
+			return fileEdits[i].column > fileEdits[j].column
+		})
+		for _, edit := range fileEdits {
+			if edit.line < 1 || edit.line > len(lines) || edit.column < 1 || edit.column > len(lines[edit.line-1])+1 {
+				return nil, nil, fmt.Errorf("TS1484 gave an invalid position in %s:%d:%d", path, edit.line, edit.column)
+			}
+			line := lines[edit.line-1]
+			at := edit.column - 1
+			line = line[:at] + "type " + line[at:]
+			lines[edit.line-1] = line
+		}
+		overlay[path] = strings.Join(lines, "\n")
+	}
+	if len(edits) == 0 {
+		return overlay, nil, nil
+	}
+	_, adaptedErr := load.LoadOverlay(paths, overlay)
+	remaining := diagnosticCount(adaptedErr, "1484")
+	return overlay, []adaptation{{Rewrite: "type-only imports (TS1484)", Removed: diagnosticCount(baselineErr, "1484") - remaining}}, nil
+}
+
+func diagnosticCount(err error, code string) int {
+	var checkError *load.CheckError
+	if !errors.As(err, &checkError) {
+		return 0
+	}
+	count := 0
+	needle := "error TS" + code + ":"
+	for _, diagnostic := range checkError.Diagnostics {
+		if strings.Contains(diagnostic, needle) {
+			count++
+		}
+	}
+	return count
+}
+
+func inspect(path string, overlay map[string]string) []observation {
+	program, err := load.LoadOverlay([]string{path}, overlay)
 	if err != nil {
 		var checkError *load.CheckError
 		if !errors.As(err, &checkError) {
@@ -216,6 +319,9 @@ func inspect(path string) []observation {
 // to 17xxx). Later 1xxx codes include option-driven type diagnostics such as TS1484.
 // Keeping the code in the reason makes the grouping exact even as TypeScript changes its wording.
 func typescriptCategory(text string) string {
+	if text == "1484" {
+		return "mechanical"
+	}
 	code, _ := strconv.Atoi(text)
 	if code >= 1000 && code < 1200 || code >= 17000 && code < 18000 {
 		return "parse"
