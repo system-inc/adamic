@@ -90,8 +90,9 @@ exit zero, produce no stderr or formatting errors, and fail the off baseline's
 byte comparison. These prove the preflight comparison catches real output
 changes; they are Go mutants, not mutants of an unbuilt Adamic block printer.
 
-The complete native Markdown parser, preprocessing, recursive block printer,
-table layout, HTML block printer and document engine remain unported. The block unit remains incomplete. The prior inline implementation is
+The list printer and the document operations Markdown uses are now ported.
+The complete native Markdown parser, preprocessing, remaining block printers
+and Unicode display-width service remain unfinished. The block unit remains incomplete. The prior inline implementation is
 composed only as a branch dependency, not yet wired into a block formatter.
 The embedding-off contract avoids those embedding dependencies. The remaining
 work is the native parser/frame and document printer, not a change to embedded
@@ -122,6 +123,39 @@ Each lowers, builds and exits zero with no stderr; only its bytes fail the oracl
 comparison. These are native front-matter mutants, not full block-printer mutants.
 The inherited Go heading/list/fence mutants still test the whole-document audit.
 The prior inline printers are not wired into a block formatter yet.
+
+## Native list layout component
+
+`lists.ts` ports the list and list-item printers, ordered-marker scanning,
+Git-friendly numbering and list alignment. It covers all marker families,
+999,999,999 capping, alternating sibling markers, task boxes, tight/loose spacing,
+blank lines before nested lists, required indentation before code, and the HTML
+column exception. `document.ts` and `commandStack.ts` port the document operations
+used by Markdown with owned arenas and numeric IDs for children and indentation
+roots. Captured mutually referring state closures are not used.
+
+The test collects real Go parser/preprocessor trees and child documents for
+blocks not ported yet. Labels are transparent to Go's actual formatter; the
+collector checks that fact on every input. In the native fixture, every list
+label is replaced by native list construction, and every eligible word label by
+the prior native word printer. The document renderer lays out the whole file.
+Fixtures are serialized before Go propagates breaks, so native break propagation
+is exercised. All text display widths are explicit inputs to this component;
+Unicode width is still a caller service, not a newly ported native implementation.
+The native component never invokes Go or Node, but its fixture driver is not a
+Markdown-file formatter. Source parsing, non-list child printing, path/context
+facts and inherited alignment still come from Go in the test harness. No native
+CommonMark list recognition/container machine is claimed by this layout slice.
+
+The current corpus is all 953 existing document cases plus 1,218 generated list
+cases, 2,171 whole-document contexts. Generated inputs cross ten markers, six
+space/tab prefixes, four task forms and five body forms, plus numbering, cap,
+blank-line, nested code/quote/table/HTML, definitions and ignore edges. Native,
+source Node, the JavaScript backend and the original fork's document printer
+agree with actual Go Markdown formatting. Native ASan/UBSan and leaks pass.
+Three native mutants change the unordered marker, checked task box and ordered
+cap; each compiles, exits zero without stderr and fails only the byte comparison.
+This proves list layout on Go trees, not completion of native Markdown parsing.
 
 ## Seven upstream embedding witnesses, with complete outputs
 
