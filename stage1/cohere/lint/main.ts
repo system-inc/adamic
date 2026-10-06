@@ -2,6 +2,7 @@ import { panic, programArguments, readTextFile } from 'adamic';
 import { written } from '../../typescript/parser/nodes.ts';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { Scanner } from '../../typescript/scanner/scanner.ts';
+import { Settings } from './settings.ts';
 import { Linter } from './lint.ts';
 import { Settings } from './settings.ts';
 

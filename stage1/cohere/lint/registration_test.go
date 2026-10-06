@@ -215,3 +215,35 @@ console.log(written('copied'));
 	}
 	t.Log("root-only import rewrite mutant caught by Node and native module loading")
 }
+
+func TestDecodedOptionsAndMutant(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fixture := filepath.Join(t.TempDir(), "catch.ts")
+	if err := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	path := manifest(t, []string{fixture + "\tno-empty\t\t\tfalse\t{\"AllowEmptyCatch\":true}"})
+	oracle := goOracle(t)
+	compare(t, oracle, buildPort(t, directory, true), directory, path)
+	count := execute(t, "", oracle, "--manifest", path, "--count")
+	if string(count.output) != "0\n" {
+		t.Fatal("JSON catch option did not override the legacy default")
+	}
+	changed := mutant(t, "settings.read('allowemptycatch', allowCatch ? 'true' : 'false') === 'true'", "allowCatch", "context.ts")
+	want := execute(t, "", oracle, "--manifest", path).output
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{
+		{"Node", node(t, changed, path, false)},
+		{"native", execute(t, "", buildPort(t, changed, true), "--manifest", path)},
+	} {
+		if bytes.Equal(side.run.output, want) {
+			t.Fatalf("ignored decoded-option mutant survived on %s", side.name)
+		}
+		t.Logf("ignored decoded-option mutant caught on %s: %s", side.name, difference(side.run.output, want))
+	}
+}
