@@ -118,7 +118,8 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             return result;
         }
     }
-    if(kind(scanner) === 'LessThanToken') {
+    const generic = kind(scanner) === 'LessThanToken';
+    if(generic) {
         let depth = 0;
         while(kind(scanner) !== 'EndOfFile') {
             if(kind(scanner) === 'LessThanToken') {
@@ -160,7 +161,10 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
                 break;
             }
         }
-        if(typed || (head === 0 && (kind(scanner) === 'ColonToken' || kind(scanner) === 'OpenBraceToken'))) {
+        if(
+            !generic &&
+            (typed || (head === 0 && (kind(scanner) === 'ColonToken' || kind(scanner) === 'OpenBraceToken')))
+        ) {
             state.restore();
             return true;
         }

@@ -570,3 +570,11 @@ Inputs 2578 through 2581 exposed empty method-body nodes after malformed
 signatures. Methods now distinguish automatic semicolons from required
 bodies and retain the missing Block, with the object/class diagnostic choice.
 Four added probes and preceding cases pass in 36.039s; cohere passes.
+
+## Continued recovery: generic arrow speculation
+
+Input 2585 duplicated the generic opener in a function declaration. Typed
+parameters in a generic expression do not alone commit an arrow parse;
+without its arrow Go falls back to a type assertion. Three added probes and
+preceding cases pass in 36.045s; cohere passes. The user's main rebase now
+interrupts the wider continuation, which has not passed its complete gate.
