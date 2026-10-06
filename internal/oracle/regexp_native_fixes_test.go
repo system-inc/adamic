@@ -20,6 +20,10 @@ func init() {
 			"internal/oracle/testdata/regexp_native_" + name + ".a", true, false,
 		})
 	}
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/regexp_native_write_groups_compound_missing.a", false, false})
 }
 
 // Not parallel: these deadlines guard algorithmic complexity, not throughput under contention.
