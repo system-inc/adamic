@@ -38,12 +38,16 @@ func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
 		}
 		for _, file := range files {
 			data := file.contents
-			if mutant && file.name == "heap.c" {
-				old := "heap == NULL || heap->references == 0 || --heap->references != 0"
+			if mutant && (file.name == "heap.c" || file.name == "adamic.h") {
+				// Route count two through the slow path, then wrongly free its remaining owner.
+				old, changed := "return count == 1;", "return count <= 2;"
+				if file.name == "adamic.h" {
+					old, changed = "if (count > 1)", "if (count > 2)"
+				}
 				if strings.Count(string(data), old) != 1 {
 					t.Fatal("mutant lost its unique anchor")
 				}
-				data = []byte(strings.Replace(string(data), old, "heap == NULL || heap->references == 0 || --heap->references > 1", 1))
+				data = []byte(strings.Replace(string(data), old, changed, 1))
 			}
 			if err := os.WriteFile(filepath.Join(directory, file.name), data, 0644); err != nil {
 				t.Fatal(err)

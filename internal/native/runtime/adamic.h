@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdatomic.h>
+#include "count.h"
 
 #include <math.h>
 
@@ -40,24 +41,47 @@ typedef struct adamic_heap {
 } adamic_heap;
 
 // The high count bit records permanent sharing; the remaining bits are the actual count.
-// A relaxed load is a plain machine load on the unshared path; increments and decrements there
-// remain non-atomic. Shared updates are atomic. Zero remains immortal, including region values.
+// Unshared operations read and update the count plainly. Shared updates are atomic. A separate
+// immutable slab bit dispatches before reading a count. Zero remains immortal, including regions.
 #define ADAMIC_SHARED ((size_t)1 << (sizeof(size_t) * 8 - 1))
 _Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require two-complement intptr_t conversion");
+#define ADAMIC_SHARED_HEADER UINT32_C(0x80000000)
 #define ADAMIC_REGION_VALUE UINT32_C(0x40000000)
 static inline bool adamic_is_shared(const adamic_heap *heap) {
-	return (__atomic_load_n(&heap->references, __ATOMIC_RELAXED) & ADAMIC_SHARED) != 0;
+	return (heap->slab & ADAMIC_SHARED_HEADER) != 0;
 }
 static inline size_t adamic_reference_count(const adamic_heap *heap) {
-	return __atomic_load_n(&heap->references, __ATOMIC_ACQUIRE) & ~ADAMIC_SHARED;
+	return adamic_is_shared(heap) ? __atomic_load_n(&heap->references, __ATOMIC_ACQUIRE) & ~ADAMIC_SHARED : heap->references;
 }
 void adamic_share(void *value);
 void adamic_heap_thread_end(void);
 void adamic_heap_end(void);
 
 // adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
-void *adamic_retain(void *value);
-void adamic_release(void *value);
+void *adamic_retain_slow(void *value);
+void adamic_release_slow(void *value);
+
+// Sharing is published before any other worker can reach a value and never cleared. Test that
+// separate bit first: a plain read of a shared count would race with its atomic updates.
+static inline void *adamic_retain(void *value) {
+	ADAMIC_COUNT_RETAIN();
+	adamic_heap *heap = value;
+	if (heap != NULL && !adamic_is_shared(heap)) {
+		size_t count = heap->references;
+		if (count > 0) { heap->references = count + 1; return value; }
+	}
+	return adamic_retain_slow(value);
+}
+
+static inline void adamic_release(void *value) {
+	ADAMIC_COUNT_RELEASE();
+	adamic_heap *heap = value;
+	if (heap != NULL && !adamic_is_shared(heap)) {
+		size_t count = heap->references;
+		if (count > 1) { heap->references = count - 1; return; }
+	}
+	adamic_release_slow(value);
+}
 
 // adamic_allocate makes a heap value of size bytes, references 1, and panics when memory runs out.
 void *adamic_allocate(size_t size, enum adamic_kind kind);

@@ -52,7 +52,7 @@ func parallelBuilds() []struct {
 	builds := []struct {
 		name    string
 		options Options
-	}{{"asan", Options{Sanitize: true}}, {"count", Options{Count: true}}}
+	}{{"asan", Options{Sanitize: true}}, {"asan_slabs", Options{Sanitize: true, Slabs: true}}, {"count", Options{Count: true}}, {"malloc", Options{Malloc: true}}}
 	if goruntime.GOOS == "linux" {
 		builds = append(builds, struct {
 			name    string

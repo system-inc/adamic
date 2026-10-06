@@ -245,7 +245,7 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 
 // deallocate gives a value's memory back: to its chunk, or to free.
 static void deallocate(adamic_heap *heap) {
-	uint32_t slab = heap->slab;
+	uint32_t slab = heap->slab & ~ADAMIC_SHARED_HEADER;
 	if (slab == 0) {
 		free(heap);
 		return;
@@ -253,8 +253,7 @@ static void deallocate(adamic_heap *heap) {
 	give(heap, slab - 1);
 }
 
-void *adamic_retain(void *value) {
-	ADAMIC_COUNT_RETAIN();
+void *adamic_retain_slow(void *value) {
 	adamic_heap *heap = value;
 	if (heap != NULL) {
 		size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
@@ -380,8 +379,7 @@ __attribute__((noinline)) static void release_last(void *value) {
 	draining = false;
 }
 
-void adamic_release(void *value) {
-	ADAMIC_COUNT_RELEASE();
+void adamic_release_slow(void *value) {
 	if (drop_reference(value)) { release_last(value); }
 }
 

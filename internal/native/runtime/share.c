@@ -62,7 +62,10 @@ void adamic_share(void *value) {
 		// but their children must be visited and their storage remains alive through the join.
 		if (adamic_reference_count(heap) == 0 && (heap->slab & ADAMIC_REGION_VALUE) == 0) { continue; }
 		if (!shared && heap->kind == adamic_kind_string) { adamic_string_prepare_shared((adamic_string *)heap); }
-		if (!shared) { __atomic_fetch_or(&heap->references, ADAMIC_SHARED, __ATOMIC_RELAXED); }
+		if (!shared) {
+			__atomic_fetch_or(&heap->references, ADAMIC_SHARED, __ATOMIC_RELAXED);
+			heap->slab |= ADAMIC_SHARED_HEADER;
+		}
 		switch (heap->kind) {
 		case adamic_kind_string: append(&pending, ((adamic_string *)heap)->owner); break;
 		case adamic_kind_object: {
