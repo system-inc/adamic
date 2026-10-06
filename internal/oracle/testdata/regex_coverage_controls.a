@@ -1,0 +1,24 @@
+// Safe neighbors of the refused shapes must continue to compile.
+const regexes = [new RegExp('[a\\q{a}]', 'iv'), /[[\q{a}]&&[0-9]]/iv,
+ /[[\q{a}]--[a]]/iv, /[^a\q{a}]/iv, /[\q{12}]/iv,
+ /[\q{AB|ab}]/iv, /[[\q{ab|a|}]--[\q{}]]/v,
+ /[\q{ab|}]/v, /[\q{a|}]/v, /[\q{}]/v,
+ new RegExp('(?i:a)b', 'v'), new RegExp('(?i:a)(?:[b])', 'v'),
+ new RegExp('(?i:a)[0-9]', 'v'), new RegExp('(?i:a)[b]', 'u'),
+ new RegExp('(?i:^)[\\w\\W]', 'u'), new RegExp('(?-i:^)[\\w\\W]', 'iu'),
+ new RegExp('(?-i:^)[\\q{AB}]', 'iv'), new RegExp('(?i:a)\\w', ''),
+ new RegExp('(?s:a).', ''), new RegExp('(?-s:a).', 's'),
+ new RegExp('(?m:)^a', ''), new RegExp('(?-m:)^a', 'm'),
+ new RegExp('(?i:a)(?-i:b)(?:[c])', 'v'),
+ new RegExp('(?i:a){2}(?:[b])', 'v'),
+ new RegExp('(?i:a)\\p{Any}', 'v'),
+ new RegExp('(?-i:a)\\w', 'iu'),
+ new RegExp('(?i:^)[^\\w\\W]', 'u'),
+ new RegExp('(?<=((?i:a)))(?:[b])', 'v')];
+for (const regex of regexes) {
+ for (const input of ['', 'a', 'A', 'ab', 'AB', 'aB', 'A1', '12', 'sſ', 'K', '🌍', 'a\n', '\na', 'aab']) {
+  console.log(`${regex.source}/${regex.flags}:${regex.test(input)}`);
+  const match = regex.exec(input);
+  console.log(match === null ? 'null' : `${match.index}:${match[0]}`);
+ }
+}

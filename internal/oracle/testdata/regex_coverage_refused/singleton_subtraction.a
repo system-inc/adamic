@@ -1,0 +1,1 @@
+console.log(/[[A]--[\q{a}]]/iv.test('aB') ? 'yes' : 'no');

@@ -1,0 +1,16 @@
+const pattern = '(?<name>a)(b)?';
+const regexes = [/(?<name>a)(b)?/g, new RegExp(pattern, 'g'),
+ /(?<name>a)(b)?/gy, new RegExp(pattern, 'gy')];
+for (const regex of regexes) {
+ for (const input of ['ab a', 'aab', 'zzz', '']) {
+  for (const token of ['$1', '$<name>', '$FEATURES', '$1:$<name>:$FEATURES', '$$FEATURES', '$<missing>']) {
+   regex.lastIndex = 1;
+   console.log(`${input.replace(regex, token)}:${regex.lastIndex}`);
+   regex.lastIndex = 1;
+   console.log(`${input.replaceAll(regex, token)}:${regex.lastIndex}`);
+  }
+ }
+}
+const single = new RegExp(pattern);
+single.lastIndex = 7;
+console.log(`${'ab'.replace(single, '$1:$<name>:$FEATURES')}:${single.lastIndex}`);

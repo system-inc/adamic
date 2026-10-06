@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/notes/regex/split_surrogate_assertions.a
+=== PAUSE TestNativeAgreesWithNode/notes/regex/split_surrogate_assertions.a
+=== CONT  TestNativeAgreesWithNode/notes/regex/split_surrogate_assertions.a
+    oracle_test.go:580: stdout differs
+        node:   exit 0, stdout "a�|�b\n🌍\na�|�b\n🌍\na�||�b\n🌍\na�|�|b\n�|�\n", stderr ""
+        native: exit 0, stdout "a🌍b\n🌍\na🌍b\n🌍\na🌍b\n🌍\na🌍|b\n🌍\n", stderr ""
+    oracle_test.go:586: JavaScript backend: stdout differs
+        node:    exit 0, stdout "a�|�b\n🌍\na�|�b\n🌍\na�||�b\n🌍\na�|�|b\n�|�\n", stderr ""
+        backend: exit 0, stdout "a🌍b\n🌍\na�|�b\n🌍\na🌍b\n🌍\na�|�|b\n�|�\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/notes/regex/split_surrogate_assertions.a (0.39s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.394s
+FAIL

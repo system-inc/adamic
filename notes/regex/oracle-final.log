@@ -1,0 +1,247 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestRegexCoverageRefusals
+=== PAUSE TestRegexCoverageRefusals
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestRegexCoverageRefusals
+=== RUN   TestRegexCoverageRefusals/singleton_literal
+=== PAUSE TestRegexCoverageRefusals/singleton_literal
+=== RUN   TestRegexCoverageRefusals/singleton_constructor
+=== PAUSE TestRegexCoverageRefusals/singleton_constructor
+=== RUN   TestRegexCoverageRefusals/singleton_intersection
+=== PAUSE TestRegexCoverageRefusals/singleton_intersection
+=== RUN   TestRegexCoverageRefusals/singleton_subtraction
+=== PAUSE TestRegexCoverageRefusals/singleton_subtraction
+=== RUN   TestRegexCoverageRefusals/singleton_negated
+=== PAUSE TestRegexCoverageRefusals/singleton_negated
+=== RUN   TestRegexCoverageRefusals/modifier_enable
+=== PAUSE TestRegexCoverageRefusals/modifier_enable
+=== RUN   TestRegexCoverageRefusals/modifier_ascii_property
+=== PAUSE TestRegexCoverageRefusals/modifier_ascii_property
+=== RUN   TestRegexCoverageRefusals/modifier_class_string
+=== PAUSE TestRegexCoverageRefusals/modifier_class_string
+=== RUN   TestRegexCoverageRefusals/modifier_disable
+=== PAUSE TestRegexCoverageRefusals/modifier_disable
+=== RUN   TestRegexCoverageRefusals/modifier_word
+=== PAUSE TestRegexCoverageRefusals/modifier_word
+=== RUN   TestRegexCoverageRefusals/modifier_nonword
+=== PAUSE TestRegexCoverageRefusals/modifier_nonword
+=== RUN   TestRegexCoverageRefusals/modifier_word_class
+=== PAUSE TestRegexCoverageRefusals/modifier_word_class
+=== RUN   TestRegexCoverageRefusals/modifier_negated_class
+=== PAUSE TestRegexCoverageRefusals/modifier_negated_class
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_constructors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_constructors.a
+=== RUN   TestRegexCoverageRefusals/modifier_property
+=== PAUSE TestRegexCoverageRefusals/modifier_property
+=== RUN   TestRegexCoverageRefusals/modifier_alternative
+=== PAUSE TestRegexCoverageRefusals/modifier_alternative
+=== RUN   TestRegexCoverageRefusals/modifier_quantified
+=== PAUSE TestRegexCoverageRefusals/modifier_quantified
+=== RUN   TestRegexCoverageRefusals/modifier_lookbehind
+=== PAUSE TestRegexCoverageRefusals/modifier_lookbehind
+=== RUN   TestRegexCoverageRefusals/mixed_literal
+=== PAUSE TestRegexCoverageRefusals/mixed_literal
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_controls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_controls.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_exec.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_exec.a
+=== RUN   TestRegexCoverageRefusals/mixed_constructor
+=== PAUSE TestRegexCoverageRefusals/mixed_constructor
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_flags.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_flags.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_methods.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_replace.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_replace.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_literal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_literal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_constructor.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_constructor.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_intersection.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_intersection.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_subtraction.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_subtraction.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_negated.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_negated.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_enable.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_enable.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_ascii_property.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_ascii_property.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_class_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_class_string.a
+=== RUN   TestRegexCoverageRefusals/mixed_dead
+=== PAUSE TestRegexCoverageRefusals/mixed_dead
+=== RUN   TestRegexCoverageRefusals/mixed_union
+=== PAUSE TestRegexCoverageRefusals/mixed_union
+=== CONT  TestRegexCoverageRefusals/singleton_literal
+=== CONT  TestRegexCoverageRefusals/modifier_word_class
+=== CONT  TestRegexCoverageRefusals/mixed_union
+=== CONT  TestRegexCoverageRefusals/mixed_dead
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_disable.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_disable.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_word.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_word.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_nonword.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_nonword.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_word_class.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_word_class.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_negated_class.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_negated_class.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_property.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_property.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_alternative.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_alternative.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_quantified.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_quantified.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_lookbehind.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_lookbehind.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_literal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_literal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_constructor.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_constructor.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_dead.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_dead.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_union.a
+=== CONT  TestRegexCoverageRefusals/mixed_constructor
+=== CONT  TestRegexCoverageRefusals/mixed_literal
+=== CONT  TestRegexCoverageRefusals/modifier_lookbehind
+=== CONT  TestRegexCoverageRefusals/modifier_alternative
+=== CONT  TestRegexCoverageRefusals/modifier_quantified
+=== CONT  TestRegexCoverageRefusals/modifier_property
+=== CONT  TestRegexCoverageRefusals/modifier_negated_class
+=== CONT  TestRegexCoverageRefusals/modifier_ascii_property
+=== CONT  TestRegexCoverageRefusals/modifier_nonword
+=== CONT  TestRegexCoverageRefusals/modifier_word
+=== CONT  TestRegexCoverageRefusals/modifier_disable
+=== CONT  TestRegexCoverageRefusals/modifier_class_string
+=== CONT  TestRegexCoverageRefusals/singleton_subtraction
+=== CONT  TestRegexCoverageRefusals/modifier_enable
+=== CONT  TestRegexCoverageRefusals/singleton_negated
+=== CONT  TestRegexCoverageRefusals/singleton_intersection
+=== CONT  TestRegexCoverageRefusals/singleton_constructor
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_constructors.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_word.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_union.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_dead.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_word.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_word.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_constructor.a
+--- PASS: TestRegexCoverageRefusals (0.04s)
+    --- PASS: TestRegexCoverageRefusals/mixed_dead (0.19s)
+    --- PASS: TestRegexCoverageRefusals/singleton_literal (0.21s)
+    --- PASS: TestRegexCoverageRefusals/mixed_union (0.21s)
+    --- PASS: TestRegexCoverageRefusals/modifier_word_class (0.21s)
+    --- PASS: TestRegexCoverageRefusals/mixed_constructor (0.22s)
+    --- PASS: TestRegexCoverageRefusals/mixed_literal (0.15s)
+    --- PASS: TestRegexCoverageRefusals/modifier_quantified (0.13s)
+    --- PASS: TestRegexCoverageRefusals/modifier_alternative (0.14s)
+    --- PASS: TestRegexCoverageRefusals/modifier_lookbehind (0.16s)
+    --- PASS: TestRegexCoverageRefusals/modifier_property (0.18s)
+    --- PASS: TestRegexCoverageRefusals/modifier_ascii_property (0.15s)
+    --- PASS: TestRegexCoverageRefusals/modifier_negated_class (0.17s)
+    --- PASS: TestRegexCoverageRefusals/modifier_nonword (0.17s)
+    --- PASS: TestRegexCoverageRefusals/modifier_disable (0.14s)
+    --- PASS: TestRegexCoverageRefusals/modifier_word (0.17s)
+    --- PASS: TestRegexCoverageRefusals/modifier_class_string (0.14s)
+    --- PASS: TestRegexCoverageRefusals/singleton_subtraction (0.12s)
+    --- PASS: TestRegexCoverageRefusals/singleton_intersection (0.15s)
+    --- PASS: TestRegexCoverageRefusals/singleton_negated (0.17s)
+    --- PASS: TestRegexCoverageRefusals/modifier_enable (0.18s)
+    --- PASS: TestRegexCoverageRefusals/singleton_constructor (0.21s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_literal.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_dead.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/mixed_dead.a:1:13: stage 0 can't lower RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_lookbehind.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_union.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/mixed_union.a:1:13: stage 0 can't lower RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_quantified.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_literal.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/mixed_literal.a:1:13: stage 0 can't lower RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_alternative.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_constructor.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/mixed_constructor.a:1:13: stage 0 can't lower RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_property.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_lookbehind.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_lookbehind.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_negated_class.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_quantified.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_quantified.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_word_class.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_negated_class.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_negated_class.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_nonword.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_property.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_property.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_intersection.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_word_class.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_word_class.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_disable.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_alternative.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_alternative.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_class_string.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_nonword.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_nonword.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_ascii_property.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_intersection.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/singleton_intersection.a:1:13: stage 0 can't lower RegExp refused: V8 does not case-fold singleton \q class strings under iv departs from ECMA-262 22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_enable.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_class_string.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_class_string.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_negated.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_disable.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_disable.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_subtraction.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_ascii_property.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_ascii_property.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_methods.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_enable.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_enable.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_constructor.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_negated.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/singleton_negated.a:1:13: stage 0 can't lower RegExp refused: V8 does not case-fold singleton \q class strings under iv departs from ECMA-262 22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_literal.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_constructor.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/singleton_constructor.a:1:13: stage 0 can't lower RegExp refused: V8 does not case-fold singleton \q class strings under iv departs from ECMA-262 22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_replace.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_subtraction.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/singleton_subtraction.a:1:13: stage 0 can't lower RegExp refused: V8 does not case-fold singleton \q class strings under iv departs from ECMA-262 22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_exec.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_literal.a
+    oracle_test.go:553: not yet: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/singleton_literal.a:1:13: stage 0 can't lower RegExp refused: V8 does not case-fold singleton \q class strings under iv departs from ECMA-262 22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString; native and JavaScript must agree yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_flags.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_controls.a
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_word.a (0.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_dead.a (0.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_union.a (0.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_literal.a (0.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/mixed_constructor.a (0.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_lookbehind.a (0.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_quantified.a (0.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_negated_class.a (0.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_property.a (0.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_word_class.a (0.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_alternative.a (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_nonword.a (0.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_intersection.a (0.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_class_string.a (0.16s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_disable.a (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_ascii_property.a (0.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/modifier_enable.a (0.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_negated.a (0.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_constructor.a (0.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_subtraction.a (0.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_refused/singleton_literal.a (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_constructors.a (1.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_methods.a (1.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_replace.a (1.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_flags.a (1.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_exec.a (1.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regex_coverage_controls.a (1.07s)
+PASS
+gate cache: native hits=0 misses=18
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.239s

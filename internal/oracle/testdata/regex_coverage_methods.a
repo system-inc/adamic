@@ -1,0 +1,20 @@
+const boundary = '\\B';
+const regexes = [/\B/dgu, /\B/dgv, /\B/dgyu, /\B/dgyv, new RegExp(boundary, 'dgu'),
+ new RegExp('(?!\\W)', 'dgv'), /\B(?<part>a?)/dgu, /\B./dgu];
+for (const regex of regexes) {
+ for (const input of ['a🌍b', '🌍', 'a🌍b🌍c', 'ab', '']) {
+  regex.lastIndex = 2;
+  const iterator = input.matchAll(regex);
+  regex.lastIndex = 99;
+  let visits = 0;
+  for (const match of iterator) {
+   console.log(`all:${match.index}:${match.groups?.part ?? 'undefined'}:${regex.lastIndex}`);
+   visits++;
+   if (visits === 8) break;
+  }
+  console.log(`count:${visits}:${regex.lastIndex}`);
+  regex.lastIndex = 2;
+  console.log(`replace:${input.replace(regex, '[$1:$<part>:$FEATURES]')}:${regex.lastIndex}`);
+  console.log(`replaceAll:${input.replaceAll(regex, '$&-$$')}:${regex.lastIndex}`);
+ }
+}

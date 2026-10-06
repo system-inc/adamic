@@ -1,0 +1,22 @@
+// Bounded repeated calls include empty matches, which exec does not advance.
+function show(match: RegExpExecArray | null): string {
+ if (match === null) return 'null';
+ return `${match.index}:${match.map(value => value ?? 'undefined').join('|')}:${match.groups?.part ?? 'undefined'}`;
+}
+const pattern = '\\B(?<part>a?)';
+const flags = 'd' + 'gu';
+const regexes = [/\B/dgu, /\B/dyu, /\B/dgv, /\B/dyv,
+ new RegExp(pattern, flags), new RegExp('(?!\\W)', 'dgyv'),
+ /(?!\W)/dgu, /(?!\W)/dyu, /\B./dgu, /(?!\W)./dgv,
+ /(?<!.)/dgu, /(?=\B)/dgv, /./dyu, /./dyv, /^./dyu,
+ /\B/dg, /\B/dy, new RegExp('(?<part>🌍)', 'dgyu')];
+for (const regex of regexes) {
+ for (const input of ['a🌍b', '🌍', ' 🌍 ', 'ab', '', '\ud800x', '\udc00x']) {
+  for (const start of [0, 1, 2, 3, 4, 5, -1, 1.5, NaN, Infinity]) {
+   regex.lastIndex = start;
+   for (let step = 0; step < 3; step++) console.log(`${regex.source}/${regex.flags}:${show(regex.exec(input))}:${regex.lastIndex}`);
+   regex.lastIndex = start;
+   for (let step = 0; step < 3; step++) console.log(`test:${regex.test(input)}:${regex.lastIndex}`);
+  }
+ }
+}

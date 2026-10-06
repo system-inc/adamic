@@ -1,0 +1,222 @@
+[
+  {
+    "program": "internal/oracle/testdata/regex_coverage_constructors.a",
+    "node": 0,
+    "build": 0,
+    "jsbuild": 0,
+    "native": 0,
+    "agrees": true,
+    "js": 0,
+    "jsAgrees": true
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_controls.a",
+    "node": 0,
+    "build": 0,
+    "jsbuild": 0,
+    "native": 0,
+    "agrees": true,
+    "js": 0,
+    "jsAgrees": true
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_exec.a",
+    "node": 0,
+    "build": 0,
+    "jsbuild": 0,
+    "native": 0,
+    "agrees": true,
+    "js": 0,
+    "jsAgrees": true
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_flags.a",
+    "node": 0,
+    "build": 0,
+    "jsbuild": 0,
+    "native": 0,
+    "agrees": true,
+    "js": 0,
+    "jsAgrees": true
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_methods.a",
+    "node": 0,
+    "build": 0,
+    "jsbuild": 0,
+    "native": 0,
+    "agrees": true,
+    "js": 0,
+    "jsAgrees": true
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_replace.a",
+    "node": 0,
+    "build": 0,
+    "jsbuild": 0,
+    "native": 0,
+    "agrees": true,
+    "js": 0,
+    "jsAgrees": true
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/mixed_constructor.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/mixed_dead.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/mixed_literal.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/mixed_union.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_alternative.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_ascii_property.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_class_string.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_disable.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_enable.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_lookbehind.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_negated_class.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_nonword.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_property.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_quantified.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_word.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/modifier_word_class.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/singleton_constructor.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/singleton_intersection.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/singleton_literal.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/singleton_negated.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "internal/oracle/testdata/regex_coverage_refused/singleton_subtraction.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "notes/regex/split_surrogate_assertions.a",
+    "node": 0,
+    "build": 0,
+    "jsbuild": 0,
+    "native": 0,
+    "agrees": false,
+    "js": 0,
+    "jsAgrees": false
+  },
+  {
+    "program": "notes/regex/unsupported_empty_constructor.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "notes/regex/unsupported_modifier_literal.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "notes/regex/unsupported_replace.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  },
+  {
+    "program": "notes/regex/unsupported_replaceAll.a",
+    "node": 0,
+    "build": 1,
+    "jsbuild": 1
+  }
+]

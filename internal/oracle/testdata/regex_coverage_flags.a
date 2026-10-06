@@ -1,0 +1,17 @@
+const pattern = '^(?<line>k.)(s)?$';
+const regexes = [/^(?<line>k.)(s)?$/dgimsu, new RegExp(pattern, 'dgimsu'),
+ /^(?<line>k.)(s)?$/dgimsv, new RegExp(pattern, 'dgimsv'),
+ /^(?<line>k.)(s)?$/dimsyu, new RegExp(pattern, 'dimsyv')];
+for (const regex of regexes) {
+ console.log(`${regex.flags}:${regex.ignoreCase}:${regex.unicode}:${regex.unicodeSets}:${regex.dotAll}:${regex.multiline}`);
+ for (const input of ['K\ns', 'x\nK🌍\ny', 'Kſ', 'k\r\ns', 'zzz']) {
+  regex.lastIndex = 0;
+  for (let step = 0; step < 3; step++) {
+   const match = regex.exec(input);
+   console.log(match === null ? `null:${regex.lastIndex}` : `${match.index}:${match.groups?.line}:${match[2]}:${regex.lastIndex}`);
+  }
+  regex.lastIndex = 0;
+  console.log(`${regex.test(input)}:${regex.lastIndex}`);
+  console.log(input.split(regex).map(value => value ?? 'undefined').join('|'));
+ }
+}

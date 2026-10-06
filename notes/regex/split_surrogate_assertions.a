@@ -1,0 +1,5 @@
+for (const regex of [/\B/u, /\B/v, new RegExp('\\B(?<part>a?)', 'u'), new RegExp('(?!\\W)', 'v')]) {
+ for (const input of ['a🌍b', '🌍']) {
+  console.log(input.split(regex).map(value => value ?? 'undefined').join('|'));
+ }
+}

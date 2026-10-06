@@ -1,0 +1,1 @@
+console.log(/[a\q{ab|}]/v.test('aB') ? 'yes' : 'no');

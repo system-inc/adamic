@@ -1,0 +1,21 @@
+const atom = 'a';
+const pattern = '(' + atom + ')';
+const flags = `g`;
+for (let step = 0; step < 3; step++) {
+ const regex = new RegExp(pattern, flags);
+ console.log(`${regex.lastIndex}:${regex.test('aa')}:${regex.lastIndex}`);
+}
+function made(): RegExp { return new RegExp(pattern, 'y'); }
+const first = made();
+const second = made();
+console.log(`${first === second}:${first.test('aa')}:${first.lastIndex}:${second.lastIndex}`);
+for (const regex of [new RegExp(''), new RegExp(atom), RegExp(atom, undefined)]) {
+ regex.lastIndex = 5;
+ console.log(`${regex.source}/${regex.flags}:${regex.test('a')}:${regex.lastIndex}`);
+}
+
+for (let step = 0; step < 3; step++) {
+ const global = /a/g;
+ const sticky = /a/y;
+ console.log(`${global.exec('aa')?.index}:${global.lastIndex}:${sticky.exec('aa')?.index}:${sticky.lastIndex}`);
+}

@@ -1,0 +1,1 @@
+console.log(new RegExp('(?i:a)\\p{ASCII}', 'v').test('aK') ? 'yes' : 'no');

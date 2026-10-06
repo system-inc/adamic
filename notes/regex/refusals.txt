@@ -1,0 +1,99 @@
+internal/oracle/testdata/regex_coverage_refused/mixed_constructor.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/mixed_constructor.a:1:13: stage 0 can't lower RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/mixed_dead.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/mixed_dead.a:1:13: stage 0 can't lower RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/mixed_literal.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/mixed_literal.a:1:13: stage 0 can't lower RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/mixed_union.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/mixed_union.a:1:13: stage 0 can't lower RegExp refused: V8 can repeat an earlier empty match and hang replacement for mixed-length \q alternatives departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.6.11 RegExp.prototype [ Symbol.replace ] / AdvanceStringIndex; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_alternative.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_alternative.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_ascii_property.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_ascii_property.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_class_string.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_class_string.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_disable.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_disable.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_enable.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_enable.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_lookbehind.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_lookbehind.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_negated_class.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_negated_class.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_nonword.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_nonword.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_property.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_property.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_quantified.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_quantified.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_word.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_word.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/modifier_word_class.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/modifier_word_class.a:1:13: stage 0 can't lower RegExp refused: V8 leaks or drops a scoped i modifier in a later Unicode class or word escape departs from ECMA-262 22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/singleton_constructor.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/singleton_constructor.a:1:13: stage 0 can't lower RegExp refused: V8 does not case-fold singleton \q class strings under iv departs from ECMA-262 22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/singleton_intersection.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/singleton_intersection.a:1:13: stage 0 can't lower RegExp refused: V8 does not case-fold singleton \q class strings under iv departs from ECMA-262 22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/singleton_literal.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/singleton_literal.a:1:13: stage 0 can't lower RegExp refused: V8 does not case-fold singleton \q class strings under iv departs from ECMA-262 22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/singleton_negated.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/singleton_negated.a:1:13: stage 0 can't lower RegExp refused: V8 does not case-fold singleton \q class strings under iv departs from ECMA-262 22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString; native and JavaScript must agree yet
+exit status 1
+
+internal/oracle/testdata/regex_coverage_refused/singleton_subtraction.a
+adamic: /workspace/adamic/internal/oracle/testdata/regex_coverage_refused/singleton_subtraction.a:1:13: stage 0 can't lower RegExp refused: V8 does not case-fold singleton \q class strings under iv departs from ECMA-262 22.2.2.9 CompileToCharSet and 22.2.2.10 CompileClassSetString; native and JavaScript must agree yet
+exit status 1
+
+notes/regex/unsupported_empty_constructor.a
+notes/regex/unsupported_empty_constructor.a:1:13: error TS2554: Expected 1-2 arguments, but got 0.
+exit status 1
+
+notes/regex/unsupported_modifier_literal.a
+notes/regex/unsupported_modifier_literal.a:1:19: error TS18062: Regular expression pattern modifiers are only available when targeting 'es2025' or later.
+exit status 1
+
+notes/regex/unsupported_replace.a
+adamic: /workspace/adamic/notes/regex/unsupported_replace.a:1:13: stage 0 can't lower regex replacement other than a string yet
+exit status 1
+
+notes/regex/unsupported_replaceAll.a
+adamic: /workspace/adamic/notes/regex/unsupported_replaceAll.a:1:13: stage 0 can't lower regex replacement other than a string yet
+exit status 1
