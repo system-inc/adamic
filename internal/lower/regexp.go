@@ -290,6 +290,10 @@ func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
 // These library fields have explicit native storage. Other library members remain inherited
 // prototype reads, so recognizing regex metadata must not admit arbitrary own-field loads.
 func (l *lowering) regexRuntimeProperty(receiver *ast.Node, name string) bool {
+	if l.regexGroups(receiver) {
+		// Named-group dictionaries have dynamic own keys; regexGroups lowering checks their value type.
+		return true
+	}
 	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
 	switch {
 	case l.isLibraryType(proven, "RegExp"):
