@@ -414,3 +414,12 @@ English messages are ported from typescript-go; diagnostics requiring message
 arguments still fail explicitly until implemented rather than fabricating text.
 Four focused additions cover unterminated templates, strings, comments and
 regex literals. All focused comparisons pass in 26.186s; cohere passes.
+
+## Continued recovery: permissive parameter starts
+
+At input 913 a duplicated colon before a union type made the port leave the
+parameter list early. Go also recognizes type starts as parameter recovery
+elements, except function, minus and opening-parenthesis tokens. The port now
+uses that predicate, preserving missing parameter nodes and consuming invalid
+tokens through Go's zero-progress recovery. Three focused probes pass with
+all prior cases in 24.708s; cohere passes.

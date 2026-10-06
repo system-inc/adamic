@@ -110,6 +110,7 @@ export class Parser {
     parameterStart(): boolean {
         return (
             this.bindingIdentifier() ||
+            this.typeStart(true) ||
             modifierKinds.includes(this.kind()) ||
             [
                 'DotDotDotToken',
@@ -121,7 +122,10 @@ export class Parser {
             ].includes(this.kind())
         );
     }
-    typeStart(): boolean {
+    typeStart(inParameter = false): boolean {
+        if(inParameter && ['OpenParenToken', 'MinusToken', 'FunctionKeyword'].includes(this.kind())) {
+            return false;
+        }
         if(this.kind() === 'OpenParenToken') {
             const saved = this.mark();
             this.next();
