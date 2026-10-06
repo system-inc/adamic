@@ -471,3 +471,11 @@ A namespace cut after its name (input 1236) now retains an empty ModuleBlock
 and the missing-opening-brace diagnostic. Nested dotted namespaces use the
 same recovery; ambient external modules retain their allowed semicolon.
 Four focused additions and all preceding probes pass in 30.714s; cohere passes.
+
+## Continued recovery: stranded let expressions
+
+At input 1294 a cutoff after let is an identifier expression in Go. Statement
+parsing now treats let as a declaration only when followed by a binding
+identifier or destructuring opener, preserving exported declarations and
+Go's distinct for-initializer rule. Six focused probes and preceding cases
+pass in 30.458s; cohere passes.

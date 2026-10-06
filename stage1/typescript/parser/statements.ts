@@ -874,6 +874,15 @@ export class Statements {
         }
         return this.make('TryStatement', pos, children);
     }
+    letDeclaration(): boolean {
+        const next = this.parser.peek();
+        return (
+            next === 'Identifier' ||
+            (next.endsWith('Keyword') && !reservedKinds.includes(next)) ||
+            next === 'OpenBraceToken' ||
+            next === 'OpenBracketToken'
+        );
+    }
     statement(): number {
         const pos = this.parser.scanner.fullStart;
         if(this.parser.kind() === 'WithKeyword') {
@@ -921,7 +930,7 @@ export class Statements {
         }
         if(
             (this.parser.kind() === 'ConstKeyword' && this.parser.peek() !== 'EnumKeyword') ||
-            this.parser.kind() === 'LetKeyword' ||
+            (this.parser.kind() === 'LetKeyword' && this.letDeclaration()) ||
             this.parser.kind() === 'VarKeyword' ||
             (this.parser.kind() === 'UsingKeyword' && this.parser.nextIdentifierSameLine()) ||
             (this.parser.kind() === 'AwaitKeyword' && this.parser.peek() === 'UsingKeyword')
@@ -1023,7 +1032,7 @@ export class Statements {
         }
         if(
             this.parser.kind() === 'ConstKeyword' ||
-            this.parser.kind() === 'LetKeyword' ||
+            (this.parser.kind() === 'LetKeyword' && (modifiers.length > 0 || this.letDeclaration())) ||
             this.parser.kind() === 'VarKeyword' ||
             (this.parser.kind() === 'UsingKeyword' && this.parser.nextIdentifierSameLine()) ||
             (this.parser.kind() === 'AwaitKeyword' && this.parser.peek() === 'UsingKeyword')
