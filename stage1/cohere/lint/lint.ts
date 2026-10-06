@@ -7,6 +7,7 @@ import type { Scanner } from '../../typescript/scanner/scanner.ts';
 import { matches, quote, selfDirective } from './comments.ts';
 import { isLineBreak, isSpace } from '../../typescript/scanner/characters.ts';
 import { Finding } from './finding.ts';
+import { VolumeRules } from './volume.ts';
 import { Scanner as SourceScanner } from '../../typescript/scanner/scanner.ts';
 import type { Settings } from './settings.ts';
 
@@ -211,6 +212,7 @@ export class Linter {
     anchors: boolean[] = [];
     parents: number[] = [];
     root = -1;
+    volume: VolumeRules | undefined = undefined;
     readonly selected: string;
     readonly mode: string;
     readonly nullPolicy: string;
@@ -238,6 +240,15 @@ export class Linter {
     run(): void {
         this.root = this.parser.file();
         this.parents = this.parser.nodes.map(() => -1);
+        this.volume = new VolumeRules(
+            this.source,
+            this.parser,
+            this.scanner,
+            this.parents,
+            this.findings,
+            this.selected,
+            this.settings,
+        );
         this.walk(this.root, -1);
         this.findings.sort(compareFindings);
     }
@@ -447,6 +458,7 @@ export class Linter {
             this.variable(index, parent);
         }
         this.additional(index, parent);
+        (this.volume ?? panic('missing additional rules')).visit(index);
         for(const child of node.children) {
             this.walk(child, index);
         }
