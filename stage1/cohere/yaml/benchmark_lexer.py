@@ -9,7 +9,7 @@ import time
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('artifacts', type=Path)
 parser.add_argument('library', type=Path)
-parser.add_argument('--layer', choices=['lexer', 'scalar'], default='lexer')
+parser.add_argument('--layer', choices=['lexer', 'scalar', 'format'], default='lexer')
 parser.add_argument('--rounds', type=int, default=5)
 args = parser.parse_args()
 artifacts = args.artifacts.resolve()
@@ -18,12 +18,16 @@ layer = args.layer
 cases = str(artifacts / f'{layer}-cases.txt')
 expected = (artifacts / f'{layer}-expected.txt').read_bytes()
 count = (artifacts / f'{layer}-cases.txt').read_bytes().count(b'\n')
+driver = 'main' if layer == 'format' else ('lex_main' if layer == 'lexer' else 'scalar_main')
+case_args = ['--cases', cases] if layer == 'format' else [cases]
 commands = {
-    'native': [str(artifacts / f'native-{layer}'), cases],
-    'Node source': ['node', '--disable-warning=ExperimentalWarning', str(root / 'oracle/node.mjs'), str(root / f'stage1/cohere/yaml/{"lex" if layer == "lexer" else layer}_main.ts'), cases],
-    'Go': [str(artifacts / f'go-{layer}'), cases],
+    'native': [str(artifacts / f'native-{layer}'), *case_args],
+    'Node source': ['node', '--disable-warning=ExperimentalWarning', str(root / 'oracle/node.mjs'), str(root / f'stage1/cohere/yaml/{driver}.ts'), *case_args],
+    'Go': [str(artifacts / f'go-{layer}'), *case_args],
     'yaml 2.9.0': ['node', str(root / f'stage1/cohere/yaml/testdata/{layer}_library.mjs'), str(args.library.resolve()), cases],
 }
+if layer == 'format':
+    del commands['yaml 2.9.0']  # Published Prettier differs on the 42 proved upstream cases.
 samples = {name: [] for name in commands}
 for round_number in range(args.rounds):
     for name, command in commands.items():
