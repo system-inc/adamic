@@ -27,7 +27,41 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 	if items.Type() != ir.Array || work.Type() != ir.Closure {
 		return nil, l.notYet(node, "parallelMap operands without array and closure representations")
 	}
-	return ir.ParallelMap{Items: items, Work: work}, nil
+	result, err := l.elementType(node)
+	if err != nil {
+		return nil, err
+	}
+	// Globals are ordinarily direct loads, not closure cells. Carry every reference
+	// the task's transitive call graph reads so runtime marking reaches them too.
+	proof := &parallelProof{l: l, active: map[*ast.Node]bool{}, checked: map[*ast.Node]bool{}, shareableFunctions: map[*ast.Node]bool{}}
+	body := proof.functionValue(arguments[1], map[*ast.Symbol]bool{})
+	if err := proof.function(body, nil); err != nil {
+		return nil, err
+	}
+	shared := []ir.Expression{}
+	seen := map[*ast.Symbol]bool{}
+	for _, global := range proof.globals {
+		symbol := proof.symbol(global)
+		if seen[symbol] {
+			continue
+		}
+		seen[symbol] = true
+		value, err := l.expression(global)
+		if err != nil {
+			return nil, err
+		}
+		if !value.Type().IsReference() {
+			continue
+		}
+		if read, ok := value.(ir.Read); ok {
+			// Zero before initialization is safe to mark. A task's actual read still
+			// checks the TDZ; pre-marking must not observe a branch the task never takes.
+			read.Checked = false
+			value = read
+		}
+		shared = append(shared, value)
+	}
+	return ir.ParallelMap{Items: items, Work: work, Shared: shared, Result: result}, nil
 }
 
 // Run before general refusals, so async work gets its concurrency diagnostic even
@@ -88,6 +122,7 @@ type parallelProof struct {
 	l                  *lowering
 	active, checked    map[*ast.Node]bool
 	shareableFunctions map[*ast.Node]bool
+	globals            []*ast.Node
 }
 
 func (p *parallelProof) effect(where *ast.Node, chain []string, what string) error {
@@ -208,6 +243,7 @@ func (p *parallelProof) capture(node, owner *ast.Node, chain []string) error {
 		return p.effect(node, chain, "reads a binding whose declaration isn't known")
 	}
 	name := node.Text()
+	p.global(node)
 	if !p.immutable(declaration) {
 		return &Refused{Where: p.l.program.Where(node), What: "task capture '" + name + "' is not shareable: " + name + " is not an immutable binding", Fix: parallelMoveFix}
 	}
@@ -359,8 +395,7 @@ func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
 		if len(p.l.checker.GetSignaturesOfType(p.l.checker.GetTypeAtLocation(argument), checker.SignatureKindCall)) > 0 && p.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
 			return p.effect(node, chain, "calls a closure whose body isn't known")
 		}
-		wrapper := &parallelProof{l: p.l, active: p.active, checked: p.checked, shareableFunctions: p.shareableFunctions}
-		if err := wrapper.expression(argument, owner, chain); err != nil {
+		if err := p.expression(argument, owner, chain); err != nil {
 			return err
 		}
 	}
@@ -431,6 +466,7 @@ func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
 		}
 	}
 	if work := p.functionValue(callee, map[*ast.Symbol]bool{}); work != nil {
+		p.global(callee)
 		if ast.IsIdentifier(callee) {
 			declaration := p.declaration(callee)
 			if declaration != nil && declaration.Kind != ast.KindFunctionDeclaration && !p.immutable(declaration) {
@@ -496,4 +532,19 @@ func (p *parallelProof) symbol(node *ast.Node) *ast.Symbol {
 		return p.l.checker.GetShorthandAssignmentValueSymbol(parent)
 	}
 	return p.l.symbol(node)
+}
+
+// Reference-valued globals need runtime marking even though ordinary lowering
+// does not put them in a closure's environment. Their bindings are proven const.
+func (p *parallelProof) global(node *ast.Node) {
+	declaration := p.declaration(node)
+	if declaration == nil || (declaration.Kind != ast.KindVariableDeclaration && declaration.Kind != ast.KindBindingElement) {
+		return
+	}
+	for parent := declaration.Parent; parent != nil; parent = parent.Parent {
+		if ast.IsFunctionLike(parent) {
+			return
+		}
+	}
+	p.globals = append(p.globals, node)
 }

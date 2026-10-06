@@ -8,6 +8,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -72,5 +73,37 @@ const bad: Readonly<{ field: Readonly<{ values: string[] }> }> = { field: { valu
 	}
 	if why := l.shareable(c.GetTypeAtLocation(variables["bad"]), "bad", variables["bad"]); why != "bad.field.values is a mutable string[]" {
 		t.Errorf("nested path: %q", why)
+	}
+}
+
+func TestParallelGlobalMarkingRoots(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, `import { parallelMap } from 'adamic';
+const lookup: ReadonlyMap<string, number> = new Map([['a', 1]]);
+const pick = (item: string): number => lookup.get(item) ?? 0;
+function summarize(item: string): number { return pick(item); }
+const items: readonly string[] = ['a'];
+parallelMap(items, summarize);
+`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := false
+	walk(program.Main, func(node any) bool {
+		if mapped, ok := node.(ir.ParallelMap); ok {
+			found = true
+			if mapped.Result != ir.Number || len(mapped.Shared) != 2 {
+				t.Errorf("result=%v roots=%v", mapped.Result, mapped.Shared)
+			}
+			for _, root := range mapped.Shared {
+				if read, ok := root.(ir.Read); !ok || read.Checked {
+					t.Errorf("marking must not introduce a TDZ observation: %v", root)
+				}
+			}
+		}
+		return true
+	})
+	if !found {
+		t.Fatal("no ParallelMap")
 	}
 }

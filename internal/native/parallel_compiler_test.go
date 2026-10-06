@@ -14,6 +14,9 @@ func TestParallelMapCompilerABI(t *testing.T) {
 		ir.Evaluate{Value: ir.ParallelMap{Items: ir.Read{Local: 0, Of: ir.Array}, Work: ir.Read{Local: 1, Of: ir.Closure}}},
 	}}
 	code := C(program)
+	if !strings.Contains(code, "work->code(work, arguments)") {
+		t.Fatal("adapter must call the original closure with its original self")
+	}
 	if strings.Count(code, "adamic_parallel_map(") != 1 {
 		t.Fatal("want exactly one runtime call")
 	}
