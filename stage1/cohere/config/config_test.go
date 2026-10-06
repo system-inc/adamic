@@ -29,7 +29,7 @@ func portDirectory(t *testing.T, file, from, to string) string {
 	t.Helper()
 	root := t.TempDir()
 	for directory, names := range map[string][]string{
-		"config":      {"glob.ts", "discovery.ts", "main.ts"},
+		"config":      {"glob.ts", "discovery.ts", "main.ts", "json.ts", "settings.ts", "sets.ts", "tsglob.ts", "tsconfig.ts", "loader_main.ts", "version.ts", "house.ts", "quote_table.ts"},
 		"formatfiles": {"disk.ts", "golang.ts"},
 		"gitignore":   {"gitignore.ts", "glob.ts", "path.ts"},
 	} {
@@ -105,6 +105,7 @@ func cases(t *testing.T) string {
 	}
 	for _, project := range []string{root, filepath.Join(root, "cohere"), filepath.Join(root, "cohere/TypeScript")} {
 		fmt.Fprintln(&input, project)
+		fmt.Fprintf(&input, "configured\t%s\n", project)
 	}
 	write := func(root, name, text string) {
 		t.Helper()
@@ -150,6 +151,14 @@ func cases(t *testing.T) string {
 	refused := t.TempDir()
 	link(refused, ".gitignore", "missing")
 	fmt.Fprintln(&input, refused)
+	configured := t.TempDir()
+	write(configured, "tsconfig.json", "{}")
+	write(configured, "base.json", `{"ignorePatterns":["base/**"]}`)
+	write(configured, "CohereSettings.json", `{"extends":"./base.json","ignorePatterns":["child/**"],"rules":{"bad":9}}`)
+	write(configured, "base/tsconfig.json", "{}")
+	write(configured, "child/tsconfig.json", "{}")
+	write(configured, "keep/tsconfig.json", "{}")
+	fmt.Fprintf(&input, "configured\t%s\n", configured)
 	random := rand.New(rand.NewSource(20261006))
 	names := []string{"a", "a-b", "src", "ignored", "keep", "node_modules", ".cache", "testdata", "é", "😀", "ａ"}
 	for number := 0; number < 120; number++ {

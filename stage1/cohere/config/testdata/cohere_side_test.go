@@ -2,11 +2,15 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/system-inc/cohere/internal/lint/configuration"
 	"github.com/system-inc/cohere/internal/types/program"
 	"os"
 	"path/filepath"
+	"sort"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -33,6 +37,77 @@ func TestAdamicConfigCases(t *testing.T) {
 			continue
 		}
 		fields := strings.Split(line, "\t")
+		if fields[0] == "house" || fields[0] == "resolve" {
+			path := fields[1]
+			root := filepath.Dir(path)
+			var loaded *configuration.Config
+			var err error
+			if fields[0] == "house" || len(fields) > 3 && fields[3] == "house" {
+				loaded, err = configuration.LoadHouse(path, nil, configuration.HouseDetection{ReactFiles: map[string]bool{filepath.Join(root, "React.tsx"): true}, NextFiles: map[string]bool{filepath.Join(root, "Next.tsx"): true}, TailwindSkipped: "no stylesheet"})
+			} else {
+				loaded, err = configuration.Load(path)
+			}
+			if fields[0] == "house" {
+				fmt.Fprintf(&output, "house %s\n", path)
+			} else {
+				fmt.Fprintf(&output, "resolve %s %s\n", path, fields[2])
+			}
+			if err != nil {
+				fmt.Fprintf(&output, "error %s\n", err)
+			} else if fields[0] == "house" {
+				printAdamicSettings(&output, loaded)
+			} else {
+				resolved := loaded.Resolve(fields[2])
+				bit := 0
+				if resolved.Ignored {
+					bit = 1
+				}
+				fmt.Fprintf(&output, "ignored %d %q\n", bit, resolved.IgnoredBy)
+				names := []string{}
+				for name := range resolved.Rules {
+					names = append(names, name)
+				}
+				sort.Strings(names)
+				for _, name := range names {
+					setting := resolved.Rules[name]
+					options := []string{}
+					for _, option := range setting.Options {
+						var compacted bytes.Buffer
+						if err := json.Compact(&compacted, option); err != nil {
+							t.Fatal(err)
+						}
+						options = append(options, compacted.String())
+					}
+					fmt.Fprintf(&output, "resolved-rule %q %s [%s]\n", name, setting.Severity, strings.Join(options, ","))
+				}
+			}
+			continue
+		}
+		if fields[0] == "settings" {
+			fmt.Fprintf(&output, "settings %s\n", fields[1])
+			loaded, err := configuration.LoadFor(fields[1], fields[2:])
+			if err != nil {
+				fmt.Fprintf(&output, "error %s\n", err)
+			} else {
+				printAdamicSettings(&output, loaded)
+			}
+			continue
+		}
+		if fields[0] == "tsconfig" {
+			fmt.Fprintf(&output, "tsconfig %s\n", fields[1])
+			loaded, err := program.ReadProjectConfig(fields[1])
+			if err != nil {
+				fmt.Fprintf(&output, "error %s\n", err)
+			} else {
+				for _, file := range loaded.FileNames {
+					fmt.Fprintf(&output, "file %q\n", file)
+				}
+				for _, reference := range loaded.References {
+					fmt.Fprintf(&output, "reference %q\n", reference)
+				}
+			}
+			continue
+		}
 		if fields[0] == "glob" {
 			bit := 0
 			if configuration.Match(fields[1], fields[2]) {
@@ -42,8 +117,18 @@ func TestAdamicConfigCases(t *testing.T) {
 			continue
 		}
 		root := fields[0]
+		patterns := fields[1:]
+		if fields[0] == "configured" {
+			root = fields[1]
+			var err error
+			patterns, err = rootIgnorePatterns(root)
+			if err != nil {
+				fmt.Fprintf(&output, "root %s\nerror %s\n", root, err)
+				continue
+			}
+		}
 		fmt.Fprintf(&output, "root %s\n", root)
-		found, err := discoverProjects(root, fields[1:])
+		found, err := discoverProjects(root, patterns)
 		if err != nil {
 			fmt.Fprintf(&output, "error %s\n", err)
 			continue
@@ -64,7 +149,7 @@ func TestAdamicConfigCases(t *testing.T) {
 	if err := os.WriteFile(os.Getenv("ADAMIC_CONFIG_OUTPUT"), []byte(output.String()), 0644); err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("Go: %.6fs, %d projects, %.0f projects/s", elapsed.Seconds(), projects, float64(projects)/elapsed.Seconds())
+	t.Logf("Go: %.6fs, %d projects, %.0f projects/s; %d source files, %.0f files/s", elapsed.Seconds(), projects, float64(projects)/elapsed.Seconds(), strings.Count(output.String(), "\nfile "), float64(strings.Count(output.String(), "\nfile "))/elapsed.Seconds())
 }
 
 func census(t *testing.T) {
@@ -108,4 +193,68 @@ func census(t *testing.T) {
 	if err := os.WriteFile(os.Getenv("ADAMIC_CONFIG_OUTPUT"), []byte(strings.ReplaceAll(output.String(), root, "ROOT")), 0644); err != nil {
 		t.Fatal(err)
 	}
+}
+
+func printAdamicSettings(output *strings.Builder, loaded *configuration.Config) {
+	fmt.Fprintf(output, "settings-root %q\n", loaded.Root)
+	for _, source := range loaded.Sources {
+		fmt.Fprintf(output, "source %q\n", source)
+	}
+	for _, pattern := range loaded.IgnorePatterns {
+		fmt.Fprintf(output, "ignore %q\n", pattern)
+	}
+	for _, plugin := range loaded.Plugins {
+		fmt.Fprintf(output, "plugin %q\n", plugin)
+	}
+	printRules := func(prefix string, rules map[string]configuration.RuleSetting) {
+		names := make([]string, 0, len(rules))
+		for name := range rules {
+			names = append(names, name)
+		}
+		sort.Strings(names)
+		for _, name := range names {
+			setting := rules[name]
+			options := []string{}
+			for _, option := range setting.Options {
+				var buffer bytes.Buffer
+				if err := json.Compact(&buffer, option); err != nil {
+					panic(err)
+				}
+				options = append(options, buffer.String())
+			}
+			fmt.Fprintf(output, "%s %q %s [%s]\n", prefix, name, setting.Severity, strings.Join(options, ","))
+		}
+	}
+	printRules("rule", loaded.Rules)
+	names := []string{}
+	for name := range loaded.Departures {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	for _, name := range names {
+		reason := loaded.Departures[name]
+		fmt.Fprintf(output, "departure %q %q %q\n", name, reason.File, reason.Reason)
+	}
+	names = []string{}
+	for name := range loaded.OffReasons {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	for _, name := range names {
+		reason := loaded.OffReasons[name]
+		fmt.Fprintf(output, "off-reason %q %q %q\n", name, reason.File, reason.Reason)
+	}
+	for _, override := range loaded.Overrides {
+		files := []string{}
+		for _, file := range override.Files {
+			files = append(files, strconv.Quote(file))
+		}
+		fmt.Fprintf(output, "override %q %q [%s]\n", override.File, override.Reason, strings.Join(files, ","))
+		printRules("override-rule", override.Rules)
+	}
+	version := ""
+	if loaded.CohereVersion != nil {
+		version = loaded.CohereVersion.Text
+	}
+	fmt.Fprintf(output, "cohere-version %q\n", version)
 }
