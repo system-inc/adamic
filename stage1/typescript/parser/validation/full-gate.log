@@ -1,0 +1,20 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/internal/flow	152.349s
+ok  	github.com/system-inc/adamic/internal/fresh	34.357s
+ok  	github.com/system-inc/adamic/internal/fuzz	14.034s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	1.333s
+ok  	github.com/system-inc/adamic/internal/lower	7.192s
+ok  	github.com/system-inc/adamic/internal/native	252.083s
+ok  	github.com/system-inc/adamic/internal/oracle	681.359s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	117.813s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	182.258s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	152.651s
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	91.599s
+ok  	github.com/system-inc/adamic/stage1/cohere/suppression	119.204s
+ok  	github.com/system-inc/adamic/stage1/cohere/values	117.592s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	170.721s
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	111.729s
