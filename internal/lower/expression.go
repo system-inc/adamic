@@ -149,6 +149,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil && value.Type().IsReference() {
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if member := l.libraryPrototypeView(l.checker.GetTypeAtLocation(node), contextual, map[[2]*checker.Type]bool{}); member != "" {
+				return nil, l.notYet(node, "a structural view of library prototype member "+member+" as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver")
+			}
+		}
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
