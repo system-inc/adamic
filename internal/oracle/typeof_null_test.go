@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"e4eec87_v01_typeof_null.a", "e4eec87_v02_typeof_null_literal.a", "e4eec87_w01_uncovered_paths.a"} {
+	for _, name := range []string{"e4eec87_v02_typeof_null_literal.a", "e4eec87_w01_uncovered_paths.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

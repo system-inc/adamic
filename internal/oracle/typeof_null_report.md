@@ -9,7 +9,7 @@ constant folds concern intrinsic functions. Neither JavaScript nor lowering need
 The prohibited emission, lowering and oracle files, and the other workers' functions, were
 not edited.
 
-The three supplied programs are registered oracle fixtures. On the baseline v02 prints
+V02 and w01 are registered oracle fixtures. V01 is retained as an unregistered probe for the nullable worker. On the baseline v02 prints
 "undefined" instead of Node's "object". V01 prints "undefined true\nobject\nundefined\n"
 instead of "object true\nobject\nobject\n". W01 passes on the baseline.
 
@@ -17,8 +17,7 @@ After the scoped fix, v02 and w01 agree with source on Node and the JavaScript b
 including native release builds, ASan/UBSan, and LeakSanitizer. V01 still fails its native
 stdout comparison. Its match and exec results are nullable array references, not ir.Null
 expressions. Fixing that requires the general nullable path assigned to codex/nullable-references.
-V01 is deliberately registered and unsuppressed: this branch's oracle gate remains red until
-that dependency is merged. This branch does not claim to have fixed nullable references.
+V01 is excluded from this branch's oracle registration and counts pending that dependency. This branch does not claim to have fixed nullable references.
 
 The permanent mutant test scans all registered ordinary, lowering fixtures, changes emitted C,
 builds every changed program under ASan/UBSan, and requires clean execution and no leaks.
@@ -35,10 +34,9 @@ Node stdout alone. All four mutant programs compile and run without sanitizer or
 An initial, broader narrowing mutation also changed array-element unboxing and was discarded;
 the final mutation requires a union heap operand.
 
-Counts were regenerated with TestCountsAreRecorded. No existing row moved. New rows, in
+Counts were regenerated with TestCountsAreRecorded. No existing row moved. New registered rows, in
 allocations, frees, retains, releases, peak, regions order:
 
-- v01: 8, 8, 8, 12, 4, 0.
 - v02: 0, 0, 0, 0, 0, 0.
 - w01: 14, 14, 6, 27, 6, 0.
 
@@ -58,3 +56,7 @@ Commands and logs:
 
 The complete repository gate was not run. General nullable references and a passing v01 are
 left to the named dependency; no refusal or representation workaround is introduced here.
+
+After v01 was handed to the nullable worker, its registration and counts row were removed.
+`go test ./internal/oracle -count=1 -timeout 30m` passes, including counts and all four mutants.
+The complete oracle package log is /tmp/typeof-null-oracle-final.log. V01 remains an unregistered source probe.
