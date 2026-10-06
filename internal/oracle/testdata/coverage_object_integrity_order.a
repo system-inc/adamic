@@ -1,0 +1,15 @@
+const value = { plain: 1, '10': 10, '2': 2 };
+const alias = value;
+Object.preventExtensions(value);
+console.log(`${Object.isSealed(alias)} ${Object.isFrozen(alias)} ${Object.isExtensible(alias)}`);
+Object.seal(value);
+Object.seal(value);
+console.log(`${Object.isSealed(alias)} ${Object.isFrozen(alias)} ${Object.isExtensible(alias)}`);
+Object.assign(value, { '2': 12 }, value, { plain: 9 });
+console.log(Object.values(value).join('|'));
+Object.freeze(value);
+Object.preventExtensions(value);
+Object.seal(value);
+console.log(`${Object.isSealed(alias)} ${Object.isFrozen(alias)} ${Object.isExtensible(alias)}`);
+console.log(`${value.hasOwnProperty('2')} ${value.propertyIsEnumerable('plain')} ${Object.hasOwn(value, '10')}`);
+console.log(Object.getOwnPropertyNames(value).join('|'));

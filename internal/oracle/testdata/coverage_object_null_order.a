@@ -1,0 +1,9 @@
+let order = '';
+function mark(): boolean { order += 'n'; return true; }
+function missing(): boolean { order += 'u'; return true; }
+function object(): { n: number } { order += 'o'; return { n: 1 }; }
+console.log(`${Object.is((mark() ? null : null), (mark() ? null : null))} ${order}`);
+order = '';
+console.log(`${Object.is((mark() ? null : null), (missing() ? undefined : undefined))} ${Object.is((missing() ? undefined : undefined), (mark() ? null : null))} ${order}`);
+order = '';
+console.log(`${Object.is((mark() ? null : null), object())} ${Object.is(object(), (mark() ? null : null))} ${order}`);

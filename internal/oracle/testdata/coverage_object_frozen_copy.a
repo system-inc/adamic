@@ -1,0 +1,12 @@
+const source = { ordinary: 'made' + '-text', '10': 'ten', '2': 'two' };
+Object.freeze(source);
+console.log(Object.keys(source).join('|'));
+console.log(Object.getOwnPropertyNames(source).join('|'));
+console.log(Object.values(source).join('|'));
+for (const [key, value] of Object.entries(source)) console.log(`${key}:${value}`);
+const target = { ordinary: '', '10': '', '2': '' };
+const result = Object.assign(target, source);
+console.log(`${Object.is(result, target)} ${Object.isFrozen(target)} ${Object.isExtensible(target)}`);
+console.log(Object.values(target).join('|'));
+const copy = { ...source, ordinary: 'copy' + '-text' };
+console.log(`${Object.isFrozen(copy)} ${Object.isSealed(copy)} ${Object.isExtensible(copy)} ${source.ordinary} ${copy.ordinary}`);

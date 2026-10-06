@@ -1,0 +1,4 @@
+const entries: [string, number][] = [['2', 2], ['plain', 1], ['2', 9], ['01', 3]];
+const value = Object.fromEntries(entries);
+console.log(Object.keys(value).join('|'));
+console.log(Object.values(value).join('|'));
