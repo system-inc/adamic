@@ -2,9 +2,12 @@ import { panic } from 'adamic';
 
 function make(): string {
     let text = '';
-    for(let i = 0; i < 200; i++) text += 'x';
+    for(let index = 0; index < 200; index++) {
+        text += 'x';
+    }
     return text;
 }
+
 function shared(): void {
     const holders: string[] = [make()];
     const held = holders[0] ?? panic('missing shared text');
