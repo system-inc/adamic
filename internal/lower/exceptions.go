@@ -294,11 +294,23 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		return failing == ""
 	})
 	if failing == "" && callsClosures {
-		// What a function value does is any function value's: each of them is reached.
+		// Function values also include class methods reached through interfaces.
+		// Use the same conservative targets as exception propagation, not only
+		// closure records, or an unguarded method failure can bypass refusal.
+		targets := map[int]bool{}
 		for _, closure := range l.closureRecords {
-			if !visited[closure.function] {
-				visited[closure.function] = true
-				if failing = l.libraryFailure(l.result.Functions[closure.function].Body, visited); failing != "" {
+			targets[closure.function] = true
+		}
+		for _, instance := range l.instances {
+			for _, method := range instance.methodList() {
+				targets[method.Function] = true
+			}
+		}
+		// Function order keeps the first diagnostic deterministic.
+		for target, function := range l.result.Functions {
+			if targets[target] && !visited[target] && !function.LibraryGuarded {
+				visited[target] = true
+				if failing = l.libraryFailure(function.Body, visited); failing != "" {
 					break
 				}
 			}
