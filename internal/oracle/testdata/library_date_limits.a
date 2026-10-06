@@ -1,0 +1,11 @@
+function boundary(time: number): void {
+    const date = new Date(time);
+    console.log(`${time} ${date.getTime()} ${1 / date.getTime()} ${date.getUTCFullYear()} ${date.getUTCMonth()} ${date.getUTCDate()} ${date.getUTCDay()} ${date.getUTCHours()} ${date.getUTCMinutes()} ${date.getUTCSeconds()} ${date.getUTCMilliseconds()}`);
+    console.log(date.toISOString());
+    console.log(`${date.getFullYear()} ${date.getTimezoneOffset()} ${date.valueOf()}`);
+}
+boundary(-8640000000000000);
+boundary(8640000000000000);
+const before = new Date(-8640000000000001);
+const after = new Date(8640000000000001);
+console.log(`${before.getTime()} ${after.getTime()} ${before.getUTCFullYear()} ${after.getUTCMonth()} ${after.getUTCDate()} ${before.valueOf()} ${after.valueOf()}`);
