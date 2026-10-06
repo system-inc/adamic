@@ -33,11 +33,15 @@ func v8Divergence(tree *Pattern, properties PropertyProvider) error {
 	// builder's scoped flags. Track source order, including alternatives and
 	// lookbehind, not the VM's execution order. An ordinary '(' resets it.
 	parserFlags := tree.Flags
+	legacyAlternative := false
 	var visit func(Node, Flags) error
 	visit = func(node Node, flags Flags) error {
 		switch node := node.(type) {
 		case *Disjunction:
-			for _, alternative := range node.Alternatives {
+			outerAlternative := legacyAlternative
+			defer func() { legacyAlternative = outerAlternative }()
+			for index, alternative := range node.Alternatives {
+				legacyAlternative = outerAlternative || index != 0
 				for _, term := range alternative.Terms {
 					if err := visit(term, flags); err != nil {
 						return err
@@ -54,6 +58,20 @@ func v8Divergence(tree *Pattern, properties PropertyProvider) error {
 			set, err := compileClass(node.Expr, flags, properties)
 			if err != nil {
 				return err
+			}
+			// In legacy mode V8 loses an enabled scoped i when compiling
+			// a negated class on a later alternative. The first branch and
+			// case-closed classes are controls, not blanket refusals.
+			if !unicodeMode(flags) && flags.IgnoreCase && !tree.Flags.IgnoreCase && legacyAlternative && node.Negated {
+				actualFlags := flags
+				actualFlags.IgnoreCase = false
+				actual, err := compileClass(node.Expr, actualFlags, properties)
+				if err != nil {
+					return err
+				}
+				if !sameCharacterSets(matchedCharacters(set, flags), actual) {
+					return &V8DivergenceError{"drops scoped i on a later alternative's negated legacy class", "22.2.2.7 CompileAtom and 22.2.2.7.4 UpdateModifiers"}
+				}
 			}
 			if flags.UnicodeSets {
 				// The reported ab|a| shape also hangs V8's replacement slow
@@ -158,7 +176,11 @@ func modifierDivergence() error {
 func matchedCharacters(set characterSet, flags Flags) characterSet {
 	if flags.IgnoreCase {
 		ranges := slices.Clone(set.ranges)
-		for _, pair := range simpleCaseFold {
+		table := simpleCaseFold[:]
+		if !unicodeMode(flags) {
+			table = legacyUppercase[:]
+		}
+		for _, pair := range table {
 			if set.contains(pair[1]) {
 				ranges = append(ranges, RuneRange{pair[0], pair[0]})
 			}

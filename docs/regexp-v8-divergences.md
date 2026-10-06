@@ -5,12 +5,76 @@ use Node **24.19.0**, V8 **13.6.233.17-node.51**, Linux x86-64. Expected behavio
 comes from ECMA-262, not Adamic's output. Section links use the published ES2025
 specification; the current draft was also checked for class-string ordering.
 
+## Pinned Node 24.19.0 recheck
+
+All five drafts **reproduce on v24.19.0** at the lines identified below. No
+existing refusal was dropped. Node is now pinned at 24.19.0.
+
+| Draft | Reproduces on 24.19.0 | Decision / reproduction line |
+| --- | --- | --- |
+| 1. Singleton class folding | Yes | Keep refusal; report 1, line 1: false instead of true |
+| 2. Scoped modifiers | Yes | Keep refusal; report 2, lines 1, 2, 3 and 5; both integration lines below |
+| 3. Mixed empty class strings | Yes | Keep refusal; report 3's replacement call hangs; integration line 6 returns empty instead of a |
+| 4. Unicode non-word-boundary | Yes | Keep Node-compatible runtime; report 4 prints offset 2 instead of null |
+| 5. Negative word lookahead | Yes | Keep Node-compatible runtime; report 5 prints offset 1 instead of 2 |
+
+Integration's exact program was run locally without changes. `node --version`
+prints `v24.19.0`, and the program prints:
+
+```text
+2
+1
+false
+true
+false
+|
+```
+
+These are Linux x64 observations, V8 13.6.233.17-node.51. Integration reports
+the identical six lines from official Node v24.19.0 darwin-arm64 with the same
+V8 version, and earlier from v24.14.1 on macOS arm64. Those macOS observations
+were supplied by integration, not locally measured. None of the six outputs
+differs across the reported platforms or versions.
+
+The spec answers to those six lines are `4`, `2`, `true`, `false`, `true`, `a|`.
+The first code-point non-boundary in `1🌍aac` is between its two `a` characters,
+at UTF-16 offset 4. A checked-in test pins these witnesses and every original
+minimal refusal against explicit spec answers. The Go reference verifies the
+visible-pattern spec witnesses; surrogate matching deliberately follows Node.
+
+Integration's additional modifier witnesses are:
+
+```js
+console.log(`${new RegExp('(?i:x|[^a-z])').test('B')}`); // true, spec false
+console.log(`${new RegExp('(?i:a)|\\P{Ll}', 'v').test('Σ')}`); // false, spec true
+```
+
+The first required a new refusal for scoped `i` lost in a later alternative's
+negated legacy class. Case-closed classes remain controls. The second is covered
+by the existing stale-parser-flags refusal for Unicode property escapes.
+
+The uppercase empty witness is:
+
+```js
+const empty = /[\q{ab|a|}]/iv.exec('A');
+console.log(empty === null ? 'null' : `${empty[0]}|`); // |, spec a|
+```
+
+This confirms a wrong empty result on both platforms, so the refusal stays.
+It does **not isolate alternative priority**: the independently confirmed
+singleton-folding bug can make `a` fail on `A`, then let the correctly ordered
+empty alternative succeed. The lowercase non-i control agrees with the spec.
+Only reproducing drafts, with these qualifications, are candidates for Kirk.
+Nothing was filed.
+
 Adamic refuses incompatible pattern shapes before either backend emits code.
 The input-dependent surrogate cases instead reproduce Node in both the Go
 reference VM and the native C VM. These are deliberate compatibility choices,
 not claims that V8's results follow the specification.
 
 ## 1. Singleton Unicode-set class strings are not case-insensitive
+
+**24.19.0 status:** Reproduces on reproduction lines 1 and 3; refusal kept.
 
 **Draft title:** RegExp `/[\\q{a}]/iv` fails to match `A`.
 
@@ -39,6 +103,9 @@ the bug on input `X`. An accepted companion uses `[\q{Ss}]`; changing
 `copyS[j] = canonicalize(c, f)` to `copyS[j] = c` makes that oracle fail.
 
 ## 2. A scoped i modifier leaks into or drops from later Unicode operands
+
+**24.19.0 status:** Reproduces on reproduction lines 1, 2, 3 and 5, and both
+integration modifier lines above; refusals kept.
 
 **Draft title:** RegExp modifier groups leave stale parser flags for subsequent
 Unicode-set classes and Unicode word escapes.
@@ -71,6 +138,10 @@ stage-0 TypeScript target rejects modifier *literals* with TS18062; constant
 `new RegExp` controls exercise Adamic's own refusal without changing that target.
 
 ## 3. Mixed empty class strings can hang the replacement slow path
+
+**24.19.0 status:** Reproduces on the final replacement line (bounded hang)
+and integration's uppercase empty-result line above; refusal kept. An
+independent empty-first priority defect remains unproved.
 
 **Draft title:** RegExp Unicode-set empty match loops forever in deoptimized
 String replacement near a surrogate pair.
@@ -108,6 +179,9 @@ and the spec sections rather than asserting an observed ordering failure.
 
 ## 4. Unicode non-word-boundary assertions can match inside a surrogate pair
 
+**24.19.0 status:** Reproduces on the final console line; Node-compatible
+runtime kept, no compile-time refusal.
+
 **Draft title:** Unicode RegExp `\B` accepts an interior UTF-16 position.
 
 **Version:** Node 24.19.0 / V8 13.6.233.17-node.51.
@@ -134,6 +208,9 @@ interior of a pair. Preserve V8's initial lastIndex rewind and sticky retry.
 Comments in both interpreters identify the spec departure.
 
 ## 5. Unicode negative word lookahead succeeds inside a surrogate pair
+
+**24.19.0 status:** Reproduces on the final console line; Node-compatible
+runtime kept, no compile-time refusal.
 
 **Draft title:** Unicode RegExp `(?!\W)` succeeds inside a surrogate pair after
 the consuming assertion operand rejects the interior position.
