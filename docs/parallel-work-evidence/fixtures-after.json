@@ -1,0 +1,1603 @@
+[
+  {
+    "path": "dedication/dedication.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/01_hello.ts",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/03_shapes.ts",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/04_closures.ts",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/05_wordcount.ts",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/06_stack.ts",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/07_modules/main.ts",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/08_results.ts",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/09_tree.ts",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/10_unicode.ts",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/adversarial_exits.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/adversarial_iteration.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/adversarial_order.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/arguments.a",
+    "lowers": true,
+    "checked": false,
+    "input": true,
+    "argumentsHex": [
+      "706c61696e",
+      "",
+      "77697468207370616365",
+      "68c3a96c6c6f20f09f8c8d",
+      "2d2d666c61673d31",
+      "61ff62",
+      "e282",
+      "c080",
+      "eda080",
+      "f4908080",
+      "efbbbf6d61726b6564",
+      "656e6420f09f8c"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/array_from.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/array_from_length.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/array_from_undefined.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/ascii_scan.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/bitwise.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/bitwise_sweep.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/booleans.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/borrow_element.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/borrow_map_overwrite.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/borrow_reassigned.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/case_mapping.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/cast_fails.a",
+    "lowers": true,
+    "checked": true,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/casts.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_as_interface.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_identity.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_inheritance.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_inheritance_exceptions.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_inheritance_generic.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_inheritance_interface.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_inheritance_memory.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_inheritance_order.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_layouts.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_oct6_deep.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_oct6_parameters.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_oct6_release.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/class_oct6_subclass_holder.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/classes.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/closures.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/closures_throw.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/closures_throw_uncaught.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/collections.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/concat_too_long.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/dead_zone.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/declared_later.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/defaults.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/doubly_linked.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/effects.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/exceptions.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/exceptions_empty.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/exceptions_uncaught.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/fill_length.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/fills.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/finally_leaves.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/find_index_shrinks.a",
+    "lowers": true,
+    "checked": true,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/find_shrinks.a",
+    "lowers": true,
+    "checked": true,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/fresh_calls.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/fresh_parser.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/fresh_writes.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/from_code_point_fails.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/from_codes.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/functions.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/gaps.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/generic_functions.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/generic_method_return.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/generic_values.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/has_own.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/indexing.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/integer_format.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/interleaved.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/invariance_readonly.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/json_stringify_escapes.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/json_stringify_indent.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/json_stringify_keys.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/json_stringify_numbers.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/json_stringify_options.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/json_stringify_replacer.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/json_stringify_scalars.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/json_stringify_undefined.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/json_stringify_values.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/large_output.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/lent_reads.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_copy.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_copy_within.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_find_last.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_flat.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_flat_map.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_iterators.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_join.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_metadata.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_search.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_spliced.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_with.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_for_in.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_function_expressions.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_globals.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_construct.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_group_by.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_groupby_keys.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_iterators.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_keys.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_next.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_setops.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_visit.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_zeros.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_math_number_convert.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_math_number_math.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_math_number_prototype.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_assign.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_assign_fields.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_freeze.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_freeze_alias.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_freeze_assign.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_freeze_write.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_has_own.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_is.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_keys.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_order.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_own.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_object_same.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_string_conversion.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_string_existing.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_string_indices.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_string_prototype.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/library_string_raw.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/local_console.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/lone_surrogates.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/long_chain.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/long_literals.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/loops.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/map_iteration.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/map_shrinks.a",
+    "lowers": true,
+    "checked": true,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/map_zero_keys.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/maps_and_text.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/maybe_boolean_panic.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/maybe_booleans.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/maybe_collections.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/maybe_number_slots.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/maybe_numbers.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/method_closures.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/modules/main.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/move_throw.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/named_function_values.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/narrowed_compared.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/narrowed_fields.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/narrowed_methods.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/narrowed_numbers.a",
+    "lowers": true,
+    "checked": true,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/narrowed_reads.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/narrowed_writes.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/navigation.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/normalize.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/normalize_form.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/normalize_long_marks.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/number_edges.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/number_formats.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/number_parsing.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/numbers.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/object_prototype.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/objects.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/optional_class_method.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/optional_numbers.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/optional_strings.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/output_then_panic.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/pad_too_long.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/panic.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/panic_in_try.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/param_assigned_in_try.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/power_of_two_string.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/precision_range.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/prompt_then_read.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/radix_range.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/radixes.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/read_arguments.a",
+    "lowers": true,
+    "checked": false,
+    "input": true,
+    "argumentsHex": [
+      "72656164696e672f68656c6c6f2e747874",
+      "72656164696e672f6d697373696e672e747874",
+      "72656164696e67"
+    ],
+    "unreadable": true
+  },
+  {
+    "path": "internal/oracle/testdata/read_files.a",
+    "lowers": true,
+    "checked": false,
+    "input": true
+  },
+  {
+    "path": "internal/oracle/testdata/read_order.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regexp.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_exec.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_match.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_matchall_nonglobal.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_null_narrowed.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_replace.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_search.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_split.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_unicode.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regions.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/regions_throw.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/replace_all_large.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/return_panic.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/return_panic_fires.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/reuse.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_arrays.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_foreach_global.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_forward.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_global_sibling.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_lent_global.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_narrowed.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_throw.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_weak_after_reuse.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_weak_during_spread.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/search_from.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/search_from_sweep.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/search_halves.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/searches.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/self_assignments.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/set_maybe_numbers.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/set_undefined.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/sets.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/shadowing.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/shared_slices.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/size_class_churn.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/sort_releases.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/sort_top_level.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/sorting.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/sorts.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/splice_empty.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/splices.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/spread_calls.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/spread_snapshot.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/spread_undefined.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/spreads.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/stack_forever.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/stack_overflow.a",
+    "lowers": true,
+    "checked": false,
+    "input": false,
+    "uncounted": true
+  },
+  {
+    "path": "internal/oracle/testdata/stack_tail_call.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/string_append.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/string_index.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/string_limits.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/string_positions.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/string_too_long.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/strings.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/strings_more.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/sweeps/regexp_methods.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/timsort.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/trig_reduction.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/try_assignments.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/tuple_values.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/tuples_kept.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/undefined_elements.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/undefined_keys.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/undefined_references.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/undefined_strings.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/unions.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/unused_parameters.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/updates.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/utf8_sweep.a",
+    "lowers": true,
+    "checked": false,
+    "input": true
+  },
+  {
+    "path": "internal/oracle/testdata/utf8_view.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/utf8_view_fails.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/visits.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/walk.a",
+    "lowers": true,
+    "checked": false,
+    "input": true,
+    "writes": true
+  },
+  {
+    "path": "internal/oracle/testdata/weak_narrowed.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/weak_parent.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/write_after_shrink.a",
+    "lowers": true,
+    "checked": true,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/write_files.a",
+    "lowers": true,
+    "checked": false,
+    "input": true,
+    "writes": true
+  },
+  {
+    "path": "internal/oracle/testdata/write_stderr_order.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/write_stdout_order.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/writes.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/writes_in_try.a",
+    "lowers": true,
+    "checked": false,
+    "input": false
+  },
+  {
+    "path": "internal/oracle/testdata/writes_past_end.a",
+    "lowers": true,
+    "checked": true,
+    "input": false
+  }
+]

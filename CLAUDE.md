@@ -48,7 +48,18 @@ runtime library, Node version or test harness invalidates the affected observati
 `ADAMIC_GATE_UNCACHED=1` bypasses all oracle result caches. **Integration always runs uncached before
 main moves.** Ordinary worker gates may use the cache. Keep `-timeout 30m` for the complete gate.
 
-The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable (for example /tmp/adamic-gate, mode 1777) and Node must not live under /root. A new fixture needs its row in internal/oracle/counts.md: `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`.
+The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable
+(for example /tmp/adamic-gate, mode 1777) and Node must not live under /root.
+
+Add a fixture with its own `<source>.oracle.json` sidecar under `internal/oracle/testdata`,
+with explicit `"lowers"`, `"checked"` and `"input"` booleans. The oracle discovers these
+recursively; support modules and specialized probes have no sidecar. Never append to a
+shared registry. Record its own `<source>.counts.json` with
+`go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`
+(filter to your fixture when working in parallel). The flag writes only changed files for
+fixtures actually run. Render the human table with `go run ./cmd/oracle-fixtures -counts`;
+list the fixture set with `go run ./cmd/oracle-fixtures -list`. See `docs/parallel-work.md`
+for input options, external examples and the proposed lint-rule workflow.
 
 Send test output to a log and read the log. Never pipe a test run into `head` or `tail`: it kills the run mid-way and can orphan the fixtures' processes. Tests are parallel by default; a test that can't be says why in a "Not parallel:" comment.
 

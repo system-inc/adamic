@@ -16,35 +16,6 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// inputFixtures are the programs that read from outside, through the doors 0.2 opens: their arguments
-// and files. Each runs the three ways every fixture does, from its own directory, so a relative path
-// names the same file on every run, and with the same arguments after the program.
-var inputFixtures = []struct {
-	path      string
-	arguments []string
-
-	// unreadable adds, as the last argument, the path of a file the program may not read, made here
-	// since git can't keep a file's permissions.
-	unreadable bool
-
-	// writes gives the program, as its first argument, an empty directory of its own on every run, with
-	// a directory in it named locked that it may not write into, and unlisted and closed, which it may
-	// not list and may not enter. What each run leaves there, every
-	// file's name, bytes and permissions, must agree too.
-	writes bool
-}{
-	{"internal/oracle/testdata/read_files.a", nil, false, false},
-	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false},
-	{"internal/oracle/testdata/arguments.a", []string{
-		"plain", "", "with space", "héllo 🌍", "--flag=1",
-		// Invalid UTF-8, decoded as Node decodes argv: each bad sequence one U+FFFD.
-		"a\xffb", "\xe2\x82", "\xc0\x80", "\xed\xa0\x80", "\xf4\x90\x80\x80", "\xef\xbb\xbfmarked", "end \xf0\x9f\x8c",
-	}, false, false},
-	{"internal/oracle/testdata/read_arguments.a", []string{"reading/hello.txt", "reading/missing.txt", "reading"}, true, false},
-	{"internal/oracle/testdata/write_files.a", nil, false, true},
-	{"internal/oracle/testdata/walk.a", nil, false, true},
-}
-
 // inputRun is where and as whom one input fixture runs.
 type inputRun struct {
 	directory string
@@ -104,10 +75,10 @@ func sharedDirectory(t *testing.T) string {
 
 func TestInputAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	for _, fixture := range inputFixtures {
+	for _, fixture := range oracleFixtures(t, true) {
 		t.Run(fixture.path, func(t *testing.T) {
 			t.Parallel()
-			cacheProbe(t, fixture.path, nil, inputIdentity(t), func() {
+			cacheProbe(t, fixture.path, nil, cacheKey(inputIdentity(t), fixture.optionsIdentity), func() {
 
 				path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 				if err != nil {

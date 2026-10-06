@@ -199,6 +199,12 @@ func identity(t *testing.T) gateIdentity {
 			gateError = err
 			return
 		}
+		metadataHarness, err := filepath.Glob("fixturedata/*.go")
+		if err != nil {
+			gateError = err
+			return
+		}
+		files = append(files, metadataHarness...)
 		files = append(files, repository+"/oracle/node.mjs", repository+"/oracle/adamic.mjs", repository+"/internal/native/native.go", repository+"/internal/native/library.go")
 		parts := []string{"gate-context-v1", runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
 		root, err := filepath.Abs(repository)
