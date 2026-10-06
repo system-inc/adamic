@@ -443,3 +443,14 @@ table moves to the existing lookahead module to preserve the repository's
 source-size check. Three focused additions and all preceding probes pass
 after extraction in 27.142s; cohere passes. The continuation next retains
 a duplicated union operator and a missing parameter-list closing parenthesis.
+
+## Continued recovery: type operator precedence and binding lists
+
+Inputs 1186/1187 expose duplicated union operators and a reserved binding
+property after a missing parameter-list closing parenthesis. Leading type
+operators now respect the parsing precedence, so doubled operators retain
+a missing type and diagnostic 1110. Object bindings now require a colon for
+non-identifier property names. Object and array bindings use Go's delimited
+list recovery and allow-in context, preserving missing commas and invalid
+object separators. Eight focused additions and preceding probes pass in
+28.578s; cohere passes.

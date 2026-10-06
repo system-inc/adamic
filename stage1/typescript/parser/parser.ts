@@ -647,7 +647,7 @@ export class Parser {
             return this.make('TypeReference', pos, [this.missingIdentifier(1110, 'Type expected.')]);
         }
         let left: number;
-        if(this.kind() === 'BarToken' || this.kind() === 'AmpersandToken') {
+        if((this.kind() === 'BarToken' && minimum < 1) || (this.kind() === 'AmpersandToken' && minimum < 2)) {
             const union = this.kind() === 'BarToken';
             this.next();
             const types = [this.type(union ? 1 : 2, false)];
@@ -1136,6 +1136,29 @@ export class Parser {
         }
         return this.make('Parameter', pos, children);
     }
+    bindingElement(object: boolean): number {
+        const start = this.scanner.fullStart;
+        if(!object && this.kind() === 'CommaToken') {
+            return this.make('BindingElement', start);
+        }
+        const element: number[] = [];
+        if(this.kind() === 'DotDotDotToken') {
+            element.push(this.token());
+        }
+        const identifier = this.bindingIdentifier();
+        let name = object ? this.propertyName() : this.bindingName();
+        if(object && (!identifier || this.kind() === 'ColonToken')) {
+            element.push(name);
+            this.expect('ColonToken');
+            name = this.bindingName();
+        }
+        element.push(name);
+        if(this.kind() === 'EqualsToken') {
+            this.next();
+            element.push(this.rootAssignment());
+        }
+        return this.make('BindingElement', start, element);
+    }
     bindingName(): number {
         if(this.kind() !== 'OpenBracketToken' && this.kind() !== 'OpenBraceToken') {
             return this.identifier(false);
@@ -1143,35 +1166,12 @@ export class Parser {
         const pos = this.scanner.fullStart;
         const object = this.kind() === 'OpenBraceToken';
         this.next();
-        const children: number[] = [];
-        while(this.kind() !== 'EndOfFile' && this.kind() !== (object ? 'CloseBraceToken' : 'CloseBracketToken')) {
-            const start = this.scanner.fullStart;
-            if(this.kind() === 'CommaToken') {
-                children.push(this.make('BindingElement', start));
-                this.next();
-                continue;
-            }
-            const element: number[] = [];
-            if(this.kind() === 'DotDotDotToken') {
-                element.push(this.token());
-            }
-            let name = object ? this.propertyName() : this.bindingName();
-            if(object && this.kind() === 'ColonToken') {
-                element.push(name);
-                this.next();
-                name = this.bindingName();
-            }
-            element.push(name);
-            if(this.kind() === 'EqualsToken') {
-                this.next();
-                element.push(this.rootAssignment());
-            }
-            children.push(this.make('BindingElement', start, element));
-            if(this.kind() !== 'CommaToken') {
-                break;
-            }
-            this.next();
-        }
+        const oldIn = this.disallowIn;
+        this.disallowIn = false;
+        const children = this.delimitedList(object ? 'bindingObject' : 'bindingArray', () =>
+            this.bindingElement(object),
+        );
+        this.disallowIn = oldIn;
         this.expect(object ? 'CloseBraceToken' : 'CloseBracketToken');
         return this.make(object ? 'ObjectBindingPattern' : 'ArrayBindingPattern', pos, children);
     }
