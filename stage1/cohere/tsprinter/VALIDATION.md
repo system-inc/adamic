@@ -655,3 +655,85 @@ bug and reduces the module coupling, but native is now slower than both Node and
 expanded workload. Different fragment counts and newly supported larger parents also prevent a
 causal comparison with earlier-family throughput. Diagnosing that cost needs a separate profile;
 no compiler/runtime optimization was attempted in this port.
+
+## Optional-chain stopping increment
+
+The normalizer now records active optional-chain boundaries before removing parenthesized nodes.
+Raw receiver traversal stops at a parenthesis, so a nested already-stopped chain does not force
+extra outer parentheses. The printer preserves the boundary for ordinary members/calls, new
+callees, non-null assertions and tags. Calls on a wrapped chain retain the Go adapter's generic
+call choice even where an optional outer call can omit redundant parentheses.
+
+The independent Go selector's stopping-chain exclusion is removed. The generator adds 480
+compositions: eight chain bases, ten outer links, six contexts, including long paths and nested
+parentheses. The first Node comparison exposed the long optional-call layout discrepancy at
+case 114578; preserving the ChainExpression call-layout distinction fixed it. That failed gate is
+not validation. The former stopping-boundary gap is replaced by `await value` / `AwaitExpression`.
+Source cohere passes 276 rules, 10 checked, 100% Adamic-ready.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-optional-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-optional-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-optional-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/optional' > /tmp/ts-printer-optional-mutant.log 2>&1
+```
+
+Final optional-boundary gate: exit 0, 424.428 s. **139,716 maximal expression fragments from 199
+files**, zero full-file parse failures, all byte-identical to Go cohere, npm Prettier 3.9.6 and
+cohere's embedded fork on source Node, native ASan/UBSan, JavaScript backend and native release.
+The separate native leak run passes. Thirteen loud NotYet proving programs remain and pass on all
+three executions. `results/optional-coverage.json` contains the exact accepted/rejected counts.
+
+The optional-boundary mutant bypasses the required-parentheses branch without discarding the
+boundary metadata. Native and Node compile and finish normally with exit 0 and empty stderr,
+then both mismatch at case 114115: `obj?.x.x;` instead of `(obj?.x).x;`. Subtest 268.97 s;
+complete command exit 0, 274.782 s. Cohere source checks, vet and whitespace checks pass.
+No full-repository gate was run; no parser or internal compiler file changed.
+
+### Pushed families in this unit
+
+| Commit | Family |
+|---|---|
+| `fbed1b7` | Sequence expressions |
+| `3f7e19b` | Assignments and chains |
+| `5305f40` | Conditional expressions |
+| `e191d3d` | Object values and wrapping |
+| `f2e5e8a` | Expanded call arguments |
+| `80bca68` | Member and curried-call chains |
+| `6ccd848` | Interpolated and multiline templates |
+| `4990187` | Arrow signatures and basic statement bodies |
+
+Each was pushed after its own green byte oracle and normal-run output mutant checks. This remains
+an expression driver with basic statement bodies, not a whole-file statement formatter. Ordinary
+function expressions, object methods/accessors, tagged templates, binding patterns, contextual
+await/yield, comments/trivia, typed syntax and broader control-flow statements remain unported.
+The implementation and proving gaps are explicit; no input is passed through as a fallback.
+
+Final optional-boundary throughput, three sequential complete batch processes including input,
+output and startup, all 139,716 expected outputs verified on every sample:
+
+| Printer | Median texts/s | Seconds, all three runs |
+|---|---:|---|
+| Native release | 36,814 | 3.882, 3.795, 3.763 |
+| Source Node | 65,190 | 2.084, 2.184, 2.143 |
+| Go cohere | 52,324 | 2.873, 2.670, 2.590 |
+| npm Prettier | 3,111 | 44.910, 45.557, 43.415 |
+
+`results/optional-timing.json` retains the precise measurements. Command exit 0, empty stderr:
+
+```sh
+python3 stage1/cohere/tsprinter/testdata/measure.py /tmp/ts-printer-optional-corpus \
+  /tmp/ts-printer-optional-artifacts/port /tmp/ts-printer-go-oracle \
+  /tmp/graphql-printer-prettier > /tmp/ts-printer-optional-timing.json \
+  2> /tmp/ts-printer-optional-timing.err
+```
+
+Native remains slower than Go and Node on this expanded corpus. The direct-layout controlled
+comparison above did not demonstrate a native improvement; no unsupported causal claim is made.

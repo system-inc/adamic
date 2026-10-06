@@ -43,6 +43,7 @@ export class Expressions {
     };
     readonly ancestors: number[] = [];
     readonly sequenceBoundaries = new Set<number>();
+    readonly optionalBoundaries = new Set<number>();
     readonly protectedStrings = new Set<number>();
     constructor(parser: Parser, source: string, docs: Documents) {
         this.parser = parser;
@@ -65,11 +66,10 @@ export class Expressions {
         return syntaxOperator(this.parser, index);
     }
     activeOptional(index: number): boolean {
-        const id = this.unwrapped(index);
-        const kind = this.node(id).kind;
-        if(kind === 'NonNullExpression') return this.activeOptional(this.child(id, 0));
-        if(this.memberish(id) || kind === 'CallExpression')
-            return this.ownOptional(id) || this.activeOptional(this.child(id, 0));
+        const node = this.node(index);
+        if(node.kind === 'ParenthesizedExpression' || this.optionalBoundaries.has(index)) return false;
+        if(node.kind === 'NonNullExpression' || this.memberish(index) || node.kind === 'CallExpression')
+            return this.ownOptional(index) || this.activeOptional(node.children[0] ?? panic('missing chain receiver'));
         return false;
     }
     hasOptional(index: number): boolean {
@@ -79,8 +79,6 @@ export class Expressions {
         return false;
     }
     unsupported(index: number): string {
-        if(this.node(index).kind === 'ParenthesizedExpression' && this.activeOptional(index))
-            return 'optional-chain-parentheses';
         const id = this.unwrapped(index);
         const node = this.node(id);
         switch(node.kind) {
@@ -186,6 +184,8 @@ export class Expressions {
     }
     normalize(index: number): number {
         const id = this.unwrapped(index);
+        if(this.node(index).kind === 'ParenthesizedExpression' && this.activeOptional(id))
+            this.optionalBoundaries.add(id);
         if(
             this.node(index).kind === 'ParenthesizedExpression' &&
             this.node(id).kind === 'BinaryExpression' &&
@@ -216,6 +216,17 @@ export class Expressions {
     }
     parenthesize(index: number, parent: number, role: string): boolean {
         const node = this.node(index);
+        if(this.optionalBoundaries.has(index) && parent >= 0) {
+            const outer = this.node(parent);
+            if(
+                outer.kind === 'NonNullExpression' ||
+                role === 'tag' ||
+                (role === 'object' && this.memberish(parent) && !this.ownOptional(parent)) ||
+                (role === 'callee' &&
+                    (outer.kind === 'NewExpression' || (outer.kind === 'CallExpression' && !this.ownOptional(parent))))
+            )
+                return true;
+        }
         if(node.kind === 'ObjectLiteralExpression') {
             const root =
                 this.state.statementExpressionRoot >= 0
@@ -1146,6 +1157,7 @@ export class Expressions {
         if(
             !this.parenthesize(index, parent, role) &&
             ((node.kind === 'CallExpression' &&
+                !this.optionalBoundaries.has(this.child(index, 0)) &&
                 (this.memberish(this.child(index, 0)) || this.node(this.child(index, 0)).kind === 'CallExpression')) ||
                 this.memberish(index) ||
                 node.kind === 'NonNullExpression')
@@ -1853,6 +1865,7 @@ export class Expressions {
                 const callee = this.child(id, 0);
                 if(
                     node.kind === 'CallExpression' &&
+                    !this.optionalBoundaries.has(callee) &&
                     this.memberish(callee) &&
                     !this.parenthesize(callee, id, 'callee')
                 ) {

@@ -10,6 +10,7 @@ import (
 type mutation struct{ name, file, from, to, entry string }
 
 var mutations = []mutation{
+	{"optional chain loses its stopping parentheses", "expressions.ts", "if(this.optionalBoundaries.has(index) && parent >= 0)", "if(false && parent >= 0)", "main.ts"},
 	{"return and throw lose their keyword", "expressions.ts", "this.docs.text(node.kind === 'ReturnStatement' ? 'return' : 'throw')", "this.docs.text(node.kind === 'ReturnStatement' ? 'throw' : 'throw')", "main.ts"},
 	{"statement expression loses its semicolon", "expressions.ts", "return this.docs.concat([printed, this.docs.text(';')]);", "return this.docs.concat([printed, this.docs.text('')]);", "main.ts"},
 	{"body loses its opening brace", "expressions.ts", "this.docs.text('{'),\n                    this.docs.indent(", "this.docs.text('['),\n                    this.docs.indent(", "main.ts"},

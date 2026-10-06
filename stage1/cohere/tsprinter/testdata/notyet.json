@@ -28,8 +28,8 @@
     "Reason": "string-literal-layout"
   },
   {
-    "Source": "(a?.b).c",
-    "Reason": "optional-chain-parentheses"
+    "Source": "await value",
+    "Reason": "AwaitExpression"
   },
   {
     "Source": "[1,\n    \n2]",

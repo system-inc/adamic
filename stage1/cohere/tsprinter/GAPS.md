@@ -208,3 +208,13 @@ not an internal change in this port.
 A `.some` callback capturing the layout class was also refused because the callback interface can
 reach that captured type. A loop reads the async modifier without creating that function value.
 No language or runtime rule is relaxed, and no internal file is changed.
+
+## Optional-chain stopping boundaries
+
+The former `(a?.b).c` proving gap is implemented. A numeric boundary set preserves active-chain
+parentheses through normalization; nested already-stopped receivers do not become active chains.
+Ordinary member/call links and non-null assertions retain stopping parentheses. Optional outer
+links remove redundant parentheses without losing the original ChainExpression call-layout choice.
+The independent Go selector no longer filters these boundaries. The replacement proving input
+`await value` records `AwaitExpression`: await/yield parsing depends on expression context and is
+not enabled by forcing an async/generator context onto every fragment.

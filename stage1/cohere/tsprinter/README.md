@@ -155,3 +155,11 @@ Stateful layout stays in `Expressions`. `syntax.ts` contains pure AST classifica
 `Documents` owns document analysis. This avoids callback allocation and interface dispatch in the
 hot path. An earlier callback split exposed two stage-0 gaps; their failing programs and working
 forms remain independently tested in GAPS.md.
+
+## Optional-chain boundary increment
+
+Parentheses that stop an optional chain now compose with member lookups, calls, non-null
+assertions, assignments and arrows. Normalization records the boundary before removing syntax
+wrappers. An optional outer link can remove redundant parentheses while retaining the wrapper's
+call-layout distinction. The generated corpus adds 480 combinations, including long chains and
+nested parentheses. Context-sensitive await/yield values remain an expression gap.

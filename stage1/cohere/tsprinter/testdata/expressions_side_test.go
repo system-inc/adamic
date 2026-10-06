@@ -120,6 +120,14 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
 		}
 	}
+	for _, chain := range []string{"obj?.x", "obj?.[key]", "obj?.method()", "fn?.()", "obj?.x.y", "obj?.x!.y", "obj.method?.(x)", "veryLongIdentifierAlpha?.veryLongPropertyNameBeta.veryLongPropertyNameGamma"} {
+		for _, suffix := range []string{".x", "[key]", "()", "(x)", "!.x", "!()", "?.x", "?.(x)", ".first().second().third()", ".veryLongPropertyNameAlpha.veryLongPropertyNameBeta.veryLongPropertyNameGamma"} {
+			value := "(" + chain + ")" + suffix
+			for _, context := range []string{value, "x=" + value, "f(" + value + ")", "[" + value + "]", "x=>" + value, "((" + value + ")).tail"} {
+				add("optional-chain-boundary", context)
+			}
+		}
+	}
 	arrowBodies := []string{"a=b", "({x:1}).x", "({x:1})?a:b", "{return a?b:c;}", "{return a=b;}", "{throw a=b;}", "{return (a,b);}", "{throw new Error('failure');}", "{debugger;return x;}", "{return (veryLongIdentifierAlpha,veryLongIdentifierBeta,veryLongIdentifierGamma,veryLongIdentifierDelta);}", "(veryLongIdentifierAlpha,veryLongIdentifierBeta,veryLongIdentifierGamma,veryLongIdentifierDelta)", "{('use strict');f();'other';}", "{'use strict';'use asm';f();'later';}", "{({x:1}).x;return x;}", "x", "x+1", "a?b:c", "(a,b)", "({x:1,y:2})", "[a,b,c]", "f(x)", "`a${x}b`", "`a\nb`", "{return x;}", "{return veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma + veryLongIdentifierDelta;}", "{f(x);return x;}", "{}"}
 	for _, parameters := range []string{"x", "()", "(x,y)", "(x=1)", "(...items)", "(veryLongParameterNameAlpha,veryLongParameterNameBeta,veryLongParameterNameGamma)"} {
 		for _, body := range arrowBodies {
@@ -404,26 +412,9 @@ func hasBlankLine(source string) bool {
 	}
 	return false
 }
-func hasOptionalSyntax(node *ast.Node) bool {
-	switch node.Kind {
-	case ast.KindParenthesizedExpression, ast.KindNonNullExpression:
-		return hasOptionalSyntax(node.Expression())
-	case ast.KindPropertyAccessExpression:
-		return node.AsPropertyAccessExpression().QuestionDotToken != nil || hasOptionalSyntax(node.Expression())
-	case ast.KindElementAccessExpression:
-		return node.AsElementAccessExpression().QuestionDotToken != nil || hasOptionalSyntax(node.Expression())
-	case ast.KindCallExpression:
-		return node.AsCallExpression().QuestionDotToken != nil || hasOptionalSyntax(node.Expression())
-	default:
-		return false
-	}
-}
 
 // Literal continuation and multiline-template layout is outside the expression core.
 func coreBoundaries(node *ast.Node, source string) bool {
-	if node.Kind == ast.KindParenthesizedExpression && node.Expression().Kind != ast.KindObjectLiteralExpression && hasOptionalSyntax(node) {
-		return false
-	}
 	if node.Kind == ast.KindStringLiteral {
 		return !strings.Contains(strings.TrimSpace(source[node.Pos():node.End()]), "\n")
 	}
