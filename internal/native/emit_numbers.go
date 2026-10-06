@@ -79,3 +79,28 @@ func (e *emitter) mathCall(call ir.MathCall) string {
 	}
 	return folded
 }
+
+// integerBits keeps a pure, directly nested bitwise expression in uint32. Other operands use
+// ordinary evaluation, so snapshots and borrowed reads retain their existing rules. Purity
+// excludes sibling calls that could observe evaluation order or change an operand.
+func (e *emitter) integerBits(expression ir.Expression) string {
+	switch expression := expression.(type) {
+	case ir.Unary:
+		if expression.Operator == ir.BitNot {
+			return "((uint32_t)~" + e.integerBits(expression.Operand) + ")"
+		}
+	case ir.Binary:
+		operator := map[ir.Operator]string{ir.BitAnd: "&", ir.BitOr: "|", ir.BitXor: "^", ir.ShiftLeft: "<<", ir.ShiftRightUnsigned: ">>"}[expression.Operator]
+		if operator != "" {
+			left, right := e.integerBits(expression.Left), e.integerBits(expression.Right)
+			if expression.Operator == ir.ShiftLeft || expression.Operator == ir.ShiftRightUnsigned {
+				right = "(" + right + " & 31u)"
+			}
+			return fmt.Sprintf("((uint32_t)(%s %s %s))", left, operator, right)
+		}
+		if expression.Operator == ir.ShiftRight {
+			return fmt.Sprintf("adamic_shift_right_bits(%s, %s & 31u)", e.integerBits(expression.Left), e.integerBits(expression.Right))
+		}
+	}
+	return "adamic_to_uint32(" + e.value(expression) + ")"
+}
