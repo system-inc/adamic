@@ -1119,7 +1119,7 @@ export class Linter {
             return;
         }
         this.literalSpans(this.root);
-        this.anchors = Array.from({ length: this.source.length + 1 }, () => false);
+        this.anchors = new Array<boolean>(this.source.length + 1).fill(false);
         this.commentAnchors(this.root);
         this.anchors[0] = true;
         // Only parser owners named by cohere's collectListInteriors contribute
@@ -1128,7 +1128,7 @@ export class Linter {
         this.scanWarnings(this.literalEnds, reachable, terms);
     }
     reachableComments(anchors: readonly boolean[]): boolean[] {
-        const reachable = Array.from({ length: this.source.length + 1 }, () => false);
+        const reachable = new Array<boolean>(this.source.length + 1).fill(false);
         for(let anchor = 0; anchor < anchors.length; anchor++) {
             if(anchors[anchor] !== true) {
                 continue;
