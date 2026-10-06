@@ -121,7 +121,7 @@ func (p *Program) NativeDeclarations(name string) (string, error) {
 				out.WriteString("true,")
 			}
 			out.WriteString("};\n")
-			fmt.Fprintf(&out, "static const adamic_shape %s_group_shape = {%d,%s_group_names,%s_group_references};\n", name, len(names), name, name)
+			fmt.Fprintf(&out, "static const adamic_shape %s_group_shape = {%d,%s_group_names,%s_group_references,NULL};\n", name, len(names), name, name)
 		}
 		fmt.Fprintf(&out, "static const adamic_regex_program %s = {%s_code,%d,%d,%d,%s,%d,%s};\n", name, name, p.captures, p.repeats, nativeFlags(p.flags), groupNames, len(names), shape)
 		return nil
