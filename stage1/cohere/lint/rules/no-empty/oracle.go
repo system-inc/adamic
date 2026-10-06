@@ -12,7 +12,7 @@ import (
 func oracleNoEmpty() rule.Rule { return rules.NoEmpty }
 func oracleNoEmptyOptions(fields []string) any {
 	if len(fields) > 5 && fields[5] != "" && fields[5] != "null" {
-		var options rules.NoEmptyOptions
+		options := rules.NoEmptyOptions{AllowEmptyCatch: fields[4] == "true"}
 		if err := json.Unmarshal([]byte(fields[5]), &options); err != nil {
 			panic(err)
 		}

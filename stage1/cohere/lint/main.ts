@@ -20,16 +20,7 @@ function run(row: string, countOnly: boolean): number {
     const mode = settings.read('mode', fields[2] ?? '');
     const nullPolicy = settings.read('null', fields[3] ?? '');
     const allowCatch = settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true';
-    const linter = new Linter(
-        source.text,
-        parser,
-        scanner,
-        fields[1] ?? 'all',
-        mode,
-        nullPolicy,
-        allowCatch,
-        settings,
-    );
+    const linter = new Linter(source.text, parser, scanner, fields[1] ?? 'all', mode, nullPolicy, allowCatch, settings);
     linter.run();
     if(countOnly) {
         return linter.findings.length;
