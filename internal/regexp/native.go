@@ -10,6 +10,9 @@ import (
 // NativeDeclarations serializes this already compiled program for the C VM.
 // Bounds beyond the C counter width are refused before emitting any C.
 func (p *Program) NativeDeclarations(name string) (string, error) {
+	if err := p.NativeCompatibility(); err != nil {
+		return "", err
+	}
 	var out strings.Builder
 	var emit func(*Program, string) error
 	emit = func(p *Program, name string) error {

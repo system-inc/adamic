@@ -22,6 +22,8 @@ static bool high(uint16_t c) { return c >= 0xd800 && c <= 0xdbff; }
 static bool low(uint16_t c) { return c >= 0xdc00 && c <= 0xdfff; }
 static bool regex_read(const uint16_t *input, size_t length, ptrdiff_t at, int direction,
 					   bool unicode, uint32_t *point, ptrdiff_t *next) {
+	if (unicode && at > 0 && (size_t)at < length && high(input[at - 1]) && low(input[at]))
+		return false;
 	if (direction > 0) {
 		if ((size_t)at >= length)
 			return false;
@@ -480,12 +482,15 @@ regex_execute_kernel(adamic_object *regex, const uint16_t *input, size_t length,
 	ADAMIC_CHECK_STACK();
 	bool stateful = (p->flags & 24) != 0 || force_sticky;
 	size_t start = stateful ? regex_to_length(regex->slots[1].number) : 0;
+	size_t requested = start;
+	// V8 rewinds an initial pair interior, then permits assertion-only paths
+	// at that UTF-16 position if the rewound attempt failed. ECMA-262
+	// 22.2.2.2/22.2.7.2 instead describe a code-point Input with no interior.
+	if ((p->flags & 4) && start > 0 && start < length && high(input[start - 1]) && low(input[start]))
+		start--;
 	ptrdiff_t *captures = regex_memory(2 * (p->captures + 1) * sizeof *captures);
 	while (start <= length) {
 		ptrdiff_t at = (ptrdiff_t)start;
-		if ((p->flags & 4) && at > 0 && (size_t)at < length && high(input[at - 1]) &&
-			low(input[at]))
-			at--;
 		if (p->anchored && at != 0)
 			break;
 		bool regular = enhanced && p->regular != NULL && regex_step_limit == 0 &&
@@ -559,11 +564,12 @@ regex_execute_kernel(adamic_object *regex, const uint16_t *input, size_t length,
 			regex_workspace_destroy(&workspace);
 			return captures;
 		}
-		if (p->anchored || (p->flags & 16) || force_sticky)
+		if (p->anchored || (((p->flags & 16) || force_sticky) && start >= requested))
 			break;
-		if ((size_t)at >= length)
-			break;
-		start = regex_advance(input, length, (size_t)at, (p->flags & 4) != 0);
+		// Irregexp can accept \B or (?!\W) inside a pair. Unlike the
+		// code-point walk in 22.2.7.3 AdvanceStringIndex, try each code unit;
+		// regex_read still rejects consuming a half of a Unicode pair.
+		start = (size_t)at + 1;
 	}
 	if (stateful)
 		regex->slots[1].number = 0;
