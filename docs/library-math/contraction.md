@@ -8,8 +8,8 @@ multiply-add (every arm64) if the flag goes.
 
 ## Node is not the same everywhere
 
-Node v24.14.1 on macOS arm64 runs a V8 compiled with clang's default, `-ffp-contract=on`, which fuses a
-multiply and an add within one expression. Checked on Darwin 27.0.0 with Apple clang 21 (#myatdyv):
+Node on macOS arm64 (v24.14.1, and v24.19.0, the version Adamic pins; both V8 13.6.233.17) runs a V8 compiled with clang's default, `-ffp-contract=on`, which fuses a
+multiply and an add within one expression. Checked on Darwin 27.0.0 with Apple clang 21 (#myatdyv); v24.19.0 gives v24.14.1's answer on every one of the 380,000 inputs below, and the sweeps, parseInt and navigation.a pass under it:
 
 - V8's own `src/base/ieee754.cc` at 13.6.233.17, built alone with `-ffp-contract=on`, gives that
   Node's answers for 20,000 random inputs to each of sin, cos, tan, log, log10, log2, log1p, exp,
