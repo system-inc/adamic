@@ -32,6 +32,7 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->string_keys = string_keys;
 	map->reference_keys = string_keys;
 	map->boolean_keys = false;
+	map->maybe_number_keys = false;
 	map->reference_values = reference_values;
 	map->iterating = 0;
 	return map;
@@ -40,6 +41,12 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 adamic_map *adamic_map_new_booleans(bool reference_values) {
 	adamic_map *map = adamic_map_new(false, reference_values);
 	map->boolean_keys = true;
+	return map;
+}
+
+adamic_map *adamic_map_new_maybe_numbers(bool reference_values) {
+	adamic_map *map = adamic_map_new(false, reference_values);
+	map->maybe_number_keys = true;
 	return map;
 }
 
@@ -67,6 +74,13 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 	if (map->boolean_keys) {
 		return key.boolean ? 0x9e3779b97f4a7c15ull : 0x7f4a7c159e3779b9ull;
 	}
+	if (map->maybe_number_keys) {
+		uint64_t bits;
+		memcpy(&bits, &key.number, sizeof bits);
+		if (bits == ADAMIC_UNDEFINED_BITS) {
+			return 0x6a09e667f3bcc909ull;
+		}
+	}
 	if (map->reference_keys) {
 		// By identity: the address, its low bits (alignment, always zero) mixed up into the rest.
 		uint64_t bits = (uint64_t)(uintptr_t)key.reference;
@@ -90,6 +104,14 @@ static bool same_key(const adamic_map *map, adamic_value left, adamic_value righ
 	}
 	if (map->boolean_keys) {
 		return left.boolean == right.boolean;
+	}
+	if (map->maybe_number_keys) {
+		uint64_t left_bits, right_bits;
+		memcpy(&left_bits, &left.number, sizeof left_bits);
+		memcpy(&right_bits, &right.number, sizeof right_bits);
+		if (left_bits == ADAMIC_UNDEFINED_BITS || right_bits == ADAMIC_UNDEFINED_BITS) {
+			return left_bits == right_bits;
+		}
 	}
 	if (map->reference_keys) {
 		return left.reference == right.reference;

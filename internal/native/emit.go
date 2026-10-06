@@ -1405,6 +1405,9 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 // newMap makes a map, or a Set's map, for its keys: strings by their text, numbers by
 // SameValueZero, booleans as booleans, and anything else held by reference by its identity.
 func newMap(key ir.Type, referenceValues bool) string {
+	if key == ir.MaybeNumber {
+		return fmt.Sprintf("adamic_map_new_maybe_numbers(%t)", referenceValues)
+	}
 	if key == ir.Boolean {
 		return fmt.Sprintf("adamic_map_new_booleans(%t)", referenceValues)
 	}

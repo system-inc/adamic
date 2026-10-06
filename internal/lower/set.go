@@ -16,7 +16,7 @@ func (l *lowering) isSet(node *ast.Node) bool {
 	return l.isLibraryType(l.checker.GetTypeAtLocation(node), "Set", "ReadonlySet")
 }
 
-// setElement is the representation of a Set's elements, strings or numbers in 0.2.
+// setElement is the representation of a Set's elements.
 func (l *lowering) setElement(node *ast.Node) (ir.Type, error) {
 	arguments := l.typeArguments(l.checker.GetTypeAtLocation(node))
 	if len(arguments) != 1 {
@@ -81,6 +81,7 @@ func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	if err != nil {
 		return nil, true, err
 	}
+	value = fit(value, element)
 	if value.Type() != element {
 		return nil, true, l.notYet(arguments[0], "set."+name+" with a value of another type than the elements")
 	}

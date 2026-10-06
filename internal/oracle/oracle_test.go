@@ -196,6 +196,7 @@ var fixtures = []struct {
 	// sin, cos and tan where reducing by pi / 2 cancels the most bits, as no sweep input does.
 	{"internal/oracle/testdata/trig_reduction.a", true, false},
 	{"internal/oracle/testdata/sets.a", true, false},
+	{"internal/oracle/testdata/set_maybe_numbers.a", true, false},
 	{"internal/oracle/testdata/maybe_collections.a", true, false},
 	// Tail calls keep their frames, so recursion runs out of stack as on Node (native.go).
 	{"internal/oracle/testdata/stack_tail_call.a", true, false},
@@ -234,6 +235,7 @@ var fixtures = []struct {
 	// Generic functions per instantiation, undefined where a reference goes, ?.length, and spread
 	// arguments.
 	{"internal/oracle/testdata/generic_functions.a", true, false},
+	{"internal/oracle/testdata/generic_method_return.a", true, false},
 	{"internal/oracle/testdata/undefined_references.a", true, false},
 	{"internal/oracle/testdata/spread_calls.a", true, false},
 	// A string's UTF-8 read in place, and past its end.
