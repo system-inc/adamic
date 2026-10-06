@@ -85,3 +85,14 @@ setup: submodules ready (0s)
 There is no successful build-cache warm or done timing line. Tool installation
 needed no workaround: source /workspace/adamic-tools/env.sh makes the installed
 tools available. The unaffected registry and helper checks ran with that setup.
+
+Upstream Go checks also passed. From cohere/:
+
+```
+go test ./internal/lint/rules/core ./internal/lint/rules/react -run '^(TestNoUselessComputedKey|TestGating|TestForbidForeignPropTypes)' -count=1 -timeout 5m
+ok github.com/system-inc/cohere/internal/lint/rules/core 0.017s
+ok github.com/system-inc/cohere/internal/lint/rules/react 0.015s
+```
+
+This checks the existing Go rules, not the absent Adamic ports. The blocked
+handoff and evidence were committed as 959d1ae and pushed after claim 346d122.
