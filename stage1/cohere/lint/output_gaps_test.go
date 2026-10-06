@@ -109,7 +109,7 @@ func TestOutputRuntimeGaps(t *testing.T) {
 				t.Fatalf("Node: stdout %q, stderr %q, exit %d", answer.stdout, answer.stderr, answer.code)
 			}
 			t.Logf("Node: stdout %q, exit %d", answer.stdout, answer.code)
-			program, err := load.Load([]string{path})
+			_, err = load.Load([]string{path})
 			switch probe.name {
 			case "clock":
 				var check *load.CheckError
@@ -117,26 +117,15 @@ func TestOutputRuntimeGaps(t *testing.T) {
 					t.Fatalf("clock gap changed: %v", err)
 				}
 				t.Logf("stage 0: %v", err)
-			case "exit status":
+			case "exit status", "environment":
 				if err != nil {
 					t.Fatal(err)
 				}
-				_, err = lower.Lower(context.Background(), program)
-				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "a call returning never") {
-					t.Fatalf("exit gap changed: %v", err)
+				got := observeOutput(t, outputBinary(t, path))
+				if got.code != answer.code || !bytes.Equal(got.stdout, answer.stdout) || !bytes.Equal(got.stderr, answer.stderr) {
+					t.Fatalf("closed process gap disagrees: Node %+v, native %+v", answer, got)
 				}
-				t.Logf("stage 0: %v", err)
-			case "environment":
-				if err != nil {
-					t.Fatal(err)
-				}
-				answer := observeOutput(t, outputBinary(t, path))
-				if answer.code == 0 || !(bytes.Contains(answer.stderr, []byte("AddressSanitizer")) || bytes.Contains(answer.stderr, []byte("runtime error:"))) {
-					t.Fatalf("ambient process gap changed: stdout %q, stderr %q, exit %d", answer.stdout, answer.stderr, answer.code)
-				}
-				first, _, _ := strings.Cut(string(answer.stderr), "\n")
-				t.Logf("native: stdout %q, exit %d, diagnostic %s", answer.stdout, answer.code, first)
+				t.Logf("closed: native stdout %q, exit %d", got.stdout, got.code)
 			}
 		})
 	}
