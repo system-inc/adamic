@@ -443,3 +443,7 @@ incremental formatting and arbitrary invalid UTF-8 output remain unclaimed.
 The profile is a bounded success sample, not a profile of malformed refusals,
 and wall timings are whole parse-and-print passes on the shared corpus.
 No compiler/runtime proposal is claimed implemented or measured as a speedup.
+
+Port, harness and profile artifacts commit: `55890551505d1217a4443282e4474f956f4bc21b`.
+Verification logs are committed in the following report commit; both are pushed
+to `codex/stage1-css-printer` without a pull request.
