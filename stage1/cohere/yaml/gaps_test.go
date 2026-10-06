@@ -49,3 +49,27 @@ func TestLexerGaps(t *testing.T) {
 		})
 	}
 }
+
+func TestStructuralPositionRefusal(t *testing.T) {
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	path, err := filepath.Abs("gaps/structuralPosition.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if out := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, path); string(out) != "1\n" {
+		t.Fatalf("Node got %q", out)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), program)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "Span[], an array whose elements can reach back") {
+		t.Fatalf("refusal changed or closed: %v", err)
+	}
+	t.Log(err)
+}

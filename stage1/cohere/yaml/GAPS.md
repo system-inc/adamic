@@ -3,8 +3,45 @@
 The Adamic lexer, CST parser, scalar and property resolvers, composer and comparison drivers are implemented.
 All 36 repository files and generated cases match Go, with 9,272 scalar cases.
 Native sanitizers, Node source, emitted JavaScript and yaml 2.9.0 all agree.
-Eighteen port mutants are caught; nine compiler refusals and one runtime bug have proving programs.
-Unist conversion, the printer and formatting driver remain unfinished.
+Twenty-one port mutants are caught; ten compiler refusals and one runtime bug have proving programs.
+The printer and formatting driver are being checked; formatter throughput remains unfinished.
+
+## Green printer-tree step
+
+`unistContext.ts` ports yaml-unist-parser 3.2.0's scalar, collection and document
+transforms, comment attachment, parent assignment and position expansion.
+Numeric node, point and position arenas retain shared position and point
+identity while keeping ownership acyclic. Parsing uses whole text, as the
+original unist API does; incremental CST parsing is tested separately.
+
+36 repository files and 9,216 cases produced 5,940,046 identical answer bytes
+on Go, native with ASan/UBSan/LeakSanitizer, source Node, emitted JavaScript,
+and original yaml-unist-parser 3.2.0. Output includes tree fields, attached and
+root comments, parent spans, parse failures and scalar metadata. UTF-16 offsets
+are compared through Go's documented byte-offset mapping: an error ending
+inside an astral pair maps to that pair's beginning; line and column stay in
+UTF-16 units. This conversion is explicit in both comparison adapters.
+
+The final tree/gap/mutation suite passed in 72.994s. All three mutations compile
+and exit zero with empty stderr on native and Node; only comparison catches
+comment prefix loss (byte 9609), shifted columns (14), and a lost document end
+marker (1974423). Cohere lint/types reported 276 rules and 100% Adamic-ready.
+
+[structuralPosition.ts](gaps/structuralPosition.ts) prints `1` on Node and
+gets `lower.Refused` before clang. A structural `{ start, end }` position type
+also admits objects with diagnostic arrays reaching another such position.
+The cycle check consequently refuses copying caller-owned diagnostic arrays.
+The port uses distinct `startPoint` and `endPoint` names for point indices.
+This is a conservative 0.1 structural refusal, not an observed memory bug.
+`TestStructuralPositionRefusal` holds the exact refusal and Node result.
+
+```sh
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run 'TestUnist|TestStructuralPosition' > /tmp/stage1-yaml-unist-final.log 2>&1
+```
+
+Logs: [suite](audit/unist-suite.log), [lint](audit/unist-lint.log).
+The printer and file driver are written and undergoing formatted-byte checks;
+they are not yet a green checkpoint. No compiler or runtime file changed.
 
 ## Green composer step
 
