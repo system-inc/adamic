@@ -1,0 +1,59 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	0.707s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	67.950s
+--- FAIL: TestEveryFunctionIsInSingleAssignment (19.22s)
+    flow_test.go:82: Lower: /workspace/adamic/internal/oracle/testdata/library_object_groups_proto.a:4:17: stage 0 can't lower hasOwnProperty on RegExp named groups (the dictionary has a null prototype, so inherited Object methods throw TypeError on Node) yet
+--- FAIL: TestLivenessHoldsOnEveryPath (86.02s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.02s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_object_try_assign.a (0.22s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/library_object_try_assign.a:3:1: stage 0 can't lower a try around Object.assign into a potentially frozen object, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_object_replaced.a (0.12s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/library_object_replaced.a:5:27: stage 0 can't lower Object.values on a shape not proven by a plain literal or its const binding yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_object_public_hash.a (0.14s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/library_object_public_hash.a:2:16: stage 0 can't lower hasOwnProperty through an object view (a public # name collides with private native slot names) yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_object_iterator_view.a (0.11s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/library_object_iterator_view.a:2:13: stage 0 can't lower toString through an object view (a collection iterator may be hidden by the view) yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_object_groups_proto2.a (0.17s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/library_object_groups_proto2.a:3:14: stage 0 can't lower toString on RegExp named groups (the dictionary has a null prototype, so inherited Object methods throw TypeError on Node) yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_object_groups_proto.a (0.17s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/library_object_groups_proto.a:4:17: stage 0 can't lower hasOwnProperty on RegExp named groups (the dictionary has a null prototype, so inherited Object methods throw TypeError on Node) yet
+    trace_test.go:423: 18083607 variable-and-point pairs checked
+--- FAIL: TestEveryMutationIsInItsRange (91.72s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.03s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_object_try_assign.a (0.11s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/library_object_try_assign.a:3:1: stage 0 can't lower a try around Object.assign into a potentially frozen object, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_object_public_hash.a (0.12s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/library_object_public_hash.a:2:16: stage 0 can't lower hasOwnProperty through an object view (a public # name collides with private native slot names) yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_object_replaced.a (0.20s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/library_object_replaced.a:5:27: stage 0 can't lower Object.values on a shape not proven by a plain literal or its const binding yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_object_iterator_view.a (0.14s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/library_object_iterator_view.a:2:13: stage 0 can't lower toString through an object view (a collection iterator may be hidden by the view) yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_object_groups_proto2.a (0.12s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/library_object_groups_proto2.a:3:14: stage 0 can't lower toString on RegExp named groups (the dictionary has a null prototype, so inherited Object methods throw TypeError on Node) yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_object_groups_proto.a (0.15s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/library_object_groups_proto.a:4:17: stage 0 can't lower hasOwnProperty on RegExp named groups (the dictionary has a null prototype, so inherited Object methods throw TypeError on Node) yet
+    ranges_test.go:78: 77401 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.03s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_object_try_assign.a (0.12s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/library_object_try_assign.a:3:1: stage 0 can't lower a try around Object.assign into a potentially frozen object, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_object_replaced.a (0.11s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/library_object_replaced.a:5:27: stage 0 can't lower Object.values on a shape not proven by a plain literal or its const binding yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_object_public_hash.a (0.16s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/library_object_public_hash.a:2:16: stage 0 can't lower hasOwnProperty through an object view (a public # name collides with private native slot names) yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_object_iterator_view.a (0.17s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/library_object_iterator_view.a:2:13: stage 0 can't lower toString through an object view (a collection iterator may be hidden by the view) yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_object_groups_proto2.a (0.21s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/library_object_groups_proto2.a:3:14: stage 0 can't lower toString on RegExp named groups (the dictionary has a null prototype, so inherited Object methods throw TypeError on Node) yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_object_groups_proto.a (0.21s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/library_object_groups_proto.a:4:17: stage 0 can't lower hasOwnProperty on RegExp named groups (the dictionary has a null prototype, so inherited Object methods throw TypeError on Node) yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	99.145s
+ok  	github.com/system-inc/adamic/internal/fresh	43.495s
+ok  	github.com/system-inc/adamic/internal/fuzz	11.405s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	2.224s
+ok  	github.com/system-inc/adamic/internal/lower	26.695s

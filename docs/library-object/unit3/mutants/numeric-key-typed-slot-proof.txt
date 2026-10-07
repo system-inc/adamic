@@ -1,0 +1,8 @@
+--- FAIL: TestObjectNumericTypedSlotStaysRefused (0.31s)
+    library_object_descriptors_test.go:54: stdout differs: node stdout "9\n" native stdout "6.72554825937697e-310\n"
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.313s
+FAIL

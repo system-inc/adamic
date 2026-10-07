@@ -1,0 +1,4786 @@
+[
+  {
+    "path": "built-ins/Object/S15.2.3_A1.js",
+    "reason": "not yet: Object.hasOwnProperty",
+    "tscCodes": [],
+    "sourceSha256": "991c8f6467540e37e3dfe0f64a9a75a60950dd32d1586bdf5f6d54df4c991456",
+    "bucket": "library",
+    "feature": "Object.hasOwnProperty"
+  },
+  {
+    "path": "built-ins/Object/S15.2.3_A2.js",
+    "reason": "refuses isPrototypeOf",
+    "tscCodes": [],
+    "sourceSha256": "d4beb63632556282348488a121e2ab7bef161c7f9fd4a4e2b98d43d2c72d2a59",
+    "bucket": "library",
+    "feature": "Object.prototype.isPrototypeOf"
+  },
+  {
+    "path": "built-ins/Object/S15.2.3_A3.js",
+    "reason": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "4306eca422295308d3af404cbe9933ee737f71cd1183f825def21e9219b12f3e",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/assign/ObjectOverride-sameproperty.js",
+    "reason": "not yet: a value of type { a: number; } & { a: number; } & { a: string; }",
+    "tscCodes": [],
+    "sourceSha256": "530d8d1a69ec28de868fa7bebd91ee2133e672515694642ea911bcbc24fc25c1",
+    "bucket": "language",
+    "feature": "not yet: a value of type { a: number; } & { a: number; } & { a: string; }"
+  },
+  {
+    "path": "built-ins/Object/assign/Override-notstringtarget.js",
+    "reason": "not yet: a value of type never",
+    "tscCodes": [],
+    "sourceSha256": "e016700b02870c5dbc296395a6d0eb26025a6617abe86587fc6b48cff67f5afb",
+    "bucket": "language",
+    "feature": "not yet: a value of type never"
+  },
+  {
+    "path": "built-ins/Object/assign/Override.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "532c48ccfab120197afc111332caf84eb9094d23f709b4b44bf999ef02edeedf",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/assign/Source-String.js",
+    "reason": "not yet: a value of type Object & \"123\"",
+    "tscCodes": [],
+    "sourceSha256": "0ca90ef17d119a5224d5534e2d3f46b480ba0f4e857d3e00b72d443a7a13df83",
+    "bucket": "language",
+    "feature": "not yet: a value of type Object & \"123\""
+  },
+  {
+    "path": "built-ins/Object/assign/Target-Boolean.js",
+    "reason": "not yet: a value of type true & { a: number; }",
+    "tscCodes": [],
+    "sourceSha256": "5fbd151cdeec5f38d8b80889c6b1089795c06ebd52ad45a2077778a390607af4",
+    "bucket": "language",
+    "feature": "not yet: a value of type true & { a: number; }"
+  },
+  {
+    "path": "built-ins/Object/assign/Target-Number.js",
+    "reason": "not yet: a value of type 1 & { a: number; }",
+    "tscCodes": [],
+    "sourceSha256": "40c180353d0257c3603c29a3b16e73fca3c1e00ae609b3e7bdd28f68c49846f5",
+    "bucket": "language",
+    "feature": "not yet: a value of type 1 & { a: number; }"
+  },
+  {
+    "path": "built-ins/Object/assign/Target-Object.js",
+    "reason": "not yet: Object.assign adding a field to its target's fixed shape",
+    "tscCodes": [],
+    "sourceSha256": "a5314ddb84a5bb214c6ec2e359d11e9180aefb42481f3d13b191800f98792a05",
+    "bucket": "library",
+    "feature": "Object.assign"
+  },
+  {
+    "path": "built-ins/Object/assign/Target-String.js",
+    "reason": "not yet: a value of type \"test\" & { a: number; }",
+    "tscCodes": [],
+    "sourceSha256": "573c59f3970ebd4400db9cfdf99aa3b3911b553a783ec3ff43cb8c99c285e8d4",
+    "bucket": "language",
+    "feature": "not yet: a value of type \"test\" & { a: number; }"
+  },
+  {
+    "path": "built-ins/Object/assign/assignment-to-readonly-property-of-target-must-throw-a-typeerror-exception.js",
+    "reason": "not yet: Object.assign on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "8ba58a8f092abfc3f27a162415804bfbfe40f56518a53cdd048680d78748687a",
+    "bucket": "library",
+    "feature": "Object.assign"
+  },
+  {
+    "path": "built-ins/Object/assign/target-set-not-writable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "0d978ef8c37f034fcc984fa11a388754a90b33a7627b408acbe497c1d5bedc71",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/assign/target-set-user-error.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "dcb8b9527b2e20d59d233c36f255efab11cb4f723ef569bc9e1fc73229c61088",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-0-1.js",
+    "reason": "refuses a method read as a value (create would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "2176dfb0a39ae53f9d39681b654585074c3731ebd22bd700cbe71b608d7d9baa",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (create would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-0-2.js",
+    "reason": "refuses a method read as a value (create would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "a3ad78c787cfc8df544eb6288ec4c9f74f0e0beaeda71244b2546c5e0c875065",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (create would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-1-2.js",
+    "reason": "refuses Object.create",
+    "tscCodes": [],
+    "sourceSha256": "7743d2699ff3dab0d31eb574a7b8244db83815eac94b5ea9fd9c2be9bb82f477",
+    "bucket": "library",
+    "feature": "Object.create"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-2-2.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "2a35372d69ba5700aea6407e9741c7aedbb7a3a5d0624115733d7f92c25e1ead",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-105.js",
+    "reason": "refuses delete",
+    "tscCodes": [],
+    "sourceSha256": "a6eb92f1b8481b65e46d2c59022d317068752ee75f1946fe4cbaa8d5d34d30c0",
+    "bucket": "language",
+    "feature": "refuses delete"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-127.js",
+    "reason": "refuses delete",
+    "tscCodes": [],
+    "sourceSha256": "a79cabe353897a8d9f3d74ea3cfc748e2f2fda5f411bd4ebbe6d8a6986931cb3",
+    "bucket": "language",
+    "feature": "refuses delete"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-152.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "cbeb00e65fb540cc1967d6e2f27f1fd2df52520526fe4b9f6b9966f4a293fa1a",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-153.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "fcb8325e487a6ed579ff0896082a00100f1eff9843ac29cee8aac74063f411ca",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-154.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "0c182b8f86226b6cdff1cb2ee61eebbfa2ea3dce4ece911f42436ebd2ddc4f42",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-158.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "3b04cd03ffe614e793d487017197d90c25feb5a56778aa24b00612ab89ba0c2e",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-16.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "33f363ff35dccab7d036b9bce70666c42f0f6e54a138253a6f7488b805c4cfa4",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-162.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "5063871ee910310e5ed84ed1ae9dae10085e114b3c6f511734708ba83c0e89a4",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-17.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "ba811d8fd21964da6177393713484100ed1308d53f2a3e1a4b9f57d4d83f76d7",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-178.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "b56e706cefe884518024817d7aacb9a7f1f4bcf5a4c371ba8371f51e8338e921",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-180.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "16a0a51696e5d2bb2b9fc5cce1d0ed52b8f62e78624623d93912b44a122ee216",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-184.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "97c4f620d756e66ac2ce4757986fe30c398d2a181d373e98077f0357a98bc13b",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-19.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "372359b5bf98e2a44795ded2ca06c03c160ff163308235db8f2f9b276886caa1",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-20.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "4367396eabaa442725cb20dd102fbe887e9cb8cfd42a5f5ab5c59e3a6c80ec3f",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-206.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "7de42c587789e847f7905f5106ff261e8de1dd72cf9a1314c1b52e33e026bebb",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-231.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "af786f3e9fd2f24b8ca035551fccaab5a1a5d1aad14ba42e49968e2e1cd28e67",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-232.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "9f8d7ab99b6f70d922ddc9fa02ea2c7ca6932bdd3add3a6a9d3158181569b4e2",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-233.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "1be317a0d575d0db7708c0440605bd2c527f5db527761ce40fbaa9e17ba6e825",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-237.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "465cad5b7ef76a87c941f646a2582beb9764f10951ebe50b451bdcb88b6b73a9",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-241.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "f39c47b22226794a893428affb42c77b913833acf5f4a7c5f34b3d7fcfce26c7",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-26.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "7550406bf8cfb711dd4097bdf78404bc98e29e9ca6b04d4d3a46a6e3445573a8",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-263.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "b0151db53a7515c69885a21327431506499bac448163fa98c1a0e0eb7f58c6ce",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-266.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "67b69734fd74a6e9cfb32896adf2de303390a880cd52fe09857ab1235d3382eb",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-268.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "67b69734fd74a6e9cfb32896adf2de303390a880cd52fe09857ab1235d3382eb",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-298.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "a1e94044389c2ded8cfa7f752783c959affef8d1e1827a7bbcddf1d1f8ad1b57",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-301.js",
+    "reason": "refuses Object.create",
+    "tscCodes": [],
+    "sourceSha256": "7860441d964807e25cf27d8fb03c80a2c01c6868f34e999b9de3c09d545444e3",
+    "bucket": "library",
+    "feature": "Object.create"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-302.js",
+    "reason": "refuses Object.create",
+    "tscCodes": [],
+    "sourceSha256": "dc94c25b77b5531447ce7451866121ac5c3557e0cd20177529a68a3506b3c4d2",
+    "bucket": "library",
+    "feature": "Object.create"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-303.js",
+    "reason": "refuses Object.create",
+    "tscCodes": [],
+    "sourceSha256": "136928a79bb9604821d2290ce75590f6fba220f6a2702f2ca8c8a6c1cdcd6378",
+    "bucket": "library",
+    "feature": "Object.create"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-304.js",
+    "reason": "refuses Object.create",
+    "tscCodes": [],
+    "sourceSha256": "f37f0e2893fdf90ff77a27ac085c3f7ed31043b8e5473c3107cf7a06ca47040a",
+    "bucket": "library",
+    "feature": "Object.create"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-305.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "c1c9b908fd8cb87d5d3684025c82878f81c8ea8f354071ec4cf5886c4abb3bdb",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-306.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "133295393ebb8b2ea83f9593c16d1fb5bf930ca9545eb6f7b43407a26cbd40f1",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-308.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "d8c271823ad8fe8e8ee02ffc74e5ca8275e76725908359d48bfce6df20e51971",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-310.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "2962b5f330a875df2352f0cfc59c640361239ce1910dd495e7b220e54fefae1a",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-312.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "9d684158bec9213f3797ea995ab5f2dbb76a6d47a0ef9d88993b2731ee0345ee",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-314.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "77f5abab94fad7a3317e9f27ca8916d9c4087350e1ee475c7cc752c74491272f",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-316.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "ce23fa9e2198131f5e83b04e18c3e58d9f1f4b1b33441cd9552ee0c978d4e968",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-4.js",
+    "reason": "refuses var",
+    "tscCodes": [],
+    "sourceSha256": "ffc61a9ed7108c34d3e87af50ecc7bb9ec32590da705cdd8c188be6157b7a231",
+    "bucket": "language",
+    "feature": "refuses var"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-40.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b707707c94448f0b549d69c3e77e1622980e0b644eb46d3a29143bd4618fbc71",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-46.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "656b93d7099dd681c93a16c70ed44321603058a396cdf0e9fd382fb6998a74ff",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-47.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "3a0e2adc7d323d5a3f1ec64ae2981d71c35297a53ed703383a56fec23e9d92fa",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-48.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "852aed15f632b8aceb151c3743b5e35ad8008ca3a30d0cefbdf44b855e4c4223",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-52.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "73639af72c1ee231f37f22a19b24a777d87d8dd2855b9f0ab3654e013eb0c58c",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-56.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "705a950ce82d2f9eb84ceea445a290f7749d91d3c446a707b16e361d15722978",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-74.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "4a592409f0c35844f73f7eaa4c8553a7a9b9d7d7bbc3cf38a38317acbf1c07ce",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-75.js",
+    "reason": "refuses a value of type { enumerable: boolean",
+    "tscCodes": [],
+    "sourceSha256": "fdc86c788b222d08d0615b8fb5152a401296bfe2843cc301c1370665b995c656",
+    "bucket": "language",
+    "feature": "refuses a value of type { enumerable: boolean"
+  },
+  {
+    "path": "built-ins/Object/create/15.2.3.5-4-99.js",
+    "reason": "refuses delete",
+    "tscCodes": [],
+    "sourceSha256": "83804c6c2005aad18c67661e93b3289c7d5b00c6b75f3995496caef1c3e25663",
+    "bucket": "language",
+    "feature": "refuses delete"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-0-1.js",
+    "reason": "refuses a method read as a value (defineProperties would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "81f79c5329529bf79afad9e5a7ccaa55893ac39788a4729a7d2cf0bf7af057e0",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (defineProperties would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-0-2.js",
+    "reason": "refuses a method read as a value (defineProperties would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "2c3fbf3e9dce2966f96207d9a388e9c1d6a21cfb99167a7d7c2ea97162ee4642",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (defineProperties would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-1-1.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "751311b82ac46be9874b5e85afdd568ef4fc7c2d19c336b4bf9388af11bbd1e2",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-1-2.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "702f1d08acd0157493b9d4209b7a6ffdbf0140cad63eec29e43cd14dbe1e7d4e",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-1-3.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "a8e0c0fc464308bb786642e1b16aec82eb6b48622fbb4006d7141f33afdfb188",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-1-4.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "327242aacf650dce07589b79d69d1eaab377fab87a7d9fa33d747771576e39ed",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-1.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "18d96fa80d606dcc81b9ec116441f32e8024aa7ee15ddcdd5c30a5b49af50f71",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-3-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "aa239b44c0c8aba143c9aa022374f3000812eeb7dd473bd5af41914233219bde",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-3-2.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "8fc34a080143792aaee023da4a6230c71293d2ad39d070648d91d26627c2f83e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-3-4.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "3885f70ab05f1ea26c959fb2342637f5fbaa098e5baf03b5043cdad791d7dd8e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-3-5.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "bea9d290f4f02d1a54ab77cf1b79ab061fcfd4a68c224f543730d3c93060de38",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-3-7.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "2cefd52ed297d5e1abd0639abfc10f65106ec5a4942e1f16a1ea215c73bec28c",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-3-8.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "076192ef272329f1c56e65e797ec36c905daec1ca14a20c207036f70d8513e99",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-12.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "79b468f06691ebade107fb5a1c3bd55df0ba4b37bdbff10afb9f57ce6b035c36",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-16.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "d2394ba11dd60d9cf46fbc24c5b94bf1afe0fe10a4c3f2df72d10a40ceb94f50",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-261.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "786018073ce6d8599f46e030431ac2a342226ba4a1e19207b7f9c57ab1bd9173",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-262.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "4536d07a7a208c5fab212b3546d1ba9f5ae7e92f0796d3e8c0032fdcc4d1f5ea",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-263.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "1b1b301a6f0612178a5e022597e6ed174b3cf42d35b353dccf4d9c8de632d160",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-264.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "2879142d6311c1c92801b91a1cdec964813632a42dd83ac5397f1a4919e9676b",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-34.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "2d0ca9bfb20bcbdc646fe6eb757e15193d0cd15ba4ceb68ff0e91c613cdb282a",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-35.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "b4314757a1c29e896e6febd756c1d3ab3d2710c26a1e2fbf91ce64c2392b3355",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-6.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "2c81ba2d2aa331e190dbca7cb0deaba6a9e1d0a129046e342eb6b0aaa64671fa",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-7.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "fbbf16e198ed50b6657ef6f2508b7f52c238ee4e686fb97187651e8822ef8a87",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-5-b-8.js",
+    "reason": "refuses a value of type { enumerable: boolean",
+    "tscCodes": [],
+    "sourceSha256": "c1ad768533357f88bf6611c40fe1e3ef85ba85300a02ec48928c2db46cae25b5",
+    "bucket": "language",
+    "feature": "refuses a value of type { enumerable: boolean"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "29dc1d1a9ca3cfc6922def2af7feae250db1e75179ae817ac1b71fcbcdde4475",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-122.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "0c27a29c8f61a5a94e4b88839d9b31696d39a74b49d8fa49835645d1f3ce846c",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-123.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "809527944bd2add0e54bc05f86cd5118f2aa72c8765a0a2ba7fc701865b09749",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-125.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "022c12a6ebd93d339404f7ff619f31cae406c4cad8b07ad52e4eaafbd8a2366b",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-126.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "fa548223685f0a0381e37d9e9c241d9818cd335e58ccc186c0f7a2e97a99966c",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-127.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "97697dcddfd5d243a4200031ce8f0fa209c299a2b92fc2f00de0acfcd151ef9a",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-155.js",
+    "reason": "not yet: an OmittedExpression in an array literal",
+    "tscCodes": [],
+    "sourceSha256": "a442ef53056dc155f8055098a9f75c9331268bf1f96c5d0ad577528a3df10d75",
+    "bucket": "language",
+    "feature": "not yet: an OmittedExpression in an array literal"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-156.js",
+    "reason": "not yet: an OmittedExpression in an array literal",
+    "tscCodes": [],
+    "sourceSha256": "eb55d1710aaabe80e1da713934a0527a925df6210294292009436febdd4e3d4d",
+    "bucket": "language",
+    "feature": "not yet: an OmittedExpression in an array literal"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-157.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "b798590adb284907b08229ae422a4a986808c77fc4fef2171869c2072bdef08e",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-160.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "07f9f15917b9b2cc99e79bd72cda04a0f7d0fcb19cacc80fe786c38e03110680",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-161.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "c5a6bd5fc15bf8b34c55fd7ea289b7ffb8d9f12011e781e6181d3b3790e61a17",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-162.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "4eede6e19cd67a3785f011fa53db922c45f5c52604c214ebbc89cefa0a297532",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-165.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b35e6863fe78e28f56489099db10f32c83ba9e614ef64fbeb2faf713009f76a5",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-166.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "feeefad340a0acf194c61a2eb965a7b969a605142f08c14a9ab7778cee1eea9d",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-167.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "b0ec758fe700b4dc935bd45c104bd32be933f3b6078c1e0fb59edac46a6d2f84",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-168.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "c351e52d8746855e492b1dfcca1ec910b3498b30019a24f54fc89a7fc6660ab1",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-169.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "de1e340e69b2715ec765068281704b3ad16c9f12334124852acfcfab3fbd9c34",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-170.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "95fb58f27ca72e7e0876cc4c99aa6afb3416f60542a2ff2984772d649c12b2f1",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-171.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "42b143937e61f55b8b216c7c75cec36136202bd06a933c9bb48287156dc5ee6a",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-172.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "99758d6c7881bc46dfe1e97c28846c9e3c0e822481eeeecd189fcaa78fbce7ed",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-173.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "d65e196c9cc859d163bd0b6b61b3788d4c0203b50b132a3791eed327aa346106",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-174.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "7a2ebc659ed31e1ead45b51aaed242636f24cf79f9f760825b2d250930b8f529",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-175.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "eaa723507412419cd01c70ecb0b806a2ada66f4952e4cc6c64f14afb843111ff",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-178.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "2af99d6fe73eb9691f9ee2c029aea50f6a5ab476d90e21f05c28eefa186a417a",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-183.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "1e676776f69c5ff309c7f73f3abd9c9f349e3997d04653c441e27613d59efa7c",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-184.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "de73f1eddc9055396b66ec31c3f7dfe3f39a88faf592cb076dc2f0ded74aac1e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-185.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "86e32fea905dcf8f2ad05588ca4a28a9455f53ccad4d19314cc87d083c23fa97",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-22.js",
+    "reason": "refuses arguments",
+    "tscCodes": [],
+    "sourceSha256": "b034c5ae94ace62610dc5a36692701a5cf84f0533df35335b656574aa9c31889",
+    "bucket": "language",
+    "feature": "refuses arguments"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-25.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "a7d34d60ed2712a8364499c74503ab551fb2cc9e66fa5d1229f9650f7db14114",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-29.js",
+    "reason": "refuses Object.defineProperties",
+    "tscCodes": [],
+    "sourceSha256": "848b8c76017eb9185fdfb562ae0468c5e07a3e3e8f1a1a7c848a93d036e29389",
+    "bucket": "library",
+    "feature": "Object.defineProperties"
+  },
+  {
+    "path": "built-ins/Object/defineProperties/15.2.3.7-6-a-9.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "d1dc59dee9e92ffe66c8f88bc7b5d7402b11b31ced6bbde5a93bf8fc15dbc9d4",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-0-1.js",
+    "reason": "refuses a method read as a value (defineProperty would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "d13b9b9d37c7a16bfcf0b463efd2b34168783d0890fe54d22e6527d0e09a1bb7",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (defineProperty would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-0-2.js",
+    "reason": "refuses a method read as a value (defineProperty would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "c17fac53ed27743009245f3085c8664a51f6ff492ee3db285543dd933b25758d",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (defineProperty would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-1-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "622271d5b6e02da7b886ae1940790b89fa9a24e579d0d5481e75312f675ebfcd",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-1-2.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "31cb3d6703b32655e7c6c382630fbfd0c9272cc7921fc3062d2b6d98cc48d369",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-1-3.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "335b327b8fca99129546f9be9b2d449664ba12792310ee157402d64d8108bd25",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-1-4.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "a2ab67c0bb51dc3cd4519cd44f73c68c3bad72b30536e779e203236a8f274a84",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "02bf5af0199bf823a6ee60f767256e41f339f2657b6b57031df03810fe8a3e63",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-10.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "efce177989c45d1d77326bfb27ab82c8fdec5753941fc01b0c4f7e2caa3090f3",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-11.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "6e6e437efa6cb4606153683542ea0a2687f272a7348d104e6a3122cc67cbf6a3",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-12.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "40daf69cd5d9a41129daf2de830f58975f46429d12439e1531e9f0798c03679d",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-13.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "610a7a2e9f76d7b98e571a5d4026a3a8915ae2ca973d03689a8ace7335ebd7d3",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-14.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "9dfe60460c238b32b398c4a787651f32830fb6ad0aa3bd7cdce7fc73ec2be4cc",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-15.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "cb227493e18af0531ff116b570cfc5f9f1e04f3b38494fc7694fc12d39ef4dd3",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-16.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "224ac56b5705da7ce07fe248bae507ff2dd5ece803ebde58e870fd86fbae9899",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-17-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "aa4135b4727cb17f4493f9c31d53814bc196958791bba6c4c16685b7d23ba541",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-17.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "7f48fbdf1205ff2934a5f92ecfbcc4dcbe11ad3bbc583f33671d9b243438fc42",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-18.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "97a62c8dc8e46dd1c1373742680c50f70e7fad2ecced243a5006f0438cb1ea83",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-19.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "6f2de5cc9630da9d2b13cf16d79b176373e577b9b4b0ba6bc8b083b644483c92",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-20.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "caa1f60bc606f8abd75a5686042f0a6c2750d3802ba16eae0f6dddbdfe75b118",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-21.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "16d4b7ca522693f9aa786db0a89655ced2b2779e9ff8769a0c21cd620c9edce4",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-22.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "d0f625429c309b363f53539e210fab0d9956d88871bf1e48afc0e1e556ec2c88",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-23.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "f01a6d912acd8c2b010034fdcf1e7000b043a7f08affc5fe6791177329aa008c",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-24.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "7d857a0ef02f327a0d058ce97c72f32b77d488a27ffa865a329118590dcd7af0",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-25.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "f871af27c3a8706d134cbf9c719d6ccecf8cabfe3eaffac931bce872097f9980",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-26.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "0a623c2c0db091650b002242a77f082c73fe1e62473e160d72e8eea94403e98e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-27.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "22f520cf4b4859fb675b4b02dd073694a7f36344205b0dbe878a91c2d93a2054",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-28.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "bb7fd199957ae5b2f57e26a2416e335209d739fc9ce5cc499576b8c108bbabd8",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-29.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "c551aa7056f0e83f54d8130f6f9ad1582333a782f91db93e0badcd08e4f3b7ff",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-30.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "e46f92b4d398f515664a2f69a6e924da93ddf8142baf2b6c5d16eaf506f73534",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-31.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "9f4bc415530623e83d12969b6f32987c96cce65f1c5902bfddba38bf23aa3d06",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-32.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "fc5fc01422135784f5f2f955b75582a4c2602cf162f1af5dafc61eaa824b17aa",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-33.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "af03a7d95ff98d5b531bd64c0df72bccd54deadf5b72e48a564983baa55e694b",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-34.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "da29e299555e9ec0b32e57e3dda8c256247f78e270e15cae51ecab2f67fe58ef",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-35.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b7d31ffaa28eeada095c427ef0aab34d0b4b45eaa481cd02ec774cc205b33114",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-36.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "6108084c6d2c4573a78fdec9c23a00bc841222e55c9894174716f4c4c8f95321",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-37.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "64470b8d2857579b0b7f3b6390788fe489c6337b06b5b8f40c59758b19c2d9df",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-38.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "9a636ed98600929d6f024ca21650c1461bf567945ae92e77ba0aee310b7d6d96",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-5.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "0d2f9f9608d5e873873a5fcbb206873f579cde99d313ea13a019ca92918e3b71",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-6.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b805eb3eec0bc59f177d6e5be8f48ba313512952dc061841ebb0eeedc9f98308",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-7.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "8a9764c2398db3fcca2b08938d9be09523531b14d1f1ff9277e1d7717aed0099",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-8.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "c105afe5f4e8cf3cba30e6c5962f313dbf8f398757cad5a1c2b4b8bb5e1aec96",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-2-9.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "40fa776272350d926b2895e36cbc7627860248d4f67036c1f0d2515211309e0b",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "fa2b487499b9ec2d85902a429312d7246f3b69d1306b42fbe64fede52a013ac1",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-17.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "00d85ed6056f2fac2bfffc63f7a9703b8d8a95a9cd2f8e0c2c7f646accb6025e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-18.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "259d9ac2e5a9696b993a97e0c27d901296a7b1bfad6a7f03a015593696e32d7e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-19.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ee750822b6529c89c5cb5f6639ac00fad2ba7b9e78d74e3f3699546e5dca51ba",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-2.js",
+    "reason": "refuses a value of type { get: () => number",
+    "tscCodes": [],
+    "sourceSha256": "efadf063f1d32af59470c5cc7be3bfb28eac889b42a7755132600e5e5368bd24",
+    "bucket": "language",
+    "feature": "refuses a value of type { get: () => number"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-20.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "bf0d53f6dbd4614dfd60637c7e4ccf190750662b47d5b8e79394760f7f727964",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-21.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b7495a165a987cb86d6e1b1330570ea025528457252525ec9a64acb8661c4298",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-22.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "f473696bb71ee002966a2f3eeb816edb323759ff4bceba234139600b147f5587",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-26.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "cfb27011160e691b55a589a3140e40c478ce36a98dbc9beb46bb80ef291dfbf8",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-3.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "62c1661b4a29ef8d65fa8d9310465a81815dfd59875d39782524d9fe8d891ce5",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-30.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "4236335708f38b9c8d01b86fde27b0236b806253f1ca4ddee0ea01d8f8104bff",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-4.js",
+    "reason": "refuses a value of type { set: () => void",
+    "tscCodes": [],
+    "sourceSha256": "360886baf6943384538d7718c4793e52b5353b472f371c5926a849d4380f8de7",
+    "bucket": "language",
+    "feature": "refuses a value of type { set: () => void"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-48.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "f473696bb71ee002966a2f3eeb816edb323759ff4bceba234139600b147f5587",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-3-49.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "83ab79edd001be6f5925a93f29fcbaac76a0e0c0b0178540372bdf1e68ae2ee0",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b117c9a937e9519cc78e06b5d429e1c0330f3f32a59eb85ddd5d4627d1338784",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-117.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "ae19df48be15062c9628d5483b4b6b02e407ffab5c0df62a6e93a18f5e22f826",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-126.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "e4454b3b2e444d205482eed40d22239fdcc477d37055e5015fd799881ed48d61",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-127.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "61e4389a8f1b1815cd4bcc9e494b253193f585457d47d334c5cceeea96d2d04e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-129.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ebc8dd27035dbab42e8b43ff13ab28ad795742c7e2ed368beb65c9714c91fb20",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-130.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "379ad163ed7c4904a25fa68c09aa3ff6a0e62afd4eff0122b773315fa0691d57",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-131.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ec6597a1d58ae3ba7a091807b770b65890f93c8e0c72cee7cfa46ab559b27080",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-159.js",
+    "reason": "not yet: an OmittedExpression in an array literal",
+    "tscCodes": [],
+    "sourceSha256": "d3221d9ea004cc3286970f6a53de4c9e9db7b3b6a58ae867d11441b958954957",
+    "bucket": "language",
+    "feature": "not yet: an OmittedExpression in an array literal"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-160.js",
+    "reason": "not yet: an OmittedExpression in an array literal",
+    "tscCodes": [],
+    "sourceSha256": "1b85ba30c36410bb88f54e60fc52eab8cb77678dba6f0e7cdea576af5deed3a0",
+    "bucket": "language",
+    "feature": "not yet: an OmittedExpression in an array literal"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-161.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "3e401c6b4ff0d05cfe4265719e99dbba26c7510e63bb16d21a8a79c5bf530bbd",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-164.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "5e424fd8221d100e6777a210ac8532a43288c0c30bb1079115c22adbf58962e3",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-165.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "8b0cef4e261d45e001dc38f2e8200480d64f44f2b2c75ac1e4215f7c7a1f0d4e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-166.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ce8d8321342d31d3748cf1e0cd2204d1bdec5073bd99634295c583c11e8353b2",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-168.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "0e0acd7973c572f08efb88b1addb79c2c4bc0652a9e5694a2d6b6bde82fdd1f0",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-169.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ea2fab19223b4b34496612674586468867d72b742894fa7ae3e3c31d44c5ae72",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-170.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ca39e128656777eac0cd22e89f4e17cc10608f5ffec980283a6e699a6f4b86f3",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-171.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "56207449bf61f15e3b384d594d8a64b8adde7f74f17486da31be8bba9426ece0",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-172.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "1228ef2979a0a1a0647d15ed6e1d0a31e4735531f50073c77840840fe13bfc52",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-173.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "2e7695616b570037979b015b23424f05143442f558a54162351139aa351adf3b",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-174.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "5e01ade930d5589695e202dd55e59a9e531f64c3feb44d994f04a0c2b6906a34",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-175.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "34d6d568667df440542db5850f80fe77b233ea00ad3714dfc5574fc8e49767f8",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-176.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "963f730b9c55da545493960361e00e6f052c823cdb6a32759c9148cd81539e5e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-177.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "fb67fa56416610f8a5e0aa0ce5be551d9ecb42a3b9ba422b0dbebddb75d83589",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-178.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "4a1a1e66661d131f5fd715b8e70710f7143d3a0d41b7349743c6fbafa4e61a15",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-179-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "f4892c80e30f0a6269da411d4c15cf2e61ab657cf12469e72dc6403b2c1238ba",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-187.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "f57d0b0b3d7c34e01b3d031d5684f00fefa7f00a58c31ad88cdb8ce7391f9bed",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-188.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b4ec95079453217727dd66fb367efa5c57c54702bcb38c46c374951bb85d63cd",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-189.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "a7e6d3e1cad506dc1f361ae8c6ad1430208516375f4e9eb93a6b35b9723162db",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-30.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "bbeab664a1b292a0079af7727cad7f03ab68f67b9e83856c4017675d92a04a8d",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-325-1.js",
+    "reason": "refuses arguments",
+    "tscCodes": [],
+    "sourceSha256": "d9e37612adabf83a99713c41bd474b825825a96a868e87d4ae01e9f8c90f5d56",
+    "bucket": "language",
+    "feature": "refuses arguments"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-333-10.js",
+    "reason": "refuses arguments",
+    "tscCodes": [],
+    "sourceSha256": "70a05c138f818a13fe187e26b2455502f87ef9dd29d81de5dc9c5b233a3ce382",
+    "bucket": "language",
+    "feature": "refuses arguments"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-333-11.js",
+    "reason": "refuses arguments",
+    "tscCodes": [],
+    "sourceSha256": "dca983069e7d51d62abb3ad880fe881301c60531566291e9ca19d2592dba95e2",
+    "bucket": "language",
+    "feature": "refuses arguments"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-404.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b8af827e009aa7316b4eec55dc8acd61fab0547b97df9d25676b370a402c33e2",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-406.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "e13aee273a1f3c6f665abda7fa79382e2004885b89b8b442b30e8d4c83050ae5",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-411.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "701e91e0f8ffc0ae4a8588eb51a53cfe2abae356796c8497698bd1988dfc0eca",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-412.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "c621afdef70a3e3984842c94c0569c068e019bdb4d75f5e15de7083682a2c46d",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-414.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "edda036a7f3608d8b73fdaa23c00a7062645b40eaa659792b68d3f94952b6de8",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-416.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "4ddc417248a2766949f688ca05255660d49a7ef607ab7493805c29f459f6ae00",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-419.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "33f8706076962844fcb1686acaa1a0022a81ebabded1fc023983bbf2794a6008",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-421.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "0c414a6193e91d383bfe60fffb924e30b0a38a9144af39bf315fbda267cbfeb0",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-46.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "a36ee0e4f4dcc358222be2b650b26ef2f5ef096b31aeb3b6cf165d40dcdcc5fa",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-580.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "c3ba437cf6cc4787447c35435939626fcd8efd3abe76f5fe1267bb8f9c420425",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-582.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "d5651d73db16b05011eb652e371499759b31a0ba3ddc79ae8b1affa6fb900eea",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-587.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b182c3094fb8fc62f938fb29f1b515a735c5447674bfbd4021377b7d6433fa17",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-588.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "0e1f707ff9b97296cd6adf29c09dd91c0a3014748636f8ffdf76bf7bccc5b08b",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-590.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "2809dac9dbcaad9dcafaffbad91240007fc3eac67b35489b52c897ed07693a63",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-592.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "3d6acce10985a9faddfe56d4efc20816cf126cf4089df77634d4e2466c2e7da3",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-595.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "724ea295a1b63032b7739297694940dfe81770a7e8e2e6df688534e97f95b235",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/15.2.3.6-4-597.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "6487e34b76403c454bac9282d5af2970b14b65b49178af593d981bf0a7c485de",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/S15.2.3.6_A2.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "2affb515659418b9867a471138535e46f592fd3cd0e388251762e1ee5691c609",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/property-description-must-be-an-object-not-false.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ea1d7d0a54bad155bd5ce156db095c3f85b94cc3f320391a2bc2e41f4fb72788",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/property-description-must-be-an-object-not-number.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "9ca2cfdf3d85d62d7f82435758e1205daf959d60a1e5ea57907f6e34b1a02e74",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/property-description-must-be-an-object-not-string.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "46f032464e5b45265e96a6f02c2f6b3eabe3f46295148c8ba85bfc778ca58aa4",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/property-description-must-be-an-object-not-true.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "1e89087b4994db7d6b09f84d5ba8eba157367b7a98833f32f6e709a01f5c56d2",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/defineProperty/redefine-length-with-various-values-and-configurable-true.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b1435d4c8aa3a24fcb5790560d8a6fd4b70221cdd0c96cc58bb846c360fe9598",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/entries/primitive-booleans.js",
+    "reason": "not yet: Object.entries on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "6e30fd47e03cdb87fb145b8cddc2b98d3482f54920eba79d040db74fc17cb112",
+    "bucket": "library",
+    "feature": "Object.entries"
+  },
+  {
+    "path": "built-ins/Object/entries/primitive-numbers.js",
+    "reason": "not yet: Object.entries on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "bb0bb0b4003a7f860e982d7ee18d0c9a367a5057c0b45d109ebda1b6e938cf58",
+    "bucket": "library",
+    "feature": "Object.entries"
+  },
+  {
+    "path": "built-ins/Object/freeze/15.2.3.9-0-1.js",
+    "reason": "refuses a method read as a value (freeze would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "de574aaaec123165f69e48e01fca0cf06f1d7ea88a8efe8929ed1a2ef536621c",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (freeze would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/freeze/15.2.3.9-0-2.js",
+    "reason": "refuses a method read as a value (freeze would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "6d8b1b5f34ad2bc7669748129987cf1cbf6dab4e8e1e5d952f21450cb81c4af7",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (freeze would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/freeze/15.2.3.9-2-d-1.js",
+    "reason": "not yet: Object.freeze on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "43d41e6ea9503310f3d5eb2ea3157bce178e0a2fe540f95f7424005c1e5849d0",
+    "bucket": "library",
+    "feature": "Object.freeze"
+  },
+  {
+    "path": "built-ins/Object/freeze/15.2.3.9-2-d-2.js",
+    "reason": "not yet: Object.freeze on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "c98aed98dcc00a2cf81ef0f1baf8bd4daedb3b56be3da045164e3afb7c865893",
+    "bucket": "library",
+    "feature": "Object.freeze"
+  },
+  {
+    "path": "built-ins/Object/freeze/15.2.3.9-2-d-3.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "f4e6c8bfcf1a0fe5dcf4325dfd19582fcfc9c625ba3cbb70022ef36621953cbd",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/freeze/15.2.3.9-2-d-4.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "4b9d469c343c83e0568e5462e7f990490904ef4b0a0f0c9d1dac00c86f3314ae",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/freeze/15.2.3.9-2-d-5.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "0eea6d611a3de89f2dbc5dd6a7fed248966fbb038c809934b4803a22fad6695c",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/freeze/15.2.3.9-2-d-6.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "fa26b35fb84d4cc979b3f37fc327c85343e7ada869a30f87d3aa280fed516e24",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/freeze/15.2.3.9-2-d-8.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "2a313f515730bcc4158f5dc66caed4b9cd22f38e4b83b497cc959b720f901ab6",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/freeze/15.2.3.9-2-d-9.js",
+    "reason": "refuses arguments",
+    "tscCodes": [],
+    "sourceSha256": "ca55eada927a0f37435f610c5589ac876f46b306229de90ab8c57382e2859158",
+    "bucket": "language",
+    "feature": "refuses arguments"
+  },
+  {
+    "path": "built-ins/Object/fromEntries/empty-iterable.js",
+    "reason": "refuses Object.fromEntries",
+    "tscCodes": [],
+    "sourceSha256": "1a7d4e78d5dce851ac5ff6a816c4038b239276ad0dccc8ab54c5194785adff98",
+    "bucket": "library",
+    "feature": "Object.fromEntries"
+  },
+  {
+    "path": "built-ins/Object/fromEntries/key-order.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "162fd71c8c00a9049a2da7467e0de58aca11a24470ed1f997006a6a9a2a951d3",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/fromEntries/string-entry-object-succeeds.js",
+    "reason": "refuses Object.fromEntries",
+    "tscCodes": [],
+    "sourceSha256": "314f250400887532682b00447a76ab1224a734364bc0bc72ac7a5418dfa534ee",
+    "bucket": "library",
+    "feature": "Object.fromEntries"
+  },
+  {
+    "path": "built-ins/Object/fromEntries/uses-define-semantics.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "249f74ee4cc5fb2722ab3707376b18636768ec18c8dfc07de91ecf9949429b76",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-0-1.js",
+    "reason": "refuses a method read as a value (getOwnPropertyDescriptor would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "9c02a0c9c7da79bc25ff7dddaff35134345091416976d094cc211c56b2b02552",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (getOwnPropertyDescriptor would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-1-1.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "4f068aa61ab0368095dce9a3bfba10a411d70563c124fcbbe426db0a0d254f9f",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-1-2.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "ebeda5fd485490fab9d7ac5e250b4ded4235f9a43defbebc807d15d60ea9a1ca",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-1-3.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "a89daae7e46f8d904f93b0482bacf49a251a26395f4cdfd8cfc8c070207be018",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-1-4.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "5dc54b6b510efa3f66f5d6fdf6125335ef89cc1c9940679e9e940c24cc43c334",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-1.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "c8d49b177b5e35b0226847f183fa5a5f9a19c31744547edc96e2dbc3bd72dc07",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-3-10.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "0e833f47a25b925d05c06fb466063a4a97bd45787a4b514174e201e3b806837a",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-4-225.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "e74d46c183a9b787317e1d54aa82260a1b5a76abe5a14b079bc4424c04dfc3d7",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-4-229.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "be779f56013587b0a2fe192b628b91f1542faaec3ac319bef45339ff555392de",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-4-233.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "11265e9254f7e86d4567853a8cb229d483e7cddbb71df03d9ce01bc75f43b1b0",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-4-237.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "40f4232c375df288fd21ead66b9a4e254a8be9f033ff0fbf5a6612f4d2d72988",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-4-241.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "48983cddce0fa77e9ebf848ea3c864cd07c9cb0fcaf5c28bf0dae5ce445dac8e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-4-245.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "d96781395b28ad7428cd0234c2aa7a5b4640c0bef3526f90a8f00e3f8c3d6ce3",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptor/15.2.3.3-4-247.js",
+    "reason": "refuses Object.getOwnPropertyDescriptor",
+    "tscCodes": [],
+    "sourceSha256": "dea0a09f8a424e91761628df14a4fe9d09031f42b2a4150cfa78c5ac81374ca9",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptor"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptors/exception-not-object-coercible.js",
+    "reason": "refuses Object.getOwnPropertyDescriptors",
+    "tscCodes": [],
+    "sourceSha256": "307d4380412647917cd7b7209cec8e5d1aadc92ea71b6dec8721b579ed1d8dc1",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyDescriptors"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptors/primitive-booleans.js",
+    "reason": "not yet: a value of type boolean & { [x: string]: PropertyDescriptor; }",
+    "tscCodes": [],
+    "sourceSha256": "bacb91976beb5d8858120dd37cb61d3ebb28d3e591b9d06e71229b882355b4b4",
+    "bucket": "language",
+    "feature": "not yet: a value of type boolean & { [x: string]: PropertyDescriptor; }"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyDescriptors/primitive-numbers.js",
+    "reason": "not yet: Object.keys without a proven complete plain shape or primitive (array holes, descriptors and host objects are not represented)",
+    "tscCodes": [],
+    "sourceSha256": "79ee6a28482dbdeb4399f1deefeeb48f4b88a2b7212c105e2b9d69b8b0a69773",
+    "bucket": "library",
+    "feature": "Object.keys"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-0-1.js",
+    "reason": "refuses a method read as a value (getOwnPropertyNames would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "7fb987ebf266d368d2bdab0514f80eb08603a383979e2051ba9910bbc13f52d9",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (getOwnPropertyNames would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-0-2.js",
+    "reason": "refuses a method read as a value (getOwnPropertyNames would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "3d8e110b78d007f939ca9ffa33739b9108ba902b2678b96546f7d2a455833378",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (getOwnPropertyNames would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-1-2.js",
+    "reason": "not yet: Object.getOwnPropertyNames without a proven complete plain shape or primitive (array holes, descriptors and host objects are not represented)",
+    "tscCodes": [],
+    "sourceSha256": "c74029e75a5cbdd8cc3949b61edbd2121a9346a42573f3e5f79c76a445d6a021",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyNames"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-1-3.js",
+    "reason": "not yet: Object.getOwnPropertyNames without a proven complete plain shape or primitive (array holes, descriptors and host objects are not represented)",
+    "tscCodes": [],
+    "sourceSha256": "b1d0cdf1985789d48db44f22c6352e28ff99903d9b4dbe46318379bc8767a2b4",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyNames"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-2-1.js",
+    "reason": "refuses inherited library member isArray read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "081e58e7e0c3082aa293b259433fc1d38987875ff151ac8725f4af3c55430a77",
+    "bucket": "language",
+    "feature": "refuses inherited library member isArray read as an own field"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-2-2.js",
+    "reason": "not yet: instanceof against a value that isn't a declared class",
+    "tscCodes": [],
+    "sourceSha256": "71e889dbbf63d09702ba15fc7f66195d1c523c2aaf52bc2ae189b1370be729d6",
+    "bucket": "language",
+    "feature": "not yet: instanceof against a value that isn't a declared class"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-3-1.js",
+    "reason": "not yet: hasOwnProperty with a key that isn't a string",
+    "tscCodes": [],
+    "sourceSha256": "afc12f7f77caf32e25b67ef81a88d8874f7ba614615664be09d77f9466da6ffd",
+    "bucket": "language",
+    "feature": "not yet: hasOwnProperty with a key that isn't a string"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-2.js",
+    "reason": "not yet: Object.getOwnPropertyNames without a proven complete plain shape or primitive (array holes, descriptors and host objects are not represented)",
+    "tscCodes": [],
+    "sourceSha256": "ef4b9ec435cc1f0f34e1dd788c58c253eec99d2dd6b26aa34342872650081e07",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyNames"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-39.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b0c409dd2a3132c1794dfb7f6f5f115254ac751cb667da9ff3e1b2d3ff8fafde",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-41.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "c9c915d5bf1c034bd454562a0480e3eb2f5922dcdc137b01ced18395a2715c89",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-42.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "7605e84c804d3c3fcb89951407edd36e2751c99719f393bcbb043e422aa9e260",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-43.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "c5e317cf127a4b12de61335b0ab637419e1b2cb1e8c2e16fc09ada77a1f8296c",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-46.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "35b145daf24df8faf39f47b537072ffa60b8e6937ef9b9e8f75aa279573b90b4",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-48.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "371837cc2a018694a7ab61cdd143c12888b21c764232cfe11d1e7644a5267131",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-49.js",
+    "reason": "not yet: Object.getOwnPropertyNames without a proven complete plain shape or primitive (array holes, descriptors and host objects are not represented)",
+    "tscCodes": [],
+    "sourceSha256": "92fe76cd65c8b60559c587fcd06335973a5502e2accbeb8c8cb29f04834f85f1",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyNames"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-50.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "721596c685c3bb6ab00f7240057c6a379168eb3b13ff55901eec5d7aba896aa7",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-b-2.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "2467555390574e7b3ed1607641e94b83a64ad7f620f9cff4db01e0b305047c5f",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-b-3.js",
+    "reason": "not yet: for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)",
+    "tscCodes": [],
+    "sourceSha256": "b651b3562b7598b32588d8d2fb599eac9ed9318fdd00a72f57e351efe57c75d3",
+    "bucket": "language",
+    "feature": "not yet: for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-b-5.js",
+    "reason": "not yet: for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)",
+    "tscCodes": [],
+    "sourceSha256": "0122d07e7fe3cdaad64d310ec80d55003b1305888a33c0d2638218d6a5e76801",
+    "bucket": "language",
+    "feature": "not yet: for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)"
+  },
+  {
+    "path": "built-ins/Object/getOwnPropertyNames/15.2.3.4-4-b-6.js",
+    "reason": "refuses delete",
+    "tscCodes": [],
+    "sourceSha256": "35cbd252d9dd0bb7527257fc8bafcb6a024f3bf2a17ac03aebbd32735bce43a5",
+    "bucket": "language",
+    "feature": "refuses delete"
+  },
+  {
+    "path": "built-ins/Object/getPrototypeOf/15.2.3.2-0-1.js",
+    "reason": "refuses a method read as a value (getPrototypeOf would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "2d0591c5d1a1359ab59d815530754e888361917a4d402638352dc265ebcf67e5",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (getPrototypeOf would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/getPrototypeOf/15.2.3.2-0-2.js",
+    "reason": "refuses a method read as a value (getPrototypeOf would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "54bd2260d50152de0066f334ac0156b349f91945532934150cad91a7db0544a6",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (getPrototypeOf would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/getPrototypeOf/15.2.3.2-1-2.js",
+    "reason": "refuses Object.getPrototypeOf",
+    "tscCodes": [],
+    "sourceSha256": "9e341c89456067f9dec7766f406ae90a9e96921e1ecffdf0b7423e6a3a360916",
+    "bucket": "library",
+    "feature": "Object.getPrototypeOf"
+  },
+  {
+    "path": "built-ins/Object/getPrototypeOf/15.2.3.2-2-30.js",
+    "reason": "refuses var",
+    "tscCodes": [],
+    "sourceSha256": "9541ecf91612e75123a7fc5ddb80e7449e69c508ebda78c8698ce2e5b3b3423a",
+    "bucket": "language",
+    "feature": "refuses var"
+  },
+  {
+    "path": "built-ins/Object/groupBy/callback-throws.js",
+    "reason": "not yet: Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)",
+    "tscCodes": [],
+    "sourceSha256": "78d3145adba28efb4e6e2decfb315462504da6c7dc602ce860ec08b6616360f3",
+    "bucket": "library",
+    "feature": "Object.groupBy"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown.js",
+    "reason": "refuses a method read as a value (hasOwn would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "57d88dc5578fba121c6957a04693be57b87506b6dcea4793edf980948f24f556",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (hasOwn would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_exists.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "c325e5cbddad5ccfc9e5c821f0b4c4b9e933f1a31c0578e3c11df37697f37c3a",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_getter_and_setter_configurable_enumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "544d0ef144bed0552ee174d62e16311b63841a7b598109686f721bcbb631e9f6",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_getter_and_setter_configurable_nonenumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "4fd85c22a8d5d48c16103eca41e79319ec8264748565d5d9b6b8bbaeb0cbd74d",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_getter_and_setter_nonconfigurable_enumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "b61632a0ad8e4ecdde59a10a83d2995b8805eef93c3c8dd06bfa95b2f92c7466",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_getter_and_setter_nonconfigurable_nonenumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "49b77c4dac4bab984f8454cfe7028154de9d5b20447334f0fd0e61e6c79f7e57",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_getter_configurable_enumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "6536e94839e00e4a8f53354909006fb872f84d9a175872437c40cd0ed5103c52",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_getter_configurable_nonenumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "b7311410c758ba4698ab02236585ec586725abb15ddb326c97fdd44224dd40fb",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_getter_nonconfigurable_enumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "203f1671df4d52745b334101a19b55d52ee884eb2f4896ab172486d67111d44a",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_getter_nonconfigurable_nonenumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "b549717ad423b3b48f655cb9f349b64e506259fed28e92b8d0a2bfb7981c652c",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_nonwritable_configurable_enumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "c0ec5d9daf168bbd1d490ee32b8766cbb25ce6b69d9503668eeb21837d97965b",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_nonwritable_configurable_nonenumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "58758b2b19cf470bf7f537e28bf2edc61e2983edc1e4b5bdbc041a4682348ea9",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_nonwritable_nonconfigurable_enumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "ba3f95d28e7e1fb2505ff02925f34419d63bea8f607448b30bc9964d51b9f369",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_nonwritable_nonconfigurable_nonenumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "41821484b60fea0fca969ca1fdb047067e125ba7be127e1949101f1d78488d9d",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_setter_configurable_enumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "0052eb06e8863802e7afa8cf89e7d05cbce5c13550595e7fb7e9a35eecd430e3",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_setter_configurable_nonenumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "e9856e56169cba3188015fde6b23d618c10bc5b4c44e33440b9934c2dcaa54a5",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_setter_nonconfigurable_enumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "e62d91631be2848a48ddb6668f8800788fcb699908eb8f1bd0f7be2b85043136",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_setter_nonconfigurable_nonenumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "048816705f0559b4900adb5a6e2ba56f88de4d25015ae739e03abfd6a3887265",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_writable_configurable_enumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "10af992cebe4b7acb1f5dabfccb9abf70e93927bad77fc892285e0e67fd5f331",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_writable_configurable_nonenumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "a9e51be34d01f84d9db793094517afcf84527514f2870a81e1613e3967584de3",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_writable_nonconfigurable_enumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "354b520ed27a03e4142f24f793ab2df6aa462ebbb49f39e82f693d670e8d7cc4",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_inherited_writable_nonconfigurable_nonenumerable.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "72042e8298f6ee00fbfd1e1959774db330b80f5ebc0f60a8f952e2337121abd7",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_nonexistent.js",
+    "reason": "refuses Object.hasOwn",
+    "tscCodes": [],
+    "sourceSha256": "efacfb0d02a5c0dd84e8830197c518e3fdd1169b74922a3c95093a75ec26cfd5",
+    "bucket": "library",
+    "feature": "Object.hasOwn"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_getter_and_setter_configurable_enumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "09e6d07f920b9be8e89600a5c559d07923b0262e72de42b49d806282e4376f4c",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_getter_and_setter_configurable_nonenumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "498f5367c8a16ed9b18fc09e9bc72a7854acf56da0aaa5153c98ec3bd5dc6cdb",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_getter_and_setter_nonconfigurable_enumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "395088b70f2ca17d791aaac15acae70c09f09036fed6e272376ef2ce1ed5e0e7",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_getter_and_setter_nonconfigurable_nonenumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "fd960c0a25bc27710d9badd16c5916ba597699b431e93579e7609204c502dfdd",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_getter_configurable_enumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ca27776c38968b23528e6cc32ec7ef4a6509ecc2699e64963d3eb497f22e52cd",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_getter_configurable_nonenumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "eabe79b6d40185c321aafc6e5f2db8b376a40fa6b880ff36443808c1583526af",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_getter_nonconfigurable_enumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "1ab00771c19be2b847d4cdeb5363376c2c388b58e3e71d3b303b01a23a7f868a",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_getter_nonconfigurable_nonenumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "28b31a13ff68268cd3b251e9574b842d96e0dcb1d23787a6575f557532a9c751",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_nonwritable_configurable_enumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "8014f6ecc1e690902412ea4ed9994e8271b16148011c61c9b86967bffe8655d7",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_nonwritable_nonconfigurable_enumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "57e48e7f944436563f24e2a3bbe01216aa51cf666a2cf10d56ddf1c924f58c24",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_nonwriteable_configurable_nonenumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "2c649417ba3bc4bef18ec332313f067db651ca5e687eaf55afc5df74714a06a5",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_nonwriteable_nonconfigurable_nonenumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "96f0bcfeb923754484689096185730259b666bae8d0342609639f2a7498c1281",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_setter_configurable_enumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "e1f6b0d4ae0c6f68e0deef8aa2c59a87e411eb0703df3c018773a359e84136b3",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_setter_configurable_nonenumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "d05b142d9542e40ff741250ed4dbd36efd39b1ac0a066148b8acbf98f3e5c693",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_setter_nonconfigurable_enumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "0b810a53c2e592c9127b9a67bcdd1e103abaf14037b323f9b2d16fb492395c7d",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_setter_nonconfigurable_nonenumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "dbfb6b88065ebe0ccdb34963ba9b06027e91e82107717491e51f6dfe732328c4",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_writable_configurable_enumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ff65df74475ec0031ea4ee77b5216494fa6949b42a7aeafd9521ff68cc5700b6",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_writable_configurable_nonenumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "e3e6db9fd6d5c468005f31c83125247b81fd25c2a18f7d7e297e0f4cb24793a5",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_writable_nonconfigurable_enumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "f5f9b4af662ac3aaedf1f16aacdd7df80033f5e8ed376783a6e0428339f317e4",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/hasown_own_writable_nonconfigurable_nonenumerable.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ab32da2585e1e94251bea273021d8b6c6a9ee6a2e489c9e4d2de3ba5af8731d5",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/hasOwn/prototype.js",
+    "reason": "refuses a method read as a value (hasOwn would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "c5ed76d0ea2c4ee2744d3a3ee5c389fad2d695c3694a30e97a30102f6f144fde",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (hasOwn would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/is/not-same-value-x-y-boolean.js",
+    "reason": "not yet: an array of never",
+    "tscCodes": [],
+    "sourceSha256": "95f88a73f0bb13ff3de781ae0a5122620bd9d46a6460e0466e6d5ca0e1c53b61",
+    "bucket": "language",
+    "feature": "not yet: an array of never"
+  },
+  {
+    "path": "built-ins/Object/is/not-same-value-x-y-object.js",
+    "reason": "not yet: Object as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "f13bc19b8483b5cf9401b13d96eaee46b4a3db80989db4c3af49be1ad5e01f54",
+    "bucket": "library",
+    "feature": "Object builtin value"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-0-1.js",
+    "reason": "refuses a method read as a value (isExtensible would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "5c81dd0ae8dd24fd14977557547d5a7eaad9fd8b6ad72e92d0ffdcdaad3c1a6c",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (isExtensible would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-0-2.js",
+    "reason": "refuses a method read as a value (isExtensible would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "eb0ebb2564618b476b93da2bf3ef024ac31c1dcccf7687bf8735173c398115cc",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (isExtensible would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-0-3.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "04cdc586a6bf674faac216d890ea1682e321137c50ef637fc7da0f1b1627f96b",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-1.js",
+    "reason": "refuses var",
+    "tscCodes": [],
+    "sourceSha256": "3f1f8111e5214c993aa25b764a9a9845105fd3c8b302861c5313649599f73fb4",
+    "bucket": "language",
+    "feature": "refuses var"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-10.js",
+    "reason": "not yet: reading RegExp",
+    "tscCodes": [],
+    "sourceSha256": "419554d5283ee626bc5d1378c6c4dcd47deba16573862f1de9cbaeeae37ba7cb",
+    "bucket": "library",
+    "feature": "RegExp builtin value"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-11.js",
+    "reason": "not yet: reading Error",
+    "tscCodes": [],
+    "sourceSha256": "c6a172a6cc7b8e644ea0cd9ed79174d380cc8f4070a133ba784fa3021054cbc1",
+    "bucket": "library",
+    "feature": "Error builtin value"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-12.js",
+    "reason": "not yet: JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "01025f2e721e87666e85d3651ffa6d2935a56d0e1a7be6002447f665645bfd97",
+    "bucket": "library",
+    "feature": "JSON builtin value"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-13.js",
+    "reason": "refuses inherited library member constructor read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "642c59cd8003c53edccfe9cd265a29863e376b3782a8ff29bcb914e5b642d767",
+    "bucket": "language",
+    "feature": "refuses inherited library member constructor read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-14.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "70b1e533388ec69c50d1b02ba1ff8e1f5028f5e34e31fb33e35d4adf20cde12e",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-15.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "c68961032a6ce4be364e9b62e52d47c1989ece1f9c34d85ec09926c2d734589c",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-16.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "5d5cc0b0eec825158a5022cfcb9efa74de9e8137bff793c89c963cdbe8289f25",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-17.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "fede6dc4f5a60525e8a1403c269274375e9d4d8e77697b23d5aac95e9eb9894a",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-18.js",
+    "reason": "not yet: Number.prototype",
+    "tscCodes": [],
+    "sourceSha256": "d7dd34f5fe4f65b983a8c25bbc7d050b2ca4c9f08372067cc21a92be6a010691",
+    "bucket": "library",
+    "feature": "Number builtin value"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-19.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "e741e466db7ec130d3bf7114f368bb722acc694ff2f0d41c77bc7dc9d1b2716d",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-20.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "9d695f645c855de29262a6795214c161b4b0036f25d06959375441bee92289e1",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-21.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "ba45f2e6117c11ed89b52b74f88c0aa1da8886a11e5359929558ce846b8318f0",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-29.js",
+    "reason": "not yet: this outside a method",
+    "tscCodes": [],
+    "sourceSha256": "b1075fbcead3b729ec50ed7324a3cd5750c36dad1eede2ce5f172ebf5a337ec4",
+    "bucket": "language",
+    "feature": "not yet: this outside a method"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-4.js",
+    "reason": "not yet: Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "7ab6652fb3da637a1d11a70ffe4050b86216498408ca95d6c01bfcd6ae5a8bf4",
+    "bucket": "library",
+    "feature": "Array builtin value"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-5.js",
+    "reason": "not yet: String as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "1b40fa9c4d03ef852704d7a6d6d9ea7ffa2ac208d278f0ad4910501d006f2476",
+    "bucket": "library",
+    "feature": "String builtin value"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-6.js",
+    "reason": "not yet: reading Boolean",
+    "tscCodes": [],
+    "sourceSha256": "b55cad6d72f3190570f85e848f9c49f19ec266b8be56f75f2fd60cbe5d800e7a",
+    "bucket": "library",
+    "feature": "Boolean builtin value"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-7.js",
+    "reason": "not yet: Number as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "5a1e4aea6507417317a09dd0b6369bfa952961236198bbf94dc3145986eb8049",
+    "bucket": "library",
+    "feature": "Number builtin value"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-8.js",
+    "reason": "not yet: reading Math",
+    "tscCodes": [],
+    "sourceSha256": "8a7ba1161fc5af334c494bb897e40a1a51416a5b8916d8dc292099184096bb62",
+    "bucket": "library",
+    "feature": "Math builtin value"
+  },
+  {
+    "path": "built-ins/Object/isExtensible/15.2.3.13-2-9.js",
+    "reason": "not yet: reading Date",
+    "tscCodes": [],
+    "sourceSha256": "80a95b0121b2a247a2716c4de14d58c423c3ba0a74848c19c8c8b77b4d0c435d",
+    "bucket": "library",
+    "feature": "Date builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-0-1.js",
+    "reason": "refuses a method read as a value (isFrozen would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "943e10c35e52217f46e84e3e2136a6a9b0450f27b103f067f8f900edc388e76d",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (isFrozen would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-0-2.js",
+    "reason": "refuses a method read as a value (isFrozen would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "fcc3c3000fbda460a950b65866de98dd7770d8a0870907bc30eb48c1e555bd9d",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (isFrozen would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-1-5.js",
+    "reason": "not yet: Object.freeze on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "6e870d8cd7fc41550bbaa73351d8b41977ecdfa196c51a6e09291724d08b5a34",
+    "bucket": "library",
+    "feature": "Object.freeze"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-1-7.js",
+    "reason": "not yet: Object.freeze on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "a38adb871c5b44a4b985dca2ba8404e1340821e88c07a3aa47fe7fd7f6e16cb4",
+    "bucket": "library",
+    "feature": "Object.freeze"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-2-a-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "7c12074beaeb8bf359402ed32aa0f6620dd6cb45378d253d884bc7040cd3e957",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-2-a-13.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ecfd9ad2e6721054380c5194d25fa7f15db33aacab639c6676a959b90ace866c",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-2-a-4.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "fe7532fc0e824557c94d89146d4682c364c03dea043367dcc8cd8120ed586027",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-2-a-7.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "bbb234ac412e1988fe699904e59b306445cba292a6686c7d5383713ca87eeca5",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-2-b-i-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "f47526e9f4033112f4c77f132c3a3d0a5e113233855a98add3852caa90f85c1d",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-2-c-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "bd38e3229c9bfad5b2e301e841c00f1f970fde01f9259d0605fcefcedc229d98",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-2-c-2.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "f652face4e310f7d5bfefaf3130c427b1bb663904c2c3c7e6174ddd32f3a5a27",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-1.js",
+    "reason": "not yet: this outside a method",
+    "tscCodes": [],
+    "sourceSha256": "239fc0e176c139ee2f580d8ea26bcd2cd882069e8bfbe1d7e1d7ec3ecdee5fe3",
+    "bucket": "language",
+    "feature": "not yet: this outside a method"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-10.js",
+    "reason": "not yet: reading Boolean",
+    "tscCodes": [],
+    "sourceSha256": "2e2057007f02d970478cb401e337c708bcf5fb67c1ee7880a9c72264b734e52a",
+    "bucket": "library",
+    "feature": "Boolean builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-11.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "c6a5ad2f37d0ee832b1a87256af9ed3b68c3cc94638c9c89dc22df78016bbffa",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-12.js",
+    "reason": "not yet: Number as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "743917e358d5c02dfc2bfd8d88c9eb8e9eb73d03341895e187115f0ba5fecc52",
+    "bucket": "library",
+    "feature": "Number builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-13.js",
+    "reason": "not yet: Number.prototype",
+    "tscCodes": [],
+    "sourceSha256": "6a50ec1af7cc31ab86487657d1277bd6cca5f2e365c528b14d6754fdaf9cdcd7",
+    "bucket": "library",
+    "feature": "Number builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-14.js",
+    "reason": "not yet: reading Math",
+    "tscCodes": [],
+    "sourceSha256": "6a33c259f0927e882a9c57783ec653e6f547d5bdc1510d7d95fcc345e136e37e",
+    "bucket": "library",
+    "feature": "Math builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-15.js",
+    "reason": "not yet: reading Date",
+    "tscCodes": [],
+    "sourceSha256": "cef5f91f11996e89ada43d0806995427b4c6da9539e8137b6fa4a1e623cad4f5",
+    "bucket": "library",
+    "feature": "Date builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-16.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "46a641c954567526792b64de2181b6f97bf4a43f7e4da9b22d6d2c7ecbbd2031",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-17.js",
+    "reason": "not yet: reading RegExp",
+    "tscCodes": [],
+    "sourceSha256": "9bb5b9c43b4fedb615cd9308c8b94cd47506804c1450c424308ca7aee18bbdad",
+    "bucket": "library",
+    "feature": "RegExp builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-18.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "b827c9ba06978812c02315581a911cd78713b5b5f0392a52394a03111e366056",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-19.js",
+    "reason": "not yet: reading Error",
+    "tscCodes": [],
+    "sourceSha256": "00da7539982b2f8a9013311773ba70ef973c1c78e91f6f05edbdc9f7ebac8f46",
+    "bucket": "library",
+    "feature": "Error builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-2.js",
+    "reason": "not yet: Object as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "85a0e27e7e38eba1c1fc0d010308ce74c593570bbb037baf6416efce0dfb5917",
+    "bucket": "library",
+    "feature": "Object builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-20.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "d6fd9fe16b93a580ba6e41e303496822595a90bfbca2d445367df691e2cb3949",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-21.js",
+    "reason": "not yet: reading EvalError",
+    "tscCodes": [],
+    "sourceSha256": "a2e277cc201e69c3e98ce91d66ac52db9c72abd143f91d407d7e21a4b60d82a7",
+    "bucket": "library",
+    "feature": "EvalError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-22.js",
+    "reason": "not yet: reading RangeError",
+    "tscCodes": [],
+    "sourceSha256": "7e2f6465add16e0aa9276a7719d323cc7bf0de73b8de6a133162868f2aaa25bc",
+    "bucket": "library",
+    "feature": "RangeError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-23.js",
+    "reason": "not yet: reading ReferenceError",
+    "tscCodes": [],
+    "sourceSha256": "360fc09ab763b49f6e227ea89159902bd2a4ba123d8a53753163008878d4d084",
+    "bucket": "library",
+    "feature": "ReferenceError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-24.js",
+    "reason": "not yet: reading SyntaxError",
+    "tscCodes": [],
+    "sourceSha256": "0472beb849d307f95e8c6011f3bfa6db0ac28ca18abb5335d64555f643347bcb",
+    "bucket": "library",
+    "feature": "SyntaxError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-25.js",
+    "reason": "not yet: reading TypeError",
+    "tscCodes": [],
+    "sourceSha256": "20cb52bfb72174b6f110fd0c3b8b7be3c10f02ad1f2d5b56753ecccd74357ae9",
+    "bucket": "library",
+    "feature": "TypeError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-26.js",
+    "reason": "not yet: reading URIError",
+    "tscCodes": [],
+    "sourceSha256": "0a194b9b55f5ab0a0687a4a4e877997e087fcf853cb674dc79ee2fc05382ff7d",
+    "bucket": "library",
+    "feature": "URIError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-27.js",
+    "reason": "not yet: JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "40265d8d71dfb93538586b5e008649bde83366607ca64322d5f1887ec489a0f2",
+    "bucket": "library",
+    "feature": "JSON builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-28.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "3fbf06c2d3c102259438b52398912817f64a520bae21cc705be63702cc501acd",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-3.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "649f14457b90a1fa8f46fc168fb6743cede009e76eca5d7b7f1591f8891eb9ee",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-4.js",
+    "reason": "not yet: reading Function",
+    "tscCodes": [],
+    "sourceSha256": "18e3bb15d1400860090e630f086fd305eb9527b8532069e6d11dde02a763e42b",
+    "bucket": "library",
+    "feature": "Function builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-5.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "6d5f6648ea8d78c0fc9de0554f5f338915f3baa945a1471001142151d9552e7f",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-6.js",
+    "reason": "not yet: Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "be5f4ca0a7c5f69fabd2b6aaeb43832977e95522c5316db64cfeaa078160896e",
+    "bucket": "library",
+    "feature": "Array builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-7.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "72228fcfa570bc068f54684d8358ce22672fd1221152907e27d516be643a4c7f",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-8.js",
+    "reason": "not yet: String as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "0ae88e3cb447ad93e1ffdcaa565fa445a599526dd0420c5ad4364be4aeddf18e",
+    "bucket": "library",
+    "feature": "String builtin value"
+  },
+  {
+    "path": "built-ins/Object/isFrozen/15.2.3.12-3-9.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "9bc5f3d29d56ccd76f43ef410d605ac794b53f4895031fb424e85f180dc8c0c9",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-0-1.js",
+    "reason": "refuses a method read as a value (isSealed would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "28c49dfa44eb34376c1a65e4f6d152f49b05e6509313afb331bad27691644638",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (isSealed would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-0-2.js",
+    "reason": "refuses a method read as a value (isSealed would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "de0273a0f136a6aa2c61c49dea255e651791b23529966e3e5ca98dd578271320",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (isSealed would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-1.js",
+    "reason": "not yet: this outside a method",
+    "tscCodes": [],
+    "sourceSha256": "0de56752f03d9c5b29aa4c8cfcea06872001666c415044cd8c94497eccf2d97e",
+    "bucket": "language",
+    "feature": "not yet: this outside a method"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-10.js",
+    "reason": "not yet: reading Boolean",
+    "tscCodes": [],
+    "sourceSha256": "fe1cd7d89d632e32f2924c05b314f05e488ee1d8505ccafd9974d147e4ca40d6",
+    "bucket": "library",
+    "feature": "Boolean builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-11.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "61124656906bebc162617166100df3539d522fe59bf845d234c750d4b762e33e",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-12.js",
+    "reason": "not yet: Number as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "16a6a0ebc842e79fe1f2bfce2c3ed64afdb74a401561c576f90ad0da5138c73b",
+    "bucket": "library",
+    "feature": "Number builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-13.js",
+    "reason": "not yet: Number.prototype",
+    "tscCodes": [],
+    "sourceSha256": "df19d977b621509c74c54019e903ebe1ab75a3fac15fb0273ee4504d4a2f1219",
+    "bucket": "library",
+    "feature": "Number builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-14.js",
+    "reason": "not yet: reading Math",
+    "tscCodes": [],
+    "sourceSha256": "e22a0e33687f39a03e301156ddc05596d54482887ab77553f34d23b18cc8d069",
+    "bucket": "library",
+    "feature": "Math builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-15.js",
+    "reason": "not yet: reading Date",
+    "tscCodes": [],
+    "sourceSha256": "22b9e71576b327340ce3b0cfe2d5afcb72884c0146fcf6e12d3ca31513e0ff43",
+    "bucket": "library",
+    "feature": "Date builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-16.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "59be07c0b75907991742259add8e49f172817337a404ba62380cbbbfc90c8605",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-17.js",
+    "reason": "not yet: reading RegExp",
+    "tscCodes": [],
+    "sourceSha256": "202b1c7137ef739ec7609d4c47dc1e47739fe7e863d83cd8da183672f6c619a1",
+    "bucket": "library",
+    "feature": "RegExp builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-18.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "5485f4c70ba29291fbff492a734f270ae7987295bc534b9b5df54597d0504a3b",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-19.js",
+    "reason": "not yet: reading Error",
+    "tscCodes": [],
+    "sourceSha256": "107e63299a6dffe341537892a41686fb4ff68352de63ee1e986b970f3d920f47",
+    "bucket": "library",
+    "feature": "Error builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-2.js",
+    "reason": "not yet: Object as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "3b675480ec08a93da0a7b453ea48b691132e2ffdbc6160fbd5ffe8dbffe472bf",
+    "bucket": "library",
+    "feature": "Object builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-20.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "335b798965b25046cf1b47ee8bd52271b65031af5a39d9f5a785d6e09ae5d835",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-21.js",
+    "reason": "not yet: reading EvalError",
+    "tscCodes": [],
+    "sourceSha256": "3f127bd642061ca435e5a701ae133a5d76586810dd8a8fa4644260d0082aa380",
+    "bucket": "library",
+    "feature": "EvalError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-22.js",
+    "reason": "not yet: reading RangeError",
+    "tscCodes": [],
+    "sourceSha256": "08eea382e9c986ae37d2faeffb6e05ecfc2dae1279fbaddc77aaada9d44bea31",
+    "bucket": "library",
+    "feature": "RangeError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-23.js",
+    "reason": "not yet: reading ReferenceError",
+    "tscCodes": [],
+    "sourceSha256": "1dcabefddd843d42a8b575a2c2f40aa57d1c34da604e2cd968b513711e463f92",
+    "bucket": "library",
+    "feature": "ReferenceError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-24.js",
+    "reason": "not yet: reading SyntaxError",
+    "tscCodes": [],
+    "sourceSha256": "55582648cc4bf62869e4061823a1a82115af7e2bec3300557dcad5f18334f91e",
+    "bucket": "library",
+    "feature": "SyntaxError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-25.js",
+    "reason": "not yet: reading TypeError",
+    "tscCodes": [],
+    "sourceSha256": "0bc69df76442867fae5ab0027d744fec249be29d21a2fb3ee151b6de43cef0ea",
+    "bucket": "library",
+    "feature": "TypeError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-26.js",
+    "reason": "not yet: reading URIError",
+    "tscCodes": [],
+    "sourceSha256": "902af966f2067a854e61f272ece1a4a5f6c257161777fab3b059563925b162c0",
+    "bucket": "library",
+    "feature": "URIError builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-27.js",
+    "reason": "not yet: JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "e6043c8b799c5127d206cf172c268b8b461c80a32593e4bb073819de925fb685",
+    "bucket": "library",
+    "feature": "JSON builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-3.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "6b20f84b1523058732d809da46a77b69607b1afb76810aa792c6a5989cfbbd4d",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-4.js",
+    "reason": "not yet: reading Function",
+    "tscCodes": [],
+    "sourceSha256": "fccfe53d744a3bc3c4180034764331336d33188a768b63a06004e467b0ec3de1",
+    "bucket": "library",
+    "feature": "Function builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-5.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "7dac0d0fae5a73504c74799b99dd984440cc8fee12acd6303f097447b05766c6",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-6.js",
+    "reason": "not yet: Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "f27f528865b6380078b71cf00bc1993508e3e75ce0f2dd4d4a1c3a7cc3b0f937",
+    "bucket": "library",
+    "feature": "Array builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-7.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "607de2eb0e397698f0cf8d6e80f6d44d3dfc266473040b5b08e4d128cc0bf61d",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-8.js",
+    "reason": "not yet: String as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+    "tscCodes": [],
+    "sourceSha256": "bf8852c8b22ca54fc2b268e119872f587e1382166737513dab34f629489f18e8",
+    "bucket": "library",
+    "feature": "String builtin value"
+  },
+  {
+    "path": "built-ins/Object/isSealed/15.2.3.11-4-9.js",
+    "reason": "refuses inherited library member prototype read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "ad38cf07c6611f5b6cef3c83fda0d98b7d93b2c3e5d787cc1676bd999475e3fc",
+    "bucket": "language",
+    "feature": "refuses inherited library member prototype read as an own field"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-0-1.js",
+    "reason": "refuses a method read as a value (keys would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "c49c57f57e698387f2522013168acf99b790ba8a15f676a8b0313870e535ce14",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (keys would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-0-2.js",
+    "reason": "refuses a method read as a value (keys would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "2ee0756ee987a83b9f299f0cf4bee0da4eeb0fb353fdb417cca564878bf0a8a2",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (keys would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-2-1.js",
+    "reason": "refuses inherited library member isArray read as an own field",
+    "tscCodes": [],
+    "sourceSha256": "9b8fd0cd2db297aae72612f018b997e5eadb95de14f7068ff5b45016e26f5046",
+    "bucket": "language",
+    "feature": "refuses inherited library member isArray read as an own field"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-2-2.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "6706a0a96026acc3570c6c63eab619d7ef802fbcbb86e6b27ad2affec05ed178",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-2-3.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "c2bb2ff816209af1a90d56ce0ab987e2e5c884f12573d794b832d9c2723e0d5d",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-2-7.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "27f5b63355f72f5dec74ec442bdb52b70a2539ec88f9f84468b01ede094c9773",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-2-8.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "3bfb35f6acc1268c9426ef71503d882d29008c01d7300749ea1dcc92f77ad8aa",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-3-2.js",
+    "reason": "not yet: assigning a field of a value",
+    "tscCodes": [],
+    "sourceSha256": "c3b1f373099081289b1e1d3b9e3f495afff7736234c2a036bd098519283db750",
+    "bucket": "language",
+    "feature": "not yet: assigning a field of a value"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-3-3.js",
+    "reason": "not yet: Object.keys without a proven complete plain shape or primitive (array holes, descriptors and host objects are not represented)",
+    "tscCodes": [],
+    "sourceSha256": "13f382c6072e860469016a73546c052962c8bc9aa33e72451376cc84ef363795",
+    "bucket": "library",
+    "feature": "Object.keys"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-3-6.js",
+    "reason": "not yet: instanceof against a value that isn't a declared class",
+    "tscCodes": [],
+    "sourceSha256": "a8774e96bd227ef1bf8d2516f6dcd5420f199cdba134996ebe4869e1fb55cb0d",
+    "bucket": "language",
+    "feature": "not yet: instanceof against a value that isn't a declared class"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-3-7.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "b66d525c50c0b8d8cb732ec85a651ddd59ac726558562e1d32e7a6a210146e82",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-4-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "7385d8be73d534a776e7992445ffed9eff14080305d63dce36dc3d765d4c5acc",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-5-1.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "04a60f8b7504d94ebd983d93a63da118316b1f249e57f8ef184a0ab90cde24f6",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-5-11.js",
+    "reason": "not yet: Object.keys without a proven complete plain shape or primitive (array holes, descriptors and host objects are not represented)",
+    "tscCodes": [],
+    "sourceSha256": "a3124e87fdbbe1b302f36a2dac4164d02c5b681cd6303ec8d8ce462bd3f23cac",
+    "bucket": "library",
+    "feature": "Object.keys"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-5-12.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "f89936556fc71c4e55040a298daa1dbc7acd95f6646fd364f46f02b9c8a73605",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-5-13.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "9a6cd8010215ee683b67fe1f5966d9a18382f5797c4375e6925b3c76231bff0e",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-5-14.js",
+    "reason": "not yet: an OmittedExpression in an array literal",
+    "tscCodes": [],
+    "sourceSha256": "36eadda99a129a8b148a0379b1a37dc0cacc1f48a2a777a26f0858cdbacace75",
+    "bucket": "language",
+    "feature": "not yet: an OmittedExpression in an array literal"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-5-2.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "fcf2cb263e4ef0d9ff48694ea4d5759c8dcd5b77b2e213a39ea8a73989c427fc",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-5-3.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "71abcf61d9107a3eecab47cd45745222bf62fc9b084470ea03175a21f757e4f7",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-5-4.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "66f98215d8f53725470a44b2a259a1ea66218fce5986578bc71e06c42164bead",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-5-b-1.js",
+    "reason": "not yet: for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)",
+    "tscCodes": [],
+    "sourceSha256": "f3ccf495206808d5f909865617a54fd78b0dca769f08015a70ae4b586aa02b2d",
+    "bucket": "language",
+    "feature": "not yet: for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-6-1.js",
+    "reason": "not yet: an array of never",
+    "tscCodes": [],
+    "sourceSha256": "c312662cc8122f22c4d687d12210c543ab48e1bea6641c92c6a80a5d24c1c2ad",
+    "bucket": "language",
+    "feature": "not yet: an array of never"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-6-2.js",
+    "reason": "not yet: an OmittedExpression in an array literal",
+    "tscCodes": [],
+    "sourceSha256": "7bf9036b262c5a8b49313a87a646a62217743dd9cd5899f825edc0972ebdc428",
+    "bucket": "language",
+    "feature": "not yet: an OmittedExpression in an array literal"
+  },
+  {
+    "path": "built-ins/Object/keys/15.2.3.14-6-3.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "fa3aa160089dcbba4d62487449a8ff851fd9d724c64046ee7b28a30042a3ba9e",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/preventExtensions/15.2.3.10-0-1.js",
+    "reason": "refuses a method read as a value (preventExtensions would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "cb497ccc043cca82e3ba07267459b474b25f587c442b8fbede458e9d5d5ff284",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (preventExtensions would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/preventExtensions/15.2.3.10-0-2.js",
+    "reason": "refuses a method read as a value (preventExtensions would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "78ffda0f124ccc49807d157fb42e62b89f547e7367197f39bee161123edebd9d",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (preventExtensions would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/preventExtensions/15.2.3.10-3-23.js",
+    "reason": "not yet: Object.preventExtensions on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "03bb9f955e145b3aa2f5bbb39f0e57ccfb658f76f5479b75e5a2f9f68d89139d",
+    "bucket": "library",
+    "feature": "Object.preventExtensions"
+  },
+  {
+    "path": "built-ins/Object/preventExtensions/15.2.3.10-3-5.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "a22c1e079ebfff3f198d30608efce3ebcd50757b9d20308973e251f2015e2af5",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/property-order.js",
+    "reason": "not yet: Object.getOwnPropertyNames without a proven complete plain shape or primitive (array holes, descriptors and host objects are not represented)",
+    "tscCodes": [],
+    "sourceSha256": "29e3a1259df69e42566697cbe26dbf906ae603209dfb14a7ccbcb505051b9399",
+    "bucket": "library",
+    "feature": "Object.getOwnPropertyNames"
+  },
+  {
+    "path": "built-ins/Object/prototype/S15.2.3.1_A2.js",
+    "reason": "not yet: Object.propertyIsEnumerable",
+    "tscCodes": [],
+    "sourceSha256": "718dab3fb411b13e86fc968ed7cc77594323c69e6592bf4a7f462c63b9cfa524",
+    "bucket": "library",
+    "feature": "Object.propertyIsEnumerable"
+  },
+  {
+    "path": "built-ins/Object/prototype/S15.2.4_A2.js",
+    "reason": "not yet: toString through an object view (a value with a different native representation may be hidden by the view)",
+    "tscCodes": [],
+    "sourceSha256": "a1d6d4602af5883a7c2237d795f435c4f0b7ddb416313ec7daaa099e2ca03a49",
+    "bucket": "language",
+    "feature": "not yet: toString through an object view (a value with a different native representation may be hidden by the view)"
+  },
+  {
+    "path": "built-ins/Object/prototype/__lookupGetter__/lookup-not-found.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "b8e32dc3b9da0c3abf03d2a8f584804f4eebd91284a96aa4452ebe29030212ef",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/__lookupGetter__/lookup-own-acsr-wo-getter.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "be43c4c42ad955adca6bc81c0b22b45c2de6dddd074d7e630b5d0d64f6478e0a",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/__lookupGetter__/lookup-own-data.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "a4e67fc925230f52d48b258833268477d1f9c20130d9c94dfe9f50fa9f82a973",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/__lookupGetter__/lookup-proto-acsr-wo-getter.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "3aaeef3685c7b22f55fcb285fcaab198709380ab73aba43c28c124fe065396a6",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/__lookupGetter__/lookup-proto-data.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "89b4160f94b3ee2797a9efb49f0bb33cff4e539b2313310d1e1f7498f5124450",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/__lookupSetter__/lookup-not-found.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "475b1c6b6fbb6b0c2a6719a47e226b14b873e988fc1ace7672ddf7fdfa1760c0",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/__lookupSetter__/lookup-own-acsr-wo-setter.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "6d6b4be708feb228e7e5e3fee19ae3a4d493620e2869c42cfe9c3dcd03744725",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/__lookupSetter__/lookup-own-data.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "92b599b1adaa1c12aa82f8ac8e3c00376e0c88d5f8fc31d31b71a54a8433006d",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/__lookupSetter__/lookup-proto-acsr-wo-setter.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "f7ddd00a55572a0b1599c3f58a324f9214a9a2027109f54eb9c122fa7a4008e9",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/__lookupSetter__/lookup-proto-data.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "ae13417d6c277e148bf1704401985bd1a24f70eeb0c4202835125746aacb0774",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_1.js",
+    "reason": "not yet: hasOwnProperty through an object view (a value with a different native representation may be hidden by the view)",
+    "tscCodes": [],
+    "sourceSha256": "eca27489931de806c8eb2b55c5099c0f4d3d7d697701c732dae2f39115e6b33a",
+    "bucket": "language",
+    "feature": "not yet: hasOwnProperty through an object view (a value with a different native representation may be hidden by the view)"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_10.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "48db88e13cbf1ccc97be345395d5a47375c939dd6aa4fccba70ae8ed37a8b708",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_11.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "83136775d5f3be139b785cd95735bce248773d6e953e43288f8e3da555f978cd",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_12.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "2bd476aca1e63f7f95c2aee1cdecd1d8b0771bcdf8b99e35fe6e79d401dfc956",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_13.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "ecfc98b7d2ee712c2160215ff84b2b4d1b652c9542f410f07801279975110c3d",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_14.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "5cddde954aa2e96b8363ffc8532e7603aba78deb5761c76299bce11f419acf4b",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_15.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "470a4a35bfa1c888daaa1fe8d3c4aa530a74832b9b2e25284d0986fa88cd2ebd",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_16.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "7c288fcf6f14a3a341b571b316f5be94864b1421942d0a2739d7f3ad35c63cf5",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_17.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "ed3534d8cb78dd647fb393ca6068f3aa0fb6b921874d4eb124cc0a336e2a7360",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_18.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "87303dc985298f5b8d3bfc12d1af03ce1ef43d5b55fdd9f3df3426cbee2c4d88",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_19.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "0c629e09e964ec88c921dff35930e0f0445efe0d5869af9041c8563008a13bb5",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_26.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "fc0195c5d8941369d709bd972e439c306f6f16ff2d9ac0b9a2b96967c8c4840f",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_27.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "eacdfc8c7d60807f07531a3b03f0a04cf22b175096c764030376e0d1ed87e372",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_28.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "251db203db653bd311614d3b16c39b2122fe4208aec5c155eefdc3286f33abda",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_29.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "95288ba50c46fe55949ef9da3b599b43121cadcbb7c0d41b2eebc6077336818f",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_3.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "8c88f0bb018be46be1cb364fed48c618b097418a70a3e9a1ca365b8f3e97eadc",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_30.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "4560e69bacd9e8e6c70924f2695db83f6c4ef326cc4b71bb43774bff86c2883f",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_31.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "42d97fb178b5aae8146d8f80076fce06e6a61745b7131fc5590599d1a15468f2",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_32.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "7e21b9dd59850be8e9419e4493b1b37e9044852056f75ae60d2ce99daa8c9dda",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_33.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "310d0ebbd4deb9599967cb727190a83201ae5c243bbfc5fcb872e73277bd60b8",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_34.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "6aae6604ab3abd899c6eff18a71a075359a5eb07daa3168d82c73789af07733e",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_35.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "74a9bb4e396785da22efcaf615db576ac06a8fe13e75c551421fe854e411368a",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_36.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "03039320292ecbfb612b9730cd9f144b9f5d1608c1ee230af82068e6d45b5eb6",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_37.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ccb913a08e449caf4af24dc177674155277e6afc4badd4293c2a89d3457d471b",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_38.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "c8842994e7ae928c3e8654d44419e23b1f7e40056d9bc023432a3e994e17cbf7",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_39.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "dd583429291696dd2189995146b3a7f8f4e100ccd2c8c7a36465937e619e2453",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_4.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "7a2760575faab0ba09745d5a15c8b201c926113f5543b24900b84c42a9efc35d",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_40.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "42fde8f06e6206d5fa21ffe61c06099c380c449e6e59dffa0f5b808815368596",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_41.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "abdf2d937005cb5c211647a4cd964b2807c2ce855d27bb4e74a1cc2944ae2fec",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_42.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "86a2911ec607ab7f687b54ccbcabe137003afa096e09f45afd0ba33c1ca071f4",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_43.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "a268f7f224a103f11d0af78e30cb8afab3c67e91dab329d344fc04d10435fff4",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_44.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "eb28b03cad3e77374b45c2e3e2c22e8ad0411b846ee23b1e42256fbb0935a02e",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_45.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "4bdb083e00d6130322e0e66ba8e201595ac57797da8c32041842fa63be7a30bc",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_46.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "1e99ad8a36e8887300dc2d9eafda4cfc3907c1ae29c2764c7f9b485df7f99534",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_47.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "3d059e7f2021150b30a426594142771bf488c8b79a2f165596a818cd413c0dd1",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_48.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "3f779a75752bab48e3b85124bcba936148fcc1b582f05c1593d1feb20366d08a",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_49.js",
+    "reason": "not yet: a value of type any",
+    "tscCodes": [],
+    "sourceSha256": "2a3e0ce940c68d68731baf072359a70d987b82203e86f2d7869096d46ded024a",
+    "bucket": "language",
+    "feature": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_5.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "e076cee19ce7758a3220e621bbde272f60db482cc3f7e294a25e37a8e5eba6bc",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_6.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "e71c1afee866642e38e66f3c5be557ec966ac4b68a98d7acf41d691521280a46",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_7.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "ea092a9a93fe6189de786aed346858485c856b06564fea4952a035a267234918",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_8.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "793f04d045353d81c99f589cbe5191a1decd546c8a830cdad22105b822ade13d",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/8.12.1-1_9.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "464dc803ae429cf38ec6b6907bd637d4eaf753765b2cdc417d76984c7ed15197",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/S15.2.4.5_A12.js",
+    "reason": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "24eab6576d9703c4cc806430cd299f3702e68df1c7bb3c6445b0bb016d1e8c6f",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/S15.2.4.5_A13.js",
+    "reason": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "7d52b76c0540d1f3c1bd306786d942bc90f02d3c9de00c5beeb1c3640e8e9673",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/S15.2.4.5_A1_T1.js",
+    "reason": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "1b1d5cd0064dd0a981de42f25d54805d0b64a2cba693bdac6a2be4f22495cd0f",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/S15.2.4.5_A1_T2.js",
+    "reason": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "f1d64c81ac6415629b817a01af5c212422280e31cbe14427f4daccd1c43623d8",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/hasOwnProperty/S15.2.4.5_A6.js",
+    "reason": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "3c46ebf4d892501badaa77db6e6b858106b450647a7042a7d886002232b27eb3",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (hasOwnProperty would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/isPrototypeOf/null-this-and-object-arg-throws.js",
+    "reason": "refuses isPrototypeOf",
+    "tscCodes": [],
+    "sourceSha256": "9cffc60ad180ec422899bc7503ff74707d125298623985880c825fcf484ca753",
+    "bucket": "library",
+    "feature": "Object.prototype.isPrototypeOf"
+  },
+  {
+    "path": "built-ins/Object/prototype/isPrototypeOf/undefined-this-and-object-arg-throws.js",
+    "reason": "refuses isPrototypeOf",
+    "tscCodes": [],
+    "sourceSha256": "78384ddd0127d67107068cf34b28ae93797fb82c9640da3b6d982126c395d42c",
+    "bucket": "library",
+    "feature": "Object.prototype.isPrototypeOf"
+  },
+  {
+    "path": "built-ins/Object/prototype/propertyIsEnumerable/S15.2.4.7_A11.js",
+    "reason": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "6bf959c6c52c97719d96f3663f683b35c0947ca0b9f09b77662659242a9538e5",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/propertyIsEnumerable/S15.2.4.7_A12.js",
+    "reason": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "3139770a00ec35c6e7f771b8cc52e98e7c6181fcb71722e2b8f3814b3ee27205",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/propertyIsEnumerable/S15.2.4.7_A13.js",
+    "reason": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "2e2e1280058b670248fdf4307d2d45c36eb1e8433aff9c4438e51b037d0afac2",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/propertyIsEnumerable/S15.2.4.7_A2_T1.js",
+    "reason": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "bb2747bf50b5a810885d293e8f5bb34478f5e3d6172c12c843cb5656d095edee",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/propertyIsEnumerable/S15.2.4.7_A2_T2.js",
+    "reason": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "6e4f7463298c7e4f3fcc7ea3feff88a23292b8af150d6b1ac6ef4f89c080dd85",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/propertyIsEnumerable/S15.2.4.7_A6.js",
+    "reason": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "945bd5b4a4d3e97c6bf4cf373f8dfb12c6a3469212b106d9e4f557d1fd4b0c1b",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/propertyIsEnumerable/S15.2.4.7_A8.js",
+    "reason": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "cd8cc13dac46e5a7c8afd0015314a065242b69c1a656210c83bbec15d8e35378",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (propertyIsEnumerable would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toLocaleString/S15.2.4.3_A1.js",
+    "reason": "refuses a method read as a value (toLocaleString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "80e9f4f19279ffb7c048cd27ecb95c241ddc39642d37f89bc8aa75e11eb94809",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toLocaleString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toLocaleString/S15.2.4.3_A11.js",
+    "reason": "refuses a method read as a value (toLocaleString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "630b148590d9d485aede80244ac6eabb6c0d06f6061e6b305a6cc49e2b4a032c",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toLocaleString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toLocaleString/S15.2.4.3_A12.js",
+    "reason": "refuses a method read as a value (toLocaleString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "43fc3aba527aca103df8eac6618428eae461fd19deecb60aa7618d4f76707f25",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toLocaleString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toLocaleString/S15.2.4.3_A13.js",
+    "reason": "refuses a method read as a value (toLocaleString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "841e711e02674543b703fe22f719e8787fd106718cd5ab7dbdd17fbb2479c158",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toLocaleString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toLocaleString/S15.2.4.3_A6.js",
+    "reason": "refuses a method read as a value (toLocaleString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "f2257afcc0cb6c75d5acbc95e1e4a0e3e9f1fd968b904a0d89d5ac89a27b938c",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toLocaleString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toLocaleString/S15.2.4.3_A8.js",
+    "reason": "refuses a method read as a value (toLocaleString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "5a76996284dc531863ccd0e747a5d1db5f9538807478c2db137929cba45e579c",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toLocaleString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toLocaleString/primitive_this_value.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "cbe5be63999fce30f216064f4c98ffca6cbe2014dc14bc46afb52cc553c5a901",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toLocaleString/primitive_this_value_getter.js",
+    "reason": "refuses Object.defineProperty",
+    "tscCodes": [],
+    "sourceSha256": "bf31b7001c77e3966f4720f825ebe15237cad4908008791e698b35ea92964097",
+    "bucket": "library",
+    "feature": "Object.defineProperty"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/Object.prototype.toString.call-arguments.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "cb56924877e87720c15ecdeca19edfc8cde4bafc3630e2c263daf63da93872fa",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/Object.prototype.toString.call-array.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "5db95b3dc3a5c600055f1bd9c939863f83d5428da9836842222480e1c966d455",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/Object.prototype.toString.call-boolean.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "102031f51e809ca7f5fc19466b7c11f4205a50698fde655e804c941729959c7c",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/Object.prototype.toString.call-date.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "b51decee71f90d447cb053b11dbd5705b543c77544001a8ccbda7dfa5ba10a15",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/Object.prototype.toString.call-error.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "182bd038d6fb00f0d06339ea8f509888e690ac7a77232a0409bf30bf8e742956",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/Object.prototype.toString.call-null.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "e22e890a11c33f545ce297873daf7c4f1ba4ab1267931d7a3fb546f377f73ad3",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/Object.prototype.toString.call-number.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "daf36c72abb464d84bedb13ab9d4e3243ff05131548d909e05b28c31522b3bc6",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/Object.prototype.toString.call-object.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "d8d6d4cea35231c913d44193505d66052db3df250900b683825736016a0bf697",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/Object.prototype.toString.call-string.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "25777d1150615d48693422080c76cec29ca3302e19bc2fff50f7cb6fda8ddb96",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/Object.prototype.toString.call-undefined.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "d4b5622bab9a49ca3537acc436e42ec9d536c09d8934dd6554cf1245930f2e75",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/direct-invocation.js",
+    "reason": "not yet: toString through an object view (a value with a different native representation may be hidden by the view)",
+    "tscCodes": [],
+    "sourceSha256": "224f3e2c71e02c1b8e3a97fdafb816a045acb39ad425c2e7dc318a3ad38a2419",
+    "bucket": "language",
+    "feature": "not yet: toString through an object view (a value with a different native representation may be hidden by the view)"
+  },
+  {
+    "path": "built-ins/Object/prototype/toString/no-prototype-property.js",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "85632202c9314aa604067b51c1929bb89a9ed537706c1d9b91cd3cf6b3487560",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/valueOf/15.2.4.4-1.js",
+    "reason": "refuses a method read as a value (valueOf would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "31a99e40f13ccb878b010cd472a12a03d4a99cb35f3aea5062da3756ca2578a2",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (valueOf would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/valueOf/15.2.4.4-2.js",
+    "reason": "refuses a method read as a value (valueOf would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "791499b726895d7dcaee131aa1ff8545f3e850b34568b08cb0f80ddf09f3a8cb",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (valueOf would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/valueOf/S15.2.4.4_A11.js",
+    "reason": "refuses a method read as a value (valueOf would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "b241646a9270bc61927ff75594692c9c6398edb25d64c3d1ad2bf2ef762fa6f8",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (valueOf would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/valueOf/S15.2.4.4_A12.js",
+    "reason": "refuses a method read as a value (valueOf would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "1a749d275949b663722f66a475e0ef2078b1f0f1bccc81c436f104ba4ae57ae2",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (valueOf would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/valueOf/S15.2.4.4_A13.js",
+    "reason": "refuses a method read as a value (valueOf would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "e685a11c689609318fa1de63741a2b7272832e6ce6b65386aa4bf7f86630862f",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (valueOf would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/valueOf/S15.2.4.4_A15.js",
+    "reason": "refuses a method read as a value (valueOf would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "2a2631332c03eb2c1c5316c289e7c3ff4c88c1e7bf2ac8deba7295c2a44d37a8",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (valueOf would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/valueOf/S15.2.4.4_A6.js",
+    "reason": "refuses a method read as a value (valueOf would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "6a97a9e70fd47e3b3016d9ae9e9f9c643da16bbf9a222df277b069ebdea7e338",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (valueOf would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/prototype/valueOf/S15.2.4.4_A8.js",
+    "reason": "refuses a method read as a value (valueOf would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "37fca18e4bb9e5c42da0ddd4d3fb88834e0ddc35bae6ae63608c4372f470bea8",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (valueOf would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/seal/object-seal-is-a-function.js",
+    "reason": "refuses a method read as a value (seal would lose its object, and this with it)",
+    "tscCodes": [],
+    "sourceSha256": "3297415607c05fd43744b94076914d2fd092b17e7716a2d03444dea967feb0ae",
+    "bucket": "language",
+    "feature": "refuses a method read as a value (seal would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/Object/seal/object-seal-o-is-a-boolean-object.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "84c175b68e82c60c01e8d4a2f732ab4fc446c3adbe5af00b777b0963d71e367e",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/seal/object-seal-o-is-a-date-object.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "b878cb04543b611176f6712113497c3d455e0fdba06da8d67f7a864f4babf2c1",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/seal/object-seal-o-is-a-function-object.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "c08c6d0c8dda9b769015f9a45b4c385bd6e61e04a467b7e16a536a770fc0ed35",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/object-seal-o-is-a-number-object.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "953146699062847d9639e1c015e705612cc95b45bbb8c5cbc7d8b3883ab87def",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/seal/object-seal-o-is-a-string-object.js",
+    "reason": "not yet: new an Identifier",
+    "tscCodes": [],
+    "sourceSha256": "6079a9828df8d5f3961271401203b2389301c20f5c99a6dac71b92bc1c63b1ce",
+    "bucket": "library",
+    "feature": "boxed/builtin constructors"
+  },
+  {
+    "path": "built-ins/Object/seal/object-seal-o-is-an-arguments-object.js",
+    "reason": "refuses arguments",
+    "tscCodes": [],
+    "sourceSha256": "c150c452cec8d3bf62b94ed3216e4e2fb29a2601e8efd46fdb2d6bd6fc0cf5d9",
+    "bucket": "language",
+    "feature": "refuses arguments"
+  },
+  {
+    "path": "built-ins/Object/seal/object-seal-o-is-an-array-object.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "7a25c27f238187935faaa20e6edc41d7d05c36bd64f034cf14b0d45dfcd894e7",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/object-seal-o-is-an-error-object.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "2d25d32eebdccc43f1a8d0349722c91115ef19cf7bf713bdfe18029c1a324c05",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-aggregateerror.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "01f35dbcfadee04d7273da3aa2755b16a43ef4546c15a4573b9f28bc2cb2022b",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-arraybuffer.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "e20d09d2e1b913316256a19757fb091109c3ae0cce06e6c78747c077f3bdc651",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-arrowfunction.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "4d8be7090c636131028263a3db1daf4ab17f67f2e20988e3770cffa62e39d73e",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-bigint64array.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "b9e0f106af2616300cf058e4cd4f65cb3dda7f92978c812c2ce25bd4768f1637",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-biguint64array.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "d5ce202514e19e606f919b648e7ee310bd77e36de7541c6ebd12a58f0592d0dc",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-boolean.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "57e1c3d1bebcacadae6f1bdad0690c50587d3e8eb2c19a3117872b8278d20f53",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-dataview.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "791cd4e03c4ad4581571a181a824ddcf434955f71f8f662892a142eb2befb2b3",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-date.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "652a0f38ddc9386ce59f35f11a840f4e3e5b76c1e8724121598481800811479b",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-error.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "2f8fbe0e740bfc34f6384f92bf0bb24da51015e864c5c627b40340bc752cddb1",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-evalerror.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "bd8bb4ec30c8e3d0318001c2cc910e30c7b20443183d63d68d09ce379c3f958b",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-float32array.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "92854ea596defa3b5ff1e8182fb456c8c776cfcbbbe8bc68bab893e7149bdf19",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-float64array.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "ee1df1506863c45f6de15ad61cd897004b91c91f8215d84bb9287f93aa5b40d9",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-generatorfunction.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "0a5d2582c98956189f4fb8ffbfec5ec3930153663a9ea7725266206117a8fdc1",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-int16array.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "a2a38b8d52a5d1068ef74675d92bc641681d32573523208cd5a3fc3cb2e11320",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-int32array.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "cf8adf9a40035722ba4cb44698012c274735350bfdc78e54f09b1bd4de651838",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-int8array.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "da6915f218093468f8a2ac7434ba8ae500e257f2ec94665301a13e2c9a351f2a",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-map.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "b0c260b9f9ead06917a965fcf40458dd9f6ba1e73ed17e8f22b8792530582b75",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-number.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "1ca7f8096b0b87469c5607808318aae84ba3c8db4bbaaeeb243ff9a4f4649f1b",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-object.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "f5194e503044c83dfe75729dd49d92486945e2dc55ffdfe53c0b4ee6f94321e9",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-promise.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "998ef78bd5cc5a0a22342d09e1b4ee56a1ab02dd17cd940be6f969aa83a5060c",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-rangeerror.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "36c775241dbe2a0d0bad882102dca30d75184a495a6636e542679a45ffa42c62",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-referenceerror.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "8e5e84083bc0f5c394c93ca29a40ab59e8a62e18e99a2eca69321eb8c733a71d",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-regexp.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "e466b698ca796bbc74855cbb4036281252b8228e00bd34b5092baf549db8c272",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-set.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "8873c17b7d37c690097cab7e30bdf95199d1cd79defec1b60ebe5a9ff181633e",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-string.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "c357a724552d1f6577c3ee5c2df06af2c26343e907dd2404a006716040f7bdd5",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-syntaxerror.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "d1301ef18bc2d13b4e6d4f16db1b06c855314f1d49e9e3983c7ab73a137e8995",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-typeerror.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "45b2d735f16f91cc30756fdafcc4eb4d8c52e70728d3045b2e35c3b7d93e3d19",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-uint16array.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "5aa237fae4535cb3d76d153fe66ae7ca8154b79febe956ac7b26557b6d8edb3e",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-uint32array.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "e2e0c3058262bf76390e7f70c281c47f208353ccbc96a19d27a8eb45a4215f72",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-uint8array.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "6b5baa1641378bd09078de608d6d0498c4b906d62f5081563740524f6f111eb7",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-uint8clampedarray.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "5489a5884c9c396474c063b505a9a62430f7226686f83fa55d26b4c316b60d49",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-urierror.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "74b949c9c3a82721176821644ebda376f9ef91c6c9c79968b510ae56a80fd160",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-weakmap.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "492068f8802eb4cdcf6f1ca73599226c4c5e00175882200c061eb10cd2f68031",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/seal/seal-weakset.js",
+    "reason": "not yet: Object.seal on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "f6bf4a66c6e7f7f5d6fd93af31b4810bc4c6158f54b8441c9aea79488a31f163",
+    "bucket": "library",
+    "feature": "Object.seal"
+  },
+  {
+    "path": "built-ins/Object/setPrototypeOf/set-failure-cycle.js",
+    "reason": "refuses Object.setPrototypeOf",
+    "tscCodes": [],
+    "sourceSha256": "5e14dc9b1e6c8be1b5a48ad326a4e58327f316c250daffb77aaf7ef5f6af40fe",
+    "bucket": "library",
+    "feature": "Object.setPrototypeOf"
+  },
+  {
+    "path": "built-ins/Object/setPrototypeOf/set-failure-non-extensible.js",
+    "reason": "refuses Object.setPrototypeOf",
+    "tscCodes": [],
+    "sourceSha256": "9847c698e76b24e973ea57e4ac60688aaf37b8bcb0c2e6d0a4fa352893b368bb",
+    "bucket": "library",
+    "feature": "Object.setPrototypeOf"
+  },
+  {
+    "path": "built-ins/Object/values/primitive-booleans.js",
+    "reason": "not yet: Object.values on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "b3841f82ec434b9fdfeec2de401f7b4982ec580b5453bd164ca562cc6a5ef3f8",
+    "bucket": "library",
+    "feature": "Object.values"
+  },
+  {
+    "path": "built-ins/Object/values/primitive-numbers.js",
+    "reason": "not yet: Object.values on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "ea1852d16695768377983c0d1ebe99e5545690b119217f25e3fcac26980c6e49",
+    "bucket": "library",
+    "feature": "Object.values"
+  },
+  {
+    "path": "built-ins/Object/values/primitive-strings.js",
+    "reason": "not yet: Object.values on a shape not proven by a plain literal or its const binding",
+    "tscCodes": [],
+    "sourceSha256": "8990ef6d73ed4ef0f58fbad12779480620bffd898d6c3ae24e4f7ddc3f0968e7",
+    "bucket": "library",
+    "feature": "Object.values"
+  }
+]

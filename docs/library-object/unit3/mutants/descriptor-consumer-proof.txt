@@ -1,0 +1,8 @@
+--- FAIL: TestObjectDescriptorConsumerStaysRefused (0.33s)
+    library_object_descriptors_test.go:23: stdout differs: node stdout "\n" native stdout "1\n"
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.332s
+FAIL

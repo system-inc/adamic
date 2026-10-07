@@ -1,0 +1,11 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_descriptor_same_value.a (0.48s)
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "true true same\nCannot redefine property: zero\nCannot redefine property: nan\nCannot redefine property: text\ntrue true\n", stderr ""
+            native: exit 0, stdout "true true same\nCannot redefine property: nan\nCannot redefine property: text\ntrue true\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.492s
+FAIL

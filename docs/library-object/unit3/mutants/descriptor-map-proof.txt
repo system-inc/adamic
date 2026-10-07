@@ -1,0 +1,8 @@
+--- FAIL: TestObjectDescriptorMapStaysRefused (0.30s)
+    library_object_descriptors_test.go:27: stdout differs: node stdout "Property description must be an object: 1\nfalse\n" native stdout "true\n"
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.305s
+FAIL

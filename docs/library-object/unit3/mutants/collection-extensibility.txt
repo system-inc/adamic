@@ -1,0 +1,11 @@
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_collection_integrity.a (0.39s)
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "true false false\ntrue\n2 false true true\ntrue\n2 false true true\ntrue\n", stderr ""
+            native: exit 0, stdout "false false false\ntrue\n2 true true true\ntrue\n2 true true true\ntrue\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.399s
+FAIL
