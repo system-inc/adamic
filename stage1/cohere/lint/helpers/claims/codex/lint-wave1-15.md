@@ -103,3 +103,11 @@ SpecifierNode is tested and pushed at c88973892. Refreshed 772 origin refs and i
 - github.com/system-inc/cohere/internal/lint/ecmascript/imports.SourceVisitors
 
 Proposed file: wave15/import_source_visitors/source_visitors.a. Same three Nexus boundary consumers as SpecifierNode. Preserve a fresh two-kind listener map and report callback identity; import listeners reject missing/nonliteral specifiers, call listeners delegate to the separately owned CallExpressionSource, and reports blame the original node. First verify the exact numeric-kind map of function-valued listeners and captured callback substrate under native compilation. If that substrate is refused, record its precise compiler diagnostic and preserve Node proof instead of editing shared compiler or harness files or changing the public listener contract. Compare actual Go reports over every consumer fixture and shape/order controls; require a compiling listener-omission mutant wherever compilation succeeds. Claim pushed before code.
+
+## Accessed property continuation
+
+SourceVisitors is tested and pushed at 359a31f5d. Both owned branches remain on current main 71d7e491 and lint area b28757f3. Refreshed 774 origin refs and inspected every helper claim file. Reserve a next highest remaining count tie, three consumers, before implementation:
+
+- github.com/system-inc/cohere/internal/lint/ecmascript/property.AccessedName
+
+File: wave15/accessed_property/accessed_name.a. Consumers: no-prototype-builtins, react/no-render-return-value and yoda. Preserve nil/self-kind rejection, direct property-name delegation with unchanged accept flags, parentheses skipping on an element argument, identifier/private-identifier rejection regardless of flags, empty settled names and the Name dependency's result. Numeric supplied-node facts, stable direct-key handles and a callback to the separately owned Name helper carry the AST boundary; no table scan or parser refetch. Compare actual Go in every consumer test family plus all six-bit accept sets over parser/shape controls, source Node, emitted JavaScript and sanitized native, with an output-only variable-subscript mutant. Three edges, no whole-rule readiness claim. Claim pushed before code.
