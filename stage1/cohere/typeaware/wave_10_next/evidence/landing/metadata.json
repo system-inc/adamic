@@ -1,0 +1,220 @@
+{
+  "blocking_findings": 30,
+  "compiler_files": 77,
+  "controls": 92,
+  "logs": {
+    "wave-10-landing-blocking.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wave-10-landing-blocking.status": {
+      "bytes": 24,
+      "sha256": "89eb5c077b5af5845986f7d11573bb1fb2fe8d41fda8c188a5891617a1c782e2"
+    },
+    "wave-10-landing-blocking92.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wave-10-landing-blocking92.stdout": {
+      "bytes": 24200,
+      "sha256": "ae2c7ab1653393a134c4a61e400eca036c60c40c778f0bd78489a3e4dae9e2d0"
+    },
+    "wave-10-landing-fetch-all.log": {
+      "bytes": 18721,
+      "sha256": "97445b0354588b122fccf53f6b59e45736653c10a27189736dfe618d4fad58ad"
+    },
+    "wave-10-landing-native-rules.log": {
+      "bytes": 3155,
+      "sha256": "0446247628589d36e362123e8d3c3684f0c946cae03060216e5fd22e1c7263aa"
+    },
+    "wave-10-landing-native92-check.log": {
+      "bytes": 81,
+      "sha256": "99611c5a6ca6f7f8b131e27d1c2389973422837c84a81f776533cb51af998bbf"
+    },
+    "wave-10-landing-node.log": {
+      "bytes": 3324,
+      "sha256": "6b5a7c1fdf425f1776d350dfc07ffc87c7645bb0655aaea9285f900bd67820ba"
+    },
+    "wave-10-landing-original.log": {
+      "bytes": 1112,
+      "sha256": "8830149ecc4f09f130a05d57c826133a20bb07ac18fba469b73baeb874aaede0"
+    },
+    "wave-10-landing-packages.log": {
+      "bytes": 1268,
+      "sha256": "971c53294266813cb1627a35a3aaab30842d61d05e4e223b0c60ee481a9e2fe4"
+    },
+    "wave-10-landing-process.log": {
+      "bytes": 367,
+      "sha256": "a7932036cdcbc617ee8437c5082749bb191bafa2f72f30c762b89555cccc73aa"
+    },
+    "wave-10-landing-process92.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wave-10-landing-process92.stdout": {
+      "bytes": 45901,
+      "sha256": "99836b9759d35066b23317b1178bf554d1436304ff088953c97498a66d3da247"
+    },
+    "wave-10-landing-rebase.log": {
+      "bytes": 174,
+      "sha256": "e241ad415efff53420b01db04b953b4b647eacf2d272202ae52d3c9a102a3ed1"
+    },
+    "wave-10-landing-remote.txt": {
+      "bytes": 76,
+      "sha256": "fc2f19afe8a94770db57449440602cef9942fb8b7928b05bcde28e9a8b52aebf"
+    },
+    "wave-10-landing-runtime-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wave-10-landing-runtime-released.status": {
+      "bytes": 32,
+      "sha256": "e0a1c90175c7fb50d5d3bf08e24f520d249a4d321ba5f7a18ba3606841561a21"
+    },
+    "wave-10-landing-runtime-released.stderr": {
+      "bytes": 50,
+      "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+    },
+    "wave-10-landing-runtime-released.stdout": {
+      "bytes": 13,
+      "sha256": "2d36c4a3538b8f8d6b7ef7e19fc315d70da313938444852fa26f01c20add7115"
+    },
+    "wave-10-landing-runtime.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wave-10-landing-runtime.stdout": {
+      "bytes": 13,
+      "sha256": "2d36c4a3538b8f8d6b7ef7e19fc315d70da313938444852fa26f01c20add7115"
+    },
+    "wave-10-landing-setup.log": {
+      "bytes": 388,
+      "sha256": "ea7f890cb3d511fb96829bc7c1f3061c3134e2425e6b0cfc0996ac4163c9a155"
+    },
+    "wave-10-landing-source.log": {
+      "bytes": 388,
+      "sha256": "da66872fdf7ca6bdae89cf756324738518923f9f76a2f1a94cc84b19070773da"
+    },
+    "wave-10-landing-timeout.log": {
+      "bytes": 989,
+      "sha256": "53cda33d5b81a725ed0d85e5ce471ec7922b4232ffc98b73b53268c9e4b30f70"
+    },
+    "wave-10-landing-vet.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "main": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "native_mutants": {
+    "blocking": 13904,
+    "process": 114
+  },
+  "new_rule_corpus_findings": 0,
+  "process_findings": 77,
+  "production_commit": "314270436d7bf4ac935f98a2ff3e9024be480b65",
+  "repository_files": 287,
+  "samples": {
+    "blocking-compiler": [
+      {
+        "go_ns": 293659183,
+        "native_ns": 2181432908,
+        "round": 0
+      },
+      {
+        "go_ns": 294137334,
+        "native_ns": 2200931672,
+        "round": 1
+      },
+      {
+        "go_ns": 315181158,
+        "native_ns": 2311362691,
+        "round": 2
+      }
+    ],
+    "blocking-controls": [
+      {
+        "go_ns": 79471694,
+        "native_ns": 5322393783,
+        "round": 0
+      },
+      {
+        "go_ns": 83843908,
+        "native_ns": 5875436277,
+        "round": 1
+      },
+      {
+        "go_ns": 82977737,
+        "native_ns": 6220740519,
+        "round": 2
+      }
+    ],
+    "blocking-repository": [
+      {
+        "go_ns": 141354789,
+        "native_ns": 406769583,
+        "round": 0
+      },
+      {
+        "go_ns": 156808048,
+        "native_ns": 442950183,
+        "round": 1
+      },
+      {
+        "go_ns": 162108029,
+        "native_ns": 417093064,
+        "round": 2
+      }
+    ],
+    "process-compiler": [
+      {
+        "go_ns": 310594515,
+        "native_ns": 1762614357,
+        "round": 0
+      },
+      {
+        "go_ns": 334492672,
+        "native_ns": 1803909547,
+        "round": 1
+      },
+      {
+        "go_ns": 293286462,
+        "native_ns": 1754786506,
+        "round": 2
+      }
+    ],
+    "process-controls": [
+      {
+        "go_ns": 81827741,
+        "native_ns": 3823015147,
+        "round": 0
+      },
+      {
+        "go_ns": 84771091,
+        "native_ns": 4029821433,
+        "round": 1
+      },
+      {
+        "go_ns": 82875081,
+        "native_ns": 3810153890,
+        "round": 2
+      }
+    ],
+    "process-repository": [
+      {
+        "go_ns": 132801823,
+        "native_ns": 274067877,
+        "round": 0
+      },
+      {
+        "go_ns": 130537920,
+        "native_ns": 283158920,
+        "round": 1
+      },
+      {
+        "go_ns": 130670778,
+        "native_ns": 276697466,
+        "round": 2
+      }
+    ]
+  }
+}

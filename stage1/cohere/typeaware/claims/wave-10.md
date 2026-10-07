@@ -36,13 +36,12 @@ and 76 candidates remain. These are the first three. No implementation precedes
 this claim commit and push. Shared harness and registration generator remain
 outside this continuation's edits.
 
-Continuation status: timeout is fully ported and independently validated in
-93916207, with a passing native/sanitized corpus rerun after the latest bridge
-changes. Process-output and blocking-streams now have complete candidate source
-implementations, CFG/callee/load-time logic and separate .a runners. Their source
-execution matches Go bytes on 92 controls, with one clean-exit source mutant each.
-Their full native builds both time out in internal/fresh at 45s, so neither is
-counted as completed: native corpus parity, sanitizers and native timings are
-blocked. No shared harness, generator or protected compiler files were edited.
-See ../wave_10_next/README.md and evidence/source-ports for evidence and limits.
-These claims remain reserved; no additional rules were claimed.
+Continuation status: all three continuation rules are now fully ported and
+native-validated after rebasing onto origin/main e8ba3d5d. The original three
+rules also pass their native oracle again. Process-output and blocking-streams
+match Go bytes over 92 controls and compiler77/repository287, normal and under
+sanitizers, with one clean-exit native mutant each. Timeout and released-handle
+checks pass. The earlier internal/fresh blocker is closed on this main.
+See ../wave_10_next/LANDING_REPORT.md and evidence/landing for observations,
+commands, timings and limits. No shared harness, generator or protected compiler
+file was edited. These six claims remain reserved through integration.

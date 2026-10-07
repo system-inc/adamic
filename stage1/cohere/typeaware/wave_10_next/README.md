@@ -1,10 +1,11 @@
-# Wave 10 continuation: source ports complete, native graph compilation blocked
+# Wave 10 continuation: all three native rules validated on main
 
-Built both remaining .a rule implementations, their CFG and raw AST field bridge; timeout remains fully validated.
-Claim commit: `0ac7b51b`; timeout commit: `93916207`; this update is the commit adding the source-port evidence.
-Source/Go comparison: 92 controls, 77 process-output and 30 blocking-streams findings; native timeout rerun passed in 80.023s.
-Both source-rule mutants exit 0 and fail byte comparison; timeout and registry mutants pass their checks; raw static-body mutant is caught.
-Native graph runners time out in internal/fresh; their corpus parity, sanitizers and native/Go timings remain unverified, so no new rules are claimed.
+
+All three continuation rules now pass native byte-oracle validation after rebasing onto main.
+Base main: e8ba3d5d; rebased production tip: 31427043; see LANDING_REPORT.md for the landing commit's checks.
+The new rule native gate passes 92 controls and compiler77/repository287, including sanitizer comparisons.
+All rule mutants are caught by bytes; released-handle and retaining-registry checks pass.
+The prior compiler blocker is closed on main; historical source-only evidence below is superseded by LANDING_REPORT.md.
 
 ## Scope and selection
 
@@ -98,7 +99,7 @@ machine was shared with other checks; no speedup claim is made.
 Raw samples and outputs are in `evidence/validated-timeout/benchmarks.json` and
 its neighboring compressed output files.
 
-## Remaining source ports and exact native blocker
+## Historical source-port work and former native blocker
 
 `control_flow.a` ports Go cohere's graph construction using numeric block links.
 `syntax_fields.go` supplies raw AST field membership; `syntax_fields.a` maps those
