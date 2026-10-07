@@ -245,7 +245,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if slotless(of) {
 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
 		}
-		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier}
+		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || assertionInitializer(member.AsPropertyDeclaration().Initializer)}
 		// An uninitialized reference still has its declared representation for the shape bitmap.
 		if of.IsReference() {
 			field.Value = ir.Undefined{Of: of}
@@ -376,6 +376,33 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 		of, err := l.typeOf(member.Name())
 		if err != nil {
 			return nil, err
+		}
+		if l.uninitializedDeclaration(member) {
+			value := zeroValue(of)
+			if of.IsReference() {
+				value = ir.Undefined{Of: of}
+			}
+			statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Uninitialized: true, Site: l.writeSite(declaration.Name())})
+			available[l.fieldName(member.Name())] = true
+			continue
+		}
+
+		if initializer := member.AsPropertyDeclaration().Initializer; assertionInitializer(initializer) {
+			if err := l.initializerReads(initializer, available); err != nil {
+				return nil, err
+			}
+			prefix, present, value, err := l.lazyAssertion(initializer, of)
+			if err != nil {
+				return nil, err
+			}
+			empty := ir.Expression(zeroValue(of))
+			if of.IsReference() {
+				empty = ir.Undefined{Of: of}
+			}
+			statements = append(statements, prefix...)
+			statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: empty, Uninitialized: true, Site: l.writeSite(declaration.Name())}, ir.If{Condition: present, Then: []ir.Statement{ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Site: l.writeSite(declaration.Name())}}})
+			available[l.fieldName(member.Name())] = true
+			continue
 		}
 		value := zeroValue(of)
 		if member.AsPropertyDeclaration().Initializer != nil {

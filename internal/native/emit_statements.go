@@ -73,10 +73,20 @@ func (e *emitter) statement(statement ir.Statement) {
 		owned := e.taken(value)
 		if local.Global {
 			e.store(statement.Local, value, owned)
-			e.line("%s = true;", readyName(statement.Local))
+			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			if local.Uninitialized {
+				e.line("%s_declared = true;", readyName(statement.Local))
+			}
 			e.initialized = append(e.initialized, statement.Local)
 		} else {
 			e.declareLocal(statement.Local, value, owned)
+			if local.Uninitialized {
+				if local.Captured {
+					e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+				} else {
+					e.line("bool %s = %t; (void)%s;", readyName(statement.Local), !statement.Uninitialized, readyName(statement.Local))
+				}
+			}
 		}
 		e.end()
 	case ir.Assign:
@@ -101,6 +111,12 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		value := e.value(statement.Value)
+		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
+			e.line("if (!%s_declared) {", readyName(statement.Local))
+			message := "ReferenceError: Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization"
+			e.line("\tadamic_panic(%s, %d);", cString(message), len(message))
+			e.line("}")
+		}
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			e.checkReady(statement.Local)
@@ -108,6 +124,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		// The store is the statement's last write: nothing after it can assign the variable again
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
+		if e.program.Locals[statement.Local].Uninitialized {
+			e.line("%s = true;", e.localReady(statement.Local))
+		}
 		e.end()
 	case ir.Evaluate:
 		if splice, isSplice := statement.Value.(ir.ArraySplice); isSplice {
@@ -152,7 +171,23 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 		slot := e.temporary()
-		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
+		cache := e.cache()
+		if e.program.CheckedFields[statement.Name] {
+			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
+		}
+		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), cache)
+		converted := e.program.CheckedFields[statement.Name] && statement.Value.Type() <= ir.Boolean
+		if converted {
+			e.line("if (adamic_object_field_types(%s)[%s.index] == 10) {", object, cache)
+			boxed := fmt.Sprintf("adamic_box_number(%s)", value)
+			if statement.Value.Type() == ir.Boolean {
+				boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
+			}
+			e.line("adamic_heap *view_new_value = (adamic_heap *)%s;", boxed)
+			e.line("adamic_release(%s->reference);", slot)
+			e.line("%s->reference = view_new_value;", slot)
+			e.line("} else {")
+		}
 		if statement.Value.Type().IsReference() {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
@@ -161,6 +196,13 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("if (%s != NULL) adamic_release(%s);", old, old)
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
+		}
+		e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, statement.Value.Type())
+		if converted {
+			e.line("}")
+		}
+		if statement.Uninitialized {
+			e.line("adamic_object_set_initialized(%s, %s, false);", object, cString(statement.Name))
 		}
 		e.end()
 	case ir.Panic:
@@ -259,6 +301,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		cell := e.cellName(local)
 		fresh := e.temporary()
 		e.line("adamic_cell *%s = adamic_cell_new(%s->value, %s->references);", fresh, cell, cell)
+		e.line("%s->ready = %s->ready;", fresh, cell)
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")

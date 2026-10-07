@@ -1,0 +1,13 @@
+=== RUN   TestDefaultTaggedSourceViews
+=== RUN   TestDefaultTaggedSourceViews/default-staged
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-boolean
+=== RUN   TestDefaultTaggedSourceViews/default-read-before-set
+--- PASS: TestDefaultTaggedSourceViews (1.02s)
+    --- PASS: TestDefaultTaggedSourceViews/default-staged (0.41s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-boolean (0.31s)
+    --- PASS: TestDefaultTaggedSourceViews/default-read-before-set (0.29s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.022s
