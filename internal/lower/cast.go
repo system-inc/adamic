@@ -39,6 +39,11 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 			return checked, err
 		}
 	}
+	if source.Flags()&checker.TypeFlagsUnion == 0 {
+		if checked, err := l.structuralViewCast(node, value, source, target); checked != nil || err != nil {
+			return checked, err
+		}
+	}
 	if value.Type() != ir.Object || source.Flags()&checker.TypeFlagsUnion == 0 {
 		return nil, refused
 	}
