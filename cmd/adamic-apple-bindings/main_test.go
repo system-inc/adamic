@@ -23,7 +23,8 @@ func TestCommand(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !strings.Contains(string(output), "1.style:options(Plain=0,Bright=2,Quiet=8)") {
+	// Flipped is bit 63, read unsigned: the case a signed parse refused.
+	if !strings.Contains(string(output), "1.style:options(Plain=0,Bright=2,Quiet=8,Flipped=9223372036854775808)") {
 		t.Fatal("command did not emit the generated option binding")
 	}
 	if _, err := os.Stat(filepath.Join(directory, "bindings-check.m")); err != nil {
