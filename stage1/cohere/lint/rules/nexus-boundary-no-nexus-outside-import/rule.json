@@ -1,0 +1,13 @@
+{
+  "name": "nexus/boundary-no-nexus-outside-import",
+  "kinds": [
+    "ImportDeclaration",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNexusOutsideImport",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestBoundaryNoNexusOutsideImport"
+}

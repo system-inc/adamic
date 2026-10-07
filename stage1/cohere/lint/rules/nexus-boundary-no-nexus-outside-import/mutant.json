@@ -1,0 +1,6 @@
+{
+  "name": "alias_prefix_boundary",
+  "file": "rule.a",
+  "from": "source.startsWith(alias + '/')",
+  "to": "source.startsWith(alias)"
+}

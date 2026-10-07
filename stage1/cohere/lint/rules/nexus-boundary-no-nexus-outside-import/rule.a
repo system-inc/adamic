@@ -1,0 +1,24 @@
+import type { RuleContext } from '../../context.ts';
+import { specifier } from './specifier.a';
+import { forbiddenOutsideImport } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly enabled: boolean;
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.enabled = context.parser.path.split('\\').join('/').includes('/libraries/nexus/');
+    }
+    visit(index: number): void {
+        if (!this.enabled) return;
+        const target = specifier(this.context, index);
+        if (target < 0) return;
+        const source = this.context.node(target).text;
+        for (const alias of ['@project', '@structure', '@base']) {
+            if (source === alias || source.startsWith(alias + '/')) {
+                this.context.report(target, 'nexus/boundary-no-nexus-outside-import', 'forbiddenOutsideImport', forbiddenOutsideImport, '', '', '');
+                return;
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
