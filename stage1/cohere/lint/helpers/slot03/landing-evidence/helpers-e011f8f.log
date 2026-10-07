@@ -1,0 +1,181 @@
+=== RUN   TestBatch2Helpers
+    batch2_test.go:61: 208636 lines match real Go, Node source and sanitized native
+--- PASS: TestBatch2Helpers (44.55s)
+=== RUN   TestBatch2Mutants
+=== RUN   TestBatch2Mutants/intrinsic_element_named.a
+    batch2_test.go:101: compiled semantic mutant caught at line 24: got "true" Go "false"
+=== RUN   TestBatch2Mutants/hole_edges.a
+    batch2_test.go:101: compiled semantic mutant caught at line 179230: got "false,false" Go "true,false"
+=== RUN   TestBatch2Mutants/read_class_values.a
+    batch2_test.go:101: compiled semantic mutant caught at line 185959: got "Attribute::" Go "Callee::"
+--- PASS: TestBatch2Mutants (83.97s)
+    --- PASS: TestBatch2Mutants/intrinsic_element_named.a (28.74s)
+    --- PASS: TestBatch2Mutants/hole_edges.a (26.69s)
+    --- PASS: TestBatch2Mutants/read_class_values.a (25.24s)
+=== RUN   TestBatch3Helpers
+    batch3_test.go:63: 1117150 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch3Helpers (22.35s)
+=== RUN   TestBatch3Mutants
+=== RUN   TestBatch3Mutants/hex_value.a
+    batch3_test.go:99: compiled semantic mutant caught at line 43: got "-1" Go "15"
+=== RUN   TestBatch3Mutants/unescape_string_literal_text.a
+    batch3_test.go:99: compiled semantic mutant caught at line 1114212: got "0,99,111,112,121,10,:99,111,112,121," Go "0,169,10,:99,111,112,121,"
+=== RUN   TestBatch3Mutants/parameter_nodes.a
+    batch3_test.go:99: compiled semantic mutant caught at line 1115385: got "2,-1,3,2" Go "-1,-1,3,2"
+=== RUN   TestBatch3Mutants/parameter_nodes.a#01
+    batch3_test.go:99: compiled semantic mutant caught at line 1115375: got "0,1" Go ""
+--- PASS: TestBatch3Mutants (35.51s)
+    --- PASS: TestBatch3Mutants/hex_value.a (4.27s)
+    --- PASS: TestBatch3Mutants/unescape_string_literal_text.a (6.23s)
+    --- PASS: TestBatch3Mutants/parameter_nodes.a (7.05s)
+    --- PASS: TestBatch3Mutants/parameter_nodes.a#01 (6.44s)
+=== RUN   TestBatch4Helpers
+    batch4_test.go:49: 77616 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch4Helpers (4.60s)
+=== RUN   TestBatch4Mutants
+=== RUN   TestBatch4Mutants/escape_terminator.a
+    batch4_test.go:85: compiled semantic mutant caught at line 13: got "false" Go "true"
+=== RUN   TestBatch4Mutants/followed_by_whitespace.a
+    batch4_test.go:85: compiled semantic mutant caught at line 3585: got "true:10" Go "false:10,11"
+=== RUN   TestBatch4Mutants/ignored_theme_key.a
+    batch4_test.go:85: compiled semantic mutant caught at line 75243: got "true" Go "false"
+--- PASS: TestBatch4Mutants (17.53s)
+    --- PASS: TestBatch4Mutants/escape_terminator.a (7.97s)
+    --- PASS: TestBatch4Mutants/followed_by_whitespace.a (4.83s)
+    --- PASS: TestBatch4Mutants/ignored_theme_key.a (3.55s)
+=== RUN   TestBatch5Helpers
+    batch5_test.go:49: 11571 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch5Helpers (4.69s)
+=== RUN   TestBatch5Mutants
+=== RUN   TestBatch5Mutants/split_theme_key.a
+    batch5_test.go:92: compiled semantic mutant caught at line 283: got "1:" Go "0:"
+=== RUN   TestBatch5Mutants/split_theme_key.a#01
+    batch5_test.go:92: compiled semantic mutant caught at line 286: got "0:" Go "1:"
+=== RUN   TestBatch5Mutants/split_theme_key.a#02
+    batch5_test.go:92: compiled semantic mutant caught at line 288: got "1:99,104,97,110,103,101,100," Go "1:"
+=== RUN   TestBatch5Mutants/join_segments.a
+    batch5_test.go:92: compiled semantic mutant caught at line 290: got "0," Go "0,45,"
+=== RUN   TestBatch5Mutants/breakpoint_group_order.a
+    batch5_test.go:92: compiled semantic mutant caught at line 9639: got "2:true" Go "0:false"
+=== RUN   TestBatch5Mutants/breakpoint_group_order.a#01
+    batch5_test.go:92: compiled semantic mutant caught at line 9641: got "23:true" Go "-17:true"
+--- PASS: TestBatch5Mutants (25.94s)
+    --- PASS: TestBatch5Mutants/split_theme_key.a (6.10s)
+    --- PASS: TestBatch5Mutants/split_theme_key.a#01 (5.34s)
+    --- PASS: TestBatch5Mutants/split_theme_key.a#02 (3.44s)
+    --- PASS: TestBatch5Mutants/join_segments.a (2.60s)
+    --- PASS: TestBatch5Mutants/breakpoint_group_order.a (2.84s)
+    --- PASS: TestBatch5Mutants/breakpoint_group_order.a#01 (3.95s)
+=== RUN   TestBatch6Helpers
+    batch6_test.go:49: 34566 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch6Helpers (10.90s)
+=== RUN   TestBatch6Mutants
+=== RUN   TestBatch6Mutants/at_rule.a
+    batch6_test.go:85: compiled semantic mutant caught at line 1: got "rule|||112,97,114,97,109,115,58,|||false|false|false|false|0|0|" Go "at-rule|||112,97,114,97,109,115,58,|||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/at_rule.a#01
+    batch6_test.go:85: compiled semantic mutant caught at line 14: got "1:1:true:0" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/at_rule.a#02
+    batch6_test.go:85: compiled semantic mutant caught at line 14: got "0:0:true:" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/at_rule.a#03
+    batch6_test.go:85: compiled semantic mutant caught at line 3: got "at-rule|99,104,97,110,103,101,100,|99,104,97,110,103,101,100,|112,97,114,97,109,115,58,|||false|false|false|false|0|0|" Go "at-rule|||112,97,114,97,109,115,58,|||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/style_rule.a
+    batch6_test.go:85: compiled semantic mutant caught at line 4: got "at-rule||||||false|false|false|false|0|0|" Go "rule||||||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/style_rule.a#01
+    batch6_test.go:85: compiled semantic mutant caught at line 17: got "1:1:true:0" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/style_rule.a#02
+    batch6_test.go:85: compiled semantic mutant caught at line 17: got "0:0:true:" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/style_rule.a#03
+    batch6_test.go:85: compiled semantic mutant caught at line 6: got "rule|99,104,97,110,103,101,100,|99,104,97,110,103,101,100,||||false|false|false|false|0|0|" Go "rule||||||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/variant_next_order.a
+    batch6_test.go:85: compiled semantic mutant caught at line 29488: got "-9007199254740989" Go "-9007199254740991"
+=== RUN   TestBatch6Mutants/variant_next_order.a#01
+    batch6_test.go:85: compiled semantic mutant caught at line 29485: got "-9007199254740988" Go "-9007199254740989"
+=== RUN   TestBatch6Mutants/variant_next_order.a#02
+    batch6_test.go:85: compiled semantic mutant caught at line 29486: got "false:0:-9007199254740989" Go "false:0:-9007199254740990"
+--- PASS: TestBatch6Mutants (34.26s)
+    --- PASS: TestBatch6Mutants/at_rule.a (3.21s)
+    --- PASS: TestBatch6Mutants/at_rule.a#01 (3.86s)
+    --- PASS: TestBatch6Mutants/at_rule.a#02 (5.64s)
+    --- PASS: TestBatch6Mutants/at_rule.a#03 (2.44s)
+    --- PASS: TestBatch6Mutants/style_rule.a (2.41s)
+    --- PASS: TestBatch6Mutants/style_rule.a#01 (2.83s)
+    --- PASS: TestBatch6Mutants/style_rule.a#02 (2.54s)
+    --- PASS: TestBatch6Mutants/style_rule.a#03 (2.49s)
+    --- PASS: TestBatch6Mutants/variant_next_order.a (2.65s)
+    --- PASS: TestBatch6Mutants/variant_next_order.a#01 (2.42s)
+    --- PASS: TestBatch6Mutants/variant_next_order.a#02 (2.53s)
+=== RUN   TestBatch7Helpers
+    batch7_test.go:49: 415800 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch7Helpers (15.41s)
+=== RUN   TestBatch7Mutants
+=== RUN   TestBatch7Mutants/new_variant_registry.a
+    batch7_test.go:85: compiled semantic mutant caught at line 1: got "1:false:0:0:0" Go "0:false:0:0:0"
+=== RUN   TestBatch7Mutants/new_variant_registry.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 25: got "84:false:0:2:2" Go "0:false:0:0:0"
+=== RUN   TestBatch7Mutants/register.a
+    batch7_test.go:85: compiled semantic mutant caught at line 8: got ":84:replacement" Go ":83:replacement"
+=== RUN   TestBatch7Mutants/register.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 680: got ":83:static" Go ":-17:static"
+=== RUN   TestBatch7Mutants/register.a#02
+    batch7_test.go:85: compiled semantic mutant caught at line 679: got "-17:true:-17:1:0" Go "82:true:-17:1:0"
+=== RUN   TestBatch7Mutants/attach_comparison.a
+    batch7_test.go:85: compiled semantic mutant caught at line 16: got "84:false:0:2:0" Go "84:false:0:2:1"
+=== RUN   TestBatch7Mutants/attach_comparison.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 21: got "-8" Go "15"
+=== RUN   TestBatch7Mutants/attach_comparison.a#02
+    batch7_test.go:85: compiled semantic mutant caught at line 15: got "missing" Go "-8"
+--- PASS: TestBatch7Mutants (65.67s)
+    --- PASS: TestBatch7Mutants/new_variant_registry.a (8.35s)
+    --- PASS: TestBatch7Mutants/new_variant_registry.a#01 (8.58s)
+    --- PASS: TestBatch7Mutants/register.a (8.36s)
+    --- PASS: TestBatch7Mutants/register.a#01 (8.39s)
+    --- PASS: TestBatch7Mutants/register.a#02 (7.68s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a (6.74s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a#01 (7.61s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a#02 (7.34s)
+=== RUN   TestSlot03HelpersMatchCohere
+    slot03_test.go:105: 1115085 helper output lines match Go, Node source and sanitized native
+--- PASS: TestSlot03HelpersMatchCohere (6.58s)
+=== RUN   TestSlot03HelperMutants
+=== RUN   TestSlot03HelperMutants/component_base_name.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 159: got "false" Go "true"
+=== RUN   TestSlot03HelperMutants/tailwind_space.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 847: got "false" Go "true"
+=== RUN   TestSlot03HelperMutants/listener_kinds.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 1114948: got "JsxAttribute,CallExpression,StringLiteral" Go "JsxAttribute,CallExpression,VariableDeclaration"
+=== RUN   TestSlot03HelperMutants/listener_kinds.a/shared-list
+    slot03_test.go:160: compiled semantic mutant caught at line 1114949: got "StringLiteral,CallExpression,VariableDeclaration" Go "JsxAttribute,CallExpression,VariableDeclaration"
+--- PASS: TestSlot03HelperMutants (9.96s)
+    --- PASS: TestSlot03HelperMutants/component_base_name.a/value (1.23s)
+    --- PASS: TestSlot03HelperMutants/tailwind_space.a/value (1.61s)
+    --- PASS: TestSlot03HelperMutants/listener_kinds.a/value (1.96s)
+    --- PASS: TestSlot03HelperMutants/listener_kinds.a/shared-list (1.15s)
+=== RUN   TestConsumerCoverageRejectsMutant
+    slot03_test.go:277: missing-consumer mutant caught: consumer capture mismatch: missing [better-tailwindcss/no-unknown-classes] extra []
+--- PASS: TestConsumerCoverageRejectsMutant (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	381.937s
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:101: 22412 oracle output lines matched Go, Node and sanitized native
+--- PASS: TestHelpersMatchCohere (24.16s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+--- PASS: TestHelperMutants (39.88s)
+    --- PASS: TestHelperMutants/options_json.ts (7.76s)
+    --- PASS: TestHelperMutants/option_schema.ts (7.25s)
+    --- PASS: TestHelperMutants/policy_message.ts (6.95s)
+    --- PASS: TestHelperMutants/strict_options.ts (7.75s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native
+--- PASS: TestMessageRefusalsMatchGo (9.22s)
+=== RUN   TestKnownGapsAreExplicit
+--- PASS: TestKnownGapsAreExplicit (2.15s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	75.417s
