@@ -33,3 +33,21 @@ excluding ports on those two branches and every rule named in any origin claim.
 
 Claim commit b9a19759 was pushed before implementation.
 These three are completed in the continuation report; no further rules are claimed.
+
+## Third batch, October 7
+
+The previous three ports, tests and evidence were pushed in 8bd28ec4.
+Fetched all 324 origin refs and inspected textual claim records on every branch.
+The first three remaining checker-dependent rules by combined recorded volume,
+lexical ties, excluding ports on origin/main and origin/codex/tsgo-c-library,
+are claimed here:
+
+- nexus/correctness-no-process-exit-after-output (combined volume 0)
+- nexus/correctness-no-uncleared-race-timeout (combined volume 0)
+- nexus/correctness-require-blocking-standard-streams (combined volume 0)
+
+The preceding listener assertion, leaked-number-render and mock-on-module-
+namespace rules are reserved by other origin claims. The baseline branch tips
+remain 5afbdb83da2ed7ad9815657cd3f6ececd5294bf6 and
+ef3d907ecdc4c771b016f7d9c52372def057a340, respectively.
+Implementation waits for this claim update to be pushed successfully.
