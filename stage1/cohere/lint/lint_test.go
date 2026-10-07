@@ -392,9 +392,7 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 			case "type T = { m: => void };":
 				mode = "recovery"
 			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
-				// a46053af makes Go diagnostics select recovery; 8a21f59
-				// left these four rows as an obsolete parser capability refusal.
-				mode = "recovery"
+				mode = "unsupported-recovery"
 			}
 		}
 		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
