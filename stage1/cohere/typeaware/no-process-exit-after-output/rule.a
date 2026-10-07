@@ -5,7 +5,11 @@ import { makeContexts } from './context.a';
 import { OutputEvents } from './events.a';
 import { Graph } from './graph.a';
 import { Walk } from './walk.a';
+// Pinned typescript-go numeric SyntaxKind: SourceFile.
+export const syntaxKinds: readonly number[] = [307];
+
 export class NoProcessExitAfterOutput {
+    readonly syntaxKinds = syntaxKinds;
     readonly rules: Rules;
     readonly contexts: Contexts;
     constructor(rules: Rules) {

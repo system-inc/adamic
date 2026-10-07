@@ -4,7 +4,11 @@ import { makeBindingOrigin } from './binding_origin.a';
 import type { Syntax } from '../no-process-exit-after-output/syntax.a';
 import { makeSyntax } from '../no-process-exit-after-output/syntax.a';
 import { report } from '../no-process-exit-after-output/report.a';
+// Pinned typescript-go numeric SyntaxKind: CallExpression, NewExpression.
+export const syntaxKinds: readonly number[] = [214, 215];
+
 export class PreferPromiseRejectErrors {
+    readonly syntaxKinds = syntaxKinds;
     readonly rules: Rules;
     readonly origins: BindingOrigin;
     readonly syntax: Syntax;

@@ -2,7 +2,11 @@ import type { Rules } from './rules.ts';
 import { types } from './facts.ts';
 import { Frames, header } from './frames.ts';
 import type { WaveFacts } from './wave20_facts.a';
+// Pinned typescript-go numeric SyntaxKind: VoidExpression.
+export const syntaxKinds: readonly number[] = [223];
+
 export class NoMeaninglessVoidOperator {
+    readonly syntaxKinds = syntaxKinds;
     readonly rules: Rules;
     readonly facts: WaveFacts;
     constructor(rules: Rules, facts: WaveFacts) {

@@ -4,7 +4,11 @@ import type { Rules } from '../rules.ts';
 import type { DeclarationChain } from '../no-process-exit-after-output/declaration_chain.a';
 import { makeDeclarationChain } from '../no-process-exit-after-output/declaration_chain.a';
 import { Frames, header } from '../frames.ts';
+// Pinned typescript-go numeric SyntaxKind: CallExpression.
+export const syntaxKinds: readonly number[] = [214];
+
 export class NoUnclearedRaceTimeout {
+    readonly syntaxKinds = syntaxKinds;
     readonly rules: Rules;
     readonly facts: DeclarationChain;
     constructor(rules: Rules) {

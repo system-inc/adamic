@@ -1,0 +1,3 @@
+// Declaration only. Source analysis remains blocked as documented in `BLOCKED.md`.
+// Pinned typescript-go numeric SyntaxKind: SourceFile.
+export const syntaxKinds: readonly number[] = [307];

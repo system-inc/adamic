@@ -2,7 +2,11 @@ import type { Rules } from '../rules.ts';
 import type { BindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
 import { makeBindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
 import { report } from '../no-process-exit-after-output/report.a';
+// Pinned typescript-go numeric SyntaxKind: Identifier.
+export const syntaxKinds: readonly number[] = [79];
+
 export class PreferRestParams {
+    readonly syntaxKinds = syntaxKinds;
     readonly rules: Rules;
     readonly origins: BindingOrigin;
     constructor(rules: Rules) {

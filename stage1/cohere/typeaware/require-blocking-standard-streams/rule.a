@@ -7,7 +7,11 @@ import { Walk } from '../no-process-exit-after-output/walk.a';
 import { ModuleRecords } from './module_records.a';
 import { Analysis } from './analysis.a';
 import { OutputEvents } from '../no-process-exit-after-output/events.a';
+// Pinned typescript-go numeric SyntaxKind: SourceFile.
+export const syntaxKinds: readonly number[] = [307];
+
 export class RequireBlockingStandardStreams {
+    readonly syntaxKinds = syntaxKinds;
     readonly rules: Rules;
     readonly contexts: Contexts;
     constructor(rules: Rules) {

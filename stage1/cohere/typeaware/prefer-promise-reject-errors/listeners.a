@@ -1,0 +1,25 @@
+import { syntaxKinds as floatingKinds } from '../no_floating_promises.a';
+import { syntaxKinds as evalKinds } from '../no_implied_eval.a';
+import { syntaxKinds as voidKinds } from '../no_meaningless_void_operator.a';
+import { syntaxKinds as outputKinds } from '../no-process-exit-after-output/rule.a';
+import { syntaxKinds as timerKinds } from '../no-uncleared-race-timeout/rule.a';
+import { syntaxKinds as blockingKinds } from '../require-blocking-standard-streams/rule.a';
+import { syntaxKinds as promiseKinds } from './rule.a';
+import { syntaxKinds as regexKinds } from '../prefer-regex-literals/rule.a';
+import { syntaxKinds as restKinds } from '../prefer-rest-params/rule.a';
+import { syntaxKinds as effectKinds } from '../react-hooks-set-state-in-effect/listeners.a';
+import { syntaxKinds as renderKinds } from '../react-hooks-set-state-in-render/listeners.a';
+import { syntaxKinds as staticKinds } from '../react-hooks-static-components/listeners.a';
+
+console.log(`floating ${floatingKinds.join(',')}`);
+console.log(`eval ${evalKinds.join(',')}`);
+console.log(`void ${voidKinds.join(',')}`);
+console.log(`output ${outputKinds.join(',')}`);
+console.log(`timer ${timerKinds.join(',')}`);
+console.log(`blocking ${blockingKinds.join(',')}`);
+console.log(`promise ${promiseKinds.join(',')}`);
+console.log(`regex ${regexKinds.join(',')}`);
+console.log(`rest ${restKinds.join(',')}`);
+console.log(`effect ${effectKinds.join(',')}`);
+console.log(`render ${renderKinds.join(',')}`);
+console.log(`static ${staticKinds.join(',')}`);

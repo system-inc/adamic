@@ -8,7 +8,11 @@ import { Suggestion } from '../suggestion.ts';
 import { Repair } from '../repair.ts';
 import { Pattern } from './pattern.a';
 import { Tracker } from './tracker.a';
+// Pinned typescript-go numeric SyntaxKind: SourceFile.
+export const syntaxKinds: readonly number[] = [307];
+
 export class PreferRegexLiterals {
+    readonly syntaxKinds = syntaxKinds;
     readonly rules: Rules;
     readonly syntax: Syntax;
     readonly origins: BindingOrigin;

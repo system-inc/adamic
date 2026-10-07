@@ -5,7 +5,11 @@ import { accessedProperty } from './accessed_property.a';
 import { Repair } from './repair.ts';
 import { Suggestion } from './suggestion.ts';
 import { FloatingState } from './floating_state.a';
+// Pinned typescript-go numeric SyntaxKind: ExpressionStatement.
+export const syntaxKinds: readonly number[] = [245];
+
 export class NoFloatingPromises {
+    readonly syntaxKinds = syntaxKinds;
     readonly rules: Rules;
     readonly facts: WaveFacts;
     constructor(rules: Rules, facts: WaveFacts) {
