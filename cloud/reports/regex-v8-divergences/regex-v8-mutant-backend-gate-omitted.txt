@@ -1,0 +1,6 @@
+=== RUN   TestRegExpV8Refusals
+    regexp_v8_test.go:23: expected named V8/spec refusal: console.log( /[\q{a}]/iv.test('A') ? 'yes' : 'no');: <nil>
+--- FAIL: TestRegExpV8Refusals (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.147s
+FAIL

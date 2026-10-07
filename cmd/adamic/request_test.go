@@ -28,7 +28,9 @@ func TestWASIRequestSelection(t *testing.T) {
 		handler, refused bool
 	}{
 		{"exported", "export function handleRequest(request: string): string { return request; }", true, false},
-		{"alias", "function serve(request: string): string { return request; } export { serve as handleRequest };", false, true},
+		{"alias", "function serve(request: string): string { return request; } export { serve as handleRequest };", true, false},
+		{"alias wrong parameter", "function serve(request: number): string { return `${request}`; } export { serve as handleRequest };", false, true},
+		{"alias wrong result", "function serve(request: string): number { return request.length; } export { serve as handleRequest };", false, true},
 		{"private", "function handleRequest(request: string): string { return request; }", false, false},
 		{"wrong parameter", "export function handleRequest(request: number): string { return `${request}`; }", false, true},
 		{"wrong result", "export function handleRequest(request: string): number { return request.length; }", false, true},
@@ -46,9 +48,12 @@ func TestWASIRequestSelection(t *testing.T) {
 				t.Fatalf("checker refused handler fixture, code %d", checkCode)
 			}
 			name, err := requestFunction(checked)
-			invalidSignature := test.refused && test.name != "alias"
+			invalidSignature := test.refused
 			if (err != nil) != invalidSignature {
 				t.Fatalf("signature selection returned %q, %v, want refused %t", name, err, invalidSignature)
+			}
+			if test.name == "alias" && name != "serve" {
+				t.Fatalf("alias selected %q, want serve", name)
 			}
 			program, handler, code := compileWASI(path)
 			if test.refused {
@@ -72,21 +77,25 @@ func TestWASIRequest(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	output := filepath.Join(t.TempDir(), "request.wasm")
-	source, err := filepath.Abs("testdata/wasi/request.a")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if code := run([]string{"build", "--target", "wasm32-wasi", source, "-o", output, "--count"}); code != 0 {
-		t.Fatalf("build returned %d", code)
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", "testdata/wasi/request-host.mjs", output, source, filepath.Join(t.TempDir(), "stdout"))
-	if result, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("request host: %v\n%s", err, result)
-	} else {
-		t.Log(string(result))
+	for _, fixture := range []string{"request.a", "request_alias.a"} {
+		t.Run(fixture, func(t *testing.T) {
+			output := filepath.Join(t.TempDir(), "request.wasm")
+			source, err := filepath.Abs(filepath.Join("testdata/wasi", fixture))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if code := run([]string{"build", "--target", "wasm32-wasi", source, "-o", output, "--count"}); code != 0 {
+				t.Fatalf("build returned %d", code)
+			}
+			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			defer cancel()
+			command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", "testdata/wasi/request-host.mjs", output, source, filepath.Join(t.TempDir(), "stdout"))
+			if result, err := command.CombinedOutput(); err != nil {
+				t.Fatalf("request host: %v\n%s", err, result)
+			} else {
+				t.Log(string(result))
+			}
+		})
 	}
 }
 

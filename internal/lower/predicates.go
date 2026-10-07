@@ -38,7 +38,9 @@ func (p *predicateFlowProof) refused(node *ast.Node, reason string) error {
 }
 
 func (l *lowering) proveFlowPredicate(node *ast.Node) error {
- if l.censusPredicateMarkerContract(node) { return nil }
+	if l.censusPredicateMarkerContract(node) {
+		return nil
+	}
 
 	annotation := node.AsTypePredicateNode()
 	function := node.Parent

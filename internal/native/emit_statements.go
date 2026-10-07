@@ -13,6 +13,14 @@ type loop struct {
 	continued bool
 }
 
+// A break to an outer target uses a goto, emitted only when needed, after the target's loop.
+// Cleanup runs before the jump, including every finally and local scope it leaves.
+type breakable struct {
+	depth  int
+	label  string
+	broken bool
+}
+
 // block emits statements in a scope of their own.
 func (e *emitter) block(statements []ir.Statement, after func()) {
 	e.scopes = append(e.scopes, nil)
@@ -159,7 +167,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		if statement.Element.IsReference() {
 			value = retained(value)
 		}
-		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
+		setter := "adamic_array_set"
+		if e.hasArrayHoles() {
+			setter = "adamic_array_holes_set"
+		}
+		e.line("%s(%s, %s, (adamic_value){.%s = %s});", setter, array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
 	case ir.SetProperty:
 		object := e.value(statement.Object)
@@ -236,10 +248,15 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.Switch:
 		e.switchStatement(statement)
 	case ir.Break:
-		// A try inside the loop or switch is left: its finally runs first.
-		e.finallies(e.innerHandlers(e.breakables[len(e.breakables)-1]))
-		e.releaseScopes(e.breakables[len(e.breakables)-1])
-		e.line("break;")
+		target := e.breakables[len(e.breakables)-1-statement.Depth]
+		e.finallies(e.innerHandlers(target.depth))
+		e.releaseScopes(target.depth)
+		if statement.Depth == 0 {
+			e.line("break;")
+		} else {
+			target.broken = true
+			e.line("goto %s;", target.label)
+		}
 	case ir.Continue:
 		current := e.loops[len(e.loops)-1]
 		current.continued = true
@@ -285,7 +302,8 @@ func (e *emitter) loop(statement ir.Loop) {
 	e.out = strings.Builder{}
 	current.depth = len(e.scopes)
 	e.loops = append(e.loops, current)
-	e.breakables = append(e.breakables, current.depth)
+	target := &breakable{depth: current.depth, label: e.temporary()}
+	e.breakables = append(e.breakables, target)
 	e.line("{")
 	e.nested(statement.Body, nil)
 	e.line("}")
@@ -322,6 +340,9 @@ func (e *emitter) loop(statement ir.Loop) {
 	}
 	e.indent--
 	e.line("}")
+	if target.broken {
+		e.line("%s:;", target.label)
+	}
 }
 
 // forOf emits for (const element of array). Unless the element borrow proof keeps the array
@@ -372,7 +393,8 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.out = strings.Builder{}
 	current.depth = len(e.scopes)
 	e.loops = append(e.loops, current)
-	e.breakables = append(e.breakables, current.depth)
+	target := &breakable{depth: current.depth, label: e.temporary()}
+	e.breakables = append(e.breakables, target)
 	e.line("{")
 	e.indent++
 	e.scopes = append(e.scopes, nil)
@@ -446,6 +468,9 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	}
 	e.indent--
 	e.line("}")
+	if target.broken {
+		e.line("%s:;", target.label)
+	}
 	e.releaseScopes(len(e.scopes) - 1)
 	e.scopes = e.scopes[:len(e.scopes)-1]
 	e.indent--
@@ -469,7 +494,8 @@ func (e *emitter) switchStatement(statement ir.Switch) {
 	e.end()
 	e.line("do {")
 	e.indent++
-	e.breakables = append(e.breakables, len(e.scopes))
+	target := &breakable{depth: len(e.scopes), label: e.temporary()}
+	e.breakables = append(e.breakables, target)
 	depth := 0
 	for _, matched := range statement.Cases {
 		tests := []string{}
@@ -490,6 +516,9 @@ func (e *emitter) switchStatement(statement ir.Switch) {
 	e.breakables = e.breakables[:len(e.breakables)-1]
 	e.indent--
 	e.line("} while (0);")
+	if target.broken {
+		e.line("%s:;", target.label)
+	}
 	e.releaseScopes(len(e.scopes) - 1)
 	e.scopes = e.scopes[:len(e.scopes)-1]
 	e.indent--

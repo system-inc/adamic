@@ -12,6 +12,14 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.NodeFSFile:
+		return e.nodeFSFile(expression)
+	case ir.NodeBufferCall:
+		return e.nodeBufferCall(expression)
+	case ir.NodeHostCall:
+		return e.nodeHostCall(expression)
+	case ir.ProcessCall:
+		return e.processCall(expression)
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)
@@ -306,6 +314,9 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 				return mapped
 			}
 		}
+		if e.hasArrayHoles() {
+			return e.arrayHolesMap(expression)
+		}
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
 		callback := e.value(expression.Callback)
@@ -338,6 +349,12 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		return e.arrayReduce(expression)
 	case ir.ArraySearch:
 		return e.libraryArraySearch(expression)
+	case ir.ArrayRangeErrorIs:
+		return fmt.Sprintf("adamic_array_is_range_error(%s)", e.value(expression.Value))
+	case ir.ArraySetLength:
+		return e.arrayHolesLength(expression)
+	case ir.ArrayHoles:
+		return e.arrayHoles(expression)
 	case ir.ArrayFill:
 		if expression.Array == nil {
 			length := e.value(expression.Length)
@@ -535,6 +552,8 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		return e.snapshot(ir.Number, fmt.Sprintf("adamic_utf8_at(%s, %s)", text, e.value(expression.Index)))
 	case ir.ReadDirectory:
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_directory(%s)", e.value(expression.Path)))
+	case ir.RealPath:
+		return e.own(ir.Object, fmt.Sprintf("adamic_real_path(%s)", e.value(expression.Path)))
 	case ir.FileStatus:
 		return e.own(ir.Object, fmt.Sprintf("adamic_file_status(%s)", e.value(expression.Path)))
 	case ir.WriteTextFile:
@@ -554,6 +573,11 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		e.line("double %s = (double)%s->length;", length, array)
 		return length
 	case ir.ArrayJoin:
+		if e.hasArrayHoles() {
+			array := e.value(expression.Array)
+			separator := e.value(expression.Separator)
+			return e.own(ir.String, fmt.Sprintf("adamic_array_holes_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
+		}
 		if expression.Depth > 0 {
 			return e.libraryArrayJoin(expression)
 		}

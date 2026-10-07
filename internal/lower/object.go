@@ -267,6 +267,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	arrayType := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))
+	if l.nodeBufferType(arrayType, "Buffer") {
+		return ir.Number, nil
+	}
 	if l.isLibraryType(arrayType, "RegExpExecArray", "RegExpMatchArray") {
 		return ir.String, nil
 	}
@@ -338,7 +341,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	// A library declaration proves a prototype member exists, never an own slot. Keep this
 	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
-	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
+	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error", "RangeError") && (name == "name" || name == "message" || name == "code")) {
 		return nil, l.prototypeRead(node, name)
 	}
 	if err := l.erasedLiteralMethod(node); err != nil {
@@ -605,6 +608,15 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.libraryNodeBuffer(node); handled {
+		return value, true, err
+	}
+	if value, known, err := l.nodeFSDirectoryCall(node); known {
+		return value, known, err
+	}
+	if value, known, err := l.processValue(node); known {
+		return value, true, err
+	}
 	if value, handled, err := l.userMethodCall(node); handled {
 		return value, true, err
 	}
@@ -1003,12 +1015,32 @@ func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *as
 // switchStatement lowers switch, whose cases 0.1 requires to be constants.
 func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	statement := node.AsSwitchStatement()
+	if err := l.enumSwitch(node); err != nil {
+		return nil, err
+	}
 	value, err := l.expression(statement.Expression)
 	if err != nil {
 		return nil, err
 	}
 	lowered := ir.Switch{Value: value}
+	groups := []switchGroup{}
+	prefix := []ir.Statement{}
+	identity := l.enumIdentity(l.checker.GetTypeAtLocation(statement.Expression))
+	checkedDefault := l.numericEnum(identity) && l.enumSwitchCovered(node) && !l.enumDefaultUnreachable(node)
+	var neverCheck ir.Statement
+	if checkedDefault {
+		// The unmatched edge is never to the checker, including an implicit default. Hold the
+		// scrutinee once so the check names the original value without repeating its effects.
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "enum_switch_value", Type: value.Type(), Function: l.functionIndex})
+		prefix = append(prefix, ir.Declare{Local: local, Value: value})
+		value = ir.Read{Local: local, Of: value.Type()}
+		lowered.Value = value
+		neverCheck = ir.Evaluate{Value: l.enumNeverCheck(statement.Expression, value, identity)}
+		lowered.Default = []ir.Statement{neverCheck}
+	}
 	tests := []ir.Expression{}
+	defaultPending := false
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
 		for _, inner := range clause.AsCaseOrDefaultClause().Statements.Nodes {
 			if inner.Kind == ast.KindVariableStatement {
@@ -1018,6 +1050,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 			}
 		}
 		isDefault := clause.Kind == ast.KindDefaultClause
+		if isDefault && len(tests) == 0 && l.enumDefaultUnreachable(node) && (len(groups) == 0 || switchBodyLeaves(groups[len(groups)-1].body)) {
+			continue
+		}
 		if !isDefault {
 			test, err := l.expression(clause.AsCaseOrDefaultClause().Expression)
 			if err != nil {
@@ -1026,7 +1061,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 			switch test.(type) {
 			case ir.NumberConstant, ir.StringConstant, ir.BooleanConstant:
 			default:
-				return nil, l.notYet(clause, "a case that isn't a constant")
+				if l.enumMember(clause.AsCaseOrDefaultClause().Expression) == nil {
+					return nil, l.notYet(clause, "a case that isn't a constant")
+				}
 			}
 			if test.Type() != value.Type() {
 				return nil, l.notYet(clause, "a case whose type differs from the switch's")
@@ -1037,19 +1074,40 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		if err != nil {
 			return nil, err
 		}
-		if len(body) == 0 && !isDefault {
-			// case 'a': case 'b': share the next body.
+		defaultPending = defaultPending || isDefault
+		if len(body) == 0 {
+			// Empty labels enter the next body, including labels on either side of default.
 			continue
 		}
-		if isDefault {
-			// Cases grouped with default run its body, which is what not matching does anyway.
+		groups = append(groups, switchGroup{tests: tests, body: body, isDefault: defaultPending})
+		if defaultPending {
 			lowered.Default = body
-		} else {
+		}
+		if len(tests) > 0 {
+			// Default is a fallback position, but its grouped tests still compete in source order.
 			lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests, Body: body})
 		}
 		tests = []ir.Expression{}
+		defaultPending = false
 	}
-	return []ir.Statement{lowered}, nil
+	if len(tests) > 0 {
+		// A trailing empty label matches and leaves the switch without running default.
+		lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests})
+	}
+	if len(tests) > 0 || defaultPending {
+		groups = append(groups, switchGroup{tests: tests, isDefault: defaultPending})
+	}
+	if checkedDefault {
+		return append(prefix, l.fallthroughSwitch(value, groups, neverCheck)...), nil
+	}
+	for index, group := range groups {
+		// A default with tests must also have one body, rather than sharing statement
+		// addresses between two branches (flow instrumentation identifies those addresses).
+		if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
+			return append(prefix, l.fallthroughSwitch(value, groups, nil)...), nil
+		}
+	}
+	return append(prefix, lowered), nil
 }
 
 // arrayMethod lowers array.push(value) and array.join(separator).
@@ -1329,6 +1387,12 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	if value, found, err := l.arrayLengthConstructor(node); found {
+		return value, err
+	}
+	if value, found, err := l.nodeFSFileDate(node); found {
+		return value, err
+	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)
 	}
@@ -1482,6 +1546,9 @@ func (l *lowering) stringMethod(node *ast.Node, receiver *ast.Node, name string)
 // shorthand lowers the value of { value }. The name there is the field's, and asked for its symbol
 // the checker gives the field; the variable it reads is a separate question.
 func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeProcessValue(property.Name()); known {
+		return value, err
+	}
 	symbol := l.checker.GetShorthandAssignmentValueSymbol(property)
 	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
 		symbol = l.checker.GetAliasedSymbol(symbol)
@@ -1501,7 +1568,11 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	if censusFieldSlotless(of) {
 		return nil, l.notYet(property, "a field from a "+typeName(of)+" variable")
 	}
-	return ir.Read{Local: local, Of: of, Checked: l.checked(local)}, nil
+	read := ir.Read{Local: local, Of: of, Checked: l.checked(local)}
+	if identity := l.enumNeverIdentity(property.Name(), map[*ast.Node]bool{}); identity != nil {
+		return l.enumNeverCheck(property.Name(), read, identity), nil
+	}
+	return read, nil
 }
 
 // stringMethods are the string methods stringCall lowers: the types of their arguments, and how many
@@ -1708,6 +1779,12 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 	value, err := l.expression(valueNode)
 	if err != nil {
 		return nil, err
+	}
+	if l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") {
+		if value.Type() != ir.Number {
+			return nil, l.notYet(valueNode, "a Buffer write of a non-number")
+		}
+		return []ir.Statement{ir.Evaluate{Value: ir.NodeBufferCall{Function: "buffer_set", Arguments: []ir.Expression{array, index, value}, Returns: ir.Number}}}, nil
 	}
 	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element, Site: l.writeSite(access.Expression)}}, nil
 }
@@ -1934,6 +2011,9 @@ func (l *lowering) pairwiseTupleWhereArrayGoes(values []*checker.Type, targets [
 // read, and that read is held before the right side runs, exactly once each and in JavaScript's
 // order. The final SetIndex uses those same held values even when the right side changes their source.
 func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+	if l.nodeBufferType(l.checker.GetTypeAtLocation(target.AsElementAccessExpression().Expression), "Buffer") {
+		return nil, l.notYet(node, "a compound Buffer write outside the census")
+	}
 	access := target.AsElementAccessExpression()
 	array, err := l.expression(access.Expression)
 	if err != nil {

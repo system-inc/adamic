@@ -269,7 +269,9 @@ static void free_one(void *value) {
 	}
 	case adamic_kind_array: {
 		adamic_array *array = value;
-		if (array->references) {
+		if (array->sparse != NULL) {
+			let_go(array->sparse);
+		} else if (array->references) {
 			for (size_t index = 0; index < array->length; index++) {
 				let_go(array->elements[index].reference);
 			}
@@ -304,9 +306,7 @@ static void free_one(void *value) {
 	case adamic_kind_map_iterator: {
 		// Only an unfinished iterator still holds a place in the entries.
 		adamic_map_iterator *iterator = value;
-		if (!iterator->exhausted) {
-			iterator->map->iterating--;
-		}
+		adamic_map_iterator_close(iterator);
 		let_go(iterator->map);
 		break;
 	}

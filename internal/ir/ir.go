@@ -217,8 +217,9 @@ type (
 	StringConstant  struct{ Index int }
 
 	// Read reads a local. Of is the local's type, so a Read is typed without the program in hand.
-	// Checked is a read of a global from inside a function, which may run before the global's
-	// declaration has: JavaScript throws there (the temporal dead zone), and so does Adamic, out loud.
+	// Checked is a global read whose initialization is not proven, including function
+	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
+	// Adamic checks it out loud.
 	Read struct {
 		Local     int
 		Of        Type
@@ -793,6 +794,9 @@ type (
 	// and size of what Path names, a symbolic link followed, and whether Path is itself one, or
 	// { kind: 'Error', message }.
 	FileStatus struct{ Path Expression }
+
+	// RealPath is realPath(Path): canonical filesystem path, or an error value.
+	RealPath struct{ Path Expression }
 )
 
 // Field is one field of an object literal.
@@ -940,6 +944,7 @@ func (Utf8At) Type() Type           { return Number }
 func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
+func (RealPath) Type() Type         { return Object }
 
 func (MapNew) Type() Type     { return Map }
 func (MapKeys) Type() Type    { return Array }
@@ -1129,15 +1134,17 @@ type (
 	}
 
 	// Switch matches Value against each case's tests in order with ===, and runs the first match's
-	// Body, or Default's when none matches. A break inside a case leaves the switch. (0.1 has no
-	// fallthrough: the checker refuses it.)
+	// Body, or Default's when none matches. A break inside a case leaves the switch. Source
+	// fallthrough is expressed by lowering as entry dispatch followed by sequential guarded bodies.
 	Switch struct {
 		Value   Expression
 		Cases   []Case
 		Default []Statement
 	}
 
-	Break    struct{}
+	// Depth counts the enclosing loops and switches skipped by a labeled break.
+	// Zero is the innermost breakable, as for an unlabeled break.
+	Break    struct{ Depth int }
 	Continue struct{}
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose

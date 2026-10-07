@@ -34,6 +34,7 @@ type widening struct {
 
 	// readonlyField names a readonly field seen as a writable one, when that's the slot.
 	readonlyField string
+	enum          bool
 
 	// parameter is a function's parameter of type source seen as taking target, which it can't.
 	parameter bool
@@ -47,6 +48,17 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if l.openNumericEnumType(to) {
+		for _, member := range l.definedMembers(from) {
+			if !l.enumAssignable(member, to) {
+				return &widening{source: from, target: to, enum: true}
+			}
+		}
+		return nil
+	}
+	if to.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.openNumericEnumType(from) {
+		return &widening{source: from, target: to, enum: true}
+	}
 	if members := l.definedMembers(from); len(members) > 1 {
 		// A union is any one of its members, each seen as the target.
 		for _, member := range members {
@@ -86,6 +98,9 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		}
 		return l.widened(constraint, to, visited)
 	}
+	if !l.enumAssignable(from, to) {
+		return &widening{source: from, target: to, enum: true}
+	}
 	if !l.structured(from) || !l.structured(to) {
 		// A class instance target is walked as any object is: its fields are slots as a literal's
 		// are, so Box<Dog> seen as Box<Animal>, or a plain object seen as a class, is judged by them.
@@ -110,7 +125,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
 			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
-			if !l.checker.IsTypeAssignableTo(given, takes) {
+			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
 				// a Dog can be seen as one taking any Animal, and handed a Cat.
 				return &widening{source: takes, target: given, parameter: true}
@@ -170,7 +185,7 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 			// enters, is the same field.
 			return &widening{source: source, target: target, readonlyField: viewed.Name}
 		}
-		if !fresh && !l.checker.IsReadonlySymbol(viewed) && !l.checker.IsTypeAssignableTo(target, source) {
+		if !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
 			return &widening{source: source, target: target}
 		}
 		if found := l.widened(source, target, visited); found != nil {
@@ -211,7 +226,7 @@ func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutabl
 	}
 	for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
 		source, target := fromArguments[index], toArguments[index]
-		if mutable && !l.checker.IsTypeAssignableTo(target, source) {
+		if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
 			return &widening{source: source, target: target}
 		}
 		if found := l.widened(source, target, visited); found != nil {
@@ -387,12 +402,16 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
+	if l.nodeFSFileReadOnlyArgument(node) {
+		return nil
+	}
 	var own, contextual *checker.Type
 	var found *widening
 	switch {
 	case node.Kind == ast.KindAsExpression:
 		as := node.AsAsExpression()
-		if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+		// A qualified name (NodeJS.ErrnoException) has no Text; only the identifier const is as const.
+		if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 			return nil
 		}
 		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
@@ -416,7 +435,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			return nil
 		}
 		own, contextual = l.checker.GetTypeAtLocation(node.Name()), l.checker.GetTypeOfSymbol(property)
-		found = l.widened(own, contextual, map[[2]*checker.Type]bool{})
+		found = l.freshOrWidened(node.Name(), own, contextual)
 	case node.Kind == ast.KindSpreadAssignment:
 		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
 		// it is kennel's value seen as the literal's field.
@@ -471,6 +490,18 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 }
 
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+	if found.enum {
+		if enumObjectSymbol(found.target) != nil {
+			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
+		}
+		if l.flagEnum(l.enumIdentity(found.target)) && !l.numericEnum(l.enumIdentity(found.target)) {
+			return l.flagWriteRefusal(node, found.target)
+		}
+		if l.numericEnum(l.enumIdentity(found.target)) || l.numericEnum(l.enumIdentity(found.source)) {
+			return &Refused{Where: l.program.Where(node), What: "an unproven value assigned to a numeric literal or enum member slot " + l.checker.TypeToString(found.target), Fix: "compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"}
+		}
+		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
+	}
 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
 	if found.parameter {
@@ -493,6 +524,25 @@ func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type
 // covariant, and only what's inside it, held elsewhere too, is walked as a view.
 func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
 	node = ast.SkipParentheses(node)
+	// A numeric enum read narrowed to never has a non-returning IR check at this exact site.
+	// It cannot write a value into the contextual slot, including a closed string-enum slot.
+	if own.Flags()&checker.TypeFlagsNever != 0 && l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
+		return nil
+	}
+	targetLiteral := (contextual.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(contextual))) && !l.openNumericEnumType(contextual)
+	if targetLiteral {
+		if declared := l.enumStoredType(node); declared != nil {
+			if l.openNumericEnumType(declared) && !l.enumMemberOrigin(node, l.enumIdentity(declared), map[*ast.Node]bool{}) {
+				return &widening{source: declared, target: contextual, enum: true}
+			}
+		}
+	}
+	if found := l.flagMemberWidened(node, contextual); found != nil && !l.numericEnum(l.enumIdentity(found.target)) {
+		return found
+	}
+	if target := l.flagTarget(contextual); target != nil && l.flagDomain(node, target) {
+		return nil
+	}
 	switch node.Kind {
 	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
 		// Made as the type it's written into, held by nothing else: its own parts are sites.

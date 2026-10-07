@@ -10,12 +10,25 @@ import (
 
 // assignment lowers =, and the compound assignments, to a local.
 func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
+	if statements, known, err := l.arrayLengthWrite(node); known {
+		return statements, err
+	}
+	if value, known, err := l.processValue(node); known {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	binary := node.AsBinaryExpression()
 	operator, isCompound := compoundAssignments[binary.OperatorToken.Kind]
 	if binary.OperatorToken.Kind != ast.KindEqualsToken && !isCompound {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	target := ast.SkipParentheses(binary.Left)
+	if isCompound && l.enumNeverIdentity(target, map[*ast.Node]bool{}) != nil {
+		value, err := l.expression(target)
+		return []ir.Statement{ir.Evaluate{Value: value}}, err
+	}
 	if target.Kind == ast.KindPropertyAccessExpression {
 		if isCompound {
 			return l.updateProperty(node, target, operator, binary.Right)
@@ -144,6 +157,10 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	operand = ast.SkipParentheses(operand)
+	if l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {
+		value, err := l.expression(operand)
+		return []ir.Statement{ir.Evaluate{Value: value}}, err
+	}
 	if operand.Kind == ast.KindPropertyAccessExpression {
 		step := ast.KindPlusToken
 		if operator == ast.KindMinusMinusToken {

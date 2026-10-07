@@ -8,7 +8,7 @@
 //	handles  <extension>...                        the extensions the formatter takes, lowercased
 //	tree     <name> <root>                         a tree on disk, by its absolute root
 //	house    <declared 0 or 1> <source> <line>...  formatoptions.Resolve's answer for the tree; walks it
-//	                                               (its ignorePatterns are none: the Go side keeps them so)
+//	patterns <pattern>...                          resolved lint ignores, from the Go settings oracle
 //	has      <directory>                           HasOwnRepository
 //	contains <file>                                NestedRepositoryContaining, from the tree's root
 //	boundary <root> <settings directory>           repositoryBoundaryBetween
@@ -18,7 +18,7 @@
 // The output, for each tree, is `tree <name>`; then Enumerate's answer, `enumerate error <message>`, or
 // its counts and lists: `walked`, each `layer <name> <count>` and `declined <extension> <count>` in
 // Go's order (by code point), `unhandled`, `symbolic-links`, and each `nested`, `directory`,
-// `ignore-file` and `file` in the order the walk found them; then NestedRepositoriesBelow's, each
+// `ignore-file`, `file` and `adamic` in the order the walk found them; then NestedRepositoriesBelow's, each
 // `nested-below <path>` or `nested-below error <message>`; and an answer for each question, in order.
 // Names and paths are quoted with \\, \", \n, \r, \t, and \u00XX for any other control character.
 //
@@ -140,6 +140,7 @@ if (read.kind === 'Error') {
 
 let handled: readonly string[] = [];
 let root = '';
+let ignorePatterns: readonly string[] = [];
 for (const line of read.text.split('\n')) {
 	if (line === '') {
 		continue;
@@ -152,6 +153,10 @@ for (const line of read.text.split('\n')) {
 		case 'tree':
 			console.log(`tree ${field(fields, 1, line)}`);
 			root = field(fields, 2, line);
+			ignorePatterns = [];
+			break;
+		case 'patterns':
+			ignorePatterns = fields.slice(1).map((pattern) => unescape(pattern));
 			break;
 		case 'house': {
 			const extensions = handled;
@@ -159,7 +164,7 @@ for (const line of read.text.split('\n')) {
 				houseIgnoreDeclared: field(fields, 1, line) === '1',
 				source: field(fields, 2, line),
 				houseIgnore: fields.slice(3).map((houseLine) => unescape(houseLine)),
-				ignorePatterns: [],
+				ignorePatterns,
 			};
 			const enumerated = enumerate(root, resolution, (fileName) => extensions.includes(goToLower(ext(fileName))));
 			if (enumerated.kind === 'Error') {
@@ -186,6 +191,9 @@ for (const line of read.text.split('\n')) {
 				}
 				for (const file of enumeration.files) {
 					console.log(`file ${quote(file)}`);
+				}
+				for (const file of enumeration.adamic) {
+					console.log(`adamic ${quote(file)}`);
 				}
 			}
 			const below = nestedRepositoriesBelow(root);
