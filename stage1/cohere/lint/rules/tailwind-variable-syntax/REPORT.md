@@ -1,5 +1,5 @@
 Built: better-tailwindcss/enforce-consistent-variable-syntax in implementation.a with a temporary rule.ts registration facade.
-Commits: claimed and pushed in 1e405194 before code.
+Commits: claim 1e405194 was pushed before code; implementation 30867c28.
 Commands and outputs: ../tailwind-important-position/REPORT.md and its evidence directory contain the complete bounded validation.
 Mutants: its compiling silence mutant is required to differ from Go on Node, emitted JavaScript and sanitized native.
 Not covered: the exact JSX, custom-regexp and shared-provider gaps are documented in the linked report.
