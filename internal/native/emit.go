@@ -49,6 +49,9 @@ func C(program *ir.Program) string {
 		globals = true
 		fmt.Fprintf(&builder, "static %s %s = %s;\n", cType(local.Type), emitter.localName(index), zero(local.Type))
 		fmt.Fprintf(&builder, "static bool %s = false;\n", readyName(index))
+		if local.Uninitialized {
+			fmt.Fprintf(&builder, "static bool %s_declared = false;\n", readyName(index))
+		}
 	}
 	if globals {
 		builder.WriteString("\n")

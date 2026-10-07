@@ -122,13 +122,25 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.PhantomMember:
 		return e.phantomMember(expression)
 	case ir.Property:
-		if taken, ok := e.take(expression); ok {
-			return taken
+		if expression.Readiness == "" {
+			if taken, ok := e.take(expression); ok {
+				return taken
+			}
 		}
 		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
-		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", e.fieldSlot(object, expression.Name, expression.Class), member(expression.Of)))
+		slot := e.fieldSlot(object, expression.Name, expression.Class)
+		if expression.Readiness != "" {
+			slot = fmt.Sprintf("adamic_object_read(%s, %s, &%s, %s)", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
+			if expression.Optional {
+				slot = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, slot)
+			}
+		}
+		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", slot, member(expression.Of)))
 		if expression.Of == ir.MaybeNumber {
+			if expression.Readiness != "" && !expression.Absent {
+				e.line("(void)%s;", slot)
+			}
 			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
 		}
 		if expression.Absent {
@@ -138,6 +150,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				lookup = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, lookup)
 			}
 			e.line("adamic_value *%s = %s;", slot, lookup)
+			if expression.Readiness != "" {
+				e.line("if (%s != NULL) {", slot)
+				e.line("\t(void)adamic_object_read(%s, %s, &%s, %s);", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
+				e.line("}")
+			}
 			undefined := "NULL"
 			if expression.Of.IsMaybe() {
 				undefined = zero(expression.Of)
