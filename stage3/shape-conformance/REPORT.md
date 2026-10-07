@@ -1,3 +1,5 @@
+Current exact adapted-tree census: [ADAPTED-STAGE3-SHARE-REPORT.md](ADAPTED-STAGE3-SHARE-REPORT.md).
+
 Built: finite callback allocation flow through aliases, parameters, returns and joined implementation identities.
 Commits: diagnostic handoff b8316acd; current main merged through 030119b4 (origin/main ce0750f2); feature commit is recorded in branch history.
 Commands: lower/IR packages, IR target-reader guard, vet, native/Node fixtures, 43 unchanged graph counts and census audits pass.

@@ -1,0 +1,15 @@
+{
+  "integration": "f1c919701ec9b42b78e104fe9cc1ce96db9d7d09",
+  "failures": [
+    "internal/oracle/testdata/graph_regions_cache.a",
+    "internal/oracle/testdata/graph_regions_entries.a",
+    "internal/oracle/testdata/graph_regions_literals.a",
+    "internal/oracle/testdata/graph_regions_regression_06.a",
+    "internal/oracle/testdata/graph_regions_regression_07.a",
+    "internal/oracle/testdata/graph_regions_regression_08.a",
+    "internal/oracle/testdata/graph_regions_regression_09.a",
+    "internal/oracle/testdata/graph_regions_symbols.a"
+  ],
+  "unchanged_count_rows": 35,
+  "baseline_reproduced": true
+}

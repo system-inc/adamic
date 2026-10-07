@@ -1,0 +1,67 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "counts": {
+    "tagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1758
+    },
+    "untagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1178
+    }
+  },
+  "unknown_reasons": {
+    "tagged": {
+      "diagnosed body": 1173,
+      "flow the graph can't see": 585
+    },
+    "untagged": {
+      "diagnosed body": 887,
+      "flow the graph can't see": 288,
+      "host metadata": 3
+    }
+  },
+  "allocation_shapes": 2522,
+  "typed_body_skip_sites": {
+    "untagged": 35,
+    "tagged": 9
+  },
+  "diagnosed_dependency_sites": {
+    "tagged": 1164,
+    "untagged": 852
+  },
+  "host_values": {
+    "compilerHost.getSourceFile": 1897,
+    "getOutputPathsFor(node, host, /*forceDtsPaths*/ true).declarationFilePath": 799,
+    "host.compilerHost.getCurrentDirectory": 385,
+    "host.getCanonicalFileName": 949,
+    "host.getCommonSourceDirectory": 808,
+    "host.getCompilerOptions": 893,
+    "host.getCurrentDirectory": 813,
+    "host.getNearestAncestorDirectoryWithPackageJson": 379,
+    "host.getPackageJsonInfoCache?.()?.getPackageJsonInfo": 1,
+    "host.getParsedCommandLine": 934,
+    "host.getSourceFile": 1897,
+    "host.getSourceFileByPath": 1897,
+    "host.getSourceFileFromReference": 846,
+    "host.readFile": 1897,
+    "host.realpath": 943,
+    "host.resolveModuleNames!(\r\n                moduleNames.map(getModuleResolutionName),\r\n                containingFile,\r\n                reusedNames?.map(getModuleResolutionName),\r\n                redirectedReference,\r\n                options,\r\n                containingSourceFile,\r\n            ).map": 2,
+    "host: ModuleResolutionHost": 1897,
+    "resolutionHost.getCompilationSettings": 400,
+    "resolutionHost.getGlobalTypingsCacheLocation": 233,
+    "resolutionHost.toPath": 443,
+    "state.compilerHost.getCanonicalFileName": 406,
+    "state.compilerHost.getCurrentDirectory": 798,
+    "state.host.getCurrentDirectory": 385,
+    "state.host.readDirectory(\r\n                    scope.packageDirectory,\r\n                    extensionsToExtensionsArray(extensions),\r\n                    /*excludes*/ undefined,\r\n                    [\r\n                        changeFullExtension(replaceFirstStar(target, \"**/*\"), \".*\"),\r\n                    ],\r\n                ).forEach": 406,
+    "sys.getCurrentDirectory": 385,
+    "sys: System": 949,
+    "system.getExecutingFilePath": 949,
+    "system: System": 949
+  }
+}

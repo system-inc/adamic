@@ -1,0 +1,2911 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "diagnostic_count": 260,
+  "diagnosed_cast_sites": 2060,
+  "groups": [
+    {
+      "code": "TS2345",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 30,
+      "own_function_sites": 16,
+      "dependency_sites": 1927,
+      "affected_sites": 1943,
+      "affected_kinds": {
+        "untagged": 836,
+        "tagged": 1107
+      },
+      "recorded_barrier_cleared_alone": 10,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 9591,
+          "column": 37,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 10022,
+          "column": 63,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 10026,
+          "column": 97,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 10053,
+          "column": 53,
+          "message": "Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 10063,
+          "column": 69,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 10064,
+          "column": 93,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 10066,
+          "column": 103,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 10070,
+          "column": 50,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 10319,
+          "column": 83,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 10320,
+          "column": 51,
+          "message": "Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 10336,
+          "column": 86,
+          "message": "Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 13986,
+          "column": 47,
+          "message": "Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Node'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 13990,
+          "column": 49,
+          "message": "Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Declaration'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 14643,
+          "column": 66,
+          "message": "Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 15701,
+          "column": 42,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 15704,
+          "column": 43,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 15706,
+          "column": 52,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 16689,
+          "column": 70,
+          "message": "Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 20618,
+          "column": 50,
+          "message": "Argument of type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to parameter of type 'TypeMapper'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 35291,
+          "column": 79,
+          "message": "Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 38430,
+          "column": 64,
+          "message": "Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 42849,
+          "column": 65,
+          "message": "Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 46114,
+          "column": 128,
+          "message": "Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 46114,
+          "column": 208,
+          "message": "Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 46128,
+          "column": 128,
+          "message": "Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 46159,
+          "column": 176,
+          "message": "Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 46734,
+          "column": 64,
+          "message": "Argument of type '__String | undefined' is not assignable to parameter of type '__String'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 46736,
+          "column": 167,
+          "message": "Argument of type '__String | undefined' is not assignable to parameter of type '__String'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 51465,
+          "column": 110,
+          "message": "Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2345",
+          "line": 52429,
+          "column": 35,
+          "message": "Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/transformers/generators.ts",
+      "diagnostics": 11,
+      "own_function_sites": 0,
+      "dependency_sites": 1934,
+      "affected_sites": 1934,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1122
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 1283,
+          "column": 39,
+          "message": "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 1374,
+          "column": 70,
+          "message": "Argument of type 'InitializedVariableDeclaration | undefined' is not assignable to parameter of type 'InitializedVariableDeclaration'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 1889,
+          "column": 55,
+          "message": "Argument of type 'number | undefined' is not assignable to parameter of type 'number'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 1911,
+          "column": 27,
+          "message": "Argument of type 'number | undefined' is not assignable to parameter of type 'number'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 1918,
+          "column": 27,
+          "message": "Argument of type 'number | undefined' is not assignable to parameter of type 'number'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 2446,
+          "column": 48,
+          "message": "Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 2469,
+          "column": 56,
+          "message": "Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 2472,
+          "column": 53,
+          "message": "Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 2480,
+          "column": 48,
+          "message": "Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 2499,
+          "column": 51,
+          "message": "Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2345",
+          "line": 2507,
+          "column": 51,
+          "message": "Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'."
+        }
+      ]
+    },
+    {
+      "code": "TS2532",
+      "file": "src/compiler/transformers/generators.ts",
+      "diagnostics": 5,
+      "own_function_sites": 0,
+      "dependency_sites": 1934,
+      "affected_sites": 1934,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1122
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2532",
+          "line": 1684,
+          "column": 46,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2532",
+          "line": 1729,
+          "column": 55,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2532",
+          "line": 1919,
+          "column": 44,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2532",
+          "line": 2951,
+          "column": 21,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2532",
+          "line": 2983,
+          "column": 57,
+          "message": "Object is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS18048",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 27,
+      "own_function_sites": 7,
+      "dependency_sites": 1920,
+      "affected_sites": 1927,
+      "affected_kinds": {
+        "untagged": 823,
+        "tagged": 1104
+      },
+      "recorded_barrier_cleared_alone": 1,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 10022,
+          "column": 86,
+          "message": "'m' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 10033,
+          "column": 67,
+          "message": "'m' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 10033,
+          "column": 79,
+          "message": "'m' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 10061,
+          "column": 90,
+          "message": "'n' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 10062,
+          "column": 69,
+          "message": "'s' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 10064,
+          "column": 47,
+          "message": "'s' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 10065,
+          "column": 122,
+          "message": "'s' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 12034,
+          "column": 30,
+          "message": "'file' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 15695,
+          "column": 41,
+          "message": "'prop' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 15697,
+          "column": 22,
+          "message": "'prop' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 15697,
+          "column": 47,
+          "message": "'prop' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 15700,
+          "column": 51,
+          "message": "'prop' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 51530,
+          "column": 21,
+          "message": "'s' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 51532,
+          "column": 25,
+          "message": "'merged' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 51533,
+          "column": 41,
+          "message": "'merged' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52426,
+          "column": 13,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52427,
+          "column": 39,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52430,
+          "column": 39,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52432,
+          "column": 13,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52433,
+          "column": 39,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52435,
+          "column": 13,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52436,
+          "column": 39,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52438,
+          "column": 14,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52439,
+          "column": 39,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52441,
+          "column": 42,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52443,
+          "column": 39,
+          "message": "'parameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS18048",
+          "line": 52446,
+          "column": 39,
+          "message": "'parameter' is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS18048",
+      "file": "src/compiler/transformers/es2017.ts",
+      "diagnostics": 6,
+      "own_function_sites": 0,
+      "dependency_sites": 1926,
+      "affected_sites": 1926,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1114
+      },
+      "recorded_barrier_cleared_alone": 5,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "code": "TS18048",
+          "line": 327,
+          "column": 17,
+          "message": "'catchClauseUnshadowedNames' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "code": "TS18048",
+          "line": 764,
+          "column": 38,
+          "message": "'outerParameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "code": "TS18048",
+          "line": 765,
+          "column": 25,
+          "message": "'originalParameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "code": "TS18048",
+          "line": 765,
+          "column": 58,
+          "message": "'originalParameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "code": "TS18048",
+          "line": 767,
+          "column": 76,
+          "message": "'outerParameter' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "code": "TS18048",
+          "line": 770,
+          "column": 44,
+          "message": "'outerParameter' is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2769",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 5,
+      "own_function_sites": 9,
+      "dependency_sites": 1914,
+      "affected_sites": 1923,
+      "affected_kinds": {
+        "untagged": 831,
+        "tagged": 1092
+      },
+      "recorded_barrier_cleared_alone": 2,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2769",
+          "line": 5564,
+          "column": 33,
+          "message": "No overload matches this call."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2769",
+          "line": 10324,
+          "column": 76,
+          "message": "No overload matches this call."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2769",
+          "line": 17946,
+          "column": 29,
+          "message": "No overload matches this call."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2769",
+          "line": 19044,
+          "column": 25,
+          "message": "No overload matches this call."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2769",
+          "line": 35290,
+          "column": 33,
+          "message": "No overload matches this call."
+        }
+      ]
+    },
+    {
+      "code": "TS2322",
+      "file": "src/compiler/transformers/es2017.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1921,
+      "affected_sites": 1921,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1109
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "code": "TS2322",
+          "line": 325,
+          "column": 21,
+          "message": "Type 'Set<__String | undefined>' is not assignable to type 'Set<__String>'."
+        }
+      ]
+    },
+    {
+      "code": "TS2532",
+      "file": "src/compiler/transformers/es2017.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1921,
+      "affected_sites": 1921,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1109
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "code": "TS2532",
+          "line": 599,
+          "column": 86,
+          "message": "Object is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "diagnostics": 4,
+      "own_function_sites": 4,
+      "dependency_sites": 1917,
+      "affected_sites": 1921,
+      "affected_kinds": {
+        "untagged": 811,
+        "tagged": 1110
+      },
+      "recorded_barrier_cleared_alone": 4,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+          "code": "TS2345",
+          "line": 100,
+          "column": 46,
+          "message": "Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'."
+        },
+        {
+          "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+          "code": "TS2345",
+          "line": 163,
+          "column": 91,
+          "message": "Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'TextRange'."
+        },
+        {
+          "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+          "code": "TS2345",
+          "line": 194,
+          "column": 37,
+          "message": "Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'."
+        },
+        {
+          "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+          "code": "TS2345",
+          "line": 196,
+          "column": 81,
+          "message": "Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'."
+        }
+      ]
+    },
+    {
+      "code": "TS18048",
+      "file": "src/compiler/transformers/classFields.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 1920,
+      "affected_sites": 1920,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1108
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "code": "TS18048",
+          "line": 2252,
+          "column": 97,
+          "message": "'superStatementIndex' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "code": "TS18048",
+          "line": 2253,
+          "column": 27,
+          "message": "'superStatementIndex' is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/transformers/classFields.ts",
+      "diagnostics": 4,
+      "own_function_sites": 0,
+      "dependency_sites": 1920,
+      "affected_sites": 1920,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1108
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "code": "TS2345",
+          "line": 2297,
+          "column": 52,
+          "message": "Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'."
+        },
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "code": "TS2345",
+          "line": 2376,
+          "column": 56,
+          "message": "Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'."
+        },
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "code": "TS2345",
+          "line": 2864,
+          "column": 52,
+          "message": "Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'."
+        },
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "code": "TS2345",
+          "line": 2896,
+          "column": 52,
+          "message": "Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'."
+        }
+      ]
+    },
+    {
+      "code": "TS2532",
+      "file": "src/compiler/transformers/classFields.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1920,
+      "affected_sites": 1920,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1108
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "code": "TS2532",
+          "line": 1835,
+          "column": 21,
+          "message": "Object is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2538",
+      "file": "src/compiler/transformers/classFields.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1920,
+      "affected_sites": 1920,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1108
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "code": "TS2538",
+          "line": 2251,
+          "column": 45,
+          "message": "Type 'undefined' cannot be used as an index type."
+        }
+      ]
+    },
+    {
+      "code": "TS2375",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 2,
+      "own_function_sites": 7,
+      "dependency_sites": 1912,
+      "affected_sites": 1919,
+      "affected_kinds": {
+        "untagged": 824,
+        "tagged": 1095
+      },
+      "recorded_barrier_cleared_alone": 6,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2375",
+          "line": 6035,
+          "column": 9,
+          "message": "Type '{ accessibility: SymbolAccessibility.Accessible; aliasesToMakeVisible: LateVisibilityPaintedStatement[] | undefined; }' is not assignable to type 'SymbolVisibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2375",
+          "line": 54261,
+          "column": 5,
+          "message": "Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/transformers/es2015.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1919,
+      "affected_sites": 1919,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1107
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "code": "TS2345",
+          "line": 4437,
+          "column": 29,
+          "message": "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'."
+        }
+      ]
+    },
+    {
+      "code": "TS2532",
+      "file": "src/compiler/transformers/es2015.ts",
+      "diagnostics": 4,
+      "own_function_sites": 0,
+      "dependency_sites": 1919,
+      "affected_sites": 1919,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1107
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "code": "TS2532",
+          "line": 2803,
+          "column": 38,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "code": "TS2532",
+          "line": 3046,
+          "column": 64,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "code": "TS2532",
+          "line": 4691,
+          "column": 34,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/es2015.ts",
+          "code": "TS2532",
+          "line": 4693,
+          "column": 13,
+          "message": "Object is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS18048",
+      "file": "src/compiler/transformers/generators.ts",
+      "diagnostics": 7,
+      "own_function_sites": 0,
+      "dependency_sites": 1919,
+      "affected_sites": 1919,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1107
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS18048",
+          "line": 1370,
+          "column": 35,
+          "message": "'variable' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS18048",
+          "line": 1866,
+          "column": 21,
+          "message": "'clause' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS18048",
+          "line": 1880,
+          "column": 25,
+          "message": "'clause' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS18048",
+          "line": 1881,
+          "column": 43,
+          "message": "'clause' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS18048",
+          "line": 1887,
+          "column": 62,
+          "message": "'clause' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS18048",
+          "line": 1889,
+          "column": 85,
+          "message": "'clause' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS18048",
+          "line": 2880,
+          "column": 63,
+          "message": "'withBlock' is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2339",
+      "file": "src/compiler/transformers/generators.ts",
+      "diagnostics": 3,
+      "own_function_sites": 0,
+      "dependency_sites": 1919,
+      "affected_sites": 1919,
+      "affected_kinds": {
+        "untagged": 812,
+        "tagged": 1107
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2339",
+          "line": 1881,
+          "column": 50,
+          "message": "Property 'expression' does not exist on type 'CaseOrDefaultClause'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2339",
+          "line": 1887,
+          "column": 69,
+          "message": "Property 'expression' does not exist on type 'CaseOrDefaultClause'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2339",
+          "line": 1889,
+          "column": 92,
+          "message": "Property 'expression' does not exist on type 'CaseOrDefaultClause'."
+        }
+      ]
+    },
+    {
+      "code": "TS2379",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 5,
+      "own_function_sites": 8,
+      "dependency_sites": 1910,
+      "affected_sites": 1918,
+      "affected_kinds": {
+        "untagged": 826,
+        "tagged": 1092
+      },
+      "recorded_barrier_cleared_alone": 4,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2379",
+          "line": 7837,
+          "column": 133,
+          "message": "Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2379",
+          "line": 8082,
+          "column": 62,
+          "message": "Argument of type '{ reportTruncationError?: () => void; reportNonlocalAugmentation?: (containingFile: SourceFile, parentSymbol: Symbol, augmentingSymbol: Symbol) => void; ... 10 more ...; moduleResolverHost: (ModuleSpecifierResolutionHost & ...) | undefined; }' is not assignable to parameter of type 'SymbolTracker' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2379",
+          "line": 10941,
+          "column": 33,
+          "message": "Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; modifiers: ... | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2379",
+          "line": 21434,
+          "column": 98,
+          "message": "Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2379",
+          "line": 43740,
+          "column": 86,
+          "message": "Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    },
+    {
+      "code": "TS2322",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 11,
+      "own_function_sites": 7,
+      "dependency_sites": 1910,
+      "affected_sites": 1917,
+      "affected_kinds": {
+        "untagged": 825,
+        "tagged": 1092
+      },
+      "recorded_barrier_cleared_alone": 3,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 1683,
+          "column": 9,
+          "message": "Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 1779,
+          "column": 9,
+          "message": "Type '(call: CallLikeExpression, editingArgument: Node) => (Signature | undefined)[]' is not assignable to type '(call: CallLikeExpression, editingArgument: Node) => Signature[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 5311,
+          "column": 45,
+          "message": "Type 'Symbol | undefined' is not assignable to type 'Symbol'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 8566,
+          "column": 17,
+          "message": "Type 'Set<number | undefined>' is not assignable to type 'Set<number>'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 8861,
+          "column": 21,
+          "message": "Type 'Set<string | undefined>' is not assignable to type 'Set<string>'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 9363,
+          "column": 17,
+          "message": "Type 'Set<string | undefined>' is not assignable to type 'Set<string>'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 15145,
+          "column": 9,
+          "message": "Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 16693,
+          "column": 62,
+          "message": "Type '(Symbol | undefined)[] | undefined' is not assignable to type 'Symbol[] | undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 18662,
+          "column": 15,
+          "message": "Type '(Type | undefined)[]' is not assignable to type 'Type[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 25972,
+          "column": 13,
+          "message": "Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2322",
+          "line": 25974,
+          "column": 9,
+          "message": "Type 'Symbol[] | undefined' is not assignable to type 'Symbol[]'."
+        }
+      ]
+    },
+    {
+      "code": "TS2532",
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1917,
+      "affected_sites": 1917,
+      "affected_kinds": {
+        "untagged": 811,
+        "tagged": 1106
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+          "code": "TS2532",
+          "line": 251,
+          "column": 22,
+          "message": "Object is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2412",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 2,
+      "own_function_sites": 8,
+      "dependency_sites": 1907,
+      "affected_sites": 1915,
+      "affected_kinds": {
+        "untagged": 824,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 2,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2412",
+          "line": 17890,
+          "column": 21,
+          "message": "Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2412",
+          "line": 43517,
+          "column": 20,
+          "message": "Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        }
+      ]
+    },
+    {
+      "code": "TS2532",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 1,
+      "own_function_sites": 8,
+      "dependency_sites": 1907,
+      "affected_sites": 1915,
+      "affected_kinds": {
+        "untagged": 824,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 2,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2532",
+          "line": 50153,
+          "column": 121,
+          "message": "Object is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2488",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 2,
+      "own_function_sites": 7,
+      "dependency_sites": 1907,
+      "affected_sites": 1914,
+      "affected_kinds": {
+        "untagged": 822,
+        "tagged": 1092
+      },
+      "recorded_barrier_cleared_alone": 1,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2488",
+          "line": 2900,
+          "column": 36,
+          "message": "Type '[__String, Symbol] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2488",
+          "line": 22498,
+          "column": 32,
+          "message": "Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+        }
+      ]
+    },
+    {
+      "code": "TS2556",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 1,
+      "own_function_sites": 6,
+      "dependency_sites": 1907,
+      "affected_sites": 1913,
+      "affected_kinds": {
+        "untagged": 822,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2556",
+          "line": 22498,
+          "column": 29,
+          "message": "A spread argument must either have a tuple type or be passed to a rest parameter."
+        }
+      ]
+    },
+    {
+      "code": "TS2722",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 1,
+      "own_function_sites": 6,
+      "dependency_sites": 1907,
+      "affected_sites": 1913,
+      "affected_kinds": {
+        "untagged": 822,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2722",
+          "line": 20595,
+          "column": 32,
+          "message": "Cannot invoke an object which is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/builder.ts",
+      "diagnostics": 12,
+      "own_function_sites": 5,
+      "dependency_sites": 1901,
+      "affected_sites": 1906,
+      "affected_kinds": {
+        "untagged": 815,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 9,
+      "locations": [
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 395,
+          "column": 85,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 395,
+          "column": 118,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 991,
+          "column": 17,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 1246,
+          "column": 69,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 1345,
+          "column": 64,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 1347,
+          "column": 41,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 1347,
+          "column": 97,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 1493,
+          "column": 60,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 1495,
+          "column": 26,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 1496,
+          "column": 45,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 1562,
+          "column": 64,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2345",
+          "line": 2379,
+          "column": 45,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'."
+        }
+      ]
+    },
+    {
+      "code": "TS2322",
+      "file": "src/compiler/commandLineParser.ts",
+      "diagnostics": 4,
+      "own_function_sites": 0,
+      "dependency_sites": 1906,
+      "affected_sites": 1906,
+      "affected_kinds": {
+        "untagged": 807,
+        "tagged": 1099
+      },
+      "recorded_barrier_cleared_alone": 8,
+      "locations": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": "TS2322",
+          "line": 2677,
+          "column": 9,
+          "message": "Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": "TS2322",
+          "line": 2952,
+          "column": 13,
+          "message": "Type 'string | undefined' is not assignable to type 'string'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": "TS2322",
+          "line": 3449,
+          "column": 55,
+          "message": "Type '(string | undefined)[]' is not assignable to type 'string[]'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": "TS2322",
+          "line": 4014,
+          "column": 5,
+          "message": "Type '(string | undefined)[]' is not assignable to type 'string[]'."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/tsbuildPublic.ts",
+      "diagnostics": 1,
+      "own_function_sites": 4,
+      "dependency_sites": 1900,
+      "affected_sites": 1904,
+      "affected_kinds": {
+        "untagged": 813,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 7,
+      "locations": [
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2345",
+          "line": 1776,
+          "column": 54,
+          "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/transformers/esnext.ts",
+      "diagnostics": 6,
+      "own_function_sites": 0,
+      "dependency_sites": 1901,
+      "affected_sites": 1901,
+      "affected_kinds": {
+        "untagged": 806,
+        "tagged": 1095
+      },
+      "recorded_barrier_cleared_alone": 4,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/esnext.ts",
+          "code": "TS2345",
+          "line": 183,
+          "column": 34,
+          "message": "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'."
+        },
+        {
+          "file": "src/compiler/transformers/esnext.ts",
+          "code": "TS2345",
+          "line": 205,
+          "column": 52,
+          "message": "Argument of type '(ExportSpecifier | undefined)[]' is not assignable to parameter of type 'readonly ExportSpecifier[]'."
+        },
+        {
+          "file": "src/compiler/transformers/esnext.ts",
+          "code": "TS2345",
+          "line": 344,
+          "column": 44,
+          "message": "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'."
+        },
+        {
+          "file": "src/compiler/transformers/esnext.ts",
+          "code": "TS2345",
+          "line": 384,
+          "column": 36,
+          "message": "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'."
+        },
+        {
+          "file": "src/compiler/transformers/esnext.ts",
+          "code": "TS2345",
+          "line": 767,
+          "column": 34,
+          "message": "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'."
+        },
+        {
+          "file": "src/compiler/transformers/esnext.ts",
+          "code": "TS2345",
+          "line": 767,
+          "column": 70,
+          "message": "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'."
+        }
+      ]
+    },
+    {
+      "code": "TS2412",
+      "file": "src/compiler/tsbuildPublic.ts",
+      "diagnostics": 10,
+      "own_function_sites": 2,
+      "dependency_sites": 1898,
+      "affected_sites": 1900,
+      "affected_kinds": {
+        "untagged": 809,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 3,
+      "locations": [
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2412",
+          "line": 302,
+          "column": 5,
+          "message": "Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2412",
+          "line": 438,
+          "column": 5,
+          "message": "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2412",
+          "line": 439,
+          "column": 5,
+          "message": "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2412",
+          "line": 440,
+          "column": 5,
+          "message": "Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2412",
+          "line": 441,
+          "column": 5,
+          "message": "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2412",
+          "line": 442,
+          "column": 5,
+          "message": "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2412",
+          "line": 443,
+          "column": 5,
+          "message": "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2412",
+          "line": 785,
+          "column": 5,
+          "message": "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2412",
+          "line": 786,
+          "column": 5,
+          "message": "Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS2412",
+          "line": 787,
+          "column": 5,
+          "message": "Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        }
+      ]
+    },
+    {
+      "code": "TS2412",
+      "file": "src/compiler/watchPublic.ts",
+      "diagnostics": 10,
+      "own_function_sites": 0,
+      "dependency_sites": 1900,
+      "affected_sites": 1900,
+      "affected_kinds": {
+        "untagged": 809,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 3,
+      "locations": [
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2412",
+          "line": 125,
+          "column": 5,
+          "message": "Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2412",
+          "line": 506,
+          "column": 5,
+          "message": "Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2412",
+          "line": 529,
+          "column": 5,
+          "message": "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2412",
+          "line": 530,
+          "column": 5,
+          "message": "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2412",
+          "line": 534,
+          "column": 5,
+          "message": "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2412",
+          "line": 535,
+          "column": 5,
+          "message": "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2412",
+          "line": 542,
+          "column": 5,
+          "message": "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2412",
+          "line": 568,
+          "column": 17,
+          "message": "Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2412",
+          "line": 661,
+          "column": 9,
+          "message": "Type '((directory: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2412",
+          "line": 662,
+          "column": 9,
+          "message": "Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/program.ts",
+      "diagnostics": 4,
+      "own_function_sites": 0,
+      "dependency_sites": 1898,
+      "affected_sites": 1898,
+      "affected_kinds": {
+        "untagged": 807,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2345",
+          "line": 4157,
+          "column": 64,
+          "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'."
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2345",
+          "line": 4160,
+          "column": 69,
+          "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'."
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2345",
+          "line": 4160,
+          "column": 95,
+          "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'."
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2345",
+          "line": 4988,
+          "column": 28,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      "code": "TS2375",
+      "file": "src/compiler/program.ts",
+      "diagnostics": 4,
+      "own_function_sites": 0,
+      "dependency_sites": 1898,
+      "affected_sites": 1898,
+      "affected_kinds": {
+        "untagged": 807,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2375",
+          "line": 472,
+          "column": 11,
+          "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 16 more ...; createHash: ... | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2375",
+          "line": 1876,
+          "column": 11,
+          "message": "Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2375",
+          "line": 2599,
+          "column": 9,
+          "message": "Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2375",
+          "line": 5107,
+          "column": 5,
+          "message": "Type '{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: ...; ... 6 more ...; trace: ... | undefined; }' is not assignable to type 'ParseConfigFileHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/transformers/declarations.ts",
+      "diagnostics": 1,
+      "own_function_sites": 1,
+      "dependency_sites": 1897,
+      "affected_sites": 1898,
+      "affected_kinds": {
+        "untagged": 806,
+        "tagged": 1092
+      },
+      "recorded_barrier_cleared_alone": 1,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/declarations.ts",
+          "code": "TS2345",
+          "line": 1678,
+          "column": 110,
+          "message": "Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/transformers/jsx.ts",
+      "diagnostics": 2,
+      "own_function_sites": 1,
+      "dependency_sites": 1897,
+      "affected_sites": 1898,
+      "affected_kinds": {
+        "untagged": 806,
+        "tagged": 1092
+      },
+      "recorded_barrier_cleared_alone": 1,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/jsx.ts",
+          "code": "TS2345",
+          "line": 309,
+          "column": 58,
+          "message": "Argument of type 'JsxChild | undefined' is not assignable to parameter of type 'JsxChild'."
+        },
+        {
+          "file": "src/compiler/transformers/jsx.ts",
+          "code": "TS2345",
+          "line": 502,
+          "column": 62,
+          "message": "Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node'."
+        }
+      ]
+    },
+    {
+      "code": "TS2488",
+      "file": "src/compiler/builder.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 1897,
+      "affected_sites": 1897,
+      "affected_kinds": {
+        "untagged": 806,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2488",
+          "line": 1258,
+          "column": 65,
+          "message": "Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2488",
+          "line": 1292,
+          "column": 61,
+          "message": "Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+        }
+      ]
+    },
+    {
+      "code": "TS18046",
+      "file": "src/compiler/commandLineParser.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1897,
+      "affected_sites": 1897,
+      "affected_kinds": {
+        "untagged": 806,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": "TS18046",
+          "line": 2301,
+          "column": 91,
+          "message": "'e' is of type 'unknown'."
+        }
+      ]
+    },
+    {
+      "code": "TS18046",
+      "file": "src/compiler/program.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 1897,
+      "affected_sites": 1897,
+      "affected_kinds": {
+        "untagged": 806,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS18046",
+          "line": 406,
+          "column": 25,
+          "message": "'e' is of type 'unknown'."
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS18046",
+          "line": 441,
+          "column": 25,
+          "message": "'e' is of type 'unknown'."
+        }
+      ]
+    },
+    {
+      "code": "TS18048",
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 1897,
+      "affected_sites": 1897,
+      "affected_kinds": {
+        "untagged": 806,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/esDecorators.ts",
+          "code": "TS18048",
+          "line": 1165,
+          "column": 97,
+          "message": "'superStatementIndex' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/esDecorators.ts",
+          "code": "TS18048",
+          "line": 1192,
+          "column": 80,
+          "message": "'superStatementIndex' is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2538",
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1897,
+      "affected_sites": 1897,
+      "affected_kinds": {
+        "untagged": 806,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/esDecorators.ts",
+          "code": "TS2538",
+          "line": 1164,
+          "column": 45,
+          "message": "Type 'undefined' cannot be used as an index type."
+        }
+      ]
+    },
+    {
+      "code": "TS18046",
+      "file": "src/compiler/transformers/jsx.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 1897,
+      "affected_sites": 1897,
+      "affected_kinds": {
+        "untagged": 806,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/jsx.ts",
+          "code": "TS18046",
+          "line": 187,
+          "column": 172,
+          "message": "'s' is of type 'unknown'."
+        },
+        {
+          "file": "src/compiler/transformers/jsx.ts",
+          "code": "TS18046",
+          "line": 187,
+          "column": 188,
+          "message": "'s' is of type 'unknown'."
+        }
+      ]
+    },
+    {
+      "code": "TS2488",
+      "file": "src/compiler/transformers/jsx.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1897,
+      "affected_sites": 1897,
+      "affected_kinds": {
+        "untagged": 806,
+        "tagged": 1091
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/jsx.ts",
+          "code": "TS2488",
+          "line": 174,
+          "column": 24,
+          "message": "Type '[string, Map<string, ImportSpecifier>] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+        }
+      ]
+    },
+    {
+      "code": "TS2322",
+      "file": "src/compiler/transformers/generators.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1596,
+      "affected_sites": 1596,
+      "affected_kinds": {
+        "untagged": 733,
+        "tagged": 863
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "code": "TS2322",
+          "line": 2984,
+          "column": 23,
+          "message": "Type 'CodeBlock | undefined' is not assignable to type 'CodeBlock'."
+        }
+      ]
+    },
+    {
+      "code": "TS2375",
+      "file": "src/compiler/transformers/classFields.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 1119,
+      "affected_sites": 1119,
+      "affected_kinds": {
+        "untagged": 419,
+        "tagged": 700
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "code": "TS2375",
+          "line": 2745,
+          "column": 16,
+          "message": "Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    },
+    {
+      "code": "TS2322",
+      "file": "src/compiler/transformer.ts",
+      "diagnostics": 4,
+      "own_function_sites": 0,
+      "dependency_sites": 1090,
+      "affected_sites": 1090,
+      "affected_kinds": {
+        "untagged": 408,
+        "tagged": 682
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformer.ts",
+          "code": "TS2322",
+          "line": 563,
+          "column": 9,
+          "message": "Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'."
+        },
+        {
+          "file": "src/compiler/transformer.ts",
+          "code": "TS2322",
+          "line": 564,
+          "column": 9,
+          "message": "Type 'FunctionDeclaration[] | undefined' is not assignable to type 'FunctionDeclaration[]'."
+        },
+        {
+          "file": "src/compiler/transformer.ts",
+          "code": "TS2322",
+          "line": 565,
+          "column": 9,
+          "message": "Type 'Statement[] | undefined' is not assignable to type 'Statement[]'."
+        },
+        {
+          "file": "src/compiler/transformer.ts",
+          "code": "TS2322",
+          "line": 614,
+          "column": 9,
+          "message": "Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'."
+        }
+      ]
+    },
+    {
+      "code": "TS2532",
+      "file": "src/compiler/transformer.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 1077,
+      "affected_sites": 1077,
+      "affected_kinds": {
+        "untagged": 403,
+        "tagged": 674
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformer.ts",
+          "code": "TS2532",
+          "line": 367,
+          "column": 9,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformer.ts",
+          "code": "TS2532",
+          "line": 395,
+          "column": 9,
+          "message": "Object is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2412",
+      "file": "src/compiler/resolutionCache.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 950,
+      "affected_sites": 950,
+      "affected_kinds": {
+        "untagged": 380,
+        "tagged": 570
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS2412",
+          "line": 1386,
+          "column": 9,
+          "message": "Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        }
+      ]
+    },
+    {
+      "code": "TS2375",
+      "file": "src/compiler/watch.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 950,
+      "affected_sites": 950,
+      "affected_kinds": {
+        "untagged": 380,
+        "tagged": 570
+      },
+      "recorded_barrier_cleared_alone": 1,
+      "locations": [
+        {
+          "file": "src/compiler/watch.ts",
+          "code": "TS2375",
+          "line": 756,
+          "column": 11,
+          "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/watch.ts",
+          "code": "TS2375",
+          "line": 845,
+          "column": 5,
+          "message": "Type '{ useCaseSensitiveFileNames: () => boolean; getNewLine: () => string; getCurrentDirectory: () => string; getDefaultLibLocation: () => string; getDefaultLibFileName: (options: CompilerOptions) => string; ... 13 more ...; now: ... | undefined; }' is not assignable to type 'ProgramHost<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    },
+    {
+      "code": "TS2307",
+      "file": "src/compiler/sys.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 943,
+      "affected_sites": 943,
+      "affected_kinds": {
+        "untagged": 379,
+        "tagged": 564
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/sys.ts",
+          "code": "TS2307",
+          "line": 1598,
+          "column": 69,
+          "message": "Cannot find module 'source-map-support' or its corresponding type declarations."
+        }
+      ]
+    },
+    {
+      "code": "TS2322",
+      "file": "src/compiler/sys.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 943,
+      "affected_sites": 943,
+      "affected_kinds": {
+        "untagged": 379,
+        "tagged": 564
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/sys.ts",
+          "code": "TS2322",
+          "line": 1617,
+          "column": 13,
+          "message": "Type '(baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(baseDir: string, moduleName: string) => ModuleImportResult'."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/sys.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 943,
+      "affected_sites": 943,
+      "affected_kinds": {
+        "untagged": 379,
+        "tagged": 564
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/sys.ts",
+          "code": "TS2345",
+          "line": 1708,
+          "column": 56,
+          "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string | ArrayBufferView<ArrayBufferLike>'."
+        }
+      ]
+    },
+    {
+      "code": "TS18046",
+      "file": "src/compiler/sys.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 934,
+      "affected_sites": 934,
+      "affected_kinds": {
+        "untagged": 370,
+        "tagged": 564
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/sys.ts",
+          "code": "TS18046",
+          "line": 1281,
+          "column": 43,
+          "message": "'e' is of type 'unknown'."
+        }
+      ]
+    },
+    {
+      "code": "TS18048",
+      "file": "src/compiler/tsbuildPublic.ts",
+      "diagnostics": 3,
+      "own_function_sites": 0,
+      "dependency_sites": 903,
+      "affected_sites": 903,
+      "affected_kinds": {
+        "untagged": 343,
+        "tagged": 560
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS18048",
+          "line": 1064,
+          "column": 76,
+          "message": "'data' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS18048",
+          "line": 1065,
+          "column": 62,
+          "message": "'data' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "code": "TS18048",
+          "line": 1066,
+          "column": 42,
+          "message": "'data' is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2412",
+      "file": "src/compiler/program.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 808,
+      "affected_sites": 808,
+      "affected_kinds": {
+        "untagged": 268,
+        "tagged": 540
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2412",
+          "line": 4956,
+          "column": 9,
+          "message": "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2412",
+          "line": 4957,
+          "column": 9,
+          "message": "Type '((path: string) => string[]) | undefined' is not assignable to type '(path: string) => string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        }
+      ]
+    },
+    {
+      "code": "TS2488",
+      "file": "src/compiler/program.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 808,
+      "affected_sites": 808,
+      "affected_kinds": {
+        "untagged": 268,
+        "tagged": 540
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/program.ts",
+          "code": "TS2488",
+          "line": 5038,
+          "column": 14,
+          "message": "Type '[Path, false | SymlinkedDirectory] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+        }
+      ]
+    },
+    {
+      "code": "TS2322",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "diagnostics": 4,
+      "own_function_sites": 0,
+      "dependency_sites": 806,
+      "affected_sites": 806,
+      "affected_kinds": {
+        "untagged": 266,
+        "tagged": 540
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "code": "TS2322",
+          "line": 286,
+          "column": 9,
+          "message": "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'."
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "code": "TS2322",
+          "line": 474,
+          "column": 36,
+          "message": "Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'."
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "code": "TS2322",
+          "line": 648,
+          "column": 5,
+          "message": "Type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'."
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "code": "TS2322",
+          "line": 2772,
+          "column": 21,
+          "message": "Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'."
+        }
+      ]
+    },
+    {
+      "code": "TS18048",
+      "file": "src/compiler/resolutionCache.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 731,
+      "affected_sites": 731,
+      "affected_kinds": {
+        "untagged": 234,
+        "tagged": 497
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS18048",
+          "line": 1618,
+          "column": 39,
+          "message": "'dirPath' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS18048",
+          "line": 1619,
+          "column": 99,
+          "message": "'dirPath' is possibly 'undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2322",
+      "file": "src/compiler/resolutionCache.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 731,
+      "affected_sites": 731,
+      "affected_kinds": {
+        "untagged": 234,
+        "tagged": 497
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS2322",
+          "line": 1282,
+          "column": 21,
+          "message": "Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'."
+        },
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS2322",
+          "line": 1297,
+          "column": 17,
+          "message": "Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/resolutionCache.ts",
+      "diagnostics": 3,
+      "own_function_sites": 0,
+      "dependency_sites": 731,
+      "affected_sites": 731,
+      "affected_kinds": {
+        "untagged": 234,
+        "tagged": 497
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS2345",
+          "line": 1616,
+          "column": 118,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+        },
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS2345",
+          "line": 1619,
+          "column": 46,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+        },
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS2345",
+          "line": 1619,
+          "column": 74,
+          "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      "code": "TS2375",
+      "file": "src/compiler/resolutionCache.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 731,
+      "affected_sites": 731,
+      "affected_kinds": {
+        "untagged": 234,
+        "tagged": 497
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS2375",
+          "line": 1332,
+          "column": 58,
+          "message": "Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    },
+    {
+      "code": "TS2379",
+      "file": "src/compiler/resolutionCache.ts",
+      "diagnostics": 3,
+      "own_function_sites": 0,
+      "dependency_sites": 731,
+      "affected_sites": 731,
+      "affected_kinds": {
+        "untagged": 234,
+        "tagged": 497
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS2379",
+          "line": 990,
+          "column": 43,
+          "message": "Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS2379",
+          "line": 1019,
+          "column": 43,
+          "message": "Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "code": "TS2379",
+          "line": 1332,
+          "column": 58,
+          "message": "Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    },
+    {
+      "code": "TS2375",
+      "file": "src/compiler/builder.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 530,
+      "affected_sites": 530,
+      "affected_kinds": {
+        "untagged": 71,
+        "tagged": 459
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2375",
+          "line": 2273,
+          "column": 9,
+          "message": "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; semanticDiagnosticsPerFile: Map<Path, readonly ReusableDiagnostic[]>; ... 7 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2375",
+          "line": 2310,
+          "column": 9,
+          "message": "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; referencedMap: BuilderState.ManyToManyPathMap | undefined; ... 8 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    },
+    {
+      "code": "TS2769",
+      "file": "src/compiler/builder.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 530,
+      "affected_sites": 530,
+      "affected_kinds": {
+        "untagged": 71,
+        "tagged": 459
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/builder.ts",
+          "code": "TS2769",
+          "line": 2377,
+          "column": 13,
+          "message": "No overload matches this call."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/commandLineParser.ts",
+      "diagnostics": 3,
+      "own_function_sites": 1,
+      "dependency_sites": 469,
+      "affected_sites": 470,
+      "affected_kinds": {
+        "untagged": 21,
+        "tagged": 449
+      },
+      "recorded_barrier_cleared_alone": 2,
+      "locations": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": "TS2345",
+          "line": 1874,
+          "column": 96,
+          "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": "TS2345",
+          "line": 2077,
+          "column": 79,
+          "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": "TS2345",
+          "line": 2689,
+          "column": 66,
+          "message": "Argument of type 'Set<string | undefined>' is not assignable to parameter of type 'Set<string>'."
+        }
+      ]
+    },
+    {
+      "code": "TS2375",
+      "file": "src/compiler/commandLineParser.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 468,
+      "affected_sites": 468,
+      "affected_kinds": {
+        "untagged": 19,
+        "tagged": 449
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": "TS2375",
+          "line": 2663,
+          "column": 9,
+          "message": "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "diagnostics": 3,
+      "own_function_sites": 0,
+      "dependency_sites": 385,
+      "affected_sites": 385,
+      "affected_kinds": {
+        "untagged": 5,
+        "tagged": 380
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "code": "TS2345",
+          "line": 642,
+          "column": 143,
+          "message": "Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'."
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "code": "TS2345",
+          "line": 644,
+          "column": 144,
+          "message": "Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'."
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "code": "TS2345",
+          "line": 647,
+          "column": 35,
+          "message": "Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'."
+        }
+      ]
+    },
+    {
+      "code": "TS2375",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "diagnostics": 3,
+      "own_function_sites": 0,
+      "dependency_sites": 385,
+      "affected_sites": 385,
+      "affected_kinds": {
+        "untagged": 5,
+        "tagged": 380
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "code": "TS2375",
+          "line": 132,
+          "column": 13,
+          "message": "Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "code": "TS2375",
+          "line": 627,
+          "column": 9,
+          "message": "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "code": "TS2375",
+          "line": 635,
+          "column": 5,
+          "message": "Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: ... | undefined; resolutionDiagnostics: ... | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    },
+    {
+      "code": "TS2345",
+      "file": "src/compiler/sourcemap.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 385,
+      "affected_sites": 385,
+      "affected_kinds": {
+        "untagged": 5,
+        "tagged": 380
+      },
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/sourcemap.ts",
+          "code": "TS2345",
+          "line": 216,
+          "column": 58,
+          "message": "Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'."
+        }
+      ]
+    },
+    {
+      "code": "TS2420",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 0,
+      "affected_sites": 0,
+      "affected_kinds": {},
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "code": "TS2420",
+          "line": 54329,
+          "column": 7,
+          "message": "Class 'SymbolTrackerImpl' incorrectly implements interface 'SymbolTracker'."
+        }
+      ]
+    },
+    {
+      "code": "TS2740",
+      "file": "src/compiler/core.ts",
+      "diagnostics": 1,
+      "own_function_sites": 0,
+      "dependency_sites": 0,
+      "affected_sites": 0,
+      "affected_kinds": {},
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/core.ts",
+          "code": "TS2740",
+          "line": 1637,
+          "column": 11,
+          "message": "Type '{ has(element: TElement): boolean; add(element: TElement): Set<TElement>; delete(element: TElement): boolean; clear(): void; ... 6 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<TElement>': union, intersection, difference, symmetricDifference, and 3 more."
+        }
+      ]
+    },
+    {
+      "code": "TS2322",
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 0,
+      "affected_sites": 0,
+      "affected_kinds": {},
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/transformers/esDecorators.ts",
+          "code": "TS2322",
+          "line": 351,
+          "column": 9,
+          "message": "Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/esDecorators.ts",
+          "code": "TS2322",
+          "line": 398,
+          "column": 13,
+          "message": "Type '{ kind: \"other\"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'."
+        }
+      ]
+    },
+    {
+      "code": "TS2379",
+      "file": "src/compiler/watchPublic.ts",
+      "diagnostics": 2,
+      "own_function_sites": 0,
+      "dependency_sites": 0,
+      "affected_sites": 0,
+      "affected_kinds": {},
+      "recorded_barrier_cleared_alone": 0,
+      "locations": [
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2379",
+          "line": 371,
+          "column": 65,
+          "message": "Argument of type '{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "code": "TS2379",
+          "line": 383,
+          "column": 52,
+          "message": "Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+        }
+      ]
+    }
+  ],
+  "note": "Affected sites overlap and count a diagnosed dependency unblocked. Cleared alone counts all recorded diagnosis obligations removed by fixing this entire code/file group; rechecking can expose other frontiers. Neither count certifies free casts."
+}

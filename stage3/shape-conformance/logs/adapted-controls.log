@@ -1,0 +1,18 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "status": "PASS",
+  "counts": {
+    "tagged": {
+      "conforms and ready (free)": 4,
+      "conforms but not proven ready (readiness checks only)": 1,
+      "conforms-if": 2,
+      "unknown": 19
+    },
+    "untagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 0
+    }
+  }
+}
