@@ -20,10 +20,10 @@ gitignore's gap 3 is a call to a function declared later, taken for a void call.
 
 ```ts
 function isEven(value: number): boolean {
-	return value === 0 ? true : isOdd(value - 1);
+    return value === 0 ? true : isOdd(value - 1);
 }
 function isOdd(value: number): boolean {
-	return value === 0 ? false : isEven(value - 1);
+    return value === 0 ? false : isEven(value - 1);
 }
 console.log(`${isEven(4)} ${isOdd(4)}`);
 ```
@@ -42,10 +42,10 @@ mediaquery's gap 2 is `return undefined` from a function returning `string | und
 
 ```ts
 function names(found: boolean): readonly string[] | undefined {
-	if (found) {
-		return ['a'];
-	}
-	return undefined;
+    if(found) {
+        return ['a'];
+    }
+    return undefined;
 }
 const got = names(false);
 console.log(`${got === undefined}`);
@@ -77,16 +77,16 @@ directives.go trims a comment's body, its rule names and its reason with Go's `s
 
 Measured on ESLint 10.12.0 (`npm install eslint`; `testdata/eslint_whitespace.cjs`, the Linter API with `no-debugger` on), against Go cohere's `Build` and `Suppresses` on the same eight sources, each a comment and then `debugger;` on the next line:
 
-| Comment | ESLint 10.12.0 | Go cohere |
-|---|---|---|
-| `/* eslint-disable no-debugger */` | suppressed | suppressed |
-| `/*` U+0085 `eslint-disable no-debugger */` | reported | suppressed |
-| `/*` U+FEFF `eslint-disable no-debugger */` | suppressed | reported |
-| `/* eslint-disable no-debugger` U+0085 `*/` | reported | suppressed |
-| `/* eslint-disable no-debugger` U+FEFF `*/` | suppressed | reported |
-| `//` U+0085 `eslint-disable-next-line no-debugger` | reported | suppressed |
-| `//` U+FEFF `eslint-disable-next-line no-debugger` | suppressed | reported |
-| `/*` U+00A0 `eslint-disable no-debugger */` | suppressed | suppressed |
+| Comment                                            | ESLint 10.12.0 | Go cohere  |
+| -------------------------------------------------- | -------------- | ---------- |
+| `/* eslint-disable no-debugger */`                 | suppressed     | suppressed |
+| `/*` U+0085 `eslint-disable no-debugger */`        | reported       | suppressed |
+| `/*` U+FEFF `eslint-disable no-debugger */`        | suppressed     | reported   |
+| `/* eslint-disable no-debugger` U+0085 `*/`        | reported       | suppressed |
+| `/* eslint-disable no-debugger` U+FEFF `*/`        | suppressed     | reported   |
+| `//` U+0085 `eslint-disable-next-line no-debugger` | reported       | suppressed |
+| `//` U+FEFF `eslint-disable-next-line no-debugger` | suppressed     | reported   |
+| `/*` U+00A0 `eslint-disable no-debugger */`        | suppressed     | suppressed |
 
 Six of eight differ, every one where the two whitespace sets do. cohere's tests measured ESLint 10.8.1; this is 10.12.0, and I haven't checked the earlier version. The fix in cohere is one function, a trim over JavaScript's whitespace in place of `strings.TrimSpace` in directives.go; when cohere makes it, the port's `goTrimSpace` becomes `trim()` and the U+0085 mutant changes sides. Sent to Ahra with this report, not fixed from here (this stream's access is the adamic repository).
 
@@ -118,8 +118,8 @@ A class with mutable fields counted as it's asked (`Directive.applied`) and meth
 
 On 20,125 sources (123 read out of cohere's tests, 2 fixed and 20,000 generated, seed 20261005, from the generator as it was before the class edges below), with 2,091,150 records asked and 2,262,905 lines answered, unsanitized `-O2`, each run twice:
 
-| | Native | Node | Go cohere |
-|---|---|---|---|
+|               | Native         | Node           | Go cohere      |
+| ------------- | -------------- | -------------- | -------------- |
 | the whole run | 5.56 to 5.63 s | 6.00 to 6.52 s | 1.45 to 1.52 s |
 
 Native is a little faster than Node here, the first slice where it is. Go cohere's time is the same records answered and formatted into memory, so it does what the port does but read its cases and write its 70 MB: the most favourable to Go. Native was 6.1 s before the driver's `unescape` copied the runs between escapes whole, rather than appending a source a character at a time; under callgrind that loop had been a quarter of the run.

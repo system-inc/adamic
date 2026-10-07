@@ -17,18 +17,18 @@ below are disjoint wall intervals from diagnostic builds, not CPU samples or
 release throughput medians. The residual is subtraction. No compiler source is
 instrumented or edited.
 
-| After loading | Before | After |
-| --- | ---: | ---: |
-| Query adapters, including checker and fact production | **9.636428 s** | **8.125662 s** |
+| After loading                                                   |         Before |          After |
+| --------------------------------------------------------------- | -------------: | -------------: |
+| Query adapters, including checker and fact production           | **9.636428 s** | **8.125662 s** |
 | Shadow rule's own indexing, binder-frame decoding and judgments | **7.233657 s** | **0.871913 s** |
-| Type-graph decoding and validation | **4.318292 s** | **4.729036 s** |
-| Other rules' own work | 2.928137 s | 2.959060 s |
-| Adamic parsing | 0.936798 s | 0.968842 s |
-| UTF-16 to byte offsets | 0.198895 s | 0.206078 s |
-| Parent indexing | 0.055532 s | 0.056284 s |
-| Other setup, sorting, I/O and cleanup | 0.170780 s | 0.175260 s |
-| Total after-load interval | 25.478518 s | 18.092135 s |
-| Program loading, separate | 0.293787 s | 0.288304 s |
+| Type-graph decoding and validation                              | **4.318292 s** | **4.729036 s** |
+| Other rules' own work                                           |     2.928137 s |     2.959060 s |
+| Adamic parsing                                                  |     0.936798 s |     0.968842 s |
+| UTF-16 to byte offsets                                          |     0.198895 s |     0.206078 s |
+| Parent indexing                                                 |     0.055532 s |     0.056284 s |
+| Other setup, sorting, I/O and cleanup                           |     0.170780 s |     0.175260 s |
+| Total after-load interval                                       |    25.478518 s |    18.092135 s |
+| Program loading, separate                                       |     0.293787 s |     0.288304 s |
 
 Thus the three largest costs were query work, shadowing and graph decoding.
 Both of the first two are cut; graph decoding was not optimized and its final
@@ -39,14 +39,14 @@ type, relation, signature or rendered name.
 Other rules' own times, excluding queries and graph decoding, make the walks
 visible rather than calling all remaining time boundary overhead:
 
-| Driver | Before | After |
-| --- | ---: | ---: |
+| Driver                                                   |     Before |      After |
+| -------------------------------------------------------- | ---------: | ---------: |
 | Original six rules, excluding parser and parent indexing | 0.455279 s | 0.453305 s |
-| Volume (assertions, members, nullish, enums, switches) | 1.172303 s | 1.193154 s |
-| Assignment | 0.237630 s | 0.233675 s |
-| Void expressions | 0.177524 s | 0.186320 s |
-| Returns | 0.338880 s | 0.374071 s |
-| Unbound methods | 0.546522 s | 0.518535 s |
+| Volume (assertions, members, nullish, enums, switches)   | 1.172303 s | 1.193154 s |
+| Assignment                                               | 0.237630 s | 0.233675 s |
+| Void expressions                                         | 0.177524 s | 0.186320 s |
+| Returns                                                  | 0.338880 s | 0.374071 s |
+| Unbound methods                                          | 0.546522 s | 0.518535 s |
 
 The shared six-rule walk includes query/decoder work and must not be added to
 these disjoint rows. Raw timers, derived [phases.json](validation-volume-profile/phases.json),
@@ -109,14 +109,14 @@ only the existing load/query/run timing is enabled. No other tests or builds ran
 during these rounds. Count output must agree in each round. Medians of individual
 phases need not add exactly to the process median.
 
-| Corpus / implementation | Load | After-load run | Process | Findings/s |
-| --- | ---: | ---: | ---: | ---: |
-| Compiler before native | 0.291944 s | 26.062313 s | 26.412826 s | 538.83 |
-| Compiler after native | 0.290341 s | 17.302492 s | 17.654176 s | 806.15 |
-| Compiler production Go | 0.291912 s | 3.920293 s | 4.253829 s | 3345.69 |
-| Repository before native | 0.081600 s | 1.121934 s | 1.217576 s | 37.78 |
-| Repository after native | 0.085787 s | 1.143410 s | 1.243609 s | 36.99 |
-| Repository production Go | 0.076846 s | 0.213679 s | 0.303216 s | 151.71 |
+| Corpus / implementation  |       Load | After-load run |     Process | Findings/s |
+| ------------------------ | ---------: | -------------: | ----------: | ---------: |
+| Compiler before native   | 0.291944 s |    26.062313 s | 26.412826 s |     538.83 |
+| Compiler after native    | 0.290341 s |    17.302492 s | 17.654176 s |     806.15 |
+| Compiler production Go   | 0.291912 s |     3.920293 s |  4.253829 s |    3345.69 |
+| Repository before native | 0.081600 s |     1.121934 s |  1.217576 s |      37.78 |
+| Repository after native  | 0.085787 s |     1.143410 s |  1.243609 s |      36.99 |
+| Repository production Go | 0.076846 s |     0.213679 s |  0.303216 s |     151.71 |
 
 Native compiler mean query interval: **11.444 microseconds before, 9.151 after**,
 854,525 queries. Native repository: **7.805 before, 8.007 after**, 65,196 queries.
@@ -144,15 +144,15 @@ name duplicates a type parameter. Control headers contain local absolute paths.
 
 New mutants:
 
-| Mutant | Catch |
-| --- | --- |
-| Store binding slot 0 instead of its real slot | Independent Go byte oracle, byte 8458; exits 0, 73 findings |
-| Accept a preceding sibling scope as an ancestor | Byte oracle, byte 1623; exits 0, 86 findings |
-| Keep the last duplicate binding instead of the first | Byte oracle, byte 25697; exits 0, 77 findings |
-| Ignore indexed node kind | Compiler AST identity oracle |
-| Accept other kinds through the root-only fast path | Compiler AST identity oracle |
-| Index all end bounds as zero | Compiler AST identity oracle |
-| Omit the binding-name key | Compiled mutant panics 70: `missing binding index` |
+| Mutant                                               | Catch                                                       |
+| ---------------------------------------------------- | ----------------------------------------------------------- |
+| Store binding slot 0 instead of its real slot        | Independent Go byte oracle, byte 8458; exits 0, 73 findings |
+| Accept a preceding sibling scope as an ancestor      | Byte oracle, byte 1623; exits 0, 86 findings                |
+| Keep the last duplicate binding instead of the first | Byte oracle, byte 25697; exits 0, 77 findings               |
+| Ignore indexed node kind                             | Compiler AST identity oracle                                |
+| Accept other kinds through the root-only fast path   | Compiler AST identity oracle                                |
+| Index all end bounds as zero                         | Compiler AST identity oracle                                |
+| Omit the binding-name key                            | Compiled mutant panics 70: `missing binding index`          |
 
 The three findings mutants compiled, finished normally and had empty stderr;
 only finding bytes caught them. Index tests compare cold/warm, reverse-order,

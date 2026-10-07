@@ -39,15 +39,15 @@ also enabled Go CPU/allocation profiling and C input/call/output clocks. The
 following wall intervals do not overlap; the residual is subtraction, not a
 separate timer:
 
-| Work after loading | Before | After |
-| --- | ---: | ---: |
-| Native query adapters, including Go work | 11.139487 s | 3.560384 s |
-| Native `types` fact decoding and validation | 5.269553 s | 1.826940 s |
-| Adamic `Parser.file` | 0.953548 s | 0.973678 s |
-| Parent indexing | 0.061076 s | 0.060936 s |
-| UTF-16 to byte offset table | 0.190856 s | 0.187055 s |
-| Residual rule decisions, sorting, I/O and setup/cleanup | 0.775098 s | 0.572818 s |
-| Total after-load interval | 18.389618 s | 7.181811 s |
+| Work after loading                                      |      Before |      After |
+| ------------------------------------------------------- | ----------: | ---------: |
+| Native query adapters, including Go work                | 11.139487 s | 3.560384 s |
+| Native `types` fact decoding and validation             |  5.269553 s | 1.826940 s |
+| Adamic `Parser.file`                                    |  0.953548 s | 0.973678 s |
+| Parent indexing                                         |  0.061076 s | 0.060936 s |
+| UTF-16 to byte offset table                             |  0.190856 s | 0.187055 s |
+| Residual rule decisions, sorting, I/O and setup/cleanup |  0.775098 s | 0.572818 s |
+| Total after-load interval                               | 18.389618 s | 7.181811 s |
 
 The shared rule walk's inclusive time was 16.993280 s before and 5.846097 s
 after; those numbers include queries and fact decoding and must not be added to
@@ -97,16 +97,16 @@ still runs much faster. Post-change crossing estimate: 0.073516 s total,
 
 Profiling allocation counts, excluding program loading on Go's side:
 
-| Count | Before | After |
-| --- | ---: | ---: |
-| Go allocated bytes | 3,188,202,792 | 671,209,536 |
-| Go allocated objects | 50,572,140 | 4,395,247 |
-| Go collections during profiled run | 10 | 5 |
-| UTF-8 facts returned | 67,327,486 bytes | 44,681,859 bytes |
-| Native allocations, all freed | 61,003,189 | 10,412,957 |
-| Native retains | 333,200,401 | 213,028,710 |
-| Native releases | 380,025,789 | 211,293,603 |
-| Native peak live objects | 735,248 | 735,248 |
+| Count                              |           Before |            After |
+| ---------------------------------- | ---------------: | ---------------: |
+| Go allocated bytes                 |    3,188,202,792 |      671,209,536 |
+| Go allocated objects               |       50,572,140 |        4,395,247 |
+| Go collections during profiled run |               10 |                5 |
+| UTF-8 facts returned               | 67,327,486 bytes | 44,681,859 bytes |
+| Native allocations, all freed      |       61,003,189 |       10,412,957 |
+| Native retains                     |      333,200,401 |      213,028,710 |
+| Native releases                    |      380,025,789 |      211,293,603 |
+| Native peak live objects           |          735,248 |          735,248 |
 
 These allocation/phase builds are diagnostic experiments, separate from the
 release throughput runs. Profiling counters and CPU sampling have overhead.
@@ -120,16 +120,16 @@ printed `findings 1763`. Native adapters include lookup, checker work, fact
 encoding, C copies, owned UTF-8 decoding and output frees. Whole-process timing
 includes startup, load and exit; after-load excludes program release.
 
-| Median | Before native | After native | Production Go |
-| --- | ---: | ---: | ---: |
-| Program load | 0.298643 s | 0.303877 s | 0.285709 s |
-| Run after load | 18.359974 s | 6.921510 s | 1.775663 s |
-| Whole process | 18.708858 s | 7.247286 s | 2.069595 s |
-| Whole-process findings/s | 94.233 | 243.263 | 851.857 |
-| After-load findings/s | 96.024 | 254.713 | 992.868 |
-| Native query count | 131,755 | 133,565 | Not counted as checker calls |
-| Native query interval sum | 11.240360 s | 3.457084 s | Not equivalent to listener time |
-| Mean native adapter query | 85.313 µs | 25.883 µs | See matched facts baseline below |
+| Median                    | Before native | After native |                    Production Go |
+| ------------------------- | ------------: | -----------: | -------------------------------: |
+| Program load              |    0.298643 s |   0.303877 s |                       0.285709 s |
+| Run after load            |   18.359974 s |   6.921510 s |                       1.775663 s |
+| Whole process             |   18.708858 s |   7.247286 s |                       2.069595 s |
+| Whole-process findings/s  |        94.233 |      243.263 |                          851.857 |
+| After-load findings/s     |        96.024 |      254.713 |                          992.868 |
+| Native query count        |       131,755 |      133,565 |     Not counted as checker calls |
+| Native query interval sum |   11.240360 s |   3.457084 s |  Not equivalent to listener time |
+| Mean native adapter query |     85.313 µs |    25.883 µs | See matched facts baseline below |
 
 The final integration harness independently measured 7.439592 s native and
 2.036689 s Go medians, with 27.356 µs/native query. The explicit paired run above
@@ -140,18 +140,18 @@ can come from different rounds.
 Ten small identical-facts probes ran 10,000 queries, three rounds each. Subtract
 the first query and divide by 9,999, then take the median:
 
-| Warm query | Native µs | Direct Go µs |
-| --- | ---: | ---: |
-| Assignability | 2.163 | 1.562 |
-| Declarations | 2.678 | 2.634 |
-| Full signature | 10.783 | 10.682 |
-| Full raw type | 4.043 | 3.647 |
-| Full nullable type | 11.405 | 11.288 |
-| Widened union | 8.818 | 8.967 |
-| Signature shape | 3.674 | 3.412 |
-| Raw shape | 2.711 | 2.248 |
-| Constrained shape | 4.407 | 4.527 |
-| Compiler options | 1.257 | 0.627 |
+| Warm query         | Native µs | Direct Go µs |
+| ------------------ | --------: | -----------: |
+| Assignability      |     2.163 |        1.562 |
+| Declarations       |     2.678 |        2.634 |
+| Full signature     |    10.783 |       10.682 |
+| Full raw type      |     4.043 |        3.647 |
+| Full nullable type |    11.405 |       11.288 |
+| Widened union      |     8.818 |        8.967 |
+| Signature shape    |     3.674 |        3.412 |
+| Raw shape          |     2.711 |        2.248 |
+| Constrained shape  |     4.407 |        4.527 |
+| Compiler options   |     1.257 |        0.627 |
 
 The direct Go fact baseline intentionally shares Inspect; it isolates adapter
 cost and is not the independent findings oracle. It counts identical UTF-16 units

@@ -70,13 +70,13 @@ See [REPORT.md](REPORT.md) for measurements, commands, mutant results and limits
 `suite.ts` runs the unary-minus rule and five more production cohere rules under
 **their default options**:
 
-| Rule | Checker question |
-| --- | --- |
-| `related-getter-setter-pairs` | Getter-to-setter assignability |
-| `no-unsafe-declaration-merging` | Named and local symbols' declarations |
-| `no-unsafe-argument` | Resolved signature, rest parameters, argument/reference types |
-| `restrict-plus-operands` | Constrained, widened types and union/intersection parts |
-| `no-unnecessary-boolean-literal-compare` | Boolean/nullable constrained types and strict null checks |
+| Rule                                     | Checker question                                              |
+| ---------------------------------------- | ------------------------------------------------------------- |
+| `related-getter-setter-pairs`            | Getter-to-setter assignability                                |
+| `no-unsafe-declaration-merging`          | Named and local symbols' declarations                         |
+| `no-unsafe-argument`                     | Resolved signature, rest parameters, argument/reference types |
+| `restrict-plus-operands`                 | Constrained, widened types and union/intersection parts       |
+| `no-unnecessary-boolean-literal-compare` | Boolean/nullable constrained types and strict null checks     |
 
 One `tsgoProgram` loads all manifest roots. Adamic parses each file once, builds
 its numeric parent index, and dispatches all six rules in one shared rule walk.
@@ -133,7 +133,6 @@ mutants, regressions and why the measured result did not justify batching.
 Native phase and leaf tools live in `bridge/tsgo/profile/`; normal builds do not
 instrument native phases. Earlier six-rule measurements remain in
 [SIX_RULE_REPORT.md](SIX_RULE_REPORT.md).
-
 
 ## Ten rules selected by finding volume
 

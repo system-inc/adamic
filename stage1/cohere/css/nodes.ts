@@ -55,7 +55,7 @@ function objectJSON(fields: Map<string, string>): string {
     for(const key of fields.keys()) {
         keys.push(key);
     }
-    keys.sort((left, right) => left < right ? -1 : left > right ? 1 : 0);
+    keys.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
     const parts: string[] = [];
     for(const key of keys) {
         parts.push(`${quote(key)}:${fields.get(key) ?? panic('missing canonical field')}`);
@@ -73,7 +73,10 @@ export function render(nodes: readonly CssNode[], index: number, input: Input): 
         raws.set(key, value ? 'true' : 'false');
     }
     for(const [key, value] of node.rawValues) {
-        raws.set(key, `{"raw":${quote(value.raw)},${value.scss === undefined ? '' : `"scss":${quote(value.scss)},`}"value":${quote(value.value)}}`);
+        raws.set(
+            key,
+            `{"raw":${quote(value.raw)},${value.scss === undefined ? '' : `"scss":${quote(value.scss)},`}"value":${quote(value.value)}}`,
+        );
     }
     fields.set('raws', objectJSON(raws));
     fields.set('type', quote(node.type));
@@ -89,7 +92,10 @@ export function render(nodes: readonly CssNode[], index: number, input: Input): 
         }
         else if(key === 'source') {
             const start = node.start ?? panic('missing source start');
-            fields.set(key, `{${node.end === undefined ? '' : `"end":${positionJSON(node.end, input)},`}"start":${positionJSON(start, input)}}`);
+            fields.set(
+                key,
+                `{${node.end === undefined ? '' : `"end":${positionJSON(node.end, input)},`}"start":${positionJSON(start, input)}}`,
+            );
         }
         else if(node.strings.has(key)) {
             fields.set(key, quote(node.get(key)));
@@ -98,8 +104,17 @@ export function render(nodes: readonly CssNode[], index: number, input: Input): 
             fields.set(key, node.booleans.get(key) === true ? 'true' : 'false');
         }
     }
-    if(node.start !== undefined && node.end !== undefined && (node.range[0] !== node.start.offset || node.range[1] !== node.end.offset)) {
-        fields.set('range', quote(`Range [${node.range[0]} ${node.range[1]}] is not source's [${node.start.offset} ${node.end.offset}]`));
+    if(
+        node.start !== undefined &&
+        node.end !== undefined &&
+        (node.range[0] !== node.start.offset || node.range[1] !== node.end.offset)
+    ) {
+        fields.set(
+            'range',
+            quote(
+                `Range [${node.range[0]} ${node.range[1]}] is not source's [${node.start.offset} ${node.end.offset}]`,
+            ),
+        );
     }
     fields.set('keys', `[${keys.join(',')}]`);
     return objectJSON(fields);

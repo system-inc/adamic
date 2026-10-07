@@ -49,10 +49,10 @@ rule name, ID, exact escaped message, fix/suggestion counts, total findings and
 total queries. Native uses an ASan/UBSan-instrumented C boundary and runtime;
 normal completion also passes Linux's leak check.
 
-| Corpus | Files | Findings | Queries | Identical bytes |
-| --- | ---: | ---: | ---: | ---: |
-| TypeScript compiler | 77 | 2 | 245 | 4,959 |
-| Table-derived and additional probes | 53 | 36 | 61 | 7,782 |
+| Corpus                              | Files | Findings | Queries | Identical bytes |
+| ----------------------------------- | ----: | -------: | ------: | --------------: |
+| TypeScript compiler                 |    77 |        2 |     245 |           4,959 |
+| Table-derived and additional probes |    53 |       36 |      61 |           7,782 |
 
 Byte counts include absolute path headers and therefore depend on the scratch
 path. The two compiler findings are in `checker.ts`, line 9011 (`-name`,
@@ -72,17 +72,17 @@ The generated nonempty controls prevent a vacuous all-clean result.
 All mutants build successfully. Finding mutants finish normally; no compiler
 or sanitizer failure is counted as an oracle catch.
 
-| Mutant or probe | What catches it |
-| --- | --- |
+| Mutant or probe                                          | What catches it                                                                       |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | Ask the unary expression's type instead of its operand's | Go cohere byte oracle: first mismatch byte 258; mutant emits 0 instead of 36 findings |
-| Query a released program | Native panic, exit 70: `invalid or released checker handle` |
-| Remove registry deletion on release | Released-query expectation detects a normal exit 0 instead of 70 |
-| Return an empty parts buffer | Exit 70: `checker returned no type parts` |
-| Return a missing frame header | Exit 70: `invalid checker type frame` |
-| Return a negative frame length | Exit 70: `invalid checker type length or flags` |
-| Query a nonexistent exact kind/span | Native panic: `no exact Identifier node` |
-| Ignore the requested kind during lookup | Exact-node refusal expectation detects exit 0 |
-| Use the new library call without linking the archive | Lowering refusal: `unlinked typescript-go library call` |
+| Query a released program                                 | Native panic, exit 70: `invalid or released checker handle`                           |
+| Remove registry deletion on release                      | Released-query expectation detects a normal exit 0 instead of 70                      |
+| Return an empty parts buffer                             | Exit 70: `checker returned no type parts`                                             |
+| Return a missing frame header                            | Exit 70: `invalid checker type frame`                                                 |
+| Return a negative frame length                           | Exit 70: `invalid checker type length or flags`                                       |
+| Query a nonexistent exact kind/span                      | Native panic: `no exact Identifier node`                                              |
+| Ignore the requested kind during lookup                  | Exact-node refusal expectation detects exit 0                                         |
+| Use the new library call without linking the archive     | Lowering refusal: `unlinked typescript-go library call`                               |
 
 The foundation's seven mutants also pass unchanged in behavior: input/output
 length +1 caught by ASan; stale handle assertion; wrong-position type oracle;
@@ -109,10 +109,10 @@ Whole-process count mode includes startup, file reads, program load, AST
 traversal, Adamic parsing/offset mapping and linting. Compilation, findings
 printing and sanitizer overhead are excluded.
 
-| Corpus | Native seconds | Go seconds | Native findings/s | Go findings/s |
-| --- | ---: | ---: | ---: | ---: |
-| Compiler, 2 findings | 1.584099 | 0.353968 | 1.263 | 5.650 |
-| Generated, 36 findings | 0.022129 | 0.021937 | 1,626.833 | 1,641.088 |
+| Corpus                 | Native seconds | Go seconds | Native findings/s | Go findings/s |
+| ---------------------- | -------------: | ---------: | ----------------: | ------------: |
+| Compiler, 2 findings   |       1.584099 |   0.353968 |             1.263 |         5.650 |
+| Generated, 36 findings |       0.022129 |   0.021937 |         1,626.833 |     1,641.088 |
 
 Native is 4.48 times slower on the compiler corpus. The generated corpus is
 near parity within observed variation. No speedup is claimed. For the median
@@ -124,11 +124,11 @@ A separate probe performs 10,000 repeated queries of the same node and compares
 all returned frame-length sums with direct Go: both print 90,000. Subtract the
 first query, then divide by 9,999:
 
-| Warm query | Median cost |
-| --- | ---: |
-| Native Adamic bridge call | 4.518 us |
-| Direct Go constrained-type/frame helper | 2.973 us |
-| Difference | 1.545 us |
+| Warm query                              | Median cost |
+| --------------------------------------- | ----------: |
+| Native Adamic bridge call               |    4.518 us |
+| Direct Go constrained-type/frame helper |    2.973 us |
+| Difference                              |    1.545 us |
 
 Native's interval includes path/kind copies, the C/Go crossing, exact node
 lookup, checker acquisition/release, framing and conversion to an owned Adamic

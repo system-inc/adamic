@@ -51,7 +51,7 @@ from byte lengths or clamped byte-slice boundaries.
 postcss-scss 4.0.9 on `\😀|a`. Both originals report:
 
 ```json
-{"reason":"Unknown word \\\ud83d","endColumn":3,"endOffset":2}
+{ "reason": "Unknown word \\\ud83d", "endColumn": 3, "endOffset": 2 }
 ```
 
 That `endOffset` is the original UTF-16 offset. The oracle's conversion to bytes

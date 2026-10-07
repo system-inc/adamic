@@ -29,7 +29,7 @@ A field that holds a boolean or nothing is refused, in a class or an object type
 
 ```ts
 class Holder {
-	flag: boolean | undefined = undefined;
+    flag: boolean | undefined = undefined;
 }
 const holder = new Holder();
 holder.flag = true;
@@ -49,11 +49,11 @@ stage 0 can't lower a field of type boolean | undefined yet        (Node prints 
 ```ts
 const newline = 0x0a;
 function describe(code: number): string {
-	switch (code) {
-		case newline:
-			return 'newline';
-	}
-	return 'other';
+    switch(code) {
+        case newline:
+            return 'newline';
+    }
+    return 'other';
 }
 console.log(`${describe(10)} ${describe(32)}`);
 ```
@@ -72,15 +72,15 @@ Closed: private methods now lower, and the gap program agrees with Node under th
 
 ```ts
 class Counter {
-	#count = 0;
-	#step(): void {
-		this.#count++;
-	}
-	twice(): number {
-		this.#step();
-		this.#step();
-		return this.#count;
-	}
+    #count = 0;
+    #step(): void {
+        this.#count++;
+    }
+    twice(): number {
+        this.#step();
+        this.#step();
+        return this.#count;
+    }
 }
 console.log(`${new Counter().twice()}`);
 ```
@@ -97,7 +97,7 @@ A `private step()` lowers.
 
 ```ts
 function size(list: readonly string[] | undefined): number {
-	return (list ?? []).length;
+    return (list ?? []).length;
 }
 console.log(`${size(['a'])} ${size(undefined)}`);
 ```
@@ -137,9 +137,9 @@ A tokenizer over UTF-16 units with `charCodeAt` past the end giving NaN, which e
 
 Measured on this Linux container, x86-64, unsanitized `-O2`, with the driver's `count` mode, which parses every value in both modes and prints one line, against Go cohere's Parse over the same values in a loop (the loop alone).
 
-| Values (each parsed twice) | Native | Node | Go cohere |
-|---|---|---|---|
-| 100,092 generated | 2.65 s | 0.83 s | 2.39 to 2.44 s |
+| Values (each parsed twice)        | Native | Node   | Go cohere      |
+| --------------------------------- | ------ | ------ | -------------- |
+| 100,092 generated                 | 2.65 s | 0.83 s | 2.39 to 2.44 s |
 | the 62,803 of them that are ASCII | 1.34 s | 0.41 s | 1.37 to 1.69 s |
 
 Native is level with Go cohere here, where on the media query parser it was four times slower: cohere's Go builds every node as an `estree.Node`, a list of properties with `any` values, plus maps for raws and source, and recovers every throw from a panic, and that costs it what Adamic's typed objects don't. Node is three times faster than both.

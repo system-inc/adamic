@@ -53,8 +53,8 @@ The suppression slice's GAPS.md has Node 24.21.0 failing a `writev` with EINVAL 
 
 On 3,013 trees (13 of cohere's and 3,000 generated, seed 20261005), every side's output identical to Go cohere's, unsanitized `-O2`, each run three times:
 
-| | Native | Node | Go cohere |
-|---|---|---|---|
+|               | Native         | Node           | Go cohere      |
+| ------------- | -------------- | -------------- | -------------- |
 | the whole run | 2.26 to 2.27 s | 3.56 to 3.65 s | 1.16 to 1.19 s |
 
 Go cohere's time is the same calls, Enumerate and the rest, on the same trees, with every answer formatted into memory, not written out. Native is faster than Node, as in the suppression slice. It was 3.3 s before the driver's `quote` wrote a string with nothing to escape whole (29% of the run under callgrind, visiting every character of every absolute path), and 2.7 s before the gitignore slice's `clean` returned an already-clean path as itself (40% of the run; the gitignore slice's GAPS.md, "Path cleaning", has how, and why Go's own way of writing it was slower here).

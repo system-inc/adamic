@@ -62,7 +62,9 @@ for(let round = 0; round < (args[2] === 'repeat' ? 10 : 1); round++) {
         const result = compose(css, modes[index] ?? false);
         if(args[1] !== 'count') {
             console.log(`case ${count}`);
-            console.log(result.kind === 'Refused' ? `error ${result.message}` : renderTree(result.tree, result.tree.root));
+            console.log(
+                result.kind === 'Refused' ? `error ${result.message}` : renderTree(result.tree, result.tree.root),
+            );
         }
         count++;
         if(result.kind === 'Composed') {

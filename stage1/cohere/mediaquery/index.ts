@@ -30,10 +30,13 @@ import { trim } from './whitespace.ts';
  * units, the library's own, where the Go's is in bytes.
  */
 export function parse(params: string): Result<MediaNode> {
-	const nodes = parseMediaList(params);
-	if (nodes.kind === 'Error') {
-		return nodes;
-	}
-	// after, before and sourceIndex are undefined in the options, so Container derives them.
-	return { kind: 'Ok', value: newContainer(undefined, undefined, 'media-query-list', trim(params), undefined, nodes.value) };
+    const nodes = parseMediaList(params);
+    if(nodes.kind === 'Error') {
+        return nodes;
+    }
+    // after, before and sourceIndex are undefined in the options, so Container derives them.
+    return {
+        kind: 'Ok',
+        value: newContainer(undefined, undefined, 'media-query-list', trim(params), undefined, nodes.value),
+    };
 }

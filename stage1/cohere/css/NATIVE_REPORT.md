@@ -74,11 +74,11 @@ Three source printer mutants must compile and run with clean stderr and exit 0
 before their output can count as caught. They now run under native ASan/UBSan
 and Node in both option sets:
 
-| Mutant | First output difference |
-|---|---|
-| Declaration semicolons omitted | Line 2, byte 69 |
-| Rule body indentation omitted | Line 6, byte 7 |
-| Document groups ignore remaining width | Line 26, byte 12 |
+| Mutant                                 | First output difference |
+| -------------------------------------- | ----------------------- |
+| Declaration semicolons omitted         | Line 2, byte 69         |
+| Rule body indentation omitted          | Line 6, byte 7          |
+| Document groups ignore remaining width | Line 26, byte 12        |
 
 Existing parser mutants continue to run on raw native and Node, and on composed
 Node. The public Range-corruption proof now also runs composed native and the
@@ -88,11 +88,11 @@ JavaScript backend and prints `caught`, with a clean leak check.
 All three mutations preserve ordinary optimized printer bytes on two dynamic
 file inputs. Only the intended memory check catches each:
 
-| Mutation | Observation |
-|---|---|
-| Read allocated storage after freeing it | ASan reports heap-use-after-free |
-| Overflow a volatile signed integer with argc | UBSan reports signed integer overflow |
-| Omit generated releases | Output and ASan/UBSan with leaks off pass; LSan reports 644,428 bytes in 8,903 allocations |
+| Mutation                                     | Observation                                                                                |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Read allocated storage after freeing it      | ASan reports heap-use-after-free                                                           |
+| Overflow a volatile signed integer with argc | UBSan reports signed integer overflow                                                      |
+| Omit generated releases                      | Output and ASan/UBSan with leaks off pass; LSan reports 644,428 bytes in 8,903 allocations |
 
 The access and arithmetic probes are instrumented harness checks, not newly
 found printer defects. The release mutant affects actual composed printer
@@ -163,13 +163,13 @@ ADAMIC_CSS_PRINTER_BENCH=1 ADAMIC_CSS_PRINTER_BENCH_ONCE=1 go test -v -count=1 -
 Final throughput PASS in 77.697s. Every measured round formats 4,952
 stylesheets and produces the expected 510,298 output units.
 
-| Runtime | Round 1 / s | Round 2 / s | Round 3 / s | Median / s |
-|---|---:|---:|---:|---:|
-| native | 790 | 758 | 741 | 758 |
-| Go | 5870 | 5875 | 5799 | 5870 |
-| Adamic source on Node | 1430 | 1406 | 872 | 1406 |
-| Prettier fork on Node | 1291 | 1424 | 1293 | 1293 |
-| Prettier npm on Node | 1313 | 1362 | 1279 | 1313 |
+| Runtime               | Round 1 / s | Round 2 / s | Round 3 / s | Median / s |
+| --------------------- | ----------: | ----------: | ----------: | ---------: |
+| native                |         790 |         758 |         741 |        758 |
+| Go                    |        5870 |        5875 |        5799 |       5870 |
+| Adamic source on Node |        1430 |        1406 |         872 |       1406 |
+| Prettier fork on Node |        1291 |        1424 |        1293 |       1293 |
+| Prettier npm on Node  |        1313 |        1362 |        1279 |       1313 |
 
 Native is slower on this corpus: approximately 7.7 times below Go's
 measured throughput. This is an observation, not a diagnosis of the cause;

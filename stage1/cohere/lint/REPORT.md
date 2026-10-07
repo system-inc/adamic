@@ -105,27 +105,27 @@ Each of the following scratch mutants compiled and completed successfully on
 both Node and sanitized native, then differed from the real Go answer. None
 was counted merely because lowering, clang or execution failed.
 
-| Mutant | Comparison that caught it |
-| --- | --- |
-| Suggestion promoted to automatic fix | repair category and whole fixed source |
-| Empty function-body exemption removed | extra finding and position |
-| Duplicate-case membership inverted | finding list and positions |
-| Continue listener changed to break | control-statement finding list |
-| Assignment-target hole exemption removed | extra destructuring finding |
-| Nested generator yield counted for outer generator | missing require-yield finding |
-| Await walks across function boundary | extra await finding |
-| int32Hint option inverted | operator finding list under options |
-| Regex edit consumes an extra character | edit range and whole fixed source |
-| Loose comparison inverse changed to strict | replacement and fixed source |
-| Self-directive exemption removed | extra comment finding |
-| BOM edit removes two marks at once | edit range; converged output alone is insufficient |
-| Label loop permission inverted | label and jump findings under options |
-| Directive prefix ignored | extra vars-on-top finding |
-| Comma chain reports inner node | finding list, for-header and parenthesis behavior |
-| Empty template placeholder accepted | extra string finding |
-| Overlap winner misreported | rejected-edit metadata |
-| Decoration range collapsed to its first character | missing comment finding under range options |
-| Count-only result incremented | count check alone: 3 versus Go's 2, with ordinary output identical |
+| Mutant                                             | Comparison that caught it                                          |
+| -------------------------------------------------- | ------------------------------------------------------------------ |
+| Suggestion promoted to automatic fix               | repair category and whole fixed source                             |
+| Empty function-body exemption removed              | extra finding and position                                         |
+| Duplicate-case membership inverted                 | finding list and positions                                         |
+| Continue listener changed to break                 | control-statement finding list                                     |
+| Assignment-target hole exemption removed           | extra destructuring finding                                        |
+| Nested generator yield counted for outer generator | missing require-yield finding                                      |
+| Await walks across function boundary               | extra await finding                                                |
+| int32Hint option inverted                          | operator finding list under options                                |
+| Regex edit consumes an extra character             | edit range and whole fixed source                                  |
+| Loose comparison inverse changed to strict         | replacement and fixed source                                       |
+| Self-directive exemption removed                   | extra comment finding                                              |
+| BOM edit removes two marks at once                 | edit range; converged output alone is insufficient                 |
+| Label loop permission inverted                     | label and jump findings under options                              |
+| Directive prefix ignored                           | extra vars-on-top finding                                          |
+| Comma chain reports inner node                     | finding list, for-header and parenthesis behavior                  |
+| Empty template placeholder accepted                | extra string finding                                               |
+| Overlap winner misreported                         | rejected-edit metadata                                             |
+| Decoration range collapsed to its first character  | missing comment finding under range options                        |
+| Count-only result incremented                      | count check alone: 3 versus Go's 2, with ordinary output identical |
 
 The first seventeen appear in `TestMutants`; decoration and count have separate
 checks. Thus eighteen finding/fix mutants and one isolated count mutant were
@@ -142,10 +142,10 @@ fixing and build time. Native uses normal unsanitized clang -O2; correctness
 and mutant checks use sanitizers.
 
 | Implementation | Best seconds | Findings per second |
-| --- | ---: | ---: |
-| Go | 0.496139 | 16,557.86 |
-| Native Adamic | 3.255685 | 2,523.28 |
-| Node | 1.446095 | 5,680.82 |
+| -------------- | -----------: | ------------------: |
+| Go             |     0.496139 |           16,557.86 |
+| Native Adamic  |     3.255685 |            2,523.28 |
+| Node           |     1.446095 |            5,680.82 |
 
 Native took 6.56 times Go's time and 2.25 times Node's. This is an observed
 whole-file lint workload, not an isolated visitor benchmark or performance
@@ -248,11 +248,11 @@ sources. The Go oracle uses cohere's actual formatter and converging edit engine
 Each scratch mutant compiled and ran successfully, then failed the comparison
 on both Node and ASan/UBSan native:
 
-| Mutant | What caught it |
-| --- | --- |
-| Apply an eqeqeq suggestion as an automatic fix | repair category and fixed-source comparison |
-| Report an empty function body | finding-position and finding-list comparison |
-| Invert duplicate-case membership | finding-position and finding-list comparison |
+| Mutant                                         | What caught it                               |
+| ---------------------------------------------- | -------------------------------------------- |
+| Apply an eqeqeq suggestion as an automatic fix | repair category and fixed-source comparison  |
+| Report an empty function body                  | finding-position and finding-list comparison |
+| Invert duplicate-case membership               | finding-position and finding-list comparison |
 
 `TestNestedConstructorGap` requires Node's `1` and stage 0's false constructor
 refusal at line 7, column 16. See `GAPS.md` and its 19-line proving program.

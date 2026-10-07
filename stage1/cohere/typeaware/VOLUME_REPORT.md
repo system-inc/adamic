@@ -21,17 +21,17 @@ These are the ten highest combined counts among the remaining TypeScript rule
 family. They are not the ten highest among every cohere rule family:
 
 | New rule (`@typescript-eslint/`) | Compiler | Repository | Total |
-| --- | ---: | ---: | ---: |
-| no-unsafe-type-assertion | 3867 | 3 | 3870 |
-| no-unsafe-member-access | 2777 | 0 | 2777 |
-| prefer-nullish-coalescing | 1422 | 0 | 1422 |
-| no-shadow | 1180 | 18 | 1198 |
-| no-unsafe-enum-comparison | 1000 | 0 | 1000 |
-| no-unsafe-assignment | 623 | 0 | 623 |
-| no-confusing-void-expression | 483 | 1 | 484 |
-| consistent-return | 425 | 9 | 434 |
-| switch-exhaustiveness-check | 411 | 13 | 424 |
-| unbound-method | 281 | 0 | 281 |
+| -------------------------------- | -------: | ---------: | ----: |
+| no-unsafe-type-assertion         |     3867 |          3 |  3870 |
+| no-unsafe-member-access          |     2777 |          0 |  2777 |
+| prefer-nullish-coalescing        |     1422 |          0 |  1422 |
+| no-shadow                        |     1180 |         18 |  1198 |
+| no-unsafe-enum-comparison        |     1000 |          0 |  1000 |
+| no-unsafe-assignment             |      623 |          0 |   623 |
+| no-confusing-void-expression     |      483 |          1 |   484 |
+| consistent-return                |      425 |          9 |   434 |
+| switch-exhaustiveness-check      |      411 |         13 |   424 |
+| unbound-method                   |      281 |          0 |   281 |
 
 The next TypeScript candidates were no-unused-vars (266), no-deprecated (238),
 no-unsafe-return (126), no-unsafe-call (95), consistent-type-imports (85) and
@@ -81,11 +81,11 @@ The compiler output includes 578 fixes and 1,422 suggestions (each with one
 fix); the repository output includes three fixes and no suggestions. Complete
 fields, not just these counts, match. The final sanitizer comparison preserved:
 
-| Population | Findings | Identical bytes |
-| --- | ---: | ---: |
-| Compiler, all 77 files | 14232 | 6717107 |
-| Repository, frozen 287-file manifest | 46 | 31862 |
-| Generated controls, 49 files | 73 | 24667 |
+| Population                           | Findings | Identical bytes |
+| ------------------------------------ | -------: | --------------: |
+| Compiler, all 77 files               |    14232 |         6717107 |
+| Repository, frozen 287-file manifest |       46 |           31862 |
+| Generated controls, 49 files         |       73 |           24667 |
 
 Controls cover Unicode and CRLF spans, chained member access, generic and fresh
 assertions, spaced/commented empty Map assertions, nested destructuring, scope
@@ -105,12 +105,12 @@ and run all sixteen rules over the entire manifest. Medians below are seconds;
 process includes startup and teardown, run excludes checker program loading.
 Medians of separate phases need not add exactly to the process median.
 
-| Corpus / implementation | Load | Run | Whole process | Findings/second |
-| --- | ---: | ---: | ---: | ---: |
-| Compiler native | 0.286 | 25.463 | 25.782 | 552.01 |
-| Compiler Go | 0.281 | 3.901 | 4.212 | 3378.54 |
-| Repository native | 0.084 | 1.141 | 1.231 | 37.36 |
-| Repository Go | 0.079 | 0.223 | 0.313 | 147.12 |
+| Corpus / implementation |  Load |    Run | Whole process | Findings/second |
+| ----------------------- | ----: | -----: | ------------: | --------------: |
+| Compiler native         | 0.286 | 25.463 |        25.782 |          552.01 |
+| Compiler Go             | 0.281 |  3.901 |         4.212 |         3378.54 |
+| Repository native       | 0.084 |  1.141 |         1.231 |           37.36 |
+| Repository Go           | 0.079 |  0.223 |         0.313 |          147.12 |
 
 Native compiler: 854,525 queries, 9.434 seconds aggregate query time,
 **11.040 microseconds/query**. Repository: 65,196 queries, 0.519 seconds
@@ -148,23 +148,23 @@ Go-speed parity or an additional performance optimization is made here.
 Every judgment-question mutant compiled and finished normally with exit 0 and
 empty stderr. Only complete finding bytes from independent Go cohere caught it:
 
-| Question | Mutation | First differing byte |
-| --- | --- | ---: |
-| assignable-types | Reverse source and target | 54 |
-| widened-shape | Keep fresh type instead of widening | 481 |
-| enum-types | Member instead of parent enum type | 5661 |
-| type-symbol | Wrong symbol name | 19638 |
-| scope-locals | Wrong binder symbol name | 8112 |
-| call-returns | Number instead of signature return type | 12536 |
-| property-shape | Number instead of property type | 7098 |
-| contextual-shape | Own type instead of contextual type | 7605 |
-| symbol-origin | Current file instead of declaration file | 24220 |
-| type-origin | Wrong type symbol name | 23635 |
-| property-info | PropertySignature instead of value-declaration kind | 19886 |
-| call-count | Zero call signatures | 15638 |
-| call-parameters | Number instead of apparent callback parameter | 15638 |
-| apparent-shape | Number instead of apparent type | 15638 |
-| base-shapes | Omit base types | 23635 |
+| Question         | Mutation                                            | First differing byte |
+| ---------------- | --------------------------------------------------- | -------------------: |
+| assignable-types | Reverse source and target                           |                   54 |
+| widened-shape    | Keep fresh type instead of widening                 |                  481 |
+| enum-types       | Member instead of parent enum type                  |                 5661 |
+| type-symbol      | Wrong symbol name                                   |                19638 |
+| scope-locals     | Wrong binder symbol name                            |                 8112 |
+| call-returns     | Number instead of signature return type             |                12536 |
+| property-shape   | Number instead of property type                     |                 7098 |
+| contextual-shape | Own type instead of contextual type                 |                 7605 |
+| symbol-origin    | Current file instead of declaration file            |                24220 |
+| type-origin      | Wrong type symbol name                              |                23635 |
+| property-info    | PropertySignature instead of value-declaration kind |                19886 |
+| call-count       | Zero call signatures                                |                15638 |
+| call-parameters  | Number instead of apparent callback parameter       |                15638 |
+| apparent-shape   | Number instead of apparent type                     |                15638 |
+| base-shapes      | Omit base types                                     |                23635 |
 
 Initial widening and enum mutants survived weaker fixtures. Those fixtures were
 strengthened with a fresh excess-property assertion and same-enum member

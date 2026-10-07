@@ -83,10 +83,10 @@ ones. There are 12,038 texts, 24,076 dialect/input pairs, 5,021 successful raw
 parses, and 5,006 successful composed parses. The fixture walker found:
 
 | Extension | Files |
-|---|---:|
-| CSS | 158 |
-| SCSS | 90 |
-| Less | 43 |
+| --------- | ----: |
+| CSS       |   158 |
+| SCSS      |    90 |
+| Less      |    43 |
 
 157 CSS files, 90 SCSS files and 43 Less files come from the actual
 `system-inc/prettier` fork at `cb4b33fba24a8428d00e54be85fc886288a374ea`; one CSS
@@ -112,11 +112,11 @@ Each mutant compiles and terminates; compiler diagnostics are not counted as a
 catch. The raw comparison catches every mutant on both native and Node, and
 the composed comparison catches it on Node too.
 
-| Mutant | First raw difference | First composed difference |
-|---|---|---|
+| Mutant                                                                         | First raw difference                                             | First composed difference                                 |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------- | --------------------------------------------------------- |
 | `custom = false`, so custom properties lose their special block/token handling | line 162, byte 396: custom-property whitespace/raw value differs | line 162, byte 1001: custom block becomes a separate rule |
-| Drop an embedded comment which raw() must keep | line 3126, byte 302: `c/* x */d` becomes `cd` | line 3126, byte 77: raw value loses the embedded comment |
-| Do not include the closing brace byte in a block's source end | line 6, byte 659: end offset 28 becomes 27 | line 6, byte 2264: source/endOffset is one byte short |
+| Drop an embedded comment which raw() must keep                                 | line 3126, byte 302: `c/* x */d` becomes `cd`                    | line 3126, byte 77: raw value loses the embedded comment  |
+| Do not include the closing brace byte in a block's source end                  | line 6, byte 659: end offset 28 becomes 27                       | line 6, byte 2264: source/endOffset is one byte short     |
 
 The checks also hold all five proving programs and the complete native
 composition refusal. Once that refusal closes, the gap test intentionally fails
@@ -194,12 +194,12 @@ Each measurement parses the same 24,076 dialect/input pairs ten times. Every
 side reports `50210 of 240760 stylesheets parsed, 95850 nodes`. Rates are
 stylesheets per second, including rejected inputs:
 
-| Parser | Round 1 | Round 2 | Round 3 | Median |
-|---|---:|---:|---:|---:|
-| Native Adamic | 45,425 | 50,825 | 46,269 | 46,269 |
-| Node running the port source | 78,785 | 80,345 | 72,750 | 78,785 |
-| Original PostCSS / postcss-scss on Node | 56,404 | 49,560 | 53,951 | 53,951 |
-| Go cohere, one in-process sample | 111,694 | | | 111,694 |
+| Parser                                  | Round 1 | Round 2 | Round 3 |  Median |
+| --------------------------------------- | ------: | ------: | ------: | ------: |
+| Native Adamic                           |  45,425 |  50,825 |  46,269 |  46,269 |
+| Node running the port source            |  78,785 |  80,345 |  72,750 |  78,785 |
+| Original PostCSS / postcss-scss on Node |  56,404 |  49,560 |  53,951 |  53,951 |
+| Go cohere, one in-process sample        | 111,694 |         |         | 111,694 |
 
 The benchmark test passed in 45.484s. Go's loop took 2.155527868s. Native is
 slower than both Go and original Node on this corpus. Native/Node timings include

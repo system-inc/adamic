@@ -93,11 +93,11 @@ finishes with exit 0 and no stderr, and is caught solely by its output against
 Go cohere. Each is checked natively and on Node source. The originals are never
 mutated on disk.
 
-| Mutant | Change | Witness |
-| --- | --- | --- |
-| quote tie | choose alternate on `>=` instead of `>` | case 0, byte 1213, repository CSS file, double preference |
-| escaped closing quote | stop skipping the character following a backslash | case 142, byte 2, both native and Node differ |
-| preserve original escape | reprint even when the original enclosing quote wins | case 818, byte 2, both native and Node differ |
+| Mutant                   | Change                                              | Witness                                                   |
+| ------------------------ | --------------------------------------------------- | --------------------------------------------------------- |
+| quote tie                | choose alternate on `>=` instead of `>`             | case 0, byte 1213, repository CSS file, double preference |
+| escaped closing quote    | stop skipping the character following a backslash   | case 142, byte 2, both native and Node differ             |
+| preserve original escape | reprint even when the original enclosing quote wins | case 818, byte 2, both native and Node differ             |
 
 A post-format run initially failed the two whitespace-sensitive mutant-site guards,
 not the byte comparisons. The anchors now name expressions rather than `if` spacing;
@@ -192,12 +192,12 @@ PASS
 ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	23.113s
 ```
 
-| Side | Texts/s | Total seconds, 3 process runs |
-| --- | ---: | ---: |
-| Go cohere | 555,329.4 | 0.100881 |
-| Adamic native, clang -O2, no sanitizers | 356,919.5 | 0.156960 |
-| Adamic source on Node 24 | 124,307.6 | 0.450672 |
-| Original Prettier 3.9.6 printer on Node 24 | 113,719.9 | 0.492632 |
+| Side                                       |   Texts/s | Total seconds, 3 process runs |
+| ------------------------------------------ | --------: | ----------------------------: |
+| Go cohere                                  | 555,329.4 |                      0.100881 |
+| Adamic native, clang -O2, no sanitizers    | 356,919.5 |                      0.156960 |
+| Adamic source on Node 24                   | 124,307.6 |                      0.450672 |
+| Original Prettier 3.9.6 printer on Node 24 | 113,719.9 |                      0.492632 |
 
 Observed ratios: native is 0.64 times Go throughput, 2.87 times Node source,
 and 3.14 times the original library. The final measurement ran after the full
@@ -214,7 +214,6 @@ The report is a separate follow-up commit whose SHA is given in the final respon
 `git push -u origin codex/stage1-formatter-slice` exited 0 and created the branch
 on `https://github.com/system-inc/adamic.git`. The completed report is pushed to
 the same branch. No pull request was opened.
-
 
 ## Not covered
 

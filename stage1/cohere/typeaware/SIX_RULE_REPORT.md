@@ -3,13 +3,13 @@
 This extends the first unary-minus pilot with five native Adamic ports of the
 pinned production cohere rules, under their default options:
 
-| Added rule | Required checker facts |
-| --- | --- |
-| related-getter-setter-pairs | Getter-to-setter assignability |
-| no-unsafe-declaration-merging | Named and local symbol declarations |
-| no-unsafe-argument | Resolved call/new/tagged signature, parameter/rest types, reference arguments |
-| restrict-plus-operands | Constrained/widened types, unions and intersections |
-| no-unnecessary-boolean-literal-compare | Constrained boolean/nullable types, strict-null option |
+| Added rule                             | Required checker facts                                                        |
+| -------------------------------------- | ----------------------------------------------------------------------------- |
+| related-getter-setter-pairs            | Getter-to-setter assignability                                                |
+| no-unsafe-declaration-merging          | Named and local symbol declarations                                           |
+| no-unsafe-argument                     | Resolved call/new/tagged signature, parameter/rest types, reference arguments |
+| restrict-plus-operands                 | Constrained/widened types, unions and intersections                           |
+| no-unnecessary-boolean-literal-compare | Constrained boolean/nullable types, strict-null option                        |
 
 The additive `tsgo_inspect` API returns facts, never findings. Its exact selector,
 framing, stable program-local identities and ownership are in
@@ -51,20 +51,20 @@ preserve production cohere's current-source trivia trimming, including its
 foreign-declaration positions. The corpus produced **1,763 byte-identical
 findings**, including fixes, under ASan/UBSan/LSan.
 
-| Real-input mutation | Catcher |
-| --- | --- |
-| Ask binary result instead of left operand | Production findings oracle |
-| Select last declaration instead of earliest | Production findings oracle |
-| Trim a foreign declaration against its own file | Production findings oracle |
-| Reverse getter/setter assignability | Production findings oracle |
-| Resolve first call instead of current call | Production findings oracle |
-| Treat union as its root instead of constituents | Production findings oracle |
-| Report nullable comparisons forbidden by default allowances | Production findings oracle |
-| Query released program | Refused with panic exit 70; retaining live registry entry makes the real query succeed and fails the refusal expectation |
-| Facts UTF-8 buffer length + 1 | ASan heap-buffer-overflow |
-| Empty/noninteger/negative-length/schema-2 C facts | Native decoding checks, panic exit 70 |
-| 19 malformed dynamic decoder inputs | Panic exit 70: framing, trailing data, schema/question, integer canonicality/precision, natural counts, booleans, IDs, tuple sentinel, duplicate records, missing graph links |
-| Wrong exact kind / unknown question | Refused with panic 70; deleting each guard makes that query succeed and fails its refusal expectation |
+| Real-input mutation                                         | Catcher                                                                                                                                                                       |
+| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ask binary result instead of left operand                   | Production findings oracle                                                                                                                                                    |
+| Select last declaration instead of earliest                 | Production findings oracle                                                                                                                                                    |
+| Trim a foreign declaration against its own file             | Production findings oracle                                                                                                                                                    |
+| Reverse getter/setter assignability                         | Production findings oracle                                                                                                                                                    |
+| Resolve first call instead of current call                  | Production findings oracle                                                                                                                                                    |
+| Treat union as its root instead of constituents             | Production findings oracle                                                                                                                                                    |
+| Report nullable comparisons forbidden by default allowances | Production findings oracle                                                                                                                                                    |
+| Query released program                                      | Refused with panic exit 70; retaining live registry entry makes the real query succeed and fails the refusal expectation                                                      |
+| Facts UTF-8 buffer length + 1                               | ASan heap-buffer-overflow                                                                                                                                                     |
+| Empty/noninteger/negative-length/schema-2 C facts           | Native decoding checks, panic exit 70                                                                                                                                         |
+| 19 malformed dynamic decoder inputs                         | Panic exit 70: framing, trailing data, schema/question, integer canonicality/precision, natural counts, booleans, IDs, tuple sentinel, duplicate records, missing graph links |
+| Wrong exact kind / unknown question                         | Refused with panic 70; deleting each guard makes that query succeed and fails its refusal expectation                                                                         |
 
 Mutants compile and execute. Compile failures are not counted as catches.
 See [suite.log](validation-six/suite.log), [guards.log](validation-six/guards.log)
@@ -79,26 +79,26 @@ and is charged to whichever query requests it. Each process loads once.
 
 Observed medians from the final run:
 
-| Metric | Native Adamic | Production Go cohere |
-| --- | ---: | ---: |
-| Program load | 0.292830 s | 0.286115 s |
-| Run after load | 17.926922 s | 1.739172 s |
-| Whole process | 18.270888 s | 2.045863 s |
-| Findings/s after load | 98.344 | 1,013.701 |
-| Findings/s whole process | 96.492 | 861.739 |
-| Native adapter queries | 131,755 | Not instrumented as checker calls |
-| Native total adapter time | 10.859240 s | Not equivalent to listener time |
-| Native mean adapter query | 82.420 µs | See identical-facts baseline below |
+| Metric                    | Native Adamic |               Production Go cohere |
+| ------------------------- | ------------: | ---------------------------------: |
+| Program load              |    0.292830 s |                         0.286115 s |
+| Run after load            |   17.926922 s |                         1.739172 s |
+| Whole process             |   18.270888 s |                         2.045863 s |
+| Findings/s after load     |        98.344 |                          1,013.701 |
+| Findings/s whole process  |        96.492 |                            861.739 |
+| Native adapter queries    |       131,755 |  Not instrumented as checker calls |
+| Native total adapter time |   10.859240 s |    Not equivalent to listener time |
+| Native mean adapter query |     82.420 µs | See identical-facts baseline below |
 
 | Warm fact question | Native µs/query | Direct Go µs/query |
-| --- | ---: | ---: |
-| Assignability | 2.894 | 2.128 |
-| Declarations | 5.407 | 5.485 |
-| Resolved signature | 14.998 | 15.358 |
-| Raw type | 6.405 | 6.322 |
-| Nullable type | 17.556 | 17.828 |
-| Widened union | 13.716 | 14.288 |
-| Compiler options | 1.805 | 1.257 |
+| ------------------ | --------------: | -----------------: |
+| Assignability      |           2.894 |              2.128 |
+| Declarations       |           5.407 |              5.485 |
+| Resolved signature |          14.998 |             15.358 |
+| Raw type           |           6.405 |              6.322 |
+| Nullable type      |          17.556 |             17.828 |
+| Widened union      |          13.716 |             14.288 |
+| Compiler options   |           1.805 |              1.257 |
 
 See [measurements.log](validation-six/measurements.log) for exact medians and
 [measure.py](validation-six/measure.py) to reproduce them from raw logs.

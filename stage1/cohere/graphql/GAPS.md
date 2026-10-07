@@ -20,21 +20,24 @@ graphql-js's parser hands each of its list helpers (`any`, `many`, `optionalMany
 
 ```ts
 function total(items: readonly string[], measure: (item: string) => number): number {
-	let sum = 0;
-	for (const item of items) {
-		sum += measure(item);
-	}
-	return sum;
+    let sum = 0;
+    for(const item of items) {
+        sum += measure(item);
+    }
+    return sum;
 }
 try {
-	console.log(`${total(['a', 'bb'], (item) => {
-		if (item.length > 1) {
-			throw new Error(`too long: ${item}`);
-		}
-		return item.length;
-	})}`);
-} catch (error) {
-	console.log(error instanceof Error ? error.message : '?');
+    console.log(
+        `${total(['a', 'bb'], (item) => {
+            if(item.length > 1) {
+                throw new Error(`too long: ${item}`);
+            }
+            return item.length;
+        })}`,
+    );
+}
+catch(error) {
+    console.log(error instanceof Error ? error.message : '?');
 }
 ```
 
@@ -52,12 +55,13 @@ graphql-js's parser throws what `this.unexpected()` and `syntaxError()` return.
 
 ```ts
 function unexpected(at: number): Error {
-	return new Error(`Unexpected token at ${at}.`);
+    return new Error(`Unexpected token at ${at}.`);
 }
 try {
-	throw unexpected(3);
-} catch (error) {
-	console.log(error instanceof Error ? error.message : '?');
+    throw unexpected(3);
+}
+catch(error) {
+    console.log(error instanceof Error ? error.message : '?');
 }
 ```
 
@@ -108,8 +112,8 @@ The suppression slice's GAPS.md has Node 24.21.0 failing a `writev` with EINVAL 
 
 On the 30,426 texts above, every side's output identical, unsanitized, each run three times, back to back:
 
-| | Native | Node | Go cohere |
-|---|---|---|---|
+|               | Native         | Node           | Go cohere      |
+| ------------- | -------------- | -------------- | -------------- |
 | the whole run | 3.07 to 3.17 s | 1.37 to 1.44 s | 1.44 to 1.51 s |
 
 Go cohere's time is `Parse` on every text with every answer formatted into memory, not written out. Native is about twice Node and Go here, unlike the format walk and the suppression index, where it beats Node. Under callgrind, on 3,259 of the texts:

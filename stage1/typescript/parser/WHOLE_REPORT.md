@@ -61,16 +61,15 @@ JSDoc comment/tag parser.
 
 ## Observations
 
-| Corpus | Identical canonical bytes | Implementations |
-| --- | ---: | --- |
-| 77 whole compiler files | 44,766,682 | Go, Node, sanitized native and release native |
-| 68 generated whole files | 93,323 | Go, Node, sanitized native |
-| Two JSDoc annotation types | 250 | Go, Node, sanitized native |
-| Obsolete assert import/export/import-type forms | 1,021 | Go, Node, sanitized native |
+| Corpus                                          | Identical canonical bytes | Implementations                               |
+| ----------------------------------------------- | ------------------------: | --------------------------------------------- |
+| 77 whole compiler files                         |                44,766,682 | Go, Node, sanitized native and release native |
+| 68 generated whole files                        |                    93,323 | Go, Node, sanitized native                    |
+| Two JSDoc annotation types                      |                       250 | Go, Node, sanitized native                    |
+| Obsolete assert import/export/import-type forms |                     1,021 | Go, Node, sanitized native                    |
 
 Total new canonical agreement: 44,861,276 bytes. The obsolete-assertion probe
-uses an explicit oracle option which requires that Go emit only diagnostic
-2880. Ordinary tests still reject every parse diagnostic. This compares the
+uses an explicit oracle option which requires that Go emit only diagnostic 2880. Ordinary tests still reject every parse diagnostic. This compares the
 obsolete forms' trees and does not claim diagnostic parity.
 
 Generated inputs also cover contextual type/as ambiguities, dotted and ambient
@@ -95,11 +94,11 @@ fix was made. [GAPS.md](GAPS.md) distinguishes refusals from the observed bug.
 All three new tree mutants compile and finish normally on Node and native.
 Byte comparison against Go catches each:
 
-| Mutation | First disagreement |
-| --- | --- |
-| For-of emitted as for-in | ForInStatement versus ForOfStatement, position 0, end 25 |
-| Type-only import phase lost | ImportClause Unknown versus TypeKeyword, position 32, end 41 |
-| Keyof emitted as readonly | TypeOperator ReadonlyKeyword versus KeyOfKeyword, position 60, end 68 |
+| Mutation                    | First disagreement                                                    |
+| --------------------------- | --------------------------------------------------------------------- |
+| For-of emitted as for-in    | ForInStatement versus ForOfStatement, position 0, end 25              |
+| Type-only import phase lost | ImportClause Unknown versus TypeKeyword, position 32, end 41          |
+| Keyof emitted as readonly   | TypeOperator ReadonlyKeyword versus KeyOfKeyword, position 60, end 68 |
 
 A fourth mutant changes the count traversal's own-node contribution from one
 to zero. All whole-tree bytes stay identical, but Node and native report zero
@@ -117,11 +116,11 @@ parsing and count traversal. Five runs per implementation rotate ordering;
 these are the fastest runs, with the full samples retained in
 [whole-performance.log](validation/whole-performance.log).
 
-| Implementation | Best seconds | Nodes/s |
-| --- | ---: | ---: |
-| Go | 0.156707557 | 5,665,349 |
-| Node | 0.653935711 | 1,357,630 |
-| Native, clang -O2 | 0.782590196 | 1,134,442 |
+| Implementation    | Best seconds |   Nodes/s |
+| ----------------- | -----------: | --------: |
+| Go                |  0.156707557 | 5,665,349 |
+| Node              |  0.653935711 | 1,357,630 |
+| Native, clang -O2 |  0.782590196 | 1,134,442 |
 
 Native loses by **4.994x to Go** and **1.197x to Node**. Node-count rates from
 the earlier expression slice use a different denominator and are not a speedup

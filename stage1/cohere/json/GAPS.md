@@ -93,7 +93,7 @@ its refusal, then runs its source on Node and checks the stated output:
    Node prints `0`. Around it: comment-bearing inputs initialize all comment lists; indexed reads
    use a checked `panic` fallback instead of an untyped `[]`.
 3. `gaps/repeatInTry.ts`: `stage 0 can't lower a try around repeat, whose failure
-   is a panic natively but a throw a catch can take on Node (docs/memory.md) yet`.
+is a panic natively but a throw a catch can take on Node (docs/memory.md) yet`.
    Node prints `xxx` with three arguments. Around it: indentation caches string
    prefixes rather than calling dynamic `repeat` inside caught formatting code.
 
@@ -142,11 +142,11 @@ are in [PERFORMANCE.md](PERFORMANCE.md). No `internal/` files changed.
 
 On the original frozen source, three back-to-back rounds over all 1,075 inputs:
 
-| Side | Seconds, rounds 1 / 2 / 3 | Texts/s, rounds 1 / 2 / 3 | Median texts/s |
-|---|---|---|---|
-| Native release | 16.961 / 17.517 / 17.261 | 63.38 / 61.37 / 62.28 | **62.28** |
-| Node source | 12.405 / 11.291 / 11.791 | 86.66 / 95.21 / 91.17 | **91.17** |
-| Go cohere | 9.788 / 10.024 / 9.837 | 109.83 / 107.24 / 109.28 | **109.28** |
+| Side           | Seconds, rounds 1 / 2 / 3 | Texts/s, rounds 1 / 2 / 3 | Median texts/s |
+| -------------- | ------------------------- | ------------------------- | -------------- |
+| Native release | 16.961 / 17.517 / 17.261  | 63.38 / 61.37 / 62.28     | **62.28**      |
+| Node source    | 12.405 / 11.291 / 11.791  | 86.66 / 95.21 / 91.17     | **91.17**      |
+| Go cohere      | 9.788 / 10.024 / 9.837    | 109.83 / 107.24 / 109.28  | **109.28**     |
 
 These are observed whole-process wall times, excluding builds. Every side reads
 the same approximately 60 MB escaped cases file, formats or refuses each text,

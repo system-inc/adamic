@@ -91,10 +91,10 @@ error positions are not held to Go's different internal error API here.
 All three mutants run successfully with clean stderr and are rejected by the
 Go-byte oracle on Node in both option sets; compiler failure is not counted.
 
-| Mutant | What caught it |
-|---|---|
-| Declarations omit semicolons | First difference line 2, byte 69 |
-| Rule bodies omit indentation | First difference line 6, byte 7 |
+| Mutant                        | What caught it                    |
+| ----------------------------- | --------------------------------- |
+| Declarations omit semicolons  | First difference line 2, byte 69  |
+| Rule bodies omit indentation  | First difference line 6, byte 7   |
 | Groups ignore remaining width | First difference line 26, byte 12 |
 
 The explicit native-gap test fails when either the small regex/media proof or
@@ -145,11 +145,11 @@ ADAMIC_CSS_FIXTURES=/tmp/adamic-css-prettier ADAMIC_CSS_PRINTER_LIBRARY=/tmp/ada
 
 Final benchmark PASS in 226.708s. Every round has the exact output checksum.
 
-| Runtime | Round 1 / s | Round 2 / s | Round 3 / s | Median / s |
-|---|---:|---:|---:|---:|
-| Adamic source on Node | 1708 | 1580 | 1596 | 1596 |
-| Prettier fork on Node | 1777 | 1632 | 1703 | 1703 |
-| Go | 4432 | 5347 | 5568 | 5347 |
+| Runtime               | Round 1 / s | Round 2 / s | Round 3 / s | Median / s |
+| --------------------- | ----------: | ----------: | ----------: | ---------: |
+| Adamic source on Node |        1708 |        1580 |        1596 |       1596 |
+| Prettier fork on Node |        1777 |        1632 |        1703 |       1703 |
+| Go                    |        4432 |        5347 |        5568 |       5347 |
 
 Printer implementation commit: `b902761`; regex compatibility: `2a3416f`;
 dependency merge: `8d21b63`. This report and the throughput log are committed

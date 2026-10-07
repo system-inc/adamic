@@ -26,7 +26,7 @@ its type parameter was refused even though docs/0.1.md specifies monomorphizatio
 
 ```ts
 function identity<Item>(item: Item): Item {
-	return item;
+    return item;
 }
 console.log(identity('a'));
 ```
@@ -37,7 +37,7 @@ stage 0 can't lower a function returning Item yet        (Node prints a)
 
 ```ts
 function show<Item>(item: Item, describe: (item: Item) => string): string {
-	return describe(item);
+    return describe(item);
 }
 console.log(show(3, (value) => `${value}`));
 ```
@@ -58,7 +58,7 @@ This one isn't refused: stage 0 lowers it, and the C it writes returns an `adami
 
 ```ts
 function nothing(): string | undefined {
-	return undefined;
+    return undefined;
 }
 console.log(nothing() ?? 'none');
 ```
@@ -81,7 +81,7 @@ docs/0.1.md has `?.`. On an object it lowers; on an array or a string it's refus
 
 ```ts
 function size(list: readonly string[] | undefined): number {
-	return list?.length ?? 0;
+    return list?.length ?? 0;
 }
 console.log(`${size(['a'])} ${size(undefined)}`);
 ```
@@ -102,11 +102,11 @@ Not a NotYet: a rule of 0.1, the cycle finder's (`internal/lower/cycles.go`, doc
 
 ```ts
 class TreeNode {
-	readonly name: string;
-	readonly nodes: TreeNode[] = [];
-	constructor(name: string) {
-		this.name = name;
-	}
+    readonly name: string;
+    readonly nodes: TreeNode[] = [];
+    constructor(name: string) {
+        this.name = name;
+    }
 }
 const root = new TreeNode('root');
 root.nodes.push(new TreeNode('a'));
@@ -126,18 +126,18 @@ The same rule refuses the way nearly every parser builds a tree bottom-up: colle
 
 ```ts
 class TreeNode {
-	readonly name: string;
-	readonly nodes: readonly TreeNode[];
-	constructor(name: string, nodes: readonly TreeNode[]) {
-		this.name = name;
-		this.nodes = nodes;
-	}
+    readonly name: string;
+    readonly nodes: readonly TreeNode[];
+    constructor(name: string, nodes: readonly TreeNode[]) {
+        this.name = name;
+        this.nodes = nodes;
+    }
 }
 function build(): TreeNode {
-	const children: TreeNode[] = [];
-	children.push(new TreeNode('a', []));
-	children.push(new TreeNode('b', []));
-	return new TreeNode('root', children);
+    const children: TreeNode[] = [];
+    children.push(new TreeNode('a', []));
+    children.push(new TreeNode('b', []));
+    return new TreeNode('root', children);
 }
 console.log(`${build().nodes.length}`);
 ```
@@ -189,10 +189,10 @@ A class whose fields are written after it's made (the post-pass retypes nodes in
 
 The port agrees with Go cohere and the library on every case; these are the numbers to beat. Measured on this Linux container, x86-64, unsanitized `-O2` (`adamic build`), with the driver's `count` mode, which parses every case and prints one line, against Go cohere's Parse over the same cases in a loop (the time of the loop alone, so Go's is the most favourable).
 
-| Cases | Native | Node | Go cohere |
-|---|---|---|---|
-| 200,103 generated (non-ASCII on purpose) | 2.15 s | 0.69 s | 0.54 s |
-| the 63,742 of them that are ASCII | 0.35 s | 0.18 s | 0.16 s |
+| Cases                                    | Native | Node   | Go cohere |
+| ---------------------------------------- | ------ | ------ | --------- |
+| 200,103 generated (non-ASCII on purpose) | 2.15 s | 0.69 s | 0.54 s    |
+| the 63,742 of them that are ASCII        | 0.35 s | 0.18 s | 0.16 s    |
 
 Under callgrind, on 20,000 ASCII cases, the native run's instructions are allocation churn: `adamic_release` 17%, `adamic_string_concat` 13%, malloc and free 23% between them, `adamic_string_slice` 8%. Three shapes cause it, all in natural code the port shares with the Go:
 

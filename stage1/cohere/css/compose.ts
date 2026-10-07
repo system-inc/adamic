@@ -27,7 +27,7 @@ function frontMatter(tree: Tree, text: string): number {
         return -1;
     }
     const explicit = text.slice(3, firstBreak).trim();
-    const language = explicit === '' ? delimiter === '---' ? 'yaml' : 'toml' : explicit;
+    const language = explicit === '' ? (delimiter === '---' ? 'yaml' : 'toml') : explicit;
     let end = text.slice(firstBreak).indexOf(`\n${delimiter}`);
     if(end < 0 && delimiter === '---' && language === 'yaml') {
         end = text.slice(firstBreak).indexOf('\n...');
@@ -104,7 +104,11 @@ function copyTree(target: Tree, original: Tree, index: number): number {
 function rawText(tree: Tree, raws: number, key: string, fallback: string): string {
     const object = tree.at(raws);
     const raw = object.object(key);
-    return raw < 0 ? fallback : tree.at(raw).strings.has('scss') ? tree.at(raw).string('scss') : tree.at(raw).string('raw');
+    return raw < 0
+        ? fallback
+        : tree.at(raw).strings.has('scss')
+          ? tree.at(raw).string('scss')
+          : tree.at(raw).string('raw');
 }
 function nestedCSS(tree: Tree, index: number, text: string, scss: boolean): void {
     const node = tree.at(index);
@@ -123,11 +127,17 @@ function nestedCSS(tree: Tree, index: number, text: string, scss: boolean): void
             const source = tree.at(node.object('source'));
             const start = tree.at(source.object('start')).number('offset');
             const end = tree.at(source.object('end')).number('offset');
-            const fake = blank(byteSlice(text, 0, start)) + repeatText('a', utf8Length(prop)) + byteSlice(text, start + utf8Length(prop), end);
+            const fake =
+                blank(byteSlice(text, 0, start)) +
+                repeatText('a', utf8Length(prop)) +
+                byteSlice(text, start + utf8Length(prop), end);
             const parsed = compose(fake, scss);
             if(parsed.kind === 'Composed') {
                 const children = parsed.tree.at(parsed.tree.root).list('nodes');
-                if(children.length === 1 && parsed.tree.at(children[0] ?? panic('missing custom property rule')).type() === 'css-rule') {
+                if(
+                    children.length === 1 &&
+                    parsed.tree.at(children[0] ?? panic('missing custom property rule')).type() === 'css-rule'
+                ) {
                     const collected: number[] = [];
                     rules = collected;
                     for(const child of parsed.tree.at(children[0] ?? panic('missing rule')).list('nodes')) {
@@ -181,14 +191,21 @@ function nestedCSS(tree: Tree, index: number, text: string, scss: boolean): void
         if(selector.startsWith('@') && selector.endsWith(':')) {
             return;
         }
-        if(scss && selector.replace(/\/\*.*?\*\//, '').replace(/\/\/.*\n/, '').trimEnd().endsWith(':')) {
+        if(
+            scss &&
+            selector
+                .replace(/\/\*.*?\*\//, '')
+                .replace(/\/\/.*\n/, '')
+                .trimEnd()
+                .endsWith(':')
+        ) {
             node.setBoolean('isScssNestedProperty', true);
         }
         node.setObject('selector', parseSelector(tree, selector));
         return;
     }
     if(value.trim() !== '') {
-        const defaultDirective = /(\s*)(!default).*$/ .exec(value);
+        const defaultDirective = /(\s*)(!default).*$/.exec(value);
         if(defaultDirective !== null) {
             const match = defaultDirective[0] ?? '';
             value = value.slice(0, defaultDirective.index);
@@ -197,7 +214,7 @@ function nestedCSS(tree: Tree, index: number, text: string, scss: boolean): void
                 raws.setString('scssDefault', match);
             }
         }
-        const globalDirective = /(\s*)(!global).*$/ .exec(value);
+        const globalDirective = /(\s*)(!global).*$/.exec(value);
         if(globalDirective !== null) {
             const match = globalDirective[0] ?? '';
             value = value.slice(0, globalDirective.index);
@@ -253,7 +270,24 @@ function nestedCSS(tree: Tree, index: number, text: string, scss: boolean): void
         node.remove('filename');
         node.setObject('params', parseValue(tree, params, scss));
     }
-    else if(['namespace', 'supports', 'if', 'else', 'for', 'each', 'while', 'debug', 'mixin', 'include', 'function', 'return', 'define-mixin', 'add-mixin'].includes(name)) {
+    else if(
+        [
+            'namespace',
+            'supports',
+            'if',
+            'else',
+            'for',
+            'each',
+            'while',
+            'debug',
+            'mixin',
+            'include',
+            'function',
+            'return',
+            'define-mixin',
+            'add-mixin',
+        ].includes(name)
+    ) {
         params = params.replace(/(\$\S+?)(\s+)?\.{3}/, '$1...$2');
         if(!params.startsWith('if')) {
             params = params.replace(/^([^"'\s(]+)(\s+)\(/, '$1($2');

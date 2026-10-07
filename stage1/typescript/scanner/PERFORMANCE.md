@@ -57,134 +57,134 @@ all intermediate top twenties and five timing samples are committed in
 text logs. Comparison, mutant and tool diagnostic logs are saved there too.
 Native source snapshot commits are listed below.
 
-| Change | Commit | Native tokens/s | Go tokens/s | Node tokens/s | Native Ir | Ir/token |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Baseline | `0e1a6b3` | 600,634 | 12,986,559 | 922,788 | 9,322,686,277 | 21,441.81 |
-| Slice contiguous identifiers | `5b4a5a7` | 706,663 | 12,373,029 | 971,618 | 7,856,053,472 | 18,068.62 |
-| Reuse decoded scalar on advance | `72fe01d` | 899,161 | 12,835,108 | 1,029,928 | 5,942,889,931 | 13,668.41 |
-| Omit byte-offset table in count mode | `c98108c` | 1,250,492 | 12,165,127 | 1,744,522 | 3,806,256,243 | 8,754.24 |
-| BMP charCodeAt fast path | `d5c60eb` | 1,521,489 | 12,059,307 | 1,722,360 | 3,084,480,085 | 7,094.18 |
-| Dispatch punctuators without slices | `5cf0144` | 1,716,000 | 11,697,116 | 1,849,764 | 2,645,557,023 | 6,084.68 |
-| Read raw bodies as code units | `9012623` | 2,095,365 | 11,877,364 | 1,930,873 | 2,431,445,257 | 5,592.23 |
-| Return one cooked piece directly | `c230f01` | 2,081,602 | 13,120,602 | 2,107,845 | 2,429,614,991 | 5,588.02 |
+| Change                               | Commit    | Native tokens/s | Go tokens/s | Node tokens/s |     Native Ir |  Ir/token |
+| ------------------------------------ | --------- | --------------: | ----------: | ------------: | ------------: | --------: |
+| Baseline                             | `0e1a6b3` |         600,634 |  12,986,559 |       922,788 | 9,322,686,277 | 21,441.81 |
+| Slice contiguous identifiers         | `5b4a5a7` |         706,663 |  12,373,029 |       971,618 | 7,856,053,472 | 18,068.62 |
+| Reuse decoded scalar on advance      | `72fe01d` |         899,161 |  12,835,108 |     1,029,928 | 5,942,889,931 | 13,668.41 |
+| Omit byte-offset table in count mode | `c98108c` |       1,250,492 |  12,165,127 |     1,744,522 | 3,806,256,243 |  8,754.24 |
+| BMP charCodeAt fast path             | `d5c60eb` |       1,521,489 |  12,059,307 |     1,722,360 | 3,084,480,085 |  7,094.18 |
+| Dispatch punctuators without slices  | `5cf0144` |       1,716,000 |  11,697,116 |     1,849,764 | 2,645,557,023 |  6,084.68 |
+| Read raw bodies as code units        | `9012623` |       2,095,365 |  11,877,364 |     1,930,873 | 2,431,445,257 |  5,592.23 |
+| Return one cooked piece directly     | `c230f01` |       2,081,602 |  13,120,602 |     2,107,845 | 2,429,614,991 |  5,588.02 |
 
 Logical allocation counters, not allocated bytes. Frees equal allocations
 at every step; peak live allocations 2,262; regions 0 throughout.
 
-| Snapshot | Allocations | Retains | Releases |
-| --- | ---: | ---: | ---: |
-| baseline | 4168924 | 1831342 | 6209051 |
-| 1-identifier | 1118972 | 2441827 | 3769584 |
-| 2-advance | 1118972 | 2441827 | 3769584 |
-| 3-count-driver | 1118972 | 2441750 | 3769507 |
-| 4-bmp-read | 1118972 | 2441750 | 3769507 |
-| 5-punctuation | 435938 | 2441910 | 2636846 |
-| 6-raw-units | 435938 | 2441910 | 2636846 |
-| 7-single-piece | 432199 | 2450881 | 2642078 |
+| Snapshot       | Allocations | Retains | Releases |
+| -------------- | ----------: | ------: | -------: |
+| baseline       |     4168924 | 1831342 |  6209051 |
+| 1-identifier   |     1118972 | 2441827 |  3769584 |
+| 2-advance      |     1118972 | 2441827 |  3769584 |
+| 3-count-driver |     1118972 | 2441750 |  3769507 |
+| 4-bmp-read     |     1118972 | 2441750 |  3769507 |
+| 5-punctuation  |      435938 | 2441910 |  2636846 |
+| 6-raw-units    |      435938 | 2441910 |  2636846 |
+| 7-single-piece |      432199 | 2450881 |  2642078 |
 
 ## Top 20 inclusive instructions
 
 Baseline:
 
-| Rank | Function | Ir | Share |
-| --- | --- | ---: | ---: |
-| 1 | `main` | 9,322,507,326 | 100.00% |
-| 2 | `run` | 9,321,783,208 | 99.99% |
-| 3 | `Scanner_scan` | 6,752,900,489 | 72.44% |
-| 4 | `adamic_string_code_point_at` | 4,608,743,384 | 49.44% |
-| 5 | `Scanner_code` | 3,616,276,675 | 38.79% |
-| 6 | `Scanner_template` | 2,696,020,840 | 28.92% |
-| 7 | `adamic_string_locate` | 2,668,688,683 | 28.63% |
-| 8 | `Scanner_identifier` | 2,541,482,449 | 27.26% |
-| 9 | `Scanner_advance` | 1,992,294,730 | 21.37% |
-| 10 | `unit_at` | 1,588,551,758 | 17.04% |
-| 11 | `adamic_string_from_code_points` | 722,498,639 | 7.75% |
-| 12 | `usable` | 569,065,410 | 6.10% |
-| 13 | `adamic_string_append` | 551,490,381 | 5.92% |
-| 14 | `adamic_release` | 433,506,484 | 4.65% |
-| 15 | `adamic_string_concat` | 351,061,298 | 3.77% |
-| 16 | `adamic_string_slice` | 324,488,745 | 3.48% |
-| 17 | `adamic_string_units` | 251,888,985 | 2.70% |
-| 18 | `adamic_string_join_halves` | 239,745,081 | 2.57% |
-| 19 | `adamic_read_text_file` | 226,519,917 | 2.43% |
-| 20 | `decode` | 225,777,641 | 2.42% |
+| Rank | Function                         |            Ir |   Share |
+| ---- | -------------------------------- | ------------: | ------: |
+| 1    | `main`                           | 9,322,507,326 | 100.00% |
+| 2    | `run`                            | 9,321,783,208 |  99.99% |
+| 3    | `Scanner_scan`                   | 6,752,900,489 |  72.44% |
+| 4    | `adamic_string_code_point_at`    | 4,608,743,384 |  49.44% |
+| 5    | `Scanner_code`                   | 3,616,276,675 |  38.79% |
+| 6    | `Scanner_template`               | 2,696,020,840 |  28.92% |
+| 7    | `adamic_string_locate`           | 2,668,688,683 |  28.63% |
+| 8    | `Scanner_identifier`             | 2,541,482,449 |  27.26% |
+| 9    | `Scanner_advance`                | 1,992,294,730 |  21.37% |
+| 10   | `unit_at`                        | 1,588,551,758 |  17.04% |
+| 11   | `adamic_string_from_code_points` |   722,498,639 |   7.75% |
+| 12   | `usable`                         |   569,065,410 |   6.10% |
+| 13   | `adamic_string_append`           |   551,490,381 |   5.92% |
+| 14   | `adamic_release`                 |   433,506,484 |   4.65% |
+| 15   | `adamic_string_concat`           |   351,061,298 |   3.77% |
+| 16   | `adamic_string_slice`            |   324,488,745 |   3.48% |
+| 17   | `adamic_string_units`            |   251,888,985 |   2.70% |
+| 18   | `adamic_string_join_halves`      |   239,745,081 |   2.57% |
+| 19   | `adamic_read_text_file`          |   226,519,917 |   2.43% |
+| 20   | `decode`                         |   225,777,641 |   2.42% |
 
 Final:
 
-| Rank | Function | Ir | Share |
-| --- | --- | ---: | ---: |
-| 1 | `main` | 2,429,435,818 | 99.99% |
-| 2 | `run` | 2,428,711,381 | 99.96% |
-| 3 | `Scanner_scan` | 2,144,325,404 | 88.26% |
-| 4 | `Scanner_template` | 947,709,220 | 39.01% |
-| 5 | `adamic_string_char_code` | 707,400,508 | 29.12% |
-| 6 | `Scanner_code` | 509,850,527 | 20.98% |
-| 7 | `Scanner_identifier` | 470,209,573 | 19.35% |
-| 8 | `adamic_string_locate` | 441,849,530 | 18.19% |
-| 9 | `unit_at` | 438,287,338 | 18.04% |
-| 10 | `adamic_read_text_file` | 228,998,266 | 9.43% |
-| 11 | `decode` | 225,777,620 | 9.29% |
-| 12 | `usable` | 153,769,189 | 6.33% |
-| 13 | `adamic_string_slice` | 122,762,521 | 5.05% |
-| 14 | `adamic_string_units` | 104,515,436 | 4.30% |
-| 15 | `adamic_release` | 103,717,182 | 4.27% |
-| 16 | `adamic_array_join` | 100,712,463 | 4.15% |
-| 17 | `isIdentifierPart` | 95,756,397 | 3.94% |
-| 18 | `adamic_string_concat` | 89,162,854 | 3.67% |
-| 19 | `adamic_string_join_halves` | 82,545,858 | 3.40% |
-| 20 | `isIdentifierStart` | 73,690,719 | 3.03% |
+| Rank | Function                    |            Ir |  Share |
+| ---- | --------------------------- | ------------: | -----: |
+| 1    | `main`                      | 2,429,435,818 | 99.99% |
+| 2    | `run`                       | 2,428,711,381 | 99.96% |
+| 3    | `Scanner_scan`              | 2,144,325,404 | 88.26% |
+| 4    | `Scanner_template`          |   947,709,220 | 39.01% |
+| 5    | `adamic_string_char_code`   |   707,400,508 | 29.12% |
+| 6    | `Scanner_code`              |   509,850,527 | 20.98% |
+| 7    | `Scanner_identifier`        |   470,209,573 | 19.35% |
+| 8    | `adamic_string_locate`      |   441,849,530 | 18.19% |
+| 9    | `unit_at`                   |   438,287,338 | 18.04% |
+| 10   | `adamic_read_text_file`     |   228,998,266 |  9.43% |
+| 11   | `decode`                    |   225,777,620 |  9.29% |
+| 12   | `usable`                    |   153,769,189 |  6.33% |
+| 13   | `adamic_string_slice`       |   122,762,521 |  5.05% |
+| 14   | `adamic_string_units`       |   104,515,436 |  4.30% |
+| 15   | `adamic_release`            |   103,717,182 |  4.27% |
+| 16   | `adamic_array_join`         |   100,712,463 |  4.15% |
+| 17   | `isIdentifierPart`          |    95,756,397 |  3.94% |
+| 18   | `adamic_string_concat`      |    89,162,854 |  3.67% |
+| 19   | `adamic_string_join_halves` |    82,545,858 |  3.40% |
+| 20   | `isIdentifierStart`         |    73,690,719 |  3.03% |
 
 ## Top 20 self instructions
 
 Baseline:
 
-| Rank | Function | Ir | Share |
-| --- | --- | ---: | ---: |
-| 1 | `adamic_string_locate` | 2,099,623,273 | 22.52% |
-| 2 | `adamic_string_code_point_at` | 1,463,437,128 | 15.70% |
-| 3 | `Scanner_code` | 578,768,909 | 6.21% |
-| 4 | `usable` | 569,062,855 | 6.10% |
-| 5 | `run` | 486,970,422 | 5.22% |
-| 6 | `adamic_release` | 378,108,866 | 4.06% |
-| 7 | `unit_at` | 373,137,482 | 4.00% |
-| 8 | `Scanner_advance` | 337,296,436 | 3.62% |
-| 9 | `adamic_string_units` | 251,888,985 | 2.70% |
-| 10 | `adamic_string_join_halves` | 239,745,081 | 2.57% |
-| 11 | `decode` | 225,747,318 | 2.42% |
-| 12 | `adamic_string_append` | 205,020,447 | 2.20% |
-| 13 | `Scanner_scan` | 187,570,859 | 2.01% |
-| 14 | `adamic_array_push` | 154,446,557 | 1.66% |
-| 15 | `adamic_allocate` | 150,074,192 | 1.61% |
-| 16 | `free` | 148,698,157 | 1.60% |
-| 17 | `Scanner_template` | 129,927,701 | 1.39% |
-| 18 | `adamic_string_slice` | 126,736,694 | 1.36% |
-| 19 | `adamic_string_from_code_points` | 125,392,050 | 1.35% |
-| 20 | `adamic_string_concat` | 119,583,485 | 1.28% |
+| Rank | Function                         |            Ir |  Share |
+| ---- | -------------------------------- | ------------: | -----: |
+| 1    | `adamic_string_locate`           | 2,099,623,273 | 22.52% |
+| 2    | `adamic_string_code_point_at`    | 1,463,437,128 | 15.70% |
+| 3    | `Scanner_code`                   |   578,768,909 |  6.21% |
+| 4    | `usable`                         |   569,062,855 |  6.10% |
+| 5    | `run`                            |   486,970,422 |  5.22% |
+| 6    | `adamic_release`                 |   378,108,866 |  4.06% |
+| 7    | `unit_at`                        |   373,137,482 |  4.00% |
+| 8    | `Scanner_advance`                |   337,296,436 |  3.62% |
+| 9    | `adamic_string_units`            |   251,888,985 |  2.70% |
+| 10   | `adamic_string_join_halves`      |   239,745,081 |  2.57% |
+| 11   | `decode`                         |   225,747,318 |  2.42% |
+| 12   | `adamic_string_append`           |   205,020,447 |  2.20% |
+| 13   | `Scanner_scan`                   |   187,570,859 |  2.01% |
+| 14   | `adamic_array_push`              |   154,446,557 |  1.66% |
+| 15   | `adamic_allocate`                |   150,074,192 |  1.61% |
+| 16   | `free`                           |   148,698,157 |  1.60% |
+| 17   | `Scanner_template`               |   129,927,701 |  1.39% |
+| 18   | `adamic_string_slice`            |   126,736,694 |  1.36% |
+| 19   | `adamic_string_from_code_points` |   125,392,050 |  1.35% |
+| 20   | `adamic_string_concat`           |   119,583,485 |  1.28% |
 
 Final:
 
-| Rank | Function | Ir | Share |
-| --- | --- | ---: | ---: |
-| 1 | `Scanner_template` | 354,578,754 | 14.59% |
-| 2 | `adamic_string_locate` | 288,080,341 | 11.86% |
-| 3 | `Scanner_code` | 245,166,344 | 10.09% |
-| 4 | `decode` | 225,747,678 | 9.29% |
-| 5 | `Scanner_scan` | 189,069,591 | 7.78% |
-| 6 | `adamic_string_char_code` | 157,435,393 | 6.48% |
-| 7 | `usable` | 153,766,828 | 6.33% |
-| 8 | `adamic_string_units` | 104,515,436 | 4.30% |
-| 9 | `adamic_release` | 96,938,779 | 3.99% |
-| 10 | `adamic_string_join_halves` | 82,545,858 | 3.40% |
-| 11 | `isIdentifierStart` | 73,686,440 | 3.03% |
-| 12 | `Scanner_identifier` | 69,674,447 | 2.87% |
-| 13 | `unit_at` | 48,729,266 | 2.01% |
-| 14 | `isIdentifierPart` | 39,254,925 | 1.62% |
-| 15 | `adamic_string_slice` | 37,671,137 | 1.55% |
-| 16 | `find` | 36,304,556 | 1.49% |
-| 17 | `adamic_string_equal` | 33,785,653 | 1.39% |
-| 18 | `adamic_retain` | 18,284,449 | 0.75% |
-| 19 | `run` | 17,400,997 | 0.72% |
-| 20 | `adamic_allocate` | 15,547,828 | 0.64% |
+| Rank | Function                    |          Ir |  Share |
+| ---- | --------------------------- | ----------: | -----: |
+| 1    | `Scanner_template`          | 354,578,754 | 14.59% |
+| 2    | `adamic_string_locate`      | 288,080,341 | 11.86% |
+| 3    | `Scanner_code`              | 245,166,344 | 10.09% |
+| 4    | `decode`                    | 225,747,678 |  9.29% |
+| 5    | `Scanner_scan`              | 189,069,591 |  7.78% |
+| 6    | `adamic_string_char_code`   | 157,435,393 |  6.48% |
+| 7    | `usable`                    | 153,766,828 |  6.33% |
+| 8    | `adamic_string_units`       | 104,515,436 |  4.30% |
+| 9    | `adamic_release`            |  96,938,779 |  3.99% |
+| 10   | `adamic_string_join_halves` |  82,545,858 |  3.40% |
+| 11   | `isIdentifierStart`         |  73,686,440 |  3.03% |
+| 12   | `Scanner_identifier`        |  69,674,447 |  2.87% |
+| 13   | `unit_at`                   |  48,729,266 |  2.01% |
+| 14   | `isIdentifierPart`          |  39,254,925 |  1.62% |
+| 15   | `adamic_string_slice`       |  37,671,137 |  1.55% |
+| 16   | `find`                      |  36,304,556 |  1.49% |
+| 17   | `adamic_string_equal`       |  33,785,653 |  1.39% |
+| 18   | `adamic_retain`             |  18,284,449 |  0.75% |
+| 19   | `run`                       |  17,400,997 |  0.72% |
+| 20   | `adamic_allocate`           |  15,547,828 |  0.64% |
 
 ## Cost attribution and scanner changes
 
@@ -312,13 +312,13 @@ The final step's complete scanner package passed in 48.363s.
 
 Mutants, all observed successful executions with wrong answers:
 
-| Mutant | What caught it |
-| --- | --- |
-| `!=` kind becomes `==` | Node and sanitized native byte comparison, line 348 |
-| Repeated decimal separator accepted | Both byte comparisons, line 689: NumericLiteral instead of error 6189 |
-| Regex rescan skipped | Both byte comparisons, line 126235: SlashToken instead of RegularExpressionLiteral |
-| Release snapshot `!=` kind becomes `==` | TestProfileSnapshotsAgree fails, line 32502; demonstrates new release-build comparison |
-| Callgrind summary increased by one | profile.py refuses with self costs do not sum to summary; demonstrates accounting check |
+| Mutant                                  | What caught it                                                                          |
+| --------------------------------------- | --------------------------------------------------------------------------------------- |
+| `!=` kind becomes `==`                  | Node and sanitized native byte comparison, line 348                                     |
+| Repeated decimal separator accepted     | Both byte comparisons, line 689: NumericLiteral instead of error 6189                   |
+| Regex rescan skipped                    | Both byte comparisons, line 126235: SlashToken instead of RegularExpressionLiteral      |
+| Release snapshot `!=` kind becomes `==` | TestProfileSnapshotsAgree fails, line 32502; demonstrates new release-build comparison  |
+| Callgrind summary increased by one      | profile.py refuses with self costs do not sum to summary; demonstrates accounting check |
 
 The filtered core oracle passed nine string/index/append/surrogate fixtures
 in 16.555s (the substring filter also includes optional_strings and

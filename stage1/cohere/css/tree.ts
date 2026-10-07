@@ -146,7 +146,7 @@ export function renderTree(tree: Tree, index: number): string {
         return quote(node.literalValue);
     }
     const keys = node.keys.slice();
-    keys.sort((left, right) => left < right ? -1 : left > right ? 1 : 0);
+    keys.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
     const parts: string[] = [];
     for(const key of keys) {
         let value = 'null';
@@ -176,7 +176,11 @@ export function renderTree(tree: Tree, index: number): string {
     if(node.ast && sourceIndex >= 0) {
         const source = tree.at(sourceIndex);
         if(node.range[0] !== source.number('startOffset') || node.range[1] !== source.number('endOffset')) {
-            parts.splice(0, 0, `${quote('<range>')}:${quote(`Range [${node.range[0]} ${node.range[1]}] disagrees with the source offsets`)}`);
+            parts.splice(
+                0,
+                0,
+                `${quote('<range>')}:${quote(`Range [${node.range[0]} ${node.range[1]}] disagrees with the source offsets`)}`,
+            );
         }
     }
     return `{${parts.join(',')}}`;

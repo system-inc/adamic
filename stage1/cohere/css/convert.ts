@@ -181,7 +181,11 @@ export function fromValue(tree: Tree, original: ValueTree, input: Input): number
                 const index = value.sourceIndex;
                 const low = input.css.charCodeAt(index);
                 const high = input.css.charCodeAt(index - 1);
-                node.setNumber(key, input.byteOffset(index) - (low >= 0xdc00 && low <= 0xdfff && high >= 0xd800 && high <= 0xdbff ? 2 : 0));
+                node.setNumber(
+                    key,
+                    input.byteOffset(index) -
+                        (low >= 0xdc00 && low <= 0xdfff && high >= 0xd800 && high <= 0xdbff ? 2 : 0),
+                );
                 break;
             }
             case 'value':
@@ -218,7 +222,14 @@ export function fromValue(tree: Tree, original: ValueTree, input: Input): number
     return result;
 }
 export function fromMedia(tree: Tree, original: MediaNode, input: Input): number {
-    const result = tree.make(original.type === '' && original.value === '' ? '' : original.type.startsWith('media-') ? original.type : `media-${original.type === '' ? 'unknown' : original.type}`, true);
+    const result = tree.make(
+        original.type === '' && original.value === ''
+            ? ''
+            : original.type.startsWith('media-')
+              ? original.type
+              : `media-${original.type === '' ? 'unknown' : original.type}`,
+        true,
+    );
     const node = tree.at(result);
     node.setString('after', original.after);
     node.setString('before', original.before);

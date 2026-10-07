@@ -14,47 +14,54 @@
 // Not ported, as in the Go: parent, and Container's walk and each, which Prettier never calls.
 
 export class MediaNode {
-	type: string;
-	after: string;
-	before: string;
-	readonly value: string;
-	sourceIndex: number;
+    type: string;
+    after: string;
+    before: string;
+    readonly value: string;
+    sourceIndex: number;
 
-	// The container's children, or undefined for a node that is not a container.
-	readonly nodes: readonly MediaNode[] | undefined;
+    // The container's children, or undefined for a node that is not a container.
+    readonly nodes: readonly MediaNode[] | undefined;
 
-	constructor(type: string, after: string, before: string, value: string, sourceIndex: number, nodes: readonly MediaNode[] | undefined) {
-		this.type = type;
-		this.after = after;
-		this.before = before;
-		this.value = value;
-		this.sourceIndex = sourceIndex;
-		this.nodes = nodes;
-	}
+    constructor(
+        type: string,
+        after: string,
+        before: string,
+        value: string,
+        sourceIndex: number,
+        nodes: readonly MediaNode[] | undefined,
+    ) {
+        this.type = type;
+        this.after = after;
+        this.before = before;
+        this.value = value;
+        this.sourceIndex = sourceIndex;
+        this.nodes = nodes;
+    }
 }
 
 // nodes.go: newNode, `new Node(opts)`: a very generic node. Pretty much any element of a media query.
 export function newNode(after: string, before: string, type: string, value: string, sourceIndex: number): MediaNode {
-	return new MediaNode(type, after, before, value, sourceIndex, undefined);
+    return new MediaNode(type, after, before, value, sourceIndex, undefined);
 }
 
 // nodes.go: newContainer, `new Container(opts)`: a node that contains other nodes. after, before and
 // sourceIndex are undefined only for the root, which index.js builds without them, and Container derives
 // them from its children.
 export function newContainer(
-	after: string | undefined,
-	before: string | undefined,
-	type: string,
-	value: string,
-	sourceIndex: number | undefined,
-	nodes: readonly MediaNode[],
+    after: string | undefined,
+    before: string | undefined,
+    type: string,
+    value: string,
+    sourceIndex: number | undefined,
+    nodes: readonly MediaNode[],
 ): MediaNode {
-	const first = nodes[0];
-	const last = nodes.at(-1);
-	const derivedAfter = after ?? (last !== undefined ? last.after : '');
-	const derivedBefore = before ?? (first !== undefined ? first.before : '');
-	// this.before.length: before is whitespace from the input, so its length is the offset. The Go counts
-	// bytes and the port UTF-16 units, as the library does.
-	const derivedSourceIndex = sourceIndex ?? derivedBefore.length;
-	return new MediaNode(type, derivedAfter, derivedBefore, value, derivedSourceIndex, nodes);
+    const first = nodes[0];
+    const last = nodes.at(-1);
+    const derivedAfter = after ?? (last !== undefined ? last.after : '');
+    const derivedBefore = before ?? (first !== undefined ? first.before : '');
+    // this.before.length: before is whitespace from the input, so its length is the offset. The Go counts
+    // bytes and the port UTF-16 units, as the library does.
+    const derivedSourceIndex = sourceIndex ?? derivedBefore.length;
+    return new MediaNode(type, derivedAfter, derivedBefore, value, derivedSourceIndex, nodes);
 }

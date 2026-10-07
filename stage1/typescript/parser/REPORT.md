@@ -56,15 +56,15 @@ the pair matrix independently exercises all twenty-five. Every generated input
 must be diagnostic-free in Go; inputs are not filtered after a comparison
 failure. The source tree and corpus generators are reviewable in the tests.
 
-| Green step | Pushed commit | Observation |
-| --- | --- | --- |
-| Primary and precedence | `df909aa52267a066e2c59d524f7c8916d4573ef1` | 14 inputs, 3,194 bytes |
-| Suffixes and containers | `854d6bd89d86d564f7fb3c90887d53b2b2eb41d2` | 30 inputs, 8,080 bytes |
-| Arrows, functions and types | `48bfd18d25261561cf604061de1c4ac71c99e4b4` | 58 inputs, 17,463 bytes |
-| Whole compiler traversal | `5824126a5555214d70a48fb155d120cd715b2aed` | 77 files, 28,812,163 bytes |
-| Generated combinations | `bbc78f98c91ae10f56b7fa580afcb7898052f70a` | 1,676 inputs, 1,432,520 bytes; compiler 28,836,875 bytes |
-| Throughput measurement | `a8ccd394e6923448727f199953a88e0715348b67` | Corrected source view; 557,010 equal nodes on every sample |
-| Isolated count mutant | `83c540ba65bdb663ca0c18ec39fb6563a2259435` | Same AST bytes; wrong count caught on Node and native |
+| Green step                  | Pushed commit                              | Observation                                                |
+| --------------------------- | ------------------------------------------ | ---------------------------------------------------------- |
+| Primary and precedence      | `df909aa52267a066e2c59d524f7c8916d4573ef1` | 14 inputs, 3,194 bytes                                     |
+| Suffixes and containers     | `854d6bd89d86d564f7fb3c90887d53b2b2eb41d2` | 30 inputs, 8,080 bytes                                     |
+| Arrows, functions and types | `48bfd18d25261561cf604061de1c4ac71c99e4b4` | 58 inputs, 17,463 bytes                                    |
+| Whole compiler traversal    | `5824126a5555214d70a48fb155d120cd715b2aed` | 77 files, 28,812,163 bytes                                 |
+| Generated combinations      | `bbc78f98c91ae10f56b7fa580afcb7898052f70a` | 1,676 inputs, 1,432,520 bytes; compiler 28,836,875 bytes   |
+| Throughput measurement      | `a8ccd394e6923448727f199953a88e0715348b67` | Corrected source view; 557,010 equal nodes on every sample |
+| Isolated count mutant       | `83c540ba65bdb663ca0c18ec39fb6563a2259435` | Same AST bytes; wrong count caught on Node and native      |
 
 The compiler-byte increase in the last step adds raw no-substitution template
 text to the canonical protocol on all three sides. It does not change any
@@ -73,11 +73,11 @@ scanner output. Historical counts in this table are the protocol at each step.
 All mutants compile and finish normally under Node and sanitized native. A
 crash, lowering error or clang error is not credited as catching a mutant:
 
-| Mutant | Input demonstrating it | Comparison that catches it |
-| --- | --- | --- |
-| Multiplication precedence 14 changed to 12 | `x + y * z` | BinaryExpression child shape differs |
-| Ordinary parentheses classified as an arrow | `(x)` | Root ParenthesizedExpression becomes ArrowFunction |
-| Optional-chain property flag forced false | `a?.b.c?.[x]?.(y)` | Required flag 32 becomes 0 |
+| Mutant                                      | Input demonstrating it | Comparison that catches it                         |
+| ------------------------------------------- | ---------------------- | -------------------------------------------------- |
+| Multiplication precedence 14 changed to 12  | `x + y * z`            | BinaryExpression child shape differs               |
+| Ordinary parentheses classified as an arrow | `(x)`                  | Root ParenthesizedExpression becomes ArrowFunction |
+| Optional-chain property flag forced false   | `a?.b.c?.[x]?.(y)`     | Required flag 32 becomes 0                         |
 
 The arrow mutant changes the returned classification of an ordinary
 parenthesized expression. It does not claim that a detector mutant which merely
@@ -97,12 +97,12 @@ relational-versus-type-argument disambiguation, and async parameter contexts.
 
 Four gaps have reduced proving programs and executable gap tests:
 
-| Gap | Observation | Workaround |
-| --- | --- | --- |
-| Strong parent/child ownership cycle | Node prints root; stage 0 refuses the cycle-capable array | Indexed node table |
-| Spread arguments to Array.push | Node prints 1,2,3; stage 0 reports NotYet SpreadElement | Append indexes in a loop |
-| Import cycle with a type-only edge | Node prints 1; stage 0 refuses an import cycle | Shared snapshot type; concrete Scanner dependency |
-| Class method called through an interface | Node prints 1; sanitized native exits 70 with missing-field compiler panic | Call concrete Scanner methods in lookahead |
+| Gap                                      | Observation                                                                | Workaround                                        |
+| ---------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------- |
+| Strong parent/child ownership cycle      | Node prints root; stage 0 refuses the cycle-capable array                  | Indexed node table                                |
+| Spread arguments to Array.push           | Node prints 1,2,3; stage 0 reports NotYet SpreadElement                    | Append indexes in a loop                          |
+| Import cycle with a type-only edge       | Node prints 1; stage 0 refuses an import cycle                             | Shared snapshot type; concrete Scanner dependency |
+| Class method called through an interface | Node prints 1; sanitized native exits 70 with missing-field compiler panic | Call concrete Scanner methods in lookahead        |
 
 The final gap is an observed compiler/runtime bug, not a language refusal.
 [GAPS.md](GAPS.md) gives the evidence and exact proving files. Internal code is
@@ -118,10 +118,10 @@ flags without sanitizers; sanitizer checks are separate. Go uses ordinary
 `go build`; Node executes the TS through the repository's runner.
 
 | Implementation | Best seconds | Nodes per second |
-| --- | ---: | ---: |
-| Go | 0.153166816 | 3,636,623 |
-| Node | 0.567490607 | 981,532 |
-| Native Adamic | 0.693479657 | 803,210 |
+| -------------- | -----------: | ---------------: |
+| Go             |  0.153166816 |        3,636,623 |
+| Node           |  0.567490607 |          981,532 |
+| Native Adamic  |  0.693479657 |          803,210 |
 
 Observed: native takes 4.528 times Go's time and 1.222 times Node's. This slice
 loses to both; the result is not a claim that identical counted nodes imply

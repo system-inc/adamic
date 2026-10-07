@@ -21,28 +21,28 @@ syntax-only, but need substantial dependencies beyond this rule slice. This
 selection targets the highest-frequency rule, `one-var`; its multiple-edit
 finding shape is required work, not implemented by the first batch.
 
-| Rule | Compiler | Repository | Total |
-| --- | ---: | ---: | ---: |
-| `one-var` | 6,731 | 1,420 | 8,151 |
-| `nexus/consistency-no-ambiguous-identifier` | 5,469 | 303 | 5,772 |
-| `nexus/consistency-no-abbreviated-identifier` | 4,827 | 52 | 4,879 |
-| `@typescript-eslint/method-signature-style` | 1,508 | 2 | 1,510 |
-| `nexus/consistency-require-type-suffix` | 1,170 | 180 | 1,350 |
-| `@typescript-eslint/no-non-null-assertion` | 1,123 | 1 | 1,124 |
-| `@typescript-eslint/prefer-literal-enum-member` | 1,043 | 0 | 1,043 |
-| `base/consistency-no-console` | 1 | 1,041 | 1,042 |
-| `no-plusplus` | 680 | 323 | 1,003 |
-| `@typescript-eslint/no-wrapper-object-types` | 744 | 0 | 744 |
-| `@typescript-eslint/prefer-enum-initializers` | 680 | 0 | 680 |
-| `adamic/no-type-predicate` | 651 | 1 | 652 |
-| `nexus/consistency-no-long-line-comment` | 540 | 99 | 639 |
-| `nexus/consistency-no-multiline-arrow-function` | 540 | 72 | 612 |
-| `prefer-destructuring` | 515 | 61 | 576 |
-| `nexus/consistency-no-single-line-jsdoc` | 555 | 0 | 555 |
-| `no-negated-condition` | 414 | 17 | 431 |
-| `no-return-assign` | 276 | 0 | 276 |
-| `nexus/consistency-no-shouting` | 118 | 53 | 171 |
-| `nexus/consistency-no-enum` | 164 | 0 | 164 |
+| Rule                                            | Compiler | Repository | Total |
+| ----------------------------------------------- | -------: | ---------: | ----: |
+| `one-var`                                       |    6,731 |      1,420 | 8,151 |
+| `nexus/consistency-no-ambiguous-identifier`     |    5,469 |        303 | 5,772 |
+| `nexus/consistency-no-abbreviated-identifier`   |    4,827 |         52 | 4,879 |
+| `@typescript-eslint/method-signature-style`     |    1,508 |          2 | 1,510 |
+| `nexus/consistency-require-type-suffix`         |    1,170 |        180 | 1,350 |
+| `@typescript-eslint/no-non-null-assertion`      |    1,123 |          1 | 1,124 |
+| `@typescript-eslint/prefer-literal-enum-member` |    1,043 |          0 | 1,043 |
+| `base/consistency-no-console`                   |        1 |      1,041 | 1,042 |
+| `no-plusplus`                                   |      680 |        323 | 1,003 |
+| `@typescript-eslint/no-wrapper-object-types`    |      744 |          0 |   744 |
+| `@typescript-eslint/prefer-enum-initializers`   |      680 |          0 |   680 |
+| `adamic/no-type-predicate`                      |      651 |          1 |   652 |
+| `nexus/consistency-no-long-line-comment`        |      540 |         99 |   639 |
+| `nexus/consistency-no-multiline-arrow-function` |      540 |         72 |   612 |
+| `prefer-destructuring`                          |      515 |         61 |   576 |
+| `nexus/consistency-no-single-line-jsdoc`        |      555 |          0 |   555 |
+| `no-negated-condition`                          |      414 |         17 |   431 |
+| `no-return-assign`                              |      276 |          0 |   276 |
+| `nexus/consistency-no-shouting`                 |      118 |         53 |   171 |
+| `nexus/consistency-no-enum`                     |      164 |          0 |   164 |
 
 ## Green step 1
 
@@ -126,18 +126,18 @@ supported one-argument search. The gap test requires both observations.
 
 All ten execute and give wrong answers on Node and sanitized native:
 
-| Family | Mutation | Comparison that catches it |
-| --- | --- | --- |
-| Type predicate | listen to NeverKeyword | missing finding/message/range |
-| Console member | invert receiver name | missing and spurious findings |
-| Update option | invert for-afterthought exemption | wrong loop update findings |
-| Method style | omit method listener | missing findings and fixed member rewrite |
-| Wrapper type | omit Number | missing finding and lowercase fixed output |
-| Enum literal option | invert allow-bitwise decision | wrong finding/message under decoded option |
-| Enum declaration | disable listener | missing name finding |
-| Negated condition | invert condition polarity | missing negated if/ternary findings |
-| Return assignment | invert parentheses option | wrong arrow/return findings |
-| Interface suffix | allow forbidden Type suffix | missing interface finding |
+| Family              | Mutation                          | Comparison that catches it                 |
+| ------------------- | --------------------------------- | ------------------------------------------ |
+| Type predicate      | listen to NeverKeyword            | missing finding/message/range              |
+| Console member      | invert receiver name              | missing and spurious findings              |
+| Update option       | invert for-afterthought exemption | wrong loop update findings                 |
+| Method style        | omit method listener              | missing findings and fixed member rewrite  |
+| Wrapper type        | omit Number                       | missing finding and lowercase fixed output |
+| Enum literal option | invert allow-bitwise decision     | wrong finding/message under decoded option |
+| Enum declaration    | disable listener                  | missing name finding                       |
+| Negated condition   | invert condition polarity         | missing negated if/ternary findings        |
+| Return assignment   | invert parentheses option         | wrong arrow/return findings                |
+| Interface suffix    | allow forbidden Type suffix       | missing interface finding                  |
 
 The original 19 rule mutants and the two earlier performance mutants are also
 rerun by the full package (31 mutants total including this continuation). A discarded trial
@@ -173,11 +173,11 @@ files, 14,866 findings identical in each run. Five interleaved fresh runs,
 including file reads, parsing, visiting, messages, findings and sorting; fixes
 are not applied in count-only mode.
 
-| Runner | Best seconds | Findings per second |
-| --- | ---: | ---: |
-| Go | 0.673702 | 22,066.14 |
-| Native Adamic release | 3.023437 | 4,916.92 |
-| Node running the same source | 1.599961 | 9,291.48 |
+| Runner                       | Best seconds | Findings per second |
+| ---------------------------- | -----------: | ------------------: |
+| Go                           |     0.673702 |           22,066.14 |
+| Native Adamic release        |     3.023437 |            4,916.92 |
+| Node running the same source |     1.599961 |            9,291.48 |
 
 Native takes 4.49 times Go's elapsed time and 1.89 times Node's for this work.
 This measures thirty implementations, including the valid-source method rule;

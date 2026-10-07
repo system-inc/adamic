@@ -158,8 +158,7 @@ ok  	github.com/system-inc/adamic/internal/oracle	14.756s
 ```
 
 Both composing packages passed. The inherited quote slice's gap program still
-prints `ab` on Node and is refused with `push with other than one value` by stage
-0. Its existing three output mutants also passed their checks. Its standalone
+prints `ab` on Node and is refused with `push with other than one value` by stage 0. Its existing three output mutants also passed their checks. Its standalone
 library comparison was not enabled in that combined run; the new composed
 comparison includes the pinned library on every numeric corpus case and quote
 preference. No new stage 0 gap or upstream difference was observed.
@@ -178,11 +177,11 @@ unchanged beside it. It must lower, compile under sanitizers, exit 0 with no
 stderr, and produce a byte difference, both natively and on Node. The production
 source is never mutated by the tests.
 
-| Mutant | Effect | Witness |
-| --- | --- | --- |
-| quoted numbers | ignore the quoted-span skip | case 7244, byte 3: quoted `0.` becomes `0` |
-| unknown unit | invert recognized-unit acceptance | case 3978, byte 2: `a..0a` becomes `a.0a` |
-| word prefix | normalize matches even when an identifier precedes them | case 0, byte 3780: `--color-weird-1` becomes `--1` |
+| Mutant         | Effect                                                  | Witness                                            |
+| -------------- | ------------------------------------------------------- | -------------------------------------------------- |
+| quoted numbers | ignore the quoted-span skip                             | case 7244, byte 3: quoted `0.` becomes `0`         |
+| unknown unit   | invert recognized-unit acceptance                       | case 3978, byte 2: `a..0a` becomes `a.0a`          |
+| word prefix    | normalize matches even when an identifier precedes them | case 0, byte 3780: `--color-weird-1` becomes `--1` |
 
 All six mutant executions were caught solely by output, with no build failure,
 crash, sanitizer failure or refusal counted. Final isolated slice output:
@@ -224,12 +223,12 @@ competing for CPU. Each of three process runs handles the identical 89,786
 cases, with startup, file input, escaping and output collection included and
 compilation excluded. Native uses clang -O2 without sanitizers for timing.
 
-| Side | Texts/s | Total seconds, three runs |
-| --- | ---: | ---: |
-| Go cohere | 511,771.1 | 0.526325 |
-| Adamic native | 514,625.3 | 0.523406 |
-| Adamic source on Node 24 | 236,847.5 | 1.137263 |
-| Original Prettier 3.9.6 printer | 155,576.2 | 1.731357 |
+| Side                            |   Texts/s | Total seconds, three runs |
+| ------------------------------- | --------: | ------------------------: |
+| Go cohere                       | 511,771.1 |                  0.526325 |
+| Adamic native                   | 514,625.3 |                  0.523406 |
+| Adamic source on Node 24        | 236,847.5 |                  1.137263 |
+| Original Prettier 3.9.6 printer | 155,576.2 |                  1.731357 |
 
 Observed native throughput is about 3.31 times Prettier and 2.17 times Node
 source. Native and Go are close in this short three-run sample; this is not

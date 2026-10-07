@@ -4,37 +4,36 @@ Twenty baseline rules from the pinned cohere submodule, plus the frequency-ranke
 continuation in [VOLUME.md](VOLUME.md), using the existing Adamic TypeScript
 parser and scanner:
 
-| Rule | Visitor shape | Repair |
-| --- | --- | --- |
-| `no-debugger` | statement with parent-kind test | remove only from a statement list |
-| `no-empty` | empty block, function parent, interior trivia, empty switch | none |
-| `eqeqeq` | binary operator, unwrapped operands, mode and null policy | safe fix or human suggestion |
-| `no-var` | declaration flags, ambient modifier, module ancestry, loop initializer | none |
-| `no-duplicate-case` | switch-local recursive syntax/token signatures | none |
-| `no-continue`, `no-with`, `no-new` | control statement / keyword span / expression parent | none |
-| `no-sparse-arrays` | omitted element with assignment-target ancestry | none |
-| `require-yield` | generator ownership across nested functions and classes | none |
-| `no-await-in-loop` | repeated loop fields with function and for-await boundaries | none |
-| `vars-on-top` | function, static and program declaration prefix | none |
-| `no-template-curly-in-string` | cooked string placeholder scan | none |
-| `no-labels` | label resolution with loop/switch options | none |
-| `no-bitwise` | 13 operators, allow list and directional int32 hint | none |
-| `no-sequences` | comma chains, for fields, parenthesis option | none |
-| `unicode-bom` | file prefix with absent-option default | insert/delete one mark per pass |
-| `no-div-regex` | raw regex prefix | replace one character inside the finding |
-| `no-warning-comments` | comments, terms/location/decoration and self-directives | none |
-| `no-unneeded-ternary` | boolean branches, precedence, source-preserving inversion/default | rewrite whole expression |
-| `base/consistency-no-console` | unwrapped member receiver | none |
-| `nexus/consistency-require-type-suffix` | declarations and const-enum-shaped objects | none |
-| `adamic/no-type-predicate` | type predicate | none |
-| `no-plusplus` | update operators and optional for-incrementor exemption | none |
-| `@typescript-eslint/method-signature-style` | type-member signatures, overload groups, module ancestry | rewrite member, merge overloads, readonly suggestion; valid-source coverage |
-| `@typescript-eslint/no-wrapper-object-types` | type references with whole-file shadow guard | lowercase primitive except implements |
-| `@typescript-eslint/prefer-literal-enum-member` | enum initializer recursion with bitwise option | none |
-| `nexus/consistency-no-enum` | enum declaration name | none |
-| `no-negated-condition` | if and ternary conditions, else-if exemption | none |
-| `no-return-assign` | assignments, return/arrow ancestry, positional parentheses | none |
-
+| Rule                                            | Visitor shape                                                          | Repair                                                                      |
+| ----------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `no-debugger`                                   | statement with parent-kind test                                        | remove only from a statement list                                           |
+| `no-empty`                                      | empty block, function parent, interior trivia, empty switch            | none                                                                        |
+| `eqeqeq`                                        | binary operator, unwrapped operands, mode and null policy              | safe fix or human suggestion                                                |
+| `no-var`                                        | declaration flags, ambient modifier, module ancestry, loop initializer | none                                                                        |
+| `no-duplicate-case`                             | switch-local recursive syntax/token signatures                         | none                                                                        |
+| `no-continue`, `no-with`, `no-new`              | control statement / keyword span / expression parent                   | none                                                                        |
+| `no-sparse-arrays`                              | omitted element with assignment-target ancestry                        | none                                                                        |
+| `require-yield`                                 | generator ownership across nested functions and classes                | none                                                                        |
+| `no-await-in-loop`                              | repeated loop fields with function and for-await boundaries            | none                                                                        |
+| `vars-on-top`                                   | function, static and program declaration prefix                        | none                                                                        |
+| `no-template-curly-in-string`                   | cooked string placeholder scan                                         | none                                                                        |
+| `no-labels`                                     | label resolution with loop/switch options                              | none                                                                        |
+| `no-bitwise`                                    | 13 operators, allow list and directional int32 hint                    | none                                                                        |
+| `no-sequences`                                  | comma chains, for fields, parenthesis option                           | none                                                                        |
+| `unicode-bom`                                   | file prefix with absent-option default                                 | insert/delete one mark per pass                                             |
+| `no-div-regex`                                  | raw regex prefix                                                       | replace one character inside the finding                                    |
+| `no-warning-comments`                           | comments, terms/location/decoration and self-directives                | none                                                                        |
+| `no-unneeded-ternary`                           | boolean branches, precedence, source-preserving inversion/default      | rewrite whole expression                                                    |
+| `base/consistency-no-console`                   | unwrapped member receiver                                              | none                                                                        |
+| `nexus/consistency-require-type-suffix`         | declarations and const-enum-shaped objects                             | none                                                                        |
+| `adamic/no-type-predicate`                      | type predicate                                                         | none                                                                        |
+| `no-plusplus`                                   | update operators and optional for-incrementor exemption                | none                                                                        |
+| `@typescript-eslint/method-signature-style`     | type-member signatures, overload groups, module ancestry               | rewrite member, merge overloads, readonly suggestion; valid-source coverage |
+| `@typescript-eslint/no-wrapper-object-types`    | type references with whole-file shadow guard                           | lowercase primitive except implements                                       |
+| `@typescript-eslint/prefer-literal-enum-member` | enum initializer recursion with bitwise option                         | none                                                                        |
+| `nexus/consistency-no-enum`                     | enum declaration name                                                  | none                                                                        |
+| `no-negated-condition`                          | if and ternary conditions, else-if exemption                           | none                                                                        |
+| `no-return-assign`                              | assignments, return/arrow ancestry, positional parentheses             | none                                                                        |
 
 The runner dispatches these listeners in one preorder traversal. Child
 indexes and a parallel parent-index array retain Go's ancestry queries without

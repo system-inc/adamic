@@ -238,15 +238,15 @@ VALGRIND_LIB=/workspace/scratch/scanner-perf/valgrind/usr/libexec/valgrind pytho
 
 ## Measured steps
 
-| Step | Native findings/s | Go findings/s | Node findings/s | Native Ir | Ir/finding |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| baseline | 2,504.11 | 16,945.78 | 5,418.16 | 38,559,511,949 | 4,693,793.30 |
-| 1-scalar-comments | 2,941.27 | 16,456.40 | 5,702.12 | 30,937,912,937 | 3,766,027.14 |
-| 2-position-arrays | 4,018.26 | 16,606.44 | 4,083.68 | 20,940,946,893 | 2,549,111.00 |
-| 2b-position-arrays | 4,101.37 | 17,098.74 | 4,203.20 | 20,970,336,919 | 2,552,688.61 |
-| 3-filled-masks | 3,967.64 | 16,847.92 | 6,309.38 | 20,387,510,285 | 2,481,741.97 |
-| 4-kind-switches | 4,701.32 | 17,111.80 | 6,160.75 | 17,088,352,975 | 2,080,140.35 |
-| 5-kind-dispatch | 4,995.16 | 16,126.20 | 5,873.41 | 15,617,555,059 | 1,901,102.26 |
+| Step               | Native findings/s | Go findings/s | Node findings/s |      Native Ir |   Ir/finding |
+| ------------------ | ----------------: | ------------: | --------------: | -------------: | -----------: |
+| baseline           |          2,504.11 |     16,945.78 |        5,418.16 | 38,559,511,949 | 4,693,793.30 |
+| 1-scalar-comments  |          2,941.27 |     16,456.40 |        5,702.12 | 30,937,912,937 | 3,766,027.14 |
+| 2-position-arrays  |          4,018.26 |     16,606.44 |        4,083.68 | 20,940,946,893 | 2,549,111.00 |
+| 2b-position-arrays |          4,101.37 |     17,098.74 |        4,203.20 | 20,970,336,919 | 2,552,688.61 |
+| 3-filled-masks     |          3,967.64 |     16,847.92 |        6,309.38 | 20,387,510,285 | 2,481,741.97 |
+| 4-kind-switches    |          4,701.32 |     17,111.80 |        6,160.75 | 17,088,352,975 | 2,080,140.35 |
+| 5-kind-dispatch    |          4,995.16 |     16,126.20 |        5,873.41 | 15,617,555,059 | 1,901,102.26 |
 
 Scalar comparison removes 7,621,599,012 Ir (19.77%), 1,766,845 logical allocations, and improves native throughput 1.175 times. Load before `0.67 0.73 0.46`, after `0.79 0.75 0.48`. Full sanitized parity: 577,682 fixture bytes plus 15,548,752 source-corpus bytes, 16,126,434 total. Cohere passes the changed source.
 
@@ -254,54 +254,53 @@ Scalar comparison removes 7,621,599,012 Ir (19.77%), 1,766,845 logical allocatio
 
 ### Inclusive
 
-| Function | Instructions | Share |
-| --- | ---: | ---: |
-| `main` | 38,559,323,748 | 100.00% |
-| `adamic_function_50_run` | 38,542,204,801 | 99.96% |
-| `adamic_function_167_Linter_run` | 37,829,625,289 | 98.11% |
-| `adamic_function_180_Linter_walk` | 31,755,401,905 | 82.35% |
-| `adamic_function_187_Linter_additional` | 30,107,682,523 | 78.08% |
-| `adamic_function_198_Linter_warnings` | 27,566,479,223 | 71.49% |
-| `find` | 17,549,131,384 | 45.51% |
-| `adamic_function_130_Statements_statement'2` | 14,325,736,465 | 37.15% |
-| `adamic_map_get` | 12,688,359,186 | 32.91% |
-| `adamic_function_197_Linter_commentAnchors` | 10,265,553,333 | 26.62% |
-| `adamic_function_197_Linter_commentAnchors'2` | 10,265,217,929 | 26.62% |
-| `adamic_function_112_Statements_block'2` | 8,545,395,290 | 22.16% |
-| `adamic_function_38_fold` | 7,412,478,806 | 19.22% |
-| `adamic_map_set` | 6,067,692,216 | 15.74% |
-| `adamic_function_107_Parser_file` | 6,030,950,885 | 15.64% |
-| `adamic_function_130_Statements_statement` | 6,029,824,794 | 15.64% |
-| `adamic_function_125_Statements_functionDeclaration` | 5,251,487,167 | 13.62% |
-| `adamic_function_112_Statements_block` | 5,053,503,671 | 13.11% |
-| `adamic_function_125_Statements_functionDeclaration'2` | 4,648,204,059 | 12.05% |
-| `adamic_release` | 4,207,107,650 | 10.91% |
+| Function                                               |   Instructions |   Share |
+| ------------------------------------------------------ | -------------: | ------: |
+| `main`                                                 | 38,559,323,748 | 100.00% |
+| `adamic_function_50_run`                               | 38,542,204,801 |  99.96% |
+| `adamic_function_167_Linter_run`                       | 37,829,625,289 |  98.11% |
+| `adamic_function_180_Linter_walk`                      | 31,755,401,905 |  82.35% |
+| `adamic_function_187_Linter_additional`                | 30,107,682,523 |  78.08% |
+| `adamic_function_198_Linter_warnings`                  | 27,566,479,223 |  71.49% |
+| `find`                                                 | 17,549,131,384 |  45.51% |
+| `adamic_function_130_Statements_statement'2`           | 14,325,736,465 |  37.15% |
+| `adamic_map_get`                                       | 12,688,359,186 |  32.91% |
+| `adamic_function_197_Linter_commentAnchors`            | 10,265,553,333 |  26.62% |
+| `adamic_function_197_Linter_commentAnchors'2`          | 10,265,217,929 |  26.62% |
+| `adamic_function_112_Statements_block'2`               |  8,545,395,290 |  22.16% |
+| `adamic_function_38_fold`                              |  7,412,478,806 |  19.22% |
+| `adamic_map_set`                                       |  6,067,692,216 |  15.74% |
+| `adamic_function_107_Parser_file`                      |  6,030,950,885 |  15.64% |
+| `adamic_function_130_Statements_statement`             |  6,029,824,794 |  15.64% |
+| `adamic_function_125_Statements_functionDeclaration`   |  5,251,487,167 |  13.62% |
+| `adamic_function_112_Statements_block`                 |  5,053,503,671 |  13.11% |
+| `adamic_function_125_Statements_functionDeclaration'2` |  4,648,204,059 |  12.05% |
+| `adamic_release`                                       |  4,207,107,650 |  10.91% |
 
 ### Self
 
-| Function | Instructions | Share |
-| --- | ---: | ---: |
-| `find` | 17,515,650,254 | 45.42% |
-| `adamic_release` | 3,657,053,349 | 9.48% |
-| `adamic_string_equal` | 1,599,934,210 | 4.15% |
-| `adamic_function_198_Linter_warnings` | 1,184,845,782 | 3.07% |
-| `adamic_string_locate` | 1,132,261,690 | 2.94% |
-| `adamic_map_set` | 1,039,519,344 | 2.70% |
-| `adamic_retain` | 919,570,267 | 2.38% |
-| `adamic_function_21_Scanner_code` | 795,854,329 | 2.06% |
-| `adamic_array_index_of` | 753,685,754 | 1.95% |
-| `adamic_array_push` | 612,540,077 | 1.59% |
-| `adamic_function_32_Scanner_scan` | 601,635,118 | 1.56% |
-| `adamic_string_char_code` | 534,582,963 | 1.39% |
-| `free` | 488,805,618 | 1.27% |
-| `adamic_function_54_Parser_node` | 470,693,280 | 1.22% |
-| `adamic_allocate` | 425,731,134 | 1.10% |
-| `adamic_function_197_Linter_commentAnchors'2` | 409,300,729 | 1.06% |
-| `adamic_function_169_Linter_enabled` | 401,908,110 | 1.04% |
-| `usable` | 370,808,392 | 0.96% |
-| `adamic_function_187_Linter_additional` | 337,160,718 | 0.87% |
-| `malloc` | 296,601,126 | 0.77% |
-
+| Function                                      |   Instructions |  Share |
+| --------------------------------------------- | -------------: | -----: |
+| `find`                                        | 17,515,650,254 | 45.42% |
+| `adamic_release`                              |  3,657,053,349 |  9.48% |
+| `adamic_string_equal`                         |  1,599,934,210 |  4.15% |
+| `adamic_function_198_Linter_warnings`         |  1,184,845,782 |  3.07% |
+| `adamic_string_locate`                        |  1,132,261,690 |  2.94% |
+| `adamic_map_set`                              |  1,039,519,344 |  2.70% |
+| `adamic_retain`                               |    919,570,267 |  2.38% |
+| `adamic_function_21_Scanner_code`             |    795,854,329 |  2.06% |
+| `adamic_array_index_of`                       |    753,685,754 |  1.95% |
+| `adamic_array_push`                           |    612,540,077 |  1.59% |
+| `adamic_function_32_Scanner_scan`             |    601,635,118 |  1.56% |
+| `adamic_string_char_code`                     |    534,582,963 |  1.39% |
+| `free`                                        |    488,805,618 |  1.27% |
+| `adamic_function_54_Parser_node`              |    470,693,280 |  1.22% |
+| `adamic_allocate`                             |    425,731,134 |  1.10% |
+| `adamic_function_197_Linter_commentAnchors'2` |    409,300,729 |  1.06% |
+| `adamic_function_169_Linter_enabled`          |    401,908,110 |  1.04% |
+| `usable`                                      |    370,808,392 |  0.96% |
+| `adamic_function_187_Linter_additional`       |    337,160,718 |  0.87% |
+| `malloc`                                      |    296,601,126 |  0.77% |
 
 First-step release/debug/Node snapshot comparison passed for baseline and scalar
 snapshots: 16,139,461 identical bytes each on the same final source corpus.
@@ -316,53 +315,53 @@ not compilation failures.
 
 ### Inclusive
 
-| Function | Instructions | Share |
-| --- | ---: | ---: |
-| `main` | 15,617,366,880 | 100.00% |
-| `adamic_function_58_run` | 15,600,248,226 | 99.89% |
-| `adamic_function_175_Linter_run` | 14,900,025,884 | 95.41% |
-| `adamic_function_138_Statements_statement'2` | 14,325,690,980 | 91.73% |
-| `adamic_function_188_Linter_walk` | 8,825,760,193 | 56.51% |
-| `adamic_function_120_Statements_block'2` | 8,545,229,878 | 54.72% |
-| `adamic_function_195_Linter_additional` | 7,754,699,398 | 49.65% |
-| `adamic_function_115_Parser_file` | 6,030,990,538 | 38.62% |
-| `adamic_function_138_Statements_statement` | 6,029,866,605 | 38.61% |
-| `adamic_function_133_Statements_functionDeclaration` | 5,251,519,761 | 33.63% |
-| `adamic_function_120_Statements_block` | 5,053,524,521 | 32.36% |
-| `adamic_function_133_Statements_functionDeclaration'2` | 4,648,103,700 | 29.76% |
-| `adamic_function_32_Scanner_scan` | 3,789,059,294 | 24.26% |
-| `adamic_function_111_Parser_assignment` | 3,318,916,256 | 21.25% |
-| `adamic_function_61_Parser_next` | 3,116,970,541 | 19.96% |
-| `adamic_function_110_Parser_binary` | 2,989,938,541 | 19.14% |
-| `adamic_function_111_Parser_assignment'2` | 2,930,948,554 | 18.77% |
-| `adamic_release` | 2,776,480,130 | 17.78% |
-| `adamic_function_109_Parser_unary` | 2,771,398,846 | 17.75% |
-| `adamic_function_205_Linter_commentAnchors` | 2,489,690,413 | 15.94% |
+| Function                                               |   Instructions |   Share |
+| ------------------------------------------------------ | -------------: | ------: |
+| `main`                                                 | 15,617,366,880 | 100.00% |
+| `adamic_function_58_run`                               | 15,600,248,226 |  99.89% |
+| `adamic_function_175_Linter_run`                       | 14,900,025,884 |  95.41% |
+| `adamic_function_138_Statements_statement'2`           | 14,325,690,980 |  91.73% |
+| `adamic_function_188_Linter_walk`                      |  8,825,760,193 |  56.51% |
+| `adamic_function_120_Statements_block'2`               |  8,545,229,878 |  54.72% |
+| `adamic_function_195_Linter_additional`                |  7,754,699,398 |  49.65% |
+| `adamic_function_115_Parser_file`                      |  6,030,990,538 |  38.62% |
+| `adamic_function_138_Statements_statement`             |  6,029,866,605 |  38.61% |
+| `adamic_function_133_Statements_functionDeclaration`   |  5,251,519,761 |  33.63% |
+| `adamic_function_120_Statements_block`                 |  5,053,524,521 |  32.36% |
+| `adamic_function_133_Statements_functionDeclaration'2` |  4,648,103,700 |  29.76% |
+| `adamic_function_32_Scanner_scan`                      |  3,789,059,294 |  24.26% |
+| `adamic_function_111_Parser_assignment`                |  3,318,916,256 |  21.25% |
+| `adamic_function_61_Parser_next`                       |  3,116,970,541 |  19.96% |
+| `adamic_function_110_Parser_binary`                    |  2,989,938,541 |  19.14% |
+| `adamic_function_111_Parser_assignment'2`              |  2,930,948,554 |  18.77% |
+| `adamic_release`                                       |  2,776,480,130 |  17.78% |
+| `adamic_function_109_Parser_unary`                     |  2,771,398,846 |  17.75% |
+| `adamic_function_205_Linter_commentAnchors`            |  2,489,690,413 |  15.94% |
 
 ### Self
 
-| Function | Instructions | Share |
-| --- | ---: | ---: |
-| `adamic_release` | 2,632,692,159 | 16.86% |
-| `adamic_string_equal` | 1,311,559,923 | 8.40% |
-| `adamic_function_208_Linter_scanWarnings` | 994,381,663 | 6.37% |
-| `adamic_string_locate` | 976,427,294 | 6.25% |
-| `adamic_function_195_Linter_additional` | 930,110,583 | 5.96% |
-| `adamic_function_21_Scanner_code` | 770,543,169 | 4.93% |
-| `adamic_retain` | 650,941,320 | 4.17% |
-| `adamic_function_32_Scanner_scan` | 578,236,640 | 3.70% |
-| `find` | 576,353,248 | 3.69% |
-| `adamic_string_char_code` | 525,396,975 | 3.36% |
-| `adamic_function_205_Linter_commentAnchors'2` | 420,950,765 | 2.70% |
-| `usable` | 364,049,382 | 2.33% |
-| `adamic_function_62_Parser_node` | 362,318,178 | 2.32% |
-| `adamic_array_filled` | 310,215,576 | 1.99% |
-| `adamic_function_4_isIdentifierStart` | 241,749,762 | 1.55% |
-| `adamic_function_27_Scanner_identifier` | 230,883,599 | 1.48% |
-| `decode` | 225,738,390 | 1.45% |
-| `adamic_function_188_Linter_walk'2` | 208,479,802 | 1.33% |
-| `unit_at` | 170,779,962 | 1.09% |
-| `adamic_string_units` | 166,912,886 | 1.07% |
+| Function                                      |  Instructions |  Share |
+| --------------------------------------------- | ------------: | -----: |
+| `adamic_release`                              | 2,632,692,159 | 16.86% |
+| `adamic_string_equal`                         | 1,311,559,923 |  8.40% |
+| `adamic_function_208_Linter_scanWarnings`     |   994,381,663 |  6.37% |
+| `adamic_string_locate`                        |   976,427,294 |  6.25% |
+| `adamic_function_195_Linter_additional`       |   930,110,583 |  5.96% |
+| `adamic_function_21_Scanner_code`             |   770,543,169 |  4.93% |
+| `adamic_retain`                               |   650,941,320 |  4.17% |
+| `adamic_function_32_Scanner_scan`             |   578,236,640 |  3.70% |
+| `find`                                        |   576,353,248 |  3.69% |
+| `adamic_string_char_code`                     |   525,396,975 |  3.36% |
+| `adamic_function_205_Linter_commentAnchors'2` |   420,950,765 |  2.70% |
+| `usable`                                      |   364,049,382 |  2.33% |
+| `adamic_function_62_Parser_node`              |   362,318,178 |  2.32% |
+| `adamic_array_filled`                         |   310,215,576 |  1.99% |
+| `adamic_function_4_isIdentifierStart`         |   241,749,762 |  1.55% |
+| `adamic_function_27_Scanner_identifier`       |   230,883,599 |  1.48% |
+| `decode`                                      |   225,738,390 |  1.45% |
+| `adamic_function_188_Linter_walk'2`           |   208,479,802 |  1.33% |
+| `unit_at`                                     |   170,779,962 |  1.09% |
+| `adamic_string_units`                         |   166,912,886 |  1.07% |
 
 ## Final verification and delivery
 

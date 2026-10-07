@@ -3,7 +3,6 @@ import { panic, programArguments, readTextFile } from 'adamic';
 import { format, defaults, type PrintOptions } from './print.ts';
 import { quote } from '../selector/nodes.ts';
 
-
 // gap 5: panic is a statement in this helper, not a conditional expression.
 function unescapeLetter(letter: string | undefined): string {
     // gap 6: case undefined is refused; narrow before the switch.
@@ -60,7 +59,10 @@ let nodes = 0;
 for(let round = 0; round < (args[2] === 'repeat' ? 10 : 1); round++) {
     for(let index = 0; index < texts.length; index++) {
         const css = texts[index] ?? panic('missing stylesheet');
-        const options: PrintOptions = args[3] === 'narrow' ? {width: 24, tabWidth: 4, tabs: true, single: true, trailingComma: 'none'} : defaults;
+        const options: PrintOptions =
+            args[3] === 'narrow'
+                ? { width: 24, tabWidth: 4, tabs: true, single: true, trailingComma: 'none' }
+                : defaults;
         const result = format(css, modes[index] ?? false, options);
         if(args[1] !== 'count') {
             console.log(`case ${count}`);

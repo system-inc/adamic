@@ -100,11 +100,11 @@ ok  	github.com/system-inc/adamic/stage1/typescript/scanner	61.792s
 Each mutant compiled and ran successfully under both Node and sanitized
 native. The original Go answers killed each by byte comparison:
 
-| Mutant | First disagreement on both runtimes |
-| --- | --- |
-| `!=` scanned as `==` | `EqualsEqualsToken` vs `ExclamationEqualsToken` |
+| Mutant                              | First disagreement on both runtimes                                      |
+| ----------------------------------- | ------------------------------------------------------------------------ |
+| `!=` scanned as `==`                | `EqualsEqualsToken` vs `ExclamationEqualsToken`                          |
 | repeated decimal separator accepted | NumericLiteral flags 512/value 12 vs diagnostic 6189 at byte 2, length 1 |
-| regex rescanning skipped | SlashToken vs RegularExpressionLiteral `/abc/g` |
+| regex rescanning skipped            | SlashToken vs RegularExpressionLiteral `/abc/g`                          |
 
 The bigint probe first failed at stage 0 with
 `a value of type 1237940039285380274899124223n`; its exact refusal and
@@ -139,11 +139,11 @@ correctness runs use sanitizers. Go uses the normal `go build`; Node runs
 the same `.ts` through the repository's Node shim. Builds, cloning and
 corpus generation are outside timed runs.
 
-| Driver | Best seconds | Tokens/s |
-| --- | ---: | ---: |
-| Native Adamic | 0.717630 | 605,869 |
-| typescript-go | 0.034183 | 12,719,384 |
-| Node | 0.460514 | 944,141 |
+| Driver        | Best seconds |   Tokens/s |
+| ------------- | -----------: | ---------: |
+| Native Adamic |     0.717630 |    605,869 |
+| typescript-go |     0.034183 | 12,719,384 |
+| Node          |     0.460514 |    944,141 |
 
 Observation: native is about 21 times slower than Go and 1.56 times slower
 than Node for this driver. This is a baseline port, not a speedup claim.

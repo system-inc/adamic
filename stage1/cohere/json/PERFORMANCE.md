@@ -11,13 +11,13 @@ native remains 1.58 times slower than Node and 1.16 times slower than Go.
 The original 62.28 / 91.17 / 109.28 baseline in GAPS.md came from the earlier
 three rounds; the fresh baseline below is the controlled comparison here.
 
-| Side | Seconds, five rounds | Median texts/s |
-| --- | --- | ---: |
-| baseline-native | 17.733 / 18.126 / 17.924 / 18.924 / 18.088 | 59.43 |
-| native | 11.410 / 11.453 / 11.173 / 11.200 / 11.812 | 94.21 |
-| baseline-Node | 12.178 / 12.017 / 12.331 / 11.970 / 12.957 | 88.27 |
-| Node | 7.093 / 6.910 / 7.229 / 7.282 / 7.436 | 148.72 |
-| Go | 9.665 / 9.785 / 9.982 / 9.829 / 9.849 | 109.37 |
+| Side            | Seconds, five rounds                       | Median texts/s |
+| --------------- | ------------------------------------------ | -------------: |
+| baseline-native | 17.733 / 18.126 / 17.924 / 18.924 / 18.088 |          59.43 |
+| native          | 11.410 / 11.453 / 11.173 / 11.200 / 11.812 |          94.21 |
+| baseline-Node   | 12.178 / 12.017 / 12.331 / 11.970 / 12.957 |          88.27 |
+| Node            | 7.093 / 6.910 / 7.229 / 7.282 / 7.436      |         148.72 |
+| Go              | 9.665 / 9.785 / 9.982 / 9.829 / 9.849      |         109.37 |
 
 ## Method and scope
 
@@ -81,105 +81,105 @@ are excluded from the named ranking. Callgrind's recursive context suffix
 
 Baseline:
 
-| Rank | Function | Ir | Share |
-| --- | --- | ---: | ---: |
-| 1 | `main` | 1,554,972,940 | 99.99% |
-| 2 | `format` | 1,225,573,365 | 78.81% |
-| 3 | `Reader_value` | 376,279,126 | 24.20% |
-| 4 | `Reader_value'2` | 314,575,936 | 20.23% |
-| 5 | `adamic_release` | 293,673,055 | 18.88% |
-| 6 | `escaped` | 262,744,042 | 16.90% |
-| 7 | `Printer_print` | 254,781,616 | 16.38% |
-| 8 | `adamic_array_join` | 233,254,763 | 15.00% |
-| 9 | `Printer_print'2` | 206,512,618 | 13.28% |
-| 10 | `adamic_string_split` | 199,299,515 | 12.82% |
-| 11 | `Reader_peek` | 198,979,378 | 12.79% |
-| 12 | `adamic_string_slice` | 177,888,672 | 11.44% |
-| 13 | `Documents_fits` | 165,806,266 | 10.66% |
-| 14 | `Reader_skip` | 165,239,367 | 10.63% |
-| 15 | `adamic_string_concat` | 142,192,846 | 9.14% |
-| 16 | `adamic_string_join_halves` | 125,243,675 | 8.05% |
-| 17 | `adamic_string_equal` | 84,529,523 | 5.44% |
-| 18 | `Documents_add` | 83,249,566 | 5.35% |
-| 19 | `Reader_number` | 76,659,182 | 4.93% |
-| 20 | `adamic_allocate` | 76,015,438 | 4.89% |
+| Rank | Function                    |            Ir |  Share |
+| ---- | --------------------------- | ------------: | -----: |
+| 1    | `main`                      | 1,554,972,940 | 99.99% |
+| 2    | `format`                    | 1,225,573,365 | 78.81% |
+| 3    | `Reader_value`              |   376,279,126 | 24.20% |
+| 4    | `Reader_value'2`            |   314,575,936 | 20.23% |
+| 5    | `adamic_release`            |   293,673,055 | 18.88% |
+| 6    | `escaped`                   |   262,744,042 | 16.90% |
+| 7    | `Printer_print`             |   254,781,616 | 16.38% |
+| 8    | `adamic_array_join`         |   233,254,763 | 15.00% |
+| 9    | `Printer_print'2`           |   206,512,618 | 13.28% |
+| 10   | `adamic_string_split`       |   199,299,515 | 12.82% |
+| 11   | `Reader_peek`               |   198,979,378 | 12.79% |
+| 12   | `adamic_string_slice`       |   177,888,672 | 11.44% |
+| 13   | `Documents_fits`            |   165,806,266 | 10.66% |
+| 14   | `Reader_skip`               |   165,239,367 | 10.63% |
+| 15   | `adamic_string_concat`      |   142,192,846 |  9.14% |
+| 16   | `adamic_string_join_halves` |   125,243,675 |  8.05% |
+| 17   | `adamic_string_equal`       |    84,529,523 |  5.44% |
+| 18   | `Documents_add`             |    83,249,566 |  5.35% |
+| 19   | `Reader_number`             |    76,659,182 |  4.93% |
+| 20   | `adamic_allocate`           |    76,015,438 |  4.89% |
 
 Optimized:
 
-| Rank | Function | Ir | Share |
-| --- | --- | ---: | ---: |
-| 1 | `main` | 909,524,994 | 99.98% |
-| 2 | `format` | 646,989,632 | 71.12% |
-| 3 | `Printer_print` | 199,016,067 | 21.88% |
-| 4 | `escaped` | 193,318,283 | 21.25% |
-| 5 | `adamic_release` | 165,808,456 | 18.23% |
-| 6 | `Reader_value` | 161,606,804 | 17.76% |
-| 7 | `Reader_value'2` | 152,805,487 | 16.80% |
-| 8 | `Printer_print'2` | 149,941,727 | 16.48% |
-| 9 | `adamic_string_index_of` | 136,600,813 | 15.02% |
-| 10 | `adamic_string_index_of_at` | 136,082,150 | 14.96% |
-| 11 | `Documents_fits` | 101,853,393 | 11.20% |
-| 12 | `Documents_add` | 88,843,272 | 9.77% |
-| 13 | `adamic_string_split` | 70,001,725 | 7.70% |
-| 14 | `adamic_array_join` | 64,130,201 | 7.05% |
-| 15 | `adamic_string_concat` | 54,022,325 | 5.94% |
-| 16 | `adamic_string_equal` | 52,822,790 | 5.81% |
-| 17 | `adamic_string_slice` | 50,182,181 | 5.52% |
-| 18 | `adamic_string_join_halves` | 48,445,952 | 5.33% |
-| 19 | `adamic_allocate` | 39,890,094 | 4.38% |
-| 20 | `Printer_blankAfter` | 39,689,261 | 4.36% |
+| Rank | Function                    |          Ir |  Share |
+| ---- | --------------------------- | ----------: | -----: |
+| 1    | `main`                      | 909,524,994 | 99.98% |
+| 2    | `format`                    | 646,989,632 | 71.12% |
+| 3    | `Printer_print`             | 199,016,067 | 21.88% |
+| 4    | `escaped`                   | 193,318,283 | 21.25% |
+| 5    | `adamic_release`            | 165,808,456 | 18.23% |
+| 6    | `Reader_value`              | 161,606,804 | 17.76% |
+| 7    | `Reader_value'2`            | 152,805,487 | 16.80% |
+| 8    | `Printer_print'2`           | 149,941,727 | 16.48% |
+| 9    | `adamic_string_index_of`    | 136,600,813 | 15.02% |
+| 10   | `adamic_string_index_of_at` | 136,082,150 | 14.96% |
+| 11   | `Documents_fits`            | 101,853,393 | 11.20% |
+| 12   | `Documents_add`             |  88,843,272 |  9.77% |
+| 13   | `adamic_string_split`       |  70,001,725 |  7.70% |
+| 14   | `adamic_array_join`         |  64,130,201 |  7.05% |
+| 15   | `adamic_string_concat`      |  54,022,325 |  5.94% |
+| 16   | `adamic_string_equal`       |  52,822,790 |  5.81% |
+| 17   | `adamic_string_slice`       |  50,182,181 |  5.52% |
+| 18   | `adamic_string_join_halves` |  48,445,952 |  5.33% |
+| 19   | `adamic_allocate`           |  39,890,094 |  4.38% |
+| 20   | `Printer_blankAfter`        |  39,689,261 |  4.36% |
 
 ## Top 20 self instructions
 
 Baseline:
 
-| Rank | Function | Ir | Share |
-| --- | --- | ---: | ---: |
-| 1 | `adamic_release` | 255,418,348 | 16.42% |
-| 2 | `adamic_string_split` | 127,402,159 | 8.19% |
-| 3 | `adamic_string_join_halves` | 125,243,675 | 8.05% |
-| 4 | `adamic_string_slice` | 75,906,100 | 4.88% |
-| 5 | `adamic_allocate` | 72,918,049 | 4.69% |
-| 6 | `stringWidth` | 58,748,278 | 3.78% |
-| 7 | `adamic_array_join` | 57,871,666 | 3.72% |
-| 8 | `adamic_string_equal` | 54,674,629 | 3.52% |
-| 9 | `format` | 44,695,657 | 2.87% |
-| 10 | `Reader_value'2` | 39,759,492 | 2.56% |
-| 11 | `adamic_retain` | 38,527,550 | 2.48% |
-| 12 | `adamic_array_push` | 38,043,720 | 2.45% |
-| 13 | `Documents_fits` | 35,699,522 | 2.30% |
-| 14 | `adamic_string_locate` | 31,527,704 | 2.03% |
-| 15 | `Documents_get` | 31,485,604 | 2.02% |
-| 16 | `Reader_skip` | 24,586,592 | 1.58% |
-| 17 | `adamic_string_share` | 23,988,943 | 1.54% |
-| 18 | `free` | 19,734,315 | 1.27% |
-| 19 | `Documents_add` | 17,963,915 | 1.16% |
-| 20 | `Printer_print'2` | 17,273,450 | 1.11% |
+| Rank | Function                    |          Ir |  Share |
+| ---- | --------------------------- | ----------: | -----: |
+| 1    | `adamic_release`            | 255,418,348 | 16.42% |
+| 2    | `adamic_string_split`       | 127,402,159 |  8.19% |
+| 3    | `adamic_string_join_halves` | 125,243,675 |  8.05% |
+| 4    | `adamic_string_slice`       |  75,906,100 |  4.88% |
+| 5    | `adamic_allocate`           |  72,918,049 |  4.69% |
+| 6    | `stringWidth`               |  58,748,278 |  3.78% |
+| 7    | `adamic_array_join`         |  57,871,666 |  3.72% |
+| 8    | `adamic_string_equal`       |  54,674,629 |  3.52% |
+| 9    | `format`                    |  44,695,657 |  2.87% |
+| 10   | `Reader_value'2`            |  39,759,492 |  2.56% |
+| 11   | `adamic_retain`             |  38,527,550 |  2.48% |
+| 12   | `adamic_array_push`         |  38,043,720 |  2.45% |
+| 13   | `Documents_fits`            |  35,699,522 |  2.30% |
+| 14   | `adamic_string_locate`      |  31,527,704 |  2.03% |
+| 15   | `Documents_get`             |  31,485,604 |  2.02% |
+| 16   | `Reader_skip`               |  24,586,592 |  1.58% |
+| 17   | `adamic_string_share`       |  23,988,943 |  1.54% |
+| 18   | `free`                      |  19,734,315 |  1.27% |
+| 19   | `Documents_add`             |  17,963,915 |  1.16% |
+| 20   | `Printer_print'2`           |  17,273,450 |  1.11% |
 
 Optimized:
 
-| Rank | Function | Ir | Share |
-| --- | --- | ---: | ---: |
-| 1 | `adamic_release` | 146,949,440 | 16.15% |
-| 2 | `adamic_string_index_of_at` | 73,956,765 | 8.13% |
-| 3 | `adamic_string_join_halves` | 48,445,952 | 5.33% |
-| 4 | `adamic_string_split` | 43,937,909 | 4.83% |
-| 5 | `Reader_value'2` | 43,844,749 | 4.82% |
-| 6 | `adamic_allocate` | 37,905,044 | 4.17% |
-| 7 | `adamic_string_equal` | 34,885,228 | 3.83% |
-| 8 | `Documents_add` | 34,428,318 | 3.78% |
-| 9 | `Documents_fits` | 26,761,265 | 2.94% |
-| 10 | `Documents_get` | 25,097,408 | 2.76% |
-| 11 | `format` | 24,356,221 | 2.68% |
-| 12 | `adamic_retain` | 21,804,667 | 2.40% |
-| 13 | `adamic_string_slice` | 20,952,890 | 2.30% |
-| 14 | `adamic_string_units_before` | 20,308,907 | 2.23% |
-| 15 | `Reader_skip` | 18,300,154 | 2.01% |
-| 16 | `adamic_array_push` | 14,866,111 | 1.63% |
-| 17 | `adamic_write_line` | 13,810,369 | 1.52% |
-| 18 | `Printer_print'2` | 11,709,980 | 1.29% |
-| 19 | `adamic_object_new` | 11,086,681 | 1.22% |
-| 20 | `adamic_string_locate` | 9,500,949 | 1.04% |
+| Rank | Function                     |          Ir |  Share |
+| ---- | ---------------------------- | ----------: | -----: |
+| 1    | `adamic_release`             | 146,949,440 | 16.15% |
+| 2    | `adamic_string_index_of_at`  |  73,956,765 |  8.13% |
+| 3    | `adamic_string_join_halves`  |  48,445,952 |  5.33% |
+| 4    | `adamic_string_split`        |  43,937,909 |  4.83% |
+| 5    | `Reader_value'2`             |  43,844,749 |  4.82% |
+| 6    | `adamic_allocate`            |  37,905,044 |  4.17% |
+| 7    | `adamic_string_equal`        |  34,885,228 |  3.83% |
+| 8    | `Documents_add`              |  34,428,318 |  3.78% |
+| 9    | `Documents_fits`             |  26,761,265 |  2.94% |
+| 10   | `Documents_get`              |  25,097,408 |  2.76% |
+| 11   | `format`                     |  24,356,221 |  2.68% |
+| 12   | `adamic_retain`              |  21,804,667 |  2.40% |
+| 13   | `adamic_string_slice`        |  20,952,890 |  2.30% |
+| 14   | `adamic_string_units_before` |  20,308,907 |  2.23% |
+| 15   | `Reader_skip`                |  18,300,154 |  2.01% |
+| 16   | `adamic_array_push`          |  14,866,111 |  1.63% |
+| 17   | `adamic_write_line`          |  13,810,369 |  1.52% |
+| 18   | `Printer_print'2`            |  11,709,980 |  1.29% |
+| 19   | `adamic_object_new`          |  11,086,681 |  1.22% |
+| 20   | `adamic_string_locate`       |   9,500,949 |  1.04% |
 
 ## Attribution and changes in this port
 
@@ -214,13 +214,13 @@ inferred from these totals.
 
 Disjoint named **self** instructions, not overlapping inclusive costs:
 
-| Category | Baseline Ir | Baseline share | Optimized Ir | Optimized share |
-| --- | ---: | ---: | ---: | ---: |
-| Retains and releases | 293,945,898 | 18.90% | 168,754,107 | 18.55% |
-| allocate / malloc / free / realloc | 110,043,067 | 7.08% | 52,104,955 | 5.73% |
-| String building | 424,349,563 | 27.29% | 130,788,123 | 14.38% |
-| UTF-16 views and access | 48,085,545 | 3.09% | 41,697,995 | 4.58% |
-| Runtime number formatting | 1,430,787 | 0.092% | 1,276 | 0.00014% |
+| Category                           | Baseline Ir | Baseline share | Optimized Ir | Optimized share |
+| ---------------------------------- | ----------: | -------------: | -----------: | --------------: |
+| Retains and releases               | 293,945,898 |         18.90% |  168,754,107 |          18.55% |
+| allocate / malloc / free / realloc | 110,043,067 |          7.08% |   52,104,955 |           5.73% |
+| String building                    | 424,349,563 |         27.29% |  130,788,123 |          14.38% |
+| UTF-16 views and access            |  48,085,545 |          3.09% |   41,697,995 |           4.58% |
+| Runtime number formatting          |   1,430,787 |         0.092% |        1,276 |        0.00014% |
 
 String building includes split, join-halves, array join, concat, slice, share,
 append and the string-allocation wrapper. UTF-16 includes locate, units,
@@ -235,10 +235,10 @@ proposal to rewrite dtoa.
 
 Logical full-corpus counts, not bytes or malloc calls:
 
-| Snapshot | Allocations | Frees | Retains | Releases | Peak live | Regions |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Baseline | 208,410,603 | 208,410,603 | 458,239,251 | 513,466,401 | 21,374,125 | 0 |
-| Optimized | 103,275,657 | 103,275,657 | 302,444,925 | 301,716,973 | 13,759,774 | 0 |
+| Snapshot  | Allocations |       Frees |     Retains |    Releases |  Peak live | Regions |
+| --------- | ----------: | ----------: | ----------: | ----------: | ---------: | ------: |
+| Baseline  | 208,410,603 | 208,410,603 | 458,239,251 | 513,466,401 | 21,374,125 |       0 |
+| Optimized | 103,275,657 | 103,275,657 | 302,444,925 | 301,716,973 | 13,759,774 |       0 |
 
 Allocations fell **50.45%**. Retain/release hooks count even immortal constants
 and undefined checks; small allocations use slabs. Equal frees and allocations

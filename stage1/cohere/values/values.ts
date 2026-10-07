@@ -19,9 +19,9 @@ import { tokenize } from './tokenize.ts';
 // Go marks printing.Syntax and Prettier turns into a value-unknown node. The constructor tokenizes, so
 // a TokenizeError comes before the parse, as it does upstream.
 export function parse(value: string, loose: boolean): Parsed {
-	const tokenized = tokenize(value, loose);
-	if (tokenized.kind === 'Error') {
-		return tokenized;
-	}
-	return new Parser(loose, tokenized.tokens).parse();
+    const tokenized = tokenize(value, loose);
+    if(tokenized.kind === 'Error') {
+        return tokenized;
+    }
+    return new Parser(loose, tokenized.tokens).parse();
 }

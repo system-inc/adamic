@@ -70,7 +70,13 @@ function end(tree: Tree, index: number, text: string): number | undefined {
         }
         if(node.type() === 'css-atrule' && node.strings.has('name')) {
             const raw = raws(tree, index);
-            return start(tree, index, text) + 1 + utf8Length(node.string('name')) + utf8Length(raw.string('afterName')) + utf8Length(raw.string('params'));
+            return (
+                start(tree, index, text) +
+                1 +
+                utf8Length(node.string('name')) +
+                utf8Length(raw.string('afterName')) +
+                utf8Length(raw.string('params'))
+            );
         }
     }
     if(node.numbers.has('sourceIndex') && node.strings.has('value')) {
@@ -101,7 +107,10 @@ function paramsOffset(tree: Tree, index: number): number {
     const node = tree.at(index);
     let result = source(tree, index).number('startOffset');
     if(node.type() === 'css-atrule' && node.strings.has('name')) {
-        result += 1 + utf8Length(node.string('name')) + utf8Length(leadingColonAndWhitespace(raws(tree, index).string('afterName')));
+        result +=
+            1 +
+            utf8Length(node.string('name')) +
+            utf8Length(leadingColonAndWhitespace(raws(tree, index).string('afterName')));
     }
     return result;
 }
@@ -155,10 +164,18 @@ function selectorOffset(tree: Tree, parentIndex: number, index: number, text: st
 function emptyLocFromParent(tree: Tree, index: number, parent: number): void {
     const node = tree.at(index);
     const parentSource = source(tree, parent);
-    if(node.type() === '' || node.object('source') >= 0 || !parentSource.numbers.has('startOffset') || !parentSource.numbers.has('endOffset')) {
+    if(
+        node.type() === '' ||
+        node.object('source') >= 0 ||
+        !parentSource.numbers.has('startOffset') ||
+        !parentSource.numbers.has('endOffset')
+    ) {
         return;
     }
-    if(!(node.lists.has('nodes') && node.list('nodes').length === 0 || node.lists.has('groups') && node.list('groups').length === 0)) {
+    if(!(
+        (node.lists.has('nodes') && node.list('nodes').length === 0) ||
+        (node.lists.has('groups') && node.list('groups').length === 0)
+    )) {
         return;
     }
     const object = tree.at(tree.ensure(index, 'source'));
@@ -230,7 +247,13 @@ function emptyChildLocs(tree: Tree, index: number): void {
         }
     }
 }
-export function calculateLoc(tree: Tree, index: number, text: string, rootOffset: number = 0, isRoot: boolean = false): void {
+export function calculateLoc(
+    tree: Tree,
+    index: number,
+    text: string,
+    rootOffset: number = 0,
+    isRoot: boolean = false,
+): void {
     const node = tree.at(index);
     let object = source(tree, index);
     if(isRoot && node.type() !== '') {
@@ -261,15 +284,35 @@ export function calculateLoc(tree: Tree, index: number, text: string, rootOffset
             const childNode = tree.at(child);
             const type = childNode.type();
             if(type === 'value-root' || type === 'value-unknown') {
-                calculateLoc(tree, child, childNode.string('text') !== '' ? childNode.string('text') : childNode.string('value'), valueOffset(tree, index), true);
+                calculateLoc(
+                    tree,
+                    child,
+                    childNode.string('text') !== '' ? childNode.string('text') : childNode.string('value'),
+                    valueOffset(tree, index),
+                    true,
+                );
             }
             else if(type === 'media-query-list' || node.object('params') === child) {
-                calculateLoc(tree, child, raws(tree, index).string('params') !== '' ? raws(tree, index).string('params') : childNode.string('value'), paramsOffset(tree, index), true);
+                calculateLoc(
+                    tree,
+                    child,
+                    raws(tree, index).string('params') !== ''
+                        ? raws(tree, index).string('params')
+                        : childNode.string('value'),
+                    paramsOffset(tree, index),
+                    true,
+                );
             }
             else if(type.startsWith('selector-')) {
                 const nestedText = selectorText(tree, index, child);
                 if(nestedText !== undefined) {
-                    calculateLoc(tree, child, nestedText, selectorOffset(tree, index, child, nestedText, rootOffset), true);
+                    calculateLoc(
+                        tree,
+                        child,
+                        nestedText,
+                        selectorOffset(tree, index, child, nestedText, rootOffset),
+                        true,
+                    );
                 }
                 else {
                     calculateLoc(tree, child, text, rootOffset);

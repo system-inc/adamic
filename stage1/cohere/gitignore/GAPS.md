@@ -48,10 +48,10 @@ This is the one that changed the port's shape most. A call to a function declare
 
 ```ts
 function first(value: number): number {
-	return second(value) + 1;
+    return second(value) + 1;
 }
 function second(value: number): number {
-	return value * 2;
+    return value * 2;
 }
 console.log(`${first(3)}`);
 ```
@@ -64,14 +64,14 @@ The same happens for methods:
 
 ```ts
 class Counter {
-	count = 0;
-	twice(): number {
-		return this.once() + this.once();
-	}
-	once(): number {
-		this.count = this.count + 1;
-		return this.count;
-	}
+    count = 0;
+    twice(): number {
+        return this.once() + this.once();
+    }
+    once(): number {
+        this.count = this.count + 1;
+        return this.count;
+    }
 }
 console.log(`${new Counter().twice()}`);
 ```
@@ -88,7 +88,7 @@ The cause is in `declareModule` (internal/lower/lower.go): it records every func
 
 ```ts
 function isEven(value: number): boolean {
-	return value % 2 === 0;
+    return value % 2 === 0;
 }
 const test: (value: number) => boolean = isEven;
 console.log(`${test(4)}`);
@@ -153,7 +153,7 @@ A tuple literal anywhere except directly inside `new Map([...])` was refused: re
 
 ```ts
 function cut(text: string): readonly [string, number] {
-	return [text.slice(1), 1];
+    return [text.slice(1), 1];
 }
 const [rest, count] = cut('abc');
 console.log(`${rest} ${count}`);
@@ -185,11 +185,11 @@ Found when the driver began reading its cases at run time. `panic` returns `neve
 ```ts
 import { panic } from 'adamic';
 function kindOf(kind: string): number {
-	switch (kind) {
-		case 'one':
-			return 1;
-	}
-	return panic(`no kind ${kind}`);
+    switch(kind) {
+        case 'one':
+            return 1;
+    }
+    return panic(`no kind ${kind}`);
 }
 console.log(`${kindOf('one')}`);
 ```
@@ -222,11 +222,11 @@ Concatenation now looks for a surrogate pair's halves only where two pieces meet
 
 Main 1d72913 merged. A slice of 64 bytes or more, and a quarter of its owner, reads its owner's bytes; `text += more` on a local appends in place when the local holds the only reference; `indexOf` from a position no longer slices (docs/memory.md, "Strings, specifically"). The same case set as below, best of seven at a load average under 1, all three outputs byte for byte the same:
 
-| | time | peak memory |
-|---|---|---|
-| Go cohere | 0.11 s | not measured apart from `go test` |
-| the native port | 0.252 s (was 0.295 s) | 10 MB |
-| Node running the port's source | 0.373 s | 95 MB |
+|                                | time                  | peak memory                       |
+| ------------------------------ | --------------------- | --------------------------------- |
+| Go cohere                      | 0.11 s                | not measured apart from `go test` |
+| the native port                | 0.252 s (was 0.295 s) | 10 MB                             |
+| Node running the port's source | 0.373 s               | 95 MB                             |
 
 **Go cohere is now 2.3 times faster than the native port** (2.7 before this, 20 this morning). callgrind puts 2.34 billion instructions in the native run, down from 2.82 billion: `adamic_string_concat` is off the top of the profile and `adamic_string_slice` is down from 241 million to 177 million. What's on top now: `adamic_release` 20% (458 million, the same count as before, so it's the number of releases, not their cost, that a borrow inference would cut), malloc and free together 14%, and `adamic_string_join_halves` 3%, concat's scan of every byte for a surrogate pair's halves, which needs to look only where two pieces meet.
 
@@ -234,11 +234,11 @@ Main 1d72913 merged. A slice of 64 bytes or more, and a quarter of its owner, re
 
 Main 4ddd17f merged, and the glob on `utf8Length` and `utf8At` instead of bytes.ts. The case set has grown, with reviewer R2's cases: 55 trees, 6,360 tree paths, 21 pattern lists and 1,825 globs, 14,963 answer lines. Timed best of seven on the same container at a load average under 1, with all three outputs byte for byte the same:
 
-| | time | peak memory |
-|---|---|---|
-| Go cohere (as below) | 0.11 s | not measured apart from `go test` |
-| the native port (`adamic build`, `-O2`, reading the cases file) | 0.295 s | 10 MB |
-| Node running the port's source | 0.370 s | 95 MB |
+|                                                                 | time    | peak memory                       |
+| --------------------------------------------------------------- | ------- | --------------------------------- |
+| Go cohere (as below)                                            | 0.11 s  | not measured apart from `go test` |
+| the native port (`adamic build`, `-O2`, reading the cases file) | 0.295 s | 10 MB                             |
+| Node running the port's source                                  | 0.370 s | 95 MB                             |
 
 **Go cohere is now 2.7 times faster than the native port, where it was 6.6 times faster.** The native port beats Node by a quarter, in a ninth of its memory. callgrind puts 2.8 billion instructions in the native run, down from 7.4 billion, and none of the top of the profile is reading bytes any more. It's allocation now: `adamic_release` 16%, `adamic_string_concat` 11%, `adamic_string_slice` 9%, and malloc and free together 19%. Those are the walk's and the matcher's path strings, built by `+` and `slice` and released one by one, where the Go slices a string without copying it. A slice that shares its parent's bytes would close most of what's left. Also observed, and not in this case set's time: `text += character` in a loop is quadratic natively (each `+=` copies), where it is linear on Node; the case parser's `unescape` hit it on a 100 MiB file and now joins slices instead.
 
@@ -246,11 +246,11 @@ Main 4ddd17f merged, and the glob on `utf8Length` and `utf8At` instead of bytes.
 
 Main now carries stream C's constant-time string index (integrate-2), and the port no longer works around anything. The test's case set (53 trees, 6,318 tree paths each asked twice, by path and by walk, 21 pattern lists and 421 globs; 13,464 answer lines) was timed best of seven on the same 4-vCPU container, at a load average under 1, with all three outputs byte for byte the same:
 
-| | time | peak memory |
-|---|---|---|
-| Go cohere (cohere_side_test.go's answer step, reading the trees from disk and the cases as JSON) | 0.11 s | not measured apart from `go test` |
-| the native port (`adamic build`, `-O2`, reading the cases file) | 0.730 s | 10 MB |
-| Node running the port's source | 0.800 s | 94 MB |
+|                                                                                                  | time    | peak memory                       |
+| ------------------------------------------------------------------------------------------------ | ------- | --------------------------------- |
+| Go cohere (cohere_side_test.go's answer step, reading the trees from disk and the cases as JSON) | 0.11 s  | not measured apart from `go test` |
+| the native port (`adamic build`, `-O2`, reading the cases file)                                  | 0.730 s | 10 MB                             |
+| Node running the port's source                                                                   | 0.800 s | 94 MB                             |
 
 **Go cohere is now 6.6 times faster than the native port, where it was 20 times faster.** The native port is a little faster than Node and uses a ninth of Node's memory. callgrind puts 7.4 billion instructions in the native run, down from 26.4 billion. 56% of them are under `utf8Bytes`: before the glob matches a text, it spells the text as bytes, and its first step is a `charCodeAt` loop asking whether the text is ASCII. Each step is constant time now, but it's a call and a few conversions per character, once for every text the glob matches. That's the bytes cost below, and it's most of the distance to Go, which gets a string's bytes for free. A byte view of a string, or `TextEncoder`, would close most of it; so would the glob converting only past its literal and suffix fast paths, as the Go's never converts at all.
 
@@ -261,20 +261,20 @@ These lowered and answered correctly, but they're the numbers to beat on the way
 - **Go cohere is 20 times faster than the native port.** The same 50 trees, pattern lists and globs, answered byte for byte the same, take Go cohere 0.10 s (the whole `go test` of cohere_side_test.go's answer step, reading the trees' ignore files from disk and its cases as JSON). The native port takes 2.1 s, and Node 0.62 s. The rest of this section is where the native time goes.
 - **Native is 3.5 to 5 times slower than Node.** With the cases compiled in as constants, the unsanitized `-O2` binary ran in 2.06 s and Node in 0.42 s. Read from a 447 KB cases file, it is 2.09 s and 0.59 s. Under callgrind (run on the constants build), 42% of the native run's instructions are in `adamic_string_length` and 39% in `adamic_string_char_code_at` (internal/native/runtime/string.c). Each of them walks the string's UTF-8 from its first byte. So `text.length`, `text.charCodeAt(index)` and `text[index]` cost the length of the string, and a loop over a string's indexes is quadratic. The glob reads its pattern and its text that way, as the Go does. That's natural code, and every 0.1 program that reads a string by index pays the same. docs/memory.md already names the fix: an ASCII-only flag, so the common case is a load. Smallest program that shows the shape:
 
-  ```ts
-  const text = 'a'.repeat(100000);
-  let count = 0;
-  for (let index = 0; index < text.length; index++) {
-  	if (text.charCodeAt(index) === 97) {
-  		count++;
-  	}
-  }
-  console.log(`${count}`);
-  ```
+    ```ts
+    const text = 'a'.repeat(100000);
+    let count = 0;
+    for(let index = 0; index < text.length; index++) {
+        if(text.charCodeAt(index) === 97) {
+            count++;
+        }
+    }
+    console.log(`${count}`);
+    ```
 
-  Built with `adamic build` (`-O2`), it takes 11.1 s natively. Node runs it in 0.085 s.
+    Built with `adamic build` (`-O2`), it takes 11.1 s natively. Node runs it in 0.085 s.
 
-  In the port, 78% of the native run's instructions are under `utf8Bytes` (bytes.ts). Before it spells a text as bytes, it checks whether the text is ASCII by this very loop, and the glob calls it once for every text it matches. With `length` and `charCodeAt` constant time, the loop is a few instructions per character.
+    In the port, 78% of the native run's instructions are under `utf8Bytes` (bytes.ts). Before it spells a text as bytes, it checks whether the text is ASCII by this very loop, and the glob calls it once for every text it matches. With `length` and `charCodeAt` constant time, the loop is a few instructions per character.
 
 - **Constant data compiles slowly.** When the cases were constants (7,360 lines of TypeScript), they became 3.4 MB of C, which clang took 39 s to compile at `-O2`, and longer under the sanitizers. With cohere's checkout among the trees, the test took five and a half minutes. The driver now reads them at run time, and the same test takes 27 s. It would still cost any program with a large table in its source.
 
@@ -287,4 +287,3 @@ First try, Go's way: one pass over the units into a lazy buffer that copies noth
 So `clean` asks first whether the path is clean, with the library's scans (`includes('//')`, `startsWith('./')`, `endsWith('/..')` and the rest, `isClean`), returns it as it is when it is, and takes it apart only when it isn't. `dir` cleans what comes before the last slash without that slash, which cleans to the same path and then is usually clean already. The walk takes 2.26 s (from 2.7), and this slice's own run is unchanged within noise (0.66 to 0.77 s, from 0.71 to 0.73; Node 0.77 to 0.80). Of what remains in `clean`, most is `adamic_string_index_of`, which compares at every position with a call to `memcmp`.
 
 `path_test.go` holds `clean`, `base` and `dir` to Go's `path.Clean`, `path.Base` and `path.Dir` on 5,040 paths, natively, on Node and through the JavaScript backend: every string of up to seven units over `/`, `.` and `a`; every sequence of up to six of `/`, `.`, `..` and `a`; every string of up to four over `/`, `.`, `é`, `😀` and `.a`; and long ones by hand. Six mutants, each taking one test out of `isClean` or moving `dir`'s cut, are caught natively and on Node. The lazy buffer's four mutants were caught too, while it was the code.
-

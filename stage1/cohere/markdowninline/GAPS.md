@@ -26,18 +26,18 @@ The raw driver treats the complete file as one leaf value and writes its formatt
 bytes to stdout. It does not parse a Markdown document. Modes select explicit
 node/ancestor contexts:
 
-| Modes | Leaf and context |
-| --- | --- |
-| w, e | Word inside emphasis with letter or space sibling flanks |
-| f, n | First word, with its sentence first or later inside emphasis |
-| s, p | Word without emphasis, eligible pseudo setext or plain context |
-| c, t | Inline code, preserved newlines, outside/inside a table |
-| r, u | Inline code, newlines replaced with spaces, outside/inside a table |
-| k, v | Wiki link, preserved or collapsed tabs/newlines |
-| h, i | Image, value as alt/URL/title, double/single quote preference |
-| o | Image, original alt value with fallback alt and absent title |
-| j, l, q | Full, collapsed, shortcut image reference |
-| b | Footnote reference |
+| Modes   | Leaf and context                                                   |
+| ------- | ------------------------------------------------------------------ |
+| w, e    | Word inside emphasis with letter or space sibling flanks           |
+| f, n    | First word, with its sentence first or later inside emphasis       |
+| s, p    | Word without emphasis, eligible pseudo setext or plain context     |
+| c, t    | Inline code, preserved newlines, outside/inside a table            |
+| r, u    | Inline code, newlines replaced with spaces, outside/inside a table |
+| k, v    | Wiki link, preserved or collapsed tabs/newlines                    |
+| h, i    | Image, value as alt/URL/title, double/single quote preference      |
+| o       | Image, original alt value with fallback alt and absent title       |
+| j, l, q | Full, collapsed, shortcut image reference                          |
+| b       | Footnote reference                                                 |
 
 The exported helpers accept separate strings for sibling values, alt text, original
 alt text, URL and title. Missing optional strings map to the empty string, which

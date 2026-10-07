@@ -48,20 +48,20 @@ The baseline shows two large avoidable port costs: `byteSlice` uses
 1,171,974,355 inclusive instructions (26.71%), and regexp replacement uses
 1,691,620,205 (38.56%). Their inclusive costs overlap with other rows.
 
-* `byteSlice` now returns immediately for empty/reversed ranges, slices ASCII
+- `byteSlice` now returns immediately for empty/reversed ranges, slices ASCII
   by its identical byte/UTF-16 coordinates, and stops Unicode iteration at the
   requested end. The original boundary-replacement behavior stays intact.
   Equality of UTF-8 byte length and UTF-16 length proves ASCII in this input
   model; every non-ASCII scalar or lone surrogate uses more bytes than units.
   Its final inclusive cost is 18,853,636 instructions (1.27%).
-* The document printer trims only terminal ASCII space and tab with character
+- The document printer trims only terminal ASCII space and tab with character
   reads, rather than searching the entire accumulated output with a regexp
   at every hard line. The already-unused trailing-whitespace bookkeeping in
   `fits` is removed; pending flat-line spaces are still measured.
-* Document text is immutable, so display widths are cached lazily per document.
+- Document text is immutable, so display widths are cached lazily per document.
   The exact old ASCII range 0x20 through 0x7f is checked directly. Unicode,
   surrogate, emoji and wide-character width rules are unchanged.
-* The immutable CSS unit list is built once rather than split for each number.
+- The immutable CSS unit list is built once rather than split for each number.
 
 Total instructions: **4,387,115,814 -> 1,487,775,242**, a **66.09%** reduction.
 `Documents.print` falls from 1,839,631,017 to 105,788,399 inclusive instructions.
@@ -88,15 +88,15 @@ binary and measures only in-process formatting after decoding; that timing
 advantage is explicitly retained from the preceding report. No warmed-server
 or print-only claim is made. Timing variation is visible below; use medians.
 
-| Side | Round 1 / s | Round 2 / s | Round 3 / s | Round 4 / s | Round 5 / s | Median / s |
-|---|---:|---:|---:|---:|---:|---:|
-| native baseline | 763 | 774 | 799 | 583 | 742 | 763 |
-| native final | 1435 | 1976 | 1936 | 1286 | 1917 | 1917 |
-| Node baseline | 1145 | 1383 | 1389 | 1411 | 1327 | 1383 |
-| Node final | 2521 | 2545 | 2668 | 1142 | 2571 | 2545 |
-| Prettier fork | 1326 | 1365 | 1404 | 794 | 1282 | 1326 |
-| Prettier npm 3.9.6 | 1350 | 1368 | 1263 | 1175 | 1144 | 1263 |
-| Go | 6120 | 6009 | 5430 | 5896 | 5295 | 5896 |
+| Side               | Round 1 / s | Round 2 / s | Round 3 / s | Round 4 / s | Round 5 / s | Median / s |
+| ------------------ | ----------: | ----------: | ----------: | ----------: | ----------: | ---------: |
+| native baseline    |         763 |         774 |         799 |         583 |         742 |        763 |
+| native final       |        1435 |        1976 |        1936 |        1286 |        1917 |       1917 |
+| Node baseline      |        1145 |        1383 |        1389 |        1411 |        1327 |       1383 |
+| Node final         |        2521 |        2545 |        2668 |        1142 |        2571 |       2545 |
+| Prettier fork      |        1326 |        1365 |        1404 |         794 |        1282 |       1326 |
+| Prettier npm 3.9.6 |        1350 |        1368 |        1263 |        1175 |        1144 |       1263 |
+| Go                 |        6120 |        6009 |        5430 |        5896 |        5295 |       5896 |
 
 Measured native gain: **2.51x**. Go/native median ratio: **3.08x**.
 The previous 758/5,870 observation is reproduced closely by the fresh
@@ -113,14 +113,14 @@ They count heap values and RC calls, not every internal malloc buffer.
 Allocations equal frees and regions are zero in both runs; LSan is an
 independent check, not inferred from these counts.
 
-| Counter | Baseline | Final |
-|---|---:|---:|
-| Allocations | 5,003,718 | 1,714,919 |
-| Frees | 5,003,718 | 1,714,919 |
-| Retains | 6,513,586 | 6,408,812 |
-| Releases | 9,900,442 | 6,626,382 |
-| Peak live values | 140,777 | 140,840 |
-| Regions | 0 | 0 |
+| Counter          |  Baseline |     Final |
+| ---------------- | --------: | --------: |
+| Allocations      | 5,003,718 | 1,714,919 |
+| Frees            | 5,003,718 | 1,714,919 |
+| Retains          | 6,513,586 | 6,408,812 |
+| Releases         | 9,900,442 | 6,626,382 |
+| Peak live values |   140,777 |   140,840 |
+| Regions          |         0 |         0 |
 
 Allocations fall **65.73%**; peak live values slightly increase, consistent
 with retaining the global unit list. A lower peak-memory claim is not made.
@@ -129,14 +129,14 @@ Retains hardly change, so remaining ownership traffic is substantial.
 These categories sum **self** costs for explicitly selected, disjoint function
 names. They are attribution evidence, not estimates of achievable speedup:
 
-| Category | Baseline self Ir | Final self Ir | Final % |
-|---|---:|---:|---:|
-| RC (`retain`, `release`, `let_go`) | 605,263,559 | 351,181,789 | 23.60 |
-| Allocation (`adamic_allocate`, malloc/free/calloc/realloc, slab helpers, grown) | 1,349,805,575 | 216,007,141 | 14.52 |
-| Map (`find`, `adamic_map_*`) | 164,193,759 | 164,193,759 | 11.04 |
-| Strings (`adamic_string_*`, `adamic_utf8_*`) | 791,705,935 | 156,990,213 | 10.55 |
-| Regex VM (`regex_execute`, `regex_run`) | 559,559,594 | 57,225,046 | 3.85 |
-| Virtual dispatch (`adamic_virtual`) | 29,005,656 | 29,221,896 | 1.96 |
+| Category                                                                        | Baseline self Ir | Final self Ir | Final % |
+| ------------------------------------------------------------------------------- | ---------------: | ------------: | ------: |
+| RC (`retain`, `release`, `let_go`)                                              |      605,263,559 |   351,181,789 |   23.60 |
+| Allocation (`adamic_allocate`, malloc/free/calloc/realloc, slab helpers, grown) |    1,349,805,575 |   216,007,141 |   14.52 |
+| Map (`find`, `adamic_map_*`)                                                    |      164,193,759 |   164,193,759 |   11.04 |
+| Strings (`adamic_string_*`, `adamic_utf8_*`)                                    |      791,705,935 |   156,990,213 |   10.55 |
+| Regex VM (`regex_execute`, `regex_run`)                                         |      559,559,594 |    57,225,046 |    3.85 |
+| Virtual dispatch (`adamic_virtual`)                                             |       29,005,656 |    29,221,896 |    1.96 |
 
 The allocation helper selection is `adamic_allocate`, `malloc`, `free`,
 `calloc`, `realloc`, `take`, `give`, `deallocate`, `new_chunk`, `grown`.
@@ -221,103 +221,103 @@ as Callgrind reports them. Inclusive rows overlap.
 
 ## Baseline inclusive
 
-| Function | Ir | % |
-|---|---:|---:|
-| `main` | 4,386,905,347 | 100.00 |
-| `adamic_function_328_Printer_print'2` | 2,990,547,960 | 68.17 |
-| `adamic_function_355_Documents_print` | 1,839,631,017 | 41.93 |
-| `regex_execute` | 1,818,509,754 | 41.45 |
-| `regex_run` | 1,737,639,520 | 39.61 |
-| `adamic_regex_replace` | 1,691,620,205 | 38.56 |
-| `adamic_function_328_Printer_print` | 1,512,904,539 | 34.49 |
-| `adamic_function_326_Printer_sequence` | 1,509,111,265 | 34.40 |
-| `adamic_function_326_Printer_sequence'2` | 1,234,441,420 | 28.14 |
-| `adamic_function_133_byteSlice` | 1,171,974,355 | 26.71 |
-| `adamic_function_292_nextEmpty` | 1,126,619,406 | 25.68 |
-| `adamic_function_252_compose` | 923,495,103 | 21.05 |
-| `free` | 765,957,102 | 17.46 |
-| `adamic_release` | 699,695,436 | 15.95 |
-| `adamic_function_291_hasNewline` | 584,979,191 | 13.33 |
-| `malloc` | 486,319,474 | 11.09 |
-| `adamic_function_251_nestedCSS` | 460,392,155 | 10.49 |
-| `adamic_function_251_nestedCSS'2` | 460,351,864 | 10.49 |
-| `adamic_function_359_closure'2` | 432,083,669 | 9.85 |
-| `adamic_string_append` | 413,892,942 | 9.43 |
+| Function                                 |            Ir |      % |
+| ---------------------------------------- | ------------: | -----: |
+| `main`                                   | 4,386,905,347 | 100.00 |
+| `adamic_function_328_Printer_print'2`    | 2,990,547,960 |  68.17 |
+| `adamic_function_355_Documents_print`    | 1,839,631,017 |  41.93 |
+| `regex_execute`                          | 1,818,509,754 |  41.45 |
+| `regex_run`                              | 1,737,639,520 |  39.61 |
+| `adamic_regex_replace`                   | 1,691,620,205 |  38.56 |
+| `adamic_function_328_Printer_print`      | 1,512,904,539 |  34.49 |
+| `adamic_function_326_Printer_sequence`   | 1,509,111,265 |  34.40 |
+| `adamic_function_326_Printer_sequence'2` | 1,234,441,420 |  28.14 |
+| `adamic_function_133_byteSlice`          | 1,171,974,355 |  26.71 |
+| `adamic_function_292_nextEmpty`          | 1,126,619,406 |  25.68 |
+| `adamic_function_252_compose`            |   923,495,103 |  21.05 |
+| `free`                                   |   765,957,102 |  17.46 |
+| `adamic_release`                         |   699,695,436 |  15.95 |
+| `adamic_function_291_hasNewline`         |   584,979,191 |  13.33 |
+| `malloc`                                 |   486,319,474 |  11.09 |
+| `adamic_function_251_nestedCSS`          |   460,392,155 |  10.49 |
+| `adamic_function_251_nestedCSS'2`        |   460,351,864 |  10.49 |
+| `adamic_function_359_closure'2`          |   432,083,669 |   9.85 |
+| `adamic_string_append`                   |   413,892,942 |   9.43 |
 
 ## Baseline self
 
-| Function | Ir | % |
-|---|---:|---:|
-| `free` | 712,675,203 | 16.24 |
-| `adamic_release` | 531,477,492 | 12.11 |
-| `regex_run` | 499,680,946 | 11.39 |
-| `malloc` | 440,650,307 | 10.04 |
-| `adamic_allocate` | 182,227,715 | 4.15 |
-| `adamic_string_append` | 175,591,012 | 4.00 |
-| `adamic_string_join_halves` | 140,464,821 | 3.20 |
-| `adamic_string_share` | 119,479,302 | 2.72 |
-| `find` | 108,246,554 | 2.47 |
-| `adamic_function_133_byteSlice` | 100,254,506 | 2.29 |
-| `adamic_string_put` | 68,265,996 | 1.56 |
-| `regex_execute` | 59,878,648 | 1.36 |
-| `adamic_retain` | 55,880,366 | 1.27 |
-| `adamic_string_allocate` | 49,097,048 | 1.12 |
-| `adamic_string_free_index` | 48,539,106 | 1.11 |
-| `regex_input` | 48,247,280 | 1.10 |
-| `adamic_string_equal` | 41,170,995 | 0.94 |
-| `adamic_function_7_Tree_at` | 39,521,532 | 0.90 |
-| `adamic_object_free_children` | 34,243,742 | 0.78 |
-| `adamic_string_units` | 31,560,484 | 0.72 |
+| Function                        |          Ir |     % |
+| ------------------------------- | ----------: | ----: |
+| `free`                          | 712,675,203 | 16.24 |
+| `adamic_release`                | 531,477,492 | 12.11 |
+| `regex_run`                     | 499,680,946 | 11.39 |
+| `malloc`                        | 440,650,307 | 10.04 |
+| `adamic_allocate`               | 182,227,715 |  4.15 |
+| `adamic_string_append`          | 175,591,012 |  4.00 |
+| `adamic_string_join_halves`     | 140,464,821 |  3.20 |
+| `adamic_string_share`           | 119,479,302 |  2.72 |
+| `find`                          | 108,246,554 |  2.47 |
+| `adamic_function_133_byteSlice` | 100,254,506 |  2.29 |
+| `adamic_string_put`             |  68,265,996 |  1.56 |
+| `regex_execute`                 |  59,878,648 |  1.36 |
+| `adamic_retain`                 |  55,880,366 |  1.27 |
+| `adamic_string_allocate`        |  49,097,048 |  1.12 |
+| `adamic_string_free_index`      |  48,539,106 |  1.11 |
+| `regex_input`                   |  48,247,280 |  1.10 |
+| `adamic_string_equal`           |  41,170,995 |  0.94 |
+| `adamic_function_7_Tree_at`     |  39,521,532 |  0.90 |
+| `adamic_object_free_children`   |  34,243,742 |  0.78 |
+| `adamic_string_units`           |  31,560,484 |  0.72 |
 
 ## Final inclusive
 
-| Function | Ir | % |
-|---|---:|---:|
-| `main` | 1,487,564,813 | 99.99 |
-| `adamic_function_328_Printer_print'2` | 1,470,103,119 | 98.81 |
-| `adamic_function_252_compose` | 923,171,385 | 62.05 |
-| `adamic_function_251_nestedCSS` | 459,867,750 | 30.91 |
-| `adamic_function_251_nestedCSS'2` | 459,838,509 | 30.91 |
-| `adamic_release` | 399,214,697 | 26.83 |
-| `adamic_function_328_Printer_print` | 347,597,928 | 23.36 |
-| `adamic_function_326_Printer_sequence` | 343,793,200 | 23.11 |
-| `adamic_function_229_parseValue` | 301,421,528 | 20.26 |
-| `adamic_function_360_closure'2` | 270,119,864 | 18.16 |
-| `adamic_function_245_calculateLoc` | 251,028,702 | 16.87 |
-| `adamic_function_245_calculateLoc'2` | 243,123,414 | 16.34 |
-| `adamic_function_360_closure` | 233,393,617 | 15.69 |
-| `adamic_function_326_Printer_sequence'2` | 220,577,221 | 14.83 |
-| `adamic_function_329_Printer_declaration` | 194,938,237 | 13.10 |
-| `regex_execute` | 177,825,726 | 11.95 |
-| `adamic_function_333_Printer_comma` | 171,427,225 | 11.52 |
-| `regex_run` | 165,240,141 | 11.11 |
-| `adamic_function_12_Tree_children` | 140,747,712 | 9.46 |
-| `adamic_function_325_Printer_list` | 139,993,503 | 9.41 |
+| Function                                  |            Ir |     % |
+| ----------------------------------------- | ------------: | ----: |
+| `main`                                    | 1,487,564,813 | 99.99 |
+| `adamic_function_328_Printer_print'2`     | 1,470,103,119 | 98.81 |
+| `adamic_function_252_compose`             |   923,171,385 | 62.05 |
+| `adamic_function_251_nestedCSS`           |   459,867,750 | 30.91 |
+| `adamic_function_251_nestedCSS'2`         |   459,838,509 | 30.91 |
+| `adamic_release`                          |   399,214,697 | 26.83 |
+| `adamic_function_328_Printer_print`       |   347,597,928 | 23.36 |
+| `adamic_function_326_Printer_sequence`    |   343,793,200 | 23.11 |
+| `adamic_function_229_parseValue`          |   301,421,528 | 20.26 |
+| `adamic_function_360_closure'2`           |   270,119,864 | 18.16 |
+| `adamic_function_245_calculateLoc`        |   251,028,702 | 16.87 |
+| `adamic_function_245_calculateLoc'2`      |   243,123,414 | 16.34 |
+| `adamic_function_360_closure`             |   233,393,617 | 15.69 |
+| `adamic_function_326_Printer_sequence'2`  |   220,577,221 | 14.83 |
+| `adamic_function_329_Printer_declaration` |   194,938,237 | 13.10 |
+| `regex_execute`                           |   177,825,726 | 11.95 |
+| `adamic_function_333_Printer_comma`       |   171,427,225 | 11.52 |
+| `regex_run`                               |   165,240,141 | 11.11 |
+| `adamic_function_12_Tree_children`        |   140,747,712 |  9.46 |
+| `adamic_function_325_Printer_list`        |   139,993,503 |  9.41 |
 
 ## Final self
 
-| Function | Ir | % |
-|---|---:|---:|
-| `adamic_release` | 278,155,915 | 18.70 |
-| `find` | 108,246,554 | 7.28 |
-| `free` | 87,897,255 | 5.91 |
-| `adamic_allocate` | 63,671,456 | 4.28 |
-| `adamic_retain` | 55,120,830 | 3.70 |
-| `malloc` | 50,530,924 | 3.40 |
-| `regex_run` | 49,550,587 | 3.33 |
-| `adamic_string_equal` | 41,170,995 | 2.77 |
-| `adamic_function_7_Tree_at` | 39,521,532 | 2.66 |
-| `adamic_string_units` | 31,443,885 | 2.11 |
-| `adamic_object_free_children` | 30,296,277 | 2.04 |
-| `adamic_virtual` | 29,221,896 | 1.96 |
-| `adamic_map_set` | 17,963,856 | 1.21 |
-| `let_go` | 17,905,044 | 1.20 |
-| `adamic_function_12_Tree_children` | 14,449,691 | 0.97 |
-| `adamic_string_slice` | 14,299,880 | 0.96 |
-| `adamic_function_16_ObjectNode_clear` | 12,991,008 | 0.87 |
-| `adamic_string_units_before` | 12,857,231 | 0.86 |
-| `adamic_array_push` | 12,306,900 | 0.83 |
-| `adamic_array_new` | 11,670,488 | 0.78 |
+| Function                              |          Ir |     % |
+| ------------------------------------- | ----------: | ----: |
+| `adamic_release`                      | 278,155,915 | 18.70 |
+| `find`                                | 108,246,554 |  7.28 |
+| `free`                                |  87,897,255 |  5.91 |
+| `adamic_allocate`                     |  63,671,456 |  4.28 |
+| `adamic_retain`                       |  55,120,830 |  3.70 |
+| `malloc`                              |  50,530,924 |  3.40 |
+| `regex_run`                           |  49,550,587 |  3.33 |
+| `adamic_string_equal`                 |  41,170,995 |  2.77 |
+| `adamic_function_7_Tree_at`           |  39,521,532 |  2.66 |
+| `adamic_string_units`                 |  31,443,885 |  2.11 |
+| `adamic_object_free_children`         |  30,296,277 |  2.04 |
+| `adamic_virtual`                      |  29,221,896 |  1.96 |
+| `adamic_map_set`                      |  17,963,856 |  1.21 |
+| `let_go`                              |  17,905,044 |  1.20 |
+| `adamic_function_12_Tree_children`    |  14,449,691 |  0.97 |
+| `adamic_string_slice`                 |  14,299,880 |  0.96 |
+| `adamic_function_16_ObjectNode_clear` |  12,991,008 |  0.87 |
+| `adamic_string_units_before`          |  12,857,231 |  0.86 |
+| `adamic_array_push`                   |  12,306,900 |  0.83 |
+| `adamic_array_new`                    |  11,670,488 |  0.78 |
 
 # Setup and reproduction
 
@@ -399,10 +399,10 @@ the two proved surrogate-cut occurrences. No new discrepancy is admitted.
 Three printer source mutants compile and run to exit 0 with clean stderr;
 then both native ASan/UBSan and Node comparisons catch them in both modes:
 
-| Mutant | First difference |
-|---|---|
-| Omit declaration semicolons | Line 2, byte 69 |
-| Omit rule-body indentation | Line 6, byte 7 |
+| Mutant                                    | First difference |
+| ----------------------------------------- | ---------------- |
+| Omit declaration semicolons               | Line 2, byte 69  |
+| Omit rule-body indentation                | Line 6, byte 7   |
 | Ignore remaining width in document groups | Line 26, byte 12 |
 
 Existing raw-parser mutants are also rerun on native and Node, and on composed
@@ -418,11 +418,11 @@ Memory-check mutants **PASS**, 53.64s. All three preserve the ordinary
 optimized composed printer's bytes on the test inputs; only the intended
 instrument catches each:
 
-| Temporary generated-C mutant | Observation |
-|---|---|
-| Read freed storage | ASan heap-use-after-free |
-| Overflow a volatile signed integer with argc | UBSan signed integer overflow |
-| Omit generated releases | ASan/UBSan with leaks off and output checks pass; LSan catches 607,327 bytes in 8,466 allocations |
+| Temporary generated-C mutant                 | Observation                                                                                       |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Read freed storage                           | ASan heap-use-after-free                                                                          |
+| Overflow a volatile signed integer with argc | UBSan signed integer overflow                                                                     |
+| Omit generated releases                      | ASan/UBSan with leaks off and output checks pass; LSan catches 607,327 bytes in 8,466 allocations |
 
 The first two are instrumentation probes; the last leaks actual composed
 printer allocations. They do not deploy faulty source. The independent

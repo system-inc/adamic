@@ -8,27 +8,33 @@
 // own scans, which stage 0's runtime does in C, so a path already clean is checked without being read a
 // character at a time into new strings, and comes back as itself, uncopied, as Go's path.Clean gives it.
 function isClean(path: string): boolean {
-	if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {
-		return false;
-	}
-	if (path === '.') {
-		return true;
-	}
-	if (path.startsWith('./') || path.includes('/./') || path.endsWith('/.')) {
-		return false;
-	}
-	if (path.startsWith('/')) {
-		return !path.includes('/../') && !path.endsWith('/..');
-	}
-	// A relative path keeps its leading `..` elements; past them, none may follow.
-	let rest = path;
-	while (rest.startsWith('../')) {
-		rest = rest.slice(3);
-	}
-	if (rest === '..') {
-		return true;
-	}
-	return rest !== '.' && !rest.startsWith('./') && !rest.includes('/../') && !rest.endsWith('/..') && !rest.startsWith('../');
+    if(path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {
+        return false;
+    }
+    if(path === '.') {
+        return true;
+    }
+    if(path.startsWith('./') || path.includes('/./') || path.endsWith('/.')) {
+        return false;
+    }
+    if(path.startsWith('/')) {
+        return !path.includes('/../') && !path.endsWith('/..');
+    }
+    // A relative path keeps its leading `..` elements; past them, none may follow.
+    let rest = path;
+    while(rest.startsWith('../')) {
+        rest = rest.slice(3);
+    }
+    if(rest === '..') {
+        return true;
+    }
+    return (
+        rest !== '.' &&
+        !rest.startsWith('./') &&
+        !rest.includes('/../') &&
+        !rest.endsWith('/..') &&
+        !rest.startsWith('../')
+    );
 }
 
 // clean is path.Clean: the shortest path naming the same file, by purely lexical processing. Runs of
@@ -42,64 +48,64 @@ function isClean(path: string): boolean {
 // walks its UTF-8 from the start, and the format walk took 4.7 s where this takes 2.7 s or less (GAPS.md,
 // "Path cleaning").
 export function clean(path: string): string {
-	if (isClean(path)) {
-		return path;
-	}
-	if (path === '') {
-		return '.';
-	}
-	const rooted = path.startsWith('/');
-	const kept: string[] = [];
-	for (const element of path.split('/')) {
-		if (element === '' || element === '.') {
-			continue;
-		}
-		if (element === '..') {
-			const previous = kept.at(-1);
-			if (previous !== undefined && previous !== '..') {
-				kept.pop();
-				continue;
-			}
-			if (rooted) {
-				continue;
-			}
-		}
-		kept.push(element);
-	}
-	const joined = kept.join('/');
-	if (rooted) {
-		return '/' + joined;
-	}
-	return joined === '' ? '.' : joined;
+    if(isClean(path)) {
+        return path;
+    }
+    if(path === '') {
+        return '.';
+    }
+    const rooted = path.startsWith('/');
+    const kept: string[] = [];
+    for(const element of path.split('/')) {
+        if(element === '' || element === '.') {
+            continue;
+        }
+        if(element === '..') {
+            const previous = kept.at(-1);
+            if(previous !== undefined && previous !== '..') {
+                kept.pop();
+                continue;
+            }
+            if(rooted) {
+                continue;
+            }
+        }
+        kept.push(element);
+    }
+    const joined = kept.join('/');
+    if(rooted) {
+        return '/' + joined;
+    }
+    return joined === '' ? '.' : joined;
 }
 
 // base is path.Base: the last element, trailing slashes dropped first. It is "." for the empty path and
 // "/" for a path of slashes.
 export function base(path: string): string {
-	if (path === '') {
-		return '.';
-	}
-	let end = path.length;
-	while (end > 0 && path[end - 1] === '/') {
-		end--;
-	}
-	if (end === 0) {
-		return '/';
-	}
-	const trimmed = path.slice(0, end);
-	return trimmed.slice(trimmed.lastIndexOf('/') + 1);
+    if(path === '') {
+        return '.';
+    }
+    let end = path.length;
+    while(end > 0 && path[end - 1] === '/') {
+        end--;
+    }
+    if(end === 0) {
+        return '/';
+    }
+    const trimmed = path.slice(0, end);
+    return trimmed.slice(trimmed.lastIndexOf('/') + 1);
 }
 
 // dir is path.Dir: everything before the last element, cleaned. It is "." when there is no slash. Go
 // cleans the part up to and with the last slash; cleaning it without that slash gives the same for
 // anything but the root's slash alone, and an already-clean directory then comes back uncopied.
 export function dir(path: string): string {
-	const lastSlash = path.lastIndexOf('/');
-	if (lastSlash < 0) {
-		return '.';
-	}
-	if (lastSlash === 0) {
-		return '/';
-	}
-	return clean(path.slice(0, lastSlash));
+    const lastSlash = path.lastIndexOf('/');
+    if(lastSlash < 0) {
+        return '.';
+    }
+    if(lastSlash === 0) {
+        return '/';
+    }
+    return clean(path.slice(0, lastSlash));
 }
