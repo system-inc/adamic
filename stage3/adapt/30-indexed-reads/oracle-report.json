@@ -1,0 +1,49 @@
+{
+  "tree": "/tmp/stage3-indexed-10-tree",
+  "nproc": 5,
+  "workers": 4,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.273
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 23.068
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=4",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 0,
+      "seconds": 331.654
+    }
+  },
+  "status": "pass",
+  "counts": {
+    "passing": 106367,
+    "failing": 0,
+    "pending": 0
+  },
+  "baseline_diffs": [],
+  "wall_seconds": 357.034
+}
