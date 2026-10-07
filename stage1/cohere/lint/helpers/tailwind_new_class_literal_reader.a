@@ -1,0 +1,24 @@
+import type { ClassLiteralSettings } from './tailwind_default_class_literal_settings.a';
+
+export interface UnboundClassLiteralReader<Pattern> {
+    readonly attributeNames: ReadonlyMap<string, boolean>;
+    readonly calleeNames: ReadonlyMap<string, boolean>;
+    readonly variablePatterns: readonly Pattern[];
+    readonly valuesBound: boolean;
+}
+
+// regexp.Compile belongs to the regex provider: valid=false means invalid syntax,
+// while an unsupported provider feature must be refused by that provider.
+// Invalid patterns are skipped individually, without dropping the reader.
+export function tailwindNewClassLiteralReader<Pattern>(settings: ClassLiteralSettings, compile: (source: string) => { readonly valid: boolean; readonly pattern: Pattern }): UnboundClassLiteralReader<Pattern> {
+    const attributeNames = new Map<string, boolean>();
+    const calleeNames = new Map<string, boolean>();
+    const variablePatterns: Pattern[] = [];
+    for (const name of settings.attributeNames) { attributeNames.set(name, true); }
+    for (const name of settings.calleeNames) { calleeNames.set(name, true); }
+    for (const source of settings.variablePatterns) {
+        const result = compile(source);
+        if (result.valid) { variablePatterns.push(result.pattern); }
+    }
+    return { attributeNames, calleeNames, variablePatterns, valuesBound: false };
+}

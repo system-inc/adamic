@@ -73,8 +73,9 @@ func slot01Fixture(t *testing.T, dependency string, consumers int, mode string) 
 	}
 	source, _ := filepath.Abs("testdata/slot01_oracle.go")
 	bridge, _ := filepath.Abs("testdata/slot01_react.go")
+	tailwindBridge, _ := filepath.Abs("testdata/slot01_tailwind.go")
 	virtual := filepath.Join(root, "adamic_slot01_oracle.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/ecmascript/react/adamic_slot01.go"): bridge}})
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "internal/lint/rules/tailwind/adamic_slot01.go"): tailwindBridge, virtual: source, filepath.Join(root, "internal/lint/ecmascript/react/adamic_slot01.go"): bridge}})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)

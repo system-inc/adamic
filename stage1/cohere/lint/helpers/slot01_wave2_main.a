@@ -1,0 +1,71 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { tailwindClassLiteralFrom } from './tailwind_class_literal_from.a';
+import { tailwindClassValuesIn } from './tailwind_class_values_in.a';
+import type { TailwindClassValues } from './tailwind_class_values_in.a';
+import { tailwindNewClassLiteralReader } from './tailwind_new_class_literal_reader.a';
+interface PatternFixture { readonly source: string; readonly valid: boolean; readonly matches: readonly boolean[]; }
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('fixture path'));
+if (file.kind === 'Error') { panic(file.message); }
+for (const line of file.text.split('\n')) {
+    if (line === '') { continue; }
+    const reader = new OptionsJson(line);
+    const root = reader.parse();
+    if (root < 0) { panic(reader.error); }
+    if (args[1] === 'memo') {
+        const source = reader.node(root).text;
+        for (const bound of [false, true]) {
+            const cache = new Map<number, TailwindClassValues<string, number>>();
+            const sequence = [0, 0, 1, 0, -1, -1];
+            for (let index = 0; index < sequence.length; index++) {
+                const node = sequence[index] ?? panic('node');
+                const values = tailwindClassValuesIn(node, bound, cache, id => ({ literals: id < 0 ? [] : [source], templates: [] as number[] }));
+                console.log(`${values.literals.length} ${values.templates.length} ${cache.size}`);
+                for (const text of values.literals) { console.log(text); }
+                if (index === 0 && values.literals.length > 0) { values.literals[0] = (values.literals[0] ?? panic('literal')) + '!'; }
+            }
+        }
+        continue;
+    }
+    const fields = reader.node(root).children;
+    if (args[1] === 'literal') {
+        const node = Number(reader.node(fields[0] ?? panic('id')).text);
+        const text = reader.node(fields[1] ?? panic('text')).text;
+        const origin = reader.node(fields[2] ?? panic('origin')).text;
+        const pos = Number(reader.node(fields[3] ?? panic('pos')).text);
+        const end = Number(reader.node(fields[4] ?? panic('end')).text);
+        const value = tailwindClassLiteralFrom(node, text, origin, { pos, end });
+        console.log(`${value.node}`);
+        console.log(`${value.range.pos} ${value.range.end} ${value.edges.leading} ${value.edges.trailing}`);
+        console.log(value.text);
+        console.log(value.origin);
+        continue;
+    }
+    const attributeNames = reader.node(fields[0] ?? panic('attributes')).children.map(index => reader.node(index).text);
+    const calleeNames = reader.node(fields[1] ?? panic('callees')).children.map(index => reader.node(index).text);
+    const variablePatterns = reader.node(fields[2] ?? panic('patterns')).children.map(index => reader.node(index).text);
+    const patterns: PatternFixture[] = [];
+    for (const row of reader.node(fields[3] ?? panic('compiled patterns')).children) {
+        const parts = reader.node(row).children;
+        const source = reader.node(parts[0] ?? panic('source')).text;
+        const valid = reader.node(parts[1] ?? panic('valid')).text === 'true';
+        const matches = reader.node(parts[2] ?? panic('matches')).children.map(index => reader.node(index).text === 'true');
+        patterns.push({ source, valid, matches });
+    }
+    const names = reader.node(fields[4] ?? panic('names')).children.map(index => reader.node(index).text);
+    let calls = 0;
+    const compiled = tailwindNewClassLiteralReader({ attributeNames, calleeNames, variablePatterns }, source => {
+        const pattern = patterns[calls] ?? panic('compile called too often');
+        calls++;
+        if (pattern.source !== source) { panic('compile order differs from Go'); }
+        return { valid: pattern.valid, pattern };
+    });
+    if (calls !== variablePatterns.length) { panic('compile calls were omitted'); }
+    console.log(`${compiled.attributeNames.size} ${compiled.calleeNames.size} ${compiled.variablePatterns.length} ${!compiled.valuesBound}`);
+    for (const name of names) { console.log(`${compiled.attributeNames.get(name) ?? false} ${compiled.calleeNames.get(name) ?? false}`); }
+    for (const pattern of compiled.variablePatterns) {
+        console.log(pattern.source);
+        for (const match of pattern.matches) { console.log(`${match}`); }
+    }
+}

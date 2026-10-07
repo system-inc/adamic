@@ -8,6 +8,7 @@ import (
 	goparser "go/parser"
 	"go/token"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -111,7 +112,25 @@ func main() {
 		fmt.Fprintf(os.Stderr, "%s: %d string inputs\n", path, found)
 		fixtureCount += found
 	}
+	if os.Args[4] == "literal" {
+		sources = append(sources, "'", "\"", "`", "  '", "  `", "''", "  /* trivia */ 'flex'", "const x = 'é𐐀';", "const x = '\\n';", "const x = `flex`;", "const x = `unterminated", "const x = '\\x41';")
+	}
 	for _, path := range sources {
+		if os.Args[4] == "literal" {
+			writeLiteral(path, encode, expected)
+			continue
+		}
+		if os.Args[4] == "memo" {
+			must(encode.Encode(path))
+			for _, verdict := range tailwind.AdamicMemoVerdicts(path) {
+				fmt.Fprintln(expected, verdict)
+			}
+			continue
+		}
+		if os.Args[4] == "factory" {
+			writeFactory(path, encode, expected)
+			continue
+		}
 		if os.Args[4] == "class" {
 			writeClass(path, encode, expected)
 			continue
@@ -209,4 +228,45 @@ func writeClass(source string, encode *json.Encoder, expected *os.File) {
 
 func printSettings(output *os.File, settings tailwind.ClassLiteralSettings) {
 	fmt.Fprintf(output, "%s;%s;%s\n", strings.Join(settings.AttributeNames, "|"), strings.Join(settings.CalleeNames, "|"), strings.Join(settings.VariablePatterns, "|"))
+}
+
+func writeFactory(source string, encode *json.Encoder, expected *os.File) {
+	settings := tailwind.ClassLiteralSettings{AttributeNames: []string{"class", "className", source, source, ""}, CalleeNames: []string{"mergeClassNames", "createVariantClassNames", source, source, ""}, VariablePatterns: []string{`.*[Cc]lassName$`, `.*[Cc]lassNames$`, source, "[", `^custom$`, `^custom$`}}
+	names := []string{"", source, "class", "className", "buttonClassName", "buttonClassNames", "mergeClassNames", "custom", "Custom", "prefixcustomsuffix", "notClasses", "éClassName"}
+	compiled := [][]any{}
+	for _, source := range settings.VariablePatterns {
+		pattern, err := regexp.Compile(source)
+		matches := []bool{}
+		if err == nil {
+			for _, name := range names {
+				matches = append(matches, pattern.MatchString(name))
+			}
+		}
+		compiled = append(compiled, []any{source, err == nil, matches})
+	}
+	must(encode.Encode([]any{settings.AttributeNames, settings.CalleeNames, settings.VariablePatterns, compiled, names}))
+	for _, answer := range tailwind.AdamicFactoryVerdicts(settings, names) {
+		fmt.Fprintln(expected, answer)
+	}
+}
+
+func writeLiteral(source string, encode *json.Encoder, expected *os.File) {
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/fixture.tsx", Path: tspath.Path("/fixture.tsx")}, source, core.ScriptKindTSX)
+	id := 0
+	var visit func(*ast.Node) bool
+	visit = func(node *ast.Node) bool {
+		current := id
+		id++
+		if node.Kind == ast.KindStringLiteral || node.Kind == ast.KindNoSubstitutionTemplateLiteral {
+			for _, origin := range []string{"Attribute", "Callee", "Variable", "", "custom"} {
+				pos, end, verdict := tailwind.AdamicLiteralVerdicts(node, origin)
+				must(encode.Encode([]any{current, node.Text(), origin, pos, end}))
+				fmt.Fprintln(expected, current)
+				fmt.Fprintln(expected, verdict)
+			}
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	visit(file.AsNode())
 }

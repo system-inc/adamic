@@ -1,0 +1,15 @@
+import { panic } from 'adamic';
+
+// Node indices identify nodes in one file's arena; -1 identifies Go's nil node.
+// One bound cache belongs to one file and reader settings, never another file.
+export interface TailwindClassValues<Literal, Template> {
+    readonly literals: Literal[];
+    readonly templates: Template[];
+}
+export function tailwindClassValuesIn<Literal, Template>(node: number, bound: boolean, cache: Map<number, TailwindClassValues<Literal, Template>>, readClassValues: (node: number) => TailwindClassValues<Literal, Template>): TailwindClassValues<Literal, Template> {
+    if (!bound) { return readClassValues(node); }
+    if (cache.has(node)) { return cache.get(node) ?? panic('present class-values entry missing'); }
+    const values = readClassValues(node);
+    cache.set(node, values);
+    return values;
+}

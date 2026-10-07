@@ -1,0 +1,16 @@
+export interface TailwindLiteralRange { readonly pos: number; readonly end: number; }
+export interface TailwindClassLiteral {
+    readonly node: number;
+    readonly text: string;
+    readonly range: TailwindLiteralRange;
+    readonly origin: string;
+    readonly edges: { readonly leading: boolean; readonly trailing: boolean };
+}
+// The parser adapter supplies rule.TokenRange, in its native offset units.
+// A node's Loc starts before trivia and is not a valid substitute for TokenRange.
+export function tailwindClassLiteralFrom(node: number, text: string, origin: string, tokenRange: TailwindLiteralRange): TailwindClassLiteral {
+    const range = tokenRange.end - tokenRange.pos >= 2
+        ? { pos: tokenRange.pos + 1, end: tokenRange.end - 1 }
+        : tokenRange;
+    return { node, text, range, origin, edges: { leading: false, trailing: false } };
+}
