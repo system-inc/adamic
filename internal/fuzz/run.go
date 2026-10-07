@@ -105,7 +105,11 @@ func (c *Checkout) Try(source string, directory string) Outcome {
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
+	return c.TryFile(path, directory)
+}
 
+// TryFile runs a program file three ways, building in directory.
+func (c *Checkout) TryFile(path string, directory string) Outcome {
 	// The C first: the checker's and stage 0's refusals come from here.
 	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
 	if lowered.ExitCode != 0 || lowered.TimedOut {
