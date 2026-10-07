@@ -1,0 +1,2 @@
+export const ids: readonly string[] = ["unusedFallthroughComment", "case", "default"];
+export const messages: readonly string[] = ["This comment says the case falls through, but the case cannot fall through. Remove the comment, or remove whatever leaves the case.", "Control runs from the previous case into this one, which is almost always a missing break. Add a break, or say the fallthrough is deliberate with a `falls through` comment."];

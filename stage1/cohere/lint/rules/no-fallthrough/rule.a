@@ -1,0 +1,91 @@
+import type { RuleContext } from '../../context.ts';
+import type { Comment } from '../../helpers/comments/comment.ts';
+import { all } from '../../helpers/comments/all.ts';
+import { utf8Length } from 'adamic';
+import { Finding } from '../../finding.ts';
+import { unit, goTrim } from '../typescript-ban-tslint-comment/rule.a';
+import { Pattern } from '../default-case/pattern.a';
+import { messages } from './messages.a';
+export class Rule {
+    readonly context: RuleContext; readonly pattern: Pattern;
+    private ready = false; private comments: Comment[] = [];
+    constructor(context: RuleContext) { this.context = context; this.pattern = new Pattern(context.settings.read('commentpattern', ''), true); }
+    kind(index: number): string { return index < 0 ? '' : this.context.node(index).kind; }
+    child(index: number, at: number): number { return index < 0 ? -1 : this.context.node(index).children[at] ?? -1; }
+    last(index: number): number { const children = this.context.node(index).children; return children[children.length - 1] ?? -1; }
+    statements(index: number): number[] { return this.context.node(index).children.slice(this.kind(index) === 'CaseClause' ? 1 : 0); }
+    leaves(index: number, narrow: boolean): boolean {
+        if(index < 0) { return false; }
+        const kind = this.kind(index);
+        if(['ReturnStatement', 'ThrowStatement'].includes(kind)) { return true; }
+        if(!narrow && ['BreakStatement', 'ContinueStatement'].includes(kind)) { return true; }
+        if(kind === 'Block') { for(const child of this.context.node(index).children) { if(this.leaves(child, narrow)) { return true; } } return false; }
+        if(kind === 'IfStatement') { return this.leaves(this.child(index, 1), narrow) && this.leaves(this.child(index, 2), narrow); }
+        if(kind === 'LabeledStatement' || (!narrow && kind === 'WithStatement')) { return this.leaves(this.child(index, 1), narrow); }
+        if(narrow) { return false; }
+        if(kind === 'DoStatement') { return this.leaves(this.child(index, 0), true); }
+        if(kind === 'TryStatement') {
+            const children = this.context.node(index).children; const attempt = children[0] ?? -1;
+            let catcher = -1; let final = -1;
+            for(const child of children.slice(1)) {
+                if(this.kind(child) === 'CatchClause') { catcher = this.last(child); } else { final = child; }
+            }
+            if(this.leaves(final, false)) { return true; }
+            return this.leaves(attempt, false) && (catcher < 0 || this.leaves(catcher, false));
+        }
+        return false;
+    }
+    fileComments(index: number): Comment[] {
+        if(!this.ready) {
+            let root = index; while((this.context.parents[root] ?? -1) >= 0) { root = this.context.parents[root] ?? -1; }
+            this.comments = all(this.context.parser, root); this.ready = true;
+        }
+        return this.comments;
+    }
+    matches(comment: Comment): boolean {
+        let content = comment.text.slice(2);
+        if(comment.isBlock && content.endsWith('*/')) { content = content.slice(0, content.length - 2); }
+        content = goTrim(content);
+        if(content.startsWith('oxlint-') || content.startsWith('eslint-')) { return false; }
+        if(this.pattern.valid && this.pattern.source !== '') { return this.pattern.match(content); }
+        return ['falls through', 'fall through', 'fallsthrough', 'fallthrough'].includes(goTrim(content).toLowerCase());
+    }
+    lastComment(index: number, start: number, end: number): Comment | undefined {
+        if(start < 0 || start >= end) { return undefined; }
+        const from = utf8Length(this.context.source.slice(0, start)); const to = utf8Length(this.context.source.slice(0, end));
+        let last: Comment | undefined;
+        for(const comment of this.fileComments(index)) { if(comment.start >= from && comment.end <= to) { last = comment; } }
+        return last !== undefined && this.matches(last) ? last : undefined;
+    }
+    between(index: number, clause: number, next: number): Comment | undefined {
+        const statements = this.statements(clause);
+        const first = statements[0] ?? -1;
+        if(statements.length === 1 && this.kind(first) === 'Block') {
+            const children = this.context.node(first).children; const last = children[children.length - 1] ?? -1;
+            const start = last < 0 ? this.context.node(first).pos : this.context.node(last).end;
+            const comment = this.lastComment(index, start, this.context.node(first).end);
+            if(comment !== undefined) { return comment; }
+        }
+        return this.lastComment(index, this.context.node(clause).end, next);
+    }
+    visit(index: number): void {
+        const context = this.context; const block = this.child(index, 1);
+        if(block < 0) { return; }
+        const clauses = context.node(block).children;
+        for(let at = 0; at + 1 < clauses.length; at++) {
+            const clause = clauses[at] ?? -1; const next = clauses[at + 1] ?? -1; const start = context.start(next);
+            const statements = this.statements(clause);
+            const comment = this.between(index, clause, start);
+            if(statements.some(statement => this.leaves(statement, false))) {
+                if(context.settings.read('reportunusedfallthroughcomment', 'false') === 'true' && comment !== undefined) {
+                    context.findings.push(new Finding('no-fallthrough', 'unusedFallthroughComment', messages[0] ?? '', unit(context.source, comment.start), unit(context.source, comment.end), '', '', ''));
+                }
+                continue;
+            }
+            if(statements.length === 0 && (context.settings.read('allowemptycase', 'false') === 'true' || context.source.slice(context.node(clause).end, start).split('\n').length < 3)) { continue; }
+            if(comment !== undefined) { continue; }
+            context.report(next, 'no-fallthrough', this.kind(next) === 'DefaultClause' ? 'default' : 'case', messages[1] ?? '', '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

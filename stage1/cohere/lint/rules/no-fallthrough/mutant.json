@@ -1,0 +1,6 @@
+{
+  "name": "fallthrough_findings_disabled",
+  "file": "rule.a",
+  "from": "if(comment !== undefined) { continue; }",
+  "to": "if(true) { continue; }"
+}
