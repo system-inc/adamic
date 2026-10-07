@@ -139,7 +139,8 @@ def main():
             continue
         name, sha, committed = line.split()
         short = name.removeprefix("origin/")
-        if short in ("HEAD", "origin"):
+        if short in ("HEAD", "origin") or short.startswith(("gate-logs/", "locks/")):
+            # Gate logs are evidence and locks are merges in progress, not work waiting to land.
             continue
         if short == "main" or short.startswith("area/"):
             upstreams.append(name)
