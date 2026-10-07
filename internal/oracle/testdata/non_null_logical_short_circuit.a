@@ -1,0 +1,8 @@
+let calls = 0;
+function right(): number { calls++; return 99; }
+let value = 1;
+value! ||= right();
+value! = 0;
+value! &&= right();
+value! ??= right();
+console.log(`${calls} ${value}`);

@@ -1,0 +1,8 @@
+const values = new Map<string, number>();
+function right(): number { console.log('right'); return 7; }
+function update(value: number | undefined): void {
+    console.log('before');
+    value! &&= right();
+    console.log(`${value}`);
+}
+update(values.get('missing'));

@@ -1,0 +1,14 @@
+let calls = 0;
+function right(): number { calls++; return 7; }
+let receivers = 0;
+let indices = 0;
+const values: number[] = [0];
+function receiver(): number[] { receivers++; return values; }
+function index(): number { indices++; return 0; }
+receiver()[index()]! ||= right();
+receiver()[index()]! ||= right();
+receiver()[index()]! &&= right();
+values[0] = 0;
+receiver()[index()]! &&= right();
+receiver()[index()]! ??= right();
+console.log(`${calls} ${values[0]!} ${receivers} ${indices}`);

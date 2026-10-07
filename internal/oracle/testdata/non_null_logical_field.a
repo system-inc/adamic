@@ -1,0 +1,12 @@
+let calls = 0;
+function right(): number { calls++; return 7; }
+let receivers = 0;
+const box: { value: number | undefined } = { value: 0 };
+function receiver(): { value: number | undefined } { receivers++; return box; }
+receiver().value! ||= right();
+receiver().value! ||= right();
+receiver().value! &&= right();
+box.value = 0;
+receiver().value! &&= right();
+receiver().value! ??= right();
+console.log(`${calls} ${box.value} ${receivers}`);
