@@ -1,40 +1,39 @@
 [
   {
     "file": "01_readFile_utf8.a",
-    "source": "adaptation 47",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
       },
       "javascript": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
       }
     },
     "adapted": {
       "native": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/01_readFile_utf8.a:44:20: stage 0 can't lower an array of never yet\n"
       },
       "javascript": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/01_readFile_utf8.a:43:20: stage 0 can't lower an array of never yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/01_readFile_utf8.a:44:20: stage 0 can't lower an array of never yet\n"
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "02_readFile_utf16le.a",
-    "source": "adaptation 47",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
       },
       "javascript": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
       }
     },
     "adapted": {
@@ -48,20 +47,19 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "03_readFile_utf16be.a",
-    "source": "adaptation 47",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
       },
       "javascript": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
       }
     },
     "adapted": {
@@ -75,20 +73,19 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "04_readFile_missing.a",
-    "source": "adaptation 47",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
       },
       "javascript": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n/tmp/fs-combined-pristine-host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
       }
     },
     "adapted": {
@@ -102,112 +99,117 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "05_writeFile.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
       },
       "javascript": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
       }
     },
     "adapted": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "06_fileExists.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:52:21: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:52:21: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:52:21: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:52:21: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "07_directoryExists.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:52:21: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:52:21: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:52:21: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:52:21: stage 0 can't lower a BinaryExpression with a string and a boolean yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "08_getDirectories.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
       },
       "javascript": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
       }
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:160:1: Adamic 0.1 refuses overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result\n"
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:160:1: Adamic 0.1 refuses overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result\n"
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "09_realpath.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -231,37 +233,39 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "10_getModifiedTime.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "11_setModifiedTime.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -285,12 +289,11 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "12_deleteFile.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -314,62 +317,61 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "13_createDirectory.a",
-    "source": "adaptation 47",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/13_createDirectory.a:54:17: error TS18046: 'e' is of type 'unknown'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/13_createDirectory.a:54:17: error TS18046: 'e' is of type 'unknown'.\n"
       },
       "javascript": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/13_createDirectory.a:54:17: error TS18046: 'e' is of type 'unknown'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/13_createDirectory.a:54:17: error TS18046: 'e' is of type 'unknown'.\n"
       }
     },
     "adapted": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/13_createDirectory.a:76:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-rest-47-final/fixtures/13_createDirectory.a:76:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "14_getCurrentDirectory.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
       },
       "javascript": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
       }
     },
     "adapted": {
       "native": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:12:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
       },
       "javascript": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:12:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "15_getExecutingFilePath.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -393,12 +395,11 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "16_getEnvironmentVariable.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -422,12 +423,11 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "17_write.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -451,12 +451,11 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "18_exit_0.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -480,12 +479,11 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "19_exit_1.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -509,12 +507,11 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "20_exit_2.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -538,12 +535,11 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "21_createHash.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -567,37 +563,39 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "22_createHash_fallback.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:20:1: stage 0 can't lower a function without a body yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:20:1: stage 0 can't lower a function without a body yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:20:1: stage 0 can't lower a function without a body yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:20:1: stage 0 can't lower a function without a body yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "23_newLine.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -621,57 +619,54 @@
         "diagnostic": "",
         "agrees": true
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:48:12: stage 0 can't lower regex replacement other than a string yet\n"
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/24_useCaseSensitiveFileNames.a:48:12: stage 0 can't lower regex replacement other than a string yet\n"
       },
       "javascript": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:48:12: stage 0 can't lower regex replacement other than a string yet\n"
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/24_useCaseSensitiveFileNames.a:48:12: stage 0 can't lower regex replacement other than a string yet\n"
       }
     },
     "adapted": {
       "native": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:48:12: stage 0 can't lower regex replacement other than a string yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:56:12: stage 0 can't lower regex replacement other than a string yet\n"
       },
       "javascript": {
         "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:48:12: stage 0 can't lower regex replacement other than a string yet\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:56:12: stage 0 can't lower regex replacement other than a string yet\n"
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   },
   {
     "file": "25_readDirectory.a",
-    "source": "unchanged control",
+    "source": "audited adapted fixtures 21ef072e",
     "original": {
       "native": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
       },
       "javascript": {
         "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+        "diagnostic": "/tmp/fs-combined-pristine-host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/fs-combined-pristine-host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
       }
     },
     "adapted": {
       "native": {
-        "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:530:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
       },
       "javascript": {
-        "stage": "Checker",
-        "diagnostic": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+        "stage": "Refused",
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:530:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
       }
-    },
-    "rerunAfterHostBlockers2606e8b4": true
+    }
   }
 ]
