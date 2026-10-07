@@ -209,3 +209,28 @@ and fresh/array_holes.go, with dedicated tests, claims, fixtures and evidence.
 No changes to internal/native/emit.go, internal/lower/lower.go,
 internal/native/native.go or internal/oracle/oracle_test.go; no one-line hooks
 were needed in those four files.
+
+## p2b merge and wasmtime milestone
+
+Merged origin/library/merge-p2b 047e857207bee9aa62dbd22204445a0ab59d4319
+with both parent histories retained in 14b3d1bc2e053387f3b694676e038c25ce34ef6f.
+Conflict resolution retained all ten Array allocation rows, took integration's
+unrelated host counts, and used integration's stage1 corpus/parser changes.
+This assumes integration's stage1 revisions supersede the older base copies.
+Host guards were imported without parallel edits. The merge imports an
+integration change to internal/native/native.go; this unit made no edits there.
+
+Added TestArrayHolesWasmtime in the existing unit test file
+internal/oracle/array_holes_test.go. It builds each real WASI command and compares
+stdout, stderr and exit code with independently executed Node source. It does
+not accept target refusals, traps or skipped builds as agreements.
+
+ADAMIC_ORACLE_WASI=1 ADAMIC_WASMTIME=/workspace/adamic-tools/wasmtime/wasmtime
+go test ./internal/oracle -run TestArrayHolesWasmtime -count=1 -v -timeout 10m
+passed all ten fixtures in 6.413s. Engine: wasmtime 49.0.2
+(3c8a3e79a, 2026-10-02). The guessed v38.0.0 URL returned 404; the GitHub latest
+release API identified v49.0.2, which was installed and pinned for this run.
+
+Toolchain refresh bash cloud/setup.sh --wasi-sdk passed in 31.027s;
+WASI SDK ready at 0.269s, Go build 30.806s, cache 30.990s, nproc 5.
+Go commands use GOPROXY=https://proxy.golang.org|direct. Node remains 24.19.0.
