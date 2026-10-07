@@ -1,0 +1,192 @@
+[
+  {
+    "file": "01_reference_spreads.a",
+    "tsc": [
+      "src/compiler/parser.ts:10633"
+    ],
+    "reason": "a spread after the first field"
+  },
+  {
+    "file": "02_polling_levels.a",
+    "tsc": [
+      "src/compiler/sys.ts:175"
+    ],
+    "reason": "a spread after the first field"
+  },
+  {
+    "file": "03_resolution_cache_spreads.a",
+    "tsc": [
+      "src/compiler/moduleNameResolver.ts:1300"
+    ],
+    "reason": "a spread after the first field"
+  },
+  {
+    "file": "04_trace_metadata.a",
+    "tsc": [
+      "src/compiler/tracing.ts:97"
+    ],
+    "reason": "a spread after the first field"
+  },
+  {
+    "file": "05_polling_array_metadata.a",
+    "tsc": [
+      "src/compiler/sys.ts:248",
+      "src/compiler/sys.ts:281"
+    ],
+    "reason": "post-creation properties"
+  },
+  {
+    "file": "06_watch_close.a",
+    "tsc": [
+      "src/compiler/sys.ts:261",
+      "src/compiler/sys.ts:466"
+    ],
+    "reason": "post-creation properties"
+  },
+  {
+    "file": "07_synthetic_reference.a",
+    "tsc": [
+      "src/compiler/transformers/declarations.ts:549"
+    ],
+    "reason": "post-creation properties"
+  },
+  {
+    "file": "08_loop_state.a",
+    "tsc": [
+      "src/compiler/transformers/es2015.ts:3577",
+      "src/compiler/program.ts:4041",
+      "src/compiler/program.ts:4068"
+    ],
+    "reason": "post-creation properties"
+  },
+  {
+    "file": "10_build_options.a",
+    "tsc": [
+      "src/compiler/tsbuildPublic.ts:331",
+      "src/compiler/commandLineParser.ts:2971"
+    ],
+    "reason": "post-creation properties"
+  },
+  {
+    "file": "12_decorator_descriptor.a",
+    "tsc": [
+      "src/compiler/transformers/esDecorators.ts:1267",
+      "src/compiler/transformers/esDecorators.ts:1352",
+      "src/compiler/transformers/esDecorators.ts:1372",
+      "src/compiler/utilities.ts:8641"
+    ],
+    "reason": "post-creation properties"
+  },
+  {
+    "file": "14_comment_pending.a",
+    "tsc": [
+      "src/compiler/scanner.ts:826"
+    ],
+    "reason": "a definite assignment assertion !"
+  },
+  {
+    "file": "15_accessor_absence.a",
+    "tsc": [
+      "src/compiler/utilities.ts:6832"
+    ],
+    "reason": "a definite assignment assertion !"
+  },
+  {
+    "file": "16_version_defaults.a",
+    "tsc": [
+      "src/compiler/semver.ts:122",
+      "src/compiler/semver.ts:133"
+    ],
+    "reason": "destructuring with a default"
+  },
+  {
+    "file": "17_container_rest.a",
+    "tsc": [
+      "src/compiler/checker.ts:5408"
+    ],
+    "reason": "destructuring with rest"
+  },
+  {
+    "file": "19_identifier_multimap.a",
+    "tsc": [
+      "src/compiler/transformers/utilities.ts:441",
+      "src/compiler/types.ts:4586",
+      "src/compiler/transformers/utilities.ts:392",
+      "src/compiler/checker.ts:54329"
+    ],
+    "reason": "class declaration or expression"
+  },
+  {
+    "file": "20_queue_optional_call.a",
+    "tsc": [
+      "src/compiler/core.ts:1569"
+    ],
+    "reason": "a call through ?. (an optional call)"
+  },
+  {
+    "file": "22_nested_optional_calls.a",
+    "tsc": [
+      "src/compiler/moduleNameResolver.ts:3051"
+    ],
+    "reason": "a call through ?. (an optional call)"
+  },
+  {
+    "file": "23_factory_getters.a",
+    "tsc": [
+      "src/compiler/factory/nodeFactory.ts:1022",
+      "src/compiler/factory/nodeFactory.ts:1028"
+    ],
+    "reason": "a getter"
+  },
+  {
+    "file": "24_transformation_accessors.a",
+    "tsc": [
+      "src/compiler/transformer.ts:295"
+    ],
+    "reason": "a setter"
+  },
+  {
+    "file": "25_map_generator.a",
+    "tsc": [
+      "src/compiler/core.ts:332"
+    ],
+    "reason": "yield (generators)"
+  },
+  {
+    "file": "26_diagnostic_in.a",
+    "tsc": [
+      "src/compiler/checker.ts:2567"
+    ],
+    "reason": "in"
+  },
+  {
+    "file": "27_delete_substitution.a",
+    "tsc": [
+      "src/compiler/transformers/module/system.ts:1769"
+    ],
+    "reason": "delete"
+  },
+  {
+    "file": "28_debugger.a",
+    "tsc": [
+      "src/compiler/debug.ts:196",
+      "src/compiler/debug.ts:203"
+    ],
+    "reason": "debugger"
+  },
+  {
+    "file": "29_parameter_default.a",
+    "tsc": [
+      "src/compiler/utilities.ts:10053"
+    ],
+    "reason": "a destructured parameter beside a parameter with a default"
+  },
+  {
+    "file": "30_host_optional_method.a",
+    "tsc": [
+      "src/compiler/resolutionCache.ts:505",
+      "src/compiler/utilities.ts:6609"
+    ],
+    "reason": "a call through ?. (an optional call)"
+  }
+]
