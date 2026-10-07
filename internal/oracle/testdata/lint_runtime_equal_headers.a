@@ -1,0 +1,28 @@
+// Compare through parameters so both operands reach the runtime.
+function equal(left: string | undefined, right: string | undefined): void {
+    console.log(`${left === right} ${left !== right} ${Object.is(left, right)}`);
+}
+function made(piece: string): string {
+    return piece.repeat(40);
+}
+for (const piece of ['abc', 'éβ', '😀x', '\ud800x\udc00', '']) {
+    const text = made(piece);
+    const copy = made(piece);
+    const padded = `${'p'.repeat(80)}${text}${'q'.repeat(80)}`;
+    const slice = padded.slice(80, 80 + text.length);
+    equal(text, text);
+    equal(text, copy);
+    equal(text, slice);
+    equal(slice, slice);
+    equal(slice, copy.slice(0));
+    equal(text, `${text}!`);
+    equal(`${text}a`, `${text}b`);
+    equal(text, undefined);
+    equal(undefined, text);
+}
+equal(undefined, undefined);
+equal('\ud83d' + '\ude00', '😀');
+equal('😀'.slice(0, 1), '\ud83d');
+equal('😀'.slice(1), '\ude00');
+equal(''.concat(''), ''.concat(''));
+equal('', ''.concat(''));

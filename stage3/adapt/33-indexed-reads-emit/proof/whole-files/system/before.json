@@ -1,0 +1,36 @@
+{
+  "roots": 78,
+  "file": "transformers/module/system.ts",
+  "code_filter": null,
+  "counts": {
+    "TS2322": 3,
+    "TS2532": 1
+  },
+  "total": 4,
+  "diagnostics": [
+    {
+      "code": "TS2322",
+      "line": 1773,
+      "column": 13,
+      "diagnostic": "src/compiler/transformers/module/system.ts:1773:13: error TS2322: Type 'ExternalModuleInfo | undefined' is not assignable to type 'ExternalModuleInfo'.\n  Type 'undefined' is not assignable to type 'ExternalModuleInfo'."
+    },
+    {
+      "code": "TS2322",
+      "line": 1774,
+      "column": 13,
+      "diagnostic": "src/compiler/transformers/module/system.ts:1774:13: error TS2322: Type 'Identifier | undefined' is not assignable to type 'Identifier'.\n  Type 'undefined' is not assignable to type 'Identifier'."
+    },
+    {
+      "code": "TS2322",
+      "line": 1776,
+      "column": 13,
+      "diagnostic": "src/compiler/transformers/module/system.ts:1776:13: error TS2322: Type 'Identifier | undefined' is not assignable to type 'Identifier'.\n  Type 'undefined' is not assignable to type 'Identifier'."
+    },
+    {
+      "code": "TS2532",
+      "line": 289,
+      "column": 21,
+      "diagnostic": "src/compiler/transformers/module/system.ts:289:21: error TS2532: Object is possibly 'undefined'."
+    }
+  ]
+}
