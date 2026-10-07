@@ -1,0 +1,16 @@
+{
+  "name": "react/jsx-fragments",
+  "kinds": [
+    "JsxFragment",
+    "JsxElement",
+    "JsxSelfClosingElement"
+  ],
+  "numericKinds": [
+    289,
+    285,
+    286
+  ],
+  "status": "partial components only",
+  "blocker": "Shared native JSX AST and handed-node driver are not integrated on main.",
+  "component": "components.a"
+}

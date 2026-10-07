@@ -1,0 +1,13 @@
+// Qualified-name component only. JSX extraction and bare-name binding remain prerequisites.
+export class FragmentNameNode {
+    readonly objectKind: number; readonly objectName: string;
+    readonly propertyKind: number; readonly propertyName: string;
+    constructor(objectKind: number, objectName: string, propertyKind: number, propertyName: string) {
+        this.objectKind = objectKind; this.objectName = objectName;
+        this.propertyKind = propertyKind; this.propertyName = propertyName;
+    }
+}
+export function qualifiedFragment(node: FragmentNameNode): boolean {
+    return node.objectKind === 79 && node.objectName === 'React' &&
+        node.propertyKind === 79 && node.propertyName === 'Fragment';
+}

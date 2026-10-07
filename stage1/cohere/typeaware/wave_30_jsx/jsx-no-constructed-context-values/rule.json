@@ -1,0 +1,14 @@
+{
+  "name": "react/jsx-no-constructed-context-values",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "numericKinds": [
+    287,
+    286
+  ],
+  "status": "partial components only",
+  "blocker": "Shared native JSX AST and handed-node driver are not integrated on main.",
+  "component": "components.a"
+}

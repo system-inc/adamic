@@ -1,0 +1,38 @@
+import { panic, programArguments } from 'adamic';
+import { written } from '../../../typescript/parser/nodes.ts';
+import { FragmentNameNode, qualifiedFragment } from './jsx-fragments/components.a';
+import { ComponentNameNode, componentName } from './jsx-no-undef/components.a';
+import { ConstructionNode, constructionMessage } from './jsx-no-constructed-context-values/components.a';
+const mode = programArguments()[0] ?? panic('missing component mode');
+if(mode === 'fragments') {
+    for(const objectKind of [79, 10]) {
+        for(const propertyKind of [79, 10]) {
+            for(const objectName of ['', 'React', 'react', 'React.Fragment']) {
+                for(const propertyName of ['', 'Fragment', 'fragment']) {
+                    console.log(`${objectKind},${propertyKind},${objectName},${propertyName}\t${qualifiedFragment(new FragmentNameNode(objectKind, objectName, propertyKind, propertyName))}`);
+                }
+            }
+        }
+    }
+} else if(mode === 'undef') {
+    for(let code = 0; code < 256; code++) {
+        for(const suffix of ['', 'x', '-x', 'x-y']) {
+            const name = String.fromCharCode(code) + suffix;
+            console.log(`${code},${suffix}\t${componentName(new ComponentNameNode(name))}`);
+        }
+    }
+    for(const name of ['', '테스트', '😀', 'Foo-bar', '$foo', '_foo', 'Élément', 'div', 'A', 'x-gif']) {
+        console.log(`${written(name)}\t${componentName(new ComponentNameNode(name))}`);
+    }
+} else if(mode === 'context') {
+    for(let construction = 0; construction < 10; construction++) {
+        for(const named of [false, true]) {
+            for(const name of ['', 'theme', 'a"b', 'line\nbreak', '\\', String.fromCharCode(7), String.fromCharCode(127)]) {
+                const message = constructionMessage(new ConstructionNode(construction, named, 3, 9, name));
+                console.log(`${construction},${named},${written(name)}\t${message.id}\t${written(message.text)}`);
+            }
+        }
+    }
+} else if(mode === 'unsupported') {
+    console.log(constructionMessage(new ConstructionNode(0, true, 1, 1, '테마')).text);
+} else { panic('unknown component mode'); }

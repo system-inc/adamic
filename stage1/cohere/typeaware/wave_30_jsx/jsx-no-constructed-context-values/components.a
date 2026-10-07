@@ -1,0 +1,43 @@
+import { panic } from 'adamic';
+// Message component only. Construction detection and memo-input stability are not supplied here.
+const constructions = ['object', 'array', 'function expression', 'function declaration', 'class expression', 'new expression', 'regular expression', 'JSX element', 'JSX fragment', 'assignment expression'];
+export class ConstructionNode {
+    readonly construction: number; readonly named: boolean;
+    readonly nodeLine: number; readonly usageLine: number; readonly name: string;
+    constructor(construction: number, named: boolean, nodeLine: number, usageLine: number, name: string) {
+        this.construction = construction; this.named = named; this.nodeLine = nodeLine; this.usageLine = usageLine; this.name = name;
+    }
+}
+export class ConstructionMessage {
+    readonly id: string; readonly text: string;
+    constructor(id: string, text: string) { this.id = id; this.text = text; }
+}
+function quote(name: string): string {
+    let result = '"';
+    for(let at = 0; at < name.length; at++) {
+        const code = name.charCodeAt(at);
+        if(code === 34) { result += '\\"'; }
+        else if(code === 92) { result += '\\\\'; }
+        else if(code === 7) { result += '\\a'; }
+        else if(code === 8) { result += '\\b'; }
+        else if(code === 9) { result += '\\t'; }
+        else if(code === 10) { result += '\\n'; }
+        else if(code === 11) { result += '\\v'; }
+        else if(code === 12) { result += '\\f'; }
+        else if(code === 13) { result += '\\r'; }
+        else if(code < 32 || code === 127) { result += `\\x${code.toString(16).padStart(2, '0')}`; }
+        else if(code > 127) { panic('NotYet: non-ASCII named construction message'); }
+        else { result += name.slice(at, at + 1); }
+    }
+    return `${result}"`;
+}
+export function constructionMessage(node: ConstructionNode): ConstructionMessage {
+    const kind = constructions[node.construction] ?? panic('invalid construction component');
+    const functionKind = node.construction === 2 || node.construction === 3;
+    const remedy = functionKind ? 'useCallback' : 'useMemo';
+    const suffix = functionKind ? 'Func' : '';
+    if(!node.named) {
+        return new ConstructionMessage(`defaultMsg${suffix}`, `The ${kind} passed as the value prop to the Context provider (at line ${node.nodeLine}) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`);
+    }
+    return new ConstructionMessage(`withIdentifierMsg${suffix}`, `The ${quote(node.name)} ${kind} (at line ${node.nodeLine}) passed as the value prop to the Context provider (at line ${node.usageLine}) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`);
+}
