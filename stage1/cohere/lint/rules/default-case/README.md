@@ -6,7 +6,7 @@ Go cohere 715ba94f3608a6500086b1076ce5cb7e51b836db is the independent reference.
 
 The listener uses the existing parser-anchored all helper once per file with switches. It compares UTF-8 comment ranges to byte-converted clause and case-block boundaries, then reports through the existing UTF-16 context. The Go file-cache sharing optimization across rules is not exposed by this RuleContext; this listener does not edit that shared API. There are no fixes or suggestions, matching Go.
 
-The semantic mutant default-comment-anchors-removed changes equality to substring matching. It compiles and exits successfully on source Node, emitted JavaScript and sanitized native, then only the Go byte comparison rejects it. It silently excuses near-miss comments that Go reports. No compiler error or sanitizer failure kills this mutant.
+The semantic mutant default-comment-anchors-removed removes the translated literal's start and absolute-end anchors. It compiles and exits successfully on source Node, emitted JavaScript and sanitized native, then only the Go byte comparison rejects it. It silently excuses near-miss comments that Go reports. No compiler error or sanitizer failure kills this mutant.
 
 Measured findings/s, best of five process launches over 1,000 reported switches, includes startup and uses release native: native 76,358.33; Node 7,708.34; Go 229,411.47. These are default-configuration measurements, not general regex-option throughput. Setup PASS: Go/clang/Node/submodules 0s each, build cache warm 27s, total 27s, nproc 5.
 
@@ -29,3 +29,5 @@ A custom-pattern control makes Go return clean with exit 0; all three Adamic run
 The shared TestOwnedWitnesses run fails before reaching this rule's witness, in the existing next-google-font-display witness: the .ts copy of JSX is rejected by Go with '>' expected and exit 2. Its log is retained. No shared harness, compiler, parser or other rule file is edited to bypass it. The full gate and shared all-options/all-rules certification are not claimed.
 
 The reserved consistent-return still lacks compatible Judge / EndReachable integration; constructor-super remains reserved and unstarted. This partial default-case implementation does not meet the user's all-claimed-rules completion prerequisite, so no helper branch or further claim is taken. Unclaimed helpers still exist; no exhaustion claim is made.
+
+The default exemption now uses the shared codex/lint-regex translation at core/default_case.go:29: /^no default(?![\s\S])/iu. The table uses g for whole-match enumeration; this rule tests a boolean and omits g to keep repeated tests independent. Runtime option patterns remain explicitly refused, as also documented in the shared regex gap report. No hand-written default-pattern matcher remains.

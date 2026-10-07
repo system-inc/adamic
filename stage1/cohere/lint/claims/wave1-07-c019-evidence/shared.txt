@@ -1,0 +1,15 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:37: /tmp/adamic-gate/TestOwnedWitnesses2790026570/001/oracle [--manifest /tmp/adamic-gate/TestOwnedWitnesses2790026570/022/manifest.txt --count]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestOwnedWitnesses2790026570/021/next-google-font-display-0.ts: ['>' expected. ',' expected. Variable declaration expected. Expression expected. Expression expected.]; source="export const Test = () => <link href=\"https://fonts.googleapis.com/css2?display=block\" />;\n"
+        
+        goroutine 1 [running]:
+        main.collect({0x1753d5db81c0, 0x4f}, {0x1753d5db0780, 0x5b}, {0x1753d5d96b80, 0x7, 0x8})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:143 +0x1f0a
+        main.run({0x1753d5db81c0?, 0x6f?}, 0x1, 0x1753d5dd2140)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:303 +0x2f7
+--- FAIL: TestOwnedWitnesses (2.94s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	2.959s
+FAIL

@@ -1,0 +1,98 @@
+=== RUN   TestWave07Supported
+    lint_test.go:345: cohere cases: 1870 unique source/rule/options combinations
+    wave07_overlay_test.go:44: JSX case retained as uncovered: /tmp/adamic-gate/TestWave07Supported1580939679/003/case-103.tsx	@eslint-community/eslint-comments/require-description			false	{"ignore":null,"additionalDirectives":null}	
+    wave07_overlay_test.go:44: JSX case retained as uncovered: /tmp/adamic-gate/TestWave07Supported1580939679/003/case-1771.tsx	structure/tailwind-no-physical-direction			false		
+    wave07_overlay_test.go:51: structure/tailwind-no-physical-direction: 52 supported captured cases
+    wave07_overlay_test.go:51: @eslint-community/eslint-comments/require-description: 108 supported captured cases
+    wave07_overlay_test.go:56: supported 160 of 1870 captured cases; 2 JSX cases excluded explicitly
+    wave07_overlay_test.go:57: Go, Node, emitted JavaScript, native identical: 48906 bytes
+--- PASS: TestWave07Supported (42.05s)
+=== RUN   TestWave07Corpus
+    wave07_overlay_test.go:88: compiler and stage1: 708 file/rule rows
+    wave07_overlay_test.go:90: Go, Node, emitted JavaScript, native identical: 26637000 bytes
+--- PASS: TestWave07Corpus (100.26s)
+=== RUN   TestWave07Throughput
+    wave07_overlay_test.go:140: structure/tailwind-no-physical-direction best of 5 Go 0.014690s 136150.93 findings/s (synthetic 1000 declarations, 2000 findings)
+    wave07_overlay_test.go:140: structure/tailwind-no-physical-direction best of 5 native 0.012282s 162845.19 findings/s (synthetic 1000 declarations, 2000 findings)
+    wave07_overlay_test.go:140: structure/tailwind-no-physical-direction best of 5 Node 0.145211s 13773.09 findings/s (synthetic 1000 declarations, 2000 findings)
+    wave07_overlay_test.go:140: @eslint-community/eslint-comments/require-description best of 5 Go 0.016586s 120583.72 findings/s (synthetic 1000 declarations, 2000 findings)
+    wave07_overlay_test.go:140: @eslint-community/eslint-comments/require-description best of 5 native 0.013766s 145290.26 findings/s (synthetic 1000 declarations, 2000 findings)
+    wave07_overlay_test.go:140: @eslint-community/eslint-comments/require-description best of 5 Node 0.151828s 13172.78 findings/s (synthetic 1000 declarations, 2000 findings)
+--- PASS: TestWave07Throughput (11.34s)
+=== RUN   TestWave07JsxGap
+    wave07_overlay_test.go:168: Go JSX control: googleFontDisplayMissing
+    wave07_overlay_test.go:209: Node explicit JSX parser refusal: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestWave07JsxGap1833866493/001/subject.tsx
+    wave07_overlay_test.go:209: emitted JavaScript explicit JSX parser refusal: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestWave07JsxGap1833866493/001/subject.tsx
+    wave07_overlay_test.go:209: sanitized native explicit JSX parser refusal: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 32 in /tmp/adamic-gate/TestWave07JsxGap1833866493/001/subject.tsx
+--- PASS: TestWave07JsxGap (8.44s)
+=== RUN   TestWave07Options
+    wave07_overlay_test.go:225: Go, Node, emitted JavaScript, native identical: 8689 bytes
+--- PASS: TestWave07Options (21.30s)
+=== RUN   TestWave07OwnedMutants
+=== RUN   TestWave07OwnedMutants/empty_reason_accepted
+    wave07_overlay_test.go:265: empty reason accepted caught on Node only by Go byte comparison: case 0 line 10: port "fixed\t/* eslint-disable */\\u000aconst text = '/* eslint-disable */'; // eslint-disable-line\\u000a// cohere-disable-next-line rule -- \\u000atext;\\u000a", Go "/tmp/adamic-gate/TestWave07OwnedMutantsempty_reason_accepted264229396/001/eslint-comments-require-description-0.ts:3:1"
+        Go context:
+        range 0 20 missingDescription 			0 20
+        /tmp/adamic-gate/TestWave07OwnedMutantsempty_reason_accepted264229396/001/eslint-comments-require-description-0.ts:2:38
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 58 80 missingDescription 			58 80
+        /tmp/adamic-gate/TestWave07OwnedMutantsempty_reason_accepted264229396/001/eslint-comments-require-description-0.ts:3:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 81 117 missingDescription 			81 117
+        fixed	/* eslint-disable */\u000aconst text = '/* eslint-disable */'; // eslint-disable-line\u000a// cohere-disable-next-line rule -- \u000atext;\u000a
+    wave07_overlay_test.go:265: empty reason accepted caught on emitted JavaScript only by Go byte comparison: case 0 line 10: port "fixed\t/* eslint-disable */\\u000aconst text = '/* eslint-disable */'; // eslint-disable-line\\u000a// cohere-disable-next-line rule -- \\u000atext;\\u000a", Go "/tmp/adamic-gate/TestWave07OwnedMutantsempty_reason_accepted264229396/001/eslint-comments-require-description-0.ts:3:1"
+        Go context:
+        range 0 20 missingDescription 			0 20
+        /tmp/adamic-gate/TestWave07OwnedMutantsempty_reason_accepted264229396/001/eslint-comments-require-description-0.ts:2:38
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 58 80 missingDescription 			58 80
+        /tmp/adamic-gate/TestWave07OwnedMutantsempty_reason_accepted264229396/001/eslint-comments-require-description-0.ts:3:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 81 117 missingDescription 			81 117
+        fixed	/* eslint-disable */\u000aconst text = '/* eslint-disable */'; // eslint-disable-line\u000a// cohere-disable-next-line rule -- \u000atext;\u000a
+    wave07_overlay_test.go:265: empty reason accepted caught on native only by Go byte comparison: case 0 line 10: port "fixed\t/* eslint-disable */\\u000aconst text = '/* eslint-disable */'; // eslint-disable-line\\u000a// cohere-disable-next-line rule -- \\u000atext;\\u000a", Go "/tmp/adamic-gate/TestWave07OwnedMutantsempty_reason_accepted264229396/001/eslint-comments-require-description-0.ts:3:1"
+        Go context:
+        range 0 20 missingDescription 			0 20
+        /tmp/adamic-gate/TestWave07OwnedMutantsempty_reason_accepted264229396/001/eslint-comments-require-description-0.ts:2:38
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 58 80 missingDescription 			58 80
+        /tmp/adamic-gate/TestWave07OwnedMutantsempty_reason_accepted264229396/001/eslint-comments-require-description-0.ts:3:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 81 117 missingDescription 			81 117
+        fixed	/* eslint-disable */\u000aconst text = '/* eslint-disable */'; // eslint-disable-line\u000a// cohere-disable-next-line rule -- \u000atext;\u000a
+=== RUN   TestWave07OwnedMutants/direction-aware_exemption_removed
+    wave07_overlay_test.go:265: direction-aware exemption removed caught on Node only by Go byte comparison: case 0 line 30: port "/tmp/adamic-gate/TestWave07OwnedMutantsdirection-aware_exemption_removed880857916/001/structure-tailwind-no-physical-direction-0.ts:1:17", Go "fixed\tconst classes = 'ml-4 md:mr-2 -pl-1 border-l rounded-r scroll-pr-3 text-left rtl:ml-5';\\u000a"
+        Go context:
+        range 16 86 useLogicalClass 			16 86
+        /tmp/adamic-gate/TestWave07OwnedMutantsdirection-aware_exemption_removed880857916/001/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 86 useLogicalClass 			16 86
+        fixed	const classes = 'ml-4 md:mr-2 -pl-1 border-l rounded-r scroll-pr-3 text-left rtl:ml-5';\u000a
+    wave07_overlay_test.go:265: direction-aware exemption removed caught on emitted JavaScript only by Go byte comparison: case 0 line 30: port "/tmp/adamic-gate/TestWave07OwnedMutantsdirection-aware_exemption_removed880857916/001/structure-tailwind-no-physical-direction-0.ts:1:17", Go "fixed\tconst classes = 'ml-4 md:mr-2 -pl-1 border-l rounded-r scroll-pr-3 text-left rtl:ml-5';\\u000a"
+        Go context:
+        range 16 86 useLogicalClass 			16 86
+        /tmp/adamic-gate/TestWave07OwnedMutantsdirection-aware_exemption_removed880857916/001/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 86 useLogicalClass 			16 86
+        fixed	const classes = 'ml-4 md:mr-2 -pl-1 border-l rounded-r scroll-pr-3 text-left rtl:ml-5';\u000a
+    wave07_overlay_test.go:265: direction-aware exemption removed caught on native only by Go byte comparison: case 0 line 30: port "/tmp/adamic-gate/TestWave07OwnedMutantsdirection-aware_exemption_removed880857916/001/structure-tailwind-no-physical-direction-0.ts:1:17", Go "fixed\tconst classes = 'ml-4 md:mr-2 -pl-1 border-l rounded-r scroll-pr-3 text-left rtl:ml-5';\\u000a"
+        Go context:
+        range 16 86 useLogicalClass 			16 86
+        /tmp/adamic-gate/TestWave07OwnedMutantsdirection-aware_exemption_removed880857916/001/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 86 useLogicalClass 			16 86
+        fixed	const classes = 'ml-4 md:mr-2 -pl-1 border-l rounded-r scroll-pr-3 text-left rtl:ml-5';\u000a
+--- PASS: TestWave07OwnedMutants (39.07s)
+    --- PASS: TestWave07OwnedMutants/empty_reason_accepted (18.34s)
+    --- PASS: TestWave07OwnedMutants/direction-aware_exemption_removed (18.19s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	222.474s

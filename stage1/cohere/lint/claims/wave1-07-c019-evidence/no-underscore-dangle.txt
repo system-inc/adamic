@@ -1,0 +1,69 @@
+command ['go', 'build', '-overlay=/tmp/wave07-c019/no-underscore-dangle/oracle-overlay.json', '-o', '/tmp/wave07-c019/no-underscore-dangle/oracle', '/workspace/adamic/cohere/adamic_wave07_owned.go', '/workspace/adamic/cohere/adamic_wave07_adapter.go']
+exit 0, stdout 0 bytes, stderr 0 bytes
+command ['go', 'test', './stage1/cohere/lint/rules/no-underscore-dangle', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 162 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/oracle', '/tmp/wave07-c019/no-underscore-dangle/upstream-manifest.txt']
+exit 0, stdout 266000 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/profile.a', '/tmp/wave07-c019/no-underscore-dangle/upstream-manifest.txt']
+exit 0, stdout 266000 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-c019/no-underscore-dangle/baseline/emitted.mjs', '/tmp/wave07-c019/no-underscore-dangle/upstream-manifest.txt']
+exit 0, stdout 266000 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/baseline/native', '/tmp/wave07-c019/no-underscore-dangle/upstream-manifest.txt']
+exit 0, stdout 266000 bytes, stderr 0 bytes
+PASS upstream: 93 file rows, 266000 identical bytes
+command ['git', '-C', '/tmp/wave07-typescript', 'rev-parse', 'HEAD']
+exit 0, stdout 41 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/oracle', '/tmp/wave07-c019/no-underscore-dangle/compiler-stage1-manifest.txt']
+exit 0, stdout 13401558 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/profile.a', '/tmp/wave07-c019/no-underscore-dangle/compiler-stage1-manifest.txt']
+exit 0, stdout 13401558 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-c019/no-underscore-dangle/baseline/emitted.mjs', '/tmp/wave07-c019/no-underscore-dangle/compiler-stage1-manifest.txt']
+exit 0, stdout 13401558 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/baseline/native', '/tmp/wave07-c019/no-underscore-dangle/compiler-stage1-manifest.txt']
+exit 0, stdout 13401558 bytes, stderr 0 bytes
+PASS compiler-stage1: 354 file rows, 13401558 identical bytes
+command ['go', 'test', './stage1/cohere/lint/rules/no-underscore-dangle', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 162 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-c019/no-underscore-dangle/mutant-source/profile.a', '/tmp/wave07-c019/no-underscore-dangle/upstream-manifest.txt']
+exit 0, stdout 265360 bytes, stderr 0 bytes
+PASS mutant constructor-property-name-ignored caught only by byte comparison on Node
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-c019/no-underscore-dangle/mutant/emitted.mjs', '/tmp/wave07-c019/no-underscore-dangle/upstream-manifest.txt']
+exit 0, stdout 265360 bytes, stderr 0 bytes
+PASS mutant constructor-property-name-ignored caught only by byte comparison on emitted JavaScript
+command ['/tmp/wave07-c019/no-underscore-dangle/mutant/native', '/tmp/wave07-c019/no-underscore-dangle/upstream-manifest.txt']
+exit 0, stdout 265360 bytes, stderr 0 bytes
+PASS mutant constructor-property-name-ignored caught only by byte comparison on sanitized native
+command ['/tmp/wave07-c019/no-underscore-dangle/oracle', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/oracle', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/oracle', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/oracle', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/oracle', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT Go 126463.69 findings/s best of 5 including startup
+command ['/tmp/wave07-c019/no-underscore-dangle/baseline/release', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/baseline/release', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/baseline/release', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/baseline/release', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-c019/no-underscore-dangle/baseline/release', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT native 87498.01 findings/s best of 5 including startup
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/profile.a', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/profile.a', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/profile.a', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/profile.a', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/profile.a', '/tmp/wave07-c019/no-underscore-dangle/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT Node 3479.82 findings/s best of 5 including startup
+PASS owned profile and owner suggestion API attachment
