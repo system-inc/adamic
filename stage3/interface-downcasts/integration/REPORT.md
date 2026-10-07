@@ -142,3 +142,15 @@ Reference-source write refusals remain in both backends; search bad/literal, laz
 sparse, object identity and evaluation fixtures pin behavior. All nine new search
 mutants are rerun before publication; prior eleven array mutants remain carried
 evidence unless explicitly rerun. Gates use the same recorded baseline exclusion.
+
+## Lane 4c untagged reconciliation
+
+Tip 6b3fc480 adds selector components without production source admission.
+The sole docs/checked-views-plan.md hunk retains all integration/lane handoffs
+and the incoming selector handoff. Owner lazy admission replaces the old eager
+cast refusal with the named unsupported untagged-object-union field read. The
+source-frontier assertion is updated to that observed refusal for binding-name,
+option-element and structural view-read fixtures, preserving their rejection.
+The initial old-message failure is logged. All 84 pairs / 186 reads remain pending;
+component nested mutants prove the adapter seam, not compiler propagation.
+Six selector semantic mutants are rerun and restored before normal gates.
