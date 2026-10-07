@@ -1,0 +1,34 @@
+=== RUN   TestWave02Continuation2AgreementAndMutants
+    wave_02_continuation_2_test.go:194: controls: 58644 identical finding bytes; findings 95
+    wave_02_continuation_2_test.go:202: controls-asan: 58644 identical finding bytes; findings 95
+=== RUN   TestWave02Continuation2AgreementAndMutants/timeout
+    wave_02_continuation_2_test.go:221: timeout: exit 0, Go byte oracle catches byte 51759; findings 95
+=== RUN   TestWave02Continuation2AgreementAndMutants/exit
+    wave_02_continuation_2_test.go:221: exit: exit 0, Go byte oracle catches byte 82; findings 52
+=== RUN   TestWave02Continuation2AgreementAndMutants/blocking
+    wave_02_continuation_2_test.go:221: blocking: exit 0, Go byte oracle catches byte 2067; findings 95
+=== RUN   TestWave02Continuation2AgreementAndMutants/namespace-kind
+    wave_02_continuation_2_test.go:221: namespace-kind: exit 0, Go byte oracle catches byte 58; findings 14
+=== RUN   TestWave02Continuation2AgreementAndMutants/signature-scope
+    wave_02_continuation_2_test.go:221: signature-scope: exit 0, Go byte oracle catches byte 58632; findings 96
+=== NAME  TestWave02Continuation2AgreementAndMutants
+    wave_02_continuation_2_test.go:241: graph question mutant: exit 0, Go byte oracle catches byte 11611; findings 98
+    wave_02_continuation_2_test.go:241: context question mutant: exit 0, Go byte oracle catches byte 58; findings 6
+    wave_02_continuation_2_test.go:241: signature question mutant: exit 0, Go byte oracle catches byte 15467; findings 92
+    wave_02_continuation_2_test.go:241: modules question mutant: exit 0, Go byte oracle catches byte 39110; findings 94
+    wave_02_continuation_2_test.go:247: repository: 18485 identical finding bytes; findings 0
+    wave_02_continuation_2_test.go:248: repository-asan: 18485 identical finding bytes; findings 0
+    wave_02_continuation_2_test.go:255: compiler: 5318 identical finding bytes; findings 0
+    wave_02_continuation_2_test.go:256: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_02_continuation_2_test.go:265: dom: 1712 identical finding bytes; findings 3
+    wave_02_continuation_2_test.go:269: dom-asan: 1712 identical finding bytes; findings 3
+    wave_02_continuation_2_test.go:281: released program queried using a new question: panic 70, invalid or released checker handle
+    wave_02_continuation_2_test.go:286: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave02Continuation2AgreementAndMutants (108.60s)
+    --- PASS: TestWave02Continuation2AgreementAndMutants/timeout (6.13s)
+    --- PASS: TestWave02Continuation2AgreementAndMutants/exit (6.14s)
+    --- PASS: TestWave02Continuation2AgreementAndMutants/blocking (6.03s)
+    --- PASS: TestWave02Continuation2AgreementAndMutants/namespace-kind (5.78s)
+    --- PASS: TestWave02Continuation2AgreementAndMutants/signature-scope (6.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	108.608s

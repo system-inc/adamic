@@ -60,3 +60,9 @@ These names occur only in inventory/skip-types records on main and the base,
 and in none of the fetched typeaware claim files. They are reserved for this
 branch before implementation. New native sources remain .a. Existing shared
 registration generators and test harness files will not be edited.
+
+Continuation 2 completed in 42724911 and 774a422e, tested and pushed. The report
+WAVE_02_CONTINUATION_2_REPORT.md records all nine completed wave-02 ports across
+the three reservations, canonical byte comparisons, sanitizers and mutants.
+A later fetch found concurrent claims on 17 other branches; the initial tip audit
+contains none of these three names. No further reservation was made.

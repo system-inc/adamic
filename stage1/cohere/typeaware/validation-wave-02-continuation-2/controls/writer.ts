@@ -1,0 +1,1 @@
+export function print(){console.log('x');}export function halt():never{console.log('x');process.exit(0);}export function twice(){print();}

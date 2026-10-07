@@ -1,0 +1,1 @@
+Promise.race([new Promise((resolve,reject)=>{setTimeout(reject,10);window.setTimeout(reject,10);globalThis.setTimeout(reject,10);})]);

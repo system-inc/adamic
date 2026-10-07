@@ -1,0 +1,1 @@
+import {blockStandardStreams} from './nexus/source/system/StandardStreams';export function later(){blockStandardStreams();}

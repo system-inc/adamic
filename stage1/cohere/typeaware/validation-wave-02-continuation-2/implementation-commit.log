@@ -1,0 +1,31 @@
+[codex/typeaware-wave-02 42724911] Port process exit timeout cleanup and blocking stream rules
+ 30 files changed, 4335 insertions(+)
+ create mode 100644 bridge/tsgo/checker/ast_context.go
+ create mode 100644 bridge/tsgo/checker/execution_graph.go
+ create mode 100644 bridge/tsgo/checker/executiongraph/LICENSE
+ create mode 100644 bridge/tsgo/checker/executiongraph/NOTICE
+ create mode 100644 bridge/tsgo/checker/executiongraph/cfg.go
+ create mode 100644 bridge/tsgo/checker/executiongraph/expressions.go
+ create mode 100644 bridge/tsgo/checker/executiongraph/helpers.go
+ create mode 100644 bridge/tsgo/checker/executiongraph/patterns.go
+ create mode 100644 bridge/tsgo/checker/executiongraph/roots.go
+ create mode 100644 bridge/tsgo/checker/executiongraph/statements.go
+ create mode 100644 bridge/tsgo/checker/program_modules.go
+ create mode 100644 bridge/tsgo/checker/resolved_call.go
+ create mode 100644 bridge/tsgo/checker/wave_02_process_facts_test.go
+ create mode 100644 stage1/cohere/typeaware/ast_context.a
+ create mode 100644 stage1/cohere/typeaware/blocking_module_index.a
+ create mode 100644 stage1/cohere/typeaware/blocking_stream_analysis.a
+ create mode 100644 stage1/cohere/typeaware/execution_graph.a
+ create mode 100644 stage1/cohere/typeaware/foreign_rules.a
+ create mode 100644 stage1/cohere/typeaware/no_process_exit_after_output.a
+ create mode 100644 stage1/cohere/typeaware/no_uncleared_race_timeout.a
+ create mode 100644 stage1/cohere/typeaware/process_calls.a
+ create mode 100644 stage1/cohere/typeaware/process_write_state.a
+ create mode 100644 stage1/cohere/typeaware/program_modules.a
+ create mode 100644 stage1/cohere/typeaware/require_blocking_standard_streams.a
+ create mode 100644 stage1/cohere/typeaware/resolved_call.a
+ create mode 100644 stage1/cohere/typeaware/resolved_declarations.a
+ create mode 100644 stage1/cohere/typeaware/testdata/oracle_wave_02_continuation_2.go
+ create mode 100644 stage1/cohere/typeaware/wave_02_continuation_2_suite.a
+ create mode 100644 stage1/cohere/typeaware/wave_02_continuation_2_test.go

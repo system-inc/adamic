@@ -1,0 +1,296 @@
+[
+  {
+    "sequence": 1,
+    "label": "stage0",
+    "stdout": "001-stage0.stdout.gz",
+    "stderr": "001-stage0.stderr.gz"
+  },
+  {
+    "sequence": 2,
+    "label": "checker",
+    "stdout": "002-checker.stdout.gz",
+    "stderr": "002-checker.stderr.gz"
+  },
+  {
+    "sequence": 3,
+    "label": "coverage",
+    "stdout": "003-coverage.stdout.gz",
+    "stderr": "003-coverage.stderr.gz"
+  },
+  {
+    "sequence": 4,
+    "label": "coverage-oracle-build",
+    "stdout": "004-coverage-oracle-build.stdout.gz",
+    "stderr": "004-coverage-oracle-build.stderr.gz"
+  },
+  {
+    "sequence": 5,
+    "label": "controls-go",
+    "stdout": "005-controls-go.stdout.gz",
+    "stderr": "005-controls-go.stderr.gz"
+  },
+  {
+    "sequence": 6,
+    "label": "controls-native",
+    "stdout": "006-controls-native.stdout.gz",
+    "stderr": "006-controls-native.stderr.gz"
+  },
+  {
+    "sequence": 7,
+    "label": "checker-asan",
+    "stdout": "007-checker-asan.stdout.gz",
+    "stderr": "007-checker-asan.stderr.gz"
+  },
+  {
+    "sequence": 8,
+    "label": "coverage-asan",
+    "stdout": "008-coverage-asan.stdout.gz",
+    "stderr": "008-coverage-asan.stderr.gz"
+  },
+  {
+    "sequence": 9,
+    "label": "controls-asan-go",
+    "stdout": "009-controls-asan-go.stdout.gz",
+    "stderr": "009-controls-asan-go.stderr.gz"
+  },
+  {
+    "sequence": 10,
+    "label": "controls-asan-native",
+    "stdout": "010-controls-asan-native.stdout.gz",
+    "stderr": "010-controls-asan-native.stderr.gz"
+  },
+  {
+    "sequence": 11,
+    "label": "timeout",
+    "stdout": "011-timeout.stdout.gz",
+    "stderr": "011-timeout.stderr.gz"
+  },
+  {
+    "sequence": 12,
+    "label": "timeout-run",
+    "stdout": "012-timeout-run.stdout.gz",
+    "stderr": "012-timeout-run.stderr.gz"
+  },
+  {
+    "sequence": 13,
+    "label": "exit",
+    "stdout": "013-exit.stdout.gz",
+    "stderr": "013-exit.stderr.gz"
+  },
+  {
+    "sequence": 14,
+    "label": "exit-run",
+    "stdout": "014-exit-run.stdout.gz",
+    "stderr": "014-exit-run.stderr.gz"
+  },
+  {
+    "sequence": 15,
+    "label": "blocking",
+    "stdout": "015-blocking.stdout.gz",
+    "stderr": "015-blocking.stderr.gz"
+  },
+  {
+    "sequence": 16,
+    "label": "blocking-run",
+    "stdout": "016-blocking-run.stdout.gz",
+    "stderr": "016-blocking-run.stderr.gz"
+  },
+  {
+    "sequence": 17,
+    "label": "namespace-kind",
+    "stdout": "017-namespace-kind.stdout.gz",
+    "stderr": "017-namespace-kind.stderr.gz"
+  },
+  {
+    "sequence": 18,
+    "label": "namespace-kind-run",
+    "stdout": "018-namespace-kind-run.stdout.gz",
+    "stderr": "018-namespace-kind-run.stderr.gz"
+  },
+  {
+    "sequence": 19,
+    "label": "signature-scope",
+    "stdout": "019-signature-scope.stdout.gz",
+    "stderr": "019-signature-scope.stderr.gz"
+  },
+  {
+    "sequence": 20,
+    "label": "signature-scope-run",
+    "stdout": "020-signature-scope-run.stdout.gz",
+    "stderr": "020-signature-scope-run.stderr.gz"
+  },
+  {
+    "sequence": 21,
+    "label": "graph",
+    "stdout": "021-graph.stdout.gz",
+    "stderr": "021-graph.stderr.gz"
+  },
+  {
+    "sequence": 22,
+    "label": "graph",
+    "stdout": "022-graph.stdout.gz",
+    "stderr": "022-graph.stderr.gz"
+  },
+  {
+    "sequence": 23,
+    "label": "graph-run",
+    "stdout": "023-graph-run.stdout.gz",
+    "stderr": "023-graph-run.stderr.gz"
+  },
+  {
+    "sequence": 24,
+    "label": "context",
+    "stdout": "024-context.stdout.gz",
+    "stderr": "024-context.stderr.gz"
+  },
+  {
+    "sequence": 25,
+    "label": "context",
+    "stdout": "025-context.stdout.gz",
+    "stderr": "025-context.stderr.gz"
+  },
+  {
+    "sequence": 26,
+    "label": "context-run",
+    "stdout": "026-context-run.stdout.gz",
+    "stderr": "026-context-run.stderr.gz"
+  },
+  {
+    "sequence": 27,
+    "label": "signature",
+    "stdout": "027-signature.stdout.gz",
+    "stderr": "027-signature.stderr.gz"
+  },
+  {
+    "sequence": 28,
+    "label": "signature",
+    "stdout": "028-signature.stdout.gz",
+    "stderr": "028-signature.stderr.gz"
+  },
+  {
+    "sequence": 29,
+    "label": "signature-run",
+    "stdout": "029-signature-run.stdout.gz",
+    "stderr": "029-signature-run.stderr.gz"
+  },
+  {
+    "sequence": 30,
+    "label": "modules",
+    "stdout": "030-modules.stdout.gz",
+    "stderr": "030-modules.stderr.gz"
+  },
+  {
+    "sequence": 31,
+    "label": "modules",
+    "stdout": "031-modules.stdout.gz",
+    "stderr": "031-modules.stderr.gz"
+  },
+  {
+    "sequence": 32,
+    "label": "modules-run",
+    "stdout": "032-modules-run.stdout.gz",
+    "stderr": "032-modules-run.stderr.gz"
+  },
+  {
+    "sequence": 33,
+    "label": "repository-go",
+    "stdout": "033-repository-go.stdout.gz",
+    "stderr": "033-repository-go.stderr.gz"
+  },
+  {
+    "sequence": 34,
+    "label": "repository-native",
+    "stdout": "034-repository-native.stdout.gz",
+    "stderr": "034-repository-native.stderr.gz"
+  },
+  {
+    "sequence": 35,
+    "label": "repository-asan-go",
+    "stdout": "035-repository-asan-go.stdout.gz",
+    "stderr": "035-repository-asan-go.stderr.gz"
+  },
+  {
+    "sequence": 36,
+    "label": "repository-asan-native",
+    "stdout": "036-repository-asan-native.stdout.gz",
+    "stderr": "036-repository-asan-native.stderr.gz"
+  },
+  {
+    "sequence": 37,
+    "label": "compiler-go",
+    "stdout": "037-compiler-go.stdout.gz",
+    "stderr": "037-compiler-go.stderr.gz"
+  },
+  {
+    "sequence": 38,
+    "label": "compiler-native",
+    "stdout": "038-compiler-native.stdout.gz",
+    "stderr": "038-compiler-native.stderr.gz"
+  },
+  {
+    "sequence": 39,
+    "label": "compiler-asan-go",
+    "stdout": "039-compiler-asan-go.stdout.gz",
+    "stderr": "039-compiler-asan-go.stderr.gz"
+  },
+  {
+    "sequence": 40,
+    "label": "compiler-asan-native",
+    "stdout": "040-compiler-asan-native.stdout.gz",
+    "stderr": "040-compiler-asan-native.stderr.gz"
+  },
+  {
+    "sequence": 41,
+    "label": "dom-go",
+    "stdout": "041-dom-go.stdout.gz",
+    "stderr": "041-dom-go.stderr.gz"
+  },
+  {
+    "sequence": 42,
+    "label": "dom-native",
+    "stdout": "042-dom-native.stdout.gz",
+    "stderr": "042-dom-native.stderr.gz"
+  },
+  {
+    "sequence": 43,
+    "label": "dom-asan-go",
+    "stdout": "043-dom-asan-go.stdout.gz",
+    "stderr": "043-dom-asan-go.stderr.gz"
+  },
+  {
+    "sequence": 44,
+    "label": "dom-asan-native",
+    "stdout": "044-dom-asan-native.stdout.gz",
+    "stderr": "044-dom-asan-native.stderr.gz"
+  },
+  {
+    "sequence": 45,
+    "label": "released",
+    "stdout": "045-released.stdout.gz",
+    "stderr": "045-released.stderr.gz"
+  },
+  {
+    "sequence": 46,
+    "label": "released-run",
+    "stdout": "046-released-run.stdout.gz",
+    "stderr": "046-released-run.stderr.gz"
+  },
+  {
+    "sequence": 47,
+    "label": "released-registry",
+    "stdout": "047-released-registry.stdout.gz",
+    "stderr": "047-released-registry.stderr.gz"
+  },
+  {
+    "sequence": 48,
+    "label": "released-mutant",
+    "stdout": "048-released-mutant.stdout.gz",
+    "stderr": "048-released-mutant.stderr.gz"
+  },
+  {
+    "sequence": 49,
+    "label": "released-mutant-run",
+    "stdout": "049-released-mutant-run.stdout.gz",
+    "stderr": "049-released-mutant-run.stderr.gz"
+  }
+]

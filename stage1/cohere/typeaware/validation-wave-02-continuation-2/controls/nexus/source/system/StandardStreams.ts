@@ -1,0 +1,1 @@
+export function blockStandardStreams(){Reflect.get(process.stdout,'_handle');}
