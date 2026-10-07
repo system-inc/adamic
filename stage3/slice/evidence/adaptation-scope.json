@@ -1,0 +1,48 @@
+{
+  "area": "4ad53a4",
+  "apply_exit": 0,
+  "moved": [
+    "52-temporary-scanner-indexed-reads",
+    "53-temporary-scanner-diagnostic-optionality",
+    "54-temporary-scanner-debug-runtime",
+    "55-temporary-scanner-stack-marker",
+    "56-temporary-scanner-assert-call-sites",
+    "57-temporary-scanner-initial-text",
+    "58-temporary-scanner-uninitialized-locals",
+    "59-temporary-scanner-optional-operand",
+    "80-temporary-scanner-error-capture",
+    "81-temporary-scanner-optional-jsx",
+    "82-temporary-scanner-generic-wrappers",
+    "83-temporary-scanner-zero-flags",
+    "84-temporary-scanner-named-zero",
+    "85-temporary-scanner-lexical-locals",
+    "86-temporary-scanner-numeric-regexp-keys"
+  ],
+  "full_tree": [
+    50,
+    51,
+    60,
+    61,
+    62,
+    63,
+    64
+  ],
+  "parser_moved": [],
+  "scanner": {
+    "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+    "files": 81,
+    "node_exit": 0,
+    "comparison_control_exit": 0,
+    "end_mutant_diff_exit": 1,
+    "native": "not attempted",
+    "bytes": 27879197,
+    "lines": 509014,
+    "sha256": "c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f"
+  },
+  "parser_cmp_exit": 0,
+  "oracle": "running; API proof for older pipeline rejects newer full pipeline differences",
+  "parser": {
+    "bytes": 35456964,
+    "sha256": "2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5"
+  }
+}

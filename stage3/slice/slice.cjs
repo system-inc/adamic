@@ -7,12 +7,13 @@ const ts = require(process.env.SCANNER_TYPESCRIPT || process.env.SLICE_TYPESCRIP
 if (ts.version !== '6.0.3') throw new Error(`stock TypeScript 6.0.3 required, got ${ts.version}`);
 const [treeArgument, outputArgument, ...arguments] = process.argv.slice(2);
 const entries = [], whySelectors = [];
-let preserveEvaluation = true, conservativeNamespaces = false;
+let preserveEvaluation = true, conservativeNamespaces = false, applyAdaptations = true;
 for (let index = 0; index < arguments.length; index++) {
     if (arguments[index] === '--why') {
         if (!arguments[index + 1]) throw new Error('--why needs file:declaration');
         whySelectors.push(arguments[++index]);
-    } else if (arguments[index] === '--reference-only') preserveEvaluation = false;
+    } else if (arguments[index] === '--no-adapt') applyAdaptations = false;
+    else if (arguments[index] === '--reference-only') preserveEvaluation = false;
     else if (arguments[index] === '--conservative-namespaces') conservativeNamespaces = true;
     else entries.push(arguments[index]);
 }
@@ -318,3 +319,5 @@ fs.writeFileSync(path.join(output, 'slice.json'), JSON.stringify({summary, decla
 if (evaluationRoot && preserveEvaluation) fs.writeFileSync(path.join(output, 'slice-entry.a'), ['import \"./src/compiler/_namespaces/ts.ts\";', ...entrySpecs.map(entry => `import ${JSON.stringify('./' + path.relative(tree, entry.file).replaceAll(path.sep, '/'))};`)].join('\n')+'\n');
 for (const explanation of explanations) console.error(JSON.stringify(explanation, null, 2));
 console.log(JSON.stringify(summary, null, 2));
+
+if (applyAdaptations) require("./apply-adaptations.cjs").apply(output);

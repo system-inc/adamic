@@ -45,3 +45,8 @@ allocated segment. forEach uses entries to preserve legitimate undefined
 values and holes. Clearing the reached Unicode table in a scratch mutant is
 caught by the explicit guard (Node exits 1). The token end-offset mutant is
 caught by diff. No generic callback read rejects undefined in this revision.
+
+The full-tree indexed-read adaptation may spell a compound assignment target
+with a non-null marker. This adapter unwraps that marker when recognizing `|=`
+and rewrites the complete assignment, preserving a valid assignment target.
+The integrated full-tree-to-slice Node comparison caught and validates this case.

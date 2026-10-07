@@ -56,3 +56,16 @@ has 52 modules without reached code. Reversing only the barrel's generated
 evaluation imports, leaving declaration bytes intact, fails on Node for both
 slices and is independently caught by the import-order audit. See WHY.md and
 evidence/evaluation-proof.json for exact counts, chains, commands and mutants.
+
+Slice-only temporary adaptations live in `stage3/slice/adapt/`, never in the
+full-tree adaptation directory. After gathering, the tool applies the scanner
+profile in number order: 52–57, 59, 80–82, 85. Retired adaptations 58, 83, 84 and
+plan-only 86 are excluded. Parser adaptations 60–64 remain full-tree adaptations
+and are already present in the slice input. The parser profile has no additional
+slice edits. `--no-adapt` emits only the verbatim gathered tree.
+
+The gathered code is tsc's own code, unchanged, gathered by a tool: only import
+lines and namespace wrappers selecting reached members are rewritten. Temporary
+adaptations are a separate, explicit step after gathering. The pre-adaptation
+files are retained under `.verbatim/`; `verify.cjs` checks their original source
+spans and the final adapted file hashes. `slice.json` records the applied profile.
