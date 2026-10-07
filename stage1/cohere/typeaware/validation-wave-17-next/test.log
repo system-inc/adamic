@@ -1,0 +1,17 @@
+=== RUN   TestWave17NextAgreementAndMutants
+    wave_17_next_test.go:201: controls: 35041 identical finding bytes; findings 77
+    wave_17_next_test.go:207: 53 upstream and edge control files
+    wave_17_next_test.go:210: controls-asan: 35041 identical finding bytes; findings 77
+    wave_17_next_test.go:238: collection mutant exits 0, empty stderr; Go byte oracle catches byte 3681
+    wave_17_next_test.go:238: outcome mutant exits 0, empty stderr; Go byte oracle catches byte 16720
+    wave_17_next_test.go:238: pure mutant exits 0, empty stderr; Go byte oracle catches byte 8402
+    wave_17_next_test.go:248: ancestry await mutant exits 0, empty stderr; Go byte oracle catches byte 15658
+    wave_17_next_test.go:256: new ancestry question rejects released program: panic 70
+    wave_17_next_test.go:264: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_next_test.go:290: repository: 18485 identical finding bytes; findings 0
+    wave_17_next_test.go:291: repository-asan: 18485 identical finding bytes; findings 0
+    wave_17_next_test.go:290: compiler: 5318 identical finding bytes; findings 0
+    wave_17_next_test.go:291: compiler-asan: 5318 identical finding bytes; findings 0
+--- PASS: TestWave17NextAgreementAndMutants (137.71s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	137.716s

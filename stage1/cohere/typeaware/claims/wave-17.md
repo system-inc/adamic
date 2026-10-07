@@ -43,3 +43,17 @@ The first three eligible rules are:
 All earlier rules are already ported or claimed. None of these three is ported
 on either base branch or named in any origin claim file. This update is pushed
 before implementation, on the existing codex/typeaware-wave-17 branch.
+
+## Continuation validated status
+
+The three Nexus ports are implemented in 0be2374d. All three agree with the
+unchanged production Go rules on the frozen compiler and repository manifests,
+and 53 control files, normally and under sanitizers. Per-rule mutants, the new
+awaited-ancestry fact mutant, and released-handle/registry checks pass.
+
+The additional old request-refusal harness cannot construct its unknown-question
+mutant because it hardcodes the former bridge error-return line. The runtime
+refusal itself still passes. Per Ahra's correction, that shared harness was not
+edited, and no further rules were claimed. The failure and all evidence are in
+[the continuation report](../WAVE_17_NEXT_REPORT.md). The original Next JSX
+limitations recorded above remain unchanged.
