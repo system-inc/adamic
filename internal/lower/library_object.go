@@ -44,12 +44,24 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
 	switch name {
 	case "is":
-		for _, argument := range written {
+		null := [2]bool{}
+		for index, argument := range written {
+			proven := l.checker.GetTypeAtLocation(argument)
+			null[index] = proven.Flags()&checker.TypeFlagsNull != 0
+			if !null[index] && l.includesNull(proven) {
+				return nil, true, l.notYet(argument, "Object.is with a nullable union (null and undefined need distinct runtime tags)")
+			}
 			value, err := l.expression(argument)
 			if err != nil {
 				return nil, true, err
 			}
 			call.Arguments = append(call.Arguments, fit(value, ir.Union))
+		}
+		if null[0] || null[1] {
+			// Exact null types prove SameValue without a null tag. Both operands still evaluate
+			// once, in order, through the condition; both arms have the proven result.
+			result := ir.BooleanConstant{Value: null[0] && null[1]}
+			return ir.Conditional{Condition: call, WhenTrue: result, WhenNot: result}, true, nil
 		}
 	case "isFrozen":
 		value, err := l.expression(written[0])
