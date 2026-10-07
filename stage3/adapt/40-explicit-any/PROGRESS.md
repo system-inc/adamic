@@ -1,6 +1,8 @@
 # Type-only class applications
 
-Brands: 36 owner types changed from any to undefined, preserving marker keys
+The original brand proof below is historical. October 7 revises its 36 replacements to void under #bw3xg7c; see [BRANDS-VOID.md](BRANDS-VOID.md) for current composition, searches, build mutant and lane evidence.
+
+Historical brands: 36 owner types changed from any to undefined, preserving marker keys
 and optionality. Required markers remain required; the optional qualified-name
 marker remains optional. Branded primitives and AST construction use nominal
 assertions or staged constructors already present in upstream, rather than
@@ -198,3 +200,19 @@ Apply exits 0. The proof exits 0, including the restored clean build. The
 additional guard probes are reproduced by filesystem-proof.cjs and independently
 recorded in evidence/filesystem/guards.log. The full logs and exploratory
 failures are under /tmp/sys-stat-*. Syntax checks and git diff --check pass.
+
+
+## Internal array predicate input, October 7
+
+Site 58, already classified as Generic array predicate input, now uses unknown
+in `isArray(value: unknown): value is readonly unknown[]`. The body is unchanged;
+all compiler callers are checked by the stock compiler. This follows the
+host-blockers a85a9cb1 proof and removes one more any token: 69 of 210 removed,
+141 remaining. The function is @internal and contributes no public API line.
+Current commands, observations and mutants are in [BRANDS-VOID.md](BRANDS-VOID.md).
+
+## Combined fixture-branch merge
+
+Merging the independent filesystem stat and isArray work removes 70 of 210
+any tokens, leaving 140. Earlier 69/141 snapshots above describe each branch
+before composition and remain historical evidence.
