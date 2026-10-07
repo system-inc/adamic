@@ -74,3 +74,33 @@ submodules ready 0s; build cache warm 29s; setup done 29s.
 Cgroup quota is 400000/100000, four cores. No code tests were rerun for this
 documentation-only blocked reservation. Prior rule comparisons and timings remain
 in the earlier reports; they do not validate these three rules.
+
+Recheck after the next keep-cooking request, 2026-10-07:
+
+Fetched all heads again, now 417 origin refs. The all-origin .a/.ts search for
+ForFunctionWithoutManualMemoization, ControlDominators, controlDominators and
+high_level_intermediate_representation returned no matches (git grep exit 1).
+The pinned refs and exact patterns are retained alongside this report. The
+current branch still contains no native HIR modules. No additional claims were
+made because these three are unfinished.
+
+The freshly fetched wave-29-third report independently names the same three
+rules and the same missing React SSA, capture, post-dominator and memoization
+substrate. Its .a files under gaps/ are parser probes, not rule implementations.
+Its report additionally records hook-only positive controls, establishing that
+JSX parsing alone would not unblock the missing analysis. This is that worker's
+reported evidence, not a native comparison newly run by this worker. A copy of
+the pinned report is retained for provenance.
+
+The unchanged production Go suites were rerun successfully:
+
+```
+source /workspace/adamic-tools/env.sh
+(cd cohere && go test ./internal/lint/rules/react -run '^Test(SetStateInEffect|SetStateInRender|StaticComponents)' -count=1 -timeout=10m -v) > /workspace/wave15-hir-recheck-go.log 2>&1
+```
+
+PASS, package 0.084s. This validates the production baseline only. No native
+ports, byte comparisons, native mutants, sanitizer runs or native timings were
+added; those remain blocked by the missing shared HIR. Toolchain setup was not
+rerun for this dependency recheck; the existing environment was sourced. Work
+stops under Ahra's shared-file boundary instruction.
