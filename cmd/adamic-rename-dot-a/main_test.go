@@ -283,3 +283,52 @@ func witness() {
 		t.Fatalf("registry witness: %s", data)
 	}
 }
+
+func TestSerializationTransition(t *testing.T) {
+	t.Parallel()
+	source := `package main
+import("fmt"; "os"; "path/filepath")
+func serializationPort(directory string) error {
+ for _, name := range []string{"rule.a"} {
+  if err := os.WriteFile(filepath.Join(directory,"rules/no-debugger",name), []byte("replacement"),0644); err != nil {return err}
+ }
+ if err := os.Remove(filepath.Join(directory,"rules/no-debugger/rule.ts")); err != nil {return err}
+ return nil
+}
+func main(){ directory:=os.Args[1]; if err:=serializationPort(directory);err!=nil {panic(err)};data,err:=os.ReadFile(filepath.Join(directory,"rules/no-debugger/rule.a"));if err!=nil{panic(err)};fmt.Print(string(data)) }
+`
+	root := repository(t, map[string]string{
+		"stage1/cohere/lint/rules/no-debugger/rule.ts": "export const x=1;",
+		"stage1/cohere/lint/harness_test.go":           source,
+	})
+	p, err := prepare(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(p.changes) != 1 || len(p.changes[0].edits) != 1 {
+		t.Fatalf("transition plan: %+v", p.changes)
+	}
+	if err := p.apply(root); err != nil {
+		t.Fatal(err)
+	}
+	data, err := os.ReadFile(filepath.Join(root, "stage1/cohere/lint/harness_test.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	program := filepath.Join(t.TempDir(), "transition.go")
+	if err := os.WriteFile(program, data, 0644); err != nil {
+		t.Fatal(err)
+	}
+	output, err := exec.Command("go", "run", program, filepath.Join(root, "stage1/cohere/lint")).CombinedOutput()
+	if err != nil || string(output) != "replacement" {
+		t.Fatalf("replacement lost: %v %s", err, output)
+	}
+	repeat, err := prepare(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(repeat.renames) != 0 || len(repeat.changes) != 0 {
+		t.Fatalf("transition repeat: %+v", repeat)
+	}
+}

@@ -116,7 +116,14 @@ go run ./cmd/lint-registry > /tmp/dot-a-stack-lint-registry.log 2>&1
 go test -count=1 -timeout 30m -p 2 ./stage1/... > /tmp/dot-a-stack-stage1.log 2>&1
 ```
 
-Registry generation passed. Stage 1's full package run is still running.
+Registry generation passed. Stage 1's package run passed CSS, CSS numbers, CSS
+strings, formatfiles, gitignore, GraphQL, JSON and the lint helpers, comments,
+inventory and registry packages. Lint ran for 1,678.960 seconds and reported two
+suggestion-test failures: the rename changed an obsolete removal of `rule.ts`
+into removal of the newly installed `rule.a`. The codemod now removes that parsed
+Go cleanup block. Its executed regression passes and the mutant is caught by
+loss of the installed module. The two suggestion tests are being rerun; the
+remaining stage 1 packages are still running.
 The final command was also run literally in a second clean main snapshot,
 `/tmp/dot-a-stack-inventory`: apply exited 0 and printed
 `TOTAL files=337 references=1875 reference_files=346`; its immediate repeat exited
@@ -124,7 +131,9 @@ The final command was also run literally in a second clean main snapshot,
 verified all 7,931 files in that fresh apply against the tested scratch tree.
 Logs are `/tmp/dot-a-stack-final-{apply,repeat,equivalence}.log`.
 The first stack apply had one extra edit to the stale `.ts` ambiguity witness;
-the protected-witness fix and regression test remove that edit. Earlier main
+the protected-witness fix and regression test remove that edit. The final lint
+cleanup fix replaces a path rewrite with deletion of one parsed conditional
+block; the final edit count remains 1,875. Earlier main
 verification below is historical evidence, not a claim about this stack's gate.
 
 ## October 7 refresh
@@ -198,7 +207,7 @@ setup: build cache warm (118s)
 setup: done in 118s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
 ```
 
-Sixteen new mutants were caught, each by a test failure with exit 1:
+Seventeen new mutants were caught, each by a test failure with exit 1:
 
 | Mutant | What caught it |
 | --- | --- |
@@ -218,6 +227,7 @@ Sixteen new mutants were caught, each by a test failure with exit 1:
 | Omit the custom `.a` source extension | Same test: source-extension metadata is absent |
 | Omit the prelude validation seed | Same test: stock tsc config has no seed input |
 | Rewrite the deliberately stale TypeScript module | `TestRegistryRenameWitness`: ambiguity witness acquires an unwanted edit |
+| Keep the obsolete suggestion-module cleanup | `TestSerializationTransition`: executed Go helper deletes the installed `.a` module |
 
 Mutant logs are `/tmp/dot-a-refresh-mutant-*.log`. An earlier attempt that removed
 only stage 3's suffix fallback survived: that fixture's local path already

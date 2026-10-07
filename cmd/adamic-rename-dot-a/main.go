@@ -145,16 +145,16 @@ func prepare(root string) (plan, error) {
 		} else {
 			edits = referenceEdits(name, source, p.renames)
 			if extension == ".go" && strings.HasPrefix(name, "stage1/") {
-				filters, filterError := sourceFilterEdits(name, source)
+				filters, filterError := sourceFilterEdits(name, source, p.renames)
 				if filterError != nil {
 					return p, filterError
 				}
-				if strings.Contains(name, "/tools/generate_") {
-					// Parsed generator literals already carry their complete path rewrite.
-					edits = slices.DeleteFunc(edits, func(existing edit) bool {
-						return slices.ContainsFunc(filters, func(parsed edit) bool { return existing.start >= parsed.start && existing.end <= parsed.end })
+				// Parsed Go edits replace complete literals or obsolete transition blocks.
+				edits = slices.DeleteFunc(edits, func(existing edit) bool {
+					return slices.ContainsFunc(filters, func(parsed edit) bool {
+						return (strings.Contains(name, "/tools/generate_") || parsed.after == "") && existing.start >= parsed.start && existing.end <= parsed.end
 					})
-				}
+				})
 				edits = append(edits, filters...)
 				sort.Slice(edits, func(i, j int) bool { return edits[i].start < edits[j].start })
 			}
@@ -398,7 +398,7 @@ func observationRanges(name, source string) [][2]int {
 
 // Corpus walkers still need upstream TypeScript, and must include renamed Adamic.
 // Parse Go so parentheses and compound directory predicates stay correct.
-func sourceFilterEdits(name, source string) ([]edit, error) {
+func sourceFilterEdits(name, source string, renames map[string]string) ([]edit, error) {
 	positions := token.NewFileSet()
 	file, err := goparser.ParseFile(positions, name, source, 0)
 	if err != nil {
@@ -419,6 +419,44 @@ func sourceFilterEdits(name, source string) ([]edit, error) {
 		return true
 	})
 	goast.Inspect(file, func(node goast.Node) bool {
+		// This helper installs rule.a and used to remove the copied rule.ts.
+		// Once the copied module is already .a, that cleanup is obsolete.
+		if function, ok := node.(*goast.FuncDecl); ok && name == "stage1/cohere/lint/harness_test.go" && function.Name.Name == "serializationPort" && renames["stage1/cohere/lint/rules/no-debugger/rule.ts"] != "" {
+			for _, statement := range function.Body.List {
+				conditional, ok := statement.(*goast.IfStmt)
+				if !ok {
+					continue
+				}
+				assignment, ok := conditional.Init.(*goast.AssignStmt)
+				if !ok || len(assignment.Rhs) != 1 {
+					continue
+				}
+				call, ok := assignment.Rhs[0].(*goast.CallExpr)
+				if !ok || len(call.Args) != 1 {
+					continue
+				}
+				selector, ok := call.Fun.(*goast.SelectorExpr)
+				if !ok || selector.Sel.Name != "Remove" {
+					continue
+				}
+				receiver, ok := selector.X.(*goast.Ident)
+				if !ok || receiver.Name != "os" {
+					continue
+				}
+				owned := false
+				goast.Inspect(call.Args[0], func(argument goast.Node) bool {
+					if literal, ok := argument.(*goast.BasicLit); ok && literal.Kind == token.STRING {
+						value, _ := strconv.Unquote(literal.Value)
+						owned = owned || value == "rules/no-debugger/rule.ts"
+					}
+					return true
+				})
+				if owned {
+					start, end := positions.Position(conditional.Pos()).Offset, positions.Position(conditional.End()).Offset
+					edits = append(edits, edit{start, end, source[start:end], ""})
+				}
+			}
+		}
 		if strings.Contains(name, "/tools/generate_") {
 			if literal, ok := node.(*goast.BasicLit); ok && literal.Kind == token.STRING {
 				value, err := strconv.Unquote(literal.Value)
