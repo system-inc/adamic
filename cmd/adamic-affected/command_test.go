@@ -116,6 +116,26 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 		t.Fatal("resume reran the completed reference package")
 	}
 	t.Log("checkpoint resumed pending package; corrupted event log rejected; incomplete record selected all")
+	checkpoint.Failed = map[string]string{"affected-command-proof/quiet": "diagnosed setup failure"}
+	if err := atomicJSON(recordPath+".partial", checkpoint); err != nil {
+		t.Fatal(err)
+	}
+	if output, err := execute("record", "-out", recordPath); err == nil || !strings.Contains(output, "reference had failed packages") {
+		t.Fatalf("failed reference resumed implicitly: %v %s", err, output)
+	}
+	if output, err := execute("record", "-retry-failed", "-out", recordPath); err != nil {
+		t.Fatalf("explicit retry failed: %v %s", err, output)
+	}
+	var retried recordFile
+	data, err := os.ReadFile(recordPath)
+	if err != nil || json.Unmarshal(data, &retried) != nil || len(retried.Retries) != 1 || retried.Retries[0].Failed["affected-command-proof/quiet"] == "" {
+		t.Fatal("retry discarded failure evidence")
+	}
+	if retried.Packages["affected-command-proof/pkg"].Events != readerEvents || retried.Packages["affected-command-proof/quiet"].Events == filepath.Join(checkpoint.Logs, "001.jsonl") {
+		t.Fatal("retry replaced previous logs or reran completed evidence")
+	}
+	t.Log("failed reference required explicit retry; original logs and failure history retained")
+	checkpoint.Failed = nil
 	writeInput(t, filepath.Join(root, "docs", "README.md"), "after")
 	if output := selectPackages(recordPath); output != "" {
 		t.Fatalf("unread docs byte selected packages: %s", output)

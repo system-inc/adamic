@@ -17,10 +17,10 @@ source /workspace/adamic-tools/env.sh
 go build -o /tmp/adamic-affected ./cmd/adamic-affected
 ```
 
-At a clean, green main checkout, with `HEAD = origin/main` and initialized submodules:
+At a clean main checkout, with `HEAD = origin/main` and initialized submodules,
+the recorder itself runs the full uncached gate with the observer:
 
 ```sh
-ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m -json ./... > /tmp/main-gate.jsonl 2> /tmp/main-gate.stderr
 ADAMIC_GATE_UNCACHED=1 /tmp/adamic-affected record -out /tmp/main-inputs.json > /tmp/record.stdout 2> /tmp/record.stderr
 ```
 
@@ -36,9 +36,13 @@ cumulative, original JSON event stream at `FILE.reference.jsonl`. The partial
 record includes the fixed commit, whole repository inventory, package plan,
 toolchain/environment identity, closures and per-package event hashes. Resume
 with the same `-out`: it validates that evidence and runs only unfinished packages.
-Incomplete or failed references never justify a skip. A failed package makes that
-reference attempt failed; a completed reference requires a new destination for a
-fresh run. Four package workers share the box by default (`-jobs 4`).
+Incomplete references never justify a skip. A failed package prevents automatic
+resume. After diagnosing the failure, `-retry-failed` revalidates the same identity,
+retains the failed logs and an explicit `Retries` history, and reruns only packages
+without successful evidence in a new log directory. A completed reference requires
+a new destination for a fresh run. Four package workers share the box by default
+(`-jobs 4`). A retried reference is reported as such, including its failed attempts;
+it is not described as a single clean gate invocation.
 
 Pin a known main ancestor when integration may advance `origin/main`:
 

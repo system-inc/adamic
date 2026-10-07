@@ -23,9 +23,14 @@ type recordCheckpoint struct {
 	Failed    map[string]string
 }
 
+type failedAttempt struct {
+	Logs   string
+	Failed map[string]string
+}
+
 // A checkpoint is evidence for this unfinished reference run, never a branch
 // result cache. Resume verifies all inputs and every finished event log first.
-func recordMain(root, destination string, packages []packageInfo, jobs int, mainRef string) error {
+func recordMain(root, destination string, packages []packageInfo, jobs int, mainRef string, retryFailed bool) error {
 	if jobs < 1 {
 		return fmt.Errorf("-jobs must be positive")
 	}
@@ -72,11 +77,22 @@ func recordMain(root, destination string, packages []packageInfo, jobs int, main
 		if checkpoint.Record.Version != formatVersion || checkpoint.Root != root || checkpoint.Record.Commit != string(bytes.TrimSpace(commit)) || !reflect.DeepEqual(checkpoint.Record.Toolchain, tools) || checkpoint.Record.Submodule != submodule || !reflect.DeepEqual(checkpoint.Inventory, inventory) || !reflect.DeepEqual(checkpoint.Plan, plan) {
 			return fmt.Errorf("checkpoint identity changed; refusing to mix reference runs")
 		}
-		if len(checkpoint.Failed) > 0 {
-			return fmt.Errorf("reference had failed packages; use a new -out instead of retrying a failed gate")
+		if len(checkpoint.Failed) > 0 && !retryFailed {
+			return fmt.Errorf("reference had failed packages; use a new -out or explicitly -retry-failed after diagnosing them")
 		}
 		if err := validateFinished(root, checkpoint.Record); err != nil {
 			return err
+		}
+		if len(checkpoint.Failed) > 0 {
+			checkpoint.Record.Retries = append(checkpoint.Record.Retries, failedAttempt{Logs: checkpoint.Logs, Failed: checkpoint.Failed})
+			checkpoint.Logs, err = os.MkdirTemp(destination+".logs", "retry-")
+			if err != nil {
+				return err
+			}
+			checkpoint.Failed = nil
+			if err := atomicJSON(checkpointPath, checkpoint); err != nil {
+				return err
+			}
 		}
 		if checkpoint.Record.Complete {
 			if _, err := os.Stat(destination); err == nil {

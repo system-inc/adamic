@@ -42,6 +42,7 @@ type recordFile struct {
 	Reference   string
 	EventHashes map[string]string
 	WallSeconds float64
+	Retries     []failedAttempt `json:",omitempty"`
 }
 
 func main() {
@@ -64,6 +65,7 @@ func run(args []string) error {
 	input := flags.String("record", "", "green-main record")
 	jobs := flags.Int("jobs", 4, "maximum simultaneous uncached package runs")
 	mainRef := flags.String("main", "origin/main", "fixed main commit or reference")
+	retryFailed := flags.Bool("retry-failed", false, "explicitly rerun failed reference packages, preserving their previous logs")
 	if err := flags.Parse(args[1:]); err != nil {
 		return err
 	}
@@ -86,7 +88,7 @@ func run(args []string) error {
 		if inside(root, destination) {
 			return fmt.Errorf("record must live outside repository")
 		}
-		return recordMain(root, destination, packages, *jobs, *mainRef)
+		return recordMain(root, destination, packages, *jobs, *mainRef, *retryFailed)
 	case "select":
 		if *input == "" {
 			return fmt.Errorf("-record is required")
