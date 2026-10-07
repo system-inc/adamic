@@ -1,0 +1,9 @@
+{
+  "manifest": "/workspace/wave20-validation/fourth/jsx-probe/input.tsx\n",
+  "go.stderr": "cohere: load_ns=167050104 rule_ns=1855 run_ns=354420\n",
+  "go.stdout": "file\t/workspace/wave20-validation/fourth/jsx-probe/input.tsx\nfindings 0\n",
+  "tsconfig.json": "{\"compilerOptions\": {\"strict\": true, \"target\": \"ES2022\", \"jsx\": \"preserve\", \"types\": []}, \"include\": [\"input.tsx\"]}",
+  "native.stdout": "",
+  "native.stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 94 in /workspace/wave20-validation/fourth/jsx-probe/input.tsx\n",
+  "input.tsx": "function Example(props: unknown) {\n  const Component = createComponent();\n  return <Component />;\n}\n"
+}

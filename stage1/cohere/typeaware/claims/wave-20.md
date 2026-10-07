@@ -69,3 +69,7 @@ are:
 This claim is pushed before implementation. Native JSX parsing and React
 control-flow substrate availability are being checked; shared files will not
 be modified to work around a missing dependency.
+
+Fourth-batch status: all three claims are blocked by missing shared native JSX
+parsing, demonstrated on a valid TSX control (Go exit 0, native parser panic 70).
+See each rule directory's `BLOCKED.md`. No fourth-batch port is claimed complete.
