@@ -80,3 +80,34 @@ Per-site witnesses are blocking-families-sites.json; the executable census is
 blocking-families.cjs, both under stage3/interface-downcasts. The existing rejection
 audit still establishes zero complete eligible contracts. No whole-file lowering
 pass or unlocked site is inferred from these dependency counts.
+
+
+## Read-based demand measured by Lane 2
+
+The transitive graph counts above are historical dependencies, not the scheduling
+measure: an unread descendant needs no checked-view read contract. Following
+c898009b, a full pinned compiler census seeded by all 2,936 downcast targets finds
+2,825 (checker type, field) pairs and 25,848 source reads. Exact declared families,
+read witnesses and provenance are in [Lane 2's per-pair table](../stage3/interface-downcasts/lane2/read-census/pairs.json).
+
+| Lane 2 read family | Distinct pairs | Read sites | Coverage |
+| --- | ---: | ---: | --- |
+| array contracts | 334 | 3189 | partial |
+| array element/consumer reads | 251 | 1602 | partial |
+| callable contracts | 308 | 1503 | partial |
+| array intrinsic contracts | 179 | 794 | partial |
+| array own-property reads | 30 | 72 | missing integration |
+| tuple contracts | 6 | 9 | missing |
+| Lane 2 deduplicated total | 920 | 6362 | partial demand |
+
+Rows overlap and are demand, not a claim that every read is blocked. Currently
+refused array intrinsics specifically account for 35 pairs / 128 reads; join is
+largest at 5 pairs / 49 reads, exceeding tuples' 9 reads. Equal static receiver
+types elsewhere count conservatively. This is not allocation/alias flow or an
+unlocked lowering count. Full family/lane tables, methodology and limits are in
+[Lane 2's read census report](../stage3/interface-downcasts/lane2/READ_CENSUS_REPORT.md).
+
+The c898009b compiler still eagerly builds descendant contracts and has global
+array/callable use scans. Lane 1 owns the pending cast merge and lazy admission,
+and will push with Lane 2's tip merged. Lane 2 must merge that SHA before claiming
+unsupported members refuse only at the reached read, naming field and family.
