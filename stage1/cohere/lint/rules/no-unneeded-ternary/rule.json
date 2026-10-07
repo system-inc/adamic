@@ -1,0 +1,13 @@
+{
+  "name": "no-unneeded-ternary",
+  "kinds": [
+    "ConditionalExpression"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoUnneededTernary",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUnneededTernary",
+  "factory": "create",
+  "class": "Rule"
+}

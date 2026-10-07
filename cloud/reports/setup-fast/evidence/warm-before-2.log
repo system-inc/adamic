@@ -1,0 +1,110 @@
+build-flags-before: {"commit": "9d6bdbb9b56209032121c1ff266eb01066bcb59b", "nproc": "5", "cpu_max": "400000 100000", "go": "go version go1.27.1 linux/amd64", "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)", "node": "v24.19.0", "load": "5.05 2.57 3.56 1/238 54790", "cached": "action-cache"}
++ 1791343285.812622 /workspace/setup-trials-myl07xgn/before-2/before.sh:10: set -euo pipefail
+++ 1791343285.812904 /workspace/setup-trials-myl07xgn/before-2/before.sh:12: date +%s
++ 1791343285.813754 /workspace/setup-trials-myl07xgn/before-2/before.sh:12: started=1791343285
++ 1791343285.813791 /workspace/setup-trials-myl07xgn/before-2/before.sh:15: repository=/workspace/adamic
++ 1791343285.813802 /workspace/setup-trials-myl07xgn/before-2/before.sh:16: tools=/workspace/adamic-tools
++ 1791343285.813816 /workspace/setup-trials-myl07xgn/before-2/before.sh:17: mkdir -p /workspace/adamic-tools/bin
++ 1791343285.814933 /workspace/setup-trials-myl07xgn/before-2/before.sh:18: gate=/tmp/adamic-gate
++ 1791343285.814952 /workspace/setup-trials-myl07xgn/before-2/before.sh:21: install -d -m 1777 /tmp/adamic-gate
++ 1791343285.816060 /workspace/setup-trials-myl07xgn/before-2/before.sh:22: case $(uname -m) in
+++ 1791343285.816280 /workspace/setup-trials-myl07xgn/before-2/before.sh:22: uname -m
++ 1791343285.817067 /workspace/setup-trials-myl07xgn/before-2/before.sh:23: goArchitecture=amd64
++ 1791343285.817076 /workspace/setup-trials-myl07xgn/before-2/before.sh:23: nodeArchitecture=x64
++ 1791343285.817079 /workspace/setup-trials-myl07xgn/before-2/before.sh:23: llvmArchitecture=X64
++ 1791343285.817094 /workspace/setup-trials-myl07xgn/before-2/before.sh:30: export GOTOOLCHAIN=auto
++ 1791343285.817099 /workspace/setup-trials-myl07xgn/before-2/before.sh:30: GOTOOLCHAIN=auto
++ 1791343285.817130 /workspace/setup-trials-myl07xgn/before-2/before.sh:33: command -v go
++ 1791343285.817162 /workspace/setup-trials-myl07xgn/before-2/before.sh:33: realGo go
++ 1791343285.817370 /workspace/setup-trials-myl07xgn/before-2/before.sh:32: go version
++ 1791343285.817451 /workspace/setup-trials-myl07xgn/before-2/before.sh:32: grep -q '^go version go1\.'
++ 1791343285.820122 /workspace/setup-trials-myl07xgn/before-2/before.sh:37: '[' -x /workspace/adamic-tools/go/bin/go ']'
++ 1791343285.820153 /workspace/setup-trials-myl07xgn/before-2/before.sh:37: export PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ 1791343285.820161 /workspace/setup-trials-myl07xgn/before-2/before.sh:37: PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ 1791343285.820336 /workspace/setup-trials-myl07xgn/before-2/before.sh:38: cd /workspace/adamic
++ 1791343285.820387 /workspace/setup-trials-myl07xgn/before-2/before.sh:38: go version
+go version go1.27.1 linux/amd64
++ 1791343285.822769 /workspace/setup-trials-myl07xgn/before-2/before.sh:39: step 'go ready'
+++ 1791343285.822992 /workspace/setup-trials-myl07xgn/before-2/before.sh:13: date +%s
++ 1791343285.823840 /workspace/setup-trials-myl07xgn/before-2/before.sh:13: echo 'setup: go ready (0s)'
+setup: go ready (0s)
+++ 1791343285.824064 /workspace/setup-trials-myl07xgn/before-2/before.sh:44: mktemp -d
++ 1791343285.824875 /workspace/setup-trials-myl07xgn/before-2/before.sh:44: probe=/tmp/adamic-gate/tmp.nd4JQRRfms
++ 1791343285.824897 /workspace/setup-trials-myl07xgn/before-2/before.sh:45: cat
++ 1791343285.825882 /workspace/setup-trials-myl07xgn/before-2/before.sh:53: clang=
+++ 1791343285.826327 /workspace/setup-trials-myl07xgn/before-2/before.sh:54: ls -d '/usr/lib/llvm-*/bin/clang'
+++ 1791343285.826367 /workspace/setup-trials-myl07xgn/before-2/before.sh:54: sort -t- -k2 -V -r
+++ 1791343285.827825 /workspace/setup-trials-myl07xgn/before-2/before.sh:54: command -v clang
++ 1791343285.827993 /workspace/setup-trials-myl07xgn/before-2/before.sh:54: for candidate in "$tools/llvm/bin/clang" $(ls -d /usr/lib/llvm-*/bin/clang 2> /dev/null | sort -t- -k2 -V -r) $(command -v clang || true)
++ 1791343285.828008 /workspace/setup-trials-myl07xgn/before-2/before.sh:55: '[' -x /workspace/adamic-tools/llvm/bin/clang ']'
++ 1791343285.828021 /workspace/setup-trials-myl07xgn/before-2/before.sh:55: saneClang /workspace/adamic-tools/llvm/bin/clang
++ 1791343285.828036 /workspace/setup-trials-myl07xgn/before-2/before.sh:50: /workspace/adamic-tools/llvm/bin/clang -fsanitize=address,undefined -g /tmp/adamic-gate/tmp.nd4JQRRfms/overflow.c -o /tmp/adamic-gate/tmp.nd4JQRRfms/overflow
++ 1791343285.923350 /workspace/setup-trials-myl07xgn/before-2/before.sh:51: /tmp/adamic-gate/tmp.nd4JQRRfms/overflow
++ 1791343285.942036 /workspace/setup-trials-myl07xgn/before-2/before.sh:51: grep -q heap-buffer-overflow /tmp/adamic-gate/tmp.nd4JQRRfms/report
++ 1791343285.943195 /workspace/setup-trials-myl07xgn/before-2/before.sh:56: clang=/workspace/adamic-tools/llvm/bin/clang
++ 1791343285.943206 /workspace/setup-trials-myl07xgn/before-2/before.sh:57: break
++ 1791343285.943249 /workspace/setup-trials-myl07xgn/before-2/before.sh:60: '[' -z /workspace/adamic-tools/llvm/bin/clang ']'
++ 1791343285.943268 /workspace/setup-trials-myl07xgn/before-2/before.sh:68: for tool in clang clang++ llvm-symbolizer
+++ 1791343285.943509 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791343285.944289 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: '[' -x /workspace/adamic-tools/llvm/bin/clang ']'
+++ 1791343285.944517 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791343285.945511 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: ln -sf /workspace/adamic-tools/llvm/bin/clang /workspace/adamic-tools/bin/clang
++ 1791343285.946414 /workspace/setup-trials-myl07xgn/before-2/before.sh:68: for tool in clang clang++ llvm-symbolizer
+++ 1791343285.946628 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791343285.947353 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: '[' -x /workspace/adamic-tools/llvm/bin/clang++ ']'
+++ 1791343285.947563 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791343285.948367 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: ln -sf /workspace/adamic-tools/llvm/bin/clang++ /workspace/adamic-tools/bin/clang++
++ 1791343285.949200 /workspace/setup-trials-myl07xgn/before-2/before.sh:68: for tool in clang clang++ llvm-symbolizer
+++ 1791343285.949422 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791343285.950161 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: '[' -x /workspace/adamic-tools/llvm/bin/llvm-symbolizer ']'
+++ 1791343285.950385 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791343285.951123 /workspace/setup-trials-myl07xgn/before-2/before.sh:69: ln -sf /workspace/adamic-tools/llvm/bin/llvm-symbolizer /workspace/adamic-tools/bin/llvm-symbolizer
++ 1791343285.952201 /workspace/setup-trials-myl07xgn/before-2/before.sh:71: /workspace/adamic-tools/llvm/bin/clang --version
++ 1791343285.952269 /workspace/setup-trials-myl07xgn/before-2/before.sh:71: head -n 1
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
++ 1791343285.960771 /workspace/setup-trials-myl07xgn/before-2/before.sh:72: step 'clang ready (/workspace/adamic-tools/llvm/bin/clang)'
+++ 1791343285.961027 /workspace/setup-trials-myl07xgn/before-2/before.sh:13: date +%s
++ 1791343285.961908 /workspace/setup-trials-myl07xgn/before-2/before.sh:13: echo 'setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0s)'
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0s)
++ 1791343285.962154 /workspace/setup-trials-myl07xgn/before-2/before.sh:75: /workspace/adamic-tools/bin/node --version
++ 1791343285.962212 /workspace/setup-trials-myl07xgn/before-2/before.sh:75: grep -q '^v24\.'
++ 1791343285.966087 /workspace/setup-trials-myl07xgn/before-2/before.sh:91: /workspace/adamic-tools/bin/node --version
+v24.19.0
++ 1791343285.969842 /workspace/setup-trials-myl07xgn/before-2/before.sh:92: step 'node ready'
+++ 1791343285.970073 /workspace/setup-trials-myl07xgn/before-2/before.sh:13: date +%s
++ 1791343285.970931 /workspace/setup-trials-myl07xgn/before-2/before.sh:13: echo 'setup: node ready (0s)'
+setup: node ready (0s)
++ 1791343285.970959 /workspace/setup-trials-myl07xgn/before-2/before.sh:95: cat
+++ 1791343285.971417 /workspace/setup-trials-myl07xgn/before-2/before.sh:95: '[' -x /workspace/adamic-tools/go/bin/go ']'
+++ 1791343285.971461 /workspace/setup-trials-myl07xgn/before-2/before.sh:95: echo /workspace/adamic-tools/go/bin:
++ 1791343285.972405 /workspace/setup-trials-myl07xgn/before-2/before.sh:100: grep -qs /workspace/adamic-tools/env.sh /home/agent/.bashrc
++ 1791343285.973608 /workspace/setup-trials-myl07xgn/before-2/before.sh:102: source /workspace/adamic-tools/env.sh
+++ 1791343285.973649 /workspace/adamic-tools/env.sh:1: export PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
+++ 1791343285.973658 /workspace/adamic-tools/env.sh:1: PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
+++ 1791343285.973669 /workspace/adamic-tools/env.sh:2: export GOTOOLCHAIN=auto
+++ 1791343285.973672 /workspace/adamic-tools/env.sh:2: GOTOOLCHAIN=auto
+++ 1791343285.973678 /workspace/adamic-tools/env.sh:3: export TMPDIR=/tmp/adamic-gate
+++ 1791343285.973697 /workspace/adamic-tools/env.sh:3: TMPDIR=/tmp/adamic-gate
++ 1791343285.973707 /workspace/setup-trials-myl07xgn/before-2/before.sh:105: cd /workspace/adamic
++ 1791343285.973720 /workspace/setup-trials-myl07xgn/before-2/before.sh:106: git config submodule.cohere.url https://github.com/system-inc/cohere.git
++ 1791343285.975043 /workspace/setup-trials-myl07xgn/before-2/before.sh:107: git submodule update --init --recursive --depth 1
++ 1791343286.007376 /workspace/setup-trials-myl07xgn/before-2/before.sh:108: step 'submodules ready'
+++ 1791343286.007666 /workspace/setup-trials-myl07xgn/before-2/before.sh:13: date +%s
++ 1791343286.008603 /workspace/setup-trials-myl07xgn/before-2/before.sh:13: echo 'setup: submodules ready (1s)'
+setup: submodules ready (1s)
++ 1791343286.008631 /workspace/setup-trials-myl07xgn/before-2/before.sh:111: go build ./...
++ 1791343288.900467 /workspace/setup-trials-myl07xgn/before-2/before.sh:112: go test -count=1 -run '^$' ./...
++ 1791343299.353179 /workspace/setup-trials-myl07xgn/before-2/before.sh:113: step 'build cache warm'
+++ 1791343299.353619 /workspace/setup-trials-myl07xgn/before-2/before.sh:13: date +%s
++ 1791343299.354717 /workspace/setup-trials-myl07xgn/before-2/before.sh:13: echo 'setup: build cache warm (14s)'
+setup: build cache warm (14s)
+++ 1791343299.355116 /workspace/setup-trials-myl07xgn/before-2/before.sh:115: cat /sys/fs/cgroup/cpu.max
++ 1791343299.356826 /workspace/setup-trials-myl07xgn/before-2/before.sh:115: cpuQuota='400000 100000'
+++ 1791343299.357130 /workspace/setup-trials-myl07xgn/before-2/before.sh:116: awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo
++ 1791343299.359002 /workspace/setup-trials-myl07xgn/before-2/before.sh:116: memory='17.6 GB'
+++ 1791343299.359338 /workspace/setup-trials-myl07xgn/before-2/before.sh:117: date +%s
+++ 1791343299.360476 /workspace/setup-trials-myl07xgn/before-2/before.sh:117: nproc
++ 1791343299.361315 /workspace/setup-trials-myl07xgn/before-2/before.sh:117: echo 'setup: done in 14s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB'
+setup: done in 14s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+build-flags-after: {"commit": "9d6bdbb9b56209032121c1ff266eb01066bcb59b", "nproc": "5", "cpu_max": "400000 100000", "go": "go version go1.27.1 linux/amd64", "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)", "node": "v24.19.0", "load": "5.07 2.71 3.59 1/239 55481", "cached": "action-cache"}
+wall=13.550194 exit=0
