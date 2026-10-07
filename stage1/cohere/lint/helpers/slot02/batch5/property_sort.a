@@ -1,5 +1,11 @@
+export interface OrderSlice {
+    readonly values: number[];
+    readonly length: number;
+    readonly capacity: number;
+}
+
 export interface Sort {
-    readonly order: number[];
+    readonly order: OrderSlice;
     readonly count: number;
 }
 
@@ -12,5 +18,12 @@ export interface PropertySortResult {
 export function propertySort(nodes: readonly number[],
     compute: (nodes: readonly number[]) => PropertySortResult): Sort {
     const result = compute(nodes);
-    return { order: result.sort.order, count: result.sort.count };
+    return {
+        order: {
+            values: result.sort.order.values,
+            length: result.sort.order.length,
+            capacity: result.sort.order.capacity,
+        },
+        count: result.sort.count,
+    };
 }

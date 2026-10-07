@@ -60,7 +60,14 @@ function numbers(parent: number, field: string): number[] {
 }
 for (const row of json.node(json.field(root, 'Sorts')).children) {
     const nodes = numbers(row, 'Nodes');
-    const computed = { order: numbers(row, 'Order'), count: Number(json.node(json.field(row, 'Count')).text) };
+    const computed = {
+        order: {
+            values: numbers(row, 'Order'),
+            length: Number(json.node(json.field(row, 'Length')).text),
+            capacity: Number(json.node(json.field(row, 'Capacity')).text),
+        },
+        count: Number(json.node(json.field(row, 'Count')).text),
+    };
     const visited: string[] = [];
     for (const index of json.node(json.field(row, 'Visited')).children) { visited.push(json.node(index).text); }
     let calls = 0;
@@ -70,9 +77,12 @@ for (const row of json.node(json.field(root, 'Sorts')).children) {
         matches = received.length === nodes.length && (received.length === 0 || received === nodes);
         return { sort: computed, visited };
     });
-    console.log(`sort:${result.count}:[${result.order.join(' ')}]`);
+    console.log(`sort:${result.count}:[${result.order.values.slice(0, result.order.length).join(' ')}]`);
     console.log(`trace:${calls}:${matches}`);
     computed.count += 1000;
-    if (computed.order.length > 0) { computed.order[0] = (computed.order[0] ?? panic('order')) + 1000; }
-    console.log(`alias:${result.count}:[${result.order.join(' ')}]`);
+    if (computed.order.length > 0) { computed.order.values[0] = (computed.order.values[0] ?? panic('order')) + 1000; }
+    console.log(`alias:${result.count}:[${result.order.values.slice(0, result.order.length).join(' ')}]`);
+    computed.order.length = 0;
+    computed.order.capacity = 0;
+    console.log(`header:${result.order.length}:${result.order.capacity}:[${result.order.values.slice(0, result.order.length).join(' ')}]`);
 }

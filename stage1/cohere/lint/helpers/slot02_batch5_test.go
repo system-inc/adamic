@@ -156,8 +156,9 @@ func TestSlot02Batch5(t *testing.T) {
 		{"at callback short circuit", "find_roots.a", "root === '@' && exists('@')", "exists('@') && root === '@'"},
 		{"sort single delegation", "property_sort.a", "const result = compute(nodes);", "compute(nodes); const result = compute(nodes);"},
 		{"sort count", "property_sort.a", "count: result.sort.count", "count: result.sort.count + 1"},
-		{"sort order alias", "property_sort.a", "order: result.sort.order", "order: result.sort.order.slice()"},
-		{"sort count value semantics", "property_sort.a", "return { order: result.sort.order, count: result.sort.count };", "return result.sort;"},
+		{"sort order alias", "property_sort.a", "values: result.sort.order.values", "values: result.sort.order.values.slice()"},
+		{"sort slice header", "property_sort.a", "order: {\n            values: result.sort.order.values,\n            length: result.sort.order.length,\n            capacity: result.sort.order.capacity,\n        }", "order: result.sort.order"},
+		{"sort count value semantics", "property_sort.a", "return {\n        order: {\n            values: result.sort.order.values,\n            length: result.sort.order.length,\n            capacity: result.sort.order.capacity,\n        },\n        count: result.sort.count,\n    };", "return result.sort;"},
 		{"sort node identity", "property_sort.a", "compute(nodes)", "compute(nodes.slice())"},
 	}
 	for _, mutant := range mutants {

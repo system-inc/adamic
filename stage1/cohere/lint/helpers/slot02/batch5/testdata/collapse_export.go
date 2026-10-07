@@ -17,10 +17,11 @@ type Slot02RootKinds struct {
 }
 type Slot02Store struct{ Roots []Slot02RootKinds }
 type Slot02SortCase struct {
-	Nodes   []int
-	Order   []int
-	Count   int
-	Visited []string
+	Length, Capacity int
+	Nodes            []int
+	Order            []int
+	Count            int
+	Visited          []string
 }
 type Slot02Batch5Corpus struct {
 	Texts, RootSet, Kinds []string
@@ -205,7 +206,7 @@ func AdamicSlot02Batch5Observe(input []string) []byte {
 	}
 	for _, tree := range sortTrees {
 		dependency, visited := propertySort(tree)
-		row := Slot02SortCase{Nodes: []int{}, Order: append([]int{}, dependency.Order...), Count: dependency.Count, Visited: append([]string{}, visited...)}
+		row := Slot02SortCase{Nodes: []int{}, Order: append([]int{}, dependency.Order[:cap(dependency.Order)]...), Length: len(dependency.Order), Capacity: cap(dependency.Order), Count: dependency.Count, Visited: append([]string{}, visited...)}
 		for index := range tree {
 			row.Nodes = append(row.Nodes, index)
 		}
@@ -220,6 +221,8 @@ func AdamicSlot02Batch5Observe(input []string) []byte {
 			Slot02DelegateSort.Order[0] += 1000
 		}
 		fmt.Fprintf(&want, "alias:%d:%v\n", result.Count, result.Order)
+		Slot02DelegateSort.Order = Slot02DelegateSort.Order[:0:0]
+		fmt.Fprintf(&want, "header:%d:%d:%v\n", len(result.Order), cap(result.Order), result.Order)
 	}
 	corpus.Want = want.String()
 	data, err := json.Marshal(corpus)
