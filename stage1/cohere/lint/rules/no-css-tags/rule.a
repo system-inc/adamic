@@ -1,0 +1,39 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { decode } from './entities.a';
+import { noCssTags } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    attribute(index: number, wanted: string, insensitive: boolean): number {
+        for(const child of this.context.node(index).children) {
+            const attributes = this.context.node(child);
+            if(attributes.kind !== 'JsxAttributes') { continue; }
+            for(const property of attributes.children) {
+                const node = this.context.node(property);
+                const name = node.children[0] ?? -1;
+                if(node.kind !== 'JsxAttribute' || name < 0 || this.context.node(name).kind !== 'Identifier') { continue; }
+                const text = this.context.node(name).text;
+                if((insensitive ? text.toLowerCase() : text) === wanted) { return property; }
+            }
+        }
+        return -1;
+    }
+    value(attribute: number): string[] {
+        if(attribute < 0) { return []; }
+        const index = this.context.node(attribute).children[1] ?? -1;
+        return index >= 0 && this.context.node(index).kind === 'StringLiteral' ? [decode(this.context.node(index).text)] : [];
+    }
+    prepare(root: number): void {}
+    visit(node: ParseNode, index: number): void {
+        const tag = node.children[0] ?? -1;
+        if(tag < 0 || this.context.node(tag).kind !== 'Identifier' || this.context.node(tag).text !== 'link') { return; }
+        const rel = this.value(this.attribute(index, 'rel', false));
+        const href = this.value(this.attribute(index, 'href', false));
+        if(rel.length === 0 || rel[0] !== 'stylesheet' || href.length === 0) { return; }
+        const reference = href[0] ?? '';
+        if(reference.startsWith('http://') || reference.startsWith('https://')) { return; }
+        this.context.report(index, '@next/next/no-css-tags', 'noCssTags', noCssTags, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

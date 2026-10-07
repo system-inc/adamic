@@ -1,0 +1,15 @@
+{
+  "name": "@next/next/no-before-interactive-script-outside-document",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoBeforeInteractiveScriptOutsideDocument",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoBeforeInteractiveScriptOutsideDocument",
+  "prepare": "prepare",
+  "node": true
+}

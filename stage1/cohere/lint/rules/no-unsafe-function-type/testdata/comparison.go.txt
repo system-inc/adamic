@@ -1,0 +1,518 @@
+package lint
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+ "github.com/system-inc/adamic/internal/native"
+	"io/fs"
+	"os"
+ "os/exec"
+	"path/filepath"
+	"sort"
+ "regexp"
+	"strings"
+	"testing"
+)
+
+func wave06Emitted(t *testing.T, directory, path string, count bool) execution {
+	t.Helper()
+	prepareRegistry(t, directory)
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	emitted := filepath.Join(t.TempDir(), "main.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0600); err != nil {
+		t.Fatal(err)
+	}
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	args := []string{"--disable-warning=ExperimentalWarning", runner, emitted, "--manifest", path}
+	if count {
+		args = append(args, "--count")
+	}
+	return execute(t, "", "node", args...)
+}
+
+// Keep filename-dependent declaration-file behavior when replaying upstream cases.
+func wave06Cases(t *testing.T) []string {
+	t.Helper()
+	upstream(t)
+	capture := os.Getenv("COHERE_DOCS_CAPTURE")
+	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	type record struct{ Rule, File, Source string; Options json.RawMessage }
+	records := map[string]record{}
+	for _, file := range files {
+		data, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, line := range bytes.Split(data, []byte("\n")) {
+			if len(line) == 0 {
+				continue
+			}
+			var row record
+			if err := json.Unmarshal(line, &row); err != nil {
+				t.Fatal(err)
+			}
+			if !wave06Selected(row.Rule) {
+				continue
+			}
+			records[row.Rule+"\t"+row.File+"\t"+row.Source+"\t"+string(row.Options)] = row
+		}
+	}
+	keys := make([]string, 0, len(records))
+	for key := range records {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	root := t.TempDir()
+	var rows []string
+	for i, key := range keys {
+		row := records[key]
+        if row.Source == "x;\n/* eslint-disable" { t.Logf("BLOCKED recovery fixture: %s %s unterminated block comment", row.Rule, row.File); continue }
+		directory := filepath.Join(root, fmt.Sprintf("case-%03d", i))
+		if err := os.MkdirAll(directory, 0755); err != nil {
+			t.Fatal(err)
+		}
+		if row.Rule != "@typescript-eslint/no-unnecessary-type-constraint" && regexp.MustCompile(`<[/]?[A-Za-z][A-Za-z0-9.]*[[:space:]/>]`).MatchString(row.Source) && (strings.Contains(row.Source, "</") || strings.Contains(row.Source, "/>") || strings.Contains(row.Source, "className=") || strings.Contains(row.Source, "href=") || strings.Contains(row.Source, "strategy=")) {
+            t.Logf("BLOCKED JSX fixture: %s %s", row.Rule, row.File)
+            continue
+        }
+        path := filepath.Join(directory, strings.TrimPrefix(filepath.Clean(strings.ReplaceAll(row.File,"\\","/")), string(filepath.Separator)))
+        if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil { t.Fatal(err) }
+		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
+			t.Fatal(err)
+		}
+		rows = append(rows, path+"\t"+row.Rule+"\t\t\t\t"+string(row.Options))
+	}
+	if len(rows) < 60 {
+		t.Fatalf("unexpectedly small own corpus: %d", len(rows))
+	}
+	t.Logf("filename-preserving upstream cases: %d", len(rows))
+	return rows
+}
+
+func TestWave06Candidates(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	rows := wave06Cases(t)
+	for _, d := range prepareRegistry(t, ".") {
+		if !wave06Selected(d.Name) {
+			continue
+		}
+		for _, path := range ownedWitnesses(t, directory, d.Slug) {
+			rows = append(rows, path+"\t"+d.Name)
+		}
+	}
+	path := manifest(t, rows)
+	oracle := goOracle(t)
+	want := compare(t, oracle, buildPort(t, directory, true), directory, path)
+	emitted := wave06Emitted(t, directory, path, false)
+	if diff := difference(emitted.output, want); diff != "" {
+		t.Fatalf("emitted JavaScript: %s", diff)
+	}
+	t.Logf("all four outputs identical: %d bytes", len(want))
+}
+
+func TestWave06Mutants(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	for _, d := range prepareRegistry(t, ".") {
+		if !wave06Selected(d.Name) {
+			continue
+		}
+		t.Run(d.Slug, func(t *testing.T) {
+			var change struct{ Name, File, From, To string }
+			data, err := os.ReadFile(filepath.Join("rules", d.Slug, "mutant.json"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := json.Unmarshal(data, &change); err != nil {
+				t.Fatal(err)
+			}
+			var rows []string
+			for _, path := range ownedWitnesses(t, directory, d.Slug) {
+				rows = append(rows, path+"\t"+d.Name)
+			}
+			path := manifest(t, rows)
+			want := execute(t, "", oracle, "--manifest", path).output
+			changed := mutant(t, change.From, change.To, filepath.Join("rules", d.Slug, change.File))
+			for _, side := range []struct {
+				name string
+				run  execution
+			}{
+				{"Node", node(t, changed, path, false)},
+				{"emitted JavaScript", wave06Emitted(t, changed, path, false)},
+				{"sanitized native", execute(t, "", buildPort(t, changed, true), "--manifest", path)},
+			} {
+				if bytes.Equal(side.run.output, want) {
+					t.Fatalf("mutant survived on %s", side.name)
+				}
+				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
+			}
+		})
+	}
+}
+
+func TestWave06Compiler(t *testing.T) {
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		t.Fatal("missing compiler checkout")
+	}
+	pin := execute(t, "", "git", "-C", source, "rev-parse", "HEAD")
+	if strings.TrimSpace(string(pin.output)) != compilerCommit {
+		t.Fatal("wrong compiler pin")
+	}
+    snapshotRoot := t.TempDir()
+	var rows []string
+	for _, root := range []string{filepath.Join(source, "src/compiler"), filepath.Join(repository, "stage1")} {
+		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
+				path, err = filepath.Abs(path)
+				if err != nil {
+					return err
+				}
+                data, err := os.ReadFile(path); if err != nil { return err }
+                snapshot := filepath.Join(snapshotRoot, strings.TrimPrefix(path, "/"))
+                if err := os.MkdirAll(filepath.Dir(snapshot),0755); err != nil {return err}
+                if err := os.WriteFile(snapshot,data,0644); err != nil {return err}
+                path = snapshot
+				for _, rule := range wave06Rules {
+					rows = append(rows, path+"\t"+rule)
+				}
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("compiler plus stage1: %d file/rule rows", len(rows))
+	path := manifest(t, rows)
+    entry, binary, emitted := wave06CompilerBuild(t)
+    oracle := goOracle(t)
+    want := execute(t, "", oracle, "--manifest", path).output
+    runner,err := filepath.Abs(filepath.Join(repository,"oracle/node.mjs"));if err!=nil {t.Fatal(err)}
+    for i,side := range []execution{
+        node(t,directory,path,false),
+        execute(t,"","node","--disable-warning=ExperimentalWarning",runner,emitted,"--manifest",path),
+        execute(t,"",binary,"--manifest",path),
+        execute(t,"","node","--disable-warning=ExperimentalWarning",runner,entry,"--manifest",path),
+    } {
+        if diff:=difference(side.output,want);diff!="" {t.Fatalf("compiler backend %d: %s",i,diff)}
+    }
+    t.Logf("compiler/stage1 exact output: %d bytes across Go, original Node driver, owned driver Node, emitted JavaScript, sanitized native",len(want))
+}
+
+func TestWave06Throughput(t *testing.T) {
+	// Bounded upstream witness throughput includes startup; it is not compiler-corpus throughput.
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
+	for _, d := range prepareRegistry(t, ".") {
+		if !wave06Selected(d.Name) {
+			continue
+		}
+		var rows []string
+		witnesses := ownedWitnesses(t, directory, d.Slug)
+		for i := 0; i < 500; i++ {
+			for _, path := range witnesses {
+				options := ""
+                if d.Slug == "no-restricted-properties" { options = `{"Restrictions":[{"object":"foo","property":"bar"}]}` }
+                rows = append(rows, path+"\t"+d.Name+"\t\t\t\t"+options)
+			}
+		}
+		path := manifest(t, rows)
+		var want []byte
+		for _, side := range []struct {
+			name string
+			run  execution
+		}{
+			{"Go", execute(t, "", oracle, "--manifest", path, "--count")},
+			{"native", execute(t, "", binary, "--manifest", path, "--count")},
+			{"Node", node(t, directory, path, true)},
+		} {
+			if want == nil {
+				want = side.run.output
+			} else if !bytes.Equal(want, side.run.output) {
+				t.Fatal("count mismatch")
+			}
+			var count int
+			if _, err := fmt.Sscan(string(want), &count); err != nil {
+				t.Fatal(err)
+			}
+			t.Logf("%s %s: %d findings / %.6fs = %.2f findings/s, %d repeated witness rows", d.Name, side.name, count, side.run.duration.Seconds(), float64(count)/side.run.duration.Seconds(), len(rows))
+		}
+	}
+}
+
+func TestWave06CompilerThroughput(t *testing.T) {
+	// One whole compiler run per backend, including startup and file reads.
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
+	for _, d := range prepareRegistry(t, ".") {
+		if !wave06Selected(d.Name) {
+			continue
+		}
+		var rows []string
+		source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+		if source == "" {
+			t.Fatal("missing pinned compiler checkout")
+		}
+		err := filepath.WalkDir(filepath.Join(source, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+				rows = append(rows, path+"\t"+d.Name)
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		path := manifest(t, rows)
+		var want []byte
+		for _, side := range []struct {
+			name string
+			run  execution
+		}{
+			{"Go", execute(t, "", oracle, "--manifest", path, "--count")},
+			{"native", execute(t, "", binary, "--manifest", path, "--count")},
+			{"Node", node(t, directory, path, true)},
+		} {
+			if want == nil {
+				want = side.run.output
+			} else if !bytes.Equal(want, side.run.output) {
+				t.Fatal("count mismatch")
+			}
+			var count int
+			if _, err := fmt.Sscan(string(want), &count); err != nil {
+				t.Fatal(err)
+			}
+			t.Logf("%s %s: %d findings / %.6fs = %.2f findings/s, %d compiler files", d.Name, side.name, count, side.run.duration.Seconds(), float64(count)/side.run.duration.Seconds(), len(rows))
+		}
+	}
+}
+
+func TestWave06Build(t *testing.T) { directory, err := filepath.Abs("."); if err != nil {t.Fatal(err)}; t.Log(buildPort(t, directory, true)) }
+
+var wave06Rules = []string{"@typescript-eslint/no-unsafe-function-type","@typescript-eslint/no-useless-empty-export","@typescript-eslint/no-unnecessary-type-constraint","no-inner-declarations","no-self-assign","no-restricted-properties","structure/tailwind-no-physical-direction","@eslint-community/eslint-comments/require-description","@next/next/no-document-import-in-page"}
+func wave06Selected(name string) bool { for _, rule := range wave06Rules { if name == rule { return true } }; return false }
+
+func wave06ProjectedBuild(t *testing.T, directory string) (string, string, string) {
+    t.Helper()
+    name := "rules/no-css-tags/testdata/projection.a"
+    data, err := os.ReadFile(name); if err != nil { t.Fatal(err) }
+    entry := filepath.Join(directory, name)
+    if err := os.MkdirAll(filepath.Dir(entry), 0755); err != nil { t.Fatal(err) }
+    if err := os.WriteFile(entry, []byte(rewritePortImports(t, name, string(data))), 0644); err != nil { t.Fatal(err) }
+    program, err := load.Load([]string{entry}); if err != nil {t.Fatal(err)}
+    lowered, err := lower.Lower(context.Background(), program); if err != nil {t.Fatal(err)}
+    binary := filepath.Join(t.TempDir(), "projected")
+    if err := native.Build(native.C(lowered), binary, native.Options{Sanitize:true}); err != nil {t.Fatal(err)}
+    emitted := filepath.Join(t.TempDir(), "projected.mjs")
+    if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {t.Fatal(err)}
+    return entry, binary, emitted
+}
+func wave06ProjectedRuns(t *testing.T, directory, path string) []execution {
+    entry, binary, emitted := wave06ProjectedBuild(t, directory)
+    runner, err := filepath.Abs(filepath.Join(repository,"oracle/node.mjs")); if err != nil {t.Fatal(err)}
+    return []execution{
+        execute(t,"","node","--disable-warning=ExperimentalWarning",runner,entry,path),
+        execute(t,"","node","--disable-warning=ExperimentalWarning",runner,emitted,path),
+        execute(t,"",binary,path),
+    }
+}
+func TestWave06Projected(t *testing.T) {
+    upstream(t)
+    files, err := filepath.Glob(filepath.Join(os.Getenv("COHERE_DOCS_CAPTURE"),"*.jsonl")); if err != nil {t.Fatal(err)}
+    names := []string{"@next/next/google-font-display","@next/next/no-css-tags","@next/next/no-before-interactive-script-outside-document"}
+    type record struct {Rule,File,Source string}
+    records := map[string]record{}
+    for _, file := range files {
+        data, err := os.ReadFile(file); if err != nil {t.Fatal(err)}
+        for _, line := range bytes.Split(data,[]byte("\n")) {
+            if len(line)==0 {continue}; var row record
+            if err := json.Unmarshal(line,&row); err != nil {t.Fatal(err)}
+            selected := false; for _, name := range names { if name==row.Rule {selected=true} }; if !selected {continue}
+            records[row.Rule+row.File+row.Source]=row
+        }
+    }
+    keys:=make([]string,0,len(records));for key:=range records {keys=append(keys,key)};sort.Strings(keys)
+    var rows []string
+    for i,key:=range keys {
+        row:=records[key]; path:=filepath.Join(t.TempDir(),fmt.Sprintf("case%d",i),strings.TrimPrefix(filepath.Clean(strings.ReplaceAll(row.File,"\\","/")),"/"))
+        if err:=os.MkdirAll(filepath.Dir(path),0755);err!=nil {t.Fatal(err)}
+        if err:=os.WriteFile(path,[]byte(row.Source),0644);err!=nil {t.Fatal(err)}
+        rows=append(rows,path+"\t"+row.Rule)
+    }
+    if len(rows)<60 {t.Fatalf("missing JSX corpus: %d",len(rows))}
+    manifestPath:=manifest(t,rows)
+    cohere,err:=filepath.Abs(filepath.Join(repository,"cohere"));if err!=nil {t.Fatal(err)}
+    source,err:=filepath.Abs("rules/no-css-tags/testdata/projection.go.txt");if err!=nil {t.Fatal(err)}
+    virtual:=filepath.Join(cohere,"adamic_wave06_projection.go")
+    overlay,_:=json.Marshal(map[string]any{"Replace":map[string]string{virtual:source}})
+    overlayPath:=filepath.Join(t.TempDir(),"overlay.json");os.WriteFile(overlayPath,overlay,0644)
+    projector:=filepath.Join(t.TempDir(),"projector")
+    execute(t,cohere,"go","build","-overlay="+overlayPath,"-o",projector,virtual)
+    projected:=execute(t,"",projector,manifestPath).output
+    path:=filepath.Join(t.TempDir(),"projection.json");os.WriteFile(path,projected,0644)
+    oracle:=wave06JsxOracle(t);expected:=execute(t,"",oracle,"--manifest",manifestPath);want:=expected.output
+    directory:=copyPort(t,t.TempDir(),"","")
+    for i,side:=range wave06ProjectedRuns(t,directory,path) {
+        if diff:=difference(side.output,want);diff!="" {t.Fatalf("projected backend %d: %s",i,diff)}
+        count := bytes.Count(want, []byte("\nrange "))
+        t.Logf("JSX projection cohort backend %d: %d findings / %.6fs = %.2f findings/s (includes startup; native sanitized)",i,count,side.duration.Seconds(),float64(count)/side.duration.Seconds())
+    }
+    count := bytes.Count(want, []byte("\nrange "))
+    t.Logf("JSX projection cohort Go: %d findings / %.6fs = %.2f findings/s", count, expected.duration.Seconds(),float64(count)/expected.duration.Seconds())
+    t.Logf("Go AST projection: %d filename-preserving JSX fixtures, %d identical bytes, Node/emitted/sanitized native; independent-parser integration remains BLOCKED",len(rows),len(want))
+    if os.Getenv("WAVE06_PROJECTED_TIMING") == "1" {
+        entry,binary,emitted:=wave06ProjectedBuild(t,directory)
+        runner,err:=filepath.Abs(filepath.Join(repository,"oracle/node.mjs"));if err!=nil {t.Fatal(err)}
+        for _,name:=range names {
+            var selected []string
+            for _,row:=range rows { if strings.HasSuffix(row,"\t"+name) {selected=append(selected,row)} }
+            manifestPath:=manifest(t,selected)
+            adapted:=execute(t,"",projector,manifestPath).output
+            input:=filepath.Join(t.TempDir(),"adapted.json");if err:=os.WriteFile(input,adapted,0644);err!=nil {t.Fatal(err)}
+            reference:=execute(t,"",oracle,"--manifest",manifestPath)
+            count:=bytes.Count(reference.output,[]byte("\nrange "))
+            t.Logf("%s Go: %d findings / %.6fs = %.2f findings/s, %d projected upstream cases",name,count,reference.duration.Seconds(),float64(count)/reference.duration.Seconds(),len(selected))
+            for _,side:=range []struct{name string; run execution}{
+                {"Node",execute(t,"","node","--disable-warning=ExperimentalWarning",runner,entry,input)},
+                {"emitted JavaScript",execute(t,"","node","--disable-warning=ExperimentalWarning",runner,emitted,input)},
+                {"sanitized native",execute(t,"",binary,input)},
+            } {
+                if diff:=difference(side.run.output,reference.output);diff!="" {t.Fatal(diff)}
+                t.Logf("%s %s: %d findings / %.6fs = %.2f findings/s, %d projected upstream cases",name,side.name,count,side.run.duration.Seconds(),float64(count)/side.run.duration.Seconds(),len(selected))
+            }
+        }
+        return
+    }
+    for _,slug:=range []string{"google-font-display","no-css-tags","no-before-interactive-script-outside-document"} {
+        t.Run(slug,func(t *testing.T) {
+            var change struct{Name,File,From,To string};data,err:=os.ReadFile(filepath.Join("rules",slug,"mutant.json"));if err!=nil {t.Fatal(err)};if err:=json.Unmarshal(data,&change);err!=nil {t.Fatal(err)}
+            directory:=mutant(t,change.From,change.To,filepath.Join("rules",slug,change.File))
+            for i,side:=range wave06ProjectedRuns(t,directory,path) {
+                if bytes.Equal(side.output,want) {t.Fatalf("mutant survived backend %d",i)}
+                t.Logf("%s caught by output comparison on backend %d: %s",change.Name,i,difference(side.output,want))
+            }
+        })
+    }
+}
+func wave06JsxOracle(t *testing.T) string {
+	t.Helper()
+	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs("rules/no-css-tags/testdata/jsx-oracle.go.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	descriptors := prepareRegistry(t, ".")
+	directory := t.TempDir()
+	replacements := map[string]string{}
+	var virtualFiles []string
+	add := func(name, source string) {
+		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
+		absolute, err := filepath.Abs(source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		replacements[virtual] = absolute
+		virtualFiles = append(virtualFiles, virtual)
+	}
+	add("oracle", side)
+	add("registry", ".generated/registry.go")
+	for _, d := range descriptors {
+		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join("rules", d.Slug, "oracle.go"))
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(path, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(directory, "oracle")
+	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
+	execute(t, root, "go", args...)
+	return binary
+}
+
+
+func wave06CompilerBuild(t *testing.T) (string,string,string) {
+    t.Helper()
+    entry,err:=filepath.Abs("rules/no-unsafe-function-type/testdata/compiler.a");if err!=nil {t.Fatal(err)}
+    prepareRegistry(t,".")
+    program,err:=load.Load([]string{entry});if err!=nil {t.Fatal(err)}
+    lowered,err:=lower.Lower(context.Background(),program);if err!=nil {t.Fatal(err)}
+    binary:=filepath.Join(t.TempDir(),"scanner")
+    if err:=native.Build(native.C(lowered),binary,native.Options{Sanitize:true});err!=nil {t.Fatal(err)}
+    emitted:=filepath.Join(t.TempDir(),"main.mjs")
+    if err:=os.WriteFile(emitted,[]byte(javascript.JavaScript(lowered)),0644);err!=nil {t.Fatal(err)}
+    return entry,binary,emitted
+}
+
+func TestWave06Refusals(t *testing.T) {
+    _, binary, emitted := wave06CompilerBuild(t)
+    runner, err := filepath.Abs(filepath.Join(repository,"oracle/node.mjs")); if err != nil {t.Fatal(err)}
+    entry,err:=filepath.Abs("main.ts");if err!=nil {t.Fatal(err)}
+    for _,name:=range []string{"@next/next/google-font-display","@next/next/no-css-tags","@next/next/no-before-interactive-script-outside-document"} {
+        path:=filepath.Join(t.TempDir(),"misparsed.tsx")
+        if err:=os.WriteFile(path,[]byte("<div>{/* c */}</div>"),0644);err!=nil {t.Fatal(err)}
+        input:=manifest(t,[]string{path+"\t"+name})
+        for _,side:=range []struct{name string; args []string}{
+            {"Node",[]string{"node","--disable-warning=ExperimentalWarning",runner,entry,"--manifest",input}},
+            {"emitted JavaScript",[]string{"node","--disable-warning=ExperimentalWarning",runner,emitted,"--manifest",input}},
+            {"sanitized native",[]string{binary,"--manifest",input}},
+        } {
+            out,err:=os.Create(filepath.Join(t.TempDir(),"stdout.log"));if err!=nil {t.Fatal(err)}
+            stderr,err:=os.Create(filepath.Join(t.TempDir(),"stderr.log"));if err!=nil {t.Fatal(err)}
+            cmd:=exec.Command(side.args[0],side.args[1:]...);cmd.Stdout=out;cmd.Stderr=stderr
+            err=cmd.Run();out.Close();stderr.Close()
+            data,readErr:=os.ReadFile(stderr.Name());if readErr!=nil {t.Fatal(readErr)}
+            exit,ok:=err.(*exec.ExitError)
+            if !ok || exit.ExitCode()!=70 || !bytes.Contains(data,[]byte("NotYet: stage-1 JSX parser adapter")) {t.Fatalf("wrong %s refusal: %v %s",side.name,err,data)}
+            t.Logf("%s %s explicitly refused a silently reinterpreted JSX tree with exit 70",name,side.name)
+        }
+    }
+}

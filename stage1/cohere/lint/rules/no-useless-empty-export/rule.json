@@ -1,0 +1,13 @@
+{
+  "name": "@typescript-eslint/no-useless-empty-export",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUselessEmptyExport",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoUselessEmptyExport",
+  "node": true
+}

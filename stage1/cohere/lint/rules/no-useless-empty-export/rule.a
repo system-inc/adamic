@@ -1,0 +1,75 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    empty(index: number): boolean {
+        const node = this.context.node(index);
+        if(node.kind !== 'ExportDeclaration') {
+            return false;
+        }
+        let emptyClause = false;
+        for(const child of node.children) {
+            const part = this.context.node(child);
+            if(part.kind === 'StringLiteral') {
+                return false;
+            }
+            if(part.kind === 'NamedExports' && part.children.length === 0) {
+                emptyClause = true;
+            }
+        }
+        return emptyClause;
+    }
+    module(index: number): boolean {
+        const node = this.context.node(index);
+        switch(node.kind) {
+            case 'ImportDeclaration':
+            case 'ExportDeclaration':
+                return true;
+            case 'ExportAssignment':
+                return node.semantic !== '1';
+            case 'ImportEqualsDeclaration':
+                for(const child of node.children) {
+                    if(this.context.node(child).kind === 'ExternalModuleReference') {
+                        return true;
+                    }
+                }
+                return false;
+            default:
+                for(const child of node.children) {
+                    if(this.context.node(child).kind === 'ExportKeyword') {
+                        return true;
+                    }
+                }
+                return false;
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        if(this.context.parser.path.endsWith('.d.ts')) {
+            return;
+        }
+        const emptyExports: number[] = [];
+        let makesModule = false;
+        for(const statement of node.children) {
+            if(this.empty(statement)) {
+                emptyExports.push(statement);
+            }
+            else if(this.module(statement)) {
+                makesModule = true;
+            }
+        }
+        if(makesModule) {
+            for(const emptyExport of emptyExports) {
+                this.context.report(emptyExport, '@typescript-eslint/no-useless-empty-export', 'uselessEmptyExport', message, 'fix', '', '');
+            }
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

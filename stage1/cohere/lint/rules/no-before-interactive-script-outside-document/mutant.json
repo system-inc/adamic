@@ -1,0 +1,6 @@
+{
+  "name": "wrong-diagnostic-id",
+  "file": "rule.a",
+  "from": "'noBeforeInteractiveScriptOutsideDocument', noBeforeInteractiveScriptOutsideDocument",
+  "to": "'wrongStrategy', noBeforeInteractiveScriptOutsideDocument"
+}

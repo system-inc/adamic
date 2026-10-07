@@ -1,0 +1,77 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { decode } from './entities.a';
+import { noBeforeInteractiveScriptOutsideDocument } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    attribute(index: number, wanted: string, insensitive: boolean): number {
+        for(const child of this.context.node(index).children) {
+            const attributes = this.context.node(child);
+            if(attributes.kind !== 'JsxAttributes') { continue; }
+            for(const property of attributes.children) {
+                const node = this.context.node(property);
+                const name = node.children[0] ?? -1;
+                if(node.kind !== 'JsxAttribute' || name < 0 || this.context.node(name).kind !== 'Identifier') { continue; }
+                const text = this.context.node(name).text;
+                if((insensitive ? text.toLowerCase() : text) === wanted) { return property; }
+            }
+        }
+        return -1;
+    }
+    value(attribute: number): string[] {
+        if(attribute < 0) { return []; }
+        const index = this.context.node(attribute).children[1] ?? -1;
+        return index >= 0 && this.context.node(index).kind === 'StringLiteral' ? [decode(this.context.node(index).text)] : [];
+    }
+    local = '';
+    binding(index: number): string {
+        const node = this.context.node(index);
+        if(node.kind === 'Identifier') { return node.text; }
+        if(node.kind === 'ImportSpecifier') {
+            for(let i = node.children.length - 1; i >= 0; i--) {
+                const child = this.context.node(node.children[i] ?? -1);
+                if(child.kind === 'Identifier') { return child.text; }
+            }
+            return '';
+        }
+        for(const child of node.children) {
+            const result = this.binding(child);
+            if(result !== '') { return result; }
+        }
+        return '';
+    }
+    prepare(root: number): void {
+        for(const statement of this.context.node(root).children) {
+            const node = this.context.node(statement);
+            if(node.kind !== 'ImportDeclaration') { continue; }
+            let clause = -1;
+            let imported = false;
+            for(const child of node.children) {
+                const part = this.context.node(child);
+                if(part.kind === 'ImportClause') { clause = child; }
+                if(part.kind === 'StringLiteral' && part.text === 'next/script') { imported = true; }
+            }
+            if(imported && clause >= 0) {
+                const name = this.binding(clause);
+                if(name !== '') { this.local = name; return; }
+            }
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        const path = this.context.parser.path;
+        if(this.local === '' || path.includes('app/') || path.includes('app\\')) { return; }
+        const split = path.lastIndexOf('pages');
+        const page = split < 0 ? path : path.slice(split + 5);
+        if(page.startsWith('/_document') || page.startsWith('\\_document')) { return; }
+        const tag = node.children[0] ?? -1;
+        if(tag < 0 || this.context.node(tag).kind !== 'Identifier' || this.context.node(tag).text !== this.local) { return; }
+        const strategy = this.attribute(index, 'strategy', false);
+        const value = this.value(strategy);
+        if(value.length > 0 && value[0] === 'beforeInteractive') {
+            this.context.report(strategy, '@next/next/no-before-interactive-script-outside-document',
+                'noBeforeInteractiveScriptOutsideDocument', noBeforeInteractiveScriptOutsideDocument, '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,147 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { OptionsJson } from '../../helpers/options_json.ts';
+export class Rule {
+    readonly context: RuleContext;
+    readonly options: OptionsJson;
+    readonly specific = new Map<string, number>();
+    readonly objects = new Map<string, number>();
+    readonly properties = new Map<string, number>();
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.options = new OptionsJson(context.settings.text === '' ? '{}' : context.settings.text);
+        const root = this.options.parse();
+        if(root < 0) { panic('invalid no-restricted-properties options'); }
+        const restrictions = this.options.field(root, 'Restrictions');
+        if(restrictions >= 0 && this.options.node(restrictions).kind === 'array') {
+            for(const row of this.options.node(restrictions).children) {
+                const object = this.field(row, 'object');
+                const property = this.field(row, 'property');
+                if(object === '') { this.properties.set(property, row); }
+                else if(property === '') { this.objects.set(object, row); }
+                else { this.specific.set(`${object.length}:${object}${property}`, row); }
+            }
+        }
+    }
+    field(row: number, name: string): string {
+        const index = this.options.field(row, name);
+        return index < 0 || this.options.node(index).kind === 'null' ? '' : this.options.node(index).text;
+    }
+    allowance(row: number, name: string): string[] {
+        const index = this.options.field(row, name);
+        const result: string[] = [];
+        if(index >= 0 && this.options.node(index).kind === 'array') {
+            for(const child of this.options.node(index).children) { result.push(this.options.node(child).text); }
+        }
+        return result;
+    }
+    configured(row: number, name: string): boolean {
+        const index = this.options.field(row, name);
+        return index >= 0 && this.options.node(index).kind === 'array';
+    }
+    binaryOperator(index: number): string {
+        const operator = this.context.node(index).children[1] ?? -1;
+        return operator < 0 ? '' : this.context.node(operator).kind;
+    }
+    literal(index: number): string[] {
+        if(index < 0) { return []; }
+        const node = this.context.node(this.context.unwrap(index));
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral', 'RegularExpressionLiteral'].includes(node.kind)) { return [node.text]; }
+        if(node.kind === 'BigIntLiteral') { return [node.text.endsWith('n') ? node.text.slice(0, -1) : node.text]; }
+        if(node.kind === 'NullKeyword') { return ['null']; }
+        if(node.kind === 'TrueKeyword') { return ['true']; }
+        if(node.kind === 'FalseKeyword') { return ['false']; }
+        return [];
+    }
+    key(index: number): string[] {
+        const node = this.context.node(index);
+        if(node.kind === 'Identifier') { return [node.text]; }
+        if(node.kind === 'ComputedPropertyName') { return this.literal(node.children[0] ?? -1); }
+        return this.literal(index);
+    }
+    accessed(node: ParseNode): string[] {
+        const key = node.children[node.children.length - 1] ?? -1;
+        if(key < 0) { return []; }
+        if(node.kind === 'ElementAccessExpression') { return this.literal(key); }
+        return this.context.node(key).kind === 'Identifier' ? [this.context.node(key).text] : [];
+    }
+
+    receiver(index: number): string {
+        if(index < 0) { return ''; }
+        const node = this.context.node(this.context.unwrap(index));
+        return node.kind === 'Identifier' ? node.text : '';
+    }
+    report(index: number, object: string, property: string): void {
+        const row = this.specific.get(`${object.length}:${object}${property}`) ?? this.objects.get(object);
+        if(row !== undefined) {
+            const allowed = this.allowance(row, 'allowProperties');
+            if(allowed.includes(property)) { return; }
+            const allowance = this.configured(row, 'allowProperties') ? ` Only these properties are allowed: ${allowed.join(', ')}.` : '';
+            const suffix = this.field(row, 'message');
+            this.context.report(index, 'no-restricted-properties', 'restrictedObjectProperty',
+                `\`${object}.${property}\` is restricted from being used.${allowance}${suffix === '' ? '' : ' ' + suffix}`, '', '', '');
+            return;
+        }
+        const global = this.properties.get(property);
+        if(global === undefined) { return; }
+        const allowed = this.allowance(global, 'allowObjects');
+        if(allowed.includes(object)) { return; }
+        const allowance = this.configured(global, 'allowObjects') ? ` Property \`${property}\` is only allowed on these objects: ${allowed.join(', ')}.` : '';
+        const suffix = this.field(global, 'message');
+        this.context.report(index, 'no-restricted-properties', 'restrictedProperty',
+            `\`${property}\` is restricted from being used.${allowance}${suffix === '' ? '' : ' ' + suffix}`, '', '', '');
+    }
+    assignment(index: number): boolean {
+        let child = index;
+        let parent = this.context.parents[child] ?? -1;
+        while(parent >= 0) {
+            const node = this.context.node(parent);
+            if(node.kind === 'BinaryExpression') { return this.binaryOperator(parent) === 'EqualsToken' && node.children[0] === child; }
+            if(!['PropertyAssignment', 'ArrayLiteralExpression', 'ShorthandPropertyAssignment', 'SpreadAssignment', 'SpreadElement', 'ParenthesizedExpression', 'ObjectLiteralExpression'].includes(node.kind)) { return false; }
+            child = parent;
+            parent = this.context.parents[child] ?? -1;
+        }
+        return false;
+    }
+    initializer(index: number): number {
+        const node = this.context.node(index);
+        if(node.children.length < 2) { return -1; }
+        const previous = node.children[node.children.length - 2] ?? -1;
+        this.context.scanner.pos = this.context.node(previous).end;
+        if(this.context.scanner.scan() !== 'EqualsToken') { return -1; }
+        return node.children[node.children.length - 1] ?? -1;
+    }
+    visit(node: ParseNode, index: number, parent: number): void {
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
+            const property = this.accessed(node);
+            if(property.length > 0) { this.report(index, this.receiver(node.children[0] ?? -1), property[0] ?? ''); }
+            return;
+        }
+        const binding = node.kind === 'ObjectBindingPattern';
+        if(!binding && !this.assignment(index)) { return; }
+        let object = '';
+        if(parent >= 0) {
+            const source = this.context.node(parent);
+            if(source.kind === 'BinaryExpression' && this.binaryOperator(parent) === 'EqualsToken' && source.children[0] === index) {
+                object = this.receiver(source.children[2] ?? -1);
+                if(binding) {
+                    const right = source.children[2] ?? -1;
+                    object = right >= 0 && this.context.node(right).kind === 'Identifier' ? this.context.node(right).text : '';
+                }
+            } else if(binding && ['VariableDeclaration', 'Parameter', 'BindingElement'].includes(source.kind)) {
+                const value = this.initializer(parent);
+                if(value >= 0 && this.context.node(value).kind === 'Identifier') { object = this.context.node(value).text; }
+            }
+        }
+        for(const child of node.children) {
+            const member = this.context.node(child);
+            if(binding ? member.kind !== 'BindingElement' : !['PropertyAssignment', 'ShorthandPropertyAssignment'].includes(member.kind)) { continue; }
+            const key = member.children[0] ?? -1;
+            if(key < 0 || this.context.node(key).kind === 'DotDotDotToken') { continue; }
+            const property = this.key(key);
+            if(property.length > 0) { this.report(index, object, property[0] ?? ''); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,24 @@
+export function decode(text: string): string {
+    const names = ["Aacute", "aacute", "Acirc", "acirc", "acute", "AElig", "aelig", "Agrave", "agrave", "alefsym", "Alpha", "alpha", "amp", "and", "ang", "apos", "Aring", "aring", "asymp", "Atilde", "atilde", "Auml", "auml", "bdquo", "Beta", "beta", "brvbar", "bull", "cap", "Ccedil", "ccedil", "cedil", "cent", "Chi", "chi", "circ", "clubs", "cong", "copy", "crarr", "cup", "curren", "dagger", "Dagger", "darr", "dArr", "deg", "Delta", "delta", "diams", "divide", "Eacute", "eacute", "Ecirc", "ecirc", "Egrave", "egrave", "empty", "emsp", "ensp", "Epsilon", "epsilon", "equiv", "Eta", "eta", "ETH", "eth", "Euml", "euml", "euro", "exist", "fnof", "forall", "frac12", "frac14", "frac34", "frasl", "Gamma", "gamma", "ge", "gt", "harr", "hArr", "hearts", "hellip", "Iacute", "iacute", "Icirc", "icirc", "iexcl", "Igrave", "igrave", "image", "infin", "int", "Iota", "iota", "iquest", "isin", "Iuml", "iuml", "Kappa", "kappa", "Lambda", "lambda", "lang", "laquo", "larr", "lArr", "lceil", "ldquo", "le", "lfloor", "lowast", "loz", "lrm", "lsaquo", "lsquo", "lt", "macr", "mdash", "micro", "middot", "minus", "Mu", "mu", "nabla", "nbsp", "ndash", "ne", "ni", "not", "notin", "nsub", "Ntilde", "ntilde", "Nu", "nu", "Oacute", "oacute", "Ocirc", "ocirc", "OElig", "oelig", "Ograve", "ograve", "oline", "Omega", "omega", "Omicron", "omicron", "oplus", "or", "ordf", "ordm", "Oslash", "oslash", "Otilde", "otilde", "otimes", "Ouml", "ouml", "para", "part", "permil", "perp", "Phi", "phi", "Pi", "pi", "piv", "plusmn", "pound", "prime", "Prime", "prod", "prop", "Psi", "psi", "quot", "radic", "rang", "raquo", "rarr", "rArr", "rceil", "rdquo", "real", "reg", "rfloor", "Rho", "rho", "rlm", "rsaquo", "rsquo", "sbquo", "Scaron", "scaron", "sdot", "sect", "shy", "Sigma", "sigma", "sigmaf", "sim", "spades", "sub", "sube", "sum", "sup", "sup1", "sup2", "sup3", "supe", "szlig", "Tau", "tau", "there4", "Theta", "theta", "thetasym", "thinsp", "THORN", "thorn", "tilde", "times", "trade", "Uacute", "uacute", "uarr", "uArr", "Ucirc", "ucirc", "Ugrave", "ugrave", "uml", "upsih", "Upsilon", "upsilon", "Uuml", "uuml", "weierp", "Xi", "xi", "Yacute", "yacute", "yen", "yuml", "Yuml", "Zeta", "zeta", "zwj", "zwnj"];
+    const values = ["Á", "á", "Â", "â", "´", "Æ", "æ", "À", "à", "ℵ", "Α", "α", "&", "∧", "∠", "'", "Å", "å", "≈", "Ã", "ã", "Ä", "ä", "„", "Β", "β", "¦", "•", "∩", "Ç", "ç", "¸", "¢", "Χ", "χ", "ˆ", "♣", "≅", "©", "↵", "∪", "¤", "†", "‡", "↓", "⇓", "°", "Δ", "δ", "♦", "÷", "É", "é", "Ê", "ê", "È", "è", "∅", " ", " ", "Ε", "ε", "≡", "Η", "η", "Ð", "ð", "Ë", "ë", "€", "∃", "ƒ", "∀", "½", "¼", "¾", "⁄", "Γ", "γ", "≥", ">", "↔", "⇔", "♥", "…", "Í", "í", "Î", "î", "¡", "Ì", "ì", "ℑ", "∞", "∫", "Ι", "ι", "¿", "∈", "Ï", "ï", "Κ", "κ", "Λ", "λ", "〈", "«", "←", "⇐", "⌈", "“", "≤", "⌊", "∗", "◊", "‎", "‹", "‘", "<", "¯", "—", "µ", "·", "−", "Μ", "μ", "∇", " ", "–", "≠", "∋", "¬", "∉", "⊄", "Ñ", "ñ", "Ν", "ν", "Ó", "ó", "Ô", "ô", "Œ", "œ", "Ò", "ò", "‾", "Ω", "ω", "Ο", "ο", "⊕", "∨", "ª", "º", "Ø", "ø", "Õ", "õ", "⊗", "Ö", "ö", "¶", "∂", "‰", "⊥", "Φ", "φ", "Π", "π", "ϖ", "±", "£", "′", "″", "∏", "∝", "Ψ", "ψ", "\"", "√", "〉", "»", "→", "⇒", "⌉", "”", "ℜ", "®", "⌋", "Ρ", "ρ", "‏", "›", "’", "‚", "Š", "š", "⋅", "§", "­", "Σ", "σ", "ς", "∼", "♠", "⊂", "⊆", "∑", "⊃", "¹", "²", "³", "⊇", "ß", "Τ", "τ", "∴", "Θ", "θ", "ϑ", " ", "Þ", "þ", "˜", "×", "™", "Ú", "ú", "↑", "⇑", "Û", "û", "Ù", "ù", "¨", "ϒ", "Υ", "υ", "Ü", "ü", "℘", "Ξ", "ξ", "Ý", "ý", "¥", "ÿ", "Ÿ", "Ζ", "ζ", "‍", "‌"];
+    let result = '';
+    for(let i = 0; i < text.length; i++) {
+        if(text.slice(i, i + 1) !== '&') { result += text.slice(i, i + 1); continue; }
+        const end = text.indexOf(';', i + 1);
+        if(end < i + 2) { result += '&'; continue; }
+        const item = text.slice(i + 1, end);
+        let replacement = '';
+        let known = false;
+        if(/^#(?:[0-9]+|x[0-9a-fA-F]+)$/.test(item)) {
+            const value = item.startsWith('#x') ? Number.parseInt(item.slice(2), 16) : Number.parseInt(item.slice(1), 10);
+            replacement = value > 0x10ffff ? text.slice(i, end + 1) : String.fromCodePoint(value >= 0xd800 && value <= 0xdfff ? 65533 : value);
+            known = true;
+        } else if(/^[0-9a-zA-Z]+$/.test(item)) {
+            const offset = names.indexOf(item);
+            replacement = offset < 0 ? text.slice(i, end + 1) : values[offset] ?? '';
+            known = true;
+        }
+        if(known) { result += replacement; i = end; } else { result += '&'; }
+    }
+    return result;
+}

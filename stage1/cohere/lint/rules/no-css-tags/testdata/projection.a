@@ -1,0 +1,65 @@
+import { panic, programArguments, readTextFile, utf8Length } from 'adamic';
+import { OptionsJson } from '../../../helpers/options_json.ts';
+import { Parser } from '../../../../../typescript/parser/parser.ts';
+import { ParseNode, written } from '../../../../../typescript/parser/nodes.ts';
+import { Scanner } from '../../../../../typescript/scanner/scanner.ts';
+import { RuleContext } from '../../../context.ts';
+import { Settings } from '../../../settings.ts';
+import { Rule as Fonts } from '../../google-font-display/rule.a';
+import { Rule as Css } from '../rule.a';
+import { Rule as Scripts } from '../../no-before-interactive-script-outside-document/rule.a';
+const input = readTextFile(programArguments()[0] ?? panic('projection file'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+let caseNumber = 0;
+for(const row of json.node(root).children) {
+    const source = json.node(json.field(row, 'source')).text;
+    const path = json.node(json.field(row, 'path')).text;
+    const selected = json.node(json.field(row, 'rule')).text;
+    const parser = new Parser(source, path);
+    for(const raw of json.node(json.field(row, 'nodes')).children) {
+        const children: number[] = [];
+        for(const child of json.node(json.field(raw, 'children')).children) { children.push(Number(json.node(child).text)); }
+        const node = new ParseNode(json.node(json.field(raw, 'kind')).text, Number(json.node(json.field(raw, 'pos')).text), Number(json.node(json.field(raw, 'end')).text), children);
+        node.text = json.node(json.field(raw, 'text')).text;
+        parser.nodes.push(node);
+    }
+    const tree = Number(json.node(json.field(row, 'root')).text);
+    const parents = new Array<number>(parser.nodes.length).fill(-1);
+    for(let i = 0; i < parser.nodes.length; i++) {
+        for(const child of parser.node(i).children) { parents[child] = i; }
+    }
+    const context = new RuleContext(source, parser, new Scanner(source), selected, '', '', false, parents, new Settings());
+    const fonts = new Fonts(context);
+    const css = new Css(context);
+    const scripts = new Scripts(context);
+    fonts.prepare(tree);
+    css.prepare(tree);
+    scripts.prepare(tree);
+    // Postorder arena insertion does not preserve sibling finding order. Walk source-order children.
+    const pending = [tree];
+    while(pending.length > 0) {
+        const index = pending.pop() ?? panic('missing node');
+        const node = parser.node(index);
+        if(node.kind === 'JsxOpeningElement' || node.kind === 'JsxSelfClosingElement') {
+            if(selected === '@next/next/google-font-display') { fonts.visit(index); }
+            if(selected === '@next/next/no-css-tags') { css.visit(index); }
+            if(selected === '@next/next/no-before-interactive-script-outside-document') { scripts.visit(index); }
+        }
+        for(let i = node.children.length - 1; i >= 0; i--) { pending.push(node.children[i] ?? panic('missing child')); }
+    }
+    console.log(`case ${caseNumber}`);
+    for(const finding of context.findings) {
+        const start = utf8Length(source.slice(0, finding.start));
+        const end = utf8Length(source.slice(0, finding.end));
+        let line = 1;
+        let lineStart = 0;
+        for(let i = 0; i < finding.start; i++) { if(source.charCodeAt(i) === 10) { line++; lineStart = i + 1; } }
+        const column = utf8Length(source.slice(lineStart, finding.start)) + 1;
+        console.log(`${path}:${line}:${column}\n  ${finding.rule}  ${finding.message}\n`);
+        console.log(`range ${start} ${end} ${finding.id} ${finding.repair}\t${written(finding.replacement)}\t${written(finding.suggestion)}\t${start} ${end}`);
+    }
+    console.log(`fixed\t${written(source)}`);
+    caseNumber++;
+}

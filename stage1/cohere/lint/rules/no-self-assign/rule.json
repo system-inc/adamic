@@ -1,0 +1,13 @@
+{
+  "name": "no-self-assign",
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoSelfAssign",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoSelfAssign",
+  "node": true
+}

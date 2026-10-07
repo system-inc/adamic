@@ -1,0 +1,16 @@
+{
+  "name": "no-inner-declarations",
+  "kinds": [
+    "FunctionDeclaration",
+    "VariableStatement"
+  ],
+  "parent": true,
+  "prepare": "prepare",
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoInnerDeclarations",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoInnerDeclarations",
+  "node": true
+}

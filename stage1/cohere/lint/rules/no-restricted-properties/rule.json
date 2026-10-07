@@ -1,0 +1,17 @@
+{
+  "name": "no-restricted-properties",
+  "kinds": [
+    "PropertyAccessExpression",
+    "ElementAccessExpression",
+    "ObjectBindingPattern",
+    "ObjectLiteralExpression"
+  ],
+  "parent": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoRestrictedProperties",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoRestrictedProperties",
+  "node": true
+}

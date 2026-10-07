@@ -1,0 +1,15 @@
+{
+  "name": "@next/next/no-css-tags",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoCssTags",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoCssTags",
+  "prepare": "prepare",
+  "node": true
+}

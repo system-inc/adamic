@@ -1,0 +1,81 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    module = false;
+    root = -1;
+    constructor(context: RuleContext) { this.context = context; }
+    functionLike(index: number): boolean {
+        return ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration',
+            'GetAccessor', 'SetAccessor', 'Constructor'].includes(this.context.node(index).kind);
+    }
+    prologue(index: number): boolean {
+        for(const child of this.context.node(index).children) {
+            const statement = this.context.node(child);
+            if(statement.kind !== 'ExpressionStatement') { return false; }
+            const expression = statement.children[0] ?? -1;
+            if(expression < 0 || this.context.node(expression).kind !== 'StringLiteral') { return false; }
+            if(this.context.node(expression).text === 'use strict') { return true; }
+        }
+        return false;
+    }
+    prepare(root: number): void {
+        this.root = root;
+        for(const child of this.context.node(root).children) {
+            const node = this.context.node(child);
+            if(['ImportDeclaration', 'ExportDeclaration', 'ExportAssignment'].includes(node.kind)) { this.module = true; }
+            for(const part of node.children) {
+                const kind = this.context.node(part).kind;
+                if(kind === 'ExportKeyword' || (node.kind === 'ImportEqualsDeclaration' && kind === 'ExternalModuleReference')) {
+                    this.module = true;
+                }
+            }
+        }
+    }
+    strict(parent: number): boolean {
+        if(this.module || this.prologue(this.root)) { return true; }
+        let cursor = parent;
+        while(cursor >= 0) {
+            const node = this.context.node(cursor);
+            if(node.kind === 'ClassDeclaration' || node.kind === 'ClassExpression') { return true; }
+            if(this.functionLike(cursor)) {
+                for(const child of node.children) {
+                    if(this.context.node(child).kind === 'Block' && this.prologue(child)) { return true; }
+                }
+            }
+            cursor = this.context.parents[cursor] ?? -1;
+        }
+        return false;
+    }
+    visit(node: ParseNode, index: number, parent: number): void {
+        if(node.kind === 'VariableStatement') {
+            if(this.context.settings.read('both', 'false') !== 'true') { return; }
+            let isVar = false;
+            for(const child of node.children) {
+                const list = this.context.node(child);
+                if(list.kind === 'VariableDeclarationList' && list.semantic === '0') { isVar = true; }
+            }
+            if(!isVar) { return; }
+        } else if(this.context.settings.read('blockscopedfunctions', 'true') !== 'false' && this.strict(parent)) {
+            return;
+        }
+        if(parent < 0) { return; }
+        const parentNode = this.context.node(parent);
+        if(['SourceFile', 'ClassStaticBlockDeclaration', 'ModuleBlock'].includes(parentNode.kind)) { return; }
+        if(parentNode.kind === 'Block') {
+            const grandparent = this.context.parents[parent] ?? -1;
+            if(grandparent >= 0 && (this.functionLike(grandparent) || this.context.node(grandparent).kind === 'ClassStaticBlockDeclaration')) { return; }
+        }
+        let body = 'program';
+        let cursor = parent;
+        while(cursor >= 0) {
+            if(this.context.node(cursor).kind === 'ClassStaticBlockDeclaration') { body = 'class static block body'; break; }
+            if(this.functionLike(cursor)) { body = 'function body'; break; }
+            cursor = this.context.parents[cursor] ?? -1;
+        }
+        const type = node.kind === 'VariableStatement' ? 'variable' : 'function';
+        this.context.report(index, 'no-inner-declarations', 'moveDeclToRoot', message(type, body), '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

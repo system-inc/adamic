@@ -1,0 +1,127 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    access(index: number): boolean { return ['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.context.node(index).kind); }
+    binaryOperator(index: number): string {
+        const operator = this.context.node(index).children[1] ?? -1;
+        return operator < 0 ? '' : this.context.node(operator).kind;
+    }
+    literal(index: number): string[] {
+        if(index < 0) { return []; }
+        const node = this.context.node(this.context.unwrap(index));
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral', 'RegularExpressionLiteral'].includes(node.kind)) { return [node.text]; }
+        if(node.kind === 'BigIntLiteral') { return [node.text.endsWith('n') ? node.text.slice(0, -1) : node.text]; }
+        if(node.kind === 'NullKeyword') { return ['null']; }
+        if(node.kind === 'TrueKeyword') { return ['true']; }
+        if(node.kind === 'FalseKeyword') { return ['false']; }
+        return [];
+    }
+    key(index: number): string[] {
+        const node = this.context.node(index);
+        if(node.kind === 'Identifier') { return [node.text]; }
+        if(node.kind === 'ComputedPropertyName') { return this.literal(node.children[0] ?? -1); }
+        return this.literal(index);
+    }
+    accessed(index: number): string[] {
+        const node = this.context.node(index);
+        const key = node.children[node.children.length - 1] ?? -1;
+        if(key < 0) { return []; }
+        if(node.kind === 'ElementAccessExpression') { return this.literal(key); }
+        return this.context.node(key).kind === 'Identifier' ? [this.context.node(key).text] : [];
+    }
+    same(leftIndex: number, rightIndex: number): boolean {
+        if(leftIndex < 0 || rightIndex < 0) { return false; }
+        const l = this.context.unwrap(leftIndex);
+        const r = this.context.unwrap(rightIndex);
+        const left = this.context.node(l);
+        const right = this.context.node(r);
+        if(this.access(l) && this.access(r)) {
+            const a = this.accessed(l);
+            const b = this.accessed(r);
+            if(a.length > 0) { return b.length > 0 && a[0] === b[0] && this.same(left.children[0] ?? -1, right.children[0] ?? -1); }
+            return left.kind === right.kind && this.same(left.children[0] ?? -1, right.children[0] ?? -1) && this.same(left.children[left.children.length - 1] ?? -1, right.children[right.children.length - 1] ?? -1);
+        }
+        if(left.kind !== right.kind) { return false; }
+        if(['ThisKeyword', 'SuperKeyword', 'NullKeyword', 'TrueKeyword', 'FalseKeyword'].includes(left.kind)) { return true; }
+        if(['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'RegularExpressionLiteral'].includes(left.kind)) { return left.text === right.text; }
+        return false;
+    }
+    value(index: number): number {
+        const node = this.context.node(index);
+        if(node.kind === 'PropertyAssignment') { return node.children[1] ?? -1; }
+        if(node.kind === 'ShorthandPropertyAssignment' && node.children.length === 1) { return node.children[0] ?? -1; }
+        return -1;
+    }
+    propertyKey(index: number): string[] {
+        const node = this.context.node(index);
+        if(node.kind !== 'PropertyAssignment' && node.kind !== 'ShorthandPropertyAssignment') { return []; }
+        const name = node.children[0] ?? -1;
+        return name < 0 ? [] : this.key(name);
+    }
+    report(leftIndex: number, rightIndex: number): void {
+        if(leftIndex < 0 || rightIndex < 0) { return; }
+        const l = this.context.unwrap(leftIndex);
+        const r = this.context.unwrap(rightIndex);
+        const left = this.context.node(l);
+        const right = this.context.node(r);
+        if(left.kind === 'Identifier' && right.kind === 'Identifier') {
+            if(left.text === right.text) { this.finding(r); }
+        } else if(left.kind === 'ArrayLiteralExpression' && right.kind === 'ArrayLiteralExpression') {
+            const end = Math.min(left.children.length, right.children.length);
+            for(let i = 0; i < end; i++) {
+                const a = this.context.unwrap(left.children[i] ?? -1);
+                const b = this.context.unwrap(right.children[i] ?? -1);
+                if(this.context.node(a).kind === 'SpreadElement' && i < right.children.length - 1) { return; }
+                this.report(a, b);
+                if(this.context.node(b).kind === 'SpreadElement') { return; }
+            }
+        } else if(left.kind === 'ObjectLiteralExpression' && right.kind === 'ObjectLiteralExpression') {
+            let start = 0;
+            for(let i = 0; i < right.children.length; i++) {
+                if(this.context.node(right.children[i] ?? -1).kind === 'SpreadAssignment') { start = i + 1; }
+            }
+            for(const a of left.children) {
+                const ka = this.propertyKey(a);
+                if(ka.length === 0) { continue; }
+                for(let i = start; i < right.children.length; i++) {
+                    const b = right.children[i] ?? -1;
+                    const kb = this.propertyKey(b);
+                    if(kb.length > 0 && ka[0] === kb[0]) { this.report(this.value(a), this.value(b)); }
+                }
+            }
+        } else if(left.kind === 'SpreadElement' && right.kind === 'SpreadElement') {
+            this.report(left.children[0] ?? -1, right.children[0] ?? -1);
+        } else if(this.context.settings.read('props', 'true') !== 'false' && this.access(l) && this.access(r) && this.same(l, r)) {
+            this.finding(r);
+        }
+    }
+    finding(index: number): void { this.context.report(index, 'no-self-assign', 'selfAssignment', message, '', '', ''); }
+    target(index: number): boolean {
+        let child = index;
+        let parent = this.context.parents[child] ?? -1;
+        while(parent >= 0) {
+            const node = this.context.node(parent);
+            if(node.kind === 'BinaryExpression') {
+                return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(this.binaryOperator(parent)) && node.children[0] === child;
+            }
+            if(node.kind === 'PrefixUnaryExpression' || node.kind === 'PostfixUnaryExpression') { return node.operator === 'PlusPlusToken' || node.operator === 'MinusMinusToken'; }
+            if(node.kind === 'ForInStatement' || node.kind === 'ForOfStatement') { return node.children[0] === child; }
+            if(node.kind === 'PropertyAssignment' && node.children[0] === child) { return false; }
+            if(node.kind === 'ShorthandPropertyAssignment' && node.children[0] !== child) { return false; }
+            if(!['ParenthesizedExpression', 'ArrayLiteralExpression', 'SpreadElement', 'NonNullExpression', 'SpreadAssignment', 'ShorthandPropertyAssignment', 'PropertyAssignment', 'ObjectLiteralExpression'].includes(node.kind)) { return false; }
+            child = parent;
+            parent = this.context.parents[child] ?? -1;
+        }
+        return false;
+    }
+    visit(node: ParseNode, index: number): void {
+        const operator = node.children[1] ?? -1;
+        const kind = operator < 0 ? '' : this.context.node(operator).kind;
+        if(!['EqualsToken', 'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(kind) || this.target(index)) { return; }
+        this.report(node.children[0] ?? -1, node.children[2] ?? -1);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
