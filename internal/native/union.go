@@ -61,6 +61,9 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 // missing, and for which member a union is.
 func (e *emitter) typeOf(value ir.Expression) string {
 	operand := e.value(value)
+	if _, null := value.(ir.Null); null {
+		return "&adamic_typeof_object"
+	}
 	named := func(name string) string { return "&adamic_typeof_" + name }
 	switch value.Type() {
 	case ir.Number:
