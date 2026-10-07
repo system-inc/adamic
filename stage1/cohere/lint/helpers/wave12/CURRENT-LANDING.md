@@ -1,3 +1,13 @@
+Built CFG decorator and type-parameter expression delegation in separate .a files; four consumers lose two dependencies each, zero final blockers.
+Implementation commits fad689669 and 05d3414d3, evidence 4a37cc4e1; both owned branches contain current origin/main b8fb957aa; rule branch c485ad2cb remains pushed and parked.
+Owned eight-helper package PASS 123.469s plus final ninth-helper comparison PASS 6.677s, vet clean; new total 30,954 observations / 62,024 bytes identical on actual Go, source Node, emitted JavaScript and sanitized native; setup 122s, nproc 5.
+Four new compiling mutants caught only by actual-Go comparison on every backend: omitted/duplicated decorators, omitted constraints, swapped constraint/default order. Earlier 20 controls also pass, with the existing unsupported-separator refusal distinction retained.
+Uncovered: full expression/CFG builder and rule findings, malformed internal Go ASTs; original fixture families have zero delegation calls for these helpers. Exact counter bigint-return lowering remains blocked, shared harness not on main, other unclaimed helpers remain.
+
+Current handoff: [DECORATORS.md](DECORATORS.md) and [TYPE-PARAMETERS.md](TYPE-PARAMETERS.md). Harness 41eb6eab2 ledger read; upon harness rebase retire this unit's losing no-this-alias, optional-chain assertion and type-constraint copies, keeping its named Next document-import and ORM copies. No batch-only rule is assigned specifically to wave1-12 by this ledger. Main and area branches were never pushed. Final fetch verified main b8fb957aa; helper branch clean and pushed. No new claim is left awaiting implementation beyond the existing explicitly blocked counter.
+
+---
+
 Built: landing refresh of all seven delivered helpers onto origin/main b8fb957aa839a9e8cb0b54279dd9864fa317bd30; no ninth helper was claimed.
 Commits: pre-rebase pushed helper 2b917cbb24fa112ddf8537814e7790f91e4877a2; rebased implementation bcd3074e3c947519e99748f3becbaadde38fab72 before this evidence commit; rule sibling rebased 79ed6a17bc1a17f445cb4daad5c56471dbd73eb7 and being rechecked independently.
 Checks: complete owned helper package PASS 131.391s, vet clean; all seven contracts retain actual Go/source Node/emitted JS/sanitized-native parity. Main's inherited-static-field filtered oracle also PASS 0.918s uncached.
