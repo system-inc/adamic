@@ -65,3 +65,39 @@ func TestWeakRegionReviewStaysCounted(t *testing.T) {
 		t.Fatal("Weak closed a strong cycle in graph classification")
 	}
 }
+
+// Freeze the known classification gap, rather than inferring a miss from a leak.
+// These literal IDs are not selected although their later Link views are graph.
+func TestGraphAllocationClassificationGap(t *testing.T) {
+	for _, name := range []string{"return", "conditional", "mixed"} {
+		t.Run(name, func(t *testing.T) {
+			checked, err := load.Load([]string{"../oracle/testdata/graph_regions/classification_" + name + ".a"})
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := Lower(context.Background(), checked)
+			if err != nil {
+				t.Fatal(err)
+			}
+			counted, graph := 0, 0
+			for _, function := range program.Functions {
+				walk(function.Body, func(node any) bool {
+					literal, ok := node.(ir.ObjectLiteral)
+					if !ok {
+						return true
+					}
+					if program.IsGraph(literal.GraphTypes) {
+						graph++
+					} else {
+						counted++
+					}
+					t.Logf("allocation IDs %v selected graph=%t", literal.GraphTypes, program.IsGraph(literal.GraphTypes))
+					return true
+				})
+			}
+			if len(program.GraphTypes) == 0 || counted == 0 || (name == "mixed" && graph != 1) {
+				t.Fatalf("want missed allocation and graph view, got counted=%d graph=%d types=%v", counted, graph, program.GraphTypes)
+			}
+		})
+	}
+}
