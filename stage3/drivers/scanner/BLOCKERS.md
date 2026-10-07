@@ -1,5 +1,15 @@
 # Scanner blockers
 
+## October 7: import cycles closed, next refusal is debugger
+
+After integrating `codex/import-cycles` at `6b17636` into the unpushed scratch
+compiler, the cycle refusal closes. The next exact diagnostic is:
+`debug.ts:10:9: Adamic 0.1 refuses debugger; remove it`.
+Census reason: debugger. No closing feature branch was found. Temporary 54's
+slice-only plan is published with this blocker before implementation. It
+covers only the reached Debug.fail member and first removes debugger. V8's
+captureStackTrace and type contracts remain separate probes, not assumed fixed.
+
 ## October 7: checker clear in the adapted slice, first lowering blocker
 
 Main plus fallthrough alone removes ten TS7029 findings (34 to 24). Newest
