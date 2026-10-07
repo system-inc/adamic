@@ -236,3 +236,7 @@ Kept the existing recordStorageView check after cast proofs, avoiding the incomi
 ### Item 15 blocked: namespaces-tsc 90f1baca0
 
 Exact merge attempted and aborted with 19 conflicted files. Incoming closed numeric enum guards conflict with flag-enums, NoFallthroughCasesInSwitch conflicts with taste-land, namespace localRead must preserve unknown-narrowing runtime union checks and captured/module-cycle readiness, and namespace readiness must coexist with assertion readiness in both emitters. No tests ran on this unresolved merge. Automatic approval review rejected the broad regex resolution for miscompilation/readiness risk; no rejected change was executed. Needs a separately reviewed resolution. Conflict transcript: /tmp/landing-batch-3-15-conflicts.txt; review patch: /tmp/landing-batch-3-15-unlanded.patch.
+
+### Item 16 and checkpoint
+
+Exact multi-root 48a1a6ada merge reports Already up to date; it is an ancestor. Checkpoint 16 passed uncached: oracle 384.571s, flow 248.305s, lower 109.301s, native 294.549s, stage3 fixtures 45.228s. No new failures or record changes. Log: /tmp/landing-batch-3-checkpoint-16.log.
