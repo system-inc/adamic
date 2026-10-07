@@ -358,15 +358,20 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	var rows []string
 	for i, key := range keys {
 		row := unique[key]
-		name := filepath.Base(strings.ReplaceAll(row.File, "\\", "/"))
-		if name == "." || name == "" {
+		// The case keeps its file name's directories, not only its base name: a rule that judges a
+		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
+		name := filepath.Clean(strings.TrimLeft(strings.ReplaceAll(row.File, "\\", "/"), "/"))
+		if name == "." || name == "" || strings.HasPrefix(name, "..") {
+			name = filepath.Base(name)
+		}
+		if name == "." || name == "" || name == ".." {
 			name = "source.ts"
 		}
 		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
-		if err := os.MkdirAll(caseDirectory, 0755); err != nil {
+		path := filepath.Join(caseDirectory, name)
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
 			t.Fatal(err)
 		}
-		path := filepath.Join(caseDirectory, name)
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}
