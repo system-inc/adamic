@@ -1,0 +1,1020 @@
+{
+  "counts": {
+    "pass": 6656,
+    "skip": 43,
+    "fail": 54
+  },
+  "wasi_oracle_counts": {
+    "skip": 15,
+    "pass": 1092
+  },
+  "cache": [
+    "gate cache: native hits=0 misses=2191",
+    "gate cache: node hits=0 misses=1818",
+    "gate cache: probe hits=0 misses=36"
+  ],
+  "packages": [
+    {
+      "package": "github.com/system-inc/adamic/bench",
+      "action": "skip",
+      "elapsed": 0.001
+    },
+    {
+      "package": "github.com/system-inc/adamic/bench/regex",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo/archive",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo/checker",
+      "action": "pass",
+      "elapsed": 0.452
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo/cost",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo/oracle",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo/spec",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-fuzz",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "action": "pass",
+      "elapsed": 2.665
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+      "action": "pass",
+      "elapsed": 6.689
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-reduce",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-stage1-progress",
+      "action": "pass",
+      "elapsed": 0.59
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/lint-registry",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/cloud",
+      "action": "pass",
+      "elapsed": 40.455
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "action": "pass",
+      "elapsed": 117.707
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "action": "pass",
+      "elapsed": 48.756
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-test262",
+      "action": "pass",
+      "elapsed": 231.39
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/javascript",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "action": "pass",
+      "elapsed": 31.62
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "action": "pass",
+      "elapsed": 218.294
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "action": "pass",
+      "elapsed": 6.748
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "action": "fail",
+      "elapsed": 358.455
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "action": "pass",
+      "elapsed": 133.159
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/regexp",
+      "action": "pass",
+      "elapsed": 21.54
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/config",
+      "action": "fail",
+      "elapsed": 496.004
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "action": "pass",
+      "elapsed": 972.265
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "action": "fail",
+      "elapsed": 540.731
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "action": "pass",
+      "elapsed": 703.452
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "action": "pass",
+      "elapsed": 153.119
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "action": "pass",
+      "elapsed": 218.881
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "action": "pass",
+      "elapsed": 48.353
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "action": "pass",
+      "elapsed": 49.978
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "action": "pass",
+      "elapsed": 649.23
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "action": "fail",
+      "elapsed": 1515.88
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "action": "pass",
+      "elapsed": 173.3
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/inventory",
+      "action": "pass",
+      "elapsed": 17.953
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/registry",
+      "action": "pass",
+      "elapsed": 0.404
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+      "action": "pass",
+      "elapsed": 172.23
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "action": "pass",
+      "elapsed": 1063.942
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+      "action": "pass",
+      "elapsed": 11.581
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+      "action": "pass",
+      "elapsed": 33.844
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/suppression",
+      "action": "pass",
+      "elapsed": 32.864
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "action": "pass",
+      "elapsed": 1450.101
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/values",
+      "action": "pass",
+      "elapsed": 33.604
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "action": "pass",
+      "elapsed": 687.999
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "action": "pass",
+      "elapsed": 60.654
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/tool",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/tool",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "action": "pass",
+      "elapsed": 371.027
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "action": "fail",
+      "elapsed": 25.82
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "action": "pass",
+      "elapsed": 1272.829
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "action": "pass",
+      "elapsed": 2459.329
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "action": "pass",
+      "elapsed": 2823.109
+    }
+  ],
+  "resource_signals": [
+    {
+      "package": "github.com/system-inc/adamic/internal/regexp",
+      "test": "TestV8EmptyClassStringReplacement",
+      "output": "    v8_test.go:131: slow-path reproduction: timed out after 2s (process killed)\n"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpLongBacktrackNode",
+      "output": "    regexp_long_backtrack_test.go:47: long regex exceeded 3m: context deadline exceeded\n"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpNativeTiming/quadratic_exec",
+      "output": "    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.045697097s)\n"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpNativeTiming/quadratic_matchall",
+      "output": "    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.044949692s)\n"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpNativeTiming/quadratic_test",
+      "output": "    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.095872254s)\n"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "test": "TestCanonicalizeUnicodeNode",
+      "output": "    canonicalize_test.go:237: Unicode batch 51: node: signal: killed\n"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestRulesAgree",
+      "output": "    lint_test.go:433: explicit unsupported recovery: /workspace/adamic-gate/TestRulesAgree2963912465/003/scanner: timeout=true: signal: killed: \n"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestRulesAgree",
+      "output": "    lint_test.go:433: explicit unsupported recovery: node: timeout=true: signal: killed: \n"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestRulesAgree",
+      "output": "    lint_test.go:433: explicit unsupported recovery: /workspace/adamic-gate/TestRulesAgree2963912465/003/scanner: timeout=true: signal: killed: \n"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestRulesAgree",
+      "output": "    lint_test.go:433: explicit unsupported recovery: node: timeout=true: signal: killed: \n"
+    }
+  ],
+  "skipped": [
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-test262",
+      "test": "TestCompilerStartupMeasurement",
+      "output": [
+        "    performance_test.go:19: measurement only"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOriginalCycleLedger",
+      "output": [
+        "    import_cycle_ledger_test.go:31: set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeLongMeasurements",
+      "output": [
+        "    normalize_benchmark_test.go:19: set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordBenchmark",
+      "output": [
+        "    record_test.go:271: set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_host.a",
+      "output": [
+        "    wasi_host_test.go:65: target refusal: wasm32-wasi refuses process.platform: WASI has no Node host platform; use a native Node host target"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMeasureClangUnits",
+      "output": [
+        "    units_measure_test.go:17: set ADAMIC_CLANG_MEASURE to emitted C evidence directory"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestSplitTSGoAgrees",
+      "output": [
+        "    units_tsgo_test.go:19: set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_system.a",
+      "output": [
+        "    wasi_host_test.go:65: target refusal: wasm32-wasi refuses process.argv: WASI has no executable paths; use a native Node host target"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/open",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: file creation permission bits are not supported"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/write_file",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: file creation permission bits are not supported"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/stat",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/mkdir",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: directory creation permission bits are not supported"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/utimes",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/system",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/write_buffer",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: file creation permission bits are not supported"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/mkdtemp",
+      "output": [
+        "    wasi_host_test.go:148: target refusal: wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower",
+      "output": [
+        "    gitignore_test.go:158: only an ignore file of exactly 100 MiB shows this one, asked about when ADAMIC_GITIGNORE_LARGEST is set"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "output": [
+        "    performance_test.go:16: set ADAMIC_JSON_PROFILE_BINARIES to profile snapshot binaries"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSThroughput",
+      "output": [
+        "    css_test.go:424: set ADAMIC_CSS_BENCH=1 for throughput"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a",
+      "output": [
+        "    wasi_test.go:132: fixture does not lower"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission/internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a",
+      "output": [
+        "    wasi_test.go:132: fixture does not lower"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission/internal/oracle/testdata/regexp_surrogate_limit_refused.a",
+      "output": [
+        "    wasi_test.go:132: fixture does not lower"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a",
+      "output": [
+        "    wasi_test.go:132: fixture does not lower"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission/internal/oracle/testdata/regexp_v8_refused/folding.a",
+      "output": [
+        "    wasi_test.go:132: fixture does not lower"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestStage3FixtureHook",
+      "output": [
+        "    stage3_hook_test.go:15: called only by the Stage 3 fixture runner"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRealPathPreservesCase",
+      "output": [
+        "    realpath_test.go:118: case-sensitive file system: stat PROBE cannot find Probe; libc case mutant cannot be distinguished here"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestJsxLintReleaseAndThroughput",
+      "output": [
+        "    jsx_integration_test.go:74: set ADAMIC_LINT_BENCH=1 for JSX throughput"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCompilerAndStage1Agree",
+      "output": [
+        "    lint_test.go:485: set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestThroughput",
+      "output": [
+        "    lint_test.go:652: set ADAMIC_LINT_BENCH=1"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+      "test": "TestSelectorThroughput",
+      "output": [
+        "    selector_test.go:407: set ADAMIC_SELECTOR_BENCH=1 to time parser throughput"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSPrinterThroughput",
+      "output": [
+        "    print_test.go:204: set ADAMIC_CSS_PRINTER_BENCH=1"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSProfileArtifacts",
+      "output": [
+        "    profile_test.go:19: set ADAMIC_CSS_PROFILE_DIR"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSProfileSnapshotsAgree",
+      "output": [
+        "    profile_test.go:134: set ADAMIC_CSS_PROFILE_SNAPSHOTS"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestCompilerExpressionsAgree",
+      "output": [
+        "    parser_test.go:275: set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestPerformance",
+      "output": [
+        "    performance_test.go:21: set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestWholePerformance",
+      "output": [
+        "    performance_test.go:21: set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "test": "TestProfileArtifacts",
+      "output": [
+        "    profile_test.go:19: set ADAMIC_SCANNER_PROFILE_DIR to a scratch directory"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "test": "TestProfileSnapshotsAgree",
+      "output": [
+        "    profile_test.go:99: set ADAMIC_SCANNER_PROFILE_SNAPSHOTS to the artifact directories"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "test": "TestPerformance",
+      "output": [
+        "    scanner_test.go:393: set ADAMIC_SCANNER_BENCH=1 for best-of-five throughput"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuardHook",
+      "output": [
+        "    runner_guard_test.go:13: subprocess hook"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestWholeCompilerAgrees",
+      "output": [
+        "    whole_test.go:24: set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProfileArtifacts",
+      "output": [
+        "    profile_test.go:20: set ADAMIC_LINT_PROFILE_DIR to a scratch directory"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProfileSnapshotsAgree",
+      "output": [
+        "    profile_test.go:162: set ADAMIC_LINT_PROFILE_SNAPSHOTS"
+      ]
+    }
+  ],
+  "failed": [
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a",
+      "output": [
+        "    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1",
+        "    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1",
+        "    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1",
+        "    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1",
+        "    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1",
+        "    trace_test.go:50: 62 points walked, 83 events"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryPathNodeTakesIsInTheGraph",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpLongBacktrackNode",
+      "output": [
+        "    regexp_long_backtrack_test.go:47: long regex exceeded 3m: context deadline exceeded"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpNativeTiming/quadratic_exec",
+      "output": [
+        "    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.045697097s)"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpNativeTiming/quadratic_matchall",
+      "output": [
+        "    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.044949692s)"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpNativeTiming/quadratic_test",
+      "output": [
+        "    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.095872254s)"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpNativeTiming",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/config",
+      "test": "TestLoadersMatchGoCohere",
+      "output": [
+        "    loader_test.go:172: go: downloading github.com/dlclark/regexp2/v2 v2.5.2",
+        "        go: downloading github.com/dlclark/regexp2 v1.11.5",
+        "        === RUN   TestAdamicConfigCases",
+        "            adamic_config_test.go:152: Go: 3.860359s, 0 projects, 0 projects/s; 2091 source files, 542 files/s",
+        "        --- PASS: TestAdamicConfigCases (3.87s)",
+        "        PASS",
+        "        ok  \tgithub.com/system-inc/cohere/command/cohere\t3.915s",
+        "    loader_test.go:187: native: line 5: \"source \\\"cohere:house\\\"\", Go cohere \"source \\\"cohere:style\\\"\"",
+        "    loader_test.go:187: Node: line 5: \"source \\\"cohere:house\\\"\", Go cohere \"source \\\"cohere:style\\\"\"",
+        "    loader_test.go:187: backend: line 5: \"source \\\"cohere:house\\\"\", Go cohere \"source \\\"cohere:style\\\"\"",
+        "    loader_test.go:195: baseline must agree before mutants"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "test": "TestCanonicalizeUnicodeNode",
+      "output": [
+        "    canonicalize_test.go:237: Unicode batch 51: node: signal: killed",
+        "        ",
+        "        "
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestProcessExitDrainsStderr",
+      "output": [
+        "    process_test.go:215: node shared=false backpressure=true: stdout=0 stderr=204800 exit=37 pipe capacity=4096",
+        "    process_test.go:217: documented raw Node stderr pipe loss changed"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestProcessLargePipeExitPreservesOutput/immediate=true",
+      "output": [
+        "    process_test.go:168: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096",
+        "    process_test.go:169: program shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096",
+        "    process_test.go:170: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096",
+        "    process_test.go:180: documented raw Node pipe loss changed; review Node first"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestProcessLargePipeExitPreservesOutput",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/25_readDirectory.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Checker What:stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.",
+        "          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.",
+        "        stage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.",
+        "        stage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.",
+        "        stage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.",
+        "          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.",
+        "        stage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.",
+        "          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.",
+        "        stage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.",
+        "          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.",
+        "        stage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.",
+        "          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/25_readDirectory.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/23_newLine.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/23_newLine.a:10:31: stage 0 can't lower reading _os yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/23_newLine.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/23_newLine.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/22_createHash_fallback.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/22_createHash_fallback.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/22_createHash_fallback.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/24_useCaseSensitiveFileNames.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/24_useCaseSensitiveFileNames.a:20:16: stage 0 can't lower statSync: fs options other than a fixed literal or its plain const binding yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/24_useCaseSensitiveFileNames.a:15:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/24_useCaseSensitiveFileNames.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/21_createHash.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/host/21_createHash.a:13:18: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case}; recorded {Outcome:NotYet What:stage3/fixtures/host/21_createHash.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/21_createHash.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/20_exit_2.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/20_exit_2.a:12:5: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/20_exit_2.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/20_exit_2.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/16_getEnvironmentVariable.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/16_getEnvironmentVariable.a:11:12: stage 0 can't lower a BinaryExpression with a string and a string yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/16_getEnvironmentVariable.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/16_getEnvironmentVariable.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/19_exit_1.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/19_exit_1.a:12:5: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/19_exit_1.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/19_exit_1.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/18_exit_0.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/18_exit_0.a:12:5: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/18_exit_0.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/18_exit_0.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/17_write.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/17_write.a:16:5: stage 0 can't lower a literal method call with an unrepresented result yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/17_write.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/17_write.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/15_getExecutingFilePath.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/15_getExecutingFilePath.a:21:21: stage 0 can't lower node:path.basename yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/15_getExecutingFilePath.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/15_getExecutingFilePath.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/14_getCurrentDirectory.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/host/14_getCurrentDirectory.a:15:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case}; recorded {Outcome:NotYet What:stage3/fixtures/host/14_getCurrentDirectory.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/14_getCurrentDirectory.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/12_deleteFile.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/12_deleteFile.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/12_deleteFile.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/09_realpath.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/09_realpath.a:27:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/09_realpath.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/09_realpath.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/10_getModifiedTime.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/10_getModifiedTime.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/10_getModifiedTime.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/08_getDirectories.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/08_getDirectories.a:208:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/08_getDirectories.a:22:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/08_getDirectories.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/07_directoryExists.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/07_directoryExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/07_directoryExists.a:12:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/07_directoryExists.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/11_setModifiedTime.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/host/11_setModifiedTime.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/11_setModifiedTime.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/06_fileExists.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/06_fileExists.a:12:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/06_fileExists.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/05_writeFile.a/stage0",
+      "output": [
+        "    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)}; recorded {Outcome:NotYet What:stage3/fixtures/host/05_writeFile.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host/05_writeFile.a",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures/host",
+      "output": []
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures",
+      "output": []
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "counts": {
+    "pass": 2631,
+    "skip": 17,
+    "fail": 3
+  },
+  "wasi_oracle_counts": {
+    "skip": 15,
+    "pass": 1092
+  },
+  "cache": [
+    "gate cache: native hits=0 misses=2191",
+    "gate cache: node hits=0 misses=1818",
+    "gate cache: probe hits=0 misses=36"
+  ],
+  "packages": [
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "action": "fail",
+      "elapsed": 583.053
+    }
+  ],
+  "resource_signals": [],
+  "skipped": [
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_host.a",
+      "output": [
+        "    wasi_host_test.go:65: target refusal: wasm32-wasi refuses process.platform: WASI has no Node host platform; use a native Node host target"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_system.a",
+      "output": [
+        "    wasi_host_test.go:65: target refusal: wasm32-wasi refuses process.argv: WASI has no executable paths; use a native Node host target"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/open",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: file creation permission bits are not supported"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/write_file",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: file creation permission bits are not supported"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/stat",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/mkdir",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: directory creation permission bits are not supported"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/utimes",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/system",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: fs.utimesSync timestamp precision or range is unavailable"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/write_buffer",
+      "output": [
+        "    wasi_host_test.go:152: target refusal: file creation permission bits are not supported"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIFileAgreesWithNode/mkdtemp",
+      "output": [
+        "    wasi_host_test.go:148: target refusal: wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a",
+      "output": [
+        "    wasi_test.go:132: fixture does not lower"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission/internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a",
+      "output": [
+        "    wasi_test.go:132: fixture does not lower"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission/internal/oracle/testdata/regexp_surrogate_limit_refused.a",
+      "output": [
+        "    wasi_test.go:132: fixture does not lower"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a",
+      "output": [
+        "    wasi_test.go:132: fixture does not lower"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission/internal/oracle/testdata/regexp_v8_refused/folding.a",
+      "output": [
+        "    wasi_test.go:132: fixture does not lower"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestStage3FixtureHook",
+      "output": [
+        "    stage3_hook_test.go:15: called only by the Stage 3 fixture runner"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRealPathPreservesCase",
+      "output": [
+        "    realpath_test.go:118: case-sensitive file system: stat PROBE cannot find Probe; libc case mutant cannot be distinguished here"
+      ]
+    }
+  ],
+  "failed": [
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestProcessExitDrainsStderr",
+      "output": [
+        "    process_test.go:215: node shared=false backpressure=true: stdout=0 stderr=204800 exit=37 pipe capacity=4096",
+        "    process_test.go:217: documented raw Node stderr pipe loss changed"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestProcessLargePipeExitPreservesOutput/immediate=true",
+      "output": [
+        "    process_test.go:168: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096",
+        "    process_test.go:169: program shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096",
+        "    process_test.go:170: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096",
+        "    process_test.go:180: documented raw Node pipe loss changed; review Node first"
+      ]
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestProcessLargePipeExitPreservesOutput",
+      "output": []
+    }
+  ]
+}
