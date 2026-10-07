@@ -1,0 +1,158 @@
+[
+  {
+    "label": "go",
+    "exit": 0,
+    "stdout_bytes": 142,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "build-normal",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "run-normal",
+    "exit": 0,
+    "stdout_bytes": 4941,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "build-asan",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "run-asan",
+    "exit": 0,
+    "stdout_bytes": 4941,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "source-node",
+    "exit": 0,
+    "stdout_bytes": 4941,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "emit",
+    "exit": 0,
+    "stdout_bytes": 25055,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "emitted-js",
+    "exit": 0,
+    "stdout_bytes": 4941,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 4941,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_undef-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_undef-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 4938,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_constructed_context_values-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_constructed_context_values-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 4939,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-refusal-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-refusal-run",
+    "exit": 70,
+    "stdout_bytes": 0,
+    "stderr_bytes": 109
+  },
+  {
+    "label": "jsx_fragments-refusal-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-refusal-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_undef-refusal-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_undef-refusal-run",
+    "exit": 70,
+    "stdout_bytes": 0,
+    "stderr_bytes": 108
+  },
+  {
+    "label": "jsx_no_undef-refusal-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_undef-refusal-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_constructed_context_values-refusal-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_constructed_context_values-refusal-run",
+    "exit": 70,
+    "stdout_bytes": 0,
+    "stderr_bytes": 147
+  },
+  {
+    "label": "jsx_no_constructed_context_values-refusal-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_constructed_context_values-refusal-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  }
+]

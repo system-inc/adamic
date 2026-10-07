@@ -1,0 +1,4 @@
+import { Parser } from '../../../typescript/parser/parser.ts';
+const parser = new Parser('const x = <Missing />;', 'control.tsx');
+parser.file();
+console.log('native JSX parse completed');

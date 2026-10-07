@@ -1,0 +1,6 @@
+// A handed parser node's numeric identity and token span; no parser lookup.
+export interface SyntaxNodeInterface {
+    readonly kind: number;
+    readonly start: number;
+    readonly end: number;
+}

@@ -109,3 +109,10 @@ implementation. Code will stay in `wave_04_jsx/`, with separate rule directories
 numeric `rule.json` listeners and node-local judgment entry points. Shared
 parser, driver, registration generator and harness remain outside this unit.
 Selection provenance is preserved in `wave-04-jsx-selection.json`.
+
+Third continuation status: partial numeric-node kernels and diagnostic reporters
+are implemented and independently checked. Full source execution remains refused:
+shared numeric JSX node integration is unavailable, and rule-local binding,
+component and stability/escape decisions remain unfinished. These claims remain
+reserved here. See [the JSX report](../wave_04_jsx/REPORT.md). No additional rules
+are claimed.

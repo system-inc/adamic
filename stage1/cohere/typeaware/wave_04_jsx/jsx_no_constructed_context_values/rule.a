@@ -1,0 +1,33 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../../diagnostic.ts';
+import type { SyntaxNodeInterface } from '../syntax_node.a';
+export const listenerKinds: readonly number[] = [286,287];
+export class JsxNoConstructedContextValues {
+    constructionKind(node: SyntaxNodeInterface): string {
+        switch(node.kind) {
+            case 211: return 'object';
+            case 210: return 'array';
+            case 219: case 220: return 'function expression';
+            case 232: return 'class expression';
+            case 215: return 'new expression';
+            case 13: return 'regular expression';
+            case 285: case 286: return 'JSX element';
+            case 289: return 'JSX fragment';
+        }
+        return '';
+    }
+    // This is a message remedy label, not a parser SyntaxKind.
+    functionRemedy(label: string): boolean {
+        return label === 'function expression' || label === 'function declaration';
+    }
+    reportInline(node: SyntaxNodeInterface, line: number): Diagnostic {
+        const label = this.constructionKind(node);
+        if(label.length === 0) { panic('NotYet: inline report requires a classified construction'); }
+        const function_ = node.kind === 219 || node.kind === 220;
+        const id = function_ ? 'defaultMsgFunc' : 'defaultMsg';
+        const remedy = function_ ? 'useCallback' : 'useMemo';
+        const message = `The ${label} passed as the value prop to the Context provider (at line ${line}) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`;
+        return new Diagnostic('react/jsx-no-constructed-context-values', id, message, node.start, node.end, '');
+    }
+    run(node: SyntaxNodeInterface): void { panic(`NotYet: jsx-no-constructed-context-values node ${node.start} needs numeric JSX AST, declaration snapshots and its bounded stability/escape walk`); }
+}
