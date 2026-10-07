@@ -156,3 +156,7 @@ Rebased onto lint area b84a9d931, including main c7991b900. All five owned suite
 ### Strict landing after registry migration
 
 Rebased onto lint area b46914832 with all 287 required repository roots retained. Twelve rules pass four full suites, mutants, sanitizers and released-handle checks. React FAILS for native runtime RegExp construction; overall Go exit 1 after 615.691s. No skip and no new claims. See wave_03_react/STRICT_LANDING_B469.md for exact commands, output and the constructor reproducer.
+
+### Strict landing after typeof integration
+
+Rebased onto lint area d3a37422c, including main b6b1538b0. Twelve active rules pass their full comparisons, mutants, sanitizers and handle checks; the newest three-rule suite passed a complete retry after ENOSPC cleanup. React FAILS on native runtime RegExp construction; no skip and no new claims. The branch remains not oracle-green. See wave_03_react/STRICT_LANDING_D3A.md for commands, failed initial run, successful retry and exact blocker.
