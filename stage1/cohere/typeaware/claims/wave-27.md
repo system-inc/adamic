@@ -65,3 +65,9 @@ The first three remaining rules, each with combined count zero, are:
 
 Claim matching includes full, unqualified and underscore spellings. This update
 is pushed before writing the fourth batch's implementation.
+
+Fourth-batch status: pending, blocked before rule implementation. The native
+parser refuses a positive JSX static-components control with panic 70, while
+independent Go cohere reports one finding. See wave_27_fourth/REPORT.md.
+Following Ahra's stop-on-other-blockers instruction, shared parser/harness files
+were left untouched and the two state-update ports were not started.

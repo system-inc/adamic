@@ -1,0 +1,4 @@
+function Example() {
+    const Component = createComponent();
+    return <Component />;
+}
