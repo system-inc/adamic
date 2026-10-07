@@ -41,6 +41,8 @@ tests=[ROOT/'cohere/internal/lint/rules/react'/f'{name}_test.go' for name in ['n
 run('extract',[WORK/'extract',*tests])
 sources=json.loads((WORK/'extract.stdout').read_text())
 sources += [
+ 'function C({[ /* keep */ k() ]: x = {},[\ufeffk()]: y=[]}){return <div/>;}',
+ '/* 🌍 */ function C({[\u00a0o.p]: x={},[ /* a */ 1+2 ]: y=[]}){return <div/>;}',
  'function C({a={},b=[],c=()=>{},d=function(){},e=class{},f=new Date(),g=<div/>,h=/x/,i=Symbol(),j=<></>,k=Symbol.for(1)}){return <div/>;}',
  'function Parent(){function Child(){return <div/>;}return <Child/>;}',
  'function Parent(){const Child=()=>null;return <div/>;}',
