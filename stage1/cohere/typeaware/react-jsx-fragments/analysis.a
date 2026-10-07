@@ -1,0 +1,169 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../typescript/parser/nodes.ts';
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { BindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
+import { BindingFile } from './binding_file.a';
+
+const shorthandMessage =
+    'Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.';
+const elementMessage =
+    'Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.';
+
+export class JsxFragments {
+    readonly rules: Rules;
+    readonly origins: BindingOrigin;
+    readonly elementMode: boolean;
+    readonly files = new Map<string, BindingFile>();
+    constructor(rules: Rules, elementMode = false) {
+        this.rules = rules;
+        this.origins = new BindingOrigin(rules);
+        this.elementMode = elementMode;
+    }
+    file(path: string): BindingFile {
+        const cached = this.files.get(path);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const parsed = new BindingFile(path, this.rules);
+        this.files.set(path, parsed);
+        return parsed;
+    }
+    report(node: ParseNode, element: boolean): void {
+        this.rules.findings.push(
+            new Diagnostic(
+                'react/jsx-fragments',
+                element ? 'preferPragma' : 'preferFragment',
+                element ? elementMessage : shorthandMessage,
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(node.end),
+                '',
+            ),
+        );
+    }
+    // Each entry is called only for its declared syntax kind; none reads its entry kind.
+    visitFragment(node: ParseNode): void {
+        if(this.elementMode) {
+            this.report(node, true);
+        }
+    }
+    visitElement(node: ParseNode): void {
+        const opening = node.children[0] ?? -1;
+        if(opening >= 0) {
+            this.named(node, this.rules.parser.node(opening));
+        }
+    }
+    visitSelfClosing(node: ParseNode): void {
+        this.named(node, node);
+    }
+    named(node: ParseNode, opening: ParseNode): void {
+        if(this.elementMode) {
+            return;
+        }
+        const attributes = this.rules.parser.node(
+            opening.children[opening.children.length - 1] ?? panic('missing JSX attributes'),
+        );
+        if(attributes.children.length !== 0) {
+            return;
+        }
+        const tagIndex = opening.children[0] ?? panic('missing JSX tag');
+        const tag = this.rules.parser.node(tagIndex);
+        if(this.pragma(tag, this.file(this.rules.path))) {
+            this.report(node, false);
+            return;
+        }
+        if(tag.kind !== 'Identifier') {
+            return;
+        }
+        for(const record of this.origins.original(tagIndex).declarations) {
+            if(
+                record.kind !== 'ImportSpecifier' &&
+                record.kind !== 'BindingElement' &&
+                record.kind !== 'VariableDeclaration'
+            ) {
+                continue;
+            }
+            const file = this.file(record.file);
+            const index = file.declaration(record);
+            const declaration = file.parser.node(index);
+            if(this.acceptDeclaration(file, index, declaration)) {
+                this.report(node, false);
+                return;
+            }
+        }
+    }
+    pragma(node: ParseNode, file: BindingFile): boolean {
+        if(node.kind !== 'PropertyAccessExpression' || node.children.length !== 2) {
+            return false;
+        }
+        const base = file.child(node, 0);
+        const property = file.child(node, 1);
+        return (
+            base.kind === 'Identifier' &&
+            base.text === 'React' &&
+            property.kind === 'Identifier' &&
+            property.text === 'Fragment'
+        );
+    }
+    source(file: BindingFile, index: number): boolean {
+        if(index < 0) {
+            return false;
+        }
+        const node = file.parser.node(index);
+        if(node.kind === 'Identifier') {
+            return node.text === 'React';
+        }
+        if(this.pragma(node, file)) {
+            return true;
+        }
+        if(node.kind !== 'CallExpression' || node.list < 1) {
+            return false;
+        }
+        const callee = file.child(node, 0);
+        const first = file.child(node, node.children.length - node.list);
+        return (
+            callee.kind === 'Identifier' &&
+            callee.text === 'require' &&
+            (first.kind === 'StringLiteral' || first.kind === 'NoSubstitutionTemplateLiteral') &&
+            first.text === 'react'
+        );
+    }
+    acceptDeclaration(file: BindingFile, index: number, declaration: ParseNode): boolean {
+        switch(declaration.kind) {
+            case 'ImportSpecifier': {
+                const imported = file.child(declaration, 0);
+                if(imported.kind !== 'Identifier' || imported.text !== 'Fragment') {
+                    return false;
+                }
+                let ancestor = index;
+                for(const kind of ['NamedImports', 'ImportClause', 'ImportDeclaration']) {
+                    ancestor = file.parent(ancestor);
+                    if(ancestor < 0 || file.parser.node(ancestor).kind !== kind) {
+                        return false;
+                    }
+                }
+                const parent = file.parser.node(ancestor);
+                const module = parent.children
+                    .map((child) => file.parser.node(child))
+                    .find((child) => child.kind === 'StringLiteral');
+                return module !== undefined && module.text === 'react';
+            }
+            case 'BindingElement': {
+                const pattern = file.parent(index);
+                if(pattern < 0 || file.parser.node(pattern).kind !== 'ObjectBindingPattern') {
+                    return false;
+                }
+                const variable = file.parent(pattern);
+                return (
+                    variable >= 0 &&
+                    file.parser.node(variable).kind === 'VariableDeclaration' &&
+                    this.source(file, file.initializer(file.parser.node(variable)))
+                );
+            }
+            case 'VariableDeclaration':
+                return this.source(file, file.initializer(declaration));
+            default:
+                return false;
+        }
+    }
+}

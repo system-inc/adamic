@@ -1,0 +1,70 @@
+import { panic, readTextFile } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import type { ParseNode } from '../../../typescript/parser/nodes.ts';
+import { byteOffsets } from '../unary_minus.ts';
+import type { Rules } from '../rules.ts';
+import type { OriginDeclaration } from '../prefer-promise-reject-errors/origin_declaration.a';
+
+// Declaration spans are raw checker facts. Parse each foreign declaration file once.
+export class BindingFile {
+    readonly parser: Parser;
+    readonly scanner: Scanner;
+    readonly offsets: readonly number[];
+    readonly parents: readonly number[];
+    constructor(path: string, rules: Rules) {
+        if(path === rules.path) {
+            this.parser = rules.parser;
+            this.scanner = rules.scanner;
+            this.offsets = rules.offsets;
+            this.parents = rules.parents;
+        }
+        else {
+            const source = readTextFile(path);
+            if(source.kind === 'Error') {
+                panic(source.message);
+            }
+            this.parser = new Parser(source.text, path);
+            this.scanner = new Scanner(source.text);
+            this.offsets = byteOffsets(source.text);
+            this.parser.file();
+            const parents = this.parser.nodes.map(() => -1);
+            this.parents = parents;
+            for(let index = 0; index < this.parser.nodes.length; index++) {
+                for(const child of this.parser.node(index).children) {
+                    parents[child] = index;
+                }
+            }
+        }
+    }
+    declaration(record: OriginDeclaration): number {
+        for(let index = 0; index < this.parser.nodes.length; index++) {
+            const node = this.parser.node(index);
+            if(
+                node.kind === record.kind &&
+                this.offsets[node.pos] === record.start &&
+                this.offsets[node.end] === record.end
+            ) {
+                return index;
+            }
+        }
+        panic('checker declaration is missing from its parsed source');
+    }
+    parent(index: number): number {
+        return this.parents[index] ?? -1;
+    }
+    child(node: ParseNode, slot: number): ParseNode {
+        return this.parser.node(node.children[slot] ?? panic('missing declaration child'));
+    }
+    initializer(variable: ParseNode): number {
+        if(variable.children.length < 2) {
+            return -1;
+        }
+        const previous = this.child(variable, variable.children.length - 2);
+        this.scanner.pos = previous.end;
+        if(this.scanner.scan() !== 'EqualsToken') {
+            return -1;
+        }
+        return variable.children[variable.children.length - 1] ?? -1;
+    }
+}
