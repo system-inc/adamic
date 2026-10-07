@@ -104,6 +104,16 @@ func recordMain(root, destination string, packages []packageInfo, jobs int, main
 			if err := atomicJSON(checkpointPath, checkpoint); err != nil {
 				return err
 			}
+		} else if !checkpoint.Record.Complete && len(checkpoint.Record.Packages) < len(packages) {
+			// An interrupted process may have left unfinished logs without a
+			// recorded failure. Never truncate those when resuming its packages.
+			checkpoint.Logs, err = os.MkdirTemp(destination+".logs", "resume-")
+			if err != nil {
+				return err
+			}
+			if err := atomicJSON(checkpointPath, checkpoint); err != nil {
+				return err
+			}
 		}
 		if checkpoint.Record.Complete {
 			if _, err := os.Stat(destination); err == nil {

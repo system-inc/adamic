@@ -98,6 +98,11 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 		t.Fatal(err)
 	}
 	readerEvents := checkpoint.Record.Packages["affected-command-proof/pkg"].Events
+	quietEvents := checkpoint.Record.Packages["affected-command-proof/quiet"].Events
+	quietEvidence, err := os.ReadFile(quietEvents)
+	if err != nil {
+		t.Fatal(err)
+	}
 	referenceBytes, err := os.ReadFile(readerEvents)
 	if err != nil {
 		t.Fatal(err)
@@ -125,6 +130,10 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 	afterResume, err := os.ReadFile(readerEvents)
 	if err != nil || string(afterResume) != string(referenceBytes) {
 		t.Fatal("resume reran the completed reference package")
+	}
+	retainedQuiet, err := os.ReadFile(quietEvents)
+	if err != nil || string(retainedQuiet) != string(quietEvidence) {
+		t.Fatal("resume overwrote the interrupted attempt's unrecorded events")
 	}
 	t.Log("checkpoint resumed pending package; corrupted event log rejected; incomplete record selected all")
 	checkpoint.Failed = map[string]string{"affected-command-proof/quiet": "diagnosed setup failure"}
@@ -320,4 +329,30 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 		t.Fatal("independent event hash failed to catch resume mutant")
 	}
 	t.Log("compiled resume mutant dropped event hash and accepted corrupted evidence; independent reference hash caught it")
+	// Removing attempt-directory rollover overwrites evidence whose process
+	// ended before the recorder could mark it completed or failed.
+	rollover := `checkpoint.Logs, err = os.MkdirTemp(destination+".logs", "resume-")`
+	validator, err = os.ReadFile(validatorPath)
+	if err != nil || strings.Count(string(validator), rollover) != 1 {
+		t.Fatal("attempt rollover mutation point missing")
+	}
+	writeInput(t, validatorPath, strings.Replace(string(validator), rollover, "checkpoint.Logs, err = checkpoint.Logs, nil", 1))
+	if err := logged(mutantRoot, mutantBinary+".rollover-build.log", "go", "build", "-o", mutantBinary, "."); err != nil {
+		t.Fatal(err)
+	}
+	writeInput(t, readerEvents, string(referenceBytes))
+	if err := atomicJSON(recordPath+".partial", checkpoint); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Remove(recordPath); err != nil {
+		t.Fatal(err)
+	}
+	if output, err := executeBinary(mutantBinary, "record", "-out", recordPath, "-isolate", "affected-command-proof/quiet"); err != nil {
+		t.Fatalf("rollover mutant failed unexpectedly: %v %s", err, output)
+	}
+	overwritten, err := os.ReadFile(quietEvents)
+	if err != nil || digest(overwritten) == digest(quietEvidence) {
+		t.Fatal("independent digest did not catch overwritten attempt evidence")
+	}
+	t.Log("compiled rollover mutant overwrote unrecorded attempt events; original evidence digest caught it")
 }

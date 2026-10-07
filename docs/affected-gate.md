@@ -1,125 +1,133 @@
-# Affected gate input records
+# Affected gate: saved proof status
 
-Status: implementation, small real-process proofs and 43 durable successful package
-records, not a proven integration gate.
-The five full-repository branch proofs and the affected-versus-whole timing comparison
-remain uncompleted: there is no certified green full-main record. Do not use this
-prototype to omit integration packages until those proofs have been completed.
+Status saved at 2026-10-07T15:49:34.774613+00:00. Fixed main is `e011f8f60899586d6373a5ccb07335ad82cfbf3c`.
+The full observed reference is green: **44 packages, 31 with tests, 13 without**.
+All five shapes have completed their skipped-package runs: every skipped package
+passed with identical test names, actions and genuine output to that reference.
+Four selected gates finished; the oracle selected gate is still running. This is
+a bounded, conservative proof, not a claim that all selected gates are green.
+Only `bridge/tsgo/checker` and `internal/fresh` are test packages eligible to skip;
+uncertain observations keep 30 packages selected. No result cache was added.
 
-`cmd/adamic-affected` records inputs and selects packages. It does not reuse test
-results. Every recorded test process runs with `ADAMIC_GATE_UNCACHED=1`; selected
-packages must likewise run with that variable and `go test -count=1 -timeout 60m`.
-The existing sharded gate was not edited.
+## Shape results
 
-Build the command from the worker branch into a path outside the repository:
+| Shape | Probe SHA | Selected / skipped | Skipped events | Selected gate |
+|---|---|---|---|---|
+| stage3: `stage3/affected-proof.a` | `575b32d2dd985cc1285723065c507bb9070ccf03` | 32 / 12 | **Identical**, 12 passed | Finished: 32 pass, 0 fail |
+| docs: `docs/0.1.md` | `449254ddac9376d3382861c90d7f1d1e919c764a` | 30 / 14 | **Identical**, 14 passed | Finished: 30 pass, 0 fail |
+| slice: `stage1/cohere/json/formatter.ts` | `4f8e0a3657ad34b2c96b625f4c87f554e96dd72e` | 30 / 14 | **Identical**, 14 passed | Finished: 28 pass, 2 fail |
+| runtime: `internal/native/runtime/string.c` | `f36b912a865e35f7cbd4f74db32dade7f821fe26` | 33 / 11 | **Identical**, 11 passed | Finished: 32 pass, 1 fail |
+| oracle: `internal/oracle/testdata/numbers.a` | `18a6c54abae99bb5b69a8bd5a2baf0f7b74a4d52` | 31 / 13 | **Identical**, 13 passed | Running: 20/31 completed, 1 fail so far |
+
+Stage3 and docs selected gates passed. Slice retained scanner ENOSPC and a
+60-minute markdownblocks timeout; scanner passed a separate uncached retry after
+freeing space. Runtime retained a 60-minute markdownblocks timeout. Oracle has
+correctly failed `TestCountsAreRecorded`: its changed fixture measured
+`37 | 37 | 1 | 39 | 9 | 0` versus recorded `36 | 36 | 0 | 36 | 9 | 0`.
+Original failures and retry events remain saved; no ledger was edited to hide them.
+Markdownblocks passed alone in the reference and plain control. The selected
+branch runner uses four workers; its contention failures are retained as failures.
+
+| Loop | Before: whole observed gate | After: selected only | Instrument |
+|---|---|---|---|
+| stage3 | 92m21.615s | 72m47.271s | `proof.py --root /tmp/affected-main --record /tmp/affected-proof/main-60.json --output /tmp/affected-proof/proof-60/branches --binary /tmp/adamic-affected`; per-package literal argv in `stage3/state.json` |
+| docs | 92m21.615s | 80m15.435s | `proof.py --root /tmp/affected-main --record /tmp/affected-proof/main-60.json --output /tmp/affected-proof/proof-60/branches --binary /tmp/adamic-affected`; per-package literal argv in `docs/state.json` |
+| slice | 92m21.615s | 86m47.321s | `proof.py --root /tmp/affected-main --record /tmp/affected-proof/main-60.json --output /tmp/affected-proof/proof-60/branches --binary /tmp/adamic-affected`; per-package literal argv in `slice/state.json` |
+| runtime | 92m21.615s | 91m27.978s | `proof.py --root /tmp/affected-main --record /tmp/affected-proof/main-60.json --output /tmp/affected-proof/proof-60/branches --binary /tmp/adamic-affected`; per-package literal argv in `runtime/state.json` |
+| oracle | 92m21.615s | Still running; no final timing | `proof.py --root /tmp/affected-main --record /tmp/affected-proof/main-60.json --output /tmp/affected-proof/proof-60/branches --binary /tmp/adamic-affected`; per-package literal argv in `oracle/state.json` |
+
+Build flags for every timing: the fixed/probe SHA above, recorder `1bd43a6`
+(proof-driver reporting edits were uncommitted), nproc **5**, cpu.max
+**400000 100000**, **Go 1.27.1 linux/amd64**, **clang 20.1.8**, **Node v24.19.0**;
+`go test -c`, direct `-test.v=test2json -test.timeout=60m`,
+**ADAMIC_GATE_UNCACHED=1**, existing Go compilation cache, no test-result reuse.
+Each exceeds five minutes and ran once. These are not pure selection speedups:
+the reference includes observation and serial markdownblocks, whereas selected
+gates use four unobserved workers. The slice overlaps evidence compression and
+scanner retry; runtime overlaps moving old evidence off the small `/tmp` disk.
+The failure rows are diagnostic timings. Exact versions, command arrays and load
+boundaries are saved per phase/package. Each package is built with
+`go test -c -o BINARY PACKAGE`, then executes `BINARY -test.v=test2json -test.timeout=60m`
+from its package directory; separate stdin `go tool test2json -t -p PACKAGE` saves JSON.
+
+| Loop | Load before | Load after |
+|---|---|---|
+| Reference | 0.36 0.21 0.15 | 1.53 1.98 1.95 |
+| docs selected | 1.78 1.95 2.46 | 1.03 1.38 2.11 |
+| runtime selected | 2.17 2.12 2.44 | 1.95 2.16 2.75 |
+| slice selected | 2.48 1.77 2.17 | 1.63 2.05 2.45 |
+| stage3 selected | 1.08 1.54 1.73 | 1.51 2.02 2.53 |
+
+## Markdownblocks observer measurement
+
+| Loop | Before: observed | After: plain | Instrument |
+|---|---|---|---|
+| Fixed main, isolated markdownblocks | 2333.291s | 2319.646s | `032.timing.json` observer argv versus identical direct test binary flags without observer |
+
+Observed minus plain is **13.645s (0.59%)**. The test
+itself took **38m39.646s**. This requested single pair excludes Go compilation and
+later closure decoding; the difference includes system noise and is not a precise
+causal overhead estimate. Both passed with identical names/actions/verdicts.
+Variable benchmark rates, temporary paths and preflight attribution differ in
+raw output; `calibration-differences.json` preserves those differences. This
+package is always selected. Skipped-package output comparisons remain strict.
+
+Build flags: same fixed SHA/toolchain/quota above, uncached, one package alone,
+60-minute deadline. Load observed `1.24 1.41 2.50` to `1.61 2.07 1.98`; plain `1.49 1.96 1.95` to `1.56 1.93 1.86`.
+
+```sh
+/tmp/affected-proof/main-60.json.logs/run-3685698845/notification-observer -o /tmp/affected-proof/main-60.json.logs/run-3685698845/032.trace -- /tmp/affected-proof/main-60.json.logs/run-3685698845/032.test -test.v=test2json -test.timeout=60m
+go test -c -o /tmp/affected-proof/proof-60/markdown-plain/github.com_system-inc_adamic_stage1_cohere_markdownblocks.test github.com/system-inc/adamic/stage1/cohere/markdownblocks
+/tmp/affected-proof/proof-60/markdown-plain/github.com_system-inc_adamic_stage1_cohere_markdownblocks.test -test.v=test2json -test.timeout=60m
+```
+
+## Mutants: completed evidence and remaining work
+
+Controlled real-process CLI tests caught all three requested mutants: removing
+observed inputs wrongly skipped changed relative fixture bytes; removing listings
+wrongly skipped a new fixture; a separately compiled toolchain-comparison mutant
+wrongly skipped packages after changing the recorded Node version. Fresh uncached
+fixture tests and the independent actual Node version caught those omissions.
+Compiled event-hash and attempt-directory-rollover mutants are also exercised.
+
+In the actual five-shape matrix, stage3/docs/slice/runtime have completed all
+three selections: the Node-comparison mutant is caught in every completed shape;
+observed/listing omissions are not exposed by those four shapes. Oracle matrix
+execution waits for its selected run to finish. Its already-completed fresh test
+passed but changed output from **1040 writes / 985 acyclic** to **1041 / 986**,
+the independent witness intended to catch omission of the relative fixture.
+The listing mutant then needs its supplemental new-fixture probe with the primary
+fixture restored, preventing that file hash from masking the directory omission.
+That final real-repository mutant evidence is **not yet claimed completed**.
+
+## Record, resume and artifact locations
 
 ```sh
 source /workspace/adamic-tools/env.sh
 go build -o /tmp/adamic-affected ./cmd/adamic-affected
+ADAMIC_GATE_UNCACHED=1 /tmp/adamic-affected record -main e011f8f60899586d6373a5ccb07335ad82cfbf3c -jobs 4 -isolate github.com/system-inc/adamic/stage1/cohere/markdownblocks -out /tmp/affected-proof/main-60.json > /tmp/affected-proof/proof-60/reference.log 2>&1
+ADAMIC_GATE_UNCACHED=1 /tmp/adamic-affected select -record /tmp/affected-proof/main-60.json > /tmp/selected-packages.txt 2> /tmp/select.stderr
+python3 -B /workspace/adamic/cmd/adamic-affected/finish_proof.py --root /tmp/affected-main --main e011f8f60899586d6373a5ccb07335ad82cfbf3c --record /tmp/affected-proof/main-60.json --output /tmp/affected-proof/proof-60 > /tmp/affected-proof/proof-60-resumed-workflow.log 2>&1
 ```
 
-At a clean main checkout, with `HEAD = origin/main` and initialized submodules,
-the recorder itself runs the full uncached gate with the observer:
+The complete main record is `/tmp/affected-proof/main-60.json`; original full JSON
+is `main-60.json.reference.jsonl`. Per-package closures, original events and timing
+logs are in `main-60.json.logs/run-3685698845/`. These large integration artifacts
+are deliberately not committed. This report and the resumable runner are committed.
+`proof-60/workflow.json`, `branches/summary.json` and each shape's `state.json`
+persist the current proof. Five detached worktrees retain probe commits; execution
+switches the same checkout so paths/environment cannot cause vacuous all-selection.
+No scratch branch or main branch is pushed.
 
-```sh
-ADAMIC_GATE_UNCACHED=1 /tmp/adamic-affected record -out /tmp/main-inputs.json > /tmp/record.stdout 2> /tmp/record.stderr
-```
-
-Keep the record and its `.logs` directory together with integration's gate output.
-They are not repository files. A failed test, failed tracer, dirty checkout, changed
-input or changed toolchain prevents publishing a new record. A leak-free sanitizer
-control checks observer compatibility before tracing Adamic packages. An older destination
-is not overwritten on failure, so integration must check the command's exit status
-and the record's commit before publishing it as the new green-main artifact.
-
-Recording now checkpoints each finished package to `FILE.partial` and fsyncs a
-cumulative, original JSON event stream at `FILE.reference.jsonl`. The partial
-record includes the fixed commit, whole repository inventory, package plan,
-toolchain/environment identity, closures and per-package event hashes. Resume
-with the same `-out`: it validates that evidence and runs only unfinished packages.
-Incomplete references never justify a skip. A failed package prevents automatic
-resume. After diagnosing the failure, `-retry-failed` revalidates the same identity,
-retains the failed logs and an explicit `Retries` history, and reruns only packages
-without successful evidence in a new log directory. A completed reference requires
-a new destination for a fresh run. Four package workers share the box by default
-(`-jobs 4`). A retried reference is reported as such, including its failed attempts;
-it is not described as a single clean gate invocation.
-
-Pin a known main ancestor when integration may advance `origin/main`:
-
-```sh
-/tmp/adamic-affected record -main e011f8f60899586d6373a5ccb07335ad82cfbf3c -jobs 4 -out /tmp/main-inputs.json > /tmp/record.stdout 2> /tmp/record.stderr
-```
-
-The test binary runs directly with `-test.v=test2json -test.timeout=60m` and
-`ADAMIC_GATE_UNCACHED=1`. A separate stdin-mode `go tool test2json` converts its
-complete output into the JSON log. Command-mode test2json calls `ignoreSignals`
-before exec, which changes inherited SIGINT behavior. The first reference attempt
-failed the actual oracle interrupt test for that reason; it was retained separately
-and never published. The direct runner passed all three signal cases. Record format
-5 and the invocation identity prevent mixing deadlines or harnesses on resume.
-
-On this fixed main, markdownblocks also requires pinned upstream width dependencies
-that `cloud/setup.sh` does not install:
-
-```sh
-npm install --prefix /tmp/adamic-markdown-width --ignore-scripts --no-audit --no-fund emoji-regex@10.6.0 get-east-asian-width@1.6.0 narrow-emojis@0.0.3 > /tmp/markdown-width-npm.log 2>&1
-```
-
-The first format-4 attempt retained 42 successful package records. Markdownblocks
-failed its width oracle because those dependencies were absent, then timed out;
-typeaware also hit its 30-minute deadline. Both failures remain in the log directory.
-After installing the pinned dependencies, a small original-library width control
-passed. The explicit retry uses `-jobs 1` to reduce contention, preserving and
-revalidating the 42 completed records. Typeaware passed that retry, yielding 43
-successful records. Markdownblocks passed its width test and all three width
-mutants, then hit the 30-minute deadline again during parallel layout tests.
-None of these partial results is certified until all 44 packages pass.
-
-The completed evidence is `/tmp/affected-proof/green-main.json.partial` and
-`/tmp/affected-proof/green-main.json.reference.jsonl`; the record also preserves
-the first failed attempt in `Retries`. The failed retry logs are under
-`/tmp/affected-proof/green-main.json.logs/retry-984539610/`. There is deliberately
-no published `/tmp/affected-proof/green-main.json`. An extracted incomplete record,
-`/tmp/affected-proof/unfinished-reference.json`, was passed to `select`: it selected
-all 44 current packages, independently checked against `go list ./...`.
-
-The old queued five-shape runner stopped with `reference_failed` and ran no branches.
-The user explicitly authorized 60 minutes because integration already uses that
-deadline and CLAUDE.md's 30-minute line is stale. Format 5 records the actual
-60-minute invocation in its identity; a controlled 30-minute identity mutant selects
-every package. The fresh reference is `/tmp/affected-proof/main-60.json`.
-Old attempts remain separate evidence and cannot resume into the new identity.
-The integration gate and `cmd/adamic-gate` were not changed.
-
-For one fair observer measurement, `record -isolate IMPORT_PATH` queues that
-package only after all other package evidence is durable. The option is part of
-checkpoint identity. Its process wall time, exact invocation and load boundaries
-are saved alongside its JSON. The full reference isolates markdownblocks, then
-`finish_proof.py` runs markdownblocks once without the observer, alone, at the same
-commit and 60-minute deadline. This compares process execution, excluding Go
-compilation and later closure decoding; all events must match. Each run exceeds
-five minutes, so the requested single observed/control pair is reported.
-
-Finished traces were losslessly compressed where disk space was tight. Each
-compressed stream was independently decompressed and SHA256-checked before the
-original trace was removed; `/tmp/affected-proof/compressed-traces.json` lists
-those hashes. Original package JSON event logs were not compressed or changed.
-
-On a branch:
-
-```sh
-ADAMIC_GATE_UNCACHED=1 /tmp/adamic-affected select -record /tmp/main-inputs.json > /tmp/selected-packages.txt 2> /tmp/select.stderr
-```
-
-Standard output contains one Go import path per selected package, sorted. No output
-means no selected package only when the command exited successfully. A missing,
-unreadable, malformed or unknown-version record selects all current packages. An
-unreadable current package graph exits unsuccessfully: it cannot justify any skip.
-A new package, changed static closure, changed observed input, incomplete trace,
-Git-metadata read, undecoded multi-path operation or repository CGo dependency
-selects that package. A changed
-submodule or toolchain identity selects everything.
+Records and reference JSON are fsynced as packages finish. Reinvoke the same
+destination to validate identity and run only pending packages. An interrupted
+pending attempt gets fresh `resume-*` logs; original logs are preserved. Failed
+packages require explicit `-retry-failed` after diagnosis; failure history remains.
+Incomplete records select all. Completed destinations cannot become fresh runs.
+The user-authorized 60-minute deadline and isolation profile are recorded in
+format-5 identity. Older 30-minute attempts cannot resume into it. CLAUDE.md and
+`cmd/adamic-gate` were not edited. Direct test execution avoids command-mode
+test2json's inherited-SIGINT change; all actual oracle signal cases passed.
 
 ## Inputs
 
@@ -202,93 +210,41 @@ An unprivileged seccomp listener is available on this kernel. The replacement
 observer passes both the leak-free sanitizer control and the actual native
 `TestFreedValuesAreCaughtWithSlabs` test, with leak checking enabled. The latter
 log is `/tmp/affected-notify-native.log`. This removes the specific ptrace conflict,
-not the remaining closure and full-branch proof obligations.
+not arbitrary closure completeness beyond the bounded shapes above.
 
-## Evidence and mutants
+## Validation and retained attempts
 
-Fixed main: `e011f8f60899586d6373a5ccb07335ad82cfbf3c`.
-All changes are confined to `cmd/adamic-affected/` and this document.
-
-The whole-test-file path audit is `/tmp/affected-path-audit-all.log`. It contains
-4,488 matches, 1,702 outside the cohere submodule, at the time of the audit. Examples
-that defeat a package-directory-only model include native tests reading
-`bench/regex/cases.json`, lowering tests reading oracle fixtures, flow/fresh tests
-globbing oracle directories, stage1 CSS tests reading sibling slices, markdown tests
-reading markdowninline, and scanner tests reading cohere's generated identifier tables.
-The environment audit also includes optional TypeScript corpora and library paths.
-
-The real process-tree proof builds a small uncached Go package outside the repository,
-observes it, then changes real files and runs the same test binary
-again without tracing. This is a controlled observer proof, not one of the five
-requested full-main branch proofs.
-
-| Mutant | Observed bad decision | Independent check that catches it |
-|---|---|---|
-| Remove observed inputs | Relative fixture change wrongly skipped | Fresh Go test fails on changed fixture bytes |
-| Remove directory inputs | New fixture wrongly skipped | Fresh test fails because enumeration finds two files instead of one |
-| Compile a selector without toolchain comparison, then change the recorded Node version | Both packages wrongly skipped | Independent `node --version` requires both packages; the original selector prints both import paths |
-
-A supplemental real-repository mutant used the clean `/tmp/affected-main` worktree
-at the fixed SHA. A deliberately static-only record for `internal/native` omitted
-`bench/regex/cases.json`; adding invalid JSON bytes made `select` wrongly omit that
-package. The same untraced `TestRegExpLintPatternsNode` binary first passed with
-102 patterns and 890 inputs, then failed with `invalid character 'n' after top-level
-value`. The fixture was restored and the worktree returned clean. This was an
-isolated synthetic mutant record, not a certified whole-main record. Logs are
-`/tmp/affected-real-relative-proof.log`, `/tmp/affected-real-relative-baseline.log`
-and `/tmp/affected-real-relative-mutant.log`.
-
-The controlled CLI test creates a clean Git main and a real submodule, records both
-packages, skips an unchanged checkout and unread documentation, selects the reader
-when its relative fixture changes, and selects everything when the Node version in
-the record changes or the record is missing. Additional tests cover missing paths,
-file modes, symbolic-link target bytes, recursive testdata, and trace uncertainty.
-The toolchain mutant is a separately compiled command with the toolchain comparison
-removed. The test changes Node's version string in the record, runs that mutant and
-observes an empty selection; the independent actual Node version requires both
-packages to run. This is not an altered Node installation or a completed whole-Adamic
-branch proof. Observed-input and directory-input mutants also run through the real
-CLI; a fresh `go test -count=1 ./pkg` catches each wrongful skip.
-
-A separate Node observation test verifies its relative fixture read is captured
-and undecoded asynchronous syscalls remain uncertain. It is not a skip proof for
-Node packages. The initial strace process-tree mutant also passed, but that backend
-is incompatible with the real sanitizer controls and is no longer the recorder.
-
-Validation commands and complete logs:
+Final command tests passed (63.492s), `go vet` passed, and all five Python
+comparison tests passed. Validation overlapped the unfinished oracle selected run;
+its eventual wall time must disclose that extra load.
 
 ```sh
-ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout 5m ./cmd/adamic-affected > /tmp/affected-notification-tests.log 2>&1
-go vet ./cmd/adamic-affected > /tmp/affected-vet.log 2>&1
-gofmt -l cmd internal > /tmp/affected-gofmt.log
-go vet ./... > /tmp/affected-full-vet.log 2>&1
-ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/numbers.a$' > /tmp/affected-filtered-oracle.log 2>&1
-ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m -json ./... > /tmp/affected-main-gate.jsonl 2> /tmp/affected-main-gate.stderr
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout 5m ./cmd/adamic-affected > /tmp/affected-proof/final-command-tests.log 2>&1
+go vet ./cmd/adamic-affected > /tmp/affected-proof/final-vet.log 2>&1
+python3 -B -m unittest discover -s cmd/adamic-affected -p test_proof.py > /tmp/affected-proof/final-python-tests.log 2>&1
 ```
 
-The workspace restart interrupted whole-gate validation. Its log ends with 29
-packages passed, 13 having no tests, and two lacking terminal package events.
-The old processes were zombies; elapsed process age was not gate wall time.
-This is not a green gate. The changed command package and filtered oracle completed
-uncached. No full-main record was produced.
+The exhaustive path audit is `/tmp/affected-path-audit-all.log`: 4,488 matches,
+1,702 outside cohere. It includes sibling stage1 files, native benchmark fixtures,
+oracle fixture globs and scanner cohere tables. Dynamic environment reads and
+environments forwarded to children justify the full environment digest.
+Optional external corpora and unsupported asynchronous interfaces remain limits.
 
-Other evidence: `/tmp/affected-setup.log`, `/tmp/affected-lsan-plain.log`,
-`/tmp/affected-lsan-traced.log`, `/tmp/affected-native-plain.log`,
-`/tmp/affected-native-traced.log`, and `/tmp/affected-native.trace`.
+Older failed attempts remain uncertified: interrupted ordinary full gate;
+format-3 signal-harness failure; format-4 absent width dependencies and repeated
+30-minute markdown deadlines; and the initial calibration controller rejecting
+variable output from an always-selected package. That controller resumed the
+saved green record and plain run rather than repeating them. Missing dependencies
+were pinned to emoji-regex@10.6.0, get-east-asian-width@1.6.0 and narrow-emojis@0.0.3.
+Completed traces and older failed-attempt binaries were losslessly compressed and
+decompressed SHA256-checked. Old logs were moved to `/workspace/affected-evidence/`
+with verified hashes and original-path symlinks. Retention manifests remain in
+`/tmp/affected-proof/`. Original JSON streams remain unchanged. Only rebuildable
+successful-reference test binaries were removed.
 
-Setup printed Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s,
-build cache warm 280s, done 280s. `nproc` was 5; cgroup `cpu.max` was
-`400000 100000`. Go was 1.27.1 linux/amd64, clang was 20.1.8, Node was v24.19.0.
-Setup overlapped the initial full-gate invocation, so that invocation is validation,
-not a clean performance measurement. Setup build flags: main commit above,
-`go build ./...`, `go test -count=1 -run '^$' ./...`, build cache warmed, no fixture
-result-cache run. Load averages immediately before and after setup were not recorded.
-The script-reported setup duration is not a paired benchmark. No affected-only
-speedup is claimed.
-
-| Loop | Before | After | Instrument |
-|---|---|---|---|
-| Toolchain setup | Not measured | 280s, reported by script | `bash cloud/setup.sh > /tmp/affected-setup.log 2>&1` |
+Setup reported tools/submodules ready 0s each, build warm 280s, done 280s;
+nproc 5 and cpu.max 400000 100000. Before/after load was not captured for setup,
+so that script-reported duration is not a paired benchmark.
 
 Observed-path processing was measured on the actual saved fresh-package trace,
 interleaving before/after three times on this box. The trace was loaded before the
@@ -306,51 +262,6 @@ All six trial metadata rows are in `/tmp/affected-proof/observation-replay.log`.
 |---|---|---|---|
 | Saved fresh trace, best of 3 | 3.253772s, hash every open | 0.102878s, hash the path union | `ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout 30m ./cmd/adamic-affected -run '^TestObservationReplayTimings$' -args -affected-replay-trace /tmp/affected-proof/green-main.json.logs/run-1538579916/014.trace -affected-replay-root /tmp/affected-main > /tmp/affected-proof/observation-replay.log 2>&1` |
 
-## Uncompleted integration proof
-
-The cheaper five-shape runner is checked in as `cmd/adamic-affected/proof.py`:
-
-```sh
-python3 /workspace/adamic/cmd/adamic-affected/proof.py --root /tmp/affected-main --record /tmp/affected-proof/green-main.json --output /tmp/affected-proof/branches > /tmp/affected-proof/branches.log 2> /tmp/affected-proof/branches.stderr
-```
-
-It refuses incomplete or modified reference events and a dirty scratch checkout.
-For each shape it runs exactly the skipped packages, uncached, and compares their
-test names, actions and output lines with the saved reference. It then runs the
-selected packages uncached. It saves each finished package and phase timing to
-disk, and produces `branches/summary.json`. Failures and event differences are
-preserved and cause an unsuccessful final exit. The original JSON streams remain
-available; only harness timestamps, elapsed fields and explicitly marked test
-frame durations are omitted from the comparison. Per-test order remains exact;
-interleaving distinct parallel tests is ignored. Counts and paths remain exact.
-
-Five detached review worktrees preserve the probe commits. Execution switches
-the same scratch checkout among those commits so absolute checkout paths and
-environment identity do not turn this into an all-selected relocation test.
-No probe branch is pushed. Mutants retain uncertainty and change only the input
-component being tested. The directory mutant has a supplemental new-fixture
-probe with the primary changed fixture restored, so its retained file hash cannot
-mask a missing listing dependency.
-
-No full-main input record was certified. Therefore none of the five scratch branch
-selection sets, skipped-package event comparisons or paired timing measurements
-is reported as passing. Their status is explicit below; the instrument column gives
-the required command shape, not a command claimed to have completed.
-
-| Loop | Before: whole gate | After: affected gate | Instrument |
-|---|---|---|---|
-| stage3-only | Not paired | Blocked by uncertified record | `ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m -json ./...` versus the same invocation on selected import paths |
-| docs-only | Not paired | Blocked by uncertified record | Same whole and selected commands |
-| one stage1/cohere slice | Not paired | Blocked by uncertified record | Same whole and selected commands |
-| native runtime C | Not paired | Blocked by uncertified record | Same whole and selected commands |
-| oracle fixture | Not paired | Blocked by uncertified record | Same whole and selected commands |
-
-Each eventual measurement must log the fixed commit, `nproc`, cgroup quota, versions,
-full build flags, load before and after, exact command and uncached status. Run on the
-same box, interleaved, best of three unless a run exceeds five minutes.
-
-Literal byte equality of raw `go test -json` streams also cannot be assumed: timestamps,
-elapsed durations and parallel scheduling vary even for identical inputs. A future
-proof must specify which test events are compared, preserve all test names and verdicts
-and genuine test output, and make any normalization explicit. This implementation
-keeps original logs and does not claim a normalized comparison as raw byte equality.
+The remaining obligations are oracle selected-run completion and its observed
+and new-listing mutant witnesses. All five skipped-package comparisons are done.
+No expensive-gate speedup or general external-input completeness is claimed.

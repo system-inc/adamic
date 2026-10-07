@@ -11,6 +11,12 @@ import time
 from proof import atomic_json, canonical_events, run_package, timing_metadata
 
 
+def calibration_verdicts(events):
+    """The always-selected calibration may print varying benchmark output."""
+    return {name: [action for action, _ in entries if action != "output"]
+            for name, entries in events.items()}
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, required=True)
@@ -70,8 +76,21 @@ def main():
                                 "observer_overhead_seconds": observed["wall_seconds"]-plain_seconds,
                                 "identical": canonical_events(result["events"]) == canonical_events(observed_events)}
         atomic_json(status_path, state)
-    if state["calibration"]["plain"]["exit"] or not state["calibration"]["identical"]:
-        raise RuntimeError("markdownblocks calibration failed or changed events")
+    # Markdownblocks is always selected. Its benchmark throughput and generated
+    # temporary paths vary, so calibration compares test names and verdicts;
+    # strict output comparison remains mandatory for every skipped package.
+    calibration = state["calibration"]
+    plain_events = canonical_events(calibration["plain"]["events"])
+    observed_events = canonical_events(record["Packages"][package]["Events"])
+    calibration["verdicts_identical"] = calibration_verdicts(plain_events) == calibration_verdicts(observed_events)
+    if not calibration["identical"]:
+        atomic_json(args.output / "calibration-differences.json",
+                    {name: {"observed": observed_events.get(name), "plain": plain_events.get(name)}
+                     for name in sorted(set(plain_events) | set(observed_events))
+                     if plain_events.get(name) != observed_events.get(name)})
+    atomic_json(status_path, state)
+    if calibration["plain"]["exit"] or not calibration["verdicts_identical"]:
+        raise RuntimeError("markdownblocks calibration failed or changed test names/verdicts")
     state["phase"] = "five_shapes"
     atomic_json(status_path, state)
     arguments = [sys.executable, "-B", str(Path(__file__).with_name("proof.py")),

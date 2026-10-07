@@ -5,6 +5,7 @@ import unittest
 from unittest.mock import patch
 
 from proof import canonical_events, run_set
+from finish_proof import calibration_verdicts
 
 
 class EventComparisonTest(unittest.TestCase):
@@ -40,6 +41,15 @@ class EventComparisonTest(unittest.TestCase):
         c = {"Action": "pass", "Test": "A"}
         self.assertTrue(self.compare([a, b, c], [b, a, c]))
         self.assertFalse(self.compare([a, b, c], [c, b, a]))
+
+    def test_calibration_preserves_names_actions_and_verdicts(self):
+        observed = {"Test": [("run", ""), ("output", "1 MB/s"), ("pass", "")]}
+        plain = {"Test": [("run", ""), ("output", "2 MB/s"), ("pass", "")]}
+        self.assertEqual(calibration_verdicts(observed), calibration_verdicts(plain))
+        plain["Test"][-1] = ("fail", "")
+        self.assertNotEqual(calibration_verdicts(observed), calibration_verdicts(plain))
+        renamed = {"OtherTest": observed["Test"]}
+        self.assertNotEqual(calibration_verdicts(observed), calibration_verdicts(renamed))
 
     def test_skipped_list_and_durable_run_have_distinct_keys(self):
         with tempfile.TemporaryDirectory() as directory:
