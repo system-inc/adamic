@@ -165,9 +165,9 @@ def write_verdict(results, report):
     report['verdict'] = message
     (results / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     (results / 'verdict.txt').write_text(message + '\n')
-    print(message)
     for error in report['errors']:
         print(error, file=sys.stderr)
+    print(message, flush=True)
     return 0 if report['status'] == 'pass' else 1
 
 
