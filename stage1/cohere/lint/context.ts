@@ -29,6 +29,38 @@ function lineStartsOf(source: string): number[] {
     return starts;
 }
 
+// isFunctionKind is a hot kind test, so it switches rather than allocating a lookup array.
+function isFunctionKind(kind: string): boolean {
+    switch(kind) {
+        case 'FunctionDeclaration':
+        case 'FunctionExpression':
+        case 'ArrowFunction':
+        case 'MethodDeclaration':
+        case 'Constructor':
+        case 'GetAccessor':
+        case 'SetAccessor':
+            return true;
+        default:
+            return false;
+    }
+}
+
+// isLiteralPartKind is a token whose text is literal content rather than code, so a scan for punctuation
+// or comments has to step over it.
+function isLiteralPartKind(kind: string): boolean {
+    switch(kind) {
+        case 'StringLiteral':
+        case 'RegularExpressionLiteral':
+        case 'NoSubstitutionTemplateLiteral':
+        case 'TemplateHead':
+        case 'TemplateMiddle':
+        case 'TemplateTail':
+            return true;
+        default:
+            return false;
+    }
+}
+
 export function space(character: string): boolean {
     return character === ' ' || character === '\t' || character === '\r' || character === '\n';
 }
@@ -44,8 +76,12 @@ export class RuleContext {
     readonly mode: string;
     readonly nullPolicy: string;
     readonly allowCatch: boolean;
+    readonly root: number;
     // lineStarts is built on the first line() a rule asks for, since most files need none.
     lineStarts: number[] | undefined = undefined;
+    // literalEndsByStart is built on the first literalEnds() a rule asks for, once per file however many
+    // rules share it.
+    literalEndsByStart: number[] | undefined = undefined;
     constructor(
         source: string,
         parser: Parser,
@@ -56,6 +92,7 @@ export class RuleContext {
         allowCatch: boolean,
         parents: readonly number[],
         settings: Settings,
+        root: number,
     ) {
         this.source = source;
         this.parser = parser;
@@ -66,6 +103,7 @@ export class RuleContext {
         this.nullPolicy = this.mode === 'Always' ? (nullPolicy === '' ? 'Always' : nullPolicy) : 'Ignore';
         this.allowCatch = allowCatch;
         this.parents = parents;
+        this.root = root;
     }
     node(index: number): ParseNode {
         return this.parser.node(index);
@@ -127,7 +165,16 @@ export class RuleContext {
             panic('a finding carries at most one automatic edit');
         }
         const edit = edits[0];
-        const finding = new Finding(rule, id, message, start, end, edit === undefined ? '' : 'fix', edit === undefined ? '' : edit.text, '');
+        const finding = new Finding(
+            rule,
+            id,
+            message,
+            start,
+            end,
+            edit === undefined ? '' : 'fix',
+            edit === undefined ? '' : edit.text,
+            '',
+        );
         if(edit !== undefined) {
             finding.editStart = edit.start;
             finding.editEnd = edit.end;
@@ -160,6 +207,26 @@ export class RuleContext {
         }
         return low;
     }
+    // literalEnds maps the start of every string, regular expression and template part in the file to its
+    // end, and every other position to -1. Positions form a bounded integer domain, so lookup needs no
+    // hash table.
+    literalEnds(): readonly number[] {
+        if(this.literalEndsByStart === undefined) {
+            const ends = new Array<number>(this.source.length + 1).fill(-1);
+            this.literalSpans(this.root, ends);
+            this.literalEndsByStart = ends;
+        }
+        return this.literalEndsByStart;
+    }
+    literalSpans(index: number, ends: number[]): void {
+        const node = this.node(index);
+        if(isLiteralPartKind(node.kind)) {
+            ends[this.start(index)] = node.end;
+        }
+        for(const child of node.children) {
+            this.literalSpans(child, ends);
+        }
+    }
     child(index: number, position: number): number {
         return this.node(index).children[position] ?? panic('missing child');
     }
@@ -170,6 +237,18 @@ export class RuleContext {
     // comparison rather than a guard.
     kind(index: number): string {
         return index < 0 ? '' : this.node(index).kind;
+    }
+    functionLike(index: number): boolean {
+        return isFunctionKind(this.node(index).kind);
+    }
+    // has is whether a direct child is of this kind, without collecting the children that are.
+    has(index: number, kind: string): boolean {
+        for(const child of this.node(index).children) {
+            if(this.node(child).kind === kind) {
+                return true;
+            }
+        }
+        return false;
     }
     children(index: number, kind: string): number[] {
         return this.node(index).children.filter((child) => this.kind(child) === kind);
@@ -241,7 +320,7 @@ export class RuleContext {
         return children[children.length - 1] ?? panic('access without name');
     }
     questionDot(index: number): boolean {
-        return this.children(index, 'QuestionDotToken').length !== 0;
+        return this.has(index, 'QuestionDotToken');
     }
     initializer(index: number): number {
         const children = this.node(index).children;

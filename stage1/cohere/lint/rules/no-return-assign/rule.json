@@ -1,0 +1,13 @@
+{
+  "name": "no-return-assign",
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoReturnAssign",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoReturnAssign",
+  "factory": "create",
+  "class": "Rule"
+}

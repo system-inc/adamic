@@ -1,0 +1,23 @@
+built-ins/Math/abs 8/8 pass=4 fail=0 refused=0 crashed=0 skipped=4
+test262 5992dc3b60faf62a48fd6be8a40ae9d9a8c84d81
+adapt on
+
+built-ins/Math/abs
+pass 4   fail 0   refused 0   crashed 0   skipped 4   total 8
+
+directory             pass    fail   refused   crashed   skipped
+built-ins/Math/abs       4       0         0         0         4
+
+skip reasons
+  3  harness include propertyHelper.js
+  1  harness include isConstructor.js
+
+adaptations
+  1  var-to-let
+
+passes (4)
+  built-ins/Math/abs/S15.8.2.1_A1.js
+  built-ins/Math/abs/S15.8.2.1_A2.js
+  built-ins/Math/abs/S15.8.2.1_A3.js
+  built-ins/Math/abs/absolute-value.js
+

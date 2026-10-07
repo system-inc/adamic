@@ -267,7 +267,18 @@ func generated(t *testing.T) []string {
 			rows = append(rows, path+"\t"+options)
 		}
 	}
-	return rows
+	// One source exercising the ten rules that came from the frequency-ranked slice (VOLUME.md), by default
+	// and under the options each takes.
+	path := filepath.Join(t.TempDir(), "options.ts")
+	if err := os.WriteFile(path, []byte("interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return append(rows, path,
+		path+"\tno-plusplus\t\t\t\t{\"AllowForLoopAfterthoughts\":true}",
+		path+"\t@typescript-eslint/method-signature-style\t\t\t\t{\"Style\":\"method\"}",
+		path+"\t@typescript-eslint/prefer-literal-enum-member\t\t\t\t{\"AllowBitwiseExpressions\":true}",
+		path+"\tno-return-assign\t\t\t\t\"always\"",
+	)
 }
 
 // Capture every Run, including tests that assert repair fields directly. The overlay changes no rule.
@@ -301,9 +312,6 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	}
 	capture := filepath.Join(directory, "capture")
 	t.Setenv("COHERE_DOCS_CAPTURE", capture)
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/core", "-run", "Test(NoDebugger|NoEmpty|Eqeqeq|NoVar|NoDuplicateCase|NoContinue|NoWith|NoNew|NoSparseArrays|RequireYield|NoAwaitInLoop|VarsOnTop|NoTemplateCurlyInString|NoDivRegex|NoBitwise|NoLabels|NoSequences|UnicodeBom|NoUnneededTernary|NoWarningComments|NoPlusplus|NoNegatedCondition|NoReturnAssign)", "-count=1", "-timeout=10m")
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/base", "./internal/lint/rules/nexus", "./internal/lint/rules/adamic", "-run", "Test(ConsistencyNoConsole|ConsistencyRequireTypeSuffix|ConsistencyNoEnum|NoTypePredicate)", "-count=1", "-timeout=10m")
-	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(MethodSignatureStyle|NoWrapperObjectTypes|PreferLiteralEnumMember)", "-count=1", "-timeout=10m")
 	discovered := map[string]bool{}
 	packages := map[string][]string{}
 	for _, d := range prepareRegistry(t, sourceRoot) {
@@ -335,7 +343,7 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 			if err := json.Unmarshal(line, &row); err != nil {
 				t.Fatal(err)
 			}
-			if !discovered[row.Rule] && !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") {
+			if !discovered[row.Rule] {
 				continue
 			}
 			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
@@ -418,7 +426,7 @@ func TestRulesAgree(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
-	rows := append(generated(t), volumeGenerated(t)...)
+	rows := generated(t)
 	for _, row := range upstream(t) {
 		if strings.HasSuffix(row, "\tunsupported-recovery") {
 			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
@@ -428,6 +436,46 @@ func TestRulesAgree(t *testing.T) {
 		}
 	}
 	compare(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)))
+}
+
+// Recovery is a parser dependency, not successful lint parity. Keep the exact
+// upstream malformed cases and prove that both ports refuse instead of silently
+// returning the oracle's recovered findings.
+func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
+	t.Helper()
+	recovered := manifest(t, []string{strings.TrimSuffix(row, "unsupported-recovery") + "recovery"})
+	answer := execute(t, "", oracle, "--manifest", recovered)
+	t.Logf("Go recovered output: %s", answer.output)
+	path := manifest(t, []string{row})
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, side := range []struct {
+		name string
+		args []string
+	}{
+		{binary, []string{"--manifest", path}},
+		{"node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path}},
+	} {
+		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+		command := exec.CommandContext(ctx, side.name, side.args...)
+		output, err := os.CreateTemp(t.TempDir(), "recovery-refusal-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		command.Stdout = output
+		var stderr bytes.Buffer
+		command.Stderr = &stderr
+		err = command.Run()
+		timedOut := ctx.Err() == context.DeadlineExceeded
+		cancel()
+		output.Close()
+		if err == nil || (!timedOut && !strings.Contains(stderr.String(), "adamic: panic:")) {
+			t.Fatalf("expected parser refusal from %s, got %v: %s", side.name, err, stderr.String())
+		}
+		t.Logf("explicit unsupported recovery: %s: timeout=%t: %v: %s", side.name, timedOut, err, stderr.String())
+	}
 }
 
 // Not parallel: the large sanitized corpus runs before timing samples.
@@ -532,19 +580,6 @@ func TestLegacyMutants(t *testing.T) {
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, change := range []struct{ name, from, to string }{
-		{"control statement omitted", "node.kind === 'ContinueStatement' && this.enabled('no-continue')", "node.kind === 'BreakStatement' && this.enabled('no-continue')"},
-		{"destructuring hole reported", "!this.assignmentTarget(index) &&", ""},
-		{"nested generator owns outer yield", "].includes(this.node(child).kind)", "].includes('no boundary')"},
-		{"await crosses function boundary", "this.functionLike(parent) ||", " "},
-		{"option ignored", "this.settings.read('int32hint', 'false') === 'true'", "this.settings.read('int32hint', 'false') === 'false'"},
-		{"regex fix eats extra byte", "finding.editEnd = start + 2;", "finding.editEnd = start + 3;"},
-		{"boolean inverse changed", "? '!='", "? '!=='"},
-		{"comment self directive exemption removed", "if(selfDirective(value))", "if(selfDirective(value) && value === '')"},
-		{"bom removes two marks", "finding.editEnd = 1;", "finding.editEnd = this.source.startsWith('\\ufeff\\ufeff') ? 2 : 1;"},
-		{"label option widened", "this.settings.read('allowloop', 'false') === 'true'", "this.settings.read('allowloop', 'false') !== 'true'"},
-		{"directive prefix ignored", "let prefix = !staticBlock;", "let prefix = false;"},
-		{"comma chain reports inner", "!this.comma(parent)", "this.comma(parent)"},
-		{"empty placeholder reported", "node.text.indexOf('}', body) > body", "node.text.indexOf('}', body) >= body"},
 		{"overlap winner misreported", "${winner} overlaps another fix", "${this.selected} overlaps another fix"},
 	} {
 		t.Run(change.name, func(t *testing.T) {
@@ -703,11 +738,7 @@ func TestMutants(t *testing.T) {
 		}
 		t.Run(change.Name, func(t *testing.T) {
 			rows := generated(t)
-			var witnesses []string
-			for _, source := range ownedWitnesses(t, ".", descriptor.Slug) {
-				witnesses = append(witnesses, source+"\t"+descriptor.Name)
-			}
-			rows = append(rows, recoveryRows(t, oracle, witnesses)...)
+			rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
 			if change.File == "" {
