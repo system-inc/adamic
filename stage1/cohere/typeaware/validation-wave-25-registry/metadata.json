@@ -1,0 +1,11 @@
+{
+  "tested_head": "276d7508be25c1455bb9611b3f85e3c9fc9c7770",
+  "main": "c7991b900362796aefd111474e65eb5398e91953",
+  "area": "b46914832d70e00847d82d5d221ab7bb24040c53",
+  "prior_pushed_head": "f4731c5859c654502706237f71eafd52959df0e2",
+  "rule_command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-25-corpus go test ./stage1/cohere/typeaware -run '^TestWave25(AgreementAndMutants|NextAgreementAndMutants|ThirdAgreementAndMutants|FourthAgreementAndMutants|FifthAgreementAndMutants|FifthBooleanRefusals)$' -count=1 -v -timeout 30m",
+  "harness_command": "go test ./stage1/cohere/lint -run '^Test(CompleteSuggestionSerialization|SuggestionAlongsideAutomaticFix|EmittedJavaScriptMismatch)$' -count=1 -v -timeout 20m",
+  "artifact_environment": "same ADAMIC_WAVE25 artifact overrides as validation-wave-25-current/current-gate.sh; refusal directory /workspace/wave-25-registry-refusals",
+  "inherited_ten_rule_coverage": "not repeated on registry-only rebase; previous current validation passed",
+  "full_required_input_gate": "unrun"
+}

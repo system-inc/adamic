@@ -161,3 +161,8 @@ inherited checker coverage, bridge, filtered Node and vet passed again.
 Boolean-prop-naming remains partial and reserved; current compiler reproduces
 the nonconstant RegExp lowering blocker. No new claims. Evidence:
 ../validation-wave-25-current and ../WAVE_25_LANDING_REPORT.md.
+
+Rebased onto registry migration area b46914832, with main c7991b900 as ancestor.
+All claimed suites, refusals, mutants, sanitizer corpora and shared suggestion
+serialization checks passed again. Boolean remains partial and reserved; no
+new claims. Evidence: ../validation-wave-25-registry.

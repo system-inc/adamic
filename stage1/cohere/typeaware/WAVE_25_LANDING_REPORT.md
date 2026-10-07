@@ -568,3 +568,35 @@ certification remain unrun. No checks were skipped, relaxed or deleted.
 To avoid exhausting the disk, only explicitly named obsolete executables in
 my first wave-25-landing scratch directory were removed; its source and logs
 and the current test binaries remain. No main or area ref was pushed.
+
+## Shared registry migration landing pass
+
+Rebased cleanly onto origin/area/stage1-lint b46914832, retaining its legacy
+rule migrations. Current main c7991b900 remains an ancestor. Tested head:
+276d7508be25c1455bb9611b3f85e3c9fc9c7770. No rule source changed and no new
+claims were taken.
+
+All five claimed-rule suites and Boolean refusal checks passed in 406.197s.
+All 14 claimed-rule mutants built and exited normally and were caught only by
+Go byte comparisons; sanitizer corpus and released-handle checks passed.
+Fifth-suite compiler whole-process sample: native 3.842696078s,
+Go 0.353110614s. This is a single sample with nil Boolean options, not a median
+or an equivalent listener benchmark.
+
+Shared harness checks passed in 85.730s: complete suggestions matched across
+Go, source Node, emitted JavaScript and sanitized native (734 bytes), and
+suggestions alongside an automatic fix matched at 721 bytes. A clean-running
+emitted-JavaScript mismatch and the altered suggestion edit were caught by
+their normal comparisons. go vet ./... and registry generation passed.
+Exact logs and commands are preserved in validation-wave-25-registry.
+
+The inherited ten-rule coverage, bridge tests and filtered Node oracle were
+not repeated on this registry-only rebase; their compiler and checker inputs
+are unchanged and their preceding green evidence remains in
+validation-wave-25-current. The full mandatory-input gate and standalone
+checker-wave emitted-JavaScript certification remain unrun. Boolean options,
+imported props, typed wrappers, placeholder regex and remaining dispatch
+migrations remain partial, with no IR/SSA/capture parking classification.
+Only named obsolete binaries from my first scratch landing were removed to
+free disk space; all source, evidence and current binaries were retained.
+No main or area ref was pushed.
