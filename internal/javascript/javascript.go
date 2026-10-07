@@ -146,6 +146,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		}
 		emitter.allocateEnvironment(function.FrameEnvironment)
 		for _, parameter := range function.Parameters {
+			if program.Locals[parameter].Uninitialized && !program.Locals[parameter].Captured {
+				emitter.line("let %s = true;", readyName(parameter))
+			}
 			if program.Locals[parameter].EnvironmentCell {
 				emitter.line("%s.value = %s;", emitter.cellName(parameter), emitter.name(parameter))
 				emitter.line("%s.ready = true;", emitter.cellName(parameter))
@@ -393,7 +396,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
 		if e.program.Locals[statement.Local].Uninitialized {
-			e.line("%s = true;", e.localReady(statement.Local))
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		}
 	case ir.Evaluate:
 		e.line("%s;", e.value(statement.Value))
@@ -781,6 +784,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "String.fromCharCode(" + codes + ")"
 	case ir.ObjectCall:
+		if expression.Readiness != "" {
+			return "adamicObjectReadCall(" + quote(expression.Method) + ", " + quote(expression.Readiness) + ", " + e.values(expression.Arguments) + ")"
+		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "prototypeHasOwnProperty" {

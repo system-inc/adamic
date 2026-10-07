@@ -1062,9 +1062,10 @@ type (
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
 	// Read: a write to a global from inside a function.
 	Assign struct {
-		Local   int
-		Value   Expression
-		Checked bool
+		Local         int
+		Value         Expression
+		Checked       bool
+		Uninitialized bool
 	}
 
 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.

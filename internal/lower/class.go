@@ -409,6 +409,10 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	uninitialized := l.uninitializedInitializer(valueNode)
+	if member := l.checker.GetSymbolAtLocation(target.Name()); uninitialized && member != nil && accessorSymbol(member) {
+		return nil, l.notYet(target, "deinitializing an accessor property")
+	}
 	if call, handled, err := l.superAccessor(target, valueNode); handled {
 		if err != nil {
 			return nil, err
@@ -425,25 +429,31 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if object.Type() != ir.Object {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
 	}
-	value, err := l.expression(valueNode)
-	if err != nil {
-		return nil, err
-	}
 	of, err := l.typeOf(target)
 	if field := l.checker.GetSymbolAtLocation(target.Name()); field != nil {
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || slotless(of) || slotless(value.Type()) {
+	if err != nil || slotless(of) {
+		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
+	}
+	value := uninitializedValue(of)
+	if !uninitialized {
+		value, err = l.expression(valueNode)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if slotless(value.Type()) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
-	if call, handled := l.privateStaticStore(target, object, value); handled {
+	if call, handled := l.privateStaticStore(target, object, value, uninitialized); handled {
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Uninitialized: uninitialized, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).

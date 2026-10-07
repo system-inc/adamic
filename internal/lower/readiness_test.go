@@ -11,6 +11,12 @@ func TestReadinessElisionRequiresDominatingAssignment(t *testing.T) {
 		name, source string
 		checked      int
 	}{
+		{"deinitialize-read", `let value=4;value=undefined!;console.log(value.toString());`, 1},
+		{"deinitialize-write", `let value=4;value=undefined!;value=0;console.log(value.toString());`, 0},
+		{"deinitialize-loop", `let value=4;for(let i=0;i<3;i++){value=undefined!;value=i;console.log(value.toString());}`, 0},
+		{"deinitialize-field-alias", `class Box{value=4;}const box=new Box();const alias=box;box.value=5;alias.value=undefined!;console.log(box.value.toString());`, 1},
+		{"scanner-var-siblings", `function createScanner():string{var tokenValue!:string;const setValue=(value:string):void=>{tokenValue=value;};const getValue=():string=>tokenValue;setValue("assigned");return getValue();}console.log(createScanner());`, 1},
+		{"scanner-string-initializer", `let text:string=undefined!;text="assigned before read";console.log(text);`, 0},
 		{"branch-join", `function f(flag:boolean):void { let value:number=undefined!; if(flag){value=1;}else{value=2;} console.log(value.toString()); } f(true);`, 0},
 		{"zero-iteration", `function f(flag:boolean):void { let value:number=undefined!; while(flag){value=1;flag=false;} console.log(value.toString()); } f(false);`, 1},
 		{"loop-body", `function f(flag:boolean):void { let value:number=undefined!; while(flag){value=1;console.log(value.toString());flag=false;} } f(true);`, 0},

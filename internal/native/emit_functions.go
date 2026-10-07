@@ -69,6 +69,9 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
 		}
+		if e.program.Locals[parameter].Uninitialized && !e.program.Locals[parameter].Captured {
+			e.line("bool %s = true;", readyName(parameter))
+		}
 		if e.program.Locals[parameter].Captured {
 			// A closure captured this parameter: from here on it lives in a cell.
 			e.makeCell(parameter, e.localName(parameter), false)

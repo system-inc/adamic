@@ -138,7 +138,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
 		if e.program.Locals[statement.Local].Uninitialized {
-			e.line("%s = true;", e.localReady(statement.Local))
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		}
 		e.end()
 	case ir.Evaluate:

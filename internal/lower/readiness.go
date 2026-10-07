@@ -15,8 +15,8 @@ func sourceExpression(node *ast.Node) string {
 	return file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
 }
 
-// Only direct initializer syntax reserves an uninitialized slot. Assignments, returns,
-// and assertions outside initializer positions continue to use the nullish check.
+// The two builtin literal assertions reserve or deinitialize a slot.
+// A shadowed identifier named undefined remains an ordinary assertion.
 func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
 	if node == nil {
 		return false
@@ -49,10 +49,28 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 	return false
 }
 
-// readiness uses the existing CFG, including its exceptional edges. Readiness is monotone
-// between declarations: an assignment makes the slot ready, and calls cannot unset it.
+// readiness uses the existing CFG, including its exceptional edges. Literal assertion
+// assignments clear readiness; calls invalidate slots that a captured writer can clear.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	deinitialized := map[int]bool{}
+	collect := func(node any) bool {
+		if assign, ok := node.(ir.Assign); ok && assign.Uninitialized {
+			deinitialized[assign.Local] = true
+		}
+		return true
+	}
+	walk(program.Main, collect)
+	for _, function := range program.Functions {
+		walk(function.Body, collect)
+	}
+	invalidate := func(state []bool) {
+		for local := range deinitialized {
+			if program.Locals[local].Captured || program.Locals[local].Global {
+				state[local] = false
+			}
+		}
+	}
 	names := map[string]bool{}
 	walk(program.Main, func(node any) bool {
 		if value, ok := node.(ir.ObjectLiteral); ok {
@@ -139,6 +157,11 @@ func readiness(program *ir.Program) {
 		for i, local := range program.Locals {
 			entry[i] = !local.Uninitialized
 		}
+		if function >= 0 {
+			for _, parameter := range program.Functions[function].Parameters {
+				entry[parameter] = true
+			}
+		}
 		changed := true
 		for changed {
 			changed = false
@@ -167,6 +190,7 @@ func readiness(program *ir.Program) {
 				for _, id := range block.Instructions {
 					instruction := graph.Instructions[id]
 					if readinessCalls(instruction) {
+						invalidate(state)
 						for _, slot := range fieldSlots {
 							state[slot] = false
 						}
@@ -189,6 +213,7 @@ func readiness(program *ir.Program) {
 			for _, id := range block.Instructions {
 				instruction := graph.Instructions[id]
 				if readinessCalls(instruction) {
+					invalidate(state)
 					for _, slot := range fieldSlots {
 						state[slot] = false
 					}
@@ -209,6 +234,9 @@ func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow
 		if declare, ok := (*instruction.At).(ir.Declare); ok {
 			ready = !declare.Uninitialized
 		}
+		if assign, ok := (*instruction.At).(ir.Assign); ok {
+			ready = !assign.Uninitialized
+		}
 		state[local] = ready
 		for field, slot := range fields {
 			if field.local == local {
@@ -217,6 +245,13 @@ func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow
 		}
 	}
 	if set, ok := (*instruction.At).(ir.SetProperty); ok {
+		if set.Uninitialized {
+			for field, slot := range fields {
+				if field.name == set.Name {
+					state[slot] = false
+				}
+			}
+		}
 		if local, ok := readinessObject(set.Object); ok {
 			if slot, found := fields[fieldReadiness{local, set.Name}]; found {
 				state[slot] = !set.Uninitialized
@@ -260,6 +295,11 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 					}
 				} else {
 					expression.SpreadReadiness = ""
+				}
+				node = expression
+			case ir.ObjectCall:
+				if len(fields) == 0 || (expression.Method != "values" && expression.Method != "entries" && expression.Method != "assign") {
+					expression.Readiness = ""
 				}
 				node = expression
 			case ir.Property:
@@ -348,7 +388,7 @@ func readinessCalls(instruction *flow.Instruction) bool {
 	calls := false
 	walk(node, func(node any) bool {
 		switch node.(type) {
-		case ir.Call, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArraySort, ir.ArrayFrom, ir.MapForEach:
+		case ir.ObjectCall, ir.Call, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArraySort, ir.ArrayFrom, ir.MapForEach:
 			calls = true
 		}
 		return true
@@ -363,7 +403,7 @@ func assertionInitializer(node *ast.Node) bool {
 
 func assertionVarList(list *ast.Node) bool {
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
-		if !ast.IsIdentifier(declaration.Name()) || !assertionInitializer(declaration.AsVariableDeclaration().Initializer) {
+		if !ast.IsIdentifier(declaration.Name()) || !assertionInitializer(declaration.AsVariableDeclaration().Initializer) && declaration.AsVariableDeclaration().ExclamationToken == nil {
 			return false
 		}
 	}
@@ -411,4 +451,18 @@ stored:
 		assigned = ir.Narrow{Value: read, To: to}
 	}
 	return []ir.Statement{ir.Declare{Local: local, Value: value}}, present, assigned, nil
+}
+
+// The stored value is inaccessible until a subsequent write sets readiness.
+func uninitializedValue(of ir.Type) ir.Expression {
+	if of.IsMaybe() {
+		return ir.MaybeOf{Of: of}
+	}
+	switch of {
+	case ir.Number:
+		return ir.NumberConstant{}
+	case ir.Boolean:
+		return ir.BooleanConstant{}
+	}
+	return ir.Undefined{Of: of}
 }
