@@ -789,3 +789,28 @@
 {"Time":"2026-10-07T21:04:45.129307349Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestRequestNativeStaysCommand","Elapsed":71.92}
 {"Time":"2026-10-07T21:04:45.129432552Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestModuleSelection"}
 {"Time":"2026-10-07T21:04:45.129438028Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestModuleSelection","Output":"=== RUN   TestWASIRequestModuleSelection\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:04:45.771323654Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestModuleSelection","Output":"adamic: not yet: request handler name is ambiguous across modules; give its declaration a unique name\n"}
+{"Time":"2026-10-07T21:04:45.801062618Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestModuleSelection","Output":"--- PASS: TestWASIRequestModuleSelection (0.65s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:04:45.801130265Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestModuleSelection","Elapsed":0.65}
+{"Time":"2026-10-07T21:04:45.801141168Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows"}
+{"Time":"2026-10-07T21:04:45.801145364Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Output":"=== RUN   TestWASIRequestThrows\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:05:05.367336344Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial","Output":"--- PASS: TestParallelCachedMatchesSerial (81.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:05:05.367386099Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial","Elapsed":81.04}
+{"Time":"2026-10-07T21:05:05.367400597Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress"}
+{"Time":"2026-10-07T21:05:05.36740482Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress","Output":"=== RUN   TestOrderedProgress\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:05:05.36741008Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress","Output":"=== PAUSE TestOrderedProgress\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:05:05.367413024Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress"}
+{"Time":"2026-10-07T21:05:05.367417224Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns"}
+{"Time":"2026-10-07T21:05:05.367420309Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"=== RUN   TestUnavailableCacheStillRuns\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:05:05.367425203Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"=== PAUSE TestUnavailableCacheStillRuns\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:05:05.367428225Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns"}
+{"Time":"2026-10-07T21:05:05.367432369Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-07T21:05:05.367443334Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== RUN   TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:05:05.367447433Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== PAUSE TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:05:05.367450069Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-07T21:05:05.367453572Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-07T21:05:05.367456042Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== RUN   TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:05:05.367459836Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== PAUSE TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:05:05.36746217Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-07T21:05:05.367467787Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories"}
+{"Time":"2026-10-07T21:05:05.367470838Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories","Output":"=== RUN   TestCompilerCacheAcrossScratchDirectories\n","OutputType":"frame"}
