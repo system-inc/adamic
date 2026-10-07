@@ -1,0 +1,8 @@
+let name: string | undefined = `n${1}`;
+function drop(): void {
+	name = undefined;
+}
+if (name !== undefined) {
+	drop();
+	console.log(`${name}`);
+}
