@@ -162,7 +162,7 @@ func TestWave25FifthAgreementAndMutants(t *testing.T) {
 	for _, mutation := range []struct{ name, file, from, to string }{
 		{"eval-library", "unsupported_syntax.a", "declaration.library", "false"},
 		{"memo-inline", "use_memo.a", "if(!inline) {", "if(inline) {"},
-		{"boolean-capital", "boolean_prop_naming.a", "char >= 'A' && char <= 'Z'", "char >= 'a' && char <= 'z'"},
+		{"boolean-capital", "boolean_prop_naming.a", "/^(is|has)[A-Z]([A-Za-z0-9]?)+/u", "/^(is|has)[a-z]([A-Za-z0-9]?)+/u"},
 	} {
 		mutantDirectory := filepath.Join(directory, mutation.name)
 		if err := os.MkdirAll(mutantDirectory, 0755); err != nil {

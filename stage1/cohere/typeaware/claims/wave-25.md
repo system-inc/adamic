@@ -112,3 +112,12 @@ revalidated all five wave suites, the inherited checker dependency, bridge,
 released handles, sanitizers, uncached filtered Node oracle and vet.
 Evidence: validation-wave-25-landing-third and WAVE_25_LANDING_REPORT.md.
 Boolean-prop-naming remains partial and reserved. No additional claims.
+
+## Regex instruction, October 7
+
+Default boolean-prop-naming matching now uses a JS RegExp literal, with fresh
+Go byte agreement, a regex mutant, sanitizer and released-handle validation.
+Configured patterns explicitly refuse pending native dynamic RegExp lowering;
+the new RegExp(pattern, 'u') compiler probe demonstrates that exact blocker.
+Imported props and typed wrappers remain unfinished local paths. This claim
+is partial, not parked under the IR/SSA/capture exception. No new rules claimed.

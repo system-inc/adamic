@@ -267,3 +267,41 @@ partial for arbitrary runtime regex, imported props and typed wrappers;
 handed-node dispatch and string-kind removal remain unfinished. Its three
 React kinds declarations are present but not consumed by the current runner.
 No full gate or new emitted-JavaScript rule comparison was run.
+
+## RegExp literal correction, October 7
+
+The new regex instruction supersedes the previous hand-written boolean prop
+matcher. Replaced it with one module-level JS RegExp literal,
+/^(is|has)[A-Z]([A-Za-z0-9]?)+/u, matching the upstream default expression.
+No codex/lint-regex remote branch exists in the all-heads fetch, so no shared
+translation row was available. The literal is initialized once per module.
+The formerly specialized alternate configured pattern now refuses explicitly;
+no option pattern is implemented by a hand-written matcher. Arbitrary options
+remain incomplete until native dynamic RegExp construction can lower.
+
+The affected fifth agreement/mutant suite and refusal suite passed together
+in 107.628s on main f8013f0b. Controls with defaults: 141 findings and 61,122
+identical serialized bytes; nil options: 84 findings and 53,794 bytes.
+Repository and compiler findings, fixes and suggestions remain byte-identical
+under normal and sanitizer builds. Released syntax handles still panic 70.
+The boolean-capital mutant now changes the RegExp literal's [A-Z] to [a-z];
+it compiles, exits 0 with empty stderr, and only the Go byte comparison catches
+byte 44,875. eval-library and memo-inline also passed their negative checks at
+bytes 70 and 19,756. Unaffected suites retain the preceding landing evidence.
+
+Observed affected-suite whole-process timings: repository native
+0.534577645s versus Go 0.131878477s; compiler native 3.800501925s versus Go
+0.387902896s. These are single samples from the suite, not medians.
+
+A separate well-typed .a probe of new RegExp(pattern, 'u'), where pattern comes
+from programArguments, exits 1 at line 3, column 28 with:
+stage 0 can't lower RegExp with a nonconstant pattern yet.
+The initial probe had a console output type error; its corrected source and
+the actual lowering failure are preserved in validation-wave-25-regex.
+No compiler or shared harness file was edited to bypass this dependency.
+
+The remaining React blockers do not qualify for the user's IR, single-
+assignment or capture-analysis parking exception. Imported props and typed
+wrappers remain unfinished local implementation. Handed-node dispatch and
+string-kind removal are also unfinished. The claim remains partial and
+reserved, with no new claims. Final fetch confirms main remains f8013f0b.

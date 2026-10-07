@@ -1,0 +1,7 @@
+{
+  "base": "f8013f0baac41ddc340d76f83bddde38536a8f07",
+  "previous_tip": "e7dbe26a37bd965eeb3cb0cd059832e74c382f79",
+  "source_sha256": "c49472fdaf38d9df4291577d91155dd401cc6e51fe0243627694a007b972daa9",
+  "test_command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-25-corpus ADAMIC_WAVE25_FIFTH_ARTIFACTS=/workspace/wave-25-landing-second/fifth ADAMIC_WAVE25_FIFTH_REFUSALS=/workspace/wave-25-regex-refusals go test ./stage1/cohere/typeaware -run ^TestWave25Fifth(AgreementAndMutants|BooleanRefusals)$ -count=1 -v -timeout 20m",
+  "probe_exit": 1
+}
