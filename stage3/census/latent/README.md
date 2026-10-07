@@ -1,5 +1,24 @@
 # Latent census
 
+The latest rerun is in [REPORT.md](REPORT.md) and [REPORT.json](REPORT.json).
+Both new configurations have **26/78 checker-clean files (33.33%)**, measured on
+a checker-rejected program. The earlier six-configuration report is archived in
+`data/previous-REPORT.md` and `data/previous-REPORT.json.gz`; its raw files remain
+in data/. New raw observations, stock AST evidence, merge diffs and audits are
+in `data/rerun2/`.
+
+For this rerun, use `rerun2.py OUTPUT_DIRECTORY ADAPTED`, then
+`write_rerun2.py`. `declarations.cjs ADAPTED MANIFEST_JSON OUTPUT_JSON` uses stock
+TypeScript 6.0.3 to independently record declaration spans; set NODE_PATH to the
+actual stage3 API cache. `audit_rerun2.py ADAPTED STOCK_DECLARATIONS_JSON` checks
+checker totals/clean-file ratios, exact reason counts, nearest named declaration
+owners of variance refusals, and deltas against the previous cumulative run.
+Its mutants cover the new ratio and variance ownership checks. The older prepare,
+summary and report-audit scripts target the original six-configuration format.
+The old `write_report.py` entry point dispatches to the new renderer for this format.
+Pinned configuration commits and all scratch integration details are in REPORT.json.
+
+
 This measurement binary sees beyond a program's first refusal. It is built with a
 scratch Go overlay; no production compiler source is edited or committed. All
 census numbers are **measured on a checker-rejected program**. It does not compile

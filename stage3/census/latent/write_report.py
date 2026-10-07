@@ -2,6 +2,10 @@
 import json
 from pathlib import Path
 root=Path(__file__).resolve().parent;result=json.loads((root/'REPORT.json').read_text());runs=result['runs'];base=runs[0]
+if 'baseline' in result:
+ import runpy
+ runpy.run_path(str(root/'write_rerun2.py'))
+ raise SystemExit(0)
 LABEL='measured on a checker-rejected program'
 def esc(s):return str(s).replace('|','\\|').replace('\n','<br>')
 text=f'''Built: a scratch-only census that measures eligible top-level functions and every top-level statement across six configurations.
