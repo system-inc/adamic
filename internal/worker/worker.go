@@ -120,6 +120,10 @@ export default {
 
 // Build checks and lowers before writing anything, including on a signature refusal.
 func Build(entry, output string) error {
+	return BuildWith(entry, output, Options{})
+}
+
+func BuildWith(entry, output string, options Options) error {
 	program, err := load.Load([]string{entry})
 	if err != nil {
 		return err
@@ -157,15 +161,30 @@ func Build(entry, output string) error {
 	if !hasHandle {
 		return fmt.Errorf("worker: checked handle was lost during lowering")
 	}
-	handler := javascript.JavaScriptWith(lowered, javascript.Options{ModuleExports: true, RuntimeImport: "./adamic.mjs"})
+	backend := javascript.Options{ModuleExports: true, RuntimeImport: "./adamic.mjs"}
+	var wasm []workerFile
+	var imports string
+	bridge := Bridge("./handler.mjs")
+	if len(options.Wasm) != 0 {
+		backend.ExternalFunctions, imports, wasm, err = wasmFiles(entry, program, lowered, options)
+		if err != nil {
+			return err
+		}
+		bridge = wasmBridge("./handler.mjs")
+	}
+	handler := imports + javascript.JavaScriptWith(lowered, backend)
 	name := strings.TrimSuffix(filepath.Base(entry), filepath.Ext(entry))
 	configuration := fmt.Sprintf("name = %s\nmain = \"worker.mjs\"\ncompatibility_date = \"2026-10-07\"\n", strconv.Quote(name))
-	files := []struct{ name, text string }{
+	if len(options.Wasm) != 0 {
+		configuration += "\n[[rules]]\ntype = \"CompiledWasm\"\nglobs = [\"**/*.wasm\"]\nfallthrough = false\n"
+	}
+	files := []workerFile{
 		{"handler.mjs", handler},
 		{"adamic.mjs", strings.Replace(workerRuntime, "/* UTF8_RUNTIME */", strings.Replace(utf8Runtime, "export function createUtf8", "function createUtf8", 1), 1)},
-		{"worker.mjs", Bridge("./handler.mjs")},
+		{"worker.mjs", bridge},
 		{"wrangler.toml", configuration},
 	}
+	files = append(files, wasm...)
 	if err := os.MkdirAll(output, 0755); err != nil {
 		return err
 	}

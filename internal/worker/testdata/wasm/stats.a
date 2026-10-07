@@ -1,0 +1,31 @@
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+interface StatsInterface {
+    readonly count: number;
+    readonly sum: number;
+    readonly minimum: number;
+    readonly maximum: number;
+}
+
+export function stats(values: readonly number[]): StatsInterface {
+    let sum = 0;
+    let minimum = Infinity;
+    let maximum = -Infinity;
+    for(const value of values) {
+        sum += value;
+        minimum = Math.min(minimum, value);
+        maximum = Math.max(maximum, value);
+    }
+    return { count: values.length, sum, minimum, maximum };
+}
+
+export function handle(request: HttpRequest): HttpResponse {
+    const values: number[] = [];
+    if(request.body !== '') {
+        for(const part of request.body.split(',')) {
+            values.push(Number(part));
+        }
+    }
+    const result = stats(values);
+    return { status: 200, headers: [], body: `${result.count}:${result.sum}:${result.minimum}:${result.maximum}` };
+}
