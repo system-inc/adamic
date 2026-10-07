@@ -40,11 +40,10 @@ File: from_wave1_09/parse_value.a.
 
 Port the actual total value parser with an acyclic indexed arena, preserving CRLF normalization, verbatim separator runs, slash words, quote handling, trailing backslash, unmatched-close discard and final unclosed-function flush at the root. Inject the other-owned byte-separator predicate through a membership set exported from actual Go. Compare actual Go on every consumer fixture source plus upstream value fixtures and malformed/Unicode controls, source Node, emitted JavaScript and sanitized native, with compiling semantic mutants. Same six consumers, zero last blockers removed alone. Push before code.
 
-## Fourth helper feasibility reservation
+## Fourth helper feasibility reservation withdrawn
 
-All prior helpers, full gate and evidence are pushed at 7fab8c58. Refreshed 432 origin references and 17 distinct claim blobs. This six-consumer symbol remains unclaimed and ties the highest remaining concrete count.
+All three retained helpers are delivered and pushed at 7fab8c58. The fresh audit inspected 432 origin references and 17 distinct claim blobs. A fourth six-consumer loader was reserved for feasibility at 2365c934 before any probe code.
 
-Claim: github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.loadFile
-Planned file: from_wave1_09/stylesheet_load_file.a.
+Released, not claimed or delivered: stylesheetCollector.loadFile. No loader source or readiness credit is retained. Its reservation is withdrawn because actual Go theme values preserve invalid UTF-8 bytes that Adamic readTextFile replaces irreversibly. The fixed CSS witnesses with byte 80, 81 or ff all become ef bf bd on source Node, emitted JavaScript and sanitized native, whereas actual Go loadFile retains each original byte. Valid ASCII/Unicode controls agree. See ../from_wave1_09/file_loader_gap/BLOCKER.md and its recorded executable probe.
 
-First prove the file input boundary can retain Go os.ReadFile bytes through ParseCSS and theme ingestion. Adamic readTextFile documents replacement of invalid bytes and different error prose; shared runtime changes are outside this unit. If a concrete oracle witness proves a required shared gap, preserve the reproducer and report the blocker, withdraw the feasibility reservation, and stop under Ahra's shared-file ownership instruction. Do not certify a silently different file loader. Same six consumers; no implementation or readiness credit until four-way parity and a compiling mutant are complete. Push before any probe or code.
+Stopping under Ahra's instruction to report shared gaps without editing shared files. A lossless byte-reading input API or an explicitly approved contract change is required before a full Go-compatible loader can be delivered. Other helpers remain unclaimed; none are reserved by this withdrawal.
