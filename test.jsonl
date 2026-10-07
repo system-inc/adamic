@@ -69094,3 +69094,29 @@
 {"Time":"2026-10-07T23:48:16.172491723Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants","Elapsed":122.53}
 {"Time":"2026-10-07T23:48:16.172563992Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals"}
 {"Time":"2026-10-07T23:48:16.172573917Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Output":"=== RUN   TestSyntaxRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:57.863715621Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Output":"    syntax_test.go:88: three Go refusals explicitly refused with empty stdout on all builds\n"}
+{"Time":"2026-10-07T23:48:57.866700924Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Output":"--- PASS: TestSyntaxRefusals (41.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:57.866835797Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Elapsed":41.69}
+{"Time":"2026-10-07T23:48:57.86685733Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries"}
+{"Time":"2026-10-07T23:48:57.866867184Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Output":"=== RUN   TestSyntaxLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:58.761957818Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Output":"    estree_test.go:315: raw: 4 files, 4 identical, 0 differing\n"}
+{"Time":"2026-10-07T23:48:58.875633367Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Output":"    estree_test.go:315: postprocessed: 4 files, 4 identical, 0 differing\n"}
+{"Time":"2026-10-07T23:48:58.877441835Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Output":"--- PASS: TestSyntaxLibraries (1.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:58.87751855Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Elapsed":1.01}
+{"Time":"2026-10-07T23:48:58.877574815Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap"}
+{"Time":"2026-10-07T23:48:58.877579552Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap","Output":"=== RUN   TestTypeMemberLibraryGap\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:59.764191644Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap","Output":"    syntax_test.go:109: Go accepts an interface property initializer, pinned typescript-estree refuses it; the port follows Go\n"}
+{"Time":"2026-10-07T23:48:59.766990174Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap","Output":"--- PASS: TestTypeMemberLibraryGap (0.89s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:59.767003725Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap","Elapsed":0.89}
+{"Time":"2026-10-07T23:48:59.76701374Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThroughput"}
+{"Time":"2026-10-07T23:48:59.767017836Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThroughput","Output":"=== RUN   TestThroughput\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:59.767042593Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThroughput","Output":"    throughput_test.go:16: set ADAMIC_ESTREE_BENCHMARK=1 for full-output throughput\n"}
+{"Time":"2026-10-07T23:48:59.76704666Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThroughput","Output":"--- SKIP: TestThroughput (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:59.767050095Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThroughput","Elapsed":0}
+{"Time":"2026-10-07T23:48:59.767058087Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates"}
+{"Time":"2026-10-07T23:48:59.76706007Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Output":"=== RUN   TestCookedSurrogates\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:49:40.130352672Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Output":"    utf8_test.go:23: 8 cooked-surrogate files, 3606 bytes match Go\n"}
+{"Time":"2026-10-07T23:49:40.132794444Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Output":"--- PASS: TestCookedSurrogates (40.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:49:40.132808445Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Elapsed":40.37}
+{"Time":"2026-10-07T23:49:40.132815616Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant"}
+{"Time":"2026-10-07T23:49:40.13281835Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Output":"=== RUN   TestCookedSurrogateMutant\n","OutputType":"frame"}
