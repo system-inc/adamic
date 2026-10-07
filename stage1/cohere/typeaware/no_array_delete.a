@@ -1,0 +1,36 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { Suggestion } from './suggestion.ts';
+import type { Repair } from './repair.ts';
+
+export class NoArrayDelete {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind !== 'DeleteExpression') { return; }
+        const operand = this.rules.skip(node.children[0] ?? -1);
+        const access = this.rules.parser.node(operand);
+        if(access.kind !== 'ElementAccessExpression') { return; }
+        const receiver = access.children[0] ?? -1;
+        const argument = access.children[access.children.length - 1] ?? -1;
+        const facts = types(this.rules.ask(receiver, 'type-shape'), 'type-shape');
+        const root = facts.root();
+        const parts = (root.flags & (134217728 | 268435456)) !== 0 ? root.parts : [root.id];
+        const arrays = parts.map((id) => facts.type(id).array || facts.type(id).tuple >= 0);
+        const underlying = (root.flags & 268435456) !== 0 ? arrays.some((array) => array) : arrays.every((array) => array);
+        if(!underlying) { return; }
+        const finding = this.rules.add('no-array-delete', 'noArrayDelete', 'Using the `delete` operator with an array expression is unsafe.', index);
+        const repairs: Repair[] = [];
+        const scanner = this.rules.scanner;
+        for(let at = 0; at < 3; at++) {
+            scanner.pos = at === 0 ? node.pos : at === 1 ? this.rules.parser.node(receiver).end : this.rules.parser.node(argument).end;
+            scanner.scan();
+            repairs.push({ start: this.rules.byte(scanner.start), end: this.rules.byte(scanner.pos), text: at === 0 ? '' : at === 1 ? '.splice(' : ', 1)' });
+        }
+        finding.suggestions.push(new Suggestion('useSplice', 'Use `array.splice()` instead.', repairs));
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) { this.visit(index); }
+    }
+}
