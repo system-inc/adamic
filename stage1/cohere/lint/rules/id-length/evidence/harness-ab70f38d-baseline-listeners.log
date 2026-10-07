@@ -1,0 +1,93 @@
+--- FAIL: TestRulesAgree (51.04s)
+    lint_test.go:391: cohere cases: 2760 unique source/rule/options combinations
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1127360195/019/case-188/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1127360195/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1127360195/019/case-188/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: SyntaxError: Duplicate export of 'syntaxKinds'
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1127360195/019/case-190/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1127360195/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: SyntaxError: Duplicate export of 'syntaxKinds'
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1127360195/019/case-194/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1127360195/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1127360195/019/case-194/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: SyntaxError: Duplicate export of 'syntaxKinds'
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1127360195/019/case-195/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1127360195/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1127360195/019/case-195/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: SyntaxError: Duplicate export of 'syntaxKinds'
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1127360195/019/case-204/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1127360195/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1127360195/019/case-204/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: SyntaxError: Duplicate export of 'syntaxKinds'
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1127360195/019/case-206/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1127360195/019/case-206/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1127360195/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: SyntaxError: Duplicate export of 'syntaxKinds'
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1127360195/019/case-208/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1127360195/019/case-208/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1127360195/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1127360195/019/case-208/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: SyntaxError: Duplicate export of 'syntaxKinds'
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1127360195/019/case-209/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1127360195/019/case-209/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1127360195/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1127360195/019/case-209/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: SyntaxError: Duplicate export of 'syntaxKinds'
+    lint_test.go:430: /workspace/adamic/stage1/cohere/lint/rules/array-callback-return/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/array-callback-return/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/array-callback-return/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/arrow-body-style/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/arrow-body-style/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/arrow-body-style/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-bare-throw/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-bare-throw/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-bare-throw/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/dot-notation/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/dot-notation/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/dot-notation/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/grouped-accessor-pairs/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/grouped-accessor-pairs/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/grouped-accessor-pairs/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/id-length/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/id-length/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/id-length/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-restricted-types/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-restricted-types/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-restricted-types/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/rule.ts:1:10: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/rule.ts:1:10: error TS2484: Export declaration conflicts with exported declaration of 'syntaxKinds'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/rule.ts:3:14: error TS2323: Cannot redeclare exported variable 'syntaxKinds'.
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	51.049s
+FAIL

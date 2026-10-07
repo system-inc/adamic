@@ -1,0 +1,24 @@
+--- FAIL: TestRulesAgree (2.19s)
+    lint_test.go:420: /workspace/adamic/stage1/cohere/lint/rules/array-callback-return/rule.ts:100:36: error TS2345: Argument of type 'SuggestedFinding' is not assignable to parameter of type 'Finding'.
+          Types of property 'suggestions' are incompatible.
+            The type 'readonly Suggestion[]' is 'readonly' and cannot be assigned to the mutable type 'Suggestion[]'.
+        /workspace/adamic/stage1/cohere/lint/rules/arrow-body-style/rule.ts:15:36: error TS2345: Argument of type 'FixedFinding' is not assignable to parameter of type 'Finding'.
+          Types of property 'suggestions' are incompatible.
+            The type 'readonly Suggestion[]' is 'readonly' and cannot be assigned to the mutable type 'Suggestion[]'.
+        /workspace/adamic/stage1/cohere/lint/rules/dot-notation/rule.ts:19:36: error TS2345: Argument of type 'FixedFinding' is not assignable to parameter of type 'Finding'.
+          Types of property 'suggestions' are incompatible.
+            The type 'readonly Suggestion[]' is 'readonly' and cannot be assigned to the mutable type 'Suggestion[]'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/rule.ts:28:31: error TS2345: Argument of type 'SuggestedFinding' is not assignable to parameter of type 'Finding'.
+          Types of property 'suggestions' are incompatible.
+            The type 'readonly Suggestion[]' is 'readonly' and cannot be assigned to the mutable type 'Suggestion[]'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/rule.ts:61:31: error TS2345: Argument of type 'SuggestedFinding' is not assignable to parameter of type 'Finding'.
+          Types of property 'suggestions' are incompatible.
+            The type 'readonly Suggestion[]' is 'readonly' and cannot be assigned to the mutable type 'Suggestion[]'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/suggestions.a:22:14: error TS2416: Property 'suggestions' in type 'SuggestedFinding' is not assignable to the same property in base type 'Finding'.
+          The type 'readonly Suggestion[]' is 'readonly' and cannot be assigned to the mutable type 'Suggestion[]'.
+        /workspace/adamic/stage1/cohere/lint/rules/typescript-no-restricted-types/rule.ts:87:31: error TS2345: Argument of type 'SuggestedFinding' is not assignable to parameter of type 'Finding'.
+          Types of property 'suggestions' are incompatible.
+            The type 'readonly Suggestion[]' is 'readonly' and cannot be assigned to the mutable type 'Suggestion[]'.
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	2.204s
+FAIL

@@ -1,0 +1,5 @@
+--- FAIL: TestRulesAgree (3.12s)
+    lint_test.go:420: /workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/rule.ts:1:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3.132s
+FAIL
