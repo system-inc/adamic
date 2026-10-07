@@ -1,0 +1,406 @@
+{
+  "meter": "latent run 0 compiler features; fair source tree retains the exact pinned generated diagnostics input",
+  "whole_tree_count": 369,
+  "whole_files_at_zero": 40,
+  "roots": 78,
+  "partition_count": 153,
+  "review_status": "The requested six-file pass is proven in its per-file archives. Remaining-file notes are a roadmap, not reviewed site proofs or proposed assertions. Counts include every diagnostic code and are not directly comparable to the older five-code 63-finding table.",
+  "files": [
+    {
+      "file": "corePublic.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "performanceCore.ts",
+      "count": 2,
+      "codes": {
+        "TS2591": 2
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/performanceCore.ts:35:37: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/performanceCore.ts:35:84: error TS2591: Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      ],
+      "next_review": "Wait for compiler require-builtins/Node host bindings, as requested; no source shim."
+    },
+    {
+      "file": "types.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "expressionToTypeNode.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "builder.ts",
+      "count": 17,
+      "codes": {
+        "TS2345": 12,
+        "TS2488": 2,
+        "TS2375": 2,
+        "TS2769": 1
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:1258:65: error TS2488: Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:1292:61: error TS2488: Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:1345:64: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:1347:41: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:1347:97: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:1493:60: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:1495:26: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:1496:45: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:1562:64: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:2273:9: error TS2375: Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; semanticDiagnosticsPerFile: Map<Path, readonly ReusableDiagnostic[]>; ... 7 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'outSignature' are incompatible.\n    Type 'EmitSignature | undefined' is not assignable to type 'EmitSignature'.\n      Type 'undefined' is not assignable to type 'EmitSignature'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:2310:9: error TS2375: Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; referencedMap: BuilderState.ManyToManyPathMap | undefined; ... 8 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'emitSignatures' are incompatible.\n    Type 'Map<Path, EmitSignature> | undefined' is not assignable to type 'Map<Path, EmitSignature>'.\n      Type 'undefined' is not assignable to type 'Map<Path, EmitSignature>'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:2377:13: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Type 'Generator<[Path | undefined, never[]], void, unknown>' is missing the following properties from type 'readonly (readonly [Path, readonly ReusableDiagnostic[]])[]': length, concat, join, slice, and 25 more.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:2379:45: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:395:118: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:395:85: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/builder.ts:991:17: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+      ],
+      "next_review": "Review erased Map/Set iterator type arguments (arrayFrom, forEachKey, mapDefinedIterator); type the map generator output tuple; review truthful undefined unions on ReusableBuilderProgramState, then remeasure all cascades and the public API boundary."
+    },
+    {
+      "file": "builderPublic.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "builderState.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "builderStatePublic.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "watch.ts",
+      "count": 2,
+      "codes": {
+        "TS2375": 2
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/watch.ts:756:11: error TS2375: Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getDefaultLibLocation' are incompatible.\n    Type '(() => string) | undefined' is not assignable to type '() => string'.\n      Type 'undefined' is not assignable to type '() => string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watch.ts:845:5: error TS2375: Type '{ useCaseSensitiveFileNames: () => boolean; getNewLine: () => string; getCurrentDirectory: () => string; getDefaultLibLocation: () => string; getDefaultLibFileName: (options: CompilerOptions) => string; ... 13 more ...; now: ... | undefined; }' is not assignable to type 'ProgramHost<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'."
+      ],
+      "next_review": "The two reviewed errors require truthful owning public optional host declarations. Those API lines are outside the exact sanctioned set, so presence assertions are unsound and the file remains declined."
+    },
+    {
+      "file": "watchPublic.ts",
+      "count": 12,
+      "codes": {
+        "TS2412": 10,
+        "TS2379": 2
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:125:5: error TS2412: Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(data: string) => string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:371:65: error TS2379: Argument of type '{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:383:52: error TS2379: Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:506:5: error TS2412: Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => boolean'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:529:5: error TS2412: Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:530:5: error TS2412: Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:534:5: error TS2412: Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:535:5: error TS2412: Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:542:5: error TS2412: Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:568:17: error TS2412: Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:661:9: error TS2412: Type '((directory: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.",
+        "/tmp/adapt32-close-source-only/src/compiler/watchPublic.ts:662:9: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directory: string) => void'."
+      ],
+      "next_review": "Review owning optional host function declarations and explicit undefined reset fields, distinguishing internal input types from public host interfaces; public API expansions need separate sanction."
+    },
+    {
+      "file": "watchUtilities.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "resolutionCache.ts",
+      "count": 12,
+      "codes": {
+        "TS2379": 3,
+        "TS2322": 2,
+        "TS2375": 1,
+        "TS2412": 1,
+        "TS2345": 3,
+        "TS18048": 2
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1019:43: error TS2379: Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly StringLiteralLike[] | undefined' is not assignable to type 'readonly StringLiteralLike[]'.\n      Type 'undefined' is not assignable to type 'readonly StringLiteralLike[]'.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1282:21: error TS2322: Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.\n  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1297:17: error TS2322: Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.\n  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1332:58: error TS2375: Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1332:58: error TS2379: Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1386:9: error TS2412: Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1616:118: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1618:39: error TS18048: 'dirPath' is possibly 'undefined'.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1619:46: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1619:74: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:1619:99: error TS18048: 'dirPath' is possibly 'undefined'.",
+        "/tmp/adapt32-close-source-only/src/compiler/resolutionCache.ts:990:43: error TS2379: Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'."
+      ],
+      "next_review": "Review firstDefinedIterator Path-yield contracts; review optional cache-input/reset/nonRecursive fields; prove the watcher creation return and Map retrieval paths before any required-value assertion."
+    },
+    {
+      "file": "tsbuild.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "count": 14,
+      "codes": {
+        "TS18048": 3,
+        "TS2345": 1,
+        "TS2412": 10
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:1064:76: error TS18048: 'data' is possibly 'undefined'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:1065:62: error TS18048: 'data' is possibly 'undefined'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:1066:42: error TS18048: 'data' is possibly 'undefined'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:1776:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:302:5: error TS2412: Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => Date'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:438:5: error TS2412: Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:439:5: error TS2412: Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:440:5: error TS2412: Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:441:5: error TS2412: Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:442:5: error TS2412: Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:443:5: error TS2412: Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:785:5: error TS2412: Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:786:5: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => void'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tsbuildPublic.ts:787:5: error TS2412: Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'."
+      ],
+      "next_review": "Review map iterator yielded values; review ten optional host function assignments at their owning declarations, including variance for writeFile. Public owning contracts cannot be added to the accepted API set silently."
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "count": 10,
+      "codes": {
+        "TS2375": 3,
+        "TS2322": 4,
+        "TS2345": 3
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/moduleNameResolver.ts:132:13: error TS2375: Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'peerDependencies' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/moduleNameResolver.ts:2772:21: error TS2322: Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.\n  Type '{ value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.\n    Types of property 'value' are incompatible.\n      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.\n        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'originalPath' are incompatible.\n            Type 'string | undefined' is not assignable to type 'string | true'.\n              Type 'undefined' is not assignable to type 'string | true'.",
+        "/tmp/adapt32-close-source-only/src/compiler/moduleNameResolver.ts:286:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'originalPath' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/moduleNameResolver.ts:474:36: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.\n  Type 'undefined' is not assignable to type 'MapLike<string[]>'.",
+        "/tmp/adapt32-close-source-only/src/compiler/moduleNameResolver.ts:627:9: error TS2375: Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'originalPath' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/moduleNameResolver.ts:635:5: error TS2375: Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: ... | undefined; resolutionDiagnostics: ... | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'resolutionDiagnostics' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.",
+        "/tmp/adapt32-close-source-only/src/compiler/moduleNameResolver.ts:642:143: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.",
+        "/tmp/adapt32-close-source-only/src/compiler/moduleNameResolver.ts:644:144: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.",
+        "/tmp/adapt32-close-source-only/src/compiler/moduleNameResolver.ts:647:35: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.",
+        "/tmp/adapt32-close-source-only/src/compiler/moduleNameResolver.ts:648:5: error TS2322: Type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'."
+      ],
+      "next_review": "Review explicit undefined in owning PackageId/resolution/cache result contracts; remeasure assignment failures and resulting result-variable cascades before adding any assertions. Public contracts may require separate sanction."
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "sys.ts",
+      "count": 57,
+      "codes": {
+        "TS18046": 2,
+        "TS2591": 44,
+        "TS2304": 6,
+        "TS2345": 1,
+        "TS2307": 1,
+        "TS2322": 1,
+        "TS7006": 1,
+        "TS7031": 1
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1280:43: error TS18046: 'e' is of type 'unknown'.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1470:34: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1470:42: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1471:36: error TS2591: Cannot find name 'path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1471:46: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1472:21: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1474:36: error TS2591: Cannot find name 'crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1476:23: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1481:35: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1484:25: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1485:32: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1491:56: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1498:121: error TS2304: Cannot find name '__filename'.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1498:35: error TS2304: Cannot find name '__filename'.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1498:92: error TS2304: Cannot find name '__dirname'.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1500:44: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1501:51: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1516:27: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1517:38: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1518:32: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1524:19: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1528:17: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1531:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1534:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1553:29: error TS18046: 'e' is of type 'unknown'.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1566:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1575:21: error TS2304: Cannot find name 'global'.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1576:21: error TS2304: Cannot find name 'global'.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1578:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1588:42: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1592:112: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1592:68: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1594:107: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1594:180: error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1594:192: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1594:26: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1594:62: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1597:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1597:69: error TS2307: Cannot find module 'source-map-support' or its corresponding type declarations.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1606:17: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1609:33: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1614:36: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1615:36: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1616:13: error TS2322: Type '(baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(baseDir: string, moduleName: string) => ModuleImportResult'.\n  Type '{ module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.\n    Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.\n      Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '{ module: undefined; modulePath?: undefined; error: { stack?: string; message?: string; }; }'.\n        Types of property 'error' are incompatible.\n          Type 'unknown' is not assignable to type '{ stack?: string; message?: string; }'.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1619:38: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1629:49: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1650:44: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1650:59: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1672:47: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1696:54: error TS7006: Parameter 'err' implicitly has an 'any' type.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1696:61: error TS7031: Binding element 'profile' implicitly has an 'any' type.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1699:120: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1728:41: error TS2304: Cannot find name '__filename'.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1746:47: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1746:73: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1788:25: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/sys.ts:1883:96: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      ],
+      "next_review": "Most findings need proven Node global/module bindings (44 TS2591, six TS2304, one TS2307). Then remeasure contextual callback typing, ModuleImportResult absence, and two unknown catches; do not assume Error-shaped throws."
+    },
+    {
+      "file": "program.ts",
+      "count": 13,
+      "codes": {
+        "TS2375": 4,
+        "TS18046": 2,
+        "TS2345": 4,
+        "TS2412": 2,
+        "TS2488": 1
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:1876:11: error TS2375: Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'directoryExists' are incompatible.\n    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.\n      Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:2599:9: error TS2375: Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:406:25: error TS18046: 'e' is of type 'unknown'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:4157:64: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:4160:69: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:4160:95: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:441:25: error TS18046: 'e' is of type 'unknown'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:472:11: error TS2375: Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 16 more ...; createHash: ... | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:4956:9: error TS2412: Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:4957:9: error TS2412: Type '((path: string) => string[]) | undefined' is not assignable to type '(path: string) => string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => string[]'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:4988:28: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:5038:14: error TS2488: Type '[Path, false | SymlinkedDirectory] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+        "/tmp/adapt32-close-source-only/src/compiler/program.ts:5107:5: error TS2375: Type '{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: ...; ... 6 more ...; trace: ... | undefined; }' is not assignable to type 'ParseConfigFileHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'trace' are incompatible.\n    Type '((s: string) => void) | undefined' is not assignable to type '(s: string) => void'.\n      Type 'undefined' is not assignable to type '(s: string) => void'."
+      ],
+      "next_review": "Review the existing typeof-substitution narrowing, iterator yield contracts and optional host declarations. Some owner types are public; two catches lack a proven Error contract. No whole-file zero claim is made."
+    },
+    {
+      "file": "commandLineParser.ts",
+      "count": 9,
+      "codes": {
+        "TS2345": 3,
+        "TS18046": 1,
+        "TS2375": 1,
+        "TS2322": 4
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/commandLineParser.ts:1874:96: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/commandLineParser.ts:2077:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/commandLineParser.ts:2301:91: error TS18046: 'e' is of type 'unknown'.",
+        "/tmp/adapt32-close-source-only/src/compiler/commandLineParser.ts:2663:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'build' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+        "/tmp/adapt32-close-source-only/src/compiler/commandLineParser.ts:2677:9: error TS2322: Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.\n  Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.\n    Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'originalPath' are incompatible.\n        Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/commandLineParser.ts:2689:66: error TS2345: Argument of type 'Set<string | undefined>' is not assignable to parameter of type 'Set<string>'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/commandLineParser.ts:2952:13: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/commandLineParser.ts:3449:55: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.",
+        "/tmp/adapt32-close-source-only/src/compiler/commandLineParser.ts:4014:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."
+      ],
+      "next_review": "Review Map/Set iterator contracts for keys/values and map output arrays. Review CompilerOptions/ProjectReference explicit undefined owners against the public API boundary. One caught value is unknown."
+    },
+    {
+      "file": "binder.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "semver.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "tracing.ts",
+      "count": 5,
+      "codes": {
+        "TS2591": 4,
+        "TS18046": 1
+      },
+      "diagnostics": [
+        "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:40:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:63:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:66:81: error TS18046: 'e' is of type 'unknown'.",
+        "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:82:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+        "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:83:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+      ],
+      "next_review": "Five reviewed declines: four Node host bindings and one unknown catch. typesPath explicit undefined is fixed; further zero requires proven host/exception contracts."
+    },
+    {
+      "file": "symbolWalker.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    },
+    {
+      "file": "performance.ts",
+      "count": 0,
+      "codes": {},
+      "diagnostics": [],
+      "next_review": "At zero on the fair 78-root all-code meter; no further edit needed."
+    }
+  ]
+}

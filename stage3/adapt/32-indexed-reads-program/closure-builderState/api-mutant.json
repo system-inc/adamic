@@ -1,0 +1,4 @@
+{
+  "exit": 1,
+  "stderr": "/workspace/adamic/stage3/adapt/20-optional-declarations/check-baselines.cjs:106\n    throw new Error('API snapshot differs from parsed owner edits: ' + JSON.stringify(differences.slice(0, 12)));\n    ^\n\nError: API snapshot differs from parsed owner edits: []\n    at /workspace/adamic/stage3/adapt/20-optional-declarations/check-baselines.cjs:106:11\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/32-indexed-reads-program/api-exceptions.cjs:39:80)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+}
