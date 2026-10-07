@@ -69,3 +69,27 @@ remaining inventory rules in array order after excluding needs_type_information
 and binding_only, names found in main's executable lint sources, and names in
 claim documents on any origin branch. No earlier claims are released.
 This update is pushed before writing rule code. New Adamic sources use .a.
+
+## Earlier claims finished and pushed, October 7
+
+The five older implementations and complete evidence are pushed through d4808055.
+The independent compiler/stage1 comparison covers all 233 source files; all five
+semantic mutants are caught on source Node, emitted JS and ASan/UBSan native.
+Google Fonts and one Tailwind fixture retain the measured JSX adapter blocker;
+their projected semantics pass. The prior three TypeScript rules remain pushed.
+Sources use the explicitly authorized temporary .ts extension for this checkout.
+
+## Next three claims, October 7
+
+After that push, a new all-head fetch and claim scan reserves:
+
+1. better-tailwindcss/enforce-consistent-important-position
+2. better-tailwindcss/enforce-consistent-variable-syntax
+3. better-tailwindcss/enforce-consistent-variant-order
+
+Selection snapshot: origin/main ef3d907ecdc4c771b016f7d9c52372def057a340; 337 origin refs;
+52 distinct Markdown blobs under stage1/cohere/lint/claims/.
+All 46 helper-ready names are occupied. These are the first three remaining
+syntax-only inventory names in array order, excluding names present in main
+executable lint sources or any origin claim document. This reservation is
+pushed before writing any new rule code. No earlier claim is released.
