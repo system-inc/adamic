@@ -5,8 +5,8 @@
  	out.text(mode)
  	switch mode {
 +	case "declaration-ancestry": return p.declarationAncestry(out, c, node, question)
-+	case "resolved-callee": return p.resolvedCallee(out, c, node, question)
-+	case "program-modules": return p.programModules(out, node, question)
++	case "wave19-resolved-callee": return p.wave19ResolvedCallee(out, c, node, question)
++	case "wave19-program-modules": return p.wave19ProgramModules(out, node, question)
  	case "node-symbol-origin": return p.nodeSymbolOrigin(out, c, node, question)
  	case "isolated-declarations": return p.isolatedDeclarations(out, node, question)
  	case "index-signature-access": return p.indexSignatureAccess(out, c, node, question)

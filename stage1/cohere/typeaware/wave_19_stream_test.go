@@ -45,7 +45,7 @@ func TestWave19ProcessPendingRegistration(t *testing.T) {
 		t.Fatal(err)
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	overlay := h.overlay("stream-registration", "bridge/tsgo/checker/facts.go", "switch mode {", "switch mode {\ncase \"declaration-ancestry\": return p.declarationAncestry(out,c,node,question)\ncase \"resolved-callee\": return p.resolvedCallee(out,c,node,question)\ncase \"program-modules\": return p.programModules(out,node,question)")
+	overlay := h.overlay("stream-registration", "bridge/tsgo/checker/facts.go", "switch mode {", "switch mode {\ncase \"declaration-ancestry\": return p.declarationAncestry(out,c,node,question)\ncase \"wave19-resolved-callee\": return p.wave19ResolvedCallee(out,c,node,question)\ncase \"wave19-program-modules\": return p.wave19ProgramModules(out,node,question)")
 	stage0 := filepath.Join(directory, "adamic")
 	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
 	archive := h.archive("stream", overlay, false)
@@ -173,7 +173,7 @@ func TestWave19BlockingPendingRegistration(t *testing.T) {
 		t.Fatal(err)
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	overlay := h.overlay("stream-registration", "bridge/tsgo/checker/facts.go", "switch mode {", "switch mode {\ncase \"declaration-ancestry\": return p.declarationAncestry(out,c,node,question)\ncase \"resolved-callee\": return p.resolvedCallee(out,c,node,question)\ncase \"program-modules\": return p.programModules(out,node,question)")
+	overlay := h.overlay("stream-registration", "bridge/tsgo/checker/facts.go", "switch mode {", "switch mode {\ncase \"declaration-ancestry\": return p.declarationAncestry(out,c,node,question)\ncase \"wave19-resolved-callee\": return p.wave19ResolvedCallee(out,c,node,question)\ncase \"wave19-program-modules\": return p.wave19ProgramModules(out,node,question)")
 	stage0 := filepath.Join(directory, "adamic")
 	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
 	archive := h.archive("stream", overlay, false)
@@ -287,7 +287,7 @@ func wave19StreamMutant(h *harness, stage0, archive, entry, ruleFile, from, to, 
 	if err := os.MkdirAll(directory, 0755); err != nil {
 		h.t.Fatal(err)
 	}
-	for _, name := range []string{entry, "no_process_exit_after_output.a", "require_blocking_standard_streams.a", "stream_graph.a", "declaration_ancestry.a", "resolved_callee.a", "program_modules.a"} {
+	for _, name := range []string{entry, "no_process_exit_after_output.a", "require_blocking_standard_streams.a", "stream_graph.a", "declaration_ancestry.a", "wave19_resolved_callee.a", "wave19_program_modules.a"} {
 		data, err := os.ReadFile(filepath.Join(h.repository, "stage1/cohere/typeaware", name))
 		if err != nil {
 			h.t.Fatal(err)
@@ -329,7 +329,7 @@ func TestWave19StreamReleasedHandles(t *testing.T) {
 		t.Fatal(err)
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	overlay := h.overlay("stream-registration", "bridge/tsgo/checker/facts.go", "switch mode {", "switch mode {\ncase \"declaration-ancestry\": return p.declarationAncestry(out,c,node,question)\ncase \"resolved-callee\": return p.resolvedCallee(out,c,node,question)\ncase \"program-modules\": return p.programModules(out,node,question)")
+	overlay := h.overlay("stream-registration", "bridge/tsgo/checker/facts.go", "switch mode {", "switch mode {\ncase \"declaration-ancestry\": return p.declarationAncestry(out,c,node,question)\ncase \"wave19-resolved-callee\": return p.wave19ResolvedCallee(out,c,node,question)\ncase \"wave19-program-modules\": return p.wave19ProgramModules(out,node,question)")
 	stage0 := filepath.Join(directory, "adamic")
 	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
 	archive := h.archive("stream", overlay, false)
@@ -339,7 +339,7 @@ func TestWave19StreamReleasedHandles(t *testing.T) {
 	entry := h.write("released.a", `import {panic,programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic';const args=programArguments();const path=args[1]??panic('path');const program=tsgoProgram(args[0]??panic('config'),[path]);tsgoRelease(program);console.log(tsgoInspect(program,path,0,Number.parseInt(args[4]??'4',10),args[3]??'Identifier',args[2]??'declaration-ancestry'));`)
 	normal := h.build(stage0, "released", entry, archive, false)
 	asan := h.build(stage0, "released-asan", entry, sanitized, true)
-	questions := []struct{ question, kind, end string }{{"declaration-ancestry\nalias", "Identifier", "4"}, {"resolved-callee", "CallExpression", "6"}, {"program-modules", "SourceFile", "7"}}
+	questions := []struct{ question, kind, end string }{{"declaration-ancestry\nalias", "Identifier", "4"}, {"wave19-resolved-callee", "CallExpression", "6"}, {"wave19-program-modules", "SourceFile", "7"}}
 	for _, binary := range []string{normal, asan} {
 		for _, question := range questions {
 			got := h.run("released-run", exec.Command(binary, config, probe, question.question, question.kind, question.end))

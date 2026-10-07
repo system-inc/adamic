@@ -12,8 +12,8 @@ export class ResolvedCallee {
         this.bodyKind = bodyKind; this.bodyStart = bodyStart; this.bodyEnd = bodyEnd; this.source = source;
     }
 }
-export function resolvedCallee(rules: Rules, index: number): ResolvedCallee {
-    const frames = new Frames(rules.ask(index, 'resolved-callee')); header(frames, 'resolved-callee');
+export function wave19ResolvedCallee(rules: Rules, index: number): ResolvedCallee {
+    const frames = new Frames(rules.ask(index, 'wave19-resolved-callee')); header(frames, 'wave19-resolved-callee');
     const present = frames.yes(); const returns = present ? frames.natural() : 0; const declared = present && frames.yes();
     const file = declared ? frames.field() : ''; const ambient = declared && frames.yes(); const module = declared && frames.yes();
     const kind = declared ? frames.field() : ''; const start = declared ? frames.natural() : 0; const end = declared ? frames.natural() : 0;

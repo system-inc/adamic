@@ -1,0 +1,134 @@
+[
+  {
+    "corpus": "compiler",
+    "round": 1,
+    "implementation": "go",
+    "process_ns": 705388862,
+    "findings": 0,
+    "load_ns": 549717030,
+    "rule_ns": 7654497,
+    "run_ns": 104893348
+  },
+  {
+    "corpus": "compiler",
+    "round": 1,
+    "implementation": "native",
+    "process_ns": 2176296746,
+    "findings": 0,
+    "load_ns": 394808363,
+    "query_ns": 5785801,
+    "queries": 154,
+    "first_query_ns": 89394,
+    "run_ns": 1736535174
+  },
+  {
+    "corpus": "compiler",
+    "round": 2,
+    "implementation": "native",
+    "process_ns": 2060837643,
+    "findings": 0,
+    "load_ns": 348498223,
+    "query_ns": 7956865,
+    "queries": 154,
+    "first_query_ns": 23356,
+    "run_ns": 1693390117
+  },
+  {
+    "corpus": "compiler",
+    "round": 2,
+    "implementation": "go",
+    "process_ns": 443303693,
+    "findings": 0,
+    "load_ns": 355073159,
+    "rule_ns": 7849766,
+    "run_ns": 61414251
+  },
+  {
+    "corpus": "compiler",
+    "round": 3,
+    "implementation": "go",
+    "process_ns": 468973755,
+    "findings": 0,
+    "load_ns": 369752855,
+    "rule_ns": 7281261,
+    "run_ns": 64428381
+  },
+  {
+    "corpus": "compiler",
+    "round": 3,
+    "implementation": "native",
+    "process_ns": 2212849187,
+    "findings": 0,
+    "load_ns": 342795839,
+    "query_ns": 8527805,
+    "queries": 154,
+    "first_query_ns": 28029,
+    "run_ns": 1845630240
+  },
+  {
+    "corpus": "repository",
+    "round": 1,
+    "implementation": "go",
+    "process_ns": 218081868,
+    "findings": 0,
+    "load_ns": 112312857,
+    "rule_ns": 1410062,
+    "run_ns": 81364001
+  },
+  {
+    "corpus": "repository",
+    "round": 1,
+    "implementation": "native",
+    "process_ns": 413573721,
+    "findings": 0,
+    "load_ns": 142290679,
+    "query_ns": 3973646,
+    "queries": 574,
+    "first_query_ns": 20572,
+    "run_ns": 260481971
+  },
+  {
+    "corpus": "repository",
+    "round": 2,
+    "implementation": "native",
+    "process_ns": 332772465,
+    "findings": 0,
+    "load_ns": 93940330,
+    "query_ns": 3346803,
+    "queries": 574,
+    "first_query_ns": 17309,
+    "run_ns": 232477621
+  },
+  {
+    "corpus": "repository",
+    "round": 2,
+    "implementation": "go",
+    "process_ns": 190962992,
+    "findings": 0,
+    "load_ns": 91055039,
+    "rule_ns": 1467817,
+    "run_ns": 75403657
+  },
+  {
+    "corpus": "repository",
+    "round": 3,
+    "implementation": "go",
+    "process_ns": 170664244,
+    "findings": 0,
+    "load_ns": 86700700,
+    "rule_ns": 1367909,
+    "run_ns": 65233274
+  },
+  {
+    "corpus": "repository",
+    "round": 3,
+    "implementation": "native",
+    "process_ns": 355325870,
+    "findings": 0,
+    "load_ns": 105840652,
+    "query_ns": 3929270,
+    "queries": 574,
+    "first_query_ns": 21044,
+    "run_ns": 242012160
+  }
+]

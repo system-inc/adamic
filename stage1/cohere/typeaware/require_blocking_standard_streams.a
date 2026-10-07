@@ -3,8 +3,8 @@ import { Diagnostic } from './diagnostic.ts';
 import type { Rules } from './rules.ts';
 import { Bindings } from './bindings.ts';
 import { declarationAncestry } from './declaration_ancestry.a';
-import { programModules } from './program_modules.a';
-import type { ProgramModule } from './program_modules.a';
+import { wave19ProgramModules } from './wave19_program_modules.a';
+import type { ProgramModule } from './wave19_program_modules.a';
 import { StreamGraph } from './stream_graph.a';
 import { NoProcessExitAfterOutput, StreamPosition } from './no_process_exit_after_output.a';
 
@@ -12,7 +12,7 @@ export class StreamIndex {
     readonly files = new Map<string, ProgramModule>(); readonly imported = new Set<string>();
     readonly canBlock = new Set<string>(); readonly edges = new Map<string, string[]>();
     constructor(rules: Rules, root: number) {
-        const modules = programModules(rules, root); const seeds: string[] = [];
+        const modules = wave19ProgramModules(rules, root); const seeds: string[] = [];
         for(const module of modules) { this.files.set(module.file, module); if(module.file.endsWith('/source/system/StandardStreams.ts') || module.file.endsWith('/source/system/StandardStreams.d.ts')) { seeds.push(module.file); } }
         for(const module of modules) {
             if(module.ambient) { continue; } const edges: string[] = [];

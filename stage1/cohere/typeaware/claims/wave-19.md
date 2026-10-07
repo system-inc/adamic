@@ -78,3 +78,7 @@ restriction; their algorithms and overlay-based checks are already pushed.
 ## React overlap discovered on refresh
 
 The later all-head refresh includes wave 16 claim commit 58d204d3 (02:30:09 UTC), earlier than our f2e92f7b claim commit (02:31:23 UTC). Its origin branch claims the same three React rules. Skip react-hooks/set-state-in-effect, react-hooks/set-state-in-render and react-hooks/static-components under the instruction to skip rules claimed on another origin branch. Our second-continuation reservation is superseded; wave 19 has no React implementation to merge. No further rules were claimed. The current React HIR prerequisite status is recorded in wave_19_react/RESUME_REPORT.md.
+
+## Question name collision correction
+
+A later refresh found incompatible program-modules/resolved-callee implementations on other workers' origin branches. Our prepared facts are now wave19-program-modules and wave19-resolved-callee, in wave19_program_modules.go/.a and wave19_resolved_callee.go/.a. The updated registration patch remains unapplied. All six native algorithms retain independent Go, mutant and sanitizer checks; no new rules are claimed. See wave_19_landing/QUESTION_COLLISION_REPORT.md for current evidence and names.

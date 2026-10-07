@@ -12,8 +12,8 @@ export class ProgramModule {
         this.file = file; this.ambient = ambient; this.external = external; this.library = library; this.specifiers = specifiers;
     }
 }
-export function programModules(rules: Rules, root: number): ProgramModule[] {
-    const frames = new Frames(rules.ask(root, 'program-modules')); header(frames, 'program-modules');
+export function wave19ProgramModules(rules: Rules, root: number): ProgramModule[] {
+    const frames = new Frames(rules.ask(root, 'wave19-program-modules')); header(frames, 'wave19-program-modules');
     const count = frames.natural(); const modules: ProgramModule[] = [];
     for(let at = 0; at < count; at++) {
         const file = frames.field(); const ambient = frames.yes(); const external = frames.yes(); const library = frames.yes();

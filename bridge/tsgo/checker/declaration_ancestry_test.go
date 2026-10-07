@@ -128,8 +128,8 @@ func TestWave19ResolvedCalleeAndProgramModules(t *testing.T) {
 			calls++
 			out := &fields{}
 			out.number(1)
-			out.text("resolved-callee")
-			wire, err := p.resolvedCallee(out, c, node, "resolved-callee")
+			out.text("wave19-resolved-callee")
+			wire, err := p.wave19ResolvedCallee(out, c, node, "wave19-resolved-callee")
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -149,8 +149,8 @@ func TestWave19ResolvedCalleeAndProgramModules(t *testing.T) {
 	}
 	out := &fields{}
 	out.number(1)
-	out.text("program-modules")
-	wire, err := p.programModules(out, file.AsNode(), "program-modules")
+	out.text("wave19-program-modules")
+	wire, err := p.wave19ProgramModules(out, file.AsNode(), "wave19-program-modules")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -180,11 +180,11 @@ func TestWave19ResolvedCalleeAndProgramModules(t *testing.T) {
 	if !found || at != len(got) {
 		t.Fatal("missing module-resolution positive")
 	}
-	if _, err := p.resolvedCallee(&fields{}, c, file.AsNode(), "resolved-callee"); err == nil {
-		t.Fatal("resolved-callee accepted wrong kind")
+	if _, err := p.wave19ResolvedCallee(&fields{}, c, file.AsNode(), "wave19-resolved-callee"); err == nil {
+		t.Fatal("wave19-resolved-callee accepted wrong kind")
 	}
-	if _, err := p.programModules(&fields{}, file.AsNode(), "program-modules\nextra"); err == nil {
-		t.Fatal("program-modules accepted suffix")
+	if _, err := p.wave19ProgramModules(&fields{}, file.AsNode(), "wave19-program-modules\nextra"); err == nil {
+		t.Fatal("wave19-program-modules accepted suffix")
 	}
 	t.Log("resolved signature declaration/body and program import targets agree with direct checker APIs")
 }

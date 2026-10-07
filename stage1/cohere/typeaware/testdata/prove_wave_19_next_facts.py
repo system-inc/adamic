@@ -12,8 +12,8 @@ changes = [
     ("ancestry-alias", "declaration_ancestry.go", "symbol = c.GetAliasedSymbol(symbol)", "symbol = c.GetSymbolAtLocation(node)", "TestWave19AncestryAliasAndBindingNames", "wrong alias ancestry"),
     ("ancestry-name-guard", "declaration_ancestry.go", "identifier != nil && identifier.Kind == ast.KindIdentifier", "identifier != nil", "TestWave19AncestryAliasAndBindingNames", "Unhandled case in Node.Text: *ast.BindingPattern"),
     ("ancestry-global", "declaration_ancestry.go", "out.yes(ancestor.Kind == ast.KindModuleDeclaration && ast.IsGlobalScopeAugmentation(ancestor))", "out.yes(false)", "TestWave19DeclarationAncestry", "wrong global-augmentation metadata"),
-    ("callee-return", "resolved_callee.go", "out.number(flags)", "_ = flags; out.number(0)", "TestWave19ResolvedCalleeAndProgramModules", "wrong resolved callee"),
-    ("module-target", "program_modules.go", "resolved = target.FileName()", "_ = target; resolved = \"\"", "TestWave19ResolvedCalleeAndProgramModules", "wrong resolved module edge"),
+    ("callee-return", "wave19_resolved_callee.go", "out.number(flags)", "_ = flags; out.number(0)", "TestWave19ResolvedCalleeAndProgramModules", "wrong resolved callee"),
+    ("module-target", "wave19_program_modules.go", "resolved = target.FileName()", "_ = target; resolved = \"\"", "TestWave19ResolvedCalleeAndProgramModules", "wrong resolved module edge"),
 ]
 for name, filename, before, after, test, message in changes:
     original = repository / "bridge/tsgo/checker" / filename

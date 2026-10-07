@@ -13,11 +13,11 @@ type wave19ModuleSpecifier struct {
 	node     *ast.Node
 }
 
-// programModules serializes raw program files and resolved import specifiers.
+// wave19ProgramModules serializes raw program files and resolved import specifiers.
 // Native Adamic must compute entry points, closures and any lint decisions.
-func (p *Program) programModules(out *fields, node *ast.Node, question string) (string, error) {
-	if question != "program-modules" || node.Kind != ast.KindSourceFile {
-		return "", fmt.Errorf("program-modules requires a SourceFile and no suffix")
+func (p *Program) wave19ProgramModules(out *fields, node *ast.Node, question string) (string, error) {
+	if question != "wave19-program-modules" || node.Kind != ast.KindSourceFile {
+		return "", fmt.Errorf("wave19-program-modules requires a SourceFile and no suffix")
 	}
 	files := p.Compiler.SourceFiles()
 	out.number(uint64(len(files)))

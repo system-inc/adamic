@@ -8,11 +8,11 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
-// resolvedCallee exposes the chosen signature declaration and its source/body metadata.
+// wave19ResolvedCallee exposes the chosen signature declaration and its source/body metadata.
 // It does not decide whether a call prints, exits, blocks, or should be followed.
-func (p *Program) resolvedCallee(out *fields, c *checker.Checker, node *ast.Node, question string) (string, error) {
-	if question != "resolved-callee" || node.Kind != ast.KindCallExpression {
-		return "", fmt.Errorf("resolved-callee requires a CallExpression and no suffix")
+func (p *Program) wave19ResolvedCallee(out *fields, c *checker.Checker, node *ast.Node, question string) (string, error) {
+	if question != "wave19-resolved-callee" || node.Kind != ast.KindCallExpression {
+		return "", fmt.Errorf("wave19-resolved-callee requires a CallExpression and no suffix")
 	}
 	signature := c.GetResolvedSignature(node)
 	out.yes(signature != nil)
