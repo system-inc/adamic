@@ -1,3 +1,15 @@
+Built: eleven owned rules rebased to current main and parked on shared registration unification #zmh9v36; production shared harness files untouched.
+Commits: main b8fb957aa839a9e8cb0b54279dd9864fa317bd30; helpers a9fe6fd71fe35e0a132e5673b8313a3b6e1cc225; rebased rules b4b887664d19aeac0afea60134fe0e688409287a, followed by this evidence commit.
+Commands and outputs: complete owned rule gate PASS 167.223s / 261.698s / 235.374s, vet PASS; 3,916 compiler/stage1 pairs, 147,374,518 identical bytes; setup PASS 87s, nproc 5.
+Mutants: eleven rule-semantic mutants and numeric subscription, suggestion, regexp and provider guard mutants compile and are caught on Node, emitted JavaScript and ASan/UBSan native.
+Not covered: production registration and numeric handed-node dispatch, independent JSX, complete shared suggestions and native Tailwind providers; throughput and full repository gate not rerun.
+
+# Current parking refresh on b8fb957a
+
+The inherited static-field native emitter change required fresh execution on all three targets. All owned rule comparisons, complete compiler/stage1 corpora and compiling mutants passed. The stage1 source tree is unchanged across this rebase. Production shared finding, context, main, oracle and lint comparison files have no branch diff. The private historical-contract fixture remains a conditional rule certificate, as documented below; #zmh9v36 is the only production registration landing blocker. No shared harness handoff SHA has been named.
+
+With source /workspace/adamic-tools/env.sh and ADAMIC_TAILWIND_PACKAGE=/tmp/wave104-tailwind/node_modules/tailwindcss, ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-04-typescript, go test on the three owned comparison packages -p=3 -count=1 -v -timeout=20m exited zero. Owned-package vet including the private parking fixture exited zero. Logs: evidence/b8fb-rules-tests.log, b8fb-rules-vet.log and b8fb-setup.log. Earlier reports and measurements follow; no new throughput measurement is claimed.
+
 Built: all eleven owned rules rebased to current main and parked on shared registration unification #zmh9v36; production shared harness files remain untouched.
 Commits: current main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06; green pushed helper branch c023b39cedf928b9867785e8fe3cb5cd21a2f52f; rebased rule work bfca5f0c9, followed by this refreshed evidence commit.
 Commands and outputs: full owned rule gate PASS 162.996s / 263.274s / 234.742s, vet PASS; 3,916 compiler/stage1 pairs and 147,374,518 identical bytes; setup PASS 40s, nproc 5.
