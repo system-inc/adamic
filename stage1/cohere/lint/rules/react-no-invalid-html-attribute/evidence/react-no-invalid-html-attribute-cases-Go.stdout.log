@@ -1,0 +1,689 @@
+case 0
+fixed	\u000a        React.createElement('a', {\u000a          ...rest,\u000a          href: to,\u000a        })\u000a      
+case 1
+fixed	<Foo rel></Foo>
+case 2
+fixed	<Foo.Bar rel="alternatex"></Foo.Bar>;\u000a
+case 3
+finding	7	29	neverValid	`alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel="alternate alternatex"></a>
+case 4
+finding	7	29	neverValid	`alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel="alternate alternatex"></a>;\u000a
+case 5
+fixed	<a rel="alternate"></a>
+case 6
+finding	7	29	neverValid	`alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel="alternatex alternate"></a>
+case 7
+finding	7	19	neverValid	`alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel="alternatex"></a>
+case 8
+finding	7	19	neverValid	`alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel="alternatex"></a>;\u000a
+case 9
+fixed	<a rel="author"></a>
+case 10
+finding	7	14	neverValid	`bogus` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+finding	50	57	neverValid	`bogus` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel="bogus" />; React.createElement("a", {rel: "bogus"});
+case 11
+fixed	<a rel="bogus" />; React.createElement("a", {rel: "bogus"});
+case 12
+fixed	<a rel="bookmark"></a>
+case 13
+finding	7	18	notValidFor	`canonical` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="canonical"></a>
+case 14
+finding	7	18	notValidFor	`canonical` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="canonical"></a>;\u000a
+case 15
+finding	7	21	notValidFor	`dns-prefetch` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="dns-prefetch"></a>
+case 16
+fixed	<a rel="external"></a>
+case 17
+fixed	<a rel="help"></a>
+case 18
+finding	7	13	notValidFor	`icon` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="icon"></a>
+case 19
+fixed	<a rel="license"></a>
+case 20
+finding	7	17	notValidFor	`manifest` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="manifest"></a>
+case 21
+finding	7	22	notValidFor	`modulepreload` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="modulepreload"></a>
+case 22
+fixed	<a rel="next"></a>
+case 23
+fixed	<a rel="nofollow"></a>
+case 24
+fixed	<a rel="noopener"></a>
+case 25
+finding	7	28	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+fixed	<a rel="noreferrer\u0009noopener"></a>;\u000a
+case 26
+finding	7	28	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+fixed	<a rel="noreferrer\u000anoopener"></a>;\u000a
+case 27
+finding	7	35	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+fixed	<a rel="noreferrer        noopener"></a>
+case 28
+finding	7	29	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+fixed	<a rel="noreferrer  noopener"></a>;\u000a
+case 29
+finding	7	31	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+fixed	<a rel="noreferrer noopener   "></a>
+case 30
+finding	7	35	neverValid	`foobar` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel="noreferrer noopener foobar"></a>
+case 31
+fixed	<a rel="noreferrer"></a>
+case 32
+finding	7	29	neverValid	`noreferrer\u005ctnoopener` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel="noreferrer\u005ctnoopener"></a>;\u000a
+case 33
+finding	7	31	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+fixed	<a rel="noreferrer\u00a0\u00a0noopener"></a>
+case 34
+fixed	<a rel="opener"></a>
+case 35
+finding	7	17	notValidFor	`pingback` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="pingback"></a>
+case 36
+finding	7	19	notValidFor	`preconnect` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="preconnect"></a>
+case 37
+finding	7	17	notValidFor	`prefetch` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="prefetch"></a>
+case 38
+finding	7	16	notValidFor	`preload` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="preload"></a>
+case 39
+finding	7	18	notValidFor	`prerender` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="prerender"></a>
+case 40
+fixed	<a rel="prev"></a>
+case 41
+fixed	<a rel="search"></a>
+case 42
+finding	7	19	notValidFor	`stylesheet` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<a rel="stylesheet"></a>
+case 43
+fixed	<a rel="tag"></a>
+case 44
+finding	8	26	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+fixed	<a rel={"        noopener"}></a>
+case 45
+finding	8	19	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+fixed	<a rel={" noopener"}></a>
+case 46
+finding	8	24	neverValid	`batgo` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel={"batgo noopener"}></a>
+case 47
+finding	8	36	neverValid	`foobar` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel={"foobar noreferrer noopener"}></a>
+case 48
+finding	8	26	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+fixed	<a rel={"noopener        "}></a>
+case 49
+finding	8	36	neverValid	`foobar` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	<a rel={"noreferrer noopener foobar"}></a>
+case 50
+finding	8	9	onlyStrings	The `rel` attribute only supports strings. A number, a boolean, `null` or an object here is coerced on its way to the DOM, so `rel={true}` becomes the literal text `true` and `rel={null}` removes the attribute entirely. Neither is what the expression looks like it does. Pass the token as a string.
+fixed	<a rel={5}></a>
+case 51
+finding	8	9	onlyStrings	The `rel` attribute only supports strings. A number, a boolean, `null` or an object here is coerced on its way to the DOM, so `rel={true}` becomes the literal text `true` and `rel={null}` removes the attribute entirely. Neither is what the expression looks like it does. Pass the token as a string.
+fixed	<a rel={5}></a>;\u000a
+case 52
+finding	8	12	onlyStrings	The `rel` attribute only supports strings. A number, a boolean, `null` or an object here is coerced on its way to the DOM, so `rel={true}` becomes the literal text `true` and `rel={null}` removes the attribute entirely. Neither is what the expression looks like it does. Pass the token as a string.
+fixed	<a rel={null}></a>
+case 53
+finding	8	12	onlyStrings	The `rel` attribute only supports strings. A number, a boolean, `null` or an object here is coerced on its way to the DOM, so `rel={true}` becomes the literal text `true` and `rel={null}` removes the attribute entirely. Neither is what the expression looks like it does. Pass the token as a string.
+fixed	<a rel={true}></a>
+case 54
+finding	7	18	onlyStrings	The `rel` attribute only supports strings. A number, a boolean, `null` or an object here is coerced on its way to the DOM, so `rel={true}` becomes the literal text `true` and `rel={null}` removes the attribute entirely. Neither is what the expression looks like it does. Pass the token as a string.
+fixed	<a rel={undefined}></a>
+case 55
+fixed	<a rel={{a: "noreferrer"}["a"]}></a>
+case 56
+fixed	<a rel={{a: "noreferrer"}["b"]}></a>
+case 57
+finding	7	11	onlyStrings	The `rel` attribute only supports strings. A number, a boolean, `null` or an object here is coerced on its way to the DOM, so `rel={true}` becomes the literal text `true` and `rel={null}` removes the attribute entirely. Neither is what the expression looks like it does. Pass the token as a string.
+fixed	<a rel={{}}></a>
+case 58
+finding	7	11	onlyStrings	The `rel` attribute only supports strings. A number, a boolean, `null` or an object here is coerced on its way to the DOM, so `rel={true}` becomes the literal text `true` and `rel={null}` removes the attribute entirely. Neither is what the expression looks like it does. Pass the token as a string.
+fixed	<a rel={{}}></a>;\u000a
+case 59
+finding	3	6	emptyIsMeaningless	An empty `rel` attribute is meaningless. A bare attribute with no value is a boolean attribute, and this one is not boolean: it names a relationship, so with nothing to name it declares nothing. This is almost always a half-finished edit. Give it a value or delete it.
+fixed	<a rel></a>
+case 60
+finding	3	6	emptyIsMeaningless	An empty `rel` attribute is meaningless. A bare attribute with no value is a boolean attribute, and this one is not boolean: it names a relationship, so with nothing to name it declares nothing. This is almost always a half-finished edit. Give it a value or delete it.
+fixed	<a rel></a>;\u000a
+case 61
+fixed	<area rel="alternate"></area>
+case 62
+fixed	<area rel="author"></area>
+case 63
+fixed	<area rel="bookmark"></area>
+case 64
+finding	10	21	notValidFor	`canonical` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="canonical"></area>
+case 65
+finding	10	24	notValidFor	`dns-prefetch` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="dns-prefetch"></area>
+case 66
+fixed	<area rel="external"></area>
+case 67
+fixed	<area rel="help"></area>
+case 68
+finding	10	16	notValidFor	`icon` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="icon"></area>
+case 69
+fixed	<area rel="license"></area>
+case 70
+finding	10	20	notValidFor	`manifest` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="manifest"></area>
+case 71
+finding	10	25	notValidFor	`modulepreload` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="modulepreload"></area>
+case 72
+fixed	<area rel="next"></area>
+case 73
+fixed	<area rel="nofollow"></area>
+case 74
+fixed	<area rel="noopener"></area>
+case 75
+fixed	<area rel="noreferrer"></area>
+case 76
+fixed	<area rel="opener"></area>
+case 77
+finding	10	20	notValidFor	`pingback` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="pingback"></area>
+case 78
+finding	10	22	notValidFor	`preconnect` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="preconnect"></area>
+case 79
+finding	10	20	notValidFor	`prefetch` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="prefetch"></area>
+case 80
+finding	10	19	notValidFor	`preload` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="preload"></area>
+case 81
+finding	10	21	notValidFor	`prerender` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="prerender"></area>
+case 82
+fixed	<area rel="prev"></area>
+case 83
+fixed	<area rel="search"></area>
+case 84
+finding	10	22	notValidFor	`stylesheet` is a real `rel` value but not one that means anything on `<area>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<area rel="stylesheet"></area>
+case 85
+fixed	<area rel="tag"></area>
+case 86
+finding	10	12	noEmpty	An empty `rel` attribute is meaningless. The attribute is present, so a reader takes it as deliberate, and the value is blank, so the browser takes it as absent. Those two readings disagree and the markup is the only place that would say which was meant. Give it a value or delete it.
+fixed	<form rel=""></form>
+case 87
+finding	10	21	notValidFor	`alternate` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="alternate"></form>
+case 88
+finding	10	18	notValidFor	`author` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="author"></form>
+case 89
+finding	10	20	notValidFor	`bookmark` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="bookmark"></form>
+case 90
+finding	10	21	notValidFor	`canonical` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="canonical"></form>
+case 91
+finding	10	24	notValidFor	`dns-prefetch` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="dns-prefetch"></form>
+case 92
+fixed	<form rel="external"></form>
+case 93
+fixed	<form rel="help"></form>
+case 94
+finding	10	16	notValidFor	`icon` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="icon"></form>
+case 95
+fixed	<form rel="license"></form>
+case 96
+finding	10	20	notValidFor	`manifest` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="manifest"></form>
+case 97
+finding	10	25	notValidFor	`modulepreload` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="modulepreload"></form>
+case 98
+fixed	<form rel="next"></form>
+case 99
+fixed	<form rel="nofollow"></form>
+case 100
+fixed	<form rel="noopener"></form>
+case 101
+fixed	<form rel="noreferrer"></form>
+case 102
+fixed	<form rel="opener"></form>
+case 103
+finding	10	20	notValidFor	`pingback` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="pingback"></form>
+case 104
+finding	10	22	notValidFor	`preconnect` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="preconnect"></form>
+case 105
+finding	10	20	notValidFor	`prefetch` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="prefetch"></form>
+case 106
+finding	10	19	notValidFor	`preload` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="preload"></form>
+case 107
+finding	10	21	notValidFor	`prerender` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="prerender"></form>
+case 108
+fixed	<form rel="prev"></form>
+case 109
+fixed	<form rel="search"></form>
+case 110
+finding	10	22	notValidFor	`stylesheet` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="stylesheet"></form>
+case 111
+finding	10	15	notValidFor	`tag` is a real `rel` value but not one that means anything on `<form>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<form rel="tag"></form>
+case 112
+fixed	<form rel={callFoo()}></form>
+case 113
+finding	6	9	onlyMeaningfulFor	The `rel` attribute only has meaning on the tags: <link>, <a>, <area>, <form>. On any other element it is not a recognised attribute at all, so React passes it through to the DOM where it sits as inert markup, and a reader who sees it reasonably assumes it is doing something. Remove it, or move it to the element that actually takes it.
+fixed	<html rel></html>
+case 114
+fixed	<link rel="alternate"></link>
+case 115
+fixed	<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png" />
+case 116
+fixed	<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png" />
+case 117
+fixed	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png" />
+case 118
+fixed	<link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png" />
+case 119
+fixed	<link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png" />
+case 120
+fixed	<link rel="apple-touch-startup-image" href="iphone5.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" />
+case 121
+fixed	<link rel="apple-touch-startup-image" href="launch.png" />
+case 122
+fixed	<link rel="author"></link>
+case 123
+finding	10	20	notValidFor	`bookmark` is a real `rel` value but not one that means anything on `<link>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<link rel="bookmark"></link>
+case 124
+fixed	<link rel="canonical"></link>
+case 125
+fixed	<link rel="dns-prefetch"></link>
+case 126
+finding	10	20	notValidFor	`external` is a real `rel` value but not one that means anything on `<link>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<link rel="external"></link>
+case 127
+fixed	<link rel="help"></link>
+case 128
+fixed	<link rel="icon"></link>
+case 129
+fixed	<link rel="license"></link>
+case 130
+fixed	<link rel="manifest"></link>
+case 131
+fixed	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#fff" />
+case 132
+fixed	<link rel="modulepreload"></link>
+case 133
+fixed	<link rel="next"></link>
+case 134
+finding	10	20	notValidFor	`nofollow` is a real `rel` value but not one that means anything on `<link>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<link rel="nofollow"></link>
+case 135
+finding	10	20	notValidFor	`noopener` is a real `rel` value but not one that means anything on `<link>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<link rel="noopener"></link>
+case 136
+finding	10	22	notValidFor	`noreferrer` is a real `rel` value but not one that means anything on `<link>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<link rel="noreferrer"></link>
+case 137
+finding	10	18	notValidFor	`opener` is a real `rel` value but not one that means anything on `<link>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<link rel="opener"></link>
+case 138
+fixed	<link rel="pingback"></link>
+case 139
+fixed	<link rel="preconnect"></link>
+case 140
+fixed	<link rel="prefetch"></link>
+case 141
+fixed	<link rel="preload"></link>
+case 142
+fixed	<link rel="prerender"></link>
+case 143
+fixed	<link rel="prev"></link>
+case 144
+fixed	<link rel="search"></link>
+case 145
+finding	10	26	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+fixed	<link rel="shortcut  icon"></link>
+case 146
+fixed	<link rel="shortcut icon"></link>
+case 147
+finding	10	20	notAlone	`shortcut` must be directly followed by `icon`. On its own it is the legacy half of a two-token spelling and no browser treats it as complete, so the icon it was meant to declare is simply not declared. Write both tokens.
+fixed	<link rel="shortcut"></link>
+case 148
+fixed	<link rel="stylesheet"></link>
+case 149
+finding	10	15	notValidFor	`tag` is a real `rel` value but not one that means anything on `<link>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	<link rel="tag"></link>
+case 150
+finding	6	9	onlyMeaningfulFor	The `rel` attribute only has meaning on the tags: <link>, <a>, <area>, <form>. On any other element it is not a recognised attribute at all, so React passes it through to the DOM where it sits as inert markup, and a reader who sees it reasonably assumes it is doing something. Remove it, or move it to the element that actually takes it.
+fixed	<span rel></span>
+case 151
+finding	6	9	onlyMeaningfulFor	The `rel` attribute only has meaning on the tags: <link>, <a>, <area>, <form>. On any other element it is not a recognised attribute at all, so React passes it through to the DOM where it sits as inert markup, and a reader who sees it reasonably assumes it is doing something. Remove it, or move it to the element that actually takes it.
+fixed	<span rel></span>;\u000a
+case 152
+fixed	Preact.createElement("a", { rel: "alternatex" });\u000a
+case 153
+fixed	React.createElement("Foo", { rel: "alternatex" });\u000a
+case 154
+fixed	React.createElement("Foo", { rel: true })
+case 155
+finding	27	46	noMethod	The `rel` attribute cannot be a method. A method shorthand in a props object produces a function value, and this attribute takes a string, so the function is coerced to its own source text on the way to the DOM. That is never intended and it is invisible until someone reads the rendered markup.
+fixed	React.createElement("a", { rel() { return 1; } })
+case 156
+finding	32	54	neverValid	`alternate alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: "alternate alternatex" })
+case 157
+finding	32	54	neverValid	`alternate alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: "alternate alternatex" });\u000a
+case 158
+fixed	React.createElement("a", { rel: "alternate" })
+case 159
+finding	32	54	neverValid	`alternatex alternate` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: "alternatex alternate" })
+case 160
+finding	32	44	neverValid	`alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: "alternatex" })
+case 161
+finding	32	44	neverValid	`alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: "alternatex" });\u000a
+case 162
+finding	32	44	neverValid	`alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: "alternatex" });\u000a
+case 163
+finding	32	44	neverValid	`alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: "alternatex" });\u000a
+case 164
+fixed	React.createElement("a", { rel: "author" })
+case 165
+fixed	React.createElement("a", { rel: "bookmark" })
+case 166
+fixed	React.createElement("a", { rel: "external" })
+case 167
+fixed	React.createElement("a", { rel: "help" })
+case 168
+fixed	React.createElement("a", { rel: "license" })
+case 169
+fixed	React.createElement("a", { rel: "next" })
+case 170
+fixed	React.createElement("a", { rel: "nofollow" })
+case 171
+fixed	React.createElement("a", { rel: "noopener" })
+case 172
+fixed	React.createElement("a", { rel: "noreferrer" })
+case 173
+fixed	React.createElement("a", { rel: "opener" })
+case 174
+fixed	React.createElement("a", { rel: "prev" })
+case 175
+fixed	React.createElement("a", { rel: "search" })
+case 176
+fixed	React.createElement("a", { rel: "tag" })
+case 177
+finding	32	33	neverValid	`1` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: 1 })
+case 178
+finding	33	55	neverValid	`alternate alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: ["alternate alternatex"] })
+case 179
+fixed	React.createElement("a", { rel: ["alternate"] })
+case 180
+finding	33	55	neverValid	`alternatex alternate` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: ["alternatex alternate"] })
+case 181
+finding	33	45	neverValid	`alternatex` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: ["alternatex"] })
+case 182
+fixed	React.createElement("a", { rel: ["author"] })
+case 183
+fixed	React.createElement("a", { rel: ["bookmark"] })
+case 184
+fixed	React.createElement("a", { rel: ["external"] })
+case 185
+fixed	React.createElement("a", { rel: ["help"] })
+case 186
+fixed	React.createElement("a", { rel: ["license"] })
+case 187
+fixed	React.createElement("a", { rel: ["next"] })
+case 188
+fixed	React.createElement("a", { rel: ["nofollow"] })
+case 189
+fixed	React.createElement("a", { rel: ["noopener"] })
+case 190
+finding	59	67	neverValid	`foobar` is never a valid `rel` attribute value on any element. The browser does not warn about a rel token it does not recognise, it simply ignores it, so a typo here fails in the direction that looks fine: the relationship the author meant to declare is absent and nothing says so. Check it against the registered link relations.
+fixed	React.createElement("a", { rel: ["noreferrer", "noopener", "foobar" ] })
+case 191
+fixed	React.createElement("a", { rel: ["noreferrer"] })
+case 192
+fixed	React.createElement("a", { rel: ["opener"] })
+case 193
+fixed	React.createElement("a", { rel: ["prev"] })
+case 194
+fixed	React.createElement("a", { rel: ["search"] })
+case 195
+fixed	React.createElement("a", { rel: ["tag"] })
+case 196
+fixed	React.createElement("area", { rel: "alternate" })
+case 197
+fixed	React.createElement("area", { rel: "author" })
+case 198
+fixed	React.createElement("area", { rel: "bookmark" })
+case 199
+fixed	React.createElement("area", { rel: "external" })
+case 200
+fixed	React.createElement("area", { rel: "help" })
+case 201
+fixed	React.createElement("area", { rel: "license" })
+case 202
+fixed	React.createElement("area", { rel: "next" })
+case 203
+fixed	React.createElement("area", { rel: "nofollow" })
+case 204
+fixed	React.createElement("area", { rel: "noopener" })
+case 205
+fixed	React.createElement("area", { rel: "noreferrer" })
+case 206
+fixed	React.createElement("area", { rel: "opener" })
+case 207
+fixed	React.createElement("area", { rel: "prev" })
+case 208
+fixed	React.createElement("area", { rel: "search" })
+case 209
+fixed	React.createElement("area", { rel: "tag" })
+case 210
+fixed	React.createElement("area", { rel: ["alternate"] })
+case 211
+fixed	React.createElement("area", { rel: ["author"] })
+case 212
+fixed	React.createElement("area", { rel: ["bookmark"] })
+case 213
+fixed	React.createElement("area", { rel: ["external"] })
+case 214
+fixed	React.createElement("area", { rel: ["help"] })
+case 215
+fixed	React.createElement("area", { rel: ["license"] })
+case 216
+fixed	React.createElement("area", { rel: ["next"] })
+case 217
+fixed	React.createElement("area", { rel: ["nofollow"] })
+case 218
+fixed	React.createElement("area", { rel: ["noopener"] })
+case 219
+fixed	React.createElement("area", { rel: ["noreferrer"] })
+case 220
+fixed	React.createElement("area", { rel: ["opener"] })
+case 221
+fixed	React.createElement("area", { rel: ["prev"] })
+case 222
+fixed	React.createElement("area", { rel: ["search"] })
+case 223
+fixed	React.createElement("area", { rel: ["tag"] })
+case 224
+fixed	React.createElement("form", { rel: "external" })
+case 225
+fixed	React.createElement("form", { rel: "help" })
+case 226
+fixed	React.createElement("form", { rel: "license" })
+case 227
+fixed	React.createElement("form", { rel: "next" })
+case 228
+fixed	React.createElement("form", { rel: "nofollow" })
+case 229
+fixed	React.createElement("form", { rel: "noopener" })
+case 230
+fixed	React.createElement("form", { rel: "noreferrer" })
+case 231
+fixed	React.createElement("form", { rel: "opener" })
+case 232
+fixed	React.createElement("form", { rel: "prev" })
+case 233
+fixed	React.createElement("form", { rel: "search" })
+case 234
+fixed	React.createElement("form", { rel: ["external"] })
+case 235
+fixed	React.createElement("form", { rel: ["help"] })
+case 236
+fixed	React.createElement("form", { rel: ["license"] })
+case 237
+fixed	React.createElement("form", { rel: ["next"] })
+case 238
+fixed	React.createElement("form", { rel: ["nofollow"] })
+case 239
+fixed	React.createElement("form", { rel: ["noopener"] })
+case 240
+fixed	React.createElement("form", { rel: ["noreferrer"] })
+case 241
+fixed	React.createElement("form", { rel: ["opener"] })
+case 242
+fixed	React.createElement("form", { rel: ["prev"] })
+case 243
+fixed	React.createElement("form", { rel: ["search"] })
+case 244
+fixed	React.createElement("form", { rel: [callFoo()] })
+case 245
+fixed	React.createElement("form", { rel: callFoo() })
+case 246
+finding	30	33	onlyMeaningfulFor	The `rel` attribute only has meaning on the tags: <link>, <a>, <area>, <form>. On any other element it is not a recognised attribute at all, so React passes it through to the DOM where it sits as inert markup, and a reader who sees it reasonably assumes it is doing something. Remove it, or move it to the element that actually takes it.
+fixed	React.createElement("html", { rel: 1 })
+case 247
+fixed	React.createElement("link", { rel: "alternate" })
+case 248
+fixed	React.createElement("link", { rel: "author" })
+case 249
+fixed	React.createElement("link", { rel: "canonical" })
+case 250
+fixed	React.createElement("link", { rel: "dns-prefetch" })
+case 251
+fixed	React.createElement("link", { rel: "help" })
+case 252
+fixed	React.createElement("link", { rel: "icon" })
+case 253
+fixed	React.createElement("link", { rel: "license" })
+case 254
+fixed	React.createElement("link", { rel: "manifest" })
+case 255
+fixed	React.createElement("link", { rel: "modulepreload" })
+case 256
+fixed	React.createElement("link", { rel: "next" })
+case 257
+fixed	React.createElement("link", { rel: "pingback" })
+case 258
+fixed	React.createElement("link", { rel: "preconnect" })
+case 259
+fixed	React.createElement("link", { rel: "prefetch" })
+case 260
+fixed	React.createElement("link", { rel: "preload" })
+case 261
+fixed	React.createElement("link", { rel: "prerender" })
+case 262
+fixed	React.createElement("link", { rel: "prev" })
+case 263
+fixed	React.createElement("link", { rel: "search" })
+case 264
+fixed	React.createElement("link", { rel: "shortcut icon" })
+case 265
+fixed	React.createElement("link", { rel: "stylesheet" })
+case 266
+fixed	React.createElement("link", { rel: ["alternate"] })
+case 267
+fixed	React.createElement("link", { rel: ["author"] })
+case 268
+fixed	React.createElement("link", { rel: ["canonical"] })
+case 269
+fixed	React.createElement("link", { rel: ["dns-prefetch"] })
+case 270
+fixed	React.createElement("link", { rel: ["help"] })
+case 271
+fixed	React.createElement("link", { rel: ["icon"] })
+case 272
+fixed	React.createElement("link", { rel: ["license"] })
+case 273
+fixed	React.createElement("link", { rel: ["manifest"] })
+case 274
+fixed	React.createElement("link", { rel: ["modulepreload"] })
+case 275
+fixed	React.createElement("link", { rel: ["next"] })
+case 276
+fixed	React.createElement("link", { rel: ["pingback"] })
+case 277
+fixed	React.createElement("link", { rel: ["preconnect"] })
+case 278
+fixed	React.createElement("link", { rel: ["prefetch"] })
+case 279
+fixed	React.createElement("link", { rel: ["preload"] })
+case 280
+fixed	React.createElement("link", { rel: ["prerender"] })
+case 281
+fixed	React.createElement("link", { rel: ["prev"] })
+case 282
+fixed	React.createElement("link", { rel: ["search"] })
+case 283
+fixed	React.createElement("link", { rel: ["shortcut icon"] })
+case 284
+fixed	React.createElement("link", { rel: ["stylesheet"] })
+case 285
+finding	25	28	onlyMeaningfulFor	The `rel` attribute only has meaning on the tags: <link>, <a>, <area>, <form>. On any other element it is not a recognised attribute at all, so React passes it through to the DOM where it sits as inert markup, and a reader who sees it reasonably assumes it is doing something. Remove it, or move it to the element that actually takes it.
+fixed	React.createElement(5, { rel: "alternatex" });\u000a
+case 286
+fixed	React.createElement(`a`, { rel: "alternatex" });\u000a
+case 287
+fixed	const k = "rel";\u000aReact.createElement("a", { [k]: "alternatex" });\u000a
+case 288
+fixed	const p = {};\u000a<a {...p}></a>;\u000a
+case 289
+fixed	const p = {};\u000aReact.createElement("a", { ...p });\u000a
+case 290
+fixed	const tag = "a";\u000aReact.createElement(tag, { rel: "alternatex" });\u000a
+case 291
+fixed	createElement("a", { rel: "alternatex" });\u000a
+case 292
+fixed	h.createElement("a", { rel: "alternatex" });\u000a
+case 293
+finding	15	18	onlyMeaningfulFor	The `rel` attribute only has meaning on the tags: <link>, <a>, <area>, <form>. On any other element it is not a recognised attribute at all, so React passes it through to the DOM where it sits as inert markup, and a reader who sees it reasonably assumes it is doing something. Remove it, or move it to the element that actually takes it.
+finding	54	74	notValidFor	`noopener` is a real `rel` value but not one that means anything on `<link>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+finding	54	74	notPaired	`shortcut` can not be directly followed by `noopener` without `icon`. The first token is only meaningful as the opening half of that pair, so following it with anything else leaves both tokens doing nothing rather than one of them working.
+finding	54	74	spaceDelimited	The `rel` attribute's values should be space delimited, with exactly one space and no leading or trailing whitespace. A tab, a newline, or a run of spaces parses correctly in every browser, so this never breaks anything; it is flagged because the irregular spacing usually means the value was assembled by concatenation and nobody looked at the result.
+finding	110	122	notValidFor	`stylesheet` is a real `rel` value but not one that means anything on `<a>`. Link relations are scoped to the elements they can appear on, so a token borrowed from a `<link>` and placed on an `<a>` is silently dropped rather than applied. Either move it to an element it is defined for, or use the token that carries the same meaning here.
+fixed	const a = <div rel="nofollow" />;\u000aconst b = <link rel="shortcut  noopener" />;\u000aReact.createElement("a", {rel: "stylesheet"});\u000a
