@@ -7,14 +7,10 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// graphFlows works backwards from graph views to the allocations that can supply
-// them. Local assignments and function results are joined across all paths; this
-// is a may-flow proof, not an execution or a choice of one conditional branch.
-// Negative IDs name allocation sites in this IR, independently of fresh checker
-// identities. They select the existing allocation emission without runtime work.
-func (f *cycleFinder) graphFlows() {
-	program := f.l.result
-	next := 0
+// graphAllocationSites copies the IR tree before assigning unique allocation
+// IDs. Pointer and map children must be copied too, so their sites do not depend
+// solely on a checker identity. Nil containers preserve their original shape.
+func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 	var sites func(reflect.Value) reflect.Value
 	sites = func(value reflect.Value) reflect.Value {
 		switch value.Kind() {
@@ -26,14 +22,31 @@ func (f *cycleFinder) graphFlows() {
 			result := reflect.New(value.Type()).Elem()
 			result.Set(mapped)
 			return result
+		case reflect.Ptr:
+			if value.IsNil() {
+				return value
+			}
+			result := reflect.New(value.Type().Elem())
+			result.Elem().Set(sites(value.Elem()))
+			return result
+		case reflect.Map:
+			if value.IsNil() {
+				return value
+			}
+			result := reflect.MakeMapWithSize(value.Type(), value.Len())
+			entries := value.MapRange()
+			for entries.Next() {
+				result.SetMapIndex(sites(entries.Key()), sites(entries.Value()))
+			}
+			return result
 		case reflect.Struct:
 			result := reflect.New(value.Type()).Elem()
 			for i := 0; i < value.NumField(); i++ {
 				result.Field(i).Set(sites(value.Field(i)))
 			}
 			if field := result.FieldByName("GraphTypes"); field.IsValid() && field.Type() == reflect.TypeOf([]int{}) {
-				next--
-				field.Set(reflect.ValueOf(append(append([]int{}, field.Interface().([]int)...), next)))
+				*next--
+				field.Set(reflect.ValueOf(append(append([]int{}, field.Interface().([]int)...), *next)))
 			}
 			return result
 		case reflect.Slice:
@@ -49,9 +62,20 @@ func (f *cycleFinder) graphFlows() {
 			return value
 		}
 	}
-	program.Main = sites(reflect.ValueOf(program.Main)).Interface().([]ir.Statement)
+	return sites(value)
+}
+
+// graphFlows works backwards from graph views to the allocations that can supply
+// them. Local assignments and function results are joined across all paths; this
+// is a may-flow proof, not an execution or a choice of one conditional branch.
+// Negative IDs name allocation sites in this IR, independently of fresh checker
+// identities. They select the existing allocation emission without runtime work.
+func (f *cycleFinder) graphFlows() {
+	program := f.l.result
+	next := 0
+	program.Main = graphAllocationSites(reflect.ValueOf(program.Main), &next).Interface().([]ir.Statement)
 	for i := range program.Functions {
-		program.Functions[i].Body = sites(reflect.ValueOf(program.Functions[i].Body)).Interface().([]ir.Statement)
+		program.Functions[i].Body = graphAllocationSites(reflect.ValueOf(program.Functions[i].Body), &next).Interface().([]ir.Statement)
 	}
 
 	var graphType func(*checker.Type) bool

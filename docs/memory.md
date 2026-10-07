@@ -1483,6 +1483,43 @@ Format/vet logs are empty and git diff --check passes. The full repository gate
 and a macOS host run were not performed. Pointer/map traversal and its timing
 follow-ups are preserved separately and follow this repair.
 
+
+### Allocation-site traversal coverage and measured lowering cost
+
+The site-assignment copy in graph_flow.go now descends through pointers and both
+map keys and values, preserving nil containers. Its extracted graphAllocationSites
+helper is shared with the compiler and benchmark. TestGraphAllocationSiteContainers
+wraps every one of the 15 allocation-site-bearing IR types in pointer/map paths,
+requires its new negative identity while retaining its checker identity, and checks
+that the original IR is not changed. An IR source inventory rejects an untested
+new GraphTypes-bearing allocation type. Skipping pointers, skipping maps and
+adding an untested future allocation each fail that test; all mutations are restored.
+
+Measured after the shared-target repair f409709 on the largest available stage-1
+inputs, because the original 78-file tsc source corpus is absent here. Isolated
+site-walk medians are 9.29ms/1,814,890 Go bytes on the 9-file parser,
+15.08ms/2,750,870 bytes on the 17-file lint entry, and 16.54ms/3,235,882 bytes
+on the 31-file checker volume suite. The original entries have no graph types
+and skip the walk; an escaping-cycle checker overlay enables it for paired full
+lowering runs. With/without medians for those graph-enabled entries are
+948.67/1121.18ms, 1372.61/1672.30ms and 2600.16/2600.67ms respectively.
+Their ranges overlap, and no-graph controls vary too; these negative differences
+are not a speedup claim. The isolated benchmark reports the walk itself rather
+than attributing noisy full-lowering changes to it.
+
+[The traversal cost report](../internal/lower/performance/graph-walk/REPORT.md)
+contains the normal-entry controls, exact commands, source hashes, manifests,
+all samples and limitations. This is transient Go allocation during compilation,
+not native region metadata or peak RSS. No runtime/emission helper changes,
+aliased-object adoption or new pointer/map IR producer semantics are introduced.
+
+Final gates pass: lower/fresh packages (33.597s/40.103s), all six native graph
+tests (6.817s), call-target guard (ir 30.883s), the uncached ownership oracle
+and all 543 recorded numeric counts rows unchanged (107.226s, 944 native/254
+Node misses, zero cache hits), formatting and vet. The report lists exact
+commands and mutant logs. The full repository gate, tsc's own corpus, actual
+macOS execution and the deferred concurrency follow-up remain unrun here.
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
