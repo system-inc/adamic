@@ -14,6 +14,8 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
+  - JSON parsing and diagnostics (`runtime/json_parse.c`, after src/json/json-parser.cc,
+    src/json/json-parser.h and src/common/message-template.h, V8 13.6.233.17);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);

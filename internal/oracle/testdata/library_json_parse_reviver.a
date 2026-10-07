@@ -1,0 +1,12 @@
+function keys(key: string): void { console.log(`key:${JSON.stringify(key) ?? 'u'}`); }
+JSON.parse('{"p1":{"a":1},"p2":[2,3],"p1":{"b":4},"2":0,"1":0}', keys);
+console.log(JSON.stringify(JSON.parse('{"p1":{"a":1},"p2":[2,3],"p1":{"b":4},"2":0,"1":0}', (key: string) => { console.log(`number:${key}`); return 7; })) ?? 'u');
+const twice: number = JSON.parse('9007199254740993', (key: string, value: number) => { console.log(`root:${key}`); return value * 2; });
+console.log(`${twice}`);
+const string: string = JSON.parse('"\\ud800"', (key: string, value: string) => value + key + '!');
+console.log(JSON.stringify(string) ?? 'u');
+const bool: boolean = JSON.parse('true', (key: string, value: boolean) => !value);
+console.log(`${bool}`);
+try { JSON.parse('[{"x":1},2]', (key: string): void => { if (key === 'x') throw new Error('reviver stopped'); console.log(key); }); } catch (error) { if (error instanceof Error) console.log(error.message); }
+console.log(JSON.stringify({ k: JSON.parse('1', (): void => {}), z: 2 }) ?? 'u');
+console.log(JSON.stringify([JSON.parse('1', (): void => {})]) ?? 'u');

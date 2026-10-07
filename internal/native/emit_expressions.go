@@ -581,6 +581,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->length})", array, zero(ir.MaybeNumber), array))
 		}
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->length", e.value(expression.Array)))
+	case ir.JSONParse:
+		return e.jsonParse(expression)
 	case ir.JSONStringify:
 		return e.jsonStringify(expression)
 	case ir.JSONNull:
