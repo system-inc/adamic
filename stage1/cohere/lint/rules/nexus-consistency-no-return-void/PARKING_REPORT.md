@@ -1,7 +1,7 @@
-Built: rebased 29 owned commits containing 17 rule ports onto origin/main c01907a7; no shared harness edits and no new helper claims.
-Commits: rule rebase head 4346a622; helper rebase head 65508f3f; report commits follow on their respective owned branch names.
-Commands: six bounded corpus suites PASS, plus two corrected corpus runs; 6,707 supported source/rule rows and 224,561,469 matching Go bytes including extra repair probes; fresh six witness/mutant suites PASS on c01907a7; overlay vet PASS.
-Mutants: all 17 rule mutants and all 12 retained helper mutants compile, exit cleanly and are caught by Go comparison on source Node, emitted JavaScript and sanitized native.
+Built: 17 owned rule ports rebased onto origin/main b8fb957a; no shared harness edits or new claims.
+Commits: this current-main evidence commit follows the rebased rule history; prior pushed rule head b6ae2ce0f and helper head 94c8e5995.
+Commands: six fresh witness/mutant suites and overlay vet PASS on b8fb957a; the inherited-static-field Node oracle PASS uncached; earlier broader corpus evidence remains historical.
+Mutants: all 17 rule and 12 helper semantic mutants compile, exit cleanly and are caught on source Node, emitted JavaScript and sanitized native again on b8fb957a.
 Not covered: full Go parity on eleven known parser/adapter exclusions, normal shared harness integration, direct node handoff and full repository gate; these gaps extend beyond the parking exception's only-harness condition.
 
 ## Rebase and ownership
@@ -75,3 +75,9 @@ Best of three mixed-corpus release/process rounds; builds excluded, sanitizers u
 ## Helper inventory scan
 
 Fetched all 532 origin refs and read all 17 distinct recursive helper claim blobs plus the complete readiness ledger and helper README. Unclaimed helpers remain. No reservation is added while the rule branch still has the parser/adapter limitations above. The retained three helper ports remove eighteen dependency occurrences across six Tailwind rules, zero final blockers; their own reports define their narrower direct-helper contracts.
+
+## Revalidation on b8fb957a
+
+Both owned branches rebased cleanly onto b8fb957aa839a9e8cb0b54279dd9864fa317bd30. This takes the main native inherited-static-field-read fix without modifying or reverting shared files. Main changed internal/native/emit_objects.go and its oracle fixture/count records. Stage1 inputs are unchanged. The six retained scratch overlays reran `go test -overlay=<overlay> ./stage1/cohere/lint -run "^(TestParkingWitnesses|TestWave13.*Mutants)$" -count=1 -v -timeout=20m`; all passed. These are fresh raw-witness baseline comparisons against Go in all three modes, plus all seventeen compiling semantic mutants. Broad corpus and throughput results above were measured on the preceding backend and were not rerun or remeasured on this backend. The full repository gate was not run.
+
+`go vet -overlay=<strings overlay> ./...` passed with empty output. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^inherited_static_field_read.a$" -count=1 -v -timeout=10m` passed and executed the named fixture in 3.39s; cache native hits=0 misses=3 and node hits=0 misses=2. This upstream check is retained evidence, not a newly claimed mutant. The twelve helper mutants and their 4,470 baseline cases were also rerun on this main and passed. The harness ab70f38d4 still is not on main, and the eleven frontend/capture exclusions remain beyond the only-harness parking condition on this tested configuration. No new helper claim follows.
