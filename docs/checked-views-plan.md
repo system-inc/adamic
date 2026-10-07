@@ -501,3 +501,43 @@ and semantic mutants. Report family pairs and reads remaining after every push.
 Working target for both families is October 13 at 17:00 MDT. Nullish encoding,
 optional presence and shared dispatch merges remain integration risks; report an
 observed blocker immediately rather than counting a component test as completion.
+
+### Untagged unit selector handoff
+
+The new `lower.UntaggedViewMembers(contracts, unionID)` returns ordered member
+contract ids and each member's own required finite scalar tag fields. Members
+without tags retain structural matching. Optional tags never exclude a member.
+No descendant contract is replaced or certified by these tag descriptors.
+
+Concrete owner wiring needed before source admission:
+
+1. The lazy read dispatcher resolves this plan on an object-union read, leaving
+   other-family or deferred members as named read obligations. Existing
+   `viewUnionFields` must stop demanding a common finite discriminant for this
+   family. Do not call the new plan builder at the cast as an eager gate.
+2. Native emits `adamic_view_untagged_member` descriptors and calls
+   `adamic_view_untagged_union_select` with the common evaluated snapshot,
+   non-panicking slot probe and complete member matcher. Include
+   `view_unions_untagged.h`; runtime embedding already includes its new files.
+3. JavaScript appends `MixedUnionRuntime()` and `UntaggedUnionRuntime()` and
+   calls `adamicViewUntaggedUnionSelect` with the same contracts and adapters.
+4. Both selectors return the selected contract id. The shared dispatch must
+   keep that id through aliases, helpers, generics, callbacks and stored values,
+   and check each later read; selection is no permission to erase checks.
+5. The three ordinary absent controls have measured count rows in
+   `untagged/count-row-additions.md`, for the shared counts owner to register.
+
+Merging lazy admission 5002bfe0 into d15b4206 conflicts in the plan, cast.go,
+interface_cast.go, readiness.go, view_objects.go and native/view_fields.go.
+The attempt was aborted without editing those shared compiler files. Lane 4
+9ecdda53 merged with both plan additions retained. Source fixtures still
+compile-refuse at their casts for lack of a common finite discriminant. The
+component selector is therefore not a source admission checkpoint: all 84 pairs
+and 186 reads remain pending. The nested mutant exercises the supplied component
+matcher; compiler-wide transitive read propagation remains unproven by this unit.
+
+Coordination superseded by the user: stop direct lane merges. Dependency code
+now arrives through `codex/views-integration`, whose owner resolves shared hunks.
+The earlier merge observations above remain historical evidence. At this unit's
+check, `git ls-remote --heads origin codex/views-integration` returned no ref.
+Do not resolve another lane's compiler conflicts locally while waiting for it.
