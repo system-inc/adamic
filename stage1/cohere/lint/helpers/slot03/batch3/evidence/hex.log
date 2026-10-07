@@ -1,0 +1,10 @@
+=== RUN   TestBatch3Helpers
+    batch3_test.go:45: 1114210 lines match real Go, Node source and sanitized native
+--- PASS: TestBatch3Helpers (4.65s)
+=== RUN   TestBatch3Mutants
+=== RUN   TestBatch3Mutants/hex_value.a
+    batch3_test.go:81: compiled semantic mutant caught at line 43: got "-1" Go "15"
+--- PASS: TestBatch3Mutants (3.34s)
+    --- PASS: TestBatch3Mutants/hex_value.a (2.60s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	8.000s

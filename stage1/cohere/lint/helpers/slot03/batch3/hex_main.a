@@ -1,0 +1,10 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { hexValue } from './hex_value.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const item of json.node(json.field(root, 'points')).children) { console.log(`${hexValue(json.node(item).number)}`); }
+for(let point = 0; point <= 0x10ffff; point++) { console.log(`${hexValue(point)}`); }

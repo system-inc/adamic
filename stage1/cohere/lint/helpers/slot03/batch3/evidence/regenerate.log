@@ -1,0 +1,23 @@
+{
+  "symbols": [
+    "text.hexValue"
+  ],
+  "rules": [
+    "@next/next/google-font-display",
+    "@next/next/google-font-preconnect",
+    "@next/next/next-script-for-ga",
+    "@next/next/no-before-interactive-script-outside-document",
+    "@next/next/no-css-tags",
+    "@next/next/no-html-link-for-pages",
+    "@next/next/no-page-custom-font",
+    "@next/next/no-unwanted-polyfillio",
+    "structure/boundary-no-project-theme-value"
+  ],
+  "sources": 323,
+  "packages": [
+    "./internal/lint/rules/next",
+    "./internal/lint/rules/structure"
+  ],
+  "capture_gate_exit": 0,
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}
