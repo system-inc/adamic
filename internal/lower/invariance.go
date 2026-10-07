@@ -492,7 +492,21 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
 	node = ast.SkipParentheses(node)
 	switch node.Kind {
-	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
+	case ast.KindObjectLiteralExpression:
+		// Fresh fields are covariant, but freshness cannot supply a class's
+		// accessor table. Check the descriptor identity of the literal's view.
+		for _, viewed := range l.definedMembers(contextual) {
+			if l.checker.IsTypeAssignableTo(own, viewed) {
+				for _, property := range l.checker.GetPropertiesOfType(viewed) {
+					inside := l.checker.GetPropertyOfType(own, property.Name)
+					if inside != nil && accessorSymbol(inside) != accessorSymbol(property) {
+						return &widening{source: l.checker.GetTypeOfSymbol(inside), target: l.checker.GetTypeOfSymbol(property), accessorField: property.Name}
+					}
+				}
+			}
+		}
+		return nil
+	case ast.KindArrayLiteralExpression:
 		// Made as the type it's written into, held by nothing else: its own parts are sites.
 		return nil
 	case ast.KindConditionalExpression:
