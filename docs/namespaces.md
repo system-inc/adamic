@@ -369,3 +369,39 @@ Refused. Fixture 06 and its refusal are unchanged. The initialization unit
 clears the separate core Map probe; it does not change those three policy rows.
 [Reachability report, programs, diagnostics, counts and validation](../stage3/namespaces/REACHABILITY.md)
 record the observations and remaining limits.
+
+## Memoized initialization reachability
+
+Namespace initialization discovers each statically known function body once.
+A Tarjan active stack finds strongly connected call components. Each component
+receives the union of its own namespace and regular namespace-enum reads and
+its outgoing components' reach sets; no partial cycle result is cached.
+Module evaluation checks these cached sets against the declarations initialized
+at that call site. Unknown targets retain the existing runtime readiness checks.
+Graph discovery is linear in function bodies and call edges; materializing
+transitive sets additionally costs their union operations.
+
+The exact 24-level, two-call dead-branch witness from parser proof 33110b86
+emits C in milliseconds. A deterministic expansion counter pins 13 bodies at
+depth 12 and 25 at depth 24, including repeat queries; dropping completed-body
+memoization produces 8,191 walks at depth 12 and fails the pin. A three-function
+cycle must give every member both reachable namespaces. Native cycle execution
+matches Node after initialization; the same cycle before initialization remains
+located NotYet. The [component report](../stage3/namespaces/CALL_GRAPH.md) records
+exact timings, sources, diagnostics, mutants, commands and the unchanged matrix.
+
+Parser and IncrementalParser declaration-shape tests now require the same
+bodyless-overload outcome as the module-level implementation capability. This
+branch still returns the existing bodyless-function NotYet; integrations that
+admit checked overloads must also lower these namespace shapes. Namespace regular
+enum initialization has its own reachability pin, independent of the module
+analysis, so the early-enum refusal survives integration of module ready checks.
+
+
+The October 7 paired meter's 55 `reading Debug` NotYet sites measure as zero on
+this branch across the same 79-source-file adapted input. This is a latent
+measurement on a checker-rejected program. Thirteen other NotYet sites remain
+inside debug.ts; the production whole-file build still fails its dependency
+checker errors. The component report includes the exact remaining-site ledger,
+raw findings and failed production build. Existing post-initialization and
+unresolved-before-initialization Debug reads remain held to Node.
