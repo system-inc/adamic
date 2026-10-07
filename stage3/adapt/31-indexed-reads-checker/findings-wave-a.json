@@ -1,0 +1,1602 @@
+[
+  {
+    "rank": 1,
+    "line": 1779,
+    "column": 9,
+    "code": 2322,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(Set<Signature>) returns a possibly-undefined iterator payload under the current loader typing."
+  },
+  {
+    "rank": 2,
+    "line": 2447,
+    "column": 80,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 3,
+    "line": 2493,
+    "column": 60,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 4,
+    "line": 5045,
+    "column": 102,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 5,
+    "line": 5051,
+    "column": 77,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 6,
+    "line": 5076,
+    "column": 98,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 7,
+    "line": 5311,
+    "column": 45,
+    "code": 2322,
+    "status": "declined",
+    "reason": "Declined U-table probe: mergedSymbols lookup tests absence and falls back to the original symbol."
+  },
+  {
+    "rank": 8,
+    "line": 5915,
+    "column": 74,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 9,
+    "line": 6585,
+    "column": 57,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 10,
+    "line": 6586,
+    "column": 51,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 11,
+    "line": 6603,
+    "column": 57,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 12,
+    "line": 6921,
+    "column": 60,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 13,
+    "line": 6982,
+    "column": 49,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 14,
+    "line": 7009,
+    "column": 65,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 15,
+    "line": 7014,
+    "column": 112,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 16,
+    "line": 7377,
+    "column": 85,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 17,
+    "line": 7383,
+    "column": 85,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 18,
+    "line": 7424,
+    "column": 71,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 19,
+    "line": 7427,
+    "column": 62,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 20,
+    "line": 7432,
+    "column": 94,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 21,
+    "line": 7444,
+    "column": 41,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 22,
+    "line": 7446,
+    "column": 41,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 23,
+    "line": 7447,
+    "column": 41,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 24,
+    "line": 7447,
+    "column": 41,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 25,
+    "line": 7447,
+    "column": 97,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 26,
+    "line": 7452,
+    "column": 37,
+    "code": 2322,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 27,
+    "line": 7452,
+    "column": 64,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 28,
+    "line": 7452,
+    "column": 123,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 29,
+    "line": 7452,
+    "column": 123,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 30,
+    "line": 7452,
+    "column": 179,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 31,
+    "line": 7453,
+    "column": 41,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 32,
+    "line": 7453,
+    "column": 104,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 33,
+    "line": 7485,
+    "column": 75,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 34,
+    "line": 7489,
+    "column": 81,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 35,
+    "line": 7525,
+    "column": 89,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 36,
+    "line": 7526,
+    "column": 80,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 37,
+    "line": 7700,
+    "column": 50,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 38,
+    "line": 7745,
+    "column": 25,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 39,
+    "line": 7909,
+    "column": 50,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 40,
+    "line": 7913,
+    "column": 50,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 41,
+    "line": 7931,
+    "column": 63,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 42,
+    "line": 8027,
+    "column": 32,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 43,
+    "line": 8027,
+    "column": 65,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 44,
+    "line": 8027,
+    "column": 80,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 45,
+    "line": 8062,
+    "column": 153,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: regex split/map callback parameter is possibly undefined under the current string/regex typing."
+  },
+  {
+    "rank": 46,
+    "line": 8212,
+    "column": 37,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 47,
+    "line": 8219,
+    "column": 42,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 48,
+    "line": 8246,
+    "column": 37,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 49,
+    "line": 8246,
+    "column": 56,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 50,
+    "line": 8479,
+    "column": 40,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 51,
+    "line": 8482,
+    "column": 59,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 52,
+    "line": 8493,
+    "column": 64,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 53,
+    "line": 8496,
+    "column": 37,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 54,
+    "line": 8496,
+    "column": 55,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 55,
+    "line": 8497,
+    "column": 62,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 56,
+    "line": 8504,
+    "column": 131,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 57,
+    "line": 8560,
+    "column": 42,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 58,
+    "line": 8566,
+    "column": 17,
+    "code": 2322,
+    "status": "declined",
+    "reason": "Not an indexed read: copying an optional Set infers a possibly-undefined element type."
+  },
+  {
+    "rank": 59,
+    "line": 8573,
+    "column": 35,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 60,
+    "line": 8575,
+    "column": 25,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 61,
+    "line": 8575,
+    "column": 25,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 62,
+    "line": 8575,
+    "column": 79,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 63,
+    "line": 8581,
+    "column": 84,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 64,
+    "line": 8667,
+    "column": 22,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 65,
+    "line": 8672,
+    "column": 58,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 66,
+    "line": 8678,
+    "column": 65,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 67,
+    "line": 8690,
+    "column": 61,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 68,
+    "line": 8697,
+    "column": 65,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 69,
+    "line": 8762,
+    "column": 59,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 70,
+    "line": 8770,
+    "column": 62,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 71,
+    "line": 8779,
+    "column": 47,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 72,
+    "line": 8787,
+    "column": 59,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 73,
+    "line": 8793,
+    "column": 82,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 74,
+    "line": 8794,
+    "column": 77,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 75,
+    "line": 8794,
+    "column": 99,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 76,
+    "line": 8808,
+    "column": 17,
+    "code": 2322,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 77,
+    "line": 8861,
+    "column": 21,
+    "code": 2322,
+    "status": "declined",
+    "reason": "Not an indexed read: copying an optional Set infers a possibly-undefined element type."
+  },
+  {
+    "rank": 78,
+    "line": 8893,
+    "column": 61,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 79,
+    "line": 8900,
+    "column": 17,
+    "code": 2322,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 80,
+    "line": 8918,
+    "column": 59,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 81,
+    "line": 8924,
+    "column": 62,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 82,
+    "line": 8925,
+    "column": 67,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 83,
+    "line": 8932,
+    "column": 21,
+    "code": 2322,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 84,
+    "line": 8942,
+    "column": 63,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 85,
+    "line": 8954,
+    "column": 25,
+    "code": 2322,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 86,
+    "line": 9363,
+    "column": 17,
+    "code": 2322,
+    "status": "declined",
+    "reason": "Not an indexed read: copying an optional Set infers a possibly-undefined element type."
+  },
+  {
+    "rank": 87,
+    "line": 9381,
+    "column": 38,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 88,
+    "line": 9382,
+    "column": 54,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 89,
+    "line": 9498,
+    "column": 41,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 90,
+    "line": 9518,
+    "column": 88,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 91,
+    "line": 9519,
+    "column": 114,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 92,
+    "line": 9588,
+    "column": 41,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 93,
+    "line": 9591,
+    "column": 37,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: Array.from(symbolTable.values()) iterator payload is inferred as possibly undefined."
+  },
+  {
+    "rank": 94,
+    "line": 9597,
+    "column": 21,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 95,
+    "line": 9858,
+    "column": 17,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 96,
+    "line": 9965,
+    "column": 61,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 97,
+    "line": 9966,
+    "column": 65,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 98,
+    "line": 10022,
+    "column": 63,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 99,
+    "line": 10022,
+    "column": 86,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 100,
+    "line": 10026,
+    "column": 97,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 101,
+    "line": 10033,
+    "column": 67,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 102,
+    "line": 10033,
+    "column": 79,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 103,
+    "line": 10053,
+    "column": 53,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 104,
+    "line": 10061,
+    "column": 90,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 105,
+    "line": 10062,
+    "column": 69,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 106,
+    "line": 10063,
+    "column": 69,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 107,
+    "line": 10064,
+    "column": 47,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 108,
+    "line": 10064,
+    "column": 93,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 109,
+    "line": 10065,
+    "column": 122,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 110,
+    "line": 10066,
+    "column": 103,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 111,
+    "line": 10070,
+    "column": 50,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom of namespace export Map/Set iterators introduces possibly-undefined Symbol payloads propagated through callbacks."
+  },
+  {
+    "rank": 112,
+    "line": 10099,
+    "column": 50,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 113,
+    "line": 10099,
+    "column": 71,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 114,
+    "line": 10099,
+    "column": 108,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 115,
+    "line": 10099,
+    "column": 149,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 116,
+    "line": 10103,
+    "column": 71,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 117,
+    "line": 10212,
+    "column": 40,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 118,
+    "line": 10319,
+    "column": 83,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: getNonInheritedProperties returns arrayFrom(seen.values()), whose iterator payload is possibly undefined."
+  },
+  {
+    "rank": 119,
+    "line": 10320,
+    "column": 51,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: getNonInheritedProperties returns arrayFrom(seen.values()), whose iterator payload is possibly undefined."
+  },
+  {
+    "rank": 120,
+    "line": 10336,
+    "column": 86,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: getNonInheritedProperties returns arrayFrom(seen.values()), whose iterator payload is possibly undefined."
+  },
+  {
+    "rank": 121,
+    "line": 10997,
+    "column": 65,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 122,
+    "line": 11021,
+    "column": 29,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 123,
+    "line": 11193,
+    "column": 22,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 124,
+    "line": 11194,
+    "column": 19,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 125,
+    "line": 11195,
+    "column": 21,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 126,
+    "line": 11195,
+    "column": 80,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 127,
+    "line": 11196,
+    "column": 38,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 128,
+    "line": 11199,
+    "column": 86,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 129,
+    "line": 11199,
+    "column": 140,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 130,
+    "line": 11206,
+    "column": 29,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 131,
+    "line": 11226,
+    "column": 51,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 132,
+    "line": 11307,
+    "column": 17,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 133,
+    "line": 11307,
+    "column": 39,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 134,
+    "line": 11308,
+    "column": 49,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 135,
+    "line": 11310,
+    "column": 21,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 136,
+    "line": 11317,
+    "column": 28,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 137,
+    "line": 11505,
+    "column": 45,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 138,
+    "line": 12034,
+    "column": 30,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: getSourceFileOfNode has an optional return; checking its input declaration cannot change that return contract."
+  },
+  {
+    "rank": 139,
+    "line": 12040,
+    "column": 47,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 140,
+    "line": 12061,
+    "column": 47,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 141,
+    "line": 12343,
+    "column": 51,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 142,
+    "line": 12344,
+    "column": 36,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 143,
+    "line": 12344,
+    "column": 58,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 144,
+    "line": 12583,
+    "column": 73,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 145,
+    "line": 13162,
+    "column": 18,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 146,
+    "line": 13162,
+    "column": 38,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 147,
+    "line": 13162,
+    "column": 93,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 148,
+    "line": 13163,
+    "column": 54,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 149,
+    "line": 13163,
+    "column": 54,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 150,
+    "line": 13243,
+    "column": 69,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 151,
+    "line": 13313,
+    "column": 69,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 152,
+    "line": 13347,
+    "column": 49,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 153,
+    "line": 13381,
+    "column": 20,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 154,
+    "line": 13381,
+    "column": 57,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 155,
+    "line": 13986,
+    "column": 47,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(assignments.values()) propagates a possibly-undefined iterator payload into the for-of binding."
+  },
+  {
+    "rank": 156,
+    "line": 13990,
+    "column": 49,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(assignments.values()) propagates a possibly-undefined iterator payload into the for-of binding."
+  },
+  {
+    "rank": 157,
+    "line": 14191,
+    "column": 46,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 158,
+    "line": 14193,
+    "column": 88,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 159,
+    "line": 14196,
+    "column": 142,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 160,
+    "line": 14209,
+    "column": 36,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 161,
+    "line": 14210,
+    "column": 21,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 162,
+    "line": 14212,
+    "column": 37,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 163,
+    "line": 14219,
+    "column": 134,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 164,
+    "line": 14231,
+    "column": 48,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 165,
+    "line": 14287,
+    "column": 44,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 166,
+    "line": 14299,
+    "column": 41,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 167,
+    "line": 14300,
+    "column": 46,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 168,
+    "line": 14317,
+    "column": 17,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 169,
+    "line": 14318,
+    "column": 17,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 170,
+    "line": 14321,
+    "column": 37,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 171,
+    "line": 14349,
+    "column": 52,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 172,
+    "line": 14379,
+    "column": 67,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 173,
+    "line": 14379,
+    "column": 138,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 174,
+    "line": 14485,
+    "column": 49,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 175,
+    "line": 14531,
+    "column": 58,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 176,
+    "line": 14531,
+    "column": 78,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 177,
+    "line": 14554,
+    "column": 54,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 178,
+    "line": 14564,
+    "column": 83,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 179,
+    "line": 14565,
+    "column": 57,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 180,
+    "line": 14583,
+    "column": 21,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 181,
+    "line": 14584,
+    "column": 53,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 182,
+    "line": 14584,
+    "column": 89,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 183,
+    "line": 14584,
+    "column": 138,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 184,
+    "line": 14584,
+    "column": 173,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 185,
+    "line": 14584,
+    "column": 213,
+    "code": 18048,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 186,
+    "line": 14643,
+    "column": 66,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(Map.values()) infers a possibly-undefined Symbol iterator payload."
+  },
+  {
+    "rank": 187,
+    "line": 14782,
+    "column": 42,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 188,
+    "line": 14987,
+    "column": 66,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 189,
+    "line": 15145,
+    "column": 9,
+    "code": 2322,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(Map.values()) infers a possibly-undefined Symbol iterator payload."
+  },
+  {
+    "rank": 190,
+    "line": 15172,
+    "column": 87,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 191,
+    "line": 15439,
+    "column": 77,
+    "code": 2532,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 192,
+    "line": 15695,
+    "column": 41,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding."
+  },
+  {
+    "rank": 193,
+    "line": 15697,
+    "column": 22,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding."
+  },
+  {
+    "rank": 194,
+    "line": 15697,
+    "column": 47,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding."
+  },
+  {
+    "rank": 195,
+    "line": 15700,
+    "column": 51,
+    "code": 18048,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding."
+  },
+  {
+    "rank": 196,
+    "line": 15701,
+    "column": 42,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding."
+  },
+  {
+    "rank": 197,
+    "line": 15704,
+    "column": 43,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding."
+  },
+  {
+    "rank": 198,
+    "line": 15706,
+    "column": 52,
+    "code": 2345,
+    "status": "declined",
+    "reason": "Not an indexed read: arrayFrom(propSet.values()) propagates a possibly-undefined Symbol iterator payload into the for-of binding."
+  },
+  {
+    "rank": 199,
+    "line": 15958,
+    "column": 67,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  },
+  {
+    "rank": 200,
+    "line": 16133,
+    "column": 46,
+    "code": 2345,
+    "status": "removed",
+    "reason": "Removed by the reviewed required indexed reads recorded in sites.json."
+  }
+]

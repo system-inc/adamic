@@ -1,0 +1,87 @@
+{
+  "typescript": "6.0.3",
+  "sourceCommit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "rows": [
+    {
+      "name": "BuilderState",
+      "location": "src/compiler/builderState.ts:100",
+      "reopened": [],
+      "merges": [
+        {
+          "kind": "InterfaceDeclaration",
+          "location": "src/compiler/builderState.ts:62"
+        }
+      ]
+    },
+    {
+      "name": "JsxNames",
+      "location": "src/compiler/checker.ts:54223",
+      "reopened": [],
+      "merges": []
+    },
+    {
+      "name": "ReactNames",
+      "location": "src/compiler/checker.ts:54236",
+      "reopened": [],
+      "merges": []
+    },
+    {
+      "name": "Debug",
+      "location": "src/compiler/debug.ts:113",
+      "reopened": [],
+      "merges": []
+    },
+    {
+      "name": "Debug.log",
+      "location": "src/compiler/debug.ts:137",
+      "reopened": [],
+      "merges": [
+        {
+          "kind": "FunctionDeclaration",
+          "location": "src/compiler/debug.ts:133"
+        }
+      ]
+    },
+    {
+      "name": "BinaryExpressionState",
+      "location": "src/compiler/factory/utilities.ts:1273",
+      "reopened": [],
+      "merges": [
+        {
+          "kind": "TypeAliasDeclaration",
+          "location": "src/compiler/factory/utilities.ts:1271"
+        }
+      ]
+    },
+    {
+      "name": "Parser",
+      "location": "src/compiler/parser.ts:1437",
+      "reopened": [],
+      "merges": []
+    },
+    {
+      "name": "Parser.JSDocParser",
+      "location": "src/compiler/parser.ts:8790",
+      "reopened": [],
+      "merges": []
+    },
+    {
+      "name": "IncrementalParser",
+      "location": "src/compiler/parser.ts:9946",
+      "reopened": [],
+      "merges": []
+    },
+    {
+      "name": "tracingEnabled",
+      "location": "src/compiler/tracing.ts:37",
+      "reopened": [],
+      "merges": []
+    },
+    {
+      "name": "Status",
+      "location": "src/compiler/tsbuild.ts:58",
+      "reopened": [],
+      "merges": []
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+// From TypeScript 6.0.3, src/compiler/sys.ts:248
+// From TypeScript 6.0.3, src/compiler/sys.ts:281
+// Census reason: post-creation properties
+type PollingInterval = number;
+interface WatchedFileWithUnchangedPolls { fileName: string; unchangedPolls: number; }
+    interface PollingIntervalQueue extends Array<WatchedFileWithUnchangedPolls> {
+        pollingInterval: PollingInterval;
+        pollIndex: number;
+        pollScheduled: boolean;
+    }
+    function createPollingIntervalQueue(pollingInterval: PollingInterval): PollingIntervalQueue {
+        const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;
+        queue.pollingInterval = pollingInterval;
+        queue.pollIndex = 0;
+        queue.pollScheduled = false;
+        return queue;
+    }
+
+const queue = createPollingIntervalQueue(250);
+queue.push({fileName: "app.ts", unchangedPolls: 0});
+console.log(`${queue.length}:${queue.pollingInterval}:${queue.pollIndex}:${queue.pollScheduled}`);

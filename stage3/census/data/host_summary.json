@@ -1,0 +1,890 @@
+[
+  {
+    "api": "Buffer.from",
+    "call_sites": 2,
+    "family": "Buffer",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "clearScreen",
+    "call_sites": 1,
+    "family": "System",
+    "files": [
+      "src/compiler/watch.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "clearTimeout",
+    "call_sites": 0,
+    "family": "System",
+    "files": [
+      "src/compiler/watch.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "cpuProfilingEnabled",
+    "call_sites": 1,
+    "family": "System",
+    "files": [
+      "src/compiler/performance.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "createDirectory",
+    "call_sites": 3,
+    "family": "System",
+    "files": [
+      "src/compiler/program.ts",
+      "src/compiler/sys.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 4
+  },
+  {
+    "api": "createHash",
+    "call_sites": 0,
+    "family": "System",
+    "files": [
+      "src/compiler/program.ts",
+      "src/compiler/watch.ts",
+      "src/compiler/watchPublic.ts"
+    ],
+    "sites": 3
+  },
+  {
+    "api": "debugMode",
+    "call_sites": 0,
+    "family": "System",
+    "files": [
+      "src/compiler/performance.ts",
+      "src/compiler/sys.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "deleteFile",
+    "call_sites": 1,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/tsbuildPublic.ts"
+    ],
+    "sites": 3
+  },
+  {
+    "api": "directoryExists",
+    "call_sites": 5,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/program.ts",
+      "src/compiler/sys.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 6
+  },
+  {
+    "api": "enableCPUProfiler",
+    "call_sites": 2,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts"
+    ],
+    "sites": 4
+  },
+  {
+    "api": "exit",
+    "call_sites": 22,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 22
+  },
+  {
+    "api": "fileExists",
+    "call_sites": 6,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/program.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 6
+  },
+  {
+    "api": "getCurrentDirectory",
+    "call_sites": 8,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/program.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 8
+  },
+  {
+    "api": "getDirectories",
+    "call_sites": 2,
+    "family": "System",
+    "files": [
+      "src/compiler/program.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "getEnvironmentVariable",
+    "call_sites": 12,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/program.ts",
+      "src/compiler/sys.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 16
+  },
+  {
+    "api": "getExecutingFilePath",
+    "call_sites": 2,
+    "family": "System",
+    "files": [
+      "src/compiler/program.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "getMemoryUsage",
+    "call_sites": 1,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "getModifiedTime",
+    "call_sites": 1,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/tsbuildPublic.ts"
+    ],
+    "sites": 3
+  },
+  {
+    "api": "getWidthOfTerminal",
+    "call_sites": 2,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "newLine",
+    "call_sites": 0,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/tsbuildPublic.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 50
+  },
+  {
+    "api": "now",
+    "call_sites": 1,
+    "family": "System",
+    "files": [
+      "src/compiler/tsbuildPublic.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 4
+  },
+  {
+    "api": "preferNonRecursiveWatch",
+    "call_sites": 0,
+    "family": "System",
+    "files": [
+      "src/compiler/watch.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "readDirectory",
+    "call_sites": 2,
+    "family": "System",
+    "files": [
+      "src/compiler/program.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "readFile",
+    "call_sites": 4,
+    "family": "System",
+    "files": [
+      "src/compiler/commandLineParser.ts",
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/program.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 4
+  },
+  {
+    "api": "realpath",
+    "call_sites": 1,
+    "family": "System",
+    "files": [
+      "src/compiler/program.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 3
+  },
+  {
+    "api": "setModifiedTime",
+    "call_sites": 1,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/tsbuildPublic.ts"
+    ],
+    "sites": 3
+  },
+  {
+    "api": "setTimeout",
+    "call_sites": 0,
+    "family": "System",
+    "files": [
+      "src/compiler/watch.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "storeSignatureInfo",
+    "call_sites": 0,
+    "family": "System",
+    "files": [
+      "src/compiler/watch.ts",
+      "src/compiler/watchPublic.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "useCaseSensitiveFileNames",
+    "call_sites": 0,
+    "family": "System",
+    "files": [
+      "src/compiler/program.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 5
+  },
+  {
+    "api": "watchDirectory",
+    "call_sites": 0,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "watchFile",
+    "call_sites": 0,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "write",
+    "call_sites": 21,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/program.ts",
+      "src/compiler/tsbuildPublic.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 21
+  },
+  {
+    "api": "writeFile",
+    "call_sites": 3,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts",
+      "src/compiler/program.ts",
+      "src/compiler/sys.ts",
+      "src/compiler/watch.ts"
+    ],
+    "sites": 5
+  },
+  {
+    "api": "writeOutputIsTTY",
+    "call_sites": 1,
+    "family": "System",
+    "files": [
+      "src/compiler/executeCommandLine.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "__filename.endsWith",
+    "call_sites": 1,
+    "family": "__filename",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_crypto!.createHash",
+    "call_sites": 1,
+    "family": "_crypto",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.closeSync",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.mkdirSync",
+    "call_sites": 2,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "_fs.openSync",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.readFileSync",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.readdirSync",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.realpathSync",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "_fs.realpathSync.native",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 3
+  },
+  {
+    "api": "_fs.statSync",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.unlinkSync",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.unwatchFile",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.utimesSync",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.watch",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.watchFile",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.writeFileSync",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_fs.writeSync",
+    "call_sites": 1,
+    "family": "_fs",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_os.EOL",
+    "call_sites": 0,
+    "family": "_os",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_os.platform",
+    "call_sites": 1,
+    "family": "_os",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "_path.dirname",
+    "call_sites": 3,
+    "family": "_path",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 3
+  },
+  {
+    "api": "_path.join",
+    "call_sites": 2,
+    "family": "_path",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "_path.resolve",
+    "call_sites": 1,
+    "family": "_path",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": ".(call)",
+    "call_sites": 1,
+    "family": "clearTimeout",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": ".(call)",
+    "call_sites": 1,
+    "family": "fsRealpath",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "global.gc",
+    "call_sites": 1,
+    "family": "global",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "nativePerformanceTime.now",
+    "call_sites": 1,
+    "family": "performance",
+    "files": [
+      "src/compiler/performanceCore.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "perfHooks.performance.timeOrigin",
+    "call_sites": 0,
+    "family": "performance",
+    "files": [
+      "src/compiler/performance.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "performance.clearMarks",
+    "call_sites": 0,
+    "family": "performance",
+    "files": [
+      "src/compiler/performanceCore.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "performance.clearMeasures",
+    "call_sites": 0,
+    "family": "performance",
+    "files": [
+      "src/compiler/performanceCore.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "performance.mark",
+    "call_sites": 0,
+    "family": "performance",
+    "files": [
+      "src/compiler/performanceCore.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "performance.measure",
+    "call_sites": 0,
+    "family": "performance",
+    "files": [
+      "src/compiler/performanceCore.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "performance.now",
+    "call_sites": 0,
+    "family": "performance",
+    "files": [
+      "src/compiler/performanceCore.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "performance.timeOrigin",
+    "call_sites": 0,
+    "family": "performance",
+    "files": [
+      "src/compiler/performanceCore.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "performanceImpl.clearMarks",
+    "call_sites": 1,
+    "family": "performance",
+    "files": [
+      "src/compiler/performance.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "performanceImpl.clearMeasures",
+    "call_sites": 1,
+    "family": "performance",
+    "files": [
+      "src/compiler/performance.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "performanceImpl.mark",
+    "call_sites": 1,
+    "family": "performance",
+    "files": [
+      "src/compiler/performance.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "performanceImpl.measure",
+    "call_sites": 1,
+    "family": "performance",
+    "files": [
+      "src/compiler/performance.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "(process as any).browser",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/core.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "(process as any).recordreplay",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "(process.stdout as any)._handle",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.argv.slice",
+    "call_sites": 1,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.cwd",
+    "call_sites": 2,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": "process.env.NODE_INSPECTOR_IPC",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.env.TSC_NONPOLLING_WATCHER",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.env.TSC_WATCHDIRECTORY",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.env.TSC_WATCHFILE",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.env.VSCODE_INSPECTOR_OPTIONS",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.env.name",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.execArgv",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 3
+  },
+  {
+    "api": "process.exit",
+    "call_sites": 1,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.memoryUsage",
+    "call_sites": 1,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.nextTick",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/core.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.pid",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts",
+      "src/compiler/tracing.ts"
+    ],
+    "sites": 3
+  },
+  {
+    "api": "process.platform",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 4
+  },
+  {
+    "api": "process.stdout",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.stdout.columns",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.stdout.isTTY",
+    "call_sites": 0,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  },
+  {
+    "api": "process.stdout.write",
+    "call_sites": 2,
+    "family": "process",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 2
+  },
+  {
+    "api": ".(call)",
+    "call_sites": 9,
+    "family": "require",
+    "files": [
+      "src/compiler/performanceCore.ts",
+      "src/compiler/sys.ts",
+      "src/compiler/tracing.ts"
+    ],
+    "sites": 9
+  },
+  {
+    "api": ".(call)",
+    "call_sites": 1,
+    "family": "setTimeout",
+    "files": [
+      "src/compiler/sys.ts"
+    ],
+    "sites": 1
+  }
+]
