@@ -93,7 +93,7 @@ Mutants were applied independently through Go overlays, never left in production
 | Remove regionValues reset | uncached oracle TestNativeAgreesWithNode/internal/oracle/testdata/regions.a$ | ASan heap-use-after-free; exit 1 |
 
 Each mutant compiles its Go test binary. The region mutant reaches an executable;
-ASan kills it, not clang warnings. Saved logs and a reproduction runner are in
+ASan kills it, not clang warnings. Raw logs with diagnostic whitespace are preserved as gzip files. Saved logs and a reproduction runner are in
 stable_emitter_evidence. The runner also repeats both churn measurements against
 the exact baseline emitter files from 52f9bae. It removes only its own temporary
 probe test file after execution. No PR was opened; only codex/stable-emitter-names
