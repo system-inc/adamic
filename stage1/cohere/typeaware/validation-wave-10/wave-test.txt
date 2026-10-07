@@ -1,0 +1,15 @@
+=== RUN   TestWave10AgreementAndMutants
+    wave_10_test.go:105: controls: 18383 identical finding bytes; findings 61
+    wave_10_test.go:113: controls-asan: 18383 identical finding bytes; findings 61
+    wave_10_test.go:124: loop mutant: exit 0, empty stderr, byte oracle catches byte 542
+    wave_10_test.go:124: redundant mutant: exit 0, empty stderr, byte oracle catches byte 4536
+    wave_10_test.go:124: includes mutant: exit 0, empty stderr, byte oracle catches byte 8396
+    wave_10_test.go:134: repository: 18863 identical finding bytes; findings 1
+    wave_10_test.go:135: repository-asan: 18863 identical finding bytes; findings 1
+    wave_10_test.go:134: compiler: 8346 identical finding bytes; findings 9
+    wave_10_test.go:135: compiler-asan: 8346 identical finding bytes; findings 9
+    wave_10_test.go:148: released member-parameters query: panic 70, invalid or released checker handle
+    wave_10_test.go:153: released-registry mutant exits 0, caught by required panic 70
+--- PASS: TestWave10AgreementAndMutants (72.53s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	72.534s

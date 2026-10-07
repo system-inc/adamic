@@ -1,0 +1,5 @@
+cohere: load_ns=17357905 rule_ns=81292 run_ns=60251642
+file	/workspace/adamic/stage1/cohere/typeaware/wave10_gate_mutant.a
+6	15	@typescript-eslint/no-unused-vars	noUnusedVars	'abandoned' is assigned a value and nothing ever reads it. A name that is written but never read is almost always the residue of an edit that moved on: an import whose call site was deleted, a parameter left behind when a signature changed, a variable holding a value nobody asked for. It costs nothing at runtime, which is what lets it accumulate, and it costs the next reader real time, because an unused name reads exactly like a used one until you search the file and find nothing. Delete it.	0	0
+findings 1
+gate mutant exit 1

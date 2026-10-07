@@ -1,0 +1,13 @@
+=== RUN   TestWave10AgreementAndMutants
+    wave_10_test.go:104: controls: 18198 identical finding bytes; findings 60
+    wave_10_test.go:112: controls-asan: 18198 identical finding bytes; findings 60
+    wave_10_test.go:123: loop mutant: exit 0, empty stderr, byte oracle catches byte 542
+    wave_10_test.go:123: redundant mutant: exit 0, empty stderr, byte oracle catches byte 4796
+    wave_10_test.go:123: includes mutant: exit 0, empty stderr, byte oracle catches byte 8260
+    wave_10_test.go:133: repository: 18863 identical finding bytes; findings 1
+    wave_10_test.go:134: repository-asan: 18863 identical finding bytes; findings 1
+    wave_10_test.go:133: compiler mismatch byte 2397: native "10-typescript/src/compiler/factory/nodeFactory.ts\n150129\t150135\t@typescript-eslint/no-redundant-type-constituents\toverridden\t'never' is overridden by other types in this union type.\t0\t0\nfile\t/workspace/wave-10-typescript/src/compiler/factory/nodeTests.ts\nfile\t/workspace/wave-10-typescript/src/compil" Go "10-typescript/src/compiler/factory/nodeFactory.ts\nfile\t/workspace/wave-10-typescript/src/compiler/factory/nodeTests.ts\nfile\t/workspace/wave-10-typescript/src/compiler/factory/parenthesizerRules.ts\nfile\t/workspace/wave-10-typescript/src/compiler/factory/utilities.ts\nfile\t/workspace/wave-10-typescript"
+--- FAIL: TestWave10AgreementAndMutants (158.54s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	158.541s
+FAIL

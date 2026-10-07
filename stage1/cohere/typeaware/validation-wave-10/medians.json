@@ -1,0 +1,40 @@
+{
+  "compiler": {
+    "native": {
+      "process_ns": 4204408273,
+      "findings": 9,
+      "load_ns": 241086135,
+      "query_ns": 1153181367,
+      "queries": 310381,
+      "first_query_ns": 51808,
+      "run_ns": 3935009214
+    },
+    "go": {
+      "process_ns": 547323849,
+      "findings": 9,
+      "load_ns": 250218826,
+      "rule_ns": 240099584,
+      "run_ns": 280831171
+    },
+    "native_over_go": 7.681756021926974
+  },
+  "repository": {
+    "native": {
+      "process_ns": 447725711,
+      "findings": 1,
+      "load_ns": 65479724,
+      "query_ns": 89103356,
+      "queries": 24911,
+      "first_query_ns": 142123,
+      "run_ns": 372350848
+    },
+    "go": {
+      "process_ns": 136648241,
+      "findings": 1,
+      "load_ns": 63461995,
+      "rule_ns": 16440636,
+      "run_ns": 62037280
+    },
+    "native_over_go": 3.276483529707492
+  }
+}

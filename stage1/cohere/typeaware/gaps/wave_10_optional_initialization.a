@@ -1,0 +1,3 @@
+// Observed stage-0 gap: native prints false, Node prints true. Ports avoid it.
+function absent(): string | undefined { let value: string | undefined; return value; }
+console.log(absent() === undefined ? 'true' : 'false');

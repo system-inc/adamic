@@ -1,0 +1,6 @@
+=== RUN   TestWave10AgreementAndMutants
+    wave_10_test.go:104: controls mismatch byte 1972: native "\nfile\t/workspace/wave-10-validation/control-003.a\n33\t36\tno-unmodified-loop-condition\tloopConditionNotModified\tThis variable is read by the loop condition and never changed inside the loop, so the condition evaluates to the same thing every time and the loop either runs forever or never runs at all. " Go "\nfile\t/workspace/wave-10-validation/control-003.a\nfile\t/workspace/wave-10-validation/control-004.a\nfile\t/workspace/wave-10-validation/control-005.a\n16\t19\tno-unmodified-loop-condition\tloopConditionNotModified\tThis variable is read by the loop condition and never changed inside the loop, so the condit"
+--- FAIL: TestWave10AgreementAndMutants (7.98s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	7.990s
+FAIL
