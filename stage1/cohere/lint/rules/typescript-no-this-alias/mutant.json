@@ -1,0 +1,6 @@
+{
+  "name": "assignment aliases omitted",
+  "file": "rule.a",
+  "from": "if(allowed.includes(context.node(target).text)) return;",
+  "to": "if(!allowed.includes(context.node(target).text)) return;"
+}
