@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+import type { SurfaceNode, ClassValues } from './types.a';
+
+// The Go private method is called only on CallExpression nodes; nil/wrong kinds panic.
+// collect receives each argument with Callee origin and false leading/trailing edges.
+export function calleeValues(nodes: readonly SurfaceNode[], index: number, calleeNames: ReadonlyMap<string, boolean>, collect: (index: number) => ClassValues): ClassValues {
+    const node = nodes[index];
+    if(node === undefined || node.kind !== 'CallExpression') { panic('calleeValues requires CallExpression'); }
+    const expression = nodes[node.expression];
+    if(expression === undefined || expression.kind !== 'Identifier') { return {literals: [], templates: []}; }
+    if(calleeNames.get(expression.text) !== true || !node.argumentsPresent) { return {literals: [], templates: []}; }
+    const literals: number[] = [];
+    const templates: number[] = [];
+    for(const argument of node.arguments) {
+        const values = collect(argument);
+        for(const literal of values.literals) { literals.push(literal); }
+        for(const template of values.templates) { templates.push(template); }
+    }
+    return {literals, templates};
+}

@@ -1,0 +1,73 @@
+=== RUN   TestSlot05ReadClassValues
+    helper_test.go:48: 11 consumers, 1039 distinct strings and controls, 3117 parser/settings cases, 48210 Go verdicts
+    helper_test.go:58: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-important-position": 103,
+          "better-tailwindcss/enforce-consistent-variable-syntax": 104,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-deprecated-classes": 231,
+          "better-tailwindcss/no-duplicate-classes": 337,
+          "better-tailwindcss/no-unknown-classes": 239,
+          "better-tailwindcss/no-unnecessary-whitespace": 323
+        }
+    helper_test.go:132: tailwind_read_class_values.a mutant caught at verdict 12790: mutant :, Go 0:
+--- PASS: TestSlot05ReadClassValues (36.11s)
+=== RUN   TestSlot05CalleeValues
+    helper_test.go:48: 11 consumers, 1039 distinct strings and controls, 3117 parser/settings cases, 162 Go verdicts
+    helper_test.go:58: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-important-position": 103,
+          "better-tailwindcss/enforce-consistent-variable-syntax": 104,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-deprecated-classes": 231,
+          "better-tailwindcss/no-duplicate-classes": 337,
+          "better-tailwindcss/no-unknown-classes": 239,
+          "better-tailwindcss/no-unnecessary-whitespace": 323
+        }
+    helper_test.go:96: Go, Node and native agree on nil/wrong-kind refusal for callee
+    helper_test.go:132: tailwind_callee_values.a mutant caught at verdict 22: mutant :, Go 0:
+--- PASS: TestSlot05CalleeValues (36.33s)
+=== RUN   TestSlot05CalleeArguments
+    helper_test.go:48: 11 consumers, 1039 distinct strings and controls, 3117 parser/settings cases, 162 Go verdicts
+    helper_test.go:58: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-important-position": 103,
+          "better-tailwindcss/enforce-consistent-variable-syntax": 104,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-deprecated-classes": 231,
+          "better-tailwindcss/no-duplicate-classes": 337,
+          "better-tailwindcss/no-unknown-classes": 239,
+          "better-tailwindcss/no-unnecessary-whitespace": 323
+        }
+    helper_test.go:96: Go, Node and native agree on nil/wrong-kind refusal for callee
+    helper_test.go:132: tailwind_callee_values.a mutant caught at verdict 37: mutant 0:, Go 0,1:
+--- PASS: TestSlot05CalleeArguments (37.30s)
+=== RUN   TestSlot05VariableValues
+    helper_test.go:48: 11 consumers, 1039 distinct strings and controls, 3117 parser/settings cases, 1023 Go verdicts
+    helper_test.go:58: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-important-position": 103,
+          "better-tailwindcss/enforce-consistent-variable-syntax": 104,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-deprecated-classes": 231,
+          "better-tailwindcss/no-duplicate-classes": 337,
+          "better-tailwindcss/no-unknown-classes": 239,
+          "better-tailwindcss/no-unnecessary-whitespace": 323
+        }
+    helper_test.go:96: Go, Node and native agree on nil/wrong-kind refusal for variable
+    helper_test.go:132: tailwind_variable_values.a mutant caught at verdict 22: mutant :, Go 0:
+--- PASS: TestSlot05VariableValues (37.38s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch2	147.118s

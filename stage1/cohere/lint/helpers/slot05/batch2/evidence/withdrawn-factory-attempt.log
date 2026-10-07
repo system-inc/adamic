@@ -1,0 +1,21 @@
+=== RUN   TestSlot05Factory
+    slot05_batch2_test.go:32: 12 consumers, 1074 distinct consumer literals, 1077 configurations, 32265 Go output lines
+    slot05_batch2_test.go:42: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-important-position": 103,
+          "better-tailwindcss/enforce-consistent-variable-syntax": 104,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-concatenated-classes": 185,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-deprecated-classes": 231,
+          "better-tailwindcss/no-duplicate-classes": 337,
+          "better-tailwindcss/no-unknown-classes": 239,
+          "better-tailwindcss/no-unnecessary-whitespace": 323
+        }
+    slot05_batch2_test.go:49: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch2/main.a:28:51: stage 0 can't lower reading compile yet
+--- FAIL: TestSlot05Factory (1.64s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	1.640s
+FAIL

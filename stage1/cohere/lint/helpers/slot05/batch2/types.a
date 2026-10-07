@@ -1,0 +1,16 @@
+// Non-owning AST indexes; -1 is a missing node. Arguments distinguish nil from an empty list.
+export interface SurfaceNode {
+    readonly kind: string;
+    readonly text: string;
+    readonly expression: number;
+    readonly name: number;
+    readonly initializer: number;
+    readonly argumentsPresent: boolean;
+    readonly arguments: readonly number[];
+}
+// Each index addresses an immutable literal/template record in the caller's payload arena,
+// retaining node identity, decoded text, range, origin and leading/trailing edges.
+export interface ClassValues {
+    readonly literals: readonly number[];
+    readonly templates: readonly number[];
+}

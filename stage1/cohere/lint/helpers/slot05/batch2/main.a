@@ -1,0 +1,46 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import type { SurfaceNode, ClassValues } from './types.a';
+import { variableValues } from './tailwind_variable_values.a';
+import { calleeValues } from './tailwind_callee_values.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing cases path'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function number(index: number, field: string): number { return json.node(json.field(index, field)).number; }
+function values(index: number): ClassValues {
+    return {literals: json.node(json.field(index, 'literals')).children.map(c => json.node(c).number), templates: json.node(json.field(index, 'templates')).children.map(c => json.node(c).number)};
+}
+for(const row of json.node(root).children) {
+    if(text(row, 'mode') !== 'callee' && text(row, 'mode') !== 'variable') { panic('unsupported helper mode'); }
+    const nodes: SurfaceNode[] = [];
+    for(const n of json.node(json.field(row, 'nodes')).children) {
+        nodes.push({kind: text(n, 'kind'), text: text(n, 'text'), expression: number(n, 'expression'), name: number(n, 'name'), initializer: number(n, 'initializer'), argumentsPresent: text(n, 'argumentsPresent') === 'true', arguments: json.node(json.field(n, 'arguments')).children.map(c => json.node(c).number)});
+    }
+    const collected = json.node(json.field(row, 'collected')).children.map(c => values(c));
+    const under = json.node(json.field(row, 'under')).children.map(c => values(c));
+    const patternRows = json.node(json.field(row, 'patterns')).children.map(c => json.node(c).children.map(v => json.node(v).text === 'true'));
+    const patternCount = patternRows[0]?.length ?? 0;
+    const patterns: ((name: string) => boolean)[] = [];
+    for(let p = 0; p < patternCount; p++) {
+        const column = patternRows.map(row => row[p] ?? false);
+        patterns.push(name => {
+            for(let i = 0; i < nodes.length; i++) {
+                const node = nodes[i];
+                if(node !== undefined && node.kind === 'Identifier' && node.text === name) { return column[i] ?? false; }
+            }
+            return false;
+        });
+    }
+    const names = new Map<string, boolean>();
+    for(const n of json.node(json.field(row, 'names')).children) { names.set(json.node(n).text, true); }
+    for(const query of json.node(json.field(row, 'queries')).children) {
+        const index = json.node(query).number;
+        const result = text(row, 'mode') === 'callee'
+            ? calleeValues(nodes, index, names, i => collected[i] ?? panic('missing collected'))
+            : variableValues(nodes, index, patterns, i => under[i] ?? panic('missing under'));
+        console.log(`${result.literals.join(',')}:${result.templates.join(',')}`);
+    }
+}

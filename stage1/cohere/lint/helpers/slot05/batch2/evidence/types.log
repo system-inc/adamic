@@ -1,0 +1,40 @@
+stage1/cohere/lint/helpers/slot05/batch2/main.a:6:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch2/main.a:8:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch2/main.a:9:7: variable root: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:11:10: function text: (index: number, field: string) => string
+stage1/cohere/lint/helpers/slot05/batch2/main.a:11:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:11:30: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch2/main.a:12:10: function number: (index: number, field: string) => number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:12:17: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:12:32: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch2/main.a:13:10: function values: (index: number) => ClassValues
+stage1/cohere/lint/helpers/slot05/batch2/main.a:13:17: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:14:77: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:14:170: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:16:11: variable row: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:18:11: variable nodes: SurfaceNode[]
+stage1/cohere/lint/helpers/slot05/batch2/main.a:19:15: variable n: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:20:288: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:22:11: variable collected: ClassValues[]
+stage1/cohere/lint/helpers/slot05/batch2/main.a:22:76: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:23:11: variable under: ClassValues[]
+stage1/cohere/lint/helpers/slot05/batch2/main.a:23:68: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:24:11: variable patternRows: boolean[][]
+stage1/cohere/lint/helpers/slot05/batch2/main.a:24:77: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:24:108: parameter v: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:25:11: variable patternCount: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:26:11: variable patterns: ((name: string) => boolean)[]
+stage1/cohere/lint/helpers/slot05/batch2/main.a:26:23: parameter name: string
+stage1/cohere/lint/helpers/slot05/batch2/main.a:27:13: variable p: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:28:15: variable column: boolean[]
+stage1/cohere/lint/helpers/slot05/batch2/main.a:28:40: parameter row: boolean[]
+stage1/cohere/lint/helpers/slot05/batch2/main.a:29:23: parameter name: string
+stage1/cohere/lint/helpers/slot05/batch2/main.a:30:21: variable i: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:31:23: variable node: SurfaceNode | undefined
+stage1/cohere/lint/helpers/slot05/batch2/main.a:37:11: variable names: Map<string, boolean>
+stage1/cohere/lint/helpers/slot05/batch2/main.a:38:15: variable n: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:39:15: variable query: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:40:15: variable index: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:41:15: variable result: ClassValues
+stage1/cohere/lint/helpers/slot05/batch2/main.a:42:49: parameter i: number
+stage1/cohere/lint/helpers/slot05/batch2/main.a:43:54: parameter i: number
