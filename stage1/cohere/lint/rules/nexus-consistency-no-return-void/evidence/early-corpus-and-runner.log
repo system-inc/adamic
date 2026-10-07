@@ -1,0 +1,56 @@
+=== RUN   TestWave13CorpusAndBackends
+    lint_test.go:312: EXPLICIT GAP: JSX case from /repository/source/ConsistencyNoReturnVoid.tsx for nexus/consistency-no-return-void; upstream Go test passed but stage1 parser has no JSX adapter
+    lint_test.go:328: cohere cases: 287 unique source/rule/options combinations
+    lint_test.go:612: nexus/consistency-no-hand-rolled-delay: 48 upstream cases and 212 compiler/stage1 files (.ts and .a)
+    lint_test.go:614: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestWave13CorpusAndBackends603116133/010/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 6 in /tmp/adamic-gate/TestWave13CorpusAndBackends603116133/007/case-106.ts
+--- FAIL: TestWave13CorpusAndBackends (22.49s)
+=== RUN   TestWave13Mutants
+=== RUN   TestWave13Mutants/delay-resolve-name-ignored
+    lint_test.go:660: node [/tmp/adamic-gate/TestWave13Mutantsdelay-resolve-name-ignored2412323048/005/mutant.mjs --manifest /tmp/adamic-gate/TestWave13Mutantsdelay-resolve-name-ignored2412323048/002/manifest.txt]: exit status 1
+        node:internal/modules/package_json_reader:301
+          throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+                ^
+        
+        Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'adamic' imported from /tmp/adamic-gate/TestWave13Mutantsdelay-resolve-name-ignored2412323048/005/mutant.mjs
+            at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+            at packageResolve (node:internal/modules/esm/resolve:768:81)
+            at moduleResolve (node:internal/modules/esm/resolve:859:18)
+            at defaultResolve (node:internal/modules/esm/resolve:992:11)
+            at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+            at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+            at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+            at #resolve (node:internal/modules/esm/loader:683:17)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+          code: 'ERR_MODULE_NOT_FOUND'
+        }
+        
+        Node.js v24.19.0
+=== RUN   TestWave13Mutants/return-void-braces-omitted
+    lint_test.go:660: node [/tmp/adamic-gate/TestWave13Mutantsreturn-void-braces-omitted2981595109/005/mutant.mjs --manifest /tmp/adamic-gate/TestWave13Mutantsreturn-void-braces-omitted2981595109/002/manifest.txt]: exit status 1
+        node:internal/modules/package_json_reader:301
+          throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+                ^
+        
+        Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'adamic' imported from /tmp/adamic-gate/TestWave13Mutantsreturn-void-braces-omitted2981595109/005/mutant.mjs
+            at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+            at packageResolve (node:internal/modules/esm/resolve:768:81)
+            at moduleResolve (node:internal/modules/esm/resolve:859:18)
+            at defaultResolve (node:internal/modules/esm/resolve:992:11)
+            at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+            at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+            at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+            at #resolve (node:internal/modules/esm/loader:683:17)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+          code: 'ERR_MODULE_NOT_FOUND'
+        }
+        
+        Node.js v24.19.0
+--- FAIL: TestWave13Mutants (26.41s)
+    --- FAIL: TestWave13Mutants/delay-resolve-name-ignored (12.83s)
+    --- FAIL: TestWave13Mutants/return-void-braces-omitted (11.68s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	48.910s
+FAIL

@@ -1,0 +1,7 @@
+=== RUN   TestWave13JsxGap
+    lint_test.go:821: Node JSX gap: exit 70 adamic: panic: parser slice expected GreaterThanToken, got Identifier at 24 in /tmp/adamic-gate/TestWave13JsxGap1387995499/002/callback.tsx
+    lint_test.go:821: native JSX gap: exit 70 adamic: panic: parser slice expected GreaterThanToken, got Identifier at 24 in /tmp/adamic-gate/TestWave13JsxGap1387995499/002/callback.tsx
+    lint_test.go:824: Go cohere JSX callback test passed; parser refuses on Node and sanitized native
+--- PASS: TestWave13JsxGap (22.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	22.767s

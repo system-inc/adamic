@@ -1,0 +1,19 @@
+=== RUN   TestRulesAgree
+    lint_test.go:323: cohere cases: 288 unique source/rule/options combinations
+    lint_test.go:348: /tmp/adamic-gate/TestRulesAgree1095174443/001/oracle [--manifest /tmp/adamic-gate/TestRulesAgree1095174443/013/manifest.txt]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestRulesAgree1095174443/010/case-141.ts: ['>' expected. ',' expected. Property destructuring pattern expected. Declaration or statement expected. Unterminated regular expression literal.]
+        
+        goroutine 1 [running]:
+        main.collect({0x3095f14a2dd2, 0x39}, {0x3095f104a230?, 0x1?}, {0x3095f13ad140, 0x6, 0x6})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:91 +0xaa5
+        main.run({0x3095f14a2dd2?, 0x3095f145c600?}, 0x0, 0x3095f145c600)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:143 +0x2f7
+--- FAIL: TestRulesAgree (54.29s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, native identical: 9782 bytes
+--- PASS: TestOwnedWitnesses (12.71s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	67.006s
+FAIL

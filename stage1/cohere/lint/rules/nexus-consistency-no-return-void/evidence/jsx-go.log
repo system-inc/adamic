@@ -1,0 +1,10 @@
+=== RUN   TestConsistencyNoReturnVoidStaysSilent
+=== PAUSE TestConsistencyNoReturnVoidStaysSilent
+=== CONT  TestConsistencyNoReturnVoidStaysSilent
+=== RUN   TestConsistencyNoReturnVoidStaysSilent/the_arrow-shorthand_callback_idiom
+=== PAUSE TestConsistencyNoReturnVoidStaysSilent/the_arrow-shorthand_callback_idiom
+=== CONT  TestConsistencyNoReturnVoidStaysSilent/the_arrow-shorthand_callback_idiom
+--- PASS: TestConsistencyNoReturnVoidStaysSilent (0.00s)
+    --- PASS: TestConsistencyNoReturnVoidStaysSilent/the_arrow-shorthand_callback_idiom (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.009s
