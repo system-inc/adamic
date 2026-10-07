@@ -49,7 +49,7 @@ else:
         sys.exit('adapted tree failed; see apply.stderr')
 # Adaptation 10 edits the generator owner. Regenerate its output afterward,
 # as upstream's build does, so the newly annotated type import is present.
-if run(['node', 'scripts/processDiagnosticMessages.mjs', 'src/compiler/diagnosticMessages.json'], 'generate', tree):
+if not (tree / 'slice.json').exists() and run(['node', 'scripts/processDiagnosticMessages.mjs', 'src/compiler/diagnosticMessages.json'], 'generate', tree):
     sys.exit('diagnostic generation failed; see generate.stderr')
 shutil.copyfile(here / 'main.a', out / 'main.a')
 # Every regular file recursively, including JSON inputs and generated diagnostics.

@@ -88,6 +88,14 @@ for (let index = 0; index < queue.length; index++) {
                 && !(ts.isPropertyAccessExpression(node.parent) && node.parent.name === node)) {
                 symbol = checker.resolveName(node.text, node, ts.SymbolFlags.Value, false) || symbol;
             }
+            if (!typePosition(node) && importBinding(symbol) && !(actual(symbol)?.flags & ts.SymbolFlags.Value)) {
+                for (const statement of source.statements) {
+                    const names = ts.isVariableStatement(statement) ? statement.declarationList.declarations.map(d => d.name) : [statement.name];
+                    if (names.some(name => name && ts.isIdentifier(name) && name.text === node.text)
+                        && !ts.isInterfaceDeclaration(statement) && !ts.isTypeAliasDeclaration(statement)
+                        && !reached.has(statement)) { reached.add(statement); queue.push(statement); }
+                }
+            }
             const binding = importBinding(symbol);
             if (binding) {
                 const resolved = actual(symbol);

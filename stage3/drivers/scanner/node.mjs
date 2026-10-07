@@ -35,7 +35,8 @@ await import(runtime);
 try {
     // Upstream initializes its compiler through the barrel entry. Starting
     // the cyclic ESM graph at scanner.ts instead hits parser's load-time read.
-    await import(new URL('./adapted/src/compiler/_namespaces/ts.ts', pathToFileURL(program)));
+    const barrel = new URL('./adapted/src/compiler/_namespaces/ts.ts', pathToFileURL(program));
+    if (existsSync(fileURLToPath(barrel))) await import(barrel);
     await import(pathToFileURL(program).href);
 } catch (error) {
     console.error(error.stack);

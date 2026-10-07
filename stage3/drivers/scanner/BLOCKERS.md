@@ -1,5 +1,54 @@
 # Scanner blockers
 
+## October 7: declaration slice, latest observation
+
+The checker-driven tool is in `stage3/slice/` and was pushed independently at
+`b7dda00` before this follow-up evidence. Final extraction from adaptations 10
+and 50, excluding 20, reaches **4,437 declaration/export records, 190,148
+copied-span lines, 78 files**. Every copied span passes byte comparison against
+its source. Counts include whole namespaces and module export facades.
+
+Ordered observations:
+
+1. Whole `Debug` in `src/compiler/debug.ts` contains `(ts as any)[enumName]`.
+   This reaches the namespace barrel and all exported declarations. Keeping
+   top-level namespaces whole defeats the intended small scanner slice. No
+   compiler feature branch fixes this gathering-granularity issue. Namespace
+   member gathering requires clarification; it is not implemented.
+2. Node fails before emitting tokens: `src/compiler/binder.ts` creates the
+   binder at module initialization, reaching `createFlowNode` and reading
+   `Debug.attachFlowNodeDebugInfo` while `Debug` is undefined. The stack's line
+   180 is in emitted JavaScript, not an upstream TypeScript location. Census
+   category: module cycles / value read at load time. The existing cycle work
+   refuses load-time reads; it does not close this new import-order problem.
+   This is an oracle failure, not an observed Adamic refusal.
+3. Main stops at the checker gate. The four-feature scratch compiler also
+   stops, with **2,652 slice-file diagnostics**. Exact returned order and slice
+   TypeScript locations are in [slice-feature-checker.json](evidence/slice-feature-checker.json).
+   First: `binder.ts:1134:13`, TS2322, `FlowNode | undefined` is not assignable
+   to `FlowNode`. This is strict optionality, with no demonstrated closing
+   feature branch. TS7030 and TS7029 remain enabled; their proposed closing
+   branch is `codex/fallthrough-and-implicit-returns`. Enum TS1294 on main is
+   covered by `codex/flag-enums`. Other diagnostics have not been individually
+   attributed to census reasons or closing branches.
+
+No slice token stream exists to compare with the full-tree 509,014-token
+oracle. No lowering was reached; no ordered Refused/NotYet sequence is claimed.
+I did not run the one-feature-at-a-time matrix for this slice or repair the
+remaining checker gate. The checked-in diagnostic list is checker evidence,
+not a complete feature blocker census.
+
+Mutant: deleting reached `compareComparableValues` from a smaller `compareValues`
+slice causes Node `ReferenceError: compareComparableValues is not defined`.
+Control output is four lines: -1, 1, 0, -1. This proves declaration omission is
+observable for that entry; the scanner-specific omission mutant remains undone
+because the scanner control already fails initialization.
+
+No new temporary slice adaptations are planned or implemented in this update.
+Previous full-tree adaptation 50 is used only as the requested input baseline;
+51 remains deferred. Any future adaptation 50-59 must have its slice-only plan
+pushed before implementation. No broad namespace or cycle rewrite was made.
+
 ## October 7: full baseline complete, latest result
 
 Temporary 50 passes the unfiltered stage 3 baseline: **106,367 passing, zero
