@@ -1,0 +1,5 @@
+// Refused: a let binding's initializer no longer proves all runtime fields after replacement.
+let value = { n: 1 };
+const hidden = { n: 2, extra: 'built' + '-wrong' };
+value = hidden;
+console.log(Object.values(value).join('|'));
