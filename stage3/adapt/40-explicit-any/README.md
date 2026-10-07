@@ -1,6 +1,6 @@
 # Explicit any owner adaptation (partial)
 
-Current progress: 70 tokens removed, 140 left. The 36 phantom brand sites now use void and isArray takes unknown under the October 7 ruling; see [BRANDS-VOID.md](BRANDS-VOID.md). See [PROGRESS.md](PROGRESS.md)
+Current progress: 74 tokens removed, 136 left. Four Error host-member assertions are removed; see [ERROR-HOST.md](ERROR-HOST.md). The 36 phantom brand sites use void, isArray takes unknown, and the filesystem stat local carries Stats | Dirent | undefined. See [BRANDS-VOID.md](BRANDS-VOID.md) and [PROGRESS.md](PROGRESS.md)
 for the combined 10+30+40 proof and reproduction. The section below records
 the original three-owner proof and its historical commands.
 

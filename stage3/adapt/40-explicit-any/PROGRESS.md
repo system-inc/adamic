@@ -154,7 +154,8 @@ lookup now uses its parsed function and variable owner, and the complete proof
 was rerun successfully. These failed exploratory attempts remain in /tmp logs
 and are not presented as passing runs.
 
-Current adaptation-40 progress is 69 removed, 141 remaining. Historical census
+The filesystem follow-up alone recorded 69 removed, 141 remaining. Together with
+the array predicate input below, current progress is 70 removed, 140 remaining. Historical census
 JSONs and the earlier verifier snapshots remain unchanged. See
 evidence/filesystem/proof.json and guards.log for the independent observations.
 
@@ -201,18 +202,27 @@ additional guard probes are reproduced by filesystem-proof.cjs and independently
 recorded in evidence/filesystem/guards.log. The full logs and exploratory
 failures are under /tmp/sys-stat-*. Syntax checks and git diff --check pass.
 
-
 ## Internal array predicate input, October 7
 
 Site 58, already classified as Generic array predicate input, now uses unknown
 in `isArray(value: unknown): value is readonly unknown[]`. The body is unchanged;
 all compiler callers are checked by the stock compiler. This follows the
-host-blockers a85a9cb1 proof and removes one more any token: 69 of 210 removed,
-141 remaining. The function is @internal and contributes no public API line.
+host-blockers a85a9cb1 proof and removes one more any token. Combined with the
+filesystem entry classification, 70 of 210 are removed and 140 remain. The function is @internal and contributes no public API line.
 Current commands, observations and mutants are in [BRANDS-VOID.md](BRANDS-VOID.md).
 
-## Combined fixture-branch merge
+## Error host members, October 7
 
-Merging the independent filesystem stat and isArray work removes 70 of 210
-any tokens, leaving 140. Earlier 69/141 snapshots above describe each branch
-before composition and remain historical evidence.
+Sites 66, 67, 126 and 127 are complete under Standard runtime feature probes.
+The existing Node ErrorConstructor declarations type both captureStackTrace
+accesses and both stackTraceLimit accesses directly. All four assertion
+receivers and their parentheses are removed; no contract or API sanction is
+added. Combined progress is 74 removed and 136 remaining.
+[ERROR-HOST.md](ERROR-HOST.md) records clean build artifacts, wrong-member
+mutants, the exact scanner reference without temporary 80, and gate results.
+
+## Earlier fixture-branch composition
+
+The independent filesystem stat and isArray merge previously removed 70 of 210
+any tokens, leaving 140. That snapshot is historical; the Error host sites bring
+the composed total to 74 removed and 136 remaining.
