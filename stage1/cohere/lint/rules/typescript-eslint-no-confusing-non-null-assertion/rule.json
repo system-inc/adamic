@@ -8,5 +8,6 @@
   "class": "Rule",
   "oracle": "oracleNoConfusingNonNullAssertion",
   "upstreamPackage": "typescript",
-  "upstreamTest": "TestNoConfusingNonNullAssertion"
+  "upstreamTest": "TestNoConfusingNonNullAssertion",
+  "node": true
 }

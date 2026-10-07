@@ -1,12 +1,11 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
-import { Diagnostic, Edit, Suggestion, report, refuseShared } from '../typescript-eslint-prefer-as-const/repairs.a';
+import { Diagnostic, Edit, Suggestion, report } from '../typescript-eslint-no-extra-non-null-assertion/repairs.a';
 export class Rule {
     readonly context: RuleContext;
     readonly diagnostics: Diagnostic[] = [];
     constructor(context: RuleContext) { this.context = context; }
-    visit(index: number): void {
-        const node = this.context.node(index);
-        if(node.kind !== 'BinaryExpression') { return; }
+    visit(node: ParseNode, index: number): void {
         const token = node.children[1];
         if(token === undefined) { return; }
         const kind = this.context.node(token).kind;
@@ -27,10 +26,9 @@ export class Rule {
             suggestions.push(new Suggestion(removeId, removeMessage, [new Edit(end - 1, end, '')]));
             if(operator !== '=' && !equal) { suggestions.push(wrap); }
         }
-        this.diagnostics.push(report(this.context, index, id, message, [], suggestions));
+        this.diagnostics.push(report(this.context, node, id, message, [], suggestions, '@typescript-eslint/no-confusing-non-null-assertion'));
     }
 }
 export function create(context: RuleContext): Rule {
-    refuseShared(context, '@typescript-eslint/no-confusing-non-null-assertion');
     return new Rule(context);
 }

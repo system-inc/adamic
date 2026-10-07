@@ -1,0 +1,422 @@
+=== RUN   TestRulesAgree
+    lint_test.go:391: cohere cases: 2558 unique source/rule/options combinations
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3967819010/019/case-079/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3967819010/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-079/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-079/Thing.ts
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3967819010/019/case-081/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3967819010/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:425: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3967819010/019/case-085/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3967819010/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-085/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-085/Thing.ts
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3967819010/019/case-086/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3967819010/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-086/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-086/Thing.ts
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3967819010/019/case-095/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3967819010/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-095/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-095/Thing.ts
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3967819010/019/case-097/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree3967819010/019/case-097/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3967819010/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:425: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3967819010/019/case-099/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree3967819010/019/case-099/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3967819010/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-099/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-099/Thing.ts
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3967819010/019/case-100/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree3967819010/019/case-100/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:425: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3967819010/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-100/Thing.ts
+    lint_test.go:425: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3967819010/019/case-100/Thing.ts
+    lint_test.go:430: /tmp/adamic-gate/TestRulesAgree3967819010/001/oracle [--manifest /tmp/adamic-gate/TestRulesAgree3967819010/069/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x3e30fce2ab40, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x3e30fcdc814a, 0x3c}, {0x3e30fcace1b0, 0x86}, {0x3e30fce2ab40, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x3e30fcdc814a?, 0x3e30fccd8880?}, 0x0, 0x3e30fccd8880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+--- FAIL: TestRulesAgree (84.25s)
+=== RUN   TestMutants
+=== RUN   TestMutants/debugger_fix_suppressed
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed4032594841/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x37dddccee240, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x37dddd0d119a, 0x50}, {0x37dddce6c000, 0x86}, {0x37dddccee240, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x37dddd0d119a?, 0x37dddd074880?}, 0x0, 0x37dddd074880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsempty_function_body_reported1590218817/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x1e5a0cb9440, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x1e5a10196ae, 0x55}, {0x1e5a0db2bd0, 0x86}, {0x1e5a0cb9440, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x1e5a10196ae?, 0x1e5a0fb88c0?}, 0x0, 0x1e5a0fb88c0)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/suggestion_applied_as_fix
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix3824866789/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x75ec85c8000, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x75ec88bd1a2, 0x52}, {0x75ec8656000, 0x86}, {0x75ec85c8000, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x75ec88bd1a2?, 0x75ec8860880?}, 0x0, 0x75ec8860880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/var_declaration_suppressed
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsvar_declaration_suppressed3586442957/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x236b65840300, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x236b65b351a6, 0x53}, {0x236b658ce000, 0x86}, {0x236b65840300, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x236b65b351a6?, 0x236b65ad8880?}, 0x0, 0x236b65ad8880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/duplicate_case_suppressed
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsduplicate_case_suppressed3201035342/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x8161a5c8300, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x8161a8bd1a2, 0x52}, {0x8161a656000, 0x86}, {0x8161a5c8300, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x8161a8bd1a2?, 0x8161a860880?}, 0x0, 0x8161a860880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/no-octal-escape_mutant_from_batch_8
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_82233005881/019/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x2a208148600, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x2a2084401ca, 0x5c}, {0x2a2081d6090, 0x86}, {0x2a208148600, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x2a2084401ca?, 0x2a2083e0880?}, 0x0, 0x2a2083e0880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/no-unexpected-multiline_mutant_from_batch_8
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84109220764/020/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x15bd5b192180, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x15bd5b4ee1ea, 0x64}, {0x15bd5b284000, 0x86}, {0x15bd5b192180, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x15bd5b4ee1ea?, 0x15bd5b48a8c0?}, 0x0, 0x15bd5b48a8c0)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/no-unused-private-class-members_mutant_from_batch_8
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_82591248018/020/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x34ba7c6a8480, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x34ba7c5b820a, 0x6c}, {0x34ba7c34e090, 0x86}, {0x34ba7c6a8480, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x34ba7c5b820a?, 0x34ba7c558880?}, 0x0, 0x34ba7c558880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/no-useless-constructor_mutant_from_batch_8
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_81680750616/020/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x3062ace12180, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x3062ad0f41e6, 0x63}, {0x3062ace8c000, 0x86}, {0x3062ace12180, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x3062ad0f41e6?, 0x3062ad0928c0?}, 0x0, 0x3062ad0928c0)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/prefer-template_mutant_from_batch_8
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83555399442/019/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x238d68a48540, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x238d68d401ca, 0x5c}, {0x238d68ad6090, 0x86}, {0x238d68a48540, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x238d68d401ca?, 0x238d68ce0880?}, 0x0, 0x238d68ce0880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_84050795794/019/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x11ae96ac5440, 0x0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x11ae96e261f6, 0x67}, {0x11ae96bbebd0, 0x86}, {0x11ae96ac5440, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x11ae96e261f6?, 0x11ae96dc48c0?}, 0x0, 0x11ae96dc48c0)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83005473691/019/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x1cbf66ac8540, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x1cbf66dc0206, 0x6b}, {0x1cbf66b56090, 0x86}, {0x1cbf66ac8540, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x1cbf66dc0206?, 0x1cbf66d60880?}, 0x0, 0x1cbf66d60880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/react-no-find-dom-node_mutant_from_batch_8
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-no-find-dom-node_mutant_from_batch_8627517153/019/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0xe6bfd23440, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0xe6c00061e2, 0x62}, {0xe6bfd9cbd0, 0x86}, {0xe6bfd23440, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0xe6c00061e2?, 0xe6bffa28c0?}, 0x0, 0xe6bffa28c0)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/react-no-is-mounted_mutant_from_batch_8
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_82766012861/019/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x1ba79190e480, 0x0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x1ba79183e1da, 0x60}, {0x1ba791946090, 0x86}, {0x1ba79190e480, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x1ba79183e1da?, 0x1ba7917e0880?}, 0x0, 0x1ba7917e0880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr2127321747/019/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x1f94f443a000, 0x0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x1f94f42c020e, 0x6d}, {0x1f94f4440000, 0x86}, {0x1f94f443a000, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x1f94f42c020e?, 0x1f94f425e8c0?}, 0x0, 0x1f94f425e8c0)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/wrap_close_parenthesis_changed
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantswrap_close_parenthesis_changed147429181/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x27205e3a7440, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x27205e6896b2, 0x56}, {0x27205e420bd0, 0x86}, {0x27205e3a7440, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x27205e6896b2?, 0x27205e6268c0?}, 0x0, 0x27205e6268c0)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/numeric_duplicate_anchor_advances
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances2473661241/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x22b9ac9c8540, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x22b9accbf6c2, 0x5a}, {0x22b9aca56090, 0x86}, {0x22b9ac9c8540, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x22b9accbf6c2?, 0x22b9acc60880?}, 0x0, 0x22b9acc60880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/unary_plus_accepted_as_static_key
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key417916658/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x25018f67c240, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x25018fa3f6be, 0x59}, {0x25018f7d6000, 0x86}, {0x25018f67c240, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x25018fa3f6be?, 0x25018f9e0880?}, 0x0, 0x25018f9e0880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/extra_bang_deleted_from_wrong_position
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsextra_bang_deleted_from_wrong_position337371363/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0xa1f2c8840c0, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0xa1f2c7301d2, 0x5e}, {0xa1f2c4c6000, 0x86}, {0xa1f2c8840c0, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0xa1f2c7301d2?, 0xa1f2c6cc8c0?}, 0x0, 0xa1f2c6cc8c0)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/getter_named_new_silently_skipped
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped3572584827/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0xeafb2d48300, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0xeafb303f6c2, 0x5a}, {0xeafb2dd6000, 0x86}, {0xeafb2d48300, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0xeafb303f6c2?, 0xeafb2fe0880?}, 0x0, 0xeafb2fe0880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/trailing_semicolon_retained
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantstrailing_semicolon_retained1597709238/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0xbd55d5c06c0, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0xbd55d8b76aa, 0x54}, {0xbd55d64e090, 0x86}, {0xbd55d5c06c0, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0xbd55d8b76aa?, 0xbd55d858880?}, 0x0, 0xbd55d858880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/namespace_style_silently_accepted
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted2910328132/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x3a04c9c483c0, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x3a04c9f3d6c2, 0x5a}, {0x3a04c9cd6090, 0x86}, {0x3a04c9c483c0, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x3a04c9f3d6c2?, 0x3a04c9ee0880?}, 0x0, 0x3a04c9ee0880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/bound_sole_block_exemption_widened
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsbound_sole_block_exemption_widened2136127417/018/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x10c284e48480, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x10c28513d6c6, 0x5b}, {0x10c284ed6090, 0x86}, {0x10c284e48480, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x10c28513d6c6?, 0x10c2850e0880?}, 0x0, 0x10c2850e0880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/replacement_carries_an_extra_space
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreplacement_carries_an_extra_space4230200438/020/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x31ad3cec8480, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x31ad3d1be1c6, 0x5b}, {0x31ad3cf56090, 0x86}, {0x31ad3cec8480, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x31ad3d1be1c6?, 0x31ad3d160880?}, 0x0, 0x31ad3d160880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+=== RUN   TestMutants/normalized_text_hides_lost_precision
+    lint_test.go:712: /tmp/adamic-gate/TestMutants4160750576/001/oracle [--manifest /tmp/adamic-gate/TestMutantsnormalized_text_hides_lost_precision2245835350/020/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleModuleAliasOptions({0x123643848300, 0x1947ae0?, 0x0?})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_nexus_import_require_module_alias.go:17 +0xaa
+        main.collect({0x123643b401ce, 0x5d}, {0x1236438d6000, 0x86}, {0x123643848300, 0x7, 0xc})
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:276 +0x1bab
+        main.run({0x123643b401ce?, 0x123643ae0880?}, 0x0, 0x123643ae0880)
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:64 +0x12f
+        main.main()
+        	/workspace/adamic-landing-wave14/cohere/adamic_lint_oracle.go:340 +0x374
+--- FAIL: TestMutants (2.77s)
+    --- FAIL: TestMutants/debugger_fix_suppressed (0.02s)
+    --- FAIL: TestMutants/empty_function_body_reported (0.02s)
+    --- FAIL: TestMutants/suggestion_applied_as_fix (0.02s)
+    --- FAIL: TestMutants/var_declaration_suppressed (0.02s)
+    --- FAIL: TestMutants/duplicate_case_suppressed (0.02s)
+    --- FAIL: TestMutants/no-octal-escape_mutant_from_batch_8 (0.02s)
+    --- FAIL: TestMutants/no-unexpected-multiline_mutant_from_batch_8 (0.02s)
+    --- FAIL: TestMutants/no-unused-private-class-members_mutant_from_batch_8 (0.02s)
+    --- FAIL: TestMutants/no-useless-constructor_mutant_from_batch_8 (0.02s)
+    --- FAIL: TestMutants/prefer-template_mutant_from_batch_8 (0.02s)
+    --- FAIL: TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8 (0.01s)
+    --- FAIL: TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8 (0.02s)
+    --- FAIL: TestMutants/react-no-find-dom-node_mutant_from_batch_8 (0.02s)
+    --- FAIL: TestMutants/react-no-is-mounted_mutant_from_batch_8 (0.02s)
+    --- FAIL: TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8 (0.02s)
+    --- FAIL: TestMutants/wrap_close_parenthesis_changed (0.02s)
+    --- FAIL: TestMutants/numeric_duplicate_anchor_advances (0.02s)
+    --- FAIL: TestMutants/unary_plus_accepted_as_static_key (0.02s)
+    --- FAIL: TestMutants/extra_bang_deleted_from_wrong_position (0.02s)
+    --- FAIL: TestMutants/getter_named_new_silently_skipped (0.02s)
+    --- FAIL: TestMutants/trailing_semicolon_retained (0.02s)
+    --- FAIL: TestMutants/namespace_style_silently_accepted (0.02s)
+    --- FAIL: TestMutants/bound_sole_block_exemption_widened (0.02s)
+    --- FAIL: TestMutants/replacement_carries_an_extra_space (0.02s)
+    --- FAIL: TestMutants/normalized_text_hides_lost_precision (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	87.037s
+FAIL

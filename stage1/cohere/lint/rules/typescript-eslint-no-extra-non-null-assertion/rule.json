@@ -8,5 +8,6 @@
   "class": "Rule",
   "oracle": "oracleNoExtraNonNullAssertion",
   "upstreamPackage": "typescript",
-  "upstreamTest": "TestNoExtraNonNullAssertion"
+  "upstreamTest": "TestNoExtraNonNullAssertion",
+  "node": true
 }

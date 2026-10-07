@@ -1,5 +1,6 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
-import { Diagnostic, Edit, report, refuseShared } from '../typescript-eslint-prefer-as-const/repairs.a';
+import { Diagnostic, Edit, report } from '../typescript-eslint-no-extra-non-null-assertion/repairs.a';
 function optionalRoot(context: RuleContext, receiver: number): boolean {
     context.scanner.pos = context.node(receiver).end;
     context.scanner.scan();
@@ -10,9 +11,7 @@ export class Rule {
     readonly context: RuleContext;
     readonly diagnostics: Diagnostic[] = [];
     constructor(context: RuleContext) { this.context = context; }
-    visit(index: number): void {
-        const node = this.context.node(index);
-        if(node.kind !== 'NonNullExpression') { return; }
+    visit(node: ParseNode, index: number): void {
         let outer = index;
         let parent = this.context.parents[outer] ?? -1;
         while(parent >= 0 && this.context.node(parent).kind === 'ParenthesizedExpression') {
@@ -22,11 +21,10 @@ export class Rule {
         const above = this.context.node(parent);
         const optional = optionalRoot(this.context, outer) && above.children[0] === outer && (above.kind === 'PropertyAccessExpression' || above.kind === 'ElementAccessExpression' || above.kind === 'CallExpression');
         if(above.kind === 'NonNullExpression' || optional) {
-            this.diagnostics.push(report(this.context, index, 'noExtraNonNullAssertion', message, [new Edit(node.end - 1, node.end, '')], []));
+            this.diagnostics.push(report(this.context, node, 'noExtraNonNullAssertion', message, [new Edit(node.end - 1, node.end, '')], [], '@typescript-eslint/no-extra-non-null-assertion'));
         }
     }
 }
 export function create(context: RuleContext): Rule {
-    refuseShared(context, '@typescript-eslint/no-extra-non-null-assertion');
     return new Rule(context);
 }

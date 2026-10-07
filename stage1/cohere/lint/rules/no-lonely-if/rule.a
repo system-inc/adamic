@@ -1,5 +1,6 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
-import { Diagnostic, Edit, report, refuseShared } from '../typescript-eslint-prefer-as-const/repairs.a';
+import { Diagnostic, Edit, report } from '../typescript-eslint-no-extra-non-null-assertion/repairs.a';
 import { messageUnexpectedLonelyIf } from './messages.a';
 function space(code: number): boolean {
     return (code >= 9 && code <= 13) || code === 32 || code === 133 || code === 160 || code === 5760 || (code >= 8192 && code <= 8202) || code === 8232 || code === 8233 || code === 8239 || code === 8287 || code === 12288;
@@ -48,9 +49,7 @@ export class Rule {
         if(!gap.includes('\n') && !gap.includes('\r')) { return true; }
         return ['(', '[', '/', '+', '`', '-'].includes(this.context.source.slice(next, next + 1)) || last.endsWith('++') || last.endsWith('--');
     }
-    visit(index: number): void {
-        const node = this.context.node(index);
-        if(node.kind !== 'IfStatement') { return; }
+    visit(node: ParseNode, index: number): void {
         const parent = this.context.parents[index] ?? -1;
         if(parent < 0 || this.context.node(parent).kind !== 'Block' || this.context.node(parent).children.length !== 1) { return; }
         const outer = this.context.parents[parent] ?? -1;
@@ -69,10 +68,9 @@ export class Rule {
                 fixes.push(fix);
             }
         }
-        this.diagnostics.push(report(this.context, index, 'unexpectedLonelyIf', messageUnexpectedLonelyIf, fixes, []));
+        this.diagnostics.push(report(this.context, node, 'unexpectedLonelyIf', messageUnexpectedLonelyIf, fixes, [], 'no-lonely-if'));
     }
 }
 export function create(context: RuleContext): Rule {
-    refuseShared(context, 'no-lonely-if');
     return new Rule(context);
 }

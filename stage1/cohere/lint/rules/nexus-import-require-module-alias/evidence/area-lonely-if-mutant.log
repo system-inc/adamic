@@ -1,0 +1,8 @@
+=== RUN   TestWave14LonelyIfMutant
+    lint_test.go:391: cohere cases: 2558 unique source/rule/options combinations
+    slot14_landing_test.go:64: replacement carries an extra space caught only by Go comparison on Node over 32 original cases
+    slot14_landing_test.go:64: replacement carries an extra space caught only by Go comparison on emitted JavaScript over 32 original cases
+    slot14_landing_test.go:64: replacement carries an extra space caught only by Go comparison on native over 32 original cases
+--- PASS: TestWave14LonelyIfMutant (37.04s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	37.051s

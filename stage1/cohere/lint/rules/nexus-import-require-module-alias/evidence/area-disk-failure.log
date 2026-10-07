@@ -1,0 +1,22 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTheOracleCatchesOneByte
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+=== NAME  TestTheOracleCatchesOneByte
+    oracle_test.go:488: native: mkdir /home/agent/.cache/adamic/runtime/.build-3927104865: no space left on device
+--- FAIL: TestTheOracleCatchesOneByte (0.08s)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+    oracle_test.go:599: native: mkdir /home/agent/.cache/adamic/runtime/.build-3927104865: no space left on device
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a (0.06s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.082s
+FAIL

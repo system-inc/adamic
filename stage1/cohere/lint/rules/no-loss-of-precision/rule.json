@@ -8,5 +8,6 @@
   "class": "Rule",
   "oracle": "oracleNoLossOfPrecision",
   "upstreamPackage": "core",
-  "upstreamTest": "TestNoLossOfPrecision"
+  "upstreamTest": "TestNoLossOfPrecision",
+  "node": true
 }

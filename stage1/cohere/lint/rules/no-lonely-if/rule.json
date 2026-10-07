@@ -8,5 +8,6 @@
   "class": "Rule",
   "oracle": "oracleNoLonelyIf",
   "upstreamPackage": "core",
-  "upstreamTest": "TestNoLonelyIf"
+  "upstreamTest": "TestNoLonelyIf",
+  "node": true
 }

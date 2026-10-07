@@ -8,5 +8,6 @@
   "class": "Rule",
   "oracle": "oracleNoUnnecessaryParameterPropertyAssignment",
   "upstreamPackage": "typescript",
-  "upstreamTest": "TestNoUnnecessaryParameterPropertyAssignment"
+  "upstreamTest": "TestNoUnnecessaryParameterPropertyAssignment",
+  "node": true
 }

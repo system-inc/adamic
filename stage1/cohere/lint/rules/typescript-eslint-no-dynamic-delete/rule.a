@@ -1,3 +1,4 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
 import { message } from './messages.a';
 
@@ -6,8 +7,8 @@ export class Rule {
     constructor(context: RuleContext) {
         this.context = context;
     }
-    visit(index: number): void {
-        const operand = this.context.node(index).children[0];
+    visit(deleteNode: ParseNode, index: number): void {
+        const operand = deleteNode.children[0];
         if(operand === undefined) {
             return;
         }

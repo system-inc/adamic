@@ -1,6 +1,0 @@
-{
-  "file": "rule.a",
-  "name": "one-based suggestion off by one",
-  "from": "`${position + 1}`",
-  "to": "`${position + 2}`"
-}

@@ -1,3 +1,4 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { panic } from 'adamic';
 import { Parser } from '../../../../typescript/parser/parser.ts';
 import type { RuleContext } from '../../context.ts';
@@ -67,11 +68,11 @@ export class Rule {
         const message = this.messages.render(ruleName, id, values, []);
         this.context.report(index, ruleName, id, message, '', '', '');
     }
-    visit(index: number): void {
+    visit(node: ParseNode, index: number): void {
         const context = this.context;
         let clause = -1;
         let source = '';
-        for(const child of context.node(index).children) {
+        for(const child of node.children) {
             const node = context.node(child);
             if(node.kind === 'ImportClause') { clause = child; }
             if(node.kind === 'StringLiteral' || node.kind === 'NoSubstitutionTemplateLiteral') { source = node.text; }
@@ -98,7 +99,7 @@ export class Rule {
     }
 }
 export function create(context: RuleContext): Rule {
-    if(context.enabled(ruleName) && context.settings.text !== '') {
+    if(context.selected === ruleName && context.settings.text !== '') {
         const validator = new StrictOptions(descriptor);
         const verdict = validator.check(context.settings.text);
         if(verdict !== 'valid') { panic(`module alias options: ${verdict}`); }

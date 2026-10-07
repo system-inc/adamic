@@ -8,5 +8,6 @@
   "class": "Rule",
   "oracle": "oracleNoDuplicateEnumValues",
   "upstreamPackage": "typescript",
-  "upstreamTest": "TestNoDuplicateEnumValues"
+  "upstreamTest": "TestNoDuplicateEnumValues",
+  "node": true
 }

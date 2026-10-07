@@ -8,5 +8,6 @@
   "class": "Rule",
   "oracle": "oracleModuleAlias",
   "upstreamPackage": "nexus",
-  "upstreamTest": "TestImportRequireModuleAlias"
+  "upstreamTest": "TestImportRequireModuleAlias",
+  "node": true
 }

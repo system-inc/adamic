@@ -1,4 +1,10 @@
-# Parked rule branch
+# Historical parked rule branch
+
+Current status: rebased onto the landed lint area, with the dedup ledger applied.
+See AREA_LANDING_REPORT.md for the fresh integrated results and two blockers.
+The missing-harness parking blocker below is historical and resolved.
+The branch is not claimed green for landing.
+
 
 Branch: codex/lint-wave1-14. Current-main base: 39638d9e278d38bb5aeae887f46d55a70e47aaad.
 Only owned rule, claim and evidence commits were replayed. The conflicting shared registration and helper foundation commits were excluded.

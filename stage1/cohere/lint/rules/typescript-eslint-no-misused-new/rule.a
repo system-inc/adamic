@@ -1,3 +1,4 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
 import { Finding } from '../../finding.ts';
 import { interfaceConstruct, interfaceConstructor, classNew } from './messages.a';
@@ -42,8 +43,7 @@ export class Rule {
         }
         return this.context.node(name).text;
     }
-    visit(index: number): void {
-        const node = this.context.node(index);
+    visit(node: ParseNode, index: number): void {
         if(node.kind === 'MethodSignature') {
             const name = this.memberName(index);
             if(name >= 0 && this.context.node(name).kind === 'Identifier' && this.context.node(name).text === 'constructor') {

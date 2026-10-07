@@ -1,6 +1,7 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
-import { Diagnostic, Edit, Suggestion, report, refuseShared } from '../typescript-eslint-prefer-as-const/repairs.a';
+import { Diagnostic, Edit, Suggestion, report } from '../typescript-eslint-no-extra-non-null-assertion/repairs.a';
 const message = 'A constructor parameter carrying `public`, `private`, `protected`, `readonly` or `override` is already assigned to the matching property before the constructor body runs. Writing it again does nothing, and it invites the next reader to believe the two names could diverge. Delete the assignment.';
 function operatorOf(context: RuleContext, index: number): string {
     const token = context.node(index).children[1];
@@ -116,14 +117,12 @@ export class Rule {
             if(this.context.node(value).kind !== 'Identifier' || this.context.node(value).text !== name || !properties.includes(name) || shadowed(this.context, value, name) || earlier.includes(name) || initialized.includes(name)) { return; }
             // Go deliberately deletes one raw trailing byte; refuse a split UTF-8 character.
             if(this.context.source.charCodeAt(node.end) > 127) { panic('NotYet: parameter-property suggestion splits a UTF-8 character'); }
-            this.diagnostics.push(report(this.context, index, 'unnecessaryAssign', message, [], [new Suggestion('removeAssignment', 'Remove the unnecessary assignment.', [new Edit(this.context.start(index), node.end + 1, '')])]));
+            this.diagnostics.push(report(this.context, node, 'unnecessaryAssign', message, [], [new Suggestion('removeAssignment', 'Remove the unnecessary assignment.', [new Edit(this.context.start(index), node.end + 1, '')])], '@typescript-eslint/no-unnecessary-parameter-property-assignment'));
             return;
         }
         for(const child of node.children) { this.descend(child, properties, earlier, initialized); }
     }
-    visit(index: number): void {
-        const node = this.context.node(index);
-        if(node.kind !== 'Constructor') { return; }
+    visit(node: ParseNode, index: number): void {
         const body = node.children[node.children.length - 1];
         const parent = this.context.parents[index] ?? -1;
         if(body === undefined || this.context.node(body).kind !== 'Block' || parent < 0) { return; }
@@ -142,6 +141,5 @@ export class Rule {
     }
 }
 export function create(context: RuleContext): Rule {
-    refuseShared(context, '@typescript-eslint/no-unnecessary-parameter-property-assignment');
     return new Rule(context);
 }

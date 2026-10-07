@@ -1,5 +1,6 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
-import { Diagnostic, report } from '../typescript-eslint-prefer-as-const/repairs.a';
+import { Diagnostic, report } from '../typescript-eslint-no-extra-non-null-assertion/repairs.a';
 import { messageNoLossOfPrecision } from './messages.a';
 class Scientific {
     readonly digits: string;
@@ -78,13 +79,11 @@ export class Rule {
     readonly context: RuleContext;
     readonly diagnostics: Diagnostic[] = [];
     constructor(context: RuleContext) { this.context = context; }
-    visit(index: number): void {
-        const node = this.context.node(index);
-        if(node.kind !== 'NumericLiteral') { return; }
+    visit(node: ParseNode, index: number): void {
         const raw = this.context.source.slice(this.context.start(index), node.end);
         if(loses(raw)) {
-            this.diagnostics.push(report(this.context, index, 'noLossOfPrecision', messageNoLossOfPrecision, [], []));
-            this.context.report(index, 'no-loss-of-precision', 'noLossOfPrecision', messageNoLossOfPrecision, 'none', '', '');
+            this.diagnostics.push(report(this.context, node, 'noLossOfPrecision', messageNoLossOfPrecision, [], [], 'no-loss-of-precision'));
+
         }
     }
 }

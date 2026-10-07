@@ -116,3 +116,22 @@ only by the external Go comparison. Independent repair integration remains
 explicitly refused where the shared contract cannot represent it. No shared
 files were modified. Complete reports, rates and exact limitations are in
 ../rules/no-lonely-if/COMPLETE_REPORT.md. No additional rules are claimed.
+
+## Landed-harness ledger refresh
+
+Rebased onto area/stage1-lint d65a8f931c98655936ae04c6899f38f14862b73e.
+The ledger assigns unnecessary type constraints, prefer-as-const and enum
+initializers to wave1-08. The three losing descriptor directories are dropped;
+this branch relinquishes those copies. The other ten descriptors remain owned.
+
+The old missing-harness/suggestion bridge blockers are resolved by the landed
+harness. Current integrated failures are the shared parser's modified-destructured
+constructor parameter and the shared Go oracle's panic on the preserved eleven-pass
+no-lonely-if witness. No case was removed to turn those gates green. The original
+slot positions skipped for batch4's stuttering-name and utils-folder copies remain
+batch-only in the ledger; no new batch work is taken while this landing unit is
+blocked. No new helper or rule was claimed in this refresh.
+
+Fresh corpus, original per-rule cases, all ten semantic mutants and exact
+reproducers are in ../rules/nexus-import-require-module-alias/AREA_LANDING_REPORT.md.
+Earlier statuses and reports in this file are historical.

@@ -11,5 +11,6 @@
   "class": "Rule",
   "oracle": "oracleNoMisusedNew",
   "upstreamPackage": "typescript",
-  "upstreamTest": "TestNoMisusedNew"
+  "upstreamTest": "TestNoMisusedNew",
+  "node": true
 }
