@@ -3,6 +3,23 @@ const entries = require("./whole-sites.json");
 function planWhole(ts, file, text, check = false) {
     if (!entries.some(entry => entry.file === file && !entry.action.startsWith("decline"))) return { text, edits: 0 };
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
+    if (file === "utilities.ts") {
+        const repairs = [
+            ["return arrayFrom(directivesByLine.entries())", "return arrayFrom<[string, CommentDirective]>(directivesByLine.entries())"],
+            ["let nextCode: number = codes[i];", "let nextCode: number | undefined = codes[i];"],
+            ["while ((nextCode & 0B11000000) === 0B10000000)", "while (nextCode !== undefined && (nextCode & 0B11000000) === 0B10000000)"],
+            ["const stringReplace = String.prototype.replace;", "const stringReplace: (this: string, searchValue: string, replaceValue: string) => string = String.prototype.replace;"],
+        ];
+        let edits = 0;
+        for (const [before, after] of repairs) {
+            const original = text.split(before).length - 1, adapted = text.split(after).length - 1;
+            if (adapted === 1 && original === 0) continue;
+            if (original !== 1 || adapted !== 0) throw new Error("utilities closure owner drift: " + before);
+            if (check) throw new Error("truthful utilities declaration or narrowing missing: " + before);
+            text = text.replace(before, after); edits++;
+        }
+        return { text, edits };
+    }
     if (file === "parser.ts") {
         const repairs = [
             ["currentNode(position: number): Node;", "currentNode(position: number): Node | undefined;"],

@@ -1017,3 +1017,76 @@ The emitNode review oracle passes: **106,367 passing, zero failing and pending,
 empty baseline diff**, in `whole-emitNode-oracle.json`. Before/after census
 JSON retain both unchanged diagnostics, and `whole-emitNode-proof.json` records
 the no-edit decline, owner and completed checks. No zero is counted.
+
+
+## Whole-file review: factory/nodeFactory.ts, four declines
+
+The four all-code diagnostics are retained, **4 -> 4**; no source edit is made.
+The TS2379 sites at 1315 and 1403 store optional generated-name prefix/suffix
+values in an object. **Partition 32 owns types.ts:1720/1721 AutoGenerateInfo**,
+whose prefix and suffix must truthfully admit undefined. Both sites are declined
+rather than asserting their optional values or changing the own-property shape.
+AutoGenerateInfo is internal, unlike the earlier public owner handoffs.
+
+The TS2412 writes at 1216 (localSymbol) and 5496 (typeExpression) are generic
+construction contracts, not required reads. The checker explicitly reports
+that undefined fits the generic constraint but a narrower T may require Symbol
+or JSDocTypeExpression. Pre-binder localSymbol and the optional JSDoc parameter
+legitimately may be undefined. Widening a constraint or casting a receiver does
+not itself prove every instantiated return contract. No small type-only repair
+with that proof has been established, so both are declined. The factory's
+existing partially constructed node casts are left alone, with no native
+acceptance claim. All four reasons are recorded individually in whole-sites.json.
+The after census, idempotence and default oracle are run on the unchanged tree.
+
+The nodeFactory review oracle passes: **106,367 passing, zero failing and pending,
+empty baseline diff**. `whole-nodeFactory-{before,after}.json` retain the exact
+four diagnostics; `whole-nodeFactory-proof.json` and its oracle report record
+the no-edit declines and completed idempotence/default-suite checks.
+
+
+## Whole-file closure: utilities.ts at zero
+
+The all-code census is **5 -> 0**. All five sites have smallest owned repairs:
+
+| Site | Class | Action | Invariant |
+| --- | --- | --- | --- |
+| 1223:22 and 1224:19 | truthful overload type argument | arrayFrom<[string, CommentDirective]> | Map.entries yields pairs; its terminal undefined is not yielded by arrayFrom's for-of. |
+| 7721:17 and 7725:17 | truthful local declaration and preserved-read narrowing | widen local type and guard mask | The lookahead may be undefined at the final byte; its actual declaration now includes undefined and the continuation-mask loop tests it explicitly. |
+| 11201:34 | truthful extracted-method overload | type stringReplace with this: string, string search, string replacement | Its only call passes s, "*", replacement; String.prototype.replace supports that exact signature. |
+
+The decoder now declares nextCode as **number | undefined**. The original
+undefined bitwise mask was zero and stopped the continuation loop. The added
+undefined guard performs the same stop. Every codes[i] read and i increment
+remains at its original evaluation point; the extra test only reads local
+nextCode. No required assertion or default is added. Its original indexed-read
+declines remain valid. The iterator type argument and extracted-method type
+annotation erase completely, keep the same iterator, and keep the captured
+String.prototype.replace function object and its .call at the same points.
+
+`utilities-proof.cjs` extracts the real decoder function and compares **5,232
+Node cases**: all 256 initial bytes, continuation/leading/ASCII endings,
+three-byte sequences, malformed runs, negatives, NaN and infinities, and
+volatile getters. Output strings and every indexed/length-read trace match.
+The stock emitter comparison permits only the exact new undefined guard;
+every other emitted byte is unchanged. All 17 file contracts/idempotence checks,
+the existing scanner and parser Node proofs, and the exact 217 API-line proof
+pass. Every one of the 60,930 other references remains identical.
+
+Mutants individually remove the nextCode union, the iterator type argument, or
+the extracted-method annotation. They must restore their respective diagnostic
+families. A separate mutant skips only the existing next lookahead read; the
+independent Node output/read-trace proof must reject it. The default oracle and
+all executed mutant outcomes are recorded below after the suite finishes.
+
+
+The utilities default oracle **passes: 106,367 passing, zero failing and pending,
+empty baseline diff**, in `whole-utilities-oracle.json`. Every type-only mutant
+is caught by the all-code census: removing nextCode's union restores two TS2322;
+removing the iterator type argument restores two TS2488; removing stringReplace's
+annotation restores TS2345. The skipped-lookahead mutant fails the independent
+Node output/read-trace comparison, exit 1. The declaration contract also catches
+the removed local union, exit 1. `whole-utilities-proof.json`, all mutant census
+JSON and `whole-utilities-read-mutant-node.log` retain the observations.
+**utilities.ts is a completed whole-file closure**, 5 -> 0, with all 17 contracts
+and idempotence checks passing. No extra API line or numeric default is added.

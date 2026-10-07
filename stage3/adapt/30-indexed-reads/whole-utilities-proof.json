@@ -1,0 +1,76 @@
+{
+  "status": "pass: utilities.ts at zero",
+  "before": 5,
+  "after": 0,
+  "roots": 78,
+  "all_codes": true,
+  "node_cases": 5232,
+  "node_output_and_reads": "identical",
+  "idempotence": "all 17 files pass",
+  "mutants": {
+    "decoder_union": {
+      "census_total": 2
+    },
+    "iterator_type": {
+      "census_total": 2
+    },
+    "replace_signature": {
+      "census_total": 1
+    },
+    "skipped_lookahead": {
+      "node_probe_exit": 1
+    }
+  },
+  "oracle": {
+    "tree": "/tmp/stage3-close-integrated",
+    "nproc": 5,
+    "workers": 4,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 2.597
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 1.815
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=4",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 0,
+        "seconds": 207.165
+      }
+    },
+    "status": "pass",
+    "counts": {
+      "passing": 106367,
+      "failing": 0,
+      "pending": 0
+    },
+    "baseline_diffs": [],
+    "wall_seconds": 211.62
+  },
+  "baseline_diff_bytes": 0,
+  "source_before_sha256": "0f1aa3a85c6352e7fafefbf033096346326973fd4ea0c4fc7471f49b1ebc379b",
+  "source_after_sha256": "87c830d6fbb1cd2dcc4bf69b5f3653ea5c68c13cd3a32ed46f778ca59218f7a9"
+}
