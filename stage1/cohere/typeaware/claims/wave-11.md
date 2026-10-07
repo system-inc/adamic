@@ -90,3 +90,20 @@ normal and sanitized complete-byte agreement, positive controls, per-rule and
 provenance mutants, and released-handle checks. Evidence and timing limits are
 in ../WAVE_11_FOURTH_REPORT.md. All twelve wave-11 reservations are implemented;
 this completion update reserves no additional rules.
+
+## Fifth batch claim
+
+All twelve previous reservations are complete and pushed through `c4a9b256`.
+Fetched origin: 347 refs, 341 distinct trees and 33 distinct Markdown claim
+files. Descending combined finding volume with lexical ties, excluding base
+ports and every named origin reservation, selects the following zero-volume
+rules. Main and bridge contain inventories, not ports; no origin claim names
+these three:
+
+1. `no-throw-literal`
+2. `no-useless-backreference`
+3. `prefer-arrow-callback`
+
+This claim is pushed before implementation. New native sources use .a. Shared
+registration generator and shared harness remain untouched. Complete findings,
+fixes and suggestions are compared with unchanged production Go rules.
