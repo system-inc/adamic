@@ -1,0 +1,28 @@
+export interface EntityResult { readonly text: string; readonly valid: boolean; }
+// Replacement is single pass: a decoded ampersand is never scanned again.
+export function unescapeStringLiteralText(text: string, decodeEntity: (body: string) => EntityResult): string {
+    if(!text.includes('&')) { return text; }
+    let result = '';
+    for(let index = 0; index < text.length;) {
+        if(text.slice(index, index + 1) !== '&') {
+            result += text.slice(index, index + 1);
+            index++;
+            continue;
+        }
+        const semicolon = text.indexOf(';', index);
+        if(semicolon < index + 2) {
+            result += '&';
+            index++;
+            continue;
+        }
+        const replacement = decodeEntity(text.slice(index + 1, semicolon));
+        if(replacement.valid) {
+            result += replacement.text;
+            index = semicolon + 1;
+            continue;
+        }
+        result += '&';
+        index++;
+    }
+    return result;
+}

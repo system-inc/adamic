@@ -1,0 +1,45 @@
+import { type Arena, type Dependencies, type Edges, type Values } from './model.a';
+// Only value positions contribute. Conditions and nonlogical operators are not entered.
+export function collectClassValues(arena: Arena, node: number, origin: string, edges: Edges, values: Values, dependencies: Dependencies): void {
+    if(node < 0) { return; }
+    const item = arena.node(node);
+    switch(item.kind) {
+        case 'StringLiteral':
+        case 'NoSubstitutionTemplateLiteral': {
+            const literal = dependencies.literal(node, origin);
+            values.literals.push({ node: literal.node, text: literal.text, start: literal.start, end: literal.end, origin: literal.origin, leading: edges.leading, trailing: edges.trailing });
+            return;
+        }
+        case 'JsxExpression':
+        case 'ParenthesizedExpression':
+        case 'AsExpression':
+        case 'SatisfiesExpression':
+            collectClassValues(arena, item.expression, origin, edges, values, dependencies);
+            return;
+        case 'ConditionalExpression':
+            collectClassValues(arena, item.whenTrue, origin, edges, values, dependencies);
+            collectClassValues(arena, item.whenFalse, origin, edges, values, dependencies);
+            return;
+        case 'BinaryExpression':
+            if(item.operator === 'AmpersandAmpersandToken') {
+                collectClassValues(arena, item.right, origin, edges, values, dependencies);
+            } else if(item.operator === 'BarBarToken' || item.operator === 'QuestionQuestionToken') {
+                collectClassValues(arena, item.left, origin, edges, values, dependencies);
+                collectClassValues(arena, item.right, origin, edges, values, dependencies);
+            }
+            return;
+        case 'ArrayLiteralExpression':
+            for(const element of item.elements) {
+                collectClassValues(arena, element, origin, edges, values, dependencies);
+            }
+            return;
+        case 'TemplateExpression':
+            values.templates.push({ node, text: '', start: -1, end: -1, origin, leading: edges.leading, trailing: edges.trailing });
+            for(const span of item.spans) {
+                if(span.valid) {
+                    collectClassValues(arena, span.expression, origin, dependencies.hole(span, edges), values, dependencies);
+                }
+            }
+            return;
+    }
+}

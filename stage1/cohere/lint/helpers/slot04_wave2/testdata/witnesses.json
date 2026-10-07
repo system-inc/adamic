@@ -1,0 +1,54 @@
+[
+  {
+    "Name": "control0.tsx",
+    "Source": "const a=<div className='p-2' class='m-1' custom={'x'} data-class={'y'} ignored='z'/>;"
+  },
+  {
+    "Name": "control1.tsx",
+    "Source": "const a=<div className={flag ? ' p-2 ' : 'm-4'}/>;"
+  },
+  {
+    "Name": "control2.tsx",
+    "Source": "const a = (('p-2' as const) satisfies string);"
+  },
+  {
+    "Name": "control3.tsx",
+    "Source": "const a=['a' && 'b', 'c' || 'd', 'e' ?? 'f', 'g' + 'h', test('ignore')];"
+  },
+  {
+    "Name": "control4.tsx",
+    "Source": "const a=`flex${flag ? ' hidden' : ''}${`block${' inline '}`}end`;"
+  },
+  {
+    "Name": "control5.tsx",
+    "Source": "const a=`${'a'}${'b'}`;"
+  },
+  {
+    "Name": "control6.tsx",
+    "Source": "const a=<div className={undefined} className />;"
+  },
+  {
+    "Name": "control7.tsx",
+    "Source": "const a=<div ns:class='p-2'/>;"
+  },
+  {
+    "Name": "control8.tsx",
+    "Source": "const a=['é😀','\\u0061',`raw`,[,'nested']];"
+  },
+  {
+    "Name": "control9.tsx",
+    "Source": "const a=`head${null}tail${undefined}`;"
+  },
+  {
+    "Name": "control10.tsx",
+    "Source": "const a=<div className={((['a','b']))} />;"
+  },
+  {
+    "Name": "control11.tsx",
+    "Source": "const a=`unterminated${'value'}"
+  },
+  {
+    "Name": "control12.tsx",
+    "Source": "const a=<div className={'unterminated"
+  }
+]

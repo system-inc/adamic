@@ -1,0 +1,994 @@
+[
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <Foo.link href=\"https://fonts.googleapis.com/css2?family=Krona+One\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://example.com/css?family=Krona+One\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?display=fallback&family=Krona+One\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&amp;display=block\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&amp;display=optional\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=auto\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=block\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=optional\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=something\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css?family=Krona+One&display=swap\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link href={fontUrl} />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = () => <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-display:Component.tsx",
+    "source": "export const Test = (props) => <link {...props} />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <Foo.link href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <div><link href=\"https://fonts.gstatic.com\" /></div>;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link HREF=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link REL=\"preconnect\" href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href=\"https:&#47;&#47;fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://example.com/a.css\" rel=\"stylesheet\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css?family=Krona+One\" rel=\"stylesheet\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.gstatic.com/s/font.woff2\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href={new URL(\"../public/favicon.ico\", import.meta.url).toString()} rel=\"icon\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link href={process.env.NEXT_PUBLIC_CANONICAL_URL} rel=\"canonical\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link rel=\"pre&#99;onnect\" href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link rel=\"preconnect\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link rel=\"stylesheet\" href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = () => <link rel={kind} href=\"https://fonts.gstatic.com\" />;"
+  },
+  {
+    "name": "@next/next/google-font-preconnect:Component.tsx",
+    "source": "export const Test = (props) => <link {...props} />;"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "\n\t\t\t        export class Blah extends Head {\n\t\t\t          createGoogleAnalyticsMarkup() {\n\t\t\t            return {\n\t\t\t              __html: `\n\t\t\t                window.dataLayer = window.dataLayer || [];\n\t\t\t                function gtag(){dataLayer.push(arguments);}\n\t\t\t                gtag('js', new Date());\n\t\t\t                gtag('config', 'UA-148481588-2');`,\n\t\t\t            };\n\t\t\t          }\n\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <script dangerouslySetInnerHTML={this.createGoogleAnalyticsMarkup()} />\n\t\t\t                <script async src='https://www.google-analytics.com/analytics.js'></script>\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "\n\t\t\t        export class Blah extends Head {\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <script async src='https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}' />\n\t\t\t                <script\n\t\t\t                  dangerouslySetInnerHTML={{\n\t\t\t                    __html: `\n\t\t\t                      window.dataLayer = window.dataLayer || [];\n\t\t\t                      function gtag(){dataLayer.push(arguments);}\n\t\t\t                      gtag('js', new Date());\n\t\t\t                      gtag('config', '${GA_TRACKING_ID}', {\n\t\t\t                        page_path: window.location.pathname,\n\t\t\t                      });\n\t\t\t                  `,\n\t\t\t                }}/>\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "\n\t\t\t        export class Blah extends Head {\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <script dangerouslySetInnerHTML={{\n\t\t\t                    __html: `\n\t\t\t                        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;\n\t\t\t                        ga('create', 'UA-XXXXX-Y', 'auto');\n\t\t\t                        ga('send', 'pageview');\n\t\t\t                    `,\n\t\t\t                  }}/>\n\t\t\t                <script async src='https://www.google-analytics.com/analytics.js'></script>\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "\n\t\t\t        export class Blah extends Head {\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <script dangerouslySetInnerHTML={{\n\t\t\t                    __html: `\n\t\t\t                      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n\t\t\t                        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n\t\t\t                        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n\t\t\t                        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');\n\n\t\t\t                        ga('create', 'UA-XXXXX-Y', 'auto');\n\t\t\t                        ga('send', 'pageview');\n\t\t\t                    `,\n\t\t\t                  }}/>\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "\n\t\t\t        export class Blah extends Head {\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1> qqq\n\t\t\t                {/* Google Tag Manager - Global base code */}\n\t\t\t                <script\n\t\t\t                dangerouslySetInnerHTML={{\n\t\t\t                  __html: `\n\t\t\t                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n\t\t\t                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n\t\t\t                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n\t\t\t                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n\t\t\t                    })(window,document,'script','dataLayer', '${GTM_ID}');\n\t\t\t                  `,\n\t\t\t                }}/>\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export class Blah extends Head {\n\t\t\t          render() {\n\t\t\t            return (\n\t\t\t              <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <script dangerouslySetInnerHTML={{}} />\n\t\t\t              </div>\n\t\t\t            );\n\t\t\t          }\n\t\t\t      }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <SCRIPT src=\"https://www.google-analytics.com/analytics.js\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <div dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script DANGEROUSLYSETINNERHTML={{__html: `www.googletagmanager.com/gtm.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script SRC=\"https://www.google-analytics.com/analytics.js\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={(({__html: `www.google-analytics.com/analytics.js`}))} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={markup} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={markup} dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{\"__html\": `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{...markup}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{...rest, __html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{[\"__html\"]: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html() { return 1; }}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: \"www.google-analytics.com/analytics.js\"}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `harmless`, __html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `head${x}www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js${x}tail`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js`}}></script>;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics\\u002ejs`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `www.googletagmanager.com/gtag/js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html: `www.googletagmanager.com/gtm.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{__html}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{get __html() { return 1; }}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{other, __html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{other: 1, __html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslySetInnerHTML={{}} dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script dangerouslysetinnerhtml={{}} dangerouslySetInnerHTML={{__html: `www.google-analytics.com/analytics.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"/local.js\" dangerouslySetInnerHTML={{__html: `www.googletagmanager.com/gtm.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"WWW.GOOGLE-ANALYTICS.COM/ANALYTICS.JS\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"http://www.google-analytics.com/analytics.js\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"https://www.example.com&#47;analytics.js\" />;"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"https://www.google-analytics.com&#47;analytics.js\" />;"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"https://www.google-analytics.com/analytics.js\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"https://www.google-analytics.com/analytics.js\" dangerouslySetInnerHTML={{__html: `www.googletagmanager.com/gtm.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src=\"https://www.googletagmanager.com/gtm.js?id=X\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script src={someUrl} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script x:src=\"https://www.google-analytics.com/analytics.js\" />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "export const A = <script {...rest} dangerouslySetInnerHTML={{__html: `www.googletagmanager.com/gtm.js`}} />;\n"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "import Script from 'next/script'\n\n\t\t\t        export class Blah extends Head {\n\t\t\t        render() {\n\t\t\t            return (\n\t\t\t            <div>\n\t\t\t                <h1>Hello title</h1>\n\t\t\t                <Script id=\"google-analytics\">\n\t\t\t                    {`window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;\n\t\t\t                    ga('create', 'UA-XXXXX-Y', 'auto');\n\t\t\t                    ga('send', 'pageview');\n\t\t\t                    })`}\n\t\t\t                </Script>\n\t\t\t            </div>\n\t\t\t            );\n\t\t\t        }\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "import Script from 'next/script'\n\n\t\t\t      export class Blah extends Head {\n\t\t\t        render() {\n\t\t\t          return (\n\t\t\t            <div>\n\t\t\t              <h1>Hello title</h1>\n\t\t\t              <Script\n\t\t\t                src=\"https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID\"\n\t\t\t                strategy=\"lazyOnload\"\n\t\t\t              />\n\t\t\t              <Script id=\"google-analytics\">\n\t\t\t                {`\n\t\t\t                  window.dataLayer = window.dataLayer || [];\n\t\t\t                  function gtag(){window.dataLayer.push(arguments);}\n\t\t\t                  gtag('js', new Date());\n\n\t\t\t                  gtag('config', 'GA_MEASUREMENT_ID');\n\t\t\t                `}\n\t\t\t              </Script>\n\t\t\t            </div>\n\t\t\t          );\n\t\t\t        }\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/next-script-for-ga:index.tsx",
+    "source": "import Script from 'next/script'\n\n\t\t\t      export class Blah extends Head {\n\t\t\t        render() {\n\t\t\t          return (\n\t\t\t            <div>\n\t\t\t              <h1>Hello title</h1>\n\t\t\t              <Script id=\"google-analytics\">\n\t\t\t                {`(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n\t\t\t                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n\t\t\t                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n\t\t\t                    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');\n\n\t\t\t                    ga('create', 'UA-XXXXX-Y', 'auto');\n\t\t\t                    ga('send', 'pageview');\n\t\t\t                })`}\n\t\t\t              </Script>\n\t\t\t            </div>\n\t\t\t          );\n\t\t\t        }\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:layout.tsx",
+    "source": "import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:layout.tsx",
+    "source": " import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:layout.tsx",
+    "source": "import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:layout.tsx",
+    "source": " import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:C:\\Users\\username\\projects\\project-name\\app\\layout.tsx",
+    "source": "import Script from \"next/script\";\n\n                  export default function test() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:C:\\Users\\username\\projects\\project-name\\pages\\layout.tsx",
+    "source": " import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:C:\\Users\\username\\projects\\project-name\\src\\app\\layout.tsx",
+    "source": "import Script from \"next/script\";\n\n                  export default function test() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:C:\\Users\\username\\projects\\project-name\\src\\pages\\layout.tsx",
+    "source": " import Script from \"next/script\";\n\n                  export default function test() {\n                    return (\n                      <html lang=\"en\">\n                        <body className={inter.className}>{children}</body>\n                        <Script\n                          src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                          strategy='beforeInteractive'\n                        />\n                      </html>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_document.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:outside-known-dirs.js",
+    "source": " import Head from \"next/head\";\n             import Script from \"next/script\";\n\n             export default function Index() {\n               return (\n                 <Script\n                   id=\"scriptBeforeInteractive\"\n                   src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                   strategy=\"beforeInteractive\"\n                 ></Script>\n               );\n             }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_document.js",
+    "source": "import Document, { Html, Main, NextScript } from 'next/document'\n                  import Script from 'next/script'\n\n                  class MyDocument extends Document {\n                    render() {\n                      return (\n                        <Html>\n                          <Head>\n                            <meta charSet=\"utf-8\" />\n                          </Head>\n                          <body>\n                            <Main />\n                            <NextScript />\n                            <Script\n                              id=\"scriptBeforeInteractive\"\n                              src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                              strategy=\"beforeInteractive\"\n                            ></Script>\n                          </body>\n                        </Html>\n                      )\n                    }\n                  }\n\n                  export default MyDocument\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_document.tsx",
+    "source": "import Document, { Html, Main, NextScript } from 'next/document'\n                  import ScriptComponent from 'next/script'\n\n                  class MyDocument extends Document {\n                    render() {\n                      return (\n                        <Html>\n                          <Head>\n                            <meta charSet=\"utf-8\" />\n                          </Head>\n                          <body>\n                            <Main />\n                            <NextScript />\n                            <ScriptComponent\n                              id=\"scriptBeforeInteractive\"\n                              src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                              strategy=\"beforeInteractive\"\n                            ></ScriptComponent>\n                          </body>\n                        </Html>\n                      )\n                    }\n                  }\n\n                  export default MyDocument\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_document.tsx",
+    "source": "import Document, { Html, Main, NextScript } from 'next/document'\n                  import ScriptComponent from 'next/script'\n\n                  class MyDocument extends Document {\n                    render() {\n                      return (\n                        <Html>\n                          <Head>\n                            <meta charSet=\"utf-8\" />\n                          </Head>\n                          <body>\n                            <Main />\n                            <NextScript />\n                            <ScriptComponent\n                              id=\"scriptBeforeInteractive\"\n                              src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                            ></ScriptComponent>\n                          </body>\n                        </Html>\n                      )\n                    }\n                  }\n\n                  export default MyDocument\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_documentation.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.js",
+    "source": "import Head from \"next/head\";\n                  import Script from \"next/script\";\n\n                  export default function Index() {\n                    return (\n                      <Script\n                        id=\"scriptBeforeInteractive\"\n                        src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js?a=scriptBeforeInteractive\"\n                        strategy=\"beforeInteractive\"\n                      ></Script>\n                    );\n                  }\n\t\t\t"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "export default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\nimport Script from \"next/script\";\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "function Script() {\n  return null;\n}\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import * as All from \"next/script\";\nexport default function Index() {\n  return <All strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import A from \"next/script\";\nimport B from \"next/script\";\nexport default function Index() {\n  return <B strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import S from \"next/script\";\nfunction Script() {\n  return null;\n}\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"ext/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nconst properties = { strategy: \"beforeInteractive\" };\nexport default function Index() {\n  return <Script {...properties} />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return (\n    <>\n      <Script src=\"/a.js\" strategy=\"beforeInteractive\" />\n      <Script id=\"b\" strategy=\"beforeInteractive\"></Script>\n    </>\n  );\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script Strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script src=\"/a.js\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script src=\"/a.js\" strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"afterInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"afterInteractive\" strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"before&#73;nteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" strategy=\"afterInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\"></Script>;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"lazyOnload\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy={\"beforeInteractive\"} />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy={x} strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script {...properties} strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script {...{ strategy: \"beforeInteractive\" }} />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script.Inner strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import Script from \"next/scripts\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import { Foo as Bar } from \"next/script\";\nexport default function Index() {\n  return <Bar strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import { Foo as Bar } from \"next/script\";\nexport default function Index() {\n  return <Foo strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:index.tsx",
+    "source": "import { Foo } from \"next/script\";\nexport default function Index() {\n  return <Foo strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-before-interactive-script-outside-document:_document.tsx",
+    "source": "import Script from \"next/script\";\nexport default function Index() {\n  return <Script strategy=\"beforeInteractive\" />;\n}\n"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <Foo.link rel=\"stylesheet\" href=\"/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <div><h1>Hello title</h1></div>;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <div><link href=\"/_next/static/css/styles.css\" rel=\"stylesheet\" /></div>;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link href=\"http://example.com/a.css\" rel=\"stylesheet\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link href=\"https://fonts.googleapis.com/css?family=Open+Sans\" rel=\"stylesheet\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"icon\" href=\"/favicon.ico\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"style&#115;heet\" href=\"/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href=\"//example.com/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href=\"/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href=\"/a.css\"></link>;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href=\"https:&#47;&#47;example.com/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href=\"styles.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel=\"stylesheet\" href={path} />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = () => <link rel={kind} href=\"/a.css\" />;"
+  },
+  {
+    "name": "@next/next/no-css-tags:Component.tsx",
+    "source": "export const C = (props) => <link {...props} />;"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<Link href=\"/about\">About</Link>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href=\"/about\" target=\"_blank\">About</a>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href=\"/contact\">Contact</a>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href='/about' />);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href='/about'>About</a>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:index.tsx",
+    "source": "export const C = () => (\n<>\n<a href=\"/\">x</a>\n</>\n);\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function Links() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) }\nexport default function D() { return (<div><Links /></div>) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "\n\t\t\t      import Document, { Html, Head } from \"next/document\";\n\t\t\t      class MyDocument {\n\t\t\t        render() {\n\t\t\t          return (\n\t\t\t            <Html>\n\t\t\t              <Head>\n\t\t\t                <link\n\t\t\t                  href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t                  rel=\"stylesheet\"\n\t\t\t                />\n\t\t\t              </Head>\n\t\t\t            </Html>\n\t\t\t          );\n\t\t\t        }\n\t\t\t      }\n\n\t\t\t      export default MyDocument;"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "\n\t\t\t      import Head from 'next/head'\n\n\n\t\t\t      function Links() {\n\t\t\t        return (\n\t\t\t          <>\n\t\t\t            <link\n\t\t\t              href=\"https://fonts.googleapis.com/css2?family=Inter\"\n\t\t\t              rel=\"stylesheet\"\n\t\t\t            />\n\t\t\t            <link\n\t\t\t              href=\"https://fonts.googleapis.com/css2?family=Open+Sans\"\n\t\t\t              rel=\"stylesheet\"\n\t\t\t              />\n\t\t\t          </>\n\t\t\t        )\n\t\t\t      }\n\n\t\t\t      export default function IndexPage() {\n\t\t\t        return (\n\t\t\t          <div>\n\t\t\t            <Head>\n\t\t\t              <Links />\n\t\t\t            </Head>\n\t\t\t            <p>Hello world!</p>\n\t\t\t          </div>\n\t\t\t        )\n\t\t\t      }\n\t\t\t      "
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "export default function CustomDocument() {\n\t\t\t      return (\n\t\t\t        <Html>\n\t\t\t          <Head>\n\t\t\t            <link\n\t\t\t              href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t              rel=\"stylesheet\"\n\t\t\t            />\n\t\t\t          </Head>\n\t\t\t        </Html>\n\t\t\t      )\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "export default function() {\n\t\t\t      return (\n\t\t\t        <Html>\n\t\t\t          <Head>\n\t\t\t            <link\n\t\t\t              href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t              rel=\"stylesheet\"\n\t\t\t            />\n\t\t\t          </Head>\n\t\t\t        </Html>\n\t\t\t      )\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "function CustomDocument() {\n\t\t\t      return (\n\t\t\t        <Html>\n\t\t\t          <Head>\n\t\t\t            <link\n\t\t\t              href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t              rel=\"stylesheet\"\n\t\t\t            />\n\t\t\t          </Head>\n\t\t\t        </Html>\n\t\t\t      )\n\t\t\t    }\n\n\t\t\t    export default CustomDocument;\n\t\t\t    "
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "function a() {\n\t\t\t      return (\n\t\t\t        <Html>\n\t\t\t          <Head>\n                  <link\n                    rel=\"apple-touch-startup-image\"\n                    href=\"/assets/public/pwa/splash/apple-splash-2048-2732.jpg\"\n                  />\n\t\t\t          </Head>\n\t\t\t        </Html>\n\t\t\t      )\n\t\t\t    }"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "import Document, { Html, Head } from \"next/document\";\n\t\t\tclass MyDocument extends Document {\n\t\t\t\trender() {\n\t\t\t\t\treturn (\n\t\t\t\t\t\t<Html>\n\t\t\t\t\t\t\t<Head>\n\t\t\t\t\t\t\t\t<link\n\t\t\t\t\t\t\t\t\thref=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t\t\t\t\t\t\trel=\"stylesheet\"\n\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t</Head>\n\t\t\t\t\t\t</Html>\n\t\t\t\t\t);\n\t\t\t\t}\n\t\t\t}\n\t\t\texport default MyDocument;"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.jsx",
+    "source": "import NextDocument, { Html, Head } from \"next/document\";\n\t\t\t    class Document extends NextDocument {\n\t\t\t      render() {\n\t\t\t        return (\n\t\t\t          <Html>\n\t\t\t            <Head>\n\t\t\t              <link\n\t\t\t                href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=swap\"\n\t\t\t                rel=\"stylesheet\"\n\t\t\t              />\n\t\t\t            </Head>\n\t\t\t          </Html>\n\t\t\t        );\n\t\t\t      }\n\t\t\t    }\n\t\t\t    export default Document;\n\t\t\t    "
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const D = () => (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />);\nexport default D;\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const D = class { render() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) } };\nexport default D;\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const D = function () { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) };\nexport default D;\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const D = function Inner() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) };\nexport default D;\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const Q = () => (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />);\nexport default function D() { return <div /> }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "const [D] = [() => (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />)];\nexport default D;\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "export default () => (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />);\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function D() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) }\nexport { D as default };\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function Links() {\n  return <link href=\"https://fonts.googleapis.com/css2?family=Inter\" />\n}\nexport default function D() { return <div><Links /></div> }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function Links() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\"></link>) }\nexport default function D() { return (<div><Links /></div>) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function Links() { return (<link href=\"https://fonts.googleapis.com/cssANYTHING\" />) }\nexport default function D() { return (<div><Links /></div>) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_document.tsx",
+    "source": "function Links() { return (<link rel=\"preload\" href=\"https://fonts.googleapis.com/css?family=X\" />) }\nexport default function D() { return (<div><Links /></div>) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:_documentation.tsx",
+    "source": "export default function D() { return (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "\n\t\t\t      import Head from 'next/head'\n\t\t\t      export default function IndexPage() {\n\t\t\t        return (\n\t\t\t          <div>\n\t\t\t            <Head>\n\t\t\t              <link\n\t\t\t                href=\"https://fonts.googleapis.com/css2?family=Inter\"\n\t\t\t                rel=\"stylesheet\"\n\t\t\t              />\n\t\t\t            </Head>\n\t\t\t            <p>Hello world!</p>\n\t\t\t          </div>\n\t\t\t        )\n\t\t\t      }\n\t\t\t      "
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "const u = \"https://fonts.googleapis.com/css2?family=Inter\";\nexport default function D() { return (<link rel=\"stylesheet\" href={u} />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() {\n  return <div><link href=\"https://example.com&#47;css2?family=Inter\" rel=\"stylesheet\" /></div>\n}\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() {\n  return <div><link href=\"https://fonts.googleapis.com&#47;css2?family=Inter\" rel=\"stylesheet\" /></div>\n}\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() {\n  return <div><link href=\"https://fonts.googleapis.com/css2?family=Inter\" rel=\"stylesheet\" /></div>\n}\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() {\n  return <div><link href=\"https://fonts.googleapis.com/css2?family=Inter\"></link></div>\n}\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<Link href=\"https://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link href=\" https://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link href=\"https://cdn.example.com/proxy?u=https://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link rel=\"stylesheet\" HREF=\"https://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css2?family=Inter\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link rel=\"stylesheet\" href=\"https://use.typekit.net/abc.css\" />) }\n"
+  },
+  {
+    "name": "@next/next/no-page-custom-font:index.tsx",
+    "source": "export default function D() { return (<link {...{href:\"https://fonts.googleapis.com/css2?family=Inter\"}} />) }\n"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export class Blah {\n            render() {\n                return (\n                    <div>\n                        <h1>Hello title</h1>\n                        <script src='https://polyfill.io/v3/polyfill.min.js'></script>\n                    </div>\n                );\n            }\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <SCRIPT src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <Script src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <div src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='//cdn.polyfill.io/v2/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='/v3/polyfill.min.js?features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='http://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https:&#47;&#47;polyfill-fastly.io/v3/polyfill.min.js?features=Array.prototype.copyWithin' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=AbortController&features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Array.prototype' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Array.prototype.@@iterator' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Foo,Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Number.Epsilon,Number.EPSILON' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Promise%2CObject.fromEntries' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=Promise%2cSet' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=es5,es6' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/p.js?features=promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://example.com/x.js?features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://polyfill-fastly.io/v3/p.js?features=Array.prototype.copyWithin' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://polyfill-fastly.io/v3/p.js?features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://polyfill-fastly.io/v3/polyfill.min.js?features=Array.prototype.copy&#87;ithin' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://polyfill-fastly.net/v3/p.js?features=Promise' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = () => <script>{\"var a = 1;\"}</script>;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export const A = (p) => <script {...p} />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "export function MyApp({ Component, pageProps }) {\n            return (\n                <div>\n                    <Component {...pageProps} />\n                    <script src='https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=Promise%2CObject.fromEntries' />\n                </div>\n            );\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import * as S from 'next/script';\nexport const A = () => <S src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Poly from 'next/script';\nexport const A = () => <Poly src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'next/script';\n        export function MyApp({ Component, pageProps }) {\n            return (\n                <div>\n                    <Component {...pageProps} />\n                    <Script src='https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise' />\n                </div>\n            );\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'next/script';\n        export function MyApp({ Component, pageProps }) {\n            return (\n                <div>\n                    <Component {...pageProps} />\n                    <Script src='https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=IntersectionObserver' />\n                </div>\n            );\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'next/script';\n        export function MyApp({ Component, pageProps }) {\n            return (\n                <div>\n                <Component {...pageProps} />\n                <Script src='https://polyfill-fastly.io/v3/polyfill.min.js?features=Array.prototype.copyWithin' />\n                </div>\n            );\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'next/script';\nexport const A = () => <Script.Sub src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'next/script';\nexport const A = (p) => <Script src={p.url} />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import Script from 'other/script';\nexport const A = () => <Script src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import {Head} from 'next/document';\n        export class Blah extends Head {\n            render() {\n                return (\n                    <div>\n                        <h1>Hello title</h1>\n                        <script src='https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=AbortController'></script>\n                    </div>\n                );\n            }\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import {Head} from 'next/document';\n        export class Blah extends Head {\n            render() {\n                return (\n                    <div>\n                        <h1>Hello title</h1>\n                        <script src='https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=IntersectionObserver'></script>\n                    </div>\n                );\n            }\n        }"
+  },
+  {
+    "name": "@next/next/no-unwanted-polyfillio:Component.tsx",
+    "source": "import {Script} from 'next/script';\nexport const A = () => <Script src='https://polyfill.io/v3/polyfill.min.js' />;"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <AnimatedButton variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <AnimatedButton variant=\"Ghost\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button size=\"Huge\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button size=\"Small\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button title=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Emphasized\">go</Button>;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Gh&#111;st\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Ghost\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"Outline\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant=\"ghost\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant={`Gh${x}`} />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variant={chosen} />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Button variantName=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Calendar size=\"Nope\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Calendar variant=\"A\" size=\"Base\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Calendar variant=\"Nope\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Card variant=\"Flat\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Card variant=\"Raised\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Foo.Button variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <TipButton variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <Unthemed variant=\"Emphasized\" />;\n"
+  },
+  {
+    "name": "structure/boundary-no-project-theme-value:UseButton.tsx",
+    "source": "export const a = <button variant=\"Emphasized\" />;\n"
+  }
+]

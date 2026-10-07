@@ -1,0 +1,7 @@
+import { type Arena, type Dependencies, type Values } from './model.a';
+import { collectClassValues } from './collect_class_values.a';
+export function classValuesUnder(arena: Arena, node: number, origin: string, dependencies: Dependencies): Values {
+    const values: Values = { literals: [], templates: [] };
+    collectClassValues(arena, node, origin, { leading: false, trailing: false }, values, dependencies);
+    return values;
+}

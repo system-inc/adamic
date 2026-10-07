@@ -1,0 +1,58 @@
+import { panic, programArguments, readTextFile, utf8At, utf8Length } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { Arena, type Node, type Span, type Edges, type Value, type Values, type Dependencies } from './model.a';
+import { collectClassValues } from './collect_class_values.a';
+import { classValuesUnder } from './class_values_under.a';
+function field(c: OptionsJson, row: number, name: string): string { return c.node(c.field(row, name)).text; }
+function integer(c: OptionsJson, row: number, name: string): number { return Number(field(c, row, name)); }
+function print(values: Values, label: string): void {
+    let line = label;
+    for(const v of values.literals) { line += ` L${v.node}:${v.origin}:${v.leading}:${v.trailing}:${v.start}:${v.end}:`; for(let i = 0; i < utf8Length(v.text); i++) { line += `${utf8At(v.text, i)},`; } }
+    for(const v of values.templates) { line += ` T${v.node}:${v.origin}:${v.leading}:${v.trailing}`; }
+    console.log(line);
+}
+class WitnessDependencies implements Dependencies {
+    readonly arena: Arena;
+    constructor(arena: Arena) { this.arena = arena; }
+    literal(node: number, origin: string): Value { const item = this.arena.node(node); return {node, text: item.text, start: item.start, end: item.end, origin, leading: false, trailing: false}; }
+    hole(span: Span, edges: Edges): Edges {
+        return span.edges[(edges.leading ? 2 : 0) + (edges.trailing ? 1 : 0)] ?? panic('missing hole dependency answer');
+    }
+}
+const input = readTextFile(programArguments()[0] ?? panic('path'));
+if(input.kind === 'Error') { panic(input.message); }
+const c = new OptionsJson(input.text);
+const root = c.parse();
+if(root < 0) { panic(c.error); }
+
+for(const row of c.node(root).children) {
+    const nodes: Node[] = [];
+    for(const raw of c.node(c.field(row, 'ast')).children) {
+        const elements: number[] = [];
+        for(const id of c.node(c.field(raw, 'elements')).children) { elements.push(Number(c.node(id).text)); }
+        const spans: Span[] = [];
+        for(const span of c.node(c.field(raw, 'spans')).children) {
+            const edges: Edges[] = [];
+            for(const edge of c.node(c.field(span, 'edges')).children) {
+                edges.push({leading: field(c, edge, 'leading') === 'true', trailing: field(c, edge, 'trailing') === 'true'});
+            }
+            spans.push({ expression: integer(c, span, 'expression'), valid: field(c, span, 'valid') === 'true', edges });
+        }
+        nodes.push({start: integer(c,raw,'start'), end: integer(c,raw,'end'), kind: field(c,raw,'kind'), text: field(c,raw,'text'), name: integer(c,raw,'name'), initializer: integer(c,raw,'initializer'), expression: integer(c,raw,'expression'), left: integer(c,raw,'left'), right: integer(c,raw,'right'), whenTrue: integer(c,raw,'whenTrue'), whenFalse: integer(c,raw,'whenFalse'), operator: field(c,raw,'operator'), elements, spans});
+    }
+    const arena = new Arena(nodes);
+    const dependencies = new WitnessDependencies(arena);
+    for(let id = -1; id < nodes.length; id++) {
+        const origin = ['Attribute', 'Callee', 'Variable'][(id + 1) % 3] ?? panic('origin');
+        for(let mask = 0; mask < 4; mask++) {
+            const values: Values = {literals: [{node: -2, text: '', start: -1, end: -1, origin: 'seed', leading: false, trailing: true}], templates: []};
+            collectClassValues(arena, id, origin, {leading: mask >= 2, trailing: mask % 2 === 1}, values, dependencies);
+            print(values, 'collect');
+        }
+        const first = classValuesUnder(arena, id, origin, dependencies);
+        print(first, 'under');
+        first.literals.push({node: -2, text: '', start: -1, end: -1, origin: 'seed', leading: true, trailing: false});
+        print(classValuesUnder(arena, id, origin, dependencies), 'fresh');
+
+    }
+}

@@ -1,0 +1,28 @@
+import { panic } from 'adamic';
+export interface Edges { readonly leading: boolean; readonly trailing: boolean; }
+export interface Value { readonly node: number; readonly text: string; readonly start: number; readonly end: number; readonly origin: string; readonly leading: boolean; readonly trailing: boolean; }
+export interface Values { readonly literals: Value[]; readonly templates: Value[]; }
+export interface Span { readonly expression: number; readonly valid: boolean; readonly edges: readonly Edges[]; }
+export interface Node {
+    readonly start: number; readonly end: number; readonly kind: string;
+    readonly text: string;
+    readonly name: number;
+    readonly initializer: number;
+    readonly expression: number;
+    readonly left: number;
+    readonly right: number;
+    readonly whenTrue: number;
+    readonly whenFalse: number;
+    readonly operator: string;
+    readonly elements: readonly number[];
+    readonly spans: readonly Span[];
+}
+export class Arena {
+    readonly nodes: readonly Node[];
+    constructor(nodes: readonly Node[]) { this.nodes = nodes; }
+    node(index: number): Node { return this.nodes[index] ?? panic('missing traversal node'); }
+}
+export interface Dependencies {
+    literal(node: number, origin: string): Value;
+    hole(span: Span, edges: Edges): Edges;
+}
