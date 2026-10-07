@@ -14,6 +14,13 @@
     slabs_test.go:119: mutant insertion points changed
 --- FAIL: TestSlabLaneCatchesRecycledRelease (0.26s)
 
+== github.com/system-inc/adamic/internal/native TestWASI
+=== RUN   TestWASI
+    wasm_test.go:41: WASI toolchain missing or unusable (sysroot, linker, builtins): exit status 1
+        wasm-ld: error: cannot open /workspace/adamic-tools/llvm/lib/clang/20/lib/wasm32-unknown-wasi/libclang_rt.builtins.a: No such file or directory
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- FAIL: TestWASI (0.30s)
+
 == github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
 FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.077s
 
