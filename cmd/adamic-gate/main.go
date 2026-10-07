@@ -3,6 +3,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
@@ -168,9 +169,12 @@ func run(args []string) error {
 	return fmt.Errorf("unknown command %q", args[0])
 }
 func output(name string, args ...string) (string, error) {
-	b, err := exec.Command(name, args...).CombinedOutput()
+	cmd := exec.Command(name, args...)
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+	b, err := cmd.Output()
 	if err != nil {
-		return "", fmt.Errorf("%s %v: %w\n%s", name, args, err, b)
+		return "", fmt.Errorf("%s %v: %w\n%s", name, args, err, string(b)+stderr.String())
 	}
 	return strings.TrimSpace(string(b)), nil
 }
@@ -567,10 +571,12 @@ func readRuns(path string) ([]result, error) {
 	scanner := bufio.NewScanner(f)
 	scanner.Buffer(make([]byte, 65536), 64*1024*1024)
 	var runs []result
+	line := 0
 	for scanner.Scan() {
+		line++
 		var e event
 		if err := json.Unmarshal(scanner.Bytes(), &e); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("%s:%d: malformed JSON: %w", path, line, err)
 		}
 		if e.Action == "run" && e.Test != "" {
 			runs = append(runs, result{Package: e.Package, Test: e.Test, Action: "run"})
@@ -590,10 +596,12 @@ func readLog(path string) ([]result, []string, int, error) {
 	var results []result
 	var cache []string
 	raw := 0
+	line := 0
 	for scanner.Scan() {
+		line++
 		var e event
 		if err := json.Unmarshal(scanner.Bytes(), &e); err != nil {
-			return nil, nil, 0, fmt.Errorf("%s: malformed JSON: %w", path, err)
+			return nil, nil, 0, fmt.Errorf("%s:%d: malformed JSON: %w", path, line, err)
 		}
 		key := e.Package + "::" + e.Test
 		outputs[key] += e.Output
@@ -633,13 +641,6 @@ func free(path string) uint64 {
 	}
 	return s.Bavail * uint64(s.Bsize)
 }
-func loadAverage() string {
-	b, err := os.ReadFile("/proc/loadavg")
-	if err != nil {
-		return "unknown"
-	}
-	return strings.TrimSpace(string(b))
-}
 func buildFlags(commit, before, after string) string {
 	get := func(n string, a ...string) string {
 		s, e := output(n, a...)
@@ -648,8 +649,8 @@ func buildFlags(commit, before, after string) string {
 		}
 		return strings.Split(s, "\n")[0]
 	}
-	quota, _ := os.ReadFile("/sys/fs/cgroup/cpu.max")
-	return fmt.Sprintf("commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", commit, get("nproc"), strings.TrimSpace(string(quota)), get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
+	quota := cpuQuota()
+	return fmt.Sprintf("commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", commit, processorCount(), quota, get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
 }
 func shard(index, count int, out, scratch string, resume bool) error {
 	started := time.Now()

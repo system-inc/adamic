@@ -11,7 +11,11 @@ import (
 
 func TestComplementRunsInitRegisteredFixture(t *testing.T) {
 	root := t.TempDir()
-	os.WriteFile(filepath.Join(root, "go.mod"), []byte("module probe\n\ngo 1.27.1\n"), 0600)
+	warningRoot := t.TempDir()
+	if err := os.WriteFile(filepath.Join(warningRoot, "go.mod"), []byte("module ignored\n\ngo 1.27\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	os.WriteFile(filepath.Join(root, "go.mod"), []byte("module probe\n\ngo 1.27\n"), 0600)
 	os.WriteFile(filepath.Join(root, "parent_test.go"), []byte(`package probe
 import "testing"
 var fixtures=[]string{"left/a", "right/b"}
@@ -31,16 +35,17 @@ func init() {for _,name:=range []string{"left/b", "right/a", "new/fixture"} {fix
 		cmd := exec.Command("go", args...)
 		cmd.Dir = root
 		log := filepath.Join(root, "shard-"+string(rune('0'+index))+".jsonl")
-		file, err := os.Create(log)
+		cmd.Env = append(os.Environ(), "GOWORK=off", "GO111MODULE=on", "GOPATH="+warningRoot)
+		if err := runJSONCommand(cmd, log); err != nil {
+			t.Fatal(err)
+		}
+		stderr, err := os.ReadFile(stderrPath(log))
 		if err != nil {
 			t.Fatal(err)
 		}
-		cmd.Stdout = file
-		cmd.Stderr = file
-		err = cmd.Run()
-		file.Close()
-		if err != nil {
-			t.Fatal(err)
+		t.Logf("Go stderr kept separate: %s", strings.TrimSpace(string(stderr)))
+		if !strings.Contains(string(stderr), "go: warning: ignoring go.mod in $GOPATH") {
+			t.Fatalf("Go warning was not reproduced: %s", stderr)
 		}
 		rows, _, _, err := readLog(log)
 		if err != nil {

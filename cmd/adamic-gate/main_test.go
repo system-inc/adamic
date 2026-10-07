@@ -35,18 +35,10 @@ func TestOther(t *testing.T) {}
 	var all []result
 	for index, pattern := range patterns(asked) {
 		log := filepath.Join(directory, "run-"+string(rune('a'+index))+".jsonl")
-		f, err := os.Create(log)
-		if err != nil {
-			t.Fatal(err)
-		}
 		cmd := exec.Command("go", "test", "-count=1", "-json", "-run", pattern, ".")
 		cmd.Dir = directory
 		cmd.Env = append(os.Environ(), "GOWORK=off")
-		cmd.Stdout = f
-		cmd.Stderr = f
-		err = cmd.Run()
-		f.Close()
-		if err != nil {
+		if err := runJSONCommand(cmd, log); err != nil {
 			t.Fatal(err)
 		}
 		events, _, _, err := readLog(log)
@@ -121,10 +113,13 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(t *testing.T) {
 	if len(cache) != 1 || cacheHits.FindStringSubmatch(cache[0])[2] != "1" {
 		t.Fatal("lost hit evidence")
 	}
-	if err := os.WriteFile(path, []byte("truncated JSON"), 0600); err != nil {
+	if err := os.WriteFile(path, []byte("{\"Action\":\"start\",\"Package\":\"p\"}\n"+"go: warning: injected non-JSON diagnostic\n"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	if _, _, _, err := readLog(path); err == nil {
-		t.Fatal("corrupt log accepted")
+	if _, _, _, err := readLog(path); err == nil || !strings.Contains(err.Error(), path+":2: malformed JSON") {
+		t.Fatal("corrupt log accepted or missing file/line", err)
+	}
+	if _, err := readRuns(path); err == nil || !strings.Contains(err.Error(), path+":2: malformed JSON") {
+		t.Fatal("corrupt run log accepted or missing file/line", err)
 	}
 }

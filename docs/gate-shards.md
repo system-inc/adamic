@@ -504,3 +504,52 @@ own tests will naturally show those added tests as a diff. Inspect `Plan.Complem
 and `Unplanned` after merge. Predictions are known elapsed work estimates, not a guarantee of
 parallel wall time; unknown complement work, missing timings, discovery and concurrency contention
 remain unpredicted.
+
+
+## macOS stderr regression repair
+
+`TestComplementRunsInitRegisteredFixture` previously directed both streams into its `.jsonl`.
+On macOS, a Go toolchain diagnostic on stderr made that file malformed. The selector test and
+runtime fixture-discovery listing had the same defect. They now use `runJSONCommand`: stdout
+alone goes to the JSON file, stderr to its sibling `.stderr`. A failed command reports that
+stderr path and diagnostics. The production shard runner already kept separate per-package
+`test.jsonl` and `test.stderr` streams. Structured queries made through `output`, including
+`go test -json -list` and `go env -json`, now also parse stdout independently of stderr.
+
+The complement regression sets `GOPATH` to a temporary directory containing a `go.mod`, while
+running a separate valid fixture module. Go emits the real warning
+`go: warning: ignoring go.mod in $GOPATH ...`. The test requires that warning to exist in the
+stderr file, then parses the stdout log and checks its exact assigned/complement children.
+The fixture-discovery regression repeats that condition for its overlay listing and structured
+query. The tiny fixture module requires Go 1.27, avoiding an unnecessary patch-version download.
+
+Both raw-log readers now reject malformed JSON with the filename and one-based line number.
+A clean eight-shard miniature merge stays green; appending a `go:` line to a copied shard's raw
+log makes merge exit 1 with `bad-shard-0/test.jsonl:41: malformed JSON`. This is a hard refusal;
+no green merged artifact is emitted for the malformed stream. Fixture discovery also fails on
+malformed stdout instead of ignoring a bad line.
+
+Linux host metadata lives in `host_linux.go`; Darwin uses `host_darwin.go`. Darwin reads logical
+CPU count and load through BSD `sysctl -n`, reports cgroup CPU quota as `not-applicable`, and
+requires neither `/proc`, `/sys` nor GNU `nproc`. Metadata tests provide POSIX-shell command
+fixtures and explicitly detect any Darwin invocation of `nproc`.
+
+All 19 package tests pass with `-race` in the ordinary run and in a Linux run whose overlay
+selects the Darwin metadata implementation. The complete package test binary cross-compiles to
+Mach-O for both Darwin arm64 and amd64. Focused vet passes. No actual Mac is available, so these
+checks exercise Darwin metadata semantics and compilation, rather than claiming execution on
+Darwin's kernel or filesystem. Commands, logs and mutants are preserved in
+`cmd/adamic-gate/evidence/stderr-portability.tar.gz`:
+
+```sh
+go test -race -count=1 -json ./cmd/adamic-gate > tests.jsonl 2> tests.stderr
+# The archived overlay replaces host_linux.go with host_darwin.go on Linux.
+go test -race -count=1 -json -overlay=darwin-semantics-overlay.json ./cmd/adamic-gate > darwin-semantics.jsonl 2> darwin-semantics.stderr
+GOOS=darwin GOARCH=arm64 go test -c -o gate-darwin-arm64.test ./cmd/adamic-gate
+GOOS=darwin GOARCH=amd64 go test -c -o gate-darwin-amd64.test ./cmd/adamic-gate
+go vet ./cmd/adamic-gate
+```
+
+Four source-overlay mutants fail their intended tests: join stderr to JSON stdout, restore
+combined output for structured queries, remove file/line diagnostics, and use GNU `nproc` in
+Darwin metadata. No cache was added or changed.

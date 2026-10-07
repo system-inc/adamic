@@ -36,27 +36,25 @@ func registeredFixtures(file, variable string) ([]string, error) {
 		return nil, err
 	}
 	logPath := filepath.Join(root, "discovery.jsonl")
-	log, err := os.Create(logPath)
-	if err != nil {
-		return nil, err
-	}
 	cmd := exec.Command("go", "test", "-overlay="+overlay, "-count=1", "-json", "-run", "^TestAdamicGateRegisteredFixtures$", "./"+filepath.ToSlash(filepath.Dir(file)))
-	cmd.Stdout, cmd.Stderr = log, log
-	commandErr := cmd.Run()
-	closeErr := log.Close()
+	commandErr := runJSONCommand(cmd, logPath)
 	bytes, readErr := os.ReadFile(logPath)
-	if commandErr != nil || closeErr != nil || readErr != nil {
-		return nil, fmt.Errorf("fixture discovery failed: %v %v %v\n%s", commandErr, closeErr, readErr, bytes)
+	if commandErr != nil || readErr != nil {
+		return nil, fmt.Errorf("fixture discovery failed: %v %v\n%s", commandErr, readErr, bytes)
 	}
 	listing := string(bytes)
 
 	var names []string
 	seen := map[string]bool{}
 	passed := false
-	for _, line := range strings.Split(listing, "\n") {
-		var event event
-		if json.Unmarshal([]byte(line), &event) != nil {
+	lines := strings.Split(listing, "\n")
+	for index, line := range lines {
+		if line == "" && index == len(lines)-1 {
 			continue
+		}
+		var event event
+		if err := json.Unmarshal([]byte(line), &event); err != nil {
+			return nil, fmt.Errorf("%s:%d: malformed JSON: %w", logPath, index+1, err)
 		}
 		if event.Test == "TestAdamicGateRegisteredFixtures" && event.Action == "pass" {
 			passed = true
