@@ -1,0 +1,254 @@
+[
+  {
+    "module": "no_import_assign",
+    "go_listener_kinds": [
+      "KindSourceFile"
+    ],
+    "numeric_kinds": [
+      307
+    ],
+    "mutant_kinds": [
+      308
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "b7cd05276dc21ac6518a2a2108a3969464de9050221ab0223f3f457bc9ec17b3",
+    "adamic_source_sha256": "6c2ea60001fcf78f4a9714440c43b709418f21d4b4b0421c86bdd3893826e5f6",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "prefer_exponentiation_operator",
+    "go_listener_kinds": [
+      "KindCallExpression"
+    ],
+    "numeric_kinds": [
+      214
+    ],
+    "mutant_kinds": [
+      215
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "7f06460a33cb9eaa39c628a22dda3fd5231fd2026a49859f3bf56593fa4e4510",
+    "adamic_source_sha256": "15595cc58e5a2adbcc481d5ed4aec1ccbfe6a9f7b260c23ba871e466ad4f0c51",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "use_isnan",
+    "go_listener_kinds": [
+      "KindSwitchStatement",
+      "KindCallExpression",
+      "KindBinaryExpression"
+    ],
+    "numeric_kinds": [
+      214,
+      227,
+      256
+    ],
+    "mutant_kinds": [
+      214,
+      227,
+      257
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "f57338432bcb1961cf7e608777446c717caa20dad2f2254737c500ea4e14a377",
+    "adamic_source_sha256": "f678ed629d3bcef4fee4e3d953ae17cd863291e1f550d597d6639dc3b0701359",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_global_listener_target_assertion",
+    "go_listener_kinds": [
+      "KindCallExpression"
+    ],
+    "numeric_kinds": [
+      214
+    ],
+    "mutant_kinds": [
+      215
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "faa11c5a807d4fbc557c707b623f0416766d4f80231ae25780d792184d678a2b",
+    "adamic_source_sha256": "627cdc54f8299019af6e236438c4c682807481d48603da0b9bd25c958dfaf97c",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_leaked_number_render",
+    "go_listener_kinds": [
+      "KindJsxExpression"
+    ],
+    "numeric_kinds": [
+      295
+    ],
+    "mutant_kinds": [
+      296
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "e7b0884f4a8178e68b2bc243bd31a2cf837df48f0aa583b17606069efebf988e",
+    "adamic_source_sha256": "55a4f5ffd064085aece905fc690973471aaabec23e0ab6068cda985be1718c95",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_mock_on_module_namespace",
+    "go_listener_kinds": [
+      "KindCallExpression"
+    ],
+    "numeric_kinds": [
+      214
+    ],
+    "mutant_kinds": [
+      215
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "be5133f27e594a645e62f2f0da71b4fca540f662e9d67269320b806c14ece0d0",
+    "adamic_source_sha256": "2f6ba2a0d6ce3da167b09b25945589da31059a4165351bd04c619e7c47b3a3c3",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_interpolated_shell_command",
+    "go_listener_kinds": [
+      "KindCallExpression"
+    ],
+    "numeric_kinds": [
+      214
+    ],
+    "mutant_kinds": [
+      215
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "6c95acdf12c17f2a39ef9d64357f903a4a7907acb194d0f9d3ac8e99e00640be",
+    "adamic_source_sha256": "705d6ef534781b52cce3ff3ff35608da53f31fcdc2e7d392f6223ac2d6f66053",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_interpolated_sql_string",
+    "go_listener_kinds": [
+      "KindTemplateExpression"
+    ],
+    "numeric_kinds": [
+      229
+    ],
+    "mutant_kinds": [
+      230
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "a939d3d5fac76ae37a0774a3305c2b3290079d097e8bada50e473582a03d0fbd",
+    "adamic_source_sha256": "a6cbe9de5bf805950bac9c1d026aa70e68ee5cbb7acc22e526b58bc7b3ae6f2c",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_alert",
+    "go_listener_kinds": [
+      "KindCallExpression"
+    ],
+    "numeric_kinds": [
+      214
+    ],
+    "mutant_kinds": [
+      215
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "40e4be04f7751da0db78085bcbeb0ca343acd76abb8d72ec34dd9ecb2e1aeaa9",
+    "adamic_source_sha256": "e554e1b83f41e68d4993c95daac5b801d2a00815f0ecbc7125734d467a0199a8",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_new_func",
+    "go_listener_kinds": [
+      "KindNewExpression",
+      "KindCallExpression"
+    ],
+    "numeric_kinds": [
+      214,
+      215
+    ],
+    "mutant_kinds": [
+      214,
+      216
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "12ca2d9e0b6749a76a0b9d91a6cf66332070f982c7855420ea7d76ad2e9b00df",
+    "adamic_source_sha256": "d928060dda9c4ef68ae518fa995262d12b316961d4ae6b18d697cac05f594d23",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_new_native_nonconstructor",
+    "go_listener_kinds": [
+      "KindNewExpression"
+    ],
+    "numeric_kinds": [
+      215
+    ],
+    "mutant_kinds": [
+      216
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "97d872a85c35b4dd4aac48210a4e84dd097fd064e162e26629fcd8eab8593f22",
+    "adamic_source_sha256": "19b66f77670ca8966849f38dbf556276aa2472a52b043927add921cd9298e503",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_new_wrappers",
+    "go_listener_kinds": [
+      "KindNewExpression"
+    ],
+    "numeric_kinds": [
+      215
+    ],
+    "mutant_kinds": [
+      216
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "7983de9cb2b2236b52cd9c21237c42cde5100e8c75ddbe0a3a281f7b15fed579",
+    "adamic_source_sha256": "cfb2dc55e1cbfebabbd4945b069db16076080eaf0878dcbce222e50799c789ef",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_throw_literal",
+    "go_listener_kinds": [
+      "KindThrowStatement"
+    ],
+    "numeric_kinds": [
+      258
+    ],
+    "mutant_kinds": [
+      259
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "64fdd56048b844e167c9b35a7bc69704dc332805a2b89124e0294f1f3a637ba5",
+    "adamic_source_sha256": "fd03a192ddb1590ac77ab8d168749f00d38ba4343a543a3f15e4683c384adc97",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "no_useless_backreference",
+    "go_listener_kinds": [
+      "KindRegularExpressionLiteral",
+      "KindSourceFile"
+    ],
+    "numeric_kinds": [
+      13,
+      307
+    ],
+    "mutant_kinds": [
+      13,
+      308
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "b1c4de699c3c766be003d9990625eed5e8d13d21240c71fae396e8b56f93af56",
+    "adamic_source_sha256": "df231fa403cbdeea05890f2716f88911ce9e2ffbf22e528040308c1eec12488e",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  },
+  {
+    "module": "prefer_arrow_callback",
+    "go_listener_kinds": [
+      "KindSourceFile"
+    ],
+    "numeric_kinds": [
+      307
+    ],
+    "mutant_kinds": [
+      308
+    ],
+    "mutant_caught": true,
+    "go_source_sha256": "98816ba3126d5fda0c6b942d5a7a332b6b542325ab801b9bb51b30c9154161c5",
+    "adamic_source_sha256": "2249725f88eca738cb146d35f228fc1cb1e7d800684761683a54cd62f19afdb7",
+    "enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189"
+  }
+]

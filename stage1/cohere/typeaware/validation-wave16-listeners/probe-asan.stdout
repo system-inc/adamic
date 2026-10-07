@@ -1,0 +1,15 @@
+no_import_assign	307
+prefer_exponentiation_operator	214
+use_isnan	214,227,256
+no_global_listener_target_assertion	214
+no_leaked_number_render	295
+no_mock_on_module_namespace	214
+no_interpolated_shell_command	214
+no_interpolated_sql_string	229
+no_alert	214
+no_new_func	214,215
+no_new_native_nonconstructor	215
+no_new_wrappers	215
+no_throw_literal	258
+no_useless_backreference	13,307
+prefer_arrow_callback	307

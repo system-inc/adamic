@@ -1,0 +1,11 @@
+compiler first: native 3.122423s, Go 0.365894s, 8.53x; all three count bytes match
+compiler followup: native 2.002449s, Go 0.285192s, 7.02x; all three count bytes match
+compiler third: native 3.592577s, Go 1.338157s, 2.68x; all three count bytes match
+compiler fourth: native 1.532256s, Go 0.282076s, 5.43x; all three count bytes match
+compiler fifth: native 2.306226s, Go 0.333608s, 6.91x; all three count bytes match
+repository first: native 0.288572s, Go 0.122554s, 2.35x; all three count bytes match
+repository followup: native 0.304080s, Go 0.121549s, 2.50x; all three count bytes match
+repository third: native 0.443908s, Go 0.181894s, 2.44x; all three count bytes match
+repository fourth: native 0.228417s, Go 0.119111s, 1.92x; all three count bytes match
+repository fifth: native 0.351165s, Go 0.127508s, 2.75x; all three count bytes match
+PASS 60 successful processes, 30 matching native/Go count pairs

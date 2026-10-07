@@ -1,0 +1,252 @@
+[
+  {
+    "population": "compiler",
+    "group": "first",
+    "samples": {
+      "native": [
+        3.122422637999989,
+        3.6114306449999276,
+        2.9722237969999696
+      ],
+      "go": [
+        0.36589400800039584,
+        0.4045728550008789,
+        0.3291075289998844
+      ]
+    },
+    "native_median_seconds": 3.122422637999989,
+    "go_median_seconds": 0.36589400800039584,
+    "native_over_go": 8.53368071006129,
+    "binary_sha256": {
+      "native": "6174a39ed6a8605d3820d1173ae0424c38940f39c086111d3d1414f833561051",
+      "go": "7472b5f9bab1d2026ffb13accb42b304fc480445f1c3bfa6241894b9ed626b57"
+    },
+    "config": "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+    "manifest": "/workspace/wave16-artifacts/compiler.manifest"
+  },
+  {
+    "population": "compiler",
+    "group": "followup",
+    "samples": {
+      "native": [
+        1.9869507610001165,
+        2.046878455999831,
+        2.002448690000165
+      ],
+      "go": [
+        0.2851924360002158,
+        0.29017762699913874,
+        0.28133402200001
+      ]
+    },
+    "native_median_seconds": 2.002448690000165,
+    "go_median_seconds": 0.2851924360002158,
+    "native_over_go": 7.021394810059582,
+    "binary_sha256": {
+      "native": "bc4cb13b68902e497e734e504e0bc9ab13de3981fce831edd4a179b330ce8f09",
+      "go": "eb66d24ab0ca19637da30823d384465fd096d3d1f07f1d28eac52a2eaebd1b21"
+    },
+    "config": "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+    "manifest": "/workspace/wave16-artifacts/compiler.manifest"
+  },
+  {
+    "population": "compiler",
+    "group": "third",
+    "samples": {
+      "native": [
+        3.7213619829999516,
+        3.592577084000368,
+        3.5264743760017154
+      ],
+      "go": [
+        1.3381574710001587,
+        1.3279491260000214,
+        1.4233676679996279
+      ]
+    },
+    "native_median_seconds": 3.592577084000368,
+    "go_median_seconds": 1.3381574710001587,
+    "native_over_go": 2.6847192216587357,
+    "binary_sha256": {
+      "native": "e15bfadfbbb9e6605f3e35de4f380576256cf347cae93c1e3a5a39f25b9935dd",
+      "go": "bfb84879028d3daf3234c957171252b72b4c855a053fe15fc3d2d806c82227e5"
+    },
+    "config": "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+    "manifest": "/workspace/wave16-artifacts/compiler.manifest"
+  },
+  {
+    "population": "compiler",
+    "group": "fourth",
+    "samples": {
+      "native": [
+        1.6398315129990806,
+        1.480597863001094,
+        1.5322560790009447
+      ],
+      "go": [
+        0.28207578500041564,
+        0.27966586600086885,
+        0.2904557659985585
+      ]
+    },
+    "native_median_seconds": 1.5322560790009447,
+    "go_median_seconds": 0.28207578500041564,
+    "native_over_go": 5.432072373737033,
+    "binary_sha256": {
+      "native": "86e1978ae2123fd319bc6068c326799535a3fd71b83a513a943cb5f9af3909d9",
+      "go": "418d023115006a898b5b99fd14d766b7bec98582e5bae8fbe430325ab2055d8e"
+    },
+    "config": "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+    "manifest": "/workspace/wave16-artifacts/compiler.manifest"
+  },
+  {
+    "population": "compiler",
+    "group": "fifth",
+    "samples": {
+      "native": [
+        2.3062261049999506,
+        2.324121396000919,
+        2.3012503379995906
+      ],
+      "go": [
+        0.3336423189994093,
+        0.32504325400077505,
+        0.3336076760006108
+      ]
+    },
+    "native_median_seconds": 2.3062261049999506,
+    "go_median_seconds": 0.3336076760006108,
+    "native_over_go": 6.912988731697313,
+    "binary_sha256": {
+      "native": "3b951df369c156a324993ad32c3bc05204df789c687fda829459ddf5e43a504d",
+      "go": "574007108577ca99b5734dc628f76cb3bde2e0133cbf7ee8f220498af9e2550e"
+    },
+    "config": "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+    "manifest": "/workspace/wave16-artifacts/compiler.manifest"
+  },
+  {
+    "population": "repository",
+    "group": "first",
+    "samples": {
+      "native": [
+        0.28560192700024345,
+        0.28857191700080875,
+        0.30877441099983116
+      ],
+      "go": [
+        0.12013334299990674,
+        0.1225544560002163,
+        0.12278230000083568
+      ]
+    },
+    "native_median_seconds": 0.28857191700080875,
+    "go_median_seconds": 0.1225544560002163,
+    "native_over_go": 2.354642388525632,
+    "binary_sha256": {
+      "native": "6174a39ed6a8605d3820d1173ae0424c38940f39c086111d3d1414f833561051",
+      "go": "7472b5f9bab1d2026ffb13accb42b304fc480445f1c3bfa6241894b9ed626b57"
+    },
+    "config": "/workspace/adamic/tsconfig.json",
+    "manifest": "/workspace/wave16-artifacts/repository.manifest"
+  },
+  {
+    "population": "repository",
+    "group": "followup",
+    "samples": {
+      "native": [
+        0.29139833000044746,
+        0.30918097399990074,
+        0.30408016399996995
+      ],
+      "go": [
+        0.12255716100116842,
+        0.11694355200052087,
+        0.12154896600077336
+      ]
+    },
+    "native_median_seconds": 0.30408016399996995,
+    "go_median_seconds": 0.12154896600077336,
+    "native_over_go": 2.5017091794761566,
+    "binary_sha256": {
+      "native": "bc4cb13b68902e497e734e504e0bc9ab13de3981fce831edd4a179b330ce8f09",
+      "go": "eb66d24ab0ca19637da30823d384465fd096d3d1f07f1d28eac52a2eaebd1b21"
+    },
+    "config": "/workspace/adamic/tsconfig.json",
+    "manifest": "/workspace/wave16-artifacts/repository.manifest"
+  },
+  {
+    "population": "repository",
+    "group": "third",
+    "samples": {
+      "native": [
+        0.452704747000098,
+        0.4439084179994097,
+        0.42088633899948036
+      ],
+      "go": [
+        0.18644931000017095,
+        0.1779236510010378,
+        0.1818935720002628
+      ]
+    },
+    "native_median_seconds": 0.4439084179994097,
+    "go_median_seconds": 0.1818935720002628,
+    "native_over_go": 2.440484361914496,
+    "binary_sha256": {
+      "native": "e15bfadfbbb9e6605f3e35de4f380576256cf347cae93c1e3a5a39f25b9935dd",
+      "go": "bfb84879028d3daf3234c957171252b72b4c855a053fe15fc3d2d806c82227e5"
+    },
+    "config": "/workspace/adamic/tsconfig.json",
+    "manifest": "/workspace/wave16-artifacts/repository.manifest"
+  },
+  {
+    "population": "repository",
+    "group": "fourth",
+    "samples": {
+      "native": [
+        0.22432680500060087,
+        0.228416654999819,
+        0.22987176600145176
+      ],
+      "go": [
+        0.11911064899868506,
+        0.11059918099999777,
+        0.13102570599949104
+      ]
+    },
+    "native_median_seconds": 0.228416654999819,
+    "go_median_seconds": 0.11911064899868506,
+    "native_over_go": 1.917684580850035,
+    "binary_sha256": {
+      "native": "86e1978ae2123fd319bc6068c326799535a3fd71b83a513a943cb5f9af3909d9",
+      "go": "418d023115006a898b5b99fd14d766b7bec98582e5bae8fbe430325ab2055d8e"
+    },
+    "config": "/workspace/adamic/tsconfig.json",
+    "manifest": "/workspace/wave16-artifacts/repository.manifest"
+  },
+  {
+    "population": "repository",
+    "group": "fifth",
+    "samples": {
+      "native": [
+        0.4484309880008368,
+        0.3511647699997411,
+        0.3063872739985527
+      ],
+      "go": [
+        0.1275083429991355,
+        0.13201188499988348,
+        0.11246663400015677
+      ]
+    },
+    "native_median_seconds": 0.3511647699997411,
+    "go_median_seconds": 0.1275083429991355,
+    "native_over_go": 2.754053277926465,
+    "binary_sha256": {
+      "native": "3b951df369c156a324993ad32c3bc05204df789c687fda829459ddf5e43a504d",
+      "go": "574007108577ca99b5734dc628f76cb3bde2e0133cbf7ee8f220498af9e2550e"
+    },
+    "config": "/workspace/adamic/tsconfig.json",
+    "manifest": "/workspace/wave16-artifacts/repository.manifest"
+  }
+]
