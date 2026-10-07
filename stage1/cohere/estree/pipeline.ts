@@ -1,3 +1,4 @@
+import { syntaxError } from './sourceValidation.ts';
 import { externalModule } from './sourceModules.ts';
 import { panic } from 'adamic';
 import { Parser } from './sourceParser.ts';
@@ -37,6 +38,10 @@ export function answer(path: string, text: string): string {
     }
     if(parser.scanner.errors.length > 0) {
         return panic('ESTree scanner diagnostic');
+    }
+    const syntax = syntaxError(parser.nodes);
+    if(syntax !== '') {
+        return panic(`ESTree parser: ${syntax}`);
     }
     const converter = new Converter(parser, convertedText);
     converter.babel = babel;

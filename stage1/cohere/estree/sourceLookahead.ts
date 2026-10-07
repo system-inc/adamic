@@ -178,7 +178,7 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             state.restore();
             return true;
         }
-        if(kind(scanner) === 'EqualsGreaterThanToken' && (scanner.flags & 1) === 0) {
+        if(kind(scanner) === 'EqualsGreaterThanToken') {
             result = true;
         }
         else if(kind(scanner) === 'ColonToken' && (allowReturn || typed)) {
@@ -673,4 +673,143 @@ export function nextAwaitOperand(scanner: Scanner): boolean {
             ['NumericLiteral', 'BigIntLiteral', 'StringLiteral'].includes(token));
     state.restore();
     return result;
+}
+
+export function heritageElementAhead(scanner: Scanner): boolean {
+    const current = kind(scanner);
+    const state = new Speculation(scanner);
+    let result: boolean;
+    if(current === 'OpenBraceToken') {
+        state.next();
+        result = kind(scanner) !== 'CloseBraceToken';
+        if(!result) {
+            state.next();
+            result = ['CommaToken', 'OpenBraceToken', 'ExtendsKeyword', 'ImplementsKeyword'].includes(kind(scanner));
+        }
+    }
+    else {
+        result =
+            current === 'Identifier' ||
+            (current.endsWith('Keyword') && !reservedKinds.includes(current)) ||
+            [
+                'ThisKeyword',
+                'SuperKeyword',
+                'NullKeyword',
+                'TrueKeyword',
+                'FalseKeyword',
+                'NumericLiteral',
+                'BigIntLiteral',
+                'StringLiteral',
+                'RegularExpressionLiteral',
+                'SlashToken',
+                'SlashEqualsToken',
+                'NoSubstitutionTemplateLiteral',
+                'TemplateHead',
+                'OpenParenToken',
+                'OpenBracketToken',
+                'FunctionKeyword',
+                'ClassKeyword',
+                'NewKeyword',
+                'ImportKeyword',
+                'LessThanToken',
+            ].includes(current);
+        if(current === 'ExtendsKeyword' || current === 'ImplementsKeyword') {
+            state.next();
+            const next = kind(scanner);
+            if(
+                next === 'Identifier' ||
+                next.endsWith('Keyword') ||
+                [
+                    'OpenBraceToken',
+                    'OpenParenToken',
+                    'OpenBracketToken',
+                    'NumericLiteral',
+                    'BigIntLiteral',
+                    'StringLiteral',
+                    'NoSubstitutionTemplateLiteral',
+                    'TemplateHead',
+                    'PlusToken',
+                    'MinusToken',
+                    'ExclamationToken',
+                    'TildeToken',
+                    'AtToken',
+                    'SlashToken',
+                ].includes(next)
+            ) {
+                result = false;
+            }
+        }
+    }
+    state.restore();
+    return result;
+}
+
+export function accessorAhead(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    state.next();
+    const next = kind(scanner);
+    const result =
+        next === 'Identifier' ||
+        next === 'PrivateIdentifier' ||
+        next.endsWith('Keyword') ||
+        ['OpenBracketToken', 'StringLiteral', 'NumericLiteral', 'BigIntLiteral'].includes(next);
+    state.restore();
+    return result;
+}
+export function usingDeclarationAhead(scanner: Scanner, disallowOf: boolean): boolean {
+    const state = new Speculation(scanner);
+    const await_ = kind(scanner) === 'AwaitKeyword';
+    if(await_) {
+        state.next();
+    }
+    const using = kind(scanner) === 'UsingKeyword';
+    state.next();
+    const token = kind(scanner);
+    const binding =
+        token === 'OpenBraceToken' ||
+        token === 'Identifier' ||
+        (token.endsWith('Keyword') && !reservedKinds.includes(token));
+    let result = using && (scanner.flags & 1) === 0 && binding;
+    if(disallowOf && !await_ && token === 'OfKeyword') {
+        state.next();
+        result = ['EqualsToken', 'SemicolonToken', 'ColonToken'].includes(kind(scanner));
+    }
+    state.restore();
+    return result;
+}
+
+export function leftHandSide(nodeKind: string): boolean {
+    return [
+        'PropertyAccessExpression',
+        'ElementAccessExpression',
+        'NewExpression',
+        'CallExpression',
+        'JsxElement',
+        'JsxSelfClosingElement',
+        'JsxFragment',
+        'TaggedTemplateExpression',
+        'ArrayLiteralExpression',
+        'ParenthesizedExpression',
+        'ObjectLiteralExpression',
+        'ClassExpression',
+        'FunctionExpression',
+        'Identifier',
+        'PrivateIdentifier',
+        'RegularExpressionLiteral',
+        'NumericLiteral',
+        'BigIntLiteral',
+        'StringLiteral',
+        'NoSubstitutionTemplateLiteral',
+        'TemplateExpression',
+        'FalseKeyword',
+        'NullKeyword',
+        'ThisKeyword',
+        'TrueKeyword',
+        'SuperKeyword',
+        'NonNullExpression',
+        'ExpressionWithTypeArguments',
+        'MetaProperty',
+        'ImportKeyword',
+        'MissingDeclaration',
+    ].includes(nodeKind);
 }

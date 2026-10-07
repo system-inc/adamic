@@ -8,6 +8,9 @@ import { ParseNode } from '../../typescript/parser/nodes.ts';
 import { modifierKinds, precedence, reservedKinds, tokenSpelling, expressionKinds } from './sourceGrammar.ts';
 import {
     arrowAhead,
+    leftHandSide,
+    accessorAhead,
+    heritageElementAhead,
     indexSignatureAhead,
     nextAwaitOperand,
     statementAhead,
@@ -57,7 +60,11 @@ export class Parser {
             this.errorAt(error.code, error.start, error.start + error.length, lexicalMessage(error.code));
         }
     }
+    suppressKeywordEscape = false;
     next(): void {
+        if(!this.suppressKeywordEscape && this.kind().endsWith('Keyword') && (this.scanner.flags & 1032) !== 0) {
+            this.error(1260, 'Keywords cannot contain escape characters.');
+        }
         if(this.lastScanPosition === this.scanner.pos) {
             this.stalledScans++;
             if(this.stalledScans > 32) {
@@ -141,6 +148,8 @@ export class Parser {
                 return !(recovery && this.kind() === 'SemicolonToken') && statementAhead(this.scanner);
             case 'members':
                 return typeMemberAhead(this.scanner);
+            case 'heritage':
+                return heritageElementAhead(this.scanner);
             case 'arguments':
                 return this.kind() === 'DotDotDotToken' || this.expressionStart();
             case 'array':
@@ -306,6 +315,9 @@ export class Parser {
         return this.make('Identifier', this.scanner.fullStart);
     }
     identifier(allowReserved = true): number {
+        if(!allowReserved && this.kind() === 'PrivateIdentifier') {
+            this.error(18016, 'Private identifiers are not allowed as bindings.');
+        }
         if(!allowReserved && reservedKinds.includes(this.kind())) {
             return this.missingIdentifier(
                 1359,
@@ -317,8 +329,11 @@ export class Parser {
         }
         const pos = this.scanner.fullStart;
         const text = this.scanner.value;
+        const kind = this.kind() === 'PrivateIdentifier' ? 'PrivateIdentifier' : 'Identifier';
+        this.suppressKeywordEscape = true;
         this.next();
-        const id = this.make('Identifier', pos);
+        this.suppressKeywordEscape = false;
+        const id = this.make(kind, pos);
         this.node(id).text = text;
         return id;
     }
@@ -568,6 +583,9 @@ export class Parser {
             this.next();
             this.expect('OpenBraceToken');
             const operator = this.kind();
+            if(operator === 'AssertKeyword') {
+                this.error(2880, 'Import assertions have been replaced by import attributes.');
+            }
             this.next();
             this.expect('ColonToken');
             children.push(this.statements().attributeBody(this.scanner.fullStart, operator));
@@ -872,8 +890,6 @@ export class Parser {
                 (this.kind() === 'QuestionToken' &&
                     (this.peek() === 'SemicolonToken' ||
                         this.peek() === 'CloseParenToken' ||
-                        this.peek() === 'BarToken' ||
-                        this.peek() === 'AmpersandToken' ||
                         this.peek() === 'GreaterThanToken' ||
                         this.peek() === 'CloseBraceToken'))) &&
             (this.scanner.flags & 1) === 0
@@ -1017,13 +1033,7 @@ export class Parser {
                 kind = 'IndexSignature';
             }
             else {
-                if(
-                    (this.kind() === 'GetKeyword' || this.kind() === 'SetKeyword') &&
-                    this.peek() !== 'OpenParenToken' &&
-                    this.peek() !== 'LessThanToken' &&
-                    this.peek() !== 'ColonToken' &&
-                    this.peek() !== 'QuestionToken'
-                ) {
+                if((this.kind() === 'GetKeyword' || this.kind() === 'SetKeyword') && accessorAhead(this.scanner)) {
                     kind = this.kind() === 'GetKeyword' ? 'GetAccessor' : 'SetAccessor';
                     this.next();
                 }
@@ -1726,32 +1736,10 @@ export class Parser {
             return this.make('SpreadAssignment', start, [expression]);
         }
 
-        const children: number[] = [];
-        let async = false;
+        const children = this.modifiers(true, false);
+        const async = children.some((id) => this.node(id).kind === 'AsyncKeyword');
         let methodKind = 'MethodDeclaration';
-        if(
-            this.kind() === 'AsyncKeyword' &&
-            this.peek() !== 'ColonToken' &&
-            this.peek() !== 'EqualsToken' &&
-            this.peek() !== 'QuestionToken' &&
-            this.peek() !== 'ExclamationToken' &&
-            this.peek() !== 'CommaToken' &&
-            this.peek() !== 'CloseBraceToken' &&
-            this.peek() !== 'OpenParenToken'
-        ) {
-            async = true;
-            children.push(this.token());
-        }
-        if(
-            (this.kind() === 'GetKeyword' || this.kind() === 'SetKeyword') &&
-            this.peek() !== 'ColonToken' &&
-            this.peek() !== 'EqualsToken' &&
-            this.peek() !== 'QuestionToken' &&
-            this.peek() !== 'ExclamationToken' &&
-            this.peek() !== 'CommaToken' &&
-            this.peek() !== 'OpenParenToken' &&
-            this.peek() !== 'CloseBraceToken'
-        ) {
+        if((this.kind() === 'GetKeyword' || this.kind() === 'SetKeyword') && accessorAhead(this.scanner)) {
             methodKind = this.kind() === 'GetKeyword' ? 'GetAccessor' : 'SetAccessor';
             this.next();
         }
@@ -1764,7 +1752,7 @@ export class Parser {
         if(this.kind() === 'QuestionToken' || this.kind() === 'ExclamationToken') {
             children.push(this.token());
         }
-        if(this.kind() === 'OpenParenToken' || this.kind() === 'LessThanToken') {
+        if(generator || this.kind() === 'OpenParenToken' || this.kind() === 'LessThanToken') {
             return this.methodBody(start, children, methodKind, async, generator, false);
         }
 
@@ -1819,11 +1807,7 @@ export class Parser {
         if(operator === 'YieldKeyword' && (this.yieldContext || nextAwaitOperand(this.scanner))) {
             this.next();
             const children: number[] = [];
-            if(
-                (this.scanner.flags & 1) === 0 &&
-                this.kind() !== 'SemicolonToken' &&
-                this.kind() !== 'CloseBraceToken'
-            ) {
+            if((this.scanner.flags & 1) === 0 && (this.kind() === 'AsteriskToken' || this.expressionStart())) {
                 if(this.kind() === 'AsteriskToken') {
                     children.push(this.token());
                 }
@@ -1923,7 +1907,10 @@ export class Parser {
             this.yieldContext = oldYield;
             return this.make('ArrowFunction', pos, children);
         }
-        if(operator === 'EqualsToken' || (operator.endsWith('EqualsToken') && precedence(operator) < 0)) {
+        if(
+            leftHandSide(this.node(left).kind) &&
+            (operator === 'EqualsToken' || (operator.endsWith('EqualsToken') && precedence(operator) < 0))
+        ) {
             const token = this.token();
             const right = this.assignment();
             return this.make('BinaryExpression', pos, [left, token, right]);

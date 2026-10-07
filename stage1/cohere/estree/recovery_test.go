@@ -42,7 +42,7 @@ func TestRecoveryMutants(t *testing.T) {
 	list := manifest(t, recoveredGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	for _, item := range []struct{ name, file, from, to string }{
-		{"first-accessibility", "convert.ts", "return stringValue(kind.slice(0, -7).toLowerCase());", "return stringValue('public');"},
+		{"first-accessibility", "modifiers.ts", "return stringValue(kind.slice(0, -7).toLowerCase());", "return stringValue('public');"},
 		{"empty-type-list-range", "typeLists.ts", "arena.node(result).set('params', listValue([]));", "arena.node(result).end -= 1; arena.node(result).set('params', listValue([]));"},
 		{"module-await", "pipeline.ts", "&& externalModule(parser.nodes, root)", "&& false && externalModule(parser.nodes, root)"},
 	} {

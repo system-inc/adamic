@@ -1,6 +1,6 @@
 Follow-up on codex/stage1-estree, baseline 80f1ded.
-The frozen source census has 15,554 matches and zero output mismatches.
-Acceptance disagreements fall from 984 to 175; this remains incomplete.
+The frozen source census has 15,635 matches and zero output mismatches.
+Acceptance disagreements fall from 984 to 20; this remains incomplete.
 UTF-8 loss and parser stalls have separate pushed commits and proving programs.
 No shared parser, compiler or runtime files were edited.
 
@@ -211,3 +211,41 @@ Final focused recovery gate: `ADAMIC_ESTREE_LIBRARY=/workspace/scratch/estree-li
 passed in 152.496s. `cohere --no-cache stage1/cohere/estree/*.ts` passed,
 29/29 Adamic-ready sources. The final actual-driver source audit remains
 15,554 / 98 / 77 / zero / 11,640 on all 27,369 frozen records.
+
+### Acceptance checkpoint
+
+Recovery checkpoint 4a8deeb was pushed. The next source census is 15,635 identical,
+17 refused Go answers, three accepted Go refusals, zero different and 11,714 both
+refused: 20 acceptance disagreements. No previously matching file regressed.
+The largest remaining recoverable causes were declaration modifiers, bare yield,
+object modifiers and Go's heritage-list recovery. Local structural validation
+also follows Go for exponentiation, super, optional new expressions, untagged
+invalid escapes, private type names and prefix update operands. Import assertions
+produce the pinned Go diagnostic instead of being silently accepted.
+
+Catch initializers are not type annotations; implements can name a class when
+it does not start a heritage clause. Optional tagged-template markers are excluded
+from type arguments, and a recovered newline throw gets Go's empty identifier.
+Pure modifier classification has its own helper. One callback capturing this
+was explicitly refused by Adamic's cycle checker and was replaced with a loop.
+No shared implementation files were changed.
+
+The actual-driver source audit covers all 27,369 frozen records. The 81 newly
+matching files pass TestRepositoryAgreement on source Node, sanitized native
+and emitted JS: 474,925 canonical bytes. Eleven generated cases match another
+8,800 bytes. Eight Go-refused minimal programs explicitly refuse with empty stdout
+before the two-second deadline on all three builds.
+
+Three controls are run on source Node and sanitized native: catch initializer
+misclassified as a type annotation (wrong output, line 182), class-name recovery
+suppressed (wrong output), and syntax validation disabled (incorrect acceptance
+of ++await 42). The first class-name mutant was behaviorally inert and survived;
+it is not credited. The corrected mutant must produce wrong output and finish
+normally. Final gate output and final source census are retained below.
+
+Final acceptance gate: `go test -count=1 -v ./stage1/cohere/estree -run
+'^TestAcceptance' > /tmp/estree-acceptance-final-green.log 2>&1` passes in
+115.498s. Corrected class-name mutant differs at line 151 on both builds.
+`ADAMIC_ESTREE_CORPUS=/tmp/estree-acceptance-rescued go test -count=1 -v
+./stage1/cohere/estree -run '^TestRepositoryAgreement$|^TestRecoveredGrammar$'
+passes in 46.223s. Cohere passes with 31/31 Adamic-ready sources.

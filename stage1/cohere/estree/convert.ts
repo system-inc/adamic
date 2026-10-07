@@ -1,3 +1,5 @@
+import { modifierKinds } from './sourceGrammar.ts';
+import { accessibility, dataChildren, emptyIdentifier } from './modifiers.ts';
 import { typeList } from './typeLists.ts';
 import { convertJsx } from './jsxConvert.ts';
 import { keywordTypes, unaryTypes } from './simpleTypes.ts';
@@ -124,7 +126,8 @@ export class Converter {
     }
     property(id: number, pattern: boolean): number {
         const node = this.ts(id);
-        const name = this.child(id, 0);
+        const children = dataChildren(this.parser.nodes, id);
+        const name = children[0] ?? -1;
         const shorthand = node.kind === 'ShorthandPropertyAssignment';
         const result = this.create(id, 'Property');
         this.set(result, 'computed', boolValue(this.kind(name) === 'ComputedPropertyName'));
@@ -134,9 +137,9 @@ export class Converter {
         this.set(result, 'optional', boolValue(false));
         this.set(result, 'shorthand', boolValue(shorthand));
         const initialized = node.children.some((child) => this.kind(child) === 'EqualsToken');
-        let value = this.convert(shorthand ? name : (node.children[node.children.length - 1] ?? -1), pattern, id);
+        let value = this.convert(shorthand ? name : (children[children.length - 1] ?? -1), pattern, id);
         if(shorthand && initialized) {
-            const initializer = node.children[node.children.length - 1] ?? -1;
+            const initializer = children[children.length - 1] ?? -1;
             const assignment = this.create(id, 'AssignmentPattern');
             this.set(assignment, 'decorators', listValue([]));
             this.set(assignment, 'left', this.converted(name, true));
@@ -205,48 +208,6 @@ export class Converter {
             }
         }
         return false;
-    }
-    dataChildren(id: number): number[] {
-        const result: number[] = [];
-        for(const child of this.ts(id).children) {
-            if(
-                [
-                    'ExportKeyword',
-                    'DefaultKeyword',
-                    'DeclareKeyword',
-                    'AsyncKeyword',
-                    'AbstractKeyword',
-                    'ConstKeyword',
-                    'PublicKeyword',
-                    'PrivateKeyword',
-                    'ProtectedKeyword',
-                    'ReadonlyKeyword',
-                    'StaticKeyword',
-                    'OverrideKeyword',
-                    'AccessorKeyword',
-                    'InKeyword',
-                    'OutKeyword',
-                    'Decorator',
-                    'AsteriskToken',
-                ].includes(this.kind(child))
-            ) {
-                continue;
-            }
-            result.push(child);
-        }
-        return result;
-    }
-    accessibility(id: number): Value {
-        for(const child of this.ts(id).children) {
-            const kind = this.kind(child);
-            if(['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword'].includes(kind)) {
-                return stringValue(kind.slice(0, -7).toLowerCase());
-            }
-            if(!kind.endsWith('Keyword') && kind !== 'Decorator') {
-                break;
-            }
-        }
-        return absent();
     }
     exports(id: number, result: number): number {
         const children: number[] = [];
@@ -320,7 +281,7 @@ export class Converter {
         return this.scanner.kind === token && this.scanner.start < this.startUnit(right);
     }
     parameter(id: number, parent: number): number {
-        const children = this.dataChildren(id);
+        const children = dataChildren(this.parser.nodes, id);
         let index = 0;
         const rest = this.kind(children[index] ?? -1) === 'DotDotDotToken';
         if(rest) {
@@ -377,7 +338,7 @@ export class Converter {
         }
         if(hasModifiers) {
             const wrapper = this.create(id, 'TSParameterProperty');
-            this.set(wrapper, 'accessibility', this.accessibility(id));
+            this.set(wrapper, 'accessibility', accessibility(this.parser.nodes, id));
             this.set(wrapper, 'decorators', listValue([]));
             this.set(wrapper, 'override', boolValue(this.hasModifier(id, 'OverrideKeyword')));
             this.set(wrapper, 'parameter', childValue(result));
@@ -388,7 +349,7 @@ export class Converter {
         return result;
     }
     functionNode(id: number): number {
-        const children = this.dataChildren(id);
+        const children = dataChildren(this.parser.nodes, id);
         const arrow = this.kind(id) === 'ArrowFunction';
         let index = 0;
         let name = -1;
@@ -557,7 +518,7 @@ export class Converter {
         return result;
     }
     classNode(id: number, interface_: boolean): number {
-        const children = this.dataChildren(id);
+        const children = dataChildren(this.parser.nodes, id);
         let index = 0;
         let name = -1;
         if(this.kind(children[index] ?? -1) === 'Identifier') {
@@ -576,7 +537,7 @@ export class Converter {
         let implementsSeen = false;
         while(this.kind(children[index] ?? -1) === 'HeritageClause') {
             const clause = this.ts(children[index] ?? -1);
-            const keep = clause.operator === 'ExtendsKeyword' ? !extendsSeen : !implementsSeen;
+            const keep = interface_ || (clause.operator === 'ExtendsKeyword' ? !extendsSeen : !implementsSeen);
             for(const type of clause.children) {
                 if(!keep) {
                     continue;
@@ -653,7 +614,7 @@ export class Converter {
         return this.exports(id, result);
     }
     member(id: number, parent: number): number {
-        const children = this.dataChildren(id);
+        const children = dataChildren(this.parser.nodes, id);
         let index = 0;
         const constructor = this.kind(id) === 'Constructor';
         const signature =
@@ -709,7 +670,7 @@ export class Converter {
                         ? 'TSAbstractPropertyDefinition'
                         : 'PropertyDefinition',
             );
-            this.set(result, 'accessibility', this.accessibility(id));
+            this.set(result, 'accessibility', accessibility(this.parser.nodes, id));
             this.set(result, 'computed', boolValue(this.kind(name) === 'ComputedPropertyName'));
             if(!signature) {
                 this.set(result, 'declare', boolValue(this.hasModifier(id, 'DeclareKeyword')));
@@ -737,7 +698,7 @@ export class Converter {
         }
         if(this.kind(id) === 'IndexSignature') {
             const result = this.create(id, 'TSIndexSignature');
-            this.set(result, 'accessibility', this.accessibility(id));
+            this.set(result, 'accessibility', accessibility(this.parser.nodes, id));
             this.set(result, 'parameters', this.list(params));
             this.set(result, 'readonly', boolValue(this.hasModifier(id, 'ReadonlyKeyword')));
             this.set(result, 'static', boolValue(this.hasModifier(id, 'StaticKeyword')));
@@ -747,7 +708,7 @@ export class Converter {
         const kind = this.kind(id) === 'GetAccessor' ? 'get' : this.kind(id) === 'SetAccessor' ? 'set' : 'method';
         if(signature) {
             const result = this.create(id, 'TSMethodSignature');
-            this.set(result, 'accessibility', this.accessibility(id));
+            this.set(result, 'accessibility', accessibility(this.parser.nodes, id));
             this.set(result, 'computed', boolValue(this.kind(name) === 'ComputedPropertyName'));
             this.set(result, 'key', this.converted(name));
             this.set(result, 'kind', stringValue(kind));
@@ -762,7 +723,7 @@ export class Converter {
         let scanStart = name >= 0 ? this.ts(name).end : this.ts(id).pos;
         if(constructor) {
             for(const child of this.ts(id).children) {
-                if(this.kind(child).endsWith('Keyword')) {
+                if(modifierKinds.includes(this.kind(child))) {
                     scanStart = this.ts(child).end;
                 }
                 else {
@@ -829,7 +790,7 @@ export class Converter {
                   : 'MethodDefinition',
         );
         if(!object) {
-            this.set(result, 'accessibility', this.accessibility(id));
+            this.set(result, 'accessibility', accessibility(this.parser.nodes, id));
         }
         this.set(result, 'computed', boolValue(!constructor && this.kind(name) === 'ComputedPropertyName'));
         if(!object) {
@@ -877,7 +838,7 @@ export class Converter {
         return result;
     }
     importDeclaration(id: number): number {
-        const children = this.dataChildren(id);
+        const children = dataChildren(this.parser.nodes, id);
         const clause = this.kind(children[0] ?? -1) === 'ImportClause' ? (children[0] ?? -1) : -1;
         const source = children[clause >= 0 ? 1 : 0] ?? -1;
         const attributes = children[clause >= 0 ? 2 : 1] ?? -1;
@@ -924,7 +885,7 @@ export class Converter {
         return result;
     }
     exportDeclaration(id: number): number {
-        const children = this.dataChildren(id);
+        const children = dataChildren(this.parser.nodes, id);
         const named = this.kind(children[0] ?? -1) === 'NamedExports';
         const namespace = this.kind(children[0] ?? -1) === 'NamespaceExport';
         const source = children[named || namespace ? 1 : 0] ?? -1;
@@ -945,7 +906,7 @@ export class Converter {
         return result;
     }
     moduleNode(id: number): number {
-        const children = this.dataChildren(id);
+        const children = dataChildren(this.parser.nodes, id);
         const name = children[0] ?? -1;
         const global = this.ts(id).operator === 'GlobalKeyword';
         let innermost = id;
@@ -961,7 +922,7 @@ export class Converter {
                 if(this.hasModifier(innermost, 'DeclareKeyword')) {
                     declare = true;
                 }
-                const parts = this.dataChildren(innermost);
+                const parts = dataChildren(this.parser.nodes, innermost);
                 const right = this.convert(parts[0] ?? -1);
                 const qualified = this.arena.newNode(
                     'TSQualifiedName',
@@ -1250,7 +1211,7 @@ export class Converter {
             return result;
         }
         if(node.kind === 'VariableStatement') {
-            const children = this.dataChildren(id);
+            const children = dataChildren(this.parser.nodes, id);
             const list = children[0] ?? panic('missing variable list');
             const result = this.convert(list);
             this.arena.node(result).start = this.start(id);
@@ -1525,7 +1486,14 @@ export class Converter {
                 return panic('ESTree throw statement requires an expression');
             }
             const result = this.create(id, 'ThrowStatement');
-            this.set(result, 'argument', this.converted(this.child(id, 0), false, id));
+            const argument = this.ts(first);
+            this.set(
+                result,
+                'argument',
+                argument.kind === 'Identifier' && argument.text === '' && argument.pos === argument.end
+                    ? childValue(emptyIdentifier(this.arena, this.byte(argument.pos)))
+                    : this.converted(first, false, id),
+            );
             return result;
         }
         if(node.kind === 'IfStatement') {
@@ -1690,7 +1658,7 @@ export class Converter {
             return result;
         }
         if(node.kind === 'TypeParameter') {
-            const children = this.dataChildren(id);
+            const children = dataChildren(this.parser.nodes, id);
             let index = 0;
             while(['InKeyword', 'OutKeyword'].includes(this.kind(children[index] ?? -1))) {
                 index++;
@@ -1713,7 +1681,7 @@ export class Converter {
             return result;
         }
         if(node.kind === 'TypeAliasDeclaration') {
-            const children = this.dataChildren(id);
+            const children = dataChildren(this.parser.nodes, id);
             const types: number[] = [];
             for(const child of children.slice(1, -1)) {
                 if(!this.isTypeParameter(child)) {
@@ -1779,7 +1747,16 @@ export class Converter {
             this.set(
                 result,
                 'param',
-                childValue(declaration >= 0 ? this.bind(this.child(declaration, 0), this.child(declaration, 1)) : -1),
+                childValue(
+                    declaration >= 0
+                        ? this.bind(
+                              this.child(declaration, 0),
+                              this.separated(this.child(declaration, 0), this.child(declaration, 1), 'ColonToken')
+                                  ? this.child(declaration, 1)
+                                  : -1,
+                          )
+                        : -1,
+                ),
             );
             return result;
         }
@@ -1838,7 +1815,7 @@ export class Converter {
             return result;
         }
         if(node.kind === 'ImportEqualsDeclaration') {
-            const children = this.dataChildren(id);
+            const children = dataChildren(this.parser.nodes, id);
             const result = this.create(id, 'TSImportEqualsDeclaration');
             this.set(result, 'id', this.converted(children[0] ?? -1));
             this.set(result, 'importKind', stringValue(node.semantic === '1' ? 'type' : 'value'));
@@ -1847,7 +1824,11 @@ export class Converter {
         }
         if(node.kind === 'ExportAssignment') {
             const result = this.create(id, node.semantic === '1' ? 'TSExportAssignment' : 'ExportDefaultDeclaration');
-            this.set(result, node.semantic === '1' ? 'expression' : 'declaration', this.converted(first));
+            this.set(
+                result,
+                node.semantic === '1' ? 'expression' : 'declaration',
+                this.converted(dataChildren(this.parser.nodes, id).at(-1) ?? -1),
+            );
             if(node.semantic !== '1') {
                 this.set(result, 'exportKind', stringValue('value'));
             }
@@ -1866,7 +1847,7 @@ export class Converter {
             return result;
         }
         if(['FunctionType', 'ConstructorType', 'ConstructSignature', 'CallSignature'].includes(node.kind)) {
-            const children = this.dataChildren(id);
+            const children = dataChildren(this.parser.nodes, id);
             const types: number[] = [];
             const params: number[] = [];
             let resultType = -1;
@@ -1904,7 +1885,7 @@ export class Converter {
             return result;
         }
         if(node.kind === 'EnumDeclaration') {
-            const children = this.dataChildren(id);
+            const children = dataChildren(this.parser.nodes, id);
             const name = children[0] ?? -1;
             const body = this.arena.newNode('TSEnumBody', this.bodyStart(id, this.ts(name).end), this.byte(node.end));
             this.set(body, 'members', this.list(children.slice(1)));
@@ -1963,7 +1944,13 @@ export class Converter {
             const result = this.create(id, 'TaggedTemplateExpression');
             this.set(result, 'quasi', this.converted(template));
             this.set(result, 'tag', this.converted(first));
-            this.set(result, 'typeArguments', childValue(this.wrapper(node.children.slice(1, -1), false)));
+            this.set(
+                result,
+                'typeArguments',
+                childValue(
+                    this.wrapper(node.children.slice(this.kind(second) === 'QuestionDotToken' ? 2 : 1, -1), false),
+                ),
+            );
             return result;
         }
         if(node.kind === 'MetaProperty') {

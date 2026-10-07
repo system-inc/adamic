@@ -14,6 +14,8 @@ export function listTerminator(kind: string, context: string, lineBreak: boolean
     switch(context) {
         case 'source':
             return false;
+        case 'heritage':
+            return ['OpenBraceToken', 'ExtendsKeyword', 'ImplementsKeyword'].includes(kind);
         case 'block':
         case 'members':
         case 'object':
@@ -64,6 +66,8 @@ export function listDiagnostic(kind: string, context: string): ListDiagnosticInt
             return { code: 1128, message: 'Declaration or statement expected.' };
         case 'block':
             return { code: 1128, message: 'Declaration or statement expected.' };
+        case 'heritage':
+            return { code: 1190, message: 'A heritage clause element is expected.' };
         case 'members':
             return { code: 1131, message: 'Property or signature expected.' };
         case 'arguments':

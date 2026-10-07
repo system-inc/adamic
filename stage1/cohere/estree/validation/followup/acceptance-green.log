@@ -1,0 +1,22 @@
+=== RUN   TestAcceptanceGrammar
+    acceptance_test.go:25: 11 acceptance grammar cases, 8800 identical canonical bytes
+--- PASS: TestAcceptanceGrammar (22.85s)
+=== RUN   TestAcceptanceMutants
+=== RUN   TestAcceptanceMutants/catch-initializer
+    acceptance_test.go:41: Node: line 182: Go "3 Identifier 13 14 0 0 0 13 14 0", port "3 Identifier 13 16 0 0 0 13 16 0"
+    acceptance_test.go:41: native: line 182: Go "3 Identifier 13 14 0 0 0 13 14 0", port "3 Identifier 13 16 0 0 0 13 16 0"
+=== RUN   TestAcceptanceMutants/class-keyword-name
+    acceptance_test.go:41: Node: line 151: Go "1 .id node", port "1 .id null"
+    acceptance_test.go:41: native: line 151: Go "1 .id node", port "1 .id null"
+--- PASS: TestAcceptanceMutants (44.66s)
+    --- PASS: TestAcceptanceMutants/catch-initializer (22.06s)
+    --- PASS: TestAcceptanceMutants/class-keyword-name (21.97s)
+=== RUN   TestAcceptanceDiagnostics
+    acceptance_test.go:65: 8 Go refusals explicitly refused before deadline on all builds
+--- PASS: TestAcceptanceDiagnostics (24.68s)
+=== RUN   TestAcceptanceDiagnosticControl
+    acceptance_test.go:79: Node: disabled syntax validation accepts Go-refused update operand; acceptance check catches it
+    acceptance_test.go:79: native: disabled syntax validation accepts Go-refused update operand; acceptance check catches it
+--- PASS: TestAcceptanceDiagnosticControl (23.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	115.498s

@@ -71,7 +71,7 @@ one second on source Node and sanitized native. That observation concerns the
 shared dependency, not the local driver. The original modifier, cooked surrogate
 and JSX refusals are repaired and held to Go on all three builds. The baseline
 92 output mismatches are also resolved. Current frozen-corpus acceptance still
-differs on 175 files, including missing parser diagnostics, unrepresented
+differs on 20 files, including missing parser diagnostics, unrepresented
 recovery and raw input loss. Every disposition is retained; whole-checkout
 success is not claimed. See FOLLOWUP.md for checkpoint commands and counts.
 
