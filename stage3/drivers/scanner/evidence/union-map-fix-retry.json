@@ -1,0 +1,75 @@
+{
+  "result": "red: union-valued Map iterator binding, before Uint16Array",
+  "scratch_commit": "04a365a8b60bd1ab0f8bb3ea834a130889bd6a31",
+  "compiler_pins": {
+    "host-blockers": "2606e8b444f57c59dfa38b9e483d33f94a0cbd2f",
+    "imported-const-case": "c9d885d79e10c6e0b404a9b6e9f3529f9e9b3412",
+    "library-array-holes": "f05aec3cee91d2ce3bfced6d341865933ec28da1"
+  },
+  "compiler_build_exit": 0,
+  "builds": {
+    "0": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/scanner-latest-preflight-run/adapted/src/compiler/utilities.ts:15:22: stage 0 can't lower an iterator binding held in more than one word yet\n"
+    },
+    "1": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/scanner-latest-preflight-run/adapted/src/compiler/utilities.ts:15:22: stage 0 can't lower an iterator binding held in more than one word yet\n"
+    }
+  },
+  "probes": {
+    "map-union-values": {
+      "node": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "one_byte_mutant_diff_exit": 1
+    },
+    "switch-case-declaration": {
+      "node": {
+        "exit": 0,
+        "stdout": "other\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "other\n",
+        "stderr": ""
+      },
+      "one_byte_mutant_diff_exit": 1
+    }
+  },
+  "minimal_iterator_probe": {
+    "file": "probes/map-union-iterator-binding.a",
+    "native_build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/map-union-iterator-binding.a:4:18: stage 0 can't lower an iterator binding held in more than one word yet\n",
+    "node_exit": 0,
+    "node_stdout": "one:1\ntext:x\n",
+    "node_stderr": ""
+  },
+  "Uint16Array_probe": {
+    "native_build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/uint16-array-constructor.a:2:7: stage 0 can't lower a value of type Uint16Array<ArrayBuffer> yet\n"
+  },
+  "slice_audit": "PASS: 168 byte-identical source spans; 79 ordered module import lists\n",
+  "merge_conflicts": [
+    "docs/0.1.md",
+    "internal/lower/expression.go",
+    "internal/lower/functions.go",
+    "internal/lower/object.go",
+    "internal/lower/predicates.go",
+    "internal/oracle/counts.md"
+  ],
+  "scratch_resolution": "Retained Error/Buffer/process hooks, checked union narrowing and predicate flow APIs; combined incoming Array predicate observation and optional join hooks, and never call result behavior. Existing switch readiness feature retained. Counts/docs retained scratch versions. No compiler changes pushed.",
+  "Node_reference": "Unchanged expanded reference reused; no new full scanner Node run. 1,369,432 tokens, 466 errors, SHA256 41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc.",
+  "discovery": "No stub used: real first stop is iterator binding, before Uint16Array. Both requested split builds ran against the validated unstubbed slice.",
+  "metrics": "Unavailable: lowering stops before scanner C emission; nproc 5.",
+  "scanner_native_diff": "not run: no scanner binary",
+  "focused_tests": "Unchanged Map get and case probes source Node/native stdout, stderr, exit comparisons; one-byte native output mutants caught. Full oracle gate not rerun; prior switch gate limits remain recorded."
+}

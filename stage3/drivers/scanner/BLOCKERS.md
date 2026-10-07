@@ -1,5 +1,35 @@
 # Scanner blockers
 
+## October 7: Map storage fixed; union iterator binding is first real stop
+
+Merged host-blockers 2606e8b4 into the unpushed scratch already carrying
+imported-const-case c9d885d7. Newest fetched library-array-holes remains f05aec3c.
+Compiler builds. Exact pins, conflict resolutions and commands/results are in
+`evidence/union-map-fix-retry.json`.
+
+Both validated-slice builds (ADAMIC_NATIVE_SPLIT=0 and =1) stop at
+utilities.ts:15:22, upstream utilities.ts:748, the `for (const [key, value]
+of iterator)` binding in forEachEntry:
+
+```text
+stage 0 can't lower an iterator binding held in more than one word yet
+```
+
+Minimal unchanged-form reduction: `probes/map-union-iterator-binding.a`.
+Node prints `one:1` and `text:x`; native refuses its binding at 4:18 with
+that same diagnostic. Required feature: destructured Map entry iterator binding
+whose value is a tagged union (string | number). This representation-specific
+NotYet is not separately named in REPORT.md. The Map constructor/get probe now
+builds and prints `1`; the case-declaration probe builds and prints `other`.
+Both match Node stdout, stderr and exit, and each one-byte native-output mutant
+is caught by diff exit 1.
+
+The proof slice audit passes and the real builds use no stubs. Uint16Array's
+independent probe still refuses, but the real slice has not reached that stop;
+no Uint16Array discovery stub was used. Full scanner C/executable, token diff
+and metrics remain unavailable. The established expanded Node reference is
+unchanged and reused; no fresh full scanner Node run is claimed.
+
 ## October 7: case declaration probe fixed; union-valued Map still pending
 
 Merged imported-const-case c9d885d7 into the unpushed feature scratch.
