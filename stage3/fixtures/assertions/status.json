@@ -219,8 +219,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/assertions/14_structural_cache.a:11:16: stage 0 can't lower an ElementAccessExpression yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/assertions/14_structural_cache.a:11:17: Adamic 0.1 refuses an unproven relation from Type to IterableOrIteratorType: optional field iterationTypes has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)"
     }
   },
   {
