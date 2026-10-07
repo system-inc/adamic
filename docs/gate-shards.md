@@ -1004,3 +1004,26 @@ proof compares the parser shard with ADAMIC_TYPESCRIPT_SOURCE absent and present
 with other setup gate inputs supplied. Only that shard is supplied to merge: its
 census status is checked independently of the expected missing-shard errors.
 This is not a claim that a one-shard partial run is a whole green gate.
+
+The cloud proof at 773d5fc79122ec9e98ad2368f4cadd5c43869182 ran shard 1 of 15
+uncached with setup --gate-inputs otherwise intact. With ADAMIC_TYPESCRIPT_SOURCE
+unset it recorded 377 pass, 0 fail, 1 skip in 620.299 seconds; merge reported:
+
+```text
+required-input skip github.com/system-inc/adamic/stage1/typescript/parser::TestWholeCompilerAgrees; input: ADAMIC_TYPESCRIPT_SOURCE: TypeScript v6.0.3 source checkout at 050880ce59e30b356b686bd3144efe24f875ebc8, including src/compiler/*.ts; see docs/gate-inputs.md.
+```
+
+Restoring the source recorded 378 pass, 0 fail, 0 skip in 607.991 seconds, with
+SkipCensus.Status=checked and empty RequiredInput and Unknown arrays. These were
+partial merges, correctly red for the other fourteen absent shards; only the
+census check is claimed to pass. Package race tests recorded 50 pass; vet and
+Darwin arm64 cross-compilation passed. Both policy mutants failed the intended
+regression test. Raw JSON logs, summaries, build flags, setup log and mutant
+outputs are in cmd/adamic-gate/evidence/skip-census-773d5fc.tgz. Setup took
+281.655 seconds on nproc=5, cpu.max=400000 100000; its full timing lines are
+included in that archive. No whole gate was run.
+
+One policy mismatch remains in the authoritative table: TestStage3FixtureHook
+is described in its source as dormant outside the stage3 fixture runner, but
+the table classifies its missing runner input as required-input. Normal whole
+merges therefore refuse that skip. The gate does not override that classification.
