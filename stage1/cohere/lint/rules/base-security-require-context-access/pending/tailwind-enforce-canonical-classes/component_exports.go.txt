@@ -1,0 +1,23 @@
+package tailwind
+import (
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/system-inc/cohere/internal/lint/rule"
+)
+type AdamicCandidate = candidateParts
+func AdamicCanonical(candidates []AdamicCandidate, logical bool) ([]string,string,rule.Message) {
+ for i,left := range candidates { for _,right := range candidates[i+1:] {
+  if left.mergeKey()!=right.mergeKey(){continue}
+  root,found:=collapseOutputFor(left.Root,right.Root,canonicalCollapseOptions{logical:logical});if !found{continue}
+  inputs:=[]string{left.ClassName,right.ClassName};output:=rebuildClass(left,root)
+  return inputs,output,messageCanonicalCollapse(inputs,output)
+ }}
+ return nil,"",rule.Message{}
+}
+func AdamicLexical(classes []string, order string) []string {
+ result,ok:=orderClasses(classes,DesignSystemResult{},classOrderOptions{order:order});if !ok{panic("unresolved")};return result
+}
+func AdamicSlots(text []string, starts, ends []int, ordered []string) []rule.Fix {
+ slots:=[]classToken{};for i,t:=range text { slots=append(slots,classToken{Text:t,Range:core.NewTextRange(starts[i],ends[i])}) }
+ return slotFixes(slots,ordered)
+}
+func AdamicOrderMessage(ordered string) rule.Message { return messageInconsistentClassOrder(ordered) }

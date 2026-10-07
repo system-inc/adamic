@@ -1,0 +1,6 @@
+{
+  "name": "canonical_merge_value_check_lost",
+  "file": "collapse.a",
+  "from": "left.mergeKey() !== right.mergeKey()",
+  "to": "false"
+}

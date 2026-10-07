@@ -1,0 +1,34 @@
+package main
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "strings"
+ "unicode/utf16"
+ rules "github.com/system-inc/cohere/internal/lint/rules/tailwind"
+)
+func written(s string) string {
+	var b strings.Builder
+	for _, r := range s {
+		if r >= 32 && r <= 126 && r != '\\' {
+			b.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&b, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&b, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return b.String()
+}
+
+type Slot struct {Text string;Start,End int}
+type Row struct {Mode string; Logical bool; Candidates []rules.AdamicCandidate;Classes []string;Order string;Slots []Slot}
+func main(){data,err:=os.ReadFile(os.Args[1]);if err!=nil{panic(err)};var rows []Row;if err=json.Unmarshal(data,&rows);err!=nil{panic(err)}
+ for i,row:=range rows{fmt.Printf("case %d\n",i)
+  if row.Mode=="collapse"{inputs,output,message:=rules.AdamicCanonical(row.Candidates,row.Logical);fmt.Println("inputs\t"+written(strings.Join(inputs,"|")));fmt.Println("output\t"+written(output));fmt.Println("message\t"+written(message.Description));continue}
+  ordered:=rules.AdamicLexical(row.Classes,row.Order);fmt.Println("order\t"+written(strings.Join(ordered,"|")));message:=rules.AdamicOrderMessage(strings.Join(ordered," "));fmt.Println("message\t"+written(message.Description))
+  text:=[]string{};starts:=[]int{};ends:=[]int{};for _,slot:=range row.Slots{text=append(text,slot.Text);starts=append(starts,slot.Start);ends=append(ends,slot.End)}
+  for _,fix:=range rules.AdamicSlots(text,starts,ends,ordered){fmt.Printf("fix\t%d %d\t%s\n",fix.Range.Pos(),fix.Range.End(),written(fix.Text))}
+ }
+}

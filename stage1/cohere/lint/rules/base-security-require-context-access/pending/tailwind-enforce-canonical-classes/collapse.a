@@ -1,0 +1,43 @@
+import { families } from './families.a';
+export class Candidate {
+    readonly name: string; readonly prefix: string; readonly root: string; readonly value: string; readonly sourceValue: string; readonly important: boolean;
+    constructor(name: string, prefix: string, root: string, value: string, sourceValue: string, important: boolean) { this.name = name; this.prefix = prefix; this.root = root; this.value = value; this.sourceValue = sourceValue; this.important = important; }
+    mergeKey(): string { return this.prefix + '|' + (this.important ? '!' : '') + '|' + this.value; }
+    rebuild(root: string): string {
+        const value = this.sourceValue !== '' ? this.sourceValue : this.value;
+        return this.prefix + root + (value !== '' ? '-' + value : '') + (this.important ? '!' : '');
+    }
+}
+export class Merge {
+    readonly inputs: string[] = [];
+    output = '';
+}
+export function outputFor(left: string, right: string, logical: boolean): string {
+    for(const family of families) {
+        if(family.logical && !logical) { continue; }
+        if((family.first === left && family.second === right) || (family.first === right && family.second === left)) { return family.output; }
+    }
+    return '';
+}
+// Input candidates must come from the project's design system, not a prefix guess.
+// This is the portable suffix of mergeOnce after ParseCandidate/splitCandidateIn.
+export function mergeOnce(parsed: readonly Candidate[], logical: boolean): Merge {
+    const result = new Merge();
+    for(let i = 0; i < parsed.length; i++) {
+        const left = parsed[i];
+        if(left === undefined) { continue; }
+        for(let j = i + 1; j < parsed.length; j++) {
+            const right = parsed[j];
+            if(right === undefined || left.mergeKey() !== right.mergeKey()) { continue; }
+            const output = outputFor(left.root, right.root, logical);
+            if(output === '') { continue; }
+            result.inputs.push(left.name); result.inputs.push(right.name);
+            result.output = left.rebuild(output);
+            return result;
+        }
+    }
+    return result;
+}
+export function message(inputs: readonly string[], output: string): string {
+    return `The classes "${inputs.join('", "')}" say the same thing as "${output}". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.`;
+}
