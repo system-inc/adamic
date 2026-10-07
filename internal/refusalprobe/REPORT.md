@@ -74,3 +74,31 @@ The four test mutants failed their intended assertions, not compilation or the t
 This is partial coverage, explicitly represented by catalog Boundary entries and in every command summary. The first-200 guarantee applies to executable entries, not boundaries. In particular yield requires a generator (a second refused construct); with and enums cannot reach lower.Refused through the strict loader. The original 0.1 refusal table includes features opened in later compiler revisions. Current main cannot simultaneously accept their neighbors and refuse every old syntax as requested.
 
 Not covered: exhaustive delegated-helper refusal cases, inheritance override scenes, overloads, remaining library omissions, multi-module refusals/cycles and polymorphic recursion. Those omissions are limitations of this writer, not claims of impossible syntax. Runtime differential tests for the accepted declarations are also not covered. The catalog audit is exhaustive for both maps and direct Refused expressions in refusals.go, but not for the bodies of delegated helper functions.
+
+## Runtime differential of the four accepted constructs
+
+Measured October 7, 2026 against origin/main `39638d9e278d38bb5aeae887f46d55a70e47aaad` (built with `go build -trimpath`), and again on area/developer-tools `8117291c2`, whose compiler differs only by an opt-in split build: every repeated program printed the same bytes. Each program ran three ways as internal/oracle runs them: `node --disable-warning=ExperimentalWarning oracle/node.mjs <file>`, `adamic build <file> -o <bin> --sanitize` then the binary (also unsanitized, with the same result except where noted), and `adamic js <file>` run through `oracle/node.mjs`. Node v24.14.1, Apple clang 21, macOS arm64. No compiler change was made.
+
+Every program whose native or JavaScript result differs from Node with exit 0 is kept in [lies/](lies), with Node's stdout as `<name>.expected`.
+
+| Construct | Use | Verdict | Node versus native |
+|---|---|---|---|
+| Optional widening, `y: 'wrong'` seen as `y?: number` | directly, through a parameter, a return, a readonly and a mutable array element | visible panic (native), JavaScript agrees | `string` / `wrong` / `false` / `wrong1`, exit 0, versus `adamic: panic: compiler bug: a numeric field holds a reference`, exit 70, nothing printed |
+| Optional widening, `y: true` or `false` seen as `y?: number` | directly, parameter, return, readonly array, arithmetic | **silent wrong answer (native)**, JavaScript agrees | `typeof` `boolean` versus `number`; `(y ?? 0) + 1` 2 versus 1; `(y ?? 0) * 10` 10 versus `5e-323`; `x + (y ?? 100)` 2 versus 1 |
+| Optional widening, `y: 2` seen as `y?: string`, `y: 5` as `y?: 'a' \| 'b'`, `y: true` as `y?: string`, `y: 'wrong'` as `y?: { z: number }` | directly | visible crash (native): ASan SEGV or UBSan invalid bool, exit 134; unsanitized SIGSEGV, exit 139 | Node exit 0 with output |
+| Optional widening, `y: { z: 5 }` seen as `y?: number` | directly | visible panic (native) | `[object Object]1` versus the compiler-bug panic |
+| Optional widening, target `y?: boolean` or `y?: number \| string` | directly | not yet (both backends) | `can't lower a field of type boolean \| undefined yet` |
+| Control: class instance without `y`, fresh literal | directly and through a parameter | agrees | identical |
+| Merging, `interface Box { extra: number }` | `typeof`, value, `+ 1`, number argument, seen as `{ extra: number }` | visible panic (native), JavaScript agrees | `undefined` / `NaN`, exit 0, versus `adamic: panic: compiler bug: a field the checker proved is there is missing`, exit 70 |
+| Merging, `extra: boolean` or `label: string` | value, `.length` | visible panic (native) | Node prints `true` before its own TypeError; native prints nothing, then the compiler-bug panic |
+| Merging, a method `describe(): string` | call | both panic, stdout agrees | Node `TypeError: box.describe is not a function`, native `compiler bug: a method the checker proved is there is missing` |
+| Merging, `extra?: number` | read | agrees | the optional member reads `undefined` on both |
+| `Function` | annotation only, passed a closure | **clang rejects the C** (native), JavaScript agrees | `-Wincompatible-pointer-types`: a closure passed as `adamic_object *` |
+| `Function` | `.length` on a local, a field and a parameter | **silent wrong answer (JavaScript backend)**; clang rejects the native C | `2 2 2 1` versus the JavaScript backend's `undefined` four times (it reads `length` off its closure object) |
+| `Function` | called, stored and called, passed and called, `.name` | not yet (call) or refused as an inherited member (`.name`) | |
+| `Record<string, number>` | own keys by dotted read, `Object.keys` on a literal, a parameter, a widened view or a spread class, integer-like keys first | agrees | `2 10 b a`, and `x label` for a view hiding a string field |
+| `Record<string, number>` | a missing key by dotted read | visible panic (native) | `undefined` / `true` / `1` versus `compiler bug: a field the checker proved is there is missing` |
+| `Record<string, number>` | any element read (`ages['Kirk']`, `ages[key]`), any element write, `Object.values` and `Object.entries` | not yet | |
+| `Record<string, number>` | `ages['constructor']`, `ages.constructor`, `ages.toString`, an own key named `constructor` | refused at compile time as an inherited member read (unbound-method) | Node reads `Object.prototype` |
+
+Against the approved record design (#p9v82wa): own keys are what main keeps (its shape is the literal's, and `Object.keys` matches Node, integer keys first); a dynamic read is not yet, not `T | undefined`; a missing key read by name panics with a compiler-bug message rather than giving `undefined`; a key named after an `Object.prototype` member is refused at compile time when it is written literally, even when the key is the object's own, and has no runtime panic because no dynamic read compiles.
