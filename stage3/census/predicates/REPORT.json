@@ -426,9 +426,9 @@
       "head": "65be00ae33fe4d394de1cb9468ddb472c3184e8f",
       "branch": "scratch/latent-predicates-oct7-main",
       "durations_seconds": {
-        "overlay": 0.026,
-        "build": 362.786,
-        "run": 226.583
+        "overlay": 0.025,
+        "build": 3.19,
+        "run": 174.458
       },
       "status": "complete",
       "exit": 0,
@@ -30386,9 +30386,9 @@
       "head": "b556f77ab985384d4822b2a7399498972e14116e",
       "branch": "scratch/latent-predicates-oct7-taste",
       "durations_seconds": {
-        "overlay": 0.029,
-        "build": 325.984,
-        "run": 248.375
+        "overlay": 0.021,
+        "build": 3.018,
+        "run": 182.77
       },
       "status": "complete",
       "exit": 0,
@@ -60362,8 +60362,8 @@
       "branch": "scratch/latent-predicates-oct7-flags",
       "durations_seconds": {
         "overlay": 0.029,
-        "build": 317.774,
-        "run": 250.8
+        "build": 2.747,
+        "run": 176.298
       },
       "status": "complete",
       "exit": 0,
@@ -88743,9 +88743,9 @@
       "head": "5c65c6cae00a03a18e4f49c2fafff94001de1989",
       "branch": "scratch/latent-predicates-oct7-namespaces",
       "durations_seconds": {
-        "overlay": 0.023,
-        "build": 243.095,
-        "run": 319.449
+        "overlay": 0.025,
+        "build": 2.89,
+        "run": 174.833
       },
       "status": "complete",
       "exit": 0,
@@ -117422,9 +117422,9 @@
       "head": "e5e7073ae6bcb4a13d22ea7536f30f6c3de6bc8f",
       "branch": "scratch/latent-predicates-oct7-nested",
       "durations_seconds": {
-        "overlay": 0.023,
-        "build": 242.566,
-        "run": 328.437
+        "overlay": 0.025,
+        "build": 3.195,
+        "run": 166.297
       },
       "status": "complete",
       "exit": 0,
@@ -148733,9 +148733,9 @@
       "head": "9396f8c212bd68f72b291fbe60b7c751fbbd928c",
       "branch": "scratch/latent-predicates-oct7-cumulative",
       "durations_seconds": {
-        "overlay": 0.024,
-        "build": 270.621,
-        "run": 297.254
+        "overlay": 0.029,
+        "build": 2.352,
+        "run": 174.989
       },
       "status": "complete",
       "exit": 0,
@@ -175213,14 +175213,14 @@
         "codex/flag-enums": "f7d62772fa8e52fcfae754e047ceb66dba88b782",
         "codex/namespaces-tsc": "ce8a2acf14e420a9c82345236845a377cd4c7a50",
         "codex/nested-functions": "b15216dabf65ffaa7152f6e64709b7b062ea01a9",
-        "codex/proven-predicates": "e58c805469e3cfa36b2d1e37b0ada2a6ae2ade6a"
+        "codex/proven-predicates": "04b3f073992d6712bfb850677def5d47673fbaea"
       },
       "feature_shas": {
         "codex/taste-not-soundness": "aa896b5d5ccc82210184fd01b8fe4d0ce0730a50",
         "codex/flag-enums": "f7d62772fa8e52fcfae754e047ceb66dba88b782",
         "codex/namespaces-tsc": "ce8a2acf14e420a9c82345236845a377cd4c7a50",
         "codex/nested-functions": "b15216dabf65ffaa7152f6e64709b7b062ea01a9",
-        "codex/proven-predicates": "e58c805469e3cfa36b2d1e37b0ada2a6ae2ade6a"
+        "codex/proven-predicates": "04b3f073992d6712bfb850677def5d47673fbaea"
       },
       "preparation_shas": {
         "origin/codex/stage3-base": "8728405135d329efc12c837a7a6c293234abbe1c",
@@ -175231,12 +175231,12 @@
       "cohere_tree": "/workspace/adamic/cohere",
       "measurement": "measured on a checker-rejected program",
       "main": "ef3d907ecdc4c771b016f7d9c52372def057a340",
-      "head": "b209456a2e7743bf2dca47a8cefa97e7b3a9c002",
+      "head": "a9866f24ad9dfecaf5c97915e852ebaecf22c0d7",
       "branch": "scratch/latent-predicates-oct7-predicates",
       "durations_seconds": {
-        "overlay": 0.022,
-        "build": 255.192,
-        "run": 384.457
+        "overlay": 0.024,
+        "build": 12.304,
+        "run": 351.329
       },
       "status": "complete",
       "exit": 0,
@@ -175274,21 +175274,21 @@
         "TS7031": 1
       },
       "lowering_counts": {
-        "NotYet": 1005,
-        "Refused": 2651,
+        "NotYet": 1006,
+        "Refused": 2673,
         "SkippedDependency": 25,
         "error": 1,
-        "panic": 3
+        "panic": 0
       },
-      "unique_sites": 3685,
-      "recorded_events": 4315,
+      "unique_sites": 3705,
+      "recorded_events": 4336,
       "units": {
         "total": 4530,
         "functions": 2755,
         "skipped_checker_body": 223,
         "attempted_functions": 2532,
         "attempted_statements": 1775,
-        "panicked_units": 1
+        "panicked_units": 0
       },
       "per_reason": {
         "NotYet: .length on a value": 1,
@@ -175446,7 +175446,7 @@
         "NotYet: an array of never": 7,
         "NotYet: an array of unknown": 1,
         "NotYet: an enum inside a function or block; declare it at module scope": 3,
-        "NotYet: an indirect call of a checked predicate overload": 15,
+        "NotYet: an indirect call of a checked predicate overload": 16,
         "NotYet: an optional chain longer than one step": 4,
         "NotYet: assigning a field of a value": 2,
         "NotYet: assigning an element of a value": 2,
@@ -175542,7 +175542,7 @@
         "NotYet: this outside a method": 7,
         "Refused: Object.defineProperty": 1,
         "Refused: Object.entries": 1,
-        "Refused: a cast the runtime can't check": 450,
+        "Refused: a cast the runtime can't check": 451,
         "Refused: a checked view with callable field setExternalModuleIndicator": 4,
         "Refused: a filter callback that doesn't return a boolean": 2,
         "Refused: a function taking () => T seen as one taking () => T (tsc relates a method's parameters both ways), so it can be handed what it can't take": 3,
@@ -175677,7 +175677,7 @@
         "Refused: a type predicate whose return is not proven (return expression is not a trusted check on kind)": 22,
         "Refused: a type predicate whose return is not proven (return expression is not a trusted check on location)": 1,
         "Refused: a type predicate whose return is not proven (return expression is not a trusted check on member)": 3,
-        "Refused: a type predicate whose return is not proven (return expression is not a trusted check on n)": 4,
+        "Refused: a type predicate whose return is not proven (return expression is not a trusted check on n)": 5,
         "Refused: a type predicate whose return is not proven (return expression is not a trusted check on node)": 384,
         "Refused: a type predicate whose return is not proven (return expression is not a trusted check on option)": 1,
         "Refused: a type predicate whose return is not proven (return expression is not a trusted check on options)": 1,
@@ -175700,6 +175700,7 @@
         "Refused: a value of type ((level: LogLevel) => boolean) | typeof log | (() => AssertionLevel) | ((level: AssertionLevel) => void) | ((level: AssertionLevel) => boolean) | ... 45 more ... | ... seen as AnyFunction, which can write void where boolean is read": 1,
         "Refused: a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read": 1,
         "Refused: a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read": 4,
+        "Refused: a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 1,
         "Refused: a value of type (symbol: Symbol) => { visitedTypes: Type[]; visitedSymbols: Symbol[]; } seen as (root: Symbol) => { visitedTypes: readonly Type[]; visitedSymbols: readonly Symbol[]; }, which can write readonly Type[] where Type[] is read": 1,
         "Refused: a value of type (symbolAccessibilityResult: SymbolAccessibilityResult) => { diagnosticMessage: DiagnosticMessage; errorNode: DeclarationDiagnosticProducing; typeName: DeclarationName | undefined; } | undefined seen as (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic | undefined, which can write Node where DeclarationDiagnosticProducing is read": 1,
         "Refused: a value of type (type: Type) => { visitedTypes: Type[]; visitedSymbols: Symbol[]; } seen as (root: Type) => { visitedTypes: readonly Type[]; visitedSymbols: readonly Symbol[]; }, which can write readonly Type[] where Type[] is read": 1,
@@ -175722,7 +175723,7 @@
         "Refused: a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read": 1,
         "Refused: a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read": 4,
         "Refused: a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read": 10,
-        "Refused: a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read": 1,
+        "Refused: a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read": 10,
         "Refused: a value of type DiagnosticWithLocation | undefined seen as Diagnostic | undefined, which can write SourceFile | undefined where SourceFile is read": 1,
         "Refused: a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read": 2,
         "Refused: a value of type ElementAccessExpression seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 2,
@@ -175862,7 +175863,7 @@
         "Refused: a value of type never[] seen as string[], which can write string where never is read": 8,
         "Refused: a value of type number[] seen as string | (string | number)[] | undefined, which can write string | number where number is read": 1,
         "Refused: a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[] | undefined, which can write SourceFile | undefined where SourceFile is read": 2,
-        "Refused: a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 1,
+        "Refused: a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 2,
         "Refused: a value of type readonly Extension[][] seen as readonly string[][], which can write string where Extension is read": 3,
         "Refused: a value of type string | number | boolean | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined seen as string | number | boolean | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined, which can write string | number where string is read": 1,
         "Refused: a value of type string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> seen as CompilerOptionsValue, which can write string | number where string is read": 1,
@@ -175895,18 +175896,21 @@
         "Refused: an arbitrary number or a value from another enum assigned to InternalSymbolName.Call; its members are a closed union": 3,
         "Refused: an arbitrary number or a value from another enum assigned to Phase.Parse; its members are a closed union": 2,
         "Refused: an index signature": 7,
-        "Refused: an object refinement using an open numeric enum as a literal tag": 506,
+        "Refused: an object refinement using an open numeric enum as a literal tag": 512,
+        "Refused: an unproven predicate argument for parameter callback (argument \"(n): n is Exclude<FunctionLikeDeclaration, ConstructorDeclaration> => isFunctionLikeDeclaration(n) && !isConstructorDeclaration(n)\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"(node): node is RequireOrImportCall => isRequireCall(node, /*requireStringLiteralLikeArgument*/ true)\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"decl => isVariableDeclarationInitializedToRequire(decl)\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"isClassLike\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"isFunctionLike\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"isFunctionLikeDeclaration\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"isFunctionLikeOrClassStaticBlockDeclaration\")": 1,
+        "Refused: an unproven predicate argument for parameter callback (argument \"isHeritageClause\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"isImportDeclaration\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"isJSDoc\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"isJSDocTypeExpression\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"isParameter\")": 1,
         "Refused: an unproven predicate argument for parameter callback (argument \"isTypeOnlyImportOrExportDeclaration\")": 1,
+        "Refused: an unproven predicate argument for parameter callback (argument \"n => isExportAssignment(n) || isStatement(n) || isVariableDeclaration(n) || isPropertyDeclaration(n) || isParameter(n)\")": 1,
         "Refused: an unproven predicate argument for parameter f (argument \"helper => !helper.scoped\")": 1,
         "Refused: an unproven predicate argument for parameter f (argument \"isDecorator\")": 1,
         "Refused: an unproven predicate argument for parameter f (argument \"isInitializedVariable\")": 1,
@@ -176132,10 +176136,7 @@
         "Refused: var": 1,
         "Refused: yield (generators)": 4,
         "SkippedDependency: a dependency function whose body has checker diagnostics (measurement skipped)": 25,
-        "error: lower: src/compiler/parser.ts:1472:9: the checker gave a declaration no symbol": 1,
-        "panic: Unhandled case in Node.Text: *ast.ComputedPropertyName": 1,
-        "panic: Unhandled case in Node.Text: *ast.QualifiedName": 1,
-        "panic: runtime error: slice bounds out of range [:-1]": 1
+        "error: lower: src/compiler/parser.ts:1472:9: the checker gave a declaration no symbol": 1
       },
       "per_file": {
         "src/compiler/_namespaces/ts.moduleSpecifiers.ts": {
@@ -176233,12 +176234,12 @@
         "src/compiler/builder.ts": {
           "measurement": "measured on a checker-rejected program",
           "NotYet": 19,
-          "Refused": 31,
+          "Refused": 34,
           "SkippedDependency": 0,
           "error": 0,
-          "panic": 1,
-          "unique_sites": 51,
-          "recorded_events": 67,
+          "panic": 0,
+          "unique_sites": 53,
+          "recorded_events": 69,
           "checker": 40,
           "units": {
             "total": 85,
@@ -176257,15 +176258,16 @@
             "NotYet: a value of type Path": 9,
             "NotYet: a value of type T": 1,
             "NotYet: optional chaining to .size on a value": 3,
-            "Refused: a cast the runtime can't check": 17,
+            "Refused: a cast the runtime can't check": 18,
             "Refused: a type predicate whose return is not proven (return expression is not a trusted check on info)": 3,
             "Refused: a type predicate whose return is not proven (true return narrows to ReusableBuilderProgramState, not BuilderProgramStateWithDefinedProgram)": 1,
+            "Refused: a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 1,
             "Refused: a value of type BuilderProgramStateWithDefinedProgram seen as BuilderProgramState, which can write Program | undefined where Program is read": 5,
+            "Refused: a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 1,
             "Refused: an object refinement using an open numeric enum as a literal tag": 2,
             "Refused: an unproven value assigned to a numeric literal or enum member slot BuilderFileEmit.Js | BuilderFileEmit.JsMap | BuilderFileEmit.JsInlineMap | BuilderFileEmit.DtsErrors | BuilderFileEmit.DtsEmit | ... 5 more ... | BuilderFileEmit.All": 1,
             "Refused: an unproven value assigned to a numeric literal or enum member slot CompilerOptions | BuilderFileEmit": 1,
-            "Refused: overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined": 1,
-            "panic: Unhandled case in Node.Text: *ast.QualifiedName": 1
+            "Refused: overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined": 1
           }
         },
         "src/compiler/builderPublic.ts": {
@@ -176654,8 +176656,8 @@
           "Refused": 14,
           "SkippedDependency": 0,
           "error": 0,
-          "panic": 1,
-          "unique_sites": 21,
+          "panic": 0,
+          "unique_sites": 20,
           "recorded_events": 27,
           "checker": 36,
           "units": {
@@ -176664,7 +176666,7 @@
             "skipped_checker_body": 5,
             "attempted_functions": 29,
             "attempted_statements": 16,
-            "panicked_units": 1
+            "panicked_units": 0
           },
           "per_reason": {
             "NotYet: .length on a value": 1,
@@ -176675,8 +176677,7 @@
             "Refused: a cast the runtime can't check": 4,
             "Refused: a type predicate whose return is not proven (false return can still contain LateBoundDeclaration)": 1,
             "Refused: a value of type never[] seen as string[], which can write string where never is read": 2,
-            "Refused: an object refinement using an open numeric enum as a literal tag": 7,
-            "panic: runtime error: slice bounds out of range [:-1]": 1
+            "Refused: an object refinement using an open numeric enum as a literal tag": 7
           }
         },
         "src/compiler/executeCommandLine.ts": {
@@ -177739,13 +177740,13 @@
         },
         "src/compiler/transformers/declarations/diagnostics.ts": {
           "measurement": "measured on a checker-rejected program",
-          "NotYet": 0,
-          "Refused": 20,
+          "NotYet": 1,
+          "Refused": 39,
           "SkippedDependency": 0,
           "error": 0,
-          "panic": 1,
-          "unique_sites": 21,
-          "recorded_events": 24,
+          "panic": 0,
+          "unique_sites": 40,
+          "recorded_events": 43,
           "checker": 0,
           "units": {
             "total": 8,
@@ -177756,11 +177757,16 @@
             "panicked_units": 0
           },
           "per_reason": {
+            "NotYet: an indirect call of a checked predicate overload": 1,
             "Refused: a cast the runtime can't check": 10,
+            "Refused: a type predicate whose return is not proven (return expression is not a trusted check on n)": 1,
             "Refused: a type predicate whose return is not proven (return expression is not a trusted check on node)": 1,
             "Refused: a value of type (symbolAccessibilityResult: SymbolAccessibilityResult) => { diagnosticMessage: DiagnosticMessage; errorNode: DeclarationDiagnosticProducing; typeName: DeclarationName | undefined; } | undefined seen as (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic | undefined, which can write Node where DeclarationDiagnosticProducing is read": 1,
-            "Refused: an object refinement using an open numeric enum as a literal tag": 8,
-            "panic: Unhandled case in Node.Text: *ast.ComputedPropertyName": 1
+            "Refused: a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read": 9,
+            "Refused: an object refinement using an open numeric enum as a literal tag": 14,
+            "Refused: an unproven predicate argument for parameter callback (argument \"(n): n is Exclude<FunctionLikeDeclaration, ConstructorDeclaration> => isFunctionLikeDeclaration(n) && !isConstructorDeclaration(n)\")": 1,
+            "Refused: an unproven predicate argument for parameter callback (argument \"isHeritageClause\")": 1,
+            "Refused: an unproven predicate argument for parameter callback (argument \"n => isExportAssignment(n) || isStatement(n) || isVariableDeclaration(n) || isPropertyDeclaration(n) || isParameter(n)\")": 1
           }
         },
         "src/compiler/transformers/destructuring.ts": {
@@ -182538,6 +182544,13 @@
         {
           "measurement": "measured on a checker-rejected program",
           "kind": "NotYet",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:672:9",
+          "reason": "an indirect call of a checked predicate overload",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:672:9: stage 0 can't lower an indirect call of a checked predicate overload yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "NotYet",
           "where": "src/compiler/transformers/destructuring.ts:185:9",
           "reason": "an indirect call of a checked predicate overload",
           "text": "src/compiler/transformers/destructuring.ts:185:9: stage 0 can't lower an indirect call of a checked predicate overload yet"
@@ -186223,6 +186236,27 @@
           "where": "src/compiler/builder.ts:1663:1",
           "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
           "text": "src/compiler/builder.ts:1663:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:2233:9",
+          "reason": "a cast the runtime can't check",
+          "text": "src/compiler/builder.ts:2233:9: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:2467:34",
+          "reason": "a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/builder.ts:2467:34: Adamic 0.1 refuses a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:2467:69",
+          "reason": "a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/builder.ts:2467:69: Adamic 0.1 refuses a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
         },
         {
           "measurement": "measured on a checker-rejected program",
@@ -194945,6 +194979,139 @@
           "where": "src/compiler/transformers/declarations/diagnostics.ts:590:24",
           "reason": "a cast the runtime can't check",
           "text": "src/compiler/transformers/declarations/diagnostics.ts:590:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:665:51",
+          "reason": "an unproven predicate argument for parameter callback (argument \"isHeritageClause\")",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:665:51: Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isHeritageClause\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:708:43",
+          "reason": "an unproven predicate argument for parameter callback (argument \"n => isExportAssignment(n) || isStatement(n) || isVariableDeclaration(n) || isPropertyDeclaration(n) || isParameter(n)\")",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:708:43: Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"n => isExportAssignment(n) || isStatement(n) || isVariableDeclaration(n) || isPropertyDeclaration(n) || isParameter(n)\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:711:48",
+          "reason": "an object refinement using an open numeric enum as a literal tag",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:711:48: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:714:111",
+          "reason": "a type predicate whose return is not proven (return expression is not a trusted check on n)",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:714:111: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on n); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:714:33",
+          "reason": "an object refinement using an open numeric enum as a literal tag",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:714:33: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:714:41",
+          "reason": "an unproven predicate argument for parameter callback (argument \"(n): n is Exclude<FunctionLikeDeclaration, ConstructorDeclaration> => isFunctionLikeDeclaration(n) && !isConstructorDeclaration(n)\")",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:714:41: Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"(n): n is Exclude<FunctionLikeDeclaration, ConstructorDeclaration> => isFunctionLikeDeclaration(n) && !isConstructorDeclaration(n)\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:722:51",
+          "reason": "an object refinement using an open numeric enum as a literal tag",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:722:51: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:722:72",
+          "reason": "an object refinement using an open numeric enum as a literal tag",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:722:72: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:726:34",
+          "reason": "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:726:34: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:729:34",
+          "reason": "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:729:34: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:737:34",
+          "reason": "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:737:34: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:754:30",
+          "reason": "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:754:30: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:763:30",
+          "reason": "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:763:30: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:768:44",
+          "reason": "an object refinement using an open numeric enum as a literal tag",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:768:44: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:768:49",
+          "reason": "an object refinement using an open numeric enum as a literal tag",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:768:49: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:779:30",
+          "reason": "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:779:30: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:799:38",
+          "reason": "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:799:38: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:803:38",
+          "reason": "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:803:38: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "kind": "Refused",
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:804:38",
+          "reason": "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+          "text": "src/compiler/transformers/declarations/diagnostics.ts:804:38: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
         },
         {
           "measurement": "measured on a checker-rejected program",
@@ -204808,27 +204975,6 @@
           "where": "",
           "reason": "lower: src/compiler/parser.ts:1472:9: the checker gave a declaration no symbol",
           "text": "lower: src/compiler/parser.ts:1472:9: the checker gave a declaration no symbol"
-        },
-        {
-          "measurement": "measured on a checker-rejected program",
-          "kind": "panic",
-          "where": "src/compiler/builder.ts:1:1",
-          "reason": "Unhandled case in Node.Text: *ast.QualifiedName",
-          "text": "Unhandled case in Node.Text: *ast.QualifiedName"
-        },
-        {
-          "measurement": "measured on a checker-rejected program",
-          "kind": "panic",
-          "where": "src/compiler/emitter.ts:685:1",
-          "reason": "runtime error: slice bounds out of range [:-1]",
-          "text": "runtime error: slice bounds out of range [:-1]"
-        },
-        {
-          "measurement": "measured on a checker-rejected program",
-          "kind": "panic",
-          "where": "src/compiler/transformers/declarations/diagnostics.ts:1:1",
-          "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName",
-          "text": "Unhandled case in Node.Text: *ast.ComputedPropertyName"
         }
       ],
       "overlay_sha256": {
@@ -204842,18 +204988,18 @@
         "internal_lower_refusals.go": "8368e94d7d7658db331989f20470e0e3bceb4e85b19cfa1d802c655a5743eb5b",
         "stage3_census_latent_tool_main.go": "f41fc3be7c6b69aa99aa082a3554feb6dcf3368f97ee18642263c1e4ca73c474"
       },
-      "binary_sha256": "a9ba8e07c3094b124a3e69e9081c3bb28bcb912e7f9b2995a4278af818e1795e",
+      "binary_sha256": "f5281c8ef5dc11098e8496f2242a3ce17db71290cf90d05209ad85edbd1e7da3",
       "feature_lowering_delta": {
         "measurement": "measured on a checker-rejected program",
         "counts": {
-          "NotYet": -933,
-          "Refused": 838,
+          "NotYet": -932,
+          "Refused": 860,
           "SkippedDependency": 2,
           "error": 1,
-          "panic": 3
+          "panic": 0
         },
-        "removed_sites": 2701,
-        "added_sites": 2612,
+        "removed_sites": 2690,
+        "added_sites": 2621,
         "removed_per_reason": {
           "NotYet: String as a value outside equality or typeof (overloaded calls and static properties need their own representation)": 1,
           "NotYet: a BinaryExpression as a statement": 6,
@@ -205020,7 +205166,6 @@
           "Refused: a type predicate": 581,
           "Refused: a union of differently held members as a condition": 3,
           "Refused: a value as a condition": 50,
-          "Refused: a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 1,
           "Refused: a value of type ArrayBindingPattern seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
           "Refused: a value of type BindingElement seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 5,
           "Refused: a value of type BuilderProgram seen as T, a type parameter whose constraint BuilderProgram can be written, so it can write what BuilderProgram can't hold": 1,
@@ -205036,7 +205181,6 @@
           "Refused: a value of type ConstructorDeclaration seen as Mutable<ConstructorDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 2,
           "Refused: a value of type Declaration seen as T, a type parameter whose constraint Declaration can be written, so it can write what Declaration can't hold": 2,
           "Refused: a value of type DiagnosticMessageChain seen as T, a type parameter whose constraint DiagnosticMessageChain | ReusableDiagnosticMessageChain can be written, so it can write what DiagnosticMessageChain can't hold": 3,
-          "Refused: a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read": 9,
           "Refused: a value of type Expression seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 4,
           "Refused: a value of type ExpressionWithTypeArguments seen as ExpressionWithTypeArguments & { expression: Identifier | PropertyAccessEntityNameExpression; }, whose readonly field expression becomes writable: a readonly field may hold something narrower than LeftHandSideExpression, which a write of LeftHandSideExpression & (Identifier | PropertyAccessEntityNameExpression) would replace": 1,
           "Refused: a value of type FlowNode seen as FlowLabel, which can write undefined where BinaryExpression | CallExpression is read": 1,
@@ -205076,7 +205220,6 @@
           "Refused: a value of type VariableDeclarationList seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
           "Refused: a value of type VisitEachChildTable seen as Record<SyntaxKind, VisitEachChildFunction<any> | undefined>, which can write VisitEachChildFunction<any> | undefined where VisitEachChildFunction<QualifiedName> is read": 1,
           "Refused: a value of type any seen as T, a type parameter whose constraint BuilderProgram can be written, so it can write what any can't hold": 2,
-          "Refused: a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 1,
           "Refused: a value of type string[] | PluginImport[] | ProjectReference[] | (string | number)[] seen as unknown[], which can write unknown where string is read": 2,
           "Refused: an ExportDeclaration": 77,
           "Refused: an import cycle": 1,
@@ -205155,7 +205298,7 @@
           "NotYet: an array of T": 7,
           "NotYet: an array of never": 4,
           "NotYet: an enum inside a function or block; declare it at module scope": 3,
-          "NotYet: an indirect call of a checked predicate overload": 15,
+          "NotYet: an indirect call of a checked predicate overload": 16,
           "NotYet: an optional chain longer than one step": 4,
           "NotYet: assigning a field of a value": 1,
           "NotYet: assigning an element of a value": 1,
@@ -205245,7 +205388,7 @@
           "NotYet: storing true | Node | undefined in a field": 1,
           "Refused: Object.defineProperty": 1,
           "Refused: Object.entries": 1,
-          "Refused: a cast the runtime can't check": 450,
+          "Refused: a cast the runtime can't check": 451,
           "Refused: a checked view with callable field setExternalModuleIndicator": 4,
           "Refused: a filter callback that doesn't return a boolean": 2,
           "Refused: a function taking () => T seen as one taking () => T (tsc relates a method's parameters both ways), so it can be handed what it can't take": 3,
@@ -205269,7 +205412,7 @@
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on kind)": 22,
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on location)": 1,
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on member)": 3,
-          "Refused: a type predicate whose return is not proven (return expression is not a trusted check on n)": 4,
+          "Refused: a type predicate whose return is not proven (return expression is not a trusted check on n)": 5,
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on node)": 384,
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on option)": 1,
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on options)": 1,
@@ -205328,18 +205471,21 @@
           "Refused: an arbitrary number or a value from another enum assigned to ForegroundColorEscapeSequences.Grey; its members are a closed union": 1,
           "Refused: an arbitrary number or a value from another enum assigned to InternalSymbolName.Call; its members are a closed union": 3,
           "Refused: an arbitrary number or a value from another enum assigned to Phase.Parse; its members are a closed union": 2,
-          "Refused: an object refinement using an open numeric enum as a literal tag": 506,
+          "Refused: an object refinement using an open numeric enum as a literal tag": 512,
+          "Refused: an unproven predicate argument for parameter callback (argument \"(n): n is Exclude<FunctionLikeDeclaration, ConstructorDeclaration> => isFunctionLikeDeclaration(n) && !isConstructorDeclaration(n)\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"(node): node is RequireOrImportCall => isRequireCall(node, /*requireStringLiteralLikeArgument*/ true)\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"decl => isVariableDeclarationInitializedToRequire(decl)\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isClassLike\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isFunctionLike\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isFunctionLikeDeclaration\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isFunctionLikeOrClassStaticBlockDeclaration\")": 1,
+          "Refused: an unproven predicate argument for parameter callback (argument \"isHeritageClause\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isImportDeclaration\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isJSDoc\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isJSDocTypeExpression\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isParameter\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isTypeOnlyImportOrExportDeclaration\")": 1,
+          "Refused: an unproven predicate argument for parameter callback (argument \"n => isExportAssignment(n) || isStatement(n) || isVariableDeclaration(n) || isPropertyDeclaration(n) || isParameter(n)\")": 1,
           "Refused: an unproven predicate argument for parameter f (argument \"helper => !helper.scoped\")": 1,
           "Refused: an unproven predicate argument for parameter f (argument \"isDecorator\")": 1,
           "Refused: an unproven predicate argument for parameter f (argument \"isInitializedVariable\")": 1,
@@ -205550,10 +205696,7 @@
           "Refused: overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor": 1,
           "Refused: this in a namespace function; a qualified call and a detached call have different receivers": 1,
           "SkippedDependency: a dependency function whose body has checker diagnostics (measurement skipped)": 3,
-          "error: lower: src/compiler/parser.ts:1472:9: the checker gave a declaration no symbol": 1,
-          "panic: Unhandled case in Node.Text: *ast.ComputedPropertyName": 1,
-          "panic: Unhandled case in Node.Text: *ast.QualifiedName": 1,
-          "panic: runtime error: slice bounds out of range [:-1]": 1
+          "error: lower: src/compiler/parser.ts:1472:9: the checker gave a declaration no symbol": 1
         },
         "checker": -515,
         "skipped_bodies": -33,
@@ -205561,14 +205704,14 @@
         "no_longer_eligible_units": 0,
         "common_eligible_units": 4274,
         "common_eligible_counts_delta": {
-          "NotYet": -1003,
-          "Refused": 694,
+          "NotYet": -1002,
+          "Refused": 716,
           "SkippedDependency": 2,
           "error": 1,
-          "panic": 3
+          "panic": 0
         },
-        "common_eligible_removed_sites": 2701,
-        "common_eligible_added_sites": 2398,
+        "common_eligible_removed_sites": 2690,
+        "common_eligible_added_sites": 2407,
         "per_reason": {
           "NotYet: .length on a value": 0,
           "NotYet: ?. to a number, which would be number | undefined": 1,
@@ -205776,7 +205919,7 @@
           "NotYet: an array of never": 2,
           "NotYet: an array of unknown": 0,
           "NotYet: an enum inside a function or block; declare it at module scope": 3,
-          "NotYet: an indirect call of a checked predicate overload": 15,
+          "NotYet: an indirect call of a checked predicate overload": 16,
           "NotYet: an optional chain longer than one step": 4,
           "NotYet: assigning a field of a value": 1,
           "NotYet: assigning an element of a value": 1,
@@ -205937,7 +206080,7 @@
           "Refused: Object.defineProperty": 1,
           "Refused: Object.entries": 1,
           "Refused: a boolean | undefined as a condition": -11,
-          "Refused: a cast the runtime can't check": 427,
+          "Refused: a cast the runtime can't check": 428,
           "Refused: a checked view with callable field setExternalModuleIndicator": 4,
           "Refused: a definite assignment assertion !": -5,
           "Refused: a filter callback that doesn't return a boolean": 2,
@@ -206092,7 +206235,7 @@
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on kind)": 22,
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on location)": 1,
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on member)": 3,
-          "Refused: a type predicate whose return is not proven (return expression is not a trusted check on n)": 4,
+          "Refused: a type predicate whose return is not proven (return expression is not a trusted check on n)": 5,
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on node)": 384,
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on option)": 1,
           "Refused: a type predicate whose return is not proven (return expression is not a trusted check on options)": 1,
@@ -206117,7 +206260,7 @@
           "Refused: a value of type ((level: LogLevel) => boolean) | typeof log | (() => AssertionLevel) | ((level: AssertionLevel) => void) | ((level: AssertionLevel) => boolean) | ... 45 more ... | ... seen as AnyFunction, which can write void where boolean is read": 1,
           "Refused: a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read": 0,
           "Refused: a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read": 4,
-          "Refused: a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": -1,
+          "Refused: a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 0,
           "Refused: a value of type (symbol: Symbol) => { visitedTypes: Type[]; visitedSymbols: Symbol[]; } seen as (root: Symbol) => { visitedTypes: readonly Type[]; visitedSymbols: readonly Symbol[]; }, which can write readonly Type[] where Type[] is read": 0,
           "Refused: a value of type (symbolAccessibilityResult: SymbolAccessibilityResult) => { diagnosticMessage: DiagnosticMessage; errorNode: DeclarationDiagnosticProducing; typeName: DeclarationName | undefined; } | undefined seen as (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic | undefined, which can write Node where DeclarationDiagnosticProducing is read": 0,
           "Refused: a value of type (type: Type) => { visitedTypes: Type[]; visitedSymbols: Symbol[]; } seen as (root: Type) => { visitedTypes: readonly Type[]; visitedSymbols: readonly Symbol[]; }, which can write readonly Type[] where Type[] is read": 0,
@@ -206153,7 +206296,7 @@
           "Refused: a value of type DiagnosticMessageChain seen as T, a type parameter whose constraint DiagnosticMessageChain | ReusableDiagnosticMessageChain can be written, so it can write what DiagnosticMessageChain can't hold": -3,
           "Refused: a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read": 0,
           "Refused: a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read": 0,
-          "Refused: a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read": -9,
+          "Refused: a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read": 0,
           "Refused: a value of type DiagnosticWithLocation | undefined seen as Diagnostic | undefined, which can write SourceFile | undefined where SourceFile is read": 0,
           "Refused: a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read": 0,
           "Refused: a value of type ElementAccessExpression seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 0,
@@ -206314,7 +206457,7 @@
           "Refused: a value of type never[] seen as string[], which can write string where never is read": 1,
           "Refused: a value of type number[] seen as string | (string | number)[] | undefined, which can write string | number where number is read": 0,
           "Refused: a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[] | undefined, which can write SourceFile | undefined where SourceFile is read": 0,
-          "Refused: a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": -1,
+          "Refused: a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 0,
           "Refused: a value of type readonly Extension[][] seen as readonly string[][], which can write string where Extension is read": 0,
           "Refused: a value of type string | number | boolean | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined seen as string | number | boolean | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined, which can write string | number where string is read": 0,
           "Refused: a value of type string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> seen as CompilerOptionsValue, which can write string | number where string is read": 0,
@@ -206349,18 +206492,21 @@
           "Refused: an arbitrary number or a value from another enum assigned to Phase.Parse; its members are a closed union": 2,
           "Refused: an import cycle": -1,
           "Refused: an index signature": 0,
-          "Refused: an object refinement using an open numeric enum as a literal tag": 506,
+          "Refused: an object refinement using an open numeric enum as a literal tag": 512,
+          "Refused: an unproven predicate argument for parameter callback (argument \"(n): n is Exclude<FunctionLikeDeclaration, ConstructorDeclaration> => isFunctionLikeDeclaration(n) && !isConstructorDeclaration(n)\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"(node): node is RequireOrImportCall => isRequireCall(node, /*requireStringLiteralLikeArgument*/ true)\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"decl => isVariableDeclarationInitializedToRequire(decl)\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isClassLike\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isFunctionLike\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isFunctionLikeDeclaration\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isFunctionLikeOrClassStaticBlockDeclaration\")": 1,
+          "Refused: an unproven predicate argument for parameter callback (argument \"isHeritageClause\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isImportDeclaration\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isJSDoc\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isJSDocTypeExpression\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isParameter\")": 1,
           "Refused: an unproven predicate argument for parameter callback (argument \"isTypeOnlyImportOrExportDeclaration\")": 1,
+          "Refused: an unproven predicate argument for parameter callback (argument \"n => isExportAssignment(n) || isStatement(n) || isVariableDeclaration(n) || isPropertyDeclaration(n) || isParameter(n)\")": 1,
           "Refused: an unproven predicate argument for parameter f (argument \"helper => !helper.scoped\")": 1,
           "Refused: an unproven predicate argument for parameter f (argument \"isDecorator\")": 1,
           "Refused: an unproven predicate argument for parameter f (argument \"isInitializedVariable\")": 1,
@@ -206593,10 +206739,7 @@
           "Refused: yield (generators)": 0,
           "Refused: ||=": -15,
           "SkippedDependency: a dependency function whose body has checker diagnostics (measurement skipped)": 2,
-          "error: lower: src/compiler/parser.ts:1472:9: the checker gave a declaration no symbol": 1,
-          "panic: Unhandled case in Node.Text: *ast.ComputedPropertyName": 1,
-          "panic: Unhandled case in Node.Text: *ast.QualifiedName": 1,
-          "panic: runtime error: slice bounds out of range [:-1]": 1
+          "error: lower: src/compiler/parser.ts:1472:9: the checker gave a declaration no symbol": 1
         },
         "per_file": {
           "src/compiler/_namespaces/ts.moduleSpecifiers.ts": {
@@ -206634,10 +206777,10 @@
           "src/compiler/builder.ts": {
             "measurement": "measured on a checker-rejected program",
             "NotYet": -11,
-            "Refused": 3,
+            "Refused": 6,
             "SkippedDependency": 0,
             "error": 0,
-            "panic": 1
+            "panic": 0
           },
           "src/compiler/builderPublic.ts": {
             "measurement": "measured on a checker-rejected program",
@@ -206717,7 +206860,7 @@
             "Refused": 1,
             "SkippedDependency": 0,
             "error": 0,
-            "panic": 1
+            "panic": 0
           },
           "src/compiler/executeCommandLine.ts": {
             "measurement": "measured on a checker-rejected program",
@@ -206969,11 +207112,11 @@
           },
           "src/compiler/transformers/declarations/diagnostics.ts": {
             "measurement": "measured on a checker-rejected program",
-            "NotYet": -2,
-            "Refused": 8,
+            "NotYet": -1,
+            "Refused": 27,
             "SkippedDependency": 0,
             "error": 0,
-            "panic": 1
+            "panic": 0
           },
           "src/compiler/transformers/destructuring.ts": {
             "measurement": "measured on a checker-rejected program",

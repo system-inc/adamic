@@ -1,7 +1,7 @@
 Fixed: qualified cast names, computed relation fields, and generic validation context cleanup.
 Commits: the fix commit contains this report; the following census commit records its measured SHA.
 Commands/results: affected package tests and vet pass; sanitized qualified cast prints `one`, matching Node.
-Mutants: restoring each faulty operation makes its reduced regression panic; logs retain all three failures.
+Mutants: four runs restore the cast guard, widening guard, computed-field guard and early cleanup; each regression catches the original panic.
 Limits: generic mutation and computed optional-field contracts remain named refusals; the full gate is not claimed green.
 
 # Programs, panics and fixes
@@ -19,7 +19,9 @@ its type-only `types.a` dependency. Both cast admission and mutable-view admissi
 now require an identifier before comparing it with `const`. Qualified casts reach
 the existing relation proof. This compatible upcast is erased. Its original source
 on Node and native with ASan/UBSan print `one\n`, byte for byte.
-`TestCensusQualifiedCast` independently pins both admission paths.
+`TestCensusQualifiedCast` independently pins both admission paths. The original
+builder cast has unproven fields and now returns the named refusal `a cast the
+runtime can't check` at `builder.ts:2233:9`, rather than panicking.
 
 ## Computed relation field
 
@@ -58,7 +60,11 @@ prints `1\n`; `TestCensusGenericRefusalInsideClosure` pins the named refusal.
 
 # Verification
 
-Outputs are retained under `evidence/panics/`. The commands were:
+Outputs are retained under `evidence/panics/`. Setup in the repository completed
+in 41.084 seconds, including 40.784 seconds warming the Go build cache. `nproc`
+reported 5; the cgroup permits four CPUs. Go 1.27.1, Node 24.19.0 and clang 20.1.8
+were used. The scratch setup encountered its intentional cohere symlink; rerunning
+from the repository succeeded. The commands were:
 
 ```sh
 go test ./internal/lower ./cmd/adamic ./internal/ir ./internal/load -count=1
