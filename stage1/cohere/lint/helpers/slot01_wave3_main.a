@@ -1,5 +1,7 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from './options_json.ts';
+import { textDecodeEntity } from './text_decode_entity.a';
+import { textXhtmlEntities } from './text_xhtml_entities.a';
 import { tailwindAttributeValues } from './tailwind_attribute_values.a';
 import type { TailwindAttributeNode } from './tailwind_attribute_values.a';
 import type { TailwindClassValues } from './tailwind_class_values_in.a';
@@ -41,6 +43,17 @@ for (const line of file.text.split('\n')) {
     const reader = new OptionsJson(line);
     const root = reader.parse();
     if (root < 0) { panic(reader.error); }
+    if (args[1] === 'entity') {
+        const result = textDecodeEntity(reader.node(root).text, textXhtmlEntities, character => {
+            if (character >= 48 && character <= 57) { return character - 48; }
+            if (character >= 97 && character <= 102) { return character - 97 + 10; }
+            if (character >= 65 && character <= 70) { return character - 65 + 10; }
+            return -1;
+        });
+        const units: string[] = [];
+        for (let index = 0; index < result.replacement.length; index++) { units.push(`${result.replacement.charCodeAt(index)}`); }
+        console.log(`${result.ok}`); console.log(units.join(',')); console.log(result.replacement); continue;
+    }
     const fields = reader.node(root).children;
     const present = reader.node(fields[0] ?? panic('name presence')).text === 'true';
     const text = reader.node(fields[1] ?? panic('name')).text;

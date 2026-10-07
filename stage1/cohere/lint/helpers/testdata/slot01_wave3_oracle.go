@@ -8,12 +8,15 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/parser"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	texthelpers "github.com/system-inc/cohere/internal/lint/ecmascript/text"
 	"github.com/system-inc/cohere/internal/lint/rules/tailwind"
 	goast "go/ast"
 	goparser "go/parser"
 	"go/token"
 	"os"
 	"strconv"
+	"strings"
+	"unicode/utf16"
 )
 
 func must(err error) {
@@ -98,6 +101,51 @@ func main() {
 		fixtureCount += found
 	}
 
+	if os.Args[4] == "entity" {
+		if !texthelpers.AdamicWave3EmptyPanics() {
+			panic("Go empty entity no longer panics")
+		}
+		items := []string{"#", "#x", "#X41", "#0", "#x0", "#x10ffff", "#1114112", "#x110000", "#000000000000000000001", "#x000000000000000000041", "#9999999999999999999999999999999999999999999", "#xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "#999999999999999999999999999999z", "#xFFFFFFFFFFFFFFFFFFFFFFFFFFFFz", "unknownName", "AMP", "amp", "a_b", "#-1", "# 1", "#١", "#xé", "#x😀"}
+		for _, source := range sources {
+			if source != "" {
+				items = append(items, source)
+			}
+			for start := 0; start < len(source); start++ {
+				if source[start] != '&' {
+					continue
+				}
+				end := strings.IndexByte(source[start+1:], ';')
+				if end > 0 {
+					items = append(items, source[start+1:start+1+end])
+				}
+			}
+		}
+		for _, pair := range texthelpers.AdamicWave3Entities() {
+			items = append(items, pair[0], strings.ToUpper(pair[0]), strings.ToLower(pair[0]))
+		}
+		for value := 0; value <= 0x110000; value += 997 {
+			items = append(items, "#"+strconv.Itoa(value), "#x"+strconv.FormatInt(int64(value), 16))
+		}
+		for value := 0xd7ff; value <= 0xe000; value++ {
+			items = append(items, "#"+strconv.Itoa(value), "#x"+strconv.FormatInt(int64(value), 16))
+		}
+		for _, value := range []int{0, 9, 10, 13, 32, 127, 128, 255, 256, 0xffff, 0x10000, 0x10ffff, 0x110000} {
+			items = append(items, "#"+strconv.Itoa(value), "#x"+strconv.FormatInt(int64(value), 16))
+		}
+		for _, item := range items {
+			must(encode.Encode(item))
+			replacement, ok := texthelpers.AdamicWave3Decode(item)
+			fmt.Fprintln(expected, ok)
+			units := []string{}
+			for _, unit := range utf16.Encode([]rune(replacement)) {
+				units = append(units, strconv.Itoa(int(unit)))
+			}
+			fmt.Fprintln(expected, strings.Join(units, ","))
+			fmt.Fprintln(expected, replacement)
+		}
+		fmt.Fprintf(os.Stderr, "%d fixture strings; %d entity queries; %d pinned named entities\n", fixtureCount, len(items), len(texthelpers.AdamicWave3Entities()))
+		return
+	}
 	queries := 0
 	for _, source := range sources {
 		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/fixture.tsx", Path: tspath.Path("/fixture.tsx")}, source, core.ScriptKindTSX)

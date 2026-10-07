@@ -70,8 +70,9 @@ func slot01Wave3Fixture(t *testing.T, dependency string, consumers int, mode str
 	}
 	source, _ := filepath.Abs("testdata/slot01_wave3_oracle.go")
 	tailwindBridge, _ := filepath.Abs("testdata/slot01_wave3_tailwind.go")
+	textBridge, _ := filepath.Abs("testdata/slot01_wave3_text.go")
 	virtual := filepath.Join(root, "adamic_slot01_oracle.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "internal/lint/rules/tailwind/adamic_slot01.go"): tailwindBridge, virtual: source}})
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "internal/lint/rules/tailwind/adamic_slot01.go"): tailwindBridge, virtual: source, filepath.Join(root, "internal/lint/ecmascript/text/adamic_slot01_wave3.go"): textBridge}})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
@@ -105,14 +106,20 @@ func slot01Wave3Fixture(t *testing.T, dependency string, consumers int, mode str
 }
 func slot01Wave3Check(t *testing.T, symbol, mode, file, old, replacement string) {
 	t.Helper()
-	cases, want := slot01Wave3Fixture(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind."+symbol, 11, mode)
+	dependency := "github.com/system-inc/cohere/internal/lint/rules/tailwind." + symbol
+	consumers := 11
+	if mode == "entity" {
+		dependency = "github.com/system-inc/cohere/internal/lint/ecmascript/text." + symbol
+		consumers = 9
+	}
+	cases, want := slot01Wave3Fixture(t, dependency, consumers, mode)
 	entry, _ := filepath.Abs("slot01_wave3_main.a")
 	runner, _ := filepath.Abs("../../../../oracle/node.mjs")
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, cases, mode), want)
 	compare(t, run(t, "", slot01Build(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines match Node and sanitized native", bytes.Count(want, []byte("\n")))
 	directory := t.TempDir()
-	for _, name := range []string{"slot01_wave3_main.a", "tailwind_attribute_values.a", "tailwind_class_values_in.a", "tailwind_class_literal_from.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave3_main.a", "tailwind_attribute_values.a", "tailwind_class_values_in.a", "tailwind_class_literal_from.a", "text_decode_entity.a", "text_xhtml_entities.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -138,4 +145,12 @@ func slot01Wave3Check(t *testing.T, symbol, mode, file, old, replacement string)
 		t.Fatal("compiled semantic mutant survived")
 	}
 	slot01MutantWitness(t, mutant, want, file)
+}
+
+// Not parallel: bounded external corpus and sanitizer builds.
+func TestSlot01Wave3EntityMatchesCohere(t *testing.T) {
+	slot01Wave3Check(t, "decodeEntity", "entity", "text_decode_entity.a", "value = 0x110000;", "value = 0;")
+}
+func TestSlot01Wave3EntitySurrogateMutant(t *testing.T) {
+	slot01Wave3Check(t, "decodeEntity", "entity", "text_decode_entity.a", "value >= 0xd800 && value <= 0xdfff", "false")
 }
