@@ -1,3 +1,190 @@
+Native tokenizer event primitives and complete mdast construction from resolved events are green.
+79,873 event cases and 5,008 document trees agree with Go and the pinned fork.
+All 1,112,064 Unicode scalars held to Go; seven output and three diagnostic mutants caught.
+Construction: native 1,357.9, Go 962.4, fork 1,875.5 texts/s; lexical parsing excluded.
+Go still supplies resolved lexical events; full native Markdown grammar remains unfinished.
+
+Tokenizer events and full mdast construction, October 7, 2026
+
+Scope and implementation
+
+Same branch: codex/stage1-markdown-blocks. Parent 250158ed66d8c6ed5306b0a87de2bf87b5852a85.
+This unit selects the event kernel and mdast constructor because construction
+composes with the existing printer without requiring an embedded-language parser.
+Only stage1/cohere/markdownblocks changed. No compiler or prior inline edits.
+
+Read CLAUDE.md and actual cohere tokenizer/types, mdast constructor/extensions,
+node and ParseMarkdown sources. TokenArena and TokenizerEvents port identity,
+points, consume, enter/exit, checkpoints/rollback, skips, chunks and serialization.
+Controlled programs run the actual private Go and original fork tokenizer effects.
+They do not replace the complete construct factory, grammar, resolver ordering,
+subtokenization or streaming. The fork adapter infers terminal private consumed
+and stack state; all its public observations come from the actual engine.
+
+MdastCompile constructs the complete non-MDX Go node arena from pre-compilation
+resolved lexical events and raw context chunks. It implements list-item event
+insertion, spread inference, every core and extension handler, buffered text,
+references/escapes, tables, tasks, footnotes, delete, autolinks, math, wiki/liquid.
+ParseFrontMatter recognizes, blanks and inserts front matter natively. Its blanked
+source is compared independently; embedding is absent at this layer.
+
+The transport contains token identity, type, flags, five point fields, event
+order and raw source streams. No constructed AST, inserted listItem events,
+inferred list spreads or sliced token strings are supplied. Actual Go
+ParseMarkdown and actual fork full source parsing independently supply expected
+canonical trees. Both actual compilers additionally consume the same transport.
+Go offsets convert to UTF-16 through its byte-offset map, not inferred AST points.
+Canonical preorder compares every Go construction field and its presence/null
+flags, children and coordinates. Extra original JavaScript object properties,
+HAST data and originalLabelText absent from Go are outside this typed projection.
+Front-matter point-valued start is not a list start integer. Native preprocessing
+and printer AstPath remain separate arenas and are not integrated with this tree.
+A complete native source parser or formatter is NOT established by these checks.
+
+Corpus and external oracles
+
+876 physical repository/submodule Markdown files plus 4,067 generated documents
+form the existing 4,943-document corpus. Event cases total 79,873: these documents,
+65,536 UTF-16 units, 9,330 special-code sequences, 63 column cases and empty input.
+Mdast adds 11 extension cases and 54 front-matter cases: 5,008 complete trees,
+16,564,161 output bytes in the final integration run. Source Node, JavaScript backend and sanitized native agree.
+Native ASan/UBSan and leak checks pass. Lone-surrogate parity is UTF-8 stdout
+parity; it does not establish identical internal original string storage.
+
+Cohere 715ba94f3608a6500086b1076ce5cb7e51b836db; fork based on 3.9.6.
+Scratch fork /tmp/adamic-markdown-blocks-fork is the actual pinned vendored bundle,
+byte-checked against cohere, not an assumed upstream npm package.
+plugins/markdown.js SHA256:
+c2b90eeee96c3fc37516c34b4ca63bdb498975a30132c7e624b681c5669da6f5.
+Adapters expose original private functions by checked unique export anchors;
+function bodies remain unchanged. embeddedLanguageFormatting remains off.
+
+Identifier tables implement Go simple lower/upper/lower, ASCII whitespace folding
+and trimming. The actual Go routine independently checks all 1,112,064 Unicode
+scalars against source/backend/native, including sanitizer/leaks. Go Unicode17.0.0.
+The committed Go probe supports --generate to reproduce the tables.
+
+Observed gaps and proving programs
+
+Three original fork identifier differences: straße -> Go straße vs fork strasse;
+İ -> Go i vs fork i plus combining dot; ΟΣ -> Go οσ vs fork ος. Full source inputs
+and both complete tree outputs live in gaps/identifier_case.jsonl and the two
+identifier_case_{go,fork}.txt files; test compares both, native held to Go.
+
+Three malformed event streams in gaps/event_{unclosed,not-open,mismatch}.txt
+prove different diagnostic values. Go omits token coordinates; fork includes
+(1:1-1:1). GAPS.md records all six complete messages. Native/source/backend hold
+Go with panic prefix, empty stdout and exit70. Actual recovered Go panic/fork
+throw messages are compared as values, not their original process behavior.
+The original seven embedding disagreements and all fourteen outputs are retained.
+
+New minimal compiler witnesses 15_string_or.ts, 16_array_shift.ts and
+17_long_optional_chain.ts prove NotYet for string || string, .shift, and optional
+chains longer than one step. Node runs each. Production uses explicit conditions,
+discarded splice and checked intermediate values. The context registry uses
+immutable append to avoid the already witnessed potential-cycle rejection.
+One class per file and all 276 cohere rules are respected.
+
+Mutants, all actually compiled and run
+
+Seven positive-output mutants keep successful execution and are caught by bytes:
+1. Rollback retains two extra events: CLAUDE.md, byte12896.
+2. Reverse virtual-space suppression: cohere/TypeScript/packages/typescript/vendor/
+   vscode-jsonrpc/README.md, byte1125.
+3. Restore current construct as 8 instead of saved value: CLAUDE.md, byte65048.
+4. Insert ! before merged token text: CLAUDE.md, byte6589.
+5. Invert list spread: CLAUDE.md, byte8692.
+6. Use TOML rather than YAML for ... fallback: generated YAML front matter, byte9.
+7. Change first Unicode case-table key65 to64: scalar oracle, byte183.
+
+Three additional diagnostic mutants retain expected fatal exit70 and empty stdout;
+only stderr catches them: remove 'a' from document unclosed text, change 'not open'
+to 'already closed', and change 'a different token' to 'another token'. These are
+not claimed as zero-exit mutants. Cumulative successful-output mutants: 40
+(previous33 plus7); these three diagnostic mutants are additional.
+
+Commands and measured results (all test output redirected to logs)
+
+source /workspace/adamic-tools/env.sh for every toolchain shell.
+git fetch origin > /tmp/markdown-events-fetch.log 2>&1
+bash cloud/setup.sh > /tmp/markdown-events-setup.log 2>&1
+Setup timings: Go0s, clang0s, Node1s, submodules1s, cachewarm16s, total16s.
+nproc5; cpu.max400000100000; memory17.6GB. Go1.27.1, Node24.19.0, clang20.1.8.
+
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test
+./stage1/cohere/markdownblocks -run '^TestTokenizerEvents$' -count=1 -v
+-timeout 20m > /tmp/markdown-events-final.log 2>&1
+PASS265.181s, 79,873 cases, three output mutants. Three-run texts/s:
+Go10739.3, native14677.9, actual original Node28029.0.
+
+ADAMIC_MDAST_KEEP=/tmp/markdown-mdast-final
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test
+./stage1/cohere/markdownblocks -run '^TestNativeMdastConstruction$' -count=1 -v
+-timeout 20m > /tmp/markdown-mdast-final.log 2>&1
+PASS266.244s, 5,008 trees, three output mutants. Three-run texts/s:
+Go806.7, native1026.5, actual fork1473.9. These full gates overlapped on this host.
+
+Throughput consumes identical event transport, constructs and serializes identical
+trees. Lexical parsing and fixture generation are excluded; startup, transport
+reading and output included. This is component throughput, not Markdown parsing.
+The event benchmark is a controlled effects program, not the complete tokenizer.
+The native constructor is 1.27x Go and 0.70x fork in the overlapping run.
+
+Go test TestMdastIdentifierScalars > /tmp/markdown-mdast-identifiers.log:
+PASS10.177s, all scalars, case-table mutant.
+Go test '^(TestMdastMalformedEvents|TestMdastIdentifierWitnesses)$' with scratch
+fork > /tmp/markdown-mdast-gap-final.log: PASS28.534s, both complete witness
+outputs and all three stderr mutants.
+Go test '^(TestParserRepresentationProbes|TestArrayGrowthWitness|TestUninitializedOptionalStringWitness)$'
+> /tmp/markdown-events-gaps.log: PASS1.973s. Last pattern matched no test;
+actual TestOptionalStringInitializationWitness separately passed0.338s in
+/tmp/markdown-events-optional.log: Node missing, native/backend present as the
+existing intentional gap6 demonstrates; decoder uses an explicit match flag.
+All commands used -count=1 -v, default or stated timeouts, and redirected stderr.
+
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'TestNativeAgreesWithNode/internal/oracle/testdata/(classes.a|class_as_interface.a|objects.a|maybe_number_slots.a|reuse_arrays.a|maps_and_text.a|array_from.a)$'
+-count=1 -v -timeout 10m > /tmp/markdown-events-compiler.log 2>&1:
+PASS3.145s, seven fixtures, native21/Node14 cache misses, zero hits.
+go vet ./... > /tmp/markdown-events-vet.log 2>&1: exit0, empty.
+gofmt -l stage1/cohere/markdownblocks > /tmp/markdown-events-gofmt.log:
+empty. git diff --check > /tmp/markdown-events-diff-check.log: empty.
+/tmp/cssstrings-cohere --no-cache --no-fix on all thirteen new production/probe TS
+files > /tmp/markdown-events-lint-final.log: 276rules, zero errors, 100% ready.
+
+Early diagnostic failures were corrected, not ignored: transport JSON text used
+wrong adapter property; fork front-matter point start was incorrectly projected
+as list start; layout lint required one class per file. The original diagnostic
+coordinate and Unicode differences instead remain explicit witnesses held to Go.
+Full repository and full package test gates were not run. The scoped full corpora,
+new mutants, seven uncached compiler fixtures and repository vet are the gates.
+
+Final integration command (parent corpus checks run; already-run mutant subtests filtered):
+ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork go test
+./stage1/cohere/markdownblocks
+-run '^(TestNativeMdastConstruction|TestTokenizerEvents|TestMarkdownWhitespaceLayout|TestWholeDocumentOraclePreflight)$/^$'
+-count=1 -v -timeout 20m > /tmp/markdown-events-integration.log 2>&1
+Event parent PASS110.71s: Go16613.1/native19340.7/fork36835.3 texts/s.
+Existing layout parent PASS152.12s, all4,943 documents still agree.
+Mdast parent PASS122.96s: Go962.4/native1357.9/fork1875.5 texts/s,
+all5,008 trees and16,564,161 bytes agree after this unit's GAPS documentation.
+These sequential parent checks give native1.41x Go and0.72x fork construction.
+
+Integration PASS430.452s. Preflight PASS44.66s: all953 embedding-off documents
+agree; auto-mode known11 named differences remain outside this contract.
+Go prints '[no tests to run]' because the /^$ subtest filter removes subtests;
+the four parent tests above actually ran their full corpus/oracle checks.
+After removing incidental trailing tabs from three error fixtures by explicitly
+setting unused token alignment, TestMdastMalformedEvents reran all three source,
+backend, native diagnostic checks and three stderr mutants: PASS31.125s,
+/tmp/markdown-mdast-errors-final.log. Cached diff whitespace check now empty.
+
+Implementation commit: f31d250c998a975b7e87cf22ad7591e9d57aa6d8.
+Report is committed separately; push both commits on codex/stage1-markdown-blocks.
+No pull request. Full native grammar remains the next dependency.
+
+Historical completed-unit reports follow unchanged.
+
 Native Markdown printer AstPath is green on the existing branch.
 4,975 documents agree with actual Go and fork path classes; all 876 files included.
 Three native output mutants caught; source/backend, sanitizers and leaks pass.
