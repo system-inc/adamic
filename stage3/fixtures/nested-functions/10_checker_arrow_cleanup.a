@@ -1,0 +1,17 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:10284
+// Census reason: a function inside a function (a closure)
+
+const context = { enclosingDeclaration: 'source.ts' };
+// Cut the callback to its save, update and early-cleanup path.
+const visitHeritage = (e: string) => {
+    const oldEnclosing = context.enclosingDeclaration;
+    context.enclosingDeclaration = e;
+    return cleanup(/*result*/ undefined);
+    function cleanup<T>(result: T): T {
+                        context.enclosingDeclaration = oldEnclosing;
+                        return result;
+                    }
+};
+const result = visitHeritage('interface I extends Object');
+console.log(result === undefined ? 'result undefined' : 'result present');
+console.log('restored ' + context.enclosingDeclaration);

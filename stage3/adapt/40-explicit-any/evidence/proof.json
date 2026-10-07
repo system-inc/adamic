@@ -1,0 +1,20 @@
+{
+  "before": 210,
+  "after": 207,
+  "jsFiles": 10,
+  "declarationFiles": 714,
+  "changedDeclarations": [
+    "local/compiler/core.d.ts",
+    "local/typescript.internal.d.ts"
+  ],
+  "newlyExposed": [],
+  "beforeFiles": 28,
+  "beforeLines": 198,
+  "afterFiles": 28,
+  "afterLines": 195,
+  "publicApi": {
+    "sha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263",
+    "baselineMatchesWithUpstreamNewlineNormalization": true,
+    "changed": false
+  }
+}
