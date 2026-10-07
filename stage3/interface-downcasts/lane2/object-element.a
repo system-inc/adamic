@@ -1,0 +1,6 @@
+interface Base { readonly kind: 'items' | 'other'; }
+interface Child { readonly name: string; }
+interface Items extends Base { readonly kind: 'items'; readonly values: readonly Child[]; }
+function items(node: Base): Items { return node as Items; }
+const raw = {kind: 'items' as const, values: [{name: 'ok'}]};
+console.log(items(raw).values[0]?.name ?? 'missing');
