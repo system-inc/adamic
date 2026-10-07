@@ -1,0 +1,39 @@
+{
+  "node": {
+    "exit": 0,
+    "stdout": "other\n",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 0,
+    "stdout": "other\n",
+    "stderr": ""
+  },
+  "source_sha256": "9a0ecd448514516729c662fa2b1cfdb02206532b6df7b8a520d35e5e8dc0253f",
+  "comparison": "stdout, stderr and exit identical",
+  "one_byte_mutant_diff_exit": 1,
+  "mutant": "XOR first native-output byte with 1",
+  "full_slice": "not rerun, awaiting union-valued Map fix",
+  "feature_commit": "c9d885d79e10c6e0b404a9b6e9f3529f9e9b3412",
+  "scratch_commit": "3d9406793bc3405b88ca3529f2c2c5193c99b7e2",
+  "probe": "probes/switch-case-declaration.a",
+  "compiler_build_exit": 0,
+  "probe_build_exit": 0,
+  "merge_conflicts": [
+    "docs/0.1.md",
+    "internal/ir/ir.go",
+    "internal/javascript/javascript.go",
+    "internal/lower/collections.go",
+    "internal/lower/locals.go",
+    "internal/lower/object.go",
+    "internal/lower/statements.go",
+    "internal/native/emit_locals.go",
+    "internal/oracle/counts.md"
+  ],
+  "resolution": "Scratch only: retain prior features, add switch readiness to local initialization/checks and JS/native readiness access; preserve enum default guards and discriminant-before-storage order. Retain existing generated counts table.",
+  "focused_oracle_command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations|TestSwitchCaseDeclarationMutants' -count=1 -timeout 15m",
+  "focused_oracle_exit": 1,
+  "focused_oracle_log": "--- FAIL: TestSwitchCaseDeclarationMutants (0.00s)\n    --- FAIL: TestSwitchCaseDeclarationMutants/no_fallthrough (0.07s)\n        switch_case_declaration_test.go:52: /workspace/scratch/scanner-front2/internal/oracle/testdata/switch_case_declarations/fallthrough.a:12:4: stage 0 can't lower a block-scoped nested function declaration yet\n    --- FAIL: TestSwitchCaseDeclarationMutants/unready_write (0.07s)\n        switch_case_declaration_test.go:52: /workspace/scratch/scanner-front2/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a:15:4: stage 0 can't lower a block-scoped nested function declaration yet\n    --- FAIL: TestSwitchCaseDeclarationMutants/function_not_hoisted (0.10s)\n        switch_case_declaration_test.go:52: /workspace/scratch/scanner-front2/internal/oracle/testdata/switch_case_declarations/shared.a:10:4: stage 0 can't lower a block-scoped nested function declaration yet\n--- FAIL: TestNativeAgreesWithNode (0.05s)\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a (0.06s)\n        oracle_test.go:744: Lower: /workspace/scratch/scanner-front2/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a:15:4: stage 0 can't lower a block-scoped nested function declaration yet\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone.a (0.07s)\n        oracle_test.go:744: Lower: /workspace/scratch/scanner-front2/internal/oracle/testdata/switch_case_declarations/dead_zone.a:9:4: stage 0 can't lower a block-scoped nested function declaration yet\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a (0.06s)\n        oracle_test.go:744: Lower: /workspace/scratch/scanner-front2/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a:7:4: stage 0 can't lower a block-scoped nested function declaration yet\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/fallthrough.a (0.07s)\n        oracle_test.go:744: Lower: /workspace/scratch/scanner-front2/internal/oracle/testdata/switch_case_declarations/fallthrough.a:12:4: stage 0 can't lower a block-scoped nested function declaration yet\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/shared.a (0.05s)\n        oracle_test.go:744: Lower: /workspace/scratch/scanner-front2/internal/oracle/testdata/switch_case_declarations/shared.a:10:4: stage 0 can't lower a block-scoped nested function declaration yet\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a (0.56s)\n        oracle_test.go:767: exit codes differ\n            node:   exit 7, stdout \"value0\\nbefore\\n\", stderr \"file:///workspace/scratch/scanner-front2/oracle/adamic.mjs:37\\n\\tconst message = error instanceof AdamicPanic ? error.message\\n\\t                                 ^\\n\\nReferenceError: AdamicPanic is not defined\\n    at process.<anonymous> (file:///workspace/scratch/scanner-front2/oracle/adamic.mjs:37:35)\\n    at process.emit (node:events:509:28)\\n    at process._fatalException (node:internal/process/execution:159:25)\\n    at asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:107:5)\\n\\nNode.js v24.19.0\\n\"\n            native: exit 70, stdout \"value0\\nbefore\\n\", stderr \"adamic: panic: ReferenceError: Cannot access 'value' before initialization\\n\"\nFAIL\ngate cache: native hits=0 misses=10\ngate cache: node hits=0 misses=8\ngate cache: probe hits=0 misses=0\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.704s\nFAIL\n",
+  "full_scanner_status": "red; previous first real stop remains union-valued Map, no full slice rerun requested",
+  "compiler_edits_pushed": false
+}

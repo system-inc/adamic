@@ -1,5 +1,30 @@
 # Scanner blockers
 
+## October 7: case declaration probe fixed; union-valued Map still pending
+
+Merged imported-const-case c9d885d7 into the unpushed feature scratch.
+The unchanged `probes/switch-case-declaration.a` builds natively and prints
+`other\n`, identical to source Node stdout, stderr and exit (0).
+Changing exactly one byte of native stdout makes diff exit 1.
+Evidence, exact pins, commands and conflict resolutions are in
+`evidence/case-declaration-fix.json`; the mutant diff is tracked alongside it.
+
+Conflicts touched lowering (collections, locals, object/switch and statements),
+IR, JavaScript and native local readiness, documentation and the counts table.
+Scratch resolutions keep prior features and combine switch readiness with
+existing checks, enum default guards and discriminant evaluation order.
+No compiler changes or scratch merge were pushed.
+
+The broader uncached switch oracle failed: fixtures with block-scoped nested
+functions stop in lowering, and the dead_zone_direct Node error control encounters
+an undefined AdamicPanic in oracle/adamic.mjs. These are recorded failures,
+not a green claim for the whole feature gate. The requested unchanged scanner
+probe and its one-byte comparison mutant are green.
+
+Per instruction, the full slice was not rebuilt or rerun. Its last observed first
+stop is still union-valued Map (stop 2), awaiting host-blockers. No scanner native
+diff or metrics are newly available.
+
 ## October 7: generic optional result fixed; union-valued Map is first real stop
 
 Merged scanner-generic-optional-result 6ffb8bb8 into the existing unpushed
