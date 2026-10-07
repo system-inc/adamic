@@ -283,6 +283,24 @@ fi
 "$warmTests" || step "test binaries deferred (use --warm-tests)"
 step "build cache warm"
 
+# Go commands in workspace mode (downloads, builds, the archive step) add sums to go.work.sum. A gate
+# tests the commit exactly, and the shard runner refuses a dirty submodule, so setup leaves every
+# go.work.sum as the commit has it: a tracked one is written back from HEAD, an untracked one setup
+# created is removed. Go adds missing sums again as it needs them.
+restoreWorkSums() {
+	local directory=$1
+	if bounded 30 git -C "$directory" ls-files --error-unmatch go.work.sum > /dev/null 2>&1; then
+		bounded 30 git -C "$directory" diff --quiet -- go.work.sum || bounded 30 git -C "$directory" show HEAD:go.work.sum > "$directory/go.work.sum"
+	elif [ -f "$directory/go.work.sum" ] && ! bounded 30 git -C "$directory" check-ignore -q go.work.sum; then
+		rm -f "${directory:?}/go.work.sum"
+	fi
+}
+restoreWorkSums "$repository"
+while IFS= read -r submodule; do
+	restoreWorkSums "$repository/$submodule"
+done < <(bounded 60 git -C "$repository" submodule --quiet foreach --recursive 'echo "$displaypath"')
+step "workspace sums restored to the commit"
+
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
 echo "setup: build-flags commit=$(bounded 30 git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(bounded 30 go version) clang=$(bounded 30 clang --version | head -n 1) node=$(bounded 30 node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests gate-inputs=$gateInputs load-before=$loadBefore load-after=$(cat /proc/loadavg)"
