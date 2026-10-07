@@ -1,0 +1,19 @@
+export function expandAwaitTypes(types: readonly number[], unions: ReadonlyMap<number, readonly number[]>, substitutions: ReadonlyMap<number, readonly number[]>): number[] {
+    const expanded: number[] = [];
+    for(const type of types) {
+        const parts = unions.get(type) ?? [type];
+        for(const part of parts) {
+            const standIns = substitutions.get(part);
+            if(standIns !== undefined) {
+                for(const standIn of standIns) {
+                    for(const replacement of unions.get(standIn) ?? [standIn]) {
+                        expanded.push(replacement);
+                    }
+                }
+                continue;
+            }
+            expanded.push(part);
+        }
+    }
+    return expanded;
+}

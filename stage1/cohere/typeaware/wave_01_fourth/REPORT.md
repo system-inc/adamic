@@ -567,3 +567,37 @@ await generic/heritage demand and native fact delivery, atomic CFG/event/capture
 integration, and symbol shared-driver integration. Full stage-1 gate and the 17
 external correctness checks were not run or claimed. No check was weakened or
 skipped and called green. No new full-rule throughput measurements were made.
+
+## Await union expansion and substitution continuation
+
+Added require_await/expand.a. Adamic expands supplied union members, substitutes
+parameter identities, expands each stand-in union once, preserves order and
+duplicates and distinguishes an empty substitution from an absent one.
+No type names or syntax kinds are compared for relevance.
+
+An independent Go overlay loads real checker types for two unions and a generic
+parameter. Sixteen substitution maps vary parameter replacement, stand-in unions,
+empty replacements and repeated inputs. Expected identity sequences come from
+unchanged requireAwaitExpandTypes. No expected result is supplied to native.
+All sequences agree byte for byte under ASan/UBSan/LSan. The empty-substitution
+mutant treats an empty present substitution as absent; it compiles and exits zero
+with empty sanitizer stderr, then fails only Go byte comparison. Captures and
+exact streams are preserved in validation/await-expand.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_await_expand.py /workspace/wave01-await-expand /workspace/wave-01-fourth-adamic > /tmp/wave01-await-expand.log 2>&1
+```
+
+Output: PASS 16 real-type expansion/substitution cases; sanitizer-clean
+empty-substitution mutant caught by bytes. gofmt and git diff --check pass.
+Current main c7991b900 and area b84a9d931 are unchanged ancestors. No rebase,
+shared edits or new claims were needed. Native captures are test-only and
+create no bridge handles; no new released-handle coverage is claimed.
+
+Generic context-step recording/replay, parameter stand-in discovery, heritage
+demand and native fact delivery remain unfinished. The three latest rules are
+still incomplete. Full rule corpus agreement/throughput, complete stage-1 gate
+and the 17 external correctness comparisons were not run for this isolated
+helper. No check was weakened or skipped and called green. Existing full-rule
+gates were unchanged and not repeated.
