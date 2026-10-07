@@ -1,0 +1,479 @@
+[
+  {
+    "name": "extract",
+    "args": [
+      "go",
+      "run",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-next/testdata/extract.go",
+      "/workspace/adamic"
+    ],
+    "exit": 0,
+    "ns": 274014773
+  },
+  {
+    "name": "oracle-build",
+    "args": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave29-latest-next-fresh/overlay.json",
+      "-o",
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/adamic/cohere/adamic_wave29_next_oracle.go"
+    ],
+    "exit": 0,
+    "ns": 12148148284
+  },
+  {
+    "name": "native-build",
+    "args": [
+      "/workspace/wave29-latest-kernel-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-next/runner.a",
+      "-o",
+      "/workspace/wave29-latest-next-fresh/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 33595618268
+  },
+  {
+    "name": "group-00-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/wave29-latest-next-fresh/group-00/config.json",
+      "/workspace/wave29-latest-next-fresh/group-00/manifest",
+      "/workspace/wave29-latest-next-fresh/group-00/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 478176504
+  },
+  {
+    "name": "group-00-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/wave29-latest-next-fresh/group-00/config.json",
+      "/workspace/wave29-latest-next-fresh/group-00/manifest",
+      "/workspace/wave29-latest-next-fresh/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 294603608
+  },
+  {
+    "name": "group-01-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/wave29-latest-next-fresh/group-01/config.json",
+      "/workspace/wave29-latest-next-fresh/group-01/manifest",
+      "/workspace/wave29-latest-next-fresh/group-01/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 170074987
+  },
+  {
+    "name": "group-01-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/wave29-latest-next-fresh/group-01/config.json",
+      "/workspace/wave29-latest-next-fresh/group-01/manifest",
+      "/workspace/wave29-latest-next-fresh/group-01/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 88453992
+  },
+  {
+    "name": "group-02-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/wave29-latest-next-fresh/group-02/config.json",
+      "/workspace/wave29-latest-next-fresh/group-02/manifest",
+      "/workspace/wave29-latest-next-fresh/group-02/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 154716389
+  },
+  {
+    "name": "group-02-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/wave29-latest-next-fresh/group-02/config.json",
+      "/workspace/wave29-latest-next-fresh/group-02/manifest",
+      "/workspace/wave29-latest-next-fresh/group-02/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 103281308
+  },
+  {
+    "name": "group-03-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/wave29-latest-next-fresh/group-03/config.json",
+      "/workspace/wave29-latest-next-fresh/group-03/manifest",
+      "/workspace/wave29-latest-next-fresh/group-03/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 96573649
+  },
+  {
+    "name": "group-03-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/wave29-latest-next-fresh/group-03/config.json",
+      "/workspace/wave29-latest-next-fresh/group-03/manifest",
+      "/workspace/wave29-latest-next-fresh/group-03/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 41544613
+  },
+  {
+    "name": "group-04-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/wave29-latest-next-fresh/group-04/config.json",
+      "/workspace/wave29-latest-next-fresh/group-04/manifest",
+      "/workspace/wave29-latest-next-fresh/group-04/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 105965123
+  },
+  {
+    "name": "group-04-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/wave29-latest-next-fresh/group-04/config.json",
+      "/workspace/wave29-latest-next-fresh/group-04/manifest",
+      "/workspace/wave29-latest-next-fresh/group-04/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 166986594
+  },
+  {
+    "name": "group-05-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/wave29-latest-next-fresh/group-05/config.json",
+      "/workspace/wave29-latest-next-fresh/group-05/manifest",
+      "/workspace/wave29-latest-next-fresh/group-05/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 84206983
+  },
+  {
+    "name": "group-05-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/wave29-latest-next-fresh/group-05/config.json",
+      "/workspace/wave29-latest-next-fresh/group-05/manifest",
+      "/workspace/wave29-latest-next-fresh/group-05/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 39740568
+  },
+  {
+    "name": "group-06-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/wave29-latest-next-fresh/group-06/config.json",
+      "/workspace/wave29-latest-next-fresh/group-06/manifest",
+      "/workspace/wave29-latest-next-fresh/group-06/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 94940539
+  },
+  {
+    "name": "group-06-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/wave29-latest-next-fresh/group-06/config.json",
+      "/workspace/wave29-latest-next-fresh/group-06/manifest",
+      "/workspace/wave29-latest-next-fresh/group-06/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 79606635
+  },
+  {
+    "name": "compiler-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-latest-next-fresh/compiler.manifest"
+    ],
+    "exit": 0,
+    "ns": 1975240418
+  },
+  {
+    "name": "compiler-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-latest-next-fresh/compiler.manifest"
+    ],
+    "exit": 0,
+    "ns": 5422368910
+  },
+  {
+    "name": "repository-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-latest-next-fresh/repository.manifest"
+    ],
+    "exit": 0,
+    "ns": 286936092
+  },
+  {
+    "name": "repository-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-latest-next-fresh/repository.manifest"
+    ],
+    "exit": 0,
+    "ns": 395975918
+  },
+  {
+    "name": "globals-mutant-build",
+    "args": [
+      "/workspace/wave29-latest-kernel-adamic",
+      "build",
+      "/workspace/wave29-latest-next-fresh/globals-source/runner.a",
+      "-o",
+      "/workspace/wave29-latest-next-fresh/globals-mutant",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 11396742108
+  },
+  {
+    "name": "globals-group-00",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/globals-mutant",
+      "/workspace/wave29-latest-next-fresh/group-00/config.json",
+      "/workspace/wave29-latest-next-fresh/group-00/manifest",
+      "/workspace/wave29-latest-next-fresh/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 102712110
+  },
+  {
+    "name": "setter-mutant-build",
+    "args": [
+      "/workspace/wave29-latest-kernel-adamic",
+      "build",
+      "/workspace/wave29-latest-next-fresh/setter-source/runner.a",
+      "-o",
+      "/workspace/wave29-latest-next-fresh/setter-mutant",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 12476996320
+  },
+  {
+    "name": "setter-group-00",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/setter-mutant",
+      "/workspace/wave29-latest-next-fresh/group-00/config.json",
+      "/workspace/wave29-latest-next-fresh/group-00/manifest",
+      "/workspace/wave29-latest-next-fresh/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 99054865
+  },
+  {
+    "name": "shadow-mutant-build",
+    "args": [
+      "/workspace/wave29-latest-kernel-adamic",
+      "build",
+      "/workspace/wave29-latest-next-fresh/shadow-source/runner.a",
+      "-o",
+      "/workspace/wave29-latest-next-fresh/shadow-mutant",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 9164195193
+  },
+  {
+    "name": "shadow-group-00",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/shadow-mutant",
+      "/workspace/wave29-latest-next-fresh/group-00/config.json",
+      "/workspace/wave29-latest-next-fresh/group-00/manifest",
+      "/workspace/wave29-latest-next-fresh/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 56517033
+  },
+  {
+    "name": "asan-archive",
+    "args": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave29-latest-next-fresh/asan-checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "ns": 2804122719
+  },
+  {
+    "name": "asan-build",
+    "args": [
+      "/workspace/wave29-latest-kernel-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-next/runner.a",
+      "-o",
+      "/workspace/wave29-latest-next-fresh/asan-native",
+      "--tsgo",
+      "/workspace/wave29-latest-next-fresh/asan-checker.a",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "ns": 19804654757
+  },
+  {
+    "name": "group-00-asan",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/asan-native",
+      "/workspace/wave29-latest-next-fresh/group-00/config.json",
+      "/workspace/wave29-latest-next-fresh/group-00/manifest",
+      "/workspace/wave29-latest-next-fresh/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 156968984
+  },
+  {
+    "name": "group-01-asan",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/asan-native",
+      "/workspace/wave29-latest-next-fresh/group-01/config.json",
+      "/workspace/wave29-latest-next-fresh/group-01/manifest",
+      "/workspace/wave29-latest-next-fresh/group-01/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 56165284
+  },
+  {
+    "name": "group-02-asan",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/asan-native",
+      "/workspace/wave29-latest-next-fresh/group-02/config.json",
+      "/workspace/wave29-latest-next-fresh/group-02/manifest",
+      "/workspace/wave29-latest-next-fresh/group-02/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 38725037
+  },
+  {
+    "name": "group-03-asan",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/asan-native",
+      "/workspace/wave29-latest-next-fresh/group-03/config.json",
+      "/workspace/wave29-latest-next-fresh/group-03/manifest",
+      "/workspace/wave29-latest-next-fresh/group-03/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 27746580
+  },
+  {
+    "name": "group-04-asan",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/asan-native",
+      "/workspace/wave29-latest-next-fresh/group-04/config.json",
+      "/workspace/wave29-latest-next-fresh/group-04/manifest",
+      "/workspace/wave29-latest-next-fresh/group-04/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 32853979
+  },
+  {
+    "name": "group-05-asan",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/asan-native",
+      "/workspace/wave29-latest-next-fresh/group-05/config.json",
+      "/workspace/wave29-latest-next-fresh/group-05/manifest",
+      "/workspace/wave29-latest-next-fresh/group-05/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 48064805
+  },
+  {
+    "name": "group-06-asan",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/asan-native",
+      "/workspace/wave29-latest-next-fresh/group-06/config.json",
+      "/workspace/wave29-latest-next-fresh/group-06/manifest",
+      "/workspace/wave29-latest-next-fresh/group-06/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 33554520
+  },
+  {
+    "name": "compiler-asan",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/asan-native",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-latest-next-fresh/compiler.manifest"
+    ],
+    "exit": 0,
+    "ns": 7346934203
+  },
+  {
+    "name": "repository-asan",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/asan-native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-latest-next-fresh/repository.manifest"
+    ],
+    "exit": 0,
+    "ns": 1316946716
+  },
+  {
+    "name": "compiler-timed-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-latest-next-fresh/compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 415756321
+  },
+  {
+    "name": "compiler-timed-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-latest-next-fresh/compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 2086631035
+  },
+  {
+    "name": "repository-timed-go",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-latest-next-fresh/repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 156803926
+  },
+  {
+    "name": "repository-timed-native",
+    "args": [
+      "/workspace/wave29-latest-next-fresh/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-latest-next-fresh/repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 309890236
+  }
+]

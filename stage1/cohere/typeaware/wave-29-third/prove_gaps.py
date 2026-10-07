@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Executable blocker evidence, never a passing lint port."""
-import json, subprocess, sys
+import json, os, subprocess, sys
 from pathlib import Path
 repo=Path(__file__).resolve().parents[4];source=Path(__file__).resolve().parent
 artifacts=Path(sys.argv[1]).resolve();artifacts.mkdir(parents=True,exist_ok=True)
-compiler=Path('/workspace/wave29-regex-controls/adamic');records=[]
+compiler=Path(os.environ.get('ADAMIC_COMPILER', '/workspace/wave29-regex-controls/adamic'));records=[]
 def run(name,args,cwd=repo,expected=0):
  with (artifacts/(name+'.stdout')).open('wb') as out,(artifacts/(name+'.stderr')).open('wb') as err:
   p=subprocess.run([str(x) for x in args],cwd=cwd,stdout=out,stderr=err)

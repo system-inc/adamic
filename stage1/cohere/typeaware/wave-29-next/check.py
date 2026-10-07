@@ -4,7 +4,7 @@ import collections, hashlib, json, os, subprocess, sys, time
 from pathlib import Path
 repo=Path(__file__).resolve().parents[4]; source=Path(__file__).resolve().parent
 d=Path(sys.argv[1]).resolve();d.mkdir(parents=True,exist_ok=True)
-compiler=Path('/workspace/wave29-regex-controls/adamic');archive=Path('/workspace/wave29-next-checker.a')
+compiler=Path(os.environ.get('ADAMIC_COMPILER', '/workspace/wave29-regex-controls/adamic'));archive=Path('/workspace/wave29-next-checker.a')
 commands=[]
 def run(name,args,cwd=repo,expected=0):
  start=time.monotonic_ns()

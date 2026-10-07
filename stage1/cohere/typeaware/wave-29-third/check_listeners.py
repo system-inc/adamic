@@ -4,7 +4,7 @@ import json,os,re,subprocess,sys,time
 from pathlib import Path
 s=Path(__file__).resolve().parent;r=s.parents[3]
 d=Path(sys.argv[1]).resolve();d.mkdir(parents=True,exist_ok=True)
-c=Path('/workspace/wave29-regex-controls/adamic');archive=Path('/workspace/wave29-next-checker.a')
+c=Path(os.environ.get('ADAMIC_COMPILER', '/workspace/wave29-regex-controls/adamic'));archive=Path('/workspace/wave29-next-checker.a')
 commands=[]
 def run(name,args,cwd=r,env=None):
  start=time.monotonic_ns()

@@ -1,0 +1,6 @@
+independent Go oracle: three inputs, three positive findings; fixes and suggestions zero
+set_state_in_effect probe compiled and exited 0, but produced TypeAssertionExpression and no JSX nodes
+set_state_in_render probe compiled and exited 0, but produced TypeAssertionExpression and no JSX nodes
+static_components probe compiled; native parser exited 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 83 in input.tsx
+effect-hook Go reports one; native parser succeeds, but React SSA lowering/analysis has no native entry
+render-hook Go reports one; native parser succeeds, but React SSA lowering/analysis has no native entry
