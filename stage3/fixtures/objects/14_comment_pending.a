@@ -1,0 +1,118 @@
+// From TypeScript 6.0.3, src/compiler/scanner.ts:826
+// Census reason: a definite assignment assertion !
+type CommentKind = number;
+const CharacterCodes = {carriageReturn: 13, lineFeed: 10, tab: 9, verticalTab: 11, formFeed: 12, space: 32, slash: 47, asterisk: 42, maxAsciiCharacter: 127};
+const SyntaxKind = {SingleLineCommentTrivia: 2, MultiLineCommentTrivia: 3};
+function getShebang(_text: string): string | undefined { return undefined; }
+function isLineBreak(ch: number): boolean { return ch === 10 || ch === 13; }
+function isWhiteSpaceLike(ch: number): boolean { return ch === 160 || isLineBreak(ch); }
+function iterateCommentRanges<T, U>(reduce: boolean, text: string, pos: number, trailing: boolean, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T, memo: U | undefined) => U, state: T, initial?: U): U | undefined {
+    let pendingPos!: number;
+    let pendingEnd!: number;
+    let pendingKind!: CommentKind;
+    let pendingHasTrailingNewLine!: boolean;
+    let hasPendingCommentRange = false;
+    let collecting = trailing;
+    let accumulator = initial;
+    if (pos === 0) {
+        collecting = true;
+        const shebang = getShebang(text);
+        if (shebang) {
+            pos = shebang.length;
+        }
+    }
+    scan:
+    while (pos >= 0 && pos < text.length) {
+        const ch = text.charCodeAt(pos);
+        switch (ch) {
+            case CharacterCodes.carriageReturn:
+                if (text.charCodeAt(pos + 1) === CharacterCodes.lineFeed) {
+                    pos++;
+                }
+            // falls through
+            case CharacterCodes.lineFeed:
+                pos++;
+                if (trailing) {
+                    break scan;
+                }
+
+                collecting = true;
+                if (hasPendingCommentRange) {
+                    pendingHasTrailingNewLine = true;
+                }
+
+                continue;
+            case CharacterCodes.tab:
+            case CharacterCodes.verticalTab:
+            case CharacterCodes.formFeed:
+            case CharacterCodes.space:
+                pos++;
+                continue;
+            case CharacterCodes.slash:
+                const nextChar = text.charCodeAt(pos + 1);
+                let hasTrailingNewLine = false;
+                if (nextChar === CharacterCodes.slash || nextChar === CharacterCodes.asterisk) {
+                    const kind = nextChar === CharacterCodes.slash ? SyntaxKind.SingleLineCommentTrivia : SyntaxKind.MultiLineCommentTrivia;
+                    const startPos = pos;
+                    pos += 2;
+                    if (nextChar === CharacterCodes.slash) {
+                        while (pos < text.length) {
+                            if (isLineBreak(text.charCodeAt(pos))) {
+                                hasTrailingNewLine = true;
+                                break;
+                            }
+                            pos++;
+                        }
+                    }
+                    else {
+                        while (pos < text.length) {
+                            if (text.charCodeAt(pos) === CharacterCodes.asterisk && text.charCodeAt(pos + 1) === CharacterCodes.slash) {
+                                pos += 2;
+                                break;
+                            }
+                            pos++;
+                        }
+                    }
+
+                    if (collecting) {
+                        if (hasPendingCommentRange) {
+                            accumulator = cb(pendingPos, pendingEnd, pendingKind, pendingHasTrailingNewLine, state, accumulator);
+                            if (!reduce && accumulator) {
+                                // If we are not reducing and we have a truthy result, return it.
+                                return accumulator;
+                            }
+                        }
+
+                        pendingPos = startPos;
+                        pendingEnd = pos;
+                        pendingKind = kind;
+                        pendingHasTrailingNewLine = hasTrailingNewLine;
+                        hasPendingCommentRange = true;
+                    }
+
+                    continue;
+                }
+                break scan;
+            default:
+                if (ch > CharacterCodes.maxAsciiCharacter && (isWhiteSpaceLike(ch))) {
+                    if (hasPendingCommentRange && isLineBreak(ch)) {
+                        pendingHasTrailingNewLine = true;
+                    }
+                    pos++;
+                    continue;
+                }
+                break scan;
+        }
+    }
+
+    if (hasPendingCommentRange) {
+        accumulator = cb(pendingPos, pendingEnd, pendingKind, pendingHasTrailingNewLine, state, accumulator);
+    }
+
+    return accumulator;
+}
+
+for (const text of ["// alpha\n/* beta */\nlet x", "let x"]) {
+    const result = iterateCommentRanges(true, text, 0, false, (pos, end, kind, newline, _state, memo) => (memo ?? "") + `${pos}:${end}:${kind}:${newline};`, 0, "");
+    console.log(result ?? "none");
+}

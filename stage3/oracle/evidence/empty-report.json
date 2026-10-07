@@ -1,0 +1,51 @@
+{
+  "tree": "/tmp/stage3-comment",
+  "nproc": 5,
+  "workers": 1,
+  "runners": "compiler",
+  "tests": "stage3_no_test_matches_this_name",
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 7.207
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 5.392
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=1",
+        "--lint=false",
+        "--no-colors",
+        "--runners=compiler",
+        "--tests=stage3_no_test_matches_this_name"
+      ],
+      "exit": 0,
+      "seconds": 5.468
+    }
+  },
+  "status": "fail",
+  "counts": {
+    "passing": 0,
+    "failing": 0,
+    "pending": 0
+  },
+  "baseline_diffs": [],
+  "wall_seconds": 18.084
+}
