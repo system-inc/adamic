@@ -47,7 +47,64 @@ func (l *lowering) nodeProcessPath(node *ast.Node) string {
 	return ""
 }
 
+func (l *lowering) nodeProcessEnvironmentKey(node *ast.Node) (*ast.Node, string, bool) {
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindElementAccessExpression {
+		access := node.AsElementAccessExpression()
+		if l.processPath(access.Expression) == "process.env" {
+			return access.ArgumentExpression, "", true
+		}
+	}
+	if node.Kind == ast.KindPropertyAccessExpression && l.processPath(node.AsPropertyAccessExpression().Expression) == "process.env" {
+		return nil, node.Name().Text(), true
+	}
+	return nil, "", false
+}
+
+func (l *lowering) nodeProcessEnvironmentMutation(node *ast.Node) (ir.Expression, bool, error) {
+	var target, assigned *ast.Node
+	operation := ""
+	if node.Kind == ast.KindBinaryExpression && node.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+		target, assigned, operation = node.AsBinaryExpression().Left, node.AsBinaryExpression().Right, "envSet"
+	} else if node.Kind == ast.KindDeleteExpression {
+		target, operation = node.AsDeleteExpression().Expression, "envDelete"
+	} else {
+		return nil, false, nil
+	}
+	keyNode, keyText, known := l.nodeProcessEnvironmentKey(target)
+	if !known {
+		return nil, false, nil
+	}
+	key := ir.Expression(ir.StringConstant{Index: l.constant(keyText)})
+	if keyNode != nil {
+		var err error
+		key, err = l.expression(keyNode)
+		if err != nil {
+			return nil, true, err
+		}
+		if key.Type() != ir.String {
+			return nil, true, l.notYet(keyNode, "process.env mutation with a non-string key")
+		}
+	}
+	call := ir.ProcessCall{Operation: operation, Arguments: []ir.Expression{key}, Of: ir.Boolean}
+	if assigned != nil {
+		value, err := l.expression(assigned)
+		if err != nil {
+			return nil, true, err
+		}
+		if value.Type() != ir.String {
+			return nil, true, l.notYet(assigned, "process.env assignment of a non-string value")
+		}
+		call.Arguments = append(call.Arguments, value)
+		call.Of = ir.String
+	}
+	return call, true, nil
+}
+
 func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.nodeProcessEnvironmentMutation(node); known {
+		return value, known, err
+	}
 	if node.Kind == ast.KindPrefixUnaryExpression {
 		outer := node.AsPrefixUnaryExpression()
 		inner := ast.SkipParentheses(outer.Operand)
@@ -88,6 +145,8 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 			if path == "os.platform" {
 				call.Operation = "platform"
 			}
+		case "process.chdir":
+			call.Operation, call.Of, count, minimum = "chdir", ir.Object, 1, 1
 		case "process.memoryUsage":
 			call.Operation, call.Of = "memoryUsage", ir.Object
 		case "process.stdout.write":
@@ -175,4 +234,13 @@ func (l *lowering) nodeProcessMethodObservation(node *ast.Node) bool {
 		return true
 	}
 	return false
+}
+
+// Only the external environment has deletable keys; ordinary object shapes remain fixed.
+func (l *lowering) nodeProcessEnvironmentDelete(node *ast.Node) bool {
+	if node.Kind != ast.KindDeleteExpression {
+		return false
+	}
+	_, _, known := l.nodeProcessEnvironmentKey(node.AsDeleteExpression().Expression)
+	return known
 }

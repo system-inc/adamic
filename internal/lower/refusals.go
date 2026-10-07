@@ -64,7 +64,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused {
+		if refused, isRefused := refusals[node.Kind]; isRefused && !l.nodeProcessEnvironmentDelete(node) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}

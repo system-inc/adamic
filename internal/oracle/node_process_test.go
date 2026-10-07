@@ -244,7 +244,6 @@ func TestNodeProcessCachedDirectory(t *testing.T) {
 func TestNodeProcessUnsupportedOperationsStayLoud(t *testing.T) {
 	t.Parallel()
 	for name, source := range map[string]string{
-		"cwd catch":          "try { process.cwd(); } catch { console.log('caught'); }",
 		"measure catch":      "function compute(): void { performance.measure('x', 'absent'); } try { compute(); } catch { console.log('caught'); }",
 		"write backpressure": "const accepted = process.stdout.write('x'); console.log(String(accepted));",
 		"nextTick callback":  "process.nextTick(() => { console.log('tick'); });",

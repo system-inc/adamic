@@ -101,6 +101,46 @@ adamic_string *adamic_node_platform(void) {
     return &platform;
 }
 
+// Code-bearing host errors use the existing pending-exception word and cleanup paths.
+static void host_directory_error(int error, const char *operation, const adamic_string *from, const adamic_string *to) {
+    const char *code, *description;
+    switch (error) {
+        case ENOENT: code = "ENOENT"; description = "no such file or directory"; break;
+        case ENOTDIR: code = "ENOTDIR"; description = "not a directory"; break;
+        case EACCES: code = "EACCES"; description = "permission denied"; break;
+        case ELOOP: code = "ELOOP"; description = "too many symbolic links encountered"; break;
+        case ENAMETOOLONG: code = "ENAMETOOLONG"; description = "name too long"; break;
+        case ENOMEM: code = "ENOMEM"; description = "not enough memory"; break;
+        case EIO: code = "EIO"; description = "i/o error"; break;
+        default: { static const char message[] = "unsupported host directory errno"; adamic_panic(message, sizeof message - 1); }
+    }
+    static const char *const names[] = {"name", "message", "code"};
+    static const bool references[] = {true, true, true};
+    static const adamic_shape shape = {3, names, references, NULL};
+    static adamic_string error_name = ADAMIC_STRING("Error");
+    adamic_string *prefix = adamic_decode_utf8((const unsigned char *)code, strlen(code));
+    adamic_string *reason = adamic_decode_utf8((const unsigned char *)description, strlen(description));
+    adamic_string *syscall = adamic_decode_utf8((const unsigned char *)operation, strlen(operation));
+    adamic_string colon = ADAMIC_STRING(": "), comma = ADAMIC_STRING(", ");
+    adamic_string quote = ADAMIC_STRING("'"), arrow = ADAMIC_STRING("' -> '");
+    adamic_string *message;
+    if (to == NULL) {
+        message = adamic_string_concat(5, (adamic_string *const[]){prefix, &colon, reason, &comma, syscall});
+    } else {
+        adamic_string space = ADAMIC_STRING(" ");
+        message = adamic_string_concat(10, (adamic_string *const[]){prefix, &colon, reason, &comma, syscall, &space, &quote, (adamic_string *)from, &arrow, (adamic_string *)to});
+        adamic_string *closed = adamic_string_concat(2, (adamic_string *const[]){message, &quote});
+        adamic_release(message);
+        message = closed;
+    }
+    adamic_thrown = adamic_object_new(&shape);
+    adamic_thrown->slots[0].reference = &error_name;
+    adamic_thrown->slots[1].reference = message;
+    adamic_thrown->slots[2].reference = prefix;
+    adamic_release(reason);
+    adamic_release(syscall);
+}
+
 adamic_string *adamic_node_cwd(void) {
     if (current_directory != NULL) { return adamic_retain(current_directory); }
     size_t capacity = 256;
@@ -116,10 +156,8 @@ adamic_string *adamic_node_cwd(void) {
         int error = errno;
         free(buffer);
         if (error == ERANGE) { capacity *= 2; continue; }
-        // Catchable system errors need a code-bearing Error shape and exceptional CFG edges.
-        // Lowering refuses a try around cwd until that shared integration exists.
-        const char *message = error == ENOENT ? "Error: ENOENT: no such file or directory, uv_cwd" : "Error: cannot read current directory";
-        adamic_panic(message, strlen(message));
+        host_directory_error(error, "uv_cwd", NULL, NULL);
+        return NULL;
     }
 }
 
@@ -277,4 +315,49 @@ adamic_object *adamic_node_stdout_handle(void) {
     adamic_object *handle = adamic_object_new(&shape);
     handle->slots[0].reference = &method;
     return handle;
+}
+
+// Node's environment uses NUL-terminated UTF-8, replacing lone UTF-16 surrogates.
+static char *environment_text(const adamic_string *text) {
+    char *bytes = malloc(text->length + 1);
+    if (bytes == NULL) { static const char message[] = "out of memory"; adamic_panic(message, sizeof message - 1); }
+    memcpy(bytes, text->bytes, text->length);
+    for (size_t at = 0; at + 3 <= text->length; at++) {
+        if ((unsigned char)bytes[at] == 0xed && (unsigned char)bytes[at + 1] >= 0xa0) {
+            memcpy(bytes + at, "\xef\xbf\xbd", 3);
+            at += 2;
+        }
+    }
+    bytes[text->length] = 0;
+    return bytes;
+}
+
+void adamic_node_environment_set(const adamic_string *name, const adamic_string *value) {
+    char *key = environment_text(name), *text = environment_text(value);
+    // Node ignores invalid names (empty or containing '=') rather than throwing.
+    (void)setenv(key, text, 1);
+    free(text);
+    free(key);
+}
+
+bool adamic_node_environment_delete(const adamic_string *name) {
+    char *key = environment_text(name);
+    (void)unsetenv(key);
+    free(key);
+    return true;
+}
+
+void adamic_node_chdir(const adamic_string *directory) {
+    char *path = environment_text(directory);
+    if (chdir(path) == 0) {
+        free(path);
+        if (current_directory != NULL) { adamic_release(current_directory); current_directory = NULL; }
+        return;
+    }
+    int error = errno;
+    free(path);
+    adamic_string *from = adamic_node_cwd();
+    if (adamic_thrown != NULL) { return; }
+    host_directory_error(error, "chdir", from, directory);
+    adamic_release(from);
 }

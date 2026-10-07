@@ -160,7 +160,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 		case ir.Throw:
 			found = true
 		case ir.ProcessCall:
-			found = node.Operation == "exit" || node.Operation == "setExitCode"
+			found = node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir"
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
@@ -208,7 +208,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				failing = l.libraryFailure(l.result.Functions[node.Comparator].Body, visited)
 			}
 		case ir.ProcessCall:
-			if node.Operation == "cwd" || node.Operation == "measure" {
+			if node.Operation == "measure" {
 				failing = "the Node host " + node.Operation + " operation"
 			}
 		case ir.SetProperty:

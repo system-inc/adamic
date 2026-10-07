@@ -3,6 +3,7 @@
 bool adamic_write_raw(enum adamic_stream stream, const adamic_string *text);
 void adamic_node_process_start(int count, char **values);
 adamic_string *adamic_node_cwd(void);
+void adamic_node_chdir(const adamic_string *directory);
 adamic_string *adamic_node_platform(void);
 adamic_string *adamic_node_eol(void);
 bool adamic_node_next_tick_feature(void);
@@ -19,4 +20,6 @@ adamic_object *adamic_node_mark(const adamic_string *name);
 adamic_object *adamic_node_measure(const adamic_string *name, const adamic_string *start, const adamic_string *end);
 void adamic_node_clear_marks(const adamic_string *name);
 void adamic_node_clear_measures(const adamic_string *name);
+void adamic_node_environment_set(const adamic_string *name, const adamic_string *value);
+bool adamic_node_environment_delete(const adamic_string *name);
 #endif
