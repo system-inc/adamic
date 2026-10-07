@@ -1,8 +1,8 @@
 Follow-up on codex/stage1-estree, baseline 80f1ded.
-Largest refusal cause first: JSX rescues 523 files without new disagreements.
-The source census has 15,222 matches, 92 output mismatches and 461 acceptance disagreements.
-UTF-8 loss and parser stalls receive separate checkpoints below.
-This remains an incomplete ESTree port; no compiler/runtime files were edited.
+The frozen source census has 15,554 matches and zero output mismatches.
+Acceptance disagreements fall from 984 to 175; this remains incomplete.
+UTF-8 loss and parser stalls have separate pushed commits and proving programs.
+No shared parser, compiler or runtime files were edited.
 
 Baseline: 27,369 frozen files, 14,699 identical, 861 refused Go answers, 123
 accepted Go refusals, 92 output mismatches and 11,594 both refused. Refusal
@@ -153,3 +153,61 @@ accepts both on Node/native and fails the acceptance predicate.
 /tmp/estree-expressions-rescued.log 2>&1`: PASS 20.632s, all 64 files,
 2,142,447 bytes on all three port builds. Cohere is green. The first mutant
 anchor was not unique; that failed attempt is not credited as a mutant.
+
+### Recovery checkpoint
+
+Expression checkpoint e1f0958 was pushed. The local parser now adapts the recovery
+work on origin/codex/parser-recovery at b85afdde325a8881a54a3bdb100ea19decd4d966,
+while retaining this unit's JSX, decorated expressions and progress guards. Its
+statements, grammar, lookahead, lexical messages, recovery and spelling helpers
+are copied into the ESTree territory. Only scanner and node-model dependencies
+remain shared. This is a local adaptation, not a claim that the recovery branch
+has complete diagnostic parity. The original recovery trial regressed matches;
+those regressions were fixed before promotion.
+
+The final source census is 15,554 identical / 98 refused Go answers / 77 accepted
+Go refusals / zero different / 11,640 both refused. This resolves all 92 baseline
+output mismatches, with no old matching file regressing or newly incorrect
+acceptance. First-modifier accessibility, private and bigint property names,
+parameter modifiers, static-block contexts, object cover defaults, empty generic
+lists, first heritage clauses, external-module await, export-default async calls,
+namespace ASI, recovered index signatures and conditional arrow speculation are
+held to Go. Colon detection now scans the next token instead of looking inside
+intervening JSDoc text. Type-list construction has its own helper and scanner.
+
+`ADAMIC_ESTREE_LIBRARY=/workspace/scratch/estree-library
+ADAMIC_ESTREE_CORPUS=/tmp/estree-recovery-rescued go test -count=1 -v
+./stage1/cohere/estree -run '^TestRecover|^TestBoundedPortParser$|
+^TestPortStallControl$|^TestUnattachedDecorator|^TestRepositoryAgreement$'`
+ran the 190 newly matching frozen files, 15,512,882 bytes on all three builds,
+in 34.95s for TestRepositoryAgreement. Other passing checks included sixteen
+new generated files, 23,734 bytes, the await line-break mutant, orphan-decorator
+acceptance control, and all thirteen recorded stalls. The first library assertion
+incorrectly expected primitive implements to be rejected: the original library
+accepts it and agrees in both raw and postprocessed trees. That assertion was
+corrected and the focused gate rerun; retained failed output is not called green.
+
+The three new wrong-output mutants finish normally on Node and sanitized native:
+first accessibility forced public (line 96), empty generic end decremented
+(line 419), and module await reparse removed (line 627). The disabled class-member
+progress guard reaches the 500ms deadline on both builds. EOF recovery now emits
+parser diagnostics; every original recorded stall follows Go's acceptance
+outcome, recovering a byte-identical tree where Go accepts. The older shared
+parser remains unchanged and its separate gap still times out.
+
+`TestRecoveryLibraryGaps` proves Go accepts f<>(); and class C<> {}, while the
+pinned original library refuses. Four valid minimal programs match raw and
+postprocessed library trees, including primitive implements and module await.
+`gaps/emptyGenerics.ts` and `gaps/portParserRecovery.ts` are retained proving
+programs. The former goes through the actual driver; the latter now proves the
+actual driver's diagnostic boundary rather than calling a parser without
+checking its diagnostics. Full corpus records and final green logs are retained
+under validation/followup/. The later full gate is reported below.
+
+Final focused recovery gate: `ADAMIC_ESTREE_LIBRARY=/workspace/scratch/estree-library
+ go test -count=1 -v ./stage1/cohere/estree -run
+'^TestRecoveredGrammar$|^TestRecoveryMutants$|^TestRecoveryLibraryGaps$|
+^TestBoundedPortParser$|^TestPortStallControl$' > /tmp/estree-recovery-green.log 2>&1`
+passed in 152.496s. `cohere --no-cache stage1/cohere/estree/*.ts` passed,
+29/29 Adamic-ready sources. The final actual-driver source audit remains
+15,554 / 98 / 77 / zero / 11,640 on all 27,369 frozen records.

@@ -59,41 +59,21 @@ raw input boundary before this port can represent those files faithfully.
 
 ## Parser recovery and unsupported grammar
 
-Current follow-up: the ESTree-local parser explicitly stops after more than 32
-repeated scan positions. All 13 recorded stalls and three minimal EOF cases
-refuse before 2s on Node, sanitized native and emitted JS; disabling that guard
-hits a 500ms deadline on Node/native. The audit no longer injects a guard.
-`gaps/portParserRecovery.ts` uses the local parser. Seven of the recorded stalls
-still yield Go trees the port cannot recover; acceptance parity remains a gap.
-The following shared-parser observations describe the original dependency,
-which is intentionally unchanged, rather than the current local driver.
+The local driver includes progress guards and now recovers the Go-accepted
+members of the thirteen baseline stalls. Go-refused members and three minimal
+EOF cases explicitly refuse with parser diagnostics and empty stdout. Disabling
+the class-member progress guard reaches a 500ms deadline on source Node/native.
+The audit contains no instrumentation. `gaps/portParserRecovery.ts` calls the
+actual driver, which checks parser diagnostics before conversion.
 
-
-`gaps/parserRecovery.ts` parses `type X = {`. `TestParserRecoveryGap` externally
-kills the unchanged dependency after one second on source Node and sanitized
-native. That is a reproducible recovery stall, not a port mutant. The initial
-unbounded corpus audit exhausted Node's heap at `asiAbstract.ts`; the final audit
-adds an audit-only repeated-scan guard, detecting 13 stalls. It throws after more
-than 32 identical scanner positions. The source and native driver do not contain
-that instrumentation and are not safe for arbitrary invalid input.
-
-`TestParserBoundaryRefusals` holds three minimal Go-accepted inputs against explicit
-source Node/native/emitted JS refusal: `class C { readonly!: number; }`,
-`'\ud800a\udc00';`, and `const node = <A/>;` with extension `.tsx`.
-The modifier example produces a recovered Identifier at the `!` token, with
-stale text `readonly` and no ExclamationToken child. The converter rejects a
-recovered identifier whose source token is not an identifier or keyword.
-Go's cooked surrogate strings contain WTF-8 bytes; Go canonical serialization
-replacement-decodes those bytes, whereas JavaScript preserves UTF-16 surrogates.
-The driver explicitly refuses that unrepresented string case rather than
-normalizing a wrong value. All `.tsx`/`.jsx` input is conservatively refused.
-Diagnostic acceptance parity and JSX grammar are still missing.
-
-The final audit has 92 remaining wrong-output files and 984 acceptance
-disagreements. These include converter gaps as well as parser dependency gaps;
-no claim is made that all remaining work belongs to the compiler or runtime.
-Every file and first differing line is recorded in the compressed audit log.
-Whole-checkout success has not been achieved.
+The unchanged shared-parser gap `gaps/parserRecovery.ts` still times out after
+one second on source Node and sanitized native. That observation concerns the
+shared dependency, not the local driver. The original modifier, cooked surrogate
+and JSX refusals are repaired and held to Go on all three builds. The baseline
+92 output mismatches are also resolved. Current frozen-corpus acceptance still
+differs on 175 files, including missing parser diagnostics, unrepresented
+recovery and raw input loss. Every disposition is retained; whole-checkout
+success is not claimed. See FOLLOWUP.md for checkpoint commands and counts.
 
 ## Compiler gap: interface call and concrete default argument
 
@@ -150,3 +130,13 @@ mutant finishes with wrong bytes and is caught on both runtimes. This repairs
 canonical serialization; it does not change the earlier raw-file information
 loss, which remains proved and explicitly refused. The old surrogate refusal
 above describes the initial checkpoint, not the current driver.
+
+## Follow-up empty generic recovery
+
+`gaps/emptyGenerics.ts` formats f<>(); and class C<> {} through the actual driver.
+Go accepts both with an empty type parameter/argument wrapper and its angle
+bracket range. The pinned typescript-estree library refuses both. The focused
+library test holds those acceptance differences; generated and repository byte
+checks hold their exact Go AST and range. No blanket allowance is made for
+other library disagreements. Primitive implements is accepted by the original
+library and matches Go in both raw and postprocessed trees.

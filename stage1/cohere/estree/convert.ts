@@ -1,3 +1,4 @@
+import { typeList } from './typeLists.ts';
 import { convertJsx } from './jsxConvert.ts';
 import { keywordTypes, unaryTypes } from './simpleTypes.ts';
 import { validTemplate } from './templateValidation.ts';
@@ -125,9 +126,6 @@ export class Converter {
         const node = this.ts(id);
         const name = this.child(id, 0);
         const shorthand = node.kind === 'ShorthandPropertyAssignment';
-        if(shorthand && node.children.length !== 1) {
-            return panic('ESTree converter does not yet represent shorthand defaults');
-        }
         const result = this.create(id, 'Property');
         this.set(result, 'computed', boolValue(this.kind(name) === 'ComputedPropertyName'));
         this.set(result, 'key', this.converted(name));
@@ -135,7 +133,19 @@ export class Converter {
         this.set(result, 'method', boolValue(false));
         this.set(result, 'optional', boolValue(false));
         this.set(result, 'shorthand', boolValue(shorthand));
-        this.set(result, 'value', this.converted(shorthand ? name : this.child(id, 1), pattern, id));
+        const initialized = node.children.some((child) => this.kind(child) === 'EqualsToken');
+        let value = this.convert(shorthand ? name : (node.children[node.children.length - 1] ?? -1), pattern, id);
+        if(shorthand && initialized) {
+            const initializer = node.children[node.children.length - 1] ?? -1;
+            const assignment = this.create(id, 'AssignmentPattern');
+            this.set(assignment, 'decorators', listValue([]));
+            this.set(assignment, 'left', this.converted(name, true));
+            this.set(assignment, 'optional', boolValue(false));
+            this.set(assignment, 'right', this.converted(initializer));
+            this.set(assignment, 'typeAnnotation', absent());
+            value = assignment;
+        }
+        this.set(result, 'value', childValue(value));
         return result;
     }
     body(ids: readonly number[], parent: number, directives: boolean): Value {
@@ -214,6 +224,8 @@ export class Converter {
                     'StaticKeyword',
                     'OverrideKeyword',
                     'AccessorKeyword',
+                    'InKeyword',
+                    'OutKeyword',
                     'Decorator',
                     'AsteriskToken',
                 ].includes(this.kind(child))
@@ -225,13 +237,16 @@ export class Converter {
         return result;
     }
     accessibility(id: number): Value {
-        return this.hasModifier(id, 'PublicKeyword')
-            ? stringValue('public')
-            : this.hasModifier(id, 'PrivateKeyword')
-              ? stringValue('private')
-              : this.hasModifier(id, 'ProtectedKeyword')
-                ? stringValue('protected')
-                : absent();
+        for(const child of this.ts(id).children) {
+            const kind = this.kind(child);
+            if(['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword'].includes(kind)) {
+                return stringValue(kind.slice(0, -7).toLowerCase());
+            }
+            if(!kind.endsWith('Keyword') && kind !== 'Decorator') {
+                break;
+            }
+        }
+        return absent();
     }
     exports(id: number, result: number): number {
         const children: number[] = [];
@@ -273,31 +288,13 @@ export class Converter {
         }
         return wrapper;
     }
+    isTypeParameter(id: number): boolean {
+        return ['TypeParameter', 'EmptyTypeParameters'].includes(this.kind(id));
+    }
     wrapper(ids: readonly number[], parameters: boolean): number {
-        if(ids.length === 0) {
-            return -1;
-        }
-        const first = ids[0] ?? panic('missing type list');
-        const last = ids[ids.length - 1] ?? panic('missing type list');
-        const start = this.ts(first).pos - 1;
-        if(this.text.slice(start, start + 1) !== '<') {
-            return panic('ESTree type list start is not represented');
-        }
-        this.scanner.pos = this.ts(last).end;
-        this.scanner.scan();
-        if(this.scanner.kind === 'CommaToken') {
-            this.scanner.scan();
-        }
-        if(this.scanner.kind !== 'GreaterThanToken') {
-            return panic('ESTree type list end is not represented');
-        }
-        const result = this.arena.newNode(
-            parameters ? 'TSTypeParameterDeclaration' : 'TSTypeParameterInstantiation',
-            this.byte(start),
-            this.byte(this.scanner.pos),
+        return typeList(this.arena, this.text, this.offsets, this.parser.nodes, ids, parameters, (id) =>
+            this.convert(id),
         );
-        this.set(result, 'params', this.list(ids));
-        return result;
     }
     parameters(ids: readonly number[]): Value {
         const result: number[] = [];
@@ -370,20 +367,22 @@ export class Converter {
             );
             this.set(parameter, 'optional', boolValue(true));
         }
-        if(
-            this.hasModifier(id, 'PublicKeyword') ||
-            this.hasModifier(id, 'PrivateKeyword') ||
-            this.hasModifier(id, 'ProtectedKeyword') ||
-            this.hasModifier(id, 'ReadonlyKeyword') ||
-            this.hasModifier(id, 'OverrideKeyword')
-        ) {
+        let hasModifiers = false;
+        for(const child of this.ts(id).children) {
+            if(this.kind(child) === 'Decorator') {
+                continue;
+            }
+            hasModifiers = this.kind(child).endsWith('Keyword');
+            break;
+        }
+        if(hasModifiers) {
             const wrapper = this.create(id, 'TSParameterProperty');
             this.set(wrapper, 'accessibility', this.accessibility(id));
             this.set(wrapper, 'decorators', listValue([]));
             this.set(wrapper, 'override', boolValue(this.hasModifier(id, 'OverrideKeyword')));
             this.set(wrapper, 'parameter', childValue(result));
             this.set(wrapper, 'readonly', boolValue(this.hasModifier(id, 'ReadonlyKeyword')));
-            this.set(wrapper, 'static', boolValue(false));
+            this.set(wrapper, 'static', boolValue(this.hasModifier(id, 'StaticKeyword')));
             return wrapper;
         }
         return result;
@@ -398,7 +397,7 @@ export class Converter {
             index++;
         }
         const types: number[] = [];
-        while(this.kind(children[index] ?? -1) === 'TypeParameter') {
+        while(this.isTypeParameter(children[index] ?? -1)) {
             types.push(children[index] ?? -1);
             index++;
         }
@@ -542,7 +541,18 @@ export class Converter {
     }
     heritage(id: number, interface_: boolean): number {
         const result = this.create(id, interface_ ? 'TSInterfaceHeritage' : 'TSClassImplements');
-        this.set(result, 'expression', childValue(this.entityExpression(this.child(id, 0))));
+        let expression = this.child(id, 0);
+        if(expression < 0 && this.kind(id).endsWith('Keyword')) {
+            expression = this.create(id, 'Identifier');
+            this.set(expression, 'decorators', listValue([]));
+            this.set(expression, 'name', stringValue(this.spellings.get(this.kind(id)) ?? this.raw(id)));
+            this.set(expression, 'optional', boolValue(false));
+            this.set(expression, 'typeAnnotation', absent());
+        }
+        else {
+            expression = this.entityExpression(expression);
+        }
+        this.set(result, 'expression', childValue(expression));
         this.set(result, 'typeArguments', childValue(this.wrapper(this.ts(id).children.slice(1), false)));
         return result;
     }
@@ -555,22 +565,34 @@ export class Converter {
             index++;
         }
         const types: number[] = [];
-        while(this.kind(children[index] ?? -1) === 'TypeParameter') {
+        while(this.isTypeParameter(children[index] ?? -1)) {
             types.push(children[index] ?? -1);
             index++;
         }
         const extendsTypes: number[] = [];
         const implementsTypes: number[] = [];
         let after = index > 0 ? this.ts(children[index - 1] ?? -1).end : this.ts(id).pos;
+        let extendsSeen = false;
+        let implementsSeen = false;
         while(this.kind(children[index] ?? -1) === 'HeritageClause') {
             const clause = this.ts(children[index] ?? -1);
+            const keep = clause.operator === 'ExtendsKeyword' ? !extendsSeen : !implementsSeen;
             for(const type of clause.children) {
+                if(!keep) {
+                    continue;
+                }
                 if(clause.operator === 'ExtendsKeyword') {
                     extendsTypes.push(type);
                 }
                 else {
                     implementsTypes.push(type);
                 }
+            }
+            if(clause.operator === 'ExtendsKeyword') {
+                extendsSeen = true;
+            }
+            if(clause.operator === 'ImplementsKeyword') {
+                implementsSeen = true;
             }
             after = clause.end;
             index++;
@@ -649,7 +671,7 @@ export class Converter {
             index++;
         }
         const types: number[] = [];
-        while(this.kind(children[index] ?? -1) === 'TypeParameter') {
+        while(this.isTypeParameter(children[index] ?? -1)) {
             types.push(children[index] ?? -1);
             index++;
         }
@@ -1145,6 +1167,9 @@ export class Converter {
             parent = this.parents[id] ?? -1;
         }
         const node = this.ts(id);
+        if(node.kind === 'EmptyTypeArguments' || node.kind === 'EmptyTypeParameters') {
+            return this.wrapper([id], node.kind === 'EmptyTypeParameters');
+        }
         if(node.kind.startsWith('Jsx')) {
             return convertJsx(this.arena, this.parser.nodes, this.offsets, id, (child) => this.convert(child));
         }
@@ -1265,10 +1290,7 @@ export class Converter {
 
             if(index < node.children.length) {
                 const next = node.children[index] ?? -1;
-                this.scanner.pos = this.ts(next).pos;
-                this.scanner.scan();
-                const previous = this.text.slice(this.ts(first).end, this.scanner.start);
-                if(previous.includes(':')) {
+                if(this.separated(definite ? (node.children[1] ?? -1) : first, next, 'ColonToken')) {
                     type = next;
                     index++;
                 }
@@ -1694,7 +1716,7 @@ export class Converter {
             const children = this.dataChildren(id);
             const types: number[] = [];
             for(const child of children.slice(1, -1)) {
-                if(this.kind(child) !== 'TypeParameter') {
+                if(!this.isTypeParameter(child)) {
                     return panic('unexpected type alias child');
                 }
                 types.push(child);
@@ -1784,7 +1806,8 @@ export class Converter {
         }
         if(node.kind === 'ClassStaticBlockDeclaration') {
             const result = this.create(id, 'StaticBlock');
-            this.set(result, 'body', this.body(this.ts(first).children, id, true));
+            const block = node.children[node.children.length - 1] ?? -1;
+            this.set(result, 'body', this.body(this.ts(block).children, id, true));
             return result;
         }
         if(node.kind === 'ImportDeclaration') {
@@ -1848,7 +1871,7 @@ export class Converter {
             const params: number[] = [];
             let resultType = -1;
             for(const child of children) {
-                if(this.kind(child) === 'TypeParameter') {
+                if(this.isTypeParameter(child)) {
                     types.push(child);
                 }
                 else if(this.kind(child) === 'Parameter') {

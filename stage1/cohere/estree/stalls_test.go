@@ -3,6 +3,7 @@ package estree
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -37,7 +38,7 @@ func TestBoundedPortParser(t *testing.T) {
 		path := filepath.Join(t.TempDir(), "input.ts")
 		os.WriteFile(path, []byte(text), 0644)
 		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-			refusedBeforeDeadline(t, argv, "ESTree parser stopped advancing")
+			refusedBeforeDeadline(t, argv, "ESTree parser")
 		}
 	}
 	fixtures, err := filepath.Glob("validation/followup/stalls/*.input")
@@ -51,18 +52,33 @@ func TestBoundedPortParser(t *testing.T) {
 		}
 		path := filepath.Join(t.TempDir(), strings.TrimSuffix(filepath.Base(fixture), ".input"))
 		os.WriteFile(path, body, 0644)
-		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-			refusedBeforeDeadline(t, argv, "ESTree parser stopped advancing")
+		list := filepath.Join(t.TempDir(), "manifest")
+		os.WriteFile(list, []byte(path+"\n"), 0644)
+		var record struct{ Status string }
+		if err := json.Unmarshal(execute(t, "", goOracle(t), "--audit", list, t.TempDir()), &record); err != nil {
+			t.Fatal(err)
+		}
+		if record.Status == "ok" {
+			want := execute(t, "", goOracle(t), path)
+			for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path), "emitted": onNode(t, script, path)} {
+				if diff := firstDifference(want, got); diff != "" {
+					t.Fatal(name + ": " + diff)
+				}
+			}
+		} else {
+			for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
+				refusedBeforeDeadline(t, argv, "ESTree parser")
+			}
 		}
 	}
-	t.Log("all 13 recorded stalls explicitly refuse before 2s in all three port builds")
-	t.Log("three EOF recovery stalls explicitly refuse before 2s on Node, sanitized native and emitted JS")
+	t.Log("all 13 recorded stalls terminate: Go-accepted inputs match and Go-refused inputs explicitly refuse in all three port builds")
+	t.Log("three EOF recovery cases explicitly refuse with parser diagnostics before 2s on Node, sanitized native and emitted JS")
 }
 func TestPortStallControl(t *testing.T) {
-	main := mutantPort(t, "sourceParser.ts", "this.stalledScans > 32", "this.stalledScans > 320000000")
+	main := mutantPort(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
 	binary, _ := build(t, main, true)
 	path := filepath.Join(t.TempDir(), "input.ts")
-	os.WriteFile(path, []byte("type X = {"), 0644)
+	os.WriteFile(path, []byte("class C { ) }"), 0644)
 	for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}} {
 		ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
 		cmd := exec.CommandContext(ctx, argv[0], argv[1:]...)

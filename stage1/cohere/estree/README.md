@@ -1,14 +1,15 @@
-Built an incomplete non-JSON ESTree converter, postprocessor and canonical tree driver.
-14,699 repository files match Go on source Node, sanitized native and emitted JavaScript.
-86 generated cases match 126,324 bytes; three successful port mutants are caught.
-Full-output throughput: native 5,709, Node 4,601, Go 11,345 texts/s.
-Whole-checkout parity is blocked by 92 wrong outputs and 984 acceptance disagreements.
+An incomplete non-JSON ESTree converter, postprocessor and canonical tree driver.
+The follow-up source audit has 15,554 matching frozen files and zero output mismatches.
+Acceptance disagreements fall from 984 to 175; raw UTF-8 loss remains proved.
+The earlier throughput measurement is historical: native 5,709, Node 4,601, Go 11,345 texts/s.
+Current checkpoint evidence, commands, mutants and limits are in FOLLOWUP.md.
+
 
 # Non-JSON ESTree slice
 
 The claim and origin survey are in the repository's `CLAIM.md`. This unit uses
 cohere at `715ba94f3608a6500086b1076ce5cb7e51b836db`; `parse_json.go` is excluded.
-The existing TypeScript parser and scanner are imported without edits. The
+The ESTree-local parser adapts the main and recovery branches; the shared scanner and node model remain unedited. The
 node table owns its nodes; all child links are numeric indexes, so there are
 no owning parent/child cycles. Own fields retain insertion order and absence
 is distinct from an explicitly stored null. The visitor table preserves all
@@ -159,3 +160,14 @@ copies the parser from main 5d4c801 and adds JSX through jsxParser.ts; shared
 parser files remain unchanged. Conversion preserves fragments, names, attributes,
 spread, comments, HTML entities, ranges and empty type argument lists. This does
 not complete diagnostic parity. See FOLLOWUP.md for current checks and counts.
+
+## Follow-up recovery
+
+All 92 baseline output mismatches are resolved in the frozen source census.
+The 190 newly matching files pass 15,512,882 bytes on source Node, sanitized
+native and emitted JS. Generated recovery cases and three additional successful
+wrong-output mutants cover the new parser/converter behavior. Thirteen baseline
+stalls now terminate and follow Go's acceptance outcome. Source diagnostics and
+remaining recovery cases still prevent full acceptance parity; raw input bytes
+remain unavailable. Historical checkpoint claims above describe their own
+revisions. FOLLOWUP.md is the current report.

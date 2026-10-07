@@ -1,3 +1,4 @@
+import { externalModule } from './sourceModules.ts';
 import { panic } from 'adamic';
 import { Parser } from './sourceParser.ts';
 import { Converter } from './convert.ts';
@@ -21,9 +22,19 @@ export function answer(path: string, text: string): string {
         return panic('unrecognized ESTree source extension');
     }
     const convertedText = text.startsWith('#!') ? `//${text.slice(2)}` : text;
-    const parser = new Parser(convertedText, path);
+    let parser = new Parser(convertedText, path);
     parser.jsx = babel || file.endsWith('.tsx');
-    const root = parser.file();
+    let root = parser.file();
+    if(!['.d.ts', '.d.mts', '.d.cts'].some((suffix) => file.endsWith(suffix)) && externalModule(parser.nodes, root)) {
+        parser = new Parser(convertedText, path);
+        parser.jsx = babel || file.endsWith('.tsx');
+        parser.awaitContext = true;
+        root = parser.file();
+    }
+    if(parser.diagnostics.length > 0) {
+        const diagnostic = parser.diagnostics[0] ?? panic('missing diagnostic');
+        return panic(`ESTree parser diagnostic ${diagnostic.code} at ${diagnostic.start}: ${diagnostic.message}`);
+    }
     if(parser.scanner.errors.length > 0) {
         return panic('ESTree scanner diagnostic');
     }

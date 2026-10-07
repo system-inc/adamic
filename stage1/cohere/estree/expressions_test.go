@@ -25,7 +25,7 @@ func TestRecoveredExpressions(t *testing.T) {
 func TestRecoveredExpressionMutant(t *testing.T) {
 	list := manifest(t, recoveredExpressions())
 	want := execute(t, "", goOracle(t), "--manifest", list)
-	path := mutantPort(t, "sourceParser.ts", "(this.scanner.flags & 1) === 0 &&\n            (kind", "(this.scanner.flags & 1) >= 0 &&\n            (kind")
+	path := mutantPort(t, "sourceLookahead.ts", "(scanner.flags & 1) === 0 &&\n        (token", "(scanner.flags & 1) >= 0 &&\n        (token")
 	binary, _ := build(t, path, true)
 	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
 		if d := firstDifference(want, got); d == "" {

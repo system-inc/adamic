@@ -113,7 +113,11 @@ class JsxParser {
             if(this.kind() === 'LessThanToken') {
                 const typeStart = this.scanner.start;
                 const types = this.types();
-                attributes.push(this.add('JsxTypeArguments', typeStart, this.scanner.fullStart, types));
+                attributes.push(
+                    types.length === 1 && this.nodes[types[0] ?? -1]?.kind === 'EmptyTypeArguments'
+                        ? (types[0] ?? -1)
+                        : this.add('JsxTypeArguments', typeStart, this.scanner.fullStart, types),
+                );
                 typeCount = 1;
             }
             while(this.kind() !== 'SlashToken' && this.kind() !== 'GreaterThanToken') {

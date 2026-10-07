@@ -111,48 +111,6 @@ func TestParserRecoveryGap(t *testing.T) {
 	}
 }
 
-func TestParserBoundaryRefusals(t *testing.T) {
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary, script := build(t, main, true)
-	oracle := goOracle(t)
-	cases := []struct{ name, text, diagnostic string }{
-		{"modifier.ts", "class C { readonly!: number; }", "recovered an identifier"},
-	}
-	for _, sample := range cases {
-		t.Run(sample.name, func(t *testing.T) {
-			path := filepath.Join(t.TempDir(), sample.name)
-			if err := os.WriteFile(path, []byte(sample.text), 0644); err != nil {
-				t.Fatal(err)
-			}
-			if len(execute(t, "", oracle, path)) == 0 {
-				t.Fatal("Go should produce a nonempty tree")
-			}
-			for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-				command := exec.Command(argv[0], argv[1:]...)
-				stdout, err := os.CreateTemp(t.TempDir(), "stdout")
-				if err != nil {
-					t.Fatal(err)
-				}
-				var stderr bytes.Buffer
-				command.Stdout, command.Stderr = stdout, &stderr
-				err = command.Run()
-				stdout.Close()
-				info, statErr := os.Stat(stdout.Name())
-				if statErr != nil {
-					t.Fatal(statErr)
-				}
-				if err == nil || info.Size() != 0 || !strings.Contains(stderr.String(), sample.diagnostic) {
-					t.Fatalf("%v: exit=%v stdout=%d stderr=%s", argv, err, info.Size(), &stderr)
-				}
-			}
-			t.Logf("Go accepts %q; source Node, sanitized native and emitted JS explicitly refuse: %s", sample.text, sample.diagnostic)
-		})
-	}
-}
-
 func TestInterfaceDefaultGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/interfaceDefault.ts")
 	if err != nil {

@@ -1,3 +1,2 @@
-import { Parser } from '../sourceParser.ts';
-const parser = new Parser('type X = {');
-console.log(`${parser.file()}`);
+import { answer } from '../pipeline.ts';
+console.log(answer('source.ts', 'type X = {'));
