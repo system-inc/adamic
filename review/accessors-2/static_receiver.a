@@ -1,0 +1,12 @@
+class Base {
+ static get x(): number {
+  return this === Derived ? 20 : 10;
+ }
+ static set x(value: number) {
+  console.log(`${this === Derived ? 'derived' : 'base'} ${value}`);
+ }
+}
+class Derived extends Base {}
+console.log(`${Base.x} ${Derived.x}`);
+Base.x = 3;
+Derived.x = 4;

@@ -36,7 +36,7 @@ between a call and a stored field true.
 | A getter class and a field class passed through the same `interface View { x: number }` | Refused at the accessor conversion with `adamic/accessor-field-view`. Choosing a load for one implementation and a call for another would lie about effects and storage. The rule also applies inside arrays, fields, signatures, casts and inferred views. |
 | `const erased: {} = a`, or an upcast to a class omitting an accessor | Refused, `adamic/accessor-view-erasure`. Erasing the descriptor could later expose it as an optional structural field with unchecked writes. Keep a nominal view declaring that accessor. |
 | `const o = { get x() { return 1; } }` or an object-literal setter | NotYet, `adamic/object-accessor`. Own enumerable descriptors need a separate object layout and spread implementation. |
-| `class C { static get x() { return 1; } }` and static setters | NotYet, `adamic/static-accessor`. Static receivers and inherited static descriptors are not modeled by instance method tables. |
+| `class C { static get x() { return 1; } }` and static setters | NotYet, `adamic/static-accessor`. The accessors-2 unit stopped here: inherited descriptors must receive the constructor used at the access site as `this`, and class values have no runtime receiver representation. See the static receiver probe below. |
 | `class C<T> { get x() { return 1; } }` and generic class setters | NotYet, `adamic/generic-accessor`. Declared generic accessors need substituted descriptor and override proofs. Inheriting an unchanged non-generic accessor does not add a new descriptor. |
 | `interface View { get x(): number; }` or another descriptor declaration outside a class | NotYet, `adamic/accessor-declaration`. Structural descriptor syntax still does not prove a nominal virtual layout. |
 | `function read<T extends A>(value: T) { return value.x; }` | NotYet, `adamic/generic-accessor-receiver`. The up-front pass cannot yet prove every instantiation has the constraint's nominal table rather than a structural property. |
@@ -85,3 +85,63 @@ Fifteen mutants were run and caught, then restored:
 | Missing descriptor half inherited | The partial-descriptor override probe became admitted. |
 | Setter-only read fabricated as zero | The setter-only read probe became admitted. |
 | Spread and destructuring treated as loads | Three refusal probes became admitted. The indexed probe still reached an older NotYet guard, so that part is masked. |
+
+## Accessors-2 stopping point
+
+The ordered follow-on unit starts from `origin/codex/accessors` at `d785e87`:
+that commit is not an ancestor of the fetched `origin/main` at `ef3d907`.
+It stops before admitting static accessors. Generic descriptors, super descriptor
+calls, update values and object-literal descriptors remain NotYet and were not
+implemented in this unit.
+
+Observed on Node 24.19.0, `review/accessors-2/static_receiver.a` exits 0 and prints:
+
+```
+10 20
+base 3
+derived 4
+```
+
+The same getter and setter declarations execute with `Base` as `this` for
+`Base.x`, and with `Derived` as `this` for `Derived.x`. Both `adamic c` and
+`adamic js` reject this probe at the static getter with `adamic/static-accessor`,
+before either backend emits code.
+
+The implementation has only instance receivers: `instantiate` gives every
+method an object-typed `thisLocal`, while `expression.go` rejects reading a
+class name as a value. Static methods are excluded from instance tables, but
+still receive that object parameter. Static fields separately return NotYet in
+`inheritanceConstructor`. These are code observations, not a claim that static
+accessors are impossible to implement.
+
+The inference is that simply removing the refusal and emitting a function per
+static descriptor is insufficient for the approved semantics. A receiver model
+must preserve constructor identity for inherited reads and writes; static
+member lookup must also preserve descriptor halves. Binding `this` to the class
+that declares the function would print the wrong values in the probe above.
+A restricted implementation could refuse every receiver-dependent body, but
+that would leave the receiver part of this ordered item unfinished. This unit
+keeps the named refusal instead of claiming the static row is admitted.
+
+Unused getter and setter declarations now have dedicated refusal probes in
+`TestAccessorRefusals`, alongside an inherited static receiver probe. Mutant:
+remove only the static-accessor guard from `accessorRefusal`. Both unused
+probes then lower successfully and fail the test with `got <nil>`; no backend
+or clang diagnostic masks the missing guard. The mutant was restored. No new
+feature runs natively, so this stopping-point probe has no sanitizer or leak
+result. The existing six admitted accessor fixtures are the backend regression
+coverage for this documentation and refusal-test change.
+
+Validation for the stopping-point commit (logs in `/tmp/accessors-2-*.log`):
+
+- `go test -count=1 -timeout 10m ./internal/lower`: passed, 7.826s.
+- `ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 10m ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/accessors'`: passed, 10.724s.
+  This covers all six existing accessor fixtures against source Node, both
+  backends, the release build, ASan/UBSan and LeakSanitizer.
+- `go vet ./internal/lower`: exit 0; `gofmt -l internal/lower/accessors_test.go`:
+  empty; `git diff --check`: exit 0.
+- Setup: Go ready 0s, clang ready 1s, Node ready 1s, submodules ready 1s,
+  build cache warm 83s, done 83s; `nproc`: 5.
+
+The full repository gate was not run. No fixture was added to the admitted
+oracle list and no allocation-count row changed.
