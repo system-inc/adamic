@@ -1,0 +1,5 @@
+order_check_starts=['./internal/ir', './cmd/adamic', './internal/flow']
+argument_order_followed=True
+added=['./stage1/cohere/estree', './stage1/cohere/graphql/printer', './stage1/cohere/tsprinter', './stage1/cohere/yaml']
+dropped=[]
+set_equal=True
