@@ -1,0 +1,6 @@
+typescript-no-this-alias findings and full suggestions identical 45 cases 19540 bytes
+typescript-no-this-alias mutant this alias exemption inverted caught only by comparison on Node
+typescript-no-this-alias mutant this alias exemption inverted caught only by comparison on JavaScript
+typescript-no-this-alias mutant this alias exemption inverted caught only by comparison on native
+typescript-no-this-alias compiler and stage1 identical 236 files
+typescript-no-this-alias rates {'Go': {'seconds': 0.17750609800077655, 'findings': 0, 'findings_per_second': 0.0}, 'Node': {'seconds': 0.7776044749998618, 'findings': 0, 'findings_per_second': 0.0}, 'native': {'seconds': 4.885737446000348, 'findings': 0, 'findings_per_second': 0.0}}
