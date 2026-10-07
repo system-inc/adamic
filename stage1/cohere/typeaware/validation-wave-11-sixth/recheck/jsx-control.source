@@ -1,0 +1,2 @@
+declare function make(): () => unknown;
+function Component() { const C = make(); return <C />; }
