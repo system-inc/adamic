@@ -130,32 +130,62 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 		}
 		old, next := oldSignatures[0], newSignatures[0]
 		if len(old.Parameters()) != len(next.Parameters()) {
-			return l.notYet(member, "an override with a different parameter count")
+			return l.notYet(member, "an override with a different parameter count; keep the base method's parameter count")
 		}
 		for index, parameter := range old.Parameters() {
 			accepts := l.checker.GetTypeOfSymbol(parameter)
 			override := l.checker.GetTypeOfSymbol(next.Parameters()[index])
+			a, knownA := l.overrideParameterRepresentation(parameter)
+			b, knownB := l.overrideParameterRepresentation(next.Parameters()[index])
+			if checkABI && (!knownA || !knownB || a != b) {
+				return l.notYet(member, "an override with a different native representation for parameter "+strconv.Quote(next.Parameters()[index].Name)+"; keep the base method's parameter form")
+			}
 			if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
 				return refuse("an override that narrows a method parameter (adamic/contravariant-override)", "accept the base method's parameter type or a wider type; narrow it inside the method")
-			}
-			a, knownA := l.representation(accepts)
-			b, knownB := l.representation(override)
-			if checkABI && (!knownA || !knownB || a != b) {
-				return l.notYet(member, "an override with a different native parameter representation")
 			}
 		}
 		oldResult := l.checker.GetReturnTypeOfSignature(old)
 		newResult := l.checker.GetReturnTypeOfSignature(next)
+		a, knownA := l.overrideResultRepresentation(oldResult)
+		b, knownB := l.overrideResultRepresentation(newResult)
+		if checkABI && (!knownA || !knownB || a != b) {
+			return l.notYet(member, "an override with a different native result representation; keep the base method's result form")
+		}
 		if !l.classAssignable(newResult, oldResult) || l.widened(newResult, oldResult, map[[2]*checker.Type]bool{}) != nil {
 			return refuse("an override that widens its return type", "return the base method's result type or a subtype")
 		}
-		a, knownA := l.representation(oldResult)
-		b, knownB := l.representation(newResult)
-		if checkABI && oldResult.Flags()&checker.TypeFlagsVoid == 0 && (!knownA || !knownB || a != b) {
-			return l.notYet(member, "an override with a different native result representation")
-		}
 	}
 	return nil
+}
+
+// Match signature lowering, including the incoming optional form of a defaulted parameter.
+// The signature's symbol carries the instantiated type; its declaration carries the default.
+func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Type, bool) {
+	if len(parameter.Declarations) != 1 || parameter.Declarations[0].Kind != ast.KindParameter {
+		return 0, false
+	}
+	declaration := parameter.Declarations[0]
+	declared := declaration.AsParameterDeclaration()
+	if declared.DotDotDotToken != nil {
+		return 0, false
+	}
+	name := declaration.Name()
+	if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
+		return ir.Object, declared.Initializer == nil && declared.QuestionToken == nil
+	}
+	representation, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
+	if declared.Initializer != nil || declared.QuestionToken != nil {
+		representation = ir.Maybe(representation)
+	}
+	return representation, known
+}
+
+// Named methods returning void or never have no C result, as signature lowering does.
+func (l *lowering) overrideResultRepresentation(result *checker.Type) (ir.Type, bool) {
+	if result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0 {
+		return 0, true
+	}
+	return l.representation(result)
 }
 
 // Constructors initialize an already allocated object. A separate allocator fixes its dynamic
