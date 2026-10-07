@@ -1,0 +1,125 @@
+=== RUN   TestNoConflictingClassesReportsSymmetrically
+=== PAUSE TestNoConflictingClassesReportsSymmetrically
+=== RUN   TestNoConflictingClassesStaysSilent
+=== PAUSE TestNoConflictingClassesStaysSilent
+=== RUN   TestConflictingClassesProposeSuggestionsNotFixes
+=== PAUSE TestConflictingClassesProposeSuggestionsNotFixes
+=== RUN   TestPropertyLookupUsesTheLongestRoot
+=== PAUSE TestPropertyLookupUsesTheLongestRoot
+=== RUN   TestRepositoryUtilitiesAreCompiledRatherThanLookedUp
+=== PAUSE TestRepositoryUtilitiesAreCompiledRatherThanLookedUp
+=== RUN   TestStaticRepositoryUtilitiesStillReadFromTheFrameworkTables
+=== PAUSE TestStaticRepositoryUtilitiesStillReadFromTheFrameworkTables
+=== RUN   TestConflictFixturesActuallyRan
+=== PAUSE TestConflictFixturesActuallyRan
+=== RUN   TestVariantsAreComparedNotStripped
+=== PAUSE TestVariantsAreComparedNotStripped
+=== RUN   TestSelectorShapeCannotProduceAWrongFinding
+=== PAUSE TestSelectorShapeCannotProduceAWrongFinding
+=== CONT  TestNoConflictingClassesReportsSymmetrically
+=== RUN   TestNoConflictingClassesReportsSymmetrically/two_display_utilities
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/two_display_utilities
+=== RUN   TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice
+=== RUN   TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities
+=== RUN   TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant
+=== CONT  TestPropertyLookupUsesTheLongestRoot
+    no_conflicting_classes_test.go:296: no corpus stylesheet at /tmp/wave11-helper-tailwind/theme.css, so there is no live design system to ask
+=== CONT  TestStaticRepositoryUtilitiesStillReadFromTheFrameworkTables
+=== RUN   TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
+=== CONT  TestSelectorShapeCannotProduceAWrongFinding
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
+=== CONT  TestRepositoryUtilitiesAreCompiledRatherThanLookedUp
+--- SKIP: TestPropertyLookupUsesTheLongestRoot (0.00s)
+=== CONT  TestConflictingClassesProposeSuggestionsNotFixes
+=== RUN   TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
+=== RUN   TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
+=== CONT  TestNoConflictingClassesStaysSilent
+=== RUN   TestNoConflictingClassesStaysSilent/width_and_height
+=== PAUSE TestNoConflictingClassesStaysSilent/width_and_height
+=== RUN   TestNoConflictingClassesStaysSilent/padding_and_padding-inline
+=== PAUSE TestNoConflictingClassesStaysSilent/padding_and_padding-inline
+=== RUN   TestNoConflictingClassesStaysSilent/same_property_under_different_variants
+=== PAUSE TestNoConflictingClassesStaysSilent/same_property_under_different_variants
+=== RUN   TestNoConflictingClassesStaysSilent/different_axes_of_margin
+=== PAUSE TestNoConflictingClassesStaysSilent/different_axes_of_margin
+=== RUN   TestNoConflictingClassesStaysSilent/unrelated_properties
+=== PAUSE TestNoConflictingClassesStaysSilent/unrelated_properties
+=== RUN   TestNoConflictingClassesStaysSilent/one_class
+=== PAUSE TestNoConflictingClassesStaysSilent/one_class
+=== RUN   TestNoConflictingClassesStaysSilent/the_same_class_twice
+=== PAUSE TestNoConflictingClassesStaysSilent/the_same_class_twice
+=== RUN   TestNoConflictingClassesStaysSilent/unrelated_attribute
+=== PAUSE TestNoConflictingClassesStaysSilent/unrelated_attribute
+=== RUN   TestNoConflictingClassesStaysSilent/unrelated_callee
+=== PAUSE TestNoConflictingClassesStaysSilent/unrelated_callee
+=== RUN   TestNoConflictingClassesStaysSilent/divide_against_border
+=== PAUSE TestNoConflictingClassesStaysSilent/divide_against_border
+=== RUN   TestNoConflictingClassesStaysSilent/shadow_against_ring
+=== PAUSE TestNoConflictingClassesStaysSilent/shadow_against_ring
+=== RUN   TestNoConflictingClassesStaysSilent/border_against_border-dashed
+=== PAUSE TestNoConflictingClassesStaysSilent/border_against_border-dashed
+=== RUN   TestNoConflictingClassesStaysSilent/ring_against_ring-inset
+=== PAUSE TestNoConflictingClassesStaysSilent/ring_against_ring-inset
+=== RUN   TestNoConflictingClassesStaysSilent/container_against_w-full
+=== PAUSE TestNoConflictingClassesStaysSilent/container_against_w-full
+=== CONT  TestVariantsAreComparedNotStripped
+--- PASS: TestStaticRepositoryUtilitiesStillReadFromTheFrameworkTables (0.00s)
+=== CONT  TestConflictFixturesActuallyRan
+--- PASS: TestSelectorShapeCannotProduceAWrongFinding (0.01s)
+=== CONT  TestNoConflictingClassesReportsSymmetrically/two_display_utilities
+=== CONT  TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
+--- PASS: TestConflictFixturesActuallyRan (0.02s)
+=== CONT  TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
+--- PASS: TestConflictingClassesProposeSuggestionsNotFixes (0.03s)
+=== CONT  TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
+=== NAME  TestRepositoryUtilitiesAreCompiledRatherThanLookedUp
+    no_conflicting_classes_test.go:363: no corpus stylesheet at /tmp/wave11-helper-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestRepositoryUtilitiesAreCompiledRatherThanLookedUp (0.03s)
+=== CONT  TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities
+=== CONT  TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant
+=== CONT  TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice
+--- PASS: TestVariantsAreComparedNotStripped (0.04s)
+=== CONT  TestNoConflictingClassesStaysSilent/width_and_height
+=== CONT  TestNoConflictingClassesStaysSilent/unrelated_attribute
+=== CONT  TestNoConflictingClassesStaysSilent/container_against_w-full
+=== CONT  TestNoConflictingClassesStaysSilent/ring_against_ring-inset
+--- PASS: TestNoConflictingClassesReportsSymmetrically (0.00s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/two_display_utilities (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice (0.01s)
+=== CONT  TestNoConflictingClassesStaysSilent/border_against_border-dashed
+=== CONT  TestNoConflictingClassesStaysSilent/shadow_against_ring
+=== CONT  TestNoConflictingClassesStaysSilent/divide_against_border
+=== CONT  TestNoConflictingClassesStaysSilent/unrelated_callee
+=== CONT  TestNoConflictingClassesStaysSilent/unrelated_properties
+=== CONT  TestNoConflictingClassesStaysSilent/the_same_class_twice
+=== CONT  TestNoConflictingClassesStaysSilent/one_class
+=== CONT  TestNoConflictingClassesStaysSilent/same_property_under_different_variants
+=== CONT  TestNoConflictingClassesStaysSilent/different_axes_of_margin
+=== CONT  TestNoConflictingClassesStaysSilent/padding_and_padding-inline
+--- PASS: TestNoConflictingClassesStaysSilent (0.00s)
+    --- PASS: TestNoConflictingClassesStaysSilent/width_and_height (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/unrelated_attribute (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/container_against_w-full (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/ring_against_ring-inset (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/border_against_border-dashed (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/shadow_against_ring (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/divide_against_border (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/unrelated_callee (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/unrelated_properties (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/the_same_class_twice (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/one_class (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/same_property_under_different_variants (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/different_axes_of_margin (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/padding_and_padding-inline (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.086s

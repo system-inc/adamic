@@ -1,0 +1,24 @@
+=== RUN   TestFindEntryPointMatchesGoWithMutant
+    entry_test.go:33: replaying 154 actual consumer calls and 768 controls
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        entry_point_priority_reversed Node byte-only catch
+        entry_point_priority_reversed emitted byte-only catch
+        entry_point_priority_reversed native byte-only catch
+        PASS 922 cases 130833 bytes
+        
+--- PASS: TestFindEntryPointMatchesGoWithMutant (3.86s)
+=== RUN   TestValueToCssMatchesGoWithMutant
+    value_test.go:33: replaying 78 actual consumer calls and 155 controls
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        function_closing_parenthesis_omitted Node byte-only catch
+        function_closing_parenthesis_omitted emitted byte-only catch
+        function_closing_parenthesis_omitted native byte-only catch
+        PASS 233 cases 13040 bytes
+        
+--- PASS: TestValueToCssMatchesGoWithMutant (2.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_11	6.505s

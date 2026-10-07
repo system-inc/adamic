@@ -1,0 +1,74 @@
+=== RUN   TestEnforceConsistentVariantOrderReports
+=== PAUSE TestEnforceConsistentVariantOrderReports
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent
+=== RUN   TestEnforceConsistentVariantOrderNamesBothSpellings
+=== PAUSE TestEnforceConsistentVariantOrderNamesBothSpellings
+=== CONT  TestEnforceConsistentVariantOrderReports
+=== RUN   TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant
+=== PAUSE TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant
+=== RUN   TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
+=== PAUSE TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
+=== RUN   TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
+=== PAUSE TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
+=== RUN   TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
+=== PAUSE TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
+=== RUN   TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
+=== PAUSE TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
+=== RUN   TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
+=== PAUSE TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
+=== RUN   TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
+=== PAUSE TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
+=== CONT  TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant
+=== CONT  TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent
+=== CONT  TestEnforceConsistentVariantOrderNamesBothSpellings
+=== CONT  TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/one_variant
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/one_variant
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/no_variants
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/no_variants
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/unknown_variant
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/unknown_variant
+=== CONT  TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
+--- PASS: TestEnforceConsistentVariantOrderNamesBothSpellings (0.02s)
+=== CONT  TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
+=== CONT  TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
+=== CONT  TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/no_variants
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/unknown_variant
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant
+--- PASS: TestEnforceConsistentVariantOrderReports (0.00s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant (0.02s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves (0.03s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon (0.03s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint (0.03s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order (0.01s)
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/one_variant
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
+--- PASS: TestEnforceConsistentVariantOrderStaysSilent (0.00s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/no_variants (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/unknown_variant (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/one_variant (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.062s

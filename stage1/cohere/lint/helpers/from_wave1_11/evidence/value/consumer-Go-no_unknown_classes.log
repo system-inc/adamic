@@ -1,0 +1,138 @@
+=== RUN   TestNoUnknownClassesReportsTypos
+=== PAUSE TestNoUnknownClassesReportsTypos
+=== RUN   TestNoUnknownClassesStaysSilent
+=== PAUSE TestNoUnknownClassesStaysSilent
+=== RUN   TestUnknownIgnoreExemptsProjectClasses
+=== PAUSE TestUnknownIgnoreExemptsProjectClasses
+=== RUN   TestExistenceIsNotReadFromPropertyTables
+=== PAUSE TestExistenceIsNotReadFromPropertyTables
+=== RUN   TestKnownRootWithUnknownValueIsReported
+=== PAUSE TestKnownRootWithUnknownValueIsReported
+=== RUN   TestExistenceComesFromTheRepositoryRatherThanATable
+=== PAUSE TestExistenceComesFromTheRepositoryRatherThanATable
+=== RUN   TestRepositoryNamesAreNoLongerVouchedForByTheFramework
+=== PAUSE TestRepositoryNamesAreNoLongerVouchedForByTheFramework
+=== RUN   TestUnknownClassFixturesActuallyRan
+=== PAUSE TestUnknownClassFixturesActuallyRan
+=== RUN   TestRepositoryUtilityRootsAreNeverReported
+=== PAUSE TestRepositoryUtilityRootsAreNeverReported
+=== CONT  TestNoUnknownClassesReportsTypos
+=== RUN   TestNoUnknownClassesReportsTypos/misspelled_utility
+=== CONT  TestRepositoryUtilityRootsAreNeverReported
+=== PAUSE TestNoUnknownClassesReportsTypos/misspelled_utility
+=== NAME  TestRepositoryUtilityRootsAreNeverReported
+    no_unknown_classes_test.go:690: no corpus stylesheet at /tmp/wave11-helper-tailwind/theme.css, so there is no live design system to ask
+=== CONT  TestUnknownClassFixturesActuallyRan
+=== CONT  TestRepositoryNamesAreNoLongerVouchedForByTheFramework
+    no_unknown_classes_test.go:524: no corpus stylesheet at /tmp/wave11-helper-tailwind/theme.css, so there is no live design system to ask
+=== CONT  TestExistenceIsNotReadFromPropertyTables
+    no_unknown_classes_test.go:353: no corpus stylesheet at /tmp/wave11-helper-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestRepositoryNamesAreNoLongerVouchedForByTheFramework (0.00s)
+--- SKIP: TestRepositoryUtilityRootsAreNeverReported (0.00s)
+--- SKIP: TestExistenceIsNotReadFromPropertyTables (0.00s)
+=== CONT  TestKnownRootWithUnknownValueIsReported
+=== RUN   TestNoUnknownClassesReportsTypos/invented_utility
+=== PAUSE TestNoUnknownClassesReportsTypos/invented_utility
+=== NAME  TestKnownRootWithUnknownValueIsReported
+    no_unknown_classes_test.go:399: no corpus stylesheet at /tmp/wave11-helper-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestKnownRootWithUnknownValueIsReported (0.00s)
+=== CONT  TestNoUnknownClassesStaysSilent
+=== RUN   TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+=== PAUSE TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+=== CONT  TestUnknownIgnoreExemptsProjectClasses
+=== CONT  TestExistenceComesFromTheRepositoryRatherThanATable
+=== RUN   TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
+=== RUN   TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== PAUSE TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== PAUSE TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
+=== NAME  TestExistenceComesFromTheRepositoryRatherThanATable
+    no_unknown_classes_test.go:429: no corpus stylesheet at /tmp/wave11-helper-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestExistenceComesFromTheRepositoryRatherThanATable (0.00s)
+=== RUN   TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
+=== RUN   TestNoUnknownClassesStaysSilent/gradient_stops
+=== PAUSE TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
+=== RUN   TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
+=== PAUSE TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
+=== RUN   TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
+=== PAUSE TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
+=== RUN   TestNoUnknownClassesReportsTypos/on_a_callee_surface
+=== PAUSE TestNoUnknownClassesReportsTypos/on_a_callee_surface
+=== RUN   TestNoUnknownClassesReportsTypos/on_a_variable_surface
+=== PAUSE TestNoUnknownClassesReportsTypos/on_a_variable_surface
+=== CONT  TestNoUnknownClassesReportsTypos/misspelled_utility
+=== PAUSE TestNoUnknownClassesStaysSilent/gradient_stops
+=== RUN   TestNoUnknownClassesStaysSilent/multi-rule_component_class
+=== PAUSE TestNoUnknownClassesStaysSilent/multi-rule_component_class
+=== RUN   TestNoUnknownClassesStaysSilent/group_and_peer
+=== PAUSE TestNoUnknownClassesStaysSilent/group_and_peer
+=== RUN   TestNoUnknownClassesStaysSilent/group_with_a_name
+=== PAUSE TestNoUnknownClassesStaysSilent/group_with_a_name
+=== RUN   TestNoUnknownClassesStaysSilent/arbitrary_property
+=== PAUSE TestNoUnknownClassesStaysSilent/arbitrary_property
+=== RUN   TestNoUnknownClassesStaysSilent/arbitrary_value
+=== PAUSE TestNoUnknownClassesStaysSilent/arbitrary_value
+=== RUN   TestNoUnknownClassesStaysSilent/variants
+=== PAUSE TestNoUnknownClassesStaysSilent/variants
+=== RUN   TestNoUnknownClassesStaysSilent/importance
+=== PAUSE TestNoUnknownClassesStaysSilent/importance
+=== RUN   TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
+=== PAUSE TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
+=== RUN   TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== PAUSE TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== RUN   TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
+=== PAUSE TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
+=== RUN   TestNoUnknownClassesStaysSilent/unrelated_attribute
+=== PAUSE TestNoUnknownClassesStaysSilent/unrelated_attribute
+=== RUN   TestNoUnknownClassesStaysSilent/unrelated_callee
+=== PAUSE TestNoUnknownClassesStaysSilent/unrelated_callee
+=== CONT  TestNoUnknownClassesReportsTypos/on_a_variable_surface
+=== CONT  TestNoUnknownClassesReportsTypos/on_a_callee_surface
+=== CONT  TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
+=== CONT  TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
+--- PASS: TestUnknownClassFixturesActuallyRan (0.02s)
+=== CONT  TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
+=== CONT  TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
+=== CONT  TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+=== CONT  TestNoUnknownClassesReportsTypos/invented_utility
+=== CONT  TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== CONT  TestNoUnknownClassesStaysSilent/importance
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
+--- PASS: TestNoUnknownClassesReportsTypos (0.00s)
+    --- PASS: TestNoUnknownClassesReportsTypos/on_a_variable_surface (0.02s)
+    --- PASS: TestNoUnknownClassesReportsTypos/misspelled_utility (0.02s)
+    --- PASS: TestNoUnknownClassesReportsTypos/on_a_callee_surface (0.02s)
+    --- PASS: TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/another_root-prefixed_typo (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/invented_utility (0.01s)
+=== CONT  TestNoUnknownClassesStaysSilent/unrelated_callee
+=== CONT  TestNoUnknownClassesStaysSilent/unrelated_attribute
+=== CONT  TestNoUnknownClassesStaysSilent/group_with_a_name
+--- PASS: TestUnknownIgnoreExemptsProjectClasses (0.05s)
+=== CONT  TestNoUnknownClassesStaysSilent/variants
+=== CONT  TestNoUnknownClassesStaysSilent/arbitrary_value
+=== CONT  TestNoUnknownClassesStaysSilent/arbitrary_property
+=== CONT  TestNoUnknownClassesStaysSilent/multi-rule_component_class
+=== CONT  TestNoUnknownClassesStaysSilent/group_and_peer
+=== CONT  TestNoUnknownClassesStaysSilent/gradient_stops
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
+--- PASS: TestNoUnknownClassesStaysSilent (0.00s)
+    --- PASS: TestNoUnknownClassesStaysSilent/ordinary_utilities (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/importance (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/unrelated_callee (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/unrelated_attribute (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/group_with_a_name (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/variants (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/arbitrary_value (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/arbitrary_property (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/multi-rule_component_class (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/group_and_peer (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/gradient_stops (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.078s

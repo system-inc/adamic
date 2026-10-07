@@ -1,0 +1,168 @@
+=== RUN   TestEnforceCanonicalClassesReportsCollapses
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses
+=== RUN   TestEnforceCanonicalClassesStaysSilent
+=== PAUSE TestEnforceCanonicalClassesStaysSilent
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling
+=== RUN   TestCanonicalProposesNoFix
+=== PAUSE TestCanonicalProposesNoFix
+=== RUN   TestPreconditionsAreCheckedNotAssumed
+=== PAUSE TestPreconditionsAreCheckedNotAssumed
+=== RUN   TestLongestRootWinsInCollapse
+=== PAUSE TestLongestRootWinsInCollapse
+=== RUN   TestSplitValueCarriesEverythingAfterTheRoot
+=== PAUSE TestSplitValueCarriesEverythingAfterTheRoot
+=== RUN   TestRebuiltClassIsWritable
+=== PAUSE TestRebuiltClassIsWritable
+=== RUN   TestCanonicalFixturesActuallyRan
+=== PAUSE TestCanonicalFixturesActuallyRan
+=== RUN   TestIgnoredClassesAreExempt
+=== PAUSE TestIgnoredClassesAreExempt
+=== RUN   TestCanonicalCollapseOption
+=== PAUSE TestCanonicalCollapseOption
+=== RUN   TestCanonicalLogicalOption
+=== PAUSE TestCanonicalLogicalOption
+=== RUN   TestWave11CanonicalValueProbe
+--- PASS: TestWave11CanonicalValueProbe (0.01s)
+=== CONT  TestEnforceCanonicalClassesReportsCollapses
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/padding_axes
+=== CONT  TestSplitValueCarriesEverythingAfterTheRoot
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/padding_axes
+=== NAME  TestSplitValueCarriesEverythingAfterTheRoot
+    enforce_canonical_classes_test.go:397: no corpus stylesheet at /tmp/wave11-helper-tailwind/theme.css, so there is no live design system to ask
+=== CONT  TestIgnoredClassesAreExempt
+=== CONT  TestCanonicalProposesNoFix
+=== CONT  TestLongestRootWinsInCollapse
+    enforce_canonical_classes_test.go:350: no corpus stylesheet at /tmp/wave11-helper-tailwind/theme.css, so there is no live design system to ask
+=== CONT  TestCanonicalLogicalOption
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+--- SKIP: TestSplitValueCarriesEverythingAfterTheRoot (0.00s)
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/border_edges
+--- SKIP: TestLongestRootWinsInCollapse (0.00s)
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/border_edges
+=== CONT  TestPreconditionsAreCheckedNotAssumed
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/rounded_corners
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/rounded_corners
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/gap_axes
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/gap_axes
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/negative_margins
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/negative_margins
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/p-4
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/p-4
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/size-8
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/size-8
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/border-x
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/border-x
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
+=== CONT  TestRebuiltClassIsWritable
+    enforce_canonical_classes_test.go:459: no corpus stylesheet at /tmp/wave11-helper-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestRebuiltClassIsWritable (0.00s)
+=== CONT  TestCanonicalFixturesActuallyRan
+--- PASS: TestCanonicalProposesNoFix (0.01s)
+=== CONT  TestCanonicalCollapseOption
+--- PASS: TestCanonicalFixturesActuallyRan (0.01s)
+=== CONT  TestEnforceCanonicalClassesStaysSilent
+=== RUN   TestEnforceCanonicalClassesStaysSilent/different_values
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/different_values
+=== RUN   TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== RUN   TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== RUN   TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+=== RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+=== RUN   TestEnforceCanonicalClassesStaysSilent/single_class
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/single_class
+=== RUN   TestEnforceCanonicalClassesStaysSilent/statics
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/statics
+=== RUN   TestEnforceCanonicalClassesStaysSilent/no_pair_present
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/no_pair_present
+=== RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
+=== RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_callee
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_callee
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/padding_axes
+--- PASS: TestIgnoredClassesAreExempt (0.02s)
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/p-4
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+--- PASS: TestCanonicalLogicalOption (0.04s)
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+--- PASS: TestCanonicalCollapseOption (0.03s)
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/negative_margins
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/gap_axes
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/rounded_corners
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/border_edges
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
+--- PASS: TestPreconditionsAreCheckedNotAssumed (0.06s)
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/border-x
+--- PASS: TestEnforceCanonicalClassesReportsCollapses (0.00s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/padding_axes (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/arbitrary_values (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/negative_margins (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/gap_axes (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/rounded_corners (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/border_edges (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size (0.01s)
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/size-8
+=== CONT  TestEnforceCanonicalClassesStaysSilent/different_values
+=== CONT  TestEnforceCanonicalClassesStaysSilent/single_class
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_callee
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
+--- PASS: TestCanonicalMessageNamesTheShorterSpelling (0.00s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/p-4 (0.01s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/sm:p-4 (0.01s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md (0.01s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/p-[3px] (0.01s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/border-x (0.01s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/size-8 (0.01s)
+=== CONT  TestEnforceCanonicalClassesStaysSilent/no_pair_present
+=== CONT  TestEnforceCanonicalClassesStaysSilent/statics
+=== CONT  TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+=== CONT  TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== CONT  TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+--- PASS: TestEnforceCanonicalClassesStaysSilent (0.00s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/different_values (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/single_class (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/unrelated_callee (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/unrelated_attribute (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/no_pair_present (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/statics (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/one_side_is_important (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/unrelated_roots (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.115s
