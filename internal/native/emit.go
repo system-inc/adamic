@@ -20,6 +20,9 @@ import (
 // retain and a release on every assignment for that simplicity; removing them where they cancel is
 // the memory model's work, measured against this.
 func C(program *ir.Program) string {
+	if program.Async != nil {
+		return asyncC(program)
+	}
 	// Borrowed elements first: reuse must see the variables they mark Borrowed.
 	elementBorrows, lending := planElementBorrows(program)
 	emitter := &emitter{program: program, reuse: planReuse(program, lending), regions: planRegions(program), elementBorrows: elementBorrows}

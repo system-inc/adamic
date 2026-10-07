@@ -37,6 +37,10 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/async_plain.a", true, false},
+	{"internal/oracle/testdata/async_three.a", true, false},
+	{"internal/oracle/testdata/async_nested.a", true, false},
+	{"internal/oracle/testdata/async_throw.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},

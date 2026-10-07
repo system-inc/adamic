@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	Async *AsyncProgram
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 

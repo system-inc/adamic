@@ -1,0 +1,8 @@
+async function fail(value: string): Promise<void> {
+    const held = `${value}!`;
+    await Promise.resolve(held);
+    console.log(`before throw ${held}`);
+    throw new Error('boom');
+}
+await fail(`dynamic${2}`);
+console.log('unreachable');
