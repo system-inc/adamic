@@ -78,3 +78,22 @@ byte-only rule mutants, five compiler-fact/request mutants and a released-handle
 mutant are caught. The implementation is f8c455b3; timings, evidence and the exact
 external-checker JavaScript integration blocker are in ../wave_03_more/REPORT.md.
 All nine wave-03 claims are implemented and validated. No additional claim made.
+
+## Continuation 3, October 7, 2026
+
+All nine earlier claims were implemented, tested and pushed through c2758b18.
+Fetched all 389 origin refs and read every distinct Markdown claim blob (33)
+under stage1/cohere/typeaware/claims. Checked all 197 ranked checker-dependent
+rules against claims and named/grouped native ports on main and the bridge.
+The first three eligible rules are reserved here before implementation:
+
+| Rule | Compiler | Repository | Total |
+| --- | ---: | ---: | ---: |
+| react-hooks/unsupported-syntax | 0 | 0 | 0 |
+| react-hooks/use-memo | 0 | 0 | 0 |
+| react/boolean-prop-naming | 0 | 0 | 0 |
+
+Higher-ranked names are ported or claimed. Exact origin tips, claim blobs and
+port evidence are in ../validation-wave-03/continuation-3-selection.json.
+Continue on this branch; new native files use .a. Shared harness and generator
+files remain untouched.
