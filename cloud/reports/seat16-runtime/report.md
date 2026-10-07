@@ -94,7 +94,7 @@ Uncounted release omits -DADAMIC_COUNT. Sanitized builds replace -O2 with -O1 -g
 
 ## Limits
 
-The complete uncached **oracle** and all touched packages are the requested worker gate; the full repository test suite was not run. No macOS or separate WASI execution claim is made. This train does not include the queued destruction reference-slot optimization, new parser/scanner edits, character-read changes or compiler write-path changes. Logs and count comparison are retained under evidence; scratch reproductions remain at /workspace/scratch/seat16-runtime.
+The complete uncached **oracle** and all touched packages are the requested worker gate; the full repository test suite was not run. No macOS or separate WASI execution claim is made. This train does not include the queued destruction reference-slot optimization, new parser/scanner edits, character-read changes or compiler write-path changes. Logs are retained compressed as evidence/*.log.gz (the plain scratch logs are ignored by the repository); the count comparison is retained under evidence; scratch reproductions remain at /workspace/scratch/seat16-runtime.
 
 ## Package results after each merge
 
