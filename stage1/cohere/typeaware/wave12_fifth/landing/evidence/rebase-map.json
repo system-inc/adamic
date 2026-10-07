@@ -1,0 +1,102 @@
+{
+  "main": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "tested_tip": "4e96ec4188b33db8358f3d8ae36109215406ba9b",
+  "old_remote": "dc360b9199008f6d73831d14dda92cee54a0079a",
+  "commits": [
+    {
+      "old": "0d540f413625f016f20fea39761c7b184f335de6",
+      "rebased": "3618eafc72d5323f36b4c4ce26f1c523ff59391a",
+      "subject": "Port ten inventory-ranked lint rules through the checker bridge"
+    },
+    {
+      "old": "adea8d3881798b7aebbafb627a6465a2e3c8ead4",
+      "rebased": "7f3219ffbfcab1efa68b938a96c60670952bbb9a",
+      "subject": "Claim the three rules for type-aware wave 12"
+    },
+    {
+      "old": "6f8522931a3366fabdc55c5a255a5108429a1d71",
+      "rebased": "a7ccd2ffc282840d169542ce248a8ff47e77d44d",
+      "subject": "Port wave 12 type-aware lint rules with byte oracles"
+    },
+    {
+      "old": "1a1be27f287bcb61660bf6705578600630e43c35",
+      "rebased": "0945a8461c9c7e11445fbc48473b1e9687782e5c",
+      "subject": "Record wave 12 comparison evidence and timings"
+    },
+    {
+      "old": "047ec3559c02c953cef648efa9f8495eeded0b7c",
+      "rebased": "afb9ffd95381c1c6a9b2b9bb263c9dacbbf07290",
+      "subject": "Claim the next three available wave 12 rules"
+    },
+    {
+      "old": "75fb78e8b25bf9117c49f67eb6d8f65fa95e1d06",
+      "rebased": "f587c890ccf1d05e89a746c1dd76f86648c05e86",
+      "subject": "Port the next three wave 12 rules in an isolated directory"
+    },
+    {
+      "old": "97aab7724d12e9f61780e8fb5d7ba5dcbe9c0ff9",
+      "rebased": "fcca8718825581a4302d2976cc61f55bac3031ad",
+      "subject": "Record continuation byte agreement mutants and timings"
+    },
+    {
+      "old": "2ac7b71c622ac71b29ce69ad30c3b9c3e2d1a746",
+      "rebased": "5cffe174a1de0eaefa5f0c490efcc36d8e416ad1",
+      "subject": "Claim the next three global constructor rules"
+    },
+    {
+      "old": "32f968f31327caa8cb31170ce345a2bda631285f",
+      "rebased": "ea684fe2f12ec27cddb5f2822f99d10b261f31fa",
+      "subject": "Port three global constructor rules with raw declaration facts"
+    },
+    {
+      "old": "ba3b7db29378e39522d4b24669a8d6659dd7e295",
+      "rebased": "3aaabb62b354fc37a85247914e2b1b04164955d5",
+      "subject": "Record constructor rule byte agreement mutants and timings"
+    },
+    {
+      "old": "5da49595e7b3e6d831cf9048b28b17ed746ce62f",
+      "rebased": "cfbd1b9f0654cbbe6287fdbc7c769df1dcee0858",
+      "subject": "Compress reference inputs outside implementation source discovery"
+    },
+    {
+      "old": "99abb23814fe20b824902baeafefe19fd11b7aca",
+      "rebased": "4abfc6095147a0b36969d52b559cf2d229546601",
+      "subject": "Claim regex literals rest parameters and exhaustive dependencies"
+    },
+    {
+      "old": "974dc27512195f98d01858a58a2b1950fda3b04c",
+      "rebased": "e9085c50533a3328e07f767ef5a1824db88f976f",
+      "subject": "Port regex literals rest parameters and hook dependencies"
+    },
+    {
+      "old": "acb1ff7c523fd3ef616ef31447af2995f49489b0",
+      "rebased": "5adf08f6433cb955d907d8b6547f93d6be178a88",
+      "subject": "Record fourth wave 12 comparisons mutants and timings"
+    },
+    {
+      "old": "b8be942f3a23d28f5d5c19b9a0957de3c84706f9",
+      "rebased": "d8294859dd3d98ebecb671d61209eb63dd24bda1",
+      "subject": "Claim React state and static component rules"
+    },
+    {
+      "old": "6bff9a9dd89e3f50b6cae1c1f6106808427d3a6b",
+      "rebased": "12325664df05de97903e43b9d9171ad7a7607edb",
+      "subject": "Record native React graph substrate blockers"
+    },
+    {
+      "old": "88871cafa3255a43272e417533def3cffb7144bc",
+      "rebased": "a4b61826d27cc27d89d5259667ff5fdc016e6f61",
+      "subject": "Name the render validator graph entry point precisely"
+    },
+    {
+      "old": "dc360b9199008f6d73831d14dda92cee54a0079a",
+      "rebased": "9b80f3179eb54ff94f607a8040218dd0b8f7bbc1",
+      "subject": "Recheck the blocked React claims against latest origin branches"
+    },
+    {
+      "old": null,
+      "rebased": "4e96ec4188b33db8358f3d8ae36109215406ba9b",
+      "subject": "Preserve historical failure output outside whitespace checks"
+    }
+  ]
+}
