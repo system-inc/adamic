@@ -37,6 +37,15 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/borrow_chain_override.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_unknown.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_argument.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_walk.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_listener.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_write.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_reassigned.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_capture.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_store.a", true, false},
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
