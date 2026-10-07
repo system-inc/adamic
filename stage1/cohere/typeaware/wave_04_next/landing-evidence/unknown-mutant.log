@@ -1,0 +1,8 @@
+=== RUN   TestWave04NextModuleAndSourceContext
+=== PAUSE TestWave04NextModuleAndSourceContext
+=== CONT  TestWave04NextModuleAndSourceContext
+    wave04_next_modules_test.go:54: unknown private question must reject: <nil>
+--- FAIL: TestWave04NextModuleAndSourceContext (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.018s
+FAIL
