@@ -1,0 +1,27 @@
+import { parseAtRule } from './parse_at_rule.a';
+import { OptionsJson } from '../../options_json.ts';
+import { panic, programArguments, readTextFile } from 'adamic';
+interface AtRuleNode { kind: string; name: string; params: string; nodes: number[]; }
+function atRule(name: string, params: string, nodes: number[]): AtRuleNode { return { kind: 'at-rule', name, params, nodes }; }
+function units(text: string): string {
+    const codes: string[] = [];
+    for(let i = 0; i < text.length; i++) codes.push(text.charCodeAt(i).toString());
+    return codes.join(',');
+}
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('corpus path'));
+if(file.kind === 'Error') panic(file.message);
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if(root < 0 || json.node(root).kind !== 'array') panic('invalid corpus');
+for(const row of json.node(root).children) {
+    const text = json.node(json.field(row, 'source')).text;
+    const children = [1, 2];
+    const result = parseAtRule(text, children, atRule);
+    console.log(`${result.kind}|${units(result.name)}|${units(result.params)}|${result.nodes.join(',')}`);
+    children[0] = 7;
+    console.log(result.nodes.join(','));
+    const empty: number[] = [];
+    const emptyResult = parseAtRule(text, empty, atRule);
+    console.log(emptyResult.nodes.length.toString());
+}

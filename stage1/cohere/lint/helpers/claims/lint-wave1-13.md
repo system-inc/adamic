@@ -16,5 +16,5 @@ Go nil keyOrder is represented by an empty Adamic array, as in the existing Them
 Withdraw NewTheme. Slot 08 e069e11a at 02:30:35 UTC precedes our f0b136e5 at 02:32:43 UTC; slot 06 also claimed it earlier. Our passing duplicate is removed from active sources and tests and retained only as evidence. It is not counted as delivered.
 
 2. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseAtRule
-   File: from-wave1-13/parse_at_rule.a. Six consumers, zero final blockers alone, same six rules listed above.
+   File: from-wave1-13/at-rule/parse_at_rule.a. Six consumers, zero final blockers alone, same six rules listed above.
    Refetched all 407 origin refs and inspected all 17 distinct helper claims. All larger named symbols are reserved; this splitter ties the highest unclaimed count at six. Preserve Go byte-offset-five scan, only SPACE/TAB/open-parenthesis boundaries, exact Go TrimSpace behavior and ordered untouched children. The independently owned AtRule allocation is an explicit generic callback dependency. Compare actual Go on all six consumers' test literals and byte/Unicode/alias controls, source Node, emitted JavaScript and sanitized native, with a compiling semantic mutant. Push claim before code.

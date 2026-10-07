@@ -1,0 +1,23 @@
+// Go TrimSpace differs from JavaScript trim: NEL is whitespace and BOM is not.
+const goWhitespace = '\t\n\v\f\r \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000';
+function trimGo(text: string): string {
+    let start = 0;
+    let end = text.length;
+    while(start < end && goWhitespace.includes(text.slice(start, start + 1))) start++;
+    while(end > start && goWhitespace.includes(text.slice(end - 1, end))) end--;
+    return text.slice(start, end);
+}
+// The separately owned AtRule constructor receives the original child array.
+export function parseAtRule<N, R>(buffer: string, nodes: N[], atRule: (name: string, params: string, nodes: N[]) => R): R {
+    let split = -1;
+    let byteOffset = 0;
+    for(let index = 0; index < buffer.length; index++) {
+        const point = buffer.codePointAt(index) ?? 0;
+        if(byteOffset >= 5 && (point === 32 || point === 9 || point === 40)) { split = index; break; }
+        byteOffset += point < 128 ? 1 : point < 2048 ? 2 : point < 65536 ? 3 : 4;
+        if(point > 65535) index++;
+    }
+    const name = split < 0 ? buffer : buffer.slice(0, split);
+    const params = split < 0 ? '' : buffer.slice(split);
+    return atRule(trimGo(name), trimGo(params), nodes);
+}
