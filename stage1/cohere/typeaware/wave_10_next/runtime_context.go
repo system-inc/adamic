@@ -44,7 +44,7 @@ func (f *fields) declaration(p *compiler.Program, n *ast.Node) {
 	for _, a := range ancestors {
 		f.text(strings.TrimPrefix(a.Kind.String(), "Kind"))
 		name := ""
-		if a.Name() != nil {
+		if a.Name() != nil && (ast.IsIdentifier(a.Name()) || ast.IsStringLiteralLike(a.Name()) || a.Name().Kind == ast.KindNumericLiteral) {
 			name = a.Name().Text()
 		}
 		f.text(name)
@@ -60,7 +60,7 @@ func (f *fields) declaration(p *compiler.Program, n *ast.Node) {
 	}
 }
 
-// Inspect accepts an AST anchor already validated by the bridge. Its four modes
+// Inspect accepts an AST anchor already validated by the bridge. Its modes
 // return only compiler facts; all lint classification belongs in Adamic.
 func Inspect(p *compiler.Program, file *ast.SourceFile, selected *ast.Node, c *checker.Checker, question string) (string, error) {
 	pieces := strings.Split(question, "\n")
@@ -68,7 +68,7 @@ func Inspect(p *compiler.Program, file *ast.SourceFile, selected *ast.Node, c *c
 		return "", fmt.Errorf("invalid runtime context question")
 	}
 	mode := pieces[1]
-	if mode != "origin" && mode != "alias-origin" && mode != "signature" && mode != "program" {
+	if mode != "origin" && mode != "alias-origin" && mode != "signature" && mode != "program" && mode != "syntax" {
 		return "", fmt.Errorf("unknown runtime context mode")
 	}
 	if p == nil || file == nil || selected == nil || ast.GetSourceFileOfNode(selected) != file {
@@ -84,6 +84,8 @@ func Inspect(p *compiler.Program, file *ast.SourceFile, selected *ast.Node, c *c
 	out.text("runtime-context")
 	out.text(mode)
 	switch mode {
+	case "syntax":
+		syntaxFields(out, selected)
 	case "origin", "alias-origin":
 		symbol := c.GetSymbolAtLocation(selected)
 		if mode == "alias-origin" && symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {

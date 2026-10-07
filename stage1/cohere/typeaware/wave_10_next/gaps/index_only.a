@@ -1,4 +1,4 @@
-import { RequireBlockingStandardStreamsIndex } from '../require_blocking_standard_streams.a';
+import { RequireBlockingStandardStreamsIndex } from '../blocking_index.a';
 const index = new RequireBlockingStandardStreamsIndex([
  { path: '/source/system/StandardStreams.d.ts', declarationFile: true, external: true, text: '', edges: [] },
  { path: '/entry.a', declarationFile: false, external: true, text: "import './source/system/StandardStreams';", edges: [

@@ -1,10 +1,10 @@
-# Wave 10 continuation: timeout validated, two rules incomplete
+# Wave 10 continuation: source ports complete, native graph compilation blocked
 
-Built the native timeout rule and registered its raw compiler-fact question; two control-flow rules remain partial.
-Claims: `0ac7b51b`; earlier partial components: `72718a9d`; completed timeout work is in the commit adding this report.
-Final native/Go gate passed in 64.698s: 37 controls, compiler77, repository287, sanitizers and released-handle checks.
-Timeout, library-fact and released-registry mutants were caught; state/index component mutants were also caught by Go bytes.
-The combined component build stalls in internal/fresh; CFG/root/callee and load-time/call work for the other two rules is unported.
+Built both remaining .a rule implementations, their CFG and raw AST field bridge; timeout remains fully validated.
+Claim commit: `0ac7b51b`; timeout commit: `93916207`; this update is the commit adding the source-port evidence.
+Source/Go comparison: 92 controls, 77 process-output and 30 blocking-streams findings; native timeout rerun passed in 80.023s.
+Both source-rule mutants exit 0 and fail byte comparison; timeout and registry mutants pass their checks; raw static-body mutant is caught.
+Native graph runners time out in internal/fresh; their corpus parity, sanitizers and native/Go timings remain unverified, so no new rules are claimed.
 
 ## Scope and selection
 
@@ -98,42 +98,83 @@ machine was shared with other checks; no speedup claim is made.
 Raw samples and outputs are in `evidence/validated-timeout/benchmarks.json` and
 its neighboring compressed output files.
 
-## Exact remaining blocker and unfinished work
+## Remaining source ports and exact native blocker
 
-The combined owned component probe `gaps/native_atoms.a` still fails to finish
-compilation. A bounded final-source run using the current stage-0 binary and
-registered checker archive exited 124 at 45 seconds with empty compiler output.
-The earlier three-minute run's SIGQUIT stack, preserved in
-`evidence/fresh-stack.txt`, showed `internal/fresh.(*analysis).argument`, `made`
-and `run` during lowering's freshness/cycle proof. Distinct literal class tags
-did not resolve it. This is a compiler stall, not a shared-harness `.a` loading
-failure. No compiler source was edited to bypass it.
+`control_flow.a` ports Go cohere's graph construction using numeric block links.
+`syntax_fields.go` supplies raw AST field membership; `syntax_fields.a` maps those
+byte spans into the native parse tree. Neither Go adapter computes lint decisions.
+The process-output port now contains root selection, reachable-path write state,
+catch filtering, never/generator/async restrictions and local/foreign callee
+following. The blocking-streams port contains import reachability, entry detection,
+ordered call/load-time analysis, callback and function reachability and exact
+policy-message serialization. The import index is in its own `blocking_index.a`.
+Separate `.a` runners and independent production Go oracle overlays are provided.
 
-Separate `gaps/state_only.a`, `gaps/index_only.a` and `timeout_probe.a` component
-probes compile and run. An owned overlay test calls unchanged private production
-Go helpers and matches their five output lines exactly:
+Source execution under Node matches Go exactly over 64 extracted/extra process
+controls and 28 additional blocking controls. The latter exercise empty Nexus
+blocker declarations, aliases/reexports, blocking before/after exits, branches,
+awaits, direct/indirect callbacks, generator and unused function roots, recursion,
+catch/finally and shebang entry detection. Both rules produce zero fixes and zero
+suggestions; those serialized fields are compared, not inferred.
 
-```text
-,1,
-,
-reaches streams
-imported
-lost
-```
+| Source comparison | Controls | Findings | Identical bytes |
+| --- | ---: | ---: | ---: |
+| Process exit after output | 92 | 77 | 45,901 |
+| Require blocking standard streams | 92 | 30 | 24,200 |
 
-Those comparisons and the two component mutants validate only the prepared
-helpers. They do not establish complete process-output or blocking-streams rule
-behavior. Process-output still needs native CFG construction, root analysis,
-callee following and its complete runner. Blocking-streams still needs native
-CFG traversal, ordered call/load-time analysis and its complete runner. Their
-full findings/fixes/suggestions comparisons, complete rule mutants and timings
-remain unverified. The raw signature/program modes are prepared for this work;
-origin and program-root facts have direct tests, but full signature/import-edge
-coverage is not claimed.
+`TestSourceAgreementAndMutants` passed in 95.251s. It executes the owned source
+with Node's type stripping against independently recorded raw compiler facts.
+The records contain no production lint verdicts. A separate production Go loader
+and rule supply expected findings. This is **source execution**, not native
+parity or the compiler's emitted-JavaScript comparison. The raw record stream is
+large (about 277 MiB compressed); it is reproducible but not committed.
 
-Following Ahra's instruction to report other blockers and stop rather than edit
-shared files, this continuation stops with the combined compiler stall recorded.
-The two incomplete claims remain reserved. No further batch is claimed.
+The process source mutant drops newly recorded writes: exit 0, empty stderr,
+comparison catches byte 114. The blocking source mutant disables ordered blocking:
+exit 0, empty stderr, comparison catches byte 13,904. New syntax regression tests
+cover absent loop fields, static bodies and destructuring ancestry. Clearing the resolved never return flag causes its Go assertion to fail. Omitting the
+static body causes the Go check to exit 1 with `static block body absent`.
+Source comparison also caught omitted loop/jump fields and a missing static-body
+edge during development. A raw declaration adapter panic on binding-pattern
+ancestor names was corrected by reading text only from supported name kinds.
+
+The final native process build is bounded at 45s and exits 124; its owned Go test
+fails after 53.129s. The final blocking build likewise exits 124 at 45s. Both
+SIGQUIT traces show `internal/fresh.(*analysis).argument`, `made`, `value` and
+freshness analysis before emission. An earlier process run stalled over three
+minutes. This establishes a compiler-pass stall; its precise root cause is not
+proven. No protected compiler, shared registration generator or shared harness
+was edited. A nested-constructor refusal encountered earlier was avoided by
+constructing the process helper in the blocking runner and injecting it.
+
+The isolated native `runtime_probe.a` confirms a decoded static `Block` and a
+resolved never return flag of 262144. Its released syntax query exits 70 with the
+exact released-handle panic. The same probe passes address/undefined
+and leak sanitizer checks with empty stderr. Omitting the raw static body in the
+bridge makes the native probe exit 0 with empty stderr; byte comparison catches
+byte 0. This validates raw bridge/decoder behavior only, not either
+full graph rule. Probe evidence and statuses are preserved alongside the build
+traces; see `evidence/source-ports`.
+
+The completed timeout rule was rerun after these bridge changes. Normal and
+sanitized outputs match Go for 37 controls (15 findings, 10,371 bytes at the new
+artifact path), compiler77 (0 findings, 5,318 bytes) and repository287 (0 findings,
+18,485 bytes). Its native decision mutant exits 0 and differs at byte 57; released
+handle and retaining-registry mutant checks pass. Touched Go packages and vet pass.
+All 12 top-level owned `.a` files format and lint with zero configured findings.
+Previous timeout wall-time samples above remain the native/Go timing evidence.
+Go-only compiler77 and repository287 baselines for each new rule have zero findings;
+that observation does not establish native or source corpus agreement.
+
+The earlier component-only evidence under `evidence` and `validated-timeout`
+remains historical evidence for the previous commits. The source implementations
+supersede its statements that CFG/callee/load-time logic was unported. Full native
+findings/fixes/suggestions comparisons, complete native rule mutants, sanitizer
+checks and native timings for these two rules remain blocked. Dynamic production
+fixtures not assembled by the extraction helper, the full repository gate,
+shared-harness integration and emitted-JavaScript comparison are not covered.
+Following Ahra's instruction to stop at other blockers instead of editing shared
+files, both claims remain reserved and no additional batch is claimed.
 
 ## Reproduction and evidence
 
@@ -176,3 +217,31 @@ failed combined comparisons are superseded only for the completed timeout port
 and the separate helper probes. No whole-repository gate, complete control-flow
 rule equivalence, shared-harness integration or emitted-JavaScript comparison is
 claimed.
+
+## Reproduce the source-port checks
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_WAVE10_PROCESS_VALIDATE=1 \
+ADAMIC_WAVE10_PROCESS_ARTIFACTS=/workspace/wave-10-process-validation \
+go test ./stage1/cohere/typeaware/wave_10_next \
+  -run '^TestProcessNativeAgreement$' -count=1 -timeout=2m -v \
+  > /tmp/wave-10-process-native-final.log 2>&1
+# This prepares the 64 controls and independent oracle before its bounded build.
+ADAMIC_WAVE10_BLOCKING_FIXTURES=/workspace/wave-10-process-validation \
+go test ./stage1/cohere/typeaware/wave_10_next \
+  -run '^TestBlockingFixturePreparation$' -count=1 -v \
+  > /tmp/wave-10-blocking-fixtures.log 2>&1
+go build -o /workspace/wave-10-context-recorder \
+  ./stage1/cohere/typeaware/wave_10_next/testdata/record_context.go \
+  > /tmp/wave-10-context-recorder-build.log 2>&1
+/workspace/wave-10-context-recorder \
+  /workspace/wave-10-process-validation/tsconfig.json \
+  /workspace/wave-10-process-validation/all-controls.manifest \
+  /workspace/wave-10-all-context.json.gz > /tmp/wave-10-all-context.log 2>&1
+ADAMIC_WAVE10_SOURCE_ARTIFACTS=/workspace/wave-10-process-validation \
+ADAMIC_WAVE10_SOURCE_RECORDS=/workspace/wave-10-all-context.json.gz \
+go test ./stage1/cohere/typeaware/wave_10_next \
+  -run '^TestSourceAgreementAndMutants$' -count=1 -timeout=5m -v \
+  > /tmp/wave-10-next-source-comparison.log 2>&1
+```

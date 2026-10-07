@@ -101,6 +101,16 @@ export class RuntimeContext {
         frames.end();
         return { present, flags, name, declarations };
     }
+    signature(index: number): {
+        readonly declaration: RuntimeDeclarationInterface | undefined;
+        readonly flags: number;
+    } {
+        const frames = this.open(index, 'signature');
+        const declaration = frames.yes() ? this.declaration(frames) : undefined;
+        const flags = declaration === undefined ? 0 : frames.natural();
+        frames.end();
+        return { declaration, flags };
+    }
     program(index: number): RuntimeFileInterface[] {
         const frames = this.open(index, 'program');
         const result: RuntimeFileInterface[] = [];

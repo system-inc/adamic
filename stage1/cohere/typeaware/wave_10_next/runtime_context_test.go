@@ -111,5 +111,92 @@ func TestRuntimeContextFactsAndLiveDispatch(t *testing.T) {
 	if _, err := adapter.Inspect(p.Compiler, loaded, nil, c, "runtime-context\norigin"); err == nil {
 		t.Fatal("missing anchor accepted")
 	}
+	call := nodes["exit"].Parent.Parent
+	signatureWire, err := adapter.Inspect(p.Compiler, loaded, call, c, "runtime-context\nsignature")
+	if err != nil {
+		t.Fatal(err)
+	}
+	signature := decode(t, signatureWire)
+	if signature[len(signature)-1] != "262144" {
+		t.Fatal("resolved never return flag absent")
+	}
 	t.Log("raw origin/program facts and live dispatch pass")
+}
+
+func TestSyntaxMembershipAndDestructuringAncestry(t *testing.T) {
+	directory := t.TempDir()
+	file := filepath.Join(directory, "syntax.a")
+	config := filepath.Join(directory, "tsconfig.json")
+	source := `declare function use(x?:unknown):void; const {a=1}={}; class C{static{use(a)}}for(;;){break;}try{use()}catch({code=0}){use(code)}export {};`
+	for path, text := range map[string]string{config: `{"compilerOptions":{"target":"ES2022","types":[]},"files":["stub.d.ts"]}`, filepath.Join(directory, "stub.d.ts"): "export {};", file: source} {
+		if err := os.WriteFile(path, []byte(text), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	p, err := bridge.Open(config, []string{file})
+	if err != nil {
+		t.Fatal(err)
+	}
+	loaded := p.Compiler.GetSourceFile(file)
+	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), loaded)
+	defer release()
+	staticBody := false
+	bareFor := false
+	ancestry := false
+	var visit func(*ast.Node)
+	visit = func(node *ast.Node) {
+		wire, err := adapter.Inspect(p.Compiler, loaded, node, c, "runtime-context\nsyntax")
+		if err != nil {
+			t.Fatal(err)
+		}
+		values := decode(t, wire)
+		if len(values) < 8 || values[2] != "syntax" {
+			t.Fatalf("invalid syntax fields: %q", values)
+		}
+		count, err := strconv.Atoi(values[7])
+		if err != nil {
+			t.Fatal(err)
+		}
+		roles := map[string][]string{}
+		offset := 8
+		for i := 0; i < count; i++ {
+			name := values[offset]
+			length, err := strconv.Atoi(values[offset+1])
+			if err != nil {
+				t.Fatal(err)
+			}
+			offset += 2
+			roles[name] = values[offset : offset+length*3]
+			offset += length * 3
+		}
+		if offset != len(values) {
+			t.Fatal("syntax trailing fields")
+		}
+		if node.Kind == ast.KindClassStaticBlockDeclaration {
+			body := roles["body"]
+			if len(body) != 3 || body[0] != "Block" {
+				t.Fatal("static block body absent")
+			}
+			staticBody = true
+		}
+		if node.Kind == ast.KindForStatement {
+			if len(roles["initializer"])+len(roles["condition"])+len(roles["incrementor"]) != 0 {
+				t.Fatal("omitted loop field invented")
+			}
+			bareFor = true
+		}
+		if node.Kind == ast.KindIdentifier && node.Text() == "code" {
+			wire, err := adapter.Inspect(p.Compiler, loaded, node, c, "runtime-context\norigin")
+			if err != nil {
+				t.Fatal(err)
+			}
+			decode(t, wire)
+			ancestry = true
+		}
+		node.ForEachChild(func(child *ast.Node) bool { visit(child); return false })
+	}
+	visit(loaded.AsNode())
+	if !staticBody || !bareFor || !ancestry {
+		t.Fatal("syntax fixture did not exercise required fields")
+	}
 }

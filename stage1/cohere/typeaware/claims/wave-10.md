@@ -36,13 +36,13 @@ and 76 candidates remain. These are the first three. No implementation precedes
 this claim commit and push. Shared harness and registration generator remain
 outside this continuation's edits.
 
-Continuation status: the timeout rule is ported and independently validated;
-process-output and blocking-streams remain partial. The runtime-context bridge
-question is now registered. The timeout oracle passes 37 controls, compiler77
-and repository287, including sanitizer runs, a native decision mutant and
-released-handle checks. Separate native state/index/timer helpers match Go;
-the combined native probe still stalls in internal/fresh (45s, exit 124).
-Process-output still lacks CFG/root/callee analysis; blocking-streams still lacks
-CFG/load-time/call analysis and a complete runner. Neither is counted as a
-completed rule. See ../wave_10_next/README.md for commands, evidence and limits.
+Continuation status: timeout is fully ported and independently validated in
+93916207, with a passing native/sanitized corpus rerun after the latest bridge
+changes. Process-output and blocking-streams now have complete candidate source
+implementations, CFG/callee/load-time logic and separate .a runners. Their source
+execution matches Go bytes on 92 controls, with one clean-exit source mutant each.
+Their full native builds both time out in internal/fresh at 45s, so neither is
+counted as completed: native corpus parity, sanitizers and native timings are
+blocked. No shared harness, generator or protected compiler files were edited.
+See ../wave_10_next/README.md and evidence/source-ports for evidence and limits.
 These claims remain reserved; no additional rules were claimed.

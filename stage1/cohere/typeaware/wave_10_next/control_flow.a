@@ -1,0 +1,1029 @@
+// Native port of cohere's ECMAScript CFG shape. Numeric block links own no
+// cycles. Only consumer-observable expression/statement events are retained.
+import { panic } from 'adamic';
+import type { SyntaxFields } from './syntax_fields.a';
+
+export interface FlowEventInterface {
+    readonly kind: string;
+    readonly node: number;
+}
+export interface FlowBlockInterface {
+    readonly events: FlowEventInterface[];
+    readonly successors: number[];
+    reachable: boolean;
+    incoming: boolean;
+}
+interface TryFrameInterface {
+    position: number;
+    readonly hasFinally: boolean;
+    readonly catchEntry: number;
+    readonly finallyEntry: number;
+    forked: boolean;
+    thrown: boolean;
+    returned: boolean;
+}
+interface JumpTargetInterface {
+    readonly labels: readonly string[];
+    readonly breakTo: number;
+    readonly continueTo: number;
+    readonly breakable: boolean;
+}
+export class ControlFlow {
+    readonly discriminator = 'control-flow';
+    readonly syntax: SyntaxFields;
+    readonly blocks: FlowBlockInterface[] = [];
+    readonly tries: TryFrameInterface[] = [];
+    readonly jumps: JumpTargetInterface[] = [];
+    readonly chains: number[] = [];
+    current = 0;
+    constructor(syntax: SyntaxFields) {
+        this.syntax = syntax;
+    }
+    block(index: number): FlowBlockInterface {
+        return this.blocks[index] ?? panic('missing flow block');
+    }
+    fresh(): number {
+        const index = this.blocks.length;
+        this.blocks.push({ events: [], successors: [], reachable: false, incoming: false });
+        return index;
+    }
+    link(from: number, to: number): void {
+        if(from < 0 || to < 0) {
+            return;
+        }
+        this.block(from).successors.push(to);
+        if(this.block(from).reachable) {
+            this.block(to).incoming = true;
+        }
+    }
+    enter(index: number): void {
+        this.block(index).reachable = this.block(index).incoming;
+        this.current = index;
+    }
+    unreachable(): void {
+        const next = this.fresh();
+        this.block(this.current).successors.push(next);
+        this.current = next;
+    }
+    emit(kind: string, node: number): void {
+        this.block(this.current).events.push({ kind, node });
+    }
+    one(index: number, role: string): number {
+        return this.syntax.one(index, role);
+    }
+    list(index: number, role: string): number[] {
+        return this.syntax.list(index, role);
+    }
+    kind(index: number): string {
+        return this.syntax.kind(index);
+    }
+    children(index: number): number[] {
+        return index < 0 ? [] : this.syntax.rules.parser.node(index).children;
+    }
+    throwFrame(): number {
+        for(let index = this.tries.length - 1; index >= 0; index--) {
+            const frame = this.tries[index] ?? panic('missing try frame');
+            if(frame.position === 0 || frame.hasFinally) {
+                return index;
+            }
+        }
+        return -1;
+    }
+    returnFrame(): number {
+        for(let index = this.tries.length - 1; index >= 0; index--) {
+            if(this.tries[index]?.hasFinally === true) {
+                return index;
+            }
+        }
+        return -1;
+    }
+    target(frame: TryFrameInterface): number {
+        return frame.position === 0 && frame.catchEntry >= 0 ? frame.catchEntry : frame.finallyEntry;
+    }
+    throwable(): void {
+        if(!this.block(this.current).reachable) {
+            return;
+        }
+        const index = this.throwFrame();
+        if(index < 0) {
+            return;
+        }
+        const frame = this.tries[index] ?? panic('missing try frame');
+        if(frame.forked) {
+            return;
+        }
+        frame.forked = true;
+        frame.thrown = true;
+        this.link(this.current, this.target(frame));
+        const next = this.fresh();
+        this.link(this.current, next);
+        this.enter(next);
+    }
+    identifierThrows(index: number): boolean {
+        const parent = this.syntax.parent(index);
+        const kind = this.kind(parent);
+        if(
+            parent < 0 ||
+            kind.startsWith('Jsx') ||
+            [
+                'LabeledStatement',
+                'BreakStatement',
+                'ContinueStatement',
+                'ArrayBindingPattern',
+                'ImportSpecifier',
+                'ExportSpecifier',
+                'ImportClause',
+                'NamespaceImport',
+                'NamespaceExport',
+                'CatchClause',
+            ].includes(kind)
+        ) {
+            return false;
+        }
+        if(kind === 'BindingElement') {
+            return (
+                this.one(parent, 'rest') < 0 &&
+                this.one(parent, 'propertyName') !== index &&
+                this.kind(this.syntax.parent(parent)) === 'ObjectBindingPattern'
+            );
+        }
+        if(
+            [
+                'FunctionDeclaration',
+                'FunctionExpression',
+                'ArrowFunction',
+                'ClassDeclaration',
+                'ClassExpression',
+                'VariableDeclaration',
+                'PropertyAssignment',
+                'PropertyDeclaration',
+                'MethodDeclaration',
+                'GetAccessor',
+                'SetAccessor',
+                'EnumDeclaration',
+                'ModuleDeclaration',
+                'InterfaceDeclaration',
+                'TypeAliasDeclaration',
+            ].includes(kind)
+        ) {
+            return this.one(parent, 'name') !== index;
+        }
+        return true;
+    }
+    truthy(index: number): boolean {
+        const selected = this.syntax.rules.skip(index);
+        const node = this.syntax.rules.parser.node(selected);
+        if(node.kind === 'TrueKeyword' || node.kind === 'RegularExpressionLiteral') {
+            return true;
+        }
+        if(node.kind === 'NumericLiteral') {
+            return node.text !== '0';
+        }
+        if(node.kind === 'BigIntLiteral') {
+            const digits = node.text.slice(0, -1).replaceAll('_', '').toLowerCase();
+            const start = digits.startsWith('0x') || digits.startsWith('0b') || digits.startsWith('0o') ? 2 : 0;
+            return digits
+                .slice(start)
+                .split('')
+                .some((digit) => digit !== '0');
+        }
+        return node.kind === 'StringLiteral' && node.text !== '';
+    }
+    build(root: number): void {
+        this.current = this.fresh();
+        this.block(this.current).incoming = true;
+        this.block(this.current).reachable = true;
+        const kind = this.kind(root);
+        if(kind === 'SourceFile') {
+            this.statements(this.list(root, 'statements'));
+        }
+        else if(kind === 'ClassStaticBlockDeclaration') {
+            this.statement(this.one(root, 'body'));
+        }
+        else if(kind === 'PropertyDeclaration') {
+            this.expr(this.one(root, 'initializer'));
+        }
+        else {
+            for(const parameter of this.list(root, 'parameters')) {
+                this.expr(this.one(parameter, 'type'));
+                this.bindDefault(this.one(parameter, 'name'), this.one(parameter, 'initializer'));
+            }
+            this.expr(this.one(root, 'type'));
+            const body = this.one(root, 'body');
+            if(this.kind(body) === 'Block') {
+                this.statement(body);
+            }
+            else {
+                this.expr(body);
+            }
+        }
+    }
+    unknown(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        if(this.syntax.fields(index).statement) {
+            this.statement(index);
+        }
+        else {
+            this.expr(index);
+        }
+    }
+    statements(list: readonly number[]): void {
+        for(const node of list) {
+            this.statement(node);
+        }
+    }
+    expr(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        this.emit('Expression', index);
+        const kind = this.kind(index);
+        if(kind === 'Identifier') {
+            if(this.identifierThrows(index)) {
+                this.throwable();
+            }
+            return;
+        }
+        if(kind === 'ParenthesizedExpression') {
+            this.expr(this.one(index, 'expression'));
+            return;
+        }
+        if(kind === 'BinaryExpression') {
+            this.binary(index);
+            return;
+        }
+        if(kind === 'ConditionalExpression') {
+            this.expr(this.one(index, 'condition'));
+            const end = this.current;
+            const join = this.fresh();
+            const yes = this.fresh();
+            this.link(end, yes);
+            this.enter(yes);
+            this.expr(this.one(index, 'then'));
+            this.link(this.current, join);
+            const no = this.fresh();
+            this.link(end, no);
+            this.enter(no);
+            this.expr(this.one(index, 'else'));
+            this.link(this.current, join);
+            this.enter(join);
+            return;
+        }
+        if(kind === 'PrefixUnaryExpression' || kind === 'PostfixUnaryExpression') {
+            const operand = this.one(index, 'expression');
+            const operator = this.syntax.rules.parser.node(index).operator;
+            if(kind === 'PostfixUnaryExpression' || ['PlusPlusToken', 'MinusMinusToken'].includes(operator)) {
+                this.patternRead(operand);
+            }
+            else {
+                this.expr(operand);
+            }
+            return;
+        }
+        if(
+            [
+                'PropertyAccessExpression',
+                'ElementAccessExpression',
+                'CallExpression',
+                'NewExpression',
+                'TaggedTemplateExpression',
+            ].includes(kind)
+        ) {
+            this.access(index);
+            return;
+        }
+        if(kind === 'YieldExpression') {
+            this.expr(this.one(index, 'expression'));
+            this.abrupt('yield');
+            return;
+        }
+        if(kind === 'ClassExpression') {
+            this.classLike(index);
+            return;
+        }
+        if(this.syntax.isRoot(index)) {
+            this.memberHeader(index);
+            return;
+        }
+        for(const child of this.children(index)) {
+            this.unknown(child);
+        }
+    }
+    condition(index: number, yes: number, no: number): void {
+        if(index < 0) {
+            this.link(this.current, yes);
+            this.link(this.current, no);
+            return;
+        }
+        const kind = this.kind(index);
+        if(kind === 'ParenthesizedExpression') {
+            this.emit('Expression', index);
+            this.condition(this.one(index, 'expression'), yes, no);
+            return;
+        }
+        if(kind === 'PrefixUnaryExpression' && this.syntax.rules.parser.node(index).operator === 'ExclamationToken') {
+            this.emit('Expression', index);
+            this.condition(this.one(index, 'expression'), no, yes);
+            return;
+        }
+        if(kind === 'BinaryExpression') {
+            const operator = this.kind(this.one(index, 'operator'));
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator)) {
+                this.emit('Expression', index);
+                const right = this.fresh();
+                const left = this.one(index, 'left');
+                if(operator === 'AmpersandAmpersandToken') {
+                    this.condition(left, right, no);
+                }
+                else if(operator === 'BarBarToken') {
+                    this.condition(left, yes, right);
+                }
+                else {
+                    this.expr(left);
+                    this.link(this.current, yes);
+                    this.link(this.current, no);
+                    this.link(this.current, right);
+                }
+                this.enter(right);
+                this.condition(this.one(index, 'right'), yes, no);
+                return;
+            }
+        }
+        if(kind === 'ConditionalExpression') {
+            this.emit('Expression', index);
+            const trueEntry = this.fresh();
+            const falseEntry = this.fresh();
+            this.condition(this.one(index, 'condition'), trueEntry, falseEntry);
+            this.enter(trueEntry);
+            this.condition(this.one(index, 'then'), yes, no);
+            this.enter(falseEntry);
+            this.condition(this.one(index, 'else'), yes, no);
+            return;
+        }
+        this.expr(index);
+        this.link(this.current, yes);
+        this.link(this.current, no);
+    }
+    binary(index: number): void {
+        const left = this.one(index, 'left');
+        const right = this.one(index, 'right');
+        const operator = this.kind(this.one(index, 'operator'));
+        if(
+            [
+                'AmpersandAmpersandToken',
+                'BarBarToken',
+                'QuestionQuestionToken',
+                'AmpersandAmpersandEqualsToken',
+                'BarBarEqualsToken',
+                'QuestionQuestionEqualsToken',
+            ].includes(operator)
+        ) {
+            if(operator.endsWith('EqualsToken')) {
+                this.patternRead(left);
+            }
+            else {
+                this.expr(left);
+            }
+            const join = this.fresh();
+            this.link(this.current, join);
+            const next = this.fresh();
+            this.link(this.current, next);
+            this.enter(next);
+            this.expr(right);
+            this.link(this.current, join);
+            this.enter(join);
+            return;
+        }
+        if(
+            operator === 'EqualsToken' &&
+            ['ObjectLiteralExpression', 'ArrayLiteralExpression'].includes(this.kind(this.syntax.rules.skip(left)))
+        ) {
+            this.expr(right);
+            this.pattern(left);
+            return;
+        }
+        if(
+            operator.endsWith('EqualsToken') &&
+            ![
+                'EqualsEqualsToken',
+                'EqualsEqualsEqualsToken',
+                'ExclamationEqualsToken',
+                'ExclamationEqualsEqualsToken',
+                'LessThanEqualsToken',
+                'GreaterThanEqualsToken',
+            ].includes(operator)
+        ) {
+            this.patternRead(left);
+        }
+        else {
+            this.expr(left);
+        }
+        this.expr(right);
+    }
+    access(index: number): void {
+        const facts = this.syntax.fields(index);
+        const outer = facts.chain && facts.outermost;
+        const kind = this.kind(index);
+        if(outer) {
+            this.chains.push(this.fresh());
+        }
+        this.expr(this.one(index, 'expression'));
+        if(facts.chainRoot && this.chains.length > 0) {
+            this.link(this.current, this.chains[this.chains.length - 1] ?? -1);
+            const next = this.fresh();
+            this.link(this.current, next);
+            this.enter(next);
+        }
+        if(kind === 'ElementAccessExpression') {
+            this.expr(this.one(index, 'argument'));
+        }
+        if(['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(kind)) {
+            for(const type of this.list(index, 'typeArguments')) {
+                this.expr(type);
+            }
+            for(const argument of this.list(index, 'arguments')) {
+                this.expr(argument);
+            }
+            if(kind === 'TaggedTemplateExpression') {
+                this.expr(this.one(index, 'template'));
+            }
+        }
+        this.throwable();
+        if(outer) {
+            const join = this.chains.pop() ?? panic('missing optional join');
+            this.link(this.current, join);
+            this.enter(join);
+        }
+    }
+    decorators(index: number): void {
+        for(const decorator of this.list(index, 'decorators')) {
+            for(const child of this.children(decorator)) {
+                this.expr(child);
+            }
+        }
+    }
+    memberHeader(index: number): void {
+        this.decorators(index);
+        for(const parameter of this.list(index, 'parameters')) {
+            this.decorators(parameter);
+        }
+        const name = this.one(index, 'name');
+        if(this.kind(name) === 'ComputedPropertyName') {
+            for(const child of this.children(name)) {
+                this.expr(child);
+            }
+        }
+        if(this.kind(index) === 'PropertyDeclaration') {
+            this.expr(this.one(index, 'type'));
+        }
+        if(this.kind(index) === 'IndexSignature') {
+            for(const parameter of this.list(index, 'parameters')) {
+                this.expr(this.one(parameter, 'type'));
+            }
+            this.expr(this.one(index, 'type'));
+        }
+    }
+    classLike(index: number): void {
+        this.decorators(index);
+        for(const parameter of this.list(index, 'typeParameters')) {
+            for(const child of this.children(parameter).slice(1)) {
+                this.expr(child);
+            }
+        }
+        for(const heritage of this.list(index, 'heritage')) {
+            for(const child of this.children(heritage)) {
+                this.expr(child);
+            }
+        }
+        for(const member of this.list(index, 'members')) {
+            this.memberHeader(member);
+        }
+    }
+    patternRead(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        const kind = this.kind(index);
+        if(kind === 'Identifier') {
+            if(this.identifierThrows(index)) {
+                this.throwable();
+            }
+            return;
+        }
+        if(
+            [
+                'ParenthesizedExpression',
+                'NonNullExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+            ].includes(kind)
+        ) {
+            const children = this.children(index);
+            this.patternRead(
+                kind === 'TypeAssertionExpression' ? (children[children.length - 1] ?? -1) : (children[0] ?? -1),
+            );
+            return;
+        }
+        this.expr(index);
+    }
+    bindDefault(index: number, fallback: number): void {
+        if(fallback >= 0) {
+            const join = this.fresh();
+            this.link(this.current, join);
+            const next = this.fresh();
+            this.link(this.current, next);
+            this.enter(next);
+            this.expr(fallback);
+            this.link(this.current, join);
+            this.enter(join);
+        }
+        this.pattern(index);
+    }
+    pattern(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        const kind = this.kind(index);
+        if(kind === 'Identifier') {
+            if(this.identifierThrows(index)) {
+                this.throwable();
+            }
+            return;
+        }
+        if(kind === 'OmittedExpression') {
+            return;
+        }
+        if(
+            [
+                'ParenthesizedExpression',
+                'NonNullExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+            ].includes(kind)
+        ) {
+            const children = this.children(index);
+            this.pattern(
+                kind === 'TypeAssertionExpression' ? (children[children.length - 1] ?? -1) : (children[0] ?? -1),
+            );
+            return;
+        }
+        if(['ObjectBindingPattern', 'ArrayBindingPattern'].includes(kind)) {
+            for(const binding of this.list(index, 'elements')) {
+                if(this.kind(binding) !== 'BindingElement') {
+                    continue;
+                }
+                const key = this.one(binding, 'propertyName');
+                if(this.kind(key) === 'ComputedPropertyName') {
+                    for(const child of this.children(key)) {
+                        this.expr(child);
+                    }
+                }
+                this.bindDefault(this.one(binding, 'name'), this.one(binding, 'initializer'));
+            }
+            return;
+        }
+        if(kind === 'ObjectLiteralExpression') {
+            for(const property of this.list(index, 'properties')) {
+                const propertyKind = this.kind(property);
+                if(propertyKind === 'PropertyAssignment') {
+                    const name = this.one(property, 'name');
+                    if(this.kind(name) === 'ComputedPropertyName') {
+                        for(const child of this.children(name)) {
+                            this.expr(child);
+                        }
+                    }
+                    this.pattern(this.one(property, 'initializer'));
+                }
+                else if(propertyKind === 'ShorthandPropertyAssignment') {
+                    this.bindDefault(this.one(property, 'name'), this.one(property, 'initializer'));
+                }
+                else if(propertyKind === 'SpreadAssignment') {
+                    this.pattern(this.children(property)[0] ?? -1);
+                }
+            }
+            return;
+        }
+        if(kind === 'ArrayLiteralExpression') {
+            for(const child of this.list(index, 'elements')) {
+                this.pattern(child);
+            }
+            return;
+        }
+        if(kind === 'SpreadElement') {
+            this.pattern(this.children(index)[0] ?? -1);
+            return;
+        }
+        if(kind === 'BinaryExpression' && this.kind(this.one(index, 'operator')) === 'EqualsToken') {
+            this.bindDefault(this.one(index, 'left'), this.one(index, 'right'));
+            return;
+        }
+        this.expr(index);
+    }
+    declaration(index: number): void {
+        this.expr(this.one(index, 'type'));
+        const name = this.one(index, 'name');
+        const initializer = this.one(index, 'initializer');
+        if(['ObjectBindingPattern', 'ArrayBindingPattern'].includes(this.kind(name))) {
+            this.expr(initializer);
+            this.pattern(name);
+        }
+        else {
+            this.patternRead(name);
+            this.expr(initializer);
+        }
+    }
+    declarations(index: number): void {
+        for(const declaration of this.list(index, 'declarations')) {
+            this.declaration(declaration);
+        }
+    }
+    breakable(index: number): boolean {
+        return [
+            'SwitchStatement',
+            'WhileStatement',
+            'DoStatement',
+            'ForStatement',
+            'ForInStatement',
+            'ForOfStatement',
+        ].includes(this.kind(index));
+    }
+    labels(index: number): string[] {
+        const labels: string[] = [];
+        let current = index;
+        for(
+            let parent = this.syntax.parent(current);
+            this.kind(parent) === 'LabeledStatement' && this.one(parent, 'statement') === current;
+            parent = this.syntax.parent(current)
+        ) {
+            labels.push(this.syntax.rules.parser.node(this.one(parent, 'label')).text);
+            current = parent;
+        }
+        return labels;
+    }
+    pushJump(index: number, breakTo: number, continueTo: number): void {
+        this.jumps.push({ labels: this.labels(index), breakTo, continueTo, breakable: true });
+    }
+    statement(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        this.emit('Statement', index);
+        const kind = this.kind(index);
+        if(kind === 'Block') {
+            this.statements(this.list(index, 'statements'));
+            return;
+        }
+        if(kind === 'VariableStatement') {
+            this.declarations(this.one(index, 'declarations'));
+            return;
+        }
+        if(kind === 'ExpressionStatement' || kind === 'ExportAssignment') {
+            this.expr(this.one(index, 'expression'));
+            return;
+        }
+        if(kind === 'IfStatement') {
+            const after = this.fresh();
+            const yes = this.fresh();
+            const alternative = this.one(index, 'else');
+            const no = alternative < 0 ? after : this.fresh();
+            this.condition(this.one(index, 'expression'), yes, no);
+            this.enter(yes);
+            this.statement(this.one(index, 'then'));
+            this.link(this.current, after);
+            if(alternative >= 0) {
+                this.enter(no);
+                this.statement(alternative);
+                this.link(this.current, after);
+            }
+            this.enter(after);
+            return;
+        }
+        if(['WhileStatement', 'DoStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement'].includes(kind)) {
+            this.loop(index);
+            return;
+        }
+        if(kind === 'SwitchStatement') {
+            this.switchStatement(index);
+            return;
+        }
+        if(kind === 'TryStatement') {
+            this.tryStatement(index);
+            return;
+        }
+        if(kind === 'LabeledStatement') {
+            const statement = this.one(index, 'statement');
+            if(this.breakable(statement)) {
+                this.statement(statement);
+                return;
+            }
+            const after = this.fresh();
+            this.jumps.push({
+                labels: [this.syntax.rules.parser.node(this.one(index, 'label')).text],
+                breakTo: after,
+                continueTo: -1,
+                breakable: false,
+            });
+            this.statement(statement);
+            this.jumps.pop();
+            this.link(this.current, after);
+            this.enter(after);
+            return;
+        }
+        if(kind === 'ReturnStatement' || kind === 'ThrowStatement') {
+            this.expr(this.one(index, 'expression'));
+            this.abrupt(kind === 'ReturnStatement' ? 'return' : 'throw');
+            return;
+        }
+        if(kind === 'BreakStatement' || kind === 'ContinueStatement') {
+            this.jump(index, kind === 'ContinueStatement');
+            return;
+        }
+        if(kind === 'WithStatement') {
+            this.expr(this.one(index, 'expression'));
+            this.statement(this.one(index, 'statement'));
+            return;
+        }
+        if(
+            [
+                'EmptyStatement',
+                'DebuggerStatement',
+                'ImportDeclaration',
+                'ImportEqualsDeclaration',
+                'FunctionDeclaration',
+                'ExportDeclaration',
+            ].includes(kind)
+        ) {
+            return;
+        }
+        if(kind === 'ClassDeclaration') {
+            this.classLike(index);
+            return;
+        }
+        for(const child of this.children(index)) {
+            this.unknown(child);
+        }
+    }
+    loop(index: number): void {
+        const kind = this.kind(index);
+        const bodyNode = this.one(index, 'statement');
+        const expression = this.one(index, 'expression');
+        if(kind === 'DoStatement') {
+            const body = this.fresh();
+            this.link(this.current, body);
+            const test = this.fresh();
+            const after = this.fresh();
+            this.pushJump(index, after, test);
+            this.enter(body);
+            this.statement(bodyNode);
+            this.link(this.current, test);
+            this.jumps.pop();
+            this.enter(test);
+            this.expr(expression);
+            this.link(this.current, body);
+            if(!this.truthy(expression)) {
+                this.link(this.current, after);
+            }
+            this.enter(after);
+            return;
+        }
+        if(kind === 'ForInStatement' || kind === 'ForOfStatement') {
+            this.expr(expression);
+            const head = this.fresh();
+            this.link(this.current, head);
+            this.enter(head);
+            const after = this.fresh();
+            this.link(head, after);
+            const body = this.fresh();
+            this.link(head, body);
+            this.pushJump(index, after, head);
+            this.enter(body);
+            const initializer = this.one(index, 'initializer');
+            if(this.kind(initializer) === 'VariableDeclarationList') {
+                for(const declaration of this.list(initializer, 'declarations')) {
+                    this.pattern(this.one(declaration, 'name'));
+                }
+            }
+            else {
+                this.pattern(initializer);
+            }
+            this.statement(bodyNode);
+            this.link(this.current, head);
+            this.jumps.pop();
+            this.enter(after);
+            return;
+        }
+        let condition = expression;
+        let incrementor = -1;
+        if(kind === 'ForStatement') {
+            const initializer = this.one(index, 'initializer');
+            if(this.kind(initializer) === 'VariableDeclarationList') {
+                this.declarations(initializer);
+            }
+            else {
+                this.expr(initializer);
+            }
+            condition = this.one(index, 'condition');
+            incrementor = this.one(index, 'incrementor');
+        }
+        if(kind === 'ForStatement' && condition < 0 && incrementor < 0) {
+            const body = this.fresh();
+            this.link(this.current, body);
+            const after = this.fresh();
+            this.pushJump(index, after, body);
+            this.enter(body);
+            this.statement(bodyNode);
+            this.link(this.current, body);
+            this.jumps.pop();
+            this.enter(after);
+            return;
+        }
+        const test = this.fresh();
+        this.link(this.current, test);
+        this.enter(test);
+        const after = this.fresh();
+        const body = this.fresh();
+        this.condition(
+            condition,
+            body,
+            (kind === 'ForStatement' && condition < 0) || this.truthy(condition) ? -1 : after,
+        );
+        let update = test;
+        if(incrementor >= 0) {
+            update = this.fresh();
+            this.block(update).incoming = this.block(update).incoming || this.block(this.current).reachable;
+            this.enter(update);
+            this.expr(incrementor);
+            this.link(this.current, test);
+        }
+        this.pushJump(index, after, update);
+        this.enter(body);
+        this.statement(bodyNode);
+        this.link(this.current, update);
+        this.jumps.pop();
+        this.enter(after);
+    }
+    switchStatement(index: number): void {
+        this.expr(this.one(index, 'expression'));
+        const after = this.fresh();
+        const clauses = this.list(this.one(index, 'caseBlock'), 'clauses');
+        const bodies: number[] = [];
+        while(bodies.length < clauses.length) {
+            bodies.push(this.fresh());
+        }
+        let fallback = -1;
+        let test = this.current;
+        for(let at = 0; at < clauses.length; at++) {
+            const clause = clauses[at] ?? -1;
+            if(this.kind(clause) === 'DefaultClause') {
+                fallback = at;
+                continue;
+            }
+            this.current = test;
+            this.expr(this.one(clause, 'expression'));
+            this.link(this.current, bodies[at] ?? -1);
+            const next = this.fresh();
+            this.link(this.current, next);
+            this.enter(next);
+            test = this.current;
+        }
+        this.link(test, fallback >= 0 ? (bodies[fallback] ?? -1) : after);
+        this.pushJump(index, after, -1);
+        let fallthrough = -1;
+        for(let at = 0; at < clauses.length; at++) {
+            const body = bodies[at] ?? -1;
+            this.link(fallthrough, body);
+            this.enter(body);
+            this.statements(this.list(clauses[at] ?? -1, 'statements'));
+            fallthrough = this.current;
+        }
+        this.link(fallthrough, after);
+        this.jumps.pop();
+        this.enter(after);
+    }
+    tryStatement(index: number): void {
+        const catchNode = this.one(index, 'catch');
+        const finallyNode = this.one(index, 'finally');
+        const frame: TryFrameInterface = {
+            position: 0,
+            hasFinally: finallyNode >= 0,
+            catchEntry: catchNode >= 0 ? this.fresh() : -1,
+            finallyEntry: finallyNode >= 0 ? this.fresh() : -1,
+            forked: false,
+            thrown: false,
+            returned: false,
+        };
+        this.tries.push(frame);
+        this.statement(this.one(index, 'try'));
+        const normal: number[] = [];
+        if(catchNode >= 0) {
+            this.link(this.current, frame.catchEntry);
+            normal.push(this.current);
+            frame.position = 1;
+            frame.forked = false;
+            this.enter(frame.catchEntry);
+            const variable = this.one(catchNode, 'variable');
+            if(variable >= 0) {
+                this.pattern(this.one(variable, 'name'));
+            }
+            this.statement(this.one(catchNode, 'body'));
+        }
+        normal.push(this.current);
+        this.tries.pop();
+        const after = this.fresh();
+        if(finallyNode < 0) {
+            for(const end of normal) {
+                this.link(end, after);
+            }
+            this.enter(after);
+            return;
+        }
+        const forks = this.tries.map((held) => held.forked);
+        const normalEntry = this.fresh();
+        for(const end of normal) {
+            this.link(end, normalEntry);
+        }
+        this.enter(normalEntry);
+        this.statement(finallyNode);
+        this.link(this.current, after);
+        if(this.block(frame.finallyEntry).incoming) {
+            for(let at = 0; at < forks.length; at++) {
+                const held = this.tries[at];
+                if(held !== undefined) {
+                    held.forked = forks[at] ?? false;
+                }
+            }
+            this.enter(frame.finallyEntry);
+            this.statement(finallyNode);
+            if(this.block(this.current).reachable) {
+                if(frame.returned) {
+                    const target = this.returnFrame();
+                    if(target >= 0) {
+                        const outer = this.tries[target] ?? panic('missing outer finally');
+                        outer.returned = true;
+                        this.link(this.current, outer.finallyEntry);
+                    }
+                }
+                if(frame.thrown) {
+                    const target = this.throwFrame();
+                    if(target >= 0) {
+                        const outer = this.tries[target] ?? panic('missing outer handler');
+                        outer.thrown = true;
+                        this.link(this.current, this.target(outer));
+                    }
+                }
+            }
+        }
+        this.enter(after);
+    }
+    jump(index: number, continuing: boolean): void {
+        if(!this.block(this.current).reachable) {
+            return;
+        }
+        const labelNode = this.one(index, 'label');
+        const label = labelNode < 0 ? '' : this.syntax.rules.parser.node(labelNode).text;
+        for(let at = this.jumps.length - 1; at >= 0; at--) {
+            const target = this.jumps[at] ?? panic('missing jump target');
+            if(continuing && target.continueTo < 0) {
+                continue;
+            }
+            if(label === '' ? continuing || target.breakable : target.labels.includes(label)) {
+                this.link(this.current, continuing ? target.continueTo : target.breakTo);
+                break;
+            }
+        }
+        this.unreachable();
+    }
+    abrupt(kind: string): void {
+        if(!this.block(this.current).reachable) {
+            return;
+        }
+        if(kind !== 'throw') {
+            const at = this.returnFrame();
+            if(at >= 0) {
+                const frame = this.tries[at] ?? panic('missing return frame');
+                frame.returned = true;
+                this.link(this.current, frame.finallyEntry);
+            }
+        }
+        if(kind !== 'return') {
+            const at = this.throwFrame();
+            if(at >= 0) {
+                const frame = this.tries[at] ?? panic('missing throw frame');
+                frame.thrown = true;
+                this.link(this.current, this.target(frame));
+            }
+        }
+        if(kind === 'yield') {
+            const next = this.fresh();
+            this.link(this.current, next);
+            this.enter(next);
+        }
+        else {
+            this.unreachable();
+        }
+    }
+}

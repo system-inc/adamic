@@ -16,9 +16,13 @@ suggestions are calculated in Go.
 - `alias-origin`: the same facts after following one import alias. Native code
   chooses whether following it is appropriate for a particular rule.
 - `signature`: a resolved call signature's declaration and return-type flags.
-  This mode is prepared for the incomplete process-output port.
+  The process-output port uses these facts for native callee classification.
 - `program`: source files and import/export/dynamic import/require resolutions.
-  This mode is prepared for the incomplete blocking-streams port.
+  The blocking-streams port uses these facts for native import reachability.
+
+- `syntax`: raw statement/optional-chain flags and named AST field children, each
+  identified by compiler kind and byte span. Fields are encoded in arbitrary map
+  order; the decoder indexes them by name. This mode builds no control flow.
 
 Declarations include source path, AST kind and byte positions, declaration-file,
 default-library and external-module flags, source text, node/function flags, and
@@ -30,3 +34,8 @@ are UTF-16 units. These are different quantities.
 The caller's checker lease is reused. No new type handles or owned addresses are
 exposed. The archive's released-handle guard runs before dispatch and is tested
 with this question and a registry-retention mutant.
+
+Ancestor text is empty for binding patterns/computed names; the name kind remains
+available. Native graph compilation is blocked even though source execution
+compares successfully. The isolated native syntax/signature probe and its released
+query check validate this raw question separately.

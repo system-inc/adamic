@@ -4,7 +4,7 @@ import { Scanner } from '../../../../typescript/scanner/scanner.ts';
 import { UnaryMinus, byteOffsets } from '../../unary_minus.ts';
 import { Rules } from '../../rules.ts';
 import { NoProcessExitAfterOutput } from '../no_process_exit_after_output.a';
-import { RequireBlockingStandardStreamsIndex } from '../require_blocking_standard_streams.a';
+import { RequireBlockingStandardStreamsIndex } from '../blocking_index.a';
 import { NoUnclearedRaceTimeout } from '../no_uncleared_race_timeout.a';
 
 const args = programArguments();
