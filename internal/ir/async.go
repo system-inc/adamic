@@ -1,5 +1,7 @@
 package ir
 
+import "reflect"
+
 // Await remains an ordinary expression until normalization exposes its suspension point.
 type Await struct {
 	Value Expression
@@ -61,8 +63,41 @@ func (p *Program) HasPromises() bool {
 		}
 	}
 	for _, function := range p.Functions {
-		if function.Returns == Promise {
+		if function.Returns == Promise || containsPromise(reflect.ValueOf(function.Body)) {
 			return true
+		}
+	}
+	return containsPromise(reflect.ValueOf(p.Main))
+}
+
+// Promise expressions can occur without a Promise local or return signature,
+// for example under typeof. Walk the ordinary IR operands, not checker metadata.
+func containsPromise(value reflect.Value) bool {
+	if !value.IsValid() {
+		return false
+	}
+	if value.CanInterface() {
+		if expression, ok := value.Interface().(Expression); ok && expression.Type() == Promise {
+			return true
+		}
+	}
+	switch value.Kind() {
+	case reflect.Interface, reflect.Pointer:
+		return !value.IsNil() && containsPromise(value.Elem())
+	case reflect.Struct:
+		if value.Type().PkgPath() != reflect.TypeFor[PromiseValue]().PkgPath() {
+			return false
+		}
+		for index := 0; index < value.NumField(); index++ {
+			if containsPromise(value.Field(index)) {
+				return true
+			}
+		}
+	case reflect.Slice, reflect.Array:
+		for index := 0; index < value.Len(); index++ {
+			if containsPromise(value.Index(index)) {
+				return true
+			}
 		}
 	}
 	return false

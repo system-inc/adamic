@@ -170,8 +170,8 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	if l.function.Async && value.Type() == ir.Promise {
-		return nil, l.notYet(expression, "return of a Promise without await (Promise adoption)")
+	if err := l.checkAsyncReturn(expression, value); err != nil {
+		return nil, err
 	}
 	return []ir.Statement{ir.Return{Value: fit(value, l.function.BodyReturns())}}, nil
 }

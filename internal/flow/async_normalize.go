@@ -262,6 +262,22 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			}
 			statement = value
 		case ir.Loop:
+			// Body declarations (including nested blocks and catch bindings) are
+			// new bindings on each execution, just like for-header bindings.
+			var captured bool
+			inspectAsyncIR(reflect.ValueOf([][]ir.Statement{value.Test, value.Body, value.Update}), func(node any) {
+				switch binding := node.(type) {
+				case ir.Declare:
+					captured = captured || n.program.Locals[binding.Local].Captured
+				case ir.Try:
+					if binding.HasCatch && binding.CatchLocal >= 0 {
+						captured = captured || n.program.Locals[binding.CatchLocal].Captured
+					}
+				}
+			})
+			if captured {
+				return nil, fmt.Errorf("async per-iteration captured cells in a repeatedly executed body are not yet represented")
+			}
 			for _, local := range value.PerIteration {
 				if n.program.Locals[local].Captured {
 					return nil, fmt.Errorf("async per-iteration captured cells are not yet represented")

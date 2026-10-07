@@ -126,3 +126,75 @@ func TestAsyncTypeOfCompoundFunctionValuesLower(t *testing.T) {
 		}
 	}
 }
+
+func TestAsyncReaderRefusals(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name, want string
+		cycle      bool
+	}{
+		{"async_refuse_frame_capture_cycle", "async frame capture cycle", true},
+		{"async_refuse_loop_body_capture", "async per-iteration captured cells", false},
+		{"async_refuse_return_thenable", "return of thenables", false},
+		{"async_refuse_arrow_thenable", "return of thenables", false},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			source, err := os.ReadFile("../oracle/testdata/async_refused/" + probe.name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowerSource(t, string(source))
+			if err == nil || !strings.Contains(err.Error(), probe.want) {
+				t.Fatalf("reader probe must be refused by name %q: %v", probe.want, err)
+			}
+			var refused *Refused
+			var notYet *NotYet
+			if probe.cycle {
+				if !errors.As(err, &refused) {
+					t.Fatalf("cycle must be Refused: %v", err)
+				}
+			} else if !errors.As(err, &notYet) {
+				t.Fatalf("unproved semantics must be NotYet: %v", err)
+			}
+		})
+	}
+}
+
+func TestAsyncRepeatedBindingRefusals(t *testing.T) {
+	t.Parallel()
+	for _, body := range []string{
+		"if (true) { const held = `item${i}`; readers.push(() => held); }",
+		"try { throw new Error(`item${i}`); } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } }",
+	} {
+		for _, loop := range []string{
+			"while (i < 3) { BODY await Promise.resolve(); i++; }",
+			"for (; i < 3; i++) { BODY await Promise.resolve(); }",
+			"do { BODY await Promise.resolve(); i++; } while (i < 3);",
+		} {
+			source := "async function run(): Promise<void> { const readers: (() => string)[] = []; let i = 0; " + strings.ReplaceAll(loop, "BODY", body) + " } await run();"
+			_, err := lowerSource(t, source)
+			if err == nil || !strings.Contains(err.Error(), "async per-iteration captured cells") {
+				t.Fatalf("repeated binding must be refused: %s: %v", source, err)
+			}
+		}
+	}
+}
+
+func TestAsyncReturnThenableShapes(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		`class Then { then(resolve: (value: number) => void): void { resolve(7); } }
+async function f(): Promise<number> { return new Then(); }
+const result = await f();`,
+		`async function f(flag: boolean): Promise<number> {
+return flag ? 4 : { then(resolve: (value: number) => void): void { resolve(7); } };
+}
+const result = await f(false);`,
+	} {
+		_, err := lowerSource(t, source)
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "return of thenables") {
+			t.Fatalf("class or union thenable must be refused by name: %v", err)
+		}
+	}
+}

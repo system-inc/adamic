@@ -63,3 +63,28 @@ func (l *lowering) promiseValue(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	return ir.PromiseValue{Value: value, Reject: name == "reject"}, true, nil
 }
+
+// Both statement returns and expression arrows need the same adoption boundary.
+func (l *lowering) checkAsyncReturn(node *ast.Node, value ir.Expression) error {
+	if !l.function.Async {
+		return nil
+	}
+	if value.Type() == ir.Promise {
+		return l.notYet(node, "return of a Promise without await (Promise adoption)")
+	}
+	if l.hasThen(l.checker.GetTypeAtLocation(node)) {
+		return l.notYet(node, "return of thenables (thenable adoption)")
+	}
+	return nil
+}
+
+func (l *lowering) hasThen(proven *checker.Type) bool {
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range proven.Types() {
+			if l.hasThen(member) {
+				return true
+			}
+		}
+	}
+	return l.checker.GetPropertyOfType(proven, "then") != nil
+}

@@ -227,9 +227,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		// Otherwise its value is what it returns.
 		var value ir.Expression
 		if value, err = l.expression(body); err == nil {
-			if function.Async && value.Type() == ir.Promise {
-				err = l.notYet(body, "return of a Promise without await (Promise adoption)")
-			}
+			err = l.checkAsyncReturn(body, value)
 			lowered = []ir.Statement{ir.Return{Value: fit(value, function.BodyReturns())}}
 		}
 	}

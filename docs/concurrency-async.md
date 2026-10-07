@@ -1326,3 +1326,115 @@ shared-SSA reconciliation retain the earlier explicit gaps. No macOS, mobile,
 WebAssembly opt-in or graph-regions proof was run in this Linux reconciliation.
 The earlier full-repository markdown timeout is not recast as a passing run.
 No automated review rejected an action.
+
+### Four runtime-area review probes
+
+The review against 0b98846 and area/runtime 915b9e05 exposed ownership and
+representation holes outside the earlier controls. They are now held by the
+reader's source programs in `async_refused/async_refuse_frame_capture_cycle.a`,
+`async_refuse_loop_body_capture.a`, `async_refuse_return_thenable.a` and
+`async_promise_expression.a`, plus the expression-arrow thenable witness and a
+safe frame-capture control.
+
+An async interior cell keeps its owner frame alive. Cycle traversal now follows
+that ownership edge to every captured slot preserved in the owner's
+FrameEnvironment, regardless of the signatures of closures stored there. The
+reader's frame -> read closure -> frame graph is refused as an
+`async frame capture cycle` under `adamic/cycle-capable`. Private slots are
+omitted from the post-completion graph because the audited finish/abandon hooks
+clear them. This relies on those existing cleanup proofs; it does not introduce
+a collector, a second environment layout, or a runtime cycle exemption for user
+values. Escaped captures over strings still work. The safe control stores an
+unused private read closure and returns a closure over text. Mutating only the
+read slot's preservation restores the ownership cycle: it prints the same Node
+answer, but the common leak check detects 394 leaked bytes in three allocations.
+Removing the frame-owner edge independently makes the reader refusal test fail.
+
+Async loop normalization refuses captured declarations in every repeatedly
+executed test, body and update tree, including nested blocks and catch bindings,
+in addition to Loop.PerIteration. The reader's while-body binding now receives
+`async per-iteration captured cells` as NotYet. While, for and do-loop witnesses
+exercise nested conditional declarations and captured catch parameters.
+Expression arrows and ordinary return statements share one async-return
+adoption check. A `then` member on the value's checker type, including any
+union or intersection constituent, produces `return of thenables` as NotYet
+before the value is fitted to the awaited payload representation. Promise
+adoption keeps its existing named diagnostic.
+
+HasPromises now inspects expressions in main and ordinary function bodies,
+including nested operands and branches, without traversing checker metadata.
+The reader's expression-only Promise therefore enables async.h and the Promise
+runtime. Node, sanitized native and the JavaScript backend all print `object`.
+The detection mutant is killed by an IR assertion, not a clang warning.
+
+Linux counts regeneration adds only two rows; all existing measured rows are
+unchanged. Counting every numeric table row, including input fixtures, the table
+goes from 525 to 527 rows. Columns below are allocations, frees, retains, releases, peak and
+regions.
+
+| Fixture | Counts | Cause |
+| --- | --- | --- |
+| async_promise_expression.a | 1 / 1 / 1 / 2 / 1 / 0 | A settled temporary Promise; no async activation |
+| async_frame_capture_safe.a | 14 / 14 / 22 / 39 / 11 / 0 | Ordinary async frames and closures with private closure-slot cleanup |
+
+Assumptions: conservatively refuse frame cycles rather than implement selective
+captured-slot liveness, and refuse all repeatedly executed captured bindings
+rather than allocate per-iteration environments. The Promise/host ABI, native
+emission hooks and mutable statics are unchanged. Existing named gaps, including
+non-suspending finally and shared-SSA reconciliation, remain explicit.
+
+### Review-fix verification
+
+Toolchain setup: Go ready 0.023s, Node ready 0.026s, pinned markdown dependencies
+ready 0.069s, submodules ready 0.075s, clang ready 0.206s, Go build ready 36.064s,
+total 36.316s. nproc is 5, with a four-core cgroup quota. Source environment:
+`/workspace/adamic-tools/env.sh`. Setup log: `/tmp/async-review-setup.log`.
+
+The final requested package gates pass:
+
+```sh
+gofmt -l cmd internal > /tmp/async-review-gofmt-final.log
+go vet ./... > /tmp/async-review-vet-final.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -v -count=1 -timeout 30m ./internal/lower ./internal/fresh ./internal/flow ./internal/ir > /tmp/async-review-analysis-final.log 2>&1
+go test -v -count=1 -timeout 30m ./internal/lower > /tmp/async-review-lower-final.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -v -count=1 -timeout 30m ./internal/native > /tmp/async-review-native.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -v -count=1 -timeout 30m ./internal/oracle > /tmp/async-review-oracle-final.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/async-review-counts.log 2>&1
+```
+
+Formatting and vet produce no diagnostics. Lower/fresh/flow/IR pass in
+33.837s/57.347s/92.860s/1.676s; the additional complete lowering run, including
+class and union thenables, passes in 12.515s. The whole native package passes
+in 457.595s, including host promises, the static inventory, sanitizer and TSan
+controls and protection-removal mutants. The whole uncached oracle passes in
+412.852s, with native hits=0/misses=2539, Node hits=0/misses=1179 and probe
+hits=0/misses=25. Its 30 passing TSan configurations execute three times each,
+90 executions at one worker or the default pool size. Linux counts regeneration
+passes in 51.712s. Every old row remains byte-for-byte unchanged.
+
+The first analysis run caught the four refusal fixtures mistakenly placed in
+the accepted top-level fixture glob. Moving them into async_refused corrected
+the placement without weakening a flow check. A workspace restart interrupted
+the first uncached oracle; that incomplete run is not counted as green. The
+complete rerun above and its new log are the oracle evidence.
+
+Five temporary source mutants were run and restored: omitting the async-frame
+owner edge, skipping repeated-body capture refusal, skipping return-thenable
+refusal, skipping union-member thenable traversal, and ignoring expression-only
+Promise types. Each builds and fails its named lowering or IR assertion. The
+return guard removal fails both block-return and expression-arrow witnesses;
+the union traversal removal independently fails the mixed union witness.
+Logs are `/tmp/async-review-mutant-{frame-owner-edge,loop-body-cells,return-thenables,union-thenables,expression-promises}.log`.
+Restored guards pass in `/tmp/async-review-restored-guards.log`. The permanent
+frame preservation mutant in TestAsyncFrameCapturedClosureCycleMutant is caught
+only by the common leak check after matching Node stdout. It reproduces 394
+leaked bytes in three allocations; its control is leak-clean. The whole oracle
+rerun includes that proof, the reader's Node witnesses and the earlier async
+ownership, evaluation-order, settlement, cancellation and exit mutants.
+
+Current origin/main remains 71d7e491 and is already included, as is the requested
+area/runtime 915b9e05. No graph-regions worker branch was merged. This review fix
+does not change runtime ABI, emission hooks or mutable statics. No automated
+review rejected an action. The requested complete package list was run;
+`go test ./...`, macOS and opt-in platform gates were not rerun. The earlier
+finally and shared-SSA gaps remain explicit.

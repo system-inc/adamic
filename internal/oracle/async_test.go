@@ -1,9 +1,11 @@
 package oracle
 
 import (
+	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
 	"regexp"
@@ -466,5 +468,102 @@ func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
 			t.Fatalf("only Node stdout must catch %s's wrong-kind mutant: %+v", name, result)
 		}
 		t.Logf("Node stdout catches %s's async function classified as object", name)
+	}
+}
+
+// Refused programs still have a source oracle. In particular the frame cycle
+// must not depend on the two closures having the same callable signature.
+func TestAsyncReaderProbes(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name, want, output string
+		cycle              bool
+	}{
+		{"async_refuse_frame_capture_cycle", "async frame capture cycle", "seed3:held:7\n", true},
+		{"async_refuse_loop_body_capture", "async per-iteration captured cells", "item0 item1 item2\n", false},
+		{"async_refuse_return_thenable", "return of thenables", "7\n", false},
+		{"async_refuse_arrow_thenable", "return of thenables", "7\n", false},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_refused", probe.name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			observed := onNode(t, path)
+			if observed.exitCode != 0 || len(observed.stderr) != 0 || string(observed.stdout) != probe.output {
+				t.Fatalf("Node witness: %+v", observed)
+			}
+			_, err = lowered(t, path)
+			if err == nil || !strings.Contains(err.Error(), probe.want) {
+				t.Fatalf("named refusal: %v", err)
+			}
+			var refused *lower.Refused
+			var notYet *lower.NotYet
+			if probe.cycle {
+				if !errors.As(err, &refused) {
+					t.Fatalf("cycle must be Refused: %v", err)
+				}
+			} else if !errors.As(err, &notYet) {
+				t.Fatalf("unproved semantics must be NotYet: %v", err)
+			}
+		})
+	}
+}
+
+// Restoring preservation of the private closure slot creates exactly the
+// frame -> closure -> frame graph. It still prints Node's answer; only the
+// common leak check may catch it, not a build failure or an output check.
+func TestAsyncFrameCapturedClosureCycleMutant(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_frame_capture_safe.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := onNode(t, path)
+	control := native.C(program)
+	changed := false
+	for index := range program.Locals {
+		local := &program.Locals[index]
+		if local.Name == "read" && local.Type == ir.Closure && !local.Captured {
+			local.Captured = true
+			changed = true
+		}
+	}
+	if !changed {
+		t.Fatal("missing private read closure slot")
+	}
+	mutant := native.C(program)
+	if mutant == control {
+		t.Fatal("mutant did not preserve the closure in its frame")
+	}
+	for _, test := range []struct {
+		name, code string
+		leaks      bool
+	}{
+		{"control", control, false}, {"preserved-closure-slot", mutant, true},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			binary := filepath.Join(t.TempDir(), "frame-cycle")
+			if err := native.Build(test.code, binary, native.Options{Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			observed := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
+			if difference := disagreement(oracle, observed); difference != "" {
+				t.Fatalf("mutant must match Node before leak check: %s: %+v", difference, observed)
+			}
+			report := leakcheck.Report(t, test.code, binary)
+			if test.leaks {
+				if !strings.Contains(report, "LeakSanitizer: detected memory leaks") && !strings.Contains(report, "allocations") {
+					t.Fatalf("common leak check missed frame capture cycle: %s", report)
+				}
+				t.Logf("frame capture cycle caught only by leak check: %s", report)
+			} else if report != "" {
+				t.Fatal(report)
+			}
+		})
 	}
 }
