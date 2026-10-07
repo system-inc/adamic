@@ -130,3 +130,37 @@ source-derived assertion target type made explicit.
 
 @system_adamic_library: these adapted host fixtures preserve all Node goldens;
 setModifiedTime now has native evidence, and every remaining refusal is named.
+
+## Fixture 08 filesystem stat follow-up
+
+Merged codex/stage3-any-sys-stat at
+06971f0574b6cd408c6291973c685941ea6457ee into this branch with a merge commit,
+without rebasing. The fixture branch started at origin's 21ef072e. Re-extracted
+getAccessibleFileSystemEntries from /tmp/sys-stat-lane/adapted-tree, the actual
+full adaptation output proved in that branch. The only copied source change
+is line 199's `any` to `import("fs").Stats | import("fs").Dirent | undefined`.
+The provenance header and only fixture 08's source-spans.json record are updated.
+Its per-fixture stage3 pin supersedes the manifest's historical shared pin.
+
+All 18 copied declarations in 08 match the adapted source canonically. Node
+v24.19.0 retains stdout `a,link,z` twice, an empty line, then `a,link,z`; stderr
+is empty and exit is 0. Before/after stdout and stderr compare byte for byte,
+and the observation matches the unchanged status.json golden. A mutant returning
+files instead of directories prints `file` in place of `a,link,z` and is caught
+by stdout comparison. A changed copied declaration is caught by the canonical
+source comparison. See 08-stat-proof.json.
+
+Reproduce from the Adamic root with stock TypeScript 6.0.3 on NODE_PATH:
+
+```sh
+node stage3/fixtures/host/reextract-08.cjs . <adapted-tree> 06971f0574b6cd408c6291973c685941ea6457ee > /tmp/sys-stat-fixture-extract.log 2>&1
+node --disable-warning=ExperimentalWarning oracle/node.mjs stage3/fixtures/host/08_getDirectories.a > /tmp/sys-stat-fixture-after.stdout 2> /tmp/sys-stat-fixture-after.stderr
+```
+
+The README's full source-audit command was also run, logged at
+/tmp/sys-stat-host-full-audit.log, and exits 1 solely at fixture 25's copied
+getAccessibleFileSystemEntries: that fixture still carries the old any at
+line 1238. Re-extraction of 25 is outside this unit's fixture-08 territory.
+This is a reported incomplete full-bucket audit, not a passing full-bucket claim.
+The scoped fixture-08 audit passes. Native/library outcomes and the full Go
+gate were not rerun; the existing stage 0 status remains its historical record.
