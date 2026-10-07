@@ -1,0 +1,223 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+    css_test.go:121: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 2.813654241s, 85568 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (3.66s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	3.662s
+=== RUN   TestThePortParsesAsGoCohereDoes/Go_agreement
+    css_test.go:125: native: compiling runtime regexp.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-1943973918/regexp.c:336:75: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          336 | static const adamic_shape regex_shape = {12, regex_names, regex_references};
+              |                                                                           ^
+        /home/agent/.cache/adamic/runtime/.build-1943973918/regexp.c:400:74: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          400 | static const adamic_shape match_shape = {4, match_names, match_references};
+              |                                                                          ^
+        /home/agent/.cache/adamic/runtime/.build-1943973918/regexp.c:418:71: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          418 | static const adamic_shape pair_shape = {2, pair_names, pair_references};
+              |                                                                       ^
+        /home/agent/.cache/adamic/runtime/.build-1943973918/regexp.c:539:83: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          539 | static const adamic_shape iterator_shape = {3, iterator_names, iterator_references};
+              |                                                                                   ^
+        /home/agent/.cache/adamic/runtime/.build-1943973918/regexp.c:578:71: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          578 | static const adamic_shape next_shape = {2, next_names, next_references};
+              |                                                                       ^
+        5 errors generated.
+
+=== RUN   TestThePortParsesAsGoCohereDoes/PostCSS
+    css_test.go:183: PostCSS: 24074 exact agreements, 2 occurrences of the proved surrogate gap
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_custom_properties_lose_their_block_values
+    css_test.go:193: native: compiling runtime regexp.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3678093928/regexp.c:336:75: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          336 | static const adamic_shape regex_shape = {12, regex_names, regex_references};
+              |                                                                           ^
+        /home/agent/.cache/adamic/runtime/.build-3678093928/regexp.c:400:74: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          400 | static const adamic_shape match_shape = {4, match_names, match_references};
+              |                                                                          ^
+        /home/agent/.cache/adamic/runtime/.build-3678093928/regexp.c:418:71: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          418 | static const adamic_shape pair_shape = {2, pair_names, pair_references};
+              |                                                                       ^
+        /home/agent/.cache/adamic/runtime/.build-3678093928/regexp.c:539:83: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          539 | static const adamic_shape iterator_shape = {3, iterator_names, iterator_references};
+              |                                                                                   ^
+        /home/agent/.cache/adamic/runtime/.build-3678093928/regexp.c:578:71: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          578 | static const adamic_shape next_shape = {2, next_names, next_references};
+              |                                                                       ^
+        5 errors generated.
+
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values
+    css_test.go:193: native: compiling runtime regexp.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-4020396132/regexp.c:336:75: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          336 | static const adamic_shape regex_shape = {12, regex_names, regex_references};
+              |                                                                           ^
+        /home/agent/.cache/adamic/runtime/.build-4020396132/regexp.c:400:74: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          400 | static const adamic_shape match_shape = {4, match_names, match_references};
+              |                                                                          ^
+        /home/agent/.cache/adamic/runtime/.build-4020396132/regexp.c:418:71: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          418 | static const adamic_shape pair_shape = {2, pair_names, pair_references};
+              |                                                                       ^
+        /home/agent/.cache/adamic/runtime/.build-4020396132/regexp.c:539:83: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          539 | static const adamic_shape iterator_shape = {3, iterator_names, iterator_references};
+              |                                                                                   ^
+        /home/agent/.cache/adamic/runtime/.build-4020396132/regexp.c:578:71: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          578 | static const adamic_shape next_shape = {2, next_names, next_references};
+              |                                                                       ^
+        5 errors generated.
+
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte
+    css_test.go:193: native: compiling runtime regexp.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-554701269/regexp.c:336:75: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          336 | static const adamic_shape regex_shape = {12, regex_names, regex_references};
+              |                                                                           ^
+        /home/agent/.cache/adamic/runtime/.build-554701269/regexp.c:400:74: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          400 | static const adamic_shape match_shape = {4, match_names, match_references};
+              |                                                                          ^
+        /home/agent/.cache/adamic/runtime/.build-554701269/regexp.c:418:71: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          418 | static const adamic_shape pair_shape = {2, pair_names, pair_references};
+              |                                                                       ^
+        /home/agent/.cache/adamic/runtime/.build-554701269/regexp.c:539:83: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          539 | static const adamic_shape iterator_shape = {3, iterator_names, iterator_references};
+              |                                                                                   ^
+        /home/agent/.cache/adamic/runtime/.build-554701269/regexp.c:578:71: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          578 | static const adamic_shape next_shape = {2, next_names, next_references};
+              |                                                                       ^
+        5 errors generated.
+
+--- FAIL: TestThePortParsesAsGoCohereDoes (21.85s)
+    --- FAIL: TestThePortParsesAsGoCohereDoes/Go_agreement (3.18s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/PostCSS (1.15s)
+    --- FAIL: TestThePortParsesAsGoCohereDoes/catches_custom_properties_lose_their_block_values (4.68s)
+    --- FAIL: TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values (3.30s)
+    --- FAIL: TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte (5.04s)
+=== RUN   TestCompositionOnNodeMatchesGo
+    css_test.go:354: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 6.123660653s, 39316 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (7.14s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	7.151s
+    css_test.go:376: === RUN   TestAdamicCompositionCases
+            adamic_compose_side_test.go:79: composed trees: 24076 inputs, 5006 parsed
+        --- PASS: TestAdamicCompositionCases (1.90s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	1.915s
+=== RUN   TestCompositionOnNodeMatchesGo/catches_custom_properties_lose_their_block_values
+    css_test.go:402: Node composition caught: line 162, byte 1001: "tOffset\":14},\"type\":\"css-decl\",\"value\":\"\"},{\"nodes\":[{\"prop\":\"a\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":\"b\"},\"source\":{\"end\":{\"column\":28,\"line\":1,\"offset\":2", Go cohere "tOffset\":14},\"type\":\"css-decl\",\"value\":\" \"},{\"prop\":\"--c\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":30,\"line\":1,\"offset\":30},\"endOffset\":30,\""
+=== RUN   TestCompositionOnNodeMatchesGo/catches_comments_always_disappear_from_values
+    css_test.go:402: Node composition caught: line 3126, byte 77: "s\":{\"before\":\"\",\"between\":\":\",\"value\":\"cd\"},\"source\":{\"end\":{\"column\":14,\"line\":1,\"offset\":14},\"endOffset\":14,\"start\":{\"column\":3,\"line\":1,\"offset\":2},\"startOff", Go cohere "s\":{\"before\":\"\",\"between\":\":\",\"value\":\"c/* x */d\"},\"source\":{\"end\":{\"column\":14,\"line\":1,\"offset\":14},\"endOffset\":14,\"start\":{\"column\":3,\"line\":1,\"offset\":2},\"s"
+=== RUN   TestCompositionOnNodeMatchesGo/catches_closing_braces_no_longer_include_the_closing_byte
+    css_test.go:402: Node composition caught: line 6, byte 2264: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"endOffset\":27,\"start\":{\"column\":1,\"line\":1,\"offset\":0},\"startOffset\":0},\"type\":\"css-rule\"},{\"nodes\":[],\"raws\":{\"afte", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"endOffset\":28,\"start\":{\"column\":1,\"line\":1,\"offset\":0},\"startOffset\":0},\"type\":\"css-rule\"},{\"nodes\":[],\"raws\":{\"afte"
+=== NAME  TestCompositionOnNodeMatchesGo
+    css_test.go:408: 24076 composed trees/error positions agree with Go
+--- PASS: TestCompositionOnNodeMatchesGo (24.48s)
+    --- PASS: TestCompositionOnNodeMatchesGo/catches_custom_properties_lose_their_block_values (3.08s)
+    --- PASS: TestCompositionOnNodeMatchesGo/catches_comments_always_disappear_from_values (3.14s)
+    --- PASS: TestCompositionOnNodeMatchesGo/catches_closing_braces_no_longer_include_the_closing_byte (2.93s)
+=== RUN   TestCSSThroughput
+    css_test.go:415: set ADAMIC_CSS_BENCH=1 for throughput
+--- SKIP: TestCSSThroughput (0.00s)
+=== RUN   TestTheCanonicalRangeChecksCanFail
+    css_test.go:467: native: compiling runtime regexp.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3450996092/regexp.c:336:75: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          336 | static const adamic_shape regex_shape = {12, regex_names, regex_references};
+              |                                                                           ^
+        /home/agent/.cache/adamic/runtime/.build-3450996092/regexp.c:400:74: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          400 | static const adamic_shape match_shape = {4, match_names, match_references};
+              |                                                                          ^
+        /home/agent/.cache/adamic/runtime/.build-3450996092/regexp.c:418:71: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          418 | static const adamic_shape pair_shape = {2, pair_names, pair_references};
+              |                                                                       ^
+        /home/agent/.cache/adamic/runtime/.build-3450996092/regexp.c:539:83: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          539 | static const adamic_shape iterator_shape = {3, iterator_names, iterator_references};
+              |                                                                                   ^
+        /home/agent/.cache/adamic/runtime/.build-3450996092/regexp.c:578:71: error: missing field 'methods' initializer [-Werror,-Wmissing-field-initializers]
+          578 | static const adamic_shape next_shape = {2, next_names, next_references};
+              |                                                                       ^
+        5 errors generated.
+
+--- FAIL: TestTheCanonicalRangeChecksCanFail (2.90s)
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_regex_and_value_tree.ts
+    gaps_test.go:41: Node prints "Parsed\nOk\n"; Adamic refuses: /workspace/adamic/stage1/cohere/values/nodes.ts:92:2: Adamic 0.1 refuses ValueTree.nodes, a readonly field, which its constructor writes, of type readonly ValueTree[], which can reach back to the ValueTree holding it: a cycle reference counting can't free, and a write in Parser_attribute may close one (ir.RegExpCall is a node the cycle finder doesn't know); declare it nodes: Weak<readonly ValueTree[]> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts
+    gaps_test.go:41: Node prints "a\n1\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/2_array_shift.ts:2:16: stage 0 can't lower .shift on a value yet
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean_condition.ts
+    gaps_test.go:41: Node prints "important\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/3_optional_boolean_condition.ts:3:13: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts
+    gaps_test.go:41: Node prints "0\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/4_empty_array_union.ts:2:9: stage 0 can't lower an array of never yet
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts
+    gaps_test.go:41: Node prints "a\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/5_repeat_in_try.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.84s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_regex_and_value_tree.ts (0.32s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts (0.12s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean_condition.ts (0.14s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts (0.13s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts (0.14s)
+=== RUN   TestNativeCompositionIsBlockedByTheRecordedGap
+    gaps_test.go:61: /workspace/adamic/stage1/cohere/mediaquery/nodes.ts:24:2: Adamic 0.1 refuses MediaNode.nodes, a readonly field, which its constructor writes, of type readonly MediaNode[] | undefined, which can reach back to the MediaNode holding it: a cycle reference counting can't free, and a write in Parser_raw may close one (ir.RegExpCall is a node the cycle finder doesn't know); declare it nodes: Weak<readonly MediaNode[]> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+--- PASS: TestNativeCompositionIsBlockedByTheRecordedGap (0.52s)
+=== RUN   TestCSSPrinterAgreesWithGo
+    print_test.go:54: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 2.929557403s, 82183 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (3.75s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	3.760s
+=== RUN   TestCSSPrinterAgreesWithGo/default
+    print_test.go:57: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 24076 inputs, 4966 formatted, elapsed 1.212732576s
+        --- PASS: TestAdamicPrinterCases (1.21s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	1.222s
+    print_test.go:66: 24076 stylesheet formats and refusals agree byte for byte
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons
+    print_test.go:78: Node caught: line 2, byte 69: "larations,\\n  empty rules,\\n  semicolons\\n\"", Go cohere "larations,\\n  empty rules,\\n  semicolons;\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_rule_bodies_lose_indentation
+    print_test.go:78: Node caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n  color: red;\\n  background: blue;\\n}\\nb {\\n}\\nc {\\n  color: red;\\n}\\n\\nd {\\n  color: Red;\\n}\\ne {\\n  margin: 0;\\n}\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_groups_ignore_the_remaining_width
+    print_test.go:78: Node caught: line 26, byte 12: "\"selectors: combinators, pseudo-classes, pseudo-elements, attributes, namespaces,\\n  lists;\\n\"", Go cohere "\"selectors:\\n  combinators, pseudo-classes, pseudo-elements, attributes, namespaces, lists;\\n\""
+=== NAME  TestCSSPrinterAgreesWithGo/default
+    print_test.go:82: Prettier npm default: 4952 byte-identical formats, 19080 shared refusals, 44 exact recorded discrepancy occurrences: map[BOM boundary:12 CR normalization:2 whitespace fast path:2 yaml embedding:28]
+    print_test.go:84: Prettier fork default: 4952 byte-identical formats, 19080 shared refusals, 44 exact recorded discrepancy occurrences: map[BOM boundary:12 CR normalization:2 whitespace fast path:2 yaml embedding:28]
+=== RUN   TestCSSPrinterAgreesWithGo/narrow
+    print_test.go:57: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 24076 inputs, 4966 formatted, elapsed 1.23018225s
+        --- PASS: TestAdamicPrinterCases (1.23s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	1.242s
+    print_test.go:66: 24076 stylesheet formats and refusals agree byte for byte
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_declarations_lose_their_semicolons
+    print_test.go:78: Node caught: line 2, byte 69: "larations,\\n\\tempty rules,\\n\\tsemicolons\\n\"", Go cohere "larations,\\n\\tempty rules,\\n\\tsemicolons;\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_rule_bodies_lose_indentation
+    print_test.go:78: Node caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n\\tcolor: red;\\n\\tbackground: blue;\\n}\\nb {\\n}\\nc {\\n\\tcolor: red;\\n}\\n\\nd {\\n\\tcolor: Red;\\n}\\ne {\\n\\tmargin: 0;\\n}\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_groups_ignore_the_remaining_width
+    print_test.go:78: Node caught: line 26, byte 12: "\"selectors: combinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\"", Go cohere "\"selectors:\\n\\tcombinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\""
+=== NAME  TestCSSPrinterAgreesWithGo/narrow
+    print_test.go:82: Prettier npm narrow: 4952 byte-identical formats, 19080 shared refusals, 44 exact recorded discrepancy occurrences: map[BOM boundary:12 CR normalization:2 whitespace fast path:2 yaml embedding:28]
+    print_test.go:84: Prettier fork narrow: 4952 byte-identical formats, 19080 shared refusals, 44 exact recorded discrepancy occurrences: map[BOM boundary:12 CR normalization:2 whitespace fast path:2 yaml embedding:28]
+--- PASS: TestCSSPrinterAgreesWithGo (105.26s)
+    --- PASS: TestCSSPrinterAgreesWithGo/default (51.36s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons (6.92s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_rule_bodies_lose_indentation (5.97s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_groups_ignore_the_remaining_width (6.00s)
+    --- PASS: TestCSSPrinterAgreesWithGo/narrow (49.36s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_declarations_lose_their_semicolons (8.10s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_rule_bodies_lose_indentation (4.74s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_groups_ignore_the_remaining_width (4.62s)
+=== RUN   TestNativeCSSPrinterHasTheRecordedCompositionGap
+=== RUN   TestNativeCSSPrinterHasTheRecordedCompositionGap/gaps/6_printer_regex_tree.ts
+    print_test.go:112: /workspace/adamic/stage1/cohere/mediaquery/nodes.ts:24:2: Adamic 0.1 refuses MediaNode.nodes, a readonly field, which its constructor writes, of type readonly MediaNode[] | undefined, which can reach back to the MediaNode holding it: a cycle reference counting can't free, and a write in the top level may close one (ir.RegExpNew is a node the cycle finder doesn't know); declare it nodes: Weak<readonly MediaNode[]> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+=== RUN   TestNativeCSSPrinterHasTheRecordedCompositionGap/print_main.ts
+    print_test.go:112: /workspace/adamic/stage1/cohere/mediaquery/nodes.ts:24:2: Adamic 0.1 refuses MediaNode.nodes, a readonly field, which its constructor writes, of type readonly MediaNode[] | undefined, which can reach back to the MediaNode holding it: a cycle reference counting can't free, and a write in the top level may close one (ir.RegExpNew is a node the cycle finder doesn't know); declare it nodes: Weak<readonly MediaNode[]> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+--- PASS: TestNativeCSSPrinterHasTheRecordedCompositionGap (1.16s)
+    --- PASS: TestNativeCSSPrinterHasTheRecordedCompositionGap/gaps/6_printer_regex_tree.ts (0.23s)
+    --- PASS: TestNativeCSSPrinterHasTheRecordedCompositionGap/print_main.ts (0.92s)
+=== RUN   TestCSSPrinterThroughput
+    print_test.go:189: set ADAMIC_CSS_PRINTER_BENCH=1
+--- SKIP: TestCSSPrinterThroughput (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/css	157.024s
+FAIL

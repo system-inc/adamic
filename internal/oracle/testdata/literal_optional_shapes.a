@@ -1,0 +1,37 @@
+interface Reading {
+	readonly value?: number;
+	readonly text?: string;
+}
+function show(target: Reading): string {
+	return `${target.value} ${target.value === undefined} ${target.text ?? 'absent'} ${target.hasOwnProperty('value')}`;
+}
+for (const target of [{}, { value: 0, text: 'zero' }, {}, { value: 4 }, {}, { value: NaN }]) {
+	console.log(show(target));
+}
+let calls = 0;
+function receiver(): Reading {
+	calls += 1;
+	return {};
+}
+console.log(`${receiver().value} ${calls}`);
+function chained(target: Reading | undefined): string {
+	return `${target?.value} ${target?.text ?? 'absent'}`;
+}
+console.log(chained(undefined));
+console.log(chained({}));
+console.log(chained({ value: 0, text: 'here' }));
+function destructured({ value, text }: Reading): string {
+	return `${value} ${text ?? 'absent'}`;
+}
+console.log(destructured({}));
+console.log(destructured({ value: 0, text: 'present' }));
+const { value: localValue, text: localText } = receiver();
+console.log(`${localValue} ${localText ?? 'absent'} ${calls}`);
+function narrowed(target: Reading): string {
+	if (target.value !== undefined) {
+		return target.value.toFixed(0);
+	}
+	return 'absent';
+}
+console.log(narrowed({}));
+console.log(narrowed({ value: 0 }));

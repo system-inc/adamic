@@ -81,8 +81,14 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/json_stringify_keys.a", true, false},
 	{"internal/oracle/testdata/json_stringify_replacer.a", true, false},
 	{"internal/oracle/testdata/library_function_expressions.a", true, false},
+	{"internal/oracle/testdata/library_fnexpr_recurse.a", true, false},
+	{"internal/oracle/testdata/library_fnexpr_store.a", true, false},
+	{"internal/oracle/testdata/library_fnexpr_loops.a", true, false},
 	{"internal/oracle/testdata/library_for_in.a", true, false},
+	{"internal/oracle/testdata/library_for_in_keys.a", true, false},
+	{"internal/oracle/testdata/library_for_in_live.a", true, false},
 	{"internal/oracle/testdata/library_globals.a", true, false},
+	{"internal/oracle/testdata/library_globals_typeof.a", true, false},
 	{"internal/load/testdata/0.1/compile/01_hello.ts", true, false},
 	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true, false},
 	{"internal/load/testdata/0.1/compile/03_shapes.ts", true, false},
@@ -368,6 +374,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regexp_match.a", true, false},
 	{"internal/oracle/testdata/regexp_search.a", true, false},
 	{"internal/oracle/testdata/regexp_unicode.a", true, false},
+	{"internal/oracle/testdata/regexp_split_pair_pattern.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

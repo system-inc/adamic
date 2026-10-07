@@ -1,10 +1,12 @@
 package lower
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 )
 
 // refusal is one construct Adamic 0.1 doesn't allow (docs/0.1.md, "What's refused in 0.1"), and the
@@ -19,8 +21,6 @@ type refusal struct {
 var refusals = map[ast.Kind]refusal{
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
-	ast.KindGetAccessor:       {"a getter", "write a method: in 0.1 reading a property is just a read"},
-	ast.KindSetAccessor:       {"a setter", "write a method: in 0.1 writing a property is just a write"},
 	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
@@ -49,6 +49,17 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	if err := l.parallelPreflight(module); err != nil {
 		return err
 	}
+	// Use the parser's directives, which also recognize the block forms honored by the checker.
+	// Text in a string or a prose comment never enters this list.
+	if len(module.CommentDirectives) > 0 {
+		directive := module.CommentDirectives[0]
+		name := "@ts-ignore"
+		if directive.Kind == ast.CommentDirectiveKindExpectError {
+			name = "@ts-expect-error"
+		}
+		line, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())
+		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error"}
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -57,6 +68,19 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+			return true
+		}
+		var assertion *ast.Node
+		if node.Kind == ast.KindPropertyDeclaration {
+			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
+				assertion = token
+			}
+		}
+		if node.Kind == ast.KindVariableDeclaration {
+			assertion = node.AsVariableDeclaration().ExclamationToken
+		}
+		if assertion != nil {
+			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
 			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {
@@ -68,6 +92,19 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		// Covered async syntax is lowered by async.go. Unsupported lifecycle and Promise
 		// operations get specific NotYet there; permanent refusals above still apply.
 
+		generator := false
+		switch node.Kind {
+		case ast.KindFunctionDeclaration:
+			generator = node.AsFunctionDeclaration().AsteriskToken != nil
+		case ast.KindFunctionExpression:
+			generator = node.AsFunctionExpression().AsteriskToken != nil
+		case ast.KindMethodDeclaration:
+			generator = node.AsMethodDeclaration().AsteriskToken != nil
+		}
+		if generator {
+			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+			return true
+		}
 		if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
