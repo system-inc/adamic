@@ -71,7 +71,7 @@ On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that j
 
 cohere checks and formats every Adamic program in this repository, `.ts` and `.a` alike. `tsconfig.json` carries the same compiler options stage 0 sets in `internal/load/load.go` (keep the two identical), the prelude as the one global declaration file, and `"sourceExtensions": [".a"]`, which cohere's TypeScript reads and stock tools ignore. `CohereSettings.json` turns on `cohere:typescript` (soundness, style and correctness) and ignores the files that are wrong on purpose, for these reasons:
 
-- `**/testdata/**`: every test's fixtures, docs/0.1.md's five refused programs among them. A fixture's text is what its test checks: oracle programs mutate their caller's data and reassign parameters on purpose, and formatting one moves the anchors its test reads.
+- `**/testdata/**` and `**/fixtures/**`: every test's fixtures, docs/0.1.md's five refused programs among them. A fixture's text is what its test checks: oracle programs mutate their caller's data and reassign parameters on purpose, and formatting one moves the anchors its test reads.
 - `**/evidence/**` and `notes/**`: measurements and working notes, the inputs and outputs of an investigation, kept as they were when it was made.
 - `stage1/**/gaps/**`: each stage-1 slice's smallest programs for what stage 0 can't hold yet, kept exactly as written so their gaps tests notice when a gap closes.
 - `review/**`: reviewers' probes, written to break things.

@@ -1,4 +1,4 @@
 {
     "extends": ["cohere:typescript"],
-    "ignorePatterns": ["**/testdata/**", "**/evidence/**", "notes/**", "stage1/**/gaps/**", "review/**", "stage3/drivers/tsc/corpus/**", "internal/refusalprobe/lies/**"]
+    "ignorePatterns": ["**/testdata/**", "**/fixtures/**", "**/evidence/**", "notes/**", "stage1/**/gaps/**", "review/**", "stage3/drivers/tsc/corpus/**", "internal/refusalprobe/lies/**"]
 }
