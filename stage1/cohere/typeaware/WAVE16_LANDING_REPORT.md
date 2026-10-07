@@ -159,3 +159,16 @@ or an area branch. The exact remaining blockers and uncovered checks above
 are unchanged. This evidence-only continuation stops under Ahra's instruction
 to report prerequisites outside the owned rule directories rather than edit
 shared files.
+
+## React reference ambiguity continuation
+
+Current main remains e8ba3d5d. Wave 21 now supplies prepared-HIR native cores
+for the same three retained names, while its source adapter remains absent.
+This unit independently reproduces a production static-components message
+ambiguity: 64 unchanged Go runs emit createA 59 times and createB 5 times,
+while a same-creator control is byte-identical across all 64 runs. The sole
+canonical difference is byte 203. No output is normalized. See
+WAVE16_REACT_REFERENCE_REPORT.md and validation-wave16-react-reference for
+all outputs, exact sources, the independent runner and the positive-control
+mutation. The completed fifteen native implementations remain unchanged;
+no further claim or shared source edit was made.

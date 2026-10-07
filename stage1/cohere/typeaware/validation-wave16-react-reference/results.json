@@ -1,0 +1,31 @@
+{
+  "cases": {
+    "one-creator": {
+      "creator_frequencies": {
+        "createA": 64
+      },
+      "distinct_stdout": 1,
+      "hash_frequencies": {
+        "f7cf6cefdda97eb08b273a55047876bb8c170745be52b6977c54850c258c51f0": 64
+      }
+    },
+    "two-creator": {
+      "creator_frequencies": {
+        "createA": 59,
+        "createB": 5
+      },
+      "distinct_stdout": 2,
+      "hash_frequencies": {
+        "1950403b5459647de26d5c5ccbeadeadc63f61e7e1c7067014490a99efe928a5": 5,
+        "47b24aacb04829a68526fd2cde202e0df4ec9b1dc0f9641fa1cc83628adeb579": 59
+      }
+    }
+  },
+  "rounds": 64,
+  "sources": {
+    "one-creator.a": "e326861f5816076a9a928fc9f41c8d9633293e45426e95c7a5b1941c6eb8eaf4",
+    "oracle_wave16_react.go": "828ae58696d32410c406f9ab45d63d5ae5d5371d67f62ede07bee62607e45b1e",
+    "tsconfig.json": "82aebe6ca73c89a40242e9125dfc510ec3444871c6e39bc4183f096241a0717a",
+    "two-creator.a": "0f894d4b17530848271ddc50afcfcd0045c15367f0df59d182e37974cdb559c7"
+  }
+}

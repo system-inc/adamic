@@ -105,3 +105,10 @@ Sixth-set status: blocked before native implementation by unavailable native
 React HIR lowering, SSA, capture mapping and graph analyses. These names remain
 claimed, not ported. See WAVE16_SIXTH_REPORT.md for exact dependencies and the
 production Go reference test results. No seventh set is claimed.
+
+Prepared-HIR cores for these same three names now exist on wave 21 at bc6750a6,
+with source-to-HIR/SSA integration still absent. These source claims remain
+incomplete, not completed ports. Independent reference runs also reproduce
+non-deterministic static-components creation-site message bytes; see
+WAVE16_REACT_REFERENCE_REPORT.md. No duplicate core implementation or new
+reservation was added in this continuation.

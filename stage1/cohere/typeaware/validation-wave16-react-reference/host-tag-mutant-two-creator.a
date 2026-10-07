@@ -1,0 +1,8 @@
+declare function createA(): any;
+declare function createB(): any;
+export function Example(props: {cond: boolean}) {
+    let C;
+    if (props.cond) { C = createA(); }
+    else { C = createB(); }
+    return <div />;
+}
