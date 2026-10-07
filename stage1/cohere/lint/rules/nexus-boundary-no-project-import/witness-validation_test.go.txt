@@ -1,25 +1,33 @@
 package lint
 
 import (
-    "path/filepath"
-    "testing"
+	"path/filepath"
+	"testing"
 )
 
 // Enable this owned artifact as wave12_project_witness_test.go in a validation checkout.
 func TestWave12ConfiguredProjectWitness(t *testing.T) {
-    directory, err := filepath.Abs(".")
-    if err != nil { t.Fatal(err) }
-    oracle := goOracle(t)
-    for _, descriptor := range prepareRegistry(t, ".") {
-        if descriptor.Name != "nexus/boundary-no-project-import" { continue }
-        rows := ownedWitnessRows(t, directory, descriptor)
-        if len(rows) != 1 { t.Fatalf("expected one configured witness, got %d", len(rows)) }
-        path := manifest(t, rows)
-        count := execute(t, "", oracle, "--manifest", path, "--count")
-        if string(count.output) != "1\n" { t.Fatalf("upstream witness count: %s", count.output) }
-        compare(t, oracle, buildPort(t, directory, true), directory, path)
-        t.Log("configured raw project-import witness: one Go finding; source Node, emitted JavaScript and sanitized native agree")
-        return
-    }
-    t.Fatal("project-import descriptor missing")
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	for _, descriptor := range prepareRegistry(t, ".") {
+		if descriptor.Name != "nexus/boundary-no-project-import" {
+			continue
+		}
+		rows := ownedWitnessRows(t, directory, descriptor)
+		if len(rows) != 1 {
+			t.Fatalf("expected one configured witness, got %d", len(rows))
+		}
+		path := manifest(t, rows)
+		count := execute(t, "", oracle, "--manifest", path, "--count")
+		if string(count.output) != "1\n" {
+			t.Fatalf("upstream witness count: %s", count.output)
+		}
+		compare(t, oracle, buildPort(t, directory, true), directory, path)
+		t.Log("configured raw project-import witness: one Go finding; source Node, emitted JavaScript and sanitized native agree")
+		return
+	}
+	t.Fatal("project-import descriptor missing")
 }

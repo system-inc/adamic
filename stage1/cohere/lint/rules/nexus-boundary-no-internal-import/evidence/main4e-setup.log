@@ -1,0 +1,19 @@
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: go ready (0.169s)
+setup: node ready (0.173s)
+Submodule 'TypeScript' (https://github.com/kirkouimet/TypeScript.git) registered for path 'cohere/TypeScript'
+setup: submodules ready (0.296s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.517s)
+
+added 3 packages in 685ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.408s
+setup: markdown dependencies ready (1.717s)
+setup: go build ready (69.633s)
+setup: test binaries deferred (use --warm-tests) (69.878s)
+setup: build cache warm (69.880s)
+setup: build-flags commit=5ebf94179394647f9facd0a0554bee91a541435a nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=1.16 1.52 0.82 1/323 176070 load-after=4.98 2.68 1.28 2/340 177106
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (69.928s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.QS0I11
