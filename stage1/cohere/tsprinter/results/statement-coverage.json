@@ -1,0 +1,43 @@
+{
+  "cases": 44091,
+  "complete_files": 5,
+  "coverage": {
+    "KindBlock": 1285,
+    "KindBreakStatement": 905,
+    "KindContinueStatement": 326,
+    "KindDebuggerStatement": 1,
+    "KindEmptyStatement": 2,
+    "KindExpressionStatement": 16794,
+    "KindReturnStatement": 12757,
+    "KindSourceFile": 5,
+    "KindThrowStatement": 27,
+    "KindVariableStatement": 11710
+  },
+  "file_refusals": {},
+  "files": 202,
+  "unsupported_candidates": {
+    "KindBlock": 15689,
+    "KindClassDeclaration": 50,
+    "KindDoStatement": 31,
+    "KindEnumDeclaration": 164,
+    "KindExportDeclaration": 77,
+    "KindExpressionStatement": 2150,
+    "KindForInStatement": 27,
+    "KindForOfStatement": 830,
+    "KindForStatement": 446,
+    "KindFunctionDeclaration": 9250,
+    "KindIfStatement": 15295,
+    "KindImportDeclaration": 237,
+    "KindInterfaceDeclaration": 833,
+    "KindLabeledStatement": 10,
+    "KindModuleDeclaration": 12,
+    "KindReturnStatement": 3941,
+    "KindSourceFile": 197,
+    "KindSwitchStatement": 639,
+    "KindTryStatement": 37,
+    "KindTypeAliasDeclaration": 436,
+    "KindVariableStatement": 5094,
+    "KindWhileStatement": 433,
+    "standalone-context": 4
+  }
+}

@@ -2,8 +2,8 @@
 
 This is a **partial port** of cohere's `internal/format/javascript`, composed with the Adamic
 TypeScript parser on `codex/typescript-scanner`. The document engine is ported; the expression core
-is the first printer increment. This is not yet a formatter for complete TypeScript source files.
-Statements, declarations and types are later slices. Remaining expression families are listed in
+is the first printer increment. A separate statement driver formats complete files whose statements are supported.
+Control flow, typed declarations and types remain later families. Remaining expression families are listed in
 [GAPS.md](GAPS.md), with proving inputs. Nothing falls back to printing the input unchanged.
 
 `doc.ts` implements cohere's shared Prettier document interpreter, including group, indent, line,
@@ -197,3 +197,20 @@ The current expression gate additionally covers named functions, arrows and basi
 object methods/accessors, ordinary tags, contextual await/yield and identifier variable statements.
 Incremental coverage, exact commands and mutation results are recorded in VALIDATION.md;
 the original corpus totals above describe the initial slice rather than the latest increment.
+
+## Composed statement files
+
+`statementsMain.ts` formats complete files containing supported statements: expression statements,
+blocks, return/throw, empty/debugger/break/continue, identifier variable declarations and named
+untyped function declarations, including async and generators. Files with unsupported children
+are refused as a whole. Directives, empty files and program statement separators are preserved.
+
+```sh
+go run ./cmd/adamic build stage1/cohere/tsprinter/statementsMain.ts -o /tmp/ts-statement-printer
+/tmp/ts-statement-printer /path/to/supported-file.ts
+```
+
+The independent statement oracle walks the same source files and records both maximal fragments
+and the number of complete files. `ADAMIC_TS_STATEMENT_KEEP` and `ADAMIC_TS_STATEMENT_ARTIFACTS`
+retain its corpus and release executable. Complete-file coverage does not imply that any whole
+TypeScript compiler file is supported.

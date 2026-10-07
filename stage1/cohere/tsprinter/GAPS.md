@@ -292,3 +292,26 @@ Those inputs are retained in the expression corpus. The assignment-chain boundar
 that the layout distinction matters. A hashbang audit also found a real silent header loss in
 both Node and native execution; hashbang and BOM-plus-hashbang are now refused, with a mutant
 that removes that refusal and compares the proving corpus rather than accepted cases.
+
+## Complete-file statement boundary
+
+The statement driver composes supported program sequences and named untyped function declarations.
+Five complete repository files pass its independent selector; this does not include an entire
+TypeScript compiler file. Remaining statements include if/else, loops, labels, try/catch/finally
+and switch. Imports/exports and typed declarations belong to later declaration/type families.
+[testdata/statements-notyet.json](testdata/statements-notyet.json) records the five exact refusal
+inputs used by the statement gate on Node, native and the JavaScript backend: annotated variables,
+binding patterns, modifiers, if-statements and hashbang headers.
+
+There is a real upstream contract boundary for control-flow statements: the pinned Go printer's
+`print_statements.go` deliberately prints `if(`, `while(`, `for(`, `switch(` and `catch(`, and places
+else/catch/finally on separate lines. npm Prettier 3.9.6 uses spaces and cuddles block boundaries.
+These are cohere customizations, not a compiler gap. The current accepted expression and statement
+corpora have no upstream exceptions. A future control-flow family must report these exact
+upstream differences while retaining Go cohere as the primary contract, as previously decided.
+
+The five fork/npm pairs are pinned in
+[testdata/statement-upstream-differences.json](testdata/statement-upstream-differences.json).
+`TestStatementUpstreamDifferences` verifies Go and embedded-fork bytes against each Go field,
+and independently verifies npm bytes against each Prettier field. It does not grant exceptions
+to the supported expression or statement corpus.

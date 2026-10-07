@@ -1022,3 +1022,112 @@ pass agree with Go cohere, npm Prettier 3.9.6 and the embedded fork. All **15** 
 pass. The running gate printed the old hardcoded count of 13; only that log statement was changed
 after its test binary was built, and the actual assertions already checked every proving input.
 Coverage is in `results/variable-coverage.json`. No compiler or parser source changed.
+
+## Complete-file statement composition
+
+The new `statementsMain.ts` driver formats supported complete files. Program statement sequences,
+directive prologues, empty statements/files and named untyped function declarations compose with
+the expression printer. Pure precedence/parentheses logic moved to `parentheses.ts`; no callback
+or compiler change was needed. Source cohere checks all 13 port files: 276 rules, 100% Adamic-ready.
+Package vet and whitespace checks pass.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_STATEMENT_KEEP=/tmp/ts-printer-program-corpus \
+ADAMIC_TS_STATEMENT_ARTIFACTS=/tmp/ts-printer-program-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestStatementsAgainstGoAndPrettier$' > /tmp/ts-printer-program-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-program-expression-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-program-expression-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-program-expression-test.log 2>&1
+```
+
+The statement gate exits 0 in **401.238 s: 44,091 / 44,091** maximal statement/program fragments,
+from 202 files including all 77 compiler sources, zero parse failures. Five complete files are
+supported: `internal/load/testdata/0.1/compile/01_hello.ts`, three small tsprinter gap inputs
+(`defaultSort.ts`, `numberConstructor.ts`, `prefixUpdateValue.ts`) and the parser's
+`6_conditional_empty_array.ts` input. These are formatting inputs, not claims about their execution
+or about complete compiler-file support. Source Node, native ASan/UBSan, JavaScript backend,
+release and the separate leak check agree with Go, npm Prettier and the embedded fork. Five exact
+statement refusal inputs agree on all three executions. Coverage: `results/statement-coverage.json`.
+
+### Statement mutations and upstream evidence
+
+The first combined mutation command selected program-separator, function-keyword and
+optional-boundary mutations. It **exited 1 in 366.078 s** because the separator anchor matched
+both the program and block paths. That harness failure is not a catch. The optional-boundary
+mutation still completed normally and was caught on Node and native at line 115458:
+``tag`a${x?.y.z}b` `` rather than ``tag`a${(x?.y).z}b` ``, **357.46 s**.
+The generic function mutation completed normally and was caught at line 43831 (**337.87 s**),
+but its first mismatch was an older function-expression case. It was therefore narrowed to
+FunctionDeclaration before rerunning; the final declaration-specific result is recorded below.
+
+```sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/program' > /tmp/ts-printer-program-separator-mutant.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/declaration' > /tmp/ts-printer-program-declaration-mutant.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestStatementUpstreamDifferences$' > /tmp/ts-printer-statement-upstream-test.log 2>&1
+```
+
+The external upstream-difference pin check exits 0 in **9.727 s**: five exact Go/fork pairs and
+five exact npm outputs. It covers if/else, while, for, try/catch/finally and switch, all currently
+unported. Accepted expression and statement corpora remain strict, with zero exceptions.
+No full-repository gate was run, and no internal, parser, scanner or submodule source changed.
+
+### Pushed expression-family commits in this unit
+
+```text
+fbed1b7 Port sequence expression layout
+3f7e19b Port assignment expression layout and chains
+5305f40 Port conditional expression layout
+e191d3d Port object expression values and wrapping
+f2e5e8a Port expanded call argument layout
+80bca68 Port member call chains and curried calls
+6ccd848 Port interpolated and multiline template layout
+4990187 Port arrow signatures and basic statement bodies
+d89ad60 Port optional chain stopping boundaries
+9d8c9b6 Port named function expressions
+a22bcf6 Port object methods and preserve template optional boundaries
+43f35c4 Port ordinary tagged template expressions
+384a593 Port contextual await and yield expressions
+3dd85f2 Port variable statements and preserve composition boundaries
+```
+
+The corrected program-separator mutant exits 0 in **349.707 s**, subtest **338.12 s**. Both Node
+and native finish normally, exit 0 and empty stderr, then disagree at line 3461: the formatted
+`defaultSort.ts` program loses the newlines between its const declaration, sort and console call.
+This specifically exercises the new complete-file program path.
+
+An environment status update occurred during the final gates. The managed runtime reported current
+observations and an enforced restricted network policy; the workspace and running test processes
+were present in the process table, but a subsequent status check showed the two unfinished tests
+were zombies. Their partial logs are not green results. The expression regression and
+declaration-specific mutant are rerun below with explicit logged exit codes.
+
+The declaration-only retry exits 0 in **259.245 s**, subtest **250.64 s**. Both Node and native
+finish normally, exit 0 and empty stderr, then disagree at line 44023 on
+`function named(x){const y=x+1;return y;}f(x);`: the declaration keyword is missing. Function
+expressions are deliberately unchanged by this mutant, so this catch proves the new family.
+Log: `/tmp/ts-printer-program-declaration-retry-mutant.log`. The retry used the same environment,
+package and `-run '^TestMutants$/declaration'` flags above, with an explicit final `exit=0` line.
+The interrupted earlier declaration attempt is not counted.
+
+The complete expression regression retry exits 0 in **426.260 s: 146,678 / 146,678** fragments
+from 202 files, zero parse failures. All 15 proving-input refusals match on Node, native and the
+JavaScript backend. Strict Go, npm Prettier and embedded-fork equality holds on source Node,
+native ASan/UBSan, JavaScript backend and native release; the separate leak pass is clean.
+Log: `/tmp/ts-printer-program-expression-retry-test.log`, including explicit `exit=0`.
+The retry used the same environment and flags above; the interrupted original attempt is not
+counted as a completed gate. Coverage: `results/statement-expression-coverage.json`.

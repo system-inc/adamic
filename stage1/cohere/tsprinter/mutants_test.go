@@ -10,6 +10,8 @@ import (
 type mutation struct{ name, file, from, to, entry string }
 
 var mutations = []mutation{
+	{"program loses its statement separator", "expressions.ts", "if(parts.length > 0) parts.push(this.docs.hardline());\n                    const previous =", "if(false) parts.push(this.docs.hardline());\n                    const previous =", "statementsMain.ts"},
+	{"declaration loses its function keyword", "expressions.ts", "`${async}function${generator}${name}`", "`${async}${node.kind === 'FunctionDeclaration' ? '' : 'function'}${generator}${name}`", "statementsMain.ts"},
 	{"assignment chain ignores statement boundaries", "expressions.ts", "!['ExpressionStatement', 'VariableDeclarationList', 'VariableStatement']", "!['UnrelatedStatement', 'VariableDeclarationList', 'VariableStatement']", "main.ts"},
 	{"hashbang loses its refusal", "expressions.ts", "source.startsWith('#!') || source.startsWith('\\ufeff#!') || ", "", "main.ts"},
 	{"variable statement loses its keyword", "expressions.ts", "this.docs.text(kind),", "this.docs.text(''),", "main.ts"},
@@ -20,7 +22,7 @@ var mutations = []mutation{
 	{"computed key forgets its clean text", "expressions.ts", "const keyText = this.docs.textContent(left);", "const keyText = this.docs.get(left).kind === 'text' ? this.docs.get(left).text : undefined;", "main.ts"},
 	{"method loses its key", "expressions.ts", "this.propertyKey(index, offset)", "this.docs.text(\"\")", "main.ts"},
 	{"function loses its keyword", "expressions.ts", "`${async}function${generator}${name}`", "`${async}${generator}${name}`", "main.ts"},
-	{"optional chain loses its stopping parentheses", "expressions.ts", "if(this.optionalBoundaries.has(index) && parent >= 0)", "if(false && parent >= 0)", "main.ts"},
+	{"optional chain loses its stopping parentheses", "parentheses.ts", "if(optionalBoundaries.has(index) && parent >= 0)", "if(false && parent >= 0)", "main.ts"},
 	{"return and throw lose their keyword", "expressions.ts", "this.docs.text(node.kind === 'ReturnStatement' ? 'return' : 'throw')", "this.docs.text(node.kind === 'ReturnStatement' ? 'throw' : 'throw')", "main.ts"},
 	{"statement expression loses its semicolon", "expressions.ts", "return this.docs.concat([printed, this.docs.text(';')]);", "return this.docs.concat([printed, this.docs.text('')]);", "main.ts"},
 	{"body loses its opening brace", "expressions.ts", "this.docs.text('{'),\n                    this.docs.indent(", "this.docs.text('['),\n                    this.docs.indent(", "main.ts"},
@@ -78,6 +80,13 @@ func TestMutants(t *testing.T) {
 	t.Parallel()
 	documents, documentWant, _ := documentCorpus(t)
 	expressions, expressionWant, _ := expressionCorpus(t)
+	statementCases, statementWant := "", ""
+	for _, change := range mutations {
+		if change.entry == "statementsMain.ts" {
+			statementCases, statementWant, _ = statementCorpus(t)
+			break
+		}
+	}
 	for _, change := range mutations {
 		t.Run(change.name, func(t *testing.T) {
 			t.Parallel()
@@ -85,6 +94,10 @@ func TestMutants(t *testing.T) {
 			arguments := []string{cases}
 			if change.entry == "main.ts" {
 				cases, want = expressions, expressionWant
+				arguments = []string{"--cases", cases, "80"}
+			}
+			if change.entry == "statementsMain.ts" {
+				cases, want = statementCases, statementWant
 				arguments = []string{"--cases", cases, "80"}
 			}
 			if change.name == "hashbang loses its refusal" {

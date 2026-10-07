@@ -1,0 +1,27 @@
+[
+  {
+    "Source": "(function named(){if(x){f();}else{g();}})",
+    "Go": "(function named() {\n    if(x) {\n        f();\n    }\n    else {\n        g();\n    }\n});\n",
+    "Prettier": "(function named() {\n    if (x) {\n        f();\n    } else {\n        g();\n    }\n});\n"
+  },
+  {
+    "Source": "(function named(){while(x){f();}})",
+    "Go": "(function named() {\n    while(x) {\n        f();\n    }\n});\n",
+    "Prettier": "(function named() {\n    while (x) {\n        f();\n    }\n});\n"
+  },
+  {
+    "Source": "(function named(){for(let i=0;i<3;i++){f(i);}})",
+    "Go": "(function named() {\n    for(let i = 0; i < 3; i++) {\n        f(i);\n    }\n});\n",
+    "Prettier": "(function named() {\n    for (let i = 0; i < 3; i++) {\n        f(i);\n    }\n});\n"
+  },
+  {
+    "Source": "(function named(){try{f();}catch(e){g(e);}finally{h();}})",
+    "Go": "(function named() {\n    try {\n        f();\n    }\n    catch(e) {\n        g(e);\n    }\n    finally {\n        h();\n    }\n});\n",
+    "Prettier": "(function named() {\n    try {\n        f();\n    } catch (e) {\n        g(e);\n    } finally {\n        h();\n    }\n});\n"
+  },
+  {
+    "Source": "(function named(){switch(x){case 1:f();break;default:g();}})",
+    "Go": "(function named() {\n    switch(x) {\n        case 1:\n            f();\n            break;\n        default:\n            g();\n    }\n});\n",
+    "Prettier": "(function named() {\n    switch (x) {\n        case 1:\n            f();\n            break;\n        default:\n            g();\n    }\n});\n"
+  }
+]

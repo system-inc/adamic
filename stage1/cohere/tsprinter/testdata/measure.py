@@ -14,9 +14,10 @@ parser.add_argument("native", type=Path)
 parser.add_argument("go", type=Path)
 parser.add_argument("prettier", type=Path)
 parser.add_argument("--runs", type=int, default=3)
+parser.add_argument("--entry", default="main.ts", choices=["main.ts", "statementsMain.ts"])
 arguments = parser.parse_args()
 root = Path(__file__).resolve().parents[4]
-port = root / "stage1/cohere/tsprinter/main.ts"
+port = root / "stage1/cohere/tsprinter" / arguments.entry
 expected = (arguments.corpus / "answers.txt").read_bytes()
 count = len(expected.splitlines())
 commands = {
@@ -25,7 +26,7 @@ commands = {
     "Go": [str(arguments.go), "-test.run=^TestAdamicExpressionBenchmark$"],
     "Prettier": ["node", str(port.parent / "testdata/expressions.mjs"), str(arguments.prettier), str(arguments.corpus / "cases.json")],
 }
-results = {"texts": count, "width": 80, "runs": arguments.runs, "method": "sequential complete batch processes including input, output and startup", "samples": {}}
+results = {"entry": arguments.entry, "texts": count, "width": 80, "runs": arguments.runs, "method": "sequential complete batch processes including input, output and startup", "samples": {}}
 with tempfile.TemporaryDirectory(prefix="ts-printer-measure-") as temporary:
     directory = Path(temporary)
     for name, command in commands.items():

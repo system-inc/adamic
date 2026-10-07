@@ -99,16 +99,16 @@ export function flatten(parent: string, child: string): boolean {
     if(['<<', '>>', '>>>'].includes(parent) && ['<<', '>>', '>>>'].includes(child)) return false;
     return true;
 }
-function syntaxNode(parser: Parser, index: number): ParseNode {
+export function syntaxNode(parser: Parser, index: number): ParseNode {
     return parser.nodes[index] ?? panic('missing syntax node');
 }
-function unwrapped(parser: Parser, index: number): number {
+export function unwrapped(parser: Parser, index: number): number {
     const item = syntaxNode(parser, index);
     return item.kind === 'ParenthesizedExpression'
         ? unwrapped(parser, item.children[0] ?? panic('missing parenthesized syntax'))
         : index;
 }
-function syntaxChild(parser: Parser, index: number, offset: number): number {
+export function syntaxChild(parser: Parser, index: number, offset: number): number {
     return unwrapped(parser, syntaxNode(parser, index).children[offset] ?? panic('missing syntax child'));
 }
 export function syntaxOperator(parser: Parser, index: number): string {
@@ -288,7 +288,7 @@ export function hasBlankLine(source: string): boolean {
     return false;
 }
 
-function syntaxAssignment(parser: Parser, index: number): boolean {
+export function syntaxAssignment(parser: Parser, index: number): boolean {
     return (
         index >= 0 &&
         syntaxNode(parser, index).kind === 'BinaryExpression' &&
@@ -315,6 +315,34 @@ export function jestTag(parser: Parser, index: number): boolean {
     );
 }
 
+export function syntaxLeftmost(parser: Parser, index: number): number {
+    const node = syntaxNode(parser, index);
+    if(
+        [
+            'BinaryExpression',
+            'ConditionalExpression',
+            'PropertyAccessExpression',
+            'ElementAccessExpression',
+            'NonNullExpression',
+            'PostfixUnaryExpression',
+            'CallExpression',
+            'TaggedTemplateExpression',
+        ].includes(node.kind)
+    )
+        return syntaxLeftmost(parser, syntaxChild(parser, index, 0));
+    return index;
+}
+
+export function syntaxMemberish(parser: Parser, index: number): boolean {
+    return ['PropertyAccessExpression', 'ElementAccessExpression'].includes(syntaxNode(parser, index).kind);
+}
+
+export function syntaxOwnOptional(parser: Parser, index: number): boolean {
+    for(const child of syntaxNode(parser, index).children)
+        if(syntaxNode(parser, child).kind === 'QuestionDotToken') return true;
+    return false;
+}
+
 export function unsupported(parser: Parser, source: string, index: number): string {
     const id = unwrapped(parser, index);
     const node = syntaxNode(parser, id);
@@ -338,6 +366,7 @@ export function unsupported(parser: Parser, source: string, index: number): stri
             return '';
         case 'ArrowFunction':
         case 'FunctionExpression':
+        case 'FunctionDeclaration':
         case 'MethodDeclaration':
         case 'GetAccessor':
         case 'SetAccessor':
@@ -442,6 +471,15 @@ export function unsupported(parser: Parser, source: string, index: number): stri
 export function statementUnsupported(parser: Parser, source: string, index: number): string {
     const node = syntaxNode(parser, index);
     switch(node.kind) {
+        case 'SourceFile':
+            for(const child of node.children) {
+                if(syntaxNode(parser, child).kind === 'EndOfFile') continue;
+                const reason = statementUnsupported(parser, source, child);
+                if(reason !== '') return reason;
+            }
+            return '';
+        case 'FunctionDeclaration':
+            return functionUnsupported(parser, source, index);
         case 'VariableStatement': {
             if(
                 node.children.length !== 1 ||
@@ -532,6 +570,7 @@ export function functionUnsupported(parser: Parser, source: string, index: numbe
         if(item.children.length > offset) return 'function-types';
     }
     if(node.kind === 'FunctionExpression' && !named) return 'FunctionExpression';
+    if(node.kind === 'FunctionDeclaration' && !named) return 'FunctionDeclaration';
     const body = node.children[node.children.length - 1] ?? panic('missing function body');
     return syntaxNode(parser, body).kind === 'Block'
         ? statementUnsupported(parser, source, body)

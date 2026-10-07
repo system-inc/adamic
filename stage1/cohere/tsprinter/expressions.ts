@@ -5,6 +5,7 @@ import { ParseNode } from '../../typescript/parser/nodes.ts';
 import { Documents, type SettingsOptions } from './doc.ts';
 import { numberText, stringText } from './literals.ts';
 import { isKeyName } from './keys.ts';
+import { parenthesize } from './parentheses.ts';
 import { stringWidth } from './width.ts';
 import {
     assignmentOperators,
@@ -108,189 +109,15 @@ export class Expressions {
         return this.normalize(id);
     }
     parenthesize(index: number, parent: number, role: string): boolean {
-        const node = this.node(index);
-        if(this.optionalBoundaries.has(index) && parent >= 0) {
-            const outer = this.node(parent);
-            if(
-                outer.kind === 'NonNullExpression' ||
-                role === 'tag' ||
-                (role === 'object' && this.memberish(parent) && !this.ownOptional(parent)) ||
-                (role === 'callee' &&
-                    (outer.kind === 'NewExpression' || (outer.kind === 'CallExpression' && !this.ownOptional(parent))))
-            )
-                return true;
-        }
-        if(node.kind === 'FunctionExpression') {
-            const root =
-                this.state.statementExpressionRoot >= 0
-                    ? this.state.statementExpressionRoot
-                    : (this.ancestors[0] ?? index);
-            return this.leftmost(root) === index || role === 'callee' || role === 'tag';
-        }
-        if(node.kind === 'ObjectLiteralExpression') {
-            const root =
-                this.state.statementExpressionRoot >= 0
-                    ? this.state.statementExpressionRoot
-                    : (this.ancestors[0] ?? index);
-            if(this.leftmost(root) === index) return true;
-            for(let position = this.ancestors.length - 1; position >= 0; position--) {
-                const ancestor = this.ancestors[position] ?? panic('missing object ancestor');
-                const item = this.node(ancestor);
-                if(item.kind !== 'ArrowFunction') continue;
-                const body = this.unwrapped(item.children[item.children.length - 1] ?? panic('missing arrow body'));
-                return (
-                    !this.isAssignment(body) &&
-                    !(this.node(body).kind === 'BinaryExpression' && this.operator(body) === ',') &&
-                    this.leftmost(body) === index
-                );
-            }
-            return false;
-        }
-        if(parent < 0) return false;
-        const outer = this.node(parent);
-        if(node.kind === 'AwaitExpression' || node.kind === 'YieldExpression')
-            return (
-                role === 'tag' ||
-                role === 'object' ||
-                role === 'callee' ||
-                (outer.kind === 'ConditionalExpression' && role === 'test') ||
-                (outer.kind === 'BinaryExpression' && !this.isAssignment(parent)) ||
-                (node.kind === 'YieldExpression' && outer.kind === 'AwaitExpression') ||
-                [
-                    'PrefixUnaryExpression',
-                    'DeleteExpression',
-                    'VoidExpression',
-                    'TypeOfExpression',
-                    'SpreadElement',
-                    'SpreadAssignment',
-                    'NonNullExpression',
-                ].includes(outer.kind)
-            );
-        if(node.kind === 'ArrowFunction')
-            return (
-                role === 'callee' ||
-                role === 'object' ||
-                role === 'tag' ||
-                (outer.kind === 'BinaryExpression' && !this.isAssignment(parent) && this.operator(parent) !== ',') ||
-                (outer.kind === 'ConditionalExpression' && role === 'test') ||
-                [
-                    'PrefixUnaryExpression',
-                    'PostfixUnaryExpression',
-                    'DeleteExpression',
-                    'VoidExpression',
-                    'TypeOfExpression',
-                    'NonNullExpression',
-                    'AwaitExpression',
-                ].includes(outer.kind)
-            );
-        if(outer.kind === 'NewExpression' && role === 'callee') {
-            let current = index;
-            while(
-                [
-                    'PropertyAccessExpression',
-                    'ElementAccessExpression',
-                    'NonNullExpression',
-                    'AwaitExpression',
-                    'TaggedTemplateExpression',
-                ].includes(this.node(current).kind)
-            )
-                current = this.child(current, 0);
-            if(this.node(current).kind === 'CallExpression') return true;
-        }
-        if(
-            node.kind === 'Identifier' &&
-            node.text === 'let' &&
-            role === 'object' &&
-            outer.kind === 'ElementAccessExpression' &&
-            !outer.optional &&
-            this.leftmost(
-                this.state.statementExpressionRoot >= 0
-                    ? this.state.statementExpressionRoot
-                    : (this.ancestors[0] ?? index),
-            ) === index
-        )
-            return true;
-        if(node.kind === 'NumericLiteral')
-            return role === 'object' && ['PropertyAccessExpression', 'ElementAccessExpression'].includes(outer.kind);
-        const unary = [
-            'PrefixUnaryExpression',
-            'PostfixUnaryExpression',
-            'DeleteExpression',
-            'VoidExpression',
-            'TypeOfExpression',
-        ].includes(node.kind);
-        if(unary) {
-            const operator = this.operator(index);
-            const update = node.kind === 'PostfixUnaryExpression' || ['++', '--'].includes(operator);
-            if(outer.kind === 'PrefixUnaryExpression' && !['++', '--'].includes(this.operator(parent))) {
-                if(update)
-                    return (
-                        node.kind !== 'PostfixUnaryExpression' &&
-                        ((operator === '++' && this.operator(parent) === '+') ||
-                            (operator === '--' && this.operator(parent) === '-'))
-                    );
-                return operator === this.operator(parent) && ['+', '-'].includes(operator);
-            }
-            if(outer.kind === 'BinaryExpression')
-                return (
-                    role === 'left' &&
-                    (this.operator(parent) === '**' ||
-                        (!update && ['in', 'instanceof'].includes(this.operator(parent))))
-                );
-            return role === 'object' || role === 'callee' || role === 'tag' || outer.kind === 'NonNullExpression';
-        }
-        if(node.kind === 'ConditionalExpression')
-            return (
-                role === 'object' ||
-                role === 'callee' ||
-                role === 'tag' ||
-                (outer.kind === 'ConditionalExpression' && role === 'test') ||
-                (outer.kind === 'BinaryExpression' && !this.isAssignment(parent) && this.operator(parent) !== ',') ||
-                [
-                    'PrefixUnaryExpression',
-                    'PostfixUnaryExpression',
-                    'DeleteExpression',
-                    'VoidExpression',
-                    'TypeOfExpression',
-                    'NonNullExpression',
-                    'AwaitExpression',
-                    'SpreadElement',
-                    'SpreadAssignment',
-                ].includes(outer.kind)
-            );
-        if(node.kind === 'BinaryExpression') {
-            if(this.isAssignment(index)) return !this.isAssignment(parent);
-            if(this.operator(index) === ',') return true;
-            if(this.isAssignment(parent)) return false;
-            if(outer.kind === 'ConditionalExpression') return this.operator(index) === '??';
-            if(outer.kind === 'BinaryExpression') {
-                const operator = this.operator(index);
-                const other = this.operator(parent);
-                if(['??', '||', '&&'].includes(operator) && ['??', '||', '&&'].includes(other))
-                    return operator !== other;
-                if(rank(other) > rank(operator)) return true;
-                if(rank(other) === rank(operator) && (role === 'right' || !flatten(other, operator))) return true;
-                if(operator === '%' && (other === '+' || other === '-')) return true;
-                return ['|', '^', '&', '<<', '>>', '>>>'].includes(other);
-            }
-            return (
-                role === 'object' ||
-                role === 'callee' ||
-                role === 'tag' ||
-                [
-                    'PrefixUnaryExpression',
-                    'PostfixUnaryExpression',
-                    'DeleteExpression',
-                    'VoidExpression',
-                    'TypeOfExpression',
-                    'NonNullExpression',
-                    'AwaitExpression',
-                    'SpreadElement',
-                    'SpreadAssignment',
-                ].includes(outer.kind)
-            );
-        }
-        return false;
+        return parenthesize(
+            this.parser,
+            this.state.statementExpressionRoot,
+            this.ancestors,
+            this.optionalBoundaries,
+            index,
+            parent,
+            role,
+        );
     }
     leftmost(index: number): number {
         const node = this.node(index);
@@ -777,6 +604,32 @@ export class Expressions {
         const node = this.node(index);
         const parts: number[] = [];
         switch(node.kind) {
+            case 'SourceFile': {
+                let directive = true;
+                for(const child of node.children) {
+                    const statement = this.node(child);
+                    if(statement.kind === 'EndOfFile') continue;
+                    const expression =
+                        statement.kind === 'ExpressionStatement'
+                            ? this.unwrapped(statement.children[0] ?? panic('missing program directive'))
+                            : -1;
+                    if(
+                        expression < 0 ||
+                        this.node(expression).kind !== 'StringLiteral' ||
+                        this.protectedStrings.has(expression)
+                    )
+                        directive = false;
+                    if(statement.kind === 'EmptyStatement') continue;
+                    if(parts.length > 0) parts.push(this.docs.hardline());
+                    const previous = this.state.directive;
+                    this.state.directive = directive;
+                    parts.push(this.statementDoc(child, index));
+                    this.state.directive = previous;
+                }
+                return this.docs.concat(parts);
+            }
+            case 'FunctionDeclaration':
+                return this.functionDoc(index);
             case 'VariableStatement':
                 return this.variableDoc(this.child(index, 0));
             case 'Block': {
