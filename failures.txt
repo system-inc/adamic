@@ -1,0 +1,1489 @@
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryFunctionIsInSingleAssignment
+=== RUN   TestEveryFunctionIsInSingleAssignment
+=== PAUSE TestEveryFunctionIsInSingleAssignment
+=== CONT  TestEveryFunctionIsInSingleAssignment
+    flow_test.go:95: Lower: /workspace/adamic/internal/oracle/testdata/field_access_paths.a:20:18: Adamic 0.1 refuses optional property amount in Optional absent from structural source { label: string; padding: number; }, which can hide fields; declare amount on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryFunctionIsInSingleAssignment (26.70s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_file.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_file.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_file.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_file.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_file.a (0.90s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_buffer.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_buffer.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_buffer.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_buffer.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:18:79: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_buffer.a (1.16s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write.a (1.11s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_utimes.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_utimes.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_utimes.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_utimes.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_utimes.a (0.95s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_system.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_system.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_system.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_system.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_system.a (0.78s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_unlink.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_unlink.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_unlink.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_unlink.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_unlink.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_unlink.a (1.20s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_stat.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_stat.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_stat.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_stat.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_stat.a (1.07s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_rm.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_rm.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_rm.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_rm.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_rm.a (1.12s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read.a (1.11s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_open.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_open.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_open.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_open.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_open.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_open.a (1.12s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read_sync.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read_sync.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read_sync.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read_sync.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_read_sync.a:6:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read_sync.a (1.56s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdtemp.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdtemp.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdtemp.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdtemp.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdtemp.a (1.14s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdir.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdir.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdir.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdir.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdir.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdir.a (1.34s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_exists.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_exists.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_exists.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_exists.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_exists.a (1.30s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_buffer.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_buffer.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_buffer.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_buffer.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_buffer.a (1.26s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_close.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_close.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_close.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_close.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_close.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_close.a (1.45s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_realpath.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_realpath.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_realpath.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_realpath.a:4:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_realpath.a (1.27s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_permissions.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_permissions.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_permissions.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_permissions.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_permissions.a:6:86: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_permissions.a (0.92s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_entries.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_entries.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_entries.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_directory_entries.a (1.21s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs/../oracle/testdata/field_access_paths.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/field_access_paths.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/field_access_paths.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/field_access_paths.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/field_access_paths.a:20:18: Adamic 0.1 refuses optional property amount in Optional absent from structural source { label: string; padding: number; }, which can hide fields; declare amount on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/field_access_paths.a (0.40s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/field_access_paths.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/field_access_paths.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/field_access_paths.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/field_access_paths.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/field_access_paths.a:20:18: Adamic 0.1 refuses optional property amount in Optional absent from structural source { label: string; padding: number; }, which can hide fields; declare amount on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/field_access_paths.a (0.17s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a
+    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+    trace_test.go:50: 62 points walked, 83 events
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a (0.30s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_file.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_file.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_file.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_file.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_file.a (1.60s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write.a (1.58s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_buffer.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_buffer.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_buffer.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_buffer.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:18:79: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_write_buffer.a (1.70s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_utimes.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_utimes.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_utimes.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_utimes.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_utimes.a (1.40s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_unlink.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_unlink.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_unlink.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_unlink.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_unlink.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_unlink.a (1.48s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_system.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_system.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_system.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_system.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_system.a (2.30s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_stat.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_stat.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_stat.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_stat.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_stat.a (2.29s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_rm.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_rm.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_rm.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_rm.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_rm.a (2.34s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_read_sync.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_read_sync.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_read_sync.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_read_sync.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_read_sync.a:6:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_read_sync.a (2.34s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_read.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_read.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_read.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_read.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_read.a (1.57s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_open.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_open.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_open.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_open.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_open.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_open.a (1.49s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdtemp.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdtemp.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdtemp.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdtemp.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdtemp.a (1.53s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_buffer.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_buffer.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_buffer.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_buffer.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_buffer.a (1.12s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_exists.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_exists.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_exists.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_exists.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_exists.a (1.59s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdir.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdir.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdir.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdir.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdir.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_mkdir.a (2.07s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_close.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_close.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_close.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_close.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_close.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_file_close.a (1.97s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_realpath.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_realpath.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_realpath.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_realpath.a:4:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_realpath.a (2.01s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_permissions.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_permissions.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_permissions.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_permissions.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_permissions.a:6:86: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_permissions.a (1.74s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_entries.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_entries.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_entries.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_fs_directory_entries.a (2.31s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/field_access_paths.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/field_access_paths.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/field_access_paths.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/field_access_paths.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/field_access_paths.a:20:18: Adamic 0.1 refuses optional property amount in Optional absent from structural source { label: string; padding: number; }, which can hide fields; declare amount on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/field_access_paths.a (0.22s)
+
+package: github.com/system-inc/adamic/internal/lower
+test: (package)
+FAIL	github.com/system-inc/adamic/internal/lower [build failed]
+# github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]
+internal/lower/optional_widening_census_test.go:40:68: cannot use configPath (variable of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in argument to tsoptions.GetParsedCommandLineOfConfigFile
+internal/lower/optional_widening_census_test.go:40:90: cannot use optionalCensusHost{…} (value of struct type optionalCensusHost) as "github.com/microsoft/TypeScript/tsc/internal/vfs".FS value in argument to tsoptions.GetParsedCommandLineOfConfigFile: optionalCensusHost does not implement "github.com/microsoft/TypeScript/tsc/internal/vfs".FS (missing method AppendFile)
+internal/lower/optional_widening_census_test.go:45:87: too many arguments in call to compiler.NewCachedFSCompilerHost
+	have (string, *"github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs".FS, "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedDirectoryPath, nil, nil, nil)
+	want ("github.com/microsoft/TypeScript/tsc/internal/vfs".FS, "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedDirectoryPath, "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ExtendedConfigCache, func(msg *diagnostics.Message, args ...any), contentmapper.Project)
+internal/lower/optional_widening_census_test.go:58:51: cannot use file.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to strings.HasPrefix
+internal/lower/optional_widening_census_test.go:78:25: cannot use file.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to strings.TrimPrefix
+
+package: github.com/system-inc/adamic/internal/ir
+test: TestCallTargetReaders
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+    call_targets_guard_test.go:51: go list: # github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]
+        internal/lower/optional_widening_census_test.go:40:68: cannot use configPath (variable of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in argument to tsoptions.GetParsedCommandLineOfConfigFile
+        internal/lower/optional_widening_census_test.go:40:90: cannot use optionalCensusHost{…} (value of struct type optionalCensusHost) as "github.com/microsoft/TypeScript/tsc/internal/vfs".FS value in argument to tsoptions.GetParsedCommandLineOfConfigFile: optionalCensusHost does not implement "github.com/microsoft/TypeScript/tsc/internal/vfs".FS (missing method AppendFile)
+        internal/lower/optional_widening_census_test.go:45:87: too many arguments in call to compiler.NewCachedFSCompilerHost
+        	have (string, *"github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs".FS, "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedDirectoryPath, nil, nil, nil)
+        	want ("github.com/microsoft/TypeScript/tsc/internal/vfs".FS, "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedDirectoryPath, "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ExtendedConfigCache, func(msg *diagnostics.Message, args ...any), contentmapper.Project)
+        internal/lower/optional_widening_census_test.go:58:51: cannot use file.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to strings.HasPrefix
+        internal/lower/optional_widening_census_test.go:78:25: cannot use file.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to strings.TrimPrefix
+--- FAIL: TestCallTargetReaders (26.63s)
+
+package: github.com/system-inc/adamic/internal/ir
+test: (package)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	26.674s
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph
+=== RUN   TestEveryPathNodeTakesIsInTheGraph
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph
+=== CONT  TestEveryPathNodeTakesIsInTheGraph
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.13s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_entries.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_entries.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_entries.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_entries.a (1.51s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_file.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_file.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_file.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_file.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_file.a (1.58s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_buffer.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_buffer.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_buffer.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_buffer.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:18:79: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write_buffer.a (1.24s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_write.a (1.20s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_system.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_system.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_system.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_system.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_system.a (1.07s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_unlink.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_unlink.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_unlink.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_unlink.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_unlink.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_unlink.a (1.09s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_utimes.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_utimes.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_utimes.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_utimes.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_utimes.a (1.43s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_stat.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_stat.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_stat.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_stat.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_stat.a (1.48s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_read_sync.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_read_sync.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_read_sync.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_read_sync.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_read_sync.a:6:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_read_sync.a (1.58s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_rm.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_rm.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_rm.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_rm.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_rm.a (1.84s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_read.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_read.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_read.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_read.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_read.a (1.88s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_open.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_open.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_open.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_open.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_open.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_open.a (1.49s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdtemp.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdtemp.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdtemp.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdtemp.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdtemp.a (1.44s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdir.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdir.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdir.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdir.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdir.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_mkdir.a (1.27s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_exists.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_exists.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_exists.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_exists.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_exists.a (1.75s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_close.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_close.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_close.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_close.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_close.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_close.a (1.35s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_buffer.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_buffer.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_buffer.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_buffer.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_file_buffer.a (1.57s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_realpath.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_realpath.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_realpath.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_realpath.a:4:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_realpath.a (1.39s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_permissions.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_permissions.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_permissions.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_permissions.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_permissions.a:6:86: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_fs_directory_permissions.a (1.82s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange/programs
+=== RUN   TestEveryMutationIsInItsRange/programs
+--- FAIL: TestEveryMutationIsInItsRange/programs (0.07s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryMutationIsInItsRange
+=== RUN   TestEveryMutationIsInItsRange
+=== PAUSE TestEveryMutationIsInItsRange
+=== CONT  TestEveryMutationIsInItsRange
+    ranges_test.go:78: 98247 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestEveryMutationIsInItsRange (258.92s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath/programs
+=== RUN   TestLivenessHoldsOnEveryPath/programs
+--- FAIL: TestLivenessHoldsOnEveryPath/programs (0.12s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: TestLivenessHoldsOnEveryPath
+=== RUN   TestLivenessHoldsOnEveryPath
+=== PAUSE TestLivenessHoldsOnEveryPath
+=== CONT  TestLivenessHoldsOnEveryPath
+    trace_test.go:426: 61818023 variable-and-point pairs checked
+--- FAIL: TestLivenessHoldsOnEveryPath (259.21s)
+
+package: github.com/system-inc/adamic/internal/flow
+test: (package)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	259.244s
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryMutants/isFile
+=== RUN   TestNodeFSDirectoryMutants/isFile
+=== PAUSE TestNodeFSDirectoryMutants/isFile
+=== CONT  TestNodeFSDirectoryMutants/isFile
+    node_fs_directory_test.go:62: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSDirectoryMutants/isFile (2.59s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryMutants/error_code
+=== RUN   TestNodeFSDirectoryMutants/error_code
+=== PAUSE TestNodeFSDirectoryMutants/error_code
+=== CONT  TestNodeFSDirectoryMutants/error_code
+    node_fs_directory_test.go:62: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSDirectoryMutants/error_code (2.65s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryMutants/realpath_walk
+=== RUN   TestNodeFSDirectoryMutants/realpath_walk
+=== PAUSE TestNodeFSDirectoryMutants/realpath_walk
+=== CONT  TestNodeFSDirectoryMutants/realpath_walk
+    node_fs_directory_test.go:62: /workspace/adamic/internal/oracle/testdata/node_fs_directory_realpath.a:4:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSDirectoryMutants/realpath_walk (1.70s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryMutants/realpath_native
+=== RUN   TestNodeFSDirectoryMutants/realpath_native
+=== PAUSE TestNodeFSDirectoryMutants/realpath_native
+=== CONT  TestNodeFSDirectoryMutants/realpath_native
+    node_fs_directory_test.go:62: /workspace/adamic/internal/oracle/testdata/node_fs_directory_realpath.a:4:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSDirectoryMutants/realpath_native (1.49s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryMutants/error_message
+=== RUN   TestNodeFSDirectoryMutants/error_message
+=== PAUSE TestNodeFSDirectoryMutants/error_message
+=== CONT  TestNodeFSDirectoryMutants/error_message
+    node_fs_directory_test.go:62: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSDirectoryMutants/error_message (1.68s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryMutants/isSymbolicLink
+=== RUN   TestNodeFSDirectoryMutants/isSymbolicLink
+=== PAUSE TestNodeFSDirectoryMutants/isSymbolicLink
+=== CONT  TestNodeFSDirectoryMutants/isSymbolicLink
+    node_fs_directory_test.go:62: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSDirectoryMutants/isSymbolicLink (1.59s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryMutants/Dirent_name
+=== RUN   TestNodeFSDirectoryMutants/Dirent_name
+=== PAUSE TestNodeFSDirectoryMutants/Dirent_name
+=== CONT  TestNodeFSDirectoryMutants/Dirent_name
+    node_fs_directory_test.go:62: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSDirectoryMutants/Dirent_name (1.73s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryMutants/readdir_order
+=== RUN   TestNodeFSDirectoryMutants/readdir_order
+=== PAUSE TestNodeFSDirectoryMutants/readdir_order
+=== CONT  TestNodeFSDirectoryMutants/readdir_order
+    node_fs_directory_test.go:62: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSDirectoryMutants/readdir_order (1.76s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryMutants/isDirectory
+=== RUN   TestNodeFSDirectoryMutants/isDirectory
+=== PAUSE TestNodeFSDirectoryMutants/isDirectory
+=== CONT  TestNodeFSDirectoryMutants/isDirectory
+    node_fs_directory_test.go:62: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSDirectoryMutants/isDirectory (1.91s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryMutants
+=== RUN   TestNodeFSDirectoryMutants
+--- FAIL: TestNodeFSDirectoryMutants (0.00s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestRegExpLongBacktrackNode
+=== RUN   TestRegExpLongBacktrackNode
+    regexp_long_backtrack_test.go:47: long regex exceeded 3m: context deadline exceeded
+--- FAIL: TestRegExpLongBacktrackNode (234.20s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestRegExpNativeTiming/quadratic_exec
+=== RUN   TestRegExpNativeTiming/quadratic_exec
+    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.066613422s)
+--- FAIL: TestRegExpNativeTiming/quadratic_exec (4.17s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestRegExpNativeTiming/quadratic_matchall
+=== RUN   TestRegExpNativeTiming/quadratic_matchall
+    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.020024359s)
+--- FAIL: TestRegExpNativeTiming/quadratic_matchall (5.11s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestRegExpNativeTiming
+=== RUN   TestRegExpNativeTiming
+--- FAIL: TestRegExpNativeTiming (28.67s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+    wasi_host_test.go:61: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a (1.67s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+    wasi_host_test.go:61: /workspace/adamic/internal/oracle/testdata/node_fs_directory_realpath.a:4:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a (1.39s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+    wasi_host_test.go:61: /workspace/adamic/internal/oracle/testdata/node_fs_directory_permissions.a:6:86: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a (0.93s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIInputAgreesWithNode
+=== RUN   TestWASIInputAgreesWithNode
+--- FAIL: TestWASIInputAgreesWithNode (41.21s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/read
+=== RUN   TestWASIFileAgreesWithNode/read
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/read (1.02s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/open
+=== RUN   TestWASIFileAgreesWithNode/open
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_open.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/open (1.22s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/write
+=== RUN   TestWASIFileAgreesWithNode/write
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_write.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/write (1.08s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/close
+=== RUN   TestWASIFileAgreesWithNode/close
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_close.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/close (1.97s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/write_file
+=== RUN   TestWASIFileAgreesWithNode/write_file
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/write_file (2.33s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/exists
+=== RUN   TestWASIFileAgreesWithNode/exists
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/exists (2.27s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/stat
+=== RUN   TestWASIFileAgreesWithNode/stat
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/stat (2.29s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/mkdir
+=== RUN   TestWASIFileAgreesWithNode/mkdir
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdir.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/mkdir (2.05s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/unlink
+=== RUN   TestWASIFileAgreesWithNode/unlink
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_unlink.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/unlink (2.05s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/utimes
+=== RUN   TestWASIFileAgreesWithNode/utimes
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/utimes (1.71s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/system
+=== RUN   TestWASIFileAgreesWithNode/system
+    wasi_host_test.go:144: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/system (1.61s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/buffer
+=== RUN   TestWASIFileAgreesWithNode/buffer
+    wasi_host_test.go:144: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/buffer (1.30s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/read_sync
+=== RUN   TestWASIFileAgreesWithNode/read_sync
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_read_sync.a:6:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/read_sync (0.99s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/write_buffer
+=== RUN   TestWASIFileAgreesWithNode/write_buffer
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:18:79: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/write_buffer (1.25s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/mkdtemp
+=== RUN   TestWASIFileAgreesWithNode/mkdtemp
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/mkdtemp (1.04s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode/rm
+=== RUN   TestWASIFileAgreesWithNode/rm
+    wasi_host_test.go:144: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIFileAgreesWithNode/rm (1.30s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIFileAgreesWithNode
+=== RUN   TestWASIFileAgreesWithNode
+--- FAIL: TestWASIFileAgreesWithNode (26.77s)
+
+package: github.com/system-inc/adamic/stage1/cohere/config
+test: TestLoadersMatchGoCohere
+=== RUN   TestLoadersMatchGoCohere
+=== PAUSE TestLoadersMatchGoCohere
+=== CONT  TestLoadersMatchGoCohere
+    loader_test.go:172: go: downloading github.com/dlclark/regexp2/v2 v2.5.2
+        go: downloading github.com/dlclark/regexp2 v1.11.5
+        === RUN   TestAdamicConfigCases
+            adamic_config_test.go:152: Go: 6.819868s, 0 projects, 0 projects/s; 2094 source files, 307 files/s
+        --- PASS: TestAdamicConfigCases (6.82s)
+        PASS
+        ok  	github.com/system-inc/cohere/command/cohere	6.950s
+    loader_test.go:187: native: line 5: "source \"cohere:house\"", Go cohere "source \"cohere:style\""
+    loader_test.go:187: Node: line 5: "source \"cohere:house\"", Go cohere "source \"cohere:style\""
+    loader_test.go:187: backend: line 5: "source \"cohere:house\"", Go cohere "source \"cohere:style\""
+    loader_test.go:195: baseline must agree before mutants
+--- FAIL: TestLoadersMatchGoCohere (528.89s)
+
+package: github.com/system-inc/adamic/stage1/cohere/config
+test: (package)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/config	529.255s
+
+package: github.com/system-inc/adamic/internal/unicodeproperties
+test: TestCanonicalizeUnicodeNode
+=== RUN   TestCanonicalizeUnicodeNode
+    canonicalize_test.go:237: Unicode batch 51: node: signal: killed
+        
+        
+--- FAIL: TestCanonicalizeUnicodeNode (575.26s)
+
+package: github.com/system-inc/adamic/internal/unicodeproperties
+test: (package)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/unicodeproperties	623.499s
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIAgreesWithNode/internal/oracle/testdata/field_access_paths.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/field_access_paths.a
+    wasi_test.go:38: /workspace/adamic/internal/oracle/testdata/field_access_paths.a:20:18: Adamic 0.1 refuses optional property amount in Optional absent from structural source { label: string; padding: number; }, which can hide fields; declare amount on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIAgreesWithNode/internal/oracle/testdata/field_access_paths.a (0.09s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIAgreesWithNode
+=== RUN   TestWASIAgreesWithNode
+--- FAIL: TestWASIAgreesWithNode (715.72s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIEmission/internal/oracle/testdata/field_access_paths.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/field_access_paths.a
+    wasi_test.go:135: /workspace/adamic/internal/oracle/testdata/field_access_paths.a:20:18: Adamic 0.1 refuses optional property amount in Optional absent from structural source { label: string; padding: number; }, which can hide fields; declare amount on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIEmission/internal/oracle/testdata/field_access_paths.a (0.18s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestWASIEmission
+=== RUN   TestWASIEmission
+--- FAIL: TestWASIEmission (223.51s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestProcessExitDrainsStderr
+=== RUN   TestProcessExitDrainsStderr
+=== PAUSE TestProcessExitDrainsStderr
+=== CONT  TestProcessExitDrainsStderr
+    process_test.go:215: node shared=false backpressure=true: stdout=0 stderr=204800 exit=37 pipe capacity=4096
+    process_test.go:217: documented raw Node stderr pipe loss changed
+--- FAIL: TestProcessExitDrainsStderr (1.89s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestProcessLargePipeExitPreservesOutput/immediate=true
+=== RUN   TestProcessLargePipeExitPreservesOutput/immediate=true
+    process_test.go:168: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:169: program shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:170: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:180: documented raw Node pipe loss changed; review Node first
+--- FAIL: TestProcessLargePipeExitPreservesOutput/immediate=true (4.26s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestProcessLargePipeExitPreservesOutput
+=== RUN   TestProcessLargePipeExitPreservesOutput
+=== PAUSE TestProcessLargePipeExitPreservesOutput
+=== CONT  TestProcessLargePipeExitPreservesOutput
+--- FAIL: TestProcessLargePipeExitPreservesOutput (8.71s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSDirectoryPermissions
+=== RUN   TestNodeFSDirectoryPermissions
+=== PAUSE TestNodeFSDirectoryPermissions
+=== CONT  TestNodeFSDirectoryPermissions
+    node_fs_directory_test.go:152: /workspace/adamic/internal/oracle/testdata/node_fs_directory_permissions.a:6:86: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSDirectoryPermissions (1.02s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a
+    oracle_test.go:734: Lower: /workspace/adamic/internal/oracle/testdata/field_access_paths.a:20:18: Adamic 0.1 refuses optional property amount in Optional absent from structural source { label: string; padding: number; }, which can hide fields; declare amount on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a (0.14s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/mkdtempSync_suffix
+=== RUN   TestNodeFSFileMutants/mkdtempSync_suffix
+=== PAUSE TestNodeFSFileMutants/mkdtempSync_suffix
+=== CONT  TestNodeFSFileMutants/mkdtempSync_suffix
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/mkdtempSync_suffix (0.94s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/read
+=== RUN   TestNodeFSFileAgreesWithNode/read
+=== PAUSE TestNodeFSFileAgreesWithNode/read
+=== CONT  TestNodeFSFileAgreesWithNode/read
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/read (0.70s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/System_createDirectory
+=== RUN   TestNodeFSFileMutants/System_createDirectory
+=== PAUSE TestNodeFSFileMutants/System_createDirectory
+=== CONT  TestNodeFSFileMutants/System_createDirectory
+    node_fs_file_test.go:202: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/System_createDirectory (0.42s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/System_writeFile_BOM
+=== RUN   TestNodeFSFileMutants/System_writeFile_BOM
+=== PAUSE TestNodeFSFileMutants/System_writeFile_BOM
+=== CONT  TestNodeFSFileMutants/System_writeFile_BOM
+    node_fs_file_test.go:202: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/System_writeFile_BOM (0.82s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/System_deleteFile
+=== RUN   TestNodeFSFileMutants/System_deleteFile
+=== PAUSE TestNodeFSFileMutants/System_deleteFile
+=== CONT  TestNodeFSFileMutants/System_deleteFile
+    node_fs_file_test.go:202: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/System_deleteFile (0.90s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/System_setModifiedTime
+=== RUN   TestNodeFSFileMutants/System_setModifiedTime
+=== PAUSE TestNodeFSFileMutants/System_setModifiedTime
+=== CONT  TestNodeFSFileMutants/System_setModifiedTime
+    node_fs_file_test.go:202: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/System_setModifiedTime (1.15s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/System_getModifiedTime
+=== RUN   TestNodeFSFileMutants/System_getModifiedTime
+=== PAUSE TestNodeFSFileMutants/System_getModifiedTime
+=== CONT  TestNodeFSFileMutants/System_getModifiedTime
+    node_fs_file_test.go:202: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/System_getModifiedTime (1.00s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/System_getFileSize
+=== RUN   TestNodeFSFileMutants/System_getFileSize
+=== PAUSE TestNodeFSFileMutants/System_getFileSize
+=== CONT  TestNodeFSFileMutants/System_getFileSize
+    node_fs_file_test.go:202: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/System_getFileSize (0.88s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/System_fileExists
+=== RUN   TestNodeFSFileMutants/System_fileExists
+=== PAUSE TestNodeFSFileMutants/System_fileExists
+=== CONT  TestNodeFSFileMutants/System_fileExists
+    node_fs_file_test.go:202: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/System_fileExists (1.20s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/unlinkSync_swallowed_failure
+=== RUN   TestNodeFSFileMutants/unlinkSync_swallowed_failure
+=== PAUSE TestNodeFSFileMutants/unlinkSync_swallowed_failure
+=== CONT  TestNodeFSFileMutants/unlinkSync_swallowed_failure
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_unlink.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/unlinkSync_swallowed_failure (0.81s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/utimesSync_milliseconds
+=== RUN   TestNodeFSFileMutants/utimesSync_milliseconds
+=== PAUSE TestNodeFSFileMutants/utimesSync_milliseconds
+=== CONT  TestNodeFSFileMutants/utimesSync_milliseconds
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/utimesSync_milliseconds (0.94s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/mkdirSync_first_directory
+=== RUN   TestNodeFSFileMutants/mkdirSync_first_directory
+=== PAUSE TestNodeFSFileMutants/mkdirSync_first_directory
+=== CONT  TestNodeFSFileMutants/mkdirSync_first_directory
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdir.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/mkdirSync_first_directory (1.05s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/Stats_isSymbolicLink_follows
+=== RUN   TestNodeFSFileMutants/Stats_isSymbolicLink_follows
+=== PAUSE TestNodeFSFileMutants/Stats_isSymbolicLink_follows
+=== CONT  TestNodeFSFileMutants/Stats_isSymbolicLink_follows
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/Stats_isSymbolicLink_follows (0.74s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/Stats_isDirectory
+=== RUN   TestNodeFSFileMutants/Stats_isDirectory
+=== PAUSE TestNodeFSFileMutants/Stats_isDirectory
+=== CONT  TestNodeFSFileMutants/Stats_isDirectory
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/Stats_isDirectory (1.00s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/Stats_isFile
+=== RUN   TestNodeFSFileMutants/Stats_isFile
+=== PAUSE TestNodeFSFileMutants/Stats_isFile
+=== CONT  TestNodeFSFileMutants/Stats_isFile
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/Stats_isFile (1.01s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/Stats_mtime
+=== RUN   TestNodeFSFileMutants/Stats_mtime
+=== PAUSE TestNodeFSFileMutants/Stats_mtime
+=== CONT  TestNodeFSFileMutants/Stats_mtime
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/Stats_mtime (1.02s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/Stats_atime
+=== RUN   TestNodeFSFileMutants/Stats_atime
+=== PAUSE TestNodeFSFileMutants/Stats_atime
+=== CONT  TestNodeFSFileMutants/Stats_atime
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/Stats_atime (0.97s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/Stats_mtimeMs
+=== RUN   TestNodeFSFileMutants/Stats_mtimeMs
+=== PAUSE TestNodeFSFileMutants/Stats_mtimeMs
+=== CONT  TestNodeFSFileMutants/Stats_mtimeMs
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/Stats_mtimeMs (0.96s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/Stats_size
+=== RUN   TestNodeFSFileMutants/Stats_size
+=== PAUSE TestNodeFSFileMutants/Stats_size
+=== CONT  TestNodeFSFileMutants/Stats_size
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/Stats_size (0.78s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/statSync_missing_option
+=== RUN   TestNodeFSFileMutants/statSync_missing_option
+=== PAUSE TestNodeFSFileMutants/statSync_missing_option
+=== CONT  TestNodeFSFileMutants/statSync_missing_option
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/statSync_missing_option (0.71s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/existsSync_directories
+=== RUN   TestNodeFSFileMutants/existsSync_directories
+=== PAUSE TestNodeFSFileMutants/existsSync_directories
+=== CONT  TestNodeFSFileMutants/existsSync_directories
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/existsSync_directories (0.77s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/writeFileSync_append_flag
+=== RUN   TestNodeFSFileMutants/writeFileSync_append_flag
+=== PAUSE TestNodeFSFileMutants/writeFileSync_append_flag
+=== CONT  TestNodeFSFileMutants/writeFileSync_append_flag
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/writeFileSync_append_flag (0.93s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/closeSync_swallowed_failure
+=== RUN   TestNodeFSFileMutants/closeSync_swallowed_failure
+=== PAUSE TestNodeFSFileMutants/closeSync_swallowed_failure
+=== CONT  TestNodeFSFileMutants/closeSync_swallowed_failure
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_close.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/closeSync_swallowed_failure (0.90s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/writeSync_byte_count
+=== RUN   TestNodeFSFileMutants/writeSync_byte_count
+=== PAUSE TestNodeFSFileMutants/writeSync_byte_count
+=== CONT  TestNodeFSFileMutants/writeSync_byte_count
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_write.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/writeSync_byte_count (0.89s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/openSync_truncation
+=== RUN   TestNodeFSFileMutants/openSync_truncation
+=== PAUSE TestNodeFSFileMutants/openSync_truncation
+=== CONT  TestNodeFSFileMutants/openSync_truncation
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_open.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/openSync_truncation (0.98s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/readFileSync_fd
+=== RUN   TestNodeFSFileMutants/readFileSync_fd
+=== PAUSE TestNodeFSFileMutants/readFileSync_fd
+=== CONT  TestNodeFSFileMutants/readFileSync_fd
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/readFileSync_fd (0.97s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/readFileSync_UTF8
+=== RUN   TestNodeFSFileMutants/readFileSync_UTF8
+=== PAUSE TestNodeFSFileMutants/readFileSync_UTF8
+=== CONT  TestNodeFSFileMutants/readFileSync_UTF8
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/readFileSync_UTF8 (1.02s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/readFileSync_raw_fd
+=== RUN   TestNodeFSFileMutants/readFileSync_raw_fd
+=== PAUSE TestNodeFSFileMutants/readFileSync_raw_fd
+=== CONT  TestNodeFSFileMutants/readFileSync_raw_fd
+    node_fs_file_test.go:202: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/readFileSync_raw_fd (1.11s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/readSync_byte_count
+=== RUN   TestNodeFSFileMutants/readSync_byte_count
+=== PAUSE TestNodeFSFileMutants/readSync_byte_count
+=== CONT  TestNodeFSFileMutants/readSync_byte_count
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_read_sync.a:6:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/readSync_byte_count (0.72s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/readFileSync_raw_bytes
+=== RUN   TestNodeFSFileMutants/readFileSync_raw_bytes
+=== PAUSE TestNodeFSFileMutants/readFileSync_raw_bytes
+=== CONT  TestNodeFSFileMutants/readFileSync_raw_bytes
+    node_fs_file_test.go:202: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/readFileSync_raw_bytes (1.08s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/writeFileSync_Buffer_fd
+=== RUN   TestNodeFSFileMutants/writeFileSync_Buffer_fd
+=== PAUSE TestNodeFSFileMutants/writeFileSync_Buffer_fd
+=== CONT  TestNodeFSFileMutants/writeFileSync_Buffer_fd
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:18:79: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/writeFileSync_Buffer_fd (0.93s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/writeFileSync_Buffer_bytes
+=== RUN   TestNodeFSFileMutants/writeFileSync_Buffer_bytes
+=== PAUSE TestNodeFSFileMutants/writeFileSync_Buffer_bytes
+=== CONT  TestNodeFSFileMutants/writeFileSync_Buffer_bytes
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:18:79: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/writeFileSync_Buffer_bytes (1.26s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants/rmSync_force
+=== RUN   TestNodeFSFileMutants/rmSync_force
+=== PAUSE TestNodeFSFileMutants/rmSync_force
+=== CONT  TestNodeFSFileMutants/rmSync_force
+    node_fs_file_test.go:202: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileMutants/rmSync_force (1.11s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileMutants
+=== RUN   TestNodeFSFileMutants
+=== PAUSE TestNodeFSFileMutants
+=== CONT  TestNodeFSFileMutants
+--- FAIL: TestNodeFSFileMutants (0.00s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/utimes
+=== RUN   TestNodeFSFileAgreesWithNode/utimes
+=== PAUSE TestNodeFSFileAgreesWithNode/utimes
+=== CONT  TestNodeFSFileAgreesWithNode/utimes
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/utimes (1.16s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/rm
+=== RUN   TestNodeFSFileAgreesWithNode/rm
+=== PAUSE TestNodeFSFileAgreesWithNode/rm
+=== CONT  TestNodeFSFileAgreesWithNode/rm
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/rm (1.12s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/mkdtemp
+=== RUN   TestNodeFSFileAgreesWithNode/mkdtemp
+=== PAUSE TestNodeFSFileAgreesWithNode/mkdtemp
+=== CONT  TestNodeFSFileAgreesWithNode/mkdtemp
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/mkdtemp (1.26s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/buffer
+=== RUN   TestNodeFSFileAgreesWithNode/buffer
+=== PAUSE TestNodeFSFileAgreesWithNode/buffer
+=== CONT  TestNodeFSFileAgreesWithNode/buffer
+    node_fs_file_test.go:115: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/buffer (0.83s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/write_buffer
+=== RUN   TestNodeFSFileAgreesWithNode/write_buffer
+=== PAUSE TestNodeFSFileAgreesWithNode/write_buffer
+=== CONT  TestNodeFSFileAgreesWithNode/write_buffer
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:18:79: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/write_buffer (0.99s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/read_sync
+=== RUN   TestNodeFSFileAgreesWithNode/read_sync
+=== PAUSE TestNodeFSFileAgreesWithNode/read_sync
+=== CONT  TestNodeFSFileAgreesWithNode/read_sync
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_read_sync.a:6:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/read_sync (0.98s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/system
+=== RUN   TestNodeFSFileAgreesWithNode/system
+=== PAUSE TestNodeFSFileAgreesWithNode/system
+=== CONT  TestNodeFSFileAgreesWithNode/system
+    node_fs_file_test.go:115: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/system (1.31s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/exists
+=== RUN   TestNodeFSFileAgreesWithNode/exists
+=== PAUSE TestNodeFSFileAgreesWithNode/exists
+=== CONT  TestNodeFSFileAgreesWithNode/exists
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/exists (0.91s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/unlink
+=== RUN   TestNodeFSFileAgreesWithNode/unlink
+=== PAUSE TestNodeFSFileAgreesWithNode/unlink
+=== CONT  TestNodeFSFileAgreesWithNode/unlink
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_unlink.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/unlink (1.26s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/mkdir
+=== RUN   TestNodeFSFileAgreesWithNode/mkdir
+=== PAUSE TestNodeFSFileAgreesWithNode/mkdir
+=== CONT  TestNodeFSFileAgreesWithNode/mkdir
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdir.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/mkdir (1.32s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/close
+=== RUN   TestNodeFSFileAgreesWithNode/close
+=== PAUSE TestNodeFSFileAgreesWithNode/close
+=== CONT  TestNodeFSFileAgreesWithNode/close
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_close.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/close (1.38s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/write_file
+=== RUN   TestNodeFSFileAgreesWithNode/write_file
+=== PAUSE TestNodeFSFileAgreesWithNode/write_file
+=== CONT  TestNodeFSFileAgreesWithNode/write_file
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/write_file (1.18s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/stat
+=== RUN   TestNodeFSFileAgreesWithNode/stat
+=== PAUSE TestNodeFSFileAgreesWithNode/stat
+=== CONT  TestNodeFSFileAgreesWithNode/stat
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/stat (1.65s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/write
+=== RUN   TestNodeFSFileAgreesWithNode/write
+=== PAUSE TestNodeFSFileAgreesWithNode/write
+=== CONT  TestNodeFSFileAgreesWithNode/write
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_write.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/write (0.96s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode/open
+=== RUN   TestNodeFSFileAgreesWithNode/open
+=== PAUSE TestNodeFSFileAgreesWithNode/open
+=== CONT  TestNodeFSFileAgreesWithNode/open
+    node_fs_file_test.go:115: /workspace/adamic/internal/oracle/testdata/node_fs_file_open.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNodeFSFileAgreesWithNode/open (0.91s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestNodeFSFileAgreesWithNode
+=== RUN   TestNodeFSFileAgreesWithNode
+=== PAUSE TestNodeFSFileAgreesWithNode
+=== CONT  TestNodeFSFileAgreesWithNode
+--- FAIL: TestNodeFSFileAgreesWithNode (0.00s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+    input_test.go:124: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_permissions.a:6:86: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a (1.36s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+    input_test.go:124: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_realpath.a:4:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a (1.24s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+    input_test.go:124: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a (1.15s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== CONT  TestInputAgreesWithNode
+--- FAIL: TestInputAgreesWithNode (0.00s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_rm.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_rm.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_rm.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_rm.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_rm.a (1.01s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:18:79: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a (1.08s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdtemp.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdtemp.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdtemp.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdtemp.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdtemp.a (1.54s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read_sync.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read_sync.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read_sync.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read_sync.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_read_sync.a:6:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read_sync.a (1.30s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_system.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_system.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_system.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_system.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_system.a (1.02s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_buffer.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_buffer.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_buffer.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_buffer.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_buffer.a (1.18s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_utimes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_utimes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_utimes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_utimes.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_utimes.a (1.11s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_unlink.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_unlink.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_unlink.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_unlink.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_unlink.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_unlink.a (1.05s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdir.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdir.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdir.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdir.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdir.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdir.a (1.21s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_stat.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_stat.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_stat.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_stat.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_stat.a (1.04s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_exists.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_exists.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_exists.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_exists.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_exists.a (1.08s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_open.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_open.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_open.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_open.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_open.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_open.a (0.79s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_close.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a (1.25s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write.a (1.15s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_file.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_file.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_file.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_file.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_file.a (1.60s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read.a
+    counts_test.go:177: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read.a (1.40s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_realpath.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_realpath.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_realpath.a
+    counts_test.go:167: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_realpath.a:4:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_realpath.a (0.79s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_permissions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_permissions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_permissions.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_permissions.a
+    counts_test.go:167: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_permissions.a:6:86: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_permissions.a (0.94s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_entries.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_entries.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_entries.a
+    counts_test.go:167: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_directory_entries.a:10:90: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_entries.a (0.86s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_access_paths.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_access_paths.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_access_paths.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_access_paths.a
+    counts_test.go:158: Lower: /workspace/adamic/internal/oracle/testdata/field_access_paths.a:20:18: Adamic 0.1 refuses optional property amount in Optional absent from structural source { label: string; padding: number; }, which can hide fields; declare amount on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_access_paths.a (0.10s)

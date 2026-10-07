@@ -1,0 +1,57 @@
+sha: 40f57ae38f589dc0dfe2fb0116c764b0987f3e62
+whole run running
+completed packages: 33
+solo reruns completed: []
+stage3: {
+  "tree": "/workspace/stage3-applied",
+  "nproc": 5,
+  "workers": 4,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 23.099
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 105.011
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=4",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 1069.106
+    }
+  },
+  "status": "fail",
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "wall_seconds": 1198.282
+}
+
+snapshot UTC: 2026-10-07T19:29:16Z
