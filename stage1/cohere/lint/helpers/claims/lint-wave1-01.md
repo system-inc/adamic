@@ -40,3 +40,13 @@ throwFrame green and pushed at 50a340ca5 before this reservation. Fresh wildcard
 Four consumers tie the maximum: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks. Territory: from_wave1_01/throw_target.a and owned target data/driver/oracle/evidence. Preserve actual catch/finally block identity and nil targets; prefer catch only in try position with a non-nil catch. Real private Go on all consumers and exhaustive position/entry/alias controls; source Node, emitted JavaScript, sanitized native and compiling mutants. No regex or shared harness changes. Push before implementation.
 
 Continuation completed: throwFrame and throwTarget match actual private Go on all four consumer suites plus controls on all three backends. All four helpers pass full package 39.739s; eight compiling semantic mutants caught only by comparison, vet and filtered uncached oracle pass. Sixteen prerequisite entries removed across four rules, zero complete rules unblocked. Current-main c01907a70 ancestry; parked rules d508f5ef2. See ../from_wave1_01/REPORT.md. No additional helper reserved.
+
+## Fifth helper
+
+Both existing own branches contain current origin/main c01907a70 and are pushed with fresh scoped green evidence: rules 092de10ce, helpers 62ba4fe5d. The rule branch names ten unowned conflicts incorporating the supplied ab70f38d4 and is parked under the explicit shared-harness exception. No shared file is edited to resolve them.
+
+Fresh wildcard fetch audited 575 origin refs, all 20 distinct helper claim blobs and HELPERS.md reservations. Claim before code:
+
+- github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enterDisconnected
+
+Four consumers tie maximum remaining fan-out: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks. Territory: from_wave1_01/enter_disconnected.a and owned driver/capture/tests/evidence. Preserve incoming OR previous-current reachability, then settle handed-block reachability and current identity using enter; include same-block aliases and reachable-to-unreachable changes. Actual private Go calls on every consumer test suite plus state controls; source Node, emitted JavaScript, sanitized native, compiling comparison-only mutants. No regex or shared harness changes. Current state must have a block, as valid Go builder calls do; nil-current panic text is outside this contract. Push claim before implementation.
