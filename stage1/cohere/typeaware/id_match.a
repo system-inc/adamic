@@ -1,0 +1,12 @@
+import type { Rules } from './rules.ts';
+import { panic } from 'adamic';
+
+// Go's default Pattern is nil and registers no listeners.
+export class IdMatch {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    run(pattern = ''): void {
+        if(pattern !== '') { panic('id-match configured options are not yet ported'); }
+        if(pattern === '') { return; }
+    }
+}
