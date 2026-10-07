@@ -1,0 +1,72 @@
+import type { RuleContext } from '../../context.ts';
+import { description } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    // The parser omits the initializer's equals token. Read only the gaps between
+    // direct children so equals inside binding patterns or type nodes cannot count.
+    defaulted(index: number): boolean {
+        let previous = this.context.start(index);
+        for(const child of this.context.node(index).children) {
+            const end = this.context.start(child);
+            this.context.scanner.pos = previous;
+            while(this.context.scanner.scan() !== 'EndOfFile' && this.context.scanner.start < end) {
+                if(this.context.scanner.kind === 'EqualsToken') {
+                    return true;
+                }
+            }
+            previous = this.context.node(child).end;
+        }
+        return false;
+    }
+    token(index: number, kind: string): boolean {
+        for(const child of this.context.node(index).children) {
+            if(this.context.node(child).kind === kind) {
+                return true;
+            }
+        }
+        return false;
+    }
+    visit(index: number): void {
+        const children = this.context.node(index).children;
+        const parameters: number[] = [];
+        let hasBody = false;
+        for(const child of children) {
+            const kind = this.context.node(child).kind;
+            if(kind === 'Parameter') {
+                parameters.push(child);
+            }
+            if(kind === 'Block' || (this.context.node(index).kind === 'ArrowFunction' && kind === 'EqualsGreaterThanToken')) {
+                hasBody = true;
+            }
+        }
+        if(!hasBody) {
+            return;
+        }
+        let hasPlain = false;
+        for(let position = parameters.length - 1; position >= 0; position--) {
+            const parameter = parameters[position] ?? -1;
+            if(parameter < 0) {
+                continue;
+            }
+            const defaulted = this.defaulted(parameter);
+            const optional = this.token(parameter, 'QuestionToken');
+            const rest = this.token(parameter, 'DotDotDotToken');
+            if(defaulted || optional) {
+                if(hasPlain) {
+                    this.context.report(parameter, '@typescript-eslint/default-param-last', 'shouldBeLast', description, '', '', '');
+                }
+            }
+            else if(!rest) {
+                hasPlain = true;
+            }
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

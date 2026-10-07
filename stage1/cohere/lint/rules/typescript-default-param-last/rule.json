@@ -1,0 +1,19 @@
+{
+  "name": "@typescript-eslint/default-param-last",
+  "kinds": [
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "ArrowFunction",
+    "MethodDeclaration",
+    "Constructor",
+    "GetAccessor",
+    "SetAccessor"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleDefaultParamLast",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestDefaultParamLast"
+}
