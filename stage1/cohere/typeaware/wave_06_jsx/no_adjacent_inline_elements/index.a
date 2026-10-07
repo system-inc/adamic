@@ -1,0 +1,30 @@
+import {panic} from 'adamic';
+import {Diagnostic} from '../../diagnostic.ts';
+import {ArrayLiteralExpression, BigIntLiteral, CallExpression, FalseKeyword, Identifier, JsxElement, JsxSelfClosingElement, NullKeyword, NumericLiteral, PropertyAccessExpression, RegularExpressionLiteral, StringLiteral, TrueKeyword} from '../kinds.a';
+import {ContainerInput,ChildInput} from '../inputs.a';
+import {bindsPragma} from '../bindings.a';
+const inlineNames=["a", "b", "big", "i", "small", "tt", "abbr", "acronym", "cite", "code", "dfn", "em", "kbd", "strong", "samp", "time", "var", "bdo", "br", "img", "map", "object", "q", "script", "span", "sub", "sup", "button", "input", "label", "select", "textarea"];
+function inlineName(name:string):boolean{for(const candidate of inlineNames){if(name===candidate){return true;}}return false;}
+// Go unicode.IsSpace includes U+0085 and excludes BOM; String.trim is not equivalent.
+function space(code:number):boolean{return code===9||code===10||code===11||code===12||code===13||code===32||code===133||code===160||code===5760||(code>=8192&&code<=8202)||code===8232||code===8233||code===8239||code===8287||code===12288;}
+function literal(kind:number):boolean{return kind===StringLiteral||kind===NumericLiteral||kind===BigIntLiteral||kind===TrueKeyword||kind===FalseKeyword||kind===NullKeyword||kind===RegularExpressionLiteral;}
+export class NoAdjacentInlineElements {
+ child(child:ChildInput,jsx:boolean):boolean{
+  if(jsx){return (child.kind===JsxElement||child.kind===JsxSelfClosingElement)&&child.tagKind===Identifier&&inlineName(child.tagText);}
+  if(literal(child.kind)){return child.text===''||(!space(child.text.charCodeAt(0))&&!space(child.text.charCodeAt(child.text.length-1)));}
+  return child.kind===CallExpression&&child.firstKind===StringLiteral&&inlineName(child.firstText);
+ }
+ validate(node:ContainerInput,jsx:boolean):Diagnostic[]{
+  let previous=false;
+  for(const child of node.children){const current=this.child(child,jsx);if(previous&&current){return [new Diagnostic('react/no-adjacent-inline-elements','inlineElement','These two inline elements sit directly against each other with nothing between them, so the browser renders them as one run of text with no gap. What reads as two separate links or labels in the source arrives as a single unbroken word on the page, and the reader has no way to see where one ends. Put a space between them, or wrap them in block-level elements that separate themselves.',node.start,node.end,'')];}previous=current;}
+  return [];
+ }
+ jsx(node:ContainerInput):Diagnostic[]{return this.validate(node,true);}
+ call(node:ContainerInput,checkerPresent=true):Diagnostic[]{
+  if(!checkerPresent||node.argumentsCount<3||node.thirdKind!==ArrayLiteralExpression){return [];}
+  const callee=node.callee;
+  const accepted=callee.kind===PropertyAccessExpression?callee.receiverKind===Identifier&&callee.receiverText==='React'&&callee.text==='createElement':callee.kind===Identifier&&callee.text==='createElement'&&bindsPragma(node.declarations);
+  return accepted?this.validate(node,false):[];
+ }
+ analyze():void{panic('NotYet: react/no-adjacent-inline-elements needs the shared numeric JSX parser, handed-node driver and raw pragma declaration adapter');}
+}

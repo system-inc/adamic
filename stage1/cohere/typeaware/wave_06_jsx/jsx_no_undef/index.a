@@ -1,0 +1,19 @@
+import {panic} from 'adamic';
+import {Diagnostic} from '../../diagnostic.ts';
+import {Identifier, PropertyAccessExpression} from '../kinds.a';
+import {TagInput} from '../inputs.a';
+export class JsxNoUndef {
+ visit(tag:TagInput,checkerPresent:boolean,symbolPresent:boolean,declarationFiles:readonly string[],fileName:string,allowGlobals=false):Diagnostic[]{
+  if(!checkerPresent){return [];}
+  let reference=false;
+  if(tag.kind===Identifier){const first=tag.text.charCodeAt(0);reference=tag.text!==''&&!tag.text.includes('-')&&(first<97||first>122);}
+  else if(tag.kind===PropertyAccessExpression){reference=tag.receiverKind===Identifier;}
+  if(!reference){return [];}
+  if(symbolPresent){
+   if(allowGlobals||fileName.endsWith('.cjs')){return [];}
+   for(const declarationFile of declarationFiles){if(declarationFile===fileName){return [];}}
+  }
+  return [new Diagnostic('react/jsx-no-undef','jsxIdentifierNotDefined','This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.',tag.start,tag.end,'')];
+ }
+ analyze():void{panic('NotYet: react/jsx-no-undef needs the shared numeric JSX parser, handed-node driver and raw symbol declaration adapter');}
+}

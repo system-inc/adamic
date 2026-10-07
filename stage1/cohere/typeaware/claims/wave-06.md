@@ -112,3 +112,5 @@ Reserved before implementation:
 3. `react/no-adjacent-inline-elements` (0 compiler, 0 repository)
 
 The intervening `react/jsx-no-constructed-context-values` is skipped under the analysis exclusion: its stability extension uses function evaluation and capture/escape checks (`functionEvaluation`, `anyEscapes`, `StaysHome` in jsx_no_constructed_context_values_stability.go). The selected rules do not need that analysis. Implementations and private validation belong in `wave_06_jsx/`. JSX/numeric-driver integration may still be blocked by the shared parser; findings must refuse rather than silently omit unsupported source analyses.
+
+The fifth continuation is partially implemented and tested in `wave_06_jsx/`. The three prepared-node kernels match Go, native, Node and sanitizers on 61 controls with 47 findings; each semantic mutant is caught. Source integration is blocked on the shared numeric JSX parser, handed-node driver and raw syntax/declaration adapter. Source entry points explicitly refuse. These are reserved claims, not completed source ports; see `wave_06_jsx/REPORT.md`.

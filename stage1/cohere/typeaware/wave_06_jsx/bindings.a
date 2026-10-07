@@ -1,0 +1,30 @@
+import {BindingElement, CallExpression, Identifier, ImportSpecifier, NoSubstitutionTemplateLiteral, PropertyAccessExpression, StringLiteral, VariableDeclaration} from './kinds.a';
+import {DeclarationInput} from './inputs.a';
+export function sourceMatches(declaration:DeclarationInput,property:string):boolean {
+ if(declaration.initializerKind===Identifier){return declaration.initializerName==='React';}
+ if(declaration.initializerKind===PropertyAccessExpression){return declaration.receiverKind===Identifier&&declaration.receiverName==='React'&&declaration.initializerName===property;}
+ return declaration.initializerKind===CallExpression&&declaration.initializerName==='require'&&(declaration.firstKind===StringLiteral||declaration.firstKind===NoSubstitutionTemplateLiteral)&&declaration.firstText==='react';
+}
+export function binds(declarations:readonly DeclarationInput[],property:string):boolean {
+ for(const declaration of declarations){
+  if(declaration.kind===ImportSpecifier){if(declaration.imported===property&&declaration.module==='react'){return true;}}
+  else if(declaration.kind===BindingElement){if(declaration.objectBinding&&declaration.variableParent&&sourceMatches(declaration,property)){return true;}}
+  else if(declaration.kind===VariableDeclaration&&sourceMatches(declaration,property)){return true;}
+ }
+ return false;
+}
+
+export function bindsPragma(declarations:readonly DeclarationInput[]):boolean {
+ for(const declaration of declarations){
+  if(declaration.kind===ImportSpecifier){if(declaration.module==='react'){return true;}}
+  else if(declaration.kind===VariableDeclaration||(declaration.kind===BindingElement&&declaration.objectBinding&&declaration.variableParent)){
+   if(declaration.initializerKind===Identifier&&declaration.initializerName==='React'){return true;}
+   if(declaration.initializerKind===PropertyAccessExpression){
+    if(declaration.receiverKind===Identifier&&declaration.receiverName==='React'){return true;}
+    if(declaration.receiverKind===CallExpression&&declaration.receiverName==='require'&&(declaration.receiverFirstKind===StringLiteral||declaration.receiverFirstKind===NoSubstitutionTemplateLiteral)&&declaration.receiverFirstText==='react'){return true;}
+   }
+   if(declaration.initializerKind===CallExpression&&declaration.initializerName==='require'&&(declaration.firstKind===StringLiteral||declaration.firstKind===NoSubstitutionTemplateLiteral)&&declaration.firstText==='react'){return true;}
+  }
+ }
+ return false;
+}

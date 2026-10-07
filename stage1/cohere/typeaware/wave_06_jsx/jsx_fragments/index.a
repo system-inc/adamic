@@ -1,0 +1,19 @@
+import {panic} from 'adamic';
+import {Diagnostic} from '../../diagnostic.ts';
+import {Identifier, PropertyAccessExpression} from '../kinds.a';
+import {ElementInput} from '../inputs.a';
+import {binds} from '../bindings.a';
+export class JsxFragments {
+ named(node:ElementInput,elementMode=false,checkerPresent=true):Diagnostic[]{
+  if(elementMode||!checkerPresent||node.attributes>0){return [];}
+  const tag=node.tag;
+  const match=tag.kind===PropertyAccessExpression?tag.depth===1&&tag.receiverKind===Identifier&&tag.receiverText==='React'&&tag.text==='Fragment':tag.kind===Identifier&&binds(node.declarations,'Fragment');
+  if(!match){return [];}
+  return [new Diagnostic('react/jsx-fragments','preferFragment','Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.',node.start,node.end,'')];
+ }
+ fragment(node:ElementInput,elementMode=false):Diagnostic[]{
+  if(!elementMode){return [];}
+  return [new Diagnostic('react/jsx-fragments','preferPragma','Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.',node.start,node.end,'')];
+ }
+ analyze():void{panic('NotYet: react/jsx-fragments needs the shared numeric JSX parser, handed-node driver and raw declaration adapter');}
+}

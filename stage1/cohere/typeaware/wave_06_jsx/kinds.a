@@ -1,0 +1,21 @@
+// Numeric values from the pinned typescript-go AST enum.
+export const Identifier = 79;
+export const PropertyAccessExpression = 212;
+export const ImportSpecifier = 277;
+export const BindingElement = 209;
+export const ObjectBindingPattern = 207;
+export const VariableDeclaration = 261;
+export const StringLiteral = 10;
+export const NoSubstitutionTemplateLiteral = 14;
+export const CallExpression = 214;
+export const JsxFragment = 289;
+export const JsxElement = 285;
+export const JsxOpeningElement = 287;
+export const JsxSelfClosingElement = 286;
+export const NumericLiteral = 8;
+export const BigIntLiteral = 9;
+export const TrueKeyword = 111;
+export const FalseKeyword = 96;
+export const NullKeyword = 105;
+export const RegularExpressionLiteral = 13;
+export const ArrayLiteralExpression = 210;

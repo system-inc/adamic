@@ -1,0 +1,16 @@
+// Private prepared syntax inputs. A native parser/checker adapter is still missing.
+export class DeclarationInput {
+ kind=0; imported=''; module=''; initializerKind=0; initializerName=''; receiverKind=0; receiverName=''; firstKind=0; firstText=''; receiverFirstKind=0; receiverFirstText=''; objectBinding=false; variableParent=false;
+}
+export class TagInput {
+ kind=0; text=''; receiverKind=0; receiverText=''; depth=0; start=0; end=0;
+}
+export class ElementInput {
+ start=0; end=0; attributes=0; readonly tag=new TagInput(); readonly declarations:DeclarationInput[]=[];
+}
+export class ChildInput {
+ kind=0; text=''; tagKind=0; tagText=''; firstKind=0; firstText='';
+}
+export class ContainerInput {
+ start=0; end=0; readonly children:ChildInput[]=[]; readonly callee=new TagInput(); readonly declarations:DeclarationInput[]=[]; argumentsCount=0; thirdKind=0;
+}
