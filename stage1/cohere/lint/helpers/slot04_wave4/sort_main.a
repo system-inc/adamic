@@ -1,0 +1,28 @@
+import { panic, programArguments, readTextFile, utf8At, utf8Length } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { sortedKeys } from './sorted_keys.a';
+function field(c: OptionsJson,raw: number,name: string): string { return c.node(c.field(raw,name)).text; }
+function print(keys: readonly string[],label: string): void {
+    let line = label;
+    for(const key of keys) {
+        line += ' [';
+        for(let index = 0; index < utf8Length(key); index++) { line += `${utf8At(key,index)},`; }
+        line += ']';
+    }
+    console.log(line);
+}
+const input = readTextFile(programArguments()[0] ?? panic('path'));
+if(input.kind === 'Error') { panic(input.message); }
+const c = new OptionsJson(input.text);
+const root = c.parse();
+if(root < 0) { panic(c.error); }
+for(const row of c.node(root).children) {
+    const map = new Map<string, boolean>();
+    for(const raw of c.node(row).children) { map.set(field(c,raw,'key'),field(c,raw,'value') === 'true'); }
+    const keys = sortedKeys(map);
+    print(keys,'keys');
+    keys.push('mutate returned list');
+    print(sortedKeys(map),'fresh');
+    map.set('mutation after first call',false);
+    print(sortedKeys(map),'updated');
+}

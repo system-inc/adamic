@@ -1,0 +1,17 @@
+import { utf8At, utf8Length } from 'adamic';
+// Go sorts strings by storage bytes. Supplementary characters and BMP-private
+// characters distinguish that order from JavaScript's default UTF-16 sort.
+export function sortedKeys(set: ReadonlyMap<string, boolean>): string[] {
+    const keys: string[] = [];
+    for(const key of set.keys()) { keys.push(key); }
+    keys.sort((left: string, right: string): number => {
+        const a = utf8Length(left);
+        const b = utf8Length(right);
+        for(let index = 0; index < a && index < b; index++) {
+            const difference = utf8At(left,index) - utf8At(right,index);
+            if(difference !== 0) { return difference; }
+        }
+        return a - b;
+    });
+    return keys;
+}

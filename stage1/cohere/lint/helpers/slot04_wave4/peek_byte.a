@@ -1,0 +1,6 @@
+import { panic } from 'adamic';
+// The byte view is Go string storage, not decoded Unicode or UTF-16 units.
+export function peekByte(input: readonly number[], index: number): number {
+    if(index < 0 || index >= input.length) { return 0; }
+    return input[index] ?? panic('missing byte view element');
+}
