@@ -30,6 +30,9 @@ def read(tree, raw):
     units = {unit['where']: unit['status'] for row in rows[1:] for unit in row['units']}
     files = {p.relative_to(tree).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
              for p in (tree / 'src/compiler').rglob('*.ts')}
+    measured_files = [row['file'] for row in rows[1:]]
+    assert len(measured_files) == len(files) and set(measured_files) == set(files), \
+        'incomplete or duplicate compiler-file measurement'
     return rows, sites, units, files
 
 before, first, before_units, before_files = read(before_tree, before_raw)

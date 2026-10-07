@@ -8,7 +8,7 @@ if (ts.version !== '6.0.3') throw new Error('expected stock TypeScript 6.0.3');
 if (process.argv.length !== 4) throw new Error('usage: node mutant.cjs <tree> <mode>');
 const tree = path.resolve(process.argv[2]);
 const mode = process.argv[3];
-const name = path.join(tree, mode.startsWith('inferred-local-') ? 'src/compiler/moduleNameResolver.ts' :
+const name = path.join(tree, (mode.startsWith('inferred-local-') || mode === 'payload-writer') ? 'src/compiler/moduleNameResolver.ts' :
     mode.startsWith('parameter-') ? 'src/compiler/utilities.ts' : 'src/compiler/types.ts');
 const text = fs.readFileSync(name, 'utf8');
 const source = ts.createSourceFile(name, text, ts.ScriptTarget.Latest, true);
@@ -52,6 +52,23 @@ if (process.argv[3] === 'writer-view') {
     const tag = declaration && ts.getJSDocTags(declaration).find(node => node.tagName.text === 'internal');
     if (!tag) throw new Error('missing internal tag');
     fs.writeFileSync(name, text.slice(0, tag.getStart(source)) + text.slice(tag.end));
+} else if (mode === 'payload-writer') {
+    const worker = source.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === 'nodeModuleNameResolverWorker');
+    const matches = [];
+    function find(n) {
+        if (ts.isFunctionDeclaration(n) && n.name?.text === 'tryResolve' && n.type &&
+            ts.isTypeReferenceNode(n.type) && n.type.typeName.getText(source) === 'SearchResult') matches.push(n);
+        ts.forEachChild(n, find);
+    }
+    find(worker);
+    if (matches.length !== 1 || !matches[0].body) throw new Error('missing payload owner');
+    const fragment = ts.createSourceFile('mutant-input.a',
+        '((view: NonNullable<NonNullable<ReturnType<typeof tryResolve>>["value"]>) => { view.isExternalLibraryImport = true; });',
+        ts.ScriptTarget.Latest, true);
+    if (fragment.parseDiagnostics.length) throw new Error('mutant parse failed');
+    const printed = ts.createPrinter().printNode(ts.EmitHint.Unspecified, fragment.statements[0], fragment);
+    const at = matches[0].body.getStart(source) + 1;
+    fs.writeFileSync(name, text.slice(0, at) + '\n' + printed + '\n' + text.slice(at));
 } else if (mode.startsWith('inferred-local-')) {
     const fn = source.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === 'nodeModuleNameResolverWorker');
     let declaration;

@@ -2,7 +2,8 @@
 
 This is a partial unit. The first internal wave removed 22 measured refusals;
 the second removed four more, and the third removes 21 net, for 456 to 409
-cumulatively. The other 409 sites are retained and individually listed in [REMAINING.md](REMAINING.md).
+cumulatively before wave 4. Wave 4 removes six more, for 456 to 403 overall.
+The other 403 sites are retained and individually listed in [REMAINING.md](REMAINING.md).
 I decline a blanket readonly conversion because the remaining mutation chains,
 generic views, inferred contracts and erased escapes have not all been proven.
 Public API readonly changes are now sanctioned by @system_adamic. Each public
@@ -379,3 +380,54 @@ NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly
 Public readonly owners, their downstream consumer proof and the requested
 UPSTREAM_NOTE.md remain work for a subsequent public wave. This wave does not
 claim a complete write analysis of all remaining internal or public sites.
+
+
+## Internal wave 4
+
+The highest-yield newly proved internal owner is the return payload's
+isExternalLibraryImport field in nodeModuleNameResolverWorker.tryResolve.
+Four references, no writes, no aliases or escapes: its one readonly insertion
+removes four measured reasons. The selected function and inline return member
+are found by their nested AST owner path, not line numbers. The location parameter
+of createMemberAccessForPropertyName becomes Readonly<TextRange>. Its entire
+consumer chain is setTextRange's input location, which reads pos and end and
+writes only the separate destination. The two edits touch two source files.
+
+The controlled census is **409 to 403**: seven removed, one added, 78 files,
+2,168 byte-identical normalized diagnostics, no eligibility changes. The new
+reason at factory/utilities.ts:190:99 is the now-readonly location flowing into
+public setTextRange's still-mutable input. That public owner is sanctioned and
+queued for the next public wave. Every retained reason is in REMAINING.md.
+The before measurement is wave 3's measured after input, after verification of
+all 78 compiler-source hashes. A new completeness assertion rejects any missing
+or duplicate compiler file. A deliberately truncated event log fails that
+assertion with exit 1; no partial count is used as final evidence.
+
+Complete upstream build: exit 0. All ten JavaScript hashes remain identical,
+including after the oracle. Idempotence: zero files edited. Published API:
+exactly adaptation 20's 189 sanctioned optional additions, no public readonly
+addition; all 60,930 other reference baselines identical. Default oracle:
+**106,367 passing, zero failing, zero pending, empty diff**, 273.957s wall time.
+The payload writer mutant is rejected by the field audit before edits, and
+upstream's compiler build independently catches it with **TS2540 at
+moduleNameResolver.ts(1914,85)**. Earlier generic writer/escape mutants remain
+applicable to the unchanged guards. Logs and owner proofs are in evidence/wave4.
+
+Ranked internal declines, observed through stock-checker declarations and calls:
+
+| Owner or view | Observed writes | Assessment |
+|---|---|---|
+| mutateMapSkippingNewValues.map (nine sites) | utilities.ts:8220:13, map.delete(key) | Actual write removes entries; no wrong-type insertion. Element replacement capacity remains latent. |
+| multiMapSparseArrayAdd.map (four sites) | transformers/utilities.ts:380:9, values.push(value); 383:9, map[key] = values = [value] | Real insertion through the broader view; a wrong-type path into a particular original array was not established. Retained pending reachability proof. |
+| FlowGraphNode.edges | debug.ts:1033:13 and 1034:13, source/target.edges.push(edge) | Real element insertion; shallow slot readonly would not fix it. No executed narrow-type witness yet. |
+| ModuleResolutionState lookup-location slots | program.ts:1362:9 and 1363:9, replacement with string[] | Real replacement; the particular never[] caller's path to these writes is unverified. |
+| SourceFileLike.lineMap | scanner.ts:504:35 | Cache writer prevents readonly; its number[] RHS fits the original slot. |
+| clear.array (four sites) | core.ts:312:5, array.length = 0 | Actual mutation removes elements; no wrong-type insertion. |
+| addRelatedInfo.relatedInformation (13 sites) | utilities.ts:10357:5 stores its elements in diagnostic.relatedInformation | Retained alias into the mutable diagnostic family. Array readonly alone would not prove those element views safe. |
+
+The preparatory field and parameter inventories are recorded beside this wave.
+They rank owners and report conservative escapes, including incomplete overload
+and callback chains; they do not certify every remaining site. Other unproved
+owners remain honest declines. No upstream candidate is inferred from a writer
+location alone. Public-owner edits and their API compatibility note follow in a
+separate proven wave.
