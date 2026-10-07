@@ -265,3 +265,155 @@ patches applied the authorized changes without losing existing code.
 The full repository test suite is not claimed. The earlier complete parser
 package and final JSX subset are distinguished above; final complete scanner
 and lint packages, repository-wide vet and the named external oracle are run.
+
+
+## Variant gate diagnosis, October 7, 2026
+
+Built: matched release profiles and a gate-off mutant on codex/jsx-variant-gate, from a8a62d62ca49db7415e14c3887dd305022b17309. No scanner or parser implementation change.
+Commits: a8a62d6 is the measured implementation; this evidence is a separate report commit, not a parse-speed fix or an achieved variant-gate unit.
+Commands and outputs: 77 compiler trees, 348 generated JSX inputs and 54 upstream JSX fixtures match Go; the baseline is 8,997,591,885 Ir.
+Mutant: evaluating JSX arrow lookahead unconditionally adds 386,910,853 Ir while preserving every compiler/JSX tree byte; the zero-entry assertion catches it.
+Not covered: reproduction of the reported 10.00G run, a new once-at-entry implementation, the 8.96G threshold, or a full repository/native/oracle package gate.
+
+### Finding that blocks the proposed change
+
+At this requested base, Scanner.scan has no language-variant test and calls none
+of scanJsx, scanJsxIdentifier or scanJsxAttributeValue. Those methods are entered
+only from JSX descent. Parser's constructor already computes the variant once
+from the filename. Its assignment method short-circuits JSX arrow speculation
+with `!this.jsx || jsxArrowAhead(this.scanner)`; unary descent enters JSX only
+for LessThanToken with this.jsx true. All five JSX entry counters below are
+zero on the pinned 77 TypeScript compiler files. Adding a scanner-entry flag
+cannot remove JSX scanning work that is already absent.
+
+The Go implementation also stores the variant at initialization, but its scanner
+checks it in the less-than token branch (scanner.go, LanguageVariantJSX), and its
+parser checks it during arrow disambiguation. Selecting a variant once does not
+mean Go contains no token-dependent variant checks. Go uses JSX variants for
+.js, .jsx, .mjs, .cjs and .tsx, not just .jsx/.tsx. Restricting the existing
+extension selection to the latter two would break the inherited JSX corpus.
+
+The requested 12% increase is not reproduced with either available parse-only
+driver. Under a matched compiler/runtime, the source-only JSX delta is
+10,563,753 Ir, or 0.1175%. Of that delta, string-equality self costs rise
+5,458,593 Ir; the rest is 5,105,160 Ir across generated code and runtime work.
+There is no measured JSX scanner execution to attribute the delta to.
+No counterfactual claim is made about an unidentified 10.00G artifact.
+The driver/command for that run was requested before editing production source.
+
+### Exact native build and measurement configuration
+
+Every native instruction number in this section uses clang 20.1.8 and the
+following release command: -O2 -g, sanitizers off, -ffp-contract=off,
+-fno-optimize-sibling-calls, no LTO, no ADAMIC_COUNT and no entry probes.
+The warning flags are also retained exactly. All variants use a8a62d6's stage-0
+compiler and runtime; no runtime-area or codex/parse-speed fix is imported.
+
+```sh
+source /workspace/adamic-tools/env.sh
+go build -o /workspace/scratch/jsx-variant-gate/adamic ./cmd/adamic > /tmp/jsx-variant-compiler-build.log 2>&1
+/workspace/scratch/jsx-variant-gate/adamic c /workspace/scratch/parse-speed/batch8/parse.a > /workspace/scratch/jsx-variant-gate/before.c 2> /tmp/jsx-variant-before-emit.log
+clang -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -g -I internal/native/runtime /workspace/scratch/jsx-variant-gate/before.c internal/native/runtime/*.c -lm -o /workspace/scratch/jsx-variant-gate/before > /tmp/jsx-variant-before-clang.log 2>&1
+VALGRIND_LIB=/workspace/scratch/parse-speed/valgrind/usr/libexec/valgrind /workspace/scratch/parse-speed/valgrind/usr/bin/valgrind --tool=callgrind --callgrind-out-file=/workspace/scratch/jsx-variant-gate/before.callgrind /workspace/scratch/jsx-variant-gate/before --manifest /workspace/scratch/parse-speed/compiler.txt --count > /workspace/scratch/jsx-variant-gate/before.stdout 2> /workspace/scratch/jsx-variant-gate/before.stderr
+```
+
+The accepted prior parse-only driver is batch8 4189abd's driver with visit
+removed, previously reconstructed for codex/parse-speed. It includes file reads,
+parsing, parent mapping, line tables and cleanup; count output is `0` because
+rule traversal is absent. Its imports are absolute references to the checked-out
+parser/scanner. The second driver copies this branch's batch8 .ts files to
+scratch .a files, rewrites their imports and removes only visit(context, root).
+The pre-JSX control copies parser/scanner .ts files from e715ef4's parent to
+scratch .a files and rewrites the accepted driver's imports to that tree. All
+retained application modules are copied too, so their Parser types refer to the
+same isolated tree. No production .ts source is edited during these controls.
+
+| Variant, with the exact release flags above | Ir |
+| --- | ---: |
+| Pre-JSX sources, matched compiler/runtime and accepted driver | 8,987,028,132 |
+| a8a62d6 sources, accepted driver | 8,997,591,885 |
+| a8a62d6 sources, updated batch8 driver | 8,997,570,749 |
+| Existing JSX lookahead gate disabled, accepted driver | 9,384,502,738 |
+
+Even the matched pre-JSX control exceeds 8.96G by 27,028,132 Ir. Neither a
+restored 8.96G count nor a 10.00G baseline is claimed. All four count stdout
+files contain exactly `0\n`. Callgrind emitted its brk-segment limitation notice
+on these large processes; each completed successfully and produced a profile
+whose disjoint self costs reconcile exactly to its summary.
+
+### Gate-off mutant and independent entry counters
+
+The scratch mutant changes only Parser.assignment:
+
+```text
+before:
+if((!this.jsx || jsxArrowAhead(this.scanner)) && arrowAhead(this.scanner, allowReturn)) {
+mutant:
+const jsxArrow = jsxArrowAhead(this.scanner);
+if((!this.jsx || jsxArrow) && arrowAhead(this.scanner, allowReturn)) {
+```
+
+The result is still ignored outside JSX, but its speculation executes. This
+keeps syntax/trees unchanged and isolates the gate's performance value.
+Sanitized native matches Go on 77 compiler trees (44,766,682 bytes) and 348 JSX
+inputs (277,842 bytes); no stderr or sanitizer/leak error occurs. The instruction
+check detects the 386,910,853 Ir rise, separately from those passing tree checks.
+
+Separate generated-C entry probes increment an unsigned counter at each of the
+five named function definitions and print counters after normal main cleanup.
+Their O2 builds use the same warning/runtime flags, but are never used as Ir
+measurements. The five-function zero-entry assertion passes on the control and
+fails for the mutant's 189,810 lookahead calls. Other entries remain zero:
+
+| Entry on the 77 files | Control calls | Gate-off mutant calls |
+| --- | ---: | ---: |
+| jsxArrowAhead | 0 | 189,810 |
+| Scanner.scanJsxIdentifier | 0 | 0 |
+| Scanner.scanJsxAttributeValue | 0 | 0 |
+| Scanner.scanJsx | 0 | 0 |
+| Parser.jsxParser | 0 | 0 |
+
+### Correctness controls and retained evidence
+
+```text
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test ./stage1/typescript/parser -run '^Test(WholeCompilerAgrees|JsxNode|JsxNative)$' -count=1 -v -timeout 30m
+PASS, 48.896s: 77 files / 44,766,682 identical tree bytes; 348 JSX inputs / 277,842 bytes on Node, sanitized and release native.
+go test ./stage1/cohere/lint -run '^TestJsxLintTrees$' -count=1 -v -timeout 30m
+PASS, 49.134s: all 54 original cohere JSX trees / 45,527 identical bytes.
+go test -overlay=/workspace/scratch/jsx-variant-gate/test-overlay.json ./stage1/typescript/parser -run '^TestJsxVariantGateOffEvidence$' -count=1 -v -timeout 30m
+PASS, 12.228s: gate-off sanitized native, 77 compiler and 348 JSX files, identical Go tree bytes.
+go vet ./stage1/typescript/parser ./stage1/typescript/scanner
+exit 0, empty output.
+```
+
+The overlay adds a scratch-only Go test which uses the existing compilerManifest,
+jsxManifest, goOracle, execute and difference helpers. It compares the scratch
+mutant's parser/main.a binary with the independent Go oracle in whole-tree mode.
+That binary uses the warning/runtime flags above with -O1 -g,
+-fsanitize=address,undefined and -fno-sanitize-recover=all; Linux LeakSanitizer
+is enabled by the sanitizer runtime. No verification helper is weakened.
+
+Setup: Go/clang/Node/submodules ready at 0s, cache warm and done at 81s;
+nproc 5, cpu.max 400000 100000, memory 17.6 GB. Every build/test shell sources
+/workspace/adamic-tools/env.sh. Compiler corpus pin remains
+050880ce59e30b356b686bd3144efe24f875ebc8; cohere remains 715ba94.
+
+Full raw profiles, generated C, mutant copies, counter outputs and overlay test
+are under /workspace/scratch/jsx-variant-gate. Test logs are
+/tmp/jsx-variant-base-parity.log, /tmp/jsx-variant-gate-off-parity.log and
+/tmp/jsx-variant-upstream-parity.log. Entry assertions are in
+/workspace/scratch/jsx-variant-gate/gate-check.log. SHA-256 identities:
+
+```text
+compiler.txt 212a132782f06d00d57521cc80c7d0cad9e1896e9be0356af1524457f9800e3e
+accepted parse.a 9aa97951a5d2d9ac956badc8e8c0306716814096a8e86312b08395fa81a6e5ea
+before.c f0740c932a267902b7763cd64dc2fe035c14b1cd00e302826dba47602a57685c
+current-driver.c 941a241816cf5590094477a894d588ba547767aaba6d6c486cfd165c8328259f
+pre.c acb1f7bec3bc0552ff0cdd1b39b2dbbb41fca9ff32dd02747433011f7340c743
+gate-off.c 8907f3a95d26954582ab63140aedfdf4f4d5c905df76753a612d03667f4b7c53
+```
+
+This branch records diagnosis only. It does not touch codex/parse-speed, runtime,
+emission, lint visitors or any parser/scanner implementation file. A new source
+fix needs the mismatching baseline artifact or another measured mechanism;
+adding a redundant flag is not evidence of the requested speedup.
