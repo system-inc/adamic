@@ -151,3 +151,13 @@ compatibility is resolved; it must no longer be cited as a blocker. Legacy
 checker-backed visitor migration remains unfinished, and dynamic RegExp is
 still refused by native lowering. No new claims or React parking. See
 ../wave09_core/KIND_NAMES_REPORT.md.
+
+## Handed-node label migration
+
+no-label-var now has visit(node,index), no per-rule node scan or relevance
+comparison, and no target refetch in its raw scope query. Its declaration
+uses LabeledStatement and node:true. Full Go controls/corpora, sanitizers and
+released-handle checks pass again. A clean-running refetch mutant is caught
+at byte 43 by the dedicated handed-node check. Shared registry installation
+and both regex completions remain outstanding; no new claims or React
+parking. See ../wave09_core/HANDED_LABEL_REPORT.md.

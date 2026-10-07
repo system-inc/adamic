@@ -30,7 +30,15 @@ for(const path of paths) {
         linter.parents.push(-1);
     }
     linter.links(root, -1);
-    new NoLabelVar(linter).run();
+    // The isolated driver selects relevance once and hands over its fetched node.
+    const rule = new NoLabelVar(linter);
+    for(let index = 0; index < parser.nodes.length; index++) {
+        const node = parser.node(index);
+        switch(node.kind) {
+            case 'LabeledStatement': rule.visit(node, index); break;
+            default: break;
+        }
+    }
     for(const finding of linter.findings) {
         finding.sortKey = finding.written();
     }

@@ -16,7 +16,9 @@ declarations=[]
 for row in rows:
  directory=root/(row['Name'].split('/')[-1].replace('-','_'))
  declaration=json.loads((directory/'rule.json').read_text())
- assert declaration=={'name':row['Name'],'kinds':row['Kinds']},directory
+ expected={'name':row['Name'],'kinds':row['Kinds']}
+ if row['Name']=='no-label-var':expected['node']=True
+ assert declaration==expected,directory
  assert all(type(kind) is str for kind in declaration['kinds']),directory
  declarations.append(declaration)
 metadata=''.join(row['name']+'\t'+','.join(map(str,row['kinds']))+'\n' for row in declarations).encode()
