@@ -220,3 +220,7 @@ Rebased onto area b84a9d93 and current main c7991b90. Tested source a6e9ab6ba: o
 ## Registry landing refresh, October 7
 
 Rebased onto area b46914832, containing current main c7991b900. Source a89cd2eec: owned byte oracle PASS 480.336s, registry and vet pass, all semantic mutants and sanitizer/ownership checks pass. All-origin audit leaves no candidates. No new claim. Remaining boundaries and excluded gates are in WAVE_14_REGISTRY_REFRESH_REPORT.md.
+
+## Typeof landing refresh, October 7
+
+Rebased onto area d3a37422c and main b6b1538b0. Source 9fb3da437: owned oracle PASS 490.484s, uncached typeof Node checks PASS 12.241s, registry and vet pass. All semantic mutants, sanitizer and released-handle checks pass. No new claim; 658 origin refs leave zero candidates. Remaining gaps and excluded gates are in WAVE_14_TYPEOF_REFRESH_REPORT.md.

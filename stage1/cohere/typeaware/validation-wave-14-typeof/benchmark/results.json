@@ -1,0 +1,482 @@
+[
+  {
+    "corpus": "compiler",
+    "round": 1,
+    "implementation": "native",
+    "seconds": 1.755919052997342,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/wave-14-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-14-artifacts/compiler.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "compiler",
+    "round": 1,
+    "implementation": "go",
+    "seconds": 0.3335801380017074,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/wave-14-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-14-artifacts/compiler.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "compiler",
+    "round": 2,
+    "implementation": "go",
+    "seconds": 0.32250122700133943,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/wave-14-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-14-artifacts/compiler.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "compiler",
+    "round": 2,
+    "implementation": "native",
+    "seconds": 1.6816121850024501,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/wave-14-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-14-artifacts/compiler.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "compiler",
+    "round": 3,
+    "implementation": "native",
+    "seconds": 1.7422861869999906,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/wave-14-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-14-artifacts/compiler.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "compiler",
+    "round": 3,
+    "implementation": "go",
+    "seconds": 0.35744998500013025,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/wave-14-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-14-artifacts/compiler.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "repository",
+    "round": 1,
+    "implementation": "native",
+    "seconds": 0.24197088300206815,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-14-artifacts/repository.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "repository",
+    "round": 1,
+    "implementation": "go",
+    "seconds": 0.13833976599926245,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-14-artifacts/repository.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "repository",
+    "round": 2,
+    "implementation": "go",
+    "seconds": 0.14410762899933616,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-14-artifacts/repository.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "repository",
+    "round": 2,
+    "implementation": "native",
+    "seconds": 0.24815382399901864,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-14-artifacts/repository.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "repository",
+    "round": 3,
+    "implementation": "native",
+    "seconds": 0.25502458099799696,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-14-artifacts/repository.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "repository",
+    "round": 3,
+    "implementation": "go",
+    "seconds": 0.14402856600281666,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-14-artifacts/repository.manifest",
+      "--count"
+    ],
+    "stdout": "findings 0\n"
+  },
+  {
+    "corpus": "controls",
+    "round": 1,
+    "implementation": "native",
+    "seconds": 0.027644498000881867,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/controls.manifest",
+      "--count"
+    ],
+    "stdout": "findings 60\n"
+  },
+  {
+    "corpus": "controls",
+    "round": 1,
+    "implementation": "go",
+    "seconds": 0.03638633900118293,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/controls.manifest",
+      "--count"
+    ],
+    "stdout": "findings 60\n"
+  },
+  {
+    "corpus": "controls",
+    "round": 2,
+    "implementation": "go",
+    "seconds": 0.03757552200113423,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/controls.manifest",
+      "--count"
+    ],
+    "stdout": "findings 60\n"
+  },
+  {
+    "corpus": "controls",
+    "round": 2,
+    "implementation": "native",
+    "seconds": 0.025011582001752686,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/controls.manifest",
+      "--count"
+    ],
+    "stdout": "findings 60\n"
+  },
+  {
+    "corpus": "controls",
+    "round": 3,
+    "implementation": "native",
+    "seconds": 0.024409805999312084,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/controls.manifest",
+      "--count"
+    ],
+    "stdout": "findings 60\n"
+  },
+  {
+    "corpus": "controls",
+    "round": 3,
+    "implementation": "go",
+    "seconds": 0.040557072999945376,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/controls.manifest",
+      "--count"
+    ],
+    "stdout": "findings 60\n"
+  },
+  {
+    "corpus": "constructors",
+    "round": 1,
+    "implementation": "native",
+    "seconds": 0.024966550001408905,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/constructors.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 58\n"
+  },
+  {
+    "corpus": "constructors",
+    "round": 1,
+    "implementation": "go",
+    "seconds": 0.035413096000411315,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/constructors.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 58\n"
+  },
+  {
+    "corpus": "constructors",
+    "round": 2,
+    "implementation": "go",
+    "seconds": 0.037297963001037715,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/constructors.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 58\n"
+  },
+  {
+    "corpus": "constructors",
+    "round": 2,
+    "implementation": "native",
+    "seconds": 0.02694581000105245,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/constructors.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 58\n"
+  },
+  {
+    "corpus": "constructors",
+    "round": 3,
+    "implementation": "native",
+    "seconds": 0.03167198799928883,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/constructors.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 58\n"
+  },
+  {
+    "corpus": "constructors",
+    "round": 3,
+    "implementation": "go",
+    "seconds": 0.03158351499951095,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/constructors.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 58\n"
+  },
+  {
+    "corpus": "upstream",
+    "round": 1,
+    "implementation": "native",
+    "seconds": 0.03705021899804706,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-constructor-upstream/valid.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 89\n"
+  },
+  {
+    "corpus": "upstream",
+    "round": 1,
+    "implementation": "go",
+    "seconds": 0.038565614999242825,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-constructor-upstream/valid.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 89\n"
+  },
+  {
+    "corpus": "upstream",
+    "round": 2,
+    "implementation": "go",
+    "seconds": 0.032876680001209024,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-constructor-upstream/valid.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 89\n"
+  },
+  {
+    "corpus": "upstream",
+    "round": 2,
+    "implementation": "native",
+    "seconds": 0.036376372998347506,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-constructor-upstream/valid.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 89\n"
+  },
+  {
+    "corpus": "upstream",
+    "round": 3,
+    "implementation": "native",
+    "seconds": 0.025511511998047354,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-constructor-upstream/valid.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 89\n"
+  },
+  {
+    "corpus": "upstream",
+    "round": 3,
+    "implementation": "go",
+    "seconds": 0.03585347400075989,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-constructor-upstream/valid.manifest",
+      "--count",
+      "--class-only"
+    ],
+    "stdout": "findings 89\n"
+  },
+  {
+    "corpus": "patterns",
+    "round": 1,
+    "implementation": "native",
+    "seconds": 0.0335022340004798,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/patterns.manifest",
+      "--count"
+    ],
+    "stdout": "findings 36\n"
+  },
+  {
+    "corpus": "patterns",
+    "round": 1,
+    "implementation": "go",
+    "seconds": 0.04438109200054896,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/patterns.manifest",
+      "--count"
+    ],
+    "stdout": "findings 36\n"
+  },
+  {
+    "corpus": "patterns",
+    "round": 2,
+    "implementation": "go",
+    "seconds": 0.039360583999950904,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/patterns.manifest",
+      "--count"
+    ],
+    "stdout": "findings 36\n"
+  },
+  {
+    "corpus": "patterns",
+    "round": 2,
+    "implementation": "native",
+    "seconds": 0.038795251999545144,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/patterns.manifest",
+      "--count"
+    ],
+    "stdout": "findings 36\n"
+  },
+  {
+    "corpus": "patterns",
+    "round": 3,
+    "implementation": "native",
+    "seconds": 0.029447703000187175,
+    "command": [
+      "/workspace/wave-14-registry-third/third",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/patterns.manifest",
+      "--count"
+    ],
+    "stdout": "findings 36\n"
+  },
+  {
+    "corpus": "patterns",
+    "round": 3,
+    "implementation": "go",
+    "seconds": 0.03976859999966109,
+    "command": [
+      "/workspace/wave-14-registry-third/third-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/wave-14-registry-third/patterns.manifest",
+      "--count"
+    ],
+    "stdout": "findings 36\n"
+  }
+]

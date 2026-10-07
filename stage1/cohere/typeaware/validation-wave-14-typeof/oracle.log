@@ -1,0 +1,106 @@
+=== RUN   TestWave14NumericListenerDeclarations
+=== RUN   TestWave14NumericListenerDeclarations/no_array_delete
+    wave_14_listeners_test.go:101: Go listener kinds [221] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_base_to_string
+    wave_14_listeners_test.go:101: Go listener kinds [227, 214, 229] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_extraneous_class
+    wave_14_listeners_test.go:101: Go listener kinds [264, 232] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_global_listener_target_assertion
+    wave_14_listeners_test.go:101: Go listener kinds [214] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_mock_on_module_namespace
+    wave_14_listeners_test.go:101: Go listener kinds [214] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_leaked_number_render
+    wave_14_listeners_test.go:101: Go listener kinds [295] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_label_var
+    wave_14_listeners_test.go:101: Go listener kinds [257] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_invalid_regexp
+    wave_14_listeners_test.go:101: Go listener kinds [214, 215] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_misleading_character_class
+    wave_14_listeners_test.go:101: Go listener kinds [307, 13] agree; wrong-kind declaration mutant caught
+--- PASS: TestWave14NumericListenerDeclarations (0.01s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_array_delete (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_base_to_string (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_extraneous_class (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_global_listener_target_assertion (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_mock_on_module_namespace (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_leaked_number_render (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_label_var (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_invalid_regexp (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_misleading_character_class (0.00s)
+=== RUN   TestWave14NextAgreementAndMutants
+    wave_14_next_test.go:99: controls: 9187 identical finding bytes; findings 15
+    wave_14_next_test.go:107: module-CommonJS: 4920 identical finding bytes; findings 7
+    wave_14_next_test.go:107: module-NodeNext: 4920 identical finding bytes; findings 7
+    wave_14_next_test.go:107: module-Preserve: 9187 identical finding bytes; findings 15
+    wave_14_next_test.go:107: module-ES2020: 9187 identical finding bytes; findings 15
+    wave_14_next_test.go:111: controls-asan: 9187 identical finding bytes; findings 15
+    wave_14_next_test.go:121: listener mutant: exit 0, empty stderr, byte oracle catches byte 97
+    wave_14_next_test.go:121: namespace mutant: exit 0, empty stderr, byte oracle catches byte 4649
+    wave_14_next_test.go:131: repository: 18485 identical finding bytes; findings 0
+    wave_14_next_test.go:132: repository-asan: 18485 identical finding bytes; findings 0
+    wave_14_next_test.go:131: compiler: 5318 identical finding bytes; findings 0
+    wave_14_next_test.go:132: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_14_next_test.go:138: jsx: 430 identical finding bytes; findings 1
+    wave_14_next_test.go:139: jsx-asan: 430 identical finding bytes; findings 1
+    wave_14_next_test.go:143: Real JSX findings now agree byte for byte with production Go under sanitizers
+    wave_14_next_test.go:154: released handle: panic 70, invalid or released checker handle
+    wave_14_next_test.go:159: released-registry mutant exits 0, required panic catches it
+--- PASS: TestWave14NextAgreementAndMutants (87.88s)
+=== RUN   TestWave14RenderJudgmentsAndMutant
+    wave_14_render_test.go:20: synthetic-children: 7770 identical bytes; findings 18
+    wave_14_render_test.go:20: synthetic-attributes: 1199 identical bytes; findings 0
+    wave_14_render_test.go:20: ordinary-source: 1199 identical bytes; findings 0
+    wave_14_render_test.go:20: synthetic-children-asan: 7770 identical bytes; findings 18
+    wave_14_render_test.go:90: render mutant exits 0 with empty stderr; byte comparison catches byte 54
+    wave_14_render_test.go:20: compiler: 5318 identical bytes; findings 0
+    wave_14_render_test.go:20: compiler-asan: 5318 identical bytes; findings 0
+    wave_14_render_test.go:20: repository: 18485 identical bytes; findings 0
+    wave_14_render_test.go:20: repository-asan: 18485 identical bytes; findings 0
+    wave_14_render_test.go:20: jsx: 5721 identical bytes; findings 13
+    wave_14_render_test.go:20: jsx-asan: 5721 identical bytes; findings 13
+    wave_14_render_test.go:137: real JSX mutant exits 0 with empty stderr; byte comparison catches byte 60
+--- PASS: TestWave14RenderJudgmentsAndMutant (63.82s)
+=== RUN   TestWave14AgreementAndMutants
+    wave_14_test.go:97: controls: 5444 identical finding bytes; findings 33
+    wave_14_test.go:105: controls-asan: 5444 identical finding bytes; findings 33
+    wave_14_test.go:116: delete mutant: exit 0, empty stderr, byte oracle catches byte 56
+    wave_14_test.go:116: stringify mutant: exit 0, empty stderr, byte oracle catches byte 1541
+    wave_14_test.go:116: class mutant: exit 0, empty stderr, byte oracle catches byte 4362
+    wave_14_test.go:126: repository: 18485 identical finding bytes; findings 0
+    wave_14_test.go:127: repository-asan: 18485 identical finding bytes; findings 0
+    wave_14_test.go:126: compiler: 5794 identical finding bytes; findings 3
+    wave_14_test.go:127: compiler-asan: 5794 identical finding bytes; findings 3
+    wave_14_test.go:140: released handle: panic 70, invalid or released checker handle
+    wave_14_test.go:145: released-registry mutant exits 0, required panic catches it
+--- PASS: TestWave14AgreementAndMutants (74.77s)
+=== RUN   TestWave14ThirdAgreementAndMutants
+    wave_14_third_test.go:97: controls: 19460 identical finding bytes; findings 60
+    wave_14_third_test.go:105: controls-asan: 19460 identical finding bytes; findings 60
+    wave_14_third_test.go:181: constructors-native: 24193 identical finding bytes; findings 58
+    wave_14_third_test.go:181: constructors-asan: 24193 identical finding bytes; findings 58
+    wave_14_third_test.go:201: cooked-mapping mutant exits 0 with empty stderr; byte oracle catches byte 58
+    wave_14_third_test.go:201: constant-write mutant exits 0 with empty stderr; byte oracle catches byte 8695
+    wave_14_third_test.go:201: call-flags mutant exits 0 with empty stderr; byte oracle catches byte 461
+    wave_14_third_test.go:201: call-literal mutant exits 0 with empty stderr; byte oracle catches byte 10257
+    wave_14_third_test.go:201: constant-dedup mutant exits 0 with empty stderr; byte oracle catches byte 6680
+    wave_14_third_test.go:201: tracker-alias mutant exits 0 with empty stderr; byte oracle catches byte 12772
+    wave_14_third_test.go:201: tracker-write mutant exits 0 with empty stderr; byte oracle catches byte 21938
+    wave_14_third_test.go:218: label mutant exits 0 with empty stderr; full byte oracle catches byte 53
+    wave_14_third_test.go:218: flags mutant exits 0 with empty stderr; full byte oracle catches byte 5142
+    wave_14_third_test.go:218: unicode-quote mutant exits 0 with empty stderr; full byte oracle catches byte 5742
+    wave_14_third_test.go:218: surrogate-decoding mutant exits 0 with empty stderr; full byte oracle catches byte 18061
+    wave_14_third_test.go:218: class mutant exits 0 with empty stderr; full byte oracle catches byte 6895
+    wave_14_third_test.go:228: scope meaning mutant exits 0 with empty stderr; full byte oracle catches byte 1356
+    wave_14_third_test.go:236: compiler: 5318 identical finding bytes; findings 0
+    wave_14_third_test.go:237: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_14_third_test.go:236: repository: 18485 identical finding bytes; findings 0
+    wave_14_third_test.go:237: repository-asan: 18485 identical finding bytes; findings 0
+    wave_14_third_test.go:256: patterns: 11997 identical finding bytes; findings 36
+    wave_14_third_test.go:257: patterns-asan: 11997 identical finding bytes; findings 36
+    wave_14_third_test.go:263: pattern range mutant exits 0 with empty stderr; byte oracle catches byte 4473
+    wave_14_third_test.go:285: label-parser: Go positive identifierClashWithLabel; native explicit NotYet panic 70
+    wave_14_third_test.go:285: pattern: Go positive invalidRegexp; native explicit NotYet panic 70
+    wave_14_third_test.go:301: released handle panics 70; retaining it exits 0 and is caught
+--- PASS: TestWave14ThirdAgreementAndMutants (264.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	490.484s
