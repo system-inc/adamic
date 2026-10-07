@@ -15,7 +15,7 @@ export class Rule {
     inProp(node: Node): boolean {
         const c=this.context;const parent=c.parent(node);
         if(parent?.kind===Kind.PropertyAssignment){return this.components.returns(node);}
-        if(this.closest(node,(n)=>this.attribute(n))!==undefined){return this.components.returns(node);}
+        if(c.hasJsxAttributes&&this.closest(node,(n)=>this.attribute(n))!==undefined){return this.components.returns(node);}
         if(!this.components.detected.has(node.index)){return false;}
         const call=this.closest(node,(n)=>n.kind===Kind.CallExpression&&this.components.elements.createElement(n));
         if(call===undefined||call.list<2){return false;}const object=this.closest(node,(n)=>n.kind===Kind.ObjectLiteralExpression);
@@ -43,6 +43,7 @@ export class Rule {
         this.statelessParents.set(node.index,result===undefined?-1:result.index);return result;
     }
     recovered(node: Node): boolean {
+        if(!this.components.hasReactClass){return false;}
         let current:Node|undefined=node;let parent:Node|undefined;
         while(current!==undefined){if(this.components.class(current)||this.components.factory(current)){parent=current;break;}current=this.context.parent(current);}
         if(parent===undefined){parent=this.statelessParent(node);}

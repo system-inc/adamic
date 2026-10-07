@@ -5,6 +5,7 @@ import { Rule as Elements } from '../../wave-22-sixth/no-adjacent-inline-element
 export class Components {
     readonly context: Context;readonly elements: Elements;
     ready=false;
+    hasReactClass=false;
     readonly returned=new Map<number,boolean>();
     readonly reactImports=new Map<string,boolean>();
     readonly unnamedStateless=new Map<number,number>();
@@ -123,6 +124,7 @@ export class Components {
     }
     add(node: Node): void {
         if(this.detected.has(node.index)){return;}this.detected.add(node.index);const c=this.context;
+        if(node.kind===Kind.ClassDeclaration||node.kind===Kind.ClassExpression){this.hasReactClass=true;}
         if(node.kind===Kind.ClassDeclaration){const name=c.name(node);if(name!==undefined){this.names.add(name.text);}}
         if(node.kind===Kind.ArrowFunction){const parent=c.parent(node);if(parent?.kind===Kind.VariableDeclaration){const name=c.name(parent);if(name?.kind===Kind.Identifier){this.names.add(name.text);}}}
     }
