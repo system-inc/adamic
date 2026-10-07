@@ -1,3 +1,50 @@
+Built: isolated upstream JSX dependency probe; the three claimed React rules remain unported.
+Commits: claims and original blocker evidence are pushed through 99d90694; this update records the newly available dependency.
+Commands and outputs: fresh fetch found 417 origin refs; dependency_probe.py passes three JSX controls and one ordinary control, all exit 0.
+Mutants: no React rule mutants or comparison gates ran; this probe checks parser capability only.
+Not covered: React implementations, byte agreement, fixes/suggestions, sanitizer/released-handle gates, or native/Go rule timing.
+
+# JSX dependency recheck
+
+The original parser-blocker report below is historical. A subsequent all-head
+fetch found origin/codex/stage1-jsx-lint at
+`a8a62d62ca49db7415e14c3887dd305022b17309`, containing a published JSX parser.
+Its JSX_REPORT.md was read whole before testing. The implementation commit is
+`e715ef4a2f898230af63c40195dea6586a557899`.
+
+[dependency_probe.py](dependency_probe.py) extracts that revision's unchanged
+stage1/typescript source files into an isolated scratch dependency directory,
+then compiles the existing .a parser probe against those sources. It changes no
+shared files on codex/typeaware-wave-07. All three previously failing JSX
+controls now exit 0 and print `jsx 1`; the ordinary control exits 0 and prints
+`jsx 0`. Exact dependency source hashes, fixture strings, commands, exits and
+stdout/stderr are saved in [jsx-dependency.json.gz](evidence/jsx-dependency.json.gz).
+This demonstrates that the upstream dependency can remove the parser failure;
+it does not demonstrate any React rule behavior.
+
+The branch's shared parser remains unchanged and still has the previously
+measured JSX refusal. Integrating the published parser requires shared changes
+to parser.ts, lookahead.ts, scanner.ts and the new jsx.ts module. Ahra's explicit
+instruction is "Keep your changes inside your own rule directories" and "If
+anything else blocks you, say exactly what it is and stop, rather than editing
+shared files." This unit therefore stops at pending shared parser integration.
+No claim is made that the published parser is unavailable or defective. Once it
+is integrated, the React ports still need their native value-flow implementations
+and all required verification; the parser probe is not a substitute for them.
+
+Reproduction:
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave07_react/dependency_probe.py > /workspace/wave-07-artifacts/react-jsx-dependency-probe.log 2>&1
+```
+
+The established toolchain is reused (original setup 81 seconds; nproc 5).
+No additional rules were claimed and none of the prior nine rule gates were
+rerun. The original claim remains held for these three incomplete React rules.
+
+# Historical blocker report
+
 Built: third-trio claims and reproducible JSX blocker probes; none of these three React rules is ported.
 Commits: claim d6724bb17f529da289d3d4e21afb559de1dbf148 was pushed before probes; blocker evidence follows in this report commit.
 Commands and outputs: fetched 389 origin refs; production Go reports three positive findings, while native parser exits 70 on all three JSX controls; ordinary TypeScript exits 0.

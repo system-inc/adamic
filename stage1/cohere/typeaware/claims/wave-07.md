@@ -102,3 +102,12 @@ the self-closing JSX slash in each. Ordinary TypeScript parses successfully.
 See ../wave07_react/REPORT.md and its reproducible probe evidence. Ahra's
 shared-file restriction prevents extending the parser in this unit. All three
 claims remain incomplete; no additional rules are claimed.
+
+## Third continuation dependency recheck
+
+Upstream JSX support is now available on origin/codex/stage1-jsx-lint at
+a8a62d62ca49db7415e14c3887dd305022b17309. An isolated build accepts all three
+previously failing controls (exit 0, jsx 1), plus the ordinary control (jsx 0).
+The wave branch's shared parser remains unchanged pending integration by its
+owner. No React rule is implemented yet; these three claims remain incomplete.
+The updated report records exact dependency evidence. No more rules claimed.
