@@ -1,0 +1,2 @@
+class A { foo() {} foo() {} static foo() {} get bar() { return 1; } set bar(v) {} get bar() { return 2; } ['x']() {} x() {} m(a: string): void; m(a: any) {} }
+const C = class { value: string; value: string; };

@@ -1,0 +1,31 @@
+{
+  "cases": 31,
+  "bytes": 6546,
+  "corpus_files": 236,
+  "rates": {
+    "Go": {
+      "seconds": 0.19103375699978642,
+      "findings": 0,
+      "findings_per_second": 0.0
+    },
+    "Node": {
+      "seconds": 0.8464781729999231,
+      "findings": 0,
+      "findings_per_second": 0.0
+    },
+    "native": {
+      "seconds": 4.6069192269997075,
+      "findings": 0,
+      "findings_per_second": 0.0
+    }
+  },
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "setup_seconds": 16,
+  "nproc": 5,
+  "comparison_backends": [
+    "Go",
+    "Node",
+    "JavaScript",
+    "sanitized native"
+  ]
+}
