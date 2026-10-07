@@ -4,24 +4,37 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	goruntime "runtime"
+	"slices"
 	"strings"
 )
+
+// Stage1ProfileUnit records both the source identity seen by clang and its bytes.
+// Build currently emits one unit. A future split must enumerate every unit here.
+type Stage1ProfileUnit struct {
+	Name   string `json:"name"`
+	SHA256 string `json:"sha256"`
+}
 
 // Stage1ProfileManifest binds a text profile to the bytes the compiler consumes.
 // Toolchain and target checks are conservative: another host regenerates its own profile.
 type Stage1ProfileManifest struct {
-	Version  int      `json:"version"`
-	Source   string   `json:"source_sha256"`
-	Runtime  string   `json:"runtime_sha256"`
-	Profile  string   `json:"profile_sha256"`
-	Training string   `json:"training_manifest_sha256"`
-	Compiler string   `json:"compiler"`
-	Target   string   `json:"target"`
-	Flags    []string `json:"flags"`
+	Version           int                 `json:"version"`
+	Units             []Stage1ProfileUnit `json:"emitted_units"`
+	CompilerSHA256    string              `json:"compiler_sha256"`
+	LinkFlags         []string            `json:"link_flags"`
+	TrainingFlags     []string            `json:"training_flags"`
+	TrainingLinkFlags []string            `json:"training_link_flags"`
+	Runtime           string              `json:"runtime_sha256"`
+	Profile           string              `json:"profile_sha256"`
+	Training          string              `json:"training_manifest_sha256"`
+	Compiler          string              `json:"compiler"`
+	Target            string              `json:"target"`
+	Flags             []string            `json:"flags"`
 }
 
 func profileHash(data []byte) string { return fmt.Sprintf("%x", sha256.Sum256(data)) }
@@ -32,16 +45,28 @@ func RuntimeFingerprint() (string, error) {
 	if err != nil {
 		return "", err
 	}
+	return runtimeFingerprint(files), nil
+}
+
+func runtimeFingerprint(files []runtimeFile) string {
 	h := sha256.New()
 	for _, f := range files {
 		fmt.Fprintf(h, "%d:%s%d:", len(f.name), f.name, len(f.contents))
 		h.Write(f.contents)
 	}
-	return fmt.Sprintf("%x", h.Sum(nil)), nil
+	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
 // NewStage1ProfileManifest is called by regeneration after llvm-profdata writes the text file.
 func NewStage1ProfileManifest(source string, profile []byte, training string) (Stage1ProfileManifest, error) {
+	return newStage1ProfileManifest(source, profile, training, Options{Release: true})
+}
+
+func newStage1ProfileManifest(source string, profile []byte, training string, options Options) (Stage1ProfileManifest, error) {
+	// The text profile has its own content hash. Its local indexed pathname is
+	// not a portable build input. Record all other flags from the actual policy.
+	options.Profile = ""
+	options.ProfileGenerate = false
 	snapshot, err := RuntimeFingerprint()
 	if err != nil {
 		return Stage1ProfileManifest{}, err
@@ -50,15 +75,44 @@ func NewStage1ProfileManifest(source string, profile []byte, training string) (S
 	if err != nil {
 		return Stage1ProfileManifest{}, fmt.Errorf("native: compiler identity: %w", err)
 	}
-	return Stage1ProfileManifest{Version: 1, Source: profileHash([]byte(source)), Runtime: snapshot,
-		Profile: profileHash(profile), Training: training, Compiler: string(compiler),
-		Target: goruntime.GOOS + "-" + goruntime.GOARCH, Flags: Flags(Options{Release: true})}, nil
+	compilerPath, err := exec.LookPath("clang")
+	if err != nil {
+		return Stage1ProfileManifest{}, err
+	}
+	file, err := os.Open(compilerPath)
+	if err != nil {
+		return Stage1ProfileManifest{}, err
+	}
+	defer file.Close()
+	digest := sha256.New()
+	if _, err = io.Copy(digest, file); err != nil {
+		return Stage1ProfileManifest{}, err
+	}
+	trainingOptions := options
+	trainingOptions.ProfileGenerate = true
+	return Stage1ProfileManifest{
+		Version:           2,
+		Units:             []Stage1ProfileUnit{{Name: "main.c", SHA256: profileHash([]byte(source))}},
+		Runtime:           snapshot,
+		Profile:           profileHash(profile),
+		Training:          training,
+		Compiler:          string(compiler),
+		CompilerSHA256:    fmt.Sprintf("%x", digest.Sum(nil)),
+		Target:            goruntime.GOOS + "-" + goruntime.GOARCH,
+		Flags:             Flags(options),
+		LinkFlags:         LinkFlags(options),
+		TrainingFlags:     Flags(trainingOptions),
+		TrainingLinkFlags: LinkFlags(trainingOptions),
+	}, nil
 }
 
 func profileMatches(record, current Stage1ProfileManifest) bool {
-	return record.Version == current.Version && record.Source == current.Source && record.Runtime == current.Runtime &&
+	return record.Version == current.Version && slices.Equal(record.Units, current.Units) &&
+		record.CompilerSHA256 == current.CompilerSHA256 && slices.Equal(record.LinkFlags, current.LinkFlags) &&
+		slices.Equal(record.TrainingFlags, current.TrainingFlags) && slices.Equal(record.TrainingLinkFlags, current.TrainingLinkFlags) &&
+		record.Runtime == current.Runtime &&
 		record.Profile == current.Profile && record.Compiler == current.Compiler && record.Target == current.Target &&
-		strings.Join(record.Flags, "\x00") == strings.Join(current.Flags, "\x00")
+		slices.Equal(record.Flags, current.Flags)
 }
 
 func prepareStage1Profile(source string, options Options) (Options, error) {
@@ -88,7 +142,7 @@ func prepareStage1Profile(source string, options Options) (Options, error) {
 	if err = json.Unmarshal(manifest, &record); err != nil {
 		return fallback("invalid manifest")
 	}
-	current, err := NewStage1ProfileManifest(source, data, record.Training)
+	current, err := newStage1ProfileManifest(source, data, record.Training, options)
 	if err != nil {
 		return options, err
 	}

@@ -1,8 +1,8 @@
-Built: committed profiles for stage 1 parse and lint, fixed separate training lists, stale fallback and cold-cache binary checks.
-Commits: base 455c5c2ae046847633e5adb858ef90c84242da3f; pushed checkpoint e486297ebd8e63fa824d31f15972b04c1f4fc1a0; final implementation 305f7457ab2589829b871be1525bb1d4da8ed4ad.
-Commands and outputs: release oracle and all stage 1 packages passed; the profile build measured 4.504G instructions and 0.5094s user on all 77 files, meeting both limits.
-Mutants: stale guards, training overlap, cold binary paths, parse output bytes and counter accounting were challenged and caught; the main.c-only path mutant survived and is recorded.
-Not covered: Apple clang execution, hardware cycles, lint throughput, or integration with the later stack-check compiler branch.
+Built: stage 1 profiles with version 2 bindings for every emitted unit, the runtime, profile, clang executable and complete training/use flags; source-name audits now catch the surviving mutant.
+Commits: base 455c5c2ae046847633e5adb858ef90c84242da3f; pushed checkpoint e486297ebd8e63fa824d31f15972b04c1f4fc1a0; measured implementation 305f7457ab2589829b871be1525bb1d4da8ed4ad; this follow-up starts at 92f1d65d94c39892e12aeca269c5051c73339ff0.
+Commands and outputs: follow-up native/build packages, release oracle with regenerated shipping profiles, gofmt and vet passed; the earlier named parse build measured 4.504G instructions and 0.5094s user.
+Mutants: fifteen distinct compiling follow-up mutants were caught, including the main.c-only path mutant; previous corpus, output and counter proofs remain recorded.
+Not covered: new speed measurements, Apple execution, hardware cycles, lint throughput or the later stack-check compiler branch. The user will regenerate Apple profiles.
 
 # Stage 1 profiles
 
@@ -253,8 +253,9 @@ cold-cache rebuilds and their Go/Node byte oracles. The complete release
 oracle passed in 146.415s after the training-list guard was added, with 420 registered fixture subtests and the
 shipping-artifact delegate. Parse matched 44,767,604 AST bytes including its
 fixture; lint matched 18,692,000 bytes. A compiling runtime source-path
-mutant was caught by the actual shipping binary comparison. A main.c-only
-path mutant survived and is not claimed as proof of that runtime fix.
+mutant was caught by the actual shipping binary comparison. At that checkpoint a main.c-only
+path mutant survived and was not claimed as proof of that runtime fix. The
+follow-up below now catches it with the actual source-name audit.
 
 ## A second environment failure, checked on the base
 
@@ -440,3 +441,124 @@ Apple execution and the stack-check-SCC integration were not attempted on
 this fixed base. When that compiler change lands, its changed C hash will
 force plain ThinLTO until the script regenerates and the shipping oracle and
 byte checks pass again. No main/area branch or pull request was changed.
+
+
+## Follow-up: the surviving main.c mutant and the complete binding
+
+The original main.c-only path mutant replaces
+`command.Args[index] = "main.c"` with `command.Args[index] = argument` in
+native.Build. Here, argument is the absolute path of the temporary main.c.
+It leaves the C bytes, compiler options, working directory and runtime alone.
+It changes the source identity clang sees from `main.c` to something like
+`/tmp/adamic-gate/adamic-build-3519998900/main.c`.
+
+At the previous checkpoint, the shipping parse test passed this mutant in
+23.269s. It compared binary bytes and Go/Node output; those bytes did not
+change on this box. The freshness check hashed C contents, which also did
+not change. None of those checks inspected the actual source argument.
+That explains the missed mutant. It does not prove that absolute source
+paths are harmless on another compiler or another emitted program.
+
+The native profile test now audits the actual C argument during both training
+and use. Each runtime compile must name its recorded runtime file, once,
+using a relative name. The main compilation/link must name main.c, once,
+as recorded in the emitted-unit list. The exact former mutant now fails
+with `emitted profile source identity changed`: the audit observes the
+absolute temporary pathname and requires main.c. A use-only main mutant is
+also caught, independently of the training audit. A dtoa.c-only absolute
+runtime-path mutant is caught by the runtime source-name audit. All three
+compile; no warning or compilation error is counted as a catcher.
+
+Manifest version 2 binds these inputs before any profile reaches clang:
+
+- The name and SHA256 of every emitted C unit. Build currently consumes one
+  unit, main.c, containing the whole emitted driver. There is no unrecorded
+  second emitted unit. An added or changed recorded unit falls back. A future
+  translation-unit split must extend the build API and enumerate every unit.
+- Names and all bytes of all 48 runtime C files and 18 headers. The fingerprint
+  test changes one real byte and one name in each of these 66 inputs. Every
+  change invalidates the snapshot; removing a file also invalidates it.
+- All text profile bytes and the fixed training-list hash. The stage 1
+  entrypoint compares the latter with the actual committed list.
+- SHA256 of the clang executable, its complete version output and the target.
+- The complete, ordered compile and link flag lists for training and use.
+  Current build options are used for the comparison: changing the actual
+  CPU option also falls back. The local indexed-profile pathname is represented
+  by the text profile's content hash, rather than treated as a portable path.
+
+Every binding mismatch must produce one fallback line, and the actual clang
+command audit must find no -fprofile-use flag. Version 1 manifests fall back
+as well. -ffp-contract=off and -fno-optimize-sibling-calls remain required on
+all actual runtime compiles and on the main compilation/link with profiles.
+TestNonShippingFlagsStayIdentical still passes unchanged.
+
+An interim duplicate main-source hash check survived its bypass because the
+emitted-unit hash still caught changed source bytes. That duplicate check and
+field were removed. There is no claim that its green run proved anything.
+
+The reproducible runner is
+`internal/native/testdata/run-stage1-profile-mutants.py`. Fifteen distinct
+compiling mutants were caught:
+
+| Mutants | What caught them |
+|---|---|
+| main-source-path, main-use-source-path | Actual main source-name audit |
+| runtime-source-path | Actual dtoa.c source-name audit |
+| manifest-version, emitted-units, runtime-bytes, profile-bytes, compiler-bytes, compiler-version, compile-flags, link-flags, training-compile-flags, training-link-flags, target | A profile flag reached clang on a build that had to fall back |
+| runtime-fingerprint-file | Omitting ieee754.c from hashing let its real changed byte retain the old fingerprint |
+
+Both Linux profiles were regenerated by the approved script, on the same
+38 separate training files, with the same source, runtime and compiler.
+The new shipping binary SHA256 values are:
+
+- Parse: `25d4025a2816b39f4716ae6ad5561734366aca639215352280c6d8c5946d4774`.
+- Lint: `443ddbe70587c0687291bfb36d1c038523d5f109e1cb64f2e0cba1e7c9fea9c3`.
+
+The release oracle tested those exact binaries. Each matched its independent
+cold rebuild byte for byte. Parse matched Go and Node on 44,767,604 AST bytes,
+and lint matched on 18,692,000 bytes. The whole opt-in release lane passed
+in 296.279s, including all 420 fixture subtests and the stage 1 delegate.
+The complete native/build package run passed in 431.003s and 0.006s;
+the final strengthened profile/fingerprint/nonshipping checks then passed
+in 39.874s, with the training-list test also passing. gofmt and go vet ./...
+passed after the final test edits. These checks overlapped on the box; their
+elapsed times are gate observations, not speed claims.
+
+The earlier speed table still names the measured binaries, including parse
+7cbaa14f315c9d017399286d004c620115ebc1318b1e15af3b5ce3340eba9b9c.
+It is not a measurement of the newly regenerated binaries. No new speed
+claim is made in this follow-up. Only a few input-reader counters changed in the text profiles. The regeneration
+work pathname is three characters longer, consistent with those counter changes;
+the committed 38-file corpus and its hashes did not change.
+
+Commands used, with the same sourced tool environment:
+
+```
+python3 stage1/profiles/regenerate.py \
+  --typescript /workspace/scratch/release-lto/typescript \
+  --work /workspace/scratch/stage1-profiles/followup-regeneration \
+  --llvm-profdata /workspace/adamic-tools/llvm/bin/llvm-profdata
+go test -v -count=1 -timeout 10m ./internal/native ./cmd/adamic-stage1
+go test -v -count=1 -timeout 5m ./internal/native ./cmd/adamic-stage1 \
+  -run '^Test(Stage1ProfileStalenessAndDeterminism|RuntimeFingerprintCoversEveryFile|NonShippingFlagsStayIdentical|ChangedTrainingByteCannotReachProfileFlags)$'
+python3 internal/native/testdata/run-stage1-profile-mutants.py \
+  --work /workspace/scratch/stage1-profiles/followup-complete-mutants
+```
+
+The first complete mutant run covered thirteen mutants. After adding the
+training-side audit, --only main-source-path, --only main-use-source-path and
+--only runtime-source-path were run in followup-path-mutants. The first repeats
+the original mutant; the latter two add independent use/runtime proofs.
+All fifteen distinct mutants were caught. The final runner supports all fifteen
+in one command. Full outputs remain local in followup-complete-mutants.log,
+followup-path-mutants.log, followup-native-all.log, followup-final-focused.log,
+followup-release-oracle.log, followup-regeneration.log and followup-vet.log
+under /workspace/scratch/stage1-profiles/.
+
+The release command used ADAMIC_ORACLE_RELEASE=1 ADAMIC_GATE_UNCACHED=1,
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/release-lto/typescript, and
+ADAMIC_STAGE1_PARSE_BINARY / ADAMIC_STAGE1_LINT_BINARY pointing to the two
+followup-regeneration artifacts, with the same release test filter above.
+
+No Apple profile was built or measured. The user will regenerate those profiles
+when Kirk's Mac is available; this worker has no work on that machine.

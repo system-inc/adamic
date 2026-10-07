@@ -56,7 +56,6 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	writeManifest(record)
 	audit := filepath.Join(directory, "commands.jsonl")
 	wrapperDir := filepath.Join(directory, "wrapper")
 	if err = os.Mkdir(wrapperDir, 0o755); err != nil {
@@ -68,17 +67,34 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Setenv("PATH", wrapperDir+string(os.PathListSeparator)+filepath.Dir(profdata)+string(os.PathListSeparator)+os.Getenv("PATH"))
+	// The audit wrapper is itself a different compiler executable; bind it explicitly.
+	record, err = NewStage1ProfileManifest(source, data, "test-only-corpus")
+	if err != nil {
+		t.Fatal(err)
+	}
+	writeManifest(record)
+	runtimeFiles, err := readRuntime(runtime, "runtime")
+	if err != nil {
+		t.Fatal(err)
+	}
+	expectedRuntime := map[string]bool{}
+	for _, file := range runtimeFiles {
+		if strings.HasSuffix(file.name, ".c") {
+			expectedRuntime[file.name] = true
+		}
+	}
 	options := Options{Release: true, Profile: text}
 	if _, err := RuntimeLibrary("", options); err == nil {
 		t.Fatal("unverified profile reached the runtime builder")
 	}
-	checkCommands := func(profile bool) {
+	checkCommands := func(profile bool, stable bool) {
 		t.Helper()
 		data, err := os.ReadFile(audit)
 		if err != nil {
 			t.Fatal(err)
 		}
 		compiles, links := 0, 0
+		seen := map[string]bool{}
 		for _, line := range strings.Split(strings.TrimSpace(string(data)), "\n") {
 			var args []string
 			if err = json.Unmarshal([]byte(line), &args); err != nil {
@@ -91,6 +107,26 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 				compiles++
 			} else {
 				links++
+			}
+			if stable {
+				units := 0
+				for _, arg := range args {
+					if !strings.HasSuffix(arg, ".c") {
+						continue
+					}
+					units++
+					if slices.Contains(args, "-c") {
+						if !expectedRuntime[arg] || seen[arg] {
+							t.Fatalf("runtime profile source identity changed or duplicated: %q", args)
+						}
+						seen[arg] = true
+					} else if arg != record.Units[0].Name {
+						t.Fatalf("emitted profile source identity changed: got %q want %q", arg, record.Units[0].Name)
+					}
+				}
+				if units != 1 {
+					t.Fatalf("profile invocation did not consume exactly one recorded C unit: %q", args)
+				}
 			}
 			present := false
 			for _, arg := range args {
@@ -107,7 +143,7 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 				}
 			}
 		}
-		if links != 1 || (profile && compiles != 48) {
+		if links != 1 || (stable && compiles != 48) {
 			t.Fatalf("incomplete actual command audit: compile=%d link=%d", compiles, links)
 		}
 	}
@@ -117,12 +153,18 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
+	// Audit training identities too; the same profile contract applies on both sides.
+	reset()
+	if err = Build(source, generate, Options{Release: true, ProfileGenerate: true}); err != nil {
+		t.Fatal(err)
+	}
+	checkCommands(false, true)
 	first, second := filepath.Join(directory, "first"), filepath.Join(directory, "second")
 	reset()
 	if err = Build(source, first, options); err != nil {
 		t.Fatal(err)
 	}
-	checkCommands(true)
+	checkCommands(true, true)
 	t.Setenv("XDG_CACHE_HOME", filepath.Join(directory, "independent-cold-cache"))
 	if err = Build(source, second, options); err != nil {
 		t.Fatal(err)
@@ -163,7 +205,7 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		checkCommands(false)
+		checkCommands(false, false)
 		if strings.Count(string(body), "\n") != 1 || !strings.Contains(string(body), "using plain ThinLTO") {
 			t.Fatalf("missing one-line fallback diagnostic: %q", body)
 		}
@@ -171,9 +213,44 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 	}
 	changed := strings.Replace(source, "// A", "// B", 1)
 	t.Log("one changed emitted-C byte:", capture(changed))
-	record.Runtime = "changed-runtime-byte"
+	// Each mismatch must produce an actual plain-ThinLTO build: no profile flag
+	// on any runtime compile or the main compilation/link, plus one diagnostic.
+	mutations := []struct {
+		name   string
+		change func(*Stage1ProfileManifest)
+	}{
+		{"manifest version", func(r *Stage1ProfileManifest) { r.Version = 1 }},
+		{"runtime snapshot", func(r *Stage1ProfileManifest) { r.Runtime = "changed-runtime-byte" }},
+		{"emitted unit name", func(r *Stage1ProfileManifest) { r.Units[0].Name = "other.c" }},
+		{"emitted unit byte", func(r *Stage1ProfileManifest) { r.Units[0].SHA256 = "changed-unit-byte" }},
+		{"added emitted unit", func(r *Stage1ProfileManifest) {
+			r.Units = append(r.Units, Stage1ProfileUnit{Name: "extra.c", SHA256: profileHash([]byte("int extra;"))})
+		}},
+		{"text profile", func(r *Stage1ProfileManifest) { r.Profile = "changed-profile-byte" }},
+		{"compiler executable", func(r *Stage1ProfileManifest) { r.CompilerSHA256 = "changed-compiler-byte" }},
+		{"compiler version", func(r *Stage1ProfileManifest) { r.Compiler += "changed" }},
+		{"compile flags", func(r *Stage1ProfileManifest) { r.Flags[0] = "-std=c99" }},
+		{"link flags", func(r *Stage1ProfileManifest) { r.LinkFlags[0] = "-std=c99" }},
+		{"training compile flags", func(r *Stage1ProfileManifest) { r.TrainingFlags[0] = "-std=c99" }},
+		{"training link flags", func(r *Stage1ProfileManifest) { r.TrainingLinkFlags[0] = "-std=c99" }},
+		{"target", func(r *Stage1ProfileManifest) { r.Target = "different-target" }},
+	}
+	for _, mutation := range mutations {
+		changed := record
+		changed.Units = slices.Clone(record.Units)
+		changed.Flags = slices.Clone(record.Flags)
+		changed.LinkFlags = slices.Clone(record.LinkFlags)
+		changed.TrainingFlags = slices.Clone(record.TrainingFlags)
+		changed.TrainingLinkFlags = slices.Clone(record.TrainingLinkFlags)
+		mutation.change(&changed)
+		writeManifest(changed)
+		t.Log(mutation.name, "mismatch:", capture(source))
+	}
 	writeManifest(record)
-	t.Log("runtime snapshot mismatch:", capture(source))
+	originalOptions := options
+	options.cpu = "native"
+	t.Log("actual compile/link flags changed:", capture(source))
+	options = originalOptions
 	for _, opts := range []Options{{Profile: text}, {Release: true, Count: true, Profile: text}, {Release: true, Sanitize: true, Profile: text}, {Release: true, Target: "wasm32-wasi", Profile: text}} {
 		for _, flags := range [][]string{Flags(opts), LinkFlags(opts)} {
 			for _, flag := range flags {
@@ -183,4 +260,32 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 			}
 		}
 	}
+}
+
+func TestRuntimeFingerprintCoversEveryFile(t *testing.T) {
+	files, err := readRuntime(runtime, "runtime")
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := runtimeFingerprint(files)
+	for index, file := range files {
+		if len(file.contents) == 0 {
+			t.Fatalf("empty runtime input: %s", file.name)
+		}
+		changed := slices.Clone(files)
+		changed[index].contents = slices.Clone(file.contents)
+		changed[index].contents[len(file.contents)/2] ^= 1
+		if runtimeFingerprint(changed) == original {
+			t.Fatalf("changed runtime byte did not invalidate %s", file.name)
+		}
+		changed = slices.Clone(files)
+		changed[index].name += ".changed"
+		if runtimeFingerprint(changed) == original {
+			t.Fatalf("changed runtime name did not invalidate %s", file.name)
+		}
+	}
+	if runtimeFingerprint(files[:len(files)-1]) == original {
+		t.Fatal("removed runtime file did not invalidate snapshot")
+	}
+	t.Logf("a real changed byte and name invalidate each of %d runtime C/header files", len(files))
 }
