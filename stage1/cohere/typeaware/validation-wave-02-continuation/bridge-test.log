@@ -1,0 +1,56 @@
+=== RUN   TestBridge
+    bridge_test.go:72: C ABI: 100 queries, outputs survive release, stale and zero handles rejected, second handle distinct; "世界🌍"
+    bridge_test.go:77: input length off by one: ASan heap-buffer-overflow
+    bridge_test.go:90: build, C and JavaScript commands refuse unlinked checker calls
+    bridge_test.go:149: go: tsgo: load_ns=177123510 query_ns=195920813 queries=1600
+    bridge_test.go:154: oracle: 1600 positions across 4 files, 54982 bytes identical under ASan/UBSan/LSan
+    bridge_test.go:156: native-round-1: tsgo: load_ns=262355393 query_ns=123165283 queries=1600 first_query_ns=46750 run_ns=125494237
+    bridge_test.go:157: go-round-1: tsgo: load_ns=197381901 query_ns=201378377 queries=1600
+    bridge_test.go:156: native-round-2: tsgo: load_ns=258839996 query_ns=101076337 queries=1600 first_query_ns=45138 run_ns=103227400
+    bridge_test.go:157: go-round-2: tsgo: load_ns=170861873 query_ns=192345923 queries=1600
+    bridge_test.go:156: native-round-3: tsgo: load_ns=248707384 query_ns=109119696 queries=1600 first_query_ns=75924 run_ns=111327320
+    bridge_test.go:157: go-round-3: tsgo: load_ns=169077150 query_ns=193395568 queries=1600
+    bridge_test.go:197: output string length off by one: ASan heap-buffer-overflow
+    bridge_test.go:207: released handle kept live: stale-handle assertion catches it
+    bridge_test.go:217: type from source-file position: oracle mismatch at byte 6
+    bridge_test.go:224: link opt-in guard removed: refusal test catches it
+    bridge_test.go:235: C output free removed: LeakSanitizer detects the leaked buffers
+    bridge_test.go:273: region probe: Go and native answer 6; adamic: counts: allocations 9 frees 8 retains 6 releases 14 peak 8 regions 1
+    bridge_test.go:283: region entry allocates on heap: LeakSanitizer catches the unowned result
+--- PASS: TestBridge (64.86s)
+=== RUN   TestTSGoRequiresLink
+--- PASS: TestTSGoRequiresLink (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo	64.893s
+?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.01s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestTypeDeclarationAncestry
+=== PAUSE TestTypeDeclarationAncestry
+=== RUN   TestWave02CheckerQuestions
+=== PAUSE TestWave02CheckerQuestions
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestWave02CheckerQuestions
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestTypeDeclarationAncestry
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestShapeAndNameFacts
+--- PASS: TestWave02CheckerQuestions (0.03s)
+--- PASS: TestShapeAndNameFacts (0.05s)
+--- PASS: TestTypeDeclarationAncestry (0.11s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.15s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.14s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.178s
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]

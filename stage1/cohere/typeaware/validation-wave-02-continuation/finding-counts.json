@@ -1,0 +1,16 @@
+{
+  "controls": {
+    "nexus/correctness-no-collection-misuse": 36,
+    "nexus/correctness-no-discarded-pure-result": 13,
+    "nexus/correctness-no-discarded-outcome": 12
+  },
+  "controls-asan": {
+    "nexus/correctness-no-collection-misuse": 36,
+    "nexus/correctness-no-discarded-pure-result": 13,
+    "nexus/correctness-no-discarded-outcome": 12
+  },
+  "compiler": {},
+  "compiler-asan": {},
+  "repository": {},
+  "repository-asan": {}
+}

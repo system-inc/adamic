@@ -37,3 +37,9 @@ These three names occur only in inventory/skip-types records on the base and
 main, with no native implementation or typeaware claim. Existing reservations
 remain excluded even where their claim documents describe incomplete work.
 Positive controls and byte-oracle mutants are required despite zero volume.
+
+Continuation status: all three reserved Nexus rules implemented and validated in
+cba8883eebe65ae8e3bef3fdb3c54455b00fd1e8, pushed. Later origin fetches revealed
+concurrent continuation claims; WAVE_02_CONTINUATION_REPORT.md records them.
+Ahra's correction arrived after this reservation and validation; no further
+rules were claimed. The original three wave-02 rules were already done and pushed.

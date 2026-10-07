@@ -1,0 +1,15 @@
+{
+  "rank_source": "validation-volume/{compiler,repository}-all.counts",
+  "checker_rules": 197,
+  "origin_refs_at_selection": 320,
+  "unique_claim_blobs_at_selection": 30,
+  "rules": [
+    "nexus/correctness-no-collection-misuse",
+    "nexus/correctness-no-discarded-outcome",
+    "nexus/correctness-no-discarded-pure-result"
+  ],
+  "selection_order": "descending combined findings, ascending full rule name",
+  "claim_commit": "c835aa6dc806d690a24d5df89bca1696d9cfd40b",
+  "implementation_commit": "cba8883eebe65ae8e3bef3fdb3c54455b00fd1e8",
+  "later_collision_evidence": "claim-collisions.json"
+}

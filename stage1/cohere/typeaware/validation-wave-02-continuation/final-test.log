@@ -1,0 +1,23 @@
+=== RUN   TestWave02ContinuationAgreementAndMutants
+    wave_02_continuation_test.go:132: controls: 25803 identical finding bytes; findings 61
+    wave_02_continuation_test.go:140: controls-asan: 25803 identical finding bytes; findings 61
+=== RUN   TestWave02ContinuationAgreementAndMutants/collection
+    wave_02_continuation_test.go:157: collection: exit 0, Go byte oracle catches byte 2937; findings 53
+=== RUN   TestWave02ContinuationAgreementAndMutants/outcome
+    wave_02_continuation_test.go:157: outcome: exit 0, Go byte oracle catches byte 20722; findings 50
+=== RUN   TestWave02ContinuationAgreementAndMutants/pure
+    wave_02_continuation_test.go:157: pure: exit 0, Go byte oracle catches byte 12583; findings 49
+=== NAME  TestWave02ContinuationAgreementAndMutants
+    wave_02_continuation_test.go:171: ancestry mutant: exit 0, Go byte oracle catches byte 20722; findings 49
+    wave_02_continuation_test.go:176: repository: 18485 identical finding bytes; findings 0
+    wave_02_continuation_test.go:177: repository-asan: 18485 identical finding bytes; findings 0
+    wave_02_continuation_test.go:184: compiler: 5318 identical finding bytes; findings 0
+    wave_02_continuation_test.go:185: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_02_continuation_test.go:197: released program queried using a new question: panic 70, invalid or released checker handle
+    wave_02_continuation_test.go:202: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave02ContinuationAgreementAndMutants (76.80s)
+    --- PASS: TestWave02ContinuationAgreementAndMutants/collection (5.78s)
+    --- PASS: TestWave02ContinuationAgreementAndMutants/outcome (5.89s)
+    --- PASS: TestWave02ContinuationAgreementAndMutants/pure (5.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	76.813s
