@@ -28,3 +28,20 @@ native. Six consumer suites execute with pinned Tailwind; this removes six
 dependency entries and zero final blockers. Explicit callback integration and
 unavailable external repository corpus tests remain outside the evidence.
 See ../slot_wave1_03/REPORT.md and its raw evidence.
+
+## Second helper
+
+- github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading
+- File: slot_wave1_03/framework_static_reading.a.
+- Six remaining rule consumers; zero final blockers removed alone.
+
+Theme.Add implementation and evidence e3924eb5 are tested and pushed. Refetched
+every origin head and checked all seventeen distinct helper claims. The delivered
+comment bundle is excluded, and every larger individual dependency is reserved.
+This helper ties the highest unclaimed concrete count. Preserve absent/present
+registrations, including empty declaration lists, one body-reading call only for
+present names, and the complete order/count result. Generated declarations are
+input data; separately owned nodesFromStaticDeclarations and PropertySort compose
+an explicit body-reading dependency. Actual Go on every consuming rule's runtime
+name inputs, every registered static utility and controls, source Node, emitted
+JavaScript and sanitized native with compiling semantic mutants. Push before code.
