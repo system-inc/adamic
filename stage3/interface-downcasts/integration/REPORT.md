@@ -172,3 +172,13 @@ native exits 70 at source.message with unsupported representation. The runner's
 initial textual check expected uncertified storage, but this oracle prints byte
 arrays; semantic exit evidence is verified from the captured log. Production
 exceptions.c was restored in finally.
+
+## Lane 6 dictionary reconciliation
+
+Tip 753cca96 adds ranked demand and source probes only. One plan hunk retains
+all earlier handoffs plus dictionary representation/probing/registry obligations.
+No compiler check is added, so no new dictionary mutant is claimed. All 409
+pairs / 2,256 reads remain pending. The frozen ranking is reproduced byte for
+byte; existing record semantics are checked against Node as a representation
+control, not checked dictionary admission. Full IR, focused compiler packages,
+filtered checked-view/Node oracle and vet are rerun with the same baseline skip.
