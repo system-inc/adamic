@@ -1,0 +1,6 @@
+{
+  "name": "silence variant ordering",
+  "file": "rule.ts",
+  "from": "this.listener.visit(index,parent);",
+  "to": "if(index < 0) {this.listener.visit(index,parent);}"
+}
