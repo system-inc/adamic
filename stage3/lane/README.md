@@ -7,7 +7,9 @@ Git, npm and Python 3 available:
 stage3/lane/run.sh /absolute/path/to/new-results > /absolute/path/to/lane.log 2>&1
 ```
 
-The results directory must be new. The lane calls this checkout's unmodified
+The results argument is optional. Without it, the lane creates a fresh temporary
+directory and prints its absolute path on the first line. With an argument,
+the results directory must be new. The verdict remains the last stdout line. The lane calls this checkout's unmodified
 `stage3/apply.sh` with `results/adapted-tree`, then its unmodified
 `stage3/oracle/run.sh` with that tree and `results/oracle`. Apply's normal
 `STAGE3_CACHE` override also selects the pinned TypeScript compiler API used

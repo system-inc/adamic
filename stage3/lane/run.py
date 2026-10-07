@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 import subprocess
 import time
+import tempfile
 
 from check import check_results, write_verdict
 
@@ -15,13 +16,18 @@ ROOT = LANE.parents[1]
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('results', type=Path)
+    parser.add_argument('results', type=Path, nargs='?',
+                        help='new results directory (default: a fresh temporary directory)')
     args = parser.parse_args()
-    results = args.results.resolve()
-    try:
-        results.mkdir(parents=True, exist_ok=False)
-    except FileExistsError:
-        parser.error(f'refusing to replace existing results directory: {results}')
+    if args.results is None:
+        results = Path(tempfile.mkdtemp(prefix='stage3-lane-')).resolve()
+    else:
+        results = args.results.resolve()
+        try:
+            results.mkdir(parents=True, exist_ok=False)
+        except FileExistsError:
+            parser.error(f'refusing to replace existing results directory: {results}')
+    print(results, flush=True)
     started = time.monotonic()
     execution = dict(commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'],
                                                      cwd=ROOT, text=True).strip(),

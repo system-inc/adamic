@@ -37,5 +37,8 @@ separate tasks. --runners=compiler selects compiler and conformance;
 --tests=<regex> narrows a mutant probe. Default test limit is 2400 seconds.
 See oracle/REPORT.md for measured runs and throwaway mutants.
 
-The landing lane copies the adapted tree's patch-set.md beside its report.json,
+Run `stage3/lane/run.sh` without arguments for a fresh temporary results
+directory, or pass a new results path explicitly. It prints the path first
+and the verdict last. The landing lane copies the adapted tree's patch-set.md
+beside its report.json,
 so each verdict carries the table for the exact tree it tested.
