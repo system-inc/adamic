@@ -68,3 +68,19 @@ Go consumer tests pass; 63,845 helper cases yield 883,340 identical bytes across
 source Node, emitted JavaScript and sanitized native. Both compiling mutants are
 caught. Complete owned helper gate PASS 26.695s, all seven semantic mutants;
 vet and six uncached input probes pass. See from_wave1_04/TRIM_REPORT.md.
+
+4. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber
+   File: helpers/from_wave1_04/scan_number.a.
+   Four consumers, the same class-order, shorthand, conflicting and unknown
+   Tailwind rules listed for trimLeadingJavaScriptSpace. Highest unclaimed
+   named count after fetching all 573 origin refs and reading 20 distinct
+   helper claim blobs plus HELPERS.md. Both owned branches are landing-ready
+   on current main c01907a7: rules 20e03b57 are parked and fully re-greened;
+   helpers c023b39c are rebased, fully re-greened and pushed.
+   Preserve Go's anchored grammar, required fractional digits, optional sign,
+   all-or-nothing exponent, ASCII digit membership and consumed byte count.
+   Successful prefixes are ASCII so their UTF-16 and byte counts coincide.
+   The separately claimed digit predicate is an explicit dependency. Compare
+   actual Go on all four consumer fixture domains plus bounded exhaustive
+   grammar and Unicode controls, on source Node, emitted JavaScript and
+   sanitized native. Require compiling semantic mutants. Claim pushed before code.
