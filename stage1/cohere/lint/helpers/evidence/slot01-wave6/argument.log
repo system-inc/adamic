@@ -1,0 +1,38 @@
+=== RUN   TestSlot01Wave6ArgumentMatchesCohere
+    slot01_wave6_test.go:142: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1672 helper queries (argument)
+    slot01_wave6_test.go:142: 1672 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:142: compiled collapse_normalize_value_function_argument.a mutant caught at output line 633: got "21:45,45,116,101,120,116,45,45,108,105,110,101,45,104,101,105,103,104,116,45,42,", Go "21:45,45,116,101,120,116,45,42,45,45,108,105,110,101,45,104,101,105,103,104,116,"
+--- PASS: TestSlot01Wave6ArgumentMatchesCohere (3.03s)
+=== RUN   TestSlot01Wave6ArgumentWhitespaceMutant
+    slot01_wave6_test.go:145: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1672 helper queries (argument)
+    slot01_wave6_test.go:145: 1672 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:145: compiled collapse_normalize_value_function_argument.a mutant caught at output line 640: got "8:45,45,97,45,45,98,45,42,", Go "9:45,45,97,11,45,45,98,45,42,"
+--- PASS: TestSlot01Wave6ArgumentWhitespaceMutant (1.99s)
+=== RUN   TestSlot01Wave6ArgumentRepeatedStarMutant
+    slot01_wave6_test.go:148: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1672 helper queries (argument)
+    slot01_wave6_test.go:148: 1672 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:148: compiled collapse_normalize_value_function_argument.a mutant caught at output line 635: got "9:45,45,97,45,42,45,42,45,42,", Go "5:45,45,97,45,42,"
+--- PASS: TestSlot01Wave6ArgumentRepeatedStarMutant (1.98s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	7.002s

@@ -1,0 +1,26 @@
+=== RUN   TestSlot01Wave6DefinitionMatchesCohere
+    slot01_wave6_test.go:142: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (definition), six arena nodes each
+    slot01_wave6_test.go:142: 7704 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:142: compiled collapse_normalize_utility_definition.a mutant caught at output line 4: got "43:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,45,42,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,", Go "42:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,32,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,"
+--- PASS: TestSlot01Wave6DefinitionMatchesCohere (6.34s)
+=== RUN   TestSlot01Wave6DefinitionForwardMutant
+    slot01_wave6_test.go:145: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (definition), six arena nodes each
+    slot01_wave6_test.go:145: 7704 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:145: compiled collapse_normalize_utility_definition.a mutant caught at output line 10: got "42:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,32,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,", Go "43:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,45,42,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,"
+--- PASS: TestSlot01Wave6DefinitionForwardMutant (4.79s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	11.141s

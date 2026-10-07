@@ -97,7 +97,7 @@ func main() {
 
 	sources = append(sources, "", "--value(--spacing)", "calc(--value(--text --line-height) * 2)", "--modifier([ *])", "--value(--a, --b)", "--value(--a) --modifier(--b)", "--value (--spacing)", "--VALUE(--a)", "'--value(--a)'", "--value(--é --𝒜)", "--value(--a\\*)", "--value(--a\n--b)")
 	if os.Args[4] == "framework" {
-		sources = append(sources, "existing", "shared-a", "shared-b", "negative", "é𝒜")
+		sources = append(sources, "existing", "shared-a", "shared-b", "negative", "é𝒜", "adamic:actual-framework-table")
 		for _, value := range sources {
 			for _, last := range []int{3, 9} {
 				input, actual := collapse.AdamicWave6Framework(value, last)

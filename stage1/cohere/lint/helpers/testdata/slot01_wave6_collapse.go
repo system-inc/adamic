@@ -49,6 +49,13 @@ func AdamicWave6Framework(source string, last int) ([]any, []string) {
 	initial := []FrameworkVariantRegistration{{Name: "existing", Order: 3, Kind: ParsedVariantKindStatic}}
 	incoming := []FrameworkVariantRegistration{{Name: source, Order: 2, Kind: ParsedVariantKindFunctional}, {Name: source, Order: 99, Kind: ParsedVariantKindCompound}, {Name: "shared-a", Order: 5, Kind: ParsedVariantKindStatic}, {Name: "shared-b", Order: 5, Kind: ParsedVariantKindArbitrary}, {Name: "negative", Order: -3, Kind: ParsedVariantKindFunctional}, {Name: "existing", Order: 1000, Kind: ParsedVariantKindFunctional}}
 	queries := []string{"existing", source, "shared-a", "shared-b", "negative"}
+	if source == "adamic:actual-framework-table" {
+		incoming = append([]FrameworkVariantRegistration(nil), FrameworkVariantRegistrations...)
+		queries = []string{"existing"}
+		for _, row := range incoming {
+			queries = append(queries, row.Name)
+		}
+	}
 	registry := NewVariantRegistry()
 	registry.lastOrder = last
 	first := [][]any{}

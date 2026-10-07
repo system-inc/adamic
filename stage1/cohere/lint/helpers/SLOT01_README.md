@@ -33,3 +33,5 @@ The third batch is documented in [SLOT01_WAVE3_README.md](SLOT01_WAVE3_README.md
 The fourth batch is documented in [SLOT01_WAVE4_README.md](SLOT01_WAVE4_README.md), with every consumer and Go/Node/native/emitted-JavaScript evidence.
 
 The fifth batch is documented in [SLOT01_WAVE5_README.md](SLOT01_WAVE5_README.md), with every consumer, Go-equivalent dependency contracts and retained differential evidence.
+
+The sixth batch is documented in [SLOT01_WAVE6_README.md](SLOT01_WAVE6_README.md), with nil and traversal contracts, exact registry replay, every consumer and retained Go comparisons.

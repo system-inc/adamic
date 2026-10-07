@@ -1,0 +1,122 @@
+=== RUN   TestSlot01Wave6DefinitionMatchesCohere
+    slot01_wave6_test.go:156: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (definition), six arena nodes each
+    slot01_wave6_test.go:156: 7704 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:156: compiled collapse_normalize_utility_definition.a mutant caught at output line 4: got "43:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,45,42,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,", Go "42:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,32,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,"
+--- PASS: TestSlot01Wave6DefinitionMatchesCohere (6.87s)
+=== RUN   TestSlot01Wave6DefinitionForwardMutant
+    slot01_wave6_test.go:159: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (definition), six arena nodes each
+    slot01_wave6_test.go:159: 7704 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:159: compiled collapse_normalize_utility_definition.a mutant caught at output line 10: got "42:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,32,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,", Go "43:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,45,42,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,"
+--- PASS: TestSlot01Wave6DefinitionForwardMutant (5.79s)
+=== RUN   TestSlot01Wave6WalkerMatchesCohere
+    slot01_wave6_test.go:164: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (walker), six arena nodes each
+    slot01_wave6_test.go:164: 9641 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:164: compiled collapse_normalize_value_function_arguments.a mutant caught at output line 11: got "42:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,32,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,", Go "43:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,45,42,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,"
+--- PASS: TestSlot01Wave6WalkerMatchesCohere (6.08s)
+=== RUN   TestSlot01Wave6WalkerPresentMutant
+    slot01_wave6_test.go:167: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (walker), six arena nodes each
+    slot01_wave6_test.go:167: 9641 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:167: compiled collapse_normalize_value_function_arguments.a mutant caught at output line 7377: got "164:64,105,109,112,111,114,116,32,39,116,97,105,108,119,105,110,100,99,115,115,39,59,10,64,116,104,101,109,101,32,123,32,45,45,102,114,111,98,110,105,99,97,116,101,45,115,109,97,108,108,58,32,50,112,120,59,32,125,10,64,117,116,105,108,105,116,121,32,103,117,116,116,101,114,45,42,32,123,10,32,32,32,32,38,32,62,32,58,110,111,116,40,58,108,97,115,116,45,99,104,105,108,100,41,32,123,32,109,97,114,103,105,110,45,105,110,108,105,110,101,45,101,110,100,58,32,45,45,118,97,108,117,101,40,45,45,102,114,111,98,110,105,99,97,116,101,45,42,44,91,108,101,110,103,116,104,93,41,59,32,125,10,125,10,", Go "165:64,105,109,112,111,114,116,32,39,116,97,105,108,119,105,110,100,99,115,115,39,59,10,64,116,104,101,109,101,32,123,32,45,45,102,114,111,98,110,105,99,97,116,101,45,115,109,97,108,108,58,32,50,112,120,59,32,125,10,64,117,116,105,108,105,116,121,32,103,117,116,116,101,114,45,42,32,123,10,32,32,32,32,38,32,62,32,58,110,111,116,40,58,108,97,115,116,45,99,104,105,108,100,41,32,123,32,109,97,114,103,105,110,45,105,110,108,105,110,101,45,101,110,100,58,32,45,45,118,97,108,117,101,40,45,45,102,114,111,98,110,105,99,97,116,101,45,42,44,32,91,108,101,110,103,116,104,93,41,59,32,125,10,125,10,"
+--- PASS: TestSlot01Wave6WalkerPresentMutant (5.72s)
+=== RUN   TestSlot01Wave6WalkerKindMutant
+    slot01_wave6_test.go:170: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (walker), six arena nodes each
+    slot01_wave6_test.go:170: 9641 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:170: compiled collapse_normalize_value_function_arguments.a mutant caught at output line 7373: got "164:64,105,109,112,111,114,116,32,39,116,97,105,108,119,105,110,100,99,115,115,39,59,10,64,116,104,101,109,101,32,123,32,45,45,102,114,111,98,110,105,99,97,116,101,45,115,109,97,108,108,58,32,50,112,120,59,32,125,10,64,117,116,105,108,105,116,121,32,103,117,116,116,101,114,45,42,32,123,10,32,32,32,32,38,32,62,32,58,110,111,116,40,58,108,97,115,116,45,99,104,105,108,100,41,32,123,32,109,97,114,103,105,110,45,105,110,108,105,110,101,45,101,110,100,58,32,45,45,118,97,108,117,101,40,45,45,102,114,111,98,110,105,99,97,116,101,45,42,44,91,108,101,110,103,116,104,93,41,59,32,125,10,125,10,", Go "165:64,105,109,112,111,114,116,32,39,116,97,105,108,119,105,110,100,99,115,115,39,59,10,64,116,104,101,109,101,32,123,32,45,45,102,114,111,98,110,105,99,97,116,101,45,115,109,97,108,108,58,32,50,112,120,59,32,125,10,64,117,116,105,108,105,116,121,32,103,117,116,116,101,114,45,42,32,123,10,32,32,32,32,38,32,62,32,58,110,111,116,40,58,108,97,115,116,45,99,104,105,108,100,41,32,123,32,109,97,114,103,105,110,45,105,110,108,105,110,101,45,101,110,100,58,32,45,45,118,97,108,117,101,40,45,45,102,114,111,98,110,105,99,97,116,101,45,42,44,32,91,108,101,110,103,116,104,93,41,59,32,125,10,125,10,"
+--- PASS: TestSlot01Wave6WalkerKindMutant (6.00s)
+=== RUN   TestSlot01Wave6WalkerBailMutant
+    slot01_wave6_test.go:173: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (walker), six arena nodes each
+    slot01_wave6_test.go:173: 9641 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:173: compiled collapse_normalize_value_function_arguments.a mutant caught at output line 29: got "trace:2", Go "trace:1"
+--- PASS: TestSlot01Wave6WalkerBailMutant (5.84s)
+=== RUN   TestSlot01Wave6WalkerOrderMutant
+    slot01_wave6_test.go:178: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1284 tree batches (walker), six arena nodes each
+    slot01_wave6_test.go:178: 9641 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:178: compiled collapse_normalize_value_function_arguments.a mutant caught at output line 7380: got "165:64,105,109,112,111,114,116,32,39,116,97,105,108,119,105,110,100,99,115,115,39,59,10,64,116,104,101,109,101,32,123,32,45,45,102,114,111,98,110,105,99,97,116,101,45,115,109,97,108,108,58,32,50,112,120,59,32,125,10,64,117,116,105,108,105,116,121,32,103,117,116,116,101,114,45,42,32,123,10,32,32,32,32,38,32,62,32,58,110,111,116,40,58,108,97,115,116,45,99,104,105,108,100,41,32,123,32,109,97,114,103,105,110,45,105,110,108,105,110,101,45,101,110,100,58,32,45,45,118,97,108,117,101,40,45,45,102,114,111,98,110,105,99,97,116,101,45,42,44,32,91,108,101,110,103,116,104,93,41,59,32,125,10,125,10,", Go "42:99,97,108,99,40,45,45,109,111,100,105,102,105,101,114,40,45,45,116,101,120,116,32,45,45,108,105,110,101,45,104,101,105,103,104,116,41,32,42,32,50,41,"
+--- PASS: TestSlot01Wave6WalkerOrderMutant (6.15s)
+=== RUN   TestSlot01Wave6FrameworkMatchesCohere
+    slot01_wave6_test.go:187: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1294 registry batches, three snapshots each
+    slot01_wave6_test.go:187: 62112 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:187: compiled collapse_register_framework_variants.a mutant caught at output line 2: got "1000", Go "3"
+--- PASS: TestSlot01Wave6FrameworkMatchesCohere (5.12s)
+=== RUN   TestSlot01Wave6FrameworkLastOrderMutant
+    slot01_wave6_test.go:190: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1294 registry batches, three snapshots each
+    slot01_wave6_test.go:190: 62112 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:190: compiled collapse_register_framework_variants.a mutant caught at output line 1: got "3 5", Go "5 5"
+--- PASS: TestSlot01Wave6FrameworkLastOrderMutant (5.18s)
+=== RUN   TestSlot01Wave6FrameworkCopyMutant
+    slot01_wave6_test.go:193: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1294 registry batches, three snapshots each
+    slot01_wave6_test.go:193: 62112 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave6_test.go:193: compiled collapse_register_framework_variants.a mutant caught at output line 26: got "8:116,97,109,112,101,114,101,100,", Go "6:115,116,97,116,105,99,"
+--- PASS: TestSlot01Wave6FrameworkCopyMutant (4.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	57.721s
