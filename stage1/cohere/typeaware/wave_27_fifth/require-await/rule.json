@@ -1,13 +1,13 @@
 {
   "name": "require-await",
   "kinds": [
-    263,
-    219,
-    220,
-    175,
-    178,
-    179,
-    177
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "ArrowFunction",
+    "MethodDeclaration",
+    "GetAccessor",
+    "SetAccessor",
+    "Constructor"
   ],
   "factory": "create",
   "class": "Rule",

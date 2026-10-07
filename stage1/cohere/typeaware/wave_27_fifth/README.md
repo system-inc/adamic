@@ -1,7 +1,7 @@
 # Wave 27 fifth batch
 
 The three claimed core rules live in their own directories and export factories
-and handed-node callbacks. rule.json records pinned numeric SyntaxKind listeners.
+and handed-node callbacks. rule.json records typescript-go ast.Kind listener names.
 The owned driver caches each parser node once and dispatches only its listeners.
 String kind names are used only by the compatibility adapter to the existing
 parser and checker wire protocol. Rule callbacks use numeric kinds.
@@ -13,8 +13,9 @@ thenability, shadowing, traversal, messages, ranges and suggestion edits run
 natively. The bridge dispatch registration changes one physical line; no shared
 parser, generator or test harness was edited.
 
-The existing shared registration interfaces still need integration with numeric
-handed-node dispatch. These metadata files and factories are exercised by this
+The owned numeric compatibility adapter remains separate from named metadata.
+The existing shared registration interfaces still need integration with the owned
+handed-node driver. These metadata files and factories are exercised by this
 owned driver; this unit does not claim shared registry discovery or emitted
 JavaScript comparison. ValidTypeof supports requireStringLiterals in its Rule
 constructor, but the published differential gate covers default options only.

@@ -38,8 +38,10 @@ for name in ['require-await','symbol-description','valid-typeof']:assert ('\t'+n
 virtual=repo/'cohere/adamic_wave27_kinds.go';overlay=art/'kinds-overlay.json';overlay.write_text(json.dumps({'Replace':{str(virtual):str(source/'kinds_oracle.go.txt')}}));kindsOracle=art/'kinds-oracle';run('kinds-oracle-build',['go','build','-overlay',overlay,'-o',kindsOracle,virtual],cwd=repo/'cohere');data,err,_=run('kinds-oracle',[kindsOracle]);assert not err
 values=dict((name,int(value)) for name,value in (line.split('\t') for line in data.decode().splitlines()));declared=dict((name,int(value)) for name,value in re.findall(r'static readonly (\w+) = (\d+)',(source/'kinds.a').read_text()));assert values==declared
 expected={'symbol-description':['CallExpression'],'valid-typeof':['BinaryExpression'],'require-await':['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration','GetAccessor','SetAccessor','Constructor']}
-for name,kinds in expected.items():assert json.loads((source/name/'rule.json').read_text())['kinds']==[values[k] for k in kinds]
-print(len(values),'numeric SyntaxKinds and three listener declarations match Go enum',flush=True)
+for name,kinds in expected.items():
+ assert all(kind in values for kind in kinds)
+ assert json.loads((source/name/'rule.json').read_text())['kinds']==kinds
+print(len(values),'internal numeric constants and three named listener declarations match Go enum',flush=True)
 asanarchive=art/'checker-asan.a';asan=art/'native-asan';library('checker-asan',asanarchive,True);build('native-asan',source/'suite.a',asan,asanarchive,True);compare('controls-asan',asan,config,manifest)
 populations=[]
 for name,variable,setting in [('repository','ADAMIC_WAVE27_REPOSITORY_MANIFEST',repo/'tsconfig.json'),('compiler','ADAMIC_WAVE27_COMPILER_MANIFEST',Path(os.environ['ADAMIC_TYPESCRIPT_SOURCE'])/'src/compiler/tsconfig.json')]:
