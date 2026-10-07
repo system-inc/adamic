@@ -1,0 +1,35 @@
+import { decodeJson } from 'adamic';
+for (const text of ['0.1', '-0', '1e400', '123456789012345678901234567890', '5e-324', '1.7976931348623157e308', '9007199254740993']) {
+ const result = decodeJson<number>(text);
+ if (result.kind === 'Ok') console.log(`${result.value.toPrecision(17)} ${1 / result.value}`);
+ else console.log(result.message);
+}
+for (const text of ['"hello"', '"\\uD800"', '"\\uDC00"', '"\\uD83C\\uDF0D"', '"🌍"', '"\\\"\\\\\\/\\b\\f\\n\\r\\t\\u0000"']) {
+ const result = decodeJson<string>(text);
+ if (result.kind === 'Ok') {
+  console.log(`length ${result.value.length}`);
+  for (let index = 0; index < result.value.length; index++) console.log(`${result.value.charCodeAt(index)}`);
+ }
+ else console.log(result.message);
+}
+for (const text of ['true', 'false', '0', 'null']) {
+ const result = decodeJson<boolean>(text);
+ if (result.kind === 'Ok') console.log(`${result.value}`);
+ else console.log(result.message);
+}
+for (const text of ['"Morning"', '"Evening"', '"Anytime"', '"Noon"', '42']) {
+ const result = decodeJson<'Morning' | 'Evening' | 'Anytime'>(text);
+ console.log(result.kind);
+}
+for (const text of ['1', '2', '3']) console.log(decodeJson<1 | 2>(text).kind);
+for (const text of ['true', 'false']) console.log(decodeJson<true>(text).kind);
+for (const text of ['"wrong"', 'null', 'false', '{}', '[]']) console.log(decodeJson<number>(text).kind);
+
+console.log(decodeJson<'\uD800'>('"\\uD800"').kind);
+console.log(decodeJson<'🌍'>('"\\uD83C\\uDF0D"').kind);
+console.log(decodeJson<'\uD800'>('"wrong"').kind);
+
+const surrogate = decodeJson<'\uD800'>('"wrong"');
+if (surrogate.kind === 'Error') console.log(surrogate.message);
+
+console.log(decodeJson<1e400>('1e400', /* a trailing comma keeps its syntax */).kind);

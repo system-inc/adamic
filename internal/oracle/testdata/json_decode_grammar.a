@@ -1,0 +1,9 @@
+import { decodeJson } from 'adamic';
+for (const text of ['', ' ', '[1,]', '{"x":1,}', '01', '-01', 'NaN', 'Infinity', '"unterminated', '"control\ncharacter"', 'null garbage', '{', '[', '{x:1}', '{"x" 1}', '{"x":}', '[1 2]', '-', '1.', '1e', '1e+', 'tru', '"\\x"', '"\\u12xz"', '\u00a01', '\ufeff1', '\v1', '\f1', '\r\n  {"x":1\n   ?}', '"🌍" x', '"\\uD800" x']) {
+ const result = decodeJson<number>(text);
+ console.log(result.kind === 'Error' ? result.message : 'unexpected Ok');
+}
+for (const text of [' \t\r\n1\n\t ', '0', '-0', '1E+2', '1e-2']) {
+ const result = decodeJson<number>(text);
+ console.log(result.kind === 'Ok' ? `${result.value}` : result.message);
+}
