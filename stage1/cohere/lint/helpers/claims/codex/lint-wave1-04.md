@@ -36,3 +36,10 @@ This claim is pushed before code. Re-fetch all origin claims before the next hel
    and RecordingFS are explicit dependencies, owned separately. Compare the actual
    Go function on six-consumer inputs and dependency controls on all three targets.
    This claim is pushed before code; projectRootOf was pushed as 482d36bf first.
+
+Delivery status: both claimed helpers are implemented, tested and pushed.
+projectRootOf: 482d36bf; loadDesignSystemForProgram: bb0fd01e.
+Five compiling semantic mutants are caught across Node, emitted JavaScript and
+sanitized native execution by the actual Go comparison. See the owned REPORT.md
+and evidence/both-tests.log for the exact dependency boundaries and residual
+rule prerequisites. No claim of whole-rule/native CSS engine completion is made.

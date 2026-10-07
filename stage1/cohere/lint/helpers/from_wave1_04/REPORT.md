@@ -1,8 +1,8 @@
-Built: tailwind.projectRootOf in project_root.a, preserving configured-file preference, POSIX filepath.Dir and lazy fallback reads.
-Commits: claim 398cedef was pushed before implementation; projectRootOf implementation 482d36bf; load wrapper claim 4e028e6f was pushed before code.
-Commands and outputs: owned four-way comparison and three compiling mutants PASS in 12.757s; 2,935 cases and 85,445 identical bytes.
-Mutants: accept empty configured path, omit parent cleaning, and clean fallback cwd all finish cleanly and differ from actual Go on all three execution paths.
-Not covered: Windows filepath semantics, concurrent program mutation, full program/CSS engine integration, or a full repository gate.
+Built: projectRootOf and loadDesignSystemForProgram, two .a helpers removing two prerequisites from each of six Tailwind rules.
+Commits: rule work pushed through 3aa2bc62; helper claims 398cedef and 4e028e6f precede implementations 482d36bf and bb0fd01e.
+Commands and outputs: setup PASS 76s, nproc 5; both owned suites PASS 15.786s; filtered input oracle PASS 5.960s; go vet PASS.
+Mutants: empty configured path, parent cleaning, fallback normalization, discarded snapshot and early snapshot all compile and are caught only by actual Go byte comparison on source Node, emitted JavaScript and sanitized native.
+Not covered: full native program/CSS engine integration, Windows path semantics, concurrent mutation, a full repository gate or elimination of the six rules' other prerequisites.
 
 This is one helper per .a file. The options result is a structural interface: the initial class-returning callback was explicitly refused by stage 0's nominal ancestry check. The owned model was changed to the recommended interface; no compiler or shared harness was edited. The superseded compile refusal is in evidence/first-nominal-refusal.log and is not credited as a mutant catch.
 
@@ -65,3 +65,10 @@ twelve rule/helper dependency removals total, zero final blockers removed.
 
 Before the second claim, all 428 origin refs and 17 distinct helper claim blobs
 were inspected; the selected helper tied the highest unclaimed named count at six.
+
+Final combined command after the owned build harness was parameterized for both
+helpers: ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers/from_wave1_04
+-count=1 -v -timeout=10m > .../evidence/both-tests.log 2>&1: PASS 15.786s.
+Both baseline comparisons and all five semantic mutants pass. go vet over the
+same package exits zero with empty evidence/both-vet.log. These bounded checks
+and the filtered external input oracle are the gate run; no full gate is claimed.
