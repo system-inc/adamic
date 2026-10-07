@@ -1,0 +1,21 @@
+import { panic } from 'adamic';
+import { normalizeBigIntLiteral } from './control_flow_normalize_bigint_literal.a';
+export interface TruthyNode {
+    present: boolean;
+    kind: number;
+    text: string;
+    inner: TruthyNode[];
+}
+// The supplied node preserves parentheses and scanner text; no parser fetches or kind names.
+export function isAlwaysTruthyTest(input: TruthyNode): boolean {
+    let node = input;
+    while(node.present && node.kind === 218 && node.inner.length > 0) {
+        node = node.inner[0] ?? panic('missing parenthesized expression');
+    }
+    if(!node.present) { panic('nil input to isAlwaysTruthyTest'); }
+    if(node.kind === 111 || node.kind === 13) { return true; }
+    if(node.kind === 8) { return node.text !== '0'; }
+    if(node.kind === 9) { return normalizeBigIntLiteral(node.text) !== '0'; }
+    if(node.kind === 10) { return node.text !== ''; }
+    return false;
+}

@@ -1,0 +1,19 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { isAlwaysTruthyTest, type TruthyNode } from './control_flow_is_always_truthy_test.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+function nodeOf(item: number): TruthyNode {
+    const inner: TruthyNode[] = [];
+    for(const child of json.node(json.field(item, 'inner')).children) { inner.push(nodeOf(child)); }
+    return {
+        present: json.node(json.field(item, 'present')).text === 'true',
+        kind: json.node(json.field(item, 'kind')).number,
+        text: json.node(json.field(item, 'text')).text,
+        inner
+    };
+}
+for(const item of json.node(root).children) { console.log(`${isAlwaysTruthyTest(nodeOf(item))}`); }

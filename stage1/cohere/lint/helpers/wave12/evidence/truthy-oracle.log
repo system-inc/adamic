@@ -1,0 +1,27 @@
+=== RUN   TestAlwaysTruthyTestMatchesGo
+    truthy_test.go:58: actual Go numeric parenthesized/true/regex/numeric/bigint/string kinds: 218 111 13 8 9 10
+    truthy_test.go:66: 30458 consumer AST and literal/parenthesis controls, 182218 identical Go/source Node/emitted JS/sanitized native bytes
+=== RUN   TestAlwaysTruthyTestMatchesGo/zero-bigint
+    truthy_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 30003
+    truthy_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 30003
+    truthy_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 30003
+=== RUN   TestAlwaysTruthyTestMatchesGo/skip-parentheses
+    truthy_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 29569
+    truthy_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 29569
+    truthy_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 29569
+=== RUN   TestAlwaysTruthyTestMatchesGo/empty-string
+    truthy_test.go:93: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 57
+    truthy_test.go:93: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 57
+    truthy_test.go:93: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 57
+--- PASS: TestAlwaysTruthyTestMatchesGo (18.31s)
+    --- PASS: TestAlwaysTruthyTestMatchesGo/zero-bigint (4.27s)
+    --- PASS: TestAlwaysTruthyTestMatchesGo/skip-parentheses (4.27s)
+    --- PASS: TestAlwaysTruthyTestMatchesGo/empty-string (4.54s)
+=== RUN   TestAlwaysTruthyNilRefused
+    truthy_test.go:115: backend 0 rejects nil before any successful observation
+    truthy_test.go:115: backend 1 rejects nil before any successful observation
+    truthy_test.go:115: backend 2 rejects nil before any successful observation
+    truthy_test.go:115: backend 3 rejects nil before any successful observation
+--- PASS: TestAlwaysTruthyNilRefused (1.79s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	20.113s
