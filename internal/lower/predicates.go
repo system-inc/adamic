@@ -364,6 +364,19 @@ func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
 		return nil
 	}
 	function := parameter.Parent
+	if function.Kind == ast.KindFunctionDeclaration && function.Body() == nil {
+		implementation := l.censusImplementation(function)
+		if implementation == nil {
+			return nil
+		}
+		for index, candidate := range function.Parameters() {
+			if candidate == parameter && index < len(implementation.Parameters()) {
+				parameter = implementation.Parameters()[index]
+				function = implementation
+				break
+			}
+		}
+	}
 	if !ast.IsFunctionLike(function) || function.Body() == nil {
 		return nil
 	}

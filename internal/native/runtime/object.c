@@ -232,4 +232,5 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);
+
 }
