@@ -98,3 +98,34 @@ exit 70, and the native React HIR/SSA prerequisites are absent on this branch.
 No shared parser or harness files were edited. See WAVE_22_FIFTH_REPORT.md and
 validation-wave-22-fifth for the reproduction and production Go test results.
 The twelve earlier rules remain complete and pushed; no more rules are claimed.
+
+## Fifth batch parked
+
+Per Ahra's explicit parking instruction, the following reservations are parked
+and count as finished for the landing-first cap:
+
+- react-hooks/set-state-in-effect
+- react-hooks/set-state-in-render
+- react-hooks/static-components
+
+Blocker: native React high-level IR, SSA, capture/value propagation and
+dominator analyses. Cohere's analysis modules are being ported under #dnv6f2c;
+JSX support is landing on area/stage1-lint. The existing reproduction and Go
+tests remain in WAVE_22_FIFTH_REPORT.md. These are not completed native ports.
+
+## Sixth batch claim
+
+The branch includes current main f8013f0ba and its twelve completed rule ports
+were re-green and pushed as 0aeeea235 before this selection. All origin heads
+were fetched: 529 refs and 33 distinct Markdown claim documents were scanned.
+The next eligible rules, now reserved for this branch, are:
+
+1. react/jsx-fragments
+2. react/jsx-no-undef
+3. react/no-adjacent-inline-elements
+
+react/jsx-no-constructed-context-values was skipped because its memo stability
+path requires capture/alias escape analysis, the parked prerequisite. The
+selection inventory and inspected refs are in validation-wave-22-sixth/selection.json.
+This claim is pushed before implementation. New rule directories will declare
+rule.json kinds and use .a listener sources receiving the provided node.
