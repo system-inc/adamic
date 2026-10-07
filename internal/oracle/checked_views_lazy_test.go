@@ -21,7 +21,7 @@ func TestCheckedViewLazyUnread(t *testing.T) {
 			sanitized, binary := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if difference := disagreement(truth, got); difference != "" {
-					t.Fatal(difference)
+					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}
 			if report := leaks(t, program, binary); report != "" {
@@ -45,5 +45,21 @@ func TestCheckedViewLazyHelperMutant(t *testing.T) {
 			}
 			t.Logf("caught helper mutant: %v", err)
 		})
+	}
+}
+
+func TestCheckedViewLazyMissingNameMutant(t *testing.T) {
+	program, path := interfaceFixture(t, "lazy/missing-name-mutant")
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "undefined\n" {
+		t.Fatalf("Node source mutant: %#v", truth)
+	}
+	sanitized, _ := nativelyUncached(t, program)
+	for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		message := string(got.stderr)
+		if got.exitCode != 70 || !strings.Contains(message, "name") || !strings.Contains(message, "string") {
+			t.Fatalf("supported helper read ran on: %#v", got)
+		}
+		t.Logf("caught missing-name mutant: %s", message)
 	}
 }

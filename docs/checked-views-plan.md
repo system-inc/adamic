@@ -384,3 +384,29 @@ lower package tests still report failures in the merged pre-lazy baseline.
 Phantom-array, predicate marker, overload diagnostic, and nested-function failures
 were reproduced against c01ae313 using a Go source overlay. Those are not claimed
 as a green gate; reconciliation belongs with the integration branch.
+
+### Lazy admission evidence complete, October 7, 2026
+
+Core lazy descriptors and demanded read refusals have passed the focused view suite.
+The exact census matches 2,936 original spans: 1,758 tagged and 1,178 untagged target
+contracts intern descriptors. Unchanged production compilation is still 0 tagged,
+0 untagged: Adamic checker policy stops the upstream project before lowering.
+The family/read inventory, commands, mutants and limits are in
+[the lazy admission report](../stage3/interface-downcasts/lazy/REPORT.md).
+
+Direct, generic, callback and object-field helper mutants refuse at the opaque read;
+a missing-name helper mutant exits 70 in sanitized native, release native and JS.
+Deleting the demand guard is caught by every wired array consumer control, wider
+helper and Unknown flow controls, and the source helper controls. Positive tagged,
+untagged and unread mixed-union fixtures match Node in both backends.
+
+The full JavaScript package passes. Full native tests fail five graph-region tests,
+including sanitizer use-after-free and leaks; a c01ae313 source overlay reproduces
+all five. Full lower tests likewise retain reproduced merged-baseline failures.
+An extra Error.code probe exits 70 at the native read with an unsupported representation,
+rather than matching Node's missing optional field result. It is a recorded limit,
+not a successful positive fixture. Two old eager optional-Error compile assertions
+were updated to expect lazy admission. The final focused lower and view oracle tests
+pass. The integration branch was still absent from origin at the last check. This
+work is available on its own branch; whole-project compilation and a green integration
+gate are not claimed.
