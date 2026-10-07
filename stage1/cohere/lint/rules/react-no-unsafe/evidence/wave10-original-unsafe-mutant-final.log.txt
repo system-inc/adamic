@@ -1,0 +1,42 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/unsafe_component_detection_disabled
+    lint_test.go:496: unsafe_component_detection_disabled caught on Node: case 24 line 558: port "fixed\tclass Foo extends React.Component { UNSAFE_componentWillMount() {} }\\u000a", Go "/tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled3284863742/007/react-no-unsafe-0.ts:1:37"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled3284863742/007/react-no-unsafe-0.ts:1:37
+          react/no-unsafe  `componentWillMount` runs before the first render and is not guaranteed to run exactly once, so work started there can be discarded or repeated when React interrupts the render. Move the work to `componentDidMount`, which runs after the tree is committed and cannot be thrown away.
+        
+        range 36 61 unsafeComponentWillMount 		
+        fixed	class Foo extends React.Component { UNSAFE_componentWillMount() {} }\u000a
+    lint_test.go:496: unsafe_component_detection_disabled caught on emitted JavaScript: case 24 line 558: port "fixed\tclass Foo extends React.Component { UNSAFE_componentWillMount() {} }\\u000a", Go "/tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled3284863742/007/react-no-unsafe-0.ts:1:37"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled3284863742/007/react-no-unsafe-0.ts:1:37
+          react/no-unsafe  `componentWillMount` runs before the first render and is not guaranteed to run exactly once, so work started there can be discarded or repeated when React interrupts the render. Move the work to `componentDidMount`, which runs after the tree is committed and cannot be thrown away.
+        
+        range 36 61 unsafeComponentWillMount 		
+        fixed	class Foo extends React.Component { UNSAFE_componentWillMount() {} }\u000a
+    lint_test.go:496: unsafe_component_detection_disabled caught on native: case 24 line 558: port "fixed\tclass Foo extends React.Component { UNSAFE_componentWillMount() {} }\\u000a", Go "/tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled3284863742/007/react-no-unsafe-0.ts:1:37"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled3284863742/007/react-no-unsafe-0.ts:1:37
+          react/no-unsafe  `componentWillMount` runs before the first render and is not guaranteed to run exactly once, so work started there can be discarded or repeated when React interrupts the render. Move the work to `componentDidMount`, which runs after the tree is committed and cannot be thrown away.
+        
+        range 36 61 unsafeComponentWillMount 		
+        fixed	class Foo extends React.Component { UNSAFE_componentWillMount() {} }\u000a
+--- PASS: TestMutants (17.47s)
+    --- PASS: TestMutants/unsafe_component_detection_disabled (15.29s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	17.478s

@@ -1,0 +1,6 @@
+{
+  "name": "unsafe_component_detection_disabled",
+  "file": "rule.a",
+  "from": "!object && this.component(ancestor)",
+  "to": "false && this.component(ancestor)"
+}

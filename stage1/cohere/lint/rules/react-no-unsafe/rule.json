@@ -1,0 +1,15 @@
+{
+  "name": "react/no-unsafe",
+  "kinds": [
+    "MethodDeclaration",
+    "GetAccessor",
+    "SetAccessor",
+    "PropertyAssignment"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleUnsafe",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoUnsafe"
+}

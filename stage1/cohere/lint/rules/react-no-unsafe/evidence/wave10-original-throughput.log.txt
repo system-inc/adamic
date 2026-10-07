@@ -1,0 +1,40 @@
+=== RUN   TestOriginalThroughput
+    owned_original_test.go:68: react/no-unsafe Go round0 count=1000 duration=233.830309ms
+    owned_original_test.go:68: react/no-unsafe Node round0 count=1000 duration=1.38039577s
+    owned_original_test.go:68: react/no-unsafe native round0 count=1000 duration=1.143174682s
+    owned_original_test.go:68: react/no-unsafe Go round1 count=1000 duration=241.493466ms
+    owned_original_test.go:68: react/no-unsafe Node round1 count=1000 duration=1.443390221s
+    owned_original_test.go:68: react/no-unsafe native round1 count=1000 duration=1.418358221s
+    owned_original_test.go:68: react/no-unsafe Go round2 count=1000 duration=221.308381ms
+    owned_original_test.go:68: react/no-unsafe Node round2 count=1000 duration=1.182635307s
+    owned_original_test.go:68: react/no-unsafe native round2 count=1000 duration=1.249663751s
+    owned_original_test.go:68: react/no-unsafe Go round3 count=1000 duration=248.629974ms
+    owned_original_test.go:68: react/no-unsafe Node round3 count=1000 duration=1.107984443s
+    owned_original_test.go:68: react/no-unsafe native round3 count=1000 duration=1.232770001s
+    owned_original_test.go:68: react/no-unsafe Go round4 count=1000 duration=271.343647ms
+    owned_original_test.go:68: react/no-unsafe Node round4 count=1000 duration=1.156382317s
+    owned_original_test.go:68: react/no-unsafe native round4 count=1000 duration=1.471453441s
+    owned_original_test.go:70: react/no-unsafe native 874.76 findings/s (1000, 78 files, best of five)
+    owned_original_test.go:70: react/no-unsafe Node 902.54 findings/s (1000, 78 files, best of five)
+    owned_original_test.go:70: react/no-unsafe Go 4518.58 findings/s (1000, 78 files, best of five)
+    owned_original_test.go:68: sort-vars Go round0 count=1018 duration=295.154041ms
+    owned_original_test.go:68: sort-vars Node round0 count=1018 duration=1.039976753s
+    owned_original_test.go:68: sort-vars native round0 count=1018 duration=1.231982743s
+    owned_original_test.go:68: sort-vars Go round1 count=1018 duration=255.342033ms
+    owned_original_test.go:68: sort-vars Node round1 count=1018 duration=898.711606ms
+    owned_original_test.go:68: sort-vars native round1 count=1018 duration=1.161860846s
+    owned_original_test.go:68: sort-vars Go round2 count=1018 duration=217.421575ms
+    owned_original_test.go:68: sort-vars Node round2 count=1018 duration=809.252741ms
+    owned_original_test.go:68: sort-vars native round2 count=1018 duration=1.306872893s
+    owned_original_test.go:68: sort-vars Go round3 count=1018 duration=202.723229ms
+    owned_original_test.go:68: sort-vars Node round3 count=1018 duration=869.135366ms
+    owned_original_test.go:68: sort-vars native round3 count=1018 duration=1.241571116s
+    owned_original_test.go:68: sort-vars Go round4 count=1018 duration=235.053403ms
+    owned_original_test.go:68: sort-vars Node round4 count=1018 duration=834.748372ms
+    owned_original_test.go:68: sort-vars native round4 count=1018 duration=1.291526108s
+    owned_original_test.go:70: sort-vars native 876.18 findings/s (1018, 78 files, best of five)
+    owned_original_test.go:70: sort-vars Node 1257.95 findings/s (1018, 78 files, best of five)
+    owned_original_test.go:70: sort-vars Go 5021.62 findings/s (1018, 78 files, best of five)
+--- PASS: TestOriginalThroughput (34.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	34.382s

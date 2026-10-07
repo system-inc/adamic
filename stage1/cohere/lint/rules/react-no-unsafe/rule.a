@@ -1,0 +1,57 @@
+import type { RuleContext } from '../../context.ts';
+import { ids, messages } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    kind(index: number): string { return index < 0 ? '' : this.context.node(index).kind; }
+    child(index: number, at: number): number { return index < 0 ? -1 : this.context.node(index).children[at] ?? -1; }
+    base(index: number): boolean {
+        if(this.kind(index) === 'Identifier') { return ['Component', 'PureComponent'].includes(this.context.node(index).text); }
+        if(this.kind(index) !== 'PropertyAccessExpression') { return false; }
+        const receiver = this.child(index, 0);
+        const name = this.child(index, 1);
+        return this.kind(receiver) === 'Identifier' && this.context.node(receiver).text === 'React' && this.kind(name) === 'Identifier' && ['Component', 'PureComponent'].includes(this.context.node(name).text);
+    }
+    factory(index: number): boolean {
+        if(this.kind(index) !== 'CallExpression') { return false; }
+        const callee = this.context.unwrap(this.child(index, 0));
+        if(this.kind(callee) === 'Identifier') { return this.context.node(callee).text === 'createReactClass'; }
+        if(this.kind(callee) !== 'PropertyAccessExpression') { return false; }
+        const receiver = this.context.unwrap(this.child(callee, 0));
+        const name = this.child(callee, 1);
+        return this.kind(receiver) === 'Identifier' && this.context.node(receiver).text === 'React' && this.kind(name) === 'Identifier' && this.context.node(name).text === 'createReactClass';
+    }
+    component(index: number): boolean {
+        if(!['ClassDeclaration', 'ClassExpression'].includes(this.kind(index))) { return false; }
+        for(const child of this.context.node(index).children) {
+            if(this.kind(child) !== 'HeritageClause') { continue; }
+            for(const type of this.context.node(child).children) {
+                if(this.kind(type) === 'ExpressionWithTypeArguments' && this.base(this.child(type, 0))) { return true; }
+            }
+        }
+        return false;
+    }
+    visit(index: number): void {
+        let key = -1;
+        for(const child of this.context.node(index).children) {
+            const kind = this.kind(child);
+            if(kind.endsWith('Keyword') || kind === 'AsteriskToken') { continue; }
+            key = child; break;
+        }
+        if(this.kind(key) === 'ComputedPropertyName') { key = this.child(key, 0); }
+        if(!['Identifier', 'StringLiteral', 'NumericLiteral'].includes(this.kind(key))) { return; }
+        const name = this.context.node(key).text;
+        const names = ['UNSAFE_componentWillMount', 'UNSAFE_componentWillReceiveProps', 'UNSAFE_componentWillUpdate', 'componentWillMount', 'componentWillReceiveProps', 'componentWillUpdate'];
+        const at = names.indexOf(name);
+        if(at < 0 || (at >= 3 && this.context.settings.read('checkaliases', 'false') !== 'true')) { return; }
+        const object = this.kind(index) === 'PropertyAssignment';
+        let ancestor = index;
+        while(ancestor >= 0) {
+            if(this.factory(ancestor) || (!object && this.component(ancestor))) {
+                this.context.report(key, 'react/no-unsafe', ids[at % 3] ?? '', messages[at % 3] ?? '', '', '', ''); return;
+            }
+            ancestor = this.context.parents[ancestor] ?? -1;
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
