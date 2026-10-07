@@ -59,3 +59,7 @@ remain intact; this receipt only adds owned status/evidence files. Because that
 branch is not landing-ready, the cap prevents any new helper claim. No fresh rule
 oracle pass or rule mutant catch is claimed on current main, and the full
 repository gate was not run.
+
+## Authorized parking
+
+@system_cohere_lint explicitly directs this branch to remain unrebased until the shared harness #zmh9v36 lands and the fleet names its area SHA. The harness is built at ab70f38d4 on origin/lint-rules/harness. Do not rewrite this rule history or validate through a scratch harness. Await the rule ownership ledger before retaining duplicate ports. This pushed branch is parked under that explicit exception; no shared harness file is changed.
