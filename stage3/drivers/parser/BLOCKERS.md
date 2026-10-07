@@ -1,3 +1,42 @@
+# Found behind a stub: follow-on Map initialization stops
+
+This is exploratory evidence, not a source adaptation and not a native proof.
+The validated slice and committed compiler remain unchanged. Reordered sources
+stay untracked under /tmp and are never committed or pushed.
+
+**Actual first blocker remains core.ts:11:52**, emptyMap's new Map call before
+enum initialization. To investigate only that declaration, copied the validated
+slice into /tmp/parser-after-runtime-enum-stub-slice, removed emptyMap with its
+attached @internal comment from core.ts, and inserted the exact declaration
+immediately after the final non-const top-level enum, ModuleKind, in types.ts.
+The existing compiler barrel exports both modules, so no import, export-facade
+or other declaration was rewritten. Only those two source files differ.
+This deliberately changes evaluation order and is a diagnostic stub, not an
+accepted semantics-preserving repair.
+
+| Measurement | Result |
+| --- | --- |
+| Full slice, **found behind a stub** | debug.ts:333:29: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet |
+| Minimal probe, **found behind a stub**, moving emptyMap after Pending | native-enum-map-after.a:4:52: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet |
+
+The exact statement is `const enumMemberCache = new Map<Record<string, string | number>, SortedReadonlyArray<[number, string]>>();`.
+
+The full-slice result is still the global enum-initialization guard, now at
+Debug's enumMemberCache initializer. No further initializer was reordered and
+no compiler check was disabled. The minimal reordered probe exposes unsupported
+never-key Map storage after the enum guard clears; that is a separate probe
+finding, not a claimed second result on the complete slice.
+
+A first local move after core's existing AssertionLevel const enum merely
+relocates the same core failure to line 693. The guard tracks pending ordinary
+enums across all modules; a const enum does not decrement that count. This
+explains why the one declaration was moved to the runtime enum's module in
+the actual exploratory attempt. Evidence/report.json records exact diagnostics,
+paths and original source hashes. These findings belong to compiler fixes;
+no temporary adaptation 65 or other adaptation is added.
+
+---
+
 # Final six-input retry: same enum-initialization NotYet, both compile modes
 
 Unpushed fresh scratch starts at front-2 860a0d5 (779ff9d ancestor verified),
