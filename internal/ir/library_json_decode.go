@@ -1,5 +1,7 @@
 package ir
 
+import "encoding/json"
+
 // JSONDecodeSchema is a graph, so recursive data types need no runtime type expansion.
 // Only the type descriptor is shared with Node; its parser and validator are independent.
 type JSONDecodeSchema struct {
@@ -16,10 +18,21 @@ type JSONDecodeNode struct {
 	Number            float64           `json:"-"`
 	Boolean           bool              `json:"boolean,omitempty"`
 	Children          []int             `json:"children,omitempty"`
-	Fields            []JSONDecodeField `json:"fields,omitempty"`
+	Fields            []JSONDecodeField `json:"fields"`
 	DiscriminantUnits []uint16          `json:"discriminantUnits,omitempty"`
 	Discriminant      string            `json:"discriminant,omitempty"`
 }
+
+// Every descriptor has a fields array. Empty tuples and objects use [], never null or omission.
+func (node JSONDecodeNode) MarshalJSON() ([]byte, error) {
+	type descriptor JSONDecodeNode
+	value := descriptor(node)
+	if value.Fields == nil {
+		value.Fields = []JSONDecodeField{}
+	}
+	return json.Marshal(value)
+}
+
 type JSONDecodeField struct {
 	Name      string   `json:"name"`
 	NameUnits []uint16 `json:"nameUnits,omitempty"`

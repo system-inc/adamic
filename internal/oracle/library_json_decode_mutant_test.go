@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
@@ -185,6 +186,41 @@ func TestJSONDecodeFieldPresenceMutants(t *testing.T) {
 				t.Fatalf("mutant survived: %q", diff)
 			}
 			t.Logf("%s: caught only by Node stdout comparison", c.name)
+		})
+	}
+}
+
+// Restore the old omission in the emitted descriptor, leaving valid JavaScript and the source
+// oracle untouched. Each empty-shape fixture must catch its validator's TypeError at runtime.
+func TestJSONDecodeEmptyFieldsMutant(t *testing.T) {
+	for _, name := range []string{"json_decode_empty_tuple.a", "json_decode_empty_object.a"} {
+		t.Run(name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || len(truth.stderr) != 0 {
+				t.Fatalf("reference failed: %s", truth.stderr)
+			}
+			code := javascript.JavaScript(program)
+			mutant := strings.ReplaceAll(code, `,"fields":[]`, "")
+			if mutant == code {
+				t.Fatal("mutant changed nothing")
+			}
+			mutantPath := filepath.Join(t.TempDir(), "omitted-fields.mjs")
+			if err := os.WriteFile(mutantPath, []byte(mutant), 0600); err != nil {
+				t.Fatal(err)
+			}
+			got := onNode(t, mutantPath)
+			if got.exitCode != 70 || !strings.Contains(string(got.stderr), "TypeError") || disagreement(truth, got) == "" {
+				t.Fatalf("omission survived or was caught outside runtime comparison: exit %d stderr %s", got.exitCode, got.stderr)
+			}
+			t.Log("empty fields omitted: caught by fixture's Node comparison (TypeError, exit 70)")
 		})
 	}
 }

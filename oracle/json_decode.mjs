@@ -120,7 +120,7 @@ function validate(value, schema, index, path) {
  }
  if (node.kind === 'object') {
   const result = {};
-  for (const field of node.fields ?? []) {
+  for (const field of node.fields) {
    const name = fieldName(field);
    if (!Object.hasOwn(value, name)) {
     if (field.optional) continue;

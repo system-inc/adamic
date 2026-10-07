@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-var jsonDecodeFixtures = []string{"json_decode_supplement.a", "json_decode_scalars.a", "json_decode_objects.a", "json_decode_grammar.a", "json_decode_depth.a"}
+var jsonDecodeFixtures = []string{"json_decode_supplement.a", "json_decode_scalars.a", "json_decode_objects.a", "json_decode_grammar.a", "json_decode_depth.a", "json_decode_empty_tuple.a", "json_decode_empty_object.a"}
 
 func init() {
 	for _, name := range jsonDecodeFixtures {
