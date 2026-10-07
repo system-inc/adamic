@@ -1,0 +1,6 @@
+{
+  "name": "whitelist_widened",
+  "file": "rule.a",
+  "from": "!this.allowed.includes(source)",
+  "to": "!this.allowed.some((entry) => source.startsWith(entry))"
+}

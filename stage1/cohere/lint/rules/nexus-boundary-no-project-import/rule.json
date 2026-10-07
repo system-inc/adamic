@@ -1,0 +1,13 @@
+{
+  "name": "nexus/boundary-no-project-import",
+  "kinds": [
+    "ImportDeclaration",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNexusProjectImport",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestBoundaryNoProjectImport"
+}

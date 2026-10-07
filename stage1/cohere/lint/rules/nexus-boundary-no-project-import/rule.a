@@ -1,0 +1,68 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { specifier } from './specifier.a';
+import { OptionsJson } from '../../helpers/options_json.ts';
+import { forbiddenProjectImport } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly enabled: boolean;
+    readonly allowed: readonly string[];
+    constructor(context: RuleContext, directory: string, allowed: readonly string[]) {
+        this.context = context;
+        this.allowed = allowed;
+        this.enabled = directory !== '' && context.parser.path.split('\\').join('/').includes(directory);
+    }
+    visit(index: number): void {
+        if (!this.enabled) return;
+        const target = specifier(this.context, index);
+        if (target < 0) return;
+        const source = this.context.node(target).text;
+        if ((source === '@project' || source.startsWith('@project/')) && !this.allowed.includes(source)) {
+            this.context.report(target, 'nexus/boundary-no-project-import', 'forbiddenProjectImport', forbiddenProjectImport, '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule {
+    let directory = '';
+    let allowed: string[] = [];
+    if (!context.enabled('nexus/boundary-no-project-import')) return new Rule(context, directory, allowed);
+    const json = new OptionsJson(context.settings.text === '' ? 'null' : context.settings.text);
+    const root = json.parse();
+    if (root < 0) panic('invalid project import options JSON');
+    const object = json.node(root);
+    if (object.kind === 'null') return new Rule(context, directory, allowed);
+    if (object.kind !== 'object') panic('project import options must be an object');
+    // Typed Go decoding processes duplicates in source order: null leaves a string field unchanged.
+    // Re-read the validated object through the helper's value reader rather than its deduplicated map.
+    json.position = 0;
+    json.skip();
+    json.position++;
+    json.skip();
+    while (json.source.slice(json.position, json.position + 1) !== '}') {
+        const key = json.string().toLowerCase();
+        json.skip();
+        json.position++;
+        const valueIndex = json.value(1);
+        if (valueIndex < 0 || json.error !== '') panic('invalid project import option value');
+        const value = json.node(valueIndex);
+        if (key === 'librarydirectory') {
+            if (value.kind !== 'null' && value.kind !== 'string') panic('libraryDirectory must be a string');
+            if (value.kind === 'string') directory = value.text;
+        } else if (key === 'allowed') {
+            allowed = [];
+            if (value.kind !== 'null' && value.kind !== 'array') panic('allowed must be a string array');
+            for (const child of value.children) {
+                const name = json.node(child);
+                if (name.kind !== 'string' && name.kind !== 'null') panic('allowed item must be a string');
+                allowed.push(name.kind === 'null' ? '' : name.text);
+            }
+        }
+        json.skip();
+        const separator = json.source.slice(json.position, json.position + 1);
+        if (separator === '}') break;
+        if (separator !== ',') panic('invalid project import option separator');
+        json.position++;
+        json.skip();
+    }
+    return new Rule(context, directory, allowed);
+}

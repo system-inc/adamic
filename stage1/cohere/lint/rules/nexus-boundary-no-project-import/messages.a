@@ -1,0 +1,1 @@
+export const forbiddenProjectImport = "A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.";
