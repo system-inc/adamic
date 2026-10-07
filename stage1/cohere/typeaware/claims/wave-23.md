@@ -123,8 +123,16 @@ capture passes; their analyses are AST and checker queries. Shared JSX frontend
 integration is still needed for native execution. No conflicting claim was found.
 This claim update is pushed before implementation or declaration work.
 
-Status of the sixth continuation: numeric listener declarations, rule.json
-manifests, independent Go registration/finding controls and metadata mutants
-are pushed. Native decision ports are blocked on shared JSX frontend integration
-on area/stage1-lint. These three AST/checker rules do not require the HIR/SSA
-passes parked above. No native findings/fixes/suggestions parity is claimed.
+Status of the sixth continuation: named ast.Kind rule.json declarations,
+independent Go registration/finding controls and metadata mutants are pushed.
+The branch now includes the integrated shared JSX frontend from
+origin/area/stage1-lint at 7481e032. All three existing native JSX capability
+inputs parse successfully with exit 0 and empty stderr. The previous parser
+blocker is resolved. react/jsx-no-undef now has a native supplied-node implementation, default and
+allowGlobals controls, production-Go byte comparisons on both frozen corpora,
+sanitizer checks, a compiled oracle-only mutant and released-handle rejection.
+react/jsx-fragments and react/jsx-no-constructed-context-values decision ports
+remain outstanding; those two reservations are not completed ports.
+These three AST/checker rules do not require the HIR/SSA passes parked above.
+Native findings/fixes/suggestions parity is claimed only for jsx-no-undef
+in the sixth continuation; no parity is claimed for the other two.
