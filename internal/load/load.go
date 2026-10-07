@@ -59,9 +59,7 @@ func compilerOptions() *core.CompilerOptions {
 		Strict:                     core.TSTrue,
 		NoUncheckedIndexedAccess:   core.TSTrue,
 		ExactOptionalPropertyTypes: core.TSTrue,
-		NoImplicitReturns:          core.TSTrue,
-		NoFallthroughCasesInSwitch: core.TSTrue,
-		ErasableSyntaxOnly:         core.TSTrue,
+		ErasableSyntaxOnly:         core.TSFalse,
 		VerbatimModuleSyntax:       core.TSTrue,
 		AllowImportingTsExtensions: core.TSTrue,
 		NoEmit:                     core.TSTrue,
@@ -98,18 +96,14 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	if err != nil {
 		return nil, fmt.Errorf("load: resolving the current directory: %w", err)
 	}
-	currentDirectory := tspath.NormalizePath(workingDirectory)
+	currentDirectory := tspath.RootedDirectoryPathFromAbsolute(workingDirectory)
 
-	normalizedOverlay := make(map[string]string, len(overlay))
+	normalizedOverlay := make(map[tspath.RootedFilePath]string, len(overlay))
 	for name, source := range overlay {
-		name = tspath.NormalizePath(name)
-		if !tspath.IsRootedDiskPath(name) {
-			name = tspath.CombinePaths(currentDirectory, name)
-		}
-		normalizedOverlay[name] = source
+		normalizedOverlay[currentDirectory.ResolveFile(name)] = source
 	}
 	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay}
-	roots := make([]string, 0, len(paths)+1)
+	roots := make([]tspath.RootedFilePath, 0, len(paths)+1)
 	for _, path := range paths {
 		root, err := rootFileName(fs, currentDirectory, path)
 		if err != nil {
@@ -122,11 +116,8 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
 	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
-	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, tspath.ComparePathsOptions{
-		UseCaseSensitiveFileNames: fileSystem.UseCaseSensitiveFileNames(),
-		CurrentDirectory:          currentDirectory,
-	})
-	host := compiler.NewCachedFSCompilerHost(currentDirectory, fileSystem, bundled.LibPath(), nil, nil, nil)
+	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 	program := compiler.NewProgram(compiler.ProgramOptions{
 		Config:         config,
 		Host:           host,
@@ -142,12 +133,12 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	}
 
 	// Every root must be in the program. One that is not would be a file silently left unchecked.
-	byPath := make(map[tspath.Path]*ast.SourceFile)
+	byPath := make(map[tspath.PathKey]*ast.SourceFile)
 	for _, sourceFile := range program.GetSourceFiles() {
-		byPath[sourceFile.Path()] = sourceFile
+		byPath[sourceFile.PathKey()] = sourceFile
 	}
 	for _, root := range roots[:len(roots)-1] {
-		sourceFile, isLoaded := byPath[tspath.ToPath(root, currentDirectory, fileSystem.UseCaseSensitiveFileNames())]
+		sourceFile, isLoaded := byPath[fileSystem.CaseSensitivity().PathKey(root.AsPath())]
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))
 		}
@@ -188,16 +179,13 @@ func IsPrelude(sourceFile *ast.SourceFile) bool {
 // IsLibrary reports whether a declaration comes from TypeScript's bundled library (lib.es2024.d.ts and
 // the files it includes), which is where Math, Array and String are declared.
 func IsLibrary(sourceFile *ast.SourceFile) bool {
-	return sourceFile != nil && strings.HasPrefix(sourceFile.FileName(), bundled.LibPath())
+	return sourceFile != nil && strings.HasPrefix(sourceFile.FileName().AsString(), bundled.LibPath().AsString())
 }
 
 // rootFileName is the name the checker knows a source file by, refusing anything that isn't Adamic.
-func rootFileName(fs *sourceFS, currentDirectory string, path string) (string, error) {
-	fileName := tspath.NormalizePath(path)
-	if !tspath.IsRootedDiskPath(fileName) {
-		fileName = tspath.CombinePaths(currentDirectory, fileName)
-	}
-	switch filepath.Ext(fileName) {
+func rootFileName(fs *sourceFS, currentDirectory tspath.RootedDirectoryPath, path string) (tspath.RootedFilePath, error) {
+	fileName := currentDirectory.ResolveFile(path)
+	switch filepath.Ext(fileName.AsString()) {
 	case ".ts":
 		if !fs.FS.FileExists(fileName) {
 			return "", fmt.Errorf("load: no file at %s", path)
@@ -207,10 +195,10 @@ func rootFileName(fs *sourceFS, currentDirectory string, path string) (string, e
 		if !fs.FS.FileExists(fileName) {
 			return "", fmt.Errorf("load: no file at %s", path)
 		}
-		if fs.FS.FileExists(fileName + ".ts") {
+		if fs.FS.FileExists(fileName.AppendSuffix(".ts")) {
 			return "", fmt.Errorf("load: %s and %s.ts both exist, and an import of %s could mean either; rename one", path, path, filepath.Base(path))
 		}
-		return fileName + ".ts", nil
+		return fileName.AppendSuffix(".ts"), nil
 	}
 	return "", fmt.Errorf("load: %s is not an Adamic source; want a .ts or .a file", path)
 }
@@ -269,3 +257,6 @@ func (p *Program) lineAndColumn(sourceFile *ast.SourceFile, position int) (int, 
 	prefix := sourceFile.Text()[int(lineStarts[line]):position]
 	return line + 1, len(utf16.Encode([]rune(prefix))) + 1
 }
+
+// CompilerProgram exposes the checked program to public checker and lint adapters.
+func (p *Program) CompilerProgram() *compiler.Program { return p.compiler }
