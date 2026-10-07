@@ -1,3 +1,28 @@
+# Newest-tip native build checkpoint: red at an overload callback
+
+Fresh newest-area slice and all ten requested compiler inputs: parser native
+build and C-emission requests exit 1 at core.ts:54:101, before C emission:
+`a type predicate whose return is not proven (there is no body proving this parameter)`.
+This is every's bodyless overload callback signature. Split off, split on and
+split repeat fail identically. No temporary signature removal or stub used.
+New minimal native-predicate-overload.a reproduces at line 3:45; Node prints
+`true`, exit 0. In contrast, the previous native-predicate-callback.a (with an
+implementation body) now builds and runs native `true`, exit 0, empty stderr.
+Thus the new predicate feature is present, and the remaining gap is specifically
+a callback contract on a bodyless overload. The reduced overload returns boolean
+on both signatures, so result-covariance ambiguity is not needed to reproduce it.
+
+All three timed Node runs match the 81-file extended dump (cmp 0), 36,429,231
+bytes, SHA256 686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+Best Node user time 6.552528 seconds. nproc 5. Parser C bytes/lines, clang wall
+unsplit/split, parser binary bytes, native user time and instruction counts are
+unavailable: no parser C or binary exists. Repeat has zero cache objects and is
+not a warm-cache measurement. perf is not installed. No native byte mutant or
+81-file/10,406-case comparison was possible. Exact failures and metrics attempts:
+evidence/front9/build/report.json and logs. No compiler edits pushed.
+
+---
+
 # Newest-tip native rerun: inputs checkpoint
 
 All ten requested fetched tips are in scratch HEAD 46854599d67d4c75bb39900f43e21c56c0538ff0,
