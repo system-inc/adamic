@@ -1,0 +1,31 @@
+{
+  "helpers": {
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forStatement": [
+      "array-callback-return",
+      "consistent-return",
+      "no-unreachable-loop",
+      "react-hooks/rules-of-hooks"
+    ],
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forInOfStatement": [
+      "array-callback-return",
+      "consistent-return",
+      "no-unreachable-loop",
+      "react-hooks/rules-of-hooks"
+    ],
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].accessOrCall": [
+      "array-callback-return",
+      "consistent-return",
+      "no-unreachable-loop",
+      "react-hooks/rules-of-hooks"
+    ]
+  },
+  "dependency_occurrences_removed": 12,
+  "unique_consumers": 4,
+  "newly_helper_ready_from_batch_alone": [],
+  "cumulative_slot05": {
+    "helpers": 56,
+    "dependency_occurrences_removed": 319,
+    "unique_consumers": 70,
+    "helper_ready": 50
+  }
+}

@@ -1,0 +1,42 @@
+import type {FlowState,FlowOps,ForStatement} from './types.a';
+export function forStatement<N,B>(state:FlowState<N,B>,node:N,project:(node:N)=>ForStatement<N>,ops:FlowOps<N,B>):void {
+ const stmt=project(node);
+ if(!ops.isNil(stmt.initializer)) {
+  if(ops.declaration(stmt.initializer)) {ops.variables(stmt.initializer);}else {ops.expr(stmt.initializer);}
+ }
+ if(ops.isNil(stmt.condition) && ops.isNil(stmt.incrementor)) {
+  const body=ops.newBlock();
+  ops.link(state.cur,body);
+  const after=ops.newBlock();
+  ops.pushJump(node,after,body,node);
+  ops.enter(body);
+  ops.statement(stmt.statement);
+  ops.loop(node);
+  ops.link(state.cur,body);
+  ops.popJump();
+  ops.enter(after);
+  return;
+ }
+ const test=ops.newBlock();
+ ops.link(state.cur,test);
+ ops.enter(test);
+ const after=ops.newBlock();
+ const body=ops.newBlock();
+ let falseEntry:B | undefined=after;
+ if(ops.isNil(stmt.condition) || ops.truthy(stmt.condition)) {falseEntry=undefined;}
+ ops.condition(stmt.condition,body,falseEntry);
+ let update=test;
+ if(!ops.isNil(stmt.incrementor)) {
+  update=ops.newBlock();
+  ops.enterDisconnected(update);
+  ops.expr(stmt.incrementor);
+  ops.link(state.cur,test);
+ }
+ ops.pushJump(node,after,update,node);
+ ops.enter(body);
+ ops.statement(stmt.statement);
+ ops.loop(node);
+ ops.link(state.cur,update);
+ ops.popJump();
+ ops.enter(after);
+}

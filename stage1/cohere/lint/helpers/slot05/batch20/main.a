@@ -1,0 +1,64 @@
+import {panic,readTextFile,programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {forStatement} from './for_statement.a';
+import {forInOfStatement} from './for_in_of_statement.a';
+import {accessOrCall} from './access_or_call.a';
+import type {FlowState,FlowOps,AccessProjection} from './types.a';
+interface Block {reachable:boolean;incoming:boolean;edges:number[];}
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));if(input.kind === 'Error'){panic(input.message);}
+const json=new OptionsJson(input.text);const root=json.parse();if(root<0){panic(json.error);}
+function field(index:number,name:string):number{return json.field(index,name);}
+function number(index:number):number{return Number(json.node(index).text);}
+function bool(index:number):boolean{return json.node(index).text === 'true';}
+function effect(json:OptionsJson,state:FlowState<number,number>,blocks:Block[],index:number):void {
+ if(index<0){return;}
+ const saved=json.node(field(index,'Blocks')).children;
+ while(blocks.length<saved.length){blocks.push({reachable:false,incoming:false,edges:[]});}
+ for(let i=0;i<saved.length;i+=1){const x=saved[i] ?? panic('missing saved block');const b=blocks[i] ?? panic('missing block');const parts=json.node(x).text.split('|');const flags=parts[0] ?? panic('missing flags');b.reachable=flags.slice(0,1) === '1';b.incoming=flags.slice(1,2) === '1';const edges:number[]=[];for(const e of (parts[1] ?? panic('missing edges')).split(',')){if(e.length>0){edges.push(Number(e));}}b.edges=edges;}
+ state.cur=number(field(index,'Cur'));
+ const broken=json.node(field(index,'Broken')).children;
+ for(let i=0;i<state.jumps.length;i+=1){const j=state.jumps[i] ?? panic('missing jump');const x=broken[i];if(x !== undefined){j.broken=bool(x);}}
+}
+
+const mode=json.node(field(root,'mode')).text;
+for(const row of json.node(field(root,'rows')).children){
+ const blocks:Block[]=[];
+ const state:FlowState<number,number>={cur:0,jumps:[],joins:[]};
+ let trace='';
+ const node=number(field(row,'Node'));const expression=number(field(row,'Expression'));const statement=number(field(row,'Statement'));const initializer=number(field(row,'Initializer'));const condition=number(field(row,'Condition'));const incrementor=number(field(row,'Incrementor'));
+ for(let i=0;i<number(field(row,'Prefix'));i+=1){state.jumps.push({labels:[`seed${i}`],breakTo:0,continueTo:0,loop:node,breakable:i % 2 === 0,broken:i % 2 === 1});}
+ for(const j of json.node(field(field(row,'Start'),'Joins')).children){state.joins.push(number(j));}
+ effect(json,state,blocks,field(row,'Start'));
+ const stack=():string=>{let text='';for(const j of state.jumps){let labels='';for(let i=0;i<j.labels.length;i+=1){if(i>0){labels+=',';}labels+=j.labels[i] ?? panic('missing label');}text+=`[${labels}]:${j.breakTo}:${j.continueTo ?? -1}:${j.loop ?? -1}:${j.breakable}:${j.broken},`;}return text;};
+ const ops:FlowOps<number,number>={
+  newBlock:():number=>{const id=blocks.length;blocks.push({reachable:false,incoming:false,edges:[]});trace+=`new:${id};`;return id;},
+  link:(from:number,to:number):void=>{trace+=`link:${from}:${to};`;const a=blocks[from] ?? panic('missing source');const b=blocks[to] ?? panic('missing target');a.edges.push(to);if(a.reachable){b.incoming=true;}},
+  enter:(id:number):void=>{trace+=`enter:${id};`;const b=blocks[id] ?? panic('missing entry');b.reachable=b.incoming;state.cur=id;},
+  truthy:(n:number):boolean=>{const value=bool(field(row,'Truthy'));trace+=`truthy:${n}:${value};`;return value;},
+  breakable:(n:number):boolean=>{const value=bool(field(row,'Breakable'));trace+=`breakable:${n}:${value};`;return value;},
+  text:(n:number):string=>{const value=json.node(field(row,'Text')).text;trace+=`text:${n}:${value};`;return value;},
+  condition:(n:number,yes:number,no:number | undefined):void=>{trace+=`condition:${n}:${yes}:${no ?? -1};`;effect(json,state,blocks,field(field(row,'Effects'),'condition'));},
+  statement:(n:number):void=>{trace+=`stmt:${n}:${state.cur}:${stack()};`;effect(json,state,blocks,field(field(row,'Effects'),'stmt'));},
+  expr:(n:number):void=>{trace+=`expr:${n}:${state.cur};`;effect(json,state,blocks,field(field(row,'Effects'),`expr:${n}`));},
+  loop:(n:number):void=>{trace+=`loop:${n}:${state.cur};`;},
+  pushJump:(n:number,after:number,test:number,loop:number | undefined):void=>{trace+=`push:${n}:${after}:${test}:${loop ?? -1};`;const labels:string[]=[];for(const x of json.node(field(row,'Labels')).children){labels.push(json.node(x).text);}state.jumps.push({labels,breakTo:after,continueTo:test,loop,breakable:true,broken:false});},
+  isNil:(n:number):boolean=>n<0,
+  declaration:(n:number):boolean=>{const v=bool(field(row,'Declaration'));trace+=`declaration:${n}:${v};`;return v;},
+  variables:(n:number):void=>{trace+=`variables:${n}:${state.cur};`;effect(json,state,blocks,field(field(row,'Effects'),'variables'));},
+  names:(n:number):readonly number[]=>{trace+=`names:${n};`;const result:number[]=[];for(const x of json.node(field(row,'Names')).children){result.push(number(x));}return result;},
+  bind:(n:number):void=>{trace+=`bind:${n}:${state.cur};`;effect(json,state,blocks,field(field(row,'Effects'),`bind:${n}`));},
+  enterDisconnected:(id:number):void=>{const cur=blocks[state.cur] ?? panic('missing current');trace+=`disconnected:${id}:${cur.reachable};`;const b=blocks[id] ?? panic('missing disconnected');b.incoming=b.incoming || cur.reachable;b.reachable=b.incoming;state.cur=id;},
+  optional:(n:number):boolean=>{const v=bool(field(row,'Optional'));trace+=`optional:${n}:${v};`;return v;},
+  outermost:(n:number):boolean=>{const v=bool(field(row,'Outermost'));trace+=`outermost:${n}:${v};`;return v;},
+  forkOptional:(n:number):void=>{trace+=`optionalFork:${n}:${state.cur}:${state.joins.length};`;effect(json,state,blocks,field(field(row,'Effects'),'optionalFork'));},
+  typeArguments:(n:number):void=>{trace+=`types:${n}:${state.cur};`;effect(json,state,blocks,field(field(row,'Effects'),'types'));},
+  throwable:():void=>{trace+=`throwable:${state.cur}:${state.joins.length};`;effect(json,state,blocks,field(field(row,'Effects'),'throwable'));},
+  popJump:():void=>{trace+=`pop:${stack()};`;state.jumps.pop();}
+ };
+ if(mode === 'for'){forStatement(state,node,(n:number):{readonly initializer:number;readonly condition:number;readonly incrementor:number;readonly statement:number}=>{if(n !== node){panic('for projection identity');}return {initializer,condition,incrementor,statement};},ops);}
+ else if(mode === 'inof'){forInOfStatement(state,node,(n:number):{readonly initializer:number;readonly expression:number;readonly statement:number}=>{if(n !== node){panic('iteration projection identity');}return {initializer,expression,statement};},ops);}
+ else {accessOrCall(state,node,(n:number):AccessProjection<number>=>{if(n !== node){panic('access projection identity');}trace+=`project:${n};`;const args:number[]=[];for(const x of json.node(field(row,'Arguments')).children){args.push(number(x));}return {property:bool(field(row,'Property')),element:bool(field(row,'Element')),call:bool(field(row,'Call')),construct:bool(field(row,'Construct')),tagged:bool(field(row,'Tagged')),expression,argument:number(field(row,'Argument')),arguments:args,template:number(field(row,'Template'))};},ops);}
+ let joins='';for(const j of state.joins){joins+=`${j},`;}
+ let graph='';for(const b of blocks){graph+=`${b.reachable}:${b.incoming}:`;for(const e of b.edges){graph+=`${e},`;}graph+=';';}
+ console.log(`${state.cur}|${stack()}|${joins}|${graph}|${trace}`);
+}

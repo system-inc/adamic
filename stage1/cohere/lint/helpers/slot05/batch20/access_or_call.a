@@ -1,0 +1,35 @@
+import {panic} from 'adamic';
+import type {FlowState,FlowOps,AccessProjection} from './types.a';
+export function accessOrCall<N,B>(state:FlowState<N,B>,node:N,project:(node:N)=>AccessProjection<N>,ops:FlowOps<N,B>):void {
+ const outermost=ops.optional(node) && ops.outermost(node);
+ if(outermost) {state.joins.push(ops.newBlock());}
+ const shape=project(node);
+ if(shape.property) {
+  ops.expr(shape.expression);
+  ops.forkOptional(node);
+ }else if(shape.element) {
+  ops.expr(shape.expression);
+  ops.forkOptional(node);
+  ops.expr(shape.argument);
+ }else if(shape.call) {
+  ops.expr(shape.expression);
+  ops.forkOptional(node);
+  ops.typeArguments(node);
+  for(const argument of shape.arguments) {ops.expr(argument);}
+ }else if(shape.construct) {
+  ops.expr(shape.expression);
+  ops.typeArguments(node);
+  for(const argument of shape.arguments) {ops.expr(argument);}
+ }else if(shape.tagged) {
+  ops.expr(shape.expression);
+  ops.typeArguments(node);
+  ops.expr(shape.template);
+ }
+ ops.throwable();
+ if(outermost) {
+  const join=state.joins[state.joins.length-1] ?? panic('missing optional join');
+  state.joins.pop();
+  ops.link(state.cur,join);
+  ops.enter(join);
+ }
+}

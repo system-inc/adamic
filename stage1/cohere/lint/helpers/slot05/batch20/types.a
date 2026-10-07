@@ -1,0 +1,33 @@
+export interface FlowJump<N,B> {readonly labels:readonly string[];readonly breakTo:B;readonly continueTo:B | undefined;readonly loop:N | undefined;readonly breakable:boolean;broken:boolean;}
+export interface FlowState<N,B> {cur:B;readonly jumps:FlowJump<N,B>[];readonly joins:B[];}
+export interface LoopStatement<N> {readonly expression:N;readonly statement:N;}
+export interface LabelStatement<N> {readonly label:N;readonly statement:N;}
+export interface FlowOps<N,B> {
+ readonly newBlock:()=>B;
+ readonly link:(from:B,to:B)=>void;
+ readonly enter:(block:B)=>void;
+ readonly condition:(node:N,yes:B,no:B | undefined)=>void;
+ readonly statement:(node:N)=>void;
+ readonly expr:(node:N)=>void;
+ readonly loop:(node:N)=>void;
+ readonly pushJump:(node:N,after:B,test:B,loop:N | undefined)=>void;
+ readonly popJump:()=>void;
+ readonly truthy:(node:N)=>boolean;
+ readonly breakable:(node:N)=>boolean;
+ readonly text:(node:N)=>string;
+ readonly isNil:(node:N)=>boolean;
+ readonly declaration:(node:N)=>boolean;
+ readonly variables:(node:N)=>void;
+ readonly names:(node:N)=>readonly N[];
+ readonly bind:(node:N)=>void;
+ readonly enterDisconnected:(block:B)=>void;
+ readonly optional:(node:N)=>boolean;
+ readonly outermost:(node:N)=>boolean;
+ readonly forkOptional:(node:N)=>void;
+ readonly typeArguments:(node:N)=>void;
+ readonly throwable:()=>void;
+}
+
+export interface ForStatement<N> {readonly initializer:N;readonly condition:N;readonly incrementor:N;readonly statement:N;}
+export interface ForInOfStatement<N> {readonly initializer:N;readonly expression:N;readonly statement:N;}
+export interface AccessProjection<N> {readonly property:boolean;readonly element:boolean;readonly call:boolean;readonly construct:boolean;readonly tagged:boolean;readonly expression:N;readonly argument:N;readonly arguments:readonly N[];readonly template:N;}

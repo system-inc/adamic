@@ -1,0 +1,24 @@
+import type {FlowState,FlowOps,ForInOfStatement} from './types.a';
+export function forInOfStatement<N,B>(state:FlowState<N,B>,node:N,project:(node:N)=>ForInOfStatement<N>,ops:FlowOps<N,B>):void {
+ const stmt=project(node);
+ ops.expr(stmt.expression);
+ const head=ops.newBlock();
+ ops.link(state.cur,head);
+ ops.enter(head);
+ const after=ops.newBlock();
+ ops.link(head,after);
+ const body=ops.newBlock();
+ ops.link(head,body);
+ ops.pushJump(node,after,head,node);
+ ops.enter(body);
+ if(!ops.isNil(stmt.initializer)) {
+  if(ops.declaration(stmt.initializer)) {
+   for(const name of ops.names(stmt.initializer)) {ops.bind(name);}
+  }else {ops.bind(stmt.initializer);}
+ }
+ ops.statement(stmt.statement);
+ ops.loop(node);
+ ops.link(state.cur,head);
+ ops.popJump();
+ ops.enter(after);
+}
