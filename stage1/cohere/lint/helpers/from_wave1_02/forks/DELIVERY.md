@@ -75,3 +75,36 @@ but the shared witness gate supplies no Types configuration. Previous shared
 all-row option-isolation failure remains recorded there. The rule branch is
 not newly green or landing-certified. No additional helper is claimed until
 that landing gate is resolved. Main and area branches were not pushed.
+
+
+## Landed harness and current main refresh
+
+Rule landing successor rebased cleanly onto origin/area/stage1-lint
+7481e0324e34a2537aafa9db7eeacda50405611b and pushed at 775fba63a.
+It retains the six ledger-winning ports; six losing ports remain retired.
+Ledger is unchanged from 41eb6eab2. Shared lint files match area exactly.
+Registry PASS 0.077s, but TestOwnedWitnesses FAIL 2.797s because the shared
+witness gate supplies no restricted-types configuration. This is an observed
+remaining blocker after the harness landing, not a newly green rule branch.
+No additional helper or rule claim is made.
+
+Helper branch rebased cleanly onto origin/main
+39638d9e278d38bb5aeae887f46d55a70e47aaad. Reran final/verify.py,
+thrown/verify.py, verify_joint.py, forks/verify_snapshot.py and
+forks/verify_restore.py with separate direct logs. All five PASS:
+7,432 observations, 211,466 equal bytes against Go on source Node,
+emitted JavaScript and sanitized native. All twelve clean-executing
+semantic mutants were caught only by comparison: final unreachable/final
+guards; thrown unreachable/thrown guards and wrong final flag; joint wrong
+list; snapshot bit inversion, reversed order and buffer reuse; restore bit
+inversion, suffix clobbering and reversed writes through shared identities.
+The buffer mutant still passes ordinary snapshot comparisons; reversed
+restore still passes unique-frame comparisons. Their identity/lifetime
+checks alone detect them. Logs: ../evidence/main-39638d9e-*.log.
+
+Consumers and bounds unchanged: array-callback-return, consistent-return,
+no-unreachable-loop and react-hooks/rules-of-hooks; sixteen dependency
+occurrences removed, zero newly complete rules. No full CFG, whole-rule
+findings/fixes, fresh throughput or full repository gate is asserted.
+No shared harness or compiler file was edited. Incoming main developer-tools
+changes were preserved. No push to main or area branches.
