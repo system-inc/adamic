@@ -10,4 +10,4 @@ The existing length-framed UTF-16 field protocol starts with version `1`, questi
 
 Signature records have zero flags and carry their receiver/parameters, type parameters and return or predicate type. Declaration spans use the checker's source positions. The Adamic decoder validates framing and ID bounds. The native traversal owns visitation limits, multiplicity, witnesses, diagnostics and suggestions.
 
-`checker/facts.go` delegates unknown questions to this file in one registration line. The delegate preserves the previous unsupported-question refusal for other names.
+`checker/facts.go` registers the question with one added switch line. The existing unsupported-question refusal remains intact, including its independent mutant. This shared registration is intentionally kept on one physical line as required by the wave instructions; gofmt would expand it to two lines. New Go files are gofmt-clean.
