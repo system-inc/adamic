@@ -1,0 +1,531 @@
+{
+  "modes": {
+    "default": {
+      "by_rule": {
+        "react/jsx-no-undef": 200,
+        "react/jsx-fragments": 25,
+        "react/jsx-no-constructed-context-values": 69
+      },
+      "message_ids": {
+        "jsxIdentifierNotDefined": 200,
+        "preferFragment": 25,
+        "withIdentifierMsg": 22,
+        "defaultMsg": 10,
+        "withIdentifierMsgFunc": 6,
+        "unstableDependencyMsg": 26,
+        "memoWithoutDependenciesMsg": 2,
+        "defaultMsgFunc": 3
+      },
+      "bytes": 114617,
+      "fixes": 0,
+      "suggestions": 0,
+      "sha256": "3322a04878694c9290be7922bffa6d15a7c794b393812f1c2f021c9de1b04b22"
+    },
+    "element": {
+      "by_rule": {
+        "react/jsx-no-undef": 200,
+        "react/jsx-no-constructed-context-values": 69,
+        "react/jsx-fragments": 7
+      },
+      "message_ids": {
+        "jsxIdentifierNotDefined": 200,
+        "withIdentifierMsg": 22,
+        "defaultMsg": 10,
+        "withIdentifierMsgFunc": 6,
+        "unstableDependencyMsg": 26,
+        "memoWithoutDependenciesMsg": 2,
+        "preferPragma": 7,
+        "defaultMsgFunc": 3
+      },
+      "bytes": 110365,
+      "fixes": 0,
+      "suggestions": 0,
+      "sha256": "7e208e2ce667e0459f74509297e9520d600d64fceb3d3eff29b578b2de4d160c"
+    },
+    "globals": {
+      "by_rule": {
+        "react/jsx-no-undef": 198,
+        "react/jsx-fragments": 25,
+        "react/jsx-no-constructed-context-values": 69
+      },
+      "message_ids": {
+        "jsxIdentifierNotDefined": 198,
+        "preferFragment": 25,
+        "withIdentifierMsg": 22,
+        "defaultMsg": 10,
+        "withIdentifierMsgFunc": 6,
+        "unstableDependencyMsg": 26,
+        "memoWithoutDependenciesMsg": 2,
+        "defaultMsgFunc": 3
+      },
+      "bytes": 113932,
+      "fixes": 0,
+      "suggestions": 0,
+      "sha256": "73d0ed367d4983adfd039dd31c3b1f451adcf3670e81a581f24508140fc6884c"
+    }
+  },
+  "batches": [
+    {
+      "batch": "default-00",
+      "bytes": 3158,
+      "sha256": "4b3a86215ed58822f71633a8b85bee12210d3ea3401e95cc8cca99b22792eb07",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-01",
+      "bytes": 6263,
+      "sha256": "419c2539b7fd579446ae68e2bfedb4ca7ed23e11f51042bf57416c2a69ee40e3",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-02",
+      "bytes": 2206,
+      "sha256": "69cedeb5413e75015fe6d50d5b10494aa529c4d76520f8c2a41ad7edfd0e9b7b",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-03",
+      "bytes": 5035,
+      "sha256": "4c856a6b0a58edcd10a2221b36393333c7ae7275cca7aad82c4cfbfcdeb07d08",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-04",
+      "bytes": 6657,
+      "sha256": "f3b4cba77170c891a38af43aa87304c7eba74a71711b9a9ed9ba560ed78adb3d",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-05",
+      "bytes": 4822,
+      "sha256": "7d3289176bbbcec361e628477e5848c61d1274c9cee0876cd079eec000403cfe",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-06",
+      "bytes": 7606,
+      "sha256": "e82bf5d2c11c3b47c2fbe4a4b0052b0f74d28be8fb3393ec314da94c43933c89",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-07",
+      "bytes": 7274,
+      "sha256": "6571ececb956ef6574e0e47a90a3e45f3b5855331b75136f346c70222cc6abaf",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-08",
+      "bytes": 6217,
+      "sha256": "3185ebbf45b653bfa54a16393c6518f7f270c28bb5fb1b71948d74315c22901d",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-09",
+      "bytes": 3916,
+      "sha256": "50a7707fffcdb23a6f798e959d82898b5d1b56ca4655ec3092309fcde5f06614",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-10",
+      "bytes": 6737,
+      "sha256": "768d5430d637c23c889ecce9a74c188344a16654a9b40b77e523abca371e1a0d",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-11",
+      "bytes": 7774,
+      "sha256": "6c501198d0cb0215d823dd841b3a0052036c879dc99dd92202fabdf2be5d34f3",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-12",
+      "bytes": 3690,
+      "sha256": "fe0d4e6b706b9520b437bf72f6b4dafe332ebe0b0c4f6001b78edc6dbbdcfa66",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-13",
+      "bytes": 7226,
+      "sha256": "5da526b1347ef105c7f3452d9d32502d93c4957b7a878a9d743b4adf86e9a4aa",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-14",
+      "bytes": 7313,
+      "sha256": "07d276e6092eede48ba8304270d18a0cd729e2758845cec6f7c0015b9069eb15",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-15",
+      "bytes": 5683,
+      "sha256": "52fe52c714521a35aafa6fd8fb8e3cc02a8efc5ec6876720f524a961e410fa08",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-16",
+      "bytes": 5897,
+      "sha256": "4db9636af435747ebe2a222d6e75c04fd7f5cb4b3470d239d48c8792564b95cc",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-17",
+      "bytes": 8157,
+      "sha256": "179041a9ffa800063c5ea08009dca513897876b391122bfe3c630367032461ac",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-18",
+      "bytes": 2891,
+      "sha256": "ddb1cb37e07acb325913495f741c180822f5c6c55ed96beb0dec48c37ab886ca",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-19",
+      "bytes": 2553,
+      "sha256": "4f6ee446bfec9cce470e06f3caea5f67338471e8b8fa238dd71b3e23f9b17d80",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-20",
+      "bytes": 2211,
+      "sha256": "0e81cb287182dc518073ee531c0ea3855912e3e31675afe981d476ed2e7c9473",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "default-21",
+      "bytes": 1331,
+      "sha256": "1d369d430b0d74a4254e62f512d51eaa832b228ee5f6eea537af932cf1375d20",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-00",
+      "bytes": 2932,
+      "sha256": "3ca920000537590d0815b7cb0d7ab16b20b2302c4d50d8504a7a43d959d0e7aa",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-01",
+      "bytes": 5811,
+      "sha256": "f71e6e2cf567e343ff091928b0306bcebee9bb5162f8772325428764e179a20d",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-02",
+      "bytes": 1528,
+      "sha256": "4c108713a2ad338438d093186e9802c9b9c1290d640d69d279a46a4570eb1793",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-03",
+      "bytes": 5035,
+      "sha256": "4c856a6b0a58edcd10a2221b36393333c7ae7275cca7aad82c4cfbfcdeb07d08",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-04",
+      "bytes": 6657,
+      "sha256": "f3b4cba77170c891a38af43aa87304c7eba74a71711b9a9ed9ba560ed78adb3d",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-05",
+      "bytes": 4822,
+      "sha256": "7d3289176bbbcec361e628477e5848c61d1274c9cee0876cd079eec000403cfe",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-06",
+      "bytes": 7606,
+      "sha256": "e82bf5d2c11c3b47c2fbe4a4b0052b0f74d28be8fb3393ec314da94c43933c89",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-07",
+      "bytes": 7274,
+      "sha256": "6571ececb956ef6574e0e47a90a3e45f3b5855331b75136f346c70222cc6abaf",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-08",
+      "bytes": 6217,
+      "sha256": "3185ebbf45b653bfa54a16393c6518f7f270c28bb5fb1b71948d74315c22901d",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-09",
+      "bytes": 4910,
+      "sha256": "ed51bbbcc0a3394c0bde24870d9e0f8c55c47f495d6daf1d5992c89357671155",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-10",
+      "bytes": 5612,
+      "sha256": "73550ff40f162fd7e52a304a74ef008dc34330619797735e4d2d08221a5ba8ee",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-11",
+      "bytes": 6648,
+      "sha256": "6ff9626b6a2d67fa0196f4de857c1fab317a3b47693ba05de1d0c8dd19dc6616",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-12",
+      "bytes": 3437,
+      "sha256": "0639a8f567f2a2981a48eb1dd83b69585a78cdcce90b65cda71a01c5b1e02186",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-13",
+      "bytes": 7226,
+      "sha256": "5da526b1347ef105c7f3452d9d32502d93c4957b7a878a9d743b4adf86e9a4aa",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-14",
+      "bytes": 7313,
+      "sha256": "07d276e6092eede48ba8304270d18a0cd729e2758845cec6f7c0015b9069eb15",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-15",
+      "bytes": 5683,
+      "sha256": "52fe52c714521a35aafa6fd8fb8e3cc02a8efc5ec6876720f524a961e410fa08",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-16",
+      "bytes": 5897,
+      "sha256": "4db9636af435747ebe2a222d6e75c04fd7f5cb4b3470d239d48c8792564b95cc",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-17",
+      "bytes": 7452,
+      "sha256": "9037442314889d6df9fcac067b1745ef273cc81d4ec376db360c9fa274441677",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-18",
+      "bytes": 2210,
+      "sha256": "6646b4a316765c42579a01e5a35d4b904d45ece4e3d41e222f64cc9530a88f5f",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-19",
+      "bytes": 2553,
+      "sha256": "4f6ee446bfec9cce470e06f3caea5f67338471e8b8fa238dd71b3e23f9b17d80",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-20",
+      "bytes": 2211,
+      "sha256": "0e81cb287182dc518073ee531c0ea3855912e3e31675afe981d476ed2e7c9473",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "element-21",
+      "bytes": 1331,
+      "sha256": "1d369d430b0d74a4254e62f512d51eaa832b228ee5f6eea537af932cf1375d20",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-00",
+      "bytes": 3158,
+      "sha256": "4b3a86215ed58822f71633a8b85bee12210d3ea3401e95cc8cca99b22792eb07",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-01",
+      "bytes": 6263,
+      "sha256": "419c2539b7fd579446ae68e2bfedb4ca7ed23e11f51042bf57416c2a69ee40e3",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-02",
+      "bytes": 2206,
+      "sha256": "69cedeb5413e75015fe6d50d5b10494aa529c4d76520f8c2a41ad7edfd0e9b7b",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-03",
+      "bytes": 5035,
+      "sha256": "4c856a6b0a58edcd10a2221b36393333c7ae7275cca7aad82c4cfbfcdeb07d08",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-04",
+      "bytes": 6657,
+      "sha256": "f3b4cba77170c891a38af43aa87304c7eba74a71711b9a9ed9ba560ed78adb3d",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-05",
+      "bytes": 4822,
+      "sha256": "7d3289176bbbcec361e628477e5848c61d1274c9cee0876cd079eec000403cfe",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-06",
+      "bytes": 7606,
+      "sha256": "e82bf5d2c11c3b47c2fbe4a4b0052b0f74d28be8fb3393ec314da94c43933c89",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-07",
+      "bytes": 7274,
+      "sha256": "6571ececb956ef6574e0e47a90a3e45f3b5855331b75136f346c70222cc6abaf",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-08",
+      "bytes": 6217,
+      "sha256": "3185ebbf45b653bfa54a16393c6518f7f270c28bb5fb1b71948d74315c22901d",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-09",
+      "bytes": 3916,
+      "sha256": "50a7707fffcdb23a6f798e959d82898b5d1b56ca4655ec3092309fcde5f06614",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-10",
+      "bytes": 6737,
+      "sha256": "768d5430d637c23c889ecce9a74c188344a16654a9b40b77e523abca371e1a0d",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-11",
+      "bytes": 7432,
+      "sha256": "5fed676d994993205bfc95448e379b218650b1a7b19087e72d3783bd70df5c8a",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-12",
+      "bytes": 3347,
+      "sha256": "2bb8fe690c43e904cd0d555edcd3254193ad2fc628e5b57346df5d0d3337a490",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-13",
+      "bytes": 7226,
+      "sha256": "5da526b1347ef105c7f3452d9d32502d93c4957b7a878a9d743b4adf86e9a4aa",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-14",
+      "bytes": 7313,
+      "sha256": "07d276e6092eede48ba8304270d18a0cd729e2758845cec6f7c0015b9069eb15",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-15",
+      "bytes": 5683,
+      "sha256": "52fe52c714521a35aafa6fd8fb8e3cc02a8efc5ec6876720f524a961e410fa08",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-16",
+      "bytes": 5897,
+      "sha256": "4db9636af435747ebe2a222d6e75c04fd7f5cb4b3470d239d48c8792564b95cc",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-17",
+      "bytes": 8157,
+      "sha256": "179041a9ffa800063c5ea08009dca513897876b391122bfe3c630367032461ac",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-18",
+      "bytes": 2891,
+      "sha256": "ddb1cb37e07acb325913495f741c180822f5c6c55ed96beb0dec48c37ab886ca",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-19",
+      "bytes": 2553,
+      "sha256": "4f6ee446bfec9cce470e06f3caea5f67338471e8b8fa238dd71b3e23f9b17d80",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-20",
+      "bytes": 2211,
+      "sha256": "0e81cb287182dc518073ee531c0ea3855912e3e31675afe981d476ed2e7c9473",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    },
+    {
+      "batch": "globals-21",
+      "bytes": 1331,
+      "sha256": "1d369d430b0d74a4254e62f512d51eaa832b228ee5f6eea537af932cf1375d20",
+      "native_stderr_bytes": 0,
+      "asan_stderr_bytes": 0
+    }
+  ]
+}

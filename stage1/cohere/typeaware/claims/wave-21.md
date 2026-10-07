@@ -191,3 +191,14 @@ origin/codex/tsgo-c-library, and none is mentioned in any origin claim document.
 These three are reserved for codex/typeaware-wave-21. JSX syntax support is a
 shared dependency, separate from the parked high-level analysis modules.
 This claim update is pushed before writing any rule implementation.
+
+Sixth batch native-core status: all three numeric handed-node rule cores are
+implemented in wave21_jsx, including all six context-value messages and its memo
+stability/escape analysis. Prepared-syntax comparisons pass for 216 controls in
+three modes and both frozen corpora, with a real native mutant per rule,
+sanitizers, external source/emitted Node and released-handle checks. Source
+integration remains BLOCKED on shared JSX parsing and the shared numeric
+handed-node layout; raw syntax/checker metadata is supplied by an explicit
+Go test provider. These are partial native cores, not completed source ports.
+Reservations remain retained, not released or automatically parked. See
+../wave21_jsx/README.md and ../wave21_jsx/validation/. No new batch was claimed.

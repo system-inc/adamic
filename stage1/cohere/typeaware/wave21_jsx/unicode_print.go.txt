@@ -1,0 +1,46 @@
+// Reproduce the pinned Go runtime's printable-rune table for native %q.
+package main
+
+import (
+	"fmt"
+	"unicode"
+)
+
+func main() {
+	starts := []int{}
+	ends := []int{}
+	start := -1
+	for r := 0; r <= unicode.MaxRune; r++ {
+		if unicode.IsPrint(rune(r)) {
+			if start < 0 {
+				start = r
+			}
+		} else if start >= 0 {
+			starts = append(starts, start)
+			ends = append(ends, r-1)
+			start = -1
+		}
+	}
+	if start >= 0 {
+		starts = append(starts, start)
+		ends = append(ends, unicode.MaxRune)
+	}
+	fmt.Println("// Generated from Go unicode.IsPrint by unicode_print.go.txt.")
+	fmt.Print("const starts:readonly number[]=[")
+	for i, v := range starts {
+		if i > 0 {
+			fmt.Print(",")
+		}
+		fmt.Print(v)
+	}
+	fmt.Println("];")
+	fmt.Print("const ends:readonly number[]=[")
+	for i, v := range ends {
+		if i > 0 {
+			fmt.Print(",")
+		}
+		fmt.Print(v)
+	}
+	fmt.Println("];")
+	fmt.Println("export function isPrintRune(rune:number):boolean{let low=0;let high=starts.length;while(low<high){const middle=Math.floor((low+high)/2);const start=starts[middle]??0;if(start<=rune){low=middle+1;}else{high=middle;}}return low>0&&rune<=(ends[low-1]??0);}")
+}

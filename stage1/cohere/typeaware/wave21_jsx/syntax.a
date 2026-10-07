@@ -1,0 +1,46 @@
+// Numeric, non-owning links. Prepared syntax is a test-provider boundary until
+// the shared native JSX parser and handed-node driver land.
+import { panic } from 'adamic';
+import { isPrintRune } from './unicode_print.a';
+import { MethodSignature as K_MethodSignature, CallSignature as K_CallSignature, JSDocSignature as K_JSDocSignature, ConstructSignature as K_ConstructSignature, IndexSignature as K_IndexSignature, FunctionType as K_FunctionType, ConstructorType as K_ConstructorType } from './kinds.a';
+import { AmpersandAmpersandToken as K_AmpersandAmpersandToken, ArrayLiteralExpression as K_ArrayLiteralExpression, ArrowFunction as K_ArrowFunction, AsExpression as K_AsExpression, BarBarToken as K_BarBarToken, ClassExpression as K_ClassExpression, Constructor as K_Constructor, FunctionDeclaration as K_FunctionDeclaration, FunctionExpression as K_FunctionExpression, GetAccessor as K_GetAccessor, Identifier as K_Identifier, JsxElement as K_JsxElement, JsxFragment as K_JsxFragment, JsxSelfClosingElement as K_JsxSelfClosingElement, MethodDeclaration as K_MethodDeclaration, NewExpression as K_NewExpression, NonNullExpression as K_NonNullExpression, ObjectLiteralExpression as K_ObjectLiteralExpression, ParenthesizedExpression as K_ParenthesizedExpression, QuestionQuestionToken as K_QuestionQuestionToken, RegularExpressionLiteral as K_RegularExpressionLiteral, SatisfiesExpression as K_SatisfiesExpression, SetAccessor as K_SetAccessor } from './kinds.a';
+import { Diagnostic } from '../diagnostic.ts';
+export class Node {
+ readonly id:number;readonly kind:number;readonly start:number;readonly end:number;readonly line:number;readonly file:string;readonly text:string;readonly raw:string;
+ parent=0;name=0;propertyName=0;expression=0;initializer=0;body=0;left=0;right=0;whenTrue=0;whenFalse=0;tag=0;attributes=0;opening=0;module=0;operator=0;
+ symbol=0;shorthandSymbol=0;signature=0;flags=0;isConst=false;isAsync=false;isGenerator=false;uppercase=false;
+ readonly children:number[]=[];readonly args:number[]=[];readonly elements:number[]=[];readonly heritage:number[]=[];readonly declarations:number[]=[];readonly typeFlags:number[]=[];
+ constructor(id:number,kind:number,start:number,end:number,line:number,file:string,text:string,raw:string){this.id=id;this.kind=kind;this.start=start;this.end=end;this.line=line;this.file=file;this.text=text;this.raw=raw;}
+}
+export class Syntax {
+ readonly nodes:Node[]=[];readonly findings:Diagnostic[]=[];
+ readonly file:string;readonly hasChecker:boolean;
+ constructor(file:string,hasChecker:boolean){this.file=file;this.hasChecker=hasChecker;}
+ get(id:number):Node{return this.nodes[id-1]??panic('missing numeric syntax node');}
+ add(rule:string,id:string,message:string,node:Node):void{this.findings.push(new Diagnostic(rule,id,message,node.start,node.end,'react/'));}
+ named(id:number,text:string):boolean{return id!==0&&this.get(id).kind===K_Identifier&&this.get(id).text===text;}
+ nearest(node:Node):number{let id=node.parent;while(id!==0){const n=this.get(id);if(functionLike(n.kind)){return id;}id=n.parent;}return 0;}
+ parens(id:number):number{while(id!==0&&this.get(id).kind===K_ParenthesizedExpression){id=this.get(id).expression;}return id;}
+ unwrap(id:number):number{while(id!==0&&wrapper(this.get(id).kind)){id=this.get(id).expression;}return id;}
+}
+export function functionLike(kind:number):boolean{return kind===K_FunctionDeclaration||kind===K_FunctionExpression||kind===K_ArrowFunction||kind===K_MethodDeclaration||kind===K_GetAccessor||kind===K_SetAccessor||kind===K_Constructor||kind===K_MethodSignature||kind===K_CallSignature||kind===K_JSDocSignature||kind===K_ConstructSignature||kind===K_IndexSignature||kind===K_FunctionType||kind===K_ConstructorType;}
+export function wrapper(kind:number):boolean{return kind===K_ParenthesizedExpression||kind===K_AsExpression||kind===K_SatisfiesExpression||kind===K_NonNullExpression;}
+export function logical(kind:number):boolean{return kind===K_AmpersandAmpersandToken||kind===K_BarBarToken||kind===K_QuestionQuestionToken;}
+export function constructionKind(kind:number):string{
+ if(kind===K_ObjectLiteralExpression){return 'object';}if(kind===K_ArrayLiteralExpression){return 'array';}
+ if(kind===K_ArrowFunction||kind===K_FunctionExpression){return 'function expression';}if(kind===K_ClassExpression){return 'class expression';}
+ if(kind===K_NewExpression){return 'new expression';}if(kind===K_RegularExpressionLiteral){return 'regular expression';}
+ if(kind===K_JsxElement||kind===K_JsxSelfClosingElement){return 'JSX element';}if(kind===K_JsxFragment){return 'JSX fragment';}return '';
+}
+// Go %q keeps printable Unicode and escapes control characters in messages.
+export function quote(text:string):string{
+ let out='"';for(let i=0;i<text.length;i++){
+  const c=text.charCodeAt(i);let rune=c;let width=1;
+  if(c>=0xd800&&c<=0xdbff&&i+1<text.length){const low=text.charCodeAt(i+1);if(low>=0xdc00&&low<=0xdfff){rune=0x10000+(c-0xd800)*1024+low-0xdc00;width=2;}}
+  if(c===34||c===92){out+='\\'+text.slice(i,i+1);}
+  else if(c===10){out+='\\n';}else if(c===13){out+='\\r';}else if(c===9){out+='\\t';}else if(c===7){out+='\\a';}else if(c===8){out+='\\b';}else if(c===11){out+='\\v';}else if(c===12){out+='\\f';}
+  else if(c<32||c===127){out+='\\x'+c.toString(16).padStart(2,'0');}
+  else if(!isPrintRune(rune)){out+=rune<=65535?'\\u'+rune.toString(16).padStart(4,'0'):'\\U'+rune.toString(16).padStart(8,'0');}
+  else{out+=text.slice(i,i+width);}i+=width-1;
+ }return out+'"';
+}

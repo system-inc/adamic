@@ -1,0 +1,23 @@
+import { Syntax,Node } from '../syntax.a';
+import { BindingElement as K_BindingElement, CallExpression as K_CallExpression, Identifier as K_Identifier, ImportClause as K_ImportClause, ImportDeclaration as K_ImportDeclaration, ImportSpecifier as K_ImportSpecifier, JsxElement as K_JsxElement, JsxFragment as K_JsxFragment, NamedImports as K_NamedImports, NoSubstitutionTemplateLiteral as K_NoSubstitutionTemplateLiteral, ObjectBindingPattern as K_ObjectBindingPattern, PropertyAccessExpression as K_PropertyAccessExpression, StringLiteral as K_StringLiteral, VariableDeclaration as K_VariableDeclaration } from '../kinds.a';
+export const syntaxKinds:readonly number[]=[289,285,286];
+export function initializerIsFragment(s:Syntax,id:number):boolean{
+ if(id===0){return false;}const n=s.get(id);
+ if(n.kind===K_Identifier){return n.text==='React';}
+ if(n.kind===K_PropertyAccessExpression){return s.named(n.expression,'React')&&s.named(n.name,'Fragment');}
+ if(n.kind===K_CallExpression&&s.named(n.expression,'require')&&n.args.length>0){const a=s.get(n.args[0]??0);return (a.kind===K_StringLiteral||a.kind===K_NoSubstitutionTemplateLiteral)&&a.text==='react';}return false;
+}
+function declarationIsFragment(s:Syntax,n:Node):boolean{
+ if(n.kind===K_ImportSpecifier){const name=n.propertyName!==0?n.propertyName:n.name;if(!s.named(name,'Fragment')){return false;}
+ let id=n.parent;if(id===0||s.get(id).kind!==K_NamedImports){return false;}id=s.get(id).parent;if(id===0||s.get(id).kind!==K_ImportClause){return false;}id=s.get(id).parent;if(id===0||s.get(id).kind!==K_ImportDeclaration){return false;}const m=s.get(id).module;if(m===0){return false;}const module=s.get(m);return (module.kind===K_StringLiteral||module.kind===K_NoSubstitutionTemplateLiteral)&&module.text==='react';}
+ if(n.kind===K_BindingElement){if(n.parent===0){return false;}const pattern=s.get(n.parent);if(pattern.kind!==K_ObjectBindingPattern||pattern.parent===0){return false;}const v=s.get(pattern.parent);return v.kind===K_VariableDeclaration&&initializerIsFragment(s,v.initializer);}
+ return n.kind===K_VariableDeclaration&&initializerIsFragment(s,n.initializer);
+}
+function fragmentName(s:Syntax,id:number):boolean{if(id===0){return false;}const n=s.get(id);if(n.kind===K_PropertyAccessExpression){return s.named(n.expression,'React')&&s.named(n.name,'Fragment');}if(n.kind!==K_Identifier){return false;}for(const d of n.declarations){if(declarationIsFragment(s,s.get(d))){return true;}}return false;}
+// Called only for declared numeric listeners, using the node already fetched by the driver.
+export function check(s:Syntax,node:Node,elementMode:boolean):void{
+ if(node.kind===K_JsxFragment){if(elementMode){s.add('jsx-fragments','preferPragma','Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.',node);}return;}
+ if(elementMode||!s.hasChecker){return;}let opening=node;if(node.kind===K_JsxElement){if(node.opening===0){return;}opening=s.get(node.opening);}
+ if(!fragmentName(s,opening.tag)){return;}if(opening.attributes!==0&&s.get(opening.attributes).elements.length>0){return;}
+ s.add('jsx-fragments','preferFragment','Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.',node);
+}

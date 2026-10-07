@@ -1,0 +1,430 @@
+// Built as an overlay inside cohere. Calls its unmodified production rule,
+// with an independent program loader and walk; imports no bridge code.
+package main
+
+import (
+	"bufio"
+	"context"
+	"fmt"
+	"os"
+	"path/filepath"
+	"slices"
+	"sort"
+	"strings"
+	"time"
+	"unicode/utf16"
+
+	"encoding/json"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/bundled"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/compiler"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
+	"github.com/system-inc/cohere/internal/lint/registry"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	react "github.com/system-inc/cohere/internal/lint/rules/react"
+	"unicode"
+)
+
+func written(text string) string {
+	var out strings.Builder
+	for _, r := range text {
+		if r >= 32 && r <= 126 && r != 92 {
+			out.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&out, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&out, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return out.String()
+}
+
+var coverageNames = map[string]bool{"react/jsx-fragments": true, "react/jsx-no-constructed-context-values": true, "react/jsx-no-undef": true}
+
+func main() {
+	args := os.Args[1:]
+	if len(args) < 2 {
+		panic("usage: oracle tsconfig manifest [--count]")
+	}
+	manifest, err := os.ReadFile(args[1])
+	if err != nil {
+		panic(err)
+	}
+	var paths []string
+	for _, path := range strings.Split(string(manifest), "\n") {
+		if path != "" {
+			paths = append(paths, path)
+		}
+	}
+	configPath, err := filepath.Abs(args[0])
+	if err != nil {
+		panic(err)
+	}
+	started := time.Now()
+	host := compiler.NewCachedFSCompilerHost(filepath.ToSlash(filepath.Dir(configPath)), bundled.WrapFS(osvfs.FS()), bundled.LibPath(), nil, nil, nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(filepath.ToSlash(configPath), nil, nil, host, nil)
+	if config == nil || len(diagnostics) > 0 || len(config.Errors) > 0 {
+		panic("invalid tsconfig")
+	}
+	roots := make([]string, len(paths))
+	for i, path := range paths {
+		if !filepath.IsAbs(path) {
+			path = filepath.Join(filepath.Dir(configPath), path)
+		}
+		roots[i] = filepath.ToSlash(path)
+	}
+	config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
+	for _, path := range config.FileNames() {
+		if strings.HasSuffix(path, ".d.ts") && !slices.Contains(roots, path) {
+			roots = append(roots, path)
+		}
+	}
+	program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(roots), Host: host, SingleThreaded: core.TSTrue})
+	// Force checker pool initialization into load, just as the native bridge does.
+	if len(roots) > 0 {
+		_, release := program.GetTypeCheckerForFile(context.Background(), program.GetSourceFile(roots[0]))
+		release()
+	}
+	loadTime := time.Since(started)
+	runStarted := time.Now()
+
+	if len(args) > 2 && args[2] == "--valid-sources" {
+		for i, path := range paths {
+			file := program.GetSourceFile(roots[i])
+			if file != nil && len(file.Diagnostics()) == 0 {
+				fmt.Println(path)
+			}
+		}
+		return
+	}
+	if len(args) > 3 && args[2] == "--prepare" {
+		fmt.Printf("import {Syntax,Node} from %s;\nimport {run} from %s;\nlet count=0;\n", sourceString(filepath.Join(args[3], "syntax.a")), sourceString(filepath.Join(args[3], "driver.a")))
+		for i, path := range paths {
+			prepareSyntax(program, program.GetSourceFile(roots[i]), path, i, slices.Contains(args, "--element"), slices.Contains(args, "--allow-globals"))
+		}
+		fmt.Println("console.log(`findings ${count}`);")
+		return
+	}
+	countOnly := len(args) > 2 && args[2] == "--count"
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
+	findings := 0
+	var ruleTime time.Duration
+	for i, path := range paths {
+		file := program.GetSourceFile(roots[i])
+		if file == nil {
+			panic("source not loaded")
+		}
+		if len(file.Diagnostics()) != 0 {
+			panic(fmt.Sprintf("parse diagnostics: %s", path))
+		}
+		typeChecker, release := program.GetTypeCheckerForFile(context.Background(), file)
+		var collected []rule.Diagnostic
+		var subjects []rule.Rule
+		for _, subject := range registry.All() {
+			if coverageNames[subject.Name] {
+				subjects = append(subjects, subject)
+			}
+		}
+		callbacks := map[ast.Kind][]func(*ast.Node){}
+		cache := rule.NewFileCache()
+		for _, subject := range subjects {
+			var options any
+			if subject.Name == "react/jsx-fragments" && slices.Contains(args, "--element") {
+				options = react.JsxFragmentsOptions{Mode: react.JsxFragmentsElement}
+			}
+			if subject.Name == "react/jsx-no-undef" && slices.Contains(args, "--allow-globals") {
+				options = react.JsxNoUndefOptions{AllowGlobals: true}
+			}
+			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, options)
+			for kind, callback := range listeners {
+				callbacks[kind] = append(callbacks[kind], callback)
+			}
+		}
+		var walk func(*ast.Node)
+		walk = func(node *ast.Node) {
+			for _, visit := range callbacks[node.Kind] {
+				before := time.Now()
+				visit(node)
+				ruleTime += time.Since(before)
+			}
+			node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
+		}
+		walk(file.AsNode())
+		release()
+		sort.SliceStable(collected, func(i, j int) bool { return diagnostic(collected[i]) < diagnostic(collected[j]) })
+		findings += len(collected)
+		if !countOnly {
+			fmt.Fprintf(out, "file\t%s\n", written(path))
+			for _, d := range collected {
+				fmt.Fprintln(out, diagnostic(d))
+			}
+		}
+	}
+	fmt.Fprintf(out, "findings %d\n", findings)
+	fmt.Fprintf(os.Stderr, "cohere: load_ns=%d rule_ns=%d run_ns=%d\n", loadTime.Nanoseconds(), ruleTime.Nanoseconds(), time.Since(runStarted).Nanoseconds())
+}
+
+func diagnostic(d rule.Diagnostic) string {
+	line := fmt.Sprintf("%d\t%d\t%s\t%s\t%s\t%d\t%d", d.Range.Pos(), d.Range.End(), d.RuleName, d.Message.Id, written(d.Message.Description), len(d.Fixes), len(d.Suggestions))
+	for _, fix := range d.Fixes {
+		line += fmt.Sprintf("\t%d\t%d\t%s", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+	}
+	for _, suggestion := range d.Suggestions {
+		line += fmt.Sprintf("\t%s\t%s\t%d", suggestion.Message.Id, written(suggestion.Message.Description), len(suggestion.Fixes))
+		for _, fix := range suggestion.Fixes {
+			line += fmt.Sprintf("\t%d\t%d\t%s", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+		}
+	}
+	return line
+}
+
+// Test-only raw syntax/checker data. No production analysis helper is called.
+func prepareSyntax(program *compiler.Program, file *ast.SourceFile, path string, batch int, element, globals bool) {
+	if file == nil || len(file.Diagnostics()) != 0 {
+		panic("invalid prepared source")
+	}
+	hasJSX := false
+	var detect func(*ast.Node)
+	detect = func(n *ast.Node) {
+		if n.Kind == ast.KindJsxElement || n.Kind == ast.KindJsxSelfClosingElement || n.Kind == ast.KindJsxFragment {
+			hasJSX = true
+		}
+		n.ForEachChild(func(c *ast.Node) bool { detect(c); return false })
+	}
+	detect(file.AsNode())
+	fmt.Printf("function batch%d():number {const s=new Syntax(%s,true);\n", batch, sourceString(path))
+	if !hasJSX {
+		fmt.Printf("return run(s,%t,%t);}\ncount+=batch%d();\n", element, globals, batch)
+		return
+	}
+	nodes := []*ast.Node{}
+	ids := map[*ast.Node]int{}
+	full := map[*ast.Node]bool{}
+	var add func(*ast.Node, bool) int
+	add = func(n *ast.Node, tree bool) int {
+		if n == nil {
+			return 0
+		}
+		id := ids[n]
+		if id == 0 {
+			nodes = append(nodes, n)
+			id = len(nodes)
+			ids[n] = id
+		}
+		if tree && !full[n] {
+			full[n] = true
+			n.ForEachChild(func(c *ast.Node) bool { add(c, true); return false })
+		}
+		return id
+	}
+	add(file.AsNode(), true)
+	symbols := map[*ast.Symbol]int{}
+	symbolID := func(sym *ast.Symbol) int {
+		if sym == nil {
+			return 0
+		}
+		id := symbols[sym]
+		if id == 0 {
+			id = len(symbols) + 1
+			symbols[sym] = id
+		}
+		return id
+	}
+	type metadata struct {
+		symbol, shorthand, signature int
+		declarations                 []int
+		flags                        []checker.TypeFlags
+	}
+	meta := map[*ast.Node]metadata{}
+	for i := 0; i < len(nodes); i++ {
+		n := nodes[i]
+		if !full[n] {
+			continue
+		}
+		tc, release := program.GetTypeCheckerForFile(context.Background(), ast.GetSourceFileOfNode(n))
+		m := metadata{}
+		if n.Kind == ast.KindIdentifier {
+			sym := tc.GetSymbolAtLocation(n)
+			m.symbol = symbolID(sym)
+			if sym != nil {
+				for _, d := range sym.Declarations {
+					m.declarations = append(m.declarations, add(d, false))
+				}
+			}
+		}
+		if n.Kind == ast.KindShorthandPropertyAssignment {
+			m.shorthand = symbolID(tc.GetShorthandAssignmentValueSymbol(n))
+		}
+		if n.Kind == ast.KindCallExpression {
+			sig := tc.GetResolvedSignature(n)
+			if sig != nil {
+				d := sig.Declaration()
+				if d != nil {
+					if d.Body() != nil {
+						add(ast.GetSourceFileOfNode(d).AsNode(), true)
+					}
+					m.signature = add(d, false)
+				}
+			}
+		}
+		if ast.IsExpression(n) {
+			t := tc.GetTypeAtLocation(n)
+			if t != nil {
+				if t.Flags()&checker.TypeFlagsUnion != 0 {
+					for _, part := range t.Types() {
+						m.flags = append(m.flags, part.Flags())
+					}
+				} else {
+					m.flags = []checker.TypeFlags{t.Flags()}
+				}
+			}
+		}
+		meta[n] = m
+		release()
+	}
+	for i, n := range nodes {
+		owner := ast.GetSourceFileOfNode(n)
+		span := rule.TokenRange(owner, n)
+		line, _ := scanner.GetLineAndCharacterOfPosition(owner, span.Pos())
+		text := ""
+		if n.Kind == ast.KindIdentifier || ast.IsStringLiteralLike(n) {
+			text = n.Text()
+		}
+		raw := ""
+		if span.Pos() >= 0 && span.End() >= span.Pos() && span.End() <= len(owner.Text()) {
+			raw = owner.Text()[span.Pos():span.End()]
+		}
+		fmt.Printf("const n%d=new Node(%d,%d,%d,%d,%d,%s,%s,%s);s.nodes.push(n%d);\n", i+1, i+1, n.Kind, span.Pos(), span.End(), line+1, sourceString(owner.FileName()), sourceString(text), sourceString(raw), i+1)
+	}
+	for i, n := range nodes {
+		if !full[n] {
+			continue
+		}
+		prefix := fmt.Sprintf("n%d", i+1)
+		field := func(name string, node *ast.Node) {
+			if id := ids[node]; id != 0 {
+				fmt.Printf("%s.%s=%d;\n", prefix, name, id)
+			}
+		}
+		list := func(name string, values []*ast.Node) {
+			for _, v := range values {
+				if id := ids[v]; id != 0 {
+					fmt.Printf("%s.%s.push(%d);\n", prefix, name, id)
+				}
+			}
+		}
+		field("parent", n.Parent)
+		field("name", n.Name())
+		field("body", n.Body())
+		n.ForEachChild(func(c *ast.Node) bool { fmt.Printf("%s.children.push(%d);\n", prefix, ids[c]); return false })
+		switch n.Kind {
+		case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression, ast.KindCallExpression, ast.KindNewExpression, ast.KindParenthesizedExpression, ast.KindAsExpression, ast.KindSatisfiesExpression, ast.KindNonNullExpression, ast.KindReturnStatement, ast.KindJsxExpression, ast.KindIfStatement, ast.KindTypeOfExpression:
+			field("expression", n.Expression())
+		}
+		switch n.Kind {
+		case ast.KindVariableDeclaration, ast.KindBindingElement, ast.KindPropertyDeclaration, ast.KindPropertyAssignment, ast.KindJsxAttribute:
+			field("initializer", n.Initializer())
+		}
+		switch n.Kind {
+		case ast.KindBinaryExpression:
+			b := n.AsBinaryExpression()
+			field("left", b.Left)
+			field("right", b.Right)
+			fmt.Printf("%s.operator=%d;\n", prefix, b.OperatorToken.Kind)
+		case ast.KindConditionalExpression:
+			b := n.AsConditionalExpression()
+			field("whenTrue", b.WhenTrue)
+			field("whenFalse", b.WhenFalse)
+		case ast.KindCallExpression:
+			if a := n.AsCallExpression().Arguments; a != nil {
+				list("args", a.Nodes)
+			}
+		case ast.KindArrayLiteralExpression:
+			if a := n.AsArrayLiteralExpression().Elements; a != nil {
+				list("elements", a.Nodes)
+			}
+		case ast.KindImportSpecifier:
+			field("propertyName", n.AsImportSpecifier().PropertyName)
+		case ast.KindImportDeclaration:
+			field("module", n.AsImportDeclaration().ModuleSpecifier)
+		case ast.KindJsxElement:
+			field("opening", n.AsJsxElement().OpeningElement)
+		case ast.KindJsxOpeningElement:
+			b := n.AsJsxOpeningElement()
+			field("tag", b.TagName)
+			field("attributes", b.Attributes)
+		case ast.KindJsxSelfClosingElement:
+			b := n.AsJsxSelfClosingElement()
+			field("tag", b.TagName)
+			field("attributes", b.Attributes)
+		case ast.KindJsxAttributes:
+			if a := n.AsJsxAttributes().Properties; a != nil {
+				list("elements", a.Nodes)
+			}
+		case ast.KindPrefixUnaryExpression:
+			fmt.Printf("%s.operator=%d;\n", prefix, n.AsPrefixUnaryExpression().Operator)
+		}
+		if ast.IsClassLike(n) {
+			if clauses := heritageClauses(n); clauses != nil {
+				for _, h := range clauses.Nodes {
+					if types := h.AsHeritageClause().Types; types != nil {
+						for _, t := range types.Nodes {
+							if id := ids[t.AsExpressionWithTypeArguments().Expression]; id != 0 {
+								fmt.Printf("%s.heritage.push(%d);\n", prefix, id)
+							}
+						}
+					}
+				}
+			}
+		}
+		generator := false
+		switch n.Kind {
+		case ast.KindFunctionDeclaration:
+			generator = n.AsFunctionDeclaration().AsteriskToken != nil
+		case ast.KindFunctionExpression:
+			generator = n.AsFunctionExpression().AsteriskToken != nil
+		case ast.KindMethodDeclaration:
+			generator = n.AsMethodDeclaration().AsteriskToken != nil
+		}
+		isConst := n.Kind == ast.KindVariableDeclaration && ast.IsVarConst(n)
+		uppercase := false
+		if n.Kind == ast.KindIdentifier {
+			for _, r := range n.Text() {
+				uppercase = unicode.IsUpper(r)
+				break
+			}
+		}
+		fmt.Printf("%s.isConst=%t;%s.isAsync=%t;%s.isGenerator=%t;%s.uppercase=%t;\n", prefix, isConst, prefix, ast.HasSyntacticModifier(n, ast.ModifierFlagsAsync), prefix, generator, prefix, uppercase)
+		m := meta[n]
+		fmt.Printf("%s.symbol=%d;%s.shorthandSymbol=%d;%s.signature=%d;\n", prefix, m.symbol, prefix, m.shorthand, prefix, m.signature)
+		for _, d := range m.declarations {
+			fmt.Printf("%s.declarations.push(%d);\n", prefix, d)
+		}
+		for _, flag := range m.flags {
+			fmt.Printf("%s.typeFlags.push(%d);\n", prefix, flag)
+		}
+	}
+	fmt.Printf("return run(s,%t,%t);}\ncount+=batch%d();\n", element, globals, batch)
+}
+
+func heritageClauses(n *ast.Node) *ast.NodeList {
+	if n.Kind == ast.KindClassDeclaration {
+		return n.AsClassDeclaration().HeritageClauses
+	}
+	return n.AsClassExpression().HeritageClauses
+}
+
+// Generated .a strings use JavaScript escapes, not Go-only \a or \U escapes.
+func sourceString(text string) string {
+	v, e := json.Marshal(text)
+	if e != nil {
+		panic(e)
+	}
+	return string(v)
+}

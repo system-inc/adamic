@@ -1,0 +1,9 @@
+import { Syntax } from './syntax.a';
+import { check as fragments } from './jsx-fragments/rule.a';
+import { check as undef } from './jsx-no-undef/rule.a';
+import { check as context } from './jsx-no-constructed-context-values/rule.a';
+import { written } from '../../../typescript/parser/nodes.ts';
+export function run(s:Syntax,elementMode:boolean,allowGlobals:boolean):number{
+ for(const node of s.nodes){if(node.file!==s.file){continue;}switch(node.kind){case 289:case 285:fragments(s,node,elementMode);break;case 287:undef(s,node,allowGlobals);context(s,node);break;case 286:fragments(s,node,elementMode);undef(s,node,allowGlobals);context(s,node);break;}}
+ const lines:string[]=[];for(const finding of s.findings){lines.push(finding.written());}lines.sort((a,b)=>a<b?-1:a>b?1:0);console.log('file\t'+written(s.file));for(const line of lines){console.log(line);}return lines.length;
+}
