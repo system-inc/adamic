@@ -1,0 +1,6 @@
+{
+  "name": "invert tailwind-no-physical-direction guard",
+  "file": "rule.ts",
+  "from": "if(directional)",
+  "to": "if(false)"
+}
