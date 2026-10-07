@@ -1,0 +1,5 @@
+// Shared table react/exhaustive_deps.go:463, revision 071fb012.
+// Isolated until native lowering supports a runtime RegExp source. No matcher fallback.
+export function additionalHookPattern(pattern: string): RegExp {
+    return new RegExp(pattern, 'u');
+}

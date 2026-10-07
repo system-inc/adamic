@@ -3,6 +3,9 @@ import type { Tools } from '../wave_27_next/tools.a';
 import { Diagnostic } from '../diagnostic.ts';
 import { Suggestion } from '../suggestion.ts';
 import { hookMessage } from './hook_messages.a';
+// Shared table react/exhaustive_deps.go:451, revision 071fb012.
+// The table's g flag enumerates matches; Go MatchString requires stateless test.
+const effectHookNamePattern = /Effect((?![\s\S])|[^a-z])/u;
 class Read {
     readonly path: string;
     readonly stable: boolean;
@@ -720,7 +723,7 @@ export class ExhaustiveDeps {
             if(this.kind(array) === 'Identifier' && this.text(array) === 'undefined') {
                 array = -1;
             }
-            const effect = ['useEffect', 'useLayoutEffect'].includes(hook);
+            const effect = effectHookNamePattern.test(hook);
             if(array < 0 && !effect) {
                 if(['useCallback', 'useMemo'].includes(hook)) {
                     this.report(index, 'exhaustiveDepsUselessWithoutDependencies');

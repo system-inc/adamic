@@ -55,7 +55,7 @@ for name,setting,corpus_config in [('repository','ADAMIC_WAVE27_REPOSITORY_MANIF
   corpus_manifest=Path(os.environ[setting]);compare(name,native,corpus_config,corpus_manifest);compare(name+'-asan',asan,corpus_config,corpus_manifest);populations.append((name,corpus_config,corpus_manifest))
  else:print(name,'corpus not supplied',flush=True)
 
-mutants=[('rest','prefer_rest_params.a','symbol.declarations.length !== 0','symbol.declarations.length === 0'),('hooks','exhaustive_deps.a','result.missing.length > 0 ?', 'result.missing.length === 0 ?'),('regex','prefer_regex_literals.a',"if(args.length !== 1 && args.length !== 2)","if(args.length === 1 || args.length === 2)")]
+mutants=[('effect-regex','exhaustive_deps.a',r'/Effect((?![\s\S])|[^a-z])/u',r'/EffectNever((?![\s\S])|[^a-z])/u'),('rest','prefer_rest_params.a','symbol.declarations.length !== 0','symbol.declarations.length === 0'),('hooks','exhaustive_deps.a','result.missing.length > 0 ?', 'result.missing.length === 0 ?'),('regex','prefer_regex_literals.a',"if(args.length !== 1 && args.length !== 2)","if(args.length === 1 || args.length === 2)")]
 for name,file,before,after in mutants:
  directory=art/(name+'-source');directory.mkdir(exist_ok=True)
  for original in source.glob('*.a'):
@@ -63,7 +63,7 @@ for name,file,before,after in mutants:
   if original.name==file:
    import re
    pattern=r'\s*'.join(re.escape(char) for char in before)
-   text,count=re.subn(pattern,after,text);assert count==1,(name,count)
+   text,count=re.subn(pattern,lambda match:after,text);assert count==1,(name,count)
   import re
   def dependency(match):return "'"+str((source/match.group(1)).resolve())+"'"
   text=re.sub(r"'((?:\.\./)+[^']+)'",dependency,text)
