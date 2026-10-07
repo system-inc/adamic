@@ -1,3 +1,18 @@
+# Adaptation 65 planned before implementation
+
+65-temporary-node-process-cast removes `(process as any).browser` in
+core.isNodeLikeSystem. Adaptation 30 currently adds a local `process` declaration
+with unknown fields, so 65 also changes its type to
+`(NodeJS.Process & { browser?: unknown }) | undefined`, preserving the optional
+browser probe while sourcing the Node contract from pinned @types/node 25.3.3.
+The official Process interface has no browser property; no fabricated Node
+binding is substituted. This is valid only with library's Node-types loader.
+All edits erase, and emitted JavaScript must be byte-identical. This temporary
+moves into adaptation 40 once the loader lands on main. User explicitly
+requested 65 for this shared-core site. No other discovery stub is sanctioned.
+
+---
+
 # Predicate callback fix rerun: red at the overload result
 
 6feee11b is merged in unpushed scratch c40d2a4e. The previous callback minimal
