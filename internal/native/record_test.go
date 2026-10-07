@@ -2,6 +2,7 @@ package native
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"math"
 	"os"
@@ -65,7 +66,7 @@ func TestRecordsAgainstNode(t *testing.T) {
 	if err := Build(recordHarness(t), binary, Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
-	for _, arguments := range [][]string{{"semantics"}, {"prototypes"}, {"references"}, {"iteration"}, {"numeric"}, {"workload", "1000000"}, {"bench", "1000"}} {
+	for _, arguments := range [][]string{{"semantics"}, {"prototypes"}, {"reads"}, {"references"}, {"iteration"}, {"numeric"}, {"workload", "1000000"}, {"bench", "1000"}} {
 		t.Run(strings.Join(arguments, "-"), func(t *testing.T) {
 			stdout, stderr, err := recordRun(binary, arguments...)
 			if err != nil {
@@ -83,6 +84,18 @@ func TestRecordsAgainstNode(t *testing.T) {
 			}
 		})
 	}
+	// The authoritative member list is read from Node rather than copied into this check.
+	// Each operation must stop for every missing member, naming exactly the requested key.
+	for _, name := range recordPrototypeNames(t) {
+		for _, operation := range []string{"missing-get", "missing-has"} {
+			t.Run(operation+"/"+name, func(t *testing.T) {
+				stdout, stderr, err := recordRun(binary, operation, name)
+				if !recordMemberStop(stdout, stderr, err, name) {
+					t.Fatalf("want exact own-only stop for %s %q: %v\nstdout %q\nstderr %s", operation, name, err, stdout, stderr)
+				}
+			})
+		}
+	}
 	// A deliberate NotYet ends at a panic, like other runtime panics: leak checking at normal
 	// exit does not apply. Check its exact message and exit, and reject sanitizer diagnostics.
 	t.Run("proto-assignment", func(t *testing.T) {
@@ -92,6 +105,36 @@ func TestRecordsAgainstNode(t *testing.T) {
 			t.Fatalf("want explicit NotYet and exit 70: %v\n%s\n%s", err, stdout, stderr)
 		}
 	})
+}
+
+func recordPrototypeNames(t *testing.T) []string {
+	t.Helper()
+	stdout, stderr, err := recordRun("node", "-e", `console.log(JSON.stringify({version:process.version,members:Object.getOwnPropertyNames(Object.prototype)}))`)
+	if err != nil || stderr != "" {
+		t.Fatalf("Node prototype names: %v\n%s", err, stderr)
+	}
+	var observation struct {
+		Version string
+		Members []string
+	}
+	if err := json.Unmarshal([]byte(stdout), &observation); err != nil || observation.Version == "" || len(observation.Members) == 0 {
+		t.Fatalf("Node prototype observation: %v, %q", err, stdout)
+	}
+	t.Logf("Object.getOwnPropertyNames(Object.prototype) on Node %s: %s", observation.Version, strings.Join(observation.Members, ", "))
+	return observation.Members
+}
+
+func recordMemberMessage(name string) string {
+	return fmt.Sprintf("adamic: panic: record member '%s' is missing; records hold own keys only\n", name)
+}
+
+// Intentional stops do not reach normal-exit leak checking. Require the complete diagnostic
+// followed only by the counted report, so a sanitizer failure cannot masquerade as this stop.
+func recordMemberStop(stdout, stderr string, err error, name string) bool {
+	exit, ok := err.(*exec.ExitError)
+	message := recordMemberMessage(name)
+	return ok && exit.ExitCode() == 70 && stdout == "" && strings.HasPrefix(stderr, message) &&
+		recordCounts.MatchString(strings.TrimPrefix(stderr, message))
 }
 
 func recordDifference(a, b string) int {
@@ -175,6 +218,48 @@ func TestRecordMutants(t *testing.T) {
 				t.Fatalf("want %s to catch mutant: %v\n%s", mutant.caught, err, stderr)
 			}
 			t.Logf("caught by %s", mutant.caught)
+		})
+	}
+}
+
+func TestRecordReadMutants(t *testing.T) {
+	t.Parallel()
+	const guardedMiss = "if (value == NULL) {\n\t\tcheck_missing_member(key);\n\t}"
+	for _, mutant := range []struct {
+		name, before, after, operation string
+	}{
+		// Restore JavaScript's inherited in result, which this own-only contract forbids.
+		{"prototype-membership-restored", "return adamic_record_get(record, key) != NULL;", "return adamic_record_get_own(record, key) != NULL || prototype_member(key);", "missing-has"},
+		{"missing-read-silent", guardedMiss, "(void)key;", "missing-get"},
+		{"own-read-checked-as-missing", guardedMiss, "check_missing_member(key);", "reads"},
+	} {
+		t.Run(mutant.name, func(t *testing.T) {
+			binary := recordMutant(t, "record.c", mutant.before, mutant.after)
+			if mutant.operation == "reads" {
+				stdout, stderr, err := recordRun(binary, "reads")
+				exit, ok := err.(*exec.ExitError)
+				if !ok || exit.ExitCode() != 70 || !strings.HasPrefix(stderr, recordMemberMessage("toString")) || stdout == recordNode(t, "reads") {
+					t.Fatalf("want own prototype-name hit wrongly stopped: %v\n%s\n%s", err, stdout, stderr)
+				}
+				t.Log("caught by the own-hit fixture")
+				return
+			}
+			stdout, stderr, err := recordRun(binary, mutant.operation, "toString")
+			if err != nil {
+				t.Fatalf("fallback mutant must finish without sanitizer failures: %v\n%s", err, stderr)
+			}
+			recordCheckCounts(t, stderr)
+			if recordMemberStop(stdout, stderr, err, "toString") {
+				t.Fatal("exact stop contract did not catch mutant")
+			}
+			want := "0\n"
+			if mutant.operation == "missing-has" {
+				want = "1\n"
+			}
+			if stdout != want {
+				t.Fatalf("want mutant's forbidden result %q, got %q", want, stdout)
+			}
+			t.Logf("caught by exact diagnostic and exit check; forbidden result %q", stdout)
 		})
 	}
 }
