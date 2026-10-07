@@ -172,3 +172,7 @@ checker coverage, bridge, uncached filtered Node with typeof compiler mutants,
 vet and registry generation passed again. Boolean remains partial and
 reserved; nonconstant RegExp lowering still rejects the reproducer. No new
 claims. Evidence: ../validation-wave-25-typeof.
+
+Authoritative unified-harness status: all owned rules are parked, not landed.
+See wave-25-parked.md for names, exact scope and reproducers. The earlier green
+evidence describes standalone bridge suites. No unified landing branch exists.
