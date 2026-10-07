@@ -269,6 +269,9 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 	for _, source := range []string{"`a\nb`", "`a\n  b\n c`", "`a\\\nb`", "`a${`b${x}c`}d`", "`a${[1,2,3]}b`", "f(`a\nb`)", "f(\n`a\nb`\n)", "x=`a\n  ${veryLongIdentifierAlpha + veryLongIdentifierBeta + veryLongIdentifierGamma}\n  z`"} {
 		add("template-boundary", source)
 	}
+	for _, source := range []string{"Number()", "Number('17')", "Number('')", "Number('0x11')", "Number('0b101')", "Number('17tail')", "Number(true)", "Number(null)", "Number(undefined)", "Number(-0)"} {
+		add("number-constructor", source)
+	}
 	memberBases := []string{"obj", "this", "Factory", "_", "$$", "longIdentifierName", "namespace.Factory", "f()", "f(x)", "[a,b]", "({a:1})", "(a+b)", "(a?b:c)", "1", "new C()"}
 	memberArguments := []string{"", "x", "x,y", "veryLongIdentifierAlpha,veryLongIdentifierBeta,veryLongIdentifierGamma", "{x:1,y:2}", "[1,2,3]", "[x,y,z]", "f(x)", "a+b"}
 	for _, base := range memberBases {

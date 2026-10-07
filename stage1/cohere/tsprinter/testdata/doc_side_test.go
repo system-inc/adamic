@@ -34,7 +34,7 @@ func TestAdamicDocuments(t *testing.T) {
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	for index, item := range cases {
 		opt := options[index]
-		fmt.Fprintf(&protocol, "reset\t%d\t%d\t%d\n", opt.PrintWidth, opt.TabWidth, boolInt(opt.UseTabs))
+		fmt.Fprintf(&protocol, "reset\t0x%x\t0x%x\t%d\n", opt.PrintWidth, opt.TabWidth, boolInt(opt.UseTabs))
 		count := 0
 		groups := map[int]int{}
 		row := func(kind, text, key string, number int, flag bool, children []int) int {

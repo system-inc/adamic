@@ -48,7 +48,7 @@ func TestDocumentsAgainstGoAndPrettier(t *testing.T) {
 	}
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {
-		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until cloud/setup.sh installs it")
+		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	script, _ := filepath.Abs("testdata/doc.mjs")
 	compare("Prettier", execute(t, nil, "node", script, library, specs))

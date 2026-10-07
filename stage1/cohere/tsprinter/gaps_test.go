@@ -13,7 +13,6 @@ import (
 func TestCompilerGaps(t *testing.T) {
 	t.Parallel()
 	for _, item := range []struct{ name, reason, output string }{
-		{"numberConstructor", "stage 0 can't lower reading Number yet", "17\n"},
 		{"prefixUpdateValue", "stage 0 can't lower a PrefixUnaryExpression on a number yet", "2\n"},
 		{"defaultSort", "Adamic 0.1 refuses sort without a comparator", "im\n"},
 	} {
@@ -37,5 +36,22 @@ func TestCompilerGaps(t *testing.T) {
 			}
 			t.Logf("Node %q; stage 0 %s", item.output, err)
 		})
+	}
+}
+
+func TestNumberConstructor(t *testing.T) {
+	path, err := filepath.Abs("testdata/numberConstructor.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program := lowered(t, path)
+	native, binary := natively(t, program)
+	for _, result := range []run{onNode(t, path), native, onJavaScriptBackend(t, program)} {
+		if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "17\n" {
+			t.Fatalf("Number constructor: %+v", result)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }

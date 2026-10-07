@@ -60,12 +60,10 @@ comparison remains strict, with no exceptions. All 149,852 accepted fragments ag
 
 ## Stage-0 gaps encountered
 
-The following are observations on the scanner/parser base of this branch, not claims about newer
-main. `TestCompilerGaps` executes each program on Node and requires stage 0's recorded diagnostic.
+The following remaining gaps are rechecked against main b6b1538b. `TestCompilerGaps` executes each program on Node and requires stage 0's recorded diagnostic.
 
 | Program | Node output | Stage 0 | Port treatment |
 |---|---|---|---|
-| [numberConstructor.ts](gaps/numberConstructor.ts) | `17` | `NotYet`: reading `Number` | Protocol fields are numeric text already; use `Number.parseFloat`, not a general substitute for `Number` |
 | [prefixUpdateValue.ts](gaps/prefixUpdateValue.ts) | `2` | `NotYet`: numeric `PrefixUnaryExpression` | Decrement as its own statement, then read the resulting index |
 | [defaultSort.ts](gaps/defaultSort.ts) | `im` | `Refused`: sort without comparator | Supply an explicit lexical comparator for regex flags |
 
@@ -205,9 +203,9 @@ separate execution-gap corpus, not formatted expression fragments.
 
 The class/interface panic is a compiler implementation bug. A compiler adapter could retain class method metadata through
 the interface view and dispatch `reader.read()` with its original receiver. Arbitrary method
-extraction needs its own Node oracle. Until that call is supported, returning NotYet during lowering
-would be preferable to reaching native with a missing proved field. This is a proposal,
-not an internal change in this port.
+extraction needs its own Node oracle. Main b6b1538b now returns NotYet during lowering instead of reaching native with a missing
+proved field, as recorded in the merge-seat repair below. Origin-preserving dispatch remains
+unimplemented; this port makes no internal change.
 
 A `.some` callback capturing the layout class was also refused because the callback interface can
 reach that captured type. A loop reads the async modifier without creating that function value.
@@ -315,3 +313,30 @@ The five fork/npm pairs are pinned in
 `TestStatementUpstreamDifferences` verifies Go and embedded-fork bytes against each Go field,
 and independently verifies npm bytes against each Prettier field. It does not grant exceptions
 to the supported expression or statement corpus.
+
+## Merge-seat repair against main b6b1538b
+
+The Number constructor gap is closed. Its program moved to
+[testdata/numberConstructor.ts](testdata/numberConstructor.ts) and now runs successfully on
+Node, native and the JavaScript backend. Protocol fields and CLI widths use Number again.
+The independent Go document protocol now encodes widths in hexadecimal: Number parses them
+as intended, while parseFloat would silently produce zero. Ten explicit Number-call inputs
+join the strict Go, embedded Prettier and npm Prettier expression corpus.
+
+The class/interface gap moved from a native missing-field panic to a compile-time NotYet:
+`gap.ts:6:28: stage 0 can't lower a class method through a view that erases its prototype origin yet`.
+The original proving program is unchanged. The test checks the typed diagnostic, location and
+reason before C emission. This closes the bad native path, but does not implement dispatch through
+this property-style interface. Preserving the concrete method's receiver through the interface
+remains a compiler implementation gap for @system_adamic; no language change is proposed here.
+
+The working callback proof now names the concrete method readValue, exposing read as an explicit
+function property. Main's origin guard conservatively considers compatible class shapes in the
+module; renaming avoids confusing that concrete method with the interface's read slot. The
+callback still returns the same captured Box value. Successful lowering rejects the gap-check
+mutant, and Node, native and backend must all print 17 without leaks.
+
+macOS leak-check integration is waiting for internal/leakcheck to land on main from
+origin/devtools/stage1-leaks (f6eef5df). This branch does not merge that development branch or
+replace the helper with local ASan option switching. Named oracle skips now cite
+#xq2ecw6 (setup --gate-inputs), the work that installs the pins and removes the skips.

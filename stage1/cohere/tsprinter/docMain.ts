@@ -11,22 +11,22 @@ for(const line of input.text.split('\n')) {
     const kind = fields[0] ?? panic('missing doc kind');
     if(kind === 'reset') {
         docs = new Documents({
-            printWidth: Number.parseFloat(fields[1] ?? ''),
-            tabWidth: Number.parseFloat(fields[2] ?? ''),
+            printWidth: Number(fields[1] ?? ''),
+            tabWidth: Number(fields[2] ?? ''),
             useTabs: fields[3] === '1',
         });
     }
     else if(kind === 'print') {
-        console.log(`ok\t${escaped(docs.print(Number.parseFloat(fields[1] ?? '')))}`);
+        console.log(`ok\t${escaped(docs.print(Number(fields[1] ?? '')))}`);
     }
     else {
         const children: number[] = [];
-        for(const child of (fields[5] ?? '').split(',')) if(child !== '') children.push(Number.parseFloat(child));
+        for(const child of (fields[5] ?? '').split(',')) if(child !== '') children.push(Number(child));
         docs.add(
             kind,
             children,
             unescaped(fields[4] ?? ''),
-            Number.parseFloat(fields[1] ?? ''),
+            Number(fields[1] ?? ''),
             fields[3] ?? '',
             fields[2] === '1',
         );

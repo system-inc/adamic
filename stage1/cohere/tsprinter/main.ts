@@ -5,7 +5,7 @@ const args = programArguments();
 const batch = args[0] === '--cases';
 const input = readTextFile(args[batch ? 1 : 0] ?? panic('usage: main.ts <expression-file> | --cases <batch> [width]'));
 if(input.kind === 'Error') panic(input.message);
-const settings = { printWidth: args[2] === undefined ? 120 : Number.parseFloat(args[2]), tabWidth: 4, useTabs: false };
+const settings = { printWidth: args[2] === undefined ? 120 : Number(args[2]), tabWidth: 4, useTabs: false };
 if(batch) {
     for(const line of input.text.split('\n')) {
         if(line === '') continue;

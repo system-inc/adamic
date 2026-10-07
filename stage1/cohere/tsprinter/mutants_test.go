@@ -10,6 +10,7 @@ import (
 type mutation struct{ name, file, from, to, entry string }
 
 var mutations = []mutation{
+	{"protocol width confuses Number with parseFloat", "docMain.ts", "printWidth: Number(fields[1] ?? '')", "printWidth: Number.parseFloat(fields[1] ?? '')", "docMain.ts"},
 	{"program loses its statement separator", "expressions.ts", "if(parts.length > 0) parts.push(this.docs.hardline());\n                    const previous =", "if(false) parts.push(this.docs.hardline());\n                    const previous =", "statementsMain.ts"},
 	{"declaration loses its function keyword", "expressions.ts", "`${async}function${generator}${name}`", "`${async}${node.kind === 'FunctionDeclaration' ? '' : 'function'}${generator}${name}`", "statementsMain.ts"},
 	{"assignment chain ignores statement boundaries", "expressions.ts", "!['ExpressionStatement', 'VariableDeclarationList', 'VariableStatement']", "!['UnrelatedStatement', 'VariableDeclarationList', 'VariableStatement']", "main.ts"},

@@ -2,6 +2,7 @@ package tsprinter
 
 import (
 	"context"
+	"errors"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"os"
@@ -25,24 +26,36 @@ func TestClassInterfaceMethodGap(t *testing.T) {
 	if node.exitCode != 0 || len(node.stderr) != 0 || string(node.stdout) != "17\n" {
 		t.Fatalf("Node truth: %+v", node)
 	}
-	actual, _ := natively(t, lowered(t, port))
-	isGap := func(result run) bool {
-		return result.exitCode != 0 && len(result.stdout) == 0 && strings.Contains(string(result.stderr), "compiler bug: a field the checker proved is there is missing")
+	loaded, err := load.Load([]string{port})
+	if err != nil {
+		t.Fatal(err)
 	}
-	if !isGap(actual) {
-		t.Fatalf("recorded native gap changed: %+v", actual)
+	_, err = lower.Lower(context.Background(), loaded)
+	isGap := func(err error) bool {
+		var diagnostic *lower.NotYet
+		return errors.As(err, &diagnostic) && diagnostic.Where == port+":6:28" && diagnostic.What == "a class method through a view that erases its prototype origin"
 	}
-	t.Logf("Node prints 17; native exits %d with missing proved field panic", actual.exitCode)
+	if !isGap(err) {
+		t.Fatalf("recorded lowering gap changed: %v", err)
+	}
+	t.Logf("Node prints 17; lowering refuses before native emission: %s", err)
 	// A safe explicit callback is also the mutant proving this gap check can reject a normal run.
-	fixed := strings.Replace(string(data), "console.log(`${new Consumer(new Box()).run()}`);", "const box = new Box();\nconsole.log(`${new Consumer({read: () => box.read()}).run()}`);", 1)
+	fixed := strings.Replace(strings.Replace(string(data), "read(): number", "readValue(): number", 1), "console.log(`${new Consumer(new Box()).run()}`);", "const box = new Box();\nconsole.log(`${new Consumer({read: () => box.readValue()}).run()}`);", 1)
 	workaround := filepath.Join(directory, "workaround.ts")
 	if err = os.WriteFile(workaround, []byte(fixed), 0644); err != nil {
 		t.Fatal(err)
 	}
-	program := lowered(t, workaround)
+	loaded, err = load.Load([]string{workaround})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil || isGap(err) {
+		t.Fatalf("explicit callback mutant lowering: %v", err)
+	}
 	safe, binary := natively(t, program)
 	for _, result := range []run{onNode(t, workaround), safe, onJavaScriptBackend(t, program)} {
-		if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "17\n" || isGap(result) {
+		if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "17\n" {
 			t.Fatalf("explicit callback: %+v", result)
 		}
 	}

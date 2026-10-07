@@ -1161,3 +1161,58 @@ unported, alongside comments, source trivia and later typed declarations/types. 
 proving inputs and the five exact upstream control-flow differences are in GAPS.md. No complete
 TypeScript compiler source file is claimed formatted. No internal, parser, scanner or submodule
 file was edited. The port-specific gates above passed; the full repository gate was not run.
+
+## Area merge-seat repair: stage1-format/ts-printer-2
+
+Base: origin/stage1-format/ts-printer at 27acfbe8, merged with origin/main
+b6b1538b (merge f489b16). Only this printer package is edited; no internal files change.
+
+Toolchain: bash cloud/setup.sh, output /tmp/ts-printer-2-setup.log.
+Timing lines: Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s,
+build cache warm 127s, total 127s. nproc 5; CPU quota four cores. Environment:
+source /workspace/adamic-tools/env.sh, Go 1.27.1, clang 20.1.8, Node 24.19.0.
+
+The before-repair filtered gap gate exited 1 in 4.970s, reproducing both obsolete
+Number refusal and obsolete class-interface native-panic expectation.
+The unchanged class proof now produces typed NotYet at gap.ts:6:28, before native
+emission. Its callback workaround renames the concrete method readValue so main's
+conservative compatible-shape scan does not erase its origin. The successful
+workaround is the mutant rejected by the diagnostic check; Node, native and backend
+print 17, with Linux leak checks passing. Number's former gap program is a positive
+three-backend regression, and protocol/CLI conversions use Number again.
+
+Pinned gate command (output /tmp/ts-printer-2-full.log):
+
+```sh
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+go test -v -count=1 -parallel 3 -timeout 60m ./stage1/cohere/tsprinter
+```
+
+349 files, zero parse refusals; 155,050 accepted expression fragments and 49,201
+statement/program fragments, including five complete files, pass strict Go cohere,
+embedded Prettier and npm Prettier comparisons. Both Prettiers remain pinned to
+3.9.6. The ten new Number-call cases account for the expression-count increase.
+5,072 document cases agree with Go and npm Prettier on Node, native and backend.
+Hexadecimal widths in the independent Go protocol exercise Number's conversion:
+its parseFloat mutant finishes normally on Node and native, then fails at output
+line 5. Existing printer mutants retain successful-run byte-mismatch requirements.
+
+Additional checks: go vet ./stage1/cohere/tsprinter (empty log); cohere --no-fix
+--no-cache stage1/cohere/tsprinter/*.ts (exit 0, 13 checked, 100% Adamic-ready);
+git diff --check; gofmt. Filtered oracle:
+go test -v -count=1 -timeout 10m ./internal/oracle -run '^TestInput'
+passed in 6.394s, including read arguments/files, write files and UTF-8 sweep.
+Output is /tmp/ts-printer-2-oracle.log. The full repository gate was not run.
+
+Fix 3 waits on internal/leakcheck, absent from main b6b1538b when re-fetched.
+The devtools/stage1-leaks branch is not merged. Existing ASan sites remain unchanged
+until the shared helper lands; no macOS validation is claimed. Every named skip
+now cites #xq2ecw6 (setup --gate-inputs), which installs pins and removes those skips.
+
+Final pinned package result: exit 0, PASS, 827.352s. All 29 printer mutants
+(including the new Number/parseFloat mutation) finished normally and were caught
+by output mismatches on both Node and native. The class-interface and optional-
+boolean gap checks also rejected their successful-lowering workaround mutants.
+The final fetch/merge reports Already up to date at main b6b1538b; internal/leakcheck
+is still absent. Fix 3 remains waiting, as authorized by the merge seat.
