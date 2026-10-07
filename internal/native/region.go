@@ -125,7 +125,10 @@ func (plan *regionPlan) returnsFresh(program *ir.Program, function int) bool {
 		if !ok || read.Local != declaration.Local {
 			return false
 		}
-		if plan.escaping(body[1:len(body)-1], declaration.Local) {
+		// A closure that captures the object (this, in the source) holds it through a cell that
+		// escaping doesn't follow, since MakeClosure names only its function: keep it on the heap, as
+		// a captured parameter is (planRegions).
+		if program.Locals[declaration.Local].Captured || plan.escaping(body[1:len(body)-1], declaration.Local) {
 			return false
 		}
 		plan.classObjects[function] = declaration.Local

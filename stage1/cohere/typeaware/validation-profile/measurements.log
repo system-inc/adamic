@@ -1,0 +1,20 @@
+before: load_s=0.298642966 run_s=18.359974306 process_s=18.708858110 run_findings_s=96.024 process_findings_s=94.233
+  queries=131755 query_s=11.240360329 average_query_us=85.313
+after: load_s=0.303876552 run_s=6.921509919 process_s=7.247286324 run_findings_s=254.713 process_findings_s=243.263
+  queries=133565 query_s=3.457083851 average_query_us=25.883
+oracle: load_s=0.285708513 run_s=1.775663369 process_s=2.069595423 run_findings_s=992.868 process_findings_s=851.857
+before profile: run_s=18.389618 query_s=11.139487 decode_s=5.269553 parse_s=0.953548 parents_s=0.061076 offsets_s=0.190856 other_s=0.775098
+  C-public-call minus Go-body: 0.096223s, 0.730us/query; input_s=0.028856 output_s=0.124014
+after profile: run_s=7.181811 query_s=3.560384 decode_s=1.826940 parse_s=0.973678 parents_s=0.060936 offsets_s=0.187055 other_s=0.572818
+  C-public-call minus Go-body: 0.073516s, 0.550us/query; input_s=0.021922 output_s=0.083869
+Warm identical-facts probes, median us/query excluding first, 9999 remaining calls
+assignable: native=2.163 direct_Go=1.562 delta=0.601
+declarations: native=2.678 direct_Go=2.634 delta=0.044
+signature: native=10.783 direct_Go=10.682 delta=0.101
+raw-type: native=4.043 direct_Go=3.647 delta=0.396
+nullable: native=11.405 direct_Go=11.288 delta=0.116
+union: native=8.818 direct_Go=8.967 delta=-0.149
+signature-shape: native=3.674 direct_Go=3.412 delta=0.262
+raw-shape: native=2.711 direct_Go=2.248 delta=0.462
+type-shape: native=4.407 direct_Go=4.527 delta=-0.119
+options: native=1.257 direct_Go=0.627 delta=0.630

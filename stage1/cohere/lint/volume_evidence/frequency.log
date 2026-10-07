@@ -1,0 +1,493 @@
+files	398
+skip-types	@next/next/no-async-client-component
+skip-types	@next/next/no-duplicate-head
+skip-types	@next/next/no-script-component-in-head
+skip-types	@next/next/no-title-in-document-head
+skip-types	@typescript-eslint/await-thenable
+skip-types	@typescript-eslint/class-literal-property-style
+skip-types	@typescript-eslint/consistent-generic-constructors
+skip-types	@typescript-eslint/consistent-indexed-object-style
+skip-types	@typescript-eslint/consistent-return
+skip-types	@typescript-eslint/consistent-type-exports
+skip-types	@typescript-eslint/consistent-type-imports
+skip-types	@typescript-eslint/dot-notation
+skip-types	@typescript-eslint/no-array-constructor
+skip-types	@typescript-eslint/no-array-delete
+skip-types	@typescript-eslint/no-base-to-string
+skip-types	@typescript-eslint/no-confusing-void-expression
+skip-types	@typescript-eslint/no-deprecated
+skip-types	@typescript-eslint/no-duplicate-type-constituents
+skip-types	@typescript-eslint/no-extraneous-class
+skip-types	@typescript-eslint/no-floating-promises
+skip-types	@typescript-eslint/no-for-in-array
+skip-types	@typescript-eslint/no-implied-eval
+skip-types	@typescript-eslint/no-meaningless-void-operator
+skip-types	@typescript-eslint/no-misused-promises
+skip-types	@typescript-eslint/no-misused-spread
+skip-types	@typescript-eslint/no-mixed-enums
+skip-types	@typescript-eslint/no-non-null-asserted-nullish-coalescing
+skip-types	@typescript-eslint/no-redeclare
+skip-types	@typescript-eslint/no-redundant-type-constituents
+skip-types	@typescript-eslint/no-require-imports
+skip-types	@typescript-eslint/no-shadow
+skip-types	@typescript-eslint/no-unnecessary-boolean-literal-compare
+skip-types	@typescript-eslint/no-unnecessary-qualifier
+skip-types	@typescript-eslint/no-unnecessary-template-expression
+skip-types	@typescript-eslint/no-unnecessary-type-parameters
+skip-types	@typescript-eslint/no-unsafe-argument
+skip-types	@typescript-eslint/no-unsafe-assignment
+skip-types	@typescript-eslint/no-unsafe-call
+skip-types	@typescript-eslint/no-unsafe-declaration-merging
+skip-types	@typescript-eslint/no-unsafe-enum-comparison
+skip-types	@typescript-eslint/no-unsafe-member-access
+skip-types	@typescript-eslint/no-unsafe-return
+skip-types	@typescript-eslint/no-unsafe-type-assertion
+skip-types	@typescript-eslint/no-unsafe-unary-minus
+skip-types	@typescript-eslint/no-unused-private-class-members
+skip-types	@typescript-eslint/no-unused-vars
+skip-types	@typescript-eslint/no-useless-default-assignment
+skip-types	@typescript-eslint/non-nullable-type-assertion-style
+skip-types	@typescript-eslint/only-throw-error
+skip-types	@typescript-eslint/prefer-find
+skip-types	@typescript-eslint/prefer-for-of
+skip-types	@typescript-eslint/prefer-includes
+skip-types	@typescript-eslint/prefer-nullish-coalescing
+skip-types	@typescript-eslint/prefer-promise-reject-errors
+skip-types	@typescript-eslint/prefer-reduce-type-parameter
+skip-types	@typescript-eslint/prefer-regexp-exec
+skip-types	@typescript-eslint/prefer-return-this-type
+skip-types	@typescript-eslint/related-getter-setter-pairs
+skip-types	@typescript-eslint/require-array-sort-compare
+skip-types	@typescript-eslint/restrict-plus-operands
+skip-types	@typescript-eslint/restrict-template-expressions
+skip-types	@typescript-eslint/return-await
+skip-types	@typescript-eslint/strict-void-return
+skip-types	@typescript-eslint/switch-exhaustiveness-check
+skip-types	@typescript-eslint/unbound-method
+skip-types	@typescript-eslint/use-unknown-in-catch-callback-variable
+skip-types	accessor-pairs
+skip-types	adamic/invariant-mutable
+skip-types	adamic/no-optional-widening
+skip-types	adamic/no-unchecked-cast
+skip-types	adamic/nominal-class
+skip-types	base/correctness-require-graphql-nullable-parity
+skip-types	base/correctness-require-matching-inject-type
+skip-types	base/correctness-require-matching-operation-context
+skip-types	base/correctness-require-matching-provider-return
+skip-types	base/correctness-require-optional-relation
+skip-types	base/correctness-require-orm-column-nullable-parity
+skip-types	base/correctness-require-serializable-nullable-parity
+skip-types	base/correctness-require-verify-array-parity
+skip-types	base/correctness-require-verify-optional-parity
+skip-types	block-scoped-var
+skip-required-options	boundaries/dependencies
+skip-types	getter-return
+skip-types	id-denylist
+skip-types	id-match
+skip-types	logical-assignment-operators
+skip-required-options	nexus/boundary-no-project-import
+skip-types	nexus/concurrency-no-check-then-write
+skip-types	nexus/concurrency-no-lost-update
+skip-types	nexus/consistency-no-iso-string-date-cut
+skip-types	nexus/consistency-no-property-alias
+skip-types	nexus/consistency-require-constant-casing
+skip-types	nexus/consistency-require-matching-return-type
+skip-types	nexus/correctness-no-callback-in-parse-try
+skip-types	nexus/correctness-no-caller-data-mutation
+skip-types	nexus/correctness-no-collection-misuse
+skip-types	nexus/correctness-no-discarded-outcome
+skip-types	nexus/correctness-no-discarded-pure-result
+skip-types	nexus/correctness-no-global-listener-target-assertion
+skip-types	nexus/correctness-no-identical-branches
+skip-types	nexus/correctness-no-implicit-return
+skip-types	nexus/correctness-no-import-cycle-load-time-read
+skip-types	nexus/correctness-no-leaked-number-render
+skip-types	nexus/correctness-no-mock-on-module-namespace
+skip-types	nexus/correctness-no-nullish-stripping-assertion
+skip-types	nexus/correctness-no-process-exit-after-output
+skip-types	nexus/correctness-no-test-on-global-regex
+skip-types	nexus/correctness-no-uncleared-race-timeout
+skip-types	nexus/correctness-no-write-only-collection
+skip-types	nexus/correctness-require-blocking-standard-streams
+skip-types	nexus/correctness-require-child-process-error-listener
+skip-types	nexus/correctness-require-response-status-check
+skip-required-options	nexus/import-require-path-alias
+skip-types	nexus/performance-no-independent-await-in-loop
+skip-types	nexus/security-no-interpolated-shell-command
+skip-types	nexus/security-no-interpolated-sql-string
+skip-types	no-alert
+skip-types	no-class-assign
+skip-types	no-const-assign
+skip-types	no-constant-binary-expression
+skip-types	no-else-return
+skip-types	no-eval
+skip-types	no-extend-native
+skip-types	no-func-assign
+skip-types	no-global-assign
+skip-types	no-implicit-coercion
+skip-types	no-implicit-globals
+skip-types	no-implied-eval
+skip-types	no-import-assign
+skip-types	no-invalid-regexp
+skip-types	no-label-var
+skip-types	no-loop-func
+skip-types	no-misleading-character-class
+skip-types	no-new-func
+skip-types	no-new-native-nonconstructor
+skip-types	no-new-wrappers
+skip-types	no-obj-calls
+skip-types	no-object-constructor
+skip-types	no-param-reassign
+skip-types	no-promise-executor-return
+skip-types	no-restricted-globals
+skip-types	no-setter-return
+skip-types	no-shadow-restricted-names
+skip-types	no-throw-literal
+skip-types	no-unassigned-vars
+skip-types	no-undef-init
+skip-types	no-unmodified-loop-condition
+skip-types	no-use-before-define
+skip-types	no-useless-assignment
+skip-types	no-useless-backreference
+skip-types	no-useless-return
+skip-types	prefer-arrow-callback
+skip-types	prefer-const
+skip-types	prefer-exponentiation-operator
+skip-types	prefer-numeric-literals
+skip-types	prefer-object-has-own
+skip-types	prefer-object-spread
+skip-types	prefer-promise-reject-errors
+skip-types	prefer-regex-literals
+skip-types	prefer-rest-params
+skip-types	preserve-caught-error
+skip-types	radix
+skip-types	react-hooks/exhaustive-deps
+skip-types	react-hooks/globals
+skip-types	react-hooks/immutability
+skip-types	react-hooks/no-deriving-state-in-effects
+skip-types	react-hooks/preserve-manual-memoization
+skip-types	react-hooks/purity
+skip-types	react-hooks/refs
+skip-types	react-hooks/set-state-in-effect
+skip-types	react-hooks/set-state-in-render
+skip-types	react-hooks/static-components
+skip-types	react-hooks/unsupported-syntax
+skip-types	react-hooks/use-memo
+skip-types	react/boolean-prop-naming
+skip-types	react/button-has-type
+skip-types	react/checked-requires-onchange-or-readonly
+skip-types	react/display-name
+skip-types	react/forbid-elements
+skip-types	react/forbid-prop-types
+skip-types	react/iframe-missing-sandbox
+skip-types	react/jsx-fragments
+skip-types	react/jsx-no-constructed-context-values
+skip-types	react/jsx-no-undef
+skip-types	react/no-adjacent-inline-elements
+skip-types	react/no-array-index-key
+skip-types	react/no-danger-with-children
+skip-types	react/no-multi-comp
+skip-types	react/no-namespace
+skip-types	react/no-object-type-as-default-prop
+skip-types	react/no-unstable-nested-components
+skip-types	react/sort-default-props
+skip-types	react/static-property-placement
+skip-types	react/style-prop-object
+skip-types	require-atomic-updates
+skip-types	require-await
+skip-types	structure/react-hook-no-any-type
+skip-types	symbol-description
+skip-types	use-isnan
+skip-types	valid-typeof
+rule	compiler	repository	total	failure
+one-var	6731	1420	8151	
+no-bitwise	6955	98	7053	
+no-inline-comments	5887	129	6016	
+nexus/consistency-no-ambiguous-identifier	5469	303	5772	
+nexus/consistency-no-abbreviated-identifier	4827	52	4879	
+id-length	1680	169	1849	
+@typescript-eslint/method-signature-style	1508	2	1510	
+nexus/consistency-require-type-suffix	1170	180	1350	
+@typescript-eslint/no-non-null-assertion	1123	1	1124	
+@typescript-eslint/prefer-literal-enum-member	1043	0	1043	
+base/consistency-no-console	1	1041	1042	
+no-plusplus	680	323	1003	
+@typescript-eslint/no-wrapper-object-types	744	0	744	
+@typescript-eslint/prefer-enum-initializers	680	0	680	
+adamic/no-type-predicate	651	1	652	
+nexus/consistency-no-long-line-comment	540	99	639	
+nexus/consistency-no-multiline-arrow-function	540	72	612	
+prefer-destructuring	515	61	576	
+nexus/consistency-no-single-line-jsdoc	555	0	555	
+consistent-return	537	9	546	
+no-var	450	0	450	
+no-negated-condition	414	17	431	
+no-continue	280	115	395	
+complexity	325	42	367	
+max-depth	331	30	361	
+default-case	286	38	324	
+no-underscore-dangle	313	3	316	
+no-return-assign	276	0	276	
+vars-on-top	262	0	262	
+@typescript-eslint/no-explicit-any	210	1	211	
+no-warning-comments	197	0	197	
+no-case-declarations	192	0	192	
+prefer-template	161	29	190	
+nexus/consistency-no-shouting	118	53	171	
+nexus/consistency-no-enum	164	0	164	
+structure/consistency-require-organized-imports	74	75	149	
+@eslint-community/eslint-comments/require-description	125	0	125	
+base/consistency-no-bare-throw	9	83	92	
+max-lines	56	13	69	
+no-cond-assign	52	0	52	
+react/no-this-in-sfc	48	0	48	
+arrow-body-style	46	0	46	
+no-multi-assign	45	0	45	
+no-lonely-if	44	0	44	
+@typescript-eslint/unified-signatures	43	0	43	
+operator-assignment	20	15	35	
+no-labels	34	0	34	
+no-sequences	34	0	34	
+@typescript-eslint/no-empty-object-type	28	0	28	
+nexus/consistency-no-for-in	27	0	27	
+@typescript-eslint/default-param-last	24	0	24	
+default-param-last	24	0	24	
+sort-vars	18	1	19	
+no-unsafe-finally	0	18	18	
+adamic/no-definite-assignment	12	0	12	
+adamic/single-spread	12	0	12	
+no-extra-boolean-cast	12	0	12	
+max-classes-per-file	3	7	10	
+no-fallthrough	9	1	10	
+@typescript-eslint/no-inferrable-types	6	2	8	
+@typescript-eslint/no-non-null-asserted-optional-chain	7	0	7	
+no-control-regex	6	0	6	
+no-self-assign	0	6	6	
+guard-for-in	5	0	5	
+no-self-compare	0	5	5	
+no-unreachable-loop	2	3	5	
+@typescript-eslint/consistent-type-definitions	0	4	4	
+@typescript-eslint/no-duplicate-enum-values	4	0	4	
+no-empty-function	3	1	4	
+react-hooks/rules-of-hooks	4	0	4	
+@typescript-eslint/no-unused-expressions	3	0	3	
+class-methods-use-this	0	3	3	
+no-constant-condition	1	2	3	
+yoda	2	1	3	
+@typescript-eslint/no-dynamic-delete	2	0	2	
+array-callback-return	2	0	2	
+nexus/consistency-no-screaming-snake-case	2	0	2	
+no-unneeded-ternary	2	0	2	
+no-useless-concat	1	1	2	
+nexus/consistency-no-stuttering-name	1	0	1	
+no-debugger	1	0	1	
+no-extra-label	1	0	1	
+no-useless-call	1	0	1	
+no-useless-computed-key	1	0	1	
+object-shorthand	1	0	1	
+structure/network-no-direct-fetch	0	1	1	
+@next/next/google-font-display	0	0	0	
+@next/next/google-font-preconnect	0	0	0	
+@next/next/inline-script-id	0	0	0	
+@next/next/next-script-for-ga	0	0	0	
+@next/next/no-assign-module-variable	0	0	0	
+@next/next/no-before-interactive-script-outside-document	0	0	0	
+@next/next/no-css-tags	0	0	0	
+@next/next/no-document-import-in-page	0	0	0	
+@next/next/no-head-element	0	0	0	
+@next/next/no-head-import-in-document	0	0	0	
+@next/next/no-html-link-for-pages	0	0	0	
+@next/next/no-img-element	0	0	0	
+@next/next/no-location-assign-relative-destination	0	0	0	
+@next/next/no-page-custom-font	0	0	0	
+@next/next/no-styled-jsx-in-document	0	0	0	
+@next/next/no-sync-scripts	0	0	0	
+@next/next/no-typos	0	0	0	
+@next/next/no-unwanted-polyfillio	0	0	0	
+@typescript-eslint/adjacent-overload-signatures	0	0	0	
+@typescript-eslint/array-type	0	0	0	
+@typescript-eslint/ban-ts-comment	0	0	0	
+@typescript-eslint/ban-tslint-comment	0	0	0	
+@typescript-eslint/consistent-type-assertions	0	0	0	
+@typescript-eslint/init-declarations	0	0	0	
+@typescript-eslint/no-confusing-non-null-assertion	0	0	0	
+@typescript-eslint/no-dupe-class-members	0	0	0	
+@typescript-eslint/no-extra-non-null-assertion	0	0	0	
+@typescript-eslint/no-import-type-side-effects	0	0	0	
+@typescript-eslint/no-invalid-this	0	0	0	
+@typescript-eslint/no-misused-new	0	0	0	
+@typescript-eslint/no-restricted-types	0	0	0	
+@typescript-eslint/no-this-alias	0	0	0	
+@typescript-eslint/no-unnecessary-parameter-property-assignment	0	0	0	
+@typescript-eslint/no-unnecessary-type-constraint	0	0	0	
+@typescript-eslint/no-unsafe-function-type	0	0	0	
+@typescript-eslint/no-useless-empty-export	0	0	0	
+@typescript-eslint/prefer-as-const	0	0	0	
+@typescript-eslint/prefer-function-type	0	0	0	
+@typescript-eslint/prefer-namespace-keyword	0	0	0	
+@typescript-eslint/triple-slash-reference	0	0	0	
+base/boundary-no-global-container	0	0	0	
+base/consistency-no-hand-built-declared-error	0	0	0	
+base/consistency-require-pagination-argument-name	0	0	0	
+base/correctness-require-orm-column-declare	0	0	0	
+base/security-require-context-access	0	0	0	
+better-tailwindcss/enforce-canonical-classes	0	0	0	
+better-tailwindcss/enforce-consistent-class-order	0	0	0	
+better-tailwindcss/enforce-consistent-important-position	0	0	0	
+better-tailwindcss/enforce-consistent-variable-syntax	0	0	0	
+better-tailwindcss/enforce-consistent-variant-order	0	0	0	
+better-tailwindcss/enforce-shorthand-classes	0	0	0	
+better-tailwindcss/no-concatenated-classes	0	0	0	
+better-tailwindcss/no-conflicting-classes	0	0	0	
+better-tailwindcss/no-deprecated-classes	0	0	0	
+better-tailwindcss/no-duplicate-classes	0	0	0	
+better-tailwindcss/no-unknown-classes	0	0	0	
+better-tailwindcss/no-unnecessary-whitespace	0	0	0	
+consistent-this	0	0	0	
+constructor-super	0	0	0	
+default-case-last	0	0	0	
+dot-notation	0	0	0	
+eqeqeq	0	0	0	
+for-direction	0	0	0	
+func-name-matching	0	0	0	
+grouped-accessor-pairs	0	0	0	
+max-nested-callbacks	0	0	0	
+nexus/boundary-no-internal-import	0	0	0	
+nexus/boundary-no-nexus-outside-import	0	0	0	
+nexus/consistency-no-boolean-outcome	0	0	0	
+nexus/consistency-no-hand-rolled-delay	0	0	0	
+nexus/consistency-no-return-void	0	0	0	
+nexus/consistency-no-utils-folder	0	0	0	
+nexus/import-no-forbidden-source	0	0	0	
+nexus/import-require-module-alias	0	0	0	
+nexus/import-require-node-namespace	0	0	0	
+nexus/localization-no-untranslated-value	0	0	0	
+no-async-promise-executor	0	0	0	
+no-await-in-loop	0	0	0	
+no-caller	0	0	0	
+no-compare-neg-zero	0	0	0	
+no-constructor-return	0	0	0	
+no-delete-var	0	0	0	
+no-div-regex	0	0	0	
+no-dupe-class-members	0	0	0	
+no-dupe-else-if	0	0	0	
+no-duplicate-case	0	0	0	
+no-empty	0	0	0	
+no-empty-character-class	0	0	0	
+no-empty-pattern	0	0	0	
+no-empty-static-block	0	0	0	
+no-eq-null	0	0	0	
+no-ex-assign	0	0	0	
+no-extra-bind	0	0	0	
+no-inner-declarations	0	0	0	
+no-invalid-this	0	0	0	
+no-irregular-whitespace	0	0	0	
+no-iterator	0	0	0	
+no-lone-blocks	0	0	0	
+no-loss-of-precision	0	0	0	
+no-multi-str	0	0	0	
+no-new	0	0	0	
+no-nonoctal-decimal-escape	0	0	0	
+no-octal	0	0	0	
+no-octal-escape	0	0	0	
+no-proto	0	0	0	
+no-prototype-builtins	0	0	0	
+no-regex-spaces	0	0	0	
+no-restricted-exports	0	0	0	
+no-restricted-imports	0	0	0	
+no-restricted-properties	0	0	0	
+no-script-url	0	0	0	
+no-sparse-arrays	0	0	0	
+no-template-curly-in-string	0	0	0	
+no-this-before-super	0	0	0	
+no-unexpected-multiline	0	0	0	
+no-unsafe-negation	0	0	0	
+no-unsafe-optional-chaining	0	0	0	
+no-unused-labels	0	0	0	
+no-unused-private-class-members	0	0	0	
+no-useless-catch	0	0	0	
+no-useless-constructor	0	0	0	
+no-useless-escape	0	0	0	
+no-useless-rename	0	0	0	
+no-with	0	0	0	
+prefer-spread	0	0	0	
+react-hooks/config	0	0	0	
+react-hooks/error-boundaries	0	0	0	
+react-hooks/gating	0	0	0	
+react-hooks/incompatible-library	0	0	0	
+react-hooks/void-use-memo	0	0	0	
+react/default-props-match-prop-types	0	0	0	
+react/forbid-dom-props	0	0	0	
+react/forbid-foreign-prop-types	0	0	0	
+react/forward-ref-uses-ref	0	0	0	
+react/jsx-curly-brace-presence	0	0	0	
+react/jsx-key	0	0	0	
+react/jsx-no-comment-textnodes	0	0	0	
+react/jsx-no-duplicate-props	0	0	0	
+react/jsx-no-script-url	0	0	0	
+react/jsx-no-target-blank	0	0	0	
+react/jsx-no-useless-fragment	0	0	0	
+react/jsx-props-no-spread-multi	0	0	0	
+react/no-access-state-in-setstate	0	0	0	
+react/no-arrow-function-lifecycle	0	0	0	
+react/no-children-prop	0	0	0	
+react/no-danger	0	0	0	
+react/no-deprecated	0	0	0	
+react/no-did-mount-set-state	0	0	0	
+react/no-did-update-set-state	0	0	0	
+react/no-direct-mutation-state	0	0	0	
+react/no-find-dom-node	0	0	0	
+react/no-invalid-html-attribute	0	0	0	
+react/no-is-mounted	0	0	0	
+react/no-redundant-should-component-update	0	0	0	
+react/no-render-return-value	0	0	0	
+react/no-set-state	0	0	0	
+react/no-string-refs	0	0	0	
+react/no-typos	0	0	0	
+react/no-unescaped-entities	0	0	0	
+react/no-unknown-property	0	0	0	
+react/no-unsafe	0	0	0	
+react/no-unused-class-component-methods	0	0	0	
+react/no-unused-state	0	0	0	
+react/no-will-update-set-state	0	0	0	
+react/prefer-es6-class	0	0	0	
+react/prefer-stateless-function	0	0	0	
+react/require-optimization	0	0	0	
+react/require-render-return	0	0	0	
+react/self-closing-comp	0	0	0	
+react/sort-comp	0	0	0	
+react/state-in-constructor	0	0	0	
+react/void-dom-elements-no-children	0	0	0	
+require-yield	0	0	0	
+strict	0	0	0	
+structure/boundary-no-project-theme-value	0	0	0	
+structure/consistency-require-matching-file-name	0	0	0	
+structure/import-require-react-namespace	0	0	0	
+structure/network-no-forbidden-import	0	0	0	
+structure/network-no-invalidate-cache-in-on-success	0	0	0	
+structure/network-no-invalidate-cache-literal-key	0	0	0	
+structure/network-no-string-literal-query	0	0	0	
+structure/network-require-hook-options-parameter	0	0	0	
+structure/network-require-hook-request-suffix	0	0	0	
+structure/network-require-hook-variables-type	0	0	0	
+structure/next-no-near-miss-route-export	0	0	0	
+structure/next-no-page-state	0	0	0	
+structure/next-require-api-parameter-name	0	0	0	
+structure/next-require-page-default-export	0	0	0	
+structure/react-component-no-const-assignment	0	0	0	
+structure/react-component-no-destructuring	0	0	0	
+structure/react-component-no-display-name	0	0	0	
+structure/react-component-no-forward-ref	0	0	0	
+structure/react-component-no-separate-named-export	0	0	0	
+structure/react-component-require-named-export	0	0	0	
+structure/react-component-require-properties-parameter	0	0	0	
+structure/react-component-require-properties-type-suffix	0	0	0	
+structure/react-element-no-anchor	0	0	0	
+structure/react-element-no-horizontal-rule	0	0	0	
+structure/react-hook-no-destructuring	0	0	0	
+structure/react-hook-no-properties-in-dependencies	0	0	0	
+structure/react-hook-require-effect-comment	0	0	0	
+structure/react-hook-require-result-naming	0	0	0	
+structure/storage-no-direct-local-storage	0	0	0	
+structure/tailwind-no-physical-direction	0	0	0	
+unicode-bom	0	0	0	
