@@ -145,3 +145,50 @@ Adaptation 47 follow-up:
 - Complete count verification without updates: /tmp/fs_adaptation47_counts.log, PASS 16.913s.
 - The companion original-fixture runner /tmp/fs_adaptation47_other_host.log records 11_setModifiedTime Compiles and exact Node agreement on both backends, now green and pushed immediately. 05_writeFile is Refused at its boolean | undefined condition; 06_fileExists, 10_getModifiedTime and 12_deleteFile are NotYet at fs.symlinkSync. All ten source Node observations and ten mutants pass. For 01-04 and 13, the actual adaptation-47 outcomes in node_fs_file_host_47_status.json supersede the original unadapted Checker records.
 - Current origin/main remains f8013f0; the existing landing branch retains that current base. No main push, force-push or PR.
+
+Library area integration on October 7
+
+Merged area/library 2faf682bbf365dcc0afde3768832a2fdffc7b965 into the published
+scratch branch 1abf67ad, merge cdd79c8, then merged fs-file-land 074c35f
+with merge c0596b0. Both are ordinary merges: no rebase, no force, no main push.
+The area QualifiedName and optional-field proof changes remain; the scratch fs,
+directory/path and process implementations remain. NOTICE and host/status.json
+are exactly the area versions. Counts were regenerated on Linux in registration order.
+
+Integration fixes:
+- The old plain Error cast acceptance test now asserts the area's optional-field
+  refusal and checks a compatible qualified type. The close fixture uses a typed
+  binding rather than the obsolete cast; its unchanged Node behavior passes both backends.
+- Generic fresh/flow source globs exclude the explicitly runtime-only process
+  directory/environment probes; flow also excludes the deliberately refused unknown/in
+  error probe. Their dedicated runtime/Node/mutant oracle tests remain active.
+  No blanket skip of unknown lowering or checker errors was added.
+- Counted execution of the registered slow RegExp fixture uses the same three-minute
+  bound as its dedicated behavior/leak oracle. The initial full oracle exposed the
+  old one-minute counted limit; its other tests passed.
+
+Validation, all output logged:
+- Initial package command: go test ./internal/load ./internal/lower ./internal/native
+  ./internal/fresh ./internal/flow ./internal/javascript ./internal/regexp -count=1 -timeout 30m
+  /tmp/fs_scratch_area_packages.log: load 5.591s, native 295.822s and regexp 12.714s
+  passed; JavaScript has no tests. Lower/fresh/flow exposed the integration issues above.
+- Complete lower rerun: /tmp/fs_scratch_area_lower_fixed.log, PASS 68.722s.
+- Complete fresh/flow rerun: /tmp/fs_scratch_area_proofs_final.log,
+  PASS fresh 131.507s, flow 184.331s.
+- go test ./internal/oracle -count=1 -timeout 30m -args -update-counts:
+  /tmp/fs_scratch_area_oracle.log, 714.517s, failed only the counted long-RegExp deadline.
+  All other oracle tests passed, including 17 fs_file fixtures, 33 fs behavioral mutants,
+  directory/path and process runtime oracles/mutants, sanitizer and leak checks.
+- Complete counts rerun after timeout fix, with -update-counts:
+  /tmp/fs_scratch_area_counts_fixed.log, PASS 25.045s.
+- Complete counts verification without update: /tmp/fs_scratch_area_counts_verify.log,
+  PASS 22.334s.
+- Independent mkdtemp/rm probe: /tmp/fs_scratch_area_scratch_probe.log, PASS 3.459s;
+  adapted close probe: /tmp/fs_scratch_close_adapt.log, PASS 0.578s.
+
+Setup initially overlapped a branch change and its warm-up failed with missing lowerer
+methods in the intermediate tree. Rerun /tmp/fs_scratch_setup_final.log completed:
+tools ready 0s, submodules 1s, cache warm and done 206s; nproc 5, quota four CPUs.
+No full go test ./... or macOS execution is claimed. The 33 individual mutants and
+their Node-only comparisons remain recorded in the earlier sections.
+All 25 current audited host fixtures are observed separately after the integration push.

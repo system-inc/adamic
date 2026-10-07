@@ -45,9 +45,10 @@ func programs(t *testing.T) []string {
 	// and operator shapes here, and the oracle still runs the full sweep.
 	// This RegExp fixture is deliberately refused and checked as such by the oracle;
 	// it has no lowered graph to trace. Keep this exclusion explicit so other lowering
-	// failures still fail the flow gate.
+	// failures still fail the flow gate. The process runtime-only probes are
+	// tested through explicit IR by their oracle tests; their source does not lower.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "regexp_native_write_groups_compound_missing.a"
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "regexp_native_write_groups_compound_missing.a" || filepath.Base(path) == "node_process_errors.a" || filepath.Base(path) == "node_process_directory_mutation.a" || filepath.Base(path) == "node_process_environment_mutation.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
