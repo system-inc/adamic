@@ -1,0 +1,8 @@
+=== RUN   TestSymbolAncestryAndAliasModes
+=== PAUSE TestSymbolAncestryAndAliasModes
+=== CONT  TestSymbolAncestryAndAliasModes
+    symbol_ancestry_test.go:64: alias modes differ from binder: own ["1" "symbol-ancestry" "1" "2" "2097152" "1" "/tmp/adamic-gate/TestSymbolAncestryAndAliasModes1996606440/001/input.a" "ImportEqualsDeclaration" "44" "70" "0" "0" "0" "1" "SourceFile" "" "0" ""] resolved ["1" "symbol-ancestry" "1" "2" "2097152" "1" "/tmp/adamic-gate/TestSymbolAncestryAndAliasModes1996606440/001/input.a" "ImportEqualsDeclaration" "44" "70" "0" "0" "0" "1" "SourceFile" "" "0" ""]
+--- FAIL: TestSymbolAncestryAndAliasModes (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.015s
+FAIL

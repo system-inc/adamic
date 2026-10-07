@@ -1,0 +1,14 @@
+repository oracle 0 0.124983 findings 0 cohere: load_ns=63253590 rule_ns=692239 run_ns=49378924
+repository native 0 0.228096 findings 0 tsgo: load_ns=63279879 query_ns=0 queries=0 first_query_ns=0 run_ns=160196030
+repository native 1 0.233627 findings 0 tsgo: load_ns=69532902 query_ns=0 queries=0 first_query_ns=0 run_ns=159272047
+repository oracle 1 0.115107 findings 0 cohere: load_ns=60201870 rule_ns=666917 run_ns=41208936
+repository oracle 2 0.123211 findings 0 cohere: load_ns=66022527 rule_ns=691107 run_ns=43595673
+repository native 2 0.233578 findings 0 tsgo: load_ns=65157208 query_ns=0 queries=0 first_query_ns=0 run_ns=163738489
+repository medians {"oracle": 0.12321141600023111, "native": 0.23357794300000023}
+compiler oracle 0 0.288553 findings 0 cohere: load_ns=230037889 rule_ns=2244584 run_ns=42779335
+compiler native 0 1.667152 findings 0 tsgo: load_ns=254934719 query_ns=0 queries=0 first_query_ns=0 run_ns=1398061170
+compiler native 1 1.574538 findings 0 tsgo: load_ns=236973609 query_ns=0 queries=0 first_query_ns=0 run_ns=1317453206
+compiler oracle 1 0.286747 findings 0 cohere: load_ns=232043299 rule_ns=2153690 run_ns=40216706
+compiler oracle 2 0.291249 findings 0 cohere: load_ns=232265649 rule_ns=2207479 run_ns=41810316
+compiler native 2 1.591788 findings 0 tsgo: load_ns=234855048 query_ns=0 queries=0 first_query_ns=0 run_ns=1341306454
+compiler medians {"oracle": 0.28855265299989696, "native": 1.5917881400000624}

@@ -1,0 +1,28 @@
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.01s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestSymbolAncestryAndAliasModes
+=== PAUSE TestSymbolAncestryAndAliasModes
+=== RUN   TestUsageShapeFactsAndRefusals
+=== PAUSE TestUsageShapeFactsAndRefusals
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestShapeAndNameFacts
+=== CONT  TestUsageShapeFactsAndRefusals
+=== CONT  TestSymbolAncestryAndAliasModes
+--- PASS: TestUsageShapeFactsAndRefusals (0.04s)
+--- PASS: TestShapeAndNameFacts (0.04s)
+--- PASS: TestSymbolAncestryAndAliasModes (0.04s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.08s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.08s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.103s

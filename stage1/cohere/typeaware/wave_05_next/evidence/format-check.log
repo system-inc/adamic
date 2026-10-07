@@ -1,0 +1,9 @@
+graph not built: --format-only reads the disk, not the program
+fix: 0 of 3 files would be rewritten, 0 fixes would apply, 0 refused
+format scope: 3 named paths, 3 the formatter handles · walked /workspace/adamic, 950 files, 3 the formatter handles, ignored 181 by .gitignore, 9 by ignorePatterns, skipped nested repositories cohere, skipped 3 symbolic links, which are never followed, declined 11 (none), 41 .c, 6 .counts, 3 .cpu, 4 .gitattributes, 1 .gitignore, 1 .gitmodules, 163 .go, 12 .gz, 7 .h, 1 .hidden, 6 .manifest, 1 .mod, 1 .patch, 2 .pprof, 10 .py, 1 .s, 4 .sh, 3 .sha256, 57 .stderr, 4 .stdout, 4 .timing, 28 .txt, 1 .work
+phases: fix checked in 10ms (formatting only, no fixes proposed), 0 files would change · types skipped (not requested) · lint skipped (not requested) · unused skipped (not requested — this is a report, ask for it with --unused)
+  total 18ms — no graph built (formatting reads none), phases 10ms, 8ms outside any phase
+  memory: collector off, ceiling 0.5 GB (half of 0.9 GB available)
+  cache: off, by --no-cache: nothing was read from or written to this project's cache table or its incremental build info
+  this run did not check everything — the phases above say what was not checked
+✓ 💎 0.02s • ⚠ 🔷 types not checked • ⚠ 👑 lint not checked

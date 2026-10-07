@@ -1,0 +1,8 @@
+=== RUN   TestSymbolAncestryAndAliasModes
+=== PAUSE TestSymbolAncestryAndAliasModes
+=== CONT  TestSymbolAncestryAndAliasModes
+    symbol_ancestry_test.go:67: accepted suffix: <nil>
+--- FAIL: TestSymbolAncestryAndAliasModes (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.012s
+FAIL
