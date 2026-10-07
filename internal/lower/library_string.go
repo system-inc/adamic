@@ -88,7 +88,7 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	if _, missing := value.(ir.Undefined); missing {
 		return ir.StringConstant{Index: l.constant("undefined")}, nil
 	}
-	return nil, l.notYet(node, "String conversion of an object, array, map or function (ToPrimitive is not lowered)")
+	return nil, l.notYet(node, "String conversion of an object, array, map or function (ToPrimitive is not lowered) (format the needed scalar fields explicitly instead of relying on object coercion)")
 }
 
 func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
@@ -115,15 +115,15 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 	if name == "call" {
 		if method, intrinsic := l.stringPrototypeMethod(receiver); intrinsic {
 			if len(written) == 0 {
-				return nil, true, l.notYet(node, "String.prototype."+method+".call without a present receiver")
+				return nil, true, l.notYet(node, "String.prototype."+method+".call without a present receiver (pass a present string receiver as the first argument to .call)")
 			}
 			proven := l.checker.GetTypeAtLocation(written[0])
 			if l.mayBeUndefined(written[0]) || proven.Flags()&checker.TypeFlagsNull != 0 {
-				return nil, true, l.notYet(node, "String prototype call on null or undefined (its TypeError is not catchable natively yet)")
+				return nil, true, l.notYet(node, "String prototype call on null or undefined (its TypeError is not catchable natively yet) (check the receiver for null and undefined before calling the method)")
 			}
 			if method == "toString" || method == "valueOf" {
 				if proven.Flags()&checker.TypeFlagsStringLike == 0 {
-					return nil, true, l.notYet(node, "String.prototype."+method+" on a non-string receiver (requires a String internal slot)")
+					return nil, true, l.notYet(node, "String.prototype."+method+" on a non-string receiver (requires a String internal slot) (use String(value) on a scalar first, then call the method on that string)")
 				}
 			}
 			value, err := l.stringConversion(written[0])
@@ -279,22 +279,22 @@ func (l *lowering) stringIndexMethod(value ir.Expression, name string, arguments
 // and user ToPrimitive methods remain refused. Reading raw occurs after all call arguments, as in JS.
 func (l *lowering) stringRaw(node *ast.Node, written []*ast.Node) (ir.Expression, error) {
 	if len(written) == 0 {
-		return nil, l.notYet(node, "String.raw without a template")
+		return nil, l.notYet(node, "String.raw without a template (pass a template object such as { raw: [\"text\"] })")
 	}
 	rawType := l.checker.GetTypeOfPropertyOfType(l.checker.GetTypeAtLocation(written[0]), "raw")
 	if rawType == nil || !l.checker.IsArrayType(rawType) || l.includesUndefined(rawType) {
-		return nil, l.notYet(node, "String.raw without a present array of strings in raw")
+		return nil, l.notYet(node, "String.raw without a present array of strings in raw (pass an object with a present raw string array: { raw: [\"text\"] })")
 	}
 	element := l.checker.GetElementTypeOfArrayType(rawType)
 	if element.Flags()&checker.TypeFlagsStringLike == 0 {
-		return nil, l.notYet(node, "String.raw with raw elements that are not strings")
+		return nil, l.notYet(node, "String.raw with raw elements that are not strings (convert the raw elements to strings explicitly before the call)")
 	}
 	template, err := l.expression(written[0])
 	if err != nil {
 		return nil, err
 	}
 	if template.Type() != ir.Object {
-		return nil, l.notYet(node, "String.raw with a template that is not an object")
+		return nil, l.notYet(node, "String.raw with a template that is not an object (pass a plain template object with a raw string array)")
 	}
 	values := []ir.Expression{template}
 	for _, arg := range written[1:] {
@@ -361,7 +361,7 @@ func (l *lowering) stringRawTemplate(node *ast.Node) (ir.Expression, error) {
 	tagged := node.AsTaggedTemplateExpression()
 	tag := ast.SkipParentheses(tagged.Tag)
 	if tagged.QuestionDotToken != nil || tag.Kind != ast.KindPropertyAccessExpression || tag.Name().Text() != "raw" || !l.isLibraryGlobal(tag.AsPropertyAccessExpression().Expression, "String") {
-		return nil, l.notYet(node, "a tagged template other than the intrinsic String.raw")
+		return nil, l.notYet(node, "a tagged template other than the intrinsic String.raw (call the tag as an ordinary function with explicit arguments and handle raw text explicitly)")
 	}
 	raw := func(text string) ir.Expression {
 		text = strings.ReplaceAll(strings.ReplaceAll(text, "\r\n", "\n"), "\r", "\n")

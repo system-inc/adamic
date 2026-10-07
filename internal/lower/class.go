@@ -120,7 +120,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 
 	if len(parameters) > 0 {
 		if l.genericDepth >= maximumGenericDepth {
-			return nil, &Refused{Where: l.program.Where(where), What: "a generic class instantiated without end (polymorphic recursion)", Fix: "keep recursive type arguments unchanged, or write a class per type"}
+			return nil, &Refused{Where: l.program.Where(where), What: "a generic class instantiated without end (polymorphic recursion)", Fix: "keep recursive type arguments unchanged, or write a class per type (adamic/polymorphic-recursion)"}
 		}
 		l.genericDepth++
 		defer func() { l.genericDepth-- }()
@@ -164,7 +164,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		switch member.Kind {
 		case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
 			if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier && !(member.Kind == ast.KindMethodDeclaration && member.Name().Kind == ast.KindComputedPropertyName && l.symbolIterator(member.Name().AsComputedPropertyName().Expression)) {
-				return nil, l.notYet(member, "a method with a computed name")
+				return nil, l.notYet(member, "a method with a computed name (give the method a fixed identifier name)")
 			}
 			if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 				continue
@@ -292,7 +292,7 @@ func containsThis(node *ast.Node) bool {
 // construct lowers new Class(...).
 func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expression, error) {
 	if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAbstract) {
-		return nil, &Refused{Where: l.program.Where(node), What: "new of an abstract class", Fix: "construct a concrete subclass that implements its abstract methods"}
+		return nil, &Refused{Where: l.program.Where(node), What: "new of an abstract class", Fix: "construct a concrete subclass that implements its abstract methods (adamic/concrete-construction)"}
 	}
 	lowered, err := l.instantiate(declaration, l.checker.GetTypeAtLocation(node), node)
 	if err != nil {
@@ -416,7 +416,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
-		return nil, l.notYet(target, "replacing a represented method at runtime")
+		return nil, l.notYet(target, "replacing a represented method at runtime (store a replaceable arrow function in a declared callback field instead)")
 	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
@@ -570,7 +570,7 @@ func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
 // field not set yet.
 func (l *lowering) useOfThis(node *ast.Node) error {
 	if l.instance != nil && l.instance.unreadyThis[node] {
-		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super(...) before using this"}
+		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super(...) before using this (adamic/this-after-super)"}
 	}
 	if l.instance != nil && l.instance.constructing && l.instance.hasDescendants {
 		if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression {
@@ -578,7 +578,7 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 				return nil
 			}
 		}
-		return &Refused{Where: l.program.Where(node), What: "this escaping a base constructor before derived fields are initialized", Fix: "use this only to read or write initialized base fields; call methods and publish the object after construction"}
+		return &Refused{Where: l.program.Where(node), What: "this escaping a base constructor before derived fields are initialized", Fix: "use this only to read or write initialized base fields; call methods and publish the object after construction (adamic/initialized-this)"}
 	}
 	if l.unsetUntil == 0 || node.Pos() >= l.unsetUntil {
 		return nil
@@ -588,5 +588,5 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 			return nil
 		}
 	}
-	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}
+	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this (adamic/initialized-this)"}
 }

@@ -32,16 +32,16 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		// names runs first (moduleOrder).
 		return nil, nil
 	case ast.KindExportDeclaration, ast.KindExportAssignment:
-		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
+		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing) (adamic/named-declaration-export)"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {
-			return nil, l.notYet(node, "a function inside a function (a closure)")
+			return nil, l.notYet(node, "a function inside a function (a closure) (use an arrow function for a closure, or move a noncapturing function to module scope)")
 		}
 		// Lowered already, by declareModule.
 		return nil, nil
 	case ast.KindClassDeclaration:
 		if l.function != nil {
-			return nil, l.notYet(node, "a class inside a function")
+			return nil, l.notYet(node, "a class inside a function (declare the class at module scope and pass captured values to its constructor)")
 		}
 		return l.staticDeclaration(node)
 	case ast.KindReturnStatement:
