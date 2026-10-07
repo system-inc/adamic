@@ -1,0 +1,12 @@
+=== RUN   TestSourceNodeParity
+    source_node_test.go:16: better-tailwindcss/enforce-consistent-important-position upstream unique configurations=16
+    source_node_test.go:16: better-tailwindcss/enforce-consistent-variable-syntax upstream unique configurations=14
+    source_node_test.go:16: better-tailwindcss/enforce-consistent-variant-order upstream unique configurations=15
+    source_node_test.go:34: source Node and actual Go: 27103 bytes across 52 fixture/witness rows, explicit Go JSX projection and design-system facts; no native/emitted certification
+--- PASS: TestSourceNodeParity (6.12s)
+=== RUN   TestRulesAndSuggestions
+    validation_test.go:511: /tmp/adamic-gate/TestRulesAndSuggestions1239303773/001/rules/tailwind-important-position/surface.a:41:132: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- FAIL: TestRulesAndSuggestions (3.44s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/tailwind-important-position	9.564s
+FAIL

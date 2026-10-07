@@ -154,3 +154,18 @@ and fails its required-input guards; that is not green and is retained. No
 correctness check is skipped, relaxed or deleted to obtain a green result.
 The seventeen repository-wide required-input checks were not run; this unit
 stops at its reproduced unowned lowerer blocker without claiming another helper.
+
+Landing refresh onto area b84a9d9314b65d3d0261ee017e233287b4f071da,
+which includes main c7991b900362796aefd111474e65eb5398e91953:
+The ledger did not change. The owned rule rebase was conflict-free. With the
+pinned TypeScript corpus supplied, TestRulesAndSuggestions, TestOwnedMutants,
+TestCompilerAndStage1 and TestDecodedOptionCorners all pass. Core corpus remains
+734 pairs and 26,622,644 identical bytes on Go, Node, emitted JavaScript and
+ASan/UBSan native; both semantic mutants compile and are caught on all targets.
+Owned rule vet passes. With the actual Tailwind package supplied, source Node
+passes 52 rows and 27,103 bytes in 6.12s, but TestRulesAndSuggestions again
+refuses surface.a:41:132, RegExp with a nonconstant pattern (FAIL 9.564s total).
+The compiler lowerer is outside this unit. The rule branch is not green; no new
+helper claimed, no shared-file changes, no required check relaxed or removed.
+The complete repository gate and its seventeen correctness checks were not run.
+See newarea-core.log, newarea-tailwind.log and newarea-vet.log.
