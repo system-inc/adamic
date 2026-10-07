@@ -45,7 +45,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 	operation := ""
 	of := ir.Number // Void calls are only admitted as discarded statements.
 	switch symbol.Name {
-	case "isFile", "isDirectory", "isSymbolicLink":
+	case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket":
 		if declaration.Parent == nil || declaration.Parent.Name() == nil || declaration.Parent.Name().Text() != "StatsBase" {
 			return nil, false, nil
 		}
@@ -455,5 +455,5 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
 }
 
 func init() {
-	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.size", "node:fs.StatsBase.mtime", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtimeMs", "node:globals.ErrnoException.code")
+	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.isBlockDevice", "node:fs.StatsBase.isCharacterDevice", "node:fs.StatsBase.isFIFO", "node:fs.StatsBase.isSocket", "node:fs.StatsBase.size", "node:fs.StatsBase.mtime", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtimeMs", "node:globals.ErrnoException.code")
 }

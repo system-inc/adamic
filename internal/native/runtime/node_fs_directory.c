@@ -216,23 +216,32 @@ static int compare(const void *left, const void *right) {
 	return strcmp(((const entry *)left)->name, ((const entry *)right)->name);
 }
 static unsigned kind(mode_t mode) {
-	return S_ISREG(mode) ? 1 : S_ISDIR(mode) ? 2 : S_ISLNK(mode) ? 3 : 0;
+	return S_ISREG(mode) ? 1 : S_ISDIR(mode) ? 2 : S_ISLNK(mode) ? 3
+		: S_ISBLK(mode) ? 5 : S_ISCHR(mode) ? 6 : S_ISFIFO(mode) ? 7
+		: S_ISSOCK(mode) ? 8 : 0;
 }
 bool adamic_node_fs_dirent_is(const adamic_object *entry_value,
 							  const char *method) {
 	// Shape identity is the host value's runtime kind. Union declarations
 	// can begin with either StatsBase or Dirent.
 	if (adamic_fs_file_is_stats(entry_value)) {
-		return strcmp(method, "isFile") == 0 ? adamic_fs_file_is_file(entry_value)
-			: strcmp(method, "isDirectory") == 0 ? adamic_fs_file_is_directory(entry_value)
-			: adamic_fs_file_is_symbolic_link(entry_value);
-	}
-	unsigned wanted = strcmp(method, "isFile") == 0		   ? 1
-					  : strcmp(method, "isDirectory") == 0 ? 2
-														   : 3;
+        return adamic_fs_file_stat_is(entry_value, method);
+    }
+    unsigned wanted = strcmp(method, "isFile") == 0 ? 1
+        : strcmp(method, "isDirectory") == 0 ? 2
+        : strcmp(method, "isSymbolicLink") == 0 ? 3
+        : strcmp(method, "isBlockDevice") == 0 ? 5
+        : strcmp(method, "isCharacterDevice") == 0 ? 6
+        : strcmp(method, "isFIFO") == 0 ? 7 : 8;
 	static adamic_slot_cache cache;
-	return adamic_object_field(entry_value, "type", &cache)->number ==
-		   (double)wanted;
+	double actual = adamic_object_field(entry_value, "type", &cache)->number;
+#ifdef ADAMIC_TARGET_WASI
+    // This type also represents FIFOs in Node's WASI host.
+    if (actual == 8 && (wanted == 7 || wanted == 8)) {
+        adamic_panic("wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets", sizeof "wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets" - 1);
+    }
+#endif
+    return actual == (double)wanted;
 }
 adamic_array *adamic_node_fs_readdir(const adamic_string *path,
 									 const adamic_object *options) {
@@ -294,7 +303,11 @@ adamic_array *adamic_node_fs_readdir(const adamic_string *path,
 		entries[count].type = found->d_type == DT_REG		? 1
 							  : found->d_type == DT_DIR		? 2
 							  : found->d_type == DT_LNK		? 3
-							  : found->d_type == DT_UNKNOWN ? 4
+							  : found->d_type == DT_BLK ? 5
+                              : found->d_type == DT_CHR ? 6
+                              : found->d_type == DT_FIFO ? 7
+                              : found->d_type == DT_SOCK ? 8
+                              : found->d_type == DT_UNKNOWN ? 4
 															: 0;
 #else
 		entries[count].type = 4;

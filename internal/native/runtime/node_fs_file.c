@@ -472,6 +472,23 @@ static mode_t stat_mode(const adamic_object *information) {
     static adamic_slot_cache cache;
     return (mode_t)adamic_object_field(information, "_fsFileMode", &cache)->number;
 }
+bool adamic_fs_file_stat_is(const adamic_object *information, const char *method) {
+    mode_t mode = stat_mode(information);
+#ifdef ADAMIC_TARGET_WASI
+    // Preview 1, including Node's uvwasi host, represents FIFOs as sockets.
+    // The two predicates cannot distinguish them from this runtime mode.
+    if (S_ISSOCK(mode) && (strcmp(method, "isFIFO") == 0 || strcmp(method, "isSocket") == 0)) {
+        adamic_panic("wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets", sizeof "wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets" - 1);
+    }
+#endif
+    if (strcmp(method, "isFile") == 0) { return S_ISREG(mode); }
+    if (strcmp(method, "isDirectory") == 0) { return S_ISDIR(mode); }
+    if (strcmp(method, "isSymbolicLink") == 0) { return S_ISLNK(mode); }
+    if (strcmp(method, "isBlockDevice") == 0) { return S_ISBLK(mode); }
+    if (strcmp(method, "isCharacterDevice") == 0) { return S_ISCHR(mode); }
+    if (strcmp(method, "isFIFO") == 0) { return S_ISFIFO(mode); }
+    return S_ISSOCK(mode);
+}
 bool adamic_fs_file_is_file(const adamic_object *information) { return S_ISREG(stat_mode(information)); }
 bool adamic_fs_file_is_directory(const adamic_object *information) { return S_ISDIR(stat_mode(information)); }
 bool adamic_fs_file_is_symbolic_link(const adamic_object *information) { return S_ISLNK(stat_mode(information)); }
