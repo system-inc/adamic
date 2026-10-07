@@ -116,8 +116,17 @@ func jsonScalar(s *ir.JSONSchema) bool {
 // alone remain insufficient: they can hide additional fields or a toJSON method.
 func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
 	n := ast.SkipParentheses(node)
-	if l.libraryNumberConstruction(n) {
-		value, err := l.libraryNumberSlot(n)
+	if n.Kind == ast.KindNewExpression && l.isLibraryGlobal(n.AsNewExpression().Expression, "Number") {
+		// Keep this JSON-only intrinsic slot independent of the Number method slice.
+		arguments := n.AsNewExpression().Arguments
+		var value ir.Expression = ir.NumberConstant{}
+		var err error
+		if arguments != nil && len(arguments.Nodes) > 0 {
+			if len(arguments.Nodes) != 1 || arguments.Nodes[0].Kind == ast.KindSpreadElement {
+				return nil, nil, l.notYet(n, "JSON.stringify boxed primitive with spread or extra arguments")
+			}
+			value, err = l.libraryNumber(arguments.Nodes[0])
+		}
 		return value, &ir.JSONSchema{Kind: "number"}, err
 	}
 	if n.Kind == ast.KindNewExpression && (l.isLibraryGlobal(n.AsNewExpression().Expression, "String") || l.isLibraryGlobal(n.AsNewExpression().Expression, "Boolean")) {
