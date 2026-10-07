@@ -1,0 +1,49 @@
+import { panic } from 'adamic';
+
+interface CollapseNodeList {
+    readonly nil: boolean;
+    readonly length: number;
+    readonly capacity: number;
+    readonly values: number[];
+}
+interface CollapseCopyNode {
+    kind: string;
+    selector: string;
+    name: string;
+    params: string;
+    property: string;
+    value: string;
+    valuePresent: boolean;
+    important: boolean;
+    contextPresent: boolean;
+    context: Map<string, string>;
+    children: CollapseNodeList;
+}
+function run(): void {
+    const arena: CollapseCopyNode[] = [];
+    const allocate = (node: CollapseCopyNode): number => {
+        const handle = arena.length;
+        arena.push(node);
+        return handle;
+    };
+    const empty: CollapseNodeList = { nil: true, length: 0, capacity: 0, values: [] };
+    for (let index = 0; index < 3; index++) {
+        const context = new Map<string, string>();
+        context.set('source', `entry${index}`);
+        const children: CollapseNodeList = index === 0 ? empty : {
+            nil: false, length: 1, capacity: 1, values: [index - 1],
+        };
+        const handle = allocate({
+            kind: 'record', selector: `s${index}`, name: `n${index}`, params: '',
+            property: '', value: `v${index}`, valuePresent: true, important: false,
+            contextPresent: true, context, children,
+        });
+        console.log(`${handle}:${children.length}`);
+    }
+    const last = arena[2] ?? panic('last');
+    const child = arena[last.children.values[0] ?? panic('handle')] ?? panic('child');
+    console.log(`${child.name}:${child.context.get('source') ?? 'missing'}`);
+    last.value = 'changed';
+    console.log(`${arena.length}:${last.value}:${empty.nil}`);
+}
+run();
