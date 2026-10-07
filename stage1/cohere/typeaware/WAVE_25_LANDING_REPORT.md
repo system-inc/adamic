@@ -171,3 +171,28 @@ This landing unit does not complete those paths and does not claim more
 rules. Its claim remains reserved. Nondefault options, shared-profile
 integration, emitted-JavaScript comparison of the rule ports, CLI fixes and
 the complete repository test gate remain outside this validation.
+
+## Numeric listener requirement, October 7
+
+An explicit fetch of all origin heads confirmed that current origin/main is
+still e8ba3d5d81de4d3773c723914fccd4c76248b965. The pushed wave-25 tip
+b2c7c75fe93a0526bb8ebcd0e150fa6b0a99d91a already contains that base;
+the oracle evidence above applies without a source change.
+
+The new speed requirement is not satisfied by these existing ports. They use
+string syntax kinds and scan their own projection. On this base,
+stage1/typescript/parser/nodes.ts declares ParseNode.kind as string and its
+constructor takes a string. The fetched origin/codex/lint-harness-dot-a version
+has the same declarations. A search of stage1/typescript,
+stage1/cohere/typeaware and bridge/tsgo found no SyntaxKind, syntaxKinds,
+kindIndex or kindId contract. Scanner tokens are also string maps.
+
+Consequently there is no parser numeric SyntaxKind contract against which to
+write the requested listener declarations or validate dispatch. Inventing a
+private numeric enumeration would not establish agreement with the coming
+shared driver. Shared parser and harness changes are outside this unit's
+territory. Work stops at that dependency, as instructed, with no additional
+claims. This report-only update does not change the previously tested source.
+Boolean-prop-naming remains partial for arbitrary runtime regular expressions,
+cross-file props annotations and typed memo/forwardRef wrappers; the latter two
+remain unfinished local implementation, not shared-harness blockers.
