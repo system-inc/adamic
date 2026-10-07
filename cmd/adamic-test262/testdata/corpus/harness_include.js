@@ -1,4 +1,4 @@
 /*---
 includes: [propertyHelper.js]
 ---*/
-verifyProperty(Object, "keys", {});
+verifyProperty(Object, 'keys', {});

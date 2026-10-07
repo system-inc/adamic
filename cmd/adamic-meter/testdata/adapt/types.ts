@@ -1,3 +1,3 @@
 export interface Shape {
-	readonly size: number;
+    readonly size: number;
 }

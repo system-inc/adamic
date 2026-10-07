@@ -1,4 +1,4 @@
 class Holder {
-	flag: boolean | undefined = undefined;
+    flag: boolean | undefined = undefined;
 }
 console.log(`${new Holder().flag === undefined}`);
