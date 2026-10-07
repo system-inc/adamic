@@ -1,0 +1,13 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class NumericLiteral {
+    readonly held: boolean;
+    readonly value: string;
+    constructor(rules: Rules, index: number, id: number) {
+        const frames = new Frames(rules.ask(index, `numeric-literal\n${id}`));
+        header(frames, 'numeric-literal');
+        this.held = frames.yes();
+        this.value = frames.field();
+        frames.end();
+    }
+}

@@ -1,0 +1,6 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { types } from './facts.ts';
+export function baseConstraintShape(rules: Rules, index: number, id: number): Types {
+    return types(rules.ask(index, `base-constraint-shape\n${id}`), 'base-constraint-shape');
+}
