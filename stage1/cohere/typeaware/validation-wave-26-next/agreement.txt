@@ -1,0 +1,23 @@
+=== RUN   TestWave26NextAgreementAndMutants
+    wave_26_next_test.go:135: controls: 14759 identical finding bytes; findings 26
+    wave_26_next_test.go:143: controls-asan: 14759 identical finding bytes; findings 26
+    wave_26_next_test.go:154: listener mutant: exit 0, empty stderr, byte oracle catches byte 1360
+    wave_26_next_test.go:154: render mutant: exit 0, empty stderr, byte oracle catches byte 6538
+    wave_26_next_test.go:154: mock mutant: exit 0, empty stderr, byte oracle catches byte 13974
+    wave_26_next_test.go:170: syntax question mutant: exit 0, empty stderr, byte oracle catches byte 5684
+    wave_26_next_test.go:170: lineage question mutant: exit 0, empty stderr, byte oracle catches byte 60
+    wave_26_next_test.go:170: literal question mutant: exit 0, empty stderr, byte oracle catches byte 6538
+    wave_26_next_test.go:170: transform question mutant: exit 0, empty stderr, byte oracle catches byte 10023
+    wave_26_next_test.go:181: repository: 18485 identical finding bytes; findings 0
+    wave_26_next_test.go:182: repository-asan: 18485 identical finding bytes; findings 0
+    wave_26_next_test.go:190: repository whole process native 647.693468ms Go 163.303576ms; native phases tsgo: load_ns=88045052 query_ns=169261771 queries=287 first_query_ns=1244123 run_ns=550754489
+        ; Go phases cohere: load_ns=81580121 rule_ns=1152796 run_ns=62987271
+    wave_26_next_test.go:181: compiler: 5318 identical finding bytes; findings 0
+    wave_26_next_test.go:182: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_26_next_test.go:190: compiler whole process native 6.233469294s Go 483.053692ms; native phases tsgo: load_ns=394844849 query_ns=1958556028 queries=77 first_query_ns=29390 run_ns=5811734471
+        ; Go phases cohere: load_ns=392130848 rule_ns=3151012 run_ns=64881985
+    wave_26_next_test.go:201: released handle: panic 70, invalid or released checker handle
+    wave_26_next_test.go:206: released-registry mutant: exit 0, required panic 70 catches it
+--- PASS: TestWave26NextAgreementAndMutants (149.51s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	149.515s
