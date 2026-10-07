@@ -1,0 +1,34 @@
+interface Item {
+    readonly label: string;
+}
+function make(value: number): Item {
+    return { label: `item${value}` };
+}
+let active: Item = make(1);
+class Reader {
+    replace(value: Item): Item {
+        return value;
+    }
+    observe(value: Item): Item {
+        return value;
+    }
+}
+class Consumer extends Reader {
+    override replace(value: Item): Item {
+        return { ...value, label: `${value.label}!` };
+    }
+    override observe(value: Item): Item {
+        return { label: `${active.label}/${value.label}` };
+    }
+}
+function replace(reader: Reader): void {
+    const value = make(2);
+    console.log(reader.replace(value).label);
+}
+function observe(reader: Reader): void {
+    active = reader.observe(active);
+    console.log(active.label);
+}
+replace(new Reader());
+replace(new Consumer());
+observe(new Consumer());
