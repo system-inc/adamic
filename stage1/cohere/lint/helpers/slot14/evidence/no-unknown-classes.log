@@ -27,57 +27,56 @@
 === PAUSE TestNoUnknownClassesReportsTypos/on_a_callee_surface
 === RUN   TestNoUnknownClassesReportsTypos/on_a_variable_surface
 === PAUSE TestNoUnknownClassesReportsTypos/on_a_variable_surface
-=== CONT  TestNoUnknownClassesReportsTypos/misspelled_utility
+=== CONT  TestUnknownClassFixturesActuallyRan
 === CONT  TestKnownRootWithUnknownValueIsReported
+=== CONT  TestNoUnknownClassesReportsTypos/misspelled_utility
+=== NAME  TestKnownRootWithUnknownValueIsReported
     no_unknown_classes_test.go:399: no corpus stylesheet at /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css, so there is no live design system to ask
+--- SKIP: TestKnownRootWithUnknownValueIsReported (0.00s)
+=== CONT  TestNoUnknownClassesReportsTypos/on_a_variable_surface
+=== CONT  TestUnknownIgnoreExemptsProjectClasses
+    no_unknown_classes_test.go:320: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 === NAME  TestNoUnknownClassesReportsTypos/misspelled_utility
     no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 === CONT  TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
-=== CONT  TestUnknownIgnoreExemptsProjectClasses
-=== NAME  TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
-    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== NAME  TestUnknownIgnoreExemptsProjectClasses
-    no_unknown_classes_test.go:320: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
-=== CONT  TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
-=== NAME  TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
-    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 === CONT  TestNoUnknownClassesStaysSilent
-=== NAME  TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
-    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
-    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestNoUnknownClassesReportsTypos/invented_utility
-=== RUN   TestNoUnknownClassesStaysSilent/ordinary_utilities
-=== NAME  TestNoUnknownClassesReportsTypos/invented_utility
-    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestUnknownClassFixturesActuallyRan
-=== PAUSE TestNoUnknownClassesStaysSilent/ordinary_utilities
-=== CONT  TestNoUnknownClassesReportsTypos/on_a_variable_surface
---- SKIP: TestKnownRootWithUnknownValueIsReported (0.00s)
-=== CONT  TestNoUnknownClassesReportsTypos/on_a_callee_surface
-=== CONT  TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
-    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== NAME  TestNoUnknownClassesReportsTypos/on_a_callee_surface
+=== NAME  TestNoUnknownClassesReportsTypos/on_a_variable_surface
     no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 === NAME  TestUnknownClassFixturesActuallyRan
     no_unknown_classes_test.go:583: no installed tailwindcss found from /Users/kirkouimet/Projects/ahra/app/_theme/styles, so every fixture in this file skipped and the package still reported ok. Either the search root is wrong or this machine has no Tailwind to test against; both need a human, and neither should read as a pass
+=== CONT  TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
+    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 --- SKIP: TestUnknownIgnoreExemptsProjectClasses (0.00s)
-=== NAME  TestNoUnknownClassesReportsTypos/on_a_variable_surface
+=== CONT  TestNoUnknownClassesReportsTypos/on_a_callee_surface
+    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+--- FAIL: TestUnknownClassFixturesActuallyRan (0.00s)
+=== CONT  TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+=== CONT  TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
+=== NAME  TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
+    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== RUN   TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== CONT  TestNoUnknownClassesReportsTypos/invented_utility
+=== CONT  TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
+    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== PAUSE TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== NAME  TestNoUnknownClassesReportsTypos/invented_utility
+    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== NAME  TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
     no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 === RUN   TestNoUnknownClassesStaysSilent/gradient_stops
---- FAIL: TestUnknownClassFixturesActuallyRan (0.00s)
+=== PAUSE TestNoUnknownClassesStaysSilent/gradient_stops
+=== NAME  TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+    no_unknown_classes_test.go:204: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 --- PASS: TestNoUnknownClassesReportsTypos (0.00s)
     --- SKIP: TestNoUnknownClassesReportsTypos/misspelled_utility (0.00s)
-    --- SKIP: TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility (0.00s)
+    --- SKIP: TestNoUnknownClassesReportsTypos/on_a_variable_surface (0.00s)
     --- SKIP: TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal (0.00s)
+    --- SKIP: TestNoUnknownClassesReportsTypos/on_a_callee_surface (0.00s)
+    --- SKIP: TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility (0.00s)
     --- SKIP: TestNoUnknownClassesReportsTypos/another_root-prefixed_typo (0.00s)
-    --- SKIP: TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know (0.00s)
     --- SKIP: TestNoUnknownClassesReportsTypos/invented_utility (0.00s)
     --- SKIP: TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root (0.00s)
-    --- SKIP: TestNoUnknownClassesReportsTypos/on_a_callee_surface (0.00s)
-    --- SKIP: TestNoUnknownClassesReportsTypos/on_a_variable_surface (0.00s)
-=== PAUSE TestNoUnknownClassesStaysSilent/gradient_stops
+    --- SKIP: TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know (0.00s)
 === RUN   TestNoUnknownClassesStaysSilent/multi-rule_component_class
 === PAUSE TestNoUnknownClassesStaysSilent/multi-rule_component_class
 === RUN   TestNoUnknownClassesStaysSilent/group_and_peer
@@ -103,59 +102,59 @@
 === RUN   TestNoUnknownClassesStaysSilent/unrelated_callee
 === PAUSE TestNoUnknownClassesStaysSilent/unrelated_callee
 === CONT  TestNoUnknownClassesStaysSilent/ordinary_utilities
-=== CONT  TestNoUnknownClassesStaysSilent/variants
-=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
-=== NAME  TestNoUnknownClassesStaysSilent/ordinary_utilities
-    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestNoUnknownClassesStaysSilent/group_with_a_name
-=== CONT  TestNoUnknownClassesStaysSilent/arbitrary_value
-=== NAME  TestNoUnknownClassesStaysSilent/group_with_a_name
-    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestNoUnknownClassesStaysSilent/multi-rule_component_class
-    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestNoUnknownClassesStaysSilent/group_and_peer
-    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== NAME  TestNoUnknownClassesStaysSilent/arbitrary_value
-    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
-=== CONT  TestNoUnknownClassesStaysSilent/gradient_stops
-=== NAME  TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
-    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== NAME  TestNoUnknownClassesStaysSilent/gradient_stops
-    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
-=== NAME  TestNoUnknownClassesStaysSilent/variants
     no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 === CONT  TestNoUnknownClassesStaysSilent/unrelated_callee
-=== NAME  TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== CONT  TestNoUnknownClassesStaysSilent/unrelated_attribute
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
     no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== CONT  TestNoUnknownClassesStaysSilent/arbitrary_value
 === NAME  TestNoUnknownClassesStaysSilent/unrelated_callee
     no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestNoUnknownClassesStaysSilent/unrelated_attribute
-=== CONT  TestNoUnknownClassesStaysSilent/importance
-=== NAME  TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
+=== CONT  TestNoUnknownClassesStaysSilent/arbitrary_property
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
+=== NAME  TestNoUnknownClassesStaysSilent/arbitrary_property
+    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== CONT  TestNoUnknownClassesStaysSilent/variants
+    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== NAME  TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
     no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 === NAME  TestNoUnknownClassesStaysSilent/unrelated_attribute
     no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== CONT  TestNoUnknownClassesStaysSilent/group_and_peer
+=== CONT  TestNoUnknownClassesStaysSilent/group_with_a_name
+=== NAME  TestNoUnknownClassesStaysSilent/group_and_peer
+    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== CONT  TestNoUnknownClassesStaysSilent/multi-rule_component_class
+=== NAME  TestNoUnknownClassesStaysSilent/arbitrary_value
+    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== CONT  TestNoUnknownClassesStaysSilent/gradient_stops
+=== CONT  TestNoUnknownClassesStaysSilent/importance
+=== NAME  TestNoUnknownClassesStaysSilent/gradient_stops
+    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 === NAME  TestNoUnknownClassesStaysSilent/importance
     no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
-=== CONT  TestNoUnknownClassesStaysSilent/arbitrary_property
+=== NAME  TestNoUnknownClassesStaysSilent/group_with_a_name
+    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== NAME  TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+    no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
+=== NAME  TestNoUnknownClassesStaysSilent/multi-rule_component_class
     no_unknown_classes_test.go:306: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an existence check
 --- PASS: TestNoUnknownClassesStaysSilent (0.00s)
     --- SKIP: TestNoUnknownClassesStaysSilent/ordinary_utilities (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/group_with_a_name (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/multi-rule_component_class (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/group_and_peer (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/arbitrary_value (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/gradient_stops (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/variants (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/unrelated_callee (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/unrelated_attribute (0.00s)
     --- SKIP: TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant (0.00s)
-    --- SKIP: TestNoUnknownClassesStaysSilent/importance (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/unrelated_callee (0.00s)
     --- SKIP: TestNoUnknownClassesStaysSilent/arbitrary_property (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/variants (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/group_and_peer (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/unrelated_attribute (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/arbitrary_value (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/gradient_stops (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/importance (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/group_with_a_name (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility (0.00s)
+    --- SKIP: TestNoUnknownClassesStaysSilent/multi-rule_component_class (0.00s)
 FAIL
-FAIL	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.010s
+FAIL	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.009s
 FAIL

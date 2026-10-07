@@ -9,56 +9,56 @@
 === PAUSE TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant
 === RUN   TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
 === PAUSE TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
-=== CONT  TestEnforceConsistentVariantOrderNamesBothSpellings
-=== CONT  TestEnforceConsistentVariantOrderStaysSilent
-=== NAME  TestEnforceConsistentVariantOrderNamesBothSpellings
-    enforce_consistent_variant_order_test.go:176: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
---- SKIP: TestEnforceConsistentVariantOrderNamesBothSpellings (0.00s)
 === RUN   TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
 === PAUSE TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
-=== RUN   TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
+=== CONT  TestEnforceConsistentVariantOrderNamesBothSpellings
+    enforce_consistent_variant_order_test.go:176: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+--- SKIP: TestEnforceConsistentVariantOrderNamesBothSpellings (0.00s)
 === RUN   TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
-=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
-=== RUN   TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
 === PAUSE TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
 === RUN   TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
 === PAUSE TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
 === RUN   TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
 === PAUSE TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
 === RUN   TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
 === PAUSE TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
 === CONT  TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant
     enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
+=== CONT  TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
+    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
+=== CONT  TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
+=== NAME  TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
+    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== NAME  TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
+    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
+    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
+=== NAME  TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
+    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== NAME  TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
+    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
 === PAUSE TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
+--- PASS: TestEnforceConsistentVariantOrderReports (0.00s)
+    --- SKIP: TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant (0.00s)
+    --- SKIP: TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon (0.00s)
+    --- SKIP: TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint (0.00s)
+    --- SKIP: TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint (0.00s)
+    --- SKIP: TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order (0.00s)
+    --- SKIP: TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves (0.00s)
+    --- SKIP: TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint (0.00s)
 === RUN   TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
 === PAUSE TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
 === RUN   TestEnforceConsistentVariantOrderStaysSilent/one_variant
 === PAUSE TestEnforceConsistentVariantOrderStaysSilent/one_variant
 === RUN   TestEnforceConsistentVariantOrderStaysSilent/no_variants
 === PAUSE TestEnforceConsistentVariantOrderStaysSilent/no_variants
-=== CONT  TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
-    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
-=== CONT  TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
-=== NAME  TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
-    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
-=== NAME  TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
-    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
-    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== NAME  TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
-    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
-    enforce_consistent_variant_order_test.go:101: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
---- PASS: TestEnforceConsistentVariantOrderReports (0.00s)
-    --- SKIP: TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant (0.00s)
-    --- SKIP: TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint (0.00s)
-    --- SKIP: TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order (0.00s)
-    --- SKIP: TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint (0.00s)
-    --- SKIP: TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint (0.00s)
-    --- SKIP: TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon (0.00s)
-    --- SKIP: TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves (0.00s)
 === RUN   TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant
 === PAUSE TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant
 === RUN   TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant
@@ -67,33 +67,35 @@
 === PAUSE TestEnforceConsistentVariantOrderStaysSilent/unknown_variant
 === CONT  TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
     enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
-=== CONT  TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/unknown_variant
 === CONT  TestEnforceConsistentVariantOrderStaysSilent/no_variants
-=== NAME  TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
-    enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== NAME  TestEnforceConsistentVariantOrderStaysSilent/no_variants
+=== NAME  TestEnforceConsistentVariantOrderStaysSilent/unknown_variant
     enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
 === CONT  TestEnforceConsistentVariantOrderStaysSilent/one_variant
-=== CONT  TestEnforceConsistentVariantOrderStaysSilent/unknown_variant
-    enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== NAME  TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
-    enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant
 === NAME  TestEnforceConsistentVariantOrderStaysSilent/one_variant
     enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
-=== CONT  TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant
 === CONT  TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
+=== NAME  TestEnforceConsistentVariantOrderStaysSilent/no_variants
+    enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== NAME  TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant
+    enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== NAME  TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
     enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
 === NAME  TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant
     enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
+=== NAME  TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
+    enforce_consistent_variant_order_test.go:165: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than an order
 --- PASS: TestEnforceConsistentVariantOrderStaysSilent (0.00s)
     --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order (0.00s)
-    --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost (0.00s)
-    --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/no_variants (0.00s)
     --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/unknown_variant (0.00s)
-    --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order (0.00s)
     --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/one_variant (0.00s)
+    --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/no_variants (0.00s)
     --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant (0.00s)
+    --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost (0.00s)
     --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant (0.00s)
+    --- SKIP: TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order (0.00s)
 PASS
 ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.010s

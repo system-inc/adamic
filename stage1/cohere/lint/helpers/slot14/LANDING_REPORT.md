@@ -49,3 +49,22 @@ landing-ready. No shared conflict file is resolved or committed. The explicit
 ownership limit still blocks preserving main's thirty rules while migrating
 the five-rule registration foundation. No new helper or rule is claimed, and
 no push targets main or an area branch.
+
+## Main f8013f0b recheck
+
+Fetched origin/main f8013f0baac41ddc340d76f83bddde38536a8f07. The shared
+lint tree is still unchanged from e8ba3d5d, while compiler lowering/runtime
+changes have landed. Rebased the helper evidence branch cleanly and reran
+both archived validators: 4,761 integer inputs / 160,778 bytes and 1,012
+static declaration cases / 139,208 bytes match actual Go on source Node,
+emitted JavaScript and sanitized native. Both clean compiling semantic
+mutants are caught on every path again. Vet passes with empty output, and
+the filtered external oracle passes in 17.392s. Live consumer fixtures
+remain missing and are not credited as passing.
+
+A fresh rule rebase against f8013f0b again fails at registration foundation
+29175443 in the same four unowned shared files; the updated exact output is
+in evidence/rule-landing-rebase.log. Aborted without resolving or committing
+those files. Rule branch remains 9d2c673b and is not landing-ready. No new
+helper or rule is claimed, and no main/area branch is pushed. The finding
+model landing SHA has not been supplied.

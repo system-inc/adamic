@@ -15,121 +15,118 @@
 === PAUSE TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant
 === RUN   TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
 === PAUSE TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
-=== CONT  TestConflictingClassesProposeSuggestionsNotFixes
-    no_conflicting_classes_test.go:271: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
---- SKIP: TestConflictingClassesProposeSuggestionsNotFixes (0.00s)
-=== CONT  TestNoConflictingClassesStaysSilent
 === RUN   TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
 === PAUSE TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
+=== RUN   TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
+=== CONT  TestNoConflictingClassesReportsSymmetrically/two_display_utilities
+=== CONT  TestNoConflictingClassesStaysSilent
 === RUN   TestNoConflictingClassesStaysSilent/width_and_height
 === PAUSE TestNoConflictingClassesStaysSilent/width_and_height
 === RUN   TestNoConflictingClassesStaysSilent/padding_and_padding-inline
-=== RUN   TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
-=== PAUSE TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
 === PAUSE TestNoConflictingClassesStaysSilent/padding_and_padding-inline
-=== CONT  TestNoConflictingClassesReportsSymmetrically/two_display_utilities
+=== NAME  TestNoConflictingClassesReportsSymmetrically/two_display_utilities
+    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
 === RUN   TestNoConflictingClassesStaysSilent/same_property_under_different_variants
 === PAUSE TestNoConflictingClassesStaysSilent/same_property_under_different_variants
+=== CONT  TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
 === RUN   TestNoConflictingClassesStaysSilent/different_axes_of_margin
 === PAUSE TestNoConflictingClassesStaysSilent/different_axes_of_margin
+=== NAME  TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
+    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
 === RUN   TestNoConflictingClassesStaysSilent/unrelated_properties
 === PAUSE TestNoConflictingClassesStaysSilent/unrelated_properties
 === RUN   TestNoConflictingClassesStaysSilent/one_class
 === PAUSE TestNoConflictingClassesStaysSilent/one_class
 === RUN   TestNoConflictingClassesStaysSilent/the_same_class_twice
 === PAUSE TestNoConflictingClassesStaysSilent/the_same_class_twice
-=== NAME  TestNoConflictingClassesReportsSymmetrically/two_display_utilities
+=== CONT  TestConflictingClassesProposeSuggestionsNotFixes
+=== CONT  TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant
     no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== CONT  TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities
+    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== CONT  TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice
+=== CONT  TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
+=== NAME  TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice
+    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== CONT  TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
+    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== NAME  TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
+    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+--- PASS: TestNoConflictingClassesReportsSymmetrically (0.00s)
+    --- SKIP: TestNoConflictingClassesReportsSymmetrically/two_display_utilities (0.00s)
+    --- SKIP: TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface (0.00s)
+    --- SKIP: TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant (0.00s)
+    --- SKIP: TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities (0.00s)
+    --- SKIP: TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice (0.00s)
+    --- SKIP: TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property (0.00s)
+    --- SKIP: TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface (0.00s)
 === RUN   TestNoConflictingClassesStaysSilent/unrelated_attribute
 === PAUSE TestNoConflictingClassesStaysSilent/unrelated_attribute
+=== NAME  TestConflictingClassesProposeSuggestionsNotFixes
+    no_conflicting_classes_test.go:271: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+--- SKIP: TestConflictingClassesProposeSuggestionsNotFixes (0.00s)
 === RUN   TestNoConflictingClassesStaysSilent/unrelated_callee
 === PAUSE TestNoConflictingClassesStaysSilent/unrelated_callee
 === RUN   TestNoConflictingClassesStaysSilent/divide_against_border
 === PAUSE TestNoConflictingClassesStaysSilent/divide_against_border
 === RUN   TestNoConflictingClassesStaysSilent/shadow_against_ring
-=== CONT  TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
-=== CONT  TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
-=== CONT  TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
-=== NAME  TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
-    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== NAME  TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
-    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== CONT  TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities
-=== NAME  TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
-    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== NAME  TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities
-    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
 === PAUSE TestNoConflictingClassesStaysSilent/shadow_against_ring
-=== CONT  TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice
-    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== CONT  TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant
 === RUN   TestNoConflictingClassesStaysSilent/border_against_border-dashed
 === PAUSE TestNoConflictingClassesStaysSilent/border_against_border-dashed
-=== NAME  TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant
-    no_conflicting_classes_test.go:144: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
---- PASS: TestNoConflictingClassesReportsSymmetrically (0.00s)
-    --- SKIP: TestNoConflictingClassesReportsSymmetrically/two_display_utilities (0.00s)
-    --- SKIP: TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property (0.00s)
-    --- SKIP: TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface (0.00s)
-    --- SKIP: TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface (0.00s)
-    --- SKIP: TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities (0.00s)
-    --- SKIP: TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice (0.00s)
-    --- SKIP: TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant (0.00s)
 === RUN   TestNoConflictingClassesStaysSilent/ring_against_ring-inset
 === PAUSE TestNoConflictingClassesStaysSilent/ring_against_ring-inset
 === RUN   TestNoConflictingClassesStaysSilent/container_against_w-full
 === PAUSE TestNoConflictingClassesStaysSilent/container_against_w-full
-=== CONT  TestNoConflictingClassesStaysSilent/width_and_height
+=== CONT  TestNoConflictingClassesStaysSilent/shadow_against_ring
     no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
 === CONT  TestNoConflictingClassesStaysSilent/the_same_class_twice
-=== CONT  TestNoConflictingClassesStaysSilent/unrelated_attribute
-=== NAME  TestNoConflictingClassesStaysSilent/the_same_class_twice
-    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== CONT  TestNoConflictingClassesStaysSilent/ring_against_ring-inset
-    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== NAME  TestNoConflictingClassesStaysSilent/unrelated_attribute
-    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== CONT  TestNoConflictingClassesStaysSilent/unrelated_properties
-    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== CONT  TestNoConflictingClassesStaysSilent/border_against_border-dashed
-=== CONT  TestNoConflictingClassesStaysSilent/unrelated_callee
-=== NAME  TestNoConflictingClassesStaysSilent/border_against_border-dashed
-    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== NAME  TestNoConflictingClassesStaysSilent/unrelated_callee
-    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== CONT  TestNoConflictingClassesStaysSilent/divide_against_border
-=== CONT  TestNoConflictingClassesStaysSilent/same_property_under_different_variants
-=== NAME  TestNoConflictingClassesStaysSilent/divide_against_border
-    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== NAME  TestNoConflictingClassesStaysSilent/same_property_under_different_variants
-    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== CONT  TestNoConflictingClassesStaysSilent/padding_and_padding-inline
-=== CONT  TestNoConflictingClassesStaysSilent/shadow_against_ring
-=== CONT  TestNoConflictingClassesStaysSilent/different_axes_of_margin
-=== NAME  TestNoConflictingClassesStaysSilent/padding_and_padding-inline
-    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== NAME  TestNoConflictingClassesStaysSilent/shadow_against_ring
-    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== CONT  TestNoConflictingClassesStaysSilent/container_against_w-full
     no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
 === CONT  TestNoConflictingClassesStaysSilent/one_class
     no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
-=== NAME  TestNoConflictingClassesStaysSilent/different_axes_of_margin
+=== CONT  TestNoConflictingClassesStaysSilent/unrelated_properties
+=== CONT  TestNoConflictingClassesStaysSilent/width_and_height
+=== NAME  TestNoConflictingClassesStaysSilent/unrelated_properties
+    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== CONT  TestNoConflictingClassesStaysSilent/different_axes_of_margin
+    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== CONT  TestNoConflictingClassesStaysSilent/same_property_under_different_variants
+=== NAME  TestNoConflictingClassesStaysSilent/width_and_height
+    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== NAME  TestNoConflictingClassesStaysSilent/same_property_under_different_variants
+    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== CONT  TestNoConflictingClassesStaysSilent/divide_against_border
+=== CONT  TestNoConflictingClassesStaysSilent/ring_against_ring-inset
+    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== NAME  TestNoConflictingClassesStaysSilent/divide_against_border
+    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== CONT  TestNoConflictingClassesStaysSilent/container_against_w-full
+=== CONT  TestNoConflictingClassesStaysSilent/border_against_border-dashed
+=== NAME  TestNoConflictingClassesStaysSilent/container_against_w-full
+    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== NAME  TestNoConflictingClassesStaysSilent/border_against_border-dashed
+    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== CONT  TestNoConflictingClassesStaysSilent/unrelated_callee
+=== CONT  TestNoConflictingClassesStaysSilent/padding_and_padding-inline
+    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== NAME  TestNoConflictingClassesStaysSilent/unrelated_callee
+    no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
+=== CONT  TestNoConflictingClassesStaysSilent/unrelated_attribute
     no_conflicting_classes_test.go:253: no installed tailwindcss on this machine, so the rule's design system cannot be built and these fixtures would measure a decline rather than a conflict
 --- PASS: TestNoConflictingClassesStaysSilent (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/width_and_height (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/the_same_class_twice (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/ring_against_ring-inset (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/unrelated_attribute (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/unrelated_properties (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/unrelated_callee (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/border_against_border-dashed (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/divide_against_border (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/same_property_under_different_variants (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/padding_and_padding-inline (0.00s)
     --- SKIP: TestNoConflictingClassesStaysSilent/shadow_against_ring (0.00s)
-    --- SKIP: TestNoConflictingClassesStaysSilent/container_against_w-full (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/the_same_class_twice (0.00s)
     --- SKIP: TestNoConflictingClassesStaysSilent/one_class (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/unrelated_properties (0.00s)
     --- SKIP: TestNoConflictingClassesStaysSilent/different_axes_of_margin (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/width_and_height (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/same_property_under_different_variants (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/ring_against_ring-inset (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/divide_against_border (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/container_against_w-full (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/border_against_border-dashed (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/padding_and_padding-inline (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/unrelated_callee (0.00s)
+    --- SKIP: TestNoConflictingClassesStaysSilent/unrelated_attribute (0.00s)
 PASS
-ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.010s
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.009s
