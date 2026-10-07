@@ -1,0 +1,146 @@
+[
+  {
+    "file": "try_statement.a",
+    "old": "if (view.hasCatch) {",
+    "new": "if (false) {",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "if (view.bindingPresent)",
+    "new": "if (false)",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "frame.position = 1",
+    "new": "frame.position = 0",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "frame.thrownForked = false",
+    "new": "frame.thrownForked = true",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "state.stack.pop();",
+    "new": "",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "if (!view.hasFinally)",
+    "new": "if (false)",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "for (const source of frame.implicit)",
+    "new": "for (const source of normalEnds)",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "dependencies.restoreForks(snapshot);",
+    "new": "",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "if (state.incoming.includes(frame.finallyEntry))",
+    "new": "if (false)",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "if (state.reachable)",
+    "new": "if (true)",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "if (frame.returnedAny)",
+    "new": "if (false)",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "if (frame.thrownAny)",
+    "new": "if (false)",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "outer.returnedAny = true;",
+    "new": "",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "outer.thrownAny = true;",
+    "new": "",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "dependencies.markFinal(state.cur);",
+    "new": "",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "dependencies.markThrown(state.cur);",
+    "new": "",
+    "prefix": ""
+  },
+  {
+    "file": "try_statement.a",
+    "old": "dependencies.enter(after);\n}",
+    "new": "\n}",
+    "prefix": ""
+  },
+  {
+    "file": "is_document_file.a",
+    "old": "startsWith('_document.')",
+    "new": "startsWith('_document')",
+    "prefix": ""
+  },
+  {
+    "file": "is_document_file.a",
+    "old": "parts.baseName.startsWith('index') && parts.parentName.startsWith('_document')",
+    "new": "parts.baseName === 'index' && parts.parentName === '_document'",
+    "prefix": ""
+  },
+  {
+    "file": "is_document_file.a",
+    "old": "&& parts.parentName.startsWith('_document')",
+    "new": "",
+    "prefix": ""
+  },
+  {
+    "file": "last_separator.a",
+    "old": "if (byte === 92)",
+    "new": "if (false)",
+    "prefix": ""
+  },
+  {
+    "file": "last_separator.a",
+    "old": "if (byte === 47)",
+    "new": "if (false)",
+    "prefix": ""
+  },
+  {
+    "file": "last_separator.a",
+    "old": "if (windows > posix)",
+    "new": "if (windows < posix)",
+    "prefix": ""
+  },
+  {
+    "file": "last_separator.a",
+    "old": "posix = i;",
+    "new": "posix = 0;",
+    "prefix": ""
+  }
+]

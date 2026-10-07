@@ -1,0 +1,6 @@
+export type DocumentPath = {baseName: string; parentName: string};
+export function isDocumentFile(filePath: string, splitPath: (path: string) => DocumentPath): boolean {
+  const parts = splitPath(filePath);
+  if (parts.baseName.startsWith('_document.')) { return true; }
+  return parts.baseName.startsWith('index') && parts.parentName.startsWith('_document');
+}

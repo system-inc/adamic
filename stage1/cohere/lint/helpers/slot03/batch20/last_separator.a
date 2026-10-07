@@ -1,0 +1,11 @@
+// Go strings are byte sequences. This adapter keeps offsets in bytes, including invalid UTF-8.
+export function lastSeparator(filePath: readonly number[]): number {
+  let posix = -1; let windows = -1;
+  for (let i = 0; i < filePath.length; i++) {
+    const byte = filePath[i];
+    if (byte === 47) { posix = i; }
+    if (byte === 92) { windows = i; }
+  }
+  if (windows > posix) { return windows; }
+  return posix;
+}

@@ -1,0 +1,31 @@
+import {panic,readTextFile,programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {tryStatement,type TryFrame,type TryState,type TryView,type TryDependencies} from './try_statement.a';
+import {isDocumentFile} from './is_document_file.a';
+import {lastSeparator} from './last_separator.a';
+const file=readTextFile(programArguments()[0]??panic('missing cases'));if(file.kind==='Error'){panic(file.message);}
+const json=new OptionsJson(file.text);const root=json.parse();if(root<0){panic(json.error);}
+function num(row:number,key:string):number{return Number(json.node(json.field(row,key)).text);}
+function str(row:number,key:string):string{return json.node(json.field(row,key)).text;}
+function bool(row:number,key:string):boolean{return str(row,key)==='true';}
+function numbers(row:number,key:string):number[]{const out:number[]=[];for(const n of json.node(json.field(row,key)).children){out.push(Number(json.node(n).text));}return out;}
+function bit(v:boolean):number{return v?1:0;}
+function ints(values:readonly number[]):string{let out='';for(const v of values){out+=`${v},`;}return out;}
+const state:TryState={cur:0,reachable:false,incoming:[],frames:[],stack:[]};
+function frame(row:number):TryFrame{return {position:num(row,'position'),hasFinally:bool(row,'hasFinally'),catchEntry:num(row,'catchEntry'),finallyEntry:num(row,'finallyEntry'),thrownForked:bool(row,'thrownForked'),thrownAny:bool(row,'thrownAny'),implicit:numbers(row,'implicit'),returnedAny:bool(row,'returnedAny')};}
+function apply(row:number):void{
+ state.cur=num(row,'cur');state.reachable=bool(row,'reachable');state.incoming=numbers(row,'incoming');state.stack=numbers(row,'stack');
+ const frames=json.node(json.field(row,'frames')).children;
+ for(let i=0;i<frames.length;i++){const n=frames[i];if(n===undefined){continue;}const f=frame(n);const old=state.frames[i];if(old===undefined){state.frames=[...state.frames,f];}else{old.position=f.position;old.hasFinally=f.hasFinally;old.catchEntry=f.catchEntry;old.finallyEntry=f.finallyEntry;old.thrownForked=f.thrownForked;old.thrownAny=f.thrownAny;old.implicit=f.implicit;old.returnedAny=f.returnedAny;}}
+}
+function digest():string{let out=`${state.cur}|${bit(state.reachable)}|${ints(state.incoming)}|${ints(state.stack)}|`;for(const f of state.frames){out+=`${f.position},${bit(f.hasFinally)},${f.catchEntry},${f.finallyEntry},${bit(f.thrownForked)},${bit(f.thrownAny)},${ints(f.implicit)}${bit(f.returnedAny)}/`;}return out;}
+const initial:readonly number[]=[];const replay={events:initial,index:0,trace:''};
+function event(kind:string,a:number,b:number):number{const before=digest();const item=replay.events[replay.index];replay.index++;let value=-1;if(item!==undefined){apply(json.field(item,'state'));if(str(item,'kind')===kind){value=num(item,'value');}}replay.trace+=`${kind}:${a}:${b}:${before}>${digest()}:${value};`;return value;}
+const dependencies:TryDependencies={statement:node=>{event('statement',node,-1);},patternBind:node=>{event('bind',node,-1);},newBlock:()=>event('new',-1,-1),link:(from,to)=>{event('link',from,to);},enter:block=>{event('enter',block,-1);},snapshotForks:()=>event('snapshot',-1,-1),restoreForks:snapshot=>{event('restore',snapshot,-1);},returnFrame:()=>event('returnFrame',-1,-1),throwFrame:()=>event('throwFrame',-1,-1),throwTarget:frame=>event('target',frame,-1),markFinal:block=>{event('final',block,-1);},markThrown:block=>{event('thrown',block,-1);}};
+for(const row of json.node(root).children){
+ if(str(row,'op')==='path'){
+ const path=str(row,'path');const result=isDocumentFile(path,p=>{if(p!==path){panic('splitPath argument');}return {baseName:str(row,'base'),parentName:str(row,'parent')};});console.log(`${bit(result)}/${lastSeparator(numbers(row,'bytes'))}`);continue;
+ }
+ state.frames=[];apply(json.field(row,'state'));replay.events=json.node(json.field(row,'events')).children;replay.index=0;replay.trace='';
+ const n=json.field(row,'try');const view:TryView={tryBlock:num(n,'tryBlock'),hasCatch:bool(n,'hasCatch'),hasFinally:bool(n,'hasFinally'),bindingPresent:bool(n,'bindingPresent'),binding:num(n,'binding'),catchBlock:num(n,'catchBlock'),finallyBlock:num(n,'finallyBlock')};tryStatement(state,view,dependencies);console.log(`${digest()}/${replay.trace}`);
+}

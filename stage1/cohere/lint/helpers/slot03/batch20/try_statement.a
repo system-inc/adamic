@@ -1,0 +1,46 @@
+import {panic} from 'adamic';
+export type TryFrame = {position: number; hasFinally: boolean; catchEntry: number; finallyEntry: number; thrownForked: boolean; thrownAny: boolean; implicit: number[]; returnedAny: boolean};
+export type TryState = {cur: number; reachable: boolean; incoming: number[]; frames: readonly TryFrame[]; stack: number[]};
+export type TryView = {tryBlock: number; hasCatch: boolean; hasFinally: boolean; bindingPresent: boolean; binding: number; catchBlock: number; finallyBlock: number};
+export type TryDependencies = {statement: (node: number) => void; patternBind: (node: number) => void; newBlock: () => number; link: (from: number,to: number) => void; enter: (block: number) => void; snapshotForks: () => number; restoreForks: (snapshot: number) => void; returnFrame: () => number; throwFrame: () => number; throwTarget: (frame: number) => number; markFinal: (block: number) => void; markThrown: (block: number) => void};
+export function tryStatement(state: TryState, view: TryView, dependencies: TryDependencies): void {
+  const catchEntry = view.hasCatch ? dependencies.newBlock() : -1;
+  const finallyEntry = view.hasFinally ? dependencies.newBlock() : -1;
+  const frame: TryFrame = {position: 0,hasFinally: view.hasFinally,catchEntry,finallyEntry,thrownForked: false,thrownAny: false,implicit: [],returnedAny: false};
+  const frameID = state.frames.length; state.frames = [...state.frames,frame]; state.stack.push(frameID);
+  dependencies.statement(view.tryBlock);
+  const normalEnds: number[] = [];
+  if (view.hasCatch) {
+    dependencies.link(state.cur,frame.catchEntry); normalEnds.push(state.cur);
+    frame.position = 1; frame.thrownForked = false;
+    dependencies.enter(frame.catchEntry);
+    if (view.bindingPresent) { dependencies.patternBind(view.binding); }
+    dependencies.statement(view.catchBlock);
+  }
+  normalEnds.push(state.cur); state.stack.pop();
+  const after = dependencies.newBlock();
+  if (!view.hasFinally) {
+    for (const end of normalEnds) { dependencies.link(end,after); }
+    dependencies.enter(after); return;
+  }
+  const snapshot = dependencies.snapshotForks(); const normalEntry = dependencies.newBlock();
+  for (const end of normalEnds) { dependencies.link(end,normalEntry); }
+  for (const source of frame.implicit) { dependencies.link(source,normalEntry); }
+  dependencies.enter(normalEntry); dependencies.statement(view.finallyBlock); dependencies.link(state.cur,after);
+  if (state.incoming.includes(frame.finallyEntry)) {
+    dependencies.restoreForks(snapshot); dependencies.enter(frame.finallyEntry); dependencies.statement(view.finallyBlock);
+    if (state.reachable) {
+      if (frame.returnedAny) {
+        const i = dependencies.returnFrame();
+        if (i >= 0) { const outer = state.frames[state.stack[i] ?? -1] ?? panic('invalid return frame'); outer.returnedAny = true; dependencies.link(state.cur,outer.finallyEntry); }
+        else { dependencies.markFinal(state.cur); }
+      }
+      if (frame.thrownAny) {
+        const i = dependencies.throwFrame();
+        if (i >= 0) { const id = state.stack[i] ?? panic('invalid throw stack'); const outer = state.frames[id] ?? panic('invalid throw frame'); outer.thrownAny = true; dependencies.link(state.cur,dependencies.throwTarget(id)); }
+        else { dependencies.markThrown(state.cur); }
+      }
+    }
+  }
+  dependencies.enter(after);
+}
