@@ -298,3 +298,17 @@ claim remains withdrawn. The refreshed all-origin audit has 597 refs, 33 claim
 blobs and zero unclaimed checker-dependent entries, so no new claim is made.
 WAVE_17_AREA_LANDING_REPORT.md records exact current-base evidence and timings.
 Only codex/typeaware-wave-17 is pushed, never main or an area branch.
+
+
+## Landing after predicate and proven-relation integration
+
+Current main c7991b900362796aefd111474e65eb5398e91953 is contained in
+area b84a9d9314b65d3d0261ee017e233287b4f071da. All 34 own commits
+rebased cleanly, source 00deb49fa0e9d6484dca8acbd39f03be84a9afbc. The
+eight selected lint suites passed again in 897.690s with complete Go bytes,
+sanitizers, mutants and released handles. Filtered uncached Node checks include
+the five new compiler proof fixtures. Existing parked scopes remain incomplete;
+no full gate or the 17 required external correctness checks were run. The audit
+of 636 origin refs and 33 claim blobs still finds zero unclaimed rules. No new
+reservation is made. WAVE_17_LANDING5_REPORT.md preserves evidence and timings.
+Only codex/typeaware-wave-17 is pushed.
