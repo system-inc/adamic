@@ -32,12 +32,12 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		return map[string]int{}
 	}
 	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message),
-	// and input/directory results (kind, text/names/message/type, size, symbolicLink). Including
+	// and input/directory results (kind, text/names/message/type/path, size, symbolicLink). Including
 	// them unconditionally is conservative when the program does not use that runtime API.
 	// TestRuntimeFieldLayoutsAreIncluded checks this list against the embedded C declarations.
 	offsets := map[string]int{
 		"0": 0, "1": 1, "name": 0, "message": 1, "kind": 0, "text": 1,
-		"names": 1, "type": 1, "size": 2, "symbolicLink": 3,
+		"names": 1, "type": 1, "path": 1, "size": 2, "symbolicLink": 3,
 	}
 	for _, names := range [][]string{
 		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
