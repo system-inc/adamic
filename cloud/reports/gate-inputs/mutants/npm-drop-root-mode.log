@@ -1,0 +1,13 @@
+..F.
+======================================================================
+FAIL: test_tree_bytes_paths_and_modes (__main__.InstallationKey.test_tree_bytes_paths_and_modes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_markdown_setup.py", line 50, in test_tree_bytes_paths_and_modes
+    self.assertNotEqual(renamed, helper.tree_digest(root))
+AssertionError: 'b4a6f1aa3dca5d9bc68b192bb186c91042faa61b8524683f1e626fc211311b18' == 'b4a6f1aa3dca5d9bc68b192bb186c91042faa61b8524683f1e626fc211311b18'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=1)

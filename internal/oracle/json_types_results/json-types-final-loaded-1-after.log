@@ -1,0 +1,104 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_arrays.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_arrays.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_shapes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_shapes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_depth_extra.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_depth_extra.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_unicode_tag.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_unicode_tag.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_nested.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_nested.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_grammar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_grammar.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_unions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_unions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_tags.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_tags.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_layouts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_layouts.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_empty.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_empty.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_calls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_calls.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_object_scalar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_object_scalar.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_supplement.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_supplement.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_scalars.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_scalars.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_grammar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_grammar.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_depth.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_depth.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_empty_tuple.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_empty_tuple.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_empty_object.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_empty_object.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_scalars.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_scalars.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_unions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_unions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_differences.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_differences.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_depth.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_depth.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_arrays.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_unions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_supplement.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_unicode_tag.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_depth_extra.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_grammar.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_nested.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_object_scalar.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_calls.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_empty.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_layouts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_tags.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_empty_object.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_depth.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_differences.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_unions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_scalars.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_grammar.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_empty_tuple.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_depth.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_scalars.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_shapes.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_unicode_tag.a (2.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_supplement.a (2.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_depth_extra.a (2.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_unions.a (2.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_arrays.a (3.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_grammar.a (2.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_object_scalar.a (2.42s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_calls.a (2.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_empty.a (2.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_nested.a (3.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_layouts.a (2.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_empty_object.a (2.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_tags.a (2.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_differences.a (1.93s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_depth.a (2.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_grammar.a (1.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_unions.a (2.46s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_objects.a (2.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_scalars.a (2.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_empty_tuple.a (2.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_depth.a (2.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_scalars.a (1.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_objects.a (2.23s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_decode_coverage_shapes.a (2.18s)
+PASS
+gate cache: native hits=0 misses=72
+gate cache: node hits=0 misses=48
+gate cache: probe hits=0 misses=0

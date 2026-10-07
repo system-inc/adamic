@@ -1,0 +1,12 @@
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo
+    gitignore_test.go:100: seed 20261005, 40 generated trees
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+    gitignore_test.go:158: only an ignore file of exactly 100 MiB shows this one, asked about when ADAMIC_GITIGNORE_LARGEST is set
+--- SKIP: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (0.00s)
+--- PASS: TestThePortAnswersAsGoCohereAndGitDo (2.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	2.656s

@@ -1,0 +1,8 @@
+--- FAIL: TestWrongDiagnosticIsAFinding (0.00s)
+    --- FAIL: TestWrongDiagnosticIsAFinding/wrong (0.00s)
+        probe_test.go:77: want wrong-refusal, got <nil>
+--- FAIL: TestStrictDiagnosticWithRealLowering (0.18s)
+    probe_test.go:111: unrelated real refusal passed: <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/refusalprobe	0.188s
+FAIL

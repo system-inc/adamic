@@ -1,0 +1,16 @@
+=== RUN   TestOptInClassification
+=== PAUSE TestOptInClassification
+=== CONT  TestOptInClassification
+=== RUN   TestOptInClassification/ADAMIC_NEW_LANE
+    census_test.go:293: enabled context lost through helper
+=== RUN   TestOptInClassification/OTHER_BENCHMARK
+    census_test.go:293: enabled context lost through helper
+=== RUN   TestOptInClassification/PROFILE_DIRECTORY
+    census_test.go:293: enabled context lost through helper
+--- FAIL: TestOptInClassification (0.00s)
+    --- FAIL: TestOptInClassification/ADAMIC_NEW_LANE (0.00s)
+    --- FAIL: TestOptInClassification/OTHER_BENCHMARK (0.00s)
+    --- FAIL: TestOptInClassification/PROFILE_DIRECTORY (0.00s)
+FAIL
+exit status 1
+FAIL	mutant	0.003s

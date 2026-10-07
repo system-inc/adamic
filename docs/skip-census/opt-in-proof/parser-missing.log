@@ -1,0 +1,6 @@
+=== RUN   TestPerformance
+    performance_test.go:23: set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout
+--- FAIL: TestPerformance (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	0.010s
+FAIL

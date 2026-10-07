@@ -1,0 +1,8 @@
+=== RUN   TestASTAndDriftMutants
+=== PAUSE TestASTAndDriftMutants
+=== CONT  TestASTAndDriftMutants
+    census_test.go:92: new-skip mutant survived: <nil>
+--- FAIL: TestASTAndDriftMutants (0.00s)
+FAIL
+FAIL	mutant	0.002s
+FAIL

@@ -1,0 +1,12 @@
+=== RUN   TestCSSParserOptimizedMatchesNode
+    optimized_test.go:35: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 2.36514278s, 101795 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (3.21s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	3.213s
+    optimized_test.go:55: optimized parser: 24076 byte-identical Node trees/errors, held to Go by the composed-tree test
+--- PASS: TestCSSParserOptimizedMatchesNode (23.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	23.029s

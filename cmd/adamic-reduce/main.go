@@ -4,8 +4,13 @@
 // way to simpler ones of the same type, until nothing more goes. A candidate is kept only when it
 // checks as the original did, comes to the same verdict, and fails with the same signature.
 //
+// Two kinds name a crash, and they're different promises. crash is the program's: native died by a
+// signal or a sanitizer reported (fuzz.Crash), and reducing keeps that line, so it never drifts to a
+// plain output difference. compiler-panic is the compiler's own Go panic while compiling it.
+//
 //	adamic-reduce program.a                           reduce the program's first failure
-//	adamic-reduce -signature crash:'a store' -o small.a program.a
+//	adamic-reduce -signature crash:heap-use-after-free -o small.a program.a
+//	adamic-reduce -signature compiler-panic:'a store' -o small.a program.a
 //	adamic-reduce -root ../other program.ts           against another checkout's compiler
 package main
 
@@ -75,7 +80,8 @@ func run() int {
 			return 1
 		}
 	}
-	// A refusal or a crash needs only the compiler; anything else runs three ways.
+	// A refusal or a compiler panic needs only the compiler, cc the compiler and clang; anything else,
+	// a crash among them, runs three ways.
 	observe := func(candidate string, slot int) fuzz.Observation {
 		return checkout.Observe(candidate, name, filepath.Join(*work, "candidates", fmt.Sprintf("slot%d", slot)), signature.Kind)
 	}

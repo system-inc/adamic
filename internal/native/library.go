@@ -38,13 +38,17 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("native: runtime: %w", err)
 	}
-	compiler, err := exec.LookPath(compilerName(options))
+	name, err := selectedCompiler(options)
+	if err != nil {
+		return "", err
+	}
+	compiler, err := exec.LookPath(name)
 	if err != nil {
 		return "", fmt.Errorf("native: %w", err)
 	}
 	version, err := exec.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
-		return "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
+		return "", fmt.Errorf("native: %s --version: %w\n%s", name, err, version)
 	}
 	cache, err := os.UserCacheDir()
 	if err != nil {

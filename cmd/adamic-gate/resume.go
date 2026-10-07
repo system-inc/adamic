@@ -58,7 +58,7 @@ func predictions(p plan, weights map[string]float64) []prediction {
 		}
 		if strings.Contains(u.Test, "/") {
 			parent := u.Package + "::" + strings.Split(u.Test, "/")[0]
-			invocation := fmt.Sprintf("%d::%s::%s", u.Shard, parent, strings.Join(strings.Split(u.Test, "/")[:len(strings.Split(u.Test, "/"))-1], "/"))
+			invocation := fmt.Sprintf("%d::%s", u.Shard, parent)
 			if !seen[invocation] && known[parent] {
 				residual := weights[parent] - childSeconds[parent]
 				if residual > 0 {
@@ -67,6 +67,17 @@ func predictions(p plan, weights map[string]float64) []prediction {
 				}
 			}
 			seen[invocation] = true
+		}
+	}
+	for _, c := range p.Complements {
+		parent := c.Package + "::" + c.Parent
+		invocation := fmt.Sprintf("%d::%s", c.Shard, parent)
+		if !seen[invocation] && known[parent] {
+			residual := weights[parent] - childSeconds[parent]
+			if residual > 0 {
+				result[c.Shard].ParentSeconds += residual
+				result[c.Shard].Seconds += residual
+			}
 		}
 	}
 	return result
@@ -175,6 +186,14 @@ func executionIdentity() (string, error) {
 			}
 		}
 	}
+	if sysroot := effective["WASI_SYSROOT"]; sysroot != "" {
+		// Include linker, archiver and compiler resources as well as sysroot headers/libraries.
+		sdk, err := pathDigest(filepath.Dir(filepath.Dir(sysroot)))
+		if err != nil {
+			return "", err
+		}
+		external["wasi-sdk"] = sdk
+	}
 	sort.Strings(env)
 	defaultWidth, err := pathDigest("/tmp/adamic-markdown-width")
 	if err != nil {
@@ -260,6 +279,7 @@ type resumeState struct {
 type packageEvidence struct {
 	Key, Package, LogDigest, StderrDigest string
 	Invocations                           []invocation
+	TestParallel                          int
 }
 
 func checkpointKey(s resumeState, pkg string, patterns []string) string {
@@ -316,27 +336,37 @@ func completePackage(dir string, e packageEvidence, p plan, index int, pkg strin
 	if err != nil {
 		return err
 	}
-	units := []unit{}
-	for _, u := range p.Units {
-		if u.Package == pkg && u.Shard == index {
-			units = append(units, u)
-		}
-	}
-	selectors := patterns(units)
+	units := assignedPackages(p, index)[pkg]
+	selectors := selections(p, index, pkg)
 	if len(e.Invocations) != len(selectors) {
 		return errors.New("package invocation count differs")
 	}
 	for i, call := range e.Invocations {
-		if call.Package != pkg || !call.Uncached || !reflect.DeepEqual(call.Args, testArgs(pkg, selectors[i])) {
+		if e.TestParallel < 0 || call.Package != pkg || !call.Uncached || !reflect.DeepEqual(call.Args, concurrencyArgs(selectionArgs(pkg, selectors[i]), e.TestParallel)) {
 			return errors.New("package invocation inputs differ")
 		}
 	}
+
 	produced := map[string]bool{}
 	problems := validateResults(p, index, results, produced, map[string]int{})
 	problems = append(problems, validateResults(p, index, runs, map[string]bool{}, map[string]int{})...)
 	for _, u := range units {
 		if !produced[u.key()] {
 			problems = append(problems, "planned unit has no terminal event: "+u.key())
+		}
+	}
+	for _, c := range p.Complements {
+		if c.Shard != index || c.Package != pkg {
+			continue
+		}
+		found := false
+		for _, r := range results {
+			if r.Package == pkg && r.Test == c.Parent {
+				found = true
+			}
+		}
+		if !found {
+			problems = append(problems, "complement parent has no terminal event: "+pkg+"::"+c.Parent)
 		}
 	}
 	starts, finishes := map[string]int{}, map[string]int{}
@@ -419,12 +449,7 @@ func validatePackageFiles(dir string, p plan, s summary) []string {
 	if state.PlanDigest != p.Digest || state.Index != s.Index || state.Context == "" {
 		return []string{"package checkpoint state differs from plan"}
 	}
-	byPackage := map[string][]unit{}
-	for _, u := range p.Units {
-		if u.Shard == s.Index {
-			byPackage[u.Package] = append(byPackage[u.Package], u)
-		}
-	}
+	byPackage := assignedPackages(p, s.Index)
 	packages := []string{}
 	for pkg := range byPackage {
 		packages = append(packages, pkg)
@@ -435,12 +460,15 @@ func validatePackageFiles(dir string, p plan, s summary) []string {
 	var problems []string
 	for _, pkg := range packages {
 		packageDir := filepath.Join(dir, "packages", shortHash(pkg))
-		e, found, err := loadPackage(packageDir, checkpointKey(state, pkg, patterns(byPackage[pkg])), p, s.Index, pkg)
+		e, found, err := loadPackage(packageDir, checkpointKey(state, pkg, selectorKeys(p, s.Index, pkg)), p, s.Index, pkg)
 		if err != nil || !found {
 			problems = append(problems, fmt.Sprintf("shard %d package %s has no valid complete log: %v", s.Index, pkg, err))
 			continue
 		}
 		calls = append(calls, e.Invocations...)
+		if e.TestParallel != s.Concurrency.Parallel {
+			problems = append(problems, fmt.Sprintf("shard %d package %s concurrency differs from summary", s.Index, pkg))
+		}
 		if err := appendFile(h, filepath.Join(packageDir, "test.jsonl")); err != nil {
 			problems = append(problems, err.Error())
 		}

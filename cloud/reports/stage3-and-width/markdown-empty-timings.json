@@ -1,0 +1,128 @@
+[
+  {
+    "loop": 1,
+    "mode": "before",
+    "seconds": 6.766457795998576,
+    "exit": 1,
+    "command": [
+      "/tmp/markdown-before.test",
+      "-test.run=^TestMarkdownUnicodeWidths$",
+      "-test.timeout=30m",
+      "-test.v"
+    ],
+    "load_before": "5.48 1.60 0.63 2/341 90096",
+    "load_after": "5.20 1.61 0.64 2/346 90173",
+    "commit": "ac92bf0abf36b0fa442929b4e9a434445cb15a17",
+    "nproc": "5",
+    "cpu_max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cached": "warm Go action cache; forced uncached observations"
+  },
+  {
+    "loop": 1,
+    "mode": "after",
+    "seconds": 0.00432390999958443,
+    "exit": 1,
+    "command": [
+      "/tmp/markdown-after.test",
+      "-test.run=^TestMarkdownUnicodeWidths$",
+      "-test.timeout=30m",
+      "-test.v"
+    ],
+    "load_before": "5.20 1.61 0.64 3/346 90182",
+    "load_after": "5.20 1.61 0.64 2/346 90188",
+    "commit": "ac92bf0abf36b0fa442929b4e9a434445cb15a17",
+    "nproc": "5",
+    "cpu_max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cached": "warm Go action cache; forced uncached observations"
+  },
+  {
+    "loop": 2,
+    "mode": "after",
+    "seconds": 0.003983388000051491,
+    "exit": 1,
+    "command": [
+      "/tmp/markdown-after.test",
+      "-test.run=^TestMarkdownUnicodeWidths$",
+      "-test.timeout=30m",
+      "-test.v"
+    ],
+    "load_before": "5.20 1.61 0.64 3/346 90197",
+    "load_after": "5.20 1.61 0.64 2/346 90203",
+    "commit": "ac92bf0abf36b0fa442929b4e9a434445cb15a17",
+    "nproc": "5",
+    "cpu_max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cached": "warm Go action cache; forced uncached observations"
+  },
+  {
+    "loop": 2,
+    "mode": "before",
+    "seconds": 8.981314284999826,
+    "exit": 1,
+    "command": [
+      "/tmp/markdown-before.test",
+      "-test.run=^TestMarkdownUnicodeWidths$",
+      "-test.timeout=30m",
+      "-test.v"
+    ],
+    "load_before": "5.20 1.61 0.64 3/346 90212",
+    "load_after": "5.85 1.87 0.73 9/354 90330",
+    "commit": "ac92bf0abf36b0fa442929b4e9a434445cb15a17",
+    "nproc": "5",
+    "cpu_max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cached": "warm Go action cache; forced uncached observations"
+  },
+  {
+    "loop": 3,
+    "mode": "before",
+    "seconds": 12.60883729499983,
+    "exit": 1,
+    "command": [
+      "/tmp/markdown-before.test",
+      "-test.run=^TestMarkdownUnicodeWidths$",
+      "-test.timeout=30m",
+      "-test.v"
+    ],
+    "load_before": "5.85 1.87 0.73 10/354 90339",
+    "load_after": "7.68 2.48 0.95 7/355 90455",
+    "commit": "ac92bf0abf36b0fa442929b4e9a434445cb15a17",
+    "nproc": "5",
+    "cpu_max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cached": "warm Go action cache; forced uncached observations"
+  },
+  {
+    "loop": 3,
+    "mode": "after",
+    "seconds": 0.013748798999586143,
+    "exit": 1,
+    "command": [
+      "/tmp/markdown-after.test",
+      "-test.run=^TestMarkdownUnicodeWidths$",
+      "-test.timeout=30m",
+      "-test.v"
+    ],
+    "load_before": "7.68 2.48 0.95 8/355 90464",
+    "load_after": "7.68 2.48 0.95 7/355 90470",
+    "commit": "ac92bf0abf36b0fa442929b4e9a434445cb15a17",
+    "nproc": "5",
+    "cpu_max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cached": "warm Go action cache; forced uncached observations"
+  }
+]

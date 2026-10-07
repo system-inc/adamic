@@ -27,7 +27,7 @@ const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
 func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
 	t.Helper()
-	descriptors, err := registry.Generate(directory)
+	descriptors, err := lintRegistry(t, directory)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -61,7 +61,7 @@ type execution struct {
 }
 
 // Output is a file, never a pipe: the large corpus must also work on Node's writev path.
-func execute(t *testing.T, directory, name string, args ...string) execution {
+func executeUncached(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
 	defer cancel()
@@ -91,7 +91,7 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 func goOracle(t *testing.T) string {
 	return goOracleFrom(t, ".")
 }
-func goOracleFrom(t *testing.T, sourceRoot string) string {
+func goOracleFromUncached(t *testing.T, sourceRoot string) string {
 	t.Helper()
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
@@ -133,7 +133,11 @@ func goOracleFrom(t *testing.T, sourceRoot string) string {
 	return binary
 }
 
-func buildPort(t *testing.T, directory string, sanitize bool) string {
+func buildPortUncached(t *testing.T, directory string, sanitize bool) string {
+	return buildPortOptionsUncached(t, directory, native.Options{Sanitize: sanitize})
+}
+
+func buildPortOptionsUncached(t *testing.T, directory string, options native.Options) string {
 	t.Helper()
 	prepareRegistry(t, directory)
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
@@ -145,13 +149,16 @@ func buildPort(t *testing.T, directory string, sanitize bool) string {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "scanner")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+	source := native.C(lowered)
+	started := time.Now()
+	if err := native.Build(source, binary, options); err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("clang build: %.3fs; split=%t jobs=%d flags=%v", time.Since(started).Seconds(), options.Split, options.Jobs, native.Flags(options))
 	return binary
 }
 
-func node(t *testing.T, directory, manifest string, count bool) execution {
+func nodeUncached(t *testing.T, directory, manifest string, count bool) execution {
 	t.Helper()
 	prepareRegistry(t, directory)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -286,6 +293,9 @@ func upstream(t *testing.T) []string {
 	return upstreamFrom(t, ".")
 }
 func upstreamFrom(t *testing.T, sourceRoot string) []string {
+	return lintFullCapture(t, sourceRoot)
+}
+func upstreamSelection(t *testing.T, sourceRoot string, selected *registry.Descriptor) []string {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		t.Fatal(err)
@@ -317,6 +327,10 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	for _, d := range prepareRegistry(t, sourceRoot) {
 		discovered[d.Name] = true
 		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
+	}
+	if selected != nil {
+		packages = map[string][]string{selected.UpstreamPackage: {selected.UpstreamTest}}
+		discovered = map[string]bool{selected.Name: true}
 	}
 	for name, tests := range packages {
 		execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(tests, "|")+")", "-count=1", "-timeout=10m")
@@ -393,7 +407,7 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 		}
 		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
 	}
-	if len(rows) < 150 {
+	if (selected == nil && len(rows) < 150) || len(rows) == 0 {
 		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
 	}
 	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
@@ -789,7 +803,7 @@ func rewritePortImports(t *testing.T, file, source string) string {
 	})
 }
 
-func emittedJavaScript(t *testing.T, directory string) string {
+func emittedJavaScriptUncached(t *testing.T, directory string) string {
 	t.Helper()
 	prepareRegistry(t, directory)
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
@@ -810,7 +824,7 @@ func emittedNode(t *testing.T, directory, manifest string, count bool) execution
 	t.Helper()
 	return runJavaScript(t, emittedJavaScript(t, directory), manifest, count)
 }
-func runJavaScript(t *testing.T, module, manifest string, count bool) execution {
+func runJavaScriptUncached(t *testing.T, module, manifest string, count bool) execution {
 	t.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {

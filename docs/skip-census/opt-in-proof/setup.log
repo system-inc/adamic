@@ -1,0 +1,29 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.106s)
+setup: submodules ready (0.144s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.332s)
+setup: downloading module dependencies in /workspace/adamic
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/../internal/boundedrun/python.py", line 70, in <module>
+    runpy.run_path(script, run_name="__main__")
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/adamic/cloud/setup-modules.py", line 110, in <module>
+    print('setup: module dependencies ' + prepare(*sys.argv[1:]) + f'; step-duration={time.monotonic() - started:.3f}s')
+                                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/cloud/setup-modules.py", line 85, in prepare
+    raise RuntimeError(record['Error'])
+RuntimeError: github.com/klauspost/compress@v1.20.0: Get "https://storage.googleapis.com/proxy-golang-org-prod/cad58d59a1ab2996-github.com:klauspost:compress-v1.20.0.zip?[signed query omitted]": Forbidden
+setup: node v24.19.0 installed (published SHA-256 verified); step-duration=4.922s
+v24.19.0
+setup: node ready (5.059s)
+
+added 3 packages in 479ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.078s
+setup: markdown dependencies ready (6.197s)
+
+added 3 packages in 782ms
+setup: stage3 API dependencies installed (npm ci --prefix stage3/api, integrity verified); step-duration=1.334s
+setup: stage3 API dependencies checked (7.586s)

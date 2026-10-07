@@ -1,0 +1,3146 @@
+[
+  {
+    "input": ">C\ufeff",
+    "go": "\"\"",
+    "prettier": "\"\ufeff\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      284,
+      22954
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"\"",
+      "prettier": "\"\ufeff\""
+    }
+  },
+  {
+    "input": ">S\ufeff",
+    "go": "\"\"",
+    "prettier": "\"\ufeff\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      285,
+      22955
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"\"",
+      "prettier": "\"\ufeff\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: x\\n---\\na { b: c }",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n  b: c;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1190
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n  b: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: x\\n---\\na { b: c }",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n  b: c;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1191
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n  b: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nx: y\\n---\\n:root { --a: { b: c } }",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n  --a: {\\n    b: c;\\n  };\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1198
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n  --a: {\\n    b: c;\\n  };\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nx: y\\n---\\n:root { --a: { b: c } }",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n  --a: {\\n    b: c;\\n  };\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1199
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n  --a: {\\n    b: c;\\n  };\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: x\\n---",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1370
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: x\\n---",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1371
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeffa{b:c}",
+    "go": "\"a {\\n  b: c;\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n  b: c;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1742,
+      4084
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n  b: c;\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n  b: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeffa{b:c}",
+    "go": "\"a {\\n  b: c;\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n  b: c;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1743,
+      4085
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n  b: c;\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n  b: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeffa{}",
+    "go": "\"a {\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2010
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeffa{}",
+    "go": "\"a {\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2011
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C// x\\ra{}",
+    "go": "\"// x\\ra {\\n}\\n\"",
+    "prettier": "\"// x\\na {\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "CR normalization",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2126,
+      4236
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 7,
+      "go": "\"// x\\ra {\\n}\\n\"",
+      "prettier": "\"// x\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\u00a0",
+    "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \u00a0\"}",
+    "prettier": "\"\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "whitespace fast path",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      3320
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown ",
+      "prettier": "\"\""
+    }
+  },
+  {
+    "input": ">S\u00a0",
+    "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \u00a0\"}",
+    "prettier": "\"\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "whitespace fast path",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      3321
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown ",
+      "prettier": "\"\""
+    }
+  },
+  {
+    "input": ">C\ufeff\\n\\n/* Block comment */\\n\\nhtml {\\n  content: \"#{1}\";\\n\\n}\\n",
+    "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+    "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/bom/bom.css"
+    ],
+    "case_indices": [
+      4506
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 3,
+      "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+      "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeff\\n\\n/* Block comment */\\n\\nhtml {\\n  content: \"#{1}\";\\n\\n}\\n",
+    "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+    "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/bom/bom.css"
+    ],
+    "case_indices": [
+      4507
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 3,
+      "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+      "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---yaml\\n\\ntitle: Hello\\nslug: home\\n\\n---\\n\\na {}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/front-matter/embedded-language-formatting/yaml.css"
+    ],
+    "case_indices": [
+      4578
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---yaml\\n\\ntitle: Hello\\nslug: home\\n\\n---\\n\\na {}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/front-matter/embedded-language-formatting/yaml.css"
+    ],
+    "case_indices": [
+      4579
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n/* comment */\\n.something {\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/comment_after.css"
+    ],
+    "case_indices": [
+      4732
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n/* comment */\\n.something {\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/comment_after.css"
+    ],
+    "case_indices": [
+      4733
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nhello:     world\\na:       \\n            - 123\\n            - 666\\n---\\n\\n.class {\\n\\n\\n\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\na:\\n  - 123\\n  - 666\\n---\\n\\n.class {\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/dirty.css"
+    ],
+    "case_indices": [
+      4734
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\na:\\n  - 123\\n  - 666\\n---\\n\\n.class {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nhello:     world\\na:       \\n            - 123\\n            - 666\\n---\\n\\n.class {\\n\\n\\n\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\na:\\n  - 123\\n  - 666\\n---\\n\\n.class {\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/dirty.css"
+    ],
+    "case_indices": [
+      4735
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\na:\\n  - 123\\n  - 666\\n---\\n\\n.class {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/ignore.css"
+    ],
+    "case_indices": [
+      4740
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/ignore.css"
+    ],
+    "case_indices": [
+      4741
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nfoo: bar\\n---\\n\\na {\\ncolor:blue\\n}\\n\\n---\\n\\n.b {\\ncolor:red\\n}",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n  color: blue;\\n}\\n\\n--- .b {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/malformed-2.css"
+    ],
+    "case_indices": [
+      4742
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n  color: blue;\\n}\\n\\n--- .b {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nfoo: bar\\n---\\n\\na {\\ncolor:blue\\n}\\n\\n---\\n\\n.b {\\ncolor:red\\n}",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n  color: blue;\\n}\\n\\n--- .b {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/malformed-2.css"
+    ],
+    "case_indices": [
+      4743
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n  color: blue;\\n}\\n\\n--- .b {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/only_comments.css"
+    ],
+    "case_indices": [
+      4746
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/only_comments.css"
+    ],
+    "case_indices": [
+      4747
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n    color: red;\\n}",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/with_comments.css"
+    ],
+    "case_indices": [
+      4748
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n    color: red;\\n}",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/with_comments.css"
+    ],
+    "case_indices": [
+      4749
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/without-newline-after.css"
+    ],
+    "case_indices": [
+      4750
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/without-newline-after.css"
+    ],
+    "case_indices": [
+      4751
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/yaml.css"
+    ],
+    "case_indices": [
+      4752
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/yaml.css"
+    ],
+    "case_indices": [
+      4753
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 2,
+    "files": [
+      "tests/format/scss/yaml/yaml.scss",
+      "tests/format/less/yaml/yaml.less"
+    ],
+    "case_indices": [
+      4838,
+      5018
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 2,
+    "files": [
+      "tests/format/scss/yaml/yaml.scss",
+      "tests/format/less/yaml/yaml.less"
+    ],
+    "case_indices": [
+      4839,
+      5019
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeff",
+    "go": "\"\"",
+    "prettier": "\"\ufeff\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      284,
+      22954
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"\"",
+      "prettier": "\"\ufeff\""
+    }
+  },
+  {
+    "input": ">S\ufeff",
+    "go": "\"\"",
+    "prettier": "\"\ufeff\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      285,
+      22955
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"\"",
+      "prettier": "\"\ufeff\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: x\\n---\\na { b: c }",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n  b: c;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1190
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n  b: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: x\\n---\\na { b: c }",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n  b: c;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1191
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n  b: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nx: y\\n---\\n:root { --a: { b: c } }",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n  --a: {\\n    b: c;\\n  };\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1198
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n  --a: {\\n    b: c;\\n  };\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nx: y\\n---\\n:root { --a: { b: c } }",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n  --a: {\\n    b: c;\\n  };\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1199
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n  --a: {\\n    b: c;\\n  };\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: x\\n---",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1370
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: x\\n---",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1371
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeffa{b:c}",
+    "go": "\"a {\\n  b: c;\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n  b: c;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1742,
+      4084
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n  b: c;\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n  b: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeffa{b:c}",
+    "go": "\"a {\\n  b: c;\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n  b: c;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1743,
+      4085
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n  b: c;\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n  b: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeffa{}",
+    "go": "\"a {\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2010
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeffa{}",
+    "go": "\"a {\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2011
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C// x\\ra{}",
+    "go": "\"// x\\ra {\\n}\\n\"",
+    "prettier": "\"// x\\na {\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "CR normalization",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2126,
+      4236
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 7,
+      "go": "\"// x\\ra {\\n}\\n\"",
+      "prettier": "\"// x\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\u00a0",
+    "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \u00a0\"}",
+    "prettier": "\"\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "whitespace fast path",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      3320
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown ",
+      "prettier": "\"\""
+    }
+  },
+  {
+    "input": ">S\u00a0",
+    "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \u00a0\"}",
+    "prettier": "\"\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "whitespace fast path",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      3321
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown ",
+      "prettier": "\"\""
+    }
+  },
+  {
+    "input": ">C\ufeff\\n\\n/* Block comment */\\n\\nhtml {\\n  content: \"#{1}\";\\n\\n}\\n",
+    "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+    "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/bom/bom.css"
+    ],
+    "case_indices": [
+      4506
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 3,
+      "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+      "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeff\\n\\n/* Block comment */\\n\\nhtml {\\n  content: \"#{1}\";\\n\\n}\\n",
+    "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+    "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/bom/bom.css"
+    ],
+    "case_indices": [
+      4507
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 3,
+      "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\"",
+      "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n  content: \\\"#{1}\\\";\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---yaml\\n\\ntitle: Hello\\nslug: home\\n\\n---\\n\\na {}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/front-matter/embedded-language-formatting/yaml.css"
+    ],
+    "case_indices": [
+      4578
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---yaml\\n\\ntitle: Hello\\nslug: home\\n\\n---\\n\\na {}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/front-matter/embedded-language-formatting/yaml.css"
+    ],
+    "case_indices": [
+      4579
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n/* comment */\\n.something {\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/comment_after.css"
+    ],
+    "case_indices": [
+      4732
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n/* comment */\\n.something {\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/comment_after.css"
+    ],
+    "case_indices": [
+      4733
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nhello:     world\\na:       \\n            - 123\\n            - 666\\n---\\n\\n.class {\\n\\n\\n\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\na:\\n  - 123\\n  - 666\\n---\\n\\n.class {\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/dirty.css"
+    ],
+    "case_indices": [
+      4734
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\na:\\n  - 123\\n  - 666\\n---\\n\\n.class {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nhello:     world\\na:       \\n            - 123\\n            - 666\\n---\\n\\n.class {\\n\\n\\n\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\na:\\n  - 123\\n  - 666\\n---\\n\\n.class {\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/dirty.css"
+    ],
+    "case_indices": [
+      4735
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\na:\\n  - 123\\n  - 666\\n---\\n\\n.class {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/ignore.css"
+    ],
+    "case_indices": [
+      4740
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/ignore.css"
+    ],
+    "case_indices": [
+      4741
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nfoo: bar\\n---\\n\\na {\\ncolor:blue\\n}\\n\\n---\\n\\n.b {\\ncolor:red\\n}",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n  color: blue;\\n}\\n\\n--- .b {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/malformed-2.css"
+    ],
+    "case_indices": [
+      4742
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n  color: blue;\\n}\\n\\n--- .b {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nfoo: bar\\n---\\n\\na {\\ncolor:blue\\n}\\n\\n---\\n\\n.b {\\ncolor:red\\n}",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n  color: blue;\\n}\\n\\n--- .b {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/malformed-2.css"
+    ],
+    "case_indices": [
+      4743
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n  color: blue;\\n}\\n\\n--- .b {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/only_comments.css"
+    ],
+    "case_indices": [
+      4746
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/only_comments.css"
+    ],
+    "case_indices": [
+      4747
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n    color: red;\\n}",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/with_comments.css"
+    ],
+    "case_indices": [
+      4748
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n    color: red;\\n}",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/with_comments.css"
+    ],
+    "case_indices": [
+      4749
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/without-newline-after.css"
+    ],
+    "case_indices": [
+      4750
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/without-newline-after.css"
+    ],
+    "case_indices": [
+      4751
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/yaml.css"
+    ],
+    "case_indices": [
+      4752
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/yaml.css"
+    ],
+    "case_indices": [
+      4753
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 2,
+    "files": [
+      "tests/format/scss/yaml/yaml.scss",
+      "tests/format/less/yaml/yaml.less"
+    ],
+    "case_indices": [
+      4838,
+      5018
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\"",
+    "mode": "default",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 2,
+    "files": [
+      "tests/format/scss/yaml/yaml.scss",
+      "tests/format/less/yaml/yaml.less"
+    ],
+    "case_indices": [
+      4839,
+      5019
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeff",
+    "go": "\"\"",
+    "prettier": "\"\ufeff\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      284,
+      22954
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"\"",
+      "prettier": "\"\ufeff\""
+    }
+  },
+  {
+    "input": ">S\ufeff",
+    "go": "\"\"",
+    "prettier": "\"\ufeff\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      285,
+      22955
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"\"",
+      "prettier": "\"\ufeff\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: x\\n---\\na { b: c }",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n\\tb: c;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1190
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n\\tb: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: x\\n---\\na { b: c }",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n\\tb: c;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1191
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n\\tb: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nx: y\\n---\\n:root { --a: { b: c } }",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n\\t--a: {\\n\\t\\tb: c;\\n\\t};\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1198
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n\\t--a: {\\n\\t\\tb: c;\\n\\t};\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nx: y\\n---\\n:root { --a: { b: c } }",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n\\t--a: {\\n\\t\\tb: c;\\n\\t};\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1199
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n\\t--a: {\\n\\t\\tb: c;\\n\\t};\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: x\\n---",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1370
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: x\\n---",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1371
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeffa{b:c}",
+    "go": "\"a {\\n\\tb: c;\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n\\tb: c;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1742,
+      4084
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n\\tb: c;\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n\\tb: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeffa{b:c}",
+    "go": "\"a {\\n\\tb: c;\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n\\tb: c;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1743,
+      4085
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n\\tb: c;\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n\\tb: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeffa{}",
+    "go": "\"a {\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2010
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeffa{}",
+    "go": "\"a {\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2011
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C// x\\ra{}",
+    "go": "\"// x\\ra {\\n}\\n\"",
+    "prettier": "\"// x\\na {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "CR normalization",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2126,
+      4236
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 7,
+      "go": "\"// x\\ra {\\n}\\n\"",
+      "prettier": "\"// x\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\u00a0",
+    "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \u00a0\"}",
+    "prettier": "\"\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "whitespace fast path",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      3320
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown ",
+      "prettier": "\"\""
+    }
+  },
+  {
+    "input": ">S\u00a0",
+    "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \u00a0\"}",
+    "prettier": "\"\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "whitespace fast path",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      3321
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown ",
+      "prettier": "\"\""
+    }
+  },
+  {
+    "input": ">C\ufeff\\n\\n/* Block comment */\\n\\nhtml {\\n  content: \"#{1}\";\\n\\n}\\n",
+    "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+    "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/bom/bom.css"
+    ],
+    "case_indices": [
+      4506
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 3,
+      "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+      "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeff\\n\\n/* Block comment */\\n\\nhtml {\\n  content: \"#{1}\";\\n\\n}\\n",
+    "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+    "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/bom/bom.css"
+    ],
+    "case_indices": [
+      4507
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 3,
+      "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+      "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---yaml\\n\\ntitle: Hello\\nslug: home\\n\\n---\\n\\na {}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/front-matter/embedded-language-formatting/yaml.css"
+    ],
+    "case_indices": [
+      4578
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---yaml\\n\\ntitle: Hello\\nslug: home\\n\\n---\\n\\na {}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/front-matter/embedded-language-formatting/yaml.css"
+    ],
+    "case_indices": [
+      4579
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n/* comment */\\n.something {\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/comment_after.css"
+    ],
+    "case_indices": [
+      4732
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n/* comment */\\n.something {\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/comment_after.css"
+    ],
+    "case_indices": [
+      4733
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nhello:     world\\na:       \\n            - 123\\n            - 666\\n---\\n\\n.class {\\n\\n\\n\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\na:\\n    - 123\\n    - 666\\n---\\n\\n.class {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/dirty.css"
+    ],
+    "case_indices": [
+      4734
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\na:\\n    - 123\\n    - 666\\n---\\n\\n.class {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nhello:     world\\na:       \\n            - 123\\n            - 666\\n---\\n\\n.class {\\n\\n\\n\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\na:\\n    - 123\\n    - 666\\n---\\n\\n.class {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/dirty.css"
+    ],
+    "case_indices": [
+      4735
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\na:\\n    - 123\\n    - 666\\n---\\n\\n.class {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/ignore.css"
+    ],
+    "case_indices": [
+      4740
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/ignore.css"
+    ],
+    "case_indices": [
+      4741
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nfoo: bar\\n---\\n\\na {\\ncolor:blue\\n}\\n\\n---\\n\\n.b {\\ncolor:red\\n}",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n\\tcolor: blue;\\n}\\n\\n--- .b {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/malformed-2.css"
+    ],
+    "case_indices": [
+      4742
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n\\tcolor: blue;\\n}\\n\\n--- .b {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nfoo: bar\\n---\\n\\na {\\ncolor:blue\\n}\\n\\n---\\n\\n.b {\\ncolor:red\\n}",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n\\tcolor: blue;\\n}\\n\\n--- .b {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/malformed-2.css"
+    ],
+    "case_indices": [
+      4743
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n\\tcolor: blue;\\n}\\n\\n--- .b {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/only_comments.css"
+    ],
+    "case_indices": [
+      4746
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/only_comments.css"
+    ],
+    "case_indices": [
+      4747
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n    color: red;\\n}",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/with_comments.css"
+    ],
+    "case_indices": [
+      4748
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n    color: red;\\n}",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/with_comments.css"
+    ],
+    "case_indices": [
+      4749
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/without-newline-after.css"
+    ],
+    "case_indices": [
+      4750
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/without-newline-after.css"
+    ],
+    "case_indices": [
+      4751
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/yaml.css"
+    ],
+    "case_indices": [
+      4752
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/yaml.css"
+    ],
+    "case_indices": [
+      4753
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 2,
+    "files": [
+      "tests/format/scss/yaml/yaml.scss",
+      "tests/format/less/yaml/yaml.less"
+    ],
+    "case_indices": [
+      4838,
+      5018
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "npm",
+    "class": "yaml embedding",
+    "occurrences": 2,
+    "files": [
+      "tests/format/scss/yaml/yaml.scss",
+      "tests/format/less/yaml/yaml.less"
+    ],
+    "case_indices": [
+      4839,
+      5019
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeff",
+    "go": "\"\"",
+    "prettier": "\"\ufeff\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      284,
+      22954
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"\"",
+      "prettier": "\"\ufeff\""
+    }
+  },
+  {
+    "input": ">S\ufeff",
+    "go": "\"\"",
+    "prettier": "\"\ufeff\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      285,
+      22955
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"\"",
+      "prettier": "\"\ufeff\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: x\\n---\\na { b: c }",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n\\tb: c;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1190
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n\\tb: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: x\\n---\\na { b: c }",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n\\tb: c;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1191
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\\na {\\n\\tb: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nx: y\\n---\\n:root { --a: { b: c } }",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n\\t--a: {\\n\\t\\tb: c;\\n\\t};\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1198
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n\\t--a: {\\n\\t\\tb: c;\\n\\t};\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nx: y\\n---\\n:root { --a: { b: c } }",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n\\t--a: {\\n\\t\\tb: c;\\n\\t};\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1199
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nx: y\\n---\\n\\n:root {\\n\\t--a: {\\n\\t\\tb: c;\\n\\t};\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: x\\n---",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1370
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: x\\n---",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: x\\n---\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1371
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: x\\n---\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeffa{b:c}",
+    "go": "\"a {\\n\\tb: c;\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n\\tb: c;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1742,
+      4084
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n\\tb: c;\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n\\tb: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeffa{b:c}",
+    "go": "\"a {\\n\\tb: c;\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n\\tb: c;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      1743,
+      4085
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n\\tb: c;\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n\\tb: c;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\ufeffa{}",
+    "go": "\"a {\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2010
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeffa{}",
+    "go": "\"a {\\n}\\n\"",
+    "prettier": "\"\ufeffa {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2011
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 2,
+      "go": "\"a {\\n}\\n\"",
+      "prettier": "\"\ufeffa {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C// x\\ra{}",
+    "go": "\"// x\\ra {\\n}\\n\"",
+    "prettier": "\"// x\\na {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "CR normalization",
+    "occurrences": 2,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      2126,
+      4236
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 7,
+      "go": "\"// x\\ra {\\n}\\n\"",
+      "prettier": "\"// x\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C\u00a0",
+    "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \u00a0\"}",
+    "prettier": "\"\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "whitespace fast path",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      3320
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown ",
+      "prettier": "\"\""
+    }
+  },
+  {
+    "input": ">S\u00a0",
+    "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \u00a0\"}",
+    "prettier": "\"\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "whitespace fast path",
+    "occurrences": 1,
+    "files": [
+      "inline corpus produced by stage1/cohere/css/testdata/cohere_side_test.go"
+    ],
+    "case_indices": [
+      3321
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error {\"column\":1,\"endColumn\":2,\"endLine\":1,\"endOffset\":2,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown ",
+      "prettier": "\"\""
+    }
+  },
+  {
+    "input": ">C\ufeff\\n\\n/* Block comment */\\n\\nhtml {\\n  content: \"#{1}\";\\n\\n}\\n",
+    "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+    "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/bom/bom.css"
+    ],
+    "case_indices": [
+      4506
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 3,
+      "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+      "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S\ufeff\\n\\n/* Block comment */\\n\\nhtml {\\n  content: \"#{1}\";\\n\\n}\\n",
+    "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+    "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "BOM boundary",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/bom/bom.css"
+    ],
+    "case_indices": [
+      4507
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 3,
+      "go": "\"\ufffd\\n\\n/* Block comment\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\"",
+      "prettier": "\"\ufeff/* Block comment */\\n\\nhtml {\\n\\tcontent: '#{1}';\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---yaml\\n\\ntitle: Hello\\nslug: home\\n\\n---\\n\\na {}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/front-matter/embedded-language-formatting/yaml.css"
+    ],
+    "case_indices": [
+      4578
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---yaml\\n\\ntitle: Hello\\nslug: home\\n\\n---\\n\\na {}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/front-matter/embedded-language-formatting/yaml.css"
+    ],
+    "case_indices": [
+      4579
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---yaml\\ntitle: Hello\\nslug: home\\n---\\n\\na {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n/* comment */\\n.something {\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/comment_after.css"
+    ],
+    "case_indices": [
+      4732
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n/* comment */\\n.something {\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/comment_after.css"
+    ],
+    "case_indices": [
+      4733
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\n/* comment */\\n.something {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nhello:     world\\na:       \\n            - 123\\n            - 666\\n---\\n\\n.class {\\n\\n\\n\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\na:\\n    - 123\\n    - 666\\n---\\n\\n.class {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/dirty.css"
+    ],
+    "case_indices": [
+      4734
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\na:\\n    - 123\\n    - 666\\n---\\n\\n.class {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nhello:     world\\na:       \\n            - 123\\n            - 666\\n---\\n\\n.class {\\n\\n\\n\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\na:\\n    - 123\\n    - 666\\n---\\n\\n.class {\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/dirty.css"
+    ],
+    "case_indices": [
+      4735
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\na:\\n    - 123\\n    - 666\\n---\\n\\n.class {\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/ignore.css"
+    ],
+    "case_indices": [
+      4740
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/ignore.css"
+    ],
+    "case_indices": [
+      4741
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nhello: world\\n---\\n\\n/* prettier-ignore */\\n.foo {}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\nfoo: bar\\n---\\n\\na {\\ncolor:blue\\n}\\n\\n---\\n\\n.b {\\ncolor:red\\n}",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n\\tcolor: blue;\\n}\\n\\n--- .b {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/malformed-2.css"
+    ],
+    "case_indices": [
+      4742
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n\\tcolor: blue;\\n}\\n\\n--- .b {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\nfoo: bar\\n---\\n\\na {\\ncolor:blue\\n}\\n\\n---\\n\\n.b {\\ncolor:red\\n}",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n\\tcolor: blue;\\n}\\n\\n--- .b {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/malformed-2.css"
+    ],
+    "case_indices": [
+      4743
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\nfoo: bar\\n---\\n\\na {\\n\\tcolor: blue;\\n}\\n\\n--- .b {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/only_comments.css"
+    ],
+    "case_indices": [
+      4746
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/only_comments.css"
+    ],
+    "case_indices": [
+      4747
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\n# comment 1\\n# comment 2\\n# comment 3\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n    color: red;\\n}",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/with_comments.css"
+    ],
+    "case_indices": [
+      4748
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n    color: red;\\n}",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/with_comments.css"
+    ],
+    "case_indices": [
+      4749
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n# This is a comment\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/without-newline-after.css"
+    ],
+    "case_indices": [
+      4750
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/without-newline-after.css"
+    ],
+    "case_indices": [
+      4751
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/yaml.css"
+    ],
+    "case_indices": [
+      4752
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n    color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 1,
+    "files": [
+      "tests/format/css/yaml/yaml.css"
+    ],
+    "case_indices": [
+      4753
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">C---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n",
+    "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 2,
+    "files": [
+      "tests/format/scss/yaml/yaml.scss",
+      "tests/format/less/yaml/yaml.less"
+    ],
+    "case_indices": [
+      4838,
+      5018
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  },
+  {
+    "input": ">S---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n  color: red;\\n}\\n",
+    "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+    "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\"",
+    "mode": "narrow",
+    "variant": "fork",
+    "class": "yaml embedding",
+    "occurrences": 2,
+    "files": [
+      "tests/format/scss/yaml/yaml.scss",
+      "tests/format/less/yaml/yaml.less"
+    ],
+    "case_indices": [
+      4839,
+      5019
+    ],
+    "first_difference": {
+      "answer_line": 1,
+      "byte": 1,
+      "go": "error \"scss: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\"",
+      "prettier": "\"---\\ntitle: Title\\ndescription: Description\\n---\\n\\na {\\n\\tcolor: red;\\n}\\n\""
+    }
+  }
+]

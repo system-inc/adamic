@@ -1,0 +1,64 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.082s)
+setup: submodules ready (0.127s)
+setup: node v24.19.0 skipped (validated version, checksum and installed bytes); step-duration=0.127s
+v24.19.0
+setup: node ready (0.245s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/css-gate-tools/llvm/bin/clang) (0.283s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.007s
+setup: markdown dependencies ready (0.303s)
+setup: stage3 API dependencies skipped (validated API lock and installed bytes); step-duration=0.051s
+setup: stage3 API dependencies checked (0.402s)
+setup: downloading module dependencies in /workspace/adamic
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tools
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tools/customlint/testdata
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tsc
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/ast
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/bundled
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/checker
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/compiler
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/core
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/format
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/incremental
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/locale
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/parser
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/scanner
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/tsoptions
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/tspath
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs/cachedvfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs/osvfs
+all modules verified
+setup: module dependencies downloaded and verified (20 module directories); step-duration=11.083s
+setup: module dependencies ready (11.271s)
+setup: gate input checker archive built (Go content-addressed inputs, archive bytes stamped); step-duration=2.204s
+setup: go build ready (22.508s)
+setup: test binaries deferred (use --warm-tests) (22.827s)
+setup: build cache warm (22.832s)
+setup: workspace sums restored to the commit (22.926s)
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=false gate-archive=true load-before=4.19 1.28 1.01 2/846 245710 load-after=3.97 1.42 1.06 1/848 247032
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (22.989s)
+setup: source /workspace/css-gate-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.3S0tw2
+setup: node v24.19.0

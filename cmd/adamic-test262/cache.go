@@ -15,6 +15,8 @@ import (
 	"strings"
 	"sync"
 	"syscall"
+
+	"github.com/system-inc/adamic/internal/boundedrun"
 )
 
 // Cache observations, never verdicts: decide still compares both executions on every hit.
@@ -116,7 +118,9 @@ func prepareCache() (*resultCache, string, string, error) {
 	if err != nil {
 		return nil, "", "", err
 	}
-	version, err := exec.Command("node", "--version").CombinedOutput()
+	command, release := boundedrun.Command(boundedrun.Probe, "node", "--version")
+	defer release()
+	version, err := command.CombinedOutput()
 	if err != nil {
 		return nil, "", "", fmt.Errorf("node --version: %w: %s", err, version)
 	}
@@ -187,7 +191,13 @@ func prepareCache() (*resultCache, string, string, error) {
 //go:embed *.go
 var runnerSources embed.FS
 
-func nodeHarnessIdentity() string { return nodeHarnessSourceIdentity(runnerSources) }
+func nodeHarnessIdentity() string {
+	return nodeHarnessWithHelperIdentity(runnerSources, boundedrun.Identity())
+}
+
+func nodeHarnessWithHelperIdentity(sources fs.FS, helper string) string {
+	return cacheKey(nodeHarnessSourceIdentity(sources), helper)
+}
 
 func nodeHarnessSourceIdentity(sources fs.FS) string {
 	entries, err := fs.ReadDir(sources, ".")

@@ -17,7 +17,7 @@ func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	flags := Flags(Options{Sanitize: true, Count: true, slabs: true, cpu: "haswell"})
+	flags := Flags(Options{Sanitize: true, Count: true, Slabs: true, cpu: "haswell"})
 	key := runtimeKey(files, flags, "clang", "version 1")
 	for index, flag := range flags {
 		changed := append([]string{}, flags[:index]...)
@@ -68,6 +68,43 @@ func TestRuntimeCacheKeepsCountFlags(t *testing.T) {
 		if string(output) != want {
 			t.Errorf("count %v: got %q, want %q", count, output, want)
 		}
+	}
+}
+
+// A coverage build writes a profile and links a runtime of its own; an ordinary build does neither.
+func TestRuntimeCacheKeepsCoverageApart(t *testing.T) {
+	t.Parallel()
+	if CoverageRequested() {
+		t.Skip("ADAMIC_C_COVERAGE=1 puts coverage in every build")
+	}
+	const source = "int main(void) { return 0; }\n"
+	libraries := map[bool]string{}
+	for _, coverage := range []bool{false, true, false} {
+		library, err := RuntimeLibrary("", Options{Coverage: coverage})
+		if err != nil {
+			t.Fatal(err)
+		}
+		if previous, seen := libraries[coverage]; seen && previous != library {
+			t.Errorf("coverage %v: two libraries, %s and %s", coverage, previous, library)
+		}
+		libraries[coverage] = library
+		directory := t.TempDir()
+		binary := filepath.Join(directory, "main")
+		if err := Build(source, binary, Options{Coverage: coverage}); err != nil {
+			t.Fatal(err)
+		}
+		profile := filepath.Join(directory, "main.profraw")
+		command := exec.Command(binary)
+		command.Env = append(os.Environ(), "LLVM_PROFILE_FILE="+profile)
+		if output, err := command.CombinedOutput(); err != nil {
+			t.Fatalf("run: %v\n%s", err, output)
+		}
+		if _, err := os.Stat(profile); (err == nil) != coverage {
+			t.Errorf("coverage %v: profile written: %v", coverage, err == nil)
+		}
+	}
+	if libraries[true] == libraries[false] {
+		t.Errorf("a coverage build and an ordinary one share the runtime %s", libraries[true])
 	}
 }
 

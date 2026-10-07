@@ -1,0 +1,13 @@
+[
+  {
+    "loop": 1,
+    "mode": "without",
+    "state": "cold",
+    "seconds": 108.2448095600048,
+    "returncode": 1,
+    "load_before": "1.32 1.23 1.03 1/846 247419",
+    "load_after": "4.29 2.60 1.56 1/847 250279",
+    "instrument": "ADAMIC_TOOLS=/workspace/css-gate-tools GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/workspace/archive-once-cost/1-without GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache ADAMIC_GATE_UNCACHED=0 bash cloud/setup.sh --gate-inputs-no-archive",
+    "log": "1-without-cold.log"
+  }
+]

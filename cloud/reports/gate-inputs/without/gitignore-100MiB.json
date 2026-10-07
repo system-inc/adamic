@@ -1,0 +1,42 @@
+{
+  "id": "gitignore-100MiB",
+  "package": "stage1/cohere/gitignore",
+  "test": "TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower",
+  "verdict": "SKIP",
+  "exit": 0,
+  "seconds": 8.62592137899992,
+  "first_diagnostic": null,
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/gitignore",
+    "-run",
+    "^TestThePortAnswersAsGoCohereAndGitDo$/^catches_R2_the_size_limit_one_byte_lower$",
+    "-count=1",
+    "-timeout=30m",
+    "-json"
+  ],
+  "build_flags": {
+    "commit": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+    "nproc": "5",
+    "cpu_max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cached": false,
+    "inputs": {
+      "ADAMIC_TYPESCRIPT_SOURCE": null,
+      "ADAMIC_CSS_LIBRARY": null,
+      "ADAMIC_GRAPHQL_LIBRARY": null,
+      "ADAMIC_MEDIA_QUERY_LIBRARY": null,
+      "ADAMIC_SELECTOR_LIBRARY": null,
+      "ADAMIC_VALUES_LIBRARY": null,
+      "ADAMIC_JSON_PRETTIER": null,
+      "ADAMIC_CSS_PRINTER_LIBRARY": null,
+      "ADAMIC_GITIGNORE_LARGEST": null,
+      "ADAMIC_CLANG_TSGO_ARCHIVE": null
+    }
+  },
+  "load_before": "5.96 6.91 3.54 3/415 116429",
+  "load_after": "5.43 6.76 3.53 3/421 116824"
+}

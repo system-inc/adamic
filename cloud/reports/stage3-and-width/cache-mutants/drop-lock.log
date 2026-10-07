@@ -1,0 +1,13 @@
+s.F.
+======================================================================
+FAIL: test_each_component_invalidates (__main__.Stage3Key.test_each_component_invalidates) (component='lock')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_stage3_setup.py", line 28, in test_each_component_invalidates
+    self.assertNotEqual(before, helper.stamp_key(**changed), name)
+AssertionError: '4f8dfc985d7d744f283bc8d07832534b6e834a3b4371aea825172d1f1e411ea1' == '4f8dfc985d7d744f283bc8d07832534b6e834a3b4371aea825172d1f1e411ea1' : lock
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+FAILED (failures=1, skipped=1)

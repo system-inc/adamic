@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"os"
-	"os/exec"
+
 	"path/filepath"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/boundedrun"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -20,7 +21,8 @@ func TestCompilerStartupMeasurement(t *testing.T) {
 	}
 	directory := t.TempDir()
 	compiler := filepath.Join(directory, "adamic")
-	build := exec.Command("go", "build", "-o", compiler, "./cmd/adamic")
+	build, release := boundedrun.Command(boundedrun.Build, "go", "build", "-o", compiler, "./cmd/adamic")
+	defer release()
 	build.Dir = "../.."
 	if output, err := build.CombinedOutput(); err != nil {
 		t.Fatalf("%v: %s", err, output)
@@ -52,7 +54,9 @@ func TestCompilerStartupMeasurement(t *testing.T) {
 			t.Fatal("in process C differs")
 		}
 		start = time.Now()
-		_ = exec.Command(compiler).Run()
+		command, release := boundedrun.Command(boundedrun.Probe, compiler)
+		_ = command.Run()
+		release()
 		startup += time.Since(start)
 	}
 	t.Logf("30 interleaved compiles: subprocess=%s in-process=%s startup-only=%s", subprocess, process, startup)

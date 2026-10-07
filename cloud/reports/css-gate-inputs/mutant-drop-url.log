@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_every_fixture_key_component (test_css_gate_inputs.CSSInputs.test_every_fixture_key_component) (name='CSS_URL')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_css_gate_inputs.py", line 44, in test_every_fixture_key_component
+    self.assertNotEqual(before, gate.css_fixture_key(), name)
+AssertionError: '8a241949a91132e9cb87e3269624989e00bffb8c735759050d72212c7c3cc875' == '8a241949a91132e9cb87e3269624989e00bffb8c735759050d72212c7c3cc875' : CSS_URL
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

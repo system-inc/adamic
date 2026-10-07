@@ -1,0 +1,289 @@
+[
+  {
+    "test": "TestCSSParserOptimizedMatchesNode",
+    "package": "css",
+    "verdict": "PASS",
+    "exit": 0,
+    "seconds": 30.196155612997245,
+    "corpus_lines": [
+      "adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]"
+    ],
+    "degraded": [],
+    "expected_coverage": true,
+    "instrument": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^TestCSSParserOptimizedMatchesNode$",
+      "-count=1",
+      "-timeout=30m",
+      "-v"
+    ],
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "cached": false,
+      "load_before": "2.63 2.05 0.93 1/796 229089",
+      "load_after": "4.68 2.63 1.16 2/818 230270"
+    },
+    "recorded_library_differences": []
+  },
+  {
+    "test": "TestCSSPrinterOptimizedMatchesGo",
+    "package": "css",
+    "verdict": "PASS",
+    "exit": 0,
+    "seconds": 19.869545636996918,
+    "corpus_lines": [
+      "adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]"
+    ],
+    "degraded": [],
+    "expected_coverage": true,
+    "instrument": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^TestCSSPrinterOptimizedMatchesGo$",
+      "-count=1",
+      "-timeout=30m",
+      "-v"
+    ],
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "cached": false,
+      "load_before": "4.68 2.63 1.16 3/818 230280",
+      "load_after": "3.91 2.59 1.18 3/817 230513"
+    },
+    "recorded_library_differences": []
+  },
+  {
+    "test": "TestCompositionMatchesGo",
+    "package": "css",
+    "verdict": "PASS",
+    "exit": 0,
+    "seconds": 78.33411255799729,
+    "corpus_lines": [
+      "adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]"
+    ],
+    "degraded": [],
+    "expected_coverage": true,
+    "instrument": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^TestCompositionMatchesGo$",
+      "-count=1",
+      "-timeout=30m",
+      "-v"
+    ],
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "cached": false,
+      "load_before": "3.91 2.59 1.18 2/817 230522",
+      "load_after": "2.74 2.53 1.28 2/817 230832"
+    },
+    "recorded_library_differences": []
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "package": "css",
+    "verdict": "PASS",
+    "exit": 0,
+    "seconds": 42.19367991800391,
+    "corpus_lines": [
+      "adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]"
+    ],
+    "degraded": [],
+    "expected_coverage": true,
+    "instrument": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^TestThePortParsesAsGoCohereDoes$",
+      "-count=1",
+      "-timeout=30m",
+      "-v"
+    ],
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "cached": false,
+      "load_before": "2.74 2.53 1.28 2/817 230841",
+      "load_after": "2.41 2.47 1.32 2/816 231126"
+    },
+    "recorded_library_differences": [
+      "css_test.go:184: PostCSS: 24074 exact agreements, 2 occurrences of the proved surrogate gap"
+    ]
+  },
+  {
+    "test": "TestCSSNumbers",
+    "package": "cssnumbers",
+    "verdict": "PASS",
+    "exit": 0,
+    "seconds": 31.753655532003904,
+    "corpus_lines": [
+      "port_test.go:354: corpus: 1 repository/submodule files, 44892 generated texts, 89786 preference cases; all byte-identical"
+    ],
+    "degraded": [],
+    "expected_coverage": true,
+    "instrument": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^TestCSSNumbers$",
+      "-count=1",
+      "-timeout=30m",
+      "-v"
+    ],
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "cached": false,
+      "load_before": "2.41 2.47 1.32 2/816 231135",
+      "load_after": "2.31 2.44 1.35 3/822 231609"
+    },
+    "recorded_library_differences": []
+  },
+  {
+    "test": "TestCSSStrings",
+    "package": "cssstrings",
+    "verdict": "PASS",
+    "exit": 0,
+    "seconds": 12.880855112998688,
+    "corpus_lines": [
+      "port_test.go:329: corpus: 1 repository/submodule files, 9336 generated texts, 18674 preference cases; all byte-identical"
+    ],
+    "degraded": [],
+    "expected_coverage": true,
+    "instrument": [
+      "go",
+      "test",
+      "./stage1/cohere/cssstrings",
+      "-run",
+      "^TestCSSStrings$",
+      "-count=1",
+      "-timeout=30m",
+      "-v"
+    ],
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "cached": false,
+      "load_before": "2.31 2.44 1.35 3/822 231618",
+      "load_after": "2.93 2.58 1.41 3/824 232203"
+    },
+    "recorded_library_differences": []
+  },
+  {
+    "test": "TestCSSPrinterAgreesWithGo",
+    "package": "css",
+    "verdict": "PASS",
+    "exit": 0,
+    "seconds": 371.82915937800135,
+    "corpus_lines": [
+      "adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]"
+    ],
+    "degraded": [],
+    "expected_coverage": true,
+    "instrument": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^TestCSSPrinterAgreesWithGo$",
+      "-count=1",
+      "-timeout=30m",
+      "-v"
+    ],
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "cached": false,
+      "load_before": "2.63 2.05 0.93 2/796 229089",
+      "load_after": "2.60 2.49 1.56 2/835 240627"
+    },
+    "recorded_library_differences": [
+      "print_test.go:104: Prettier npm default: 4952 byte-identical formats, 19080 shared refusals, 44 exact recorded discrepancy occurrences: map[BOM boundary:12 CR normalization:2 whitespace fast path:2 yaml embedding:28]",
+      "print_test.go:106: Prettier fork default: 4952 byte-identical formats, 19080 shared refusals, 44 exact recorded discrepancy occurrences: map[BOM boundary:12 CR normalization:2 whitespace fast path:2 yaml embedding:28]",
+      "print_test.go:104: Prettier npm narrow: 4952 byte-identical formats, 19080 shared refusals, 44 exact recorded discrepancy occurrences: map[BOM boundary:12 CR normalization:2 whitespace fast path:2 yaml embedding:28]",
+      "print_test.go:106: Prettier fork narrow: 4952 byte-identical formats, 19080 shared refusals, 44 exact recorded discrepancy occurrences: map[BOM boundary:12 CR normalization:2 whitespace fast path:2 yaml embedding:28]"
+    ]
+  },
+  {
+    "test": "TestMarkdownInline",
+    "package": "markdowninline",
+    "verdict": "PASS",
+    "exit": 0,
+    "seconds": 454.2918493149991,
+    "corpus_lines": [
+      "port_test.go:348: corpus: 1112 repository/submodule files, 4702 generated texts, 110466 leaf/context cases; all byte-identical"
+    ],
+    "degraded": [],
+    "expected_coverage": true,
+    "instrument": [
+      "go",
+      "test",
+      "./stage1/cohere/markdowninline",
+      "-run",
+      "^TestMarkdownInline$",
+      "-count=1",
+      "-timeout=30m",
+      "-v"
+    ],
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "cached": false,
+      "load_before": "2.93 2.58 1.41 3/824 232212",
+      "load_after": "1.03 1.60 1.43 1/808 241053"
+    },
+    "recorded_library_differences": []
+  }
+]

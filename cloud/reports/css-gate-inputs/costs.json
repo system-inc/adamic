@@ -1,0 +1,240 @@
+[
+  {
+    "loop": 1,
+    "step": "CSS fixtures",
+    "mode": "cold",
+    "seconds": 1.764195732997905,
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.18 1.59 0.69 2/792 227747",
+      "cached": false,
+      "load_after": "2.18 1.59 0.69 4/794 227781"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: css_fixtures(/workspace/css-input-cost-_3h9ul9b/1)"
+  },
+  {
+    "loop": 1,
+    "step": "shared Prettier paths",
+    "mode": "cold",
+    "seconds": 0.12943900299433153,
+    "answer": "shared prettier 3.9.6: CSS numbers, CSS strings and Markdown inline paths verified",
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.18 1.59 0.69 4/794 227790",
+      "cached": true,
+      "load_after": "2.18 1.59 0.69 4/794 227797"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: shared_prettier(/workspace/css-gate-tools/gate-inputs, /workspace/css-gate-tools/bin/node)"
+  },
+  {
+    "loop": 1,
+    "step": "CSS fixtures",
+    "mode": "warm",
+    "seconds": 0.17766784499690402,
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.18 1.59 0.69 3/794 227806",
+      "cached": true,
+      "load_after": "2.18 1.59 0.69 2/794 227809"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: css_fixtures(/workspace/css-input-cost-_3h9ul9b/1)"
+  },
+  {
+    "loop": 1,
+    "step": "shared Prettier paths",
+    "mode": "warm",
+    "seconds": 0.08367404399905354,
+    "answer": "shared prettier 3.9.6: CSS numbers, CSS strings and Markdown inline paths verified",
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.18 1.59 0.69 2/794 227818",
+      "cached": true,
+      "load_after": "2.18 1.59 0.69 2/794 227825"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: shared_prettier(/workspace/css-gate-tools/gate-inputs, /workspace/css-gate-tools/bin/node)"
+  },
+  {
+    "loop": 2,
+    "step": "CSS fixtures",
+    "mode": "cold",
+    "seconds": 1.972780264004541,
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.18 1.59 0.69 2/794 227834",
+      "cached": false,
+      "load_after": "2.01 1.56 0.69 1/809 228089"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: css_fixtures(/workspace/css-input-cost-_3h9ul9b/2)"
+  },
+  {
+    "loop": 2,
+    "step": "shared Prettier paths",
+    "mode": "cold",
+    "seconds": 0.08275800899718888,
+    "answer": "shared prettier 3.9.6: CSS numbers, CSS strings and Markdown inline paths verified",
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.01 1.56 0.69 2/809 228098",
+      "cached": true,
+      "load_after": "2.01 1.56 0.69 2/809 228105"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: shared_prettier(/workspace/css-gate-tools/gate-inputs, /workspace/css-gate-tools/bin/node)"
+  },
+  {
+    "loop": 2,
+    "step": "CSS fixtures",
+    "mode": "warm",
+    "seconds": 0.13519940100377426,
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.01 1.56 0.69 2/809 228114",
+      "cached": true,
+      "load_after": "2.01 1.56 0.69 2/809 228117"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: css_fixtures(/workspace/css-input-cost-_3h9ul9b/2)"
+  },
+  {
+    "loop": 2,
+    "step": "shared Prettier paths",
+    "mode": "warm",
+    "seconds": 0.09520708800118882,
+    "answer": "shared prettier 3.9.6: CSS numbers, CSS strings and Markdown inline paths verified",
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.01 1.56 0.69 2/809 228126",
+      "cached": true,
+      "load_after": "2.01 1.56 0.69 2/809 228133"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: shared_prettier(/workspace/css-gate-tools/gate-inputs, /workspace/css-gate-tools/bin/node)"
+  },
+  {
+    "loop": 3,
+    "step": "CSS fixtures",
+    "mode": "cold",
+    "seconds": 1.8485902819957118,
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.01 1.56 0.69 2/809 228142",
+      "cached": false,
+      "load_after": "2.01 1.56 0.69 2/806 228305"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: css_fixtures(/workspace/css-input-cost-_3h9ul9b/3)"
+  },
+  {
+    "loop": 3,
+    "step": "shared Prettier paths",
+    "mode": "cold",
+    "seconds": 0.0986736210033996,
+    "answer": "shared prettier 3.9.6: CSS numbers, CSS strings and Markdown inline paths verified",
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.01 1.56 0.69 2/806 228315",
+      "cached": true,
+      "load_after": "2.01 1.56 0.69 5/808 228338"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: shared_prettier(/workspace/css-gate-tools/gate-inputs, /workspace/css-gate-tools/bin/node)"
+  },
+  {
+    "loop": 3,
+    "step": "CSS fixtures",
+    "mode": "warm",
+    "seconds": 0.3662751010051579,
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.01 1.56 0.69 9/810 228359",
+      "cached": true,
+      "load_after": "2.01 1.56 0.69 11/827 228426"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: css_fixtures(/workspace/css-input-cost-_3h9ul9b/3)"
+  },
+  {
+    "loop": 3,
+    "step": "shared Prettier paths",
+    "mode": "warm",
+    "seconds": 0.18294765899918275,
+    "answer": "shared prettier 3.9.6: CSS numbers, CSS strings and Markdown inline paths verified",
+    "build_flags": {
+      "commit": "b58b2eef18fe899ed9b435393e17255c396ca9e6",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "GOFLAGS": "-trimpath",
+      "load_before": "2.01 1.56 0.69 12/828 228436",
+      "cached": true,
+      "load_after": "2.01 1.56 0.69 6/830 228456"
+    },
+    "instrument": "python3 cloud/measure-css-inputs.py: shared_prettier(/workspace/css-gate-tools/gate-inputs, /workspace/css-gate-tools/bin/node)"
+  },
+  {
+    "proof": "uncached fixture bytes and modes identical",
+    "digest": "05bce0c0e826d06a8474665ffeb2b40c9c2e628cbd7e0c7c5af6aa8a3980d461"
+  }
+]

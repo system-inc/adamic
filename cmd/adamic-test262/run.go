@@ -16,6 +16,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/system-inc/adamic/internal/boundedrun"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -60,7 +61,8 @@ func prepareMode(root string, test262 string, work string, profile *runProfile, 
 	}
 	adamic := filepath.Join(work, "adamic")
 	if !inProcess {
-		build := exec.Command("go", "build", "-o", adamic, "./cmd/adamic")
+		build, release := boundedrun.Command(boundedrun.Build, "go", "build", "-o", adamic, "./cmd/adamic")
+		defer release()
 		build.Dir = root
 		if output, err := build.CombinedOutput(); err != nil {
 			return nil, fmt.Errorf("building adamic: %w\n%s", err, output)
@@ -72,7 +74,7 @@ func prepareMode(root string, test262 string, work string, profile *runProfile, 
 	// Sanitizers, as the oracle compiles: a native memory bug is a crash, not a pass. Leaks are not
 	// compared to Node (the process exits either way), so leak detection stays off at run time.
 	flags := native.Flags(native.Options{Sanitize: true})
-	library, err := native.RuntimeLibrary(include, native.Options{Sanitize: true})
+	library, err := boundedRuntimeLibrary(include)
 	if err != nil {
 		return nil, err
 	}
@@ -363,6 +365,9 @@ var nativeEnvironment = []string{
 	"UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1",
 }
 
+// Existing execution limits retain verdict behavior. Recorded cold profiles
+// reached 18s compilation and 19s clang; 2m leaves substantial margin. Node
+// and native mini-fixture maxima were 84ms and 6ms, versus the existing 15s.
 const outputLimit = 256 << 10
 
 func runCommand(timeout time.Duration, extra []string, name string, args ...string) execution {
@@ -371,9 +376,10 @@ func runCommand(timeout time.Duration, extra []string, name string, args ...stri
 
 // Generated C is an artifact, not program output: give it room, and never compile a truncated one.
 func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name string, args ...string) execution {
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	ctx, cancel := boundedrun.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := boundedrun.CommandContext(ctx, name, args...)
+	defer boundedrun.Kill(command.Cmd)
 	command.Env = append(os.Environ(), extra...)
 	command.WaitDelay = 2 * time.Second
 	var stdout, stderr limitedBuffer
@@ -388,7 +394,8 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 		result.Stderr = "command output exceeded capture limit\n"
 		return result
 	}
-	if ctx.Err() == context.DeadlineExceeded {
+	if context.Cause(ctx) == context.DeadlineExceeded {
+		result.Stderr += fmt.Sprintf("child %s: deadline exceeded; process group killed\n", name)
 		result.TimedOut = true
 		result.Exit = -1
 		return result
@@ -617,9 +624,11 @@ func withCrashPath(path string, reason string) string {
 }
 
 func test262Commit(test262 string) string {
-	command := exec.Command("git", "-C", test262, "rev-parse", "HEAD")
+	command, release := boundedrun.Command(boundedrun.Probe, "git", "-C", test262, "rev-parse", "HEAD")
+	defer release()
 	output, err := command.Output()
 	if err != nil {
+		fmt.Fprintf(os.Stderr, "test262 commit probe: %v\n", err)
 		return ""
 	}
 	return strings.TrimSpace(string(output))
@@ -644,7 +653,8 @@ type compilerFallback struct {
 func (e *engine) fallbackCompile(path string) execution {
 	if e.fallback != nil && e.inProcess {
 		e.fallback.once.Do(func() {
-			build := exec.Command("go", "build", "-o", e.adamic, "./cmd/adamic")
+			build, release := boundedrun.Command(boundedrun.Build, "go", "build", "-o", e.adamic, "./cmd/adamic")
+			defer release()
 			build.Dir = e.root
 			if output, err := build.CombinedOutput(); err != nil {
 				e.fallback.err = fmt.Errorf("building adamic: %w\n%s", err, output)
