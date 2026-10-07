@@ -1,0 +1,15 @@
+{
+  "name": "react/jsx-no-useless-fragment",
+  "kinds": [
+    "JsxFragment",
+    "JsxElement",
+    "JsxSelfClosingElement"
+  ],
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "visit": "visit",
+  "oracle": "oracleJsxNoUselessFragment",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestJsxNoUselessFragment"
+}

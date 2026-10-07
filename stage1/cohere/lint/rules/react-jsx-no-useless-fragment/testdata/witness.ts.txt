@@ -1,0 +1,3 @@
+const a = <div><><span /></></div>;
+const b = <>{/* comment */}</>;
+const c = <React.Fragment><i /></React.Fragment>;
