@@ -1,0 +1,187 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/allowed_restricted_type_ban_reported
+    lint_test.go:840: allowed restricted type ban reported caught on Node: case 145 line 3302: port "/tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:1:12", Go "/tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:2:18"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:2:18
+          @typescript-eslint/no-restricted-types  Don't use `Bar` as a type.
+        
+        range 33 36 bannedTypeMessage 			33 36
+        /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:3:12
+    lint_test.go:840: allowed restricted type ban reported caught on emitted JavaScript: case 145 line 3302: port "/tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:1:12", Go "/tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:2:18"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:2:18
+          @typescript-eslint/no-restricted-types  Don't use `Bar` as a type.
+        
+        range 33 36 bannedTypeMessage 			33 36
+        /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:3:12
+    lint_test.go:840: allowed restricted type ban reported caught on native: case 145 line 3302: port "/tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:1:12", Go "/tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:2:18"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:2:18
+          @typescript-eslint/no-restricted-types  Don't use `Bar` as a type.
+        
+        range 33 36 bannedTypeMessage 			33 36
+        /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported835682145/016/typescript-no-restricted-types-0.ts:3:12
+=== RUN   TestMutants/void_callback_exemption_omitted
+    lint_test.go:836: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestMutantsvoid_callback_exemption_omitted1291423288/021/main.ts --manifest /tmp/adamic-gate/TestMutantsvoid_callback_exemption_omitted1291423288/019/manifest.txt]: exit status 70
+        adamic: panic: array-callback-return: shared control-flow end reachability is not available
+=== RUN   TestMutants/AggregateError_container_reported
+    lint_test.go:840: AggregateError container reported caught on Node: case 145 line 3310: port "/tmp/adamic-gate/TestMutantsAggregateError_container_reported953999648/016/base-consistency-no-bare-throw-0.ts:3:7", Go "fixed\tthrow new Error('x');\\u000athrow new TypeError('x');\\u000athrow new AggregateError([], 'container');\\u000athrow new Errors.Validation('x');\\u000a"
+        Go context:
+        range 6 20 bareThrow 			6 20
+        /tmp/adamic-gate/TestMutantsAggregateError_container_reported953999648/016/base-consistency-no-bare-throw-0.ts:2:7
+          base/consistency-no-bare-throw  This throws a bare `TypeError`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+        
+        range 28 46 bareThrow 			28 46
+        fixed	throw new Error('x');\u000athrow new TypeError('x');\u000athrow new AggregateError([], 'container');\u000athrow new Errors.Validation('x');\u000a
+    lint_test.go:840: AggregateError container reported caught on emitted JavaScript: case 145 line 3310: port "/tmp/adamic-gate/TestMutantsAggregateError_container_reported953999648/016/base-consistency-no-bare-throw-0.ts:3:7", Go "fixed\tthrow new Error('x');\\u000athrow new TypeError('x');\\u000athrow new AggregateError([], 'container');\\u000athrow new Errors.Validation('x');\\u000a"
+        Go context:
+        range 6 20 bareThrow 			6 20
+        /tmp/adamic-gate/TestMutantsAggregateError_container_reported953999648/016/base-consistency-no-bare-throw-0.ts:2:7
+          base/consistency-no-bare-throw  This throws a bare `TypeError`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+        
+        range 28 46 bareThrow 			28 46
+        fixed	throw new Error('x');\u000athrow new TypeError('x');\u000athrow new AggregateError([], 'container');\u000athrow new Errors.Validation('x');\u000a
+    lint_test.go:840: AggregateError container reported caught on native: case 145 line 3310: port "/tmp/adamic-gate/TestMutantsAggregateError_container_reported953999648/016/base-consistency-no-bare-throw-0.ts:3:7", Go "fixed\tthrow new Error('x');\\u000athrow new TypeError('x');\\u000athrow new AggregateError([], 'container');\\u000athrow new Errors.Validation('x');\\u000a"
+        Go context:
+        range 6 20 bareThrow 			6 20
+        /tmp/adamic-gate/TestMutantsAggregateError_container_reported953999648/016/base-consistency-no-bare-throw-0.ts:2:7
+          base/consistency-no-bare-throw  This throws a bare `TypeError`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+        
+        range 28 46 bareThrow 			28 46
+        fixed	throw new Error('x');\u000athrow new TypeError('x');\u000athrow new AggregateError([], 'container');\u000athrow new Errors.Validation('x');\u000a
+=== RUN   TestMutants/insert_an_extra_numeric_receiver_separator
+    lint_test.go:840: insert an extra numeric receiver separator caught on Node: case 145 line 3305: port "range 17 23 useDot fix\t  .prop\t\t16 24", Go "range 17 23 useDot fix\t .prop\t\t16 24"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsinsert_an_extra_numeric_receiver_separator2542356785/016/dot-notation-0.ts:1:18
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 17 23 useDot fix	 .prop		16 24
+        /tmp/adamic-gate/TestMutantsinsert_an_extra_numeric_receiver_separator2542356785/016/dot-notation-0.ts:2:19
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 44 50 useDot fix	prop		43 51
+    lint_test.go:840: insert an extra numeric receiver separator caught on emitted JavaScript: case 145 line 3305: port "range 17 23 useDot fix\t  .prop\t\t16 24", Go "range 17 23 useDot fix\t .prop\t\t16 24"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsinsert_an_extra_numeric_receiver_separator2542356785/016/dot-notation-0.ts:1:18
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 17 23 useDot fix	 .prop		16 24
+        /tmp/adamic-gate/TestMutantsinsert_an_extra_numeric_receiver_separator2542356785/016/dot-notation-0.ts:2:19
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 44 50 useDot fix	prop		43 51
+    lint_test.go:840: insert an extra numeric receiver separator caught on native: case 145 line 3305: port "range 17 23 useDot fix\t  .prop\t\t16 24", Go "range 17 23 useDot fix\t .prop\t\t16 24"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsinsert_an_extra_numeric_receiver_separator2542356785/016/dot-notation-0.ts:1:18
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 17 23 useDot fix	 .prop		16 24
+        /tmp/adamic-gate/TestMutantsinsert_an_extra_numeric_receiver_separator2542356785/016/dot-notation-0.ts:2:19
+          dot-notation  ["prop"] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.
+        
+        range 44 50 useDot fix	prop		43 51
+=== RUN   TestMutants/ignore_duplicate_getter_exemption
+    lint_test.go:840: ignore duplicate getter exemption caught on Node: case 145 line 3306: port "/tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:1:123", Go "/tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:2:30"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:1:41
+          grouped-accessor-pairs  Accessor pair getter 'value' and setter 'value' should be grouped.
+        
+        range 40 49 notGrouped 			40 49
+        /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:2:30
+          grouped-accessor-pairs  Accessor pair getter and setter should be grouped.
+        
+        range 177 186 notGrouped 			177 186
+        fixed	class Group { get value() {} other() {} set value(input) {} get duplicate() {} other2() {} get duplicate() {} other3() {} set duplicate(input) {} }\u000a({ get [key]() {}, other: 1, set [key](input) {} });\u000a
+    lint_test.go:840: ignore duplicate getter exemption caught on emitted JavaScript: case 145 line 3306: port "/tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:1:123", Go "/tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:2:30"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:1:41
+          grouped-accessor-pairs  Accessor pair getter 'value' and setter 'value' should be grouped.
+        
+        range 40 49 notGrouped 			40 49
+        /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:2:30
+          grouped-accessor-pairs  Accessor pair getter and setter should be grouped.
+        
+        range 177 186 notGrouped 			177 186
+        fixed	class Group { get value() {} other() {} set value(input) {} get duplicate() {} other2() {} get duplicate() {} other3() {} set duplicate(input) {} }\u000a({ get [key]() {}, other: 1, set [key](input) {} });\u000a
+    lint_test.go:840: ignore duplicate getter exemption caught on native: case 145 line 3306: port "/tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:1:123", Go "/tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:2:30"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:1:41
+          grouped-accessor-pairs  Accessor pair getter 'value' and setter 'value' should be grouped.
+        
+        range 40 49 notGrouped 			40 49
+        /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption136796067/016/grouped-accessor-pairs-0.ts:2:30
+          grouped-accessor-pairs  Accessor pair getter and setter should be grouped.
+        
+        range 177 186 notGrouped 			177 186
+        fixed	class Group { get value() {} other() {} set value(input) {} get duplicate() {} other2() {} get duplicate() {} other3() {} set duplicate(input) {} }\u000a({ get [key]() {}, other: 1, set [key](input) {} });\u000a
+=== RUN   TestMutants/count_private_identifier_hash
+    lint_test.go:840: count private identifier hash caught on Node: case 145 line 3306: port "/tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:3:12", Go "/tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:2:15"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:1:5
+          id-length  Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 4 5 tooShort 			4 5
+        /tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:2:15
+          id-length  Identifier name '#x' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 25 27 tooShortPrivate 			25 27
+        /tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:3:12
+    lint_test.go:840: count private identifier hash caught on emitted JavaScript: case 145 line 3306: port "/tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:3:12", Go "/tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:2:15"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:1:5
+          id-length  Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 4 5 tooShort 			4 5
+        /tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:2:15
+          id-length  Identifier name '#x' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 25 27 tooShortPrivate 			25 27
+        /tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:3:12
+    lint_test.go:840: count private identifier hash caught on native: case 145 line 3306: port "/tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:3:12", Go "/tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:2:15"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:1:5
+          id-length  Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 4 5 tooShort 			4 5
+        /tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:2:15
+          id-length  Identifier name '#x' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+        
+        range 25 27 tooShortPrivate 			25 27
+        /tmp/adamic-gate/TestMutantscount_private_identifier_hash4221745291/016/id-length-0.ts:3:12
+--- FAIL: TestMutants (124.95s)
+    --- PASS: TestMutants/allowed_restricted_type_ban_reported (24.15s)
+    --- FAIL: TestMutants/void_callback_exemption_omitted (0.33s)
+    --- PASS: TestMutants/AggregateError_container_reported (23.83s)
+    --- PASS: TestMutants/insert_an_extra_numeric_receiver_separator (24.27s)
+    --- PASS: TestMutants/ignore_duplicate_getter_exemption (23.95s)
+    --- PASS: TestMutants/count_private_identifier_hash (25.97s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	124.966s
+FAIL

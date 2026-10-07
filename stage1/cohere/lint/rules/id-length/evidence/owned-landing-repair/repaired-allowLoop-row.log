@@ -1,0 +1,36 @@
+build exit 0
+case 0
+/tmp/wave02-inline-row/generated-0.ts:1:1
+  no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+
+range 0 9 unexpectedDebugger fix			0 9
+/tmp/wave02-inline-row/generated-0.ts:1:17
+  no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+
+range 16 25 unexpectedDebugger 			16 25
+/tmp/wave02-inline-row/generated-0.ts:1:36
+  no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+
+range 35 44 unexpectedDebugger 			35 44
+/tmp/wave02-inline-row/generated-0.ts:1:46
+  no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+
+range 45 61 unexpectedLabel 			45 61
+/tmp/wave02-inline-row/generated-0.ts:1:53
+  no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+
+range 52 61 unexpectedDebugger 			52 61
+/tmp/wave02-inline-row/generated-0.ts:1:72
+  id-length  Identifier name 'f' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.
+
+range 71 72 tooShort 			71 72
+/tmp/wave02-inline-row/generated-0.ts:1:77
+  no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+
+range 76 85 unexpectedDebugger fix			76 85
+/tmp/wave02-inline-row/generated-0.ts:1:125
+  no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+
+range 124 133 unexpectedDebugger fix			124 133
+fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+oracle exit 0

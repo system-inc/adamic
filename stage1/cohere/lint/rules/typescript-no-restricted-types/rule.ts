@@ -3,7 +3,7 @@ export const syntaxKinds: readonly number[] = listenerKinds;
 import { panic } from 'adamic';
 import { Parser } from '../../../../typescript/parser/parser.ts';
 import type { RuleContext } from '../../context.ts';
-import { Fix, Suggestion, SuggestedFinding, requireDetailedReporting } from '../id-length/retired-support/typescript-no-non-null-assertion/suggestions.a';
+import { Fix, Suggestion, SuggestedFinding } from '../id-length/retired-support/typescript-no-non-null-assertion/suggestions.a';
 
 const name = '@typescript-eslint/no-restricted-types';
 // This is Go unicode.IsSpace, including NEL and excluding the JavaScript-only BOM.
@@ -105,6 +105,5 @@ export class Rule {
     }
 }
 export function create(context: RuleContext): Rule {
-    requireDetailedReporting(context, name);
     return new Rule(context);
 }

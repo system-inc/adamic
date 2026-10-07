@@ -1,0 +1,21 @@
+Owned landing repair, 2026-10-07
+
+Rebased onto origin/area/stage1-lint 7076b4ebe16a296129d17f04fe0e14029d793e92. No shared-file edits or conflict hunks. Existing ledger winners and losing-copy retirement retained. This branch is based on the requested lint area, which does not yet contain current main 71d7e491b; no new claims are made.
+
+Repaired five owned Go adapters: an all row configures directory-owned rules with defaults, while named rows still decode field 5 through their existing upstream option types. The legacy combined option bag no longer reaches these rules. The shared selected-rule nil-options guard and strict named-row decoders remain unchanged. The identical earlier allowLoop manifest now builds and exits 0, recorded in repaired-allowLoop-row.log.
+
+Removed active calls to the obsolete private detailed-reporting guard from array-callback-return, dot-notation and restricted-types. Shared Finding now carries complete suggestions. FixedFinding now maps the first automatic edit to repair/replacement/editStart/editEnd and subsequent edits to extraFixes; its historical fixes alias remains for the archived private driver. No shared runner, registry, finding or comparison file was edited.
+
+Verification
+
+The initial full `go test ./stage1/cohere/lint -run '^(TestOwnedWitnesses|TestMutants|TestRulesAgree)$' -count=1` was intentionally terminated with its child process tree after the fleet baseline mutant compilation proved expensive. Its interrupted log is preserved and earns no completed-gate credit.
+
+Ran `go test ./stage1/cohere/lint -timeout 30m -run '^(TestOwnedWitnesses|TestRulesAgree|TestMutants/(void_callback_exemption_omitted|AggregateError_container_reported|insert_an_extra_numeric_receiver_separator|ignore_duplicate_getter_exemption|count_private_identifier_hash|allowed_restricted_type_ban_reported))$' -count=1`. Go keeps a slash inside parentheses in the parent regexp, so this command actually ran only the two complete oracle gates. Both FAIL: TestRulesAgree 49.01s and TestOwnedWitnesses 26.50s, total 75.524s. Both now reach the explicit missing array callback CFG boundary, rather than allowLoop or the historical suggestion guard. Parser recovery refusals remain recorded, unchanged.
+
+Then ran the corrected explicit subtest filter: `go test ./stage1/cohere/lint -timeout 30m -run '^TestMutants$/^(void_callback_exemption_omitted|AggregateError_container_reported|insert_an_extra_numeric_receiver_separator|ignore_duplicate_getter_exemption|count_private_identifier_hash|allowed_restricted_type_ban_reported)$' -count=1 -v`. All six subtests ran, total 124.966s. Five PASS: allowed restricted type ban reported (24.15s), AggregateError container reported (23.83s), insert an extra numeric receiver separator (24.27s), ignore duplicate getter exemption (23.95s), count private identifier hash (25.97s). Each compiled and ran cleanly, and was caught by output comparison on Node, emitted JavaScript and sanitized native. The array void-exemption mutant FAILS by CFG refusal before comparison, earning no mutant credit.
+
+Remaining blocker and reproducer
+
+Rule: array-callback-return. TestOwnedWitnesses, TestRulesAgree and TestMutants/void_callback_exemption_omitted reach `graphEnd` in its owned graph-boundary.a, whose only population hook is the old comparison-only Go CFG adapter. Shared runtime has no CFG EndReachable data for a callback head. Minimal source: `foo.every(() => {});`, selected as array-callback-return, refuses with `adamic: panic: array-callback-return: shared control-flow end reachability is not available`. Its existing owned witness contains that exact line. There is no inferred or fabricated CFG substitute. The shared harness is unchanged. This remaining dependency must be implemented and connected before the rule can pass these gates.
+
+This branch is not green. No full repository gate or whole TypeScript compiler-source parity certificate, no findings-per-second measurement, and no successful array CFG or array mutant comparison. Five passing mutant subtests do not certify the entire corpus for those rules because the complete gates stop at the array refusal. nproc=5. Existing toolchain used; setup not rerun. GOPROXY fallback was set for test commands. No skipped check was relaxed or deleted. Only the owned landing branch is pushed.
