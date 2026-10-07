@@ -69067,3 +69067,10 @@
 {"Time":"2026-10-07T23:45:31.84963214Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPortStallControl","Elapsed":45.18}
 {"Time":"2026-10-07T23:45:31.849642275Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar"}
 {"Time":"2026-10-07T23:45:31.849654303Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"=== RUN   TestSyntaxGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:46:13.637325617Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"    syntax_test.go:33: 9 syntax cases, 15547 identical canonical bytes\n"}
+{"Time":"2026-10-07T23:46:13.642867206Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"--- PASS: TestSyntaxGrammar (41.79s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:46:13.642890121Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Elapsed":41.79}
+{"Time":"2026-10-07T23:46:13.642901959Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants"}
+{"Time":"2026-10-07T23:46:13.642906466Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants","Output":"=== RUN   TestSyntaxMutants\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:46:13.642932405Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants/mapped-constraint"}
+{"Time":"2026-10-07T23:46:13.642936892Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants/mapped-constraint","Output":"=== RUN   TestSyntaxMutants/mapped-constraint\n","OutputType":"frame"}
