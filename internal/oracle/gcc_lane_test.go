@@ -9,6 +9,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -18,6 +19,7 @@ func TestGCCAgreesWithNode(t *testing.T) {
 	if os.Getenv("ADAMIC_GCC_LANE") != "1" {
 		t.Skip("opt in with ADAMIC_GCC_LANE=1")
 	}
+	t.Parallel()
 	compiler := os.Getenv("ADAMIC_LANE_CC")
 	if compiler == "" {
 		compiler = "gcc"
@@ -44,8 +46,13 @@ func TestGCCAgreesWithNode(t *testing.T) {
 			}
 			// Execute Node directly: even a shell without ADAMIC_GATE_UNCACHED cannot reuse results.
 			oracle := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
+			sourceOracle := oracle
 			if fixture.checked {
-				oracle = onJavaScriptBackend(t, program)
+				script := filepath.Join(t.TempDir(), "program.mjs")
+				if err := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o644); err != nil {
+					t.Fatal(err)
+				}
+				oracle = execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), script)
 			}
 			binary := filepath.Join(t.TempDir(), "program")
 			code := native.C(program)
@@ -68,7 +75,7 @@ func TestGCCAgreesWithNode(t *testing.T) {
 			if difference := disagreement(oracle, actual); difference != "" {
 				t.Errorf("%s: Node exit %d, native exit %d\nstdout %s\nstderr %s", difference, oracle.exitCode, actual.exitCode, firstLaneDifference(oracle.stdout, actual.stdout), firstLaneDifference(oracle.stderr, actual.stderr))
 			}
-			if fixture.checked && actual.exitCode != 70 {
+			if fixture.checked && (actual.exitCode != 70 || sourceOracle.exitCode == 70) {
 				t.Errorf("inserted check did not fire: exit %d", actual.exitCode)
 			}
 			if sanitize && oracle.exitCode == 0 {
@@ -103,6 +110,7 @@ func firstLaneDifference(want, got []byte) string {
 // The comparison uses the same C and Node runners on a real fixture with one changed byte.
 // Clang keeps this proof runnable when GCC cannot compile the runtime under the lane's flags.
 func TestGCCLaneComparisonCatchesMutants(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "dedication/dedication.a"))
 	if err != nil {
 		t.Fatal(err)
