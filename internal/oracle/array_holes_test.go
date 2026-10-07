@@ -49,8 +49,8 @@ func TestArrayHolesRefusals(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(paths) != 30 {
-		t.Fatalf("want all 30 refusal fixtures, got %d", len(paths))
+	if len(paths) != 31 {
+		t.Fatalf("want all 31 refusal fixtures, got %d", len(paths))
 	}
 	for _, path := range paths {
 		t.Run(filepath.Base(path), func(t *testing.T) {

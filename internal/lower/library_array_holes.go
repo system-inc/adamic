@@ -40,6 +40,9 @@ func (l *lowering) arrayLengthConstructor(node *ast.Node) (ir.Expression, bool, 
 			proven = l.checker.GetElementTypeOfArrayType(contextual)
 		}
 	}
+	if proven != nil && l.includesNull(proven) {
+		return nil, true, l.notYet(node, "Array length constructor with nullable elements whose null and undefined slots are not distinguished")
+	}
 	if proven != nil && proven.Flags()&checker.TypeFlagsAny == 0 {
 		var known bool
 		element, known = l.kept(proven)
@@ -101,6 +104,9 @@ func (l *lowering) checkArrayHoles() error {
 			if node.Of == ir.Array {
 				if proven := l.localTypes[node.Local]; proven != nil && l.checker.IsArrayType(proven) {
 					element := l.checker.GetElementTypeOfArrayType(proven)
+					if element != nil && l.includesNull(element) {
+						operation = "an array with nullable elements whose null and undefined slots are not distinguished"
+					}
 					if element != nil && element.Flags()&checker.TypeFlagsAny != 0 {
 						operation = "an untyped array escaping its length observation"
 					}
@@ -206,6 +212,11 @@ func (l *lowering) arrayHolesSourceRefusal() error {
 			if callee.Kind == ast.KindPropertyAccessExpression {
 				access := callee.AsPropertyAccessExpression()
 				name := access.Name().Text()
+				receiverType := l.checker.GetTypeAtLocation(access.Expression)
+				if l.checker.IsArrayType(receiverType) && l.includesNull(l.checker.GetElementTypeOfArrayType(receiverType)) {
+					found = l.notYet(node, "array "+name+" with nullable elements whose null and undefined slots are not distinguished")
+					return true
+				}
 				if denied[name] {
 					receiver, known := l.representation(l.checker.GetTypeAtLocation(access.Expression))
 					if known && receiver == ir.Array {

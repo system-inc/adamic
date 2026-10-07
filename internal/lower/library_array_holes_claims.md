@@ -71,9 +71,11 @@ The fixtures execute the rejected sources on Node as well as testing refusals.
 | Buffer/Node host array consumers | Refused |
 
 Already independently refused: array literal elisions, delete, shift, unshift,
-reduceRight, toLocaleString, unsupported element types, and compound length
+reduceRight, toLocaleString, unsupported element types (including nullable elements), and compound length
 writes. Prototype mutation and inherited indexed properties remain outside the
-existing admitted language. The implementation supports own holes within that
+existing admitted language. Nullable element arrays and aliases are refused: the existing reference-slot representation
+cannot distinguish an explicitly present null from an explicitly present undefined.
+The implementation supports own holes within that
 language; it does not claim arbitrary JavaScript Array object semantics.
 
 ## Evidence
@@ -83,7 +85,7 @@ explicit undefined, callbacks, searches, joins, toString, keys, resizing and
 callback mutation. Operation fixtures exercise all-holes, a slot at the start,
 middle or end, and a partly filled array. Accepted sources compare sanitized
 native, release native and generated JavaScript with Node; native leak checks
-use detect_leaks=1 only on Linux. Thirty independently executed Node sources
+use detect_leaks=1 only on Linux. Thirty-one independently executed Node sources
 verify named compile/type refusals. Alias tests cover locals, fields, returns,
 parameters, operations hidden beneath length reads, and untyped escapes.
 

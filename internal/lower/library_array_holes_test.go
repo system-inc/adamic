@@ -19,3 +19,15 @@ func TestArrayHolesAliasRefusals(t *testing.T) {
 		}
 	}
 }
+
+func TestArrayHolesNullableSearchRefusal(t *testing.T) {
+	for _, source := range []string{
+		`const cells=new Array<string>(3); const widened:(string|null|undefined)[]=cells; console.log(String(widened.includes(null)));`,
+		`const cells=new Array<string|null|undefined>(3); console.log(String(cells.includes(null)));`,
+	} {
+		_, err := lowerSource(t, source)
+		if err == nil || !strings.Contains(err.Error(), "null") {
+			t.Fatalf("want nullable slot refusal, got %v", err)
+		}
+	}
+}
