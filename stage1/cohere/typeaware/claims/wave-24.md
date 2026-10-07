@@ -75,3 +75,13 @@ branches. Full-ranking positions 168, 169 and 170, each zero findings.
 Main: `e011f8f60899586d6373a5ccb07335ad82cfbf3c`.
 Bridge: `5afbdb83da2ed7ad9815657cd3f6ececd5294bf6`.
 This update precedes implementation. No shared harness or generator will be edited.
+
+## Fourth batch parked
+
+Status: parked, counted finished for the landing-first cap by Ahra's instruction.
+
+- `react-hooks/set-state-in-effect`: blocked on native high-level IR and capture analysis.
+- `react-hooks/set-state-in-render`: blocked on native high-level IR, single-assignment construction and control dominance.
+- `react-hooks/static-components`: blocked on native high-level IR and JSX parser integration.
+
+Cohere analysis modules are being ported to Adamic on #dnv6f2c; JSX support is landing on `area/stage1-lint`. These are not completed native rule ports. The Go oracle, native JSX refusal probe, listener metadata and evidence already pushed remain in `wave-24-fourth/`. No shared source changes are made to bypass these dependencies. Nine earlier native ports remain oracle-green on current main `f8013f0baac41ddc340d76f83bddde38536a8f07`.
