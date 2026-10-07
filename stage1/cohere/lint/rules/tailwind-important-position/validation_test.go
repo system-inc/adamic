@@ -19,7 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
+	registry "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/parking"
 )
 
 var slugs = []string{"tailwind-important-position", "tailwind-variable-syntax", "tailwind-variant-order"}
@@ -162,6 +162,9 @@ func copyPort(t *testing.T, mutationSlug, from, to string) string {
 	}
 	if from != "" && changed != 1 {
 		t.Fatal("mutation did not change exactly one owned site")
+	}
+	if err := registry.Install(destination, repo(t)); err != nil {
+		t.Fatal(err)
 	}
 	descriptors, err := registry.Generate(destination)
 	if err != nil {

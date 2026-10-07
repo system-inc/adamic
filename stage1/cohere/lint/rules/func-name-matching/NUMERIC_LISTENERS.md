@@ -1,3 +1,5 @@
+Historical report, superseded by the rebased parking evidence in rules/typescript-no-non-null-asserted-optional-chain/PARKING.md.
+
 Built: numeric listener declarations in listener.a for all eleven existing owned rules; no new rule or helper claimed.
 Commits: declaration implementation follows this report; helper branch b272eab3 remains rebased and green on unchanged origin/main e8ba3d5d.
 Commands and outputs: numeric declaration comparison and compiling mutant PASS 0.570s; owned package vet PASS; setup exits 1 at the known shared profile API mismatch, nproc 5.

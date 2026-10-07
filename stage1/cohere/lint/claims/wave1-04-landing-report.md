@@ -1,3 +1,5 @@
+Historical report, superseded by the rebased parking evidence in rules/typescript-no-non-null-asserted-optional-chain/PARKING.md.
+
 Built: helper branch rebased, re-greened and pushed; rule branch landing is blocked by shared foundation conflicts, so no new helper is claimed.
 Commits: helper landing b272eab3; rule source restored to 3aa2bc62 after aborting the conflicting rebase; this report commit follows.
 Commands and outputs: setup PASS 17s, nproc 5; rebased helper comparison/mutants PASS 18.910s; input oracle PASS 11.104s; helper vet PASS; rule rebase stops on 29175443.

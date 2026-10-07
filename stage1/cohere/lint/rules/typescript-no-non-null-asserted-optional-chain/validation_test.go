@@ -19,7 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
+	registry "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/parking"
 )
 
 var slugs = []string{"typescript-no-non-null-asserted-optional-chain", "typescript-no-non-null-assertion", "typescript-no-this-alias"}
@@ -130,6 +130,9 @@ func copyPort(t *testing.T, mutationSlug, from, to string) string {
 	}
 	if from != "" && changed != 1 {
 		t.Fatal("mutation did not change exactly one owned site")
+	}
+	if err := registry.Install(destination, repo(t)); err != nil {
+		t.Fatal(err)
 	}
 	descriptors, err := registry.Generate(destination)
 	if err != nil {
@@ -571,7 +574,7 @@ func TestSharedSuggestionRefusal(t *testing.T) {
 
 func TestSharedOracleSuggestionBlocker(t *testing.T) {
 	port := copyPort(t, "", "", "")
-	oracle := goOracle(t, port, filepath.Join(repo(t), "stage1/cohere/lint/testdata/oracle.go"))
+	oracle := goOracle(t, port, filepath.Join(port, "testdata/oracle.go"))
 	witness := filepath.Join(t.TempDir(), "positive.ts")
 	if err := os.WriteFile(witness, []byte("declare const foo: any; const r = foo!.bar;"), 0644); err != nil {
 		t.Fatal(err)
