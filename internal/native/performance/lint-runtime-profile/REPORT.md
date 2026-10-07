@@ -6,6 +6,60 @@ Not covered: type-aware profiling belongs to the bridge worker by instruction; b
 
 # Native lint runtime profile
 
+## Build flags and fresh release versus sanitizer comparison
+
+These are new interleaved best-of-five, count-only measurements on the same pinned 77-file corpus. Before/after use identical generated C, integer fast paths a183e50 and numeric Map hash e7ea1a4; only the four runtime fixes differ. Each round rotates among Go, before release, before sanitized, after release and after sanitized. Both stages share the Go result from their group. Every timed execution returns exactly 161 findings (batch8) or 15,119 (batch4), with empty stderr. No compilation or other task tests were run concurrently with this timing sequence.
+
+| Driver | Runtime fixes | Go gc/exe best s | Release -O2, no sanitizers s | Release / Go | Sanitized -O1, ASan + UBSan s | Sanitized / Go |
+|---|---|---:|---:|---:|---:|---:|
+| Batch8 syntax | before | 0.434827 | 2.569821 | 5.91x | 10.386376 | 23.89x |
+| Batch8 syntax | after | 0.434827 | 2.537118 | 5.83x | 10.979861 | 25.25x |
+| Batch4 syntax | before | 1.286065 | 7.714120 | 6.00x | 32.845238 | 25.54x |
+| Batch4 syntax | after | 1.286065 | 6.701798 | 5.21x | 29.862276 | 23.22x |
+
+Fresh best release times decrease 1.3% for batch8 and 13.1% for batch4; checked batch8 increases 5.7%, while checked batch4 decreases 9.1%. The earlier profiling campaign remains below with its own Go baseline and load.
+
+The sanitized column is the complete checked build: `-fsanitize=address,undefined -fno-sanitize-recover=all`, with `ASAN_OPTIONS=detect_leaks=1` and `UBSAN_OPTIONS=print_stacktrace=1`. Sanitizers also select malloc/free rather than the release slab allocator. These measurements therefore compare build configurations, not sanitizer instrumentation alone. Neither release binary defines ADAMIC_COUNT, enables sanitizers, or uses LTO or architecture-specific flags. Debug symbols (`-g`) are present in both configurations and do not change the optimization level.
+
+Exact expanded clang commands, source-unit order, working directories and binary Go metadata are in [flags-build-commands.txt](evidence/flags-build-commands.txt); [flags-builds.json](evidence/flags-builds.json) also records every generated/runtime C and header SHA-256. The compiler is `/workspace/adamic-tools/llvm/bin/clang`, clang 20.1.8, LLVM commit 87f0227cb60147a26a1eeb4fb06e3b505e9c7261, target x86_64-unknown-linux-gnu. Every command uses these exact common arguments, followed by the configuration arguments, `-o scanner` or `-o sanitized`, `main.c`, the recorded ordered runtime C files, and `-lm`:
+
+```text
+-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls
+Release:   -O2 -g
+Sanitized: -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+```
+
+Go is `go version go1.27.1 linux/amd64`, built with `go build -overlay=<overlay.json> -o <oracle> <virtual-main.go>` from the pinned cohere checkout. The overlay inserts the rule-selection driver, not a compiler/runtime change. This is default optimizing gc, `-buildmode=exe`, `-compiler=gc`, GOARCH=amd64, GOOS=linux, GOAMD64=v1, CGO_ENABLED=1; no race instrumentation, sanitizers, `-gcflags`, `-N`, or `-l`. Before/after use the byte-identical Go executable and manifest. Historical batch8 is regenerated from its own driver and uses the same Go version and build mode.
+
+Machine and CPU quota are unchanged: Intel Xeon Platinum 8573C, Linux 6.18.44 x86_64, `nproc` 5, `cpu.max` 400000/100000 (four CPUs). No affinity or fixed frequency. Load strings below are `/proc/loadavg` (1/5/15-minute averages, runnable/total processes, last PID), not CPU utilization. Raw samples, rotation order, commands, output hashes and exit status are in `flags-group-*.json`. A measurement-guard mutant changes the expected batch8 count to 162; the first real Go scan returns 161 and the exact-output assertion rejects it (exit 1, `lint-flags-count-mutant.log.gz`). The production expectation remains 161.
+
+| Interleaved group | Load before | Load after |
+|---|---|---|
+| 8 | 3.82 5.08 2.51 1/172 32842 | 1.26 3.39 2.27 1/173 33063 |
+| 4 | 1.26 3.39 2.27 1/173 33065 | 1.01 1.51 1.76 1/174 33265 |
+| original8 | 1.01 1.51 1.76 1/174 33266 | 1.00 1.40 1.70 1/178 33341 |
+
+### Audit of the original comparisons
+
+Read the branch-specific BATCH reports and their build harnesses, rather than the older shared REPORT.md. All three historical syntax comparisons used unsanitized release builds, so their roughly 5 to 7x gap was not a sanitizer artifact.
+
+| Original branch/report | Reported native / Go s | Ratio | Native build evidence |
+|---|---:|---:|---|
+| batch8 4189abd, BATCH8.md | 2.898728 / 0.409678 | 7.08x | Says "Release native"; batch8Throughput calls batch8Build with Sanitize=false, and native.go maps false to -O2 without sanitizers. |
+| batch6, BATCH6.md | 1.632241 / 0.311383 | 5.24x | Explicitly says "Native used clang -O2 without sanitizers". |
+| batch4-typescript 63782c5, BATCH4.md | 4.546550 / 0.945173 | 4.81x | Explicitly says "Native uses unsanitized clang -O2". |
+
+Batch8 does not spell out `-O2` in its report, so its driver was also regenerated at exactly 4189abd, with its original compiler and runtime, without the later integer/hash integrations or this unit's runtime fixes. Fresh interleaved best-of-five results:
+
+| Original batch8 build | Native best s | Go gc/exe best s | Native / Go |
+|---|---:|---:|---:|
+| Release -O2, no sanitizers | 2.413668 | 0.392837 | 6.14x |
+| Sanitized -O1, ASan + UBSan | 11.048057 | 0.392837 | 28.12x |
+
+Batch6 and batch4 reports already name the native flags, so their original revisions were not rebuilt under the conditional request. The fresh before/after batch4 rows above cover both build configurations with current-main runtime and the required scratch integrations. Archived original reports and harness flag evidence are in `evidence/flags-history/`.
+
+All native-versus-Go timings elsewhere in this report are **release -O2 without sanitizers**, unless explicitly labeled ASan/UBSan or quoted from the separate bridge reports. Checked full-output parity uses **-O1 with ASan/UBSan** and is not used as the throughput numerator. The bridge's historical 68.118s/7.422s build flags were not audited here because that path belongs to its profiling worker; that quoted result is not a syntax-driver measurement.
+
 ## Scope and reproduction
 
 Runtime base is origin/main ef3d907. The separate worktree `/workspace/lint-runtime-drivers`, branch `codex/lint-runtime-drivers`, merges batch8 4189abd and batch4-typescript 63782c5, then integer fast paths a183e50 and numeric Map hashing e7ea1a4. Its integration head is ab6de95. This branch is not merged into the runtime branch. Existing generated C is fixed throughout each runtime comparison. Runtime overlays are only heap.c, string_build_impl.h, string_search_impl.h and unchanged string_slice_impl.h. Integer/map runtime files remain those of the scratch integration. No changes to region.c, parallel runtime files or emitter.
@@ -39,7 +93,7 @@ Initial full output matches Go byte for byte: batch8 11,441,458 bytes on native,
 3. **4ffed41, Skip comparing bytes for identical string headers.** Check length first, then identity, before memcmp. Undefined cases retain their old semantics. Batch4 avoids 23,617,385 byte comparisons; batch8 avoids 2,316,956. The first pointer-first prototype added unnecessary tests for unequal-length strings; it was discarded. The length-first version still adds 226,458 total core.ts instructions in batch8 (0.092%), while reducing batch4 by 6,257,518 (1.10%). Its whole-input benefit is concentrated in batch4. This tradeoff is stated, not attributed to an across-the-board instruction win.
 4. **0f58c62, Keep destruction off the common release path.** Keep the last-reference queue/destruction path in a noinline helper. Before, clang saved seven registers even for null/immortal/shared releases. After, those cases return without stack work or queue access. Count combined `adamic_release` plus `release_last`, not only the symbol that got smaller. Child callbacks still use `let_go`, and the queue remains nonrecursive and guarded by `draining`.
 
-| Runtime stage | Driver | Native best s | Go best s | Node best s | core.ts instructions | Load before (1/5/15 min) |
+| Runtime stage | Driver | Native release -O2 best s | Go gc/exe best s | Node best s | core.ts instructions | Load before (1/5/15 min) |
 |---|---|---:|---:|---:|---:|---|
 | both | 8 | 2.434763 | 0.387216 | 1.612352 | 253,140,036 | 0.99 0.98 2.40 |
 | both | 4 | 7.750185 | 1.216820 | 3.186131 | 583,380,074 | 1.14 1.02 2.37 |
@@ -200,6 +254,8 @@ Search mutations compile and execute: returning byte offsets, searching surrogat
 The lastIndexOf test exercises empty/absent/overlong needles, repeated ASCII, multibyte BMP characters, paired and lone surrogates, embedded NUL, every substring of its pieces, and sliced heap strings. Node, release, ASan/UBSan and the JavaScript backend agree on 758 output bytes. The release control covers null, immortal, shared and final references and a 100,000-object chain with heap strings, in normal and sanitizer modes.
 
 ## Remaining gap
+
+The following times belong to the original profiling campaign. The fresh build-flags comparison near the top is a separate interleaved run of the same snapshots and reports its own Go baseline and load.
 
 | Final driver | Findings | Native s / findings per s | Go s / findings per s | Node s | Gap to Go | Native improvement vs both-integrated baseline |
 |---|---:|---:|---:|---:|---:|---:|
