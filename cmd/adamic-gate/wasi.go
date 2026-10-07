@@ -19,6 +19,23 @@ type wasiRequirement struct {
 	Gates   []string
 }
 
+func wasiVariableLiteral(n ast.Node) bool {
+	literal, ok := n.(*ast.BasicLit)
+	if !ok || literal.Kind != token.STRING {
+		return false
+	}
+	value, err := strconv.Unquote(literal.Value)
+	if err != nil || !strings.Contains(value, "WASI") {
+		return false
+	}
+	for _, ch := range value {
+		if !(ch >= 'A' && ch <= 'Z' || ch >= '0' && ch <= '9' || ch == '_') {
+			return false
+		}
+	}
+	return true
+}
+
 func hasSkip(n ast.Node) bool {
 	found := false
 	ast.Inspect(n, func(n ast.Node) bool {
@@ -95,6 +112,9 @@ func wasiGates(root string) (map[string]bool, error) {
 			}
 			hidden := false
 			ast.Inspect(declaration, func(n ast.Node) bool {
+				if wasiVariableLiteral(n) {
+					hidden = true
+				}
 				if getter(n) {
 					c := n.(*ast.CallExpr)
 					for _, arg := range c.Args {
@@ -121,7 +141,22 @@ func wasiGates(root string) (map[string]bool, error) {
 			badAliases := map[*ast.Object]bool{}
 			calls := map[ast.Node]bool{}
 			var bad error
+			variableMention := false
 			ast.Inspect(fn.Body, func(n ast.Node) bool {
+				if wasiVariableLiteral(n) {
+					variableMention = true
+				}
+				if call, ok := n.(*ast.CallExpr); ok && !getter(n) {
+					for _, argument := range call.Args {
+						if wasiVariableLiteral(argument) {
+							bad = fmt.Errorf("unrecognized WASI variable access in %s::%s", path, fn.Name.Name)
+						}
+					}
+					if selector, ok := call.Fun.(*ast.SelectorExpr); ok && (selector.Sel.Name == "Getenv" || selector.Sel.Name == "LookupEnv") {
+						bad = fmt.Errorf("unrecognized environment getter in %s::%s", path, fn.Name.Name)
+					}
+				}
+
 				if getter(n) {
 					c := n.(*ast.CallExpr)
 					if len(c.Args) != 1 {
@@ -240,7 +275,7 @@ func wasiGates(root string) (map[string]bool, error) {
 			}
 			// A WASI getter feeding any skip-bearing function must have a recognized gate.
 			// This also rejects gates hidden in helpers instead of silently losing their callers.
-			if len(calls) > 0 && !gated {
+			if (len(calls) > 0 || variableMention) && !gated {
 				return fmt.Errorf("unrecognized WASI skip dependency in %s::%s", path, fn.Name.Name)
 			}
 			if gated {

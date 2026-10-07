@@ -269,7 +269,8 @@ Lint has 38 units with `TestRulesAgree` largest (192.82 s), and CSS has 17 with
 The planner reads test source skip conditions. Direct `os.Getenv` comparisons and local aliases
 of variables whose names contain `WASI` identify required test parents. Their selected children
 inherit the requirement. Unknown predicates, dynamic environment names, `LookupEnv`, globals or
-helpers containing WASI environment reads fail planning and require an audit. The runtime branch's
+helpers containing WASI environment reads fail planning and require an audit. Nonstandard getters
+such as `syscall.Getenv`, custom environment calls and named WASI constants also fail closed. The runtime branch's
 `TestWASIAgreesWithNode` and `TestWASIEmission` use the ordinary oracle fixture table, so both are
 enumerated before execution. This list is derived rather than maintained by test name.
 

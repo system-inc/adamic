@@ -31,6 +31,9 @@ func TestWASISourceGates(t *testing.T) {
 	check(`func TestProbe(t *testing.T) { if _, ok := os.LookupEnv("NEW_WASI"); !ok { t.Skip("missing") } }`, false)
 	check(`func helper(t *testing.T) { if os.Getenv("NEW_WASI") == "" { t.Skip("missing") } }`, false)
 	check(`func TestProbe(t *testing.T) { if os.Getenv(name) == "" { t.Skip("missing") } }`, false)
+	check(`func TestProbe(t *testing.T) { value, _ := syscall.Getenv("NEW_WASI"); if value == "" { t.Skip("missing") } }`, false)
+	check(`func TestProbe(t *testing.T) { value := customEnv("NEW_WASI"); if value == "" { t.Skip("missing") } }`, false)
+	check(`const key = "NEW_WASI"; func TestProbe(t *testing.T) { value, _ := syscall.Getenv(key); if value == "" { t.Skip("missing") } }`, false)
 }
 
 func TestRequiredWASISkips(t *testing.T) {
