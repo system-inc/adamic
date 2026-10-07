@@ -104,8 +104,8 @@ func TestNormalizationMutants(t *testing.T) {
 	want := execute(t, "", upstream(t), corpus)
 	for _, mutant := range []struct{ name, old, replacement string }{
 		{"namespace-suffix", "argument += '-*';", "argument += '*';"},
-		{"newline-crossing", "if(character === '\\n') { break; }", "if(false) { break; }"},
-		{"nested-key-join", "joined += argument.slice(consumed, boundary) + '-*--';", "joined += argument.slice(consumed, boundary) + '--';"},
+		{"newline-crossing", "/--([^\\n]*?)", "/--([\\s\\S]*?)"},
+		{"nested-key-join", "'--$1-*--$2'", "'--$1--$2'"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			parent := t.TempDir()

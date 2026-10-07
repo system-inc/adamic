@@ -1,3 +1,13 @@
+Built: supplied-node CFG truthiness and labels helpers in separate .a files, plus the shared-table literal rewrite of the earlier Tailwind normalizer.
+Commits: truthiness d6c77911d0cea8f28c4d3d52badc447ef065157d; labels 4b9465715c6c392fff27902ecc1580206f024b65; parked rules 7f99254378ee9fd8b50f4cfd9aa18cebe5291b2d, all on main c01907a7.
+Checks: owned package PASS 105.859s before isolated regex rewrite; changed normalizer PASS 9.358s afterward; final owned vet clean. Two new helpers match 60,686 observations / 246,314 bytes across Go, source Node, emitted JS and sanitized native.
+Mutants: six new predicate/label mutants and three revalidated regex controls compile/run and fail only actual-Go output comparison; the other 11 owned controls also remain green.
+Uncovered: zero final rule blockers removed; counter bigint-return lowering and shared rule harness remain blocked; full CFG/rule integration and repository gate are not claimed. Other unclaimed helpers remain.
+
+Current detailed reports are TRUTHINESS.md, LABELS.md and REGEX-MIGRATION.md. All four CFG consumers lose two additional dependencies, with residual lists retained in control_flow_readiness.json. Claims preceded code and both own branches remain rebased onto current main. No new helper claim is made after the two completed ports; work stops at the already measured exact-counter primitive boundary without changing shared files.
+
+Previous landing evidence, retained as history:
+
 Rebased: helper branch onto current origin/main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06 after the final fetch observed main advancing.
 Commits: previous pushed helper 0b654cb13a383b717123bd63cadb2c00c1c04a23; rebased implementation b32f13a5c1ac98bba32d9c7bf2f3f01899b524be before this evidence commit.
 Checks: complete owned helper package PASS 61.366s and vet clean on the rebased branch; all five delivered helpers retain four-backend actual-Go parity.

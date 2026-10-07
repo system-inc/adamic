@@ -1,0 +1,58 @@
+{
+  "table_commit": "b39979305d880d7d05083704b73d405cd3694d68",
+  "cohere_pin": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "rows": [
+    {
+      "rule": "utility-nodes",
+      "file": "tailwind/collapse/utility_nodes.go",
+      "line": 131,
+      "call": "MustCompile",
+      "expression": "`\\\\\\*`",
+      "go_pattern": "\\\\\\*",
+      "feature": "plain",
+      "id": "tailwind/collapse/utility_nodes.go:131",
+      "js_pattern": "\\\\\\*",
+      "js_flags": "gu",
+      "status": "candidate, differential gate required"
+    },
+    {
+      "rule": "utility-nodes",
+      "file": "tailwind/collapse/utility_nodes.go",
+      "line": 138,
+      "call": "MustCompile",
+      "expression": "`--(.*?)\\s--(.*?)`",
+      "go_pattern": "--(.*?)\\s--(.*?)",
+      "feature": "plain",
+      "id": "tailwind/collapse/utility_nodes.go:138",
+      "js_pattern": "--([^\\n]*?)[ \\t\\n\\f\\r]--([^\\n]*?)",
+      "js_flags": "gu",
+      "status": "candidate, differential gate required"
+    },
+    {
+      "rule": "utility-nodes",
+      "file": "tailwind/collapse/utility_nodes.go",
+      "line": 140,
+      "call": "MustCompile",
+      "expression": "`\\s+`",
+      "go_pattern": "\\s+",
+      "feature": "plain",
+      "id": "tailwind/collapse/utility_nodes.go:140",
+      "js_pattern": "[ \\t\\n\\f\\r]+",
+      "js_flags": "gu",
+      "status": "candidate, differential gate required"
+    },
+    {
+      "rule": "utility-nodes",
+      "file": "tailwind/collapse/utility_nodes.go",
+      "line": 142,
+      "call": "MustCompile",
+      "expression": "`(-\\*){2,}`",
+      "go_pattern": "(-\\*){2,}",
+      "feature": "plain",
+      "id": "tailwind/collapse/utility_nodes.go:142",
+      "js_pattern": "(-\\*){2,}",
+      "js_flags": "gu",
+      "status": "candidate, differential gate required"
+    }
+  ]
+}
