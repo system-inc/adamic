@@ -177,6 +177,9 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 
 	if node.Kind == ast.KindTypeOfExpression {
 		operand := node.AsTypeOfExpression().Expression
+		if l.nodeProcessHostBinding(operand) {
+			return ir.StringConstant{Index: l.constant("object")}, true, nil
+		}
 		path := l.processPath(operand)
 		if path == "" {
 			path = l.nodeProcessPath(operand)
@@ -357,4 +360,107 @@ func (l *lowering) nodeProcessEnvironmentDelete(node *ast.Node) bool {
 	}
 	_, _, known := l.nodeProcessEnvironmentKey(node.AsDeleteExpression().Expression)
 	return known
+}
+
+// A presence descriptor is narrower than a callable method implementation.
+// These static host receivers have no evaluation effects; arbitrary typed objects
+// still use the compiler's receiver evaluation and runtime method lookup.
+func (l *lowering) nodeProcessMethodPresence(node *ast.Node) (ir.Expression, bool) {
+	if l.nodeFSRealpathPresence(node) {
+		return ir.BooleanConstant{Value: true}, true
+	}
+	path := l.processPath(node)
+	if path == "" {
+		path = l.nodeProcessPath(node)
+	}
+	// tsc's probe redeclares the global process with its official NodeJS type.
+	// An ambient global of another name, or a user method merely named nextTick,
+	// is not evidence of this host's process object.
+	if path == "" && node.Kind == ast.KindPropertyAccessExpression && l.nodeProcessHostBinding(node.AsPropertyAccessExpression().Expression) {
+		switch l.nodeLibraryMember(node) {
+		case "node:process.Process.nextTick", "node:process.Process.cwd", "node:process.Process.memoryUsage":
+			path = "process." + node.Name().Text()
+		}
+	}
+	switch path {
+	case "process.nextTick":
+		// This is only the Node-like feature observation, not callback scheduling.
+		return ir.ProcessCall{Operation: "nextTickFeature", Of: ir.Boolean}, true
+	case "process.cwd", "process.memoryUsage", "performance.now", "performance.mark", "performance.measure", "performance.clearMarks", "performance.clearMeasures":
+		return ir.BooleanConstant{Value: true}, true
+	}
+	return nil, false
+}
+
+// An ambient declaration of the official process global names the host binding,
+// not a null-initialized user object. A different name or user type proves nothing.
+func (l *lowering) nodeProcessHostBinding(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	if l.processPath(node) == "process" {
+		return true
+	}
+	if !ast.IsIdentifier(node) || node.Text() != "process" {
+		return false
+	}
+	binding := l.symbol(node)
+	if binding == nil {
+		return false
+	}
+	host := l.checker.GetTypeAtLocation(node).Symbol()
+	if host == nil || host.Name != "Process" {
+		return false
+	}
+	official := false
+	for _, declaration := range host.Declarations {
+		official = official || load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration))
+	}
+	if !official {
+		return false
+	}
+	for _, declaration := range binding.Declarations {
+		for at := declaration; at != nil && at.Kind != ast.KindSourceFile; at = at.Parent {
+			if ast.HasSyntacticModifier(at, ast.ModifierFlagsAmbient) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// sys.ts reads the native variant from its static fs module. Never erase an
+// arbitrary receiver expression merely because it has realpathSync's type.
+func (l *lowering) nodeFSRealpathPresence(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	if node.Kind != ast.KindPropertyAccessExpression || node.Name().Text() != "native" {
+		return false
+	}
+	function := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
+	module, member := l.nodeHostMember(function)
+	if module != "node:fs" || member != "realpathSync" {
+		return false
+	}
+	if ast.IsIdentifier(function) {
+		symbol := l.symbol(function)
+		return symbol != nil && symbol.Name == "realpathSync" && len(symbol.Declarations) > 0 && load.IsNodeLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))
+	}
+	if function.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	receiver := ast.SkipParentheses(function.AsPropertyAccessExpression().Expression)
+	if !ast.IsIdentifier(receiver) {
+		return false
+	}
+	symbol := l.symbol(receiver)
+	if symbol == nil {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindModuleDeclaration && load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
+			name := declaration.Name().Text()
+			if name == "fs" || name == "node:fs" {
+				return true
+			}
+		}
+	}
+	return false
 }
