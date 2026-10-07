@@ -1,3 +1,48 @@
+# Native attempt on compiler/stage3-front-2: red
+
+October 7 run: area/stage3 4ad53a4 plus compiler/stage3-front-2 80fb9b7,
+merged without conflicts as e224e66 in a detached scratch worktree, never
+pushed. Compiler source unchanged; only scratch Go module replacement paths
+were adjusted to the exact cohere 715ba94f / TypeScript 8d550c83 SDK pins.
+Compiler build succeeds.
+
+**First parser build failure:** src/compiler/performanceCore.ts:37:37,
+TS2591: Cannot find name 'require'. Six checker diagnostics total: require and
+perf_hooks in performanceCore, fs, require and two process references in tracing.
+Validated temporaries 60-64 are applied. No fake Node declarations were added.
+Minimal native-node-binding.a (`console.log(typeof require)`) produces TS2591.
+The actual build diagnostic order and full text are in evidence/front2.
+
+Lowering, native parser execution, native-vs-Node diff, parser binary size,
+native user time and the parser-output byte mutant are **unreached** in this
+run. The earlier zero-checker result used the six-feature scratch compiler with
+its official host-node bindings and import control; this published compiler is
+a different integration input. Do not mistake its binding diagnostics for a
+regression of temporary 64.
+
+The published front also does not contain import-cycles 779ff9d in ancestry:
+its modules.go still refuses all import cycles. That is a source/ancestry
+observation, not a newly measured second failure; checking stopped first.
+
+Fresh createSourceFile gather: 26 code files / 1,990 code declarations; driver
+roots add one declaration in program.ts, 27 files / 1,991 declarations. Raw
+span and evaluation-prefix audit passes, before applying five validated temps.
+Node full dump: 35,456,964 bytes, SHA256 2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5.
+All three timing runs compare equal. Best Node user CPU time: 5.179120 seconds
+(others 5.531493, 5.444617), same 81-file fixed corpus and manifest as prior proof.
+This includes Node source loading/transpilation and printing. perf is absent.
+Setup: go/clang/node/submodules ready 0 seconds each, build cache 95 seconds,
+total 95 seconds, nproc 5.
+
+A separate real native native-output-control.a prints parser comparison control.
+Its output self-cmp exits 0; flipping only the first byte makes cmp exit 1.
+This proves the comparator on real native output, not a native parser result.
+The existing Node Identifier end mutant also changes exactly one line and is
+caught. No green native proof is claimed. Scripts, minimal programs, pins,
+counts, exact diagnostics and compressed logs are committed in parser territory.
+
+---
+
 # Current result after temporary 64: zero checker diagnostics, lowering reached
 
 Push of 8411276 succeeded. The adaptation 64 list was separately pushed as
