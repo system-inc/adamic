@@ -1,7 +1,7 @@
-Built: eight retained rule ports rebased onto landed area b46914832; return-void uses JS RegExp literals and raw regex/JSX controls.
-Commits: this latest-area evidence follows the owned rebase; helper branch is pushed at 39d68709a on the same area and main c7991b900.
+Built: eight retained rule ports rebased onto landed area d3a37422c; return-void uses JS RegExp literals and raw regex/JSX controls.
+Commits: this latest-area evidence follows the owned rebase; helper branch is pushed at 8d48f3f81 on the same area and main b6b1538b0.
 Commands: fresh 411-file corpus PASS (20,649,216 Go bytes), shared witnesses PASS (116,148 bytes), eight active mutants and vet PASS; full upstream TestRulesAgree FAIL.
-Mutants: all eight active rule mutants and twelve helper mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native on area b46914832.
+Mutants: all eight active rule mutants and twelve helper mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native on area d3a37422c.
 Not covered: complete upstream-fixture parity, the other required correctness packages, new throughput or full gate; top-level await and JSX fixed-source reparsing block landing, so no new helper claim.
 
 ## Landed harness and ledger
@@ -105,3 +105,13 @@ This fresh source corpus supersedes the earlier 364-file observations as current
 Final migrated-dispatch results: combined selected suite exits 1 in 322.032s solely because TestRulesAgree fails at the named top-level-await fixture. TestCompilerAndStage1Agree passes in 87.41s (411 files, 20,649,216 matching Go bytes); all eight active TestMutants pass in 163.84s; TestOwnedWitnesses passes in 24.49s (116,148 matching Go bytes, now including the additional shared legacy witnesses). Fresh rule/registry vet passes with empty output. No selected correctness test skips. All fresh stdout/stderr is retained under evidence/parking/b469-rules.log, b469-vet.log and b469-jsx-reparse.log. The supported witness count reflects the migrated shared rules and does not withdraw either unsupported fixture.
 
 The branch remains a pushed, rebased work product with explicit full-parity blockers, not a fully green or landing-ready branch. The shared parser and fixed-source harness are outside the unit's files. No new helper is claimed under the landing cap, and no main or area branch is pushed.
+
+## Current typeof compiler landing
+
+Fetched all origin heads. Main advanced to b6b1538b0cebc4ba6741ac34f1aedb60293c1d06 and area to d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, which contains main. The complete dedup ledger is unchanged (SHA-256 4c39ec0cb129b05a3971ff257c26296d0d4ce06545b42e53dc14bbf0828a526f). Both own branches rebased cleanly and retained upstream typeof lowering/native slot changes. No shared source was edited.
+
+Reran the same four-test selected command above with ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 and -count=1 -v -timeout=20m, output directly to /tmp/wave13-d3a-rules.log. TestRulesAgree fails in 55.53s at the unchanged Go-valid top-level-await delay (source Node expected semicolon at 6). TestCompilerAndStage1Agree passes in 84.21s: 411 real-input files and 20,649,216 identical Go bytes across source Node, emitted JavaScript and sanitized native. All eight active semantic mutants pass in 156.03s, independently caught by Go-output comparison after clean compilation/execution in all three modes. TestOwnedWitnesses passes on the registered supported fixtures; rule/registry vet passes with empty output. No selected correctness test skips. Complete results are evidence/parking/d3a-rules.log and d3a-vet.log.
+
+A fresh explicit .tsx manifest also reproduces fixed-source JSX mode loss: source Node emits the expected fix and then exits 70, expected GreaterThanToken, got Identifier at 24 in fixed source. Its exact source remains gaps/jsx-fix-reparse.tsx.txt; fresh output is evidence/parking/d3a-jsx-reparse.log. The frontend top-level-await blocker extends beyond the only-harness parking exception; this branch is not fully green or landing-ready. No new helper claim follows.
+
+All three helper packages and vet pass freshly on this base: 4,470 direct-helper cases, 820,676 matching Go bytes and twelve mutants caught in all three modes. Helper evidence is pushed at 8d48f3f81. Full consuming-rule parity, other required correctness packages, new throughput and the full gate are not claimed. All eight owned upstream rules ignore their options argument and declare no options type; their nil adapters remain unchanged, and the shared options guard is retained.
