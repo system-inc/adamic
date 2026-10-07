@@ -24,6 +24,9 @@ func (e *emitter) adoptGraphObject(value string, literal ir.ObjectLiteral) {
 // The runtime decides boundary ownership from both actual allocations. This
 // keeps structural views and unions consistent and skips internal graph counts.
 func (e *emitter) heldReferenceIn(holder, value string) string {
+	if staticallyImmortal(value) {
+		return value
+	}
 	if len(e.program.GraphTypes) == 0 || constantUndefined.MatchString(value) {
 		return retained(value)
 	}
@@ -42,6 +45,9 @@ func (e *emitter) heldIn(holder string, of ir.Type, value string) string {
 	return borrowed(of, value)
 }
 func (e *emitter) dropIn(holder, value string) {
+	if staticallyImmortal(value) {
+		return
+	}
 	if len(e.program.GraphTypes) == 0 {
 		e.line("adamic_release(%s);", value)
 	} else {

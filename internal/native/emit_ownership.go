@@ -61,14 +61,22 @@ func (e *emitter) snapshot(valueType ir.Type, value string) string {
 	return name
 }
 
-// retained is a reference retained, for a place that keeps it: the constant undefined (the null
-// pointer, however it's cast) needs no retain, since retain passes over it, and costs a call.
+// retained keeps a reference. Immortal constants and the null pointer need no count.
 func retained(value string) string {
-	if constantUndefined.MatchString(value) {
+	if staticallyImmortal(value) || constantUndefined.MatchString(value) {
 		return value
 	}
 	return "adamic_retain(" + value + ")"
 }
+
+// staticallyImmortal recognizes only addresses of statics with immortal headers.
+// It runs before ownership dispatch; arbitrary expressions and heap temporaries
+// must still take their existing retain or graph boundary path.
+func staticallyImmortal(value string) bool {
+	return immortalStaticAddress.MatchString(value)
+}
+
+var immortalStaticAddress = regexp.MustCompile(`^\(*(\([a-z_]+ \*\)\(*)?&adamic_(string_([0-9]+|empty|true|false)|box_(true|false)(\.heap)?|typeof_(number|string|boolean|undefined|object|function))\)*$`)
 
 // constantUndefined matches C that is the null pointer constant, as Undefined and a missing argument
 // are emitted: NULL, perhaps parenthesized and cast to a pointer type.
