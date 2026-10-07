@@ -1,0 +1,5 @@
+// Translate the pinned Go default once. Configured patterns remain parked.
+const booleanPropDefaultPattern = /^(is|has)[a-z]([A-Za-z0-9]?)+/u;
+export function defaultBooleanPropPattern(name: string): boolean {
+    return booleanPropDefaultPattern.test(name);
+}

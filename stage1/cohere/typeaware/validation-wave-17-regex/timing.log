@@ -1,0 +1,34 @@
+[
+  {
+    "corpus": "compiler",
+    "subject": "native",
+    "process_seconds": 2.4094399260029604,
+    "load_seconds": 0.230476079,
+    "run_seconds": 2.15472121,
+    "queries": 78665
+  },
+  {
+    "corpus": "compiler",
+    "subject": "go",
+    "process_seconds": 0.36282994999783114,
+    "load_seconds": 0.232648517,
+    "run_seconds": 0.112400261,
+    "queries": null
+  },
+  {
+    "corpus": "repository",
+    "subject": "native",
+    "process_seconds": 0.3352712169980805,
+    "load_seconds": 0.076468644,
+    "run_seconds": 0.253555019,
+    "queries": 4520
+  },
+  {
+    "corpus": "repository",
+    "subject": "go",
+    "process_seconds": 0.15305265899951337,
+    "load_seconds": 0.080993057,
+    "run_seconds": 0.061632899,
+    "queries": null
+  }
+]

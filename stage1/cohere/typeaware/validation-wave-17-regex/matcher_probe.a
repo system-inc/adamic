@@ -1,0 +1,9 @@
+import { defaultBooleanPropPattern } from '../react_boolean_prop_naming.a';
+const names = ['', 'is', 'has', 'isA', 'hasA', 'isEnabled', 'hasChildren', 'enabled', 'IsEnabled', 'is_Enabled', 'isÄ', 'is🌍', 'isA🌍', 'hasA\n', ' isEnabled', 'isA-b', 'isA0'];
+for(const name of names) console.log(defaultBooleanPropPattern(name) ? 'true' : 'false');
+for(let code = 0; code < 128; code++) {
+    const letter = String.fromCharCode(code);
+    console.log(defaultBooleanPropPattern('is' + letter) ? 'true' : 'false');
+    console.log(defaultBooleanPropPattern('has' + letter + 'x') ? 'true' : 'false');
+    console.log(defaultBooleanPropPattern('was' + letter) ? 'true' : 'false');
+}

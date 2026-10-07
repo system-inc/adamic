@@ -209,10 +209,8 @@ export class ReactBooleanPropNaming {
         }
     }
 }
-// This implements only the documented default; it does not accept custom patterns.
+// Translate the pinned Go default once. Configured patterns remain parked.
+const booleanPropDefaultPattern = /^(is|has)[A-Z]([A-Za-z0-9]?)+/u;
 export function defaultBooleanPropPattern(name: string): boolean {
-    const prefix = name.startsWith('is') ? 2 : name.startsWith('has') ? 3 : -1;
-    if(prefix < 0 || name.length <= prefix) return false;
-    const c = name.charCodeAt(prefix);
-    return c >= 65 && c <= 90;
+    return booleanPropDefaultPattern.test(name);
 }

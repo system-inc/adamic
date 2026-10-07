@@ -1,0 +1,22 @@
+=== RUN   TestWave17FifthAgreementAndMutants
+    wave_17_fifth_test.go:110: controls: 50360 identical bytes
+    wave_17_fifth_test.go:116: 155 upstream and edge control files
+    wave_17_fifth_test.go:151: syntax mutant exits 0, empty stderr; Go byte oracle catches byte 55
+    wave_17_fifth_test.go:151: memo mutant exits 0, empty stderr; Go byte oracle catches byte 9283
+    wave_17_fifth_test.go:151: boolean mutant exits 0, empty stderr; Go byte oracle catches byte 1203
+    wave_17_fifth_test.go:160: options [--boolean-props --nested]: 50489 identical bytes
+    wave_17_fifth_test.go:160: options [--boolean-props --message-test]: 50443 identical bytes
+    wave_17_fifth_test.go:160: options [--boolean-props --nested --message-test]: 50592 identical bytes
+    wave_17_fifth_test.go:169: binding question rejects released program: panic 70
+    wave_17_fifth_test.go:177: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_fifth_test.go:190: symbol identity question rejects released handle; retained registry mutant finishes cleanly, required panic catches it
+    wave_17_fifth_test.go:206: ordinary-controls: 12909 identical finding bytes; findings 24
+    wave_17_fifth_test.go:207: ordinary-controls-asan: 12909 identical finding bytes; findings 24
+    wave_17_fifth_test.go:208: 44 controls use the ordinary native parser
+    wave_17_fifth_test.go:234: repository: 18485 identical finding bytes; findings 0
+    wave_17_fifth_test.go:235: repository-asan: 18485 identical finding bytes; findings 0
+    wave_17_fifth_test.go:234: compiler: 5318 identical finding bytes; findings 0
+    wave_17_fifth_test.go:235: compiler-asan: 5318 identical finding bytes; findings 0
+--- PASS: TestWave17FifthAgreementAndMutants (161.77s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	161.775s

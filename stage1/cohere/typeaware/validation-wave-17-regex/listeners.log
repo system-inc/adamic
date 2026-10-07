@@ -1,0 +1,2 @@
+PASS: 15 manifests match production listener keys and pinned numeric SyntaxKind values
+CAUGHT numeric-listener mutant: Listener mismatch for @next/next/no-async-client-component: [0] != [307]

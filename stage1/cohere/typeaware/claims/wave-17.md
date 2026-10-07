@@ -197,3 +197,12 @@ Main remains f8013f0b, validated source and evidence remain e3677e31 before this
 status update. `require-atomic-updates` remains unclaimed but requires the native
 control-flow and escape analysis and is ineligible for an analysis-independent
 batch. Other rules are not claimed by this status update.
+
+## Regex requirement update
+
+The already ported BooleanPropNaming default now uses its exact pinned Go pattern
+as one JS RegExp literal, replacing the handwritten matcher. The fifth-batch
+byte oracle, sanitizer and mutation checks pass again; a literal-class mutant
+is independently caught. Configurable patterns and full React integration remain
+parked. Evidence: [regex update](../validation-wave-17-regex/README.md).
+No new rules are claimed by this update.
