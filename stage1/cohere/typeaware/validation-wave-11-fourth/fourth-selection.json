@@ -1,0 +1,1702 @@
+{
+  "origin_refs": 341,
+  "distinct_trees": 336,
+  "main": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "bridge": "5afbdb83da2ed7ad9815657cd3f6ececd5294bf6",
+  "baseline_ports": [
+    "@typescript-eslint/consistent-return",
+    "@typescript-eslint/method-signature-style",
+    "@typescript-eslint/no-confusing-void-expression",
+    "@typescript-eslint/no-shadow",
+    "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+    "@typescript-eslint/no-unsafe-argument",
+    "@typescript-eslint/no-unsafe-assignment",
+    "@typescript-eslint/no-unsafe-declaration-merging",
+    "@typescript-eslint/no-unsafe-enum-comparison",
+    "@typescript-eslint/no-unsafe-member-access",
+    "@typescript-eslint/no-unsafe-type-assertion",
+    "@typescript-eslint/no-unsafe-unary-minus",
+    "@typescript-eslint/no-unused-vars",
+    "@typescript-eslint/prefer-nullish-coalescing",
+    "@typescript-eslint/related-getter-setter-pairs",
+    "@typescript-eslint/restrict-plus-operands",
+    "@typescript-eslint/switch-exhaustiveness-check",
+    "@typescript-eslint/unbound-method",
+    "adamic/invariant-mutable",
+    "adamic/no-optional-widening",
+    "adamic/no-unchecked-cast",
+    "nexus/consistency-no-property-alias",
+    "nexus/correctness-no-caller-data-mutation",
+    "no-implicit-coercion",
+    "no-param-reassign",
+    "no-use-before-define"
+  ],
+  "claims": [
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-01",
+      "path": "stage1/cohere/typeaware/claims/wave-01.md",
+      "sha256": "ea5a873cbd33c76fe8d7e84e44212458d9a0f62484666f4ace13a3ecd8cad70a",
+      "names": [
+        "@typescript-eslint/no-deprecated",
+        "nexus/correctness-no-implicit-return",
+        "nexus/correctness-require-child-process-error-listener",
+        "nexus/correctness-require-response-status-check",
+        "nexus/performance-no-independent-await-in-loop",
+        "no-else-return"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-02",
+      "path": "stage1/cohere/typeaware/claims/wave-02.md",
+      "sha256": "7c6696b6f0d61b9e3a9842ec21a8764f7764b9b61d88441a870467d4e34150c1",
+      "names": [
+        "@typescript-eslint/no-unsafe-return",
+        "logical-assignment-operators",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-discarded-outcome",
+        "nexus/correctness-no-discarded-pure-result",
+        "nexus/correctness-no-nullish-stripping-assertion",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-03",
+      "path": "stage1/cohere/typeaware/claims/wave-03.md",
+      "sha256": "f4e5c2f662eb4b2f192224e9b70c62ff5fa44e9e23ef1d2f434ec850ef393eb8",
+      "names": [
+        "@typescript-eslint/consistent-type-imports",
+        "@typescript-eslint/no-unnecessary-template-expression",
+        "@typescript-eslint/no-unsafe-call",
+        "findings",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-04",
+      "path": "stage1/cohere/typeaware/claims/wave-04-evidence/commands.md",
+      "sha256": "f97fac740df0de1bb196a1f40f40d75bbbfb8899b14bd02839115ac0bc419800",
+      "names": []
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-04",
+      "path": "stage1/cohere/typeaware/claims/wave-04-report.md",
+      "sha256": "3edc330a46d65cb78046e219a97bcc0792d3ad3a995b6ce2c24e42a19f34c32c",
+      "names": [
+        "@typescript-eslint/strict-void-return",
+        "nexus/consistency-require-constant-casing",
+        "nexus/consistency-require-matching-return-type"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-04",
+      "path": "stage1/cohere/typeaware/claims/wave-04.md",
+      "sha256": "92306a3cb4877e7de69aed2110f612ba96312138cb5d39fb861ef80dea42984e",
+      "names": [
+        "@typescript-eslint/strict-void-return",
+        "findings",
+        "nexus/consistency-require-constant-casing",
+        "nexus/consistency-require-matching-return-type",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-05",
+      "path": "stage1/cohere/typeaware/claims/wave-05-report.md",
+      "sha256": "3b7b4353efb82f5d3a44987ed5e9f9444ed6cb720693c7319baa066c8147362a",
+      "names": [
+        "findings",
+        "no-useless-assignment"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-05",
+      "path": "stage1/cohere/typeaware/claims/wave-05.md",
+      "sha256": "e4b7ccb0f490a7b22deb573ebf0d87f75296d88e95e9ee8a3beb0d08b173f175",
+      "names": [
+        "@typescript-eslint/no-unnecessary-type-parameters",
+        "@typescript-eslint/restrict-template-expressions",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams",
+        "no-useless-assignment"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-06",
+      "path": "stage1/cohere/typeaware/claims/wave-06.md",
+      "sha256": "063f1ea0e9cb7d6f52c0b51e767ec5933edc29e8921831d9281a78d9525eac94",
+      "names": [
+        "@typescript-eslint/no-duplicate-type-constituents",
+        "adamic/nominal-class",
+        "nexus/correctness-require-child-process-error-listener",
+        "nexus/correctness-require-response-status-check",
+        "nexus/performance-no-independent-await-in-loop",
+        "no-useless-return"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-07",
+      "path": "stage1/cohere/typeaware/claims/wave-07.md",
+      "sha256": "b6c770a02d32c8cc738a7ddec600fe8a8756b306e4c531592ade1e8bc8383acc",
+      "names": [
+        "@typescript-eslint/consistent-indexed-object-style",
+        "@typescript-eslint/prefer-for-of",
+        "findings",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams",
+        "no-undef-init"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-08",
+      "path": "stage1/cohere/typeaware/claims/wave-08.md",
+      "sha256": "57285364ad59e21ab7bacf8038357205c785124da966e37b44de31b01715d966",
+      "names": [
+        "@typescript-eslint/no-require-imports",
+        "findings",
+        "nexus/correctness-no-import-cycle-load-time-read",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams",
+        "no-loop-func"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-09",
+      "path": "stage1/cohere/typeaware/claims/wave-09.md",
+      "sha256": "ead4edc4367b62d47a2b4513bf39bc6154581b758c4a925753229229938f7d7b",
+      "names": [
+        "@typescript-eslint/non-nullable-type-assertion-style",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams",
+        "no-invalid-regexp",
+        "no-label-var",
+        "no-misleading-character-class",
+        "prefer-const",
+        "radix"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-10",
+      "path": "stage1/cohere/typeaware/claims/wave-10.md",
+      "sha256": "f42bdce045b482f74bdc6a74f67c12fc4fc93bcebb990111b266d0395e8d3bcc",
+      "names": [
+        "@typescript-eslint/no-redundant-type-constituents",
+        "@typescript-eslint/prefer-includes",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams",
+        "no-unmodified-loop-condition"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-11",
+      "path": "stage1/cohere/typeaware/claims/wave-11.md",
+      "sha256": "6d1a9cc1f8734b16806b1f49f24aae0eca51362f57554ed0c45fb97e8dcf8f66",
+      "names": [
+        "@typescript-eslint/no-for-in-array",
+        "@typescript-eslint/prefer-regexp-exec",
+        "findings",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-discarded-outcome",
+        "nexus/correctness-no-discarded-pure-result",
+        "nexus/correctness-no-identical-branches",
+        "no-eval",
+        "no-extend-native",
+        "no-func-assign"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-12",
+      "path": "stage1/cohere/typeaware/claims/wave-12.md",
+      "sha256": "98c13028defe4e1593b1d3e43f8238304303baa164ed77b26b64e84abcf8ab8a",
+      "names": [
+        "@typescript-eslint/no-redeclare",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-test-on-global-regex",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-no-write-only-collection",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-13",
+      "path": "stage1/cohere/typeaware/claims/wave-13.md",
+      "sha256": "8a5c8bd5908c561a20338dc0dbe7d6e5a3679d023fbd35e74b89590ab5f7b3a9",
+      "names": [
+        "@typescript-eslint/consistent-type-exports",
+        "findings",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams",
+        "no-unassigned-vars",
+        "preserve-caught-error"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-14",
+      "path": "stage1/cohere/typeaware/claims/wave-14.md",
+      "sha256": "836fa0ce2f8063f757487f61f8c9fe12054bcd5d736d533ea0a72aecc5c14577",
+      "names": [
+        "@typescript-eslint/no-array-delete",
+        "@typescript-eslint/no-base-to-string",
+        "@typescript-eslint/no-extraneous-class",
+        "findings",
+        "nexus/correctness-no-global-listener-target-assertion",
+        "nexus/correctness-no-leaked-number-render",
+        "nexus/correctness-no-mock-on-module-namespace",
+        "no-invalid-regexp",
+        "no-label-var",
+        "no-misleading-character-class"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-15",
+      "path": "stage1/cohere/typeaware/claims/wave-15.md",
+      "sha256": "c5ac499ed23ec194948ded6380ee1dc9a56bd2f4cb7c84c74122e533cf2639dc",
+      "names": [
+        "@typescript-eslint/no-useless-default-assignment",
+        "@typescript-eslint/prefer-find",
+        "@typescript-eslint/require-array-sort-compare",
+        "nexus/correctness-no-global-listener-target-assertion",
+        "nexus/correctness-no-leaked-number-render",
+        "nexus/correctness-no-mock-on-module-namespace",
+        "no-invalid-regexp",
+        "no-label-var",
+        "no-misleading-character-class"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-16",
+      "path": "stage1/cohere/typeaware/claims/wave-16.md",
+      "sha256": "cd4f7231e50adcd8325e712ab58f9469b0ca86532044f8f72084b379015e8842",
+      "names": [
+        "nexus/correctness-no-global-listener-target-assertion",
+        "nexus/correctness-no-leaked-number-render",
+        "nexus/correctness-no-mock-on-module-namespace",
+        "nexus/security-no-interpolated-shell-command",
+        "nexus/security-no-interpolated-sql-string",
+        "no-alert",
+        "no-import-assign",
+        "prefer-exponentiation-operator",
+        "use-isnan"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-17",
+      "path": "stage1/cohere/typeaware/claims/wave-17.md",
+      "sha256": "b8a71dfdb3db7c3755f18cc13e3f9dd2e509c9704077c286cf1d55e4861001e0",
+      "names": [
+        "@next/next/no-async-client-component",
+        "@next/next/no-duplicate-head",
+        "@next/next/no-script-component-in-head",
+        "findings",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-discarded-outcome",
+        "nexus/correctness-no-discarded-pure-result",
+        "no-global-assign",
+        "no-implicit-globals",
+        "no-implied-eval"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-18",
+      "path": "stage1/cohere/typeaware/claims/wave-18.md",
+      "sha256": "04a930359b1e5c09c85352acda44541981ee9ddbfa00f86b18f0f668446856d3",
+      "names": [
+        "@next/next/no-title-in-document-head",
+        "@typescript-eslint/await-thenable",
+        "@typescript-eslint/class-literal-property-style",
+        "findings",
+        "no-class-assign",
+        "no-const-assign",
+        "no-constant-binary-expression"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-19",
+      "path": "stage1/cohere/typeaware/claims/wave-19.md",
+      "sha256": "cc333998d351eedc62f14671558b4825be36a0e39321de5c4e677c5b8aacb339",
+      "names": [
+        "@typescript-eslint/consistent-generic-constructors",
+        "@typescript-eslint/dot-notation",
+        "@typescript-eslint/no-array-constructor",
+        "findings",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-20",
+      "path": "stage1/cohere/typeaware/claims/wave-20.md",
+      "sha256": "9ac2813403d5a00de71a19517398bdbd9ec6d6c76c100539b426c68947bf4153",
+      "names": [
+        "@typescript-eslint/no-floating-promises",
+        "@typescript-eslint/no-implied-eval",
+        "@typescript-eslint/no-meaningless-void-operator",
+        "findings",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-21",
+      "path": "stage1/cohere/typeaware/claims/wave-21.md",
+      "sha256": "36c978e7fc67cc06c7bfd93d86eb0cf280c29c90e142273f114dfa3a1efc141d",
+      "names": [
+        "@typescript-eslint/no-misused-promises",
+        "@typescript-eslint/no-misused-spread",
+        "@typescript-eslint/no-mixed-enums",
+        "findings",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-discarded-outcome",
+        "nexus/correctness-no-discarded-pure-result",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-22",
+      "path": "stage1/cohere/typeaware/claims/wave-22.md",
+      "sha256": "bd783ffd4cd7849f57bd85881053da228c7b1580e43200ab2f6ab1edf5c6411f",
+      "names": [
+        "@typescript-eslint/no-misused-promises",
+        "@typescript-eslint/no-misused-spread",
+        "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+        "@typescript-eslint/no-unnecessary-qualifier",
+        "@typescript-eslint/no-unused-private-class-members",
+        "findings",
+        "nexus/concurrency-no-lost-update",
+        "no-global-assign",
+        "no-implicit-globals",
+        "no-implied-eval"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-23",
+      "path": "stage1/cohere/typeaware/claims/wave-23.md",
+      "sha256": "8d167eeb735ea725615acf9894bc6e424bbd0ae93018412ff366ca6f99c14629",
+      "names": [
+        "@typescript-eslint/only-throw-error",
+        "@typescript-eslint/prefer-promise-reject-errors",
+        "@typescript-eslint/prefer-reduce-type-parameter",
+        "findings",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-discarded-outcome",
+        "nexus/correctness-no-discarded-pure-result",
+        "no-eval",
+        "no-extend-native",
+        "no-func-assign"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-24",
+      "path": "stage1/cohere/typeaware/claims/wave-24.md",
+      "sha256": "aa474b19a674027f160f89be65d00cf5b9ff9ca3965e1d9d96fcad7206dadc0c",
+      "names": [
+        "@typescript-eslint/prefer-return-this-type",
+        "@typescript-eslint/return-await",
+        "@typescript-eslint/use-unknown-in-catch-callback-variable",
+        "findings",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-25",
+      "path": "stage1/cohere/typeaware/claims/wave-25.md",
+      "sha256": "5cfe4bfa4f160c740f213984d878f2138c109489be815336b33f52d773b1df71",
+      "names": [
+        "accessor-pairs",
+        "base/correctness-require-graphql-nullable-parity",
+        "base/correctness-require-matching-inject-type",
+        "findings",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-discarded-outcome",
+        "nexus/correctness-no-discarded-pure-result",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-26",
+      "path": "stage1/cohere/typeaware/claims/wave-26.md",
+      "sha256": "4caad1ab15b493a155fff2a7587955d5d2186ef6bf1d2fd70762319491d9cdc7",
+      "names": [
+        "base/correctness-require-matching-operation-context",
+        "base/correctness-require-matching-provider-return",
+        "base/correctness-require-optional-relation",
+        "findings",
+        "nexus/correctness-no-global-listener-target-assertion",
+        "nexus/correctness-no-leaked-number-render",
+        "nexus/correctness-no-mock-on-module-namespace",
+        "no-eval",
+        "no-extend-native",
+        "no-func-assign"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-27",
+      "path": "stage1/cohere/typeaware/claims/wave-27.md",
+      "sha256": "075b9482e7f1aa7d3a60ace8e5aac8fefbc0fe7ce7d02ea5b52a2e9599f6d4df",
+      "names": [
+        "base/correctness-require-orm-column-nullable-parity",
+        "base/correctness-require-serializable-nullable-parity",
+        "base/correctness-require-verify-array-parity",
+        "findings",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-28",
+      "path": "stage1/cohere/typeaware/claims/wave-28.md",
+      "sha256": "2b1f88d9bec8ae0729cae5e44f8d83dc5cce78384dfc2ba5757b48cb721f83f1",
+      "names": [
+        "base/correctness-require-verify-optional-parity",
+        "block-scoped-var",
+        "getter-return",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-29",
+      "path": "stage1/cohere/typeaware/claims/wave-29.md",
+      "sha256": "7cec7061d960ac8ab2859ab7d5a9b668dcb2aa150d1bf1e09c0623a822b0cd12",
+      "names": [
+        "id-denylist",
+        "id-match",
+        "nexus/concurrency-no-check-then-write"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-30",
+      "path": "stage1/cohere/typeaware/claims/wave-30.md",
+      "sha256": "fb31b7176657213c0b7f8b2b2eb4c9ed4cc2c764f14a12463636b7dc6e844a1a",
+      "names": [
+        "findings",
+        "nexus/concurrency-no-lost-update",
+        "nexus/consistency-no-iso-string-date-cut",
+        "nexus/correctness-no-callback-in-parse-try",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-discarded-outcome",
+        "nexus/correctness-no-discarded-pure-result",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams"
+      ]
+    }
+  ],
+  "ranking": [
+    {
+      "rule": "findings",
+      "compiler": 30963,
+      "repository": 375,
+      "excluded": true
+    },
+    {
+      "rule": "no-use-before-define",
+      "compiler": 7777,
+      "repository": 66,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-type-assertion",
+      "compiler": 3867,
+      "repository": 3,
+      "excluded": true
+    },
+    {
+      "rule": "adamic/no-unchecked-cast",
+      "compiler": 3585,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-member-access",
+      "compiler": 2777,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-argument",
+      "compiler": 1759,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/prefer-nullish-coalescing",
+      "compiler": 1422,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-shadow",
+      "compiler": 1180,
+      "repository": 18,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-enum-comparison",
+      "compiler": 1000,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-implicit-coercion",
+      "compiler": 924,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-caller-data-mutation",
+      "compiler": 760,
+      "repository": 60,
+      "excluded": true
+    },
+    {
+      "rule": "no-param-reassign",
+      "compiler": 669,
+      "repository": 9,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-assignment",
+      "compiler": 623,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "adamic/invariant-mutable",
+      "compiler": 575,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-confusing-void-expression",
+      "compiler": 483,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/consistent-return",
+      "compiler": 425,
+      "repository": 9,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/switch-exhaustiveness-check",
+      "compiler": 411,
+      "repository": 13,
+      "excluded": true
+    },
+    {
+      "rule": "adamic/no-optional-widening",
+      "compiler": 287,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/consistency-no-property-alias",
+      "compiler": 258,
+      "repository": 24,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/unbound-method",
+      "compiler": 281,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unused-vars",
+      "compiler": 246,
+      "repository": 20,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-implicit-return",
+      "compiler": 251,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-deprecated",
+      "compiler": 238,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-else-return",
+      "compiler": 202,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "logical-assignment-operators",
+      "compiler": 140,
+      "repository": 3,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-return",
+      "compiler": 126,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-nullish-stripping-assertion",
+      "compiler": 97,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-call",
+      "compiler": 91,
+      "repository": 4,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/consistent-type-imports",
+      "compiler": 83,
+      "repository": 2,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-template-expression",
+      "compiler": 4,
+      "repository": 80,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/consistency-require-constant-casing",
+      "compiler": 72,
+      "repository": 12,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/consistency-require-matching-return-type",
+      "compiler": 74,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/strict-void-return",
+      "compiler": 54,
+      "repository": 2,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-type-parameters",
+      "compiler": 30,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "no-useless-assignment",
+      "compiler": 17,
+      "repository": 12,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/restrict-template-expressions",
+      "compiler": 23,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "adamic/nominal-class",
+      "compiler": 18,
+      "repository": 2,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-duplicate-type-constituents",
+      "compiler": 19,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-useless-return",
+      "compiler": 16,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-undef-init",
+      "compiler": 1,
+      "repository": 14,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/prefer-for-of",
+      "compiler": 11,
+      "repository": 2,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/consistent-indexed-object-style",
+      "compiler": 12,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-loop-func",
+      "compiler": 9,
+      "repository": 2,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-import-cycle-load-time-read",
+      "compiler": 10,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-require-imports",
+      "compiler": 9,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "prefer-const",
+      "compiler": 6,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "radix",
+      "compiler": 4,
+      "repository": 3,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/non-nullable-type-assertion-style",
+      "compiler": 4,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-unmodified-loop-condition",
+      "compiler": 4,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-redundant-type-constituents",
+      "compiler": 3,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/prefer-includes",
+      "compiler": 2,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/prefer-regexp-exec",
+      "compiler": 3,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-identical-branches",
+      "compiler": 0,
+      "repository": 3,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-for-in-array",
+      "compiler": 2,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-redeclare",
+      "compiler": 2,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+      "compiler": 1,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-unary-minus",
+      "compiler": 2,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-test-on-global-regex",
+      "compiler": 2,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-write-only-collection",
+      "compiler": 1,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "no-unassigned-vars",
+      "compiler": 2,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "preserve-caught-error",
+      "compiler": 1,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/consistent-type-exports",
+      "compiler": 1,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-array-delete",
+      "compiler": 1,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-base-to-string",
+      "compiler": 1,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-extraneous-class",
+      "compiler": 1,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-useless-default-assignment",
+      "compiler": 0,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/prefer-find",
+      "compiler": 1,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/require-array-sort-compare",
+      "compiler": 1,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/restrict-plus-operands",
+      "compiler": 1,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-import-assign",
+      "compiler": 1,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "prefer-exponentiation-operator",
+      "compiler": 0,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "use-isnan",
+      "compiler": 0,
+      "repository": 1,
+      "excluded": true
+    },
+    {
+      "rule": "@next/next/no-async-client-component",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@next/next/no-duplicate-head",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@next/next/no-script-component-in-head",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@next/next/no-title-in-document-head",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/await-thenable",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/class-literal-property-style",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/consistent-generic-constructors",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/dot-notation",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-array-constructor",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-floating-promises",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-implied-eval",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-meaningless-void-operator",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-misused-promises",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-misused-spread",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-mixed-enums",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-qualifier",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-declaration-merging",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/no-unused-private-class-members",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/only-throw-error",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/prefer-promise-reject-errors",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/prefer-reduce-type-parameter",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/prefer-return-this-type",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/related-getter-setter-pairs",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/return-await",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "@typescript-eslint/use-unknown-in-catch-callback-variable",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "accessor-pairs",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "base/correctness-require-graphql-nullable-parity",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "base/correctness-require-matching-inject-type",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "base/correctness-require-matching-operation-context",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "base/correctness-require-matching-provider-return",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "base/correctness-require-optional-relation",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "base/correctness-require-orm-column-nullable-parity",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "base/correctness-require-serializable-nullable-parity",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "base/correctness-require-verify-array-parity",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "base/correctness-require-verify-optional-parity",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "block-scoped-var",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "getter-return",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "id-denylist",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "id-match",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/concurrency-no-check-then-write",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/concurrency-no-lost-update",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/consistency-no-iso-string-date-cut",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-callback-in-parse-try",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-collection-misuse",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-discarded-outcome",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-discarded-pure-result",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-global-listener-target-assertion",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-leaked-number-render",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-mock-on-module-namespace",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-process-exit-after-output",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-no-uncleared-race-timeout",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-require-blocking-standard-streams",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-require-child-process-error-listener",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/correctness-require-response-status-check",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/performance-no-independent-await-in-loop",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/security-no-interpolated-shell-command",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "nexus/security-no-interpolated-sql-string",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-alert",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-class-assign",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-const-assign",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-constant-binary-expression",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-eval",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-extend-native",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-func-assign",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-global-assign",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-implicit-globals",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-implied-eval",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-invalid-regexp",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-label-var",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-misleading-character-class",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": true
+    },
+    {
+      "rule": "no-new-func",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "no-new-native-nonconstructor",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "no-new-wrappers",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "no-obj-calls",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "no-object-constructor",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "no-promise-executor-return",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "no-restricted-globals",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "no-setter-return",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "no-shadow-restricted-names",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "no-throw-literal",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "no-useless-backreference",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "prefer-arrow-callback",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "prefer-numeric-literals",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "prefer-object-has-own",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "prefer-object-spread",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "prefer-promise-reject-errors",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "prefer-regex-literals",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "prefer-rest-params",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/exhaustive-deps",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/globals",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/immutability",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/no-deriving-state-in-effects",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/preserve-manual-memoization",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/purity",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/refs",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/set-state-in-effect",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/set-state-in-render",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/static-components",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/unsupported-syntax",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react-hooks/use-memo",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/boolean-prop-naming",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/button-has-type",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/checked-requires-onchange-or-readonly",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/display-name",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/forbid-elements",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/forbid-prop-types",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/iframe-missing-sandbox",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/jsx-fragments",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/jsx-no-constructed-context-values",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/jsx-no-undef",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/no-adjacent-inline-elements",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/no-array-index-key",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/no-danger-with-children",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/no-multi-comp",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/no-namespace",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/no-object-type-as-default-prop",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/no-unstable-nested-components",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/sort-default-props",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/static-property-placement",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "react/style-prop-object",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "require-atomic-updates",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "require-await",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "structure/react-hook-no-any-type",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "symbol-description",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    },
+    {
+      "rule": "valid-typeof",
+      "compiler": 0,
+      "repository": 0,
+      "excluded": false
+    }
+  ],
+  "selected": [
+    "no-new-func",
+    "no-new-native-nonconstructor",
+    "no-new-wrappers"
+  ],
+  "note": "Own claim trimmed before fourth batch to reconstruct reservation snapshot. All named reservations are excluded including skipped/released entries. Main and bridge matches are inventories, not ports."
+}

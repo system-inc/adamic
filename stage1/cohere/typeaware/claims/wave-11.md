@@ -84,3 +84,9 @@ the bridge branch are inventories and skipped-type catalogs, not ports. None is
 named in an origin claim document. This reservation is pushed before writing
 code. New Adamic files are .a; existing declaration-provenance questions suffice.
 Shared generator and harness remain untouched.
+
+Fourth batch completed in `f71a535b`: all three reserved constructor rules have
+normal and sanitized complete-byte agreement, positive controls, per-rule and
+provenance mutants, and released-handle checks. Evidence and timing limits are
+in ../WAVE_11_FOURTH_REPORT.md. All twelve wave-11 reservations are implemented;
+this completion update reserves no additional rules.

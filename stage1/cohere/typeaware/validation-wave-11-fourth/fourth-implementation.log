@@ -1,0 +1,10 @@
+[codex/typeaware-wave-11 f71a535b] Port three constructor rules with independent byte comparison
+ 8 files changed, 552 insertions(+)
+ create mode 100644 stage1/cohere/typeaware/WAVE_11_FOURTH_NOTICE.md
+ create mode 100644 stage1/cohere/typeaware/no_new_func.a
+ create mode 100644 stage1/cohere/typeaware/no_new_native_nonconstructor.a
+ create mode 100644 stage1/cohere/typeaware/no_new_wrappers.a
+ create mode 100644 stage1/cohere/typeaware/testdata/oracle_wave_11_fourth.go
+ create mode 100644 stage1/cohere/typeaware/wave_11_fourth_suite.a
+ create mode 100644 stage1/cohere/typeaware/wave_11_fourth_support.a
+ create mode 100644 stage1/cohere/typeaware/wave_11_fourth_test.go

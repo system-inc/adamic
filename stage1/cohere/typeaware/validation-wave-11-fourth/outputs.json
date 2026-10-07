@@ -1,0 +1,59 @@
+{
+  "controls-go.stdout.gz": {
+    "bytes": 30883,
+    "sha256": "7caa5bf379b7811e419120160829dcaf792c37b43ca98eab77ca115a0d935e9c",
+    "findings": {
+      "no-new-func": 36,
+      "no-new-native-nonconstructor": 11,
+      "no-new-wrappers": 24
+    }
+  },
+  "controls-native.stdout.gz": {
+    "bytes": 30883,
+    "sha256": "7caa5bf379b7811e419120160829dcaf792c37b43ca98eab77ca115a0d935e9c",
+    "findings": {
+      "no-new-func": 36,
+      "no-new-native-nonconstructor": 11,
+      "no-new-wrappers": 24
+    }
+  },
+  "controls-asan.stdout.gz": {
+    "bytes": 30883,
+    "sha256": "7caa5bf379b7811e419120160829dcaf792c37b43ca98eab77ca115a0d935e9c",
+    "findings": {
+      "no-new-func": 36,
+      "no-new-native-nonconstructor": 11,
+      "no-new-wrappers": 24
+    }
+  },
+  "repository-go.stdout.gz": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "findings": {}
+  },
+  "repository-native.stdout.gz": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "findings": {}
+  },
+  "repository-asan.stdout.gz": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "findings": {}
+  },
+  "compiler-go.stdout.gz": {
+    "bytes": 5318,
+    "sha256": "51b297a8e6a04711f691f1aa6246acd95f6bf719f3d003bf18c7c27aeeb5874c",
+    "findings": {}
+  },
+  "compiler-native.stdout.gz": {
+    "bytes": 5318,
+    "sha256": "51b297a8e6a04711f691f1aa6246acd95f6bf719f3d003bf18c7c27aeeb5874c",
+    "findings": {}
+  },
+  "compiler-asan.stdout.gz": {
+    "bytes": 5318,
+    "sha256": "51b297a8e6a04711f691f1aa6246acd95f6bf719f3d003bf18c7c27aeeb5874c",
+    "findings": {}
+  }
+}
