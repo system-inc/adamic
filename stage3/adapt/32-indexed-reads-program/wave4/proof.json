@@ -1,0 +1,195 @@
+{
+  "files": {
+    "semver.ts": {
+      "before_sha256": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe",
+      "after_sha256": "51ebf538cd61c45359579fcb750558107f0564d8b1f54c69fa452a9bd2d56b6c",
+      "before_CRLF": 451,
+      "after_CRLF": 451
+    },
+    "programDiagnostics.ts": {
+      "before_sha256": "29d7760b4e759479ac33b09d154bf04622fb1b2e2e39853a6dfaa268fbc28a23",
+      "after_sha256": "39125d24533eb706e3bef5db772555d87c8cef5530ce2f44e2eeca92e9cbaa17",
+      "before_CRLF": 427,
+      "after_CRLF": 427
+    },
+    "tracing.ts": {
+      "before_sha256": "af328bd216975e2cacaa9acbe4e875c12a868d3adb0f605f6d5c2afd0be06bb1",
+      "after_sha256": "1070aae1faacce30848e14689304f9fc221eef1c476981aa6b716a85f0229ddc",
+      "before_CRLF": 375,
+      "after_CRLF": 375
+    },
+    "symbolWalker.ts": {
+      "before_sha256": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216",
+      "after_sha256": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216",
+      "before_CRLF": 216,
+      "after_CRLF": 216
+    },
+    "performance.ts": {
+      "before_sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3",
+      "after_sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3",
+      "before_CRLF": 210,
+      "after_CRLF": 210
+    },
+    "binder.ts": {
+      "before_sha256": "69518c1a0c939497008cd52ef581656739c07aa749ffa2fb725f6368181f7cde",
+      "after_sha256": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39",
+      "before_CRLF": 3916,
+      "after_CRLF": 3916
+    },
+    "program.ts": {
+      "before_sha256": "f7e3ff3d4c6e7b094832fd807a29022cb08b41d5cff0d498861435060b188e51",
+      "after_sha256": "b59b83b5e012d794fa83736bb4c77e06592a2a275b4d994f7b6040bbf7fcf5fd",
+      "before_CRLF": 5201,
+      "after_CRLF": 5201
+    },
+    "commandLineParser.ts": {
+      "before_sha256": "7d2bed352bb9351c15901144e2c87f3ef352e2428c84213976b9ccad1bc54e8e",
+      "after_sha256": "d9d4ab1667fa2d19584ccc67a38b2e7baf5553728b4b441f2cb34a774357785b",
+      "before_CRLF": 4300,
+      "after_CRLF": 4300
+    },
+    "moduleNameResolver.ts": {
+      "before_sha256": "d6d4858b027710e59bb40d91c82214e0d3054174ee46acafd546f25e2124dd1e",
+      "after_sha256": "d6d4858b027710e59bb40d91c82214e0d3054174ee46acafd546f25e2124dd1e",
+      "before_CRLF": 3428,
+      "after_CRLF": 3428
+    },
+    "moduleSpecifiers.ts": {
+      "before_sha256": "2895fc7c0249251b646fe380bbe567d700d07873372023be1dba035398760e83",
+      "after_sha256": "45e82ed9aaecbd285d408e3cff980963bd8ea4753ba18eee1447534b590c7567",
+      "before_CRLF": 1470,
+      "after_CRLF": 1470
+    },
+    "sys.ts": {
+      "before_sha256": "66fffbf6c81870ede587c45e24b5e2ff0d76213a500ad30859cc01df88084e60",
+      "after_sha256": "fff26242d3adbdc6107230f0e61f555b4394104e3d1db05c5ef89a6ca2ebce26",
+      "before_CRLF": 1981,
+      "after_CRLF": 1981
+    }
+  },
+  "verification": "PASS moduleNameResolver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS moduleSpecifiers.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS sys.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS program.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS commandLineParser.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS binder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+  "idempotence": [
+    {
+      "file": "moduleNameResolver.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 17
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 11
+    },
+    {
+      "file": "sys.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 27
+    },
+    {
+      "file": "program.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 25
+    },
+    {
+      "file": "commandLineParser.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 56
+    },
+    {
+      "file": "binder.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 11
+    },
+    {
+      "file": "semver.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 1
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 1
+    },
+    {
+      "file": "tracing.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 1
+    },
+    {
+      "file": "symbolWalker.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 4
+    },
+    {
+      "file": "performance.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    }
+  ],
+  "census_before": 132,
+  "census_after": 35,
+  "setup": "go version go1.27.1 linux/amd64\nsetup: go ready (1s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)\nv24.19.0\nsetup: node ready (1s)\nsetup: submodules ready (1s)\nsetup: build cache warm (298s)\nsetup: done in 298s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB\n",
+  "wave2_incremental_before": 14,
+  "wave3_incremental_before": 85,
+  "wave4_incremental_before": 36,
+  "oracle": {
+    "tree": "/tmp/adapt32-after",
+    "nproc": 5,
+    "workers": 4,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 3.686
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 7.822
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=4",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 0,
+        "seconds": 334.644
+      }
+    },
+    "status": "pass",
+    "counts": {
+      "passing": 106367,
+      "failing": 0,
+      "pending": 0
+    },
+    "baseline_diffs": [],
+    "wall_seconds": 346.217
+  },
+  "baseline_diff_bytes": 0
+}

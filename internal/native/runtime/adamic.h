@@ -298,7 +298,7 @@ typedef struct adamic_map {
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
 // to them are visited, and entries deleted before it gets to them aren't, as ECMA-262 requires. It
-// holds the map, and letting go of it ends the iteration.
+// holds the map; exhaustion or letting go ends the iteration exactly once.
 typedef struct adamic_map_iterator {
 	adamic_heap heap;
 	adamic_map *map;
@@ -322,6 +322,7 @@ adamic_map *adamic_map_new_identity(bool reference_values);
 adamic_map *adamic_map_new_booleans(bool reference_values);
 bool adamic_map_maybe_key_equal(double left, double right);
 uint64_t adamic_map_maybe_key_hash(double key);
+uint64_t adamic_map_number_hash(double number);
 
 // adamic_map_new_maybe_numbers makes a map whose keys are packed number | undefined values.
 adamic_map *adamic_map_new_maybe_numbers(bool reference_values);
@@ -346,6 +347,33 @@ adamic_value *adamic_map_get(const adamic_map *map, adamic_value key);
 void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value);
 
 bool adamic_map_delete(adamic_map *map, adamic_value key);
+
+// Records own a string-keyed Map through a fixed-shape wrapper (record.c). These aliases
+// use ordinary object cleanup; the compiler must use record operations for record views.
+typedef adamic_object adamic_record;
+typedef adamic_object adamic_record_iterator;
+
+adamic_record *adamic_record_new(bool reference_values);
+// Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
+adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);
+bool adamic_record_has_own(const adamic_record *record, const adamic_string *key);
+// Dynamic get and in hold own keys only: on a miss naming an Object.prototype member,
+// both panic with the member name and "records hold own keys only". Other misses return
+// NULL/false. The member-name check runs only on a miss; an own value is always borrowed.
+adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key);
+bool adamic_record_has(const adamic_record *record, const adamic_string *key);
+// Both writes consume key and value references, as Map.set does. define creates an own data
+// property even for __proto__; set refuses __proto__ assignment with an explicit NotYet panic.
+void adamic_record_define(adamic_record *record, adamic_string *key, adamic_value value);
+void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value);
+bool adamic_record_delete(adamic_record *record, const adamic_string *key);
+size_t adamic_record_size(const adamic_record *record);
+// keys returns an owned array in own-key order: array indices ascending, then insertion order.
+adamic_array *adamic_record_keys(const adamic_record *record);
+// Iteration snapshots keys, holds record and keys, skips deleted keys, and reads current values.
+// New keys are not visited. next returns borrowed key/value pairs; release ends iteration.
+adamic_record_iterator *adamic_record_iterate(adamic_record *record);
+bool adamic_record_iterator_next(adamic_record_iterator *iterator, adamic_string **key, adamic_value *value);
 
 // A Set is a map whose values aren't used (set.c). adamic_set_add_all adds an array's elements in
 // order, new Set(array), each reference retained; adamic_set_values is [...set], a new array the caller

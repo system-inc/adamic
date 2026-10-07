@@ -1,0 +1,185 @@
+[
+  {
+    "file": "01_diagnostic_code.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8933"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "02_diagnostic_message.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8937"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "03_diagnostic_file.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8776"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "04_jsx_runtime.a",
+    "tsc": [
+      "src/compiler/utilities.ts:9430"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "05_this_type.a",
+    "tsc": [
+      "src/compiler/utilities.ts:10954"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "06_localized_message.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8604"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "07_compact.a",
+    "tsc": [
+      "src/compiler/core.ts:846"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "08_for_each.a",
+    "tsc": [
+      "src/compiler/core.ts:33"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "09_literal_cache.a",
+    "tsc": [
+      "src/compiler/checker.ts:20305"
+    ],
+    "reason": "the comma operator"
+  },
+  {
+    "file": "10_global_import_meta.a",
+    "tsc": [
+      "src/compiler/checker.ts:17510"
+    ],
+    "reason": "||="
+  },
+  {
+    "file": "11_build_info_pending.a",
+    "tsc": [
+      "src/compiler/builder.ts:1227"
+    ],
+    "reason": "||="
+  },
+  {
+    "file": "12_symbol_links.a",
+    "tsc": [
+      "src/compiler/checker.ts:2932"
+    ],
+    "reason": "||="
+  },
+  {
+    "file": "13_void_callback.a",
+    "tsc": [
+      "src/compiler/moduleNameResolver.ts:610"
+    ],
+    "reason": "the void operator"
+  },
+  {
+    "file": "14_relative_complement.a",
+    "tsc": [
+      "src/compiler/core.ts:871"
+    ],
+    "reason": "a label"
+  },
+  {
+    "file": "15_barrel.a",
+    "tsc": [
+      "src/compiler/_namespaces/ts.ts:4"
+    ],
+    "reason": "an ExportDeclaration"
+  },
+  {
+    "file": "16_scan_exclamation.a",
+    "tsc": [
+      "src/compiler/scanner.ts:1891",
+      "src/compiler/scanner.ts:1964"
+    ],
+    "reason": "the comma operator"
+  },
+  {
+    "file": "17_binder_flow.a",
+    "tsc": [
+      "src/compiler/binder.ts:2032"
+    ],
+    "reason": "||="
+  },
+  {
+    "file": "18_named_export.a",
+    "tsc": [
+      "src/compiler/_namespaces/ts.ts:79"
+    ],
+    "reason": "an ExportDeclaration"
+  },
+  {
+    "file": "19_deprecated_flags.a",
+    "tsc": [
+      "src/compiler/checker.ts:2617"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "20_jsdoc_terminate.a",
+    "tsc": [
+      "src/compiler/parser.ts:3910",
+      "src/compiler/parser.ts:3916"
+    ],
+    "reason": "a label"
+  },
+  {
+    "file": "21_truthy_loops.a",
+    "tsc": [
+      "src/compiler/utilities.ts:5255",
+      "src/compiler/binder.ts:1607",
+      "src/compiler/checker.ts:25300"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "22_assignment_once.a",
+    "tsc": [
+      "src/compiler/scanner.ts:3280",
+      "src/compiler/checker.ts:2935"
+    ],
+    "reason": "&&="
+  },
+  {
+    "file": "23_labels_finally.a",
+    "tsc": [
+      "src/compiler/core.ts:874",
+      "src/compiler/core.ts:881"
+    ],
+    "reason": "a label"
+  },
+  {
+    "file": "24_proportional_conditions.a",
+    "tsc": [
+      "src/compiler/checker.ts:2427",
+      "src/compiler/checker.ts:2431",
+      "src/compiler/checker.ts:11575",
+      "src/compiler/checker.ts:11821",
+      "src/compiler/checker.ts:20650",
+      "src/compiler/checker.ts:20098",
+      "src/compiler/checker.ts:18997",
+      "src/compiler/checker.ts:5544",
+      "src/compiler/utilities.ts:6333",
+      "src/compiler/utilities.ts:6338"
+    ],
+    "reason": "non-boolean control condition"
+  }
+]
