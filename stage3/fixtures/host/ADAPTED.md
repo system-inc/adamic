@@ -422,3 +422,60 @@ The historical fixture 14 native diagnostic in status.json is not a current
 measurement of this newly adapted source. The setup from the ongoing native
 recheck succeeded in 289.304s, nproc=5, quota=4, with GOPROXY fallback set
 before setup; all timing lines are in adaptation 48's p2-repeat/setup.log.
+
+## Fixture 25 Error host members
+
+The newest fetched fixture branch was
+`0d11046e1a2e4825b58ecb7f73515c79351209cc`. Part 1
+`e17f5248a0a3fe465489b9dfb1492ab465c132e3` was merged, never rebased, as
+`720b931b2a309dc004e1e0873537d948c16fcd4f`. The three adaptation-40
+documentation conflicts retain the new 74/136 counts and the earlier fixture
+composition history. Adaptation 48 A remains applied. Source extraction used
+a fresh `stage3/apply.sh` output of this merge, rather than the part-1-only tree.
+
+The extractor inspects every recorded nonpartial declaration, permits only
+removal of `(Error as any)` in the two reviewed owners, and plans every edit
+before writing. Only `25_readDirectory.a:fail` changed: the two
+`captureStackTrace` receivers, provenance header, and its source-spans entry.
+No other host fixture copies `fail` or `setStackTraceLimit`. A second invocation
+changes nothing. The public fixture helpers retain their original contracts.
+
+Observed with Node 24.19.0 and TypeScript 6.0.3 / @types/node 25.3.3:
+
+- All 25 stdout, stderr and exit observations equal both the pre-edit run and
+  the existing status.json goldens, including successful exit-1 and exit-2 rows.
+- The full audit passes 164 copied declarations and 126 function/method spans.
+- All 25 stock checker comparisons have zero diagnostics.
+- Fixture 25's emitted JavaScript, with provenance comments excluded, is
+  byte-identical: 34,136 bytes, SHA-256
+  `bf116d3a077d4f7e2df1c2e57d2e75bcb281c472da867869c8645769d6599133`.
+
+Mutants actually run: restoring either Error cast fails the full declaration
+audit; removing the extension filter changes exact Node stdout; changing the
+upstream fail message condition is rejected by the extractor before any fixture
+or manifest write; assigning `_os.EOL` to a number produces TS2322. The audit
+also runs its reduction-only ErrnoException cast and SHA256-to-SHA1 mutants.
+Each restored full audit passes. An initial malformed extractor probe was
+replaced with the syntactically valid message-condition mutant recorded here.
+An early extraction attempt against the still-running apply tree was refused
+without writes; only the completed composed tree supplies the final evidence.
+
+After sourcing the setup environment, reproduce from this repository root:
+
+```sh
+export NODE_PATH="$HOME/.cache/adamic-stage3/api/node_modules"
+bash stage3/apply.sh /tmp/error-host-composed > /tmp/error-host-apply.log 2>&1
+node stage3/fixtures/host/reextract-error-host.cjs "$PWD/stage3/fixtures/host" /tmp/error-host-composed 720b931b2a309dc004e1e0873537d948c16fcd4f > /tmp/error-host-extract.log 2>&1
+node stage3/fixtures/host/source-audit.cjs /tmp/error-host-composed > /tmp/error-host-audit.log 2>&1
+python3 stage3/fixtures/host/error-host-proof.py "$PWD" /tmp/error-host-composed /tmp/error-host-proof stage3/fixtures/host/evidence/error-host/before-observations.json > /tmp/error-host-node.log 2>&1
+npm ci --prefix stage3/api --ignore-scripts > /tmp/error-host-api-install.log 2>&1
+node stage3/fixtures/host/stock-check.cjs "$PWD" /tmp/error-host-stock > /tmp/error-host-stock.log 2>&1
+node stage3/fixtures/host/stock-check.cjs "$PWD" /tmp/error-host-stock --mutant > /tmp/error-host-stock-mutant.log 2>&1
+```
+
+Evidence is in `evidence/error-host/`; compressed logs preserve diagnostics.
+The Node proof temporarily mutates fixture 25 and restores its exact bytes in
+`finally`, then reruns the full audit. Run it without concurrent fixture edits.
+Historical native compiler outcomes in status.json were not remeasured or
+rewritten. This unit does not claim native host support, Windows execution, or
+a full Go/native fixture gate.

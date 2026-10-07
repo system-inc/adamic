@@ -125,3 +125,14 @@ Node stdout/stderr/exit are unchanged. See
 audit and mutant evidence. The earlier decline is historical; tsc adaptation
 acceptance and native compiler support are separate. The old status.json
 compiler observation for fixture 14 has not been remeasured on this source.
+
+## Fixture 25 Error host members
+
+Adaptation 40 now supplies the Node-declared Error host members. Fixture 25's
+`fail` was re-extracted from the composed tree after merging
+`e17f5248a0a3fe465489b9dfb1492ab465c132e3`, without rebasing. Only fixture 25
+copies `fail`; no host fixture copies `setStackTraceLimit`. Its two receivers
+now use `Error.captureStackTrace`. All 25 Node observations are unchanged,
+stock tsc accepts every fixture, and the full source audit passes. See
+[ADAPTED.md](ADAPTED.md#fixture-25-error-host-members) for reproduction and
+[evidence/error-host](evidence/error-host) for the logs and mutants.

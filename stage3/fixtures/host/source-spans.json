@@ -1373,8 +1373,10 @@
           "name": "fail",
           "originalLine": 196,
           "adaptedLine": 196,
-          "adaptations": [],
-          "tokens": "function fail(message?: string, stackCrawlMark?: AnyFunction): never {\n    debugger;\n    const e = new Error(message ? `Debug Failure. ${message}` : \"Debug Failure.\");\n    if ((Error as any).captureStackTrace) {\n        (Error as any).captureStackTrace(e, stackCrawlMark || fail);\n    }\n    throw e;\n}"
+          "adaptations": [
+            "40-explicit-any"
+          ],
+          "tokens": "function fail(message?: string, stackCrawlMark?: AnyFunction): never {\n    debugger;\n    const e = new Error(message ? `Debug Failure. ${message}` : \"Debug Failure.\");\n    if (Error.captureStackTrace) {\n        Error.captureStackTrace(e, stackCrawlMark || fail);\n    }\n    throw e;\n}"
         },
         {
           "file": "src/compiler/debug.ts",
@@ -1997,9 +1999,15 @@
           "adaptations": [
             "40-explicit-any"
           ]
+        },
+        {
+          "name": "fail",
+          "adaptations": [
+            "40-explicit-any"
+          ]
         }
       ],
-      "stage3": "bb89005ad09d72cc5474df5e60c30ac7b141f2cd"
+      "stage3": "720b931b2a309dc004e1e0873537d948c16fcd4f"
     }
   ]
 }

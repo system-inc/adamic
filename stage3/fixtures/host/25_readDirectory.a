@@ -91,7 +91,7 @@
 // From TypeScript 6.0.3, src/compiler/path.ts:622; adapted line 622
 // Adaptations: none
 // From TypeScript 6.0.3, src/compiler/debug.ts:196; adapted line 196
-// Adaptations: none
+// Adaptations: 40-explicit-any
 // From TypeScript 6.0.3, src/compiler/debug.ts:213; adapted line 213
 // Adaptations: none
 // From TypeScript 6.0.3, src/compiler/core.ts:1121; adapted line 1121
@@ -690,8 +690,8 @@ export function fail(message?: string, stackCrawlMark?: AnyFunction): never {
     // eslint-disable-next-line no-debugger
     debugger;
     const e = new Error(message ? `Debug Failure. ${message}` : "Debug Failure.");
-    if ((Error as any).captureStackTrace) {
-        (Error as any).captureStackTrace(e, stackCrawlMark || fail);
+    if (Error.captureStackTrace) {
+        Error.captureStackTrace(e, stackCrawlMark || fail);
     }
     throw e;
 }
