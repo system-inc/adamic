@@ -1,0 +1,22 @@
+=== RUN   TestRule
+    semantic_test.go:24: semantic token edit no-var: 'unexpectedVar' -> 'unexpectedVaz'
+    semantic_test.go:24: semantic token edit no-var: 'unexpectedVar' -> 'unexpectedVaz'
+    cache_test.go:459: clang build: 7.459s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    cache_test.go:459: clang build: 7.325s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    semantic_test.go:33: semantic edit Node/native outputs differ
+rule no-var phase timing (seconds)
+| phase | seconds |
+|---|---:|
+| validate and snapshot | 0.082 |
+| Go oracle | 0.636 |
+| upstream capture | 0.367 |
+| owned witnesses | 0.012 |
+| sanitized correct and mutant port builds | 12.328 |
+| explicit recovery refusals | 0.000 |
+| emitted JavaScript build | 2.198 |
+| Go Node JavaScript native comparison | 0.822 |
+| total | 16.445 |
+--- FAIL: TestRule (16.45s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	16.460s
+FAIL

@@ -248,3 +248,10 @@ full-registration native builds use ordinary whole-file compilation. A fast
 selected-rule pass does not replace this run. Diagnostic IDs, descriptions,
 ranges, fixes and suggestions are part of the byte comparison; changing an ID
 must fail even when Node and native agree on the changed result.
+
+Semantic one-token measurements are in [the semantic edit report](../stage1/cohere/lint/semantic-evidence/REPORT.md).
+Those samples change a diagnostic ID, rebuild native objects and are correctly
+rejected by unchanged Go after Node, emitted JavaScript and native agree on the
+changed findings. They time a failing author check through its comparison phase;
+they do not certify the edited rule. A shared declaration or numbering change
+can still invalidate all function groups, even for one literal token.

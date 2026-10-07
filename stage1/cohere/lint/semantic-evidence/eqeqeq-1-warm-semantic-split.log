@@ -1,0 +1,34 @@
+=== RUN   TestRule
+    semantic_test.go:24: semantic token edit eqeqeq: 'unexpected' -> 'unexpectee'
+    semantic_test.go:24: semantic token edit eqeqeq: 'unexpected' -> 'unexpectee'
+    cache_test.go:459: clang build: 9.125s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    cache_test.go:459: clang build: 9.188s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    semantic_test.go:41: semantic edit Node JavaScript native byte-identical: 468702 bytes; all disagree with Go: case 20 line 357: port "range 2 4 unexpectee suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 20
+        /tmp/adamic-lint-semantic-measure/cache-243014-1-eqeqeq-split/adamic/lint/inputs/81ba7696d26cb20c83d16f8f1defcc91b9baafe7de56e20967bf78e3b341cada/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-lint-semantic-measure/cache-243014-1-eqeqeq-split/adamic/lint/inputs/81ba7696d26cb20c83d16f8f1defcc91b9baafe7de56e20967bf78e3b341cada/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+    semantic_test.go:43: EXPECTED SEMANTIC EDIT FAILURE: Node JavaScript native agree and disagree with Go
+rule eqeqeq phase timing (seconds)
+| phase | seconds |
+|---|---:|
+| validate and snapshot | 0.032 |
+| Go oracle | 0.612 |
+| upstream capture | 0.371 |
+| owned witnesses | 0.000 |
+| sanitized correct and mutant port builds | 13.826 |
+| explicit recovery refusals | 0.000 |
+| emitted JavaScript build | 2.090 |
+| Go Node JavaScript native comparison | 0.941 |
+| total | 17.872 |
+--- FAIL: TestRule (17.88s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	17.887s
+FAIL

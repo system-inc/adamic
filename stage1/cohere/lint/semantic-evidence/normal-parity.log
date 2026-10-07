@@ -1,0 +1,49 @@
+=== RUN   TestSelectedRuleParity
+=== RUN   TestSelectedRuleParity/no-var
+    lint_test.go:380: cohere cases: 20 unique source/rule/options combinations
+    cache_test.go:459: clang build: 17.545s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    rule_check_test.go:242: Go, Node, emitted JavaScript, native identical: 127657 bytes
+    cache_test.go:459: clang build: 1.020s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    rule_check_test.go:244: Go, Node, emitted JavaScript, native identical: 127657 bytes
+    rule_check_test.go:248: selected and full registration findings identical: 127657 bytes
+=== RUN   TestSelectedRuleParity/no-empty
+    lint_test.go:380: cohere cases: 57 unique source/rule/options combinations
+    rule_check_test.go:242: Go, Node, emitted JavaScript, native identical: 122641 bytes
+    rule_check_test.go:244: Go, Node, emitted JavaScript, native identical: 122641 bytes
+    rule_check_test.go:248: selected and full registration findings identical: 122641 bytes
+=== RUN   TestSelectedRuleParity/eqeqeq
+    lint_test.go:380: cohere cases: 92 unique source/rule/options combinations
+    rule_check_test.go:242: Go, Node, emitted JavaScript, native identical: 118974 bytes
+    rule_check_test.go:244: Go, Node, emitted JavaScript, native identical: 118974 bytes
+    rule_check_test.go:248: selected and full registration findings identical: 118974 bytes
+--- PASS: TestSelectedRuleParity (56.59s)
+    --- PASS: TestSelectedRuleParity/no-var (42.40s)
+    --- PASS: TestSelectedRuleParity/no-empty (7.69s)
+    --- PASS: TestSelectedRuleParity/eqeqeq (6.50s)
+=== RUN   TestSelectedRuleUncachedAnswers
+    selection_test.go:100: Go, Node, emitted JavaScript, native identical: 427484 bytes
+    lint_test.go:137: clang build: 16.453s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    selection_test.go:102: Go, Node, emitted JavaScript, native identical: 427484 bytes
+    selection_test.go:106: cached and ADAMIC_GATE_UNCACHED=1 answers byte-identical: 427484 bytes
+--- PASS: TestSelectedRuleUncachedAnswers (27.35s)
+=== RUN   TestSplitWholeParity
+=== RUN   TestSplitWholeParity/no-var
+    lint_test.go:137: clang build: 15.582s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    split_test.go:30: Go, Node, emitted JavaScript, native identical: 427484 bytes
+    split_test.go:34: split and whole-file outputs byte-identical: 427484 bytes
+=== RUN   TestSplitWholeParity/no-empty
+    lint_test.go:137: clang build: 15.957s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    split_test.go:30: Go, Node, emitted JavaScript, native identical: 427760 bytes
+    split_test.go:34: split and whole-file outputs byte-identical: 427760 bytes
+=== RUN   TestSplitWholeParity/eqeqeq
+    lint_test.go:137: clang build: 18.049s; split=false jobs=0 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    split_test.go:30: Go, Node, emitted JavaScript, native identical: 437914 bytes
+    split_test.go:34: split and whole-file outputs byte-identical: 437914 bytes
+--- PASS: TestSplitWholeParity (63.69s)
+    --- PASS: TestSplitWholeParity/no-var (19.57s)
+    --- PASS: TestSplitWholeParity/no-empty (20.74s)
+    --- PASS: TestSplitWholeParity/eqeqeq (23.38s)
+=== RUN   TestWholeBuildSelection
+--- PASS: TestWholeBuildSelection (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	147.672s

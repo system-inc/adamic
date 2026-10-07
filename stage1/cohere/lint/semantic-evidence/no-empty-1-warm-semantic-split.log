@@ -1,0 +1,34 @@
+=== RUN   TestRule
+    semantic_test.go:24: semantic token edit no-empty: 'unexpectedBlock' -> 'unexpectedBlocx'
+    semantic_test.go:24: semantic token edit no-empty: 'unexpectedBlock' -> 'unexpectedBlocx'
+    cache_test.go:459: clang build: 7.824s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    cache_test.go:459: clang build: 7.998s; split=true jobs=4 flags=[-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all]
+    semantic_test.go:41: semantic edit Node JavaScript native byte-identical: 459485 bytes; all disagree with Go: case 10 line 197: port "range 5 7 unexpectedBlocx \t\t\t5 7", Go "range 5 7 unexpectedBlock \t\t\t5 7"
+        Go context:
+        fixed	debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}
+        case 10
+        /tmp/adamic-lint-semantic-measure/cache-243014-1-no-empty-split/adamic/lint/inputs/56e40d5eced97a224caf25b9dbf49b66141051e3cfcb79f62560fbae7b0a629e/generated-1.ts:1:6
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 5 7 unexpectedBlock 			5 7
+        /tmp/adamic-lint-semantic-measure/cache-243014-1-no-empty-split/adamic/lint/inputs/56e40d5eced97a224caf25b9dbf49b66141051e3cfcb79f62560fbae7b0a629e/generated-1.ts:1:34
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 33 35 unexpectedBlock 			33 35
+    semantic_test.go:43: EXPECTED SEMANTIC EDIT FAILURE: Node JavaScript native agree and disagree with Go
+rule no-empty phase timing (seconds)
+| phase | seconds |
+|---|---:|
+| validate and snapshot | 0.034 |
+| Go oracle | 0.488 |
+| upstream capture | 0.365 |
+| owned witnesses | 0.000 |
+| sanitized correct and mutant port builds | 12.893 |
+| explicit recovery refusals | 0.000 |
+| emitted JavaScript build | 2.616 |
+| Go Node JavaScript native comparison | 0.930 |
+| total | 17.328 |
+--- FAIL: TestRule (17.33s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	17.349s
+FAIL
