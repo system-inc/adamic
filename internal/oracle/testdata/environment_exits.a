@@ -1,0 +1,14 @@
+function check(start: number): string {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ function fail(): void { throw new Error(read()); }
+ if (start === 1) { return read(); }
+ if (start === 2) { fail(); }
+ try { throw new Error(read()); } finally { console.log('finally ' + read()); }
+}
+console.log(check(1));
+for (const value of [2, 3]) {
+ try { console.log(check(value)); } catch (error) {
+  if (error instanceof Error) { console.log(error.message); }
+ }
+}

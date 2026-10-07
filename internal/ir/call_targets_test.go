@@ -54,10 +54,10 @@ func TestCallTargetsIncludeEveryDescendant(t *testing.T) {
 
 func TestClosureTargetsBoundOnlyProvenValues(t *testing.T) {
 	t.Parallel()
-	program := &ir.Program{Locals: []ir.Local{{ConstantClosure: 2}, {}}, Functions: []ir.Function{{MayThrow: true}, {}}}
+	program := &ir.Program{Locals: []ir.Local{{ConstantClosure: 2}, {}, {NestedFunction: 2}}, Functions: []ir.Function{{MayThrow: true}, {}}}
 	literal := ir.MakeClosure{Function: 1}
 	calls := []ir.Expression{
-		ir.CallClosure{Closure: literal}, ir.ArrayMap{Callback: literal}, ir.ArrayVisit{Callback: literal}, ir.ArrayReduce{Callback: literal}, ir.ArrayFrom{Callback: literal}, ir.MapForEach{Callback: literal}, ir.ArraySort{Callback: literal}, ir.ArraySort{Comparator: 1}, ir.CallClosure{Closure: ir.Read{Local: 0}},
+		ir.CallClosure{Closure: literal}, ir.ArrayMap{Callback: literal}, ir.ArrayVisit{Callback: literal}, ir.ArrayReduce{Callback: literal}, ir.ArrayFrom{Callback: literal}, ir.MapForEach{Callback: literal}, ir.ArraySort{Callback: literal}, ir.ArraySort{Comparator: 1}, ir.CallClosure{Closure: ir.Read{Local: 0}}, ir.ArrayVisit{Callback: ir.Read{Local: 2}},
 	}
 	for _, call := range calls {
 		got := program.ClosureTargets(call)

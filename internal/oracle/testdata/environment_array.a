@@ -1,0 +1,8 @@
+function fill(values: (() => string)[], start: number): void {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ values.push(read);
+}
+const values: (() => string)[] = [];
+fill(values, 3);
+for (const read of values) { console.log(read()); }

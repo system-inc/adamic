@@ -1,0 +1,8 @@
+function use(read: () => string): string { return read(); }
+function forward(read: () => string): string { const alias = read; return use(alias); }
+function check(start: number): string {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ return forward(read);
+}
+console.log(check(3));
