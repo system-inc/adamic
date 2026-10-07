@@ -759,3 +759,486 @@ Evidence: `scanner-coverage-audit.json`, `scanner-coverage-proof.json`, census
 JSON, and the owner-site lists. Delivery stays on codex/stage3-indexed-reads;
 main is reserved for @system_adamic_integration. No force-push or rebase of a
 pushed branch is allowed; bring new main work in with a merge of origin/main.
+
+
+## Whole-file closure: debug.ts at zero (initial proof was blocked)
+
+This unit merged origin/area/stage3 at 634ef061fc72c061e2de1606d5c8faebec4411f6
+by fast-forward on codex/stage3-indexed-reads. No rebase or force-push is used.
+All 17 owned source hashes before this change match run 0 of the pinned latent
+report at 176a496. Only debug.ts receives a new source edit.
+
+The new `whole-sites.json` ledger records declaration repairs separately from
+indexed reads. `whole-files.cjs` adds `| undefined` to the value type inside
+`Partial<Record<AssertionKeys, ...>>` at debug.ts:155. The private cache is
+explicitly cleared by `assertionCache[key] = undefined` at line 171. The earlier
+read is held in cachedFunc and tested against undefined before dereferencing.
+The owning declaration therefore must admit stored undefined. Partial continues
+to express absent keys. Every read, write and evaluation point is unchanged;
+stock TypeScript emits byte-identical JavaScript. This is a truthful declaration
+repair, not a presence assertion. The AST guard checks the exact original owner
+and its two entry fields, and recognizes precisely its repaired union on rerun.
+
+| Site | Class | Action | Invariant |
+| --- | --- | --- | --- |
+| debug.ts:155, write at 171:21 | truthful index-value declaration | add value union with undefined | Clearing populated cache slots stores undefined; guarded reads already handle it. |
+
+The file census is **1 -> 0**, with **all diagnostic codes** retained, on all
+78 roots using the area/stage3 checker with the pinned meter's loader options.
+`whole-census.sh` verifies that the enum feature options differ from the local
+options only by ErasableSyntaxOnly=false. It overlays that options block without
+changing repository compiler files. This does **not** reproduce the meter's
+merged scratch compiler: global counts are 717 -> 716 rather than its reported
+382. No global checker-clean count or native compiler acceptance is claimed.
+The baseline meter's debug.ts diagnostic is the same TS2322 at 171:21.
+
+All 17 owned files pass the existing emitted-JavaScript, site-contract and
+idempotence verifier. A mutant removes only the new cache value union. The
+all-code census returns TS2322 again and the adapter's --check rejects it with
+`truthful cache value union missing: debug.ts:155`, exit 1. Since this is a
+pure type edit, emitted JavaScript comparison alone would not catch that mutant.
+The existing required-read `?? 0` mutant proofs remain recorded above.
+
+An integrated rerun also needed a narrow contract compatibility rule: adaptation
+46 already selects `(matchResult[2] ?? matchResult[3])!`. Adaptation 30 continues
+to decline the individual optional captures, and recognizes exactly that
+already-approved selection on rerun. This guard changes no adapted source.
+Other coalesced declined reads remain rejected.
+
+The required API exception check **fails** before accepting any baseline.
+Adaptation 40 changes public brand declarations from any to undefined, including
+__sortedArrayBrand and __pathBrand. Those changes are outside the user-sanctioned
+adaptation 20 / adaptation 70 exceptions. No adaptation 70 is present at 634ef06.
+The adaptation-20 acceptance command made no baseline write. The fresh
+integrated pipeline already carries adaptation 40 baseline edits; these are
+not sanctioned by this unit. The default oracle finished in 375.858s: install
+and build pass, tests exit 1, **106,366 passing and one failing**. Its only
+differing baseline is api/typescript.d.ts; the diff is **48,691 bytes**. The
+independent API proof rejects the adaptation 40 brand changes before it can
+accept the sanctioned adaptation 20 changes. No extra exception was accepted.
+Until the required empty baseline diff is established, **debug.ts is not counted
+as a completed whole-file closure**. The remaining target files have not been
+started, respecting the instruction to finish one file before starting another.
+
+Reproduction, with each command redirected to its own log:
+
+```sh
+source /workspace/adamic-tools/env.sh
+bash stage3/adapt/30-indexed-reads/whole-census.sh <integrated-tree> <out> debug.ts
+CENSUS_TYPESCRIPT=<stock-typescript-6.0.3> node stage3/adapt/30-indexed-reads/verify.cjs <before-17-file-snapshot> <integrated-tree>
+TSC_ADAPT_TYPESCRIPT=<stock-typescript-6.0.3> node stage3/adapt/20-optional-declarations/check-baselines.cjs <pristine-tree> <integrated-tree> <373-owner-report> --accept-api
+bash stage3/oracle/run.sh <integrated-tree> <oracle-out>
+```
+
+Evidence: `whole-debug-{before,after,mutant}.json`, `whole-debug-proof.json`,
+`whole-debug-verify.log`, `whole-debug-mutant-contract.log`, and
+`whole-debug-api-blocker.log`, `whole-debug-oracle.json`, and
+`whole-debug-baseline.diff`. Toolchain setup: Go 0s, clang 0s, Node 0s,
+submodules 0s, cache 117s, total 117s; nproc 5, CPU quota 4.
+
+
+### October 7, 22:32 ruling: sanctioned adaptation 40 API edits
+
+@system_adamic sanctioned adaptation 40's 27 public brand fields changing any
+to undefined and ErrorCallback's arg0 changing any to string | number.
+`check-api-baselines.cjs` extends adaptation 20's independent parsed-owner
+reconstruction. It locates every brand in the pristine source by owner, key and
+line, projects exactly 27 public owners, and matches the single ErrorCallback
+payload owner. The sets are disjoint: **189 adaptation 20 lines plus 28
+adaptation 40 lines, exactly 217 changed API lines**. All **60,930** other
+reference files must match pristine bytes. Adaptation 70 is absent at the pinned
+integration SHA, so its allowed line set is empty here; unlisted readonly edits
+are rejected rather than inferred. Adaptation 40 remains on the integrated tree.
+
+Four real artifact mutants pass through this combined proof and fail, exit 1:
+restore __pathBrand to any in built API output; change ErrorCallback's payload
+to boolean; append an unlisted declaration to the API reference; append a byte
+to the unrelated 2dArrays.js reference. Each mutant restores exact original
+bytes in a finally block, and the restored combined proof passes again.
+`whole-api-acceptance.json` and `whole-api-mutants.json` record the line sets,
+owners and failures. The prior rejected proof above remains historical evidence.
+
+```sh
+TSC_ADAPT_TYPESCRIPT=<stock-typescript-6.0.3> node stage3/adapt/30-indexed-reads/check-api-baselines.cjs <pristine-tree> <integrated-tree> <373-owner-report> --accept-api
+TSC_ADAPT_TYPESCRIPT=<stock-typescript-6.0.3> node stage3/adapt/30-indexed-reads/api-mutants.cjs <pristine-tree> <integrated-tree> <373-owner-report>
+```
+
+
+The sanctioned default oracle rerun **passes**, with **106,367 passing, zero
+failing, zero pending**, and a **zero-byte baseline diff**. The final all-code
+file census remains **debug.ts 1 -> 0**. All 17 JavaScript byte comparisons and
+idempotence checks pass. `whole-debug-sanctioned-oracle.json` and the empty
+`whole-debug-sanctioned-baseline.diff` are the final oracle evidence. The earlier
+failed artifacts are retained as history, superseded by the ruling and this
+mechanically verified rerun. **debug.ts is now a completed whole-file closure.**
+The census provenance remains the area checker with meter loader options; no
+new global meter count or native acceptance is claimed.
+
+
+## Whole-file closure: scanner.ts at zero
+
+The before census is **2**: TS2532 on the comparison read and TS2322 on the
+conditional return read in computePositionOfLineAndCharacter, line 491.
+The after census is **0**, retaining every code across the same 78 roots.
+
+The last line legitimately has no next-line start. Its original comparison
+`res > undefined` is false. The adaptation holds **only that first read** in
+`const nextLineStart`, tests it against undefined, and compares res against it.
+For the declared number | undefined domain, this selects exactly the original
+branch, including NaN and infinities. The only reordered operation is reading
+local const res, a primitive without getters or writes. The first indexed read
+is still performed once after res is computed, before any fallback evaluation.
+The conditional **second indexed read remains in the true arm**, with `!`.
+Production callers in scanner.ts:471 and services/services.ts:1131 both pass
+getLineStarts. That cache is populated by computeLineStarts, which creates []
+and only pushes numeric line starts, including the final start, so the array is
+dense and plain. The explicit defined-value guard proves a next entry exists;
+no write intervenes before the true-arm second read. An absent first read is
+still declined. No public declaration or API snapshot line changes here.
+
+| Site | Class | Action | Invariant |
+| --- | --- | --- | --- |
+| scanner.ts:491:22, first next-start read | U-position, preserved-read narrowing | retain optional read and test undefined explicitly | Missing next-line start already makes the numeric comparison false. |
+| scanner.ts:491:45, second next-start read | U-position | required assertion | Defined first entry, dense plain constructed line map, and no intervening write establish the true-arm entry; retain the second read. |
+
+The independent stock emitter comparison allows exactly this guard/const
+restructure and compares every other emitted byte. `scanner-proof.cjs` runs
+the real source function before and after on **2,660 Node cases**: empty and
+multiline text, CRLF and Unicode separators, valid and clamped lines, negative
+and overflowing characters, absent debugText, NaN and infinities. A Proxy logs
+indexed and length reads. Volatile next-entry getters returning different values
+on successive reads additionally prove that the second read was not cached or
+skipped. Results, throws, Debug calls and read traces are identical. These exotic
+getter probes establish Node evaluation preservation; the native second-read
+presence proof is the production dense-array construction invariant above.
+All 17 file contracts and idempotence checks pass; the other 16 emitted files
+remain byte-identical to the before snapshot.
+
+The whole-file census now validates the **entire archived meter options block**
+from 176a496's data/meter3/loader-options.go.txt. The initial census tool kept
+NoImplicitReturns and NoFallthroughCasesInSwitch enabled from the area loader.
+The meter had removed those options after the corresponding native features
+were proven. This explains scanner's initial 17 diagnostics versus the work
+queue's 2. The corrected overlay removes exactly those two entries and uses
+ErasableSyntaxOnly=false, and rejects any other option drift. Strict,
+NoUncheckedIndexedAccess and ExactOptionalPropertyTypes stay enabled, and
+**no diagnostic codes are filtered**. The debug zero result is unaffected.
+This is a file census with exact meter options on the area checker; no global
+meter count or native compiler acceptance is claimed.
+
+The verified API exception remains exactly 189 adaptation 20 lines plus 28
+adaptation 40 lines; adaptation 70 is absent. The default oracle result and
+scanner mutant outcomes will be recorded below when finished.
+
+
+The scanner default oracle **passes: 106,367 passing, zero failing and pending,
+zero-byte baseline diff**. Its full report is `whole-scanner-oracle.json`.
+`whole-scanner-proof.json` records source hashes, all-code 2 -> 0, Node traces,
+API discipline and idempotence. The `!` -> `?? 0` mutant is **missed by the
+census (still 0)** but caught by the site contract (required read defaulted)
+and independent Node result/read-trace comparison, both exit 1. The separate
+cached-second-read mutant is caught by that Node comparison, exit 1. The logs
+are `whole-scanner-{mutant-contract,mutant-node,cached-mutant-node}.log`.
+The exact-options debug before/after controls are additionally retained as
+`whole-debug-{before,after}-exact.json`: debug still **1 -> 0**. Both files
+are completed closures. No native execution or global meter total is claimed.
+
+
+## Whole-file review: parser.ts, one owner handoff remains
+
+The all-code census is **3 -> 1**. Two local diagnostics are repaired; parser
+is **not counted at zero**. SyntaxCursor.currentNode now truthfully returns
+Node | undefined. Its implementation clears current on an unsuccessful search
+and returns it, and callers already handle the missing-node path. The parser's
+reuse test calls nodeIsMissing, whose undefined case returns true without
+property reads. To expose that fact to the checker, the adaptation caches the
+**existing helper call once, at the same evaluation point** in missingNode and
+adds a redundant `node === undefined` disjunct after it. The helper is still
+called for an absent node; its true result short-circuits every later predicate
+as before. The additional test reads only the immutable local node binding.
+No getter or intervening write differs. There are no assignments to the helper
+in the pinned compiler/services source.
+
+The local getNamedPragmaArguments return dictionary and argMap dictionary now
+both admit string | undefined. Optional argument definitions already allow a
+missing args[i] and explicitly store it. These two declaration edits are erased;
+the original read and store remain unchanged, and the site's existing decline
+is retained. Neither this dictionary nor SyntaxCursor appears in the public
+API snapshot; the mechanical **217-line** allowed API proof still passes.
+
+`parser-proof.cjs` extracts the real parser guard and real nodeIsMissing helper.
+Across **164 Node cases**, including undefined, missing/ordinary nodes, EOF,
+negative positions, NaN, and both later predicate outcomes, it compares results,
+helper-call traces and Proxy property-read traces. Every observation is equal.
+The stock emitter comparison permits only the exact helper-result const and
+redundant undefined test; every other emitted byte stays identical. The existing
+scanner proof and all 17 idempotence checks also pass.
+
+**Handoff to partition 32:** parser.ts's remaining TS2322 at adapted line
+10657 (original line 10656) belongs to **types.ts:4280 AmdDependency.name**.
+The parser always constructs an own name property; unnamed AMD dependencies
+legitimately store undefined. The truthful owner is `name?: string | undefined`.
+Do not assert that the optional name exists, omit its property, or default it.
+That owner is outside partition 30 and is a public API line outside the current
+189+28 exception set. It needs the owning partition's repair and corresponding
+mechanical API proof/exception. No outside file is edited here.
+
+The removed cursor union mutant must restore the original TS2322, and a skipped
+nodeIsMissing call mutant must fail the Node trace proof. Their outcomes and the
+default oracle result are recorded below after the run completes.
+
+
+The parser default oracle **passes: 106,367 passing, zero failing and pending,
+empty baseline diff**, recorded in `whole-parser-oracle.json`. All 17 contracts
+and idempotence checks pass. Cursor and local-map union removal mutants each
+raise the file census from 1 to 2 and fail the contract, exit 1. Skipping the
+existing nodeIsMissing call fails the independent Node call/read-trace proof,
+exit 1. `whole-parser-proof.json`, mutant census JSON and logs retain these
+observations. **Parser remains at one**, awaiting the partition 32 owner repair;
+the parser slice audit remains on hold as separately instructed.
+
+
+## Whole-file review: factory/emitNode.ts, two declined owner sites
+
+Both TS2769 overload diagnostics at 205:108 and 218:110 come from the object
+passed to **already explicit** append<SynthesizedComment>. Overload selection
+is not the underlying problem: its hasTrailingNewLine field stores the optional
+argument, whose value may legitimately be undefined. The truthful declaration
+is **partition 32's types.ts:3873 CommentRange.hasTrailingNewLine**, which needs
+`boolean | undefined` in its optional value type. This is a public owner outside
+30 and the currently sanctioned 217 API lines. Adding !, casting away the
+undefined, or omitting the own property would be unjustified. Both sites are
+recorded as declines in whole-sites.json. **No source edit is made**, and the
+file stays **2 -> 2**, not counted at zero. All current adapter contracts and
+idempotence checks are rerun; the required default oracle is rerun on the same
+source tree after this complete file review.
+
+The emitNode review oracle passes: **106,367 passing, zero failing and pending,
+empty baseline diff**, in `whole-emitNode-oracle.json`. Before/after census
+JSON retain both unchanged diagnostics, and `whole-emitNode-proof.json` records
+the no-edit decline, owner and completed checks. No zero is counted.
+
+
+## Whole-file review: factory/nodeFactory.ts, four declines
+
+The four all-code diagnostics are retained, **4 -> 4**; no source edit is made.
+The TS2379 sites at 1315 and 1403 store optional generated-name prefix/suffix
+values in an object. **Partition 32 owns types.ts:1720/1721 AutoGenerateInfo**,
+whose prefix and suffix must truthfully admit undefined. Both sites are declined
+rather than asserting their optional values or changing the own-property shape.
+AutoGenerateInfo is internal, unlike the earlier public owner handoffs.
+
+The TS2412 writes at 1216 (localSymbol) and 5496 (typeExpression) are generic
+construction contracts, not required reads. The checker explicitly reports
+that undefined fits the generic constraint but a narrower T may require Symbol
+or JSDocTypeExpression. Pre-binder localSymbol and the optional JSDoc parameter
+legitimately may be undefined. Widening a constraint or casting a receiver does
+not itself prove every instantiated return contract. No small type-only repair
+with that proof has been established, so both are declined. The factory's
+existing partially constructed node casts are left alone, with no native
+acceptance claim. All four reasons are recorded individually in whole-sites.json.
+The after census, idempotence and default oracle are run on the unchanged tree.
+
+The nodeFactory review oracle passes: **106,367 passing, zero failing and pending,
+empty baseline diff**. `whole-nodeFactory-{before,after}.json` retain the exact
+four diagnostics; `whole-nodeFactory-proof.json` and its oracle report record
+the no-edit declines and completed idempotence/default-suite checks.
+
+
+## Whole-file closure: utilities.ts at zero
+
+The all-code census is **5 -> 0**. All five sites have smallest owned repairs:
+
+| Site | Class | Action | Invariant |
+| --- | --- | --- | --- |
+| 1223:22 and 1224:19 | truthful overload type argument | arrayFrom<[string, CommentDirective]> | Map.entries yields pairs; its terminal undefined is not yielded by arrayFrom's for-of. |
+| 7721:17 and 7725:17 | truthful local declaration and preserved-read narrowing | widen local type and guard mask | The lookahead may be undefined at the final byte; its actual declaration now includes undefined and the continuation-mask loop tests it explicitly. |
+| 11201:34 | truthful extracted-method overload | type stringReplace with this: string, string search, string replacement | Its only call passes s, "*", replacement; String.prototype.replace supports that exact signature. |
+
+The decoder now declares nextCode as **number | undefined**. The original
+undefined bitwise mask was zero and stopped the continuation loop. The added
+undefined guard performs the same stop. Every codes[i] read and i increment
+remains at its original evaluation point; the extra test only reads local
+nextCode. No required assertion or default is added. Its original indexed-read
+declines remain valid. The iterator type argument and extracted-method type
+annotation erase completely, keep the same iterator, and keep the captured
+String.prototype.replace function object and its .call at the same points.
+
+`utilities-proof.cjs` extracts the real decoder function and compares **5,232
+Node cases**: all 256 initial bytes, continuation/leading/ASCII endings,
+three-byte sequences, malformed runs, negatives, NaN and infinities, and
+volatile getters. Output strings and every indexed/length-read trace match.
+The stock emitter comparison permits only the exact new undefined guard;
+every other emitted byte is unchanged. All 17 file contracts/idempotence checks,
+the existing scanner and parser Node proofs, and the exact 217 API-line proof
+pass. Every one of the 60,930 other references remains identical.
+
+Mutants individually remove the nextCode union, the iterator type argument, or
+the extracted-method annotation. They must restore their respective diagnostic
+families. A separate mutant skips only the existing next lookahead read; the
+independent Node output/read-trace proof must reject it. The default oracle and
+all executed mutant outcomes are recorded below after the suite finishes.
+
+
+The utilities default oracle **passes: 106,367 passing, zero failing and pending,
+empty baseline diff**, in `whole-utilities-oracle.json`. Every type-only mutant
+is caught by the all-code census: removing nextCode's union restores two TS2322;
+removing the iterator type argument restores two TS2488; removing stringReplace's
+annotation restores TS2345. The skipped-lookahead mutant fails the independent
+Node output/read-trace comparison, exit 1. The declaration contract also catches
+the removed local union, exit 1. `whole-utilities-proof.json`, all mutant census
+JSON and `whole-utilities-read-mutant-node.log` retain the observations.
+**utilities.ts is a completed whole-file closure**, 5 -> 0, with all 17 contracts
+and idempotence checks passing. No extra API line or numeric default is added.
+
+
+## Whole-file review: core.ts, two contract declines remain
+
+The all-code census is **7 -> 2**. The createSet.forEach arrayFrom call now
+explicitly selects **TElement | TElement[]**, exactly the multiMap value type.
+The iterator's completion undefined is not yielded by the for-of in arrayFrom.
+This type argument erases and leaves every iteration/callback unchanged.
+
+Four missing-host diagnostics are repaired by module-local **ambient** type
+knowledge for isNodeLikeSystem. process is described as an optional object with
+optional unknown nextTick/browser fields; require is unknown because the code
+only tests its typeof. The existing typeof guard handles an absent process
+before accessing either property, and both properties are only truth-tested.
+The declarations emit no binding, do not change Node global lookup, preserve
+all four reads at their original points, and are kept before the function's
+original @internal comment. Stock JavaScript is **byte-identical** before/after.
+This is not an implementation of native host globals: a native compiler must
+support the guarded absent bindings or refuse them. No native execution or
+acceptance is claimed. The exact 217 public API line proof is still unchanged.
+
+Two sites remain declined and are recorded individually in whole-sites.json:
+
+- **992:21, addRange, U-position repeated-read contract:** the first read tests
+  absence, and the conditional second read is retained. A readonly array type
+  alone does not establish stability across accessors, including to.push lookup.
+  Caching/deduplicating the two reads or skipping a missing second value changes
+  Node behavior. A generic assertion or cast has not been proven truthful.
+- **1637:11, createSet, non-absence contract:** the returned plain custom object
+  lacks seven ES2024 Set methods (union, intersection, difference,
+  symmetricDifference and three relation tests). Claiming full Set via a cast
+  would lie; adding methods changes runtime code. A reduced recursive
+  return/callback contract needs consumer proof not established in this unit.
+
+Core remains **at two**, not counted at zero. Removing the explicit iterator
+type argument or ambient host declarations individually must restore their
+original diagnostics. All 17 contracts/idempotence checks and the required
+default oracle are rerun after these type-only repairs.
+
+
+### Composition rule learned from the whole-file closure
+
+Some downstream adaptations still anchor exact upstream line numbers.
+The fresh full pipeline exposed adaptation 40's scanner diagnostic owner 114
+shifting by one line. Runtime const/guard repairs now share the original line;
+the core ambient declarations replace an existing blank line. This preserves
+**every owned file's original line count**, retaining exact downstream owners
+without editing their partitions or relaxing their checks. Stock emitted
+JavaScript is unchanged by this formatting adjustment. New workers must check
+fresh full apply.sh composition, not only rerun their own adapter on a tree
+where later adaptations have already run. This supplements the earlier rules.
+
+
+Core's iterator removal mutant restores its TS2345 (file total 2 -> 3).
+Removing only the ambient declarations restores all four TS2591 diagnostics
+(total 2 -> 6). The pure type-only repairs leave stock JavaScript byte-identical;
+all 17 contracts and idempotence checks pass. The first core oracle worker
+exited without diagnostics or test counts; its empty baseline diff was **not**
+counted as a pass. A cgroup OOM kill was observed, without a per-process cause
+claim. The retry used NODE_OPTIONS=--max-old-space-size=1536, retained all default
+suites and four workers, and **passed 106,367 tests with an empty baseline diff**.
+Both reports are retained as whole-core-{crashed-oracle,oracle}.json.
+
+The fresh full apply.sh composition now passes all downstream adapters without
+relaxing any owner check. All **17 owned file bytes** match the final composed
+oracle tree and preserve their original line counts. Final hashes are recorded
+in whole-final-source-hashes.json. Reformatting scanner/parser const statements
+to their original lines changes no emitted JavaScript; the 2,660 scanner, 164
+parser and 5,232 decoder Node case proofs and idempotence pass on the fresh tree.
+The final census is recorded in whole-final-census.json, with **all codes**:
+
+| File | Before | Final | Status |
+| --- | ---: | ---: | --- |
+| debug.ts | 1 | 0 | Completed |
+| scanner.ts | 2 | 0 | Completed |
+| parser.ts | 3 | 1 | Partition 32 AMD name owner |
+| factory/emitNode.ts | 2 | 2 | Partition 32 comment owner |
+| factory/nodeFactory.ts | 4 | 4 | Two partition 32 owner sites; two unproved generic writes |
+| utilities.ts | 5 | 0 | Completed |
+| core.ts | 7 | 2 | Unproved repeated-read and Set contracts |
+| **Target totals** | **24** | **9** | **Three completed files** |
+
+No assertion/default/cast is added at any declined site. No outside partition is
+edited, no main push or force-push is made, and the parser slice audit stays on
+hold. No global checker-clean total or native compiler acceptance is claimed.
+
+Final fresh-tree default oracle: **106,367 passing, zero failing/pending, empty baseline diff**, 344.554 seconds, all suites and four workers, with the documented 1,536 MiB Node heap budget. The API proof mechanically accepts exactly 20's 189 and 40's 28 lines; adaptation 70 is absent at this integration pin. All 60,930 other reference baseline files are byte-identical. Final evidence is in whole-final-{proof,oracle,api,census,source-hashes}.json and whole-final-baseline.diff. The final AMD remainder is at original parser.ts:10656. Historical per-file source hashes precede the line-preserving composition adjustment; whole-final-source-hashes.json records the delivered bytes.
+
+### Continuation on integration e39a299
+
+A truthful `| undefined` at a public owner is sanctioned under adaptation 20's
+discipline. Earlier wording that called AmdDependency.name and
+CommentRange.hasTrailingNewLine outside the sanctioned API changes was wrong.
+Those edits still belong to partition 32, which must contribute the parsed-owner
+proof. The whole-site ledger now says so. AmdDependency.name has been handed to
+32 by the user. The additional owner handoffs are:
+
+| Owner in types.ts (upstream lines) | Truthful change | Diagnostics relieved |
+| --- | --- | --- |
+| CommentRange.hasTrailingNewLine:3873 | `boolean` -> `boolean | undefined` | emitNode.ts:205,218 |
+| AutoGenerateInfo.prefix:1720 | `string | GeneratedNamePart` -> `string | GeneratedNamePart | undefined` | nodeFactory.ts:1315,1403 |
+| AutoGenerateInfo.suffix:1721 | `string` -> `string | undefined` | Same generated-name object stores |
+
+This repository fetches only main by default. Explicitly fetch the integration
+ref before merging it; plain `git fetch origin` can leave origin/area/stage3
+stale. This continuation advanced by fast-forward to e39a299 without rebasing:
+
+```sh
+git fetch origin refs/heads/area/stage3:refs/remotes/origin/area/stage3
+git merge origin/area/stage3
+```
+
+The fresh full apply.sh tree includes all current adaptations, including 70.
+The archived whole-census options are unchanged. Its 79 compiler roots include
+the new hostErrors.ts; the file census has no code filter.
+The exact current totals are **emitNode 2, nodeFactory 4, core 2**. No file newly
+reaches zero and no additional upstream source repair is claimed.
+
+remaining-contracts.cjs executes actual adapted core function bodies on Node.
+A two-read array getter returns 23, then undefined; addRange appends an own
+undefined element after two reads. A getter on to.push deletes an ordinary
+source-array element between the guard and argument evaluation, with the same
+result. Caching the first read changes the result in both witnesses and changes
+the first witness's read count. Its executed --mutant-cache is caught by the
+Node observation assertion, exit 1. A ! at that second read is unproved: a
+native presence check would fail where the unchanged Node function appends
+undefined. These are contract counterexamples, not claims that ordinary tsc
+production arrays are volatile.
+
+The actual custom createSet object lacks all seven ES2024 operations. The
+external caller src/server/session.ts:512 declares Set<DocumentSpan>, so merely
+reducing core's return type needs an outside consumer repair. Adding methods
+changes JavaScript; asserting the full interface lies.
+
+For the generic localSymbol/typeExpression writes, executable mapped-type
+witnesses demonstrate that widening the optional constraint alone is not a
+proof: stock TypeScript accepts the generic call with a narrower required
+member, then Node observes undefined in that member. The stock diagnostics are
+zero, as recorded; this is a witness against the proposed type argument, not a
+claim of a new miscompile in adapted tsc. A closed caller/construction proof
+remains necessary. No cast or undefined assertion is added to suppress it.
+
+The combined API checker now composes the fresh 70 audit: exactly one public
+readonly parameter, setTextRange.location, whose reported writes and escapes
+must both be empty. It reconstructs that exact parsed TextRange owner, together
+with 20's 189 and 40's 28 lines, for 218 changed API lines. It admits no other
+readonly owners. The historical 217-line proof remains valid for its earlier
+integration without 70. All 17 owned files pass stock JavaScript identity
+(with the three previously proved narrowings), site contracts and idempotence
+on this fresh tree; their runtime source repairs have not changed.
+
+Continuation default oracle: **106367 passing, zero failing/pending, empty baseline diff**, 367.373 seconds, all default suites and four workers with the documented 1,536 MiB heap budget. New API mutants removing the readonly view and inserting a write into its owner report both exit 1; the four previous API mutants also exit 1. The restored checker passes. Evidence is in remaining-{proof,census,oracle,api,api-mutants,readonly-owners,counterexamples,source-hashes}.json, remaining-baseline.diff, remaining-verify.log and remaining-cache-mutant.log. No new file reaches zero; these owner handoffs and proved declines complete the review without guessing a source repair.
