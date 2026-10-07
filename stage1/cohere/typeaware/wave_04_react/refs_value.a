@@ -6,6 +6,8 @@ export class RefValue {
     hasRefId = false;
     span = 0;
     hasSpan = false;
+    refSpan = 0;
+    hasRefSpan = false;
     value = -1;
     fn = -1;
     constructor(kind: number) { this.kind = kind; }
@@ -13,6 +15,8 @@ export class RefValue {
 export class RefFunction {
     readRefEffect = false;
     returnType = -1;
+    refAccessSpan = 0;
+    hasRefAccessSpan = false;
 }
 export class RefValues {
     readonly values: RefValue[] = [];
@@ -37,6 +41,91 @@ export class RefValues {
         const left = this.functions[a] ?? panic('missing ref function');
         const right = this.functions[b] ?? panic('missing ref function');
         return left.readRefEffect === right.readRefEffect && this.equal(left.returnType, right.returnType);
+    }
+    nextRefId = 100;
+    add(value: RefValue): number {
+        this.values.push(value);
+        return this.values.length - 1;
+    }
+    freshRef(): number {
+        const value = new RefValue(3);
+        value.refId = this.nextRefId;
+        this.nextRefId += 1;
+        value.hasRefId = true;
+        return this.add(value);
+    }
+    join(a: number, b: number): number {
+        if(a < 0) { a = this.add(new RefValue(0)); }
+        if(b < 0) { b = this.add(new RefValue(0)); }
+        const left = this.values[a] ?? panic('missing join left');
+        const right = this.values[b] ?? panic('missing join right');
+        if(left.kind === 0) { return b; }
+        if(right.kind === 0) { return a; }
+        if(left.kind === 2 && right.kind === 2) {
+            if(left.refId === right.refId && (left.hasRefId === right.hasRefId)) { return a; }
+            return this.add(new RefValue(0));
+        }
+        if((left.kind === 2 && right.kind === 1) || (left.kind === 1 && right.kind === 2)) {
+            return this.add(new RefValue(0));
+        }
+        if(left.kind === 2 || left.kind === 1) { return b; }
+        if(right.kind === 2 || right.kind === 1) { return a; }
+        return this.joinCarrying(a,b);
+    }
+    joinCarrying(a: number, b: number): number {
+        const left = this.values[a] ?? panic('missing carrying left');
+        const right = this.values[b] ?? panic('missing carrying right');
+        if(left.kind === 4 && right.kind === 4) {
+            if(left.hasRefId && right.hasRefId && left.refId === right.refId) { return a; }
+            return this.add(new RefValue(4));
+        }
+        if(left.kind === 4 || right.kind === 4) { return this.add(new RefValue(4)); }
+        if(left.kind === 3 && right.kind === 3) {
+            if(left.hasRefId && right.hasRefId && left.refId === right.refId) { return a; }
+            return this.freshRef();
+        }
+        if(left.kind === 3 || right.kind === 3) { return this.freshRef(); }
+        const joined = new RefValue(5);
+        if(left.fn < 0) { joined.fn = right.fn; }
+        else if(right.fn < 0) { joined.fn = left.fn; }
+        else {
+            const lf = this.functions[left.fn] ?? panic('missing left function');
+            const rf = this.functions[right.fn] ?? panic('missing right function');
+            const fn = new RefFunction();
+            fn.returnType = this.join(lf.returnType,rf.returnType);
+            fn.readRefEffect = lf.readRefEffect || rf.readRefEffect;
+            if(lf.hasRefAccessSpan) { fn.refAccessSpan = lf.refAccessSpan; fn.hasRefAccessSpan = true; }
+            else if(rf.hasRefAccessSpan) { fn.refAccessSpan = rf.refAccessSpan; fn.hasRefAccessSpan = true; }
+            this.functions.push(fn);
+            joined.fn = this.functions.length - 1;
+        }
+        if(left.value < 0) { joined.value = right.value; }
+        else if(right.value < 0) { joined.value = left.value; }
+        else { joined.value = this.joinCarrying(left.value,right.value); }
+        return this.add(joined);
+    }
+    joinMany(values: readonly number[]): number {
+        let result = this.add(new RefValue(0));
+        for(const value of values) { result = this.join(result,value); }
+        return result;
+    }
+    destructure(index: number): number {
+        while(index >= 0) {
+            const value = this.values[index] ?? panic('missing destructure value');
+            if(value.kind !== 5 || value.value < 0) { return index; }
+            index = value.value;
+        }
+        return this.add(new RefValue(0));
+    }
+    signature(index: number): string {
+        if(index < 0) { return 'nil'; }
+        const value = this.values[index] ?? panic('missing signature value');
+        let fn = 'nil';
+        if(value.fn >= 0) {
+            const f = this.functions[value.fn] ?? panic('missing signature function');
+            fn = `${f.readRefEffect}:${f.refAccessSpan}:${f.hasRefAccessSpan}:(${this.signature(f.returnType)})`;
+        }
+        return `${value.kind}:${value.refId}:${value.hasRefId}:${value.span}:${value.hasSpan}:${value.refSpan}:${value.hasRefSpan}:(${this.signature(value.value)}):(${fn})`;
     }
     hookName(name: string): boolean {
         if(!name.startsWith('use') || name.length < 4) { return false; }

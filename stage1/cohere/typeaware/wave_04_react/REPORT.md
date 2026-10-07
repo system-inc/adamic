@@ -199,3 +199,55 @@ check or native/Go rule timing is claimed for this kernel. The earlier six full
 ports and their measurements remain unchanged. The full repository gate was
 not rerun; this continuation checks the owned kernel through its Go overlay
 and both Adamic backends.
+
+## Refs joins and destructuring continuation
+
+Landing cap verified before this work: main remained `e8ba3d5d`, wave 04 was
+rebased and fully re-greened there, and its pushed SHA was `e945c91d`. A remote
+read after validation confirms that same main tip. No additional rules were
+claimed and no shared files were edited.
+
+The owned `refs_value.a` now also ports production Go `refsJoin`,
+`refsJoinRefCarrying`, `refsJoinMany` and `refsDestructure`. The arena allocates
+fresh ref IDs in the same order as Go; none is identity, conflicting guards
+and guard/nullable joins collapse, ref values dominate carrying joins and erase
+provenance unless both operands identify the same ref, structures recursively
+merge values/functions, function effects combine with OR, and origin spans prefer
+the left operand when present. Folding starts at none; destructuring follows
+structure values until a non-structure or an empty structure.
+
+The expanded Go overlay calls those private production functions directly.
+Twenty-four value descriptors plus nil cover all ordered pairs, nested
+structures, distinct and shared ref identities, zero/present guard identity,
+access/origin spans, function effects, function returns and function origin
+preference. Six folds and sixteen name controls complete 1,297 records / 55,984
+bytes. Native, ASan/UBSan/leaks, source Node and emitted JavaScript match exactly
+with empty stderr. No Go lint verdict crosses a bridge.
+
+Nine sanitized native kernel mutants compile, exit zero with empty stderr and
+are caught only by the independent Go byte stream. The four prior equality/name
+mutants still fail. Five new mutants preserve a guard/nullable join incorrectly,
+shift fresh ref IDs, use AND for function effects, stop destructuring too early,
+and select the right origin for a same-ref join. The last mutant depends on the
+new shared-identity/different-origin witness rather than an incidental failure.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_04_react/validate_refs_kernel.py /workspace/typeaware-wave-04-react/refs-joins-release --adamic /workspace/typeaware-wave-04-landing-current/adamic > /workspace/typeaware-wave-04-react/refs-joins-release.log 2>&1
+```
+
+The command prints `PASS partial refs kernel: 1297 records, 55984 bytes`. Inputs,
+source hashes, Go results, exact backend streams, mutant build/run logs and
+validation are in [evidence/refs-joins](evidence/refs-joins). The six earlier
+complete rules and their unchanged main-base validation remain in the
+[landing report](../wave_04_next/LANDING_REPORT.md); these new kernel files are
+not imported by those rule runners. Their latest native/Go medians are compiler
+1.905/0.318s and repository 0.296/0.130s for the correctness continuation.
+
+This is still a partial refs analysis kernel. The source entry point refuses
+missing native React HIR/SSA, instruction transfer, captures, nominal checker
+ref-type questions and the bounded sweep. Purity alias/capture propagation and
+manual-memoization reactive scopes also remain missing. Full React findings,
+fixes/suggestions, full-rule mutants, checker-handle tests and full-rule timings
+remain unverified. The full repository gate was not rerun; the owned kernel
+oracle and both backends cover this change. No further claims were made.

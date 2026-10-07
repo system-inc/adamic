@@ -20,12 +20,15 @@ driver="import { RefValue, RefFunction, RefValues } from '"+str(module)+"';\ncon
 def boolean(x):return str(x).lower()
 for i,row in enumerate(data['Values']):
  driver+=f"const v{i} = new RefValue({row['Kind']});\n"
- for field,key in [('refId','RefId'),('hasRefId','HasRefId'),('span','Span'),('hasSpan','HasSpan'),('value','Value'),('fn','Function')]:
+ for field,key in [('refId','RefId'),('hasRefId','HasRefId'),('span','Span'),('hasSpan','HasSpan'),('value','Value'),('fn','Function'),('refSpan','RefSpan'),('hasRefSpan','HasRefSpan')]:
   val=row[key];driver+=f"v{i}.{field} = {boolean(val) if isinstance(val,bool) else val};\n"
  driver+=f"arena.values.push(v{i});\n"
 for i,row in enumerate(data['Functions']):
- driver+=f"const f{i} = new RefFunction(); f{i}.readRefEffect = {boolean(row['Effect'])}; f{i}.returnType = {row['Return']}; arena.functions.push(f{i});\n"
+ driver+=f"const f{i} = new RefFunction(); f{i}.readRefEffect = {boolean(row['Effect'])}; f{i}.returnType = {row['Return']}; f{i}.refAccessSpan = {row['Span']}; f{i}.hasRefAccessSpan = {boolean(row['HasSpan'])}; arena.functions.push(f{i});\n"
 driver+="for(let i = -1; i < arena.values.length; i++) { for(let j = -1; j < arena.values.length; j++) { console.log(`equal ${i} ${j} ${arena.equal(i,j)}`); } }\n"
+driver+="const originalCount = arena.values.length;\nfor(let i = -1; i < originalCount; i++) { for(let j = -1; j < originalCount; j++) { arena.nextRefId = 100; console.log(`join ${i} ${j} ${arena.signature(arena.join(i,j))}`); } console.log(`destructure ${i} ${arena.signature(arena.destructure(i))}`); }\n"
+for indices in [[],[8],[8,9],[8,9,10],[6,1,8],[20,21,18]]:
+ driver+="arena.nextRefId = 100; console.log(`fold ${arena.signature(arena.joinMany("+json.dumps(indices)+"))}`);\n"
 for i,name in enumerate(data['Names']):
  driver+=f"console.log(`name {i} ${{arena.hookName({json.dumps(name,ensure_ascii=False)})}} ${{arena.refName({json.dumps(name,ensure_ascii=False)})}}`);\n"
 entry=out/'probe.a';entry.write_text(driver)
@@ -39,7 +42,7 @@ if actual!=truth or error:raise RuntimeError('source Node kernel differs')
 js,error=run('emit',[a.adamic,'js',entry]);(out/'probe.js').write_bytes(js)
 actual,error=run('js',['node','--disable-warning=ExperimentalWarning',repo/'oracle/node.mjs',out/'probe.js'])
 if actual!=truth or error:raise RuntimeError('emitted JS kernel differs')
-mutations=[('identity','case 3: return true;','case 3: return left.refId === right.refId;'),('guard','left.refId === right.refId && left.hasRefId === right.hasRefId','left.refId === right.refId'),('span','left.span === right.span && left.hasSpan === right.hasSpan','left.span === right.span'),('name','name.length <= 3','name.length < 3')]
+mutations=[('identity','case 3: return true;','case 3: return left.refId === right.refId;'),('guard','left.refId === right.refId && left.hasRefId === right.hasRefId','left.refId === right.refId'),('span','left.span === right.span && left.hasSpan === right.hasSpan','left.span === right.span'),('name','name.length <= 3','name.length < 3'),('join-nullable','return this.add(new RefValue(0));\n        }\n        if(left.kind === 2 ||','return b;\n        }\n        if(left.kind === 2 ||'),('join-id','value.refId = this.nextRefId;','value.refId = this.nextRefId + 1;'),('join-effect','lf.readRefEffect || rf.readRefEffect','lf.readRefEffect && rf.readRefEffect'),('destructure','value.kind !== 5 || value.value < 0','value.kind !== 5 || value.value < 0 || value.value === 14'),('join-origin','if(left.kind === 4 && right.kind === 4) {\n            if(left.hasRefId && right.hasRefId && left.refId === right.refId) { return a; }','if(left.kind === 4 && right.kind === 4) {\n            if(left.hasRefId && right.hasRefId && left.refId === right.refId) { return b; }')]
 for label,before,after in mutations:
  source=module.read_text()
  if source.count(before)!=1:raise RuntimeError('nonunique mutation '+label)
@@ -48,4 +51,4 @@ for label,before,after in mutations:
  if error or actual==truth:raise RuntimeError('mutant survived or failed before comparison: '+label)
 runfile=out/'runs.json';runfile.write_text(json.dumps(runs,indent=2)+'\n')
 (out/'source-sha256.json').write_text(json.dumps({str(x.relative_to(own)):hashlib.sha256(x.read_bytes()).hexdigest() for x in [module,own/'testdata/refs_kernel_test.go',Path(__file__).resolve()]},indent=2)+'\n')
-print(f'PASS partial refs kernel: {len(truth.splitlines())} records, {len(truth)} bytes; native, sanitizer, source Node, emitted JS; four comparison-only kernel mutants.')
+print(f'PASS partial refs kernel: {len(truth.splitlines())} records, {len(truth)} bytes; native, sanitizer, source Node, emitted JS; nine comparison-only kernel mutants.')

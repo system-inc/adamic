@@ -1,0 +1,158 @@
+[
+  {
+    "label": "go",
+    "exit": 0,
+    "stdout_bytes": 142,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "build-normal",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "run-normal",
+    "exit": 0,
+    "stdout_bytes": 55984,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "build-asan",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "run-asan",
+    "exit": 0,
+    "stdout_bytes": 55984,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "node",
+    "exit": 0,
+    "stdout_bytes": 55984,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "emit",
+    "exit": 0,
+    "stdout_bytes": 32965,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "js",
+    "exit": 0,
+    "stdout_bytes": 55984,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "identity-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "identity-run",
+    "exit": 0,
+    "stdout_bytes": 55996,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "guard-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "guard-run",
+    "exit": 0,
+    "stdout_bytes": 55982,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "span-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "span-run",
+    "exit": 0,
+    "stdout_bytes": 55980,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "name-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "name-run",
+    "exit": 0,
+    "stdout_bytes": 55983,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "join-nullable-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "join-nullable-run",
+    "exit": 0,
+    "stdout_bytes": 55981,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "join-id-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "join-id-run",
+    "exit": 0,
+    "stdout_bytes": 55984,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "join-effect-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "join-effect-run",
+    "exit": 0,
+    "stdout_bytes": 55995,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "destructure-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "destructure-run",
+    "exit": 0,
+    "stdout_bytes": 56100,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "join-origin-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "join-origin-run",
+    "exit": 0,
+    "stdout_bytes": 55984,
+    "stderr_bytes": 0
+  }
+]

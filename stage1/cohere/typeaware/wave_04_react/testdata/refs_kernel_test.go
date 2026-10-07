@@ -11,12 +11,14 @@ import (
 )
 
 type wave04Value struct {
-	Kind, RefId, Span, Value, Function int
-	HasRefId, HasSpan                  bool
+	Kind, RefId, Span, Value, Function, RefSpan int
+	HasRefId, HasSpan, HasRefSpan               bool
 }
 type wave04Function struct {
-	Effect bool
-	Return int
+	Effect  bool
+	Return  int
+	Span    int
+	HasSpan bool
 }
 
 func TestWave04RefsKernel(t *testing.T) {
@@ -30,8 +32,8 @@ func TestWave04RefsKernel(t *testing.T) {
 		wave04Value{Kind: 2, RefId: 2, HasRefId: true, Value: -1, Function: -1},
 		wave04Value{Kind: 3, RefId: 1, HasRefId: true, Value: -1, Function: -1},
 		wave04Value{Kind: 3, RefId: 2, HasRefId: true, Value: -1, Function: -1},
-		wave04Value{Kind: 4, RefId: 1, HasRefId: true, Span: 3, HasSpan: true, Value: -1, Function: -1},
-		wave04Value{Kind: 4, RefId: 2, HasRefId: true, Span: 3, HasSpan: true, Value: -1, Function: -1},
+		wave04Value{Kind: 4, RefId: 1, HasRefId: true, Span: 3, HasSpan: true, RefSpan: 101, HasRefSpan: true, Value: -1, Function: -1},
+		wave04Value{Kind: 4, RefId: 2, HasRefId: true, Span: 3, HasSpan: true, RefSpan: 102, HasRefSpan: true, Value: -1, Function: -1},
 		wave04Value{Kind: 4, Span: 4, HasSpan: true, Value: -1, Function: -1},
 		wave04Value{Kind: 4, Span: 3, Value: -1, Function: -1},
 		wave04Value{Kind: 5, Value: 8, Function: -1},
@@ -43,15 +45,16 @@ func TestWave04RefsKernel(t *testing.T) {
 		wave04Value{Kind: 5, Value: 14, Function: 0},
 		wave04Value{Kind: 5, Value: 15, Function: 1},
 		wave04Value{Kind: 2, RefId: 0, HasRefId: true, Value: -1, Function: -1},
+		wave04Value{Kind: 4, RefId: 1, HasRefId: true, Span: 4, HasSpan: true, RefSpan: 103, HasRefSpan: true, Value: -1, Function: -1},
 	)
-	frows := []wave04Function{{false, 8}, {false, 9}, {true, 9}, {false, 12}}
+	frows := []wave04Function{{false, 8, 7, true}, {false, 9, 8, true}, {true, 9, 0, false}, {false, 12, 0, false}}
 	values := make([]*refsAccessType, len(rows))
 	funcs := make([]*refsFunctionType, len(frows))
 	for i, r := range rows {
-		values[i] = &refsAccessType{Kind: refsAccessKind(r.Kind), RefId: r.RefId, HasRefId: r.HasRefId, Span: hir.IdentifierId(r.Span), HasSpan: r.HasSpan}
+		values[i] = &refsAccessType{Kind: refsAccessKind(r.Kind), RefId: r.RefId, HasRefId: r.HasRefId, Span: hir.IdentifierId(r.Span), HasSpan: r.HasSpan, RefSpan: hir.IdentifierId(r.RefSpan), HasRefSpan: r.HasRefSpan}
 	}
 	for i, r := range frows {
-		funcs[i] = &refsFunctionType{ReadRefEffect: r.Effect, ReturnType: values[r.Return]}
+		funcs[i] = &refsFunctionType{ReadRefEffect: r.Effect, ReturnType: values[r.Return], RefAccessSpan: hir.IdentifierId(r.Span), HasRefAccessSpan: r.HasSpan}
 	}
 	for i, r := range rows {
 		if r.Value >= 0 {
@@ -72,6 +75,33 @@ func TestWave04RefsKernel(t *testing.T) {
 		for j := -1; j < len(values); j++ {
 			fmt.Fprintf(&out, "equal %d %d %t\n", i, j, refsTypeEqual(get(i), get(j)))
 		}
+	}
+	var signature func(*refsAccessType) string
+	signature = func(value *refsAccessType) string {
+		if value == nil {
+			return "nil"
+		}
+		function := "nil"
+		if f := value.Function; f != nil {
+			function = fmt.Sprintf("%t:%d:%t:(%s)", f.ReadRefEffect, f.RefAccessSpan, f.HasRefAccessSpan, signature(f.ReturnType))
+		}
+		return fmt.Sprintf("%d:%d:%t:%d:%t:%d:%t:(%s):(%s)", value.Kind, value.RefId, value.HasRefId, value.Span, value.HasSpan, value.RefSpan, value.HasRefSpan, signature(value.Value), function)
+	}
+	for i := -1; i < len(values); i++ {
+		for j := -1; j < len(values); j++ {
+			next := 100
+			mint := func() int { id := next; next++; return id }
+			fmt.Fprintf(&out, "join %d %d %s\n", i, j, signature(refsJoin(get(i), get(j), mint)))
+		}
+		fmt.Fprintf(&out, "destructure %d %s\n", i, signature(refsDestructure(get(i))))
+	}
+	for _, indices := range [][]int{{}, {8}, {8, 9}, {8, 9, 10}, {6, 1, 8}, {20, 21, 18}} {
+		types := []*refsAccessType{}
+		for _, id := range indices {
+			types = append(types, get(id))
+		}
+		next := 100
+		fmt.Fprintf(&out, "fold %s\n", signature(refsJoinMany(types, func() int { id := next; next++; return id })))
 	}
 	names := []string{"", "use", "useA", "use9", "usea", "useÉ", "useRef", "ref", "Ref", "aRef", "1Ref", "$Ref", "_Ref", "a-Ref", "éRef", "a😀Ref"}
 	for i, n := range names {
