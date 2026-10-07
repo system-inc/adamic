@@ -14,15 +14,18 @@ import (
 )
 
 // Not parallel: this opt-in integration probe builds one complete runtime and runs a request
-// benchmark. Keep native tests on the native clang PATH, and run this separately with WASI clang.
+// benchmark, and it puts the WASI SDK's clang first on PATH for itself and every command it runs.
 func TestWASI(t *testing.T) {
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
-		t.Skip("WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH")
+		t.Skip("WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with Node 24 on PATH")
 	}
 	sysroot := os.Getenv("WASI_SYSROOT")
 	if sysroot == "" {
 		t.Fatalf("WASI toolchain missing: WASI_SYSROOT is not set")
 	}
+	// The SDK's clang, linker and builtins sit beside its sysroot. A native clang can't link wasm32,
+	// so whatever else a whole run has first on PATH, this test uses the SDK's own.
+	t.Setenv("PATH", filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin")+string(os.PathListSeparator)+os.Getenv("PATH"))
 	for _, tool := range []string{"clang", "node", "go"} {
 		if _, err := exec.LookPath(tool); err != nil {
 			t.Fatalf("WASI toolchain missing: %s: %v", tool, err)
