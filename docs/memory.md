@@ -952,8 +952,66 @@ five-minute trace timeouts because its flat fixture glob picked up the
 million-node benchmark. That benchmark now lives in the dedicated
 `internal/oracle/testdata/graph_regions/million.a` directory; its explicit
 oracle registration and memory/counts checks remain enabled. No flow test was
-changed or weakened. The corrected flow and benchmark checks are recorded
-below when complete.
+changed or weakened. The corrected flow package passed in 226.970s, logged to
+`/tmp/graph-regions-flow-corrected.log`. The relocated source oracle, compiled
+memory test and complete counts check passed in 117.959s, logged to
+`/tmp/graph-regions-relocated-oracle.log`.
+
+A targeted stage1 gap check also failed existing expectations outside this
+unit's territory: `TestStrongAstParentGap` expected refusal but lowering now
+succeeds; markdownblocks `2_state_arrow_cycle` and `4_structural_ranges` likewise
+expected refusal and now succeed. Markdownblocks `1_recursive_state` still
+refuses, with the newer nested-function-reference diagnostic instead of its old
+expected NotYet diagnostic. Those owning-unit tests and GAPS documents were not
+edited. Command: `ADAMIC_GATE_UNCACHED=1 go test ./stage1/typescript/parser
+./stage1/cohere/markdownblocks -run 'TestStrongAstParentGap|TestParserRepresentationProbes'
+-count=1 -v -timeout 10m`, log `/tmp/graph-regions-stage1-gap-check.log`.
+
+The pre-merge full gate was stopped after about 22 minutes when main advanced to
+`f8013f0`; its unfinished outside-unit packages are not claimed as passing. Main
+was merged into this branch, preserving its iterator and narrowing fixes. The
+only conflict was the counts table's added graph columns. Main's changed and new
+rows were preserved with those columns added. The merged package gate passed: lower 28.901s, native 195.293s, fresh 61.408s.
+Its log is `/tmp/graph-regions-merged-package-gate.log`. The merged filtered
+oracle passed behavior, sanitizer, leak and region-free checks but failed
+canonical counts-table ordering in 112.306s. Regenerating the table passed in
+33.254s and a row-by-row comparison proved that no numeric row changed, only
+fixture order. Logs: `/tmp/graph-regions-merged-filtered-oracle.log` and
+`/tmp/graph-regions-merged-counts-update.log`. The merged compiled-memory run
+observed release 79028 KiB, counted 79128 KiB, and Node through the oracle loader
+127212 KiB. Its retained-member and allocation counts match the table above;
+Node's process RSS varies across runs and includes that loader.
+
+Commands for the merge checks:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-merged-package-gate.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(.*(cycle|weak|fresh|regions|nested|iterator|047cb0d)|weak)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestNested.*|TestCountsAreRecorded|TestLibrary.*Iterator|TestNarrowed.*|TestOverride.*' -count=1 -v -timeout 30m > /tmp/graph-regions-merged-filtered-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-merged-counts-update.log 2>&1
+gofmt -l cmd internal > /tmp/graph-regions-merged-format.log 2>&1
+go vet ./... > /tmp/graph-regions-merged-vet.log 2>&1
+```
+
+The merged format and vet logs are empty. All eleven mutants were rerun against
+this merged implementation and were caught by the same checks in the table
+above; every edit was restored. Commands were
+`python3 /tmp/graph-regions-compact-mutants.py` and
+`python3 /tmp/graph-regions-compiler-mutants.py`, each redirected to its log:
+`/tmp/graph-regions-runtime-mutants-merged.log` and
+`/tmp/graph-regions-compiler-mutants-merged.log`. The restored complete counts
+check, `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$'
+-count=1 -timeout 30m`, passed in 26.710s, logged to
+`/tmp/graph-regions-merged-counts-check.log`.
+
+
+The final restored merged filtered oracle passed in 63.436s, including the
+complete counts table, all 43 formerly refused probes, graph source fixtures,
+Weak/fresh/nested coverage and main's iterator/narrowing regressions. It used the
+same merged filtered command above, with output redirected to
+`/tmp/graph-regions-merged-filtered-final.log`. Gate-cache report: native hits 0,
+misses 797; Node hits 0, misses 254. A final fetch confirmed origin/main remained
+`f8013f0` and was already included in this branch. This is the green unit gate;
+the stopped full gate and stage1 expectation failures remain separate limitations.
 
 Threads, cross-thread atomic counts and long-lived services are not built. The
 shared-region merge rejection remains a tested runtime guard. Program-version
