@@ -1,0 +1,42 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic, Edit, Suggestion } from '../typescript-prefer-as-const/records.a';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext; readonly records: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    analyze(index: number): void {
+        const context = this.context; const node = context.node(index);
+        if(node.kind !== 'TypeParameter') return;
+        let name = -1; let constraint = -1; let defaulted = false;
+        for(let position = 0; position < node.children.length; position++) {
+            const child = node.children[position] ?? -1;
+            if(child < 0) continue;
+            if(name < 0 && context.node(child).kind === 'Identifier') name = child;
+            context.scanner.pos = context.node(child).end;
+            const following = context.scanner.scan();
+            if(following === 'ExtendsKeyword' || following === 'InKeyword') constraint = node.children[position + 1] ?? -1;
+            if(following === 'EqualsToken') defaulted = true;
+        }
+        if(name < 0 || constraint < 0) return;
+        if(!['AnyKeyword', 'UnknownKeyword'].includes(context.node(constraint).kind)) return;
+        let replacement = '';
+        const parent = context.parents[index] ?? -1; const path = context.parser.path;
+        if(parent >= 0 && context.node(parent).kind === 'ArrowFunction' && !defaulted &&
+            (path.endsWith('.tsx') || path.endsWith('.mts') || path.endsWith('.cts'))) {
+            let count = 0;
+            for(const child of context.node(parent).children) { if(context.node(child).kind === 'TypeParameter') count++; }
+            context.scanner.pos = node.end;
+            if(count === 1 && context.scanner.scan() !== 'CommaToken') replacement = ',';
+        }
+        const record = new Diagnostic('@typescript-eslint/no-unnecessary-type-constraint', 'noUnnecessaryTypeConstraint', message, context.start(name), context.node(name).end);
+        const suggestion = new Suggestion('removeTheConstraint', 'Remove the constraint that does nothing.');
+        suggestion.edits.push(new Edit(context.node(name).end, context.node(constraint).end, replacement));
+        record.suggestions.push(suggestion); this.records.push(record);
+    }
+    visit(index: number): void {
+        const previous = this.records.length; this.analyze(index);
+        if(this.records.length !== previous) panic('no-unnecessary-type-constraint requires complete repair renderer');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

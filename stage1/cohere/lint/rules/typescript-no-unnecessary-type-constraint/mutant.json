@@ -1,0 +1,6 @@
+{
+  "name": "typescript-no-unnecessary-type-constraint-repair-mutant",
+  "file": "rule.a",
+  "from": "['AnyKeyword', 'UnknownKeyword']",
+  "to": "['AnyKeyword']"
+}

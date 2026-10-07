@@ -1,0 +1,1 @@
+export const message = 'A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.';
