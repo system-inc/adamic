@@ -27,6 +27,22 @@ Compiler can be rebuilt with go build -o /tmp/adamic ./cmd/adamic. Setup tools s
 
 ## Timing
 
-Three alternating whole-process count runs, no build time: repository native median 285.523 ms versus Go 89.694 ms (3.183x slower); compiler native 1476.444 ms versus Go 303.951 ms (4.858x slower). Samples are in evidence/timings.json. Driver numeric kind lookup uses a map built once per file. These zero-finding corpora include load/parse/walk costs and demonstrate no native speed advantage. Earlier concurrent measurements are not used for the final timing claim.
+Three alternating whole-process count runs, no build time: repository native median 273.655 ms versus Go 93.345 ms (2.932x slower); compiler native 1434.151 ms versus Go 277.132 ms (5.175x slower). Samples are in evidence/timings.json. Driver numeric kind lookup uses a map built once per file. These zero-finding corpora include load/parse/walk costs and demonstrate no native speed advantage. Earlier concurrent measurements are not used for the final timing claim.
 
 Evidence contains complete run logs, canonical outputs compressed with gzip, setup failure, bridge/vet logs, listener comparisons, mutants and source-selection audit. No binaries or generated C archives are committed. React native HIR/SSA/capture work remains parked pending #dnv6f2c and JSX integration; require-atomic-updates also needs capture-sensitive control-flow graph support. No further eligible non-React rule remains in the last audit after these three claims.
+
+## Landing refresh
+
+Rebased onto origin/main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. No bridge, native compiler or type-aware shared harness source changed in that main advance; the compiler binary was reused. The new full validator passes after rebase (217 controls, 125 findings, both corpora and sanitizer modes, all six compiled byte mutants and three released-question refusals). Bridge tests pass (98.500s; checker 0.409s), vet and gofmt are clean. All nine earlier rule suites and listener metadata are rechecked; detailed results follow in this evidence directory.
+
+Pins: cohere 715ba94f3608a6500086b1076ce5cb7e51b836db; typescript-go 8d550c837c90bd1805b047b7eeccc2baac2d5e7a; TypeScript v6.0.3 corpus 050880ce59e30b356b686bd3144efe24f875ebc8. source-hashes.json hashes new native modules, metadata, raw questions, production Go sources/tests and the frozen manifests. Previous batches' coverage and mutants are documented in ../WAVE_24_REPORT.md, ../wave-24-next/README.md and ../wave-24-third/README.md.
+
+The owned timing runner reproduces three alternating counts, checks successful execution, native empty stderr, Go numeric phase stderr and identical counts, and writes samples and process output to artifact files:
+
+```sh
+python3 stage1/cohere/typeaware/wave-24-fifth/timing.py /workspace/wave24-fifth-landing --repository /workspace/adamic --compiler /workspace/wave-24-corpus > /tmp/wave24-fifth-landing-timing.log 2>&1
+```
+
+All nine earlier ports pass after this rebase: original controls 43 findings and six byte mutants plus released-registry mutation; next controls 65 findings and six byte mutants; third controls 295 findings and five byte mutants. Every suite compares both complete corpora in normal and sanitized modes and checks released handles. Nine existing listener declarations match production and their native/JSON mutants fail. No new eligible non-React/non-capture-analysis rule was selected. Main was verified unchanged at c01907a70 after these tests.
+
+The first timing-runner attempt wrongly required empty Go stderr and failed on the expected phase-timing line; the corrected runner permits only that numeric line. The failed attempt is retained as timing-initial-failure.log. It did not affect diagnostic validation.

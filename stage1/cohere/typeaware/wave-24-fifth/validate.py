@@ -20,7 +20,6 @@ def main():
     parser.add_argument('directory', type=Path)
     parser.add_argument('--compiler', type=Path)
     parser.add_argument('--stage0', type=Path, required=True)
-    parser.add_argument('--controls-only', action='store_true')
     args = parser.parse_args()
     dest = args.directory.resolve(); dest.mkdir(parents=True, exist_ok=True)
     serial = 0
@@ -56,7 +55,9 @@ def main():
     assert metadata==expected, 'rule.json listener mismatch'
     changed=json.loads((OWN/'symbol-description/rule.json').read_text());changed['kinds']=[227]
     (dest/'mutant-rule.json').write_text(json.dumps(changed))
-    assert ('symbol-description\t227\n'.encode()+metadata.split(b'\n',1)[1])!=expected, 'JSON listener mutant survived'
+    changed=json.loads((dest/'mutant-rule.json').read_text())
+    mutated=(changed['name']+'\t'+','.join(str(kind) for kind in sorted(changed['kinds']))+'\n').encode()+metadata.split(b'\n',1)[1]
+    assert mutated!=expected, 'JSON listener mutant survived'
     print('native/JSON production listener kinds match; JSON relevance mutant caught',flush=True)
     streams = dest/'source/system/StandardStreams.d.ts';streams.parent.mkdir(parents=True,exist_ok=True);streams.write_text('export declare function blockStandardStreams():void;\n')
     declarations = dest/'globals.d.ts'
