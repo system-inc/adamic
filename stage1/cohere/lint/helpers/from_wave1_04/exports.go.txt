@@ -1,0 +1,29 @@
+package tailwind
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/system-inc/cohere/internal/lint/rule"
+)
+
+type wave104RootProgram struct {
+	rule.Program
+	config, cwd string
+	present     bool
+	trace       []string
+}
+
+func (p *wave104RootProgram) Options() *core.CompilerOptions {
+	p.trace = append(p.trace, "options")
+	if !p.present {
+		return nil
+	}
+	return &core.CompilerOptions{ConfigFilePath: p.config}
+}
+func (p *wave104RootProgram) GetCurrentDirectory() string {
+	p.trace = append(p.trace, "directory")
+	return p.cwd
+}
+func Wave104ProjectRoot(config, cwd string, present bool) (string, []string) {
+	p := &wave104RootProgram{config: config, cwd: cwd, present: present}
+	return projectRootOf(p), p.trace
+}

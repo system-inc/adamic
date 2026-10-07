@@ -1,0 +1,30 @@
+// Go tailwind.projectRootOf on a POSIX target. Program reads remain explicit.
+export interface RootOptions {
+    readonly present: boolean;
+    readonly configFilePath: string;
+}
+export interface RootProgram {
+    readonly options: () => RootOptions;
+    readonly currentDirectory: () => string;
+}
+function directory(path: string): string {
+    const prefix = path.slice(0,path.lastIndexOf('/') + 1);
+    const rooted = prefix.startsWith('/');
+    const parts: string[] = [];
+    for(const part of prefix.split('/')) {
+        if(part === '' || part === '.') { continue; }
+        if(part === '..') {
+            if(parts.length > 0 && parts[parts.length - 1] !== '..') { parts.pop(); }
+            else if(!rooted) { parts.push(part); }
+        } else { parts.push(part); }
+    }
+    const result = (rooted ? '/' : '') + parts.join('/');
+    return result === '' ? '.' : result;
+}
+export function projectRootOf(program: RootProgram): string {
+    const options = program.options();
+    if(options.present && options.configFilePath !== '') {
+        return directory(options.configFilePath);
+    }
+    return program.currentDirectory();
+}
