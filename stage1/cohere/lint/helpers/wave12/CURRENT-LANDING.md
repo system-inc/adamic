@@ -1,10 +1,20 @@
+Built nine delivered helpers, including new decorator and type-parameter delegation, rebased onto current origin/main 39638d9e278d38bb5aeae887f46d55a70e47aaad.
+Before rebase: helper branch ce35afe4f, rule sibling c485ad2cb; rebased rule package green and aggregate is running before its own push.
+Complete nine-helper suite PASS 125.005s, vet clean, all 24 controls pass; new helpers match 30,954 observations / 62,024 bytes on actual Go, source Node, emitted JS and sanitized native.
+All four new semantic mutants compile/run and fail only Go comparison; prior 20 controls also pass, preserving the separate unsupported-separator refusal comparison.
+Uncovered: full expression/CFG builder and rule findings, malformed internal ASTs; original fixture delegation counts zero. Exact counter bigint-return lowering and shared harness blockers remain; other unclaimed helpers remain.
+
+Main advanced at the final fetch from b8fb957aa to 39638d9e2. No lint, compiler, oracle or doctrine file changed. Both owned branches were rebased; this helper package was freshly re-greened. Git initially refused rebase with No space left on device. Removing 4,305,172,040 bytes from regenerable Go cache artifacts recovered 2.6 GB without deleting source or evidence. Setup remains 122s, nproc 5. Fresh evidence: evidence/39638-helpers.log and evidence/39638-helper-vet.log. Harness 41eb6eab2 is still not on main; DEDUP_LEDGER decisions are recorded for the future harness rebase. No main or area branch was pushed.
+
+---
+
 Built CFG decorator and type-parameter expression delegation in separate .a files; four consumers lose two dependencies each, zero final blockers.
 Implementation commits fad689669 and 05d3414d3, evidence 4a37cc4e1; both owned branches contain current origin/main b8fb957aa; rule branch c485ad2cb remains pushed and parked.
 Owned eight-helper package PASS 123.469s plus final ninth-helper comparison PASS 6.677s, vet clean; new total 30,954 observations / 62,024 bytes identical on actual Go, source Node, emitted JavaScript and sanitized native; setup 122s, nproc 5.
 Four new compiling mutants caught only by actual-Go comparison on every backend: omitted/duplicated decorators, omitted constraints, swapped constraint/default order. Earlier 20 controls also pass, with the existing unsupported-separator refusal distinction retained.
 Uncovered: full expression/CFG builder and rule findings, malformed internal Go ASTs; original fixture families have zero delegation calls for these helpers. Exact counter bigint-return lowering remains blocked, shared harness not on main, other unclaimed helpers remain.
 
-Current handoff: [DECORATORS.md](DECORATORS.md) and [TYPE-PARAMETERS.md](TYPE-PARAMETERS.md). Harness 41eb6eab2 ledger read; upon harness rebase retire this unit's losing no-this-alias, optional-chain assertion and type-constraint copies, keeping its named Next document-import and ORM copies. No batch-only rule is assigned specifically to wave1-12 by this ledger. Main and area branches were never pushed. Final fetch verified main b8fb957aa; helper branch clean and pushed. No new claim is left awaiting implementation beyond the existing explicitly blocked counter.
+Current handoff: [DECORATORS.md](DECORATORS.md) and [TYPE-PARAMETERS.md](TYPE-PARAMETERS.md). Harness 41eb6eab2 ledger read; upon harness rebase retire this unit's losing no-this-alias, optional-chain assertion and type-constraint copies, keeping its named Next document-import and ORM copies. No batch-only rule is assigned specifically to wave1-12 by this ledger. Main and area branches were never pushed. The pre-rebase validation used main b8fb957aa; the final fetch advanced main to 39638d9e2, superseded above; helper branch clean and pushed. No new claim is left awaiting implementation beyond the existing explicitly blocked counter.
 
 ---
 
