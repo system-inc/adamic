@@ -1,4 +1,5 @@
-export { syntaxKinds } from './listeners.a';
+import { syntaxKinds as listenerKinds } from './listeners.a';
+export const syntaxKinds: readonly number[] = listenerKinds;
 import type { RuleContext } from '../../context.ts';
 import { assignment, destructure } from './messages.a';
 const name = '@typescript-eslint/no-this-alias';

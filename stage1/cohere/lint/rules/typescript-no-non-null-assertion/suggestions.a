@@ -1,28 +1,22 @@
 import { panic } from 'adamic';
 import { Finding } from '../../finding.ts';
+import { SuggestionEdit, Suggestion as SharedSuggestion } from '../../suggestions.a';
 import type { RuleContext } from '../../context.ts';
 
-export class Fix {
-    readonly start: number;
-    readonly end: number;
-    readonly text: string;
-    constructor(start: number, end: number, text: string) {
-        this.start = start; this.end = end; this.text = text;
-    }
+export class Fix extends SuggestionEdit {
+    constructor(start: number, end: number, text: string) { super(start, end, text); }
 }
-export class Suggestion {
-    readonly id: string;
-    readonly message: string;
+export class Suggestion extends SharedSuggestion {
     readonly fixes: readonly Fix[];
     constructor(id: string, message: string, fixes: readonly Fix[]) {
-        this.id = id; this.message = message; this.fixes = fixes;
+        super(id, message, fixes);
+        this.fixes = fixes;
     }
 }
 export class SuggestedFinding extends Finding {
-    readonly suggestions: readonly Suggestion[];
     constructor(rule: string, id: string, message: string, start: number, end: number, suggestions: readonly Suggestion[], repair = '', replacement = '') {
         super(rule, id, message, start, end, repair, replacement, '');
-        this.suggestions = suggestions;
+        for(const suggestion of suggestions) this.suggestions.push(suggestion);
     }
 }
 let detailedReporting = false;

@@ -1,4 +1,5 @@
-export { syntaxKinds } from './listeners.a';
+import { syntaxKinds as listenerKinds } from './listeners.a';
+export const syntaxKinds: readonly number[] = listenerKinds;
 import type { RuleContext } from '../../context.ts';
 import { Fix, Suggestion, SuggestedFinding, requireDetailedReporting } from './suggestions.a';
 import { message, suggestion } from './messages.a';

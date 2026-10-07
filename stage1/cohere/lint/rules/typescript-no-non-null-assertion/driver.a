@@ -65,12 +65,12 @@ function run(row: string, countOnly: boolean): number {
         if(finding instanceof SuggestedFinding) {
             for(const suggestion of finding.suggestions) {
                 console.log(`suggestion\t${suggestion.id}\t${written(suggestion.message)}`);
-                for(const fix of suggestion.fixes) {
+                for(const fix of suggestion.edits) {
                     console.log(`edit ${offsets[fix.start]} ${offsets[fix.end]}\t${written(fix.text)}`);
                 }
                 if(fields[6] === 'apply') {
                     let suggested = source.text;
-                    const fixes = suggestion.fixes.slice().sort((left, right) => right.start - left.start);
+                    const fixes = suggestion.edits.slice().sort((left, right) => right.start - left.start);
                     for(const fix of fixes) {
                         suggested = suggested.slice(0, fix.start) + fix.text + suggested.slice(fix.end);
                     }

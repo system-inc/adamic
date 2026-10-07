@@ -36,3 +36,60 @@ Landing refresh: fetched all origin heads and rebased cleanly onto origin/main f
 Parked under system_adamic's explicit shared-harness exception. On current main f8013f0b, the preserved TestRulesAgree gate passes in 33.891s (evidence/parking-main.log). Owned directory registration remains the separately named red TestOwnedWitnesses gate, awaiting the single harness owner on #zmh9v36. No shared bridge or option-text edits are made. Numeric declaration parity and its twelve clean-executing mutants remain recorded in SPEED_REPORT.md; rule behavior validation remains bounded as in the original reports. This parking status does not claim whole-rule integration parity. Resume landing immediately when the harness commit is named, before taking further work.
 
 Parking refresh on origin/main c01907a70: clean rebase, no new shared-file hunks. Preserved main TestRulesAgree PASS 30.010s, 751,320 equal bytes. Named shared registration blocker remains: TestOwnedWitnesses FAIL 2.550s with require-description witness missing findings. Both logs are retained under evidence/parking-c01907a7-*.log. No shared bridge or option-text edit. Incoming developer-tools changes remain intact. Continue parked under the explicit exception, awaiting the named harness SHA on #zmh9v36. No fresh whole-owned-rule parity is asserted.
+
+
+## Named harness refresh, 2026-10-07
+
+Replayed owned commits onto ab70f38d47de1d4974082b38f84a56af2368b7af,
+then merged current origin/main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06.
+Both commits are ancestors. Only codex/lint-wave1-02-land is pushed.
+The original wave branch remains historical; helper delivery stays at
+38392a1ca1e8a567173ea5965b85dff496b8f94a. No new helper claim.
+
+Shared-file conflict hunks changed: zero relative to the named harness.
+Superseded registration foundation commits were skipped. At the old
+reconciliation commit, the owner's exact versions of .gitignore, CLAUDE.md,
+context.ts, settings.ts, main.ts, lint_test.go, registration_test.go,
+registry/registry.go, registry/registry_test.go and docs/lint-registration.md
+were restored. Subsequent main changes merged cleanly. No main rule was
+removed. The incoming allocator and compiler changes were retained.
+
+Owned compatibility edits: Fix now extends shared SuggestionEdit; owned
+Suggestion extends shared Suggestion and retains its private fixes alias;
+SuggestedFinding fills the inherited suggestions array instead of redeclaring
+it. The private driver reads edits. Twelve entry modules declare syntaxKinds
+rather than using an unsupported forwarding export. The owned verifier now
+preserves that declaration and is idempotent. Existing .ts entries use the
+explicit temporary allowance; all new Adamic modules remain .a.
+
+Observed gates, after sourcing /workspace/adamic-tools/env.sh:
+
+- go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1:
+  FAIL 10.272s. Restricted-types witness has zero Go findings because this
+  rule deliberately bans nothing by default and the witness gate supplies no
+  configured Types. No runtime comparison was reached.
+- go test ./stage1/cohere/lint -run '^TestRulesAgree$' -count=1:
+  final FAIL 47.290s, after capturing 2,760 upstream combinations and compiling
+  sanitized native. Go oracle panics decoding an all-row: require-description
+  receives another rule's allowLoop option and rejects that unknown field.
+  Shared oracle option isolation is needed before comparison can run.
+- python3 stage1/cohere/lint/rules/id-length/verify-numeric-listeners.py:
+  final PASS, 136 equal bytes against actual Go kinds on source Node, emitted
+  JavaScript and sanitized native. Each of twelve first-kind-plus-one mutants
+  compiled and ran successfully; only byte comparison caught all twelve on
+  all three backends. This proves declarations, not whole-rule behavior.
+- git diff --check passes. nproc=5. Toolchain setup was already completed for
+  this main at 100s total/cache warm; its log remains in the helper evidence.
+
+Earlier failures are retained: initial suggestion field incompatibility;
+unsupported forwarding export; and verifier interference that temporarily
+restored forwarding exports during a concurrent baseline run. The verifier
+was fixed, then both checks were rerun sequentially. None counts as a mutant.
+
+Remaining owned integration boundaries also include the explicit private
+CFG-end adapter for array-callback-return, multi-edit automatic fixes and the
+old detailed-reporting guard. These have not been certified with the unified
+shared driver. No silent fallback was added. No fresh whole-rule parity,
+throughput, semantic-mutant green, full repository gate or landing-ready green
+is asserted. The landing cap prevents further helper work until the named
+shared gates run successfully. Shared harness files remain untouched.

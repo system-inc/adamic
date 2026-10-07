@@ -11,8 +11,8 @@ for i,name in enumerate(names):
  vals=[int(values[k]) for k in kinds]
  (base/name/'listeners.a').write_text('// Numeric parser kinds from pinned Go cohere AST.Kind.\n// The shared numeric driver must deliver the matching node directly.\nexport const syntaxKinds: readonly number[] = ['+', '.join(map(str,vals))+'];\n')
  entry=base/name/'rule.ts'; text=entry.read_text()
- prefix="export { syntaxKinds } from './listeners.a';\n"
- text=prefix+text.removeprefix(prefix)
+ prefix="import { syntaxKinds as listenerKinds } from './listeners.a';\nexport const syntaxKinds: readonly number[] = listenerKinds;\n"
+ text=prefix+text.removeprefix("export { syntaxKinds } from './listeners.a';\n").removeprefix(prefix)
  entry.write_text(text)
  runner.append(f"import {{ syntaxKinds as kinds{i} }} from '{base/name}/listeners.a';")
  runner.append(f"for (const kind of kinds{i}) console.log(String(kind));")

@@ -1,4 +1,5 @@
-export { syntaxKinds } from './listeners.a';
+import { syntaxKinds as listenerKinds } from './listeners.a';
+export const syntaxKinds: readonly number[] = listenerKinds;
 import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import { Parser } from '../../../../typescript/parser/parser.ts';
