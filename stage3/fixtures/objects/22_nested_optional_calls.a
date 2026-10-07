@@ -1,0 +1,24 @@
+// From TypeScript 6.0.3, src/compiler/moduleNameResolver.ts:3051
+// Census reason: a call through ?. (an optional call)
+type ModuleResolutionHost = {getGlobalTypingsCacheLocation?: () => string};
+type ModuleSpecifierResolutionHost = ModuleResolutionHost;
+function forEachAncestorDirectory<T>(directory: string, callback: (directory: string) => T | undefined): T | undefined {
+    const value = callback(directory); if (value !== undefined) return value;
+    return callback("/");
+}
+export function forEachAncestorDirectoryStoppingAtGlobalCache<T, P extends string>(
+    host: ModuleResolutionHost | ModuleSpecifierResolutionHost,
+    directory: P,
+    callback: (directory: P) => T | undefined,
+): T | undefined {
+    const globalCache = host?.getGlobalTypingsCacheLocation?.();
+    return forEachAncestorDirectory(directory, ancestorDirectory => {
+        const result = callback(ancestorDirectory as P);
+        if (result !== undefined) return result;
+        if (ancestorDirectory === globalCache) return false;
+    }) || undefined;
+}
+
+
+console.log(`${forEachAncestorDirectoryStoppingAtGlobalCache({getGlobalTypingsCacheLocation: () => "/"}, "/project", () => undefined)}`);
+console.log(`${forEachAncestorDirectoryStoppingAtGlobalCache({}, "/project" as string, directory => directory === "/" ? "root" : undefined)}`);

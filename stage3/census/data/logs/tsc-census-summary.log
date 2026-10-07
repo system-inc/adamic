@@ -1,0 +1,79 @@
+{
+  "original_files": 77,
+  "original_lines": 192636,
+  "all_original_files": 79,
+  "prepared_source_files": 78,
+  "stock_runs": 78,
+  "upstream_runs": 79,
+  "stock_diagnostics": 6569,
+  "upstream_diagnostics": 29,
+  "stock_kinds": {
+    "checker": 78
+  },
+  "upstream_kinds": {
+    "checker": 79
+  },
+  "stock_seconds": 283.303279338,
+  "upstream_seconds": 226.234490924,
+  "source_sites": {
+    "an ExportDeclaration": 77,
+    "enum": 164,
+    "non-boolean control condition": 6697,
+    "type assertion sites": 4101,
+    "a function inside a function (a closure)": 5574,
+    "the non-null assertion !": 1123,
+    "||=": 110,
+    "a type predicate": 651,
+    "explicit any": 210,
+    "a namespace": 11,
+    "in": 10,
+    "the void operator": 15,
+    "the comma operator": 47,
+    "yield (generators)": 16,
+    "a label": 10,
+    "an index signature": 11,
+    "a spread after the first field": 17,
+    "Record<string, T>": 5,
+    "delete": 2,
+    "debugger": 1,
+    "a definite assignment assertion !": 12,
+    "&&=": 1
+  },
+  "module_cycle_sizes": [
+    76
+  ],
+  "host_families": {
+    "System": 196,
+    "process": 30,
+    "performance": 12,
+    "require": 9,
+    "clearTimeout": 1,
+    "setTimeout": 1,
+    "_os": 2,
+    "_fs": 19,
+    "__filename": 1,
+    "_path": 6,
+    "global": 2,
+    "Buffer": 2,
+    "fsRealpath": 1,
+    "_crypto": 1
+  },
+  "non_source_runs": [
+    {
+      "roots": [
+        "<typescript>/src/compiler/diagnosticMessages.json"
+      ],
+      "kind": "error",
+      "reason": "load: <typescript>/src/compiler/diagnosticMessages.json is not an Adamic source; want a .ts or .a file",
+      "seconds": 3.4101e-05
+    },
+    {
+      "roots": [
+        "<typescript>/src/compiler/tsconfig.json"
+      ],
+      "kind": "error",
+      "reason": "load: <typescript>/src/compiler/tsconfig.json is not an Adamic source; want a .ts or .a file",
+      "seconds": 3.335e-06
+    }
+  ]
+}
