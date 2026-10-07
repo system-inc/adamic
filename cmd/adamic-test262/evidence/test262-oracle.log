@@ -1,0 +1,37 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/pad_too_long.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/pad_too_long.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/pad_too_long.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings.a (3.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a (3.16s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a (3.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/pad_too_long.a (3.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a (3.25s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a (0.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a (0.44s)
+PASS
+gate cache: native hits=0 misses=20
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.619s

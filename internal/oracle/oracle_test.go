@@ -46,6 +46,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_views_characters.a", true, false},
 	{"internal/oracle/testdata/string_views_calls.a", true, false},
 	{"internal/oracle/testdata/string_views_surrogates.a", true, false},
+	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
 	{"internal/oracle/testdata/route_targets_virtual_fresh.a", true, false},
 	{"internal/oracle/testdata/route_targets_unknown.a", true, false},
@@ -501,6 +502,15 @@ type run struct {
 func execute(t *testing.T, name string, arguments ...string) run {
 	t.Helper()
 	return executeWith(t, nil, name, arguments...)
+}
+
+// leakSanitizer asks AddressSanitizer to check for leaks where it can. macOS's has no leak detector
+// and aborts when asked for one; there the leak check is internal/leakcheck's counted build.
+func leakSanitizer() string {
+	if runtime.GOOS == "darwin" {
+		return "ASAN_OPTIONS=detect_leaks=0"
+	}
+	return "ASAN_OPTIONS=detect_leaks=1"
 }
 
 // executeWith runs a command with environment added to the test's own; a later value for the same

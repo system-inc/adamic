@@ -1,0 +1,30 @@
+--- PASS: TestNestedConstructorGap (0.18s)
+    lint_test.go:321: cohere cases: 217 unique source/rule/options combinations
+    lint_test.go:346: Go, Node, native identical: 128446 bytes
+--- PASS: TestRulesAgree (38.21s)
+    lint_test.go:380: compiler and stage1: 193 files
+    lint_test.go:381: Go, Node, native identical: 12465548 bytes
+--- PASS: TestCompilerAndStage1Agree (50.28s)
+    lint_test.go:458: debugger fix suppressed caught on Node: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t", Go "range 0 9 unexpectedDebugger fix\t\t"
+    lint_test.go:458: debugger fix suppressed caught on native: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t", Go "range 0 9 unexpectedDebugger fix\t\t"
+    lint_test.go:428: mutant anchor count: 0 for "if(!functionBody && !(this.context.allowCatch"
+    lint_test.go:458: suggestion applied as fix caught on Node: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+    lint_test.go:458: suggestion applied as fix caught on native: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+    lint_test.go:458: var declaration suppressed caught on Node: case 12 line 286: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed4030732734/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed4030732734/004/generated-3.ts:1:1"
+    lint_test.go:458: var declaration suppressed caught on native: case 12 line 286: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed4030732734/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed4030732734/004/generated-3.ts:1:1"
+    lint_test.go:458: duplicate case suppressed caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed2676553093/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed2676553093/001/generated-0.ts:1:125"
+    lint_test.go:458: duplicate case suppressed caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed2676553093/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed2676553093/001/generated-0.ts:1:125"
+--- FAIL: TestMutants (91.63s)
+    --- PASS: TestMutants/debugger_fix_suppressed (22.11s)
+    --- FAIL: TestMutants/empty_function_body_reported (0.01s)
+    --- PASS: TestMutants/suggestion_applied_as_fix (21.91s)
+    --- PASS: TestMutants/var_declaration_suppressed (20.78s)
+    --- PASS: TestMutants/duplicate_case_suppressed (24.17s)
+    registration_test.go:42: Go, Node, native identical: 5438 bytes
+--- PASS: TestOwnedWitnesses (20.03s)
+    registration_test.go:61: wrong descriptor kind caught on Node: case 0 line 2: port "fixed\tdebugger;\\u000a", Go "/tmp/adamic-gate/TestRegistrationMutant3323751196/002/no-debugger-0.ts:1:1"
+    registration_test.go:61: wrong descriptor kind caught on native: case 0 line 2: port "fixed\tdebugger;\\u000a", Go "/tmp/adamic-gate/TestRegistrationMutant3323751196/002/no-debugger-0.ts:1:1"
+--- PASS: TestRegistrationMutant (18.85s)
+    registration_test.go:122: finish-hook omission caught on Node
+    registration_test.go:122: finish-hook omission caught on native
+--- PASS: TestFactoryHooks (35.02s)

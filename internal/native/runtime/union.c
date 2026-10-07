@@ -59,9 +59,9 @@ adamic_string *adamic_union_to_string(adamic_heap *value) {
 	}
 }
 
-adamic_string *adamic_union_typeof(const adamic_heap *value) {
+adamic_string *adamic_union_typeof(const adamic_heap *value, bool null) {
 	if (value == NULL) {
-		return &adamic_typeof_undefined;
+		return null ? &adamic_typeof_object : &adamic_typeof_undefined;
 	}
 	switch (value->kind) {
 	case adamic_kind_number:
@@ -72,6 +72,10 @@ adamic_string *adamic_union_typeof(const adamic_heap *value) {
 		return &adamic_typeof_string;
 	case adamic_kind_closure:
 		return &adamic_typeof_function;
+	case adamic_kind_object: {
+		const adamic_object *object = (const adamic_object *)value;
+		return object->class != NULL && object->class->is_static ? &adamic_typeof_function : &adamic_typeof_object;
+	}
 	default:
 		return &adamic_typeof_object;
 	}
