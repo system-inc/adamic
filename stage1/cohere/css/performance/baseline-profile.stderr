@@ -1,0 +1,14 @@
+==74016== Callgrind, a call-graph generating cache profiler
+==74016== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==74016== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==74016== Command: /workspace/scratch/css-perf/baseline/profiled /workspace/scratch/css-perf/baseline/sample.txt count once
+==74016== 
+==74016== For interactive control, run 'callgrind_control -h'.
+==74016== brk segment overflow in thread #1: can't grow to 0x485b000
+==74016== (see section Limitations in user manual)
+==74016== NOTE: further instances of this message will not be shown
+==74016== 
+==74016== Events    : Ir
+==74016== Collected : 4387115814
+==74016== 
+==74016== I   refs:      4,387,115,814
