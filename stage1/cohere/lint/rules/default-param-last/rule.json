@@ -1,0 +1,19 @@
+{
+  "name": "default-param-last",
+  "kinds": [
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "ArrowFunction",
+    "MethodDeclaration",
+    "Constructor",
+    "GetAccessor",
+    "SetAccessor"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleDefaultParamLastCore",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestDefaultParamLast"
+}
