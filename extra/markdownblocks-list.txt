@@ -1,0 +1,50 @@
+TestMarkdownASTPreprocessing
+TestWholeDocumentOraclePreflight
+TestMicromarkInputChunks
+TestMarkdownSourceDecoding
+TestFrontMatterStage
+TestParserRepresentationProbes
+TestMarkdownListLayout
+TestMarkdownQuoteLayout
+TestMarkdownTableLayout
+TestMarkdownCodeBlockLayout
+TestMarkdownHTMLBlockLayout
+TestMarkdownWhitespaceLayout
+TestMarkdownLeafComposition
+TestMarkdownRootLayout
+TestMarkdownStructureLayout
+TestOptionalStringInitializationWitness
+TestMarkdownParserPrefixes
+TestNativeBuildModesAreDistinct
+TestMarkdownTextSplitting
+TestMarkdownUnicodeWidths
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	0.008s
+
+Groups (each top-level test exactly once):
+[
+  [
+    "TestMarkdownListLayout",
+    "TestMarkdownQuoteLayout",
+    "TestMarkdownTableLayout",
+    "TestMarkdownCodeBlockLayout",
+    "TestMarkdownHTMLBlockLayout",
+    "TestMarkdownWhitespaceLayout",
+    "TestMarkdownLeafComposition",
+    "TestMarkdownRootLayout",
+    "TestMarkdownStructureLayout"
+  ],
+  [
+    "TestMarkdownASTPreprocessing",
+    "TestWholeDocumentOraclePreflight",
+    "TestMicromarkInputChunks",
+    "TestMarkdownSourceDecoding",
+    "TestFrontMatterStage",
+    "TestParserRepresentationProbes",
+    "TestOptionalStringInitializationWitness",
+    "TestMarkdownParserPrefixes",
+    "TestNativeBuildModesAreDistinct",
+    "TestMarkdownTextSplitting",
+    "TestMarkdownUnicodeWidths"
+  ]
+]
+Union diff: empty; missing=0 extra=0 duplicates=0
