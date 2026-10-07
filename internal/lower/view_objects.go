@@ -8,20 +8,26 @@ import (
 
 // A read of a structural object checks its own heap kind. Register every descendant
 // field too: returning or aliasing that object must not lose the checks on its reads.
-// Interface descendants are the next family; the root may be an existing interface.
+// Interface descendants share the same data checks, including inherited fields.
 func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields map[string]bool, seen map[*checker.Type]bool, descendant bool) error {
+	if descendant && viewInterfaceType(target) {
+		return l.viewInterfaceFields(node, target, fields, seen)
+	}
 	if seen[target] {
 		return nil
 	}
 	seen[target] = true
-	if descendant && viewInterfaceType(target) {
-		return l.notYet(node, "an interface field in a checked view")
-	}
 	if isClassInstance(target) {
 		return l.notYet(node, "a nominal class field in a checked view")
 	}
+	if len(l.checker.GetIndexInfosOfType(target)) != 0 {
+		return l.notYet(node, "a dictionary checked view")
+	}
 	for _, property := range l.checker.GetPropertiesOfType(target) {
 		declared := l.checker.GetTypeOfSymbol(property)
+		if l.callableViewContract(declared) {
+			return &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
+		}
 		of, known := l.representation(declared)
 		if property.Flags&ast.SymbolFlagsOptional != 0 || !viewDataType(declared) || !known || of < ir.Number || of > ir.Object {
 			return l.notYet(node, "checked view field "+property.Name+" of type "+l.checker.TypeToString(declared))

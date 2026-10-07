@@ -1,8 +1,8 @@
-Built so far: lane 1 object-family transitive reads, tagged/untagged structural admission, shared readiness, and reusable semantic contract descriptors/hooks.
-Commits: plan 4dbf3b6a; re-greened main merge 00d6006a; object-family checkpoint follows on codex/interface-downcasts only.
-Commands and outputs: touched lower/IR packages PASS 22.358s/23.310s; restored oracle/count check PASS 36.161s; scoped vet PASS; six new source count rows, no changed existing row.
-Mutants: dropped read/readiness/type, no-proof erasure, skipped transitive object view, and double evaluation all caught by independent semantic assertions with valid C.
-Not covered: named-interface descendants, optional/mixed/nullish union contracts, array/callable integration, proof erasure, tsc timings; complete tsc sites remain 0/1,758 and 0/1,178.
+Built: lane 1 object and named-interface transitive views, inherited/recursive contracts and shared readiness; union family remains in progress.
+Commits: plan 4dbf3b6a, main merge 00d6006a, objects df7bc5da; interface checkpoint follows on this feature branch only.
+Commands and outputs: full lower PASS 10.706s; uncached interface/object oracle and count regeneration PASS 28.141s; four new rows, no old row changed.
+Mutants: field/readiness/type removal, no-proof erasure, object/interface transitivity and double evaluation are pinned by semantic assertions, never clang or sanitizers.
+Not covered: optional/nullish/mixed unions, array/callable integration, proof erasure or timings; complete tsc sites remain 0/1,758 and 0/1,178.
 
 No main or area branch was pushed or merged into. Both dependency merges were into
 `codex/interface-downcasts`; only that feature branch was pushed. The unit is still
@@ -378,3 +378,34 @@ plus TestCountsAreRecorded; metadata/write-certificate lower tests; scoped vet;
 primitive-mutants.py. Test output goes to lane1-objects-*.log. The six new count rows
 are the only changes after the main merge; successes balance allocations/frees.
 The full repository adapter gate and performance benchmarks were not run.
+
+## Lane 1 interfaces family
+
+Named interface descendants, inherited fields and cyclic schema links now use the
+same view read checks as anonymous objects. No extra initialization representation
+was introduced. The unread recursive next field may stay uninitialized; its first
+read fails with the expected Child contract and shared uninitialized state.
+
+Four ordinary source fixtures exercise success, missing and incorrectly typed
+inherited fields, and an uninitialized object-valued recursive link. Successful
+output matches source Node byte for byte; all negative checks pin exit 70 and
+expression/property, expected contract and found category on both backends.
+Counts add only these four rows; existing rows do not move.
+
+The pinned 2,936-site target-contract audit has zero unmatched spans and zero
+stock-checker diagnostics. Zero complete eligible contracts means no complete
+tsc sites unlocked by this family. Tagged first blockers: 1,275 union/nullish/
+intersection/generic, 344 optional, 25 callable, 111 dictionary, 3 array. Untagged:
+349 union/nullish/intersection/generic, 281 optional, 438 callable, 8 dictionary,
+102 array. Named-interface recursion exposes nested callable dependencies beyond
+the earlier direct-only 19/71; these are first-blocker counts, not exhaustive
+counts of every nested dependency. The original lane partition stays direct-only.
+
+Commands: go test ./internal/lower -count=1 -timeout 30m;
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'TestCheckedViewInterfaces|TestCheckedViewObjects|TestCountsAreRecorded'
+-count=1 -v -timeout 30m -args -update-counts; the pinned interfaces-contract audit;
+primitive-mutants.py; scoped lower/oracle vet. Outputs are lane1-interfaces-*.log.
+The interface-specific production mutant skips named-descendant registration;
+valid release C then prints false instead of the independently pinned failure.
+The full repository adapter gate and release benchmark were not run.

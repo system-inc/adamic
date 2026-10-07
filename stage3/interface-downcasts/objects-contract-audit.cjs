@@ -21,13 +21,14 @@ const config=ts.parseJsonConfigFileContent(read.config,ts.sys,path.dirname(confi
 const program=ts.createProgram(config.fileNames,config.options);
 const checker=program.getTypeChecker();assert.equal(ts.getPreEmitDiagnostics(program).length,0);
 
+const family=process.argv[6]||'objects';assert.ok(['objects','interfaces'].includes(family));
 const parts=t=>t.isUnion()?t.types:[t];
 const callable=t=>parts(t).some(p=>checker.getSignaturesOfType(p,ts.SignatureKind.Call).length || checker.getSignaturesOfType(p,ts.SignatureKind.Construct).length);
 const scalar=t=>parts(t).every(p=>!!(p.flags&(ts.TypeFlags.String|ts.TypeFlags.StringLiteral|ts.TypeFlags.Number|ts.TypeFlags.NumberLiteral|ts.TypeFlags.Boolean|ts.TypeFlags.BooleanLiteral))) && (parts(t).every(p=>p.flags&ts.TypeFlags.StringLike) || parts(t).every(p=>p.flags&ts.TypeFlags.NumberLike) || parts(t).every(p=>p.flags&ts.TypeFlags.BooleanLike));
 const iface=t=>!!(t.objectFlags&ts.ObjectFlags.Interface) || !!(t.objectFlags&ts.ObjectFlags.Reference && t.target?.objectFlags&ts.ObjectFlags.Interface);
 function contract(t,seen=new Set(),descendant=false) {
  if(seen.has(t))return undefined;seen.add(t);
- if(descendant && iface(t))return 'NotYet: interface descendant';
+ if(family==='objects' && descendant && iface(t))return 'NotYet: interface descendant';
  if(t.objectFlags & ts.ObjectFlags.Class || t.objectFlags & ts.ObjectFlags.Reference && t.target?.objectFlags & ts.ObjectFlags.Class)return 'NotYet: nominal class field';
  if(checker.getIndexInfosOfType(t).length)return 'NotYet: dictionary view';
  const properties=checker.getPropertiesOfType(t);
@@ -61,5 +62,5 @@ for(const file of program.getSourceFiles()) {
  visit(file);
 }
 assert.equal(lookup.size,0);const counts={};for(const row of rows){const key=row.kind+': '+row.reason;counts[key]=(counts[key]||0)+1;}
-const summary={typescript:ts.version,source_commit:'050880ce59e30b356b686bd3144efe24f875ebc8',counts,limits:'Required scalar and anonymous-object contract rejection upper bound, not full-source lowering. Interface descendants, arrays, optional/mixed unions and nominal fields remain unsupported. Source representation, aliases and writable-slot checks may add reasons. Zero eligible targets proves zero complete sites unlocked; positive eligibility requires actual lowerer probes.'};
-fs.writeFileSync(path.join(output,'objects-contract-sites.json'),JSON.stringify(rows,null,2)+'\n');fs.writeFileSync(path.join(output,'objects-contract-summary.json'),JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary,null,2));
+const summary={typescript:ts.version,source_commit:'050880ce59e30b356b686bd3144efe24f875ebc8',counts,limits:'Required scalar and '+family+' contract rejection upper bound, not full-source lowering. Arrays, optional/mixed unions and nominal fields remain unsupported; objects-only also excludes interface descendants. Source representation, aliases and writable-slot checks may add reasons. Zero eligible targets proves zero complete sites unlocked; positive eligibility requires actual lowerer probes.'};
+fs.writeFileSync(path.join(output,family+'-contract-sites.json'),JSON.stringify(rows,null,2)+'\n');fs.writeFileSync(path.join(output,family+'-contract-summary.json'),JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary,null,2));
