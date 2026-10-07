@@ -64,3 +64,20 @@ area/stage1-lint. Existing blocker controls and partial work are pushed in
 wave_01_third. The six completed ports are oracle-green on main f8013f0b and
 published through 25f5e73b. These three reservations stay parked until their
 shared dependencies land; they are not offered to another worker implicitly.
+
+## Fourth batch after parking React
+
+The six completed ports are landing-ready on origin/main f8013f0b, oracle-green
+and pushed. The React batch is parked under the instruction above.
+After inspecting 529 origin refs, main and tsgo-c-library ports, and every origin
+claim document, reserve these next non-React entries (all zero on both corpora):
+
+1. require-atomic-updates
+2. require-await
+3. symbol-description
+
+React entries and structure/react-hook-no-any-type are skipped while React is
+parked. These three use checker/ordinary CFG facts rather than React HIR/SSA.
+The immediate pre-claim refresh found none claimed. This reservation is pushed
+before implementation. New handlers must consume numeric node kinds and nodes
+from the shared driver; their rule.json kinds declare that contract.
