@@ -91,11 +91,15 @@ func (l *lowering) checkArrayHoles() error {
 		var operation string
 		switch node := node.(type) {
 		case ir.ArrayPush, ir.ArrayPop, ir.ArraySlice,
-			ir.ArraySort, ir.ArrayFill, ir.ArraySplice, ir.ArrayReverse,
+			ir.ArrayFill, ir.ArraySplice, ir.ArrayReverse,
 			ir.ArrayConcat, ir.ArrayFrom, ir.JSONStringify, ir.ObjectCall,
 			ir.ObjectKeys, ir.HasOwn, ir.SetNew, ir.MapNew,
 			ir.NodeBufferCall, ir.NodeHostCall, ir.UnionToString:
 			operation = fmt.Sprintf("%T", node)
+		case ir.ArraySort:
+			if !node.DefaultStrings {
+				operation = fmt.Sprintf("%T", node)
+			}
 		case ir.Length:
 			if read, ok := node.Array.(ir.Read); ok && l.arrayLocalUntyped(read.Local) {
 				return false
@@ -217,7 +221,9 @@ func (l *lowering) arrayHolesSourceRefusal() error {
 					found = l.notYet(node, "array "+name+" with nullable elements whose null and undefined slots are not distinguished")
 					return true
 				}
-				if denied[name] {
+				element, elementError := l.elementType(access.Expression)
+				defaultStrings := name == "sort" && len(node.AsCallExpression().Arguments.Nodes) == 0 && elementError == nil && element == ir.String
+				if denied[name] && !defaultStrings {
 					receiver, known := l.representation(l.checker.GetTypeAtLocation(access.Expression))
 					if known && receiver == ir.Array {
 						found = l.notYet(node, "array "+name+" on a potentially holey array")

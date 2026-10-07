@@ -418,7 +418,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ArraySort:
 		array := e.value(expression.Array)
 		sort := "adamic_array_sort"
-		if expression.Element == ir.MaybeNumber {
+		if expression.DefaultStrings {
+			sort = "adamic_array_sort_strings"
+		} else if expression.Element == ir.MaybeNumber {
 			sort = "adamic_array_sort_undefined_last"
 		}
 		// A comparator that throws stops the sort, which leaves the array as it was, as V8's does

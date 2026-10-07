@@ -590,6 +590,8 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
 // a function value, the context.
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
+// Default string sort: present strings in UTF-16 order, then undefined, then holes.
+void adamic_array_sort_strings(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
 // adamic_timsort sorts count values in place by V8's algorithm (sort.c). It says false, the values
 // in some order of the sort's half done, when the comparator threw (adamic_thrown set).
