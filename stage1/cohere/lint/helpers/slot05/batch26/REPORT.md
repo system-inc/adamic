@@ -22,7 +22,7 @@ Each same-source baseline agrees byte-for-byte with actual Go on source Node, em
 
 ## Readiness
 
-Each regex helper removes a prerequisite for no-control-regex, no-regex-spaces and no-useless-escape. The React helper removes one for react/no-access-state-in-setstate, react/no-set-state and react/no-unused-state. Nine dependency occurrences across six unique blocked consumers; no final blocker is removed by this trio alone. Cumulative owned readiness is 74 helpers, 383 prerequisite occurrences, 73 unique consumers and 50 helper-ready rules under frozen common AST adapter assumptions. No rule is declared ported. All existing reservations are complete after this batch.
+Each regex helper removes a prerequisite for no-control-regex, no-regex-spaces and no-useless-escape. The React helper removes one for react/no-access-state-in-setstate, react/no-set-state and react/no-unused-state. Nine dependency occurrences across six unique blocked consumers; no final blocker is removed by this trio alone. Cumulative owned readiness is 74 helpers, 383 prerequisite occurrences, 76 unique consumers and 51 helper-ready rules under frozen common AST adapter assumptions. Combined with the previous 71 helpers, this trio removes the final listed helper blocker for no-useless-escape, adding one helper-ready candidate. This is a frozen dependency calculation, not observed rule findings parity. No rule is declared ported. All existing reservations are complete after this batch.
 
 ## Validation commands and setup timing
 
