@@ -60,6 +60,7 @@ var Features = []string{
 	"shared-slices",     // long strings, slices that share their owner's bytes, and += on those slices
 	"ownership",         // narrowed lends, borrowed elements, spreads that call methods, capturing constructors
 	"overrides",         // static read-only signatures with implementations that mutate or escape arguments
+	"operators",         // every operator over every value representation, directly and carried (operators.go)
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -71,6 +72,11 @@ func GenerateWithout(seed uint64, without []string) *Program {
 // GenerateFeatures makes the program a seed names with some features left out and some of OptIn
 // put in. The same seed and the same features always make the same program.
 func GenerateFeatures(seed uint64, without []string, with []string) *Program {
+	return newGenerator(seed, without, with).program()
+}
+
+// newGenerator is the generator for a seed and its features, before it has made anything.
+func newGenerator(seed uint64, without []string, with []string) *generator {
 	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}, with: map[string]bool{}, seed: seed}
 	for _, feature := range without {
 		generator.without[feature] = true
@@ -78,7 +84,7 @@ func GenerateFeatures(seed uint64, without []string, with []string) *Program {
 	for _, feature := range with {
 		generator.with[feature] = true
 	}
-	return generator.program()
+	return generator
 }
 
 // allowed says whether a feature may be used.
@@ -115,6 +121,8 @@ type generator struct {
 	// can call them, so a print there runs once per call, and the calls multiply: seed 90's bump printed
 	// 17315 lines, 2.5 megabytes, which made the program unfit.
 	silent bool
+	// operators is what the operators scene wrote, for its test (operatorSeen).
+	operators map[string]bool
 }
 
 // function is a callable the generator made: a name, its parameter types, and what it returns.
@@ -250,6 +258,11 @@ func (g *generator) program() *Program {
 	}
 	if g.allowed("undefined-numbers") {
 		for _, part := range g.undefinedNumbersProgram() {
+			add(part)
+		}
+	}
+	if g.allowed("operators") {
+		for _, part := range g.operatorsProgram() {
 			add(part)
 		}
 	}
