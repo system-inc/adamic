@@ -1,0 +1,137 @@
+[
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "const before = 1;\nimport { type A, type B } from 'mod';\n"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import   {   type   A   }   from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import * as T from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import T from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import T, { type U } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import type * as T from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import type T from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import type { T } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import type { T, U } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import type { type A } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import {\n\ttype A,\n\ttype B,\n} from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { T } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { T, type U } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { type 'a' as A } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { type A as AA } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { type A as AA, type B as BB } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { type A } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { type A, type B } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { type T, U } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { type as as as } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { type as } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { type default as A } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import { type type } from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import {type A} from 'mod';"
+  },
+  {
+    "file": "/repository/source/ImportTypeSideEffects.ts",
+    "options": null,
+    "sourceText": "import {} from 'mod';"
+  },
+  {
+    "file": "/source.ts",
+    "options": null,
+    "sourceText": "import { type A as AA, type B } from 'mod';\nimport   {   type   é   }   from 'mod';\nimport {} from 'mod';\nimport { type as as as } from 'mod';\nimport T, { type A } from 'mod';\n"
+  }
+]
