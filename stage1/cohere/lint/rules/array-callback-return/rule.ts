@@ -1,3 +1,4 @@
+export { syntaxKinds } from './listeners.a';
 import type { RuleContext } from '../../context.ts';
 import { Fix, Suggestion, SuggestedFinding, requireDetailedReporting } from '../typescript-no-non-null-assertion/suggestions.a';
 import { graphEnd } from './graph-boundary.a';

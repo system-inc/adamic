@@ -1,0 +1,15 @@
+baseline bytes 136 Go matches True True True
+mutant array-callback-return bytes 136 Go matches False False False
+mutant arrow-body-style bytes 136 Go matches False False False
+mutant base-consistency-no-bare-throw bytes 136 Go matches False False False
+mutant dot-notation bytes 136 Go matches False False False
+mutant eslint-comments-require-description bytes 136 Go matches False False False
+mutant grouped-accessor-pairs bytes 136 Go matches False False False
+mutant id-length bytes 136 Go matches False False False
+mutant structure-tailwind-no-physical-direction bytes 136 Go matches False False False
+mutant typescript-no-non-null-asserted-optional-chain bytes 136 Go matches False False False
+mutant typescript-no-non-null-assertion bytes 136 Go matches False False False
+mutant typescript-no-restricted-types bytes 136 Go matches False False False
+mutant typescript-no-this-alias bytes 136 Go matches False False False
+PASS: twelve numeric declaration mutants compile and run cleanly; all three outputs disagree with Go.
+workdir /tmp/adamic-gate/wave02-listeners-ar7sene2

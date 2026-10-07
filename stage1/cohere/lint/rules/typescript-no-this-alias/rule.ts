@@ -1,3 +1,4 @@
+export { syntaxKinds } from './listeners.a';
 import type { RuleContext } from '../../context.ts';
 import { assignment, destructure } from './messages.a';
 const name = '@typescript-eslint/no-this-alias';

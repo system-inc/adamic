@@ -1,3 +1,4 @@
+export { syntaxKinds } from './listeners.a';
 import { panic } from 'adamic';
 import { Parser } from '../../../../typescript/parser/parser.ts';
 import type { RuleContext } from '../../context.ts';

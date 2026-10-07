@@ -1,3 +1,4 @@
+export { syntaxKinds } from './listeners.a';
 import type { RuleContext } from '../../context.ts';
 import { Finding } from '../../finding.ts';
 import { comments } from './comments.a';

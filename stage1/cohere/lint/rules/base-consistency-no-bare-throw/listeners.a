@@ -1,0 +1,3 @@
+// Numeric parser kinds from pinned Go cohere AST.Kind.
+// The shared numeric driver must deliver the matching node directly.
+export const syntaxKinds: readonly number[] = [258];

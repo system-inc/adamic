@@ -1,0 +1,37 @@
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:10:53: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:12:53: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:14:53: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:16:53: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:18:53: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:20:53: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:22:54: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:24:54: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:2:53: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:4:53: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:6:53: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a:8:53: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+Traceback (most recent call last):
+  File "/tmp/wave02-listeners.py", line 32, in <module>
+    assert all(out==wanted for out in verify('baseline'))
+                                      ^^^^^^^^^^^^^^^^^^
+  File "/tmp/wave02-listeners.py", line 25, in verify
+    js=subprocess.check_output([str(work/'adamic'),'js',str(source)])
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/adamic-gate/wave02-listeners-1z6zz1g4/adamic', 'js', '/tmp/adamic-gate/wave02-listeners-1z6zz1g4/check.a']' returned non-zero exit status 1.

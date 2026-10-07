@@ -1,3 +1,4 @@
+export { syntaxKinds } from './listeners.a';
 import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import { comments, type Comment } from '../eslint-comments-require-description/comments.a';
