@@ -1,0 +1,13 @@
+{
+  "tested_rebased_head": "a69e0dc8261cb917eece5f7c04b899f1d7eefb6f",
+  "base": "59451e23eefc9d83102afd6d1a26050d6c447227",
+  "prior_pushed_head": "16054898c37e459d8b9f6768ffa75223be982991",
+  "command": "go test ./stage1/cohere/lint -run '^Test(OwnedWitnesses|Mutants|RulesAgree)$' -count=1 -v -timeout 30m",
+  "exit": 0,
+  "mutants_passed": 41,
+  "witness": "testdata/src/utils/format.ts.txt",
+  "witness_sha256": "ff36f61866923e0afdf9ee0488af11eb908b31d58169f56d910a0e8b13731b9a",
+  "upstream_test_prefix": "TestConsistencyNoUtilsFolder",
+  "upstream_case_count": 8,
+  "full_repository_gate": "unrun"
+}

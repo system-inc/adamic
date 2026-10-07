@@ -1,5 +1,9 @@
 # Nexus no utils folder port
 
+Current status: filename transport is fixed and the full unified checks pass.
+See LANDING.md and evidence/filename-fix. The following record preserves the
+earlier blocked run and its reproducer.
+
 Built the unified SourceFile listener, node:true descriptor, exact messages,
 JSON-preserving Go adapter and a clean-running mutant. Source:
 origin/codex/stage1-lint-batch4:nexus_consistency_no_utils_folder.ts. Base:
@@ -31,7 +35,7 @@ Blocker: ownedWitnesses generates a new temporary basename and upstream
 capture writes case-NNN/<basename>. These drop utils and _utils directory
 segments. The witness-options branch adds only JSON options, which this
 upstream rule ignores. The smallest path reproducer and required shared
-filename transport are documented in PARKED.md. No shared harness changed.
+filename transport are documented in BLOCKER_HISTORY.md. No shared harness changed.
 
 Independent real-path proof uses the same unified driver and unchanged Go
 registry oracle, with 21 selected/all/options rows and 12 findings. Go, source

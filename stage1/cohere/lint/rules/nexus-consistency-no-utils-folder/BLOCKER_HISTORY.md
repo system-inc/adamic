@@ -1,4 +1,7 @@
-# Filename transport blocker
+# Filename transport blocker history
+
+Resolved by shared commit 59451e23e. Current green validation is in LANDING.md.
+The observations below describe the earlier harness.
 
 The port is complete for the path predicate, ordered messages and zero-width
 SourceFile range. It listens only to SourceFile and receives the handed node.
