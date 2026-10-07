@@ -35,7 +35,7 @@ function forwarding(context: RuleContext, body: number, parameters: readonly num
     }
     for(let position = 0; position < parameters.length; position++) {
         const parameter = parameters[position] ?? -1;
-        const rest = context.children(parameter, 'DotDotDotToken').length !== 0;
+        const rest = context.has(parameter, 'DotDotDotToken');
         let argument = arguments_[position] ?? -1;
         if(rest) {
             if(context.kind(argument) !== 'SpreadElement') {
@@ -85,9 +85,9 @@ export function noUselessConstructor(context: RuleContext, index: number): void 
     }
     const extending = context.extendsClass(context.parent(index));
     if(
-        context.children(index, 'PrivateKeyword').length !== 0 ||
-        context.children(index, 'ProtectedKeyword').length !== 0 ||
-        (extending && context.children(index, 'PublicKeyword').length !== 0)
+        context.has(index, 'PrivateKeyword') ||
+        context.has(index, 'ProtectedKeyword') ||
+        (extending && context.has(index, 'PublicKeyword'))
     ) {
         return;
     }

@@ -1,0 +1,5 @@
+{
+  "name": "destructuring hole reported",
+  "from": "!this.assignmentTarget(index) &&",
+  "to": ""
+}

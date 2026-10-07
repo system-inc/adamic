@@ -3,7 +3,6 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
@@ -12,11 +11,6 @@ import (
 	"github.com/system-inc/cohere/internal/edit"
 	"github.com/system-inc/cohere/internal/lint/report"
 	"github.com/system-inc/cohere/internal/lint/rule"
-	adamic "github.com/system-inc/cohere/internal/lint/rules/adamic"
-	base "github.com/system-inc/cohere/internal/lint/rules/base"
-	rules "github.com/system-inc/cohere/internal/lint/rules/core"
-	nexus "github.com/system-inc/cohere/internal/lint/rules/nexus"
-	typescript "github.com/system-inc/cohere/internal/lint/rules/typescript"
 	"os"
 	"sort"
 	"strings"
@@ -157,124 +151,23 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoContinue, rules.NoWith, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
-	registered := registeredRules()
-	for _, item := range registered {
-		found := false
-		for index, subject := range selected {
-			if subject.Name == item.subject.Name {
-				selected[index] = item.subject
-				found = true
-			}
-		}
-		if !found {
-			selected = append(selected, item.subject)
-		}
-	}
+	// The registry's order is the listener order: the five first rules by their pinned order, then the rest
+	// by public name. The port dispatches each node in the same order, so ties at one position agree.
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
-	for _, subject := range selected {
+	for _, item := range registeredRules() {
+		subject := item.subject
 		if fields[1] != "" && fields[1] != "all" && fields[1] != subject.Name {
 			continue
 		}
 		ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
-		var options any
-		if fields[5] != "" {
-			switch subject.Name {
-			case "@typescript-eslint/method-signature-style":
-				var decoded typescript.MethodSignatureStyleOptions
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-				options = decoded
-			case "@typescript-eslint/prefer-literal-enum-member":
-				var decoded typescript.PreferLiteralEnumMemberOptions
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-				options = decoded
-			case "no-return-assign":
-				if fields[5][0] != '"' {
-					break
-				}
-				var decoded rules.NoReturnAssignOptions
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-				options = decoded
-			}
-		}
-		if subject.Name == "no-plusplus" && fields[5] != "" {
-			var decoded rules.NoPlusplusOptions
-			if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-				panic(err)
-			}
-			options = decoded
-		}
-		if subject.Name == "eqeqeq" {
-			options = rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}
-		}
-		if subject.Name == "no-bitwise" {
-			var decoded rules.NoBitwiseOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-labels" {
-			var decoded rules.NoLabelsOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-sequences" {
-			var decoded rules.NoSequencesOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "unicode-bom" {
-			var decoded rules.UnicodeBomOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-unneeded-ternary" {
-			var decoded rules.NoUnneededTernaryOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-warning-comments" {
-			var decoded rules.NoWarningCommentsOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-empty" {
-			options = rules.NoEmptyOptions{AllowEmptyCatch: fields[4] == "true"}
-		}
-		for _, item := range registered {
-			if subject.Name == item.subject.Name {
-				options = item.options(fields)
-			}
+		options := item.options(fields)
+		// A row that selects this rule and carries options must reach an adapter that decodes them. An
+		// adapter returning nil there would run the rule on its defaults and still agree with any port that
+		// reads no options either. An "all" row's options are one bag for every rule, so a rule with none of
+		// its own ignores them there.
+		if options == nil && fields[1] == subject.Name && fields[5] != "" && fields[5] != "null" {
+			panic(fmt.Sprintf("%s: options %s reached an adapter that decodes none", subject.Name, fields[5]))
 		}
 		listeners = append(listeners, subject.Run(ctx, options))
 	}
