@@ -824,6 +824,8 @@ func (a *analysis) run(id flow.InstructionId) {
 		a.value(statement.Index)
 		held := a.value(statement.Value)
 		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+	case ir.AllocateEnvironment:
+		// Empty captured storage allocates no user value and changes no existing slot.
 	case ir.Declare:
 		a.define(statement.Local, a.value(statement.Value))
 	case ir.Assign:
