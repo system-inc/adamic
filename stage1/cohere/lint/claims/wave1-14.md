@@ -86,3 +86,21 @@ the .a registry and Finding repair contract land. One modified-destructuring par
 fixture is excluded; split-UTF-8 repairs are explicitly refused. Full evidence,
 all semantic mutants and native/Node/Go findings rates are recorded in
 ../rules/typescript-eslint-prefer-as-const/COMPLETE_REPORT.md.
+
+## Fifth batch, October 7
+
+All prior ports and evidence are pushed through 110b24f6. Fetched main remains
+ef3d907ecdc4c771b016f7d9c52372def057a340. Inspected all 335 origin refs,
+330 unique commits and 38 unique claim Markdown documents, with exact public-name
+matching and main's directory descriptors and legacy lint source. All 46 helper-ready
+rules are already represented in claims. The first three remaining entries in the
+inventory's syntax ready for AST/API adaptation list are claimed here:
+
+1. no-lone-blocks
+2. no-lonely-if
+3. no-loss-of-precision
+
+Owned directories will be rules/no-lone-blocks, rules/no-lonely-if and
+rules/no-loss-of-precision. This claim is committed and pushed before rule code.
+The fresh fetch also found origin/codex/lint-harness-dot-a at 2650ad59. Its new
+.a/suggestion support is recorded for integration; no shared files are edited here.
