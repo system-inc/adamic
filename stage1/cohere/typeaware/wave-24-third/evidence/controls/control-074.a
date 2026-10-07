@@ -1,0 +1,2 @@
+let R=RegExp;R('a');R=1 as any;R('b');
+export {};

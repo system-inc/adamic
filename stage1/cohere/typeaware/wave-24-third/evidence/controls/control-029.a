@@ -1,0 +1,2 @@
+new Promise((resolve,reject)=>{function inner(){reject(5);}inner();});
+export {};

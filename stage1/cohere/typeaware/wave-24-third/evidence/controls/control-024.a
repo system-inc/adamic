@@ -1,0 +1,2 @@
+function f(Promise:any){Promise.reject(5);}
+export {};

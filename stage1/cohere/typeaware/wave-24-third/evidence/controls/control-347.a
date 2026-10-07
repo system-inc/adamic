@@ -1,0 +1,2 @@
+class C { #error; foo() { Promise.reject(this.#error); } }
+export {};

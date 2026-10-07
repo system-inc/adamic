@@ -1,0 +1,2 @@
+new Promise((resolve,reject)=>{const reject2=reject;reject2(5);});
+export {};

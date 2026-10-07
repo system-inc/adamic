@@ -1,0 +1,2 @@
+for (value in new RegExp('something being searched')) { console.log(value) }
+export {};

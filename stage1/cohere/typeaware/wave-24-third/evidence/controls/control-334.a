@@ -1,0 +1,2 @@
+new Foo((resolve, reject) => reject(5))
+export {};

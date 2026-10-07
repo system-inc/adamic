@@ -1,0 +1,2 @@
+{ class Promise { static reject(x) { return x; } } Promise.reject('x'); }
+export {};

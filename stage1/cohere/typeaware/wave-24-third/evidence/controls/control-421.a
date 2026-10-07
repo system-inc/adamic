@@ -1,0 +1,2 @@
+function foo() { arguments[Symbol.iterator]; }
+export {};

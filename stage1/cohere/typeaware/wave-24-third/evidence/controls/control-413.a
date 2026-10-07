@@ -1,0 +1,2 @@
+Promise.reject(5 as unknown as Error);
+export {};

@@ -1,0 +1,2 @@
+function* abc(){yield new RegExp("foo")}
+export {};

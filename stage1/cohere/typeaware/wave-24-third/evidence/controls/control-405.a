@@ -1,0 +1,2 @@
+declare const made: any; new Promise(made.executor);
+export {};

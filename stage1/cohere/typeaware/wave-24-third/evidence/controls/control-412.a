@@ -1,0 +1,2 @@
+declare const error: unknown; Promise.reject(error as unknown as Error);
+export {};

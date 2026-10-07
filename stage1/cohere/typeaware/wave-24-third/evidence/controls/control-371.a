@@ -1,0 +1,2 @@
+new Promise(({foo, bar, baz}, reject) => reject(5))
+export {};

@@ -1,0 +1,2 @@
+new Promise(function(yes, no) { no(5) })
+export {};

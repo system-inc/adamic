@@ -1,0 +1,2 @@
+new RegExp(String.raw`\p{Script=Greek}`,'u');
+export {};

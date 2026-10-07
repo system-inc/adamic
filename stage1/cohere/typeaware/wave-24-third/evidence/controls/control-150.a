@@ -1,0 +1,2 @@
+if (foo) { const String = bar; RegExp(String.raw`a`); }
+export {};

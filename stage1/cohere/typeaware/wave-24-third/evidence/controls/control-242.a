@@ -1,0 +1,2 @@
+console.log({ ...new RegExp('a') })
+export {};

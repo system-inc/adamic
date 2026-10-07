@@ -1,0 +1,2 @@
+new RegExp('(\\p{Emoji_Presentation})\\1' + '', `ug`)
+export {};

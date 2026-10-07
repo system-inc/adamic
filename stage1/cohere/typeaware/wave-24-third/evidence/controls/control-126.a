@@ -1,0 +1,2 @@
+func(new RegExp(String.raw`a${''}c\d`, 'u'),new RegExp(String.raw`a${''}c\d`, 'u'))
+export {};

@@ -1,0 +1,2 @@
+new Promise((resolve,{apply})=>apply(5));
+export {};
