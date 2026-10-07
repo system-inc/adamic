@@ -359,12 +359,10 @@ func (a *analysis) walk(body []ir.Statement) {
 			}
 		case ir.WriteLine:
 			a.fail("impure: console")
-		case ir.Panic:
-			a.fail("impure: panic")
-		case ir.Coalesce:
-			if node.Panic != nil {
-				a.fail("impure: panic")
-			}
+		case ir.Panic, ir.Coalesce:
+			// Panic is Wasm-safe: it aborts this call in either backend. The
+			// bridge turns AdamicPanic or native exit 70 into the same 500,
+			// preserving the message. Operand calls still undergo purity checks.
 		case ir.ReadTextFile, ir.WriteTextFile, ir.ReadDirectory, ir.FileStatus, ir.ProgramArguments:
 			a.fail("impure: adamic I/O")
 		case ir.Read:
@@ -740,9 +738,10 @@ func knownExpression(expression ir.Expression) bool {
 	return knownExpressions[reflect.TypeOf(expression).Name()]
 }
 
+// JSON decode and encode perform no I/O; their results depend only on arguments.
 var knownExpressions = func() map[string]bool {
 	result := map[string]bool{}
-	for _, name := range strings.Fields(`ArrayConcat ArrayFill ArrayFrom ArrayIndex ArrayJoin ArrayLiteral ArrayMap ArrayPop ArrayPush ArrayReduce ArrayReverse ArraySearch ArraySlice ArraySort ArraySplice ArrayVisit Binary BooleanConstant BooleanToString Box Call CallClosure CharCodeAt CheckedCast ClosureSelf Coalesce CodePoints CollectionIterator Concat Conditional Defined FileStatus HasAccessor HasOwn InstanceOf IsNull IsUndefined JSONDecode JSONNull JSONStringify Length LibraryGlobal MakeClosure MakeError MapClear MapDelete MapEntries MapForEach MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf MaybeToString Narrow Null NumberCall NumberConstant NumberFormat NumberToString ObjectCall ObjectKeys ObjectLiteral ProgramArguments Property Read ReadDirectory ReadTextFile RegExpCall RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant StringFromCodes StringIndex StringLength ToFixed Trim TypeOf Unary Undefined UnionToString Unwrap Utf8At Utf8Length WeakOf WeakTarget WriteTextFile`) {
+	for _, name := range strings.Fields(`ArrayConcat ArrayFill ArrayFrom ArrayIndex ArrayJoin ArrayLiteral ArrayMap ArrayPop ArrayPush ArrayReduce ArrayReverse ArraySearch ArraySlice ArraySort ArraySplice ArrayVisit Binary BooleanConstant BooleanToString Box Call CallClosure CharCodeAt CheckedCast ClosureSelf Coalesce CodePoints CollectionIterator Concat Conditional Defined FileStatus HasAccessor HasOwn InstanceOf IsNull IsUndefined JSONDecode JSONEncode JSONNull JSONStringify Length LibraryGlobal MakeClosure MakeError MapClear MapDelete MapEntries MapForEach MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf MaybeToString Narrow Null NumberCall NumberConstant NumberFormat NumberToString ObjectCall ObjectKeys ObjectLiteral ProgramArguments Property Read ReadDirectory ReadTextFile RegExpCall RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant StringFromCodes StringIndex StringLength ToFixed Trim TypeOf Unary Undefined UnionToString Unwrap Utf8At Utf8Length WeakOf WeakTarget WriteTextFile`) {
 		result[name] = true
 	}
 	return result

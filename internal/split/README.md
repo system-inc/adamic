@@ -12,8 +12,10 @@ sort last and retain nil boundary metadata.
 
 Purity is propagated through direct and virtual calls and closure bindings whose
 complete target set can be resolved. Unknown callees, console, Adamic I/O,
-external global observations, Weak reads, explicit panic and captured state
-prevent crossing. Closed-program global writes include assignments and mutations
+external global observations, Weak reads and captured state
+prevent crossing. Panic and compiler panic checks are Wasm-safe call aborts.
+JSON decode and encode are pure operations; crossability remains a separate
+requirement. Closed-program global writes include assignments and mutations
 through aliases, calls and contained references. A global initializer alone does
 not count as a write.
 
@@ -150,3 +152,10 @@ The interner mutant also passes ordinary fixture execution but fails the
 /tmp/workers-boundary-review-mutant-string-table-{tests,snapshot,diff}.log.
 The assertion mutant summary is /tmp/workers-boundary-review-mutants.log.
 No full repository test gate, Wasm emission or bridge generation was run.
+
+
+The panic/JSON refinement and the complete real compute Worker before/after
+decision tables are recorded in [refine-report.md](refine-report.md). Encoder
+fixtures run automatically when its independently landing compiler dependency
+is present; until then the base reports a skip and the compute integration
+witness runs the full source/JavaScript/native comparison.
