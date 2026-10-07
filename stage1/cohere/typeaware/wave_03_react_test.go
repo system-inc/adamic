@@ -88,7 +88,7 @@ func TestWave03ReactAgreementAndMutants(t *testing.T) {
 	optionProbe := h.run("regex-option-probe", exec.Command(stage0, "build", filepath.Join(repository, "stage1/cohere/typeaware/wave_03_react/gaps/general_regex.a"), "-o", filepath.Join(directory, "regex-option-probe")))
 	if optionProbe.err != nil {
 		if strings.Contains(string(optionProbe.stderr), "stage 0 can't lower RegExp with a nonconstant pattern yet") {
-			t.Skipf("BLOCKED: required new RegExp(pattern, 'u') is not supported by native lowering: %s", optionProbe.stderr)
+			t.Fatalf("BLOCKED: required new RegExp(pattern, 'u') is not supported by native lowering: %s", optionProbe.stderr)
 		}
 		t.Fatalf("unexpected regex option probe failure: %v %s", optionProbe.err, optionProbe.stderr)
 	}
