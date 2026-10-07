@@ -1,0 +1,12 @@
+interface Node { readonly id: number; read: () => number; }
+function run(): void {
+ const reads: (() => number)[] = [];
+ for (let i = 0; i < 3; i++) {
+  let value: Node | undefined = undefined;
+  const read = (): number => value === undefined ? -1 : value.id + i;
+  value = { id: i * 10, read };
+  reads.push(value.read);
+ }
+ console.log(reads.map((read) => read()).join(','));
+}
+run();
