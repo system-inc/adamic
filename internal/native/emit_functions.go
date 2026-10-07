@@ -204,6 +204,10 @@ func (e *emitter) arguments(call ir.Call) []string {
 	handed := []string{}
 	defer func() { e.handedOver(handed) }()
 	for index, argument := range call.Arguments {
+		if index >= len(parameters) {
+			e.value(argument) // Extra arguments still run, before the call.
+			continue
+		}
 		if e.reuse.callConsumes(e.program, call, index) {
 			value := e.handOver(argument)
 			handed = append(handed, value)
@@ -292,6 +296,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
 		}
 	}
+
 	if expression.Returns == 0 {
 		e.line("%s;", call)
 		e.closureThrown()

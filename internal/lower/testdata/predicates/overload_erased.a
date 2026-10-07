@@ -1,0 +1,3 @@
+function isNumber(value: number | string): value is number;
+function isNumber(value: number | string): boolean { return typeof value === "number"; }
+console.log(`${isNumber(1)}:${isNumber("text")}`);

@@ -42,6 +42,9 @@ type patterned struct {
 // It works on a copy and writes it back by index: lowering a body can instantiate a class, which
 // appends functions, and a pointer into the slice would be left pointing at the old one.
 func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {
+	if implementation := l.censusImplementation(declaration); implementation != nil {
+		declaration = implementation
+	}
 	if _, isSigned := l.signed[index]; !isSigned {
 		if err := l.signature(index, declaration, this); err != nil {
 			return err
@@ -55,6 +58,12 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 // signature writes the function at index's parameters and result, from the checker, without lowering
 // its body, so a call to it lowers whether or not its body has been. this is as for lowerFunction.
 func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
+	if implementation := l.censusImplementation(declaration); implementation != nil {
+		declaration = implementation
+	}
+	if err := l.censusOverloads(declaration); err != nil {
+		return err
+	}
 	function := l.result.Functions[index]
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
@@ -118,7 +127,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			}
 			function.RestElement = element
 		}
-		if function.Closure && slotless(l.result.Locals[local].Type) {
+		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) {
 			// Its arguments are each one adamic_value.
 			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
 		}
@@ -135,9 +144,8 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Parameters = append(function.Parameters, incoming)
 		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
-	if function.Closure && slotless(function.Returns) {
-		// A function value's arguments and result are each one adamic_value, and number | undefined
-		// needs two words.
+	if function.Closure && censusCallableSlotless(function.Returns) {
+		// A function value's arguments and result must each fit one adamic_value.
 		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
 	}
 	if declaration.Body() == nil && !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAbstract) {
@@ -193,6 +201,26 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	for _, parameter := range defaults {
 		if err != nil {
 			break
+		}
+		if l.uninitializedInitializer(parameter.initializer) {
+			l.result.Locals[parameter.local].Uninitialized = true
+			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
+			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: incoming}}, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
+			continue
+		}
+
+		if assertionInitializer(parameter.initializer) {
+			prefix, present, value, lazyErr := l.lazyAssertion(parameter.initializer, l.result.Locals[parameter.local].Type)
+			if lazyErr != nil {
+				err = lazyErr
+				break
+			}
+			l.result.Locals[parameter.local].Uninitialized = true
+			l.result.Locals[parameter.local].InitializerExpression = sourceExpression(parameter.initializer)
+			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
+			fallback := append(prefix, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: value}}})
+			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.IsUndefined{Value: incoming}, Then: fallback, Else: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
+			continue
 		}
 		var fallback ir.Expression
 		if fallback, err = l.expression(parameter.initializer); err != nil {

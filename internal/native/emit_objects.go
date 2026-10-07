@@ -136,7 +136,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		for index, field := range literal.Fields {
 			slot := e.temporary()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+			cache := e.cache()
+			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
 				e.line("%s->reference = %s;", slot, e.kept(values[index]))
@@ -171,6 +174,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
 	}
 	for index, field := range literal.Fields {
+		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+		if field.Uninitialized {
+			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
+		}
 		value := values[index]
 		if e.regionValues[value] {
 			// A value in the region is immortal while the region lives: held without a count.
@@ -263,12 +270,12 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 }
 
 // dispatchable reports whether a class's method can be called through an interface: each value it
-// takes and gives fits an adamic_value. One that doesn't (boolean | undefined, a union) can't be
+// takes and gives fits an adamic_value. One that doesn't (a union) can't be
 // passed to a function value either (lower's callClosure says not yet), so no call through an
 // interface reaches it with one, and it's left out of its class's table.
 func (e *emitter) dispatchable(function int) bool {
 	method := e.program.Functions[function]
-	slotless := func(valueType ir.Type) bool { return valueType == ir.MaybeBoolean || valueType == ir.Union }
+	slotless := func(valueType ir.Type) bool { return valueType == ir.Union }
 	for index, parameter := range method.Parameters {
 		if index > 0 && slotless(e.program.Locals[parameter].Type) {
 			return false

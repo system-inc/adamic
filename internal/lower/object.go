@@ -17,7 +17,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
-	literal := ir.ObjectLiteral{}
+	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node)}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
 		case ast.KindSpreadAssignment:
@@ -56,6 +56,21 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
 			}
+			if property.Kind == ast.KindPropertyAssignment && l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
+				declared := l.declaredField(node, fieldName)
+				if declared == 0 || declared == ir.MaybeBoolean {
+					return nil, l.notYet(property, "an uninitialized object field without a supported declared slot type")
+				}
+				if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
+					return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+				}
+				value := ir.Expression(zeroValue(declared))
+				if declared.IsReference() {
+					value = ir.Undefined{Of: declared}
+				}
+				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true})
+				continue
+			}
 			var value ir.Expression
 			var err error
 			if property.Kind == ast.KindPropertyAssignment {
@@ -69,11 +84,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, fieldName); declared != 0 && !slotless(declared) {
+			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if slotless(value.Type()) {
+			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
@@ -462,7 +477,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {
 				// Read the declared representation before trusting the narrowing. A call or an
 				// alias write may have restored undefined, just as for a narrowed variable.
-				if slotless(stored) {
+				if censusFieldSlotless(stored) {
 					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
 				}
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
@@ -480,13 +495,13 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if slotless(of) {
+		if censusFieldSlotless(of) {
 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 		}
-		if of == ir.MaybeNumber {
+		if of.IsMaybe() {
 			// number | undefined, whether the field holds it or ?. makes it: the packed word, or
 			// undefined when the object is.
-			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional, Class: l.classOf(node)}), nil
+			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
@@ -500,14 +515,31 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 // Absence is a read result, never a synthetic own field: hasOwnProperty and object spread still see
 // the shape that was actually made. A narrowed number checks the declared optional representation.
 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
+	property.Readiness = sourceExpression(node)
+	property.View = sourceExpression(node)
+	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
+		declared := l.checker.GetTypeOfSymbol(symbol)
+		property.ViewType = l.checker.TypeToString(declared)
+		property.ViewAllowed = l.viewLiterals(declared)
+	}
 	field := l.checker.GetSymbolAtLocation(node.Name())
+	if field != nil {
+		for _, declaration := range field.Declarations {
+			if declaration.Kind == ast.KindPropertyDeclaration {
+				initializer := declaration.AsPropertyDeclaration().Initializer
+				if assertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
+					property.Readiness = sourceExpression(initializer)
+				}
+			}
+		}
+	}
 	if field == nil || field.Flags&ast.SymbolFlagsOptional == 0 {
 		return property
 	}
 	property.Absent = true
-	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.MaybeNumber && property.Of == ir.Number {
-		property.Of = ir.MaybeNumber
-		return fit(property, ir.Number)
+	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared.IsMaybe() && property.Of == declared.Present() {
+		property.Of = declared
+		return fit(property, declared.Present())
 	}
 	return property
 }
@@ -1496,11 +1528,14 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	}
 	local, isLocal := l.locals[symbol]
 	if !isLocal {
+		if target, isFunction := l.functions[symbol]; isFunction {
+			return l.functionValue(property, target)
+		}
 		return nil, l.notYet(property, "reading "+property.Name().Text())
 	}
 	l.touch(local)
 	of := l.result.Locals[local].Type
-	if slotless(of) {
+	if censusFieldSlotless(of) {
 		return nil, l.notYet(property, "a field from a "+typeName(of)+" variable")
 	}
 	read := ir.Read{Local: local, Of: of, Checked: l.checked(local)}
@@ -1909,6 +1944,9 @@ func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type
 			return true
 		}
 		valueParameters, targetParameters := valueSignatures[0].Parameters(), targetSignatures[0].Parameters()
+		if l.censusNeverRestSignature(targetSignatures[0]) {
+			targetParameters = nil
+		}
 		for index := range valueParameters {
 			if index < len(targetParameters) && l.tupleWhereArrayGoes(l.checker.GetTypeOfSymbol(targetParameters[index]), l.checker.GetTypeOfSymbol(valueParameters[index]), depth+1) {
 				return true

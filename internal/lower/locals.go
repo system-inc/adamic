@@ -11,7 +11,7 @@ import (
 
 // variables lowers const and let declarations, each to a local of its own.
 func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
-	if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) {
 		return nil, &Refused{Where: l.program.Where(list), What: "var", Fix: "use const or let"}
 	}
 	statements := []ir.Statement{}
@@ -29,9 +29,39 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		if !ast.IsIdentifier(name) {
 			return nil, l.notYet(name, "a destructuring declaration")
 		}
+
+		if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+			if symbol := l.symbol(name); symbol != nil && len(symbol.Declarations) > 1 {
+				return nil, &Refused{Where: l.program.Where(declaration), What: "repeated var assertion declarations", Fix: "use one declaration and subsequent assignments"}
+			}
+		}
 		local, err := l.declareLocal(name)
 		if err != nil {
 			return nil, err
+		}
+		if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+			l.result.Locals[local].Hoisted = true
+		}
+		if l.uninitializedDeclaration(declaration) {
+			l.result.Locals[local].Uninitialized = true
+			statements = append(statements, ir.Declare{Local: local, Uninitialized: true})
+			continue
+		}
+
+		if initializer := declaration.AsVariableDeclaration().Initializer; assertionInitializer(initializer) {
+			prefix, present, value, err := l.lazyAssertion(initializer, l.result.Locals[local].Type)
+			if err != nil {
+				return nil, err
+			}
+			if known, ok := present.(ir.BooleanConstant); ok && known.Value && len(prefix) == 0 {
+				statements = append(statements, ir.Declare{Local: local, Value: value})
+				continue
+			}
+			l.result.Locals[local].Uninitialized = true
+			l.result.Locals[local].InitializerExpression = sourceExpression(initializer)
+			statements = append(statements, prefix...)
+			statements = append(statements, ir.Declare{Local: local, Uninitialized: true}, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: local, Value: value}}})
+			continue
 		}
 		var value ir.Expression
 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {

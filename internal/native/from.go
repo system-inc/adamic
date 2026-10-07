@@ -18,8 +18,8 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
 	// Undefined as the first parameter holds it: a null reference, or a packed word.
 	undefined := "{.reference = NULL}"
-	if from.First == ir.MaybeNumber {
-		undefined = fmt.Sprintf("{.number = %s}", slotted(ir.MaybeNumber, zero(ir.MaybeNumber)))
+	if from.First.IsMaybe() {
+		undefined = fmt.Sprintf("{.%s = %s}", member(from.First), slotted(from.First, zero(from.First)))
 	}
 	e.indent++
 	element := e.temporary()

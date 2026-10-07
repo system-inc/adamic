@@ -1,0 +1,30 @@
+// TypeScript 6.0.3 sys.ts System's write, readFile and exit shape.
+// write and exit retain nodeSystem's original bodies; host effects use deterministic stubs.
+interface System {
+    write(s: string): void;
+    readFile(path: string, encoding?: string): string | undefined;
+    exit(exitCode?: number): void;
+}
+const process = {
+    stdout: { write(s: string): void { console.log(s); } },
+    exit(code?: number): void { console.log(`exit:${code}`); }
+};
+function disableCPUProfiler(callback: () => void): void { callback(); }
+const sys: System = {
+    write(s: string): void { process.stdout.write(s); },
+    readFile(path: string, encoding?: string): string | undefined {
+        return path === 'missing' ? undefined : `${path}:${encoding ?? 'utf8'}`;
+    },
+    exit(exitCode?: number): void { disableCPUProfiler(() => process.exit(exitCode)); }
+};
+sys.write('written');
+sys.exit();
+sys.exit(undefined);
+sys.exit(7);
+console.log(sys.readFile('file') ?? 'missing');
+console.log(sys.readFile('file', 'ascii') ?? 'missing');
+console.log(sys.readFile('missing') ?? 'missing');
+const exit: (code?: number) => void = (code?: number) => sys.exit(code);
+exit();
+const holder = { exit };
+holder.exit(2);

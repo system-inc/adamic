@@ -75,10 +75,10 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
 				continue
 			}
 		}
-		packable := function.Returns != MaybeBoolean && function.Returns != Union
+		packable := function.Returns != Union
 		for _, parameter := range function.Parameters {
 			of := p.Locals[parameter].Type
-			packable = packable && of != MaybeBoolean && of != Union
+			packable = packable && of != Union
 		}
 		if !packable {
 			continue

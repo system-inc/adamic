@@ -432,7 +432,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || slotless(of) || slotless(value.Type()) {
+	if err != nil || censusFieldSlotless(of) || censusFieldSlotless(value.Type()) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.
@@ -478,7 +478,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 		}
 	}
 	name := l.fieldName(target.Name())
-	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
+	current := l.readObjectField(target, ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
 	if operator == ast.KindPlusToken && valueNode != nil {
 		current, value = l.spelled(target, current), l.spelled(valueNode, value)
 	}
@@ -532,7 +532,7 @@ func nodesOf(list *ast.NodeList) []*ast.Node {
 func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
 	unset := map[string]bool{}
 	for _, member := range declaration.Members() {
-		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !(member.PostfixToken() != nil && member.PostfixToken().Kind == ast.KindExclamationToken) && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			unset[member.Name().Text()] = true
 		}
 	}

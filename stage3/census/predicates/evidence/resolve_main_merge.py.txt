@@ -1,0 +1,24 @@
+from pathlib import Path
+import re,subprocess
+root=Path('/workspace/adamic')
+def content(path, side):return subprocess.check_output(['git','show',f':{side}:{path}'],cwd=root,text=True)
+def resolve(path, choose):
+ p=root/path;s=p.read_text();i=0
+ def f(m):
+  nonlocal i;i+=1;return choose(i,m.group(1),m.group(2))
+ s=re.sub(r'^<<<<<<< HEAD\n(.*?)^=======\n(.*?)^>>>>>>> origin/main\n',f,s,flags=re.M|re.S);assert '<<<<<<<' not in s;p.write_text(s)
+resolve('docs/0.1.md',lambda i,a,b: a.splitlines(True)[0]+''.join(b.splitlines(True)[1:]) if i==1 else a.replace('void, labels,','void,'))
+resolve('internal/lower/control.go',lambda i,a,b:a)
+resolve('internal/lower/expression.go',lambda i,a,b:a.replace('l.checked(local)','l.checkedModuleRead(node, local)'))
+resolve('internal/lower/invariance.go',lambda i,a,b:a.replace('if !l.checker.IsTypeAssignableTo(given, takes)', 'if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes)'))
+resolve('internal/oracle/counts.md',lambda i,a,b:a+b)
+resolve('internal/lower/refusals.go',lambda i,a,b:b[:b.index('\t\tvar assertion *ast.Node')])
+p=root/'internal/lower/cast.go';p.write_text(content('internal/lower/cast.go',3))
+s=p.read_text();needle='\tif len(proof.allowed) == 0 && len(proof.classes) == 0 {'
+s=s.replace(needle,'\tif proof.interfaceView {\n\t\treturn l.interfaceCast(node, value, l.concrete(l.checker.GetTypeAtLocation(as.Expression)), l.concrete(l.checker.GetTypeAtLocation(node)))\n\t}\n'+needle)
+# Tagged structural views retain the interface worker's checked field reads.
+s=s.replace('\treturn cast, nil\n}', '\tif _, err := l.view(node, value, target); err != nil {\n\t\treturn nil, err\n\t}\n\tcast.CheckedFields = true\n\treturn cast, nil\n}',1);p.write_text(s)
+p=root/'internal/lower/cast_proof.go';s=p.read_text().replace('type castProof struct {','type castProof struct {\n interfaceView bool')
+needle='\tif source.Flags()&checker.TypeFlagsUnion == 0 {\n\t\treturn castProof{}, refused\n\t}'
+s=s.replace(needle,'\tif source.Flags()&checker.TypeFlagsUnion == 0 {\n\t\tif checked, err := l.interfaceCast(node, ir.Read{Of: ir.Object}, source, target); checked != nil || err != nil {\n\t\t\treturn castProof{interfaceView: checked != nil}, err\n\t\t}\n\t\treturn castProof{}, refused\n\t}',1);p.write_text(s)
+p=root/'internal/lower/refusals.go';s=p.read_text().replace('checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0','checkedCast = proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0');p.write_text(s)

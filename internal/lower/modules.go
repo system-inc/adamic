@@ -78,7 +78,7 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 		switch statement.Kind {
 		case ast.KindVariableStatement:
 			list := statement.AsVariableStatement().DeclarationList
-			if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+			if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) {
 				continue // statements() refuses var where it stands
 			}
 			for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
@@ -94,6 +94,7 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 							return err
 						}
 						l.result.Locals[local].Global = true
+						l.result.Locals[local].Hoisted = list.Flags&ast.NodeFlagsBlockScoped == 0
 					}
 					continue
 				}
@@ -103,6 +104,7 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 						return err
 					}
 					l.result.Locals[local].Global = true
+					l.result.Locals[local].Hoisted = list.Flags&ast.NodeFlagsBlockScoped == 0
 				}
 			}
 		case ast.KindEnumDeclaration:
@@ -130,6 +132,12 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.staticStorage(statement)
 			}
 		case ast.KindFunctionDeclaration:
+			if statement.Body() == nil && l.censusImplementation(statement) != nil {
+				continue
+			}
+			if err := l.censusOverloads(statement); err != nil {
+				return err
+			}
 			symbol := l.symbol(statement.Name())
 			if len(statement.TypeParameters()) > 0 {
 				// A generic function is lowered once per instantiation, where it's called (generic.go).
