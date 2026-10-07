@@ -16,7 +16,7 @@ parser, generator or test harness was edited.
 The existing shared registration interfaces still need integration with numeric
 handed-node dispatch. These metadata files and factories are exercised by this
 owned driver; this unit does not claim shared registry discovery or emitted
-JavaScript comparison. ValidTypeof supports requireStringLiterals in its factory
+JavaScript comparison. ValidTypeof supports requireStringLiterals in its Rule
 constructor, but the published differential gate covers default options only.
 
 Run validate.py with ADAMIC_WAVE27_FIFTH_ARTIFACTS, ADAMIC_WAVE27_STAGE0,

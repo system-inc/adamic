@@ -110,3 +110,10 @@ independent Go gate passes on controls, the two pinned corpora, sanitizer builds
 three normally exiting rule mutants and released handles. Shared registry wiring
 and emitted-JavaScript comparison remain integration limitations, named in the
 batch report. Landing onto the newly fetched main is recorded separately.
+
+Landing status after the fifth batch: all twelve completed ports are rebased onto
+main c01907a7 and their complete owned Go byte gates are green again, including
+sanitizers, twelve rule mutants, five raw-fact mutants and handle refusals. Tested
+code baa46eecb00aa6527a4d10a84358b7bd95fafffa. The three React claims stay parked.
+Only codex/typeaware-wave-27 is published; details are in
+wave_27_fifth/landing_c019/REPORT.md. No additional rules are claimed here.
