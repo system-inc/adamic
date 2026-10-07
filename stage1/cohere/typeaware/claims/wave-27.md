@@ -83,3 +83,23 @@ analysis, generator and test harness files remain untouched. The native JSX
 probe exits 70 while Go reports one finding; see wave_27_fourth/PARKED.md and
 the historical fourth-batch and landing reports. Earlier pending/stop language
 in those frozen reports describes their earlier status and is superseded here.
+
+## Fifth batch
+
+The nine completed ports are rebased onto current main f8013f0b and green at
+0bed2f946. The three fourth-batch React claims were explicitly parked and pushed
+at 76e178e86 under Ahra's native-analysis exception before this selection.
+
+Fetched all 529 origin refs and audited the 197-rule combined by-volume ranking
+against ports on main/the bridge base and 33 Markdown claim records across all
+origin branches. Remaining React-family rules are excluded under the parking
+instruction. A remaining capture/escape-analysis rule is also excluded. The
+first three eligible entries, each with combined volume zero, are:
+
+- require-await
+- symbol-description
+- valid-typeof
+
+None is ported on main/base or named in any origin claim record. These rules
+use syntax and ordinary checker type/symbol facts rather than native HIR, SSA
+or capture analysis. This claim update is pushed before implementation.
