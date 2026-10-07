@@ -1,8 +1,35 @@
-Catchable crypto errors remain unsupported: Adamic Error has name/message but no Node .code; try around hash operations is rejected.
-Built Buffer encodings, BOM swaps, indexing/length, System wrapper chains and SHA-256 on both backends; removed all unit declaration copies and the loader hook.
-Implementation commits: 1321859fccc4c7391d1ca3b34eeb1f18b16ba818 and 4453ba184af55ffba9ac1c1a3b72c801af9fc6e1; branch codex/host-buffer-crypto.
-Current validation: Go compilation, vet, formatting, IR proofs and declaration-independent Node runtime comparison pass; source fixtures need the shared @types/node hook.
-Mutants: prior 15 semantic and three proof mutants caught; one new independent hash mutant caught by Node. Shared hook merge, real sys.ts fixtures, native tsc proof and macOS remain pending.
+Catchable Node crypto .code remains unsupported; full fixtures also await the shared @types/node hook and fixture 22 hits undefined-value lowering.
+Built Buffer and SHA-256 runtime/lowering plus four real-host component comparisons; merged host fixture branch 1037217 in 7545a01.
+Pushed component tests in 950cc69; both backends including native release/sanitizer match status.json for components 02, 03, 21 and 22.
+Checks: restored five runtime/component tests PASS (1.330s); four new semantic mutants caught by Node/status.json output comparison; earlier 19 mutants remain documented below.
+Full acceptance stages: 02_readFile_utf16le, 03_readFile_utf16be, 21_createHash, 22_createHash_fallback are Checker on BOTH backends; no full fixture is green yet.
+
+Real host acceptance, October 7
+
+The user's host fixture branch is merged and pushed. `internal/native/node_buffer_host_test.go` compares stdout, stderr and exit status with the unmodified fixture's Node run and committed status.json. Buffer decoding/swap and SHA-256 use direct IR to isolate this unit from missing module declarations and fs runtime. The fallback test lowers the verbatim generateDjb2Hash function through the checker and both backends. It does not prove the undefined-crypto selector or the ambient SHA function declaration. These are component passes, not full acceptance passes.
+
+| Fixture | Node vs status.json | Native full fixture | JavaScript full fixture | Owned component |
+| --- | --- | --- | --- | --- |
+| 02_readFile_utf16le.a | Agrees | Checker | Checker | Pass, LE BOM offset/odd byte/surrogate cases |
+| 03_readFile_utf16be.a | Agrees | Checker | Checker | Pass, byte swap and LE decoding |
+| 21_createHash.a | Agrees | Checker | Checker | Pass, four SHA-256 digests |
+| 22_createHash_fallback.a | Agrees | Checker | Checker | Pass, verbatim djb2 function |
+
+`python3 stage3/host-buffer/check_host_acceptance.py --logs /tmp/host-buffer-acceptance` exits 1 and records exact diagnostics: the full fixtures cannot resolve node:* modules. The fs_file worker's published branch at 080789f still contains the old unit declaration copy, not the requested shared pinned-type hook. It was not merged. The hook SHA has been requested. We cannot verify canonical @types/node symbol identity or unsupported-member guards against that hook until it arrives.
+
+Language blocker reported immediately: `const absent: undefined = undefined;` fails with `stage 0 can't lower a value of type undefined yet`. An extraction of fixture 22 preserving its undefined-crypto selector confirms this independently of Node imports. Its log is host-fallback-blocker.log. Shared language files were not changed. Other downstream language issues are unverified while the checker blocks the full fixtures.
+
+Commands and observations:
+
+- `python3 stage3/fixtures/host/check.py --mutants --logs /tmp/host-buffer-real-fixtures`: all 25 Node observations and initial Checker statuses agree; all 25 source mutants and the diagnostic-status mutant caught. This checks the fixture baseline, not acceptance progress.
+- `go test ./internal/native -run 'TestNodeBufferHost|TestNodeBufferRuntimeWithoutDeclarations' -count=1 -v`: PASS, 1.330s after restoring all four new mutants. Both backend outputs match; native release and sanitizer checked.
+- `go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/flow ./internal/fresh ./internal/ir -run '^$'`: PASS; `go vet ./internal/native`: PASS; acceptance runner Python compilation and git diff check: PASS.
+- New SHA initial-state mutant 6a09e667 -> 6a09e666: native stdout differs from status.json.
+- New LE start-offset mutant 2 -> 0: native stdout retains BOM and differs from status.json.
+- New BE buffer write mutant leaves the old byte: native decoded stdout differs from status.json.
+- New djb2 seed mutant 5381 -> 5382 in the extracted function: generated JavaScript stdout differs from status.json.
+
+No compiler error or sanitizer failure counted as a mutant catch. Exact source bytes were restored after every mutant, followed by the passing baseline. Logs and stage diagnostics are committed beside this report. Linux only; macOS and the native tsc proof remain untested.
 
 Scope and references
 
