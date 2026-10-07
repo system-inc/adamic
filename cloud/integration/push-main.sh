@@ -14,8 +14,10 @@
 #
 # --meter-run <commit> also records a stage 3 meter run (stage3/meter/twice-daily.sh, run on a box
 # against main) in a commit of its own after the velocity row. Only the files that commit adds under
-# stage3/meter/runs/ are taken, and the script refuses to push if the record changes anything else.
-# A meter run is measured after a landing, so each landing carries the newest run there is.
+# stage3/meter/runs/ are taken, plus stage3/progress.json (stage 3's milestone record) while nothing in
+# the landing reads that file, so it can't change what a gate tested; the script refuses to push if
+# the record changes anything else. A meter run is measured after a landing, so each landing carries
+# the newest run there is.
 #
 # usage: cloud/integration/push-main.sh [--defer-velocity] [--meter-run <commit>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
 set -euo pipefail
@@ -106,9 +108,13 @@ if [ -n "$meterRun" ]; then
 	git fetch -q origin "$meterRun" 2>/dev/null || true
 	meterCommit=$(git rev-parse --verify "${meterRun}^{commit}")
 	# The runs this commit has that the landing doesn't, so a run main already holds is never recorded twice.
-	added=$(git diff --name-only --diff-filter=A "$velocity" "$meterCommit" -- stage3/meter/runs/)
+	added=$(git diff --name-only --diff-filter=AM "$velocity" "$meterCommit" -- stage3/meter/runs/ stage3/progress.json)
+	if printf '%s\n' "$added" | grep -qx 'stage3/progress.json' && git grep -q 'progress\.json' "$sha" -- '*.go' '*.py' '*.sh' '*.mjs' '*.cjs' '*.js' '*.ts' '*.a'; then
+		echo "refused to record stage3/progress.json as data: something in ${sha:0:8} reads it, so it has to be gated" >&2
+		exit 1
+	fi
 	if [ -z "$added" ]; then
-		echo "refused to record the meter run: ${meterCommit:0:8} has nothing under stage3/meter/runs/ that main lacks" >&2
+		echo "refused to record the meter run: ${meterCommit:0:8} has nothing under stage3/meter/runs/ or stage3/progress.json that main lacks" >&2
 		exit 1
 	fi
 	index=$(mktemp)
@@ -119,9 +125,9 @@ if [ -n "$meterRun" ]; then
 	done <<<"$added"
 	tree=$(GIT_INDEX_FILE=$index git write-tree)
 	rm -f "${index:?}"
-	runs=$(printf '%s\n' "$added" | awk -F/ '{print $4}' | sort -u | paste -sd ' ' -)
+	runs=$(printf '%s\n' "$added" | awk -F/ '$2 == "meter" { print $4 } $2 == "progress.json" { print "and progress.json" }' | sort -u | paste -sd ' ' -)
 	meter=$(git commit-tree "$tree" -p "$velocity" -m "Record the stage 3 meter run ${runs} from ${meterCommit:0:8}")
-	outside=$(git diff --name-only "$velocity" "$meter" | grep -v '^stage3/meter/runs/' || true)
+	outside=$(git diff --name-only "$velocity" "$meter" | grep -v -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' || true)
 	if [ -n "$outside" ]; then
 		echo "refused to push the meter record: it changes $outside" >&2
 		exit 1
