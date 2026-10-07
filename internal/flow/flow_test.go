@@ -83,6 +83,10 @@ func TestEveryFunctionIsInSingleAssignment(t *testing.T) {
 	var functions int
 	for _, path := range programs(t) {
 		program := lowered(t, path)
+		if program.Async != nil {
+			t.Logf("%s: synchronous SSA does not model suspension states; async oracle checks them", path)
+			continue
+		}
 		for function := -1; function < len(program.Functions); function++ {
 			name := "main"
 			if function >= 0 {

@@ -1,0 +1,420 @@
+diff --git a/internal/lower/borrow.go b/internal/lower/borrow.go
+index e31d85c0..197e67ed 100644
+--- a/internal/lower/borrow.go
++++ b/internal/lower/borrow.go
+@@ -11,6 +11,8 @@ import "github.com/system-inc/adamic/internal/ir"
+ // callback may overwrite that element. Everything else is borrowed: a named function's or a
+ // method's reference parameters, this included, that no ir.Assign anywhere in the program writes.
+ //
++// Parameters in a shared frame environment need owned treatment, even when read-only:
++// initializing that owned slot is a store, and an escaping closure keeps it after the call.
+ // ir.Assign is the only statement that writes a local that already exists, and locals are numbered
+ // across the whole program, so a closure writing a parameter through its cell is found too.
+ func borrow(program *ir.Program) {
+@@ -25,7 +27,7 @@ func borrow(program *ir.Program) {
+ 		}
+ 		for _, parameter := range function.Parameters {
+ 			local := &program.Locals[parameter]
+-			local.Borrowed = local.Type.IsReference() && !assigned[parameter]
++			local.Borrowed = local.Type.IsReference() && !local.EnvironmentCell && !assigned[parameter]
+ 		}
+ 	}
+ }
+diff --git a/internal/lower/closed_frame_inputs.go b/internal/lower/closed_frame_inputs.go
+new file mode 100644
+index 00000000..8f8b7725
+--- /dev/null
++++ b/internal/lower/closed_frame_inputs.go
+@@ -0,0 +1,86 @@
++package lower
++
++import (
++	"github.com/system-inc/adamic/internal/ir"
++	"slices"
++)
++
++// closedFrameInput proves a narrow exception to type-based capture cycles.
++// Every call supplies a literal of scalars and capture-free closures, the
++// parameter is never replaced, and no operation can rewrite an object field.
++// This is a closed input graph proof, not freshness of arbitrary captured cells.
++func (l *lowering) closedFrameInput(local int) bool {
++	owner := l.result.Locals[local].Function
++	if owner < 0 || l.result.Functions[owner].Closure {
++		return false
++	}
++	position := slices.Index(l.result.Functions[owner].Parameters, local)
++	if position < 0 {
++		return false
++	}
++	safe, called := true, false
++	inspect := func(node any) bool {
++		switch value := node.(type) {
++		case ir.Assign:
++			if value.Local == local {
++				safe = false
++			}
++		case ir.MakeClosure:
++			if value.Function == owner {
++				safe = false
++			}
++		case ir.Call:
++			if !slices.Contains(l.result.CallTargets(value), owner) {
++				break
++			}
++			called = true
++			if value.Virtual != 0 || position >= len(value.Arguments) || !l.closedInputLiteral(value.Arguments[position]) {
++				safe = false
++			}
++		}
++		if expression, ok := node.(ir.Expression); ok {
++			switch expression.(type) {
++			case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.Read,
++				ir.Binary, ir.Unary, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap,
++				ir.MaybeOf, ir.Defined, ir.IsUndefined, ir.NumberToString, ir.BooleanToString,
++				ir.Concat, ir.Length, ir.Property, ir.ArrayIndex, ir.ArrayLiteral, ir.ObjectLiteral,
++				ir.Call, ir.CallClosure, ir.MakeClosure, ir.ClosureSelf:
++			default:
++				safe = false
++			}
++		}
++		if statement, ok := node.(ir.Statement); ok {
++			switch statement.(type) {
++			case ir.AllocateEnvironment, ir.Declare, ir.Assign, ir.Evaluate, ir.Return, ir.WriteLine,
++				ir.If, ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue:
++			default:
++				safe = false
++			}
++		}
++		return true
++	}
++	for _, function := range l.result.Functions {
++		walk(function.Body, inspect)
++	}
++	walk(l.result.Main, inspect)
++	return safe && called
++}
++
++func (l *lowering) closedInputLiteral(value ir.Expression) bool {
++	literal, ok := value.(ir.ObjectLiteral)
++	if !ok || literal.Spread != nil || literal.Class != 0 {
++		return false
++	}
++	for _, field := range literal.Fields {
++		switch value := field.Value.(type) {
++		case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined:
++		case ir.MakeClosure:
++			if len(l.result.Functions[value.Function].Environment) != 0 {
++				return false
++			}
++		default:
++			return false
++		}
++	}
++	return true
++}
+diff --git a/internal/lower/cycles.go b/internal/lower/cycles.go
+index b998045c..b57b245d 100644
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -109,7 +109,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+ 		if proven == nil || node == nil || finder.weak(proven) {
+ 			continue
+ 		}
+-		if finder.reaches(proven, cycleNode{cell: local + 1}) {
++		if finder.reaches(proven, cycleNode{cell: local + 1}) && !l.closedFrameInput(local) {
+ 			return &Refused{
+ 				Where: l.program.Where(node),
+ 				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 2882b2b3..b89b12a5 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -16,6 +16,12 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+ 	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 && (node.Kind == ast.KindVoidExpression || voidInitializer(node)) {
+ 		return ir.Object, nil
+ 	}
++	// A narrowed field still has its declared storage representation.
++	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
++		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
++			return l.typeOfSymbol(node, field)
++		}
++	}
+ 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
+ 		return valueType, nil
+ 	}
+@@ -38,7 +44,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+ 		return l.objectIntersection(proven)
+ 	}
+ 	switch {
+-	case flags&checker.TypeFlagsVoid != 0:
++	case flags&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0:
+ 		return ir.Object, true
+ 	case flags&checker.TypeFlagsNumberLike != 0:
+ 		return ir.Number, true
+@@ -184,7 +190,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+ 	}
+ 	read := l.checker.GetTypeAtLocation(node)
+ 	to, present := ir.Object, false
+-	if target, isKnown := l.representation(read); isKnown && target != ir.Weak {
++	if target, isKnown := l.representation(read); isKnown && target != ir.Weak && read.Flags()&checker.TypeFlagsUndefined == 0 {
+ 		// The checker narrowed it to present (Target & WeakBrand).
+ 		to, present = target, true
+ 	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
+@@ -885,6 +891,20 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+ 		if err != nil {
+ 			return nil, err
+ 		}
++		if l.result.Functions[instance].Closure {
++			arguments := []ir.Expression{}
++			for position, argument := range call.Arguments.Nodes {
++				value, err := l.expression(argument)
++				if err != nil {
++					return nil, err
++				}
++				if position < len(l.result.Functions[instance].Parameters) {
++					value = fit(value, l.result.Locals[l.result.Functions[instance].Parameters[position]].Type)
++				}
++				arguments = append(arguments, value)
++			}
++			return ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns}, nil
++		}
+ 		return l.callFunction(call, instance)
+ 	}
+ 	function, isFunction := l.functions[l.symbol(callee)]
+diff --git a/internal/lower/generic.go b/internal/lower/generic.go
+index bcef72da..f1fc951c 100644
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -65,8 +65,15 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
+ 
+ 	substitution := map[*checker.Type]ir.Type{}
+ 
++	owner := -1
++	if local, ok := l.locals[l.symbol(declaration.Name())]; ok && l.result.Locals[local].NestedFunction < 0 {
++		owner = l.result.Locals[local].Function
++	}
+ 	key := l.program.Where(declaration)
+ 	name := declaration.Name().Text()
++	if owner >= 0 {
++		key += ",frame:" + strconv.Itoa(owner)
++	}
+ 	for _, parameter := range declaration.TypeParameters() {
+ 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
+ 		concrete, isKnown := concreteTypes[parameterType]
+@@ -95,7 +102,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
+ 
+ 	index := len(l.result.Functions)
+ 	name += "_" + strconv.Itoa(index)
+-	l.result.Functions = append(l.result.Functions, ir.Function{Name: name})
++	l.result.Functions = append(l.result.Functions, ir.Function{Name: name, Closure: owner >= 0, NestedParent: owner + 1})
+ 	if l.genericInstances == nil {
+ 		l.genericInstances = map[string]int{}
+ 	}
+@@ -105,6 +112,14 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
+ 	// whatever function or closure called it.
+ 	outerSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper
+ 	l.substitution, l.closures = substitution, nil
++	if owner >= 0 {
++		for proven, held := range outerSubstitution {
++			if _, ok := substitution[proven]; !ok {
++				substitution[proven] = held
++			}
++		}
++		l.closures = append(append([]int{}, outerClosures...), index)
++	}
+ 	sources, targets := []*checker.Type{}, []*checker.Type{}
+ 	for _, parameter := range declaration.TypeParameters() {
+ 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
+@@ -120,7 +135,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
+ 	}
+ 	l.locals = map[*ast.Symbol]int{}
+ 	for symbol, local := range outerLocals {
+-		if l.result.Locals[local].Global {
++		if l.result.Locals[local].Global || owner >= 0 {
+ 			l.locals[symbol] = local
+ 		}
+ 	}
+@@ -129,6 +144,9 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
+ 		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
+ 		l.genericDepth--
+ 	}()
++	if owner >= 0 {
++		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(declaration.Name())), function: index, node: declaration})
++	}
+ 	if err := l.lowerFunction(index, declaration, -1); err != nil {
+ 		return 0, err
+ 	}
+diff --git a/internal/lower/nested_functions.go b/internal/lower/nested_functions.go
+index 54607d03..dbdc7f7d 100644
+--- a/internal/lower/nested_functions.go
++++ b/internal/lower/nested_functions.go
+@@ -21,7 +21,7 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
+ 		if node.Parent == nil || node.Parent.Kind != ast.KindBlock || !ast.IsFunctionLike(node.Parent.Parent) {
+ 			return nil, l.notYet(node, "a block-scoped nested function declaration")
+ 		}
+-		if node.Name() == nil || len(node.TypeParameters()) > 0 {
++		if node.Name() == nil {
+ 			return nil, l.notYet(node, "a generic or unnamed nested function declaration")
+ 		}
+ 		for _, parameter := range node.Parameters() {
+@@ -52,11 +52,21 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
+ 		}
+ 	}
+ 	functions := []int{}
++	bodies := []*ast.Node{}
+ 	for _, node := range declarations {
+ 		local, err := l.declareLocal(node.Name())
+ 		if err != nil {
+ 			return nil, err
+ 		}
++		if len(node.TypeParameters()) > 0 {
++			if l.generics == nil {
++				l.generics = map[*ast.Symbol]*ast.Node{}
++			}
++			l.generics[l.symbol(node.Name())] = node
++			// Negative marks a generic declaration with direct-call instantiations only.
++			l.result.Locals[local].NestedFunction = -1
++			continue
++		}
+ 		index := len(l.result.Functions)
+ 		l.result.Locals[local].NestedFunction = index + 1
+ 		l.result.Functions = append(l.result.Functions, ir.Function{Name: node.Name().Text(), Closure: true, NestedParent: owner + 1})
+@@ -65,12 +75,13 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
+ 			l.instance.templates = append(l.instance.templates, template{closure: index, proven: l.checker.GetTypeAtLocation(node.Name()), isClosure: true})
+ 		}
+ 		functions = append(functions, index)
++		bodies = append(bodies, node)
+ 		if err := l.signature(index, node, -1); err != nil {
+ 			return nil, err
+ 		}
+ 		prologue = append(prologue, ir.Declare{Local: local, Value: ir.MakeClosure{Function: index}})
+ 	}
+-	for position, node := range declarations {
++	for position, node := range bodies {
+ 		index := functions[position]
+ 		// Ordinary declarations own their this. Dynamic receivers are not implemented.
+ 		var invalid *ast.Node
+@@ -135,6 +146,9 @@ func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error)
+ 	if !ok || l.result.Locals[local].NestedFunction == 0 {
+ 		return nil, false, nil
+ 	}
++	if l.result.Locals[local].NestedFunction < 0 {
++		return nil, true, l.notYet(node, "a generic function as a value")
++	}
+ 	if l.result.Locals[local].Function != l.functionIndex {
+ 		return nil, true, l.notYet(node, "a first-class nested function reference from another nested function")
+ 	}
+diff --git a/internal/lower/nested_functions_test.go b/internal/lower/nested_functions_test.go
+index 465d2f27..f058ddbc 100644
+--- a/internal/lower/nested_functions_test.go
++++ b/internal/lower/nested_functions_test.go
+@@ -16,7 +16,7 @@ func TestNestedFunctionGapsAreLoud(t *testing.T) {
+ 		{"rest", `function run(): number { function inner(...values: number[]): number { return values.length; } return inner(1); } console.log(String(run()));`, "parameter that isn't a plain name"},
+ 		{"self value", `function run(): () => number { function inner(): number { const self: () => number = inner; return 1; } return inner; } console.log(String(run()()));`, "first-class nested function reference"},
+ 		{"block", `function run(): number { if (true) { function inner(): number { return 1; } return inner(); } return 0; } console.log(String(run()));`, "block-scoped nested"},
+-		{"generic", `function run(): number { function inner<T>(value: T): T { return value; } return inner(1); } console.log(String(run()));`, "generic or unnamed nested"},
++		{"generic", `function run(): number { function inner<T>(value: T): T { return value; } const stored = inner; return stored(1); } console.log(String(run()));`, "generic function as a value"},
+ 		{"sibling value", `function run(): () => number { function a(): number { return 1; } function b(): () => number { return a; } return b(); } console.log(String(run()()));`, "first-class nested function reference"},
+ 		{"ancestor call", `function run(): number { function a(): number { return 1; } function b(): number { function c(): number { return a(); } return c(); } return b(); } console.log(String(run()));`, "first-class nested function reference"},
+ 		{"dynamic this", `function run(): number { function a(this: { x: number }): number { return this.x; } return 1; } console.log(String(run()));`, "dynamic this"},
+@@ -96,3 +96,50 @@ func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
+ 		t.Fatalf("want complete environment cycle refusal, got %v", err)
+ 	}
+ }
++
++func TestNestedCapturedParametersAreOwned(t *testing.T) {
++	program, err := lowerSource(t, `function make(text: string): () => string { function read(): string { return text; } return read; } console.log(make("hello")());`)
++	if err != nil {
++		t.Fatal(err)
++	}
++	found := false
++	for _, local := range program.Locals {
++		if local.EnvironmentCell && local.Type == ir.String {
++			found = true
++			if local.Borrowed {
++				t.Fatal("captured parameter is borrowed")
++			}
++		}
++	}
++	if !found {
++		t.Fatal("missing captured parameter")
++	}
++}
++
++func TestClosedFrameInputRejectsMutation(t *testing.T) {
++	program, err := lowerSource(t, `function parser(scanner: { scan: () => number }): () => number {
++ let token = 0;
++ function read(): number { return token; }
++ function next(): number { return token = scanner.scan(); }
++ next(); return read;
++ } console.log(String(parser({scan: () => 1})()));`)
++	if err != nil {
++		t.Fatal(err)
++	}
++	l := lowering{result: program}
++	input := -1
++	for i, local := range program.Locals {
++		if local.Name == "scanner" {
++			input = i
++		}
++	}
++	if input < 0 || !l.closedFrameInput(input) {
++		t.Fatal("closed literal input was not proven")
++	}
++	owner := program.Locals[input].Function
++	// A field store invalidates the closed graph even if all initial literals were safe.
++	program.Functions[owner].Body = append(program.Functions[owner].Body, ir.SetProperty{})
++	if l.closedFrameInput(input) {
++		t.Fatal("mutable graph accepted as closed")
++	}
++}
+diff --git a/internal/lower/statements.go b/internal/lower/statements.go
+index 6e36d855..b91e2f3b 100644
+--- a/internal/lower/statements.go
++++ b/internal/lower/statements.go
+@@ -45,7 +45,7 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
+ 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export named bindings"}
+ 	case ast.KindFunctionDeclaration:
+ 		if l.function != nil {
+-			if local, ok := l.locals[l.symbol(node.Name())]; ok && l.result.Locals[local].NestedFunction > 0 {
++			if local, ok := l.locals[l.symbol(node.Name())]; ok && l.result.Locals[local].NestedFunction != 0 {
+ 				return nil, nil
+ 			}
+ 			return nil, l.notYet(node, "a block-scoped nested function declaration")
+@@ -189,6 +189,10 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
+ 		}
+ 		return []ir.Statement{returned}, nil
+ 	}
++	expression = ast.SkipParentheses(expression)
++	if expression.Kind == ast.KindBinaryExpression && expression.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
++		return l.returnAssignment(expression)
++	}
+ 	if l.isPanicCall(expression) {
+ 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
+ 		return l.expressionStatement(expression)
+@@ -202,3 +206,25 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
+ 	}
+ 	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
+ }
++
++// returnAssignment preserves the right side's value, assigns once, then returns
++// that same value. Reading the target again could observe another write.
++func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
++	statements, err := l.assignment(node)
++	if err != nil {
++		return nil, err
++	}
++	if len(statements) != 1 {
++		return nil, l.notYet(node, "returning a destructuring assignment")
++	}
++	assignment, ok := statements[0].(ir.Assign)
++	if !ok {
++		return nil, l.notYet(node, "returning a property or element assignment")
++	}
++	held := len(l.result.Locals)
++	l.result.Locals = append(l.result.Locals, ir.Local{Name: "assigned", Type: assignment.Value.Type(), Function: l.functionIndex})
++	value := assignment.Value
++	read := ir.Read{Local: held, Of: value.Type()}
++	assignment.Value = read
++	return []ir.Statement{ir.Declare{Local: held, Value: value}, assignment, ir.Return{Value: fit(read, l.function.Returns)}}, nil
++}

@@ -1,0 +1,32 @@
+
+/tmp/wasm-threads/probe.o:	file format wasm
+
+Disassembly of section CODE:
+
+00000000 <CODE>:
+        # 1 functions in section.
+
+00000001 <step>:
+        .local i32, i32
+       5: 41 00        	i32.const	0
+       7: 41 00        	i32.const	0
+       9: 28 02 80 80 80 80 00 	i32.load	0
+			0000000b:  R_WASM_MEMORY_ADDR_LEB	local+0
+      10: 41 01        	i32.const	1
+      12: 6a           	i32.add 
+      13: 22 00        	local.tee	0
+      15: 36 02 80 80 80 80 00 	i32.store	0
+			00000017:  R_WASM_MEMORY_ADDR_LEB	local+0
+      1c: 41 00        	i32.const	0
+      1e: 41 00        	i32.const	0
+      20: 28 02 84 80 80 80 00 	i32.load	4
+			00000022:  R_WASM_MEMORY_ADDR_LEB	counter+0
+      27: 22 01        	local.tee	1
+      29: 41 01        	i32.const	1
+      2b: 6a           	i32.add 
+      2c: 36 02 84 80 80 80 00 	i32.store	4
+			0000002e:  R_WASM_MEMORY_ADDR_LEB	counter+0
+      33: 20 01        	local.get	1
+      35: 20 00        	local.get	0
+      37: 6a           	i32.add 
+      38: 0b           	end

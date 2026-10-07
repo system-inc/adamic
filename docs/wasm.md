@@ -229,3 +229,38 @@ Setup printed `go ready`, `clang ready`, `node ready` and `submodules ready` at
 0 s, `build cache warm` at 106 s, and `done in 106s on 5 processors` (`nproc` = 5,
 cgroup quota four CPUs, 17.6 GB reported memory). Go was 1.27.1 and native clang
 20.1.8. The setup environment was `/workspace/adamic-tools/env.sh`.
+
+## Threads
+
+Plain `wasm32-wasi` uses unshared memory and `-mno-atomics`. W7's guarded pool
+startup selects one executor regardless of `ADAMIC_THREADS`; no worker is started.
+`parallelMap` uses the existing single-thread path, visiting ascending indices,
+preserving result positions, and stopping at the first thrown exception. Input,
+closure and result graph publication still follows the native ownership ABI.
+The request handler remains synchronous within one module instance.
+
+WASI SDK 27 clang lowers the runtime's `_Thread_local` storage and C atomics to
+ordinary memory accesses without shared memory. A disassembled probe shows
+`i32.load`, `i32.add` and `i32.store` for TLS increment and atomic fetch-add,
+with no wasm atomic instruction. No replacement counter implementation is added.
+WASI libc supplies single-thread mutex/once operations. Its `pthread_create`
+stub returned 6 (ENXIO) and never called the worker in the executed probe; that
+stub is a failure path, not a pool implementation.
+
+The WASI panic path skips the native wait for a competing panic thread. Worker
+stack initialization leaves the constructor's linear-stack limit intact.
+Native preprocessing retains the existing pool, TLS and atomic implementation;
+all 50 release runtime objects were compared byte for byte at `-O2`.
+
+The first merged-tree checks exposed two additional integration blockers:
+`-pthread` conflicts with `-mno-atomics` in the driver, and `share.c` hashes a
+32-bit pointer with a shift by 33. The W7 evidence distinguishes these compile
+failures from runtime agreement; a green WASI oracle is required before landing.
+See `cloud/reports/wasm-threads/` for the hooks, commands, counts and limitations.
+
+Actual wasm threads would require a wasi-threads-capable host, shared linear
+memory, atomics-enabled compilation and linking, worker instantiation and TLS
+initialization, per-thread stacks, and tested scheduling/ownership and shutdown.
+The native pool cannot acquire those facilities from ordinary WASI Preview 1.
+That future target needs its own Node comparisons and race/lifetime proofs.
+W7 makes no speed measurement.
