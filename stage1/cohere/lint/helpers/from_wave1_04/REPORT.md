@@ -85,3 +85,38 @@ and all five compiling mutants on source Node, emitted JavaScript and ASan/UBSan
 native. The same filtered input oracle command above passed in 11.104s, six probe
 misses. go vet ./stage1/cohere/lint/helpers/from_wave1_04 exits zero. Logs are
 evidence/landing-*.log. Earlier integration limits remain as recorded above.
+
+Landing refresh on advanced main
+
+Fresh all-origin fetch found origin/main f8013f0baac41ddc340d76f83bddde38536a8f07.
+The helper branch rebased cleanly to source tip a0e6cf3f0e97341cd4f5923a66be0f32aef8056b.
+No helper implementation, shared registration/harness, parser or compiler source
+was changed. The exact previously published tip used for the push lease is
+b272eab3c6e4395a7b68bd4811c63bd12541e73a.
+
+With source /workspace/adamic-tools/env.sh, the repeated bounded gate is:
+
+- bash cloud/setup.sh > /tmp/wave104-helper-current-setup.log 2>&1: PASS.
+  Go, clang, Node and submodules ready at 0s; cache warm and done 130s; nproc 5,
+  cpu.max 400000 100000.
+- ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers/from_wave1_04
+  -count=1 -v -timeout=10m > /tmp/wave104-helper-current-tests.log 2>&1:
+  PASS 59.134s. Both actual Go baselines and all five compiling mutants pass
+  on source Node, emitted JavaScript and ASan/UBSan native.
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$'
+  -count=1 -v -timeout=10m > /tmp/wave104-helper-current-input.log 2>&1:
+  PASS 37.822s, six uncached probe misses.
+- go vet ./stage1/cohere/lint/helpers/from_wave1_04
+  > /tmp/wave104-helper-current-vet.log 2>&1: exit zero, empty output.
+
+Logs are retained as evidence/landing-f801-*.log. Existing dependency boundaries
+and six-rule prerequisite removals remain as documented above; no full gate or
+native CSS engine completion is claimed.
+
+The rule branch remains published as 99c66e1e with numeric listener declarations.
+Its fresh rebase onto the same main still fails at inherited registration commit
+29175443 in shared README.md, lint.ts, lint_test.go and testdata/oracle.go.
+The rebase was aborted without shared-file edits. Its failure is retained in
+evidence/rule-landing-f801-blocker.log. Ahra's ownership restriction and the
+landing-first cap therefore block any new helper reservation. No new helper was
+claimed; no Diagnostic handoff SHA was supplied in the user instruction.
