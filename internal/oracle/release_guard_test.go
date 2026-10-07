@@ -108,6 +108,9 @@ func releaseSyntax(node ast.Node) string {
 func requireReleaseCall(t *testing.T, directory, function, callee string, index int, want string) {
 	t.Helper()
 	body := releaseFunction(t, directory, function).Body
+	if directory == "cmd/adamic" && function == "run" {
+		body = releaseDispatchBody(t, body)
+	}
 	calls := 0
 	ast.Inspect(body, func(node ast.Node) bool {
 		if call, ok := node.(*ast.CallExpr); ok && releaseSyntax(call.Fun) == callee {
@@ -140,6 +143,90 @@ func requireReleaseCall(t *testing.T, directory, function, callee string, index 
 	if calls != 1 {
 		t.Errorf("%s.%s: want one %s call on the shared build path, got %d", directory, function, callee, calls)
 	}
+}
+
+// Select the dispatch arm for the actual four-argument native release invocation. A WASI arm
+// may call the same builder with additional options; it is a different command invocation.
+func releaseDispatchBody(t *testing.T, body *ast.BlockStmt) *ast.BlockStmt {
+	t.Helper()
+	if len(body.List) == 0 {
+		t.Fatal("empty command dispatcher")
+	}
+	dispatch, ok := body.List[0].(*ast.SwitchStmt)
+	if !ok || dispatch.Tag != nil || dispatch.Init != nil {
+		t.Fatal("command dispatcher changed; update the release trace")
+	}
+	arguments := []string{"build", "fixture.a", "-o", "binary"}
+	var evaluate func(ast.Expr) any
+	evaluate = func(expression ast.Expr) any {
+		switch expression := expression.(type) {
+		case *ast.BasicLit:
+			if expression.Kind == token.INT {
+				value, err := strconv.Atoi(expression.Value)
+				if err == nil {
+					return value
+				}
+			}
+			if expression.Kind == token.STRING {
+				value, err := strconv.Unquote(expression.Value)
+				if err == nil {
+					return value
+				}
+			}
+		case *ast.IndexExpr:
+			if releaseSyntax(expression.X) == "arguments" {
+				index, ok := evaluate(expression.Index).(int)
+				if ok && index >= 0 && index < len(arguments) {
+					return arguments[index]
+				}
+			}
+		case *ast.CallExpr:
+			if releaseSyntax(expression) == "len(arguments)" {
+				return len(arguments)
+			}
+		case *ast.BinaryExpr:
+			left := evaluate(expression.X)
+			if expression.Op == token.LAND {
+				value, ok := left.(bool)
+				if ok && !value {
+					return false
+				}
+				if ok {
+					return evaluate(expression.Y)
+				}
+			}
+			right := evaluate(expression.Y)
+			if expression.Op == token.EQL {
+				return reflect.DeepEqual(left, right)
+			}
+			if expression.Op == token.GEQ {
+				left, leftOK := left.(int)
+				right, rightOK := right.(int)
+				if leftOK && rightOK {
+					return left >= right
+				}
+			}
+		}
+		t.Fatalf("cannot trace release dispatch condition %s", releaseSyntax(expression))
+		return nil
+	}
+	for _, statement := range dispatch.Body.List {
+		clause, ok := statement.(*ast.CaseClause)
+		if !ok || len(clause.List) == 0 {
+			t.Fatal("release command fell through to the default arm")
+		}
+		for _, condition := range clause.List {
+			selected, ok := evaluate(condition).(bool)
+			if !ok {
+				t.Fatal("release dispatch condition is not boolean")
+			}
+			if selected {
+				return &ast.BlockStmt{List: clause.Body}
+			}
+		}
+	}
+	t.Fatal("no release command dispatch arm")
+	return nil
 }
 
 func traceReleaseOptions(t *testing.T, function *ast.FuncDecl) native.Options {
