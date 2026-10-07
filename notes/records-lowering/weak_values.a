@@ -1,0 +1,4 @@
+import type {Weak} from 'adamic';
+interface Item {name: string}
+const r: Record<string, Weak<Item>> = {};
+console.log(Object.keys(r).join(','));

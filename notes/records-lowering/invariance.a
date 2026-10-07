@@ -1,0 +1,6 @@
+interface Animal {name: string}
+interface Dog extends Animal {bark: string}
+const dogs: Record<string, Dog> = {};
+const animals: Record<string, Animal> = dogs;
+animals['x'] = {name: 'cat'};
+console.log(Object.keys(dogs).join(','));

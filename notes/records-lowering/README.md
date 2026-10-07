@@ -3,7 +3,7 @@
 Reviewed branch: `codex/records-lowering` at `7e2bc734ce77dfe432ce593025fdc066a5ef973c`.
 Coverage branch starts at that commit. Current main is merged only into this branch.
 
-There are 12 new admitted oracle programs. No admitted program has an output difference.
+There are 13 new admitted oracle programs. No admitted program has an output difference.
 Programs in this folder are deliberately outside the oracle fixture list: eight expected
 runtime stops, eight literal-key refusals, and probes of unsupported forms.
 `observations.md` records Node output, native output or build diagnostic, and exit codes.
@@ -45,9 +45,9 @@ Rows group related branches of the implementation, with their individual conditi
 | Runtime __proto__ assignment boundary; computed literal data definition | prototype_set, operations | prototype_own reinforces computed definition and own-only copying |
 | Narrowed scalar/reference re-read after deletion | narrowed_number, narrowed_reference | Already covered; not duplicated |
 | Fixed/record storage views, including nested views, arguments, returns and callbacks | No oracle program | fixed_view.a pins NotYet; lower/records_test.go already exercises nested and union views |
-| Invariant mutable records and shallow spread values | No oracle program | Existing lower/records_test.go refusal probes; supported equal-storage aliases/copies exercised by calls and inherited_signature |
-| Cycle-closing writes versus fresh writes through records | No oracle program | cycle.a pins refusal; nested_arrays and inherited_signature exercise fresh literals/spreads |
-| Mixed/named signatures, readonly or numeric signature; unsupported slot representations | No oracle program | mixed_signature.a, readonly_signature.a, number_signature.a, optional_boolean.a, union_values.a |
+| Invariant mutable records and shallow spread values | No oracle program | invariance.a and spread_widening.a pin refusals; supported equal-storage aliases/copies exercised by calls and inherited_signature |
+| Cycle-closing writes versus fresh writes through records | No oracle program | cycle.a pins refusal; fresh tests recursive object/record writes, held descendants, snapshot ownership and cleanup |
+| Mixed/named signatures, readonly or numeric signature; unsupported slot representations | No oracle program | mixed_signature.a, readonly_signature.a, number_signature.a, optional_boolean.a, union_values.a, weak_values.a |
 | Optional indexing, prototype-setting initializer, multiple spread | No oracle program | optional_index.a, prototype_initializer.a, multiple_spread.a |
 | JSON object metadata and callable toJSON possibility | No oracle program | json_object_values.a and json_function_values.a: NotYet |
 
@@ -105,7 +105,7 @@ full stdout/stderr/exit agreement, dynamic probes for the exact paired backend
 stop, and remaining notes for a compile stop. It records all observations in JSON.
 
 ```sh
-python3 notes/records-lowering/verify.py /tmp/adamic-gate/records-final
+python3 notes/records-lowering/verify.py /tmp/adamic-gate/records-final-all
 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_' -count=1 -timeout 10m -v
 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
 # The same order_edges-only oracle command was run with the one-line mutant and failed.
@@ -119,3 +119,11 @@ All test output goes to files under `/tmp/adamic-gate`, then is read without pip
 a live test process through head/tail. Earlier probe runs exposed console typing
 mistakes, an incorrectly invoked JavaScript loader, and the numeric/union limits;
 those observations were corrected or isolated before the final validation.
+
+The final explicit sweep checked all 49 new programs: 13 admitted fixtures and
+36 note probes. All matched their expected outcomes. The final record oracle
+passed in 16.042s; count recording passed in 27.472s. Formatting and vet were clean.
+
+The all-package gate was interrupted by an environment reconnect after 23 packages
+had completed successfully. The remaining 21 packages were resumed with the same
+uncached settings. Their exact command is recorded in `gate-command.sh`.
