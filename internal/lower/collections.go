@@ -6,6 +6,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // keyable reports whether values of a type can be a Map's keys or a Set's elements: strings, numbers
@@ -31,6 +32,12 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 			return nil, 0, err
 		}
 		return l.libraryIteratorArray(node, value, element), element, nil
+	}
+	if plan, err := l.planIteration(node); err != nil {
+		return nil, 0, err
+	} else if plan != nil {
+		value, err := l.collectIteration(node, node, nil, plan, plan.element)
+		return value, plan.element, err
 	}
 	if node.Kind == ast.KindCallExpression && len(node.AsCallExpression().Arguments.Nodes) == 0 {
 		if callee := ast.SkipParentheses(node.AsCallExpression().Expression); callee.Kind == ast.KindPropertyAccessExpression {
@@ -249,6 +256,13 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 	if initializer == nil {
 		return nil, l.notYet(pattern, "a destructuring declaration without a value")
 	}
+	if pattern.Kind == ast.KindArrayBindingPattern {
+		if plan, err := l.planIteration(initializer); err != nil {
+			return nil, err
+		} else if plan != nil {
+			return l.destructureIterator(pattern, initializer, plan)
+		}
+	}
 	value, err := l.expression(initializer)
 	if err != nil {
 		return nil, err
@@ -288,6 +302,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		}
 		var field string
 		var fieldType *checker.Type
+		absent := false
 		if tuple {
 			if index >= len(elementTypes) {
 				return nil, l.notYet(binding, "destructuring past a tuple's end")
@@ -309,7 +324,21 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			if l.inheritedLibrarySymbol(property) {
 				return nil, l.prototypeRead(binding, field)
 			}
+			if property.Flags&ast.SymbolFlagsMethod != 0 {
+				return nil, &Refused{Where: l.program.Where(binding), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this"}
+			}
+			for _, root := range l.checker.GetRootSymbols(property) {
+				for _, declaration := range root.Declarations {
+					if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+						return nil, l.notYet(binding, "an inherited library member in object destructuring, which is not an own field")
+					}
+				}
+			}
+			if err := l.erasedMethodField(binding, destructured, field); err != nil {
+				return nil, err
+			}
 			fieldType = l.checker.GetTypeOfSymbol(property)
+			absent = property.Flags&ast.SymbolFlagsOptional != 0
 		}
 		local, err := l.declareLocal(binding.Name())
 		if err != nil {
@@ -319,7 +348,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
-		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of}
+		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
 		statements = append(statements, ir.Declare{Local: local, Value: value})
 	}
 	return statements, nil

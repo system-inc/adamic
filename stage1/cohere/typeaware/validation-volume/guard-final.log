@@ -1,0 +1,10 @@
+=== RUN   TestVolumeConfigGuardAndMutant
+    volume_test.go:256: strict-this compiler-option mutant: refusal expectation catches exit 0 instead of 70
+    volume_test.go:262: implicit-this mutant also differs from independent Go at byte 101
+    volume_test.go:266: strict-this-control: 374 identical finding bytes; findings 3
+    volume_test.go:273: edge-controls-asan: 24667 identical finding bytes; findings 73
+    volume_test.go:276: repository-final-asan: 31862 identical finding bytes; findings 46
+    volume_test.go:294: compiler-final-asan: 6717107 identical finding bytes; findings 14232
+--- PASS: TestVolumeConfigGuardAndMutant (120.59s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	120.591s
