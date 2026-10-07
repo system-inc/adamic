@@ -74,6 +74,13 @@ func selectedRows(rows []string, name string) []string {
 			fields = append(fields, name)
 		} else if fields[1] == "" || fields[1] == "all" {
 			fields[1] = name
+			// The original all-rule bag stays on inherited all rows. It is
+			// not this rule's options (an optionless adapter must reject it).
+			// Selected copies retain legacy fields; explicitly selected owned
+			// and upstream option rows retain their complete JSON below.
+			if len(fields) > 5 {
+				fields[5] = ""
+			}
 		} else if fields[1] != name {
 			continue
 		}
@@ -166,6 +173,7 @@ func TestRule(t *testing.T) {
 		path = manifest(t, recoveryRows(t, oracle, rows))
 	})
 	phase("owned witnesses", func() {
+		owned = recoveryRows(t, oracle, owned)
 		for _, row := range owned {
 			answer := execute(t, "", oracle, "--manifest", manifest(t, []string{row}), "--count")
 			if string(answer.output) == "0\n" {
