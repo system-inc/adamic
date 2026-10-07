@@ -30,3 +30,12 @@ Claim: github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.proper
 File: from_wave1_09/property_sort.a.
 
 Preserve the breadth-first queue, declaration visit trace, absent-value skip, one-way known --tw-sort latch, count independent of latch, deduplicated ascending property positions and untouched input. Use an acyclic node arena and an injected PropertyOrder map exported from actual Go. Compare actual private Go helper over each consumer test source, every framework static and nested/latch controls on source Node, emitted JavaScript and sanitized native. Prove with compiling semantic mutants. Same six consumers as above; zero last blockers removed alone. Push this claim before code.
+
+## Third helper
+
+Both prior helpers and gates are pushed at f2636e0c. Refreshed all 423 origin refs and inspected 17 distinct claim blobs. FrameworkStaticReading was claimed during the refresh and was skipped. This symbol remains unclaimed and ties the largest concrete consumer count, six.
+
+Claim: github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseValue
+File: from_wave1_09/parse_value.a.
+
+Port the actual total value parser with an acyclic indexed arena, preserving CRLF normalization, verbatim separator runs, slash words, quote handling, trailing backslash, unmatched-close discard and final unclosed-function flush at the root. Inject the other-owned byte-separator predicate through a membership set exported from actual Go. Compare actual Go on every consumer fixture source plus upstream value fixtures and malformed/Unicode controls, source Node, emitted JavaScript and sanitized native, with compiling semantic mutants. Same six consumers, zero last blockers removed alone. Push before code.
