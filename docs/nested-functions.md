@@ -773,3 +773,24 @@ measurement logs are /tmp/adamic-callback-rebinding.log,
 /tmp/adamic-combined-after-callback-final.log. The first combined measurement was
 9/11; the callback fix gains fixture 09 and reaches 10/11. No main or area branch
 was pushed to or merged into.
+
+### Current main merge and landing gate
+
+The feature branch merged origin/main c7991b900362796aefd111474e65eb5398e91953
+with merge commit 59f0d0aaf132969f5f9b55bac4b1e91ffd2a4ba1. The only conflict was
+counts.md: both independent sets of added rows were retained. Regeneration then
+moved main's five proven-predicate rows before the real nested fixtures to match
+registration order. No measured values in an existing row changed. The pre-merge
+whole oracle run overlapped this merge and failed solely on table ordering; it
+is not the landing gate. The fresh post-merge gate is recorded separately in
+/tmp/adamic-nested-merged-gate.log.
+
+The post-merge focused uncached Node gate covering all nested and omitted-argument
+fixtures and their oracle mutants passed in 44.623s. Count regeneration passed
+in 70.944s. Vet and whitespace checks passed with empty logs at
+/tmp/adamic-nested-merged-{vet,format}.log. The unpushed scratch merge was also
+updated with this feature merge and remeasured: still ten matches and the same
+fixture 01 var refusal, in /tmp/adamic-combined-current-main.log. Scratch conflict
+resolutions removed the old type-predicate refusal because main now proves these,
+retained the non-null branch's asserted initializers, and kept both sets of count
+rows. No new policy was implemented in the feature branch.
