@@ -327,3 +327,61 @@ console.log('done');`)
 		t.Fatalf("generic factories lost their concrete base layouts: %v", layouts)
 	}
 }
+
+func TestInheritanceNativeSignatureNeighbors(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"identical default", `class Base { scale(value: number, factor: number = 2): number { return value * factor; } }
+class Child extends Base { override scale(value: number, factor: number = 2): number { return value * factor + 1; } }
+const value: Base = new Child(); console.log(value.scale(3).toString());`},
+		{"wider same representation", `class Base { scale(value: 3): number { return value; } }
+class Child extends Base { override scale(value: number): number { return value + 1; } }
+const value: Base = new Child(); console.log(value.scale(3).toString());`},
+		{"identical optional", `class Base { scale(factor?: number): number { return factor ?? 2; } }
+class Child extends Base { override scale(factor?: number): number { return (factor ?? 2) + 1; } }
+const value: Base = new Child(); console.log(value.scale().toString());`},
+		{"void result", `class Base { scale(): void {} }
+class Child extends Base { override scale(): void {} }
+const value: Base = new Child(); value.scale();`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			if _, err := lowerSource(t, probe.source); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}
+
+func TestInheritanceNativeSignatureLimits(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, want, fix string }{
+		{"optional added", `class Base { scale(factor: number): number { return factor; } }
+class Child extends Base { override scale(factor?: number): number { return factor ?? 2; } }
+const value: Base = new Child();`, `parameter "factor"`, "parameter form"},
+		{"boolean default added", `class Base { scale(flag: boolean): boolean { return flag; } }
+class Child extends Base { override scale(flag: boolean = true): boolean { return flag; } }
+const value: Base = new Child();`, `parameter "flag"`, "parameter form"},
+		{"generic default added", `class Base<T> { scale(factor: T): T { return factor; } }
+class Child<T> extends Base<T> { override scale(factor: T = this.fallback): T { return factor; } readonly fallback: T; constructor(fallback: T) { super(); this.fallback = fallback; } }
+const value: Base<number> = new Child<number>(2);`, `parameter "factor"`, "parameter form"},
+		{"parameter count", `class Base { scale(factor: number): number { return factor; } }
+class Child extends Base { override scale(factor: number, extra: number = 2): number { return factor * extra; } }
+const value: Base = new Child();`, "parameter count", "parameter count"},
+		{"void to number result", `class Base { scale(): void {} }
+class Child extends Base { override scale(): number { return 2; } }
+const value: Base = new Child();`, "result representation", "result form"},
+		{"number to optional result", `class Base { scale(): number | undefined { return 2; } }
+class Child extends Base { override scale(): number { return 2; } }
+const value: Base = new Child();`, "result representation", "result form"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var gap *NotYet
+			if !errors.As(err, &gap) || !strings.Contains(err.Error(), probe.want) || !strings.Contains(err.Error(), "keep the base method's "+probe.fix) {
+				t.Fatalf("want NotYet naming %s and its repair, got %v", probe.want, err)
+			}
+		})
+	}
+}

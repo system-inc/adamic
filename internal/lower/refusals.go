@@ -58,6 +58,14 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		line, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())
 		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error"}
 	}
+	// File-level checking pragmas are separate from line-suppression directives. Use every
+	// parsed pragma, including one overridden by a later pragma, rather than just CheckJsDirective.
+	for _, pragma := range module.Pragmas {
+		if pragma.Name == "ts-nocheck" || pragma.Name == "ts-check" {
+			line, column := scanner.GetLineAndCharacterOfPosition(module, pragma.Pos())
+			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
+		}
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
