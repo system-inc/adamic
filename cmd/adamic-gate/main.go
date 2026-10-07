@@ -92,6 +92,12 @@ type summary struct {
 	Submodules            []submoduleRecord
 	Concurrency           concurrency
 }
+type shardWallTime struct {
+	Index       int
+	WallSeconds float64
+	BuildFlags  string
+}
+
 type merged struct {
 	Version           int
 	Plan              plan
@@ -100,6 +106,7 @@ type merged struct {
 	TestEvents        int
 	RawTerminalEvents int
 	WallSeconds       []float64
+	ShardWallTimes    []shardWallTime
 	BuildFlags        []string
 	Errors            []string
 	Green             bool
@@ -289,6 +296,10 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 			if !ok {
 				return true
 			}
+			field, bound := literalRunBinding(f, r)
+			if !bound {
+				return true
+			}
 			literal, ok := r.X.(*ast.CompositeLit)
 			if !ok && len(table) == 1 {
 				if id, yes := r.X.(*ast.Ident); yes && id.Name == table[0] {
@@ -310,11 +321,16 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 			if !ok {
 				return true
 			}
-			if _, ok := literal.Type.(*ast.ArrayType); !ok {
+			array, ok := literal.Type.(*ast.ArrayType)
+			if !ok {
+				return true
+			}
+			index, ok := literalNameIndex(array, field)
+			if !ok {
 				return true
 			}
 			for _, e := range literal.Elts {
-				if label, ok := e.(*ast.BasicLit); ok && label.Kind == token.STRING {
+				if label, ok := e.(*ast.BasicLit); ok && label.Kind == token.STRING && field == "" {
 					name, err := strconv.Unquote(label.Value)
 					if err == nil {
 						names = append(names, strings.ReplaceAll(name, " ", "_"))
@@ -322,10 +338,21 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 					continue
 				}
 				row, ok := e.(*ast.CompositeLit)
-				if !ok || len(row.Elts) == 0 {
+				if !ok || len(row.Elts) == 0 || index >= len(row.Elts) {
 					continue
 				}
-				s, ok := row.Elts[0].(*ast.BasicLit)
+				expression := row.Elts[index]
+				if _, keyed := row.Elts[0].(*ast.KeyValueExpr); keyed {
+					expression = nil
+					for _, entry := range row.Elts {
+						if pair, ok := entry.(*ast.KeyValueExpr); ok {
+							if key, ok := pair.Key.(*ast.Ident); ok && key.Name == field {
+								expression = pair.Value
+							}
+						}
+					}
+				}
+				s, ok := expression.(*ast.BasicLit)
 				if !ok || s.Kind != token.STRING {
 					continue
 				}
@@ -369,7 +396,9 @@ func children(pkg, parent string) ([]string, error) {
 	if strings.HasSuffix(pkg, "/stage1/cohere/lint") {
 		switch parent {
 		case "TestMutants":
-			return literalChildren("stage1/cohere/lint/lint_test.go", parent)
+			// Registry-driven mutant.json names are not a literal t.Run table.
+			// Run the whole parent rather than inventing children from backend loops.
+			return nil, nil
 		case "TestVolumeMutants":
 			return literalChildren("stage1/cohere/lint/volume_test.go", parent)
 		}
@@ -1286,6 +1315,7 @@ func merge(dirs []string, out string) error {
 
 		all = append(all, results...)
 		m.WallSeconds = append(m.WallSeconds, s.WallSeconds)
+		m.ShardWallTimes = append(m.ShardWallTimes, shardWallTime{s.Index, s.WallSeconds, s.BuildFlags})
 		m.BuildFlags = append(m.BuildFlags, s.BuildFlags)
 	}
 	for i := 0; i < expected.Count; i++ {
@@ -1328,6 +1358,7 @@ func merge(dirs []string, out string) error {
 	if err != nil {
 		m.Errors = append(m.Errors, err.Error())
 	}
+	sort.Slice(m.ShardWallTimes, func(i, j int) bool { return m.ShardWallTimes[i].Index < m.ShardWallTimes[j].Index })
 	m.Green = len(m.Errors) == 0 && m.Fail == 0
 	if _, err := os.Stat(out); err == nil {
 		return errors.New("merged output already exists")
@@ -1361,6 +1392,9 @@ func merge(dirs []string, out string) error {
 		verdict = "GREEN"
 	}
 	fmt.Printf("%s pass=%d fail=%d skip=%d test_events=%d raw_terminal_events=%d\n", verdict, m.Pass, m.Fail, m.Skip, m.TestEvents, m.RawTerminalEvents)
+	for _, timing := range m.ShardWallTimes {
+		fmt.Printf("shard %d wall=%.3fs\n%s\n", timing.Index, timing.WallSeconds, timing.BuildFlags)
+	}
 	for _, problem := range m.Errors {
 		fmt.Fprintln(os.Stderr, problem)
 	}
