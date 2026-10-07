@@ -304,9 +304,7 @@ static void free_one(void *value) {
 	case adamic_kind_map_iterator: {
 		// Only an unfinished iterator still holds a place in the entries.
 		adamic_map_iterator *iterator = value;
-		if (!iterator->exhausted) {
-			iterator->map->iterating--;
-		}
+		adamic_map_iterator_close(iterator);
 		let_go(iterator->map);
 		break;
 	}

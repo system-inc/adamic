@@ -262,7 +262,7 @@ void adamic_accessor_set(adamic_object *object, const char *name, adamic_value v
 // adamic_array_push appends; a reference pushed belongs to the array.
 void adamic_array_push(adamic_array *array, adamic_value value);
 
-// adamic_map is a Map with string or number keys (map.c).
+// adamic_map stores up to four ordered entries inline, then uses a hash table (map.c).
 typedef struct adamic_map_entry {
 	adamic_value key;
 	adamic_value value;
@@ -291,6 +291,9 @@ typedef struct adamic_map {
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
 	size_t iterating;
+	// entries points here until a fifth historical slot is needed. An open iterator
+	// can require a table even with fewer live keys; closing the last permits compaction.
+	adamic_map_entry small[4];
 } adamic_map;
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
@@ -304,6 +307,8 @@ typedef struct adamic_map_iterator {
 } adamic_map_iterator;
 
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
+// Ends an active iteration once and returns a small map to inline storage when safe.
+void adamic_map_iterator_close(adamic_map_iterator *iterator);
 adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
@@ -624,6 +629,8 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 // point: indexOf's answer, found through the index rather than by counting from the start.
 size_t adamic_string_units_before(const adamic_string *string, size_t offset);
 void adamic_string_free_index(adamic_string *string);
+// Borrowed until the string is freed or appended to; NULL for ownerless stack pieces.
+const uint16_t *adamic_string_utf16_view(adamic_string *string);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
