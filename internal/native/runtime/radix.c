@@ -18,6 +18,7 @@
 // That's V8's algorithm, not the exact expansion: (0.1).toString(3) stops after 34 digits.
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <math.h>
 #include <stdint.h>
@@ -142,7 +143,7 @@ adamic_string *adamic_number_to_radix(double value, double radix) {
 	radix = isnan(radix) ? 0 : trunc(radix);
 	if (radix < 2 || radix > 36) {
 		static const char message[] = "RangeError: toString() radix argument must be between 2 and 36";
-		adamic_panic(message, sizeof message - 1);
+		adamic_uncaught_library_error(message, sizeof message - 1);
 	}
 	if (radix == 10) {
 		return adamic_string_from_number(value);

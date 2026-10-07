@@ -1,0 +1,4 @@
+// A bad spread code point outside try still uses the ordinary uncaught convention.
+console.log('before');
+const points = [65, NaN, 66];
+console.log(String.fromCodePoint(...points));

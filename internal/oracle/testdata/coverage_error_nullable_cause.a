@@ -1,0 +1,4 @@
+const match = /z/.exec('ab');
+const failure = new Error('nullable cause', { cause: match });
+const cause = failure.cause;
+console.log(`${typeof cause} ${cause === null} ${cause === undefined}`);

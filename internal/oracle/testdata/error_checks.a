@@ -1,0 +1,167 @@
+/* eslint-disable no-use-before-define -- These calls deliberately reach the temporal dead zone to test ReferenceError cleanup. */
+// Generated failures must be catchable nominal errors, with normal cleanup.
+let effects = 0;
+function readFuture(): number {
+    const held = `read-${effects}`;
+    console.log(held);
+    let value = futureRead;
+    value += 1;
+    console.log('read checked');
+    return value;
+}
+function readThrough(): number {
+    try {
+        const result = readFuture();
+        console.log('read survived');
+        return result;
+    }
+    finally {
+        console.log('read finally');
+    }
+}
+try {
+    console.log(`${readThrough()}`);
+}
+catch(error) {
+    if(error instanceof ReferenceError) {
+        console.log(`${error.name} ${error.message} ${error instanceof Error} ${error instanceof TypeError}`);
+    }
+}
+const futureRead = 21;
+console.log(`${readThrough()}`);
+function side(): number {
+    effects += 1;
+    console.log('right side');
+    return effects;
+}
+function pureSide(): number {
+    console.log('right side');
+    return 1;
+}
+function writeFuture(): void {
+    futureWrite = pureSide();
+    console.log('write checked');
+}
+function writeThrough(): void {
+    try {
+        writeFuture();
+    }
+    finally {
+        console.log('write finally');
+    }
+}
+try {
+    writeThrough();
+}
+catch(error) {
+    if(error instanceof ReferenceError) {
+        console.log(`${error.name} ${error.message} ${error instanceof Error} ${effects}`);
+    }
+}
+let futureWrite = 3;
+writeThrough();
+console.log(`${futureWrite}`);
+const readClosure = (): number => futureClosure;
+try {
+    console.log(`${readClosure()}`);
+}
+catch(error) {
+    if(error instanceof ReferenceError) {
+        console.log(`closure ${error.message}`);
+    }
+}
+const futureClosure = 4;
+console.log(`${readClosure()}`);
+interface CheckBoxInterface {
+    value: number;
+}
+let box: CheckBoxInterface | undefined = { value: 5 };
+function dropBox(): void {
+    box = undefined;
+}
+function invalidRead(): number {
+    if(box !== undefined) {
+        dropBox();
+        return box.value;
+    }
+    return 0;
+}
+try {
+    console.log(`${invalidRead()}`);
+}
+catch(error) {
+    if(error instanceof TypeError) {
+        console.log(`${error.name} ${error.message} ${error instanceof Error} ${error instanceof ReferenceError}`);
+    }
+}
+box = { value: 6 };
+function invalidWrite(): void {
+    if(box !== undefined) {
+        dropBox();
+        box.value = side();
+    }
+}
+try {
+    invalidWrite();
+}
+catch(error) {
+    if(error instanceof TypeError) {
+        console.log(`${error.name} ${error.message} ${effects}`);
+    }
+}
+try {
+    Number.prototype.toFixed.call(1, 101);
+}
+catch(error) {
+    if(error instanceof RangeError) {
+        console.log(`prototype ${error.message}`);
+    }
+}
+try {
+    String.prototype.repeat.call('x', -1);
+}
+catch(error) {
+    if(error instanceof RangeError) {
+        console.log(`repeat ${error.message}`);
+    }
+}
+function readBeforeRight(): number {
+    return futureBeforeRight + side();
+}
+try {
+    console.log(`${readBeforeRight()}`);
+}
+catch(error) {
+    if(error instanceof ReferenceError) {
+        console.log(`before right ${effects}`);
+    }
+}
+const futureBeforeRight = 7;
+let match = /x/.exec('x');
+function dropMatch(): void {
+    match = null;
+}
+function invalidNullRead(): number {
+    if(match !== null) {
+        dropMatch();
+        return match.index;
+    }
+    return 0;
+}
+try {
+    console.log(`${invalidNullRead()}`);
+}
+catch(error) {
+    if(error instanceof TypeError) {
+        console.log(`null ${error.message}`);
+    }
+}
+try {
+    console.log([1].with(3, 9).join('|'));
+}
+catch(error) {
+    if(error instanceof RangeError) {
+        console.log(`with ${error.message} ${error instanceof Error} ${error instanceof TypeError}`);
+    }
+}
+console.log('finished');

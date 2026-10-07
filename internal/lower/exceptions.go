@@ -3,14 +3,14 @@ package lower
 import (
 	"math"
 	"reflect"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Exceptions (docs/memory.md, "Exceptions, designed into counting"): throw new Error(message), a
-// caught error thrown again, and try with catch, finally or both. What's thrown is only ever an
-// Error, made by new Error or caught, since a catch binds unknown and 0.2 has no value of every kind.
+// Exceptions retain nominal Error objects across calls and unwind through catch and finally.
+// Non-Error throws remain refused: catch's unknown has only the error-object representation.
 
 // tryRecord is a try statement lowered, for the checks made once every function is: where it is,
 // and its body.
@@ -22,12 +22,8 @@ type tryRecord struct {
 // throwStatement lowers throw.
 func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
-	isNewError := thrown.Kind == ast.KindNewExpression && l.isLibraryGlobal(thrown.AsNewExpression().Expression, "Error")
 	isCaught := ast.IsIdentifier(thrown) && l.caught[l.symbol(thrown)]
-	if !isNewError && !isCaught {
-		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
-			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
-		}
+	if !isCaught && !l.errorType(l.checker.GetTypeAtLocation(thrown)) {
 		return nil, &Refused{Where: l.program.Where(thrown), What: "throwing a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)), Fix: "throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of (adamic/throw-error)"}
 	}
 	value, err := l.expression(thrown)
@@ -37,23 +33,30 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{ir.Throw{Value: value}}, nil
 }
 
-// newError lowers new Error(message), and new Error().
+// newError lowers the standard Error constructors, including the ES2022 cause option.
 func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 	created := node.AsNewExpression()
-	message := ir.Expression(ir.StringConstant{Index: l.constant("")})
-	if created.Arguments != nil && len(created.Arguments.Nodes) > 0 {
-		if len(created.Arguments.Nodes) > 1 {
-			return nil, l.notYet(node, "new Error with options")
-		}
-		var err error
-		if message, err = l.expression(created.Arguments.Nodes[0]); err != nil {
-			return nil, err
-		}
-		if message.Type() != ir.String {
-			return nil, l.notYet(node, "new Error with a message that isn't a string (convert the message explicitly, for example new Error(String(value)) for a scalar value)")
-		}
+	message, err := l.errorMessage(node, nodesOf(created.Arguments))
+	if err != nil {
+		return nil, err
 	}
-	return ir.MakeError{Message: message}, nil
+	cause, err := l.errorCause(node, nodesOf(created.Arguments))
+	if err != nil {
+		return nil, err
+	}
+	// The constructor used to apply this parameter default. Direct initialization
+	// must apply it before the message reaches a string slot.
+	if args := nodesOf(created.Arguments); len(args) == 0 {
+		message = ir.StringConstant{Index: l.constant("")}
+	} else {
+		message = l.orDefault(args[0], message, "")
+	}
+	name := l.errorGlobal(created.Expression)
+	instance := l.errorInstance(name)
+	// Built-in construction has no user constructor effects. Initialize the nominal
+	// prefix directly, evaluating message before cause and retaining both fields.
+	// User subclass constructors keep their ordinary call and super paths.
+	return ir.ObjectLiteral{Class: instance.class, Methods: instance.methodList(), Fields: []ir.Field{{Name: "name", Value: ir.StringConstant{Index: l.constant(name)}}, {Name: "message", Value: message}, {Name: "cause", Value: cause}}}, nil
 }
 
 // tryStatement lowers try, with catch, finally or both.
@@ -93,24 +96,81 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 			return nil, err
 		}
 	}
+	// A catch is protected by its own finally even without an outer catch.
+	// Its library failures and recursive callees must unwind through that cleanup.
+	if lowered.HasCatch && lowered.HasFinally {
+		l.tries = append(l.tries, tryRecord{node: node, body: lowered.Catch})
+	}
 	return []ir.Statement{lowered}, nil
 }
 
-// caughtInstanceOfError lowers error instanceof Error on what a catch took, which is always an Error.
+// caughtInstanceOfError no longer folds the test: catch preserves the actual error identity.
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
-	binary := node.AsBinaryExpression()
-	left := ast.SkipParentheses(binary.Left)
-	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] || !l.isLibraryGlobal(binary.Right, "Error") {
-		return nil, false
-	}
-	l.local(left)
-	return ir.BooleanConstant{Value: true}, true
+	// Caught values carry their actual nominal identity; classInstanceOf handles the test.
+	return nil, false
 }
 
 // exceptions works out which functions a throw can leave, once every function is lowered, and
 // refuses what can't be done yet: a try that can reach a library call whose failure is a panic
 // natively but a throw on Node.
 func (l *lowering) exceptions() error {
+	// Incoming IR can already contain catchable reads (for example record slots).
+	// Give these the same nominal TypeError path as newly lowered narrowings.
+	catchable := func(node any) any {
+		if defined, ok := node.(ir.Defined); ok && defined.Throws() {
+			return l.errorDefined(defined.Value, strings.TrimPrefix(defined.Message, "TypeError: "))
+		}
+		return node
+	}
+	l.result.Main = rewriteChecks(l.result.Main, catchable).([]ir.Statement)
+	for index := 0; index < len(l.result.Functions); index++ {
+		l.result.Functions[index].Body = rewriteChecks(l.result.Functions[index].Body, catchable).([]ir.Statement)
+	}
+	l.preciseChecks()
+	l.refineExceptionPaths()
+	l.refineExceptionBounds()
+	// Register errors before taking the functions slice: creating a built-in error
+	// adds its allocator and initializer. A ready check is an ordinary throw.
+	register := func(node any) bool {
+		local := -1
+		switch node := node.(type) {
+		case ir.NodeFSFile:
+			if node.MayThrow() {
+				// Host failures need the same nominal identities as source errors.
+				for _, name := range []string{"Error", "TypeError", "RangeError"} {
+					l.errorInstance(name)
+				}
+			}
+		case ir.Read:
+			if node.Checked {
+				local = node.Local
+			}
+		case ir.Assign:
+			if node.Checked {
+				local = node.Local
+			}
+		}
+		if local >= 0 {
+			if l.result.ReadyErrors == nil {
+				l.result.ReadyErrors = map[int]ir.Call{}
+			}
+			if _, found := l.result.ReadyErrors[local]; !found {
+				instance := l.errorInstance("ReferenceError")
+				message := "Cannot access '" + l.result.Locals[local].Name + "' before initialization"
+				l.result.ReadyErrors[local] = ir.Call{Function: instance.constructor, Returns: ir.Object, Arguments: []ir.Expression{ir.StringConstant{Index: l.constant(message)}, ir.Undefined{Of: ir.Union}}}
+			}
+		}
+		return true
+	}
+	walk(l.result.Main, register)
+	for index := 0; index < len(l.result.Functions); index++ {
+		walk(l.result.Functions[index].Body, register)
+	}
+	if err := l.checkHostErrorMethods(); err != nil {
+		return err
+	}
+	l.guardRuntimeRanges()
+	l.finishClassCalls()
 	functions := l.result.Functions
 	// A class's methods are reached through function values too: a call through an interface the
 	// class implements calls one where it would call the object's own function value (ir.Property's
@@ -138,7 +198,7 @@ func (l *lowering) exceptions() error {
 	}
 	for _, record := range l.tries {
 		if failing := l.libraryFailure(record.body, map[int]bool{}); failing != "" {
-			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
+			return l.notYet(record.node, "a try around "+failing+", whose native runtime failure cannot unwind to a catch yet (docs/memory.md)")
 		}
 	}
 	return nil
@@ -159,10 +219,14 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
+		case ir.Read:
+			found = found || node.Checked
+		case ir.Assign:
+			found = found || node.Checked
 		case ir.Throw:
 			found = true
 		case ir.Defined:
-			found = node.Throws()
+			found = found || node.Throws()
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
@@ -192,7 +256,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		switch node := node.(type) {
 		case ir.Call:
 			for _, target := range l.result.CallTargets(node) {
-				if !visited[target] {
+				if !visited[target] && !l.result.Functions[target].LibraryGuarded {
 					visited[target] = true
 					failing = l.libraryFailure(l.result.Functions[target].Body, visited)
 					if failing != "" {
@@ -225,10 +289,34 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			if node.Method == "replaceAll" || node.Method == "matchAll" {
 				failing = "RegExp global-flag validation"
 			}
+		case ir.StringFromCodes:
+			if node.CodePoints {
+				if node.Spread != nil {
+					failing = "String.fromCodePoint"
+				}
+				for _, argument := range node.Codes {
+					if !constantWithin(argument, 0, 1114111) {
+						failing = "String.fromCodePoint"
+					}
+				}
+			}
 		case ir.StringCall:
+			if node.Method == "normalize" {
+				text, bounded := node.Value.(ir.StringConstant)
+				if !bounded || len(l.result.Strings[text.Index]) > 536870888/36 {
+					failing = "normalize expansion"
+				}
+			}
 			switch {
-			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
-				failing = "repeat"
+			case node.Method == "repeat":
+				safe := constantWithin(node.Arguments[0], 0, 1)
+				if constantWithin(node.Arguments[0], 0, math.MaxFloat64) {
+					count := math.Trunc(node.Arguments[0].(ir.NumberConstant).Value)
+					safe = safe || l.stringLengthBounds()(node.Value)*count <= maximumStringLength
+				}
+				if !safe {
+					failing = "repeat length or count"
+				}
 			case node.Method == "normalize" && len(node.Arguments) > 0 && !isNormalizationForm(node.Arguments[0], l.result.Strings):
 				failing = "normalize"
 			}
@@ -253,11 +341,23 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		return failing == ""
 	})
 	if failing == "" && callsClosures {
-		// What a function value does is any function value's: each of them is reached.
+		// Function values also include class methods reached through interfaces.
+		// Use the same conservative targets as exception propagation, not only
+		// closure records, or an unguarded method failure can bypass refusal.
+		targets := map[int]bool{}
 		for _, closure := range l.closureRecords {
-			if !visited[closure.function] {
-				visited[closure.function] = true
-				if failing = l.libraryFailure(l.result.Functions[closure.function].Body, visited); failing != "" {
+			targets[closure.function] = true
+		}
+		for _, instance := range l.instances {
+			for _, method := range instance.methodList() {
+				targets[method.Function] = true
+			}
+		}
+		// Function order keeps the first diagnostic deterministic.
+		for target, function := range l.result.Functions {
+			if targets[target] && !visited[target] && !function.LibraryGuarded {
+				visited[target] = true
+				if failing = l.libraryFailure(function.Body, visited); failing != "" {
 					break
 				}
 			}

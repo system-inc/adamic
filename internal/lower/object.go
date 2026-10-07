@@ -66,6 +66,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if index != 0 {
 				return nil, &Refused{Where: l.program.Where(property), What: "a spread after the first field", Fix: "spread once, first: { ...source, field: value } (adamic/single-spread)"}
 			}
+			if l.errorType(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
+				return nil, l.notYet(property, "spreading an Error: name, message and cause have JavaScript property descriptors that the native shape cannot enumerate yet")
+			}
 			spread, err := l.expression(property.AsSpreadAssignment().Expression)
 			if err != nil {
 				return nil, err
@@ -527,6 +530,21 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
 	}
+	if l.errorType(l.checker.GetTypeAtLocation(access.Expression)) && name == "stack" {
+		return nil, l.notYet(node, "Error.stack: native frames have no JavaScript source stack; fabricating one would misreport the program")
+	}
+
+	if l.isErrorCause(node) {
+		object, err := l.expression(access.Expression)
+		if err != nil {
+			return nil, err
+		}
+		var value ir.Expression = ir.Property{Object: object, Name: "cause", Of: ir.Union, Optional: access.QuestionDotToken != nil}
+		if narrowed, known := l.representation(l.checker.GetTypeAtLocation(node)); known && narrowed != ir.Union {
+			value = ir.Narrow{Value: value, To: narrowed}
+		}
+		return value, nil
+	}
 	if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		// The rest of a chain after a ?., which short-circuits with it.
 		return nil, l.notYet(node, "an optional chain longer than one step")
@@ -553,7 +571,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	// A library declaration proves a prototype member exists, never an own slot. Keep this
 	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
-	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
+	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.errorType(l.checker.GetTypeAtLocation(access.Expression)) && (name == "name" || name == "message")) {
 		return nil, l.prototypeRead(node, name, l.memberSymbol(node))
 	}
 	if err := l.erasedLiteralMethod(node); err != nil {
@@ -574,6 +592,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			What:  "a method read off its object, which loses its this when called (unbound-method)",
 			Fix:   fmt.Sprintf("wrap the call in an arrow function, which keeps its object: (value) => %s.%s(value)", object, name),
 		}
+	}
+	if field := l.checker.GetSymbolAtLocation(node.Name()); name == "constructor" && field != nil && len(field.Declarations) > 0 && load.IsLibrary(ast.GetSourceFileOfNode(field.Declarations[0])) {
+		return nil, l.notYet(node, "an inherited library constructor read as a value; constructors are not own instance fields")
+	}
+	if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && len(field.Declarations) > 0 && field.Declarations[0].Kind == ast.KindMethodSignature && load.IsLibrary(ast.GetSourceFileOfNode(field.Declarations[0])) {
+		return nil, l.notYet(node, "an inherited library method read as a value; it is not an own field")
 	}
 	if receiver := l.checker.GetTypeAtLocation(access.Expression); name != "length" && (checker.IsTupleType(receiver) || checker.IsTupleType(l.checker.GetNonNullableType(receiver))) {
 		// A tuple is held as an object of its elements, "0", "1", ..., read by index; an array's
@@ -891,8 +915,15 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, matched, err := l.regexBuiltin(node); matched {
 		return value, true, err
 	}
+	if value, handled, err := l.errorPrototypeCall(node); handled {
+		return value, handled, err
+	}
+	if value, handled, err := l.errorMethod(node); handled {
+		return value, handled, err
+	}
 	if value, handled, err := l.objectKeys(node); handled {
 		return value, true, err
+
 	}
 	if lowered, isInput, err := l.input(node); isInput {
 		return lowered, true, err
@@ -1031,7 +1062,7 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if len(arguments) == 1 {
 		digits = arguments[0]
 	}
-	return ir.ToFixed{Value: value, Digits: digits}, true, nil
+	return l.checkedToFixed(node, value, digits), true, nil
 }
 
 // numberFormat lowers value.toExponential(digits), value.toPrecision(digits) and
@@ -1057,7 +1088,7 @@ func (l *lowering) numberFormat(node *ast.Node, receiver *ast.Node, name string)
 		}
 		format.Argument = argument
 	}
-	return format, true, nil
+	return l.checkedNumberFormat(node, format), true, nil
 }
 
 // numberFunctions are the functions of Number that 0.1 has (docs/0.1.md), with what each takes; the
@@ -1686,7 +1717,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	if l.isLibraryGlobal(created.Expression, "Set") {
 		return l.newSet(node)
 	}
-	if l.isLibraryGlobal(created.Expression, "Error") {
+	if l.errorGlobal(created.Expression) != "" {
 		return l.newError(node)
 	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {
@@ -1918,7 +1949,7 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 	case name == "normalize" && len(arguments) == 0:
 		arguments = append(arguments, ir.StringConstant{Index: l.constant("NFC")})
 	}
-	return ir.StringCall{Method: name, Value: value, Arguments: arguments}, true, nil
+	return l.checkedStringCall(node, ir.StringCall{Method: name, Value: value, Arguments: arguments}), true, nil
 }
 
 // arraySort lowers array.sort(comparator). 0.1 requires the comparator (the default sorts numbers as

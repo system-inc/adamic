@@ -24,19 +24,13 @@ func (l *lowering) stringPrototypeCall(call, node *ast.Node, method string, writ
 	if err != nil {
 		return nil, true, err
 	}
-	errorLocal := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "type_error", Type: ir.Object, Function: function})
-	readError := ir.Read{Local: errorLocal, Of: ir.Object}
-	l.writeSites = append(l.writeSites, writeSite{node: node})
 	condition := ir.Expression(ir.IsUndefined{Value: reads[0]})
 	if l.includesNull(l.checker.GetTypeAtLocation(node)) {
 		condition = ir.IsNull{Value: reads[0]}
 	}
 	l.result.Functions[function].Body = []ir.Statement{
 		ir.If{Condition: condition, Then: []ir.Statement{
-			ir.Declare{Local: errorLocal, Value: ir.MakeError{Message: ir.StringConstant{Index: l.constant("String.prototype." + method + " called on null or undefined")}}},
-			ir.SetProperty{Object: readError, Name: "name", Value: ir.StringConstant{Index: l.constant("TypeError")}, Site: len(l.writeSites)},
-			ir.Throw{Value: readError},
+			ir.Throw{Value: l.generatedError("TypeError", "String.prototype."+method+" called on null or undefined")},
 		}},
 	}
 	receiver := &stringReceiver{lowering: l, function: function, values: []ir.Expression{value}}

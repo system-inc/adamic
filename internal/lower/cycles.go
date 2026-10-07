@@ -61,6 +61,9 @@ type cycleFinder struct {
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
 // proven not to close a cycle (fresh.go), or returns nil.
 func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+	if err := l.checkErrorCauseReflection(); err != nil {
+		return err
+	}
 	if err := l.checkDiscriminantConstruction(modules); err != nil {
 		return err
 	}
@@ -463,6 +466,13 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 				queue = append(queue, cycleNode{proven: member})
 			}
 			continue
+		}
+		if flags&checker.TypeFlagsUnknown != 0 {
+			if errors := f.l.instances["builtin-error:Error"]; errors != nil {
+				for _, cause := range errors.errorCauses {
+					queue = append(queue, cycleNode{proven: cause})
+				}
+			}
 		}
 		if flags&checker.TypeFlagsObject == 0 {
 			continue

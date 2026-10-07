@@ -1,0 +1,30 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-template-expression, no-unsafe-finally -- Preserve the reader oracle's deliberate exception, ownership and dispatch probes. */
+// A library failure in catch runs its own finally and reaches an outer handler.
+try {
+    try {
+        throw new EvalError('first');
+    }
+    catch(error) {
+        if(error instanceof EvalError) console.log(error.message);
+        console.log('x'.padStart(Infinity, 'y'));
+    }
+    finally {
+        console.log('inner finally');
+    }
+}
+catch(error) {
+    if(error instanceof RangeError) console.log(error.toString());
+}
+finally {
+    console.log('outer finally');
+}
+function override(): string {
+    try {
+        (1.25).toFixed(101);
+        return 'unreachable';
+    }
+    finally {
+        return `overridden-${3}`;
+    }
+}
+console.log(override());

@@ -57,6 +57,9 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 	case ir.MaybeBoolean:
 		return e.snapshot(ir.MaybeBoolean, fmt.Sprintf("%s == NULL ? %s : %s", value, zero(ir.MaybeBoolean), maybe(ir.MaybeBoolean, fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value))))
 	}
+	if narrow.To == ir.Object || narrow.To == ir.Array {
+		return fmt.Sprintf("((%s)(%s == &adamic_null ? NULL : %s))", cType(narrow.To), value, value)
+	}
 	return fmt.Sprintf("((%s)%s)", cType(narrow.To), value)
 }
 

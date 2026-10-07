@@ -1,0 +1,26 @@
+/* eslint-disable nexus/correctness-no-caller-data-mutation -- Preserve the reader oracle's deliberate exception, ownership and dispatch probes. */
+// Unknown field stores and writes to bounded counters must retain failing guards.
+interface SampleInterface {
+    figures: number;
+}
+function change(sample: SampleInterface, figures: number): void {
+    sample.figures = figures;
+}
+const sample: SampleInterface = { figures: 2 };
+change(sample, -1);
+try {
+    console.log((1.25).toPrecision(sample.figures));
+}
+catch(error) {
+    if(error instanceof RangeError) console.log(error.toString());
+}
+try {
+    for(let digits = 0; digits <= 2; digits += 1) {
+        if(digits === 0) digits = -1;
+        console.log((1.25).toFixed(digits));
+    }
+}
+catch(error) {
+    if(error instanceof RangeError) console.log(error.toString());
+}
+for(let digits = 3; digits >= 1; digits -= 1) console.log((1.25).toPrecision(digits));

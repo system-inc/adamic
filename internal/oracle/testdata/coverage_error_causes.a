@@ -1,0 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-template-expression, nexus/consistency-no-property-alias -- Preserve the reader oracle's deliberate exception, ownership and dispatch probes. */
+// Cause boxing retains undefined, containers and functions as well as scalars.
+class RootError extends URIError {
+    readonly code = 9;
+}
+function describe(error: Error): void {
+    try {
+        throw error;
+    }
+    catch(caught) {
+        if(caught instanceof Error) {
+            const cause = caught.cause;
+            console.log(`${caught.name} ${typeof cause} ${cause === null} ${cause === undefined}`);
+            if(cause instanceof RootError) console.log(`${cause.code} ${cause.message}`);
+            if(typeof cause === 'string') console.log(cause);
+            if(typeof cause === 'number') console.log(`${cause} ${Number.isNaN(cause)}`);
+            if(typeof cause === 'boolean') console.log(`${cause}`);
+        }
+    }
+}
+describe(new Error('undefined', { cause: undefined }));
+describe(new Error('object', { cause: { label: `held-${2}` } }));
+describe(new Error('array', { cause: [`held-${3}`] }));
+describe(new Error('function', { cause: () => 'held' }));
+describe(new Error('map', { cause: new Map<string, string>([['k', `v-${4}`]]) }));
+describe(new Error('error', { cause: new RootError(`root-${5}`) }));
+describe(new Error('nan', { cause: NaN }));
+describe(new Error('true', { cause: true }));
+describe(new Error('text', { cause: `why-${6}` }));

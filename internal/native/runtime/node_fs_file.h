@@ -1,6 +1,8 @@
 // fs file host entry points. Inputs are borrowed; pointer results are owned.
 #ifndef ADAMIC_NODE_FS_FILE_H
 #define ADAMIC_NODE_FS_FILE_H
+adamic_string *adamic_fs_file_uncaught_text(const adamic_object *);
+void adamic_fs_file_error_classes(const adamic_class *, const adamic_class *, const adamic_class *);
 adamic_string *adamic_fs_file_read_file(const adamic_string *, const adamic_string *);
 adamic_array *adamic_fs_file_read_buffer(const adamic_string *, const adamic_string *);
 adamic_array *adamic_fs_file_read_buffer_fd(double, const adamic_string *);

@@ -1,0 +1,14 @@
+// A catch's stack failure must still run its own finally before escaping.
+function depth(count: number): number {
+    return count === 0 ? 0 : 1 + depth(count - 1);
+}
+try {
+    throw new Error('enter catch');
+}
+catch {
+    console.log(`${depth(1e9)}`);
+}
+finally {
+    console.log('finally ran');
+}
+console.log('after');

@@ -59,8 +59,13 @@ func (l *lowering) closedFrameInput(local int) bool {
 		}
 		return true
 	}
-	for _, function := range l.result.Functions {
-		walk(function.Body, inspect)
+	// Only callable code can alter the closed input graph. Lowering may retain
+	// unused helper bodies, whose writes must not invalidate this proof.
+	reachable := l.closedInputReachable()
+	for index, function := range l.result.Functions {
+		if reachable[index] {
+			walk(function.Body, inspect)
+		}
 	}
 	walk(l.result.Main, inspect)
 	return safe && called
@@ -83,4 +88,51 @@ func (l *lowering) closedInputLiteral(value ir.Expression) bool {
 		}
 	}
 	return true
+}
+
+// Function values may reach any implementation when their target is unknown.
+// A plain unused function has no effects until a reachable call names it.
+func (l *lowering) closedInputReachable() map[int]bool {
+	reachable := map[int]bool{}
+	pending := []int{}
+	add := func(index int) {
+		if !reachable[index] {
+			reachable[index] = true
+			pending = append(pending, index)
+		}
+	}
+	inspect := func(node any) bool {
+		switch value := node.(type) {
+		case ir.Call:
+			for _, target := range l.result.CallTargets(value) {
+				add(target)
+			}
+		case ir.MakeClosure:
+			add(value.Function)
+		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort:
+			targets := l.result.ClosureTargets(value.(ir.Expression))
+			if targets.Unknown {
+				for _, record := range l.closureRecords {
+					add(record.function)
+				}
+				for _, instance := range l.instances {
+					for _, method := range instance.methodList() {
+						add(method.Function)
+					}
+				}
+			} else {
+				for _, target := range targets.Functions {
+					add(target)
+				}
+			}
+		}
+		return true
+	}
+	walk(l.result.Main, inspect)
+	for len(pending) > 0 {
+		index := pending[0]
+		pending = pending[1:]
+		walk(l.result.Functions[index].Body, inspect)
+	}
+	return reachable
 }

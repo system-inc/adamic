@@ -23,6 +23,9 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 		if len(bases) != 1 {
 			return nil, l.notYet(clause, "a class base whose type isn't known (name a class declared in this program as the base)")
 		}
+		if name := l.errorGlobal(types[0].AsExpressionWithTypeArguments().Expression); name != "" {
+			return l.errorInstance(name), nil
+		}
 		baseType := bases[0]
 		symbol := baseType.Symbol()
 		if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
@@ -426,6 +429,17 @@ func (l *lowering) superCall(node *ast.Node) (ir.Expression, error) {
 	if l.instance == nil || l.instance.base == nil || l.this < 0 {
 		return nil, l.notYet(node, "super outside a derived constructor")
 	}
+	if l.instance.base.builtinError != "" || l.instance.base.defaultError {
+		message, err := l.errorMessage(node, nodesOf(node.AsCallExpression().Arguments))
+		if err != nil {
+			return nil, err
+		}
+		cause, err := l.errorCause(node, nodesOf(node.AsCallExpression().Arguments))
+		if err != nil {
+			return nil, err
+		}
+		return ir.Call{Function: l.instance.base.initializer, Arguments: []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}, message, cause}}, nil
+	}
 	arguments := []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}}
 	for _, argument := range nodesOf(node.AsCallExpression().Arguments) {
 		value, err := l.expression(argument)
@@ -462,6 +476,14 @@ func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
 
 func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
 	binary := node.AsBinaryExpression()
+	if name := l.errorGlobal(binary.Right); name != "" {
+		instance := l.errorInstance(name)
+		value, err := l.expression(binary.Left)
+		if err != nil {
+			return nil, err
+		}
+		return ir.InstanceOf{Value: value, Class: instance.class}, nil
+	}
 	declaration := l.classes[l.symbol(ast.SkipParentheses(binary.Right))]
 	if declaration == nil {
 		return nil, l.notYet(node, "instanceof against a value that isn't a declared class (test against a declared class name, or use an explicit discriminant)")
@@ -487,7 +509,11 @@ func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
 // Finish calls after lowering discovers every instantiated descendant. The analyses see all
 // implementations; code generation still uses the receiver's single dynamic method table.
 func (l *lowering) finishClassCalls() {
-	l.result.MethodTargets = map[int][]int{}
+	// Accessor lowering also registers structural dispatch targets here. Later
+	// class discovery adds implementations without invalidating those calls.
+	if l.result.MethodTargets == nil {
+		l.result.MethodTargets = map[int][]int{}
+	}
 	for _, class := range l.result.Classes {
 		for slot, implementation := range class.Methods {
 			for parent := &class; parent != nil; {
@@ -536,6 +562,9 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 	if target == nil {
 		return nil
 	}
+	if l.errorType(l.checker.GetTypeAtLocation(node)) && target.Flags()&checker.TypeFlagsObject != 0 && !l.errorType(target) {
+		return l.notYet(node, "an Error seen through a structural object view: nonenumerable error fields and native stack placeholders cannot be reflected as own fields")
+	}
 	// Fresh literals are built as their contextual type; their explicit values are
 	// checked at their own sites. Spreads still need the whole inherited shape checked.
 	if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindArrayLiteralExpression {
@@ -567,8 +596,11 @@ func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*ch
 	if weak := l.weakTarget(source); weak != nil {
 		source = weak
 	}
-	if !isClassInstance(source) {
+	if !isClassInstance(source) && !l.errorType(source) {
 		return false
+	}
+	if l.isLibraryType(source, errorNames...) && l.isLibraryType(target, "Error") {
+		return true
 	}
 	if source.Symbol() == target.Symbol() {
 		from, to := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
@@ -685,6 +717,9 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 		}
 		return nil
 	}
+	if l.errorType(from) && to.Flags()&checker.TypeFlagsObject != 0 && !l.errorType(to) {
+		return to
+	}
 	if l.isStaticType(to) {
 		wanted := l.staticClass(to, nil)
 		actual := l.staticClass(from, nil)
@@ -696,7 +731,8 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 		}
 		return to
 	}
-	if isClassInstance(to) {
+	if isClassInstance(to) || l.errorType(to) {
+
 		if symbol := to.Symbol(); symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 			return nil
 		}
@@ -912,7 +948,7 @@ func (l *lowering) nominalLiteralTarget(proven *checker.Type) bool {
 	if weak := l.weakTarget(proven); weak != nil {
 		proven = weak
 	}
-	if isClassInstance(proven) {
+	if isClassInstance(proven) || l.errorType(proven) {
 		return true
 	}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {

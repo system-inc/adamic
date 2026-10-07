@@ -5,7 +5,9 @@
 #include <math.h>
 #include <string.h>
 
-adamic_heap adamic_null = {0, adamic_kind_object, 0};
+adamic_heap adamic_null = {0, adamic_kind_null, 0};
+
+static adamic_string adamic_box_null_text = ADAMIC_STRING("null");
 
 adamic_boolean_box adamic_box_true = {{0, adamic_kind_boolean, 0}, true};
 adamic_boolean_box adamic_box_false = {{0, adamic_kind_boolean, 0}, false};
@@ -47,6 +49,8 @@ adamic_string *adamic_union_to_string(adamic_heap *value) {
 		return &adamic_string_undefined;
 	}
 	switch (value->kind) {
+	case adamic_kind_null:
+		return &adamic_box_null_text;
 	case adamic_kind_number:
 		return adamic_string_from_number(((adamic_number_box *)value)->number);
 	case adamic_kind_boolean:

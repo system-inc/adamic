@@ -1,0 +1,4 @@
+const failure = new Error('message 🦉');
+failure.name = '';
+console.log('before');
+throw failure;

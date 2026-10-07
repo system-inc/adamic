@@ -138,6 +138,11 @@ func TestClosedFrameInputRejectsMutation(t *testing.T) {
 	if input < 0 || !l.closedFrameInput(input) {
 		t.Fatal("closed literal input was not proven")
 	}
+	// Dead helper effects cannot change a closed graph. Reachable effects can.
+	program.Functions = append(program.Functions, ir.Function{Body: []ir.Statement{ir.SetProperty{}}})
+	if !l.closedFrameInput(input) {
+		t.Fatal("unused helper invalidated the closed input proof")
+	}
 	owner := program.Locals[input].Function
 	// A field store invalidates the closed graph even if all initial literals were safe.
 	program.Functions[owner].Body = append(program.Functions[owner].Body, ir.SetProperty{})

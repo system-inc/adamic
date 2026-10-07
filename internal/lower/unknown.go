@@ -129,6 +129,18 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
+	// ErrorOptions exposes the concrete value to errorCause, which records its
+	// ownership edges before boxing. This is not a promise of dynamic descriptors.
+	if field := outer.Parent; field != nil && (field.Kind == ast.KindPropertyAssignment || field.Kind == ast.KindShorthandPropertyAssignment) && field.Name().Text() == "cause" {
+		options := field.Parent
+		if options != nil && options.Kind == ast.KindObjectLiteralExpression && options.Parent != nil && options.Parent.Kind == ast.KindNewExpression {
+			created := options.Parent
+			args := nodesOf(created.AsNewExpression().Arguments)
+			if len(args) == 2 && args[1] == options && l.errorType(l.checker.GetTypeAtLocation(created)) {
+				return nil
+			}
+		}
+	}
 	if outer.Parent != nil && outer.Parent.Kind == ast.KindCallExpression {
 		callee := outer.Parent.AsCallExpression().Expression
 		if l.librarySymbol(l.memberSymbol(callee)) {

@@ -245,7 +245,7 @@ func (l *lowering) libraryStringMethodWith(node *ast.Node, value ir.Expression, 
 			arguments = append(arguments, ir.StringConstant{Index: l.constant(" ")})
 		}
 	}
-	return finish(ir.StringCall{Method: name, Value: value, Arguments: arguments})
+	return finish(l.checkedStringCall(node, ir.StringCall{Method: name, Value: value, Arguments: arguments}))
 }
 
 // Helpers use the ordinary IR so both backends and ownership analyses see every evaluation. Each

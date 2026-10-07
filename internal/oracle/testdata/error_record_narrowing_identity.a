@@ -1,0 +1,23 @@
+interface Item { readonly name: string; }
+const values: Record<string, Item> = { value: { name: `held ${1}` } };
+function drop(): void { delete values['value']; }
+if (values['value'] !== undefined) {
+    drop();
+    try {
+        console.log(values['value'].name);
+    } catch (error) {
+        console.log(`${error instanceof TypeError} ${error instanceof Error}`);
+    }
+    console.log('after');
+}
+
+// Main's receiver helper must preserve the same nominal TypeError identity.
+function trim(value: string | undefined): void {
+    try {
+        console.log(String.prototype.trim.call(value));
+    } catch (error) {
+        console.log(`${error instanceof TypeError} ${error instanceof Error}`);
+    }
+}
+trim(' good ');
+trim(undefined);

@@ -74,6 +74,20 @@ func (e *emitter) checkReadyRead(local int, expression string) {
 	if expression != "" {
 		message = fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[local].Name, expression)
 	}
+	if expression == "" {
+		if failure, found := e.program.ReadyErrors[local]; found {
+			e.line("if (!%s) {", e.localReady(local))
+			e.indent++
+			owned := append([]string(nil), e.owned...)
+			value := e.value(failure)
+			e.line("adamic_thrown = adamic_retain(%s);", value)
+			e.checkThrown()
+			e.owned = owned
+			e.indent--
+			e.line("}")
+			return
+		}
+	}
 	e.line("if (!%s) {", e.localReady(local))
 	e.line("\tstatic const char message[] = %s;", cString(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")

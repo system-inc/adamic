@@ -143,6 +143,9 @@ func TestPrototypeHazardsBehindObjectViewsAreNotYet(t *testing.T) {
 		_, err := lowerSource(t, source)
 		var notYet *NotYet
 		want := "through an object view"
+		if strings.Contains(source, "new Error") {
+			want = "structural object view"
+		}
 		if strings.Contains(source, "declare field") {
 			// Declared fields are refused before prototype analysis in integration 13.
 			want = "a declare or abstract class field"
@@ -182,7 +185,6 @@ func TestUnrepresentedPrototypeCallsAreNotYet(t *testing.T) {
 		"const value = [[1]]; value.toString();",
 		"function test(value: () => number): boolean { return value.hasOwnProperty('prototype'); } console.log(`${test(() => 1)}`);",
 		"const value = [1, 'x'] as const; value.propertyIsEnumerable('0');",
-		"const value = new Error('message'); value.toString();",
 	} {
 		_, err := lowerSource(t, source)
 		var notYet *NotYet

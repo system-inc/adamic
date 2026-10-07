@@ -61,6 +61,9 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
+		if name == "hasOwn" && l.errorType(l.checker.GetTypeAtLocation(written[0])) {
+			return nil, true, l.notYet(node, "Object.hasOwn on Error: inherited defaults and nonenumerable own descriptors are not represented by native shape")
+		}
 		// Reflection cannot use a widened view: a hidden field can have another representation.
 		// A plain const's literal initializer proves the complete shape, including field presence.
 		if !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {

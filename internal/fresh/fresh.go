@@ -1033,7 +1033,7 @@ func (a *analysis) value(expression ir.Expression) value {
 		return held
 	}
 	switch expression := expression.(type) {
-	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:
+	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null, ir.StackExceeded:
 		return value{}
 	case ir.Read:
 		declared := a.proof.program.Locals[expression.Local]

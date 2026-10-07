@@ -1,0 +1,30 @@
+// Prototype .call failures use the same guards as direct calls.
+function show(digits: number): void {
+    try {
+        console.log(Number.prototype.toFixed.call(1.25, digits));
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.toString());
+    }
+    try {
+        console.log(Number.prototype.toPrecision.call(1.25, digits));
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.toString());
+    }
+    try {
+        console.log(Number.prototype.toExponential.call(1.25, digits));
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.toString());
+    }
+    try {
+        console.log(Number.prototype.toString.call(15, digits));
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.toString());
+    }
+}
+show(-1);
+show(101);
+show(2);

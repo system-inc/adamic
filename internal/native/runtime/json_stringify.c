@@ -110,6 +110,7 @@ static json_scalar scalar(adamic_value value, enum adamic_json_kind kind) {
 		if (reference == NULL) { kind = adamic_json_undefined; }
 		else {
 			switch (reference->kind) {
+			case adamic_kind_null: kind = adamic_json_null; break;
 			case adamic_kind_number: kind = adamic_json_number; value.number = ((adamic_number_box *)reference)->number; break;
 			case adamic_kind_boolean: kind = adamic_json_boolean; value.boolean = ((adamic_boolean_box *)reference)->boolean; break;
 			case adamic_kind_string: kind = adamic_json_string; break;

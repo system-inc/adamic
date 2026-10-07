@@ -1,0 +1,10 @@
+import { programArguments } from 'adamic';
+import { openSync, closeSync } from 'node:fs';
+const root = programArguments()[0] ?? '';
+function describe(error: Error): void {
+    console.log(`${error instanceof Error} ${error instanceof TypeError} ${error instanceof RangeError} ${error.cause === undefined}`);
+    console.log(Error.prototype.toString.call(error).replace(root, '<root>'));
+}
+try { openSync(root + '/missing', 'r'); } catch (error) { if (error instanceof Error) { describe(error); } }
+try { openSync(root + '/missing', 'bad'); } catch (error) { if (error instanceof Error) { describe(error); } }
+try { closeSync(-1); } catch (error) { if (error instanceof Error) { describe(error); } }

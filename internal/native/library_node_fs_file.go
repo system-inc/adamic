@@ -20,6 +20,16 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		result = e.snapshot(call.Of, code)
 	}
 	if call.MayThrow() {
+		classes := map[string]int{}
+		for index, class := range e.program.Classes {
+			if class.Definition >= 1<<30 && class.Definition < (1<<30)+7 {
+				classes[class.Name] = index + 1
+			}
+		}
+		if classes["Error"] == 0 || classes["TypeError"] == 0 || classes["RangeError"] == 0 {
+			panic("filesystem failures need nominal error classes")
+		}
+		e.line("adamic_fs_file_error_classes(&adamic_class_%d, &adamic_class_%d, &adamic_class_%d);", classes["Error"], classes["TypeError"], classes["RangeError"])
 		e.checkThrown()
 	}
 	return result

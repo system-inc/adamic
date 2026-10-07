@@ -1,0 +1,20 @@
+/* eslint-disable nexus/consistency-require-type-suffix -- Keep the integration probe's original Link interface spelling. */
+/* eslint-disable @typescript-eslint/no-unnecessary-template-expression, @typescript-eslint/no-unused-vars -- Preserve the integration probe's built label and named catch binding. */
+interface Link {
+    value: number;
+    label: string;
+}
+let chain: Link | undefined = { value: 1, label: `built ${1}` };
+function drop(): void {
+    chain = undefined;
+}
+if(chain !== undefined) {
+    drop();
+    try {
+        console.log(`${chain.value}`);
+    }
+    catch(error) {
+        console.log('caught');
+    }
+    console.log('after');
+}

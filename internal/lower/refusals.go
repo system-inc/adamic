@@ -172,7 +172,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			}
 			// Math.random has its own refusal, called or not.
 			isRandom := l.isLibraryGlobal(access.Expression, "Math") && access.Name().Text() == "random"
-			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 && !isRandom {
+			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 && !isRandom && !l.errorPrototypeRead(node) {
 				object := "its object"
 				if ast.IsIdentifier(access.Expression) || access.Expression.Kind == ast.KindThisKeyword {
 					object = scannedText(access.Expression)

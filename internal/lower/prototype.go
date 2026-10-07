@@ -113,7 +113,7 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 	if name == "isPrototypeOf" {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant (adamic/no-prototype-reflection)"}
 	}
-	if name != "valueOf" && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "Error") {
+	if name != "valueOf" && l.errorType(l.checker.GetTypeAtLocation(receiver)) {
 		return nil, true, l.notYet(node, name+" on Error (its prototype and non-enumerable own descriptors differ from plain objects)")
 	}
 	of, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
@@ -224,7 +224,7 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 					reason = "a value with a different native representation may be hidden by the view"
 					return true
 				}
-				if name != "valueOf" && l.isLibraryType(shape, "Error") {
+				if name != "valueOf" && l.errorType(shape) {
 					reason = "an Error may be hidden by the view"
 					return true
 				}

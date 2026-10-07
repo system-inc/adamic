@@ -12,20 +12,47 @@
 #include <time.h>
 #include <unistd.h>
 
-static const char *const error_fields[] = {"name", "message", "code"};
-static const bool error_refs[] = {true, true, true};
-static const adamic_shape error_shape = {3, error_fields, error_refs, NULL};
+static const char *const error_fields[] = {"name", "message", "cause", "code"};
+static const bool error_refs[] = {true, true, true, true};
+static const adamic_shape error_shape = {4, error_fields, error_refs, NULL};
 
 static adamic_string *text(const char *bytes) {
     return adamic_decode_utf8((const unsigned char *)bytes, strlen(bytes));
 }
 
+static adamic_class host_error, host_type, host_range;
+
 static void raise_error(const char *name, const char *code, const char *message) {
     adamic_object *error = adamic_object_new(&error_shape);
     error->slots[0].reference = text(name);
     error->slots[1].reference = text(message);
-    error->slots[2].reference = text(code);
+    error->slots[3].reference = text(code);
     adamic_thrown = error;
+}
+
+// The compiler supplies this program's nominal identities after a throwing host
+// operation. Host errors keep the shared name/message/cause prefix and own code.
+void adamic_fs_file_error_classes(const adamic_class *error_class, const adamic_class *type_class, const adamic_class *range_class) {
+    if (adamic_thrown == NULL) { return; }
+    adamic_object *error = adamic_thrown;
+    const adamic_string *name = error->slots[0].reference;
+    // The host's extra code field belongs to a derived layout. The base releases
+    // the standard prefix; this layer releases code exactly once.
+    host_error = (adamic_class){error_class, 3, 4, error_class->methods, 0, &error_shape, NULL, 0, false, 0, NULL};
+    host_type = (adamic_class){type_class, 3, 4, type_class->methods, 0, &error_shape, NULL, 0, false, 0, NULL};
+    host_range = (adamic_class){range_class, 3, 4, range_class->methods, 0, &error_shape, NULL, 0, false, 0, NULL};
+    error->class = &host_error;
+    if (name->length == 9 && memcmp(name->bytes, "TypeError", 9) == 0) { error->class = &host_type; }
+    if (name->length == 10 && memcmp(name->bytes, "RangeError", 10) == 0) { error->class = &host_range; }
+}
+
+// Node's TypeError host subclasses include code in their inherited formatter.
+// Ordinary errors and explicit Error.prototype.toString use the standard prefix.
+adamic_string *adamic_fs_file_uncaught_text(const adamic_object *error) {
+    if (error->class != &host_type) { return NULL; }
+    static adamic_string opening = ADAMIC_STRING(" [");
+    static adamic_string closing = ADAMIC_STRING("]: ");
+    return adamic_string_concat(5, (adamic_string *const[]){error->slots[0].reference, &opening, error->slots[3].reference, &closing, error->slots[1].reference});
 }
 
 static void system_error(int error, const char *operation, const char *path) {

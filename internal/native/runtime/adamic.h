@@ -29,6 +29,7 @@ enum adamic_kind {
 	adamic_kind_boolean,
 	adamic_kind_weak,
 	adamic_kind_environment,
+	adamic_kind_null,
 };
 
 typedef struct adamic_heap {
