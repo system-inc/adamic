@@ -121,7 +121,7 @@ func TestRegisteredCorpusControl(t *testing.T) {
 }
 
 func parseControl(source string) *tsast.SourceFile {
-	return tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: "/control.ts", Path: tspath.Path("/control.ts")}, source, core.ScriptKindTS)
+	return tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute("/control.ts"), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute("/control.ts"))}, source, core.ScriptKindTS)
 }
 func findRegistration(name string) rule.Registration {
 	for _, r := range rule.Registered() {

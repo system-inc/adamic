@@ -806,7 +806,7 @@ func measureCorpus(root, output, label string, paths []string, items []entry) []
 		if filepath.Ext(path) == ".a" {
 			data, err := os.ReadFile(path)
 			fatal(err)
-			files = append(files, tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, string(data), tscore.ScriptKindTS))
+			files = append(files, tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(path), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(path))}, string(data), tscore.ScriptKindTS))
 		}
 	}
 	if len(files) != len(paths) {
