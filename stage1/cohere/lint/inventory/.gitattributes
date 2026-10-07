@@ -1,0 +1,3 @@
+# Preserve exact test and oracle output, including indented blank lines.
+*.log -whitespace
+validation/*.log -whitespace

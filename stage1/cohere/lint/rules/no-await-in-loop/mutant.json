@@ -1,0 +1,5 @@
+{
+  "name": "await crosses function boundary",
+  "from": "this.context.functionLike(parent) ||",
+  "to": " "
+}
