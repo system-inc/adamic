@@ -79,3 +79,44 @@ machine-code archive. The cached archive saves runtime frontends; ThinLTO
 backend work is still paid at each program link. Linker-only options stay out
 of runtime clang -c. Developer-tool translation-unit splits must use the same
 Flags/LinkFlags policy and include that policy and toolchain in object keys.
+
+## Stage 1 executable profiles
+
+Only `go run ./cmd/adamic-stage1 -driver parse|lint -o <binary>` selects a
+committed profile. Ordinary `adamic build` keeps plain ThinLTO. The source
+paths are stage1/cohere/parse/parse.a and stage1/cohere/lint/main.ts.
+Profiles and their manifests live beside each driver in profiles/<os>-<arch>/.
+The committed format is LLVM's text format. The build converts it with the
+local llvm-profdata into a hash-addressed indexed copy in the user cache.
+Every runtime object and the link use that same immutable copy. Its content
+identity participates in runtime.a's existing flag-based cache key.
+
+The manifest hashes the exact emitted C, every embedded runtime C/header,
+the text profile, flags, target and compiler identity. A missing or changed
+input produces one line saying the build uses plain ThinLTO. The stale
+profile never reaches clang. The check uses bytes, never modification times.
+A different Apple clang or target regenerates its own profile; this does not
+silently reuse a Linux profile. Unsupported text conversion also falls back.
+
+Regenerate both drivers from the committed training list:
+
+```
+source /workspace/adamic-tools/env.sh
+python3 stage1/profiles/regenerate.py --typescript <pinned TypeScript checkout> \
+  --work <scratch directory> --llvm-profdata <matching llvm-profdata>
+```
+
+The script builds instrumented release binaries with the same semantic flags,
+runs only the fixed training corpus, merges to text, writes manifests and
+builds the profile outputs. stage1/profiles/training.json names paths/hashes
+outside the entire 77-file compiler benchmark set in benchmarks.json. Both
+regeneration and TestTrainingNeverIncludesBenchmarks reject path or content
+hash overlap. Every added speed corpus must be registered there first.
+
+The opt-in release oracle now includes the actual shipping stage 1 artifacts.
+Set ADAMIC_TYPESCRIPT_SOURCE to that pinned checkout and
+ADAMIC_STAGE1_PARSE_BINARY / ADAMIC_STAGE1_LINT_BINARY to the regenerated
+parse-profile / lint-profile paths when running the release oracle command
+above. It compares those exact binaries to Go and Node and rebuilds them to
+check binary determinism. It is an error to enable that lane without its
+shipping binaries. Ordinary tests keep their flags and skip this extra lane.

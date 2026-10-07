@@ -1,0 +1,26 @@
+import type { Context } from './context.a';
+import { noOctalEscape } from './no_octal_escape.a';
+import { noUnexpectedMultiline } from './no_unexpected_multiline.a';
+import { noUnusedPrivateClassMembers } from './no_unused_private_class_members.a';
+import { noUselessConstructor } from './no_useless_constructor.a';
+import { preferTemplate } from './prefer_template.a';
+import { forwardRefUsesRef } from './forward_ref_uses_ref.a';
+import { jsxNoCommentTextnodes } from './jsx_no_comment_textnodes.a';
+import { noFindDomNode } from './no_find_dom_node.a';
+import { noIsMounted } from './no_is_mounted.a';
+import { noRedundantShouldComponentUpdate } from './no_redundant_should_component_update.a';
+export function visit(context: Context, index: number): void {
+    noOctalEscape(context, index);
+    noUnexpectedMultiline(context, index);
+    noUnusedPrivateClassMembers(context, index);
+    noUselessConstructor(context, index);
+    preferTemplate(context, index);
+    forwardRefUsesRef(context, index);
+    jsxNoCommentTextnodes(context, index);
+    noFindDomNode(context, index);
+    noIsMounted(context, index);
+    noRedundantShouldComponentUpdate(context, index);
+    for(const child of context.node(index).children) {
+        visit(context, child);
+    }
+}
