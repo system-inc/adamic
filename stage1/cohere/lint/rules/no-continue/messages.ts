@@ -1,0 +1,2 @@
+export const messageContinue =
+    'This loop uses `continue`, which jumps to the next iteration from the middle of the body. A reader tracing what happens on one pass has to hold every `continue` above their position in mind, because any of them may have skipped the code they are looking at, and in a `for` loop the update expression still runs while the rest of the body does not. Inverting the condition and wrapping the remainder in an `if` says the same thing with the skip visible in the shape of the code rather than in a jump.';

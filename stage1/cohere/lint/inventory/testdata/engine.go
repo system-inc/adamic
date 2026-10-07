@@ -1,0 +1,1058 @@
+// Built by main.go as a virtual file in cohere, without editing the submodule.
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"flag"
+	"fmt"
+	goast "go/ast"
+	"go/constant"
+	"go/parser"
+	"go/token"
+	"go/types"
+	"io/fs"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
+
+	tsast "github.com/microsoft/TypeScript/tsc/shim/ast"
+	tscore "github.com/microsoft/TypeScript/tsc/shim/core"
+	tsparser "github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/cohere/internal/lint/registry"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	"github.com/system-inc/cohere/internal/types/program"
+	"golang.org/x/tools/go/packages"
+)
+
+const cohereModule = "github.com/system-inc/cohere"
+const rulesPrefix = cohereModule + "/internal/lint/rules/"
+
+type source struct {
+	Path  string `json:"path"`
+	Lines int    `json:"lines"`
+}
+type dependency struct {
+	Symbol   string `json:"symbol"`
+	Package  string `json:"package"`
+	Location string `json:"location"`
+	Direct   bool   `json:"direct"`
+	Kind     string `json:"kind"`
+}
+type testCase struct {
+	Rule     string `json:"rule"`
+	Location string `json:"location"`
+}
+type tests struct {
+	Files              []string       `json:"files"`
+	HarnessInvocations *int           `json:"harness_invocations"`
+	Locations          map[string]int `json:"locations"`
+	Status             string         `json:"status"`
+	StaticRunSites     int            `json:"static_run_sites"`
+}
+type frequency struct {
+	Count     *int           `json:"count"`
+	Status    string         `json:"status"`
+	Offered   int            `json:"offered"`
+	Listeners int            `json:"listeners"`
+	Skips     map[string]int `json:"skips"`
+	Failures  []string       `json:"failures"`
+}
+type branch struct {
+	Name     string   `json:"name"`
+	Commit   string   `json:"commit,omitempty"`
+	Status   string   `json:"status"`
+	Evidence []string `json:"evidence"`
+}
+type entry struct {
+	Name             string       `json:"name"`
+	Family           string       `json:"family"`
+	Variable         string       `json:"variable"`
+	Sources          []source     `json:"sources"`
+	Lines            int          `json:"lines"`
+	Tests            tests        `json:"tests"`
+	DeclaredChecker  bool         `json:"declared_checker"`
+	TypeAware        bool         `json:"needs_type_information"`
+	BindingOnly      bool         `json:"binding_only"`
+	Fixer            bool         `json:"has_fixer"`
+	Suggestions      bool         `json:"has_suggestions"`
+	Options          bool         `json:"has_options"`
+	RequiresOptions  bool         `json:"requires_options"`
+	Decoder          string       `json:"decoder"`
+	Dependencies     []dependency `json:"dependencies"`
+	CheckerQuestions []string     `json:"checker_questions"`
+	Stage1           []branch     `json:"stage1"`
+	Wave             string       `json:"wave"`
+	Waiting          []string     `json:"waiting_on"`
+	Compiler         frequency    `json:"compiler"`
+	Repository       frequency    `json:"repository"`
+}
+type ranking struct {
+	Symbol  string   `json:"symbol"`
+	Package string   `json:"package"`
+	Rules   []string `json:"rules"`
+	Count   int      `json:"rule_count"`
+}
+type inventory struct {
+	Version        int                 `json:"version"`
+	CohereCommit   string              `json:"cohere_commit"`
+	ScannerCommit  string              `json:"scanner_commit"`
+	CompilerCommit string              `json:"compiler_commit"`
+	Corpus         map[string][]string `json:"corpora"`
+	Excluded       map[string][]string `json:"excluded"`
+	Branches       []branch            `json:"branches"`
+	Rules          []entry             `json:"rules"`
+	Helpers        []ranking           `json:"helpers"`
+	Limitations    []string            `json:"limitations"`
+}
+type declaration struct {
+	object types.Object
+	node   goast.Node
+	pkg    *packages.Package
+	file   string
+	refs   []types.Object
+}
+type analyzer struct {
+	root         string
+	fset         *token.FileSet
+	declarations map[types.Object]*declaration
+	byName       map[string]*declaration
+	packages     []*packages.Package
+}
+
+func fatal(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+func command(dir string, args ...string) string {
+	c := exec.Command(args[0], args[1:]...)
+	c.Dir = dir
+	b, e := c.Output()
+	fatal(e)
+	return strings.TrimSpace(string(b))
+}
+func objectKey(o types.Object) string {
+	if o == nil || o.Pkg() == nil {
+		return ""
+	}
+	name := o.Name()
+	if f, ok := o.(*types.Func); ok {
+		if s, ok := f.Type().(*types.Signature); ok && s.Recv() != nil {
+			name = types.TypeString(s.Recv().Type(), func(*types.Package) string { return "" }) + "." + name
+		}
+	}
+	return o.Pkg().Path() + "." + name
+}
+func canonical(o types.Object) types.Object {
+	if f, ok := o.(*types.Func); ok {
+		return f.Origin()
+	}
+	return o
+}
+func (a *analyzer) location(pos token.Pos) string {
+	p := a.fset.Position(pos)
+	rel, _ := filepath.Rel(a.root, p.Filename)
+	return filepath.ToSlash(rel) + ":" + strconv.Itoa(p.Line)
+}
+func (a *analyzer) add(o types.Object, n goast.Node, p *packages.Package, file string) {
+	if o == nil {
+		return
+	}
+	o = canonical(o)
+	d := &declaration{object: o, node: n, pkg: p, file: file}
+	goast.Inspect(n, func(node goast.Node) bool {
+		if id, ok := node.(*goast.Ident); ok {
+			r := canonical(p.TypesInfo.Uses[id])
+			if r != nil {
+				d.refs = append(d.refs, r)
+			}
+		}
+		return true
+	})
+	a.declarations[o] = d
+	a.byName[objectKey(o)] = d
+}
+func load(root string) *analyzer {
+	fset := token.NewFileSet()
+	pkgs, err := packages.Load(&packages.Config{Dir: filepath.Join(root, "cohere"), Fset: fset, Mode: packages.NeedName | packages.NeedFiles | packages.NeedCompiledGoFiles | packages.NeedImports | packages.NeedDeps | packages.NeedSyntax | packages.NeedTypes | packages.NeedTypesInfo}, "./internal/lint/rules/...")
+	fatal(err)
+	if packages.PrintErrors(pkgs) > 0 {
+		panic("Go type information is incomplete")
+	}
+	a := &analyzer{root: root, fset: fset, declarations: map[types.Object]*declaration{}, byName: map[string]*declaration{}, packages: pkgs}
+	visited := map[*packages.Package]bool{}
+	var visit func(*packages.Package)
+	visit = func(p *packages.Package) {
+		if visited[p] {
+			return
+		}
+		visited[p] = true
+		for _, dep := range p.Imports {
+			visit(dep)
+		}
+		if !strings.HasPrefix(p.PkgPath, cohereModule+"/") {
+			return
+		}
+		for i, f := range p.Syntax {
+			file := p.CompiledGoFiles[i]
+			for _, decl := range f.Decls {
+				switch n := decl.(type) {
+				case *goast.FuncDecl:
+					a.add(p.TypesInfo.Defs[n.Name], n, p, file)
+				case *goast.GenDecl:
+					for _, spec := range n.Specs {
+						if v, ok := spec.(*goast.ValueSpec); ok {
+							for _, id := range v.Names {
+								a.add(p.TypesInfo.Defs[id], v, p, file)
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	for _, p := range pkgs {
+		visit(p)
+	}
+	// Registration decoders are rule dependencies too, including custom JSON methods.
+	for _, p := range pkgs {
+		for _, f := range p.Syntax {
+			goast.Inspect(f, func(n goast.Node) bool {
+				lit, ok := n.(*goast.CompositeLit)
+				if !ok {
+					return true
+				}
+				typ := p.TypesInfo.TypeOf(lit)
+				if typ == nil || typ.String() != cohereModule+"/internal/lint/rule.Registration" {
+					return true
+				}
+				var target *declaration
+				for _, el := range lit.Elts {
+					kv, ok := el.(*goast.KeyValueExpr)
+					if !ok {
+						continue
+					}
+					key, ok := kv.Key.(*goast.Ident)
+					if ok && key.Name == "Rule" {
+						goast.Inspect(kv.Value, func(n goast.Node) bool {
+							if id, ok := n.(*goast.Ident); ok {
+								if d := a.declarations[canonical(p.TypesInfo.Uses[id])]; d != nil && ruleName(d) != "" {
+									target = d
+								}
+							}
+							return true
+						})
+					}
+				}
+				if target == nil {
+					return true
+				}
+				goast.Inspect(lit, func(n goast.Node) bool {
+					if id, ok := n.(*goast.Ident); ok {
+						obj := canonical(p.TypesInfo.Uses[id])
+						if obj != nil {
+							target.refs = append(target.refs, obj)
+							if tn, ok := obj.(*types.TypeName); ok {
+								methods := types.NewMethodSet(types.NewPointer(tn.Type()))
+								for i := 0; i < methods.Len(); i++ {
+									target.refs = append(target.refs, canonical(methods.At(i).Obj()))
+								}
+							}
+						}
+					}
+					return true
+				})
+				return true
+			})
+		}
+	}
+	return a
+}
+func ruleName(d *declaration) string {
+	v, ok := d.node.(*goast.ValueSpec)
+	if !ok {
+		return ""
+	}
+	for _, expr := range v.Values {
+		lit, ok := expr.(*goast.CompositeLit)
+		if !ok {
+			continue
+		}
+		t := d.pkg.TypesInfo.TypeOf(lit)
+		if t == nil || t.String() != cohereModule+"/internal/lint/rule.Rule" {
+			continue
+		}
+		for _, e := range lit.Elts {
+			if kv, ok := e.(*goast.KeyValueExpr); ok {
+				if k, ok := kv.Key.(*goast.Ident); ok && k.Name == "Name" {
+					value := d.pkg.TypesInfo.Types[kv.Value].Value
+					if value != nil && value.Kind() == constant.String {
+						return constant.StringVal(value)
+					}
+				}
+			}
+		}
+	}
+	return ""
+}
+func ownSource(root, path string) source {
+	b, e := os.ReadFile(path)
+	fatal(e)
+	n := strings.Count(string(b), "\n")
+	if len(b) > 0 && b[len(b)-1] != '\n' {
+		n++
+	}
+	rel, e := filepath.Rel(root, path)
+	fatal(e)
+	return source{filepath.ToSlash(rel), n}
+}
+func classification(path string) string {
+	switch {
+	case strings.Contains(path, "/checker"), strings.Contains(path, "/internal/types/"), strings.Contains(path, "/lint/checking"):
+		return "types"
+	case strings.Contains(path, "/scope"), strings.Contains(path, "/binding"), strings.Contains(path, "/reference"):
+		return "scope"
+	case strings.Contains(path, "/edit"), strings.HasSuffix(path, "/lint/rule"):
+		return "rule-api"
+	case strings.Contains(path, "/shim/ast"), strings.Contains(path, "/internal/ast"), strings.Contains(path, "/shim/scanner"), strings.Contains(path, "/internal/scanner"), strings.Contains(path, "/shim/core"), strings.Contains(path, "/internal/core"):
+		return "ast"
+	case strings.Contains(path, "/ecmascript/"):
+		return "shared-judgment"
+	case strings.HasPrefix(path, rulesPrefix):
+		return "sibling"
+	case strings.HasPrefix(path, cohereModule):
+		return "cohere"
+	default:
+		return "library"
+	}
+}
+func (a *analyzer) trace(root *declaration) ([]dependency, []string, bool, bool) {
+	seen := map[types.Object]bool{}
+	found := map[string]dependency{}
+	questions := map[string]bool{}
+	fix, suggest := false, false
+	var walk func(*declaration, int)
+	walk = func(d *declaration, depth int) {
+		if seen[d.object] {
+			return
+		}
+		seen[d.object] = true
+		// Field reads reveal a checker dependency even if a callback/interface prevents a static call edge.
+		goast.Inspect(d.node, func(n goast.Node) bool {
+			if id, ok := n.(*goast.Ident); ok && id.Name == "TypeChecker" && d.pkg.TypesInfo.Uses[id] != nil {
+				questions["checker supplied through Context.TypeChecker"] = true
+			}
+			return true
+		})
+		for _, o := range d.refs {
+			fn, isfn := o.(*types.Func)
+			if !isfn {
+				if other := a.declarations[o]; other != nil {
+					if _, ok := o.(*types.Var); ok {
+						walk(other, depth+1)
+					}
+				}
+				continue
+			}
+			key := objectKey(fn)
+			if key == "" {
+				continue
+			}
+			path := fn.Pkg().Path()
+			if strings.Contains(key, "ReportNodeWithFixes") || strings.Contains(key, "ReportRangeWithFixes") {
+				fix = true
+			}
+			if strings.Contains(key, "WithSuggestions") {
+				suggest = true
+			}
+			if classification(path) == "types" {
+				questions[key] = true
+			}
+			next := a.declarations[canonical(fn)]
+			own := next != nil && (next.file == root.file || strings.HasPrefix(next.file, strings.TrimSuffix(root.file, ".go")+"_"))
+			external := !own
+			if external {
+				dep := dependency{Symbol: key, Package: path, Direct: depth == 0, Kind: classification(path), Location: a.location(fn.Pos())}
+				if old, ok := found[key]; !ok || dep.Direct && !old.Direct {
+					found[key] = dep
+				}
+			}
+			if next != nil {
+				walk(next, depth+1)
+			}
+		}
+	}
+	walk(root, 0)
+	deps := []dependency{}
+	for _, d := range found {
+		deps = append(deps, d)
+	}
+	sort.Slice(deps, func(i, j int) bool { return deps[i].Symbol < deps[j].Symbol })
+	q := []string{}
+	for key := range questions {
+		q = append(q, key)
+	}
+	sort.Strings(q)
+	return deps, q, fix, suggest
+}
+func (a *analyzer) testSites(d *declaration) tests {
+	result := tests{Files: []string{}, Locations: map[string]int{}, Status: "not executed"}
+	dir := filepath.Dir(d.file)
+	files, e := filepath.Glob(filepath.Join(dir, "*_test.go"))
+	fatal(e)
+	for _, file := range files {
+		f, e := parser.ParseFile(a.fset, file, nil, 0)
+		fatal(e)
+		mentions := false
+		goast.Inspect(f, func(n goast.Node) bool {
+			if id, ok := n.(*goast.Ident); ok && id.Name == d.object.Name() {
+				mentions = true
+			}
+			return true
+		})
+		if mentions {
+			rel, _ := filepath.Rel(a.root, file)
+			result.Files = append(result.Files, filepath.ToSlash(rel))
+			goast.Inspect(f, func(n goast.Node) bool {
+				if c, ok := n.(*goast.CallExpr); ok {
+					if s, ok := c.Fun.(*goast.SelectorExpr); ok && strings.HasPrefix(s.Sel.Name, "Run") {
+						for _, arg := range c.Args {
+							if id, ok := arg.(*goast.Ident); ok && id.Name == d.object.Name() {
+								result.StaticRunSites++
+							}
+						}
+					}
+				}
+				return true
+			})
+		}
+	}
+	return result
+}
+func inspectBranches(root string) []branch {
+	names := []string{"codex/typescript-scanner", "codex/stage1-lint-batch2", "codex/stage1-lint-batch3", "codex/stage1-lint-batch4"}
+	out := []branch{}
+	for _, name := range names {
+		b := branch{Name: name, Status: "unavailable", Evidence: []string{}}
+		c := exec.Command("git", "rev-parse", "--verify", "refs/remotes/origin/"+name)
+		c.Dir = root
+		if data, e := c.Output(); e == nil {
+			b.Commit = strings.TrimSpace(string(data))
+			b.Status = "inspected"
+		}
+		out = append(out, b)
+	}
+	return out
+}
+
+var branchSources = map[string]map[string]string{}
+
+func statusFor(root, name string, branches []branch) []branch {
+	out := []branch{}
+	for _, b := range branches {
+		current := b
+		current.Evidence = []string{}
+		if b.Commit != "" {
+			current.Status = "no implementation observed"
+			if branchSources[b.Commit] == nil {
+				branchSources[b.Commit] = map[string]string{}
+				rows := command(root, "git", "ls-tree", "-r", "--name-only", b.Commit, "stage1/cohere/lint")
+				for _, path := range strings.Split(rows, "\n") {
+					if strings.HasSuffix(path, ".ts") && !strings.Contains(path, "/gaps/") {
+						branchSources[b.Commit][path] = command(root, "git", "show", b.Commit+":"+path)
+					}
+				}
+			}
+			paths := []string{}
+			for path := range branchSources[b.Commit] {
+				paths = append(paths, path)
+			}
+			sort.Strings(paths)
+			for _, path := range paths {
+				if !strings.HasSuffix(path, ".ts") || strings.Contains(path, "/gaps/") {
+					continue
+				}
+				text := branchSources[b.Commit][path]
+				// Driver selectors are executable evidence. Docs or a Go reference alone are not a port.
+				if hasSelector(text, name) {
+					current.Evidence = append(current.Evidence, path)
+				}
+			}
+			if len(current.Evidence) > 0 {
+				current.Status = "ported with scope documented by branch report"
+				current.Evidence = append(current.Evidence, "stage1/cohere/lint/REPORT.md")
+				if b.Name == "codex/stage1-lint-batch3" {
+					current.Evidence = append(current.Evidence, "stage1/cohere/lint/BATCH3.md")
+				}
+				if b.Name == "codex/stage1-lint-batch2" {
+					current.Evidence = append(current.Evidence, "stage1/cohere/lint/BATCH2.md")
+				}
+				if b.Name == "codex/typescript-scanner" {
+					current.Evidence = append(current.Evidence, "stage1/cohere/lint/VOLUME.md")
+				}
+				if b.Name == "codex/stage1-lint-batch3" && (name == "nexus/consistency-no-ambiguous-identifier" || name == "nexus/consistency-no-abbreviated-identifier") {
+					current.Status = "partial port: nine JSX identifier fixtures require parser coverage"
+				}
+				if b.Name == "codex/stage1-lint-batch2" && name == "no-async-promise-executor" {
+					current.Status = "partial port: one malformed decorator recovery case refused"
+				}
+				if name == "@typescript-eslint/method-signature-style" {
+					current.Status = "partial port: malformed-source recovery blocked"
+				}
+			}
+		}
+		out = append(out, current)
+	}
+	return out
+}
+func hasSelector(text, name string) bool {
+	return regexp.MustCompile(`(?:enabled\(\s*|selected\s*===\s*)['"]` + regexp.QuoteMeta(name) + `['"]`).MatchString(text)
+}
+func emptyFrequency() frequency {
+	return frequency{Status: "not measured", Skips: map[string]int{}, Failures: []string{}}
+}
+func entries(a *analyzer, branches []branch) []entry {
+	byRule := map[string]*declaration{}
+	for _, d := range a.declarations {
+		if n := ruleName(d); n != "" {
+			if byRule[n] != nil {
+				panic("duplicate literal " + n)
+			}
+			byRule[n] = d
+		}
+	}
+	registrations := rule.Registered()
+	_ = registry.Count()
+	registrations = rule.Registered()
+	out := []entry{}
+	for _, r := range registrations {
+		d := byRule[r.Rule.Name]
+		if d == nil {
+			panic("registered rule without a resolved literal: " + r.Rule.Name)
+		}
+		delete(byRule, r.Rule.Name)
+		e := entry{Name: r.Rule.Name, Family: strings.Split(strings.TrimPrefix(d.pkg.PkgPath, rulesPrefix), "/")[0], Variable: d.object.Name(), DeclaredChecker: r.Rule.NeedsTypeChecker, Options: r.Decode != nil || r.DecodeOptionList != nil || r.DecodeAt != nil, RequiresOptions: r.RequiresOptions, Tests: a.testSites(d), Compiler: emptyFrequency(), Repository: emptyFrequency(), Stage1: statusFor(a.root, r.Rule.Name, branches), Waiting: []string{}}
+		e.Sources = []source{ownSource(a.root, d.file)}
+		stem := strings.TrimSuffix(d.file, ".go")
+		siblings, err := filepath.Glob(stem + "_*.go")
+		fatal(err)
+		for _, path := range siblings {
+			if !strings.HasSuffix(path, "_test.go") {
+				e.Sources = append(e.Sources, ownSource(a.root, path))
+			}
+		}
+		for _, src := range e.Sources {
+			e.Lines += src.Lines
+		}
+		switch {
+		case r.DecodeAt != nil:
+			e.Decoder = "DecodeAt"
+		case r.DecodeOptionList != nil:
+			e.Decoder = "DecodeOptionList"
+		case r.Decode != nil:
+			e.Decoder = "Decode"
+		default:
+			e.Decoder = "none"
+		}
+		e.Dependencies, e.CheckerQuestions, e.Fixer, e.Suggestions = a.trace(d)
+		if e.Options {
+			e.Waiting = append(e.Waiting, "strict option decoding and schema validation")
+		}
+		e.TypeAware = len(e.CheckerQuestions) > 0
+		e.BindingOnly = e.DeclaredChecker && !e.TypeAware
+		for _, dep := range e.Dependencies {
+			if dep.Kind == "shared-judgment" || dep.Kind == "sibling" || dep.Kind == "scope" || dep.Kind == "cohere" {
+				e.Waiting = append(e.Waiting, dep.Symbol)
+			}
+		}
+		switch {
+		case e.TypeAware || e.DeclaredChecker:
+			e.Wave = "type-aware / binding bridge"
+		case len(e.Waiting) > 0:
+			e.Wave = "syntax waiting on helpers"
+		default:
+			e.Wave = "syntax ready for AST/API adaptation"
+		}
+		out = append(out, e)
+	}
+	if len(byRule) > 0 {
+		names := []string{}
+		for n := range byRule {
+			names = append(names, n)
+		}
+		sort.Strings(names)
+		panic("unregistered rule literals: " + strings.Join(names, ", "))
+	}
+	if len(out) == 0 {
+		panic("empty registry")
+	}
+	return out
+}
+
+func captureTests(root, output string, items []entry) {
+	scratch, e := os.MkdirTemp("", "lint-inventory-tests-")
+	fatal(e)
+	original := filepath.Join(root, "cohere/internal/lint/testing/docs_capture.go")
+	data, e := os.ReadFile(original)
+	fatal(e)
+	anchor := "func newCapturedRun(subject rule.Rule, fileName string, otherFiles int, options any) *capturedRun {"
+	if strings.Count(string(data), anchor) != 1 {
+		panic("capture anchor changed")
+	}
+	replacement := strings.Replace(string(data), anchor, anchor+"\n inventoryRecord(subject.Name)", 1)
+	side := filepath.Join(scratch, "docs_capture.go")
+	fatal(os.WriteFile(side, []byte(replacement), 0644))
+	helper := filepath.Join(root, "stage1/cohere/lint/inventory/testdata/capture.go")
+	overlayData, e := json.Marshal(map[string]any{"Replace": map[string]string{original: side, filepath.Join(root, "cohere/internal/lint/testing/inventory_capture.go"): helper}})
+	fatal(e)
+	overlay := filepath.Join(scratch, "overlay.json")
+	fatal(os.WriteFile(overlay, overlayData, 0644))
+	capturePath := filepath.Join(output, "test-cases.jsonl")
+	file, e := os.Create(capturePath)
+	fatal(e)
+	fatal(file.Close())
+	log, e := os.Create(filepath.Join(output, "cohere-tests.log"))
+	fatal(e)
+	c := exec.Command("go", "test", "-overlay="+overlay, "-count=1", "-timeout=20m", "./internal/lint/rules/...")
+	c.Dir = filepath.Join(root, "cohere")
+	c.Env = append(os.Environ(), "ADAMIC_INVENTORY_CAPTURE="+capturePath)
+	c.Stdout = log
+	c.Stderr = log
+	started := time.Now()
+	err := c.Run()
+	fatal(log.Close())
+	fmt.Printf("cohere tests: %v (%s)\n", err, time.Since(started))
+	counts := map[string]int{}
+	locations := map[string]map[string]int{}
+	content, e := os.ReadFile(capturePath)
+	fatal(e)
+	for _, line := range strings.Split(string(content), "\n") {
+		if line == "" {
+			continue
+		}
+		var row testCase
+		fatal(json.Unmarshal([]byte(line), &row))
+		counts[row.Rule]++
+		if locations[row.Rule] == nil {
+			locations[row.Rule] = map[string]int{}
+		}
+		locations[row.Rule][row.Location]++
+	}
+	if len(counts) == 0 {
+		panic("test capture produced no evidence")
+	}
+	for i := range items {
+		item := &items[i]
+		if n, ok := counts[item.Name]; ok {
+			item.Tests.HarnessInvocations = &n
+			item.Tests.Locations = locations[item.Name]
+			item.Tests.Status = "executed harness invocations"
+			if err != nil {
+				item.Tests.Status = "partial run; inspect cohere-tests.log"
+			}
+		} else {
+			item.Tests.Status = "no captured harness invocation; direct/context or external corpus tests need inspection"
+		}
+	}
+}
+func restoreCapture(output string, items []entry) {
+	raw, err := os.ReadFile(filepath.Join(output, "test-cases.jsonl"))
+	fatal(err)
+	index := map[string]*entry{}
+	for i := range items {
+		index[items[i].Name] = &items[i]
+	}
+	for _, line := range strings.Split(string(raw), "\n") {
+		if line == "" {
+			continue
+		}
+		var row testCase
+		fatal(json.Unmarshal([]byte(line), &row))
+		item := index[row.Rule]
+		if item == nil {
+			continue // The rule packages also exercise synthetic harness-control rules.
+		}
+		if item.Tests.HarnessInvocations == nil {
+			n := 0
+			item.Tests.HarnessInvocations = &n
+		}
+		*item.Tests.HarnessInvocations++
+		item.Tests.Locations[row.Location]++
+		item.Tests.Status = "captured harness invocations; inspect cohere-tests.log"
+	}
+	log, err := os.ReadFile(filepath.Join(output, "cohere-tests.log"))
+	fatal(err)
+	for i := range items {
+		if items[i].Tests.HarnessInvocations != nil {
+			if familyPassed(log, items[i].Family) {
+				items[i].Tests.Status = "executed harness invocations; family tests passed"
+			} else {
+				items[i].Tests.Status = "partial run; inspect cohere-tests.log"
+			}
+		}
+	}
+}
+func familyPassed(log []byte, family string) bool {
+	for _, line := range strings.Split(string(log), "\n") {
+		if strings.HasPrefix(line, "ok  \t"+rulesPrefix+family+"\t") {
+			return true
+		}
+	}
+	return false
+}
+func collectFiles(root string, compiler bool) []string {
+	files := []string{}
+	if compiler {
+		fatal(filepath.WalkDir(filepath.Join(root, "src/compiler"), func(path string, d fs.DirEntry, e error) error {
+			if e != nil {
+				return e
+			}
+			if !d.IsDir() && strings.HasSuffix(path, ".ts") {
+				files = append(files, path)
+			}
+			return nil
+		}))
+	} else {
+		for _, path := range strings.Split(command(root, "git", "ls-files", "--", "*.ts", "*.tsx", "*.a", "*.js", "*.jsx"), "\n") {
+			if path != "" {
+				files = append(files, filepath.Join(root, path))
+			}
+		}
+	}
+	sort.Strings(files)
+	if len(files) == 0 {
+		panic("empty corpus")
+	}
+	return files
+}
+func measured(subject rule.Registration, file *tsast.SourceFile, graph *program.Graph, report *frequency) {
+	report.Offered++
+	defer func() {
+		if value := recover(); value != nil {
+			report.Failures = append(report.Failures, file.FileName()+": "+fmt.Sprint(value))
+		}
+	}()
+	if subject.RequiresOptions {
+		report.Status = "requires options; no default measurement"
+		return
+	}
+	ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(rule.Diagnostic) {
+		if report.Count != nil {
+			*report.Count++
+		}
+	}, RecordNote: func(s string) { report.Skips[s]++ }}
+	// Use the same declared-read view the production walk gives each rule.
+	if graph != nil {
+		ctx.Program = rule.ViewProgram(graph.Program, file, subject.Rule)
+	}
+	if subject.Rule.NeedsTypeChecker {
+		checker, release := graph.CheckerForFile(context.Background(), file)
+		defer release()
+		ctx.TypeChecker = checker
+	}
+	listeners := subject.Rule.Run(ctx, nil)
+	if len(listeners) > 0 {
+		report.Listeners++
+	}
+	var walk func(*tsast.Node)
+	walk = func(n *tsast.Node) {
+		if fn := listeners[n.Kind]; fn != nil {
+			fn(n)
+		}
+		n.ForEachChild(func(child *tsast.Node) bool { walk(child); return false })
+	}
+	walk(file.AsNode())
+}
+func measureCorpus(root, output, label string, paths []string, items []entry) []string {
+	scratch, e := os.MkdirTemp("", "lint-inventory-corpus-")
+	fatal(e)
+	config := filepath.Join(scratch, "tsconfig.json")
+	programPaths := []string{}
+	for _, path := range paths {
+		if filepath.Ext(path) != ".a" {
+			programPaths = append(programPaths, path)
+		}
+	}
+	data, e := json.Marshal(map[string]any{"compilerOptions": map[string]any{"target": "ESNext", "module": "ESNext", "moduleResolution": "Bundler", "strict": true, "skipLibCheck": true, "sourceExtensions": []string{".a"}, "allowJs": true, "jsx": "preserve", "noEmit": true}, "files": programPaths})
+	fatal(e)
+	fatal(os.WriteFile(config, data, 0644))
+	graph, e := program.Build(program.Options{CurrentDirectory: root, ConfigFileName: config, SingleThreaded: true})
+	fatal(e)
+	byName := map[string]*entry{}
+	for i := range items {
+		item := &items[i]
+		byName[item.Name] = item
+		f := &item.Repository
+		if label == "compiler" {
+			f = &item.Compiler
+		}
+		n := 0
+		f.Count = &n
+		f.Status = "raw rule API, nil/default options, no suppressions"
+	}
+	excluded := []string{}
+	files := graph.ProjectFiles()
+	if len(files) != len(programPaths) {
+		panic(fmt.Sprintf("corpus denominator mismatch %d != %d", len(files), len(programPaths)))
+	}
+	for _, path := range paths {
+		if filepath.Ext(path) == ".a" {
+			data, err := os.ReadFile(path)
+			fatal(err)
+			files = append(files, tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, string(data), tscore.ScriptKindTS))
+		}
+	}
+	if len(files) != len(paths) {
+		panic("incomplete corpus")
+	}
+	for index, file := range files {
+		if len(file.Diagnostics()) > 0 {
+			excluded = append(excluded, file.FileName()+": parse diagnostics")
+			continue
+		}
+		for _, registration := range rule.Registered() {
+			item := byName[registration.Rule.Name]
+			f := &item.Repository
+			if label == "compiler" {
+				f = &item.Compiler
+			}
+			activeGraph := graph
+			if filepath.Ext(file.FileName()) == ".a" {
+				activeGraph = nil
+			}
+			if activeGraph == nil && registration.Rule.NeedsTypeChecker {
+				f.Offered++
+				f.Status = "unknown: .a checker bridge unavailable"
+				f.Failures = append(f.Failures, file.FileName()+": no checker for Adamic source")
+				continue
+			}
+			measured(registration, file, activeGraph, f)
+		}
+		if index%20 == 0 {
+			fmt.Printf("%s: %d/%d\n", label, index+1, len(files))
+		}
+	}
+	for i := range items {
+		f := &items[i].Repository
+		if label == "compiler" {
+			f = &items[i].Compiler
+		}
+		if f.Offered == 0 {
+			panic("no files offered")
+		}
+		if len(f.Failures) > 0 || f.Status == "requires options; no default measurement" {
+			f.Count = nil
+		}
+	}
+	return excluded
+}
+func rankings(items []entry) []ranking {
+	refs := map[string]map[string]bool{}
+	pkgs := map[string]string{}
+	for _, e := range items {
+		for _, d := range e.Dependencies {
+			if d.Kind == "library" {
+				continue
+			}
+			if refs[d.Symbol] == nil {
+				refs[d.Symbol] = map[string]bool{}
+			}
+			refs[d.Symbol][e.Name] = true
+			pkgs[d.Symbol] = d.Package
+		}
+	}
+	out := []ranking{}
+	for symbol, names := range refs {
+		r := ranking{Symbol: symbol, Package: pkgs[symbol], Count: len(names), Rules: []string{}}
+		for n := range names {
+			r.Rules = append(r.Rules, n)
+		}
+		sort.Strings(r.Rules)
+		out = append(out, r)
+	}
+	sort.Slice(out, func(i, j int) bool {
+		if out[i].Count != out[j].Count {
+			return out[i].Count > out[j].Count
+		}
+		return out[i].Symbol < out[j].Symbol
+	})
+	return out
+}
+func countText(f frequency) string {
+	if f.Count == nil {
+		return "unknown"
+	}
+	return strconv.Itoa(*f.Count)
+}
+func markdown(result inventory) string {
+	var b strings.Builder
+	fmt.Fprint(&b, "# Cohere lint inventory\n"+"\n")
+	fmt.Fprintf(&b, "%d registered rules at cohere `%s`. Compiler `%s`.\n\n", len(result.Rules), result.CohereCommit, result.CompilerCommit)
+	fmt.Fprint(&b, "Counts are raw Go rule API findings with nil/default options. They bypass suppressions and live configuration. Unknown never means zero. Test counts are executed harness invocations, including repeated configurations and controls, not unique source strings. Static call sites are a separate measure.\n"+"\n")
+	fmt.Fprint(&b, "## Branch evidence\n"+"\n")
+	for _, r := range result.Branches {
+		fmt.Fprintf(&b, "- `%s`: %s `%s`\n", r.Name, r.Status, r.Commit)
+	}
+	fmt.Fprintln(&b, "\n## Rules\n\n| Rule | Family | Go lines | Tests | Checker | Fix/options | Compiler | Repository | Wave |\n|---|---|---:|---:|---|---|---:|---:|---|")
+	for _, e := range result.Rules {
+		n := "unknown"
+		if e.Tests.HarnessInvocations != nil {
+			n = strconv.Itoa(*e.Tests.HarnessInvocations)
+		}
+		fmt.Fprintf(&b, "| `%s` | %s | %d | %s | %t | %t/%t | %s | %s | %s |\n", e.Name, e.Family, e.Lines, n, e.TypeAware || e.DeclaredChecker, e.Fixer, e.Options, countText(e.Compiler), countText(e.Repository), e.Wave)
+	}
+	fmt.Fprintln(&b, "\n## Shared functions ranked by dependent rules\n\nCounts deduplicate rules and include transitive references. Port common judgments once before fan-out. AST and reporting APIs need a single adapter contract; checker APIs belong to the bridge. Standard-library functions are recorded per rule in JSON but omitted from this ranking.\n\n| Function | Rules |\n|---|---:|")
+	for _, r := range result.Helpers {
+		fmt.Fprintf(&b, "| `%s` | %d |\n", r.Symbol, r.Count)
+	}
+	fmt.Fprint(&b, "\n## Per-rule evidence and wave blockers\n"+"\n")
+	for _, e := range result.Rules {
+		fmt.Fprintf(&b, "### %s\n\n", e.Name)
+		for _, s := range e.Sources {
+			fmt.Fprintf(&b, "- Go: `%s` (%d lines)\n", s.Path, s.Lines)
+		}
+		fmt.Fprintf(&b, "- Tests: %s; files %s; %d static Run sites.\n", e.Tests.Status, strings.Join(e.Tests.Files, ", "), e.Tests.StaticRunSites)
+		keys := []string{}
+		for k := range e.Tests.Locations {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+		for _, k := range keys {
+			fmt.Fprintf(&b, "  - `%s`: %d invocations\n", k, e.Tests.Locations[k])
+		}
+		fmt.Fprintf(&b, "- Wave: %s. Binding-only declaration: %t.\n- Options: %s; required %t. Fixer %t; suggestions %t.\n", e.Wave, e.BindingOnly, e.Decoder, e.RequiresOptions, e.Fixer, e.Suggestions)
+		fmt.Fprintln(&b, "- Resolved external calls (direct or transitive):")
+		for _, dep := range e.Dependencies {
+			fmt.Fprintf(&b, "  - `%s` [%s, direct=%t] at `%s`\n", dep.Symbol, dep.Kind, dep.Direct, dep.Location)
+		}
+		if len(e.Waiting) > 0 {
+			fmt.Fprintln(&b, "- Waiting on shared functions:")
+			for _, h := range e.Waiting {
+				fmt.Fprintf(&b, "  - `%s`\n", h)
+			}
+		}
+		if len(e.CheckerQuestions) > 0 {
+			fmt.Fprintln(&b, "- Bridge questions / reachable checker APIs:")
+			for _, q := range e.CheckerQuestions {
+				fmt.Fprintf(&b, "  - `%s`\n", q)
+			}
+		}
+		for _, s := range e.Stage1 {
+			fmt.Fprintf(&b, "- `%s`: %s; %s\n", s.Name, s.Status, strings.Join(s.Evidence, ", "))
+		}
+		fmt.Fprintf(&b, "- Compiler: %s; offered %d, listeners %d, failures %d. Repository: %s; offered %d, listeners %d, failures %d.\n\n", e.Compiler.Status, e.Compiler.Offered, e.Compiler.Listeners, len(e.Compiler.Failures), e.Repository.Status, e.Repository.Offered, e.Repository.Listeners, len(e.Repository.Failures))
+	}
+	fmt.Fprint(&b, "## Limits\n"+"\n")
+	for _, s := range result.Limitations {
+		fmt.Fprintf(&b, "- %s\n", s)
+	}
+	lines := strings.Split(b.String(), "\n")
+	for i := range lines {
+		lines[i] = strings.TrimRight(lines[i], " \t")
+	}
+	return strings.Join(lines, "\n")
+}
+func main() {
+	root := flag.String("root", "", "repository")
+	output := flag.String("output", "", "output")
+	compiler := flag.String("compiler", "", "TypeScript checkout")
+	reuse := flag.String("reuse", "", "reuse previously measured evidence at identical cohere commit")
+	capture := flag.Bool("capture-tests", false, "capture")
+	measure := flag.Bool("measure", false, "measure")
+	flag.Parse()
+	branches := inspectBranches(*root)
+	a := load(*root)
+	items := entries(a, branches)
+	fmt.Printf("resolved %d registered rules\n", len(items))
+	if *capture {
+		captureTests(*root, *output, items)
+	} else if _, err := os.Stat(filepath.Join(*output, "test-cases.jsonl")); err == nil {
+		restoreCapture(*output, items)
+	}
+	result := inventory{Version: 1, CohereCommit: command(filepath.Join(*root, "cohere"), "git", "rev-parse", "HEAD"), ScannerCommit: branches[0].Commit, Branches: branches, Rules: items, Corpus: map[string][]string{}, Excluded: map[string][]string{}, Limitations: []string{
+		"Function graph is conservative: includes reachable function values and both branches, not a runtime call graph. Interface callbacks may conceal edges. Unknown dynamic dispatch is not proof of absence.",
+		"Stage 1 status requires an executable selection site and is bounded by the branch report. It does not certify complete Go semantic parity; method-signature-style has an explicit recovery gap.",
+		"Ready assumes the existing parser plus an AST/reporting adapter. Individual AST methods and standard library mappings must be proven before a worker starts; shared judgments are conservatively blocked.",
+		"Nil/default options do not exercise required project-specific settings. Such rules have unknown frequency. Panics invalidate the entire per-rule corpus count.",
+		"Test invocations are not unique fixtures or assertions. Direct Context tests, subprocess corpora and setup functions outside the common harness are not counted as cases.",
+		"Source lines count the defining rule file and same-stem companion files. Shared sibling helpers are separate dependency records. Registration decoder references are traversed; interface dispatch can still hide methods. Option rules remain blocked on strict option validation.",
+	}}
+	if *measure {
+		if *compiler == "" {
+			panic("-compiler is required for a measurement")
+		}
+		result.CompilerCommit = command(*compiler, "git", "rev-parse", "HEAD")
+		if result.CompilerCommit != "050880ce59e30b356b686bd3144efe24f875ebc8" {
+			panic("wrong TypeScript pin")
+		}
+		result.Corpus["compiler"] = collectFiles(*compiler, true)
+		result.Corpus["repository"] = collectFiles(*root, false)
+		result.Excluded["compiler"] = measureCorpus(*compiler, *output, "compiler", result.Corpus["compiler"], items)
+		result.Excluded["repository"] = measureCorpus(*root, *output, "repository", result.Corpus["repository"], items)
+	}
+	if *reuse != "" {
+		if *measure || *capture {
+			panic("reuse cannot accompany measurement or capture")
+		}
+		raw, err := os.ReadFile(*reuse)
+		fatal(err)
+		var previous inventory
+		fatal(json.Unmarshal(raw, &previous))
+		if previous.CohereCommit != result.CohereCommit || len(previous.Rules) != len(items) {
+			panic("incompatible measurement evidence")
+		}
+		byName := map[string]entry{}
+		for _, old := range previous.Rules {
+			byName[old.Name] = old
+		}
+		for i := range items {
+			old, ok := byName[items[i].Name]
+			if !ok {
+				panic("missing evidence rule")
+			}
+			items[i].Compiler = old.Compiler
+			items[i].Repository = old.Repository
+			items[i].Tests = old.Tests
+		}
+		result.Corpus = previous.Corpus
+		result.Excluded = previous.Excluded
+		result.CompilerCommit = previous.CompilerCommit
+		// A failed external fixture package does not invalidate completed families.
+		log, err := os.ReadFile(filepath.Join(filepath.Dir(*reuse), "cohere-tests.log"))
+		fatal(err)
+		for i := range items {
+			if items[i].Tests.HarnessInvocations != nil && familyPassed(log, items[i].Family) {
+				items[i].Tests.Status = "executed harness invocations; family tests passed"
+			}
+		}
+	}
+	// Runtime capture can discover cross-package or registry-dispatched test files.
+	for i := range items {
+		files := map[string]bool{}
+		for _, path := range items[i].Tests.Files {
+			files[path] = true
+		}
+		for location := range items[i].Tests.Locations {
+			if colon := strings.LastIndex(location, ":"); colon > 0 {
+				files[location[:colon]] = true
+			}
+		}
+		items[i].Tests.Files = []string{}
+		for path := range files {
+			items[i].Tests.Files = append(items[i].Tests.Files, path)
+		}
+		sort.Strings(items[i].Tests.Files)
+	}
+	result.Helpers = rankings(items)
+	data, e := json.MarshalIndent(result, "", "  ")
+	fatal(e)
+	fatal(os.WriteFile(filepath.Join(*output, "inventory.json"), append(data, '\n'), 0644))
+	fatal(os.WriteFile(filepath.Join(*output, "inventory.md"), []byte(markdown(result)), 0644))
+}

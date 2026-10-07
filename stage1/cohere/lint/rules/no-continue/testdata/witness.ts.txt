@@ -1,0 +1,6 @@
+for(const item of items) {
+    if(item) {
+        continue;
+    }
+    use(item);
+}

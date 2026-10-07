@@ -1,0 +1,28 @@
+
+/workspace/lint-split4/scanner:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+00000000000bf040 <adamic_release>:
+   bf040:	48 85 ff             	test   %rdi,%rdi
+   bf043:	74 10                	je     bf055 <adamic_release+0x15>
+   bf045:	48 8b 07             	mov    (%rdi),%rax
+   bf048:	48 85 c0             	test   %rax,%rax
+   bf04b:	74 08                	je     bf055 <adamic_release+0x15>
+   bf04d:	48 ff c8             	dec    %rax
+   bf050:	48 89 07             	mov    %rax,(%rdi)
+   bf053:	74 01                	je     bf056 <adamic_release+0x16>
+   bf055:	c3                   	ret
+   bf056:	50                   	push   %rax
+   bf057:	e8 14 00 00 00       	call   bf070 <release_last>
+   bf05c:	48 83 c4 08          	add    $0x8,%rsp
+   bf060:	c3                   	ret
+
+Disassembly of section .fini:

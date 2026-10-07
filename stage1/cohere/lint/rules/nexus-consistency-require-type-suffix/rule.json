@@ -1,0 +1,15 @@
+{
+  "name": "nexus/consistency-require-type-suffix",
+  "kinds": [
+    "InterfaceDeclaration",
+    "TypeAliasDeclaration",
+    "VariableDeclaration"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleConsistencyRequireTypeSuffix",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestConsistencyRequireTypeSuffix",
+  "factory": "create",
+  "class": "Rule"
+}

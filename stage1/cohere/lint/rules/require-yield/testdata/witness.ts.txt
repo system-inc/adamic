@@ -1,0 +1,6 @@
+function* missing() {
+    function* inner() {
+        yield 1;
+    }
+    return inner;
+}
