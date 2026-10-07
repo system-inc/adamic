@@ -1,104 +1,212 @@
-// From TypeScript 6.0.3, src/compiler/sys.ts:1487
-// From TypeScript 6.0.3, src/compiler/sys.ts:1491
-// From TypeScript 6.0.3, src/compiler/utilities.ts:10312
-// From TypeScript 6.0.3, src/compiler/types.ts:7841
-// From TypeScript 6.0.3, src/compiler/corePublic.ts:43
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9781
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9787
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9612
-// From TypeScript 6.0.3, src/compiler/core.ts:1934
-// From TypeScript 6.0.3, src/compiler/corePublic.ts:37
-// From TypeScript 6.0.3, src/compiler/core.ts:2375
-// From TypeScript 6.0.3, src/compiler/corePublic.ts:40
-// From TypeScript 6.0.3, src/compiler/corePublic.ts:17
-// From TypeScript 6.0.3, src/compiler/path.ts:32
-// From TypeScript 6.0.3, src/compiler/path.ts:28
-// From TypeScript 6.0.3, src/compiler/path.ts:526
-// From TypeScript 6.0.3, src/compiler/path.ts:882
-// From TypeScript 6.0.3, src/compiler/path.ts:732
-// From TypeScript 6.0.3, src/compiler/path.ts:30
-// From TypeScript 6.0.3, src/compiler/path.ts:146
-// From TypeScript 6.0.3, src/compiler/path.ts:31
-// From TypeScript 6.0.3, src/compiler/path.ts:151
-// From TypeScript 6.0.3, src/compiler/path.ts:165
-// From TypeScript 6.0.3, src/compiler/path.ts:250
-// From TypeScript 6.0.3, src/compiler/path.ts:41
-// From TypeScript 6.0.3, src/compiler/path.ts:140
-// From TypeScript 6.0.3, src/compiler/path.ts:807
-// From TypeScript 6.0.3, src/compiler/path.ts:579
-// From TypeScript 6.0.3, src/compiler/path.ts:785
-// From TypeScript 6.0.3, src/compiler/path.ts:627
-// From TypeScript 6.0.3, src/compiler/path.ts:722
-// From TypeScript 6.0.3, src/compiler/core.ts:320
-// From TypeScript 6.0.3, src/compiler/core.ts:1750
-// From TypeScript 6.0.3, src/compiler/core.ts:965
-// From TypeScript 6.0.3, src/compiler/core.ts:985
-// From TypeScript 6.0.3, src/compiler/core.ts:926
-// From TypeScript 6.0.3, src/compiler/core.ts:17
-// From TypeScript 6.0.3, src/compiler/core.ts:399
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9607
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9609
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9776
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9618
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9634
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9644
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9650
-// From TypeScript 6.0.3, src/compiler/core.ts:618
-// From TypeScript 6.0.3, src/compiler/path.ts:538
-// From TypeScript 6.0.3, src/compiler/core.ts:1116
-// From TypeScript 6.0.3, src/compiler/path.ts:449
-// From TypeScript 6.0.3, src/compiler/path.ts:495
-// From TypeScript 6.0.3, src/compiler/path.ts:622
-// From TypeScript 6.0.3, src/compiler/debug.ts:196
-// From TypeScript 6.0.3, src/compiler/debug.ts:213
-// From TypeScript 6.0.3, src/compiler/core.ts:1121
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9684
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9594
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9695
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9670
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9657
-// From TypeScript 6.0.3, src/compiler/path.ts:60
-// From TypeScript 6.0.3, src/compiler/core.ts:1937
-// From TypeScript 6.0.3, src/compiler/core.ts:220
-// From TypeScript 6.0.3, src/compiler/core.ts:232
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9605
-// From TypeScript 6.0.3, src/compiler/core.ts:1951
-// From TypeScript 6.0.3, src/compiler/core.ts:2430
-// From TypeScript 6.0.3, src/compiler/path.ts:388
-// From TypeScript 6.0.3, src/compiler/path.ts:398
-// From TypeScript 6.0.3, src/compiler/core.ts:1966
-// From TypeScript 6.0.3, src/compiler/path.ts:435
-// From TypeScript 6.0.3, src/compiler/path.ts:373
-// From TypeScript 6.0.3, src/compiler/path.ts:115
-// From TypeScript 6.0.3, src/compiler/path.ts:312
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9922
-// From TypeScript 6.0.3, src/compiler/core.ts:2032
-// From TypeScript 6.0.3, src/compiler/core.ts:1974
-// From TypeScript 6.0.3, src/compiler/core.ts:2074
-// From TypeScript 6.0.3, src/compiler/core.ts:2079
-// From TypeScript 6.0.3, src/compiler/core.ts:145
-// From TypeScript 6.0.3, src/compiler/path.ts:967
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9892
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9802
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9817
-// From TypeScript 6.0.3, src/compiler/core.ts:1828
-// From TypeScript 6.0.3, src/compiler/core.ts:1861
-// From TypeScript 6.0.3, src/compiler/core.ts:1835
-// From TypeScript 6.0.3, src/compiler/core.ts:1875
-// From TypeScript 6.0.3, src/compiler/core.ts:2377
-// From TypeScript 6.0.3, src/compiler/core.ts:375
-// From TypeScript 6.0.3, src/compiler/core.ts:1038
-// From TypeScript 6.0.3, src/compiler/core.ts:2247
-// From TypeScript 6.0.3, src/compiler/path.ts:120
-// From TypeScript 6.0.3, src/compiler/path.ts:125
-// From TypeScript 6.0.3, src/compiler/core.ts:198
-// From TypeScript 6.0.3, src/compiler/utilities.ts:9826
-// From TypeScript 6.0.3, src/compiler/sys.ts:1629
-// From TypeScript 6.0.3, src/compiler/sys.ts:1838
-// From TypeScript 6.0.3, src/compiler/sys.ts:1882
-// From TypeScript 6.0.3, src/compiler/sys.ts:1913
-// From TypeScript 6.0.3, src/compiler/sys.ts:1917
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9781; adapted line 9781
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9787; adapted line 9787
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9612; adapted line 9612
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1934; adapted line 1934
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/corePublic.ts:37; adapted line 37
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:2375; adapted line 2375
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/corePublic.ts:40; adapted line 40
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/corePublic.ts:17; adapted line 17
+// Adaptations: 40-explicit-any
+// From TypeScript 6.0.3, src/compiler/path.ts:32; adapted line 32
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:28; adapted line 28
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:526; adapted line 526
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:882; adapted line 882
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:732; adapted line 732
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:30; adapted line 30
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:146; adapted line 146
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:31; adapted line 31
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:151; adapted line 151
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:165; adapted line 165
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:250; adapted line 250
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:41; adapted line 41
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:140; adapted line 140
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:807; adapted line 807
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:579; adapted line 579
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:785; adapted line 785
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:627; adapted line 627
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:722; adapted line 722
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:320; adapted line 320
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/core.ts:1750; adapted line 1750
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:965; adapted line 965
+// Adaptations: 40-explicit-any
+// From TypeScript 6.0.3, src/compiler/core.ts:985; adapted line 985
+// Adaptations: 64-temporary-parser-range-read
+// From TypeScript 6.0.3, src/compiler/core.ts:926; adapted line 926
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:17; adapted line 17
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:399; adapted line 399
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9607; adapted line 9607
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9609; adapted line 9609
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9776; adapted line 9776
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9618; adapted line 9618
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9634; adapted line 9634
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9644; adapted line 9644
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9650; adapted line 9650
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:618; adapted line 618
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/path.ts:538; adapted line 538
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/core.ts:1116; adapted line 1116
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:449; adapted line 449
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:495; adapted line 495
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:622; adapted line 622
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/debug.ts:196; adapted line 196
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/debug.ts:213; adapted line 213
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1121; adapted line 1121
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9684; adapted line 9684
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9594; adapted line 9594
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9695; adapted line 9695
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9670; adapted line 9670
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9657; adapted line 9657
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:60; adapted line 60
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1937; adapted line 1937
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:220; adapted line 220
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/core.ts:232; adapted line 232
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9605; adapted line 9605
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1951; adapted line 1951
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:2430; adapted line 2430
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:388; adapted line 388
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:398; adapted line 398
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1966; adapted line 1966
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:435; adapted line 435
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:373; adapted line 373
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:115; adapted line 115
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:312; adapted line 312
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9922; adapted line 9922
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:2032; adapted line 2032
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1974; adapted line 1974
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:2074; adapted line 2074
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:2079; adapted line 2079
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:145; adapted line 145
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/path.ts:967; adapted line 967
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9892; adapted line 9892
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9802; adapted line 9802
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9817; adapted line 9817
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1828; adapted line 1828
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1861; adapted line 1861
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1835; adapted line 1835
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1875; adapted line 1875
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:2377; adapted line 2377
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:375; adapted line 375
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:1038; adapted line 1038
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:2247; adapted line 2247
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:120; adapted line 120
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:125; adapted line 125
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/core.ts:198; adapted line 198
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9826; adapted line 9826
+// Adaptations: 30-indexed-reads
+// From TypeScript 6.0.3, src/compiler/sys.ts:1487; adapted line 1488
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1629; adapted line 1630
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1838; adapted line 1839
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1491; adapted line 1492
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1913; adapted line 1914
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1917; adapted line 1918
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1882; adapted line 1883
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10312; adapted line 10312
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/types.ts:7841; adapted line 7852
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/corePublic.ts:43; adapted line 43
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/types.ts:23; adapted line 23
+// Adaptations: 40-explicit-any
+// From TypeScript 6.0.3, src/compiler/path.ts:457; adapted line 457
+// Adaptations: 40-explicit-any
 // Census reason: TS2591
+
+export type Path = string & { __pathBrand: undefined; };
+
+export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };
 
 import * as _fs from "node:fs";
 import * as _path from "node:path";
@@ -141,7 +249,7 @@ export type GetCanonicalFileName = (fileName: string) => string;
 export type Comparer<T> = (a: T, b: T) => Comparison;
 
 export interface SortedReadonlyArray<T> extends ReadonlyArray<T> {
-    " __sortedArrayBrand": any;
+    " __sortedArrayBrand": undefined;
 }
 
 const backslashRegExp = /\\/g;
@@ -265,6 +373,8 @@ export function hasTrailingDirectorySeparator(path: string): boolean {
     return path.length > 0 && isAnyDirectorySeparator(path.charCodeAt(path.length - 1));
 }
 
+export function ensureTrailingDirectorySeparator(path: Path): Path;
+export function ensureTrailingDirectorySeparator(path: string): string;
 export function ensureTrailingDirectorySeparator(path: string) {
     if (!hasTrailingDirectorySeparator(path)) {
         return path + directorySeparator;
@@ -288,6 +398,8 @@ export function combinePaths(path: string, ...paths: (string | undefined)[]): st
     return path;
 }
 
+export function removeTrailingDirectorySeparator(path: Path): Path;
+export function removeTrailingDirectorySeparator(path: string): string;
 export function removeTrailingDirectorySeparator(path: string) {
     if (hasTrailingDirectorySeparator(path)) {
         return path.substr(0, path.length - 1);
@@ -400,12 +512,14 @@ export function normalizePath(path: string): string {
     return normalized && hasTrailingDirectorySeparator(path) ? ensureTrailingDirectorySeparator(normalized) : normalized;
 }
 
+export function map<T, U>(array: readonly T[], f: (x: T, i: number) => U): U[];
+export function map<T, U>(array: readonly T[] | undefined, f: (x: T, i: number) => U): U[] | undefined;
 export function map<T, U>(array: readonly T[] | undefined, f: (x: T, i: number) => U): U[] | undefined {
     let result: U[] | undefined;
     if (array !== undefined) {
         result = [];
         for (let i = 0; i < array.length; i++) {
-            result.push(f(array[i], i));
+            result.push(f(array[i]!, i));
         }
     }
     return result;
@@ -416,10 +530,12 @@ export function isArray(value: any): value is readonly unknown[] {
     return Array.isArray(value);
 }
 
-function toOffset(array: readonly any[], offset: number) {
+function toOffset<T>(array: readonly T[], offset: number) {
     return offset < 0 ? array.length + offset : offset;
 }
 
+export function addRange<T>(to: T[], from: readonly T[] | undefined, start?: number, end?: number): T[];
+export function addRange<T>(to: T[] | undefined, from: readonly T[] | undefined, start?: number, end?: number): T[] | undefined;
 export function addRange<T>(to: T[] | undefined, from: readonly T[] | undefined, start?: number, end?: number): T[] | undefined {
     if (from === undefined || from.length === 0) return to;
     if (to === undefined) return from.slice(start, end);
@@ -427,12 +543,15 @@ export function addRange<T>(to: T[] | undefined, from: readonly T[] | undefined,
     end = end === undefined ? from.length : toOffset(from, end);
     for (let i = start; i < end && i < from.length; i++) {
         if (from[i] !== undefined) {
-            to.push(from[i]);
+            to.push(from[i]!);
         }
     }
     return to;
 }
 
+export function append<T extends {}>(to: T[], value: T | undefined): T[];
+export function append<T extends {}>(to: T[] | undefined, value: T): T[];
+export function append<T extends {}>(to: T[] | undefined, value: T | undefined): T[] | undefined;
 export function append<T extends {}>(to: T[] | undefined, value: T | undefined): T[] | undefined {
     if (value === undefined) return to;
     if (to === undefined) return [value];
@@ -446,7 +565,7 @@ export function flatMap<T, U extends {}>(array: readonly T[] | undefined, mapfn:
     let result: U[] | undefined;
     if (array !== undefined) {
         for (let i = 0; i < array.length; i++) {
-            const v = mapfn(array[i], i);
+            const v = mapfn(array[i]!, i);
             if (v) {
                 if (isArray(v)) {
                     result = addRange(result, v);
@@ -506,11 +625,13 @@ const wildcardMatchers = {
     exclude: excludeMatcher,
 };
 
+export function some<T>(array: readonly T[] | undefined): array is readonly T[];
+export function some<T>(array: readonly T[] | undefined, predicate: (value: T) => boolean): boolean;
 export function some<T>(array: readonly T[] | undefined, predicate?: (value: T) => boolean): boolean {
     if (array !== undefined) {
         if (predicate !== undefined) {
             for (let i = 0; i < array.length; i++) {
-                if (predicate(array[i])) {
+                if (predicate(array[i]!)) {
                     return true;
                 }
             }
@@ -524,7 +645,7 @@ export function some<T>(array: readonly T[] | undefined, predicate?: (value: T) 
 
 export function reducePathComponents(components: readonly string[]): string[] {
     if (!some(components)) return [];
-    const reduced = [components[0]];
+    const reduced = [components[0]!];
     for (let i = 1; i < components.length; i++) {
         const component = components[i];
         if (!component) continue;
@@ -554,6 +675,8 @@ function pathComponents(path: string, rootLength: number) {
     return [root, ...rest];
 }
 
+export function getPathComponents(path: Path): PathPathComponents;
+export function getPathComponents(path: string, currentDirectory?: string): string[];
 export function getPathComponents(path: string, currentDirectory = "") {
     path = combinePaths(currentDirectory, path);
     return pathComponents(path, getRootLength(path));
@@ -564,28 +687,28 @@ export function getNormalizedPathComponents(path: string, currentDirectory: stri
 }
 
 export function fail(message?: string, stackCrawlMark?: AnyFunction): never {
-        // eslint-disable-next-line no-debugger
-        debugger;
-        const e = new Error(message ? `Debug Failure. ${message}` : "Debug Failure.");
-        if ((Error as any).captureStackTrace) {
-            (Error as any).captureStackTrace(e, stackCrawlMark || fail);
-        }
-        throw e;
+    // eslint-disable-next-line no-debugger
+    debugger;
+    const e = new Error(message ? `Debug Failure. ${message}` : "Debug Failure.");
+    if ((Error as any).captureStackTrace) {
+        (Error as any).captureStackTrace(e, stackCrawlMark || fail);
     }
+    throw e;
+}
 
 export function assert(expression: unknown, message?: string, verboseDebugInfo?: string | (() => string), stackCrawlMark?: AnyFunction): asserts expression {
-        if (!expression) {
-            message = message ? `False expression: ${message}` : "False expression.";
-            if (verboseDebugInfo) {
-                message += "\r\nVerbose Debug Information: " + (typeof verboseDebugInfo === "string" ? verboseDebugInfo : verboseDebugInfo());
-            }
-            fail(message, stackCrawlMark || assert);
+    if (!expression) {
+        message = message ? `False expression: ${message}` : "False expression.";
+        if (verboseDebugInfo) {
+            message += "\r\nVerbose Debug Information: " + (typeof verboseDebugInfo === "string" ? verboseDebugInfo : verboseDebugInfo());
         }
+        fail(message, stackCrawlMark || assert);
     }
+}
 
 export function last<T>(array: readonly T[]): T {
     Debug.assert(array.length !== 0);
-    return array[array.length - 1];
+    return array[array.length - 1]!;
 }
 
 export function isImplicitGlob(lastPathComponent: string): boolean {
@@ -610,7 +733,7 @@ export function getSubPatternFromSpec(
 
     // getNormalizedPathComponents includes the separator for the root component.
     // We need to remove to create our regex correctly.
-    components[0] = removeTrailingDirectorySeparator(components[0]);
+    components[0] = removeTrailingDirectorySeparator(components[0]!);
 
     if (isImplicitGlob(lastComponent)) {
         components.push("**", "*");
@@ -706,7 +829,7 @@ export function equateValues<T>(a: T, b: T): boolean {
 export function contains<T>(array: readonly T[] | undefined, value: T, equalityComparer: EqualityComparer<T> = equateValues): boolean {
     if (array !== undefined) {
         for (let i = 0; i < array.length; i++) {
-            if (equalityComparer(array[i], value)) {
+            if (equalityComparer(array[i]!, value)) {
                 return true;
             }
         }
@@ -763,6 +886,8 @@ export function equateStringsCaseSensitive(a: string, b: string): boolean {
     return equateValues(a, b);
 }
 
+export function getAnyExtensionFromPath(path: string): string;
+export function getAnyExtensionFromPath(path: string, extensions: string | readonly string[], ignoreCase: boolean): string;
 export function getAnyExtensionFromPath(path: string, extensions?: string | readonly string[], ignoreCase?: boolean): string {
     // Retrieves any string from the final "." onwards from a base file name.
     // Unlike extensionFromPath, which throws an exception on unrecognized extensions.
@@ -777,6 +902,8 @@ export function getAnyExtensionFromPath(path: string, extensions?: string | read
     return "";
 }
 
+export function getBaseFileName(path: string): string;
+export function getBaseFileName(path: string, extensions: string | readonly string[], ignoreCase: boolean): string;
 export function getBaseFileName(path: string, extensions?: string | readonly string[], ignoreCase?: boolean) {
     path = normalizeSlashes(path);
 
@@ -796,6 +923,8 @@ export function hasExtension(fileName: string): boolean {
     return getBaseFileName(fileName).includes(".");
 }
 
+export function getDirectoryPath(path: Path): Path;
+export function getDirectoryPath(path: string): string;
 export function getDirectoryPath(path: string): string {
     path = normalizeSlashes(path);
 
@@ -829,6 +958,8 @@ export function compareStringsCaseInsensitive(a: string, b: string): Comparison 
     return a < b ? Comparison.LessThan : a > b ? Comparison.GreaterThan : Comparison.EqualTo;
 }
 
+export function compareComparableValues(a: string | undefined, b: string | undefined): Comparison;
+export function compareComparableValues(a: number | undefined, b: number | undefined): Comparison;
 export function compareComparableValues(a: string | number | undefined, b: string | number | undefined) {
     return a === b ? Comparison.EqualTo :
         a === undefined ? Comparison.LessThan :
@@ -845,10 +976,13 @@ export function getStringComparer(ignoreCase?: boolean): typeof compareStringsCa
     return ignoreCase ? compareStringsCaseInsensitive : compareStringsCaseSensitive;
 }
 
+export function every<T, U extends T>(array: readonly T[], callback: (element: T, index: number) => element is U): array is readonly U[];
+export function every<T, U extends T>(array: readonly T[] | undefined, callback: (element: T, index: number) => element is U): array is readonly U[] | undefined;
+export function every<T>(array: readonly T[] | undefined, callback: (element: T, index: number) => boolean): boolean;
 export function every<T>(array: readonly T[] | undefined, callback: (element: T, index: number) => boolean): boolean {
     if (array !== undefined) {
         for (let i = 0; i < array.length; i++) {
-            if (!callback(array[i], i)) {
+            if (!callback(array[i]!, i)) {
                 return false;
             }
         }
@@ -857,6 +991,8 @@ export function every<T>(array: readonly T[] | undefined, callback: (element: T,
     return true;
 }
 
+export function containsPath(parent: string, child: string, ignoreCase?: boolean): boolean;
+export function containsPath(parent: string, child: string, currentDirectory: string, ignoreCase?: boolean): boolean;
 export function containsPath(parent: string, child: string, currentDirectory?: string | boolean, ignoreCase?: boolean) {
     if (typeof currentDirectory === "string") {
         parent = combinePaths(currentDirectory, parent);
@@ -876,7 +1012,7 @@ export function containsPath(parent: string, child: string, currentDirectory?: s
     const componentEqualityComparer = ignoreCase ? equateStringsCaseInsensitive : equateStringsCaseSensitive;
     for (let i = 0; i < parentComponents.length; i++) {
         const equalityComparer = i === 0 ? equateStringsCaseInsensitive : componentEqualityComparer;
-        if (!equalityComparer(parentComponents[i], childComponents[i])) {
+        if (!equalityComparer(parentComponents[i]!, childComponents[i]!)) {
             return false;
         }
     }
@@ -998,7 +1134,7 @@ export function fileExtensionIsOneOf(path: string, extensions: readonly string[]
 export function findIndex<T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number): number {
     if (array === undefined) return -1;
     for (let i = startIndex ?? 0; i < array.length; i++) {
-        if (predicate(array[i], i)) {
+        if (predicate(array[i]!, i)) {
             return i;
         }
     }
@@ -1038,12 +1174,12 @@ export function matchFiles(path: string, extensions: readonly string[] | undefin
             if (extensions && !fileExtensionIsOneOf(name, extensions)) continue;
             if (excludeRegex && excludeRegex.test(absoluteName)) continue;
             if (!includeFileRegexes) {
-                results[0].push(name);
+                results[0]!.push(name);
             }
             else {
                 const includeIndex = findIndex(includeFileRegexes, re => re.test(absoluteName));
                 if (includeIndex !== -1) {
-                    results[includeIndex].push(name);
+                    results[includeIndex]!.push(name);
                 }
             }
         }
@@ -1068,7 +1204,8 @@ export function matchFiles(path: string, extensions: readonly string[] | undefin
     }
 }
 
-const Debug = { assert, fail };
+// Preserve the explicit assertion target type supplied by tsc's Debug namespace.
+const Debug: { assert: typeof assert; fail: typeof fail } = { assert, fail };
 
 const statSyncOptions = { throwIfNoEntry: false } as const;
 function statSync(path: string): import("fs").Stats | undefined {

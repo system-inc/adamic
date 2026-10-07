@@ -1,0 +1,1974 @@
+{
+  "stage3": "03ccf222dfeedef4bfe5cc3e219e4586d14a5c13",
+  "source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "fixtures": [
+    {
+      "file": "01_readFile_utf8.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:readFile#0",
+          "name": "readFile",
+          "originalLine": 1787,
+          "adaptedLine": 1788,
+          "adaptations": [
+            "32-indexed-reads-program",
+            "47-host-errors"
+          ],
+          "tokens": "function readFile(fileName: string, _encoding?: string): string | undefined {\n    let buffer: Buffer;\n    try {\n        buffer = _fs.readFileSync(fileName);\n    }\n    catch {\n        return undefined;\n    }\n    let len = buffer.length;\n    if (len >= 2 && buffer[0]! === 0xFE && buffer[1]! === 0xFF) {\n        len &= ~1;\n        for (let i = 0; i < len; i += 2) {\n            const temp = buffer[i]!;\n            buffer[i] = buffer[i + 1]!;\n            buffer[i + 1] = temp;\n        }\n        return buffer.toString(\"utf16le\", 2);\n    }\n    if (len >= 2 && buffer[0]! === 0xFF && buffer[1]! === 0xFE) {\n        return buffer.toString(\"utf16le\", 2);\n    }\n    if (len >= 3 && buffer[0]! === 0xEF && buffer[1]! === 0xBB && buffer[2]! === 0xBF) {\n        return buffer.toString(\"utf8\", 3);\n    }\n    return buffer.toString(\"utf8\");\n}"
+        }
+      ],
+      "changedDeclarations": [
+        {
+          "name": "readFile",
+          "adaptations": [
+            "32-indexed-reads-program",
+            "47-host-errors"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "02_readFile_utf16le.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:readFile#0",
+          "name": "readFile",
+          "originalLine": 1787,
+          "adaptedLine": 1788,
+          "adaptations": [
+            "32-indexed-reads-program",
+            "47-host-errors"
+          ],
+          "tokens": "function readFile(fileName: string, _encoding?: string): string | undefined {\n    let buffer: Buffer;\n    try {\n        buffer = _fs.readFileSync(fileName);\n    }\n    catch {\n        return undefined;\n    }\n    let len = buffer.length;\n    if (len >= 2 && buffer[0]! === 0xFE && buffer[1]! === 0xFF) {\n        len &= ~1;\n        for (let i = 0; i < len; i += 2) {\n            const temp = buffer[i]!;\n            buffer[i] = buffer[i + 1]!;\n            buffer[i + 1] = temp;\n        }\n        return buffer.toString(\"utf16le\", 2);\n    }\n    if (len >= 2 && buffer[0]! === 0xFF && buffer[1]! === 0xFE) {\n        return buffer.toString(\"utf16le\", 2);\n    }\n    if (len >= 3 && buffer[0]! === 0xEF && buffer[1]! === 0xBB && buffer[2]! === 0xBF) {\n        return buffer.toString(\"utf8\", 3);\n    }\n    return buffer.toString(\"utf8\");\n}"
+        }
+      ],
+      "changedDeclarations": [
+        {
+          "name": "readFile",
+          "adaptations": [
+            "32-indexed-reads-program",
+            "47-host-errors"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "03_readFile_utf16be.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:readFile#0",
+          "name": "readFile",
+          "originalLine": 1787,
+          "adaptedLine": 1788,
+          "adaptations": [
+            "32-indexed-reads-program",
+            "47-host-errors"
+          ],
+          "tokens": "function readFile(fileName: string, _encoding?: string): string | undefined {\n    let buffer: Buffer;\n    try {\n        buffer = _fs.readFileSync(fileName);\n    }\n    catch {\n        return undefined;\n    }\n    let len = buffer.length;\n    if (len >= 2 && buffer[0]! === 0xFE && buffer[1]! === 0xFF) {\n        len &= ~1;\n        for (let i = 0; i < len; i += 2) {\n            const temp = buffer[i]!;\n            buffer[i] = buffer[i + 1]!;\n            buffer[i + 1] = temp;\n        }\n        return buffer.toString(\"utf16le\", 2);\n    }\n    if (len >= 2 && buffer[0]! === 0xFF && buffer[1]! === 0xFE) {\n        return buffer.toString(\"utf16le\", 2);\n    }\n    if (len >= 3 && buffer[0]! === 0xEF && buffer[1]! === 0xBB && buffer[2]! === 0xBF) {\n        return buffer.toString(\"utf8\", 3);\n    }\n    return buffer.toString(\"utf8\");\n}"
+        }
+      ],
+      "changedDeclarations": [
+        {
+          "name": "readFile",
+          "adaptations": [
+            "32-indexed-reads-program",
+            "47-host-errors"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "04_readFile_missing.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:readFile#0",
+          "name": "readFile",
+          "originalLine": 1787,
+          "adaptedLine": 1788,
+          "adaptations": [
+            "32-indexed-reads-program",
+            "47-host-errors"
+          ],
+          "tokens": "function readFile(fileName: string, _encoding?: string): string | undefined {\n    let buffer: Buffer;\n    try {\n        buffer = _fs.readFileSync(fileName);\n    }\n    catch {\n        return undefined;\n    }\n    let len = buffer.length;\n    if (len >= 2 && buffer[0]! === 0xFE && buffer[1]! === 0xFF) {\n        len &= ~1;\n        for (let i = 0; i < len; i += 2) {\n            const temp = buffer[i]!;\n            buffer[i] = buffer[i + 1]!;\n            buffer[i + 1] = temp;\n        }\n        return buffer.toString(\"utf16le\", 2);\n    }\n    if (len >= 2 && buffer[0]! === 0xFF && buffer[1]! === 0xFE) {\n        return buffer.toString(\"utf16le\", 2);\n    }\n    if (len >= 3 && buffer[0]! === 0xEF && buffer[1]! === 0xBB && buffer[2]! === 0xBF) {\n        return buffer.toString(\"utf8\", 3);\n    }\n    return buffer.toString(\"utf8\");\n}"
+        }
+      ],
+      "changedDeclarations": [
+        {
+          "name": "readFile",
+          "adaptations": [
+            "32-indexed-reads-program",
+            "47-host-errors"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "05_writeFile.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244::byteOrderMarkIndicator#0",
+          "name": "byteOrderMarkIndicator",
+          "originalLine": 1466,
+          "adaptedLine": 1467,
+          "adaptations": [],
+          "tokens": "const byteOrderMarkIndicator = \"\\uFEFF\";"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:writeFile#0",
+          "name": "writeFile",
+          "originalLine": 1819,
+          "adaptedLine": 1820,
+          "adaptations": [],
+          "tokens": "function writeFile(fileName: string, data: string, writeByteOrderMark?: boolean): void {\n    if (writeByteOrderMark) {\n        data = byteOrderMarkIndicator + data;\n    }\n    let fd: number | undefined;\n    try {\n        fd = _fs.openSync(fileName, \"w\");\n        _fs.writeSync(fd, data, undefined, \"utf8\");\n    }\n    finally {\n        if (fd !== undefined) {\n            _fs.closeSync(fd);\n        }\n    }\n}"
+        },
+        {
+          "file": "src/compiler/hostErrors.ts",
+          "selector": "263::errorCode#0",
+          "name": "errorCode",
+          "originalLine": null,
+          "adaptedLine": 2,
+          "adaptations": [
+            "47-host-errors"
+          ],
+          "tokens": "function errorCode(error: unknown): string | undefined {\n    return typeof error === \"object\" && error !== null && \"code\" in error && typeof error.code === \"string\" ? error.code : undefined;\n}"
+        }
+      ],
+      "changedDeclarations": [
+        {
+          "name": "errorCode",
+          "adaptations": [
+            "47-host-errors"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "06_fileExists.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:statSyncOptions#0",
+          "name": "statSyncOptions",
+          "originalLine": 1487,
+          "adaptedLine": 1488,
+          "adaptations": [],
+          "tokens": "const statSyncOptions = { throwIfNoEntry: false } as const;"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:statSync#0",
+          "name": "statSync",
+          "originalLine": 1629,
+          "adaptedLine": 1630,
+          "adaptations": [],
+          "tokens": "function statSync(path: string): import(\"fs\").Stats | undefined {\n    try {\n        return _fs.statSync(path, statSyncOptions);\n    }\n    catch {\n        return undefined;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:fileSystemEntryExists#0",
+          "name": "fileSystemEntryExists",
+          "originalLine": 1886,
+          "adaptedLine": 1887,
+          "adaptations": [],
+          "tokens": "function fileSystemEntryExists(path: string, entryKind: FileSystemEntryKind): boolean {\n    const stat = statSync(path);\n    if (!stat) {\n        return false;\n    }\n    switch (entryKind) {\n        case FileSystemEntryKind.File:\n            return stat.isFile();\n        case FileSystemEntryKind.Directory:\n            return stat.isDirectory();\n        default:\n            return false;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:fileExists#0",
+          "name": "fileExists",
+          "originalLine": 1901,
+          "adaptedLine": 1902,
+          "adaptations": [],
+          "tokens": "function fileExists(path: string): boolean {\n    return fileSystemEntryExists(path, FileSystemEntryKind.File);\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "name": "FileSystemEntryKind",
+          "originalLine": 901,
+          "adaptedLine": 902,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "07_directoryExists.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:statSyncOptions#0",
+          "name": "statSyncOptions",
+          "originalLine": 1487,
+          "adaptedLine": 1488,
+          "adaptations": [],
+          "tokens": "const statSyncOptions = { throwIfNoEntry: false } as const;"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:statSync#0",
+          "name": "statSync",
+          "originalLine": 1629,
+          "adaptedLine": 1630,
+          "adaptations": [],
+          "tokens": "function statSync(path: string): import(\"fs\").Stats | undefined {\n    try {\n        return _fs.statSync(path, statSyncOptions);\n    }\n    catch {\n        return undefined;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:fileSystemEntryExists#0",
+          "name": "fileSystemEntryExists",
+          "originalLine": 1886,
+          "adaptedLine": 1887,
+          "adaptations": [],
+          "tokens": "function fileSystemEntryExists(path: string, entryKind: FileSystemEntryKind): boolean {\n    const stat = statSync(path);\n    if (!stat) {\n        return false;\n    }\n    switch (entryKind) {\n        case FileSystemEntryKind.File:\n            return stat.isFile();\n        case FileSystemEntryKind.Directory:\n            return stat.isDirectory();\n        default:\n            return false;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:directoryExists#0",
+          "name": "directoryExists",
+          "originalLine": 1905,
+          "adaptedLine": 1906,
+          "adaptations": [],
+          "tokens": "function directoryExists(path: string): boolean {\n    return fileSystemEntryExists(path, FileSystemEntryKind.Directory);\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "name": "FileSystemEntryKind",
+          "originalLine": 901,
+          "adaptedLine": 902,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "08_getDirectories.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:statSyncOptions#0",
+          "name": "statSyncOptions",
+          "originalLine": 1487,
+          "adaptedLine": 1488,
+          "adaptations": [],
+          "tokens": "const statSyncOptions = { throwIfNoEntry: false } as const;"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:statSync#0",
+          "name": "statSync",
+          "originalLine": 1629,
+          "adaptedLine": 1630,
+          "adaptations": [],
+          "tokens": "function statSync(path: string): import(\"fs\").Stats | undefined {\n    try {\n        return _fs.statSync(path, statSyncOptions);\n    }\n    catch {\n        return undefined;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "244::directorySeparator#0",
+          "name": "directorySeparator",
+          "originalLine": 28,
+          "adaptedLine": 28,
+          "adaptations": [],
+          "tokens": "const directorySeparator = \"/\";"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "244::altDirectorySeparator#0",
+          "name": "altDirectorySeparator",
+          "originalLine": 30,
+          "adaptedLine": 30,
+          "adaptations": [],
+          "tokens": "const altDirectorySeparator = \"\\\\\";"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "244::urlSchemeSeparator#0",
+          "name": "urlSchemeSeparator",
+          "originalLine": 31,
+          "adaptedLine": 31,
+          "adaptations": [],
+          "tokens": "const urlSchemeSeparator = \"://\";"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "244::backslashRegExp#0",
+          "name": "backslashRegExp",
+          "originalLine": 32,
+          "adaptedLine": 32,
+          "adaptations": [],
+          "tokens": "const backslashRegExp = /\\\\/g;"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::normalizeSlashes#0",
+          "name": "normalizeSlashes",
+          "originalLine": 526,
+          "adaptedLine": 526,
+          "adaptations": [],
+          "tokens": "function normalizeSlashes(path: string): string {\n    return path.includes(\"\\\\\")\n        ? path.replace(backslashRegExp, directorySeparator)\n        : path;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::isVolumeCharacter#0",
+          "name": "isVolumeCharacter",
+          "originalLine": 146,
+          "adaptedLine": 146,
+          "adaptations": [],
+          "tokens": "function isVolumeCharacter(charCode: number) {\n    return (charCode >= CharacterCodes.a && charCode <= CharacterCodes.z) ||\n        (charCode >= CharacterCodes.A && charCode <= CharacterCodes.Z);\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getFileUrlVolumeSeparatorEnd#0",
+          "name": "getFileUrlVolumeSeparatorEnd",
+          "originalLine": 151,
+          "adaptedLine": 151,
+          "adaptations": [],
+          "tokens": "function getFileUrlVolumeSeparatorEnd(url: string, start: number) {\n    const ch0 = url.charCodeAt(start);\n    if (ch0 === CharacterCodes.colon)\n        return start + 1;\n    if (ch0 === CharacterCodes.percent && url.charCodeAt(start + 1) === CharacterCodes._3) {\n        const ch2 = url.charCodeAt(start + 2);\n        if (ch2 === CharacterCodes.a || ch2 === CharacterCodes.A)\n            return start + 3;\n    }\n    return -1;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getEncodedRootLength#0",
+          "name": "getEncodedRootLength",
+          "originalLine": 165,
+          "adaptedLine": 165,
+          "adaptations": [],
+          "tokens": "function getEncodedRootLength(path: string): number {\n    if (!path)\n        return 0;\n    const ch0 = path.charCodeAt(0);\n    if (ch0 === CharacterCodes.slash || ch0 === CharacterCodes.backslash) {\n        if (path.charCodeAt(1) !== ch0)\n            return 1;\n        const p1 = path.indexOf(ch0 === CharacterCodes.slash ? directorySeparator : altDirectorySeparator, 2);\n        if (p1 < 0)\n            return path.length;\n        return p1 + 1;\n    }\n    if (isVolumeCharacter(ch0) && path.charCodeAt(1) === CharacterCodes.colon) {\n        const ch2 = path.charCodeAt(2);\n        if (ch2 === CharacterCodes.slash || ch2 === CharacterCodes.backslash)\n            return 3;\n        if (path.length === 2)\n            return 2;\n    }\n    const schemeEnd = path.indexOf(urlSchemeSeparator);\n    if (schemeEnd !== -1) {\n        const authorityStart = schemeEnd + urlSchemeSeparator.length;\n        const authorityEnd = path.indexOf(directorySeparator, authorityStart);\n        if (authorityEnd !== -1) {\n            const scheme = path.slice(0, schemeEnd);\n            const authority = path.slice(authorityStart, authorityEnd);\n            if (scheme === \"file\" && (authority === \"\" || authority === \"localhost\") &&\n                isVolumeCharacter(path.charCodeAt(authorityEnd + 1))) {\n                const volumeSeparatorEnd = getFileUrlVolumeSeparatorEnd(path, authorityEnd + 2);\n                if (volumeSeparatorEnd !== -1) {\n                    if (path.charCodeAt(volumeSeparatorEnd) === CharacterCodes.slash) {\n                        return ~(volumeSeparatorEnd + 1);\n                    }\n                    if (volumeSeparatorEnd === path.length) {\n                        return ~volumeSeparatorEnd;\n                    }\n                }\n            }\n            return ~(authorityEnd + 1);\n        }\n        return ~path.length;\n    }\n    return 0;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getRootLength#0",
+          "name": "getRootLength",
+          "originalLine": 250,
+          "adaptedLine": 250,
+          "adaptations": [],
+          "tokens": "function getRootLength(path: string): number {\n    const rootLength = getEncodedRootLength(path);\n    return rootLength < 0 ? ~rootLength : rootLength;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::isAnyDirectorySeparator#0",
+          "name": "isAnyDirectorySeparator",
+          "originalLine": 41,
+          "adaptedLine": 41,
+          "adaptations": [],
+          "tokens": "function isAnyDirectorySeparator(charCode: number): boolean {\n    return charCode === CharacterCodes.slash || charCode === CharacterCodes.backslash;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::hasTrailingDirectorySeparator#0",
+          "name": "hasTrailingDirectorySeparator",
+          "originalLine": 140,
+          "adaptedLine": 140,
+          "adaptations": [],
+          "tokens": "function hasTrailingDirectorySeparator(path: string): boolean {\n    return path.length > 0 && isAnyDirectorySeparator(path.charCodeAt(path.length - 1));\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::ensureTrailingDirectorySeparator#0",
+          "name": "ensureTrailingDirectorySeparator",
+          "originalLine": 807,
+          "adaptedLine": 807,
+          "adaptations": [],
+          "tokens": "function ensureTrailingDirectorySeparator(path: string) {\n    if (!hasTrailingDirectorySeparator(path)) {\n        return path + directorySeparator;\n    }\n    return path;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::combinePaths#0",
+          "name": "combinePaths",
+          "originalLine": 579,
+          "adaptedLine": 579,
+          "adaptations": [],
+          "tokens": "function combinePaths(path: string, ...paths: (string | undefined)[]): string {\n    if (path)\n        path = normalizeSlashes(path);\n    for (let relativePath of paths) {\n        if (!relativePath)\n            continue;\n        relativePath = normalizeSlashes(relativePath);\n        if (!path || getRootLength(relativePath) !== 0) {\n            path = relativePath;\n        }\n        else {\n            path = ensureTrailingDirectorySeparator(path) + relativePath;\n        }\n    }\n    return path;\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:getAccessibleFileSystemEntries#0",
+          "name": "getAccessibleFileSystemEntries",
+          "originalLine": 1838,
+          "adaptedLine": 1839,
+          "adaptations": [],
+          "tokens": "function getAccessibleFileSystemEntries(path: string): FileSystemEntries {\n    try {\n        const entries = _fs.readdirSync(path || \".\", { withFileTypes: true });\n        const files: string[] = [];\n        const directories: string[] = [];\n        for (const dirent of entries) {\n            const entry = typeof dirent === \"string\" ? dirent : dirent.name;\n            if (entry === \".\" || entry === \"..\") {\n                continue;\n            }\n            let stat: any;\n            if (typeof dirent === \"string\" || dirent.isSymbolicLink()) {\n                const name = combinePaths(path, entry);\n                stat = statSync(name);\n                if (!stat) {\n                    continue;\n                }\n            }\n            else {\n                stat = dirent;\n            }\n            if (stat.isFile()) {\n                files.push(entry);\n            }\n            else if (stat.isDirectory()) {\n                directories.push(entry);\n            }\n        }\n        files.sort();\n        directories.sort();\n        return { files, directories };\n    }\n    catch {\n        return emptyFileSystemEntries;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:getDirectories#0",
+          "name": "getDirectories",
+          "originalLine": 1909,
+          "adaptedLine": 1910,
+          "adaptations": [],
+          "tokens": "function getDirectories(path: string): string[] {\n    return getAccessibleFileSystemEntries(path).directories.slice();\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "name": "emptyFileSystemEntries",
+          "originalLine": 10312,
+          "adaptedLine": 10312,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        },
+        {
+          "file": "src/compiler/types.ts",
+          "selector": "266::Path#0",
+          "name": "Path",
+          "originalLine": 23,
+          "adaptedLine": 23,
+          "adaptations": [
+            "40-explicit-any"
+          ],
+          "tokens": "type Path = string & {\n    __pathBrand: undefined;\n};"
+        }
+      ],
+      "changedDeclarations": [
+        {
+          "name": "Path",
+          "adaptations": [
+            "40-explicit-any"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "09_realpath.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:isMacOs#0",
+          "name": "isMacOs",
+          "originalLine": 1484,
+          "adaptedLine": 1485,
+          "adaptations": [],
+          "tokens": "const isMacOs = process.platform === \"darwin\";"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:fsRealpath#0",
+          "name": "fsRealpath",
+          "originalLine": 1491,
+          "adaptedLine": 1492,
+          "adaptations": [],
+          "tokens": "const fsRealpath = !!_fs.realpathSync.native ? process.platform === \"win32\" ? fsRealPathHandlingLongPath : _fs.realpathSync.native : _fs.realpathSync;"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:fsRealPathHandlingLongPath#0",
+          "name": "fsRealPathHandlingLongPath",
+          "originalLine": 1913,
+          "adaptedLine": 1914,
+          "adaptations": [],
+          "tokens": "function fsRealPathHandlingLongPath(path: string): string {\n    return path.length < 260 ? _fs.realpathSync.native(path) : _fs.realpathSync(path);\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:realpath#0",
+          "name": "realpath",
+          "originalLine": 1917,
+          "adaptedLine": 1918,
+          "adaptations": [],
+          "tokens": "function realpath(path: string): string {\n    try {\n        return fsRealpath(path);\n    }\n    catch {\n        return path;\n    }\n}"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "10_getModifiedTime.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:statSyncOptions#0",
+          "name": "statSyncOptions",
+          "originalLine": 1487,
+          "adaptedLine": 1488,
+          "adaptations": [],
+          "tokens": "const statSyncOptions = { throwIfNoEntry: false } as const;"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:statSync#0",
+          "name": "statSync",
+          "originalLine": 1629,
+          "adaptedLine": 1630,
+          "adaptations": [],
+          "tokens": "function statSync(path: string): import(\"fs\").Stats | undefined {\n    try {\n        return _fs.statSync(path, statSyncOptions);\n    }\n    catch {\n        return undefined;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:getModifiedTime#0",
+          "name": "getModifiedTime",
+          "originalLine": 1926,
+          "adaptedLine": 1927,
+          "adaptations": [],
+          "tokens": "function getModifiedTime(path: string) {\n    return statSync(path)?.mtime;\n}"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "11_setModifiedTime.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:setModifiedTime#0",
+          "name": "setModifiedTime",
+          "originalLine": 1930,
+          "adaptedLine": 1931,
+          "adaptations": [],
+          "tokens": "function setModifiedTime(path: string, time: Date) {\n    try {\n        _fs.utimesSync(path, time, time);\n    }\n    catch {\n        return;\n    }\n}"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "12_deleteFile.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:deleteFile#0",
+          "name": "deleteFile",
+          "originalLine": 1939,
+          "adaptedLine": 1940,
+          "adaptations": [],
+          "tokens": "function deleteFile(path: string) {\n    try {\n        return _fs.unlinkSync(path);\n    }\n    catch {\n        return;\n    }\n}"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "13_createDirectory.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:statSyncOptions#0",
+          "name": "statSyncOptions",
+          "originalLine": 1487,
+          "adaptedLine": 1488,
+          "adaptations": [],
+          "tokens": "const statSyncOptions = { throwIfNoEntry: false } as const;"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:statSync#0",
+          "name": "statSync",
+          "originalLine": 1629,
+          "adaptedLine": 1630,
+          "adaptations": [],
+          "tokens": "function statSync(path: string): import(\"fs\").Stats | undefined {\n    try {\n        return _fs.statSync(path, statSyncOptions);\n    }\n    catch {\n        return undefined;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:fileSystemEntryExists#0",
+          "name": "fileSystemEntryExists",
+          "originalLine": 1886,
+          "adaptedLine": 1887,
+          "adaptations": [],
+          "tokens": "function fileSystemEntryExists(path: string, entryKind: FileSystemEntryKind): boolean {\n    const stat = statSync(path);\n    if (!stat) {\n        return false;\n    }\n    switch (entryKind) {\n        case FileSystemEntryKind.File:\n            return stat.isFile();\n        case FileSystemEntryKind.Directory:\n            return stat.isDirectory();\n        default:\n            return false;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:directoryExists#0",
+          "name": "directoryExists",
+          "originalLine": 1905,
+          "adaptedLine": 1906,
+          "adaptations": [],
+          "tokens": "function directoryExists(path: string): boolean {\n    return fileSystemEntryExists(path, FileSystemEntryKind.Directory);\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "175:getNodeSystem:createDirectory#0",
+          "name": "createDirectory",
+          "originalLine": 1545,
+          "adaptedLine": 1546,
+          "adaptations": [
+            "47-host-errors"
+          ],
+          "tokens": "createDirectory(directoryName: string) {\n    if (!nodeSystem.directoryExists(directoryName)) {\n        try {\n            _fs.mkdirSync(directoryName);\n        }\n        catch (e) {\n            if (errorCode(e) !== \"EEXIST\") {\n                throw e;\n            }\n        }\n    }\n}"
+        },
+        {
+          "file": "src/compiler/hostErrors.ts",
+          "selector": "263::errorCode#0",
+          "name": "errorCode",
+          "originalLine": null,
+          "adaptedLine": 2,
+          "adaptations": [
+            "47-host-errors"
+          ],
+          "tokens": "function errorCode(error: unknown): string | undefined {\n    return typeof error === \"object\" && error !== null && \"code\" in error && typeof error.code === \"string\" ? error.code : undefined;\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "name": "FileSystemEntryKind",
+          "originalLine": 901,
+          "adaptedLine": 902,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        }
+      ],
+      "changedDeclarations": [
+        {
+          "name": "createDirectory",
+          "adaptations": [
+            "47-host-errors"
+          ]
+        },
+        {
+          "name": "errorCode",
+          "adaptations": [
+            "47-host-errors"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "14_getCurrentDirectory.a",
+      "spans": [
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::memoize#0",
+          "name": "memoize",
+          "originalLine": 1891,
+          "adaptedLine": 1891,
+          "adaptations": [],
+          "tokens": "function memoize<T>(callback: () => T): () => T {\n    let value: T;\n    return () => {\n        if (callback) {\n            value = callback();\n            callback = undefined!;\n        }\n        return value;\n    };\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:getCurrentDirectory#0",
+          "name": "getCurrentDirectory",
+          "originalLine": 1501,
+          "adaptedLine": 1502,
+          "adaptations": [],
+          "tokens": "const getCurrentDirectory = memoize(() => process.cwd());"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "15_getExecutingFilePath.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "175:getNodeSystem:getExecutingFilePath#0",
+          "name": "getExecutingFilePath",
+          "originalLine": 1560,
+          "adaptedLine": 1561,
+          "adaptations": [],
+          "tokens": "getExecutingFilePath() {\n    return executingFilePath;\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "name": "executingFilePath",
+          "originalLine": 1498,
+          "adaptedLine": 1499,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "16_getEnvironmentVariable.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "175:getNodeSystem:getEnvironmentVariable#0",
+          "name": "getEnvironmentVariable",
+          "originalLine": 1565,
+          "adaptedLine": 1566,
+          "adaptations": [],
+          "tokens": "getEnvironmentVariable(name: string) {\n    return process.env[name] || \"\";\n}"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "17_write.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "175:getNodeSystem:write#0",
+          "name": "write",
+          "originalLine": 1527,
+          "adaptedLine": 1528,
+          "adaptations": [],
+          "tokens": "write(s: string): void {\n    process.stdout.write(s);\n}"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "18_exit_0.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:disableCPUProfiler#0",
+          "name": "disableCPUProfiler",
+          "originalLine": 1693,
+          "adaptedLine": 1694,
+          "adaptations": [],
+          "tokens": "function disableCPUProfiler(cb: () => void) {\n    if (activeSession && activeSession !== \"stopping\") {\n        const s = activeSession;\n        activeSession.post(\"Profiler.stop\", (err, { profile }) => {\n            if (!err) {\n                if (statSync(profilePath)?.isDirectory()) {\n                    profilePath = _path.join(profilePath, `${(new Date()).toISOString().replace(/:/g, \"-\")}+P${process.pid}.cpuprofile`);\n                }\n                try {\n                    _fs.mkdirSync(_path.dirname(profilePath), { recursive: true });\n                }\n                catch {\n                }\n                _fs.writeFileSync(profilePath, JSON.stringify(cleanupPaths(profile)));\n            }\n            activeSession = undefined;\n            s.disconnect();\n            cb();\n        });\n        activeSession = \"stopping\";\n        return true;\n    }\n    else {\n        cb();\n        return false;\n    }\n}",
+          "partial": "inactive else branch"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "175:getNodeSystem:exit#0",
+          "name": "exit",
+          "originalLine": 1587,
+          "adaptedLine": 1588,
+          "adaptations": [],
+          "tokens": "exit(exitCode?: number): void {\n    disableCPUProfiler(() => process.exit(exitCode));\n}"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "19_exit_1.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:disableCPUProfiler#0",
+          "name": "disableCPUProfiler",
+          "originalLine": 1693,
+          "adaptedLine": 1694,
+          "adaptations": [],
+          "tokens": "function disableCPUProfiler(cb: () => void) {\n    if (activeSession && activeSession !== \"stopping\") {\n        const s = activeSession;\n        activeSession.post(\"Profiler.stop\", (err, { profile }) => {\n            if (!err) {\n                if (statSync(profilePath)?.isDirectory()) {\n                    profilePath = _path.join(profilePath, `${(new Date()).toISOString().replace(/:/g, \"-\")}+P${process.pid}.cpuprofile`);\n                }\n                try {\n                    _fs.mkdirSync(_path.dirname(profilePath), { recursive: true });\n                }\n                catch {\n                }\n                _fs.writeFileSync(profilePath, JSON.stringify(cleanupPaths(profile)));\n            }\n            activeSession = undefined;\n            s.disconnect();\n            cb();\n        });\n        activeSession = \"stopping\";\n        return true;\n    }\n    else {\n        cb();\n        return false;\n    }\n}",
+          "partial": "inactive else branch"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "175:getNodeSystem:exit#0",
+          "name": "exit",
+          "originalLine": 1587,
+          "adaptedLine": 1588,
+          "adaptations": [],
+          "tokens": "exit(exitCode?: number): void {\n    disableCPUProfiler(() => process.exit(exitCode));\n}"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "20_exit_2.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:disableCPUProfiler#0",
+          "name": "disableCPUProfiler",
+          "originalLine": 1693,
+          "adaptedLine": 1694,
+          "adaptations": [],
+          "tokens": "function disableCPUProfiler(cb: () => void) {\n    if (activeSession && activeSession !== \"stopping\") {\n        const s = activeSession;\n        activeSession.post(\"Profiler.stop\", (err, { profile }) => {\n            if (!err) {\n                if (statSync(profilePath)?.isDirectory()) {\n                    profilePath = _path.join(profilePath, `${(new Date()).toISOString().replace(/:/g, \"-\")}+P${process.pid}.cpuprofile`);\n                }\n                try {\n                    _fs.mkdirSync(_path.dirname(profilePath), { recursive: true });\n                }\n                catch {\n                }\n                _fs.writeFileSync(profilePath, JSON.stringify(cleanupPaths(profile)));\n            }\n            activeSession = undefined;\n            s.disconnect();\n            cb();\n        });\n        activeSession = \"stopping\";\n        return true;\n    }\n    else {\n        cb();\n        return false;\n    }\n}",
+          "partial": "inactive else branch"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "175:getNodeSystem:exit#0",
+          "name": "exit",
+          "originalLine": 1587,
+          "adaptedLine": 1588,
+          "adaptations": [],
+          "tokens": "exit(exitCode?: number): void {\n    disableCPUProfiler(() => process.exit(exitCode));\n}"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "21_createHash.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:createSHA256Hash#0",
+          "name": "createSHA256Hash",
+          "originalLine": 1948,
+          "adaptedLine": 1949,
+          "adaptations": [],
+          "tokens": "function createSHA256Hash(data: string): string {\n    const hash = _crypto!.createHash(\"sha256\");\n    hash.update(data);\n    return hash.digest(\"hex\");\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263::generateDjb2Hash#0",
+          "name": "generateDjb2Hash",
+          "originalLine": 59,
+          "adaptedLine": 60,
+          "adaptations": [],
+          "tokens": "function generateDjb2Hash(data: string): string {\n    let acc = 5381;\n    for (let i = 0; i < data.length; i++) {\n        acc = ((acc << 5) + acc) + data.charCodeAt(i);\n    }\n    return acc.toString();\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "name": "createHash",
+          "originalLine": 1572,
+          "adaptedLine": 1573,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "22_createHash_fallback.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263::generateDjb2Hash#0",
+          "name": "generateDjb2Hash",
+          "originalLine": 59,
+          "adaptedLine": 60,
+          "adaptations": [],
+          "tokens": "function generateDjb2Hash(data: string): string {\n    let acc = 5381;\n    for (let i = 0; i < data.length; i++) {\n        acc = ((acc << 5) + acc) + data.charCodeAt(i);\n    }\n    return acc.toString();\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "name": "createHash",
+          "originalLine": 1572,
+          "adaptedLine": 1573,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "23_newLine.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "name": "newLine",
+          "originalLine": 1525,
+          "adaptedLine": 1526,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "24_useCaseSensitiveFileNames.a",
+      "spans": [
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:statSyncOptions#0",
+          "name": "statSyncOptions",
+          "originalLine": 1487,
+          "adaptedLine": 1488,
+          "adaptations": [],
+          "tokens": "const statSyncOptions = { throwIfNoEntry: false } as const;"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:statSync#0",
+          "name": "statSync",
+          "originalLine": 1629,
+          "adaptedLine": 1630,
+          "adaptations": [],
+          "tokens": "function statSync(path: string): import(\"fs\").Stats | undefined {\n    try {\n        return _fs.statSync(path, statSyncOptions);\n    }\n    catch {\n        return undefined;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:fileSystemEntryExists#0",
+          "name": "fileSystemEntryExists",
+          "originalLine": 1886,
+          "adaptedLine": 1887,
+          "adaptations": [],
+          "tokens": "function fileSystemEntryExists(path: string, entryKind: FileSystemEntryKind): boolean {\n    const stat = statSync(path);\n    if (!stat) {\n        return false;\n    }\n    switch (entryKind) {\n        case FileSystemEntryKind.File:\n            return stat.isFile();\n        case FileSystemEntryKind.Directory:\n            return stat.isDirectory();\n        default:\n            return false;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:fileExists#0",
+          "name": "fileExists",
+          "originalLine": 1901,
+          "adaptedLine": 1902,
+          "adaptations": [],
+          "tokens": "function fileExists(path: string): boolean {\n    return fileSystemEntryExists(path, FileSystemEntryKind.File);\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:swapCase#0",
+          "name": "swapCase",
+          "originalLine": 1732,
+          "adaptedLine": 1733,
+          "adaptations": [],
+          "tokens": "function swapCase(s: string): string {\n    return s.replace(/\\w/g, ch => {\n        const up = ch.toUpperCase();\n        return ch === up ? ch.toLowerCase() : up;\n    });\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:isFileSystemCaseSensitive#0",
+          "name": "isFileSystemCaseSensitive",
+          "originalLine": 1722,
+          "adaptedLine": 1723,
+          "adaptations": [],
+          "tokens": "function isFileSystemCaseSensitive(): boolean {\n    if (platform === \"win32\" || platform === \"win64\") {\n        return false;\n    }\n    return !fileExists(swapCase(__filename));\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "name": "FileSystemEntryKind",
+          "originalLine": 901,
+          "adaptedLine": 902,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "name": "platform",
+          "originalLine": 1489,
+          "adaptedLine": 1490,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        }
+      ],
+      "changedDeclarations": []
+    },
+    {
+      "file": "25_readDirectory.a",
+      "spans": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "265::FileSystemEntries#0",
+          "name": "FileSystemEntries",
+          "originalLine": 9781,
+          "adaptedLine": 9781,
+          "adaptations": [],
+          "tokens": "interface FileSystemEntries {\n    readonly files: readonly string[];\n    readonly directories: readonly string[];\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "265::FileMatcherPatterns#0",
+          "name": "FileMatcherPatterns",
+          "originalLine": 9787,
+          "adaptedLine": 9787,
+          "adaptations": [],
+          "tokens": "interface FileMatcherPatterns {\n    includeFilePatterns: readonly string[] | undefined;\n    includeFilePattern: string | undefined;\n    includeDirectoryPattern: string | undefined;\n    excludePattern: string | undefined;\n    basePaths: readonly string[];\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "265::WildcardMatcher#0",
+          "name": "WildcardMatcher",
+          "originalLine": 9612,
+          "adaptedLine": 9612,
+          "adaptations": [],
+          "tokens": "interface WildcardMatcher {\n    singleAsteriskRegexFragment: string;\n    doubleAsteriskRegexFragment: string;\n    replaceWildcardCharacter: (match: string) => string;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "266::AnyFunction#0",
+          "name": "AnyFunction",
+          "originalLine": 1934,
+          "adaptedLine": 1934,
+          "adaptations": [],
+          "tokens": "type AnyFunction = (...args: never[]) => void;"
+        },
+        {
+          "file": "src/compiler/corePublic.ts",
+          "selector": "266::EqualityComparer#0",
+          "name": "EqualityComparer",
+          "originalLine": 37,
+          "adaptedLine": 37,
+          "adaptations": [],
+          "tokens": "type EqualityComparer<T> = (a: T, b: T) => boolean;"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "266::GetCanonicalFileName#0",
+          "name": "GetCanonicalFileName",
+          "originalLine": 2375,
+          "adaptedLine": 2375,
+          "adaptations": [],
+          "tokens": "type GetCanonicalFileName = (fileName: string) => string;"
+        },
+        {
+          "file": "src/compiler/corePublic.ts",
+          "selector": "266::Comparer#0",
+          "name": "Comparer",
+          "originalLine": 40,
+          "adaptedLine": 40,
+          "adaptations": [],
+          "tokens": "type Comparer<T> = (a: T, b: T) => Comparison;"
+        },
+        {
+          "file": "src/compiler/corePublic.ts",
+          "selector": "265::SortedReadonlyArray#0",
+          "name": "SortedReadonlyArray",
+          "originalLine": 17,
+          "adaptedLine": 17,
+          "adaptations": [
+            "40-explicit-any"
+          ],
+          "tokens": "interface SortedReadonlyArray<T> extends ReadonlyArray<T> {\n    \" __sortedArrayBrand\": undefined;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "244::backslashRegExp#0",
+          "name": "backslashRegExp",
+          "originalLine": 32,
+          "adaptedLine": 32,
+          "adaptations": [],
+          "tokens": "const backslashRegExp = /\\\\/g;"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "244::directorySeparator#0",
+          "name": "directorySeparator",
+          "originalLine": 28,
+          "adaptedLine": 28,
+          "adaptations": [],
+          "tokens": "const directorySeparator = \"/\";"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::normalizeSlashes#0",
+          "name": "normalizeSlashes",
+          "originalLine": 526,
+          "adaptedLine": 526,
+          "adaptations": [],
+          "tokens": "function normalizeSlashes(path: string): string {\n    return path.includes(\"\\\\\")\n        ? path.replace(backslashRegExp, directorySeparator)\n        : path;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "244::relativePathSegmentRegExp#0",
+          "name": "relativePathSegmentRegExp",
+          "originalLine": 882,
+          "adaptedLine": 882,
+          "adaptations": [],
+          "tokens": "const relativePathSegmentRegExp = /\\/\\/|(?:^|\\/)\\.\\.?(?:$|\\/)/;"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::simpleNormalizePath#0",
+          "name": "simpleNormalizePath",
+          "originalLine": 732,
+          "adaptedLine": 732,
+          "adaptations": [],
+          "tokens": "function simpleNormalizePath(path: string): string | undefined {\n    if (!relativePathSegmentRegExp.test(path)) {\n        return path;\n    }\n    let simplified = path.replace(/\\/\\.\\//g, \"/\");\n    if (simplified.startsWith(\"./\")) {\n        simplified = simplified.slice(2);\n    }\n    if (simplified !== path) {\n        path = simplified;\n        if (!relativePathSegmentRegExp.test(path)) {\n            return path;\n        }\n    }\n    return undefined;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "244::altDirectorySeparator#0",
+          "name": "altDirectorySeparator",
+          "originalLine": 30,
+          "adaptedLine": 30,
+          "adaptations": [],
+          "tokens": "const altDirectorySeparator = \"\\\\\";"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::isVolumeCharacter#0",
+          "name": "isVolumeCharacter",
+          "originalLine": 146,
+          "adaptedLine": 146,
+          "adaptations": [],
+          "tokens": "function isVolumeCharacter(charCode: number) {\n    return (charCode >= CharacterCodes.a && charCode <= CharacterCodes.z) ||\n        (charCode >= CharacterCodes.A && charCode <= CharacterCodes.Z);\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "244::urlSchemeSeparator#0",
+          "name": "urlSchemeSeparator",
+          "originalLine": 31,
+          "adaptedLine": 31,
+          "adaptations": [],
+          "tokens": "const urlSchemeSeparator = \"://\";"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getFileUrlVolumeSeparatorEnd#0",
+          "name": "getFileUrlVolumeSeparatorEnd",
+          "originalLine": 151,
+          "adaptedLine": 151,
+          "adaptations": [],
+          "tokens": "function getFileUrlVolumeSeparatorEnd(url: string, start: number) {\n    const ch0 = url.charCodeAt(start);\n    if (ch0 === CharacterCodes.colon)\n        return start + 1;\n    if (ch0 === CharacterCodes.percent && url.charCodeAt(start + 1) === CharacterCodes._3) {\n        const ch2 = url.charCodeAt(start + 2);\n        if (ch2 === CharacterCodes.a || ch2 === CharacterCodes.A)\n            return start + 3;\n    }\n    return -1;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getEncodedRootLength#0",
+          "name": "getEncodedRootLength",
+          "originalLine": 165,
+          "adaptedLine": 165,
+          "adaptations": [],
+          "tokens": "function getEncodedRootLength(path: string): number {\n    if (!path)\n        return 0;\n    const ch0 = path.charCodeAt(0);\n    if (ch0 === CharacterCodes.slash || ch0 === CharacterCodes.backslash) {\n        if (path.charCodeAt(1) !== ch0)\n            return 1;\n        const p1 = path.indexOf(ch0 === CharacterCodes.slash ? directorySeparator : altDirectorySeparator, 2);\n        if (p1 < 0)\n            return path.length;\n        return p1 + 1;\n    }\n    if (isVolumeCharacter(ch0) && path.charCodeAt(1) === CharacterCodes.colon) {\n        const ch2 = path.charCodeAt(2);\n        if (ch2 === CharacterCodes.slash || ch2 === CharacterCodes.backslash)\n            return 3;\n        if (path.length === 2)\n            return 2;\n    }\n    const schemeEnd = path.indexOf(urlSchemeSeparator);\n    if (schemeEnd !== -1) {\n        const authorityStart = schemeEnd + urlSchemeSeparator.length;\n        const authorityEnd = path.indexOf(directorySeparator, authorityStart);\n        if (authorityEnd !== -1) {\n            const scheme = path.slice(0, schemeEnd);\n            const authority = path.slice(authorityStart, authorityEnd);\n            if (scheme === \"file\" && (authority === \"\" || authority === \"localhost\") &&\n                isVolumeCharacter(path.charCodeAt(authorityEnd + 1))) {\n                const volumeSeparatorEnd = getFileUrlVolumeSeparatorEnd(path, authorityEnd + 2);\n                if (volumeSeparatorEnd !== -1) {\n                    if (path.charCodeAt(volumeSeparatorEnd) === CharacterCodes.slash) {\n                        return ~(volumeSeparatorEnd + 1);\n                    }\n                    if (volumeSeparatorEnd === path.length) {\n                        return ~volumeSeparatorEnd;\n                    }\n                }\n            }\n            return ~(authorityEnd + 1);\n        }\n        return ~path.length;\n    }\n    return 0;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getRootLength#0",
+          "name": "getRootLength",
+          "originalLine": 250,
+          "adaptedLine": 250,
+          "adaptations": [],
+          "tokens": "function getRootLength(path: string): number {\n    const rootLength = getEncodedRootLength(path);\n    return rootLength < 0 ? ~rootLength : rootLength;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::isAnyDirectorySeparator#0",
+          "name": "isAnyDirectorySeparator",
+          "originalLine": 41,
+          "adaptedLine": 41,
+          "adaptations": [],
+          "tokens": "function isAnyDirectorySeparator(charCode: number): boolean {\n    return charCode === CharacterCodes.slash || charCode === CharacterCodes.backslash;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::hasTrailingDirectorySeparator#0",
+          "name": "hasTrailingDirectorySeparator",
+          "originalLine": 140,
+          "adaptedLine": 140,
+          "adaptations": [],
+          "tokens": "function hasTrailingDirectorySeparator(path: string): boolean {\n    return path.length > 0 && isAnyDirectorySeparator(path.charCodeAt(path.length - 1));\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::ensureTrailingDirectorySeparator#0",
+          "name": "ensureTrailingDirectorySeparator",
+          "originalLine": 807,
+          "adaptedLine": 807,
+          "adaptations": [],
+          "tokens": "function ensureTrailingDirectorySeparator(path: string) {\n    if (!hasTrailingDirectorySeparator(path)) {\n        return path + directorySeparator;\n    }\n    return path;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::combinePaths#0",
+          "name": "combinePaths",
+          "originalLine": 579,
+          "adaptedLine": 579,
+          "adaptations": [],
+          "tokens": "function combinePaths(path: string, ...paths: (string | undefined)[]): string {\n    if (path)\n        path = normalizeSlashes(path);\n    for (let relativePath of paths) {\n        if (!relativePath)\n            continue;\n        relativePath = normalizeSlashes(relativePath);\n        if (!path || getRootLength(relativePath) !== 0) {\n            path = relativePath;\n        }\n        else {\n            path = ensureTrailingDirectorySeparator(path) + relativePath;\n        }\n    }\n    return path;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::removeTrailingDirectorySeparator#0",
+          "name": "removeTrailingDirectorySeparator",
+          "originalLine": 785,
+          "adaptedLine": 785,
+          "adaptations": [],
+          "tokens": "function removeTrailingDirectorySeparator(path: string) {\n    if (hasTrailingDirectorySeparator(path)) {\n        return path.substr(0, path.length - 1);\n    }\n    return path;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getNormalizedAbsolutePath#0",
+          "name": "getNormalizedAbsolutePath",
+          "originalLine": 627,
+          "adaptedLine": 627,
+          "adaptations": [],
+          "tokens": "function getNormalizedAbsolutePath(path: string, currentDirectory: string | undefined): string {\n    let rootLength = getRootLength(path);\n    if (rootLength === 0 && currentDirectory) {\n        path = combinePaths(currentDirectory, path);\n        rootLength = getRootLength(path);\n    }\n    else {\n        path = normalizeSlashes(path);\n    }\n    const simpleNormalized = simpleNormalizePath(path);\n    if (simpleNormalized !== undefined) {\n        return simpleNormalized.length > rootLength ? removeTrailingDirectorySeparator(simpleNormalized) : simpleNormalized;\n    }\n    const length = path.length;\n    const root = path.substring(0, rootLength);\n    let normalized;\n    let index = rootLength;\n    let segmentStart = index;\n    let normalizedUpTo = index;\n    let seenNonDotDotSegment = rootLength !== 0;\n    while (index < length) {\n        segmentStart = index;\n        let ch = path.charCodeAt(index);\n        while (ch === CharacterCodes.slash && index + 1 < length) {\n            index++;\n            ch = path.charCodeAt(index);\n        }\n        if (index > segmentStart) {\n            normalized ??= path.substring(0, segmentStart - 1);\n            segmentStart = index;\n        }\n        let segmentEnd = path.indexOf(directorySeparator, index + 1);\n        if (segmentEnd === -1) {\n            segmentEnd = length;\n        }\n        const segmentLength = segmentEnd - segmentStart;\n        if (segmentLength === 1 && path.charCodeAt(index) === CharacterCodes.dot) {\n            normalized ??= path.substring(0, normalizedUpTo);\n        }\n        else if (segmentLength === 2 && path.charCodeAt(index) === CharacterCodes.dot && path.charCodeAt(index + 1) === CharacterCodes.dot) {\n            if (!seenNonDotDotSegment) {\n                if (normalized !== undefined) {\n                    normalized += normalized.length === rootLength ? \"..\" : \"/..\";\n                }\n                else {\n                    normalizedUpTo = index + 2;\n                }\n            }\n            else if (normalized === undefined) {\n                if (normalizedUpTo - 2 >= 0) {\n                    normalized = path.substring(0, Math.max(rootLength, path.lastIndexOf(directorySeparator, normalizedUpTo - 2)));\n                }\n                else {\n                    normalized = path.substring(0, normalizedUpTo);\n                }\n            }\n            else {\n                const lastSlash = normalized.lastIndexOf(directorySeparator);\n                if (lastSlash !== -1) {\n                    normalized = normalized.substring(0, Math.max(rootLength, lastSlash));\n                }\n                else {\n                    normalized = root;\n                }\n                if (normalized.length === rootLength) {\n                    seenNonDotDotSegment = rootLength !== 0;\n                }\n            }\n        }\n        else if (normalized !== undefined) {\n            if (normalized.length !== rootLength) {\n                normalized += directorySeparator;\n            }\n            seenNonDotDotSegment = true;\n            normalized += path.substring(segmentStart, segmentEnd);\n        }\n        else {\n            seenNonDotDotSegment = true;\n            normalizedUpTo = segmentEnd;\n        }\n        index = segmentEnd + 1;\n    }\n    return normalized ?? (length > rootLength ? removeTrailingDirectorySeparator(path) : path);\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::normalizePath#0",
+          "name": "normalizePath",
+          "originalLine": 722,
+          "adaptedLine": 722,
+          "adaptations": [],
+          "tokens": "function normalizePath(path: string): string {\n    path = normalizeSlashes(path);\n    let normalized = simpleNormalizePath(path);\n    if (normalized !== undefined) {\n        return normalized;\n    }\n    normalized = getNormalizedAbsolutePath(path, \"\");\n    return normalized && hasTrailingDirectorySeparator(path) ? ensureTrailingDirectorySeparator(normalized) : normalized;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::map#0",
+          "name": "map",
+          "originalLine": 320,
+          "adaptedLine": 320,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function map<T, U>(array: readonly T[] | undefined, f: (x: T, i: number) => U): U[] | undefined {\n    let result: U[] | undefined;\n    if (array !== undefined) {\n        result = [];\n        for (let i = 0; i < array.length; i++) {\n            result.push(f(array[i]!, i));\n        }\n    }\n    return result;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::isArray#0",
+          "name": "isArray",
+          "originalLine": 1750,
+          "adaptedLine": 1750,
+          "adaptations": [],
+          "tokens": "function isArray(value: any): value is readonly unknown[] {\n    return Array.isArray(value);\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::toOffset#0",
+          "name": "toOffset",
+          "originalLine": 965,
+          "adaptedLine": 965,
+          "adaptations": [
+            "40-explicit-any"
+          ],
+          "tokens": "function toOffset<T>(array: readonly T[], offset: number) {\n    return offset < 0 ? array.length + offset : offset;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::addRange#0",
+          "name": "addRange",
+          "originalLine": 985,
+          "adaptedLine": 985,
+          "adaptations": [
+            "64-temporary-parser-range-read"
+          ],
+          "tokens": "function addRange<T>(to: T[] | undefined, from: readonly T[] | undefined, start?: number, end?: number): T[] | undefined {\n    if (from === undefined || from.length === 0)\n        return to;\n    if (to === undefined)\n        return from.slice(start, end);\n    start = start === undefined ? 0 : toOffset(from, start);\n    end = end === undefined ? from.length : toOffset(from, end);\n    for (let i = start; i < end && i < from.length; i++) {\n        if (from[i] !== undefined) {\n            to.push(from[i]!);\n        }\n    }\n    return to;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::append#0",
+          "name": "append",
+          "originalLine": 926,
+          "adaptedLine": 926,
+          "adaptations": [],
+          "tokens": "function append<T extends {}>(to: T[] | undefined, value: T | undefined): T[] | undefined {\n    if (value === undefined)\n        return to;\n    if (to === undefined)\n        return [value];\n    to.push(value);\n    return to;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "244::emptyArray#0",
+          "name": "emptyArray",
+          "originalLine": 17,
+          "adaptedLine": 17,
+          "adaptations": [],
+          "tokens": "const emptyArray: never[] = [] as never[];"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::flatMap#0",
+          "name": "flatMap",
+          "originalLine": 399,
+          "adaptedLine": 399,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function flatMap<T, U extends {}>(array: readonly T[] | undefined, mapfn: (x: T, i: number) => U | readonly U[] | undefined): readonly U[] {\n    let result: U[] | undefined;\n    if (array !== undefined) {\n        for (let i = 0; i < array.length; i++) {\n            const v = mapfn(array[i]!, i);\n            if (v) {\n                if (isArray(v)) {\n                    result = addRange(result, v);\n                }\n                else {\n                    result = append(result, v);\n                }\n            }\n        }\n    }\n    return result ?? emptyArray;\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "244::commonPackageFolders#0",
+          "name": "commonPackageFolders",
+          "originalLine": 9607,
+          "adaptedLine": 9607,
+          "adaptations": [],
+          "tokens": "const commonPackageFolders: readonly string[] = [\"node_modules\", \"bower_components\", \"jspm_packages\"];"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "244::implicitExcludePathRegexPattern#0",
+          "name": "implicitExcludePathRegexPattern",
+          "originalLine": 9609,
+          "adaptedLine": 9609,
+          "adaptations": [],
+          "tokens": "const implicitExcludePathRegexPattern = `(?!(?:${commonPackageFolders.join(\"|\")})(?:/|$))`;"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "263::replaceWildcardCharacter#0",
+          "name": "replaceWildcardCharacter",
+          "originalLine": 9776,
+          "adaptedLine": 9776,
+          "adaptations": [],
+          "tokens": "function replaceWildcardCharacter(match: string, singleAsteriskRegexFragment: string) {\n    return match === \"*\" ? singleAsteriskRegexFragment : match === \"?\" ? \"[^/]\" : \"\\\\\" + match;\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "244::filesMatcher#0",
+          "name": "filesMatcher",
+          "originalLine": 9618,
+          "adaptedLine": 9618,
+          "adaptations": [],
+          "tokens": "const filesMatcher: WildcardMatcher = {\n    singleAsteriskRegexFragment: \"(?:[^./]|(?:\\\\.(?!min\\\\.js$))?)*\",\n    doubleAsteriskRegexFragment: `(?:/${implicitExcludePathRegexPattern}[^/.][^/]*)*?`,\n    replaceWildcardCharacter: match => replaceWildcardCharacter(match, filesMatcher.singleAsteriskRegexFragment),\n};"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "244::directoriesMatcher#0",
+          "name": "directoriesMatcher",
+          "originalLine": 9634,
+          "adaptedLine": 9634,
+          "adaptations": [],
+          "tokens": "const directoriesMatcher: WildcardMatcher = {\n    singleAsteriskRegexFragment: \"[^/]*\",\n    doubleAsteriskRegexFragment: `(?:/${implicitExcludePathRegexPattern}[^/.][^/]*)*?`,\n    replaceWildcardCharacter: match => replaceWildcardCharacter(match, directoriesMatcher.singleAsteriskRegexFragment),\n};"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "244::excludeMatcher#0",
+          "name": "excludeMatcher",
+          "originalLine": 9644,
+          "adaptedLine": 9644,
+          "adaptations": [],
+          "tokens": "const excludeMatcher: WildcardMatcher = {\n    singleAsteriskRegexFragment: \"[^/]*\",\n    doubleAsteriskRegexFragment: \"(?:/.+?)?\",\n    replaceWildcardCharacter: match => replaceWildcardCharacter(match, excludeMatcher.singleAsteriskRegexFragment),\n};"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "244::wildcardMatchers#0",
+          "name": "wildcardMatchers",
+          "originalLine": 9650,
+          "adaptedLine": 9650,
+          "adaptations": [],
+          "tokens": "const wildcardMatchers = {\n    files: filesMatcher,\n    directories: directoriesMatcher,\n    exclude: excludeMatcher,\n};"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::some#0",
+          "name": "some",
+          "originalLine": 618,
+          "adaptedLine": 618,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function some<T>(array: readonly T[] | undefined, predicate?: (value: T) => boolean): boolean {\n    if (array !== undefined) {\n        if (predicate !== undefined) {\n            for (let i = 0; i < array.length; i++) {\n                if (predicate(array[i]!)) {\n                    return true;\n                }\n            }\n        }\n        else {\n            return array.length > 0;\n        }\n    }\n    return false;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::reducePathComponents#0",
+          "name": "reducePathComponents",
+          "originalLine": 538,
+          "adaptedLine": 538,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function reducePathComponents(components: readonly string[]): string[] {\n    if (!some(components))\n        return [];\n    const reduced = [components[0]!];\n    for (let i = 1; i < components.length; i++) {\n        const component = components[i];\n        if (!component)\n            continue;\n        if (component === \".\")\n            continue;\n        if (component === \"..\") {\n            if (reduced.length > 1) {\n                if (reduced[reduced.length - 1] !== \"..\") {\n                    reduced.pop();\n                    continue;\n                }\n            }\n            else if (reduced[0])\n                continue;\n        }\n        reduced.push(component);\n    }\n    return reduced;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::lastOrUndefined#0",
+          "name": "lastOrUndefined",
+          "originalLine": 1116,
+          "adaptedLine": 1116,
+          "adaptations": [],
+          "tokens": "function lastOrUndefined<T>(array: readonly T[] | undefined): T | undefined {\n    return array === undefined || array.length === 0 ? undefined : array[array.length - 1];\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::pathComponents#0",
+          "name": "pathComponents",
+          "originalLine": 449,
+          "adaptedLine": 449,
+          "adaptations": [],
+          "tokens": "function pathComponents(path: string, rootLength: number) {\n    const root = path.substring(0, rootLength);\n    const rest = path.substring(rootLength).split(directorySeparator);\n    if (rest.length && !lastOrUndefined(rest))\n        rest.pop();\n    return [root, ...rest];\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getPathComponents#0",
+          "name": "getPathComponents",
+          "originalLine": 495,
+          "adaptedLine": 495,
+          "adaptations": [],
+          "tokens": "function getPathComponents(path: string, currentDirectory = \"\") {\n    path = combinePaths(currentDirectory, path);\n    return pathComponents(path, getRootLength(path));\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getNormalizedPathComponents#0",
+          "name": "getNormalizedPathComponents",
+          "originalLine": 622,
+          "adaptedLine": 622,
+          "adaptations": [],
+          "tokens": "function getNormalizedPathComponents(path: string, currentDirectory: string | undefined): string[] {\n    return reducePathComponents(getPathComponents(path, currentDirectory));\n}"
+        },
+        {
+          "file": "src/compiler/debug.ts",
+          "selector": "263:Debug:fail#0",
+          "name": "fail",
+          "originalLine": 196,
+          "adaptedLine": 196,
+          "adaptations": [],
+          "tokens": "function fail(message?: string, stackCrawlMark?: AnyFunction): never {\n    debugger;\n    const e = new Error(message ? `Debug Failure. ${message}` : \"Debug Failure.\");\n    if ((Error as any).captureStackTrace) {\n        (Error as any).captureStackTrace(e, stackCrawlMark || fail);\n    }\n    throw e;\n}"
+        },
+        {
+          "file": "src/compiler/debug.ts",
+          "selector": "263:Debug:assert#0",
+          "name": "assert",
+          "originalLine": 213,
+          "adaptedLine": 213,
+          "adaptations": [],
+          "tokens": "function assert(expression: unknown, message?: string, verboseDebugInfo?: string | (() => string), stackCrawlMark?: AnyFunction): asserts expression {\n    if (!expression) {\n        message = message ? `False expression: ${message}` : \"False expression.\";\n        if (verboseDebugInfo) {\n            message += \"\\r\\nVerbose Debug Information: \" + (typeof verboseDebugInfo === \"string\" ? verboseDebugInfo : verboseDebugInfo());\n        }\n        fail(message, stackCrawlMark || assert);\n    }\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::last#0",
+          "name": "last",
+          "originalLine": 1121,
+          "adaptedLine": 1121,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function last<T>(array: readonly T[]): T {\n    Debug.assert(array.length !== 0);\n    return array[array.length - 1]!;\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "263::isImplicitGlob#0",
+          "name": "isImplicitGlob",
+          "originalLine": 9684,
+          "adaptedLine": 9684,
+          "adaptations": [],
+          "tokens": "function isImplicitGlob(lastPathComponent: string): boolean {\n    return !/[.*?]/.test(lastPathComponent);\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "244::reservedCharacterPattern#0",
+          "name": "reservedCharacterPattern",
+          "originalLine": 9594,
+          "adaptedLine": 9594,
+          "adaptations": [],
+          "tokens": "const reservedCharacterPattern = /[^\\w\\s/]/g;"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "263::getSubPatternFromSpec#0",
+          "name": "getSubPatternFromSpec",
+          "originalLine": 9695,
+          "adaptedLine": 9695,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function getSubPatternFromSpec(spec: string, basePath: string, usage: \"files\" | \"directories\" | \"exclude\", { singleAsteriskRegexFragment, doubleAsteriskRegexFragment, replaceWildcardCharacter }: WildcardMatcher = wildcardMatchers[usage]): string | undefined {\n    let subpattern = \"\";\n    let hasWrittenComponent = false;\n    const components = getNormalizedPathComponents(spec, basePath);\n    const lastComponent = last(components);\n    if (usage !== \"exclude\" && lastComponent === \"**\") {\n        return undefined;\n    }\n    components[0] = removeTrailingDirectorySeparator(components[0]!);\n    if (isImplicitGlob(lastComponent)) {\n        components.push(\"**\", \"*\");\n    }\n    let optionalCount = 0;\n    for (let component of components) {\n        if (component === \"**\") {\n            subpattern += doubleAsteriskRegexFragment;\n        }\n        else {\n            if (usage === \"directories\") {\n                subpattern += \"(?:\";\n                optionalCount++;\n            }\n            if (hasWrittenComponent) {\n                subpattern += directorySeparator;\n            }\n            if (usage !== \"exclude\") {\n                let componentPattern = \"\";\n                if (component.charCodeAt(0) === CharacterCodes.asterisk) {\n                    componentPattern += \"(?:[^./]\" + singleAsteriskRegexFragment + \")?\";\n                    component = component.substr(1);\n                }\n                else if (component.charCodeAt(0) === CharacterCodes.question) {\n                    componentPattern += \"[^./]\";\n                    component = component.substr(1);\n                }\n                componentPattern += component.replace(reservedCharacterPattern, replaceWildcardCharacter);\n                if (componentPattern !== component) {\n                    subpattern += implicitExcludePathRegexPattern;\n                }\n                subpattern += componentPattern;\n            }\n            else {\n                subpattern += component.replace(reservedCharacterPattern, replaceWildcardCharacter);\n            }\n        }\n        hasWrittenComponent = true;\n    }\n    while (optionalCount > 0) {\n        subpattern += \")?\";\n        optionalCount--;\n    }\n    return subpattern;\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "263::getRegularExpressionsForWildcards#0",
+          "name": "getRegularExpressionsForWildcards",
+          "originalLine": 9670,
+          "adaptedLine": 9670,
+          "adaptations": [],
+          "tokens": "function getRegularExpressionsForWildcards(specs: readonly string[] | undefined, basePath: string, usage: \"files\" | \"directories\" | \"exclude\"): readonly string[] | undefined {\n    if (specs === undefined || specs.length === 0) {\n        return undefined;\n    }\n    return flatMap(specs, spec => spec && getSubPatternFromSpec(spec, basePath, usage, wildcardMatchers[usage]));\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "263::getRegularExpressionForWildcard#0",
+          "name": "getRegularExpressionForWildcard",
+          "originalLine": 9657,
+          "adaptedLine": 9657,
+          "adaptations": [],
+          "tokens": "function getRegularExpressionForWildcard(specs: readonly string[] | undefined, basePath: string, usage: \"files\" | \"directories\" | \"exclude\"): string | undefined {\n    const patterns = getRegularExpressionsForWildcards(specs, basePath, usage);\n    if (!patterns || !patterns.length) {\n        return undefined;\n    }\n    const pattern = patterns.map(pattern => `(?:${pattern})`).join(\"|\");\n    const terminator = usage === \"exclude\" ? \"(?:$|/)\" : \"$\";\n    return `^(?:${pattern})${terminator}`;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::isRootedDiskPath#0",
+          "name": "isRootedDiskPath",
+          "originalLine": 60,
+          "adaptedLine": 60,
+          "adaptations": [],
+          "tokens": "function isRootedDiskPath(path: string): boolean {\n    return getEncodedRootLength(path) > 0;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::equateValues#0",
+          "name": "equateValues",
+          "originalLine": 1937,
+          "adaptedLine": 1937,
+          "adaptations": [],
+          "tokens": "function equateValues<T>(a: T, b: T): boolean {\n    return a === b;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::contains#0",
+          "name": "contains",
+          "originalLine": 220,
+          "adaptedLine": 220,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function contains<T>(array: readonly T[] | undefined, value: T, equalityComparer: EqualityComparer<T> = equateValues): boolean {\n    if (array !== undefined) {\n        for (let i = 0; i < array.length; i++) {\n            if (equalityComparer(array[i]!, value)) {\n                return true;\n            }\n        }\n    }\n    return false;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::indexOfAnyCharCode#0",
+          "name": "indexOfAnyCharCode",
+          "originalLine": 232,
+          "adaptedLine": 232,
+          "adaptations": [],
+          "tokens": "function indexOfAnyCharCode(text: string, charCodes: readonly number[], start?: number): number {\n    for (let i = start ?? 0; i < text.length; i++) {\n        if (contains(charCodes, text.charCodeAt(i))) {\n            return i;\n        }\n    }\n    return -1;\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "244::wildcardCharCodes#0",
+          "name": "wildcardCharCodes",
+          "originalLine": 9605,
+          "adaptedLine": 9605,
+          "adaptations": [],
+          "tokens": "const wildcardCharCodes = [CharacterCodes.asterisk, CharacterCodes.question];"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::equateStringsCaseInsensitive#0",
+          "name": "equateStringsCaseInsensitive",
+          "originalLine": 1951,
+          "adaptedLine": 1951,
+          "adaptations": [],
+          "tokens": "function equateStringsCaseInsensitive(a: string, b: string): boolean {\n    return a === b\n        || a !== undefined\n            && b !== undefined\n            && a.toUpperCase() === b.toUpperCase();\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::startsWith#0",
+          "name": "startsWith",
+          "originalLine": 2430,
+          "adaptedLine": 2430,
+          "adaptations": [],
+          "tokens": "function startsWith(str: string, prefix: string, ignoreCase?: boolean): boolean {\n    return ignoreCase\n        ? equateStringsCaseInsensitive(str.slice(0, prefix.length), prefix)\n        : str.lastIndexOf(prefix, 0) === 0;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::tryGetExtensionFromPath#0",
+          "name": "tryGetExtensionFromPath",
+          "originalLine": 388,
+          "adaptedLine": 388,
+          "adaptations": [],
+          "tokens": "function tryGetExtensionFromPath(path: string, extension: string, stringEqualityComparer: (a: string, b: string) => boolean) {\n    if (!startsWith(extension, \".\"))\n        extension = \".\" + extension;\n    if (path.length >= extension.length && path.charCodeAt(path.length - extension.length) === CharacterCodes.dot) {\n        const pathExtension = path.slice(path.length - extension.length);\n        if (stringEqualityComparer(pathExtension, extension)) {\n            return pathExtension;\n        }\n    }\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getAnyExtensionFromPathWorker#0",
+          "name": "getAnyExtensionFromPathWorker",
+          "originalLine": 398,
+          "adaptedLine": 398,
+          "adaptations": [],
+          "tokens": "function getAnyExtensionFromPathWorker(path: string, extensions: string | readonly string[], stringEqualityComparer: (a: string, b: string) => boolean) {\n    if (typeof extensions === \"string\") {\n        return tryGetExtensionFromPath(path, extensions, stringEqualityComparer) || \"\";\n    }\n    for (const extension of extensions) {\n        const result = tryGetExtensionFromPath(path, extension, stringEqualityComparer);\n        if (result)\n            return result;\n    }\n    return \"\";\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::equateStringsCaseSensitive#0",
+          "name": "equateStringsCaseSensitive",
+          "originalLine": 1966,
+          "adaptedLine": 1966,
+          "adaptations": [],
+          "tokens": "function equateStringsCaseSensitive(a: string, b: string): boolean {\n    return equateValues(a, b);\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getAnyExtensionFromPath#0",
+          "name": "getAnyExtensionFromPath",
+          "originalLine": 435,
+          "adaptedLine": 435,
+          "adaptations": [],
+          "tokens": "function getAnyExtensionFromPath(path: string, extensions?: string | readonly string[], ignoreCase?: boolean): string {\n    if (extensions) {\n        return getAnyExtensionFromPathWorker(removeTrailingDirectorySeparator(path), extensions, ignoreCase ? equateStringsCaseInsensitive : equateStringsCaseSensitive);\n    }\n    const baseFileName = getBaseFileName(path);\n    const extensionIndex = baseFileName.lastIndexOf(\".\");\n    if (extensionIndex >= 0) {\n        return baseFileName.substring(extensionIndex);\n    }\n    return \"\";\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getBaseFileName#0",
+          "name": "getBaseFileName",
+          "originalLine": 373,
+          "adaptedLine": 373,
+          "adaptations": [],
+          "tokens": "function getBaseFileName(path: string, extensions?: string | readonly string[], ignoreCase?: boolean) {\n    path = normalizeSlashes(path);\n    const rootLength = getRootLength(path);\n    if (rootLength === path.length)\n        return \"\";\n    path = removeTrailingDirectorySeparator(path);\n    const name = path.slice(Math.max(getRootLength(path), path.lastIndexOf(directorySeparator) + 1));\n    const extension = extensions !== undefined && ignoreCase !== undefined ? getAnyExtensionFromPath(name, extensions, ignoreCase) : undefined;\n    return extension ? name.slice(0, name.length - extension.length) : name;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::hasExtension#0",
+          "name": "hasExtension",
+          "originalLine": 115,
+          "adaptedLine": 115,
+          "adaptations": [],
+          "tokens": "function hasExtension(fileName: string): boolean {\n    return getBaseFileName(fileName).includes(\".\");\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::getDirectoryPath#0",
+          "name": "getDirectoryPath",
+          "originalLine": 312,
+          "adaptedLine": 312,
+          "adaptations": [],
+          "tokens": "function getDirectoryPath(path: string): string {\n    path = normalizeSlashes(path);\n    const rootLength = getRootLength(path);\n    if (rootLength === path.length)\n        return path;\n    path = removeTrailingDirectorySeparator(path);\n    return path.slice(0, Math.max(rootLength, path.lastIndexOf(directorySeparator)));\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "263::getIncludeBasePath#0",
+          "name": "getIncludeBasePath",
+          "originalLine": 9922,
+          "adaptedLine": 9922,
+          "adaptations": [],
+          "tokens": "function getIncludeBasePath(absolute: string): string {\n    const wildcardOffset = indexOfAnyCharCode(absolute, wildcardCharCodes);\n    if (wildcardOffset < 0) {\n        return !hasExtension(absolute)\n            ? absolute\n            : removeTrailingDirectorySeparator(getDirectoryPath(absolute));\n    }\n    return absolute.substring(0, absolute.lastIndexOf(directorySeparator, wildcardOffset));\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::compareStringsCaseInsensitive#0",
+          "name": "compareStringsCaseInsensitive",
+          "originalLine": 2032,
+          "adaptedLine": 2032,
+          "adaptations": [],
+          "tokens": "function compareStringsCaseInsensitive(a: string, b: string): Comparison {\n    if (a === b)\n        return Comparison.EqualTo;\n    if (a === undefined)\n        return Comparison.LessThan;\n    if (b === undefined)\n        return Comparison.GreaterThan;\n    a = a.toUpperCase();\n    b = b.toUpperCase();\n    return a < b ? Comparison.LessThan : a > b ? Comparison.GreaterThan : Comparison.EqualTo;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::compareComparableValues#0",
+          "name": "compareComparableValues",
+          "originalLine": 1974,
+          "adaptedLine": 1974,
+          "adaptations": [],
+          "tokens": "function compareComparableValues(a: string | number | undefined, b: string | number | undefined) {\n    return a === b ? Comparison.EqualTo :\n        a === undefined ? Comparison.LessThan :\n            b === undefined ? Comparison.GreaterThan :\n                a < b ? Comparison.LessThan :\n                    Comparison.GreaterThan;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::compareStringsCaseSensitive#0",
+          "name": "compareStringsCaseSensitive",
+          "originalLine": 2074,
+          "adaptedLine": 2074,
+          "adaptations": [],
+          "tokens": "function compareStringsCaseSensitive(a: string | undefined, b: string | undefined): Comparison {\n    return compareComparableValues(a, b);\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::getStringComparer#0",
+          "name": "getStringComparer",
+          "originalLine": 2079,
+          "adaptedLine": 2079,
+          "adaptations": [],
+          "tokens": "function getStringComparer(ignoreCase?: boolean): typeof compareStringsCaseInsensitive {\n    return ignoreCase ? compareStringsCaseInsensitive : compareStringsCaseSensitive;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::every#0",
+          "name": "every",
+          "originalLine": 145,
+          "adaptedLine": 145,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function every<T>(array: readonly T[] | undefined, callback: (element: T, index: number) => boolean): boolean {\n    if (array !== undefined) {\n        for (let i = 0; i < array.length; i++) {\n            if (!callback(array[i]!, i)) {\n                return false;\n            }\n        }\n    }\n    return true;\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::containsPath#0",
+          "name": "containsPath",
+          "originalLine": 967,
+          "adaptedLine": 967,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function containsPath(parent: string, child: string, currentDirectory?: string | boolean, ignoreCase?: boolean) {\n    if (typeof currentDirectory === \"string\") {\n        parent = combinePaths(currentDirectory, parent);\n        child = combinePaths(currentDirectory, child);\n    }\n    else if (typeof currentDirectory === \"boolean\") {\n        ignoreCase = currentDirectory;\n    }\n    if (parent === undefined || child === undefined)\n        return false;\n    if (parent === child)\n        return true;\n    const parentComponents = reducePathComponents(getPathComponents(parent));\n    const childComponents = reducePathComponents(getPathComponents(child));\n    if (childComponents.length < parentComponents.length) {\n        return false;\n    }\n    const componentEqualityComparer = ignoreCase ? equateStringsCaseInsensitive : equateStringsCaseSensitive;\n    for (let i = 0; i < parentComponents.length; i++) {\n        const equalityComparer = i === 0 ? equateStringsCaseInsensitive : componentEqualityComparer;\n        if (!equalityComparer(parentComponents[i]!, childComponents[i]!)) {\n            return false;\n        }\n    }\n    return true;\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "263::getBasePaths#0",
+          "name": "getBasePaths",
+          "originalLine": 9892,
+          "adaptedLine": 9892,
+          "adaptations": [],
+          "tokens": "function getBasePaths(path: string, includes: readonly string[] | undefined, useCaseSensitiveFileNames: boolean): string[] {\n    const basePaths: string[] = [path];\n    if (includes) {\n        const includeBasePaths: string[] = [];\n        for (const include of includes) {\n            const absolute: string = isRootedDiskPath(include) ? include : normalizePath(combinePaths(path, include));\n            includeBasePaths.push(getIncludeBasePath(absolute));\n        }\n        includeBasePaths.sort(getStringComparer(!useCaseSensitiveFileNames));\n        for (const includeBasePath of includeBasePaths) {\n            if (every(basePaths, basePath => !containsPath(basePath, includeBasePath, path, !useCaseSensitiveFileNames))) {\n                basePaths.push(includeBasePath);\n            }\n        }\n    }\n    return basePaths;\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "263::getFileMatcherPatterns#0",
+          "name": "getFileMatcherPatterns",
+          "originalLine": 9802,
+          "adaptedLine": 9802,
+          "adaptations": [],
+          "tokens": "function getFileMatcherPatterns(path: string, excludes: readonly string[] | undefined, includes: readonly string[] | undefined, useCaseSensitiveFileNames: boolean, currentDirectory: string): FileMatcherPatterns {\n    path = normalizePath(path);\n    currentDirectory = normalizePath(currentDirectory);\n    const absolutePath = combinePaths(currentDirectory, path);\n    return {\n        includeFilePatterns: map(getRegularExpressionsForWildcards(includes, absolutePath, \"files\"), pattern => `^${pattern}$`),\n        includeFilePattern: getRegularExpressionForWildcard(includes, absolutePath, \"files\"),\n        includeDirectoryPattern: getRegularExpressionForWildcard(includes, absolutePath, \"directories\"),\n        excludePattern: getRegularExpressionForWildcard(excludes, absolutePath, \"exclude\"),\n        basePaths: getBasePaths(path, includes, useCaseSensitiveFileNames),\n    };\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "263::getRegexFromPattern#0",
+          "name": "getRegexFromPattern",
+          "originalLine": 9817,
+          "adaptedLine": 9817,
+          "adaptations": [],
+          "tokens": "function getRegexFromPattern(pattern: string, useCaseSensitiveFileNames: boolean): RegExp {\n    return new RegExp(pattern, useCaseSensitiveFileNames ? \"\" : \"i\");\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::identity#0",
+          "name": "identity",
+          "originalLine": 1828,
+          "adaptedLine": 1828,
+          "adaptations": [],
+          "tokens": "function identity<T>(x: T): T {\n    return x;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "244::fileNameLowerCaseRegExp#0",
+          "name": "fileNameLowerCaseRegExp",
+          "originalLine": 1861,
+          "adaptedLine": 1861,
+          "adaptations": [],
+          "tokens": "const fileNameLowerCaseRegExp = /[^\\u0130\\u0131\\u00DFa-z0-9\\\\/:\\-_. ]+/g;"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::toLowerCase#0",
+          "name": "toLowerCase",
+          "originalLine": 1835,
+          "adaptedLine": 1835,
+          "adaptations": [],
+          "tokens": "function toLowerCase(x: string) {\n    return x.toLowerCase();\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::toFileNameLowerCase#0",
+          "name": "toFileNameLowerCase",
+          "originalLine": 1875,
+          "adaptedLine": 1875,
+          "adaptations": [],
+          "tokens": "function toFileNameLowerCase(x: string): string {\n    return fileNameLowerCaseRegExp.test(x) ?\n        x.replace(fileNameLowerCaseRegExp, toLowerCase) :\n        x;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::createGetCanonicalFileName#0",
+          "name": "createGetCanonicalFileName",
+          "originalLine": 2377,
+          "adaptedLine": 2377,
+          "adaptations": [],
+          "tokens": "function createGetCanonicalFileName(useCaseSensitiveFileNames: boolean): GetCanonicalFileName {\n    return useCaseSensitiveFileNames ? identity : toFileNameLowerCase;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::flatten#0",
+          "name": "flatten",
+          "originalLine": 375,
+          "adaptedLine": 375,
+          "adaptations": [],
+          "tokens": "function flatten<T>(array: T[][] | readonly (T | readonly T[] | undefined)[]): T[] {\n    const result = [];\n    for (let i = 0; i < array.length; i++) {\n        const v = array[i];\n        if (v) {\n            if (isArray(v)) {\n                addRange(result, v);\n            }\n            else {\n                result.push(v);\n            }\n        }\n    }\n    return result;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::toSorted#0",
+          "name": "toSorted",
+          "originalLine": 1038,
+          "adaptedLine": 1038,
+          "adaptations": [],
+          "tokens": "function toSorted<T>(array: readonly T[], comparer?: Comparer<T>): SortedReadonlyArray<T> {\n    return (array.length === 0 ? emptyArray : array.slice().sort(comparer)) as readonly T[] as SortedReadonlyArray<T>;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::endsWith#0",
+          "name": "endsWith",
+          "originalLine": 2247,
+          "adaptedLine": 2247,
+          "adaptations": [],
+          "tokens": "function endsWith(str: string, suffix: string, ignoreCase?: boolean): boolean {\n    const expectedPos = str.length - suffix.length;\n    return expectedPos >= 0 && (ignoreCase\n        ? equateStringsCaseInsensitive(str.slice(expectedPos), suffix)\n        : str.indexOf(suffix, expectedPos) === expectedPos);\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::fileExtensionIs#0",
+          "name": "fileExtensionIs",
+          "originalLine": 120,
+          "adaptedLine": 120,
+          "adaptations": [],
+          "tokens": "function fileExtensionIs(path: string, extension: string): boolean {\n    return path.length > extension.length && endsWith(path, extension);\n}"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "263::fileExtensionIsOneOf#0",
+          "name": "fileExtensionIsOneOf",
+          "originalLine": 125,
+          "adaptedLine": 125,
+          "adaptations": [],
+          "tokens": "function fileExtensionIsOneOf(path: string, extensions: readonly string[]): boolean {\n    for (const extension of extensions) {\n        if (fileExtensionIs(path, extension)) {\n            return true;\n        }\n    }\n    return false;\n}"
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "selector": "263::findIndex#0",
+          "name": "findIndex",
+          "originalLine": 198,
+          "adaptedLine": 198,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function findIndex<T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number): number {\n    if (array === undefined)\n        return -1;\n    for (let i = startIndex ?? 0; i < array.length; i++) {\n        if (predicate(array[i]!, i)) {\n            return i;\n        }\n    }\n    return -1;\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "selector": "263::matchFiles#0",
+          "name": "matchFiles",
+          "originalLine": 9826,
+          "adaptedLine": 9826,
+          "adaptations": [
+            "30-indexed-reads"
+          ],
+          "tokens": "function matchFiles(path: string, extensions: readonly string[] | undefined, excludes: readonly string[] | undefined, includes: readonly string[] | undefined, useCaseSensitiveFileNames: boolean, currentDirectory: string, depth: number | undefined, getFileSystemEntries: (path: string) => FileSystemEntries, realpath: (path: string) => string): string[] {\n    path = normalizePath(path);\n    currentDirectory = normalizePath(currentDirectory);\n    const patterns = getFileMatcherPatterns(path, excludes, includes, useCaseSensitiveFileNames, currentDirectory);\n    const includeFileRegexes = patterns.includeFilePatterns && patterns.includeFilePatterns.map(pattern => getRegexFromPattern(pattern, useCaseSensitiveFileNames));\n    const includeDirectoryRegex = patterns.includeDirectoryPattern && getRegexFromPattern(patterns.includeDirectoryPattern, useCaseSensitiveFileNames);\n    const excludeRegex = patterns.excludePattern && getRegexFromPattern(patterns.excludePattern, useCaseSensitiveFileNames);\n    const results: string[][] = includeFileRegexes ? includeFileRegexes.map(() => []) : [[]];\n    const visited = new Map<string, true>();\n    const toCanonical = createGetCanonicalFileName(useCaseSensitiveFileNames);\n    for (const basePath of patterns.basePaths) {\n        visitDirectory(basePath, combinePaths(currentDirectory, basePath), depth);\n    }\n    return flatten(results);\n    function visitDirectory(path: string, absolutePath: string, depth: number | undefined) {\n        const canonicalPath = toCanonical(realpath(absolutePath));\n        if (visited.has(canonicalPath))\n            return;\n        visited.set(canonicalPath, true);\n        const { files, directories } = getFileSystemEntries(path);\n        for (const current of toSorted<string>(files, compareStringsCaseSensitive)) {\n            const name = combinePaths(path, current);\n            const absoluteName = combinePaths(absolutePath, current);\n            if (extensions && !fileExtensionIsOneOf(name, extensions))\n                continue;\n            if (excludeRegex && excludeRegex.test(absoluteName))\n                continue;\n            if (!includeFileRegexes) {\n                results[0]!.push(name);\n            }\n            else {\n                const includeIndex = findIndex(includeFileRegexes, re => re.test(absoluteName));\n                if (includeIndex !== -1) {\n                    results[includeIndex]!.push(name);\n                }\n            }\n        }\n        if (depth !== undefined) {\n            depth--;\n            if (depth === 0) {\n                return;\n            }\n        }\n        for (const current of toSorted<string>(directories, compareStringsCaseSensitive)) {\n            const name = combinePaths(path, current);\n            const absoluteName = combinePaths(absolutePath, current);\n            if ((!includeDirectoryRegex || includeDirectoryRegex.test(absoluteName)) &&\n                (!excludeRegex || !excludeRegex.test(absoluteName))) {\n                visitDirectory(name, absoluteName, depth);\n            }\n        }\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:statSyncOptions#0",
+          "name": "statSyncOptions",
+          "originalLine": 1487,
+          "adaptedLine": 1488,
+          "adaptations": [],
+          "tokens": "const statSyncOptions = { throwIfNoEntry: false } as const;"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:statSync#0",
+          "name": "statSync",
+          "originalLine": 1629,
+          "adaptedLine": 1630,
+          "adaptations": [],
+          "tokens": "function statSync(path: string): import(\"fs\").Stats | undefined {\n    try {\n        return _fs.statSync(path, statSyncOptions);\n    }\n    catch {\n        return undefined;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:getAccessibleFileSystemEntries#0",
+          "name": "getAccessibleFileSystemEntries",
+          "originalLine": 1838,
+          "adaptedLine": 1839,
+          "adaptations": [],
+          "tokens": "function getAccessibleFileSystemEntries(path: string): FileSystemEntries {\n    try {\n        const entries = _fs.readdirSync(path || \".\", { withFileTypes: true });\n        const files: string[] = [];\n        const directories: string[] = [];\n        for (const dirent of entries) {\n            const entry = typeof dirent === \"string\" ? dirent : dirent.name;\n            if (entry === \".\" || entry === \"..\") {\n                continue;\n            }\n            let stat: any;\n            if (typeof dirent === \"string\" || dirent.isSymbolicLink()) {\n                const name = combinePaths(path, entry);\n                stat = statSync(name);\n                if (!stat) {\n                    continue;\n                }\n            }\n            else {\n                stat = dirent;\n            }\n            if (stat.isFile()) {\n                files.push(entry);\n            }\n            else if (stat.isDirectory()) {\n                directories.push(entry);\n            }\n        }\n        files.sort();\n        directories.sort();\n        return { files, directories };\n    }\n    catch {\n        return emptyFileSystemEntries;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "244:getNodeSystem:fsRealpath#0",
+          "name": "fsRealpath",
+          "originalLine": 1491,
+          "adaptedLine": 1492,
+          "adaptations": [],
+          "tokens": "const fsRealpath = !!_fs.realpathSync.native ? process.platform === \"win32\" ? fsRealPathHandlingLongPath : _fs.realpathSync.native : _fs.realpathSync;"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:fsRealPathHandlingLongPath#0",
+          "name": "fsRealPathHandlingLongPath",
+          "originalLine": 1913,
+          "adaptedLine": 1914,
+          "adaptations": [],
+          "tokens": "function fsRealPathHandlingLongPath(path: string): string {\n    return path.length < 260 ? _fs.realpathSync.native(path) : _fs.realpathSync(path);\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:realpath#0",
+          "name": "realpath",
+          "originalLine": 1917,
+          "adaptedLine": 1918,
+          "adaptations": [],
+          "tokens": "function realpath(path: string): string {\n    try {\n        return fsRealpath(path);\n    }\n    catch {\n        return path;\n    }\n}"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "selector": "263:getNodeSystem:readDirectory#0",
+          "name": "readDirectory",
+          "originalLine": 1882,
+          "adaptedLine": 1883,
+          "adaptations": [],
+          "tokens": "function readDirectory(path: string, extensions?: readonly string[], excludes?: readonly string[], includes?: readonly string[], depth?: number): string[] {\n    return matchFiles(path, extensions, excludes, includes, useCaseSensitiveFileNames, process.cwd(), depth, getAccessibleFileSystemEntries, realpath);\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "name": "emptyFileSystemEntries",
+          "originalLine": 10312,
+          "adaptedLine": 10312,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        },
+        {
+          "file": "src/compiler/types.ts",
+          "name": "CharacterCodes",
+          "originalLine": 7841,
+          "adaptedLine": 7852,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        },
+        {
+          "file": "src/compiler/corePublic.ts",
+          "name": "Comparison",
+          "originalLine": 43,
+          "adaptedLine": 43,
+          "adaptations": [],
+          "scaffold": "sourced constant or dependency boundary; driver values may be controlled"
+        },
+        {
+          "file": "src/compiler/types.ts",
+          "selector": "266::Path#0",
+          "name": "Path",
+          "originalLine": 23,
+          "adaptedLine": 23,
+          "adaptations": [
+            "40-explicit-any"
+          ],
+          "tokens": "type Path = string & {\n    __pathBrand: undefined;\n};"
+        },
+        {
+          "file": "src/compiler/path.ts",
+          "selector": "266::PathPathComponents#0",
+          "name": "PathPathComponents",
+          "originalLine": 457,
+          "adaptedLine": 457,
+          "adaptations": [
+            "40-explicit-any"
+          ],
+          "tokens": "type PathPathComponents = Path[] & {\n    __pathComponensBrand: undefined;\n};"
+        }
+      ],
+      "changedDeclarations": [
+        {
+          "name": "SortedReadonlyArray",
+          "adaptations": [
+            "40-explicit-any"
+          ]
+        },
+        {
+          "name": "map",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "toOffset",
+          "adaptations": [
+            "40-explicit-any"
+          ]
+        },
+        {
+          "name": "addRange",
+          "adaptations": [
+            "64-temporary-parser-range-read"
+          ]
+        },
+        {
+          "name": "flatMap",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "some",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "reducePathComponents",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "last",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "getSubPatternFromSpec",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "contains",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "every",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "containsPath",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "findIndex",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "matchFiles",
+          "adaptations": [
+            "30-indexed-reads"
+          ]
+        },
+        {
+          "name": "Path",
+          "adaptations": [
+            "40-explicit-any"
+          ]
+        },
+        {
+          "name": "PathPathComponents",
+          "adaptations": [
+            "40-explicit-any"
+          ]
+        }
+      ]
+    }
+  ]
+}
