@@ -1,0 +1,324 @@
+[
+  {
+    "file": "01_has_property.a",
+    "tsc": [
+      "src/compiler/corePublic.ts:13",
+      "src/compiler/core.ts:1266"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "paths true\nmissing false\ntoString false\nconstructor false\n__proto__ false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/records/01_has_property.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+    }
+  },
+  {
+    "file": "02_get_property.a",
+    "tsc": [
+      "src/compiler/corePublic.ts:13",
+      "src/compiler/core.ts:1278"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "paths src\nmissing undefined\ntoString own\nconstructor undefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/records/02_get_property.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+    }
+  },
+  {
+    "file": "03_own_keys.a",
+    "tsc": [
+      "src/compiler/corePublic.ts:13",
+      "src/compiler/core.ts:1287"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "baseUrl,locale\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/records/03_own_keys.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+    }
+  },
+  {
+    "file": "04_own_values.a",
+    "tsc": [
+      "src/compiler/corePublic.ts:13",
+      "src/compiler/core.ts:1312"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "two,ten,bee,aye\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/04_own_values.a:12:25: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+    }
+  },
+  {
+    "file": "05_integer_order.a",
+    "tsc": [
+      "src/compiler/corePublic.ts:13",
+      "src/compiler/core.ts:1287"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "0,2,3,10,b,a,01,4294967295\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/records/05_integer_order.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+    }
+  },
+  {
+    "file": "06_delete_readd.a",
+    "tsc": [
+      "src/compiler/corePublic.ts:13",
+      "src/compiler/core.ts:1287",
+      "src/compiler/commandLineParser.ts:4159"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "test,src\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/records/06_delete_readd.a:6:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+    }
+  },
+  {
+    "file": "07_optional_view.a",
+    "tsc": [
+      "src/compiler/corePublic.ts:13",
+      "src/compiler/core.ts:1278"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "src src\nlib\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/records/07_optional_view.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+    }
+  },
+  {
+    "file": "08_option_boolean.a",
+    "tsc": [
+      "src/compiler/commandLineParser.ts:2039",
+      "src/compiler/types.ts:7539",
+      "src/compiler/types.ts:7571"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "1\ntrue 0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/08_option_boolean.a:66:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    }
+  },
+  {
+    "file": "09_option_undefined.a",
+    "tsc": [
+      "src/compiler/commandLineParser.ts:2039",
+      "src/compiler/types.ts:7539",
+      "src/compiler/types.ts:7571"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "1\nundefined strict\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/09_option_undefined.a:66:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    }
+  },
+  {
+    "file": "10_option_wrong_type.a",
+    "tsc": [
+      "src/compiler/commandLineParser.ts:2039",
+      "src/compiler/types.ts:7539",
+      "src/compiler/types.ts:7571"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "before write\nafter write yes\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/10_option_wrong_type.a:66:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    }
+  },
+  {
+    "file": "11_option_string.a",
+    "tsc": [
+      "src/compiler/commandLineParser.ts:2039",
+      "src/compiler/types.ts:7539",
+      "src/compiler/types.ts:7571"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "en\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/11_option_string.a:66:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    }
+  },
+  {
+    "file": "12_nested_entries.a",
+    "tsc": [
+      "src/compiler/utilities.ts:1384"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "Array es2015,es2016,es2019,es2022,es2023\nIterator es2015\nAsyncIterator es2015\nArrayBuffer es2024\nAtomics es2017,es2024,esnext\nSharedArrayBuffer es2017,es2024\nAsyncIterable es2018\nAsyncIterableIterator es2018\nAsyncGenerator es2018\nAsyncGeneratorFunction es2018\nRegExp es2015,es2018,es2024\nRegExpConstructor es2025\nReflect es2015\nArrayConstructor es2015,esnext\nObjectConstructor es2015,es2017,es2019,es2022,es2024\nNumberConstructor es2015\nMath es2015,es2025\nMap es2015,esnext\nMapConstructor es2024\nSet es2015,es2025\nPromiseConstructor es2015,es2020,es2021,es2024,es2025\nSymbol es2015,es2019\nWeakMap es2015,esnext\nWeakSet es2015\nString es2015,es2017,es2019,es2020,es2021,es2022,es2024\nStringConstructor es2015\nDateTimeFormat es2017\nPromise es2015,es2018\nRegExpMatchArray es2018\nRegExpExecArray es2018\nIntl es2018,es2020,es2021,es2022,es2025\nNumberFormat es2018\nSymbolConstructor es2020,esnext\nDataView es2020,es2025\nBigInt es2020\nRelativeTimeFormat es2020\nInt8Array es2022,es2023\nUint8Array es2022,es2023,esnext\nUint8ClampedArray es2022,es2023\nInt16Array es2022,es2023\nUint16Array es2022,es2023\nInt32Array es2022,es2023\nUint32Array es2022,es2023\nFloat16Array es2025\nFloat32Array es2022,es2023\nFloat64Array es2022,es2023\nBigInt64Array es2020,es2022,es2023\nBigUint64Array es2020,es2022,es2023\nError es2022\nErrorConstructor esnext\nUint8ArrayConstructor esnext\nDate esnext\nDisposableStack esnext\nAsyncDisposableStack esnext\nfind,findIndex,fill,copyWithin,entries,keys,values\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/records/12_nested_entries.a:7:5: Adamic 0.1 refuses a value of type Map<string, Map<string, string[]> | Map<string, never[]> | Map<string, string[] | never[]>> seen as ScriptTargetFeatures, which can write string where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    }
+  },
+  {
+    "file": "13_strict_option.a",
+    "tsc": [
+      "src/compiler/utilities.ts:9358",
+      "src/compiler/utilities.ts:9369"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "true\nfalse\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/records/13_strict_option.a:4:72: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+    }
+  },
+  {
+    "file": "14_group_by.a",
+    "tsc": [
+      "src/compiler/core.ts:1464"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "s src,source\nt test\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/14_group_by.a:10:24: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/records/14_group_by.a:8:40: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+    }
+  },
+  {
+    "file": "15_inherited_read.a",
+    "tsc": [
+      "src/compiler/core.ts:1464"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "before read\n",
+      "stderr": "adamic: panic: TypeError: array.push is not a function\n",
+      "exit": 70
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/15_inherited_read.a:10:24: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/records/15_inherited_read.a:8:40: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+    }
+  },
+  {
+    "file": "16_built_strings.a",
+    "tsc": [
+      "src/compiler/corePublic.ts:13",
+      "src/compiler/core.ts:1278"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "src/0\nsrc/1\nsrc/2\nsrc/3\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/records/16_built_strings.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+    }
+  },
+  {
+    "file": "17_compare_missing_object.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8147-8165"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "constructor\nfalse\ntrue\ntoString\nfalse\ntrue\nhasOwnProperty\nfalse\ntrue\n__proto__\nfalse\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/17_compare_missing_object.a:27:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.\nstage3/fixtures/records/17_compare_missing_object.a:28:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'."
+    }
+  },
+  {
+    "file": "18_compare_missing_scalar.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8147-8165"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "constructor\nfalse\ntrue\ntoString\nfalse\ntrue\nhasOwnProperty\nfalse\ntrue\n__proto__\nfalse\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/18_compare_missing_scalar.a:27:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.\nstage3/fixtures/records/18_compare_missing_scalar.a:28:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'."
+    }
+  },
+  {
+    "file": "19_compare_empty_objects.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8147-8165"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "constructor\ntrue\ntrue\ntoString\ntrue\ntrue\nhasOwnProperty\ntrue\ntrue\n__proto__\ntrue\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/19_compare_empty_objects.a:27:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.\nstage3/fixtures/records/19_compare_empty_objects.a:28:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'."
+    }
+  }
+]

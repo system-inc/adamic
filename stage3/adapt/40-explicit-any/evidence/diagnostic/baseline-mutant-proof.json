@@ -1,0 +1,10 @@
+{
+  "mutant": "unrelated declaration appended to actual API reference",
+  "exit": 1,
+  "failing": 1,
+  "differences": [
+    "api/typescript.d.ts"
+  ],
+  "restoredSha256": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf",
+  "remainingBaselineDifferences": 0
+}

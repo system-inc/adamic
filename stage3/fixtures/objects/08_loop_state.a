@@ -1,0 +1,46 @@
+// From TypeScript 6.0.3, src/compiler/transformers/es2015.ts:3577
+// From TypeScript 6.0.3, src/compiler/program.ts:4041
+// From TypeScript 6.0.3, src/compiler/program.ts:4068
+// Census reason: post-creation properties
+interface ConvertedLoopState { loopParameters: string[]; loopOutParameters: string[]; argumentsName?: string; thisName?: string; hoistedLocalVariables?: string[]; }
+function createConvertedLoopState(convertedLoopState: ConvertedLoopState | undefined): ConvertedLoopState {
+    const loopParameters: string[] = [];
+    const loopOutParameters: string[] = [];
+        const currentState: ConvertedLoopState = { loopParameters, loopOutParameters };
+        if (convertedLoopState) {
+            // convertedOuterLoopState !== undefined means that this converted loop is nested in another converted loop.
+            // if outer converted loop has already accumulated some state - pass it through
+            if (convertedLoopState.argumentsName) {
+                // outer loop has already used 'arguments' so we've already have some name to alias it
+                // use the same name in all nested loops
+                currentState.argumentsName = convertedLoopState.argumentsName;
+            }
+            if (convertedLoopState.thisName) {
+                // outer loop has already used 'this' so we've already have some name to alias it
+                // use the same name in all nested loops
+                currentState.thisName = convertedLoopState.thisName;
+            }
+            if (convertedLoopState.hoistedLocalVariables) {
+                // we've already collected some non-block scoped variable declarations in enclosing loop
+                // use the same storage in nested loop
+                currentState.hoistedLocalVariables = convertedLoopState.hoistedLocalVariables;
+            }
+        }
+        return currentState;
+    }
+const state = createConvertedLoopState({loopParameters: [], loopOutParameters: [], argumentsName: "_arguments", thisName: "_this", hoistedLocalVariables: ["i"]});
+console.log(`${state.argumentsName}:${state.thisName}:${state.hoistedLocalVariables?.join(",")}`);
+
+interface CommandLine { projectReferences?: string[]; }
+interface ResolvedProjectReference { commandLine: CommandLine; sourceFile: string; references?: string[]; }
+function parseProjectReferenceConfigFile(commandLine: CommandLine): ResolvedProjectReference {
+    const sourceFile = "tsconfig.json";
+        const resolvedRef: ResolvedProjectReference = { commandLine, sourceFile };
+    const parseProjectReferenceConfigFile = (ref: string) => ref + "/tsconfig.json";
+        if (commandLine.projectReferences) {
+            resolvedRef.references = commandLine.projectReferences.map(parseProjectReferenceConfigFile);
+        }
+
+        return resolvedRef;
+}
+console.log(`${parseProjectReferenceConfigFile({projectReferences: ["../lib"]}).references?.join(",")}`);
