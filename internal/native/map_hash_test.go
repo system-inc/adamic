@@ -87,7 +87,7 @@ func TestMapHashProbeBound(t *testing.T) {
 	t.Parallel()
 	for _, slabs := range []bool{false, true} {
 		t.Run(map[bool]string{false: "malloc", true: "slabs"}[slabs], func(t *testing.T) {
-			output, err := mapHashProbe(t, Options{Sanitize: true, slabs: slabs}, nil)
+			output, err := mapHashProbe(t, Options{Sanitize: true, Slabs: slabs}, nil)
 			t.Log(output)
 			if err != nil {
 				t.Fatalf("runtime map hash: %v", err)
