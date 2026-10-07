@@ -1,0 +1,17 @@
+{
+  "witnesses": [
+    "    helper_test.go:104: parse_regex_flags.a mutant \"bytes.includes(117)\" -> \"false\" caught at output line 13: mutant \"false|false\", Go \"true|false\"",
+    "    helper_test.go:104: parse_regex_flags.a mutant \"bytes.includes(118)\" -> \"false\" caught at output line 89: mutant \"true|false\", Go \"true|true\"",
+    "    helper_test.go:104: parse_regex_flags.a mutant \"bytes.includes(117)\" -> \"bytes[0] === 117\" caught at output line 13: mutant \"false|false\", Go \"true|false\"",
+    "    helper_test.go:104: parse_regex_flags.a mutant \"bytes.includes(118)\" -> \"bytes[0] === 118\" caught at output line 89: mutant \"true|false\", Go \"true|true\"",
+    "    helper_test.go:104: regex_flags_uv.a mutant \"flags.unicode || flags.unicodeSets\" -> \"flags.unicode && flags.unicodeSets\" caught at output line 13: mutant \"false\", Go \"true\"",
+    "    helper_test.go:104: regex_flags_uv.a mutant \"flags.unicode || flags.unicodeSets\" -> \"flags.unicode\" caught at output line 507: mutant \"false\", Go \"true\"",
+    "    helper_test.go:104: regex_flags_uv.a mutant \"flags.unicode || flags.unicodeSets\" -> \"flags.unicodeSets\" caught at output line 13: mutant \"false\", Go \"true\"",
+    "    helper_test.go:104: pattern_and_flags.a mutant \"bytes[0] !== 47\" -> \"false\" caught at output line 13: mutant \"0a2020202020202020202020202f|20225b2220616e6420225d22206573636170656420617320225c7835422220616e6420225c7530303544220a2020202020202020202020206e65772052656745787028225c783542205c5c75666530665c753030354422290a0a202020202020202020202020\", Go \"|\"",
+    "    helper_test.go:104: pattern_and_flags.a mutant \"lastSlash = i;\" -> \"if (lastSlash < 0) { lastSlash = i; }\" caught at output line 457: mutant \"|206120636f6d6d656e742061626f757420746865207061747465726e0a76617220666f6f203d202f626172202062617a2f3b\", Go \"2f206120636f6d6d656e742061626f757420746865207061747465726e0a76617220666f6f203d202f626172202062617a|3b\"",
+    "    helper_test.go:104: pattern_and_flags.a mutant \"pattern: bytes.slice(1), flags: []\" -> \"pattern: [], flags: []\" caught at output line 272: mutant \"|\", Go \"00|\"",
+    "    helper_test.go:104: pattern_and_flags.a mutant \"bytes.slice(1, lastSlash)\" -> \"bytes.slice(0, lastSlash)\" caught at output line 273: mutant \"2f00|7576\", Go \"00|7576\"",
+    "    helper_test.go:104: pattern_and_flags.a mutant \"bytes.slice(lastSlash + 1)\" -> \"bytes.slice(lastSlash)\" caught at output line 273: mutant \"00|2f7576\", Go \"00|7576\""
+  ],
+  "log_sha256": "fdef6097c115767b10f3c1321ec47766183482ff4331d48b0483a63f9e1f33c7"
+}

@@ -1,0 +1,139 @@
+[
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-01",
+    "sha": "0fd7214cbbd6135873afed2631c2d7b8338a37dd",
+    "path": "stage1/cohere/lint/helpers/claims/01.md",
+    "sha256": "3d1f4cf8157cb8501eaf18949f7b83e79c11b0c98bdd070aae1b38939eda0143",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-02",
+    "sha": "238e54a2ae6b7e6de6b35d9d91fb7426e630276f",
+    "path": "stage1/cohere/lint/helpers/claims/02.md",
+    "sha256": "1111c8867b4a9021d8ee980cc54a3f749cd53d647ef3604f43335a6653b3a737",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-03",
+    "sha": "3e85502d728bcd67b3ed326565bcf09749f2ec1b",
+    "path": "stage1/cohere/lint/helpers/claims/03.md",
+    "sha256": "17d76e01128d2d878a9c1b5bf3874b00241d786d60757bd061bfb4c37138896d",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-04",
+    "sha": "8e0d98a645ae73cc4cf72561c779f257b51b8c9a",
+    "path": "stage1/cohere/lint/helpers/claims/04.md",
+    "sha256": "a68c686cc9d68b729aa33aa170f21ec7ef344b81bc4930f76111b21039dcd934",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-05",
+    "sha": "56d10c693dba9faaf6899908a8d688af036261b6",
+    "path": "stage1/cohere/lint/helpers/claims/05.md",
+    "sha256": "5681a9914fa7cafef44f9d2cb94dd43df5f5436de3336f4a9970c3e85e802379",
+    "selected_matches": [
+      "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ParseRegexFlags",
+      "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.RegexFlags.UV",
+      "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.PatternAndFlags"
+    ]
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-03",
+    "sha": "5e64fe3cf0d236a2fae7e4f8b645f0d3f33afc29",
+    "path": "stage1/cohere/lint/helpers/claims/codex-lint-wave1-03.md",
+    "sha256": "9b4b3cbb427b6bf140ff41a956c0e2fd4eafc28e35327a6e16b5f822e6e78786",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-14",
+    "sha": "7b6a7c28bdf9b9e715a8403cf27703a69afeeb74",
+    "path": "stage1/cohere/lint/helpers/claims/codex-lint-wave1-14.md",
+    "sha256": "a71ca1f2409931650f84830f5876f6e4a3626dfa6f304655dd918fa6e5ba1fe3",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-02",
+    "sha": "d62bb9d4df13cc6132f0b4bc2b1748d16934edb7",
+    "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-02.md",
+    "sha256": "77febf6cc9bf266f37fe01461a301b9f42b7aeb726edd55928c8a032a7ccc37b",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-04",
+    "sha": "8754bdeafe0ef400be14bfb1d8f1505c0c80c713",
+    "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-04.md",
+    "sha256": "d2de6271271ebf27ee922326e57941f00e86b830f70350b231df10e189ca14a6",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-06",
+    "sha": "6f2aff526107895a267896fdcbf182cd67c3c7a6",
+    "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-06.md",
+    "sha256": "cfa358e4ca93accde06d1e8308485b6b8e61aeba71fdff940334347b5d2355be",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-09",
+    "sha": "017f34d7fc64fed98740ab5456f516c8cec2931e",
+    "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-09.md",
+    "sha256": "2b50dceedb4b7b08d308c96b778755b40286d84d63a4e34c178501cc3796582e",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-10",
+    "sha": "48c2db8a342ee27a2630f07d0b0923f4a5da0bca",
+    "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-10.md",
+    "sha256": "bfe14eb1102cd070db7f51d44248e12acac00699ccb5420e85137ad83651b404",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-11",
+    "sha": "22f918c2c18ef42a3f556fad3e67ac471f21fec8",
+    "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-11.md",
+    "sha256": "f6ff2deceddc6a3faa42d8034f713dd1d6dded3e2e2b3855daf463416f6b0b4d",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-15",
+    "sha": "2817bf8415f9b511d38913c7c497079138563441",
+    "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-15.md",
+    "sha256": "1c7554b25d3acecaa1ce384bcaa119e6f945fdbfffaa6e55c901492e07da6fc4",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-01",
+    "sha": "72fca0ebb2abb157f395c2cf91520c04ea26d794",
+    "path": "stage1/cohere/lint/helpers/claims/lint-wave1-01.md",
+    "sha256": "263edb50291ed8dd86cd854b2b9d611ae3604b720fed61c5e3469aaf84166aa0",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-05",
+    "sha": "376dd83f2c8c7cbeedc819c03631fdd670090c06",
+    "path": "stage1/cohere/lint/helpers/claims/lint-wave1-05.md",
+    "sha256": "6419ec436448cc488bffb1f9cef77923617badfeb003383e697d3eff7d47dc1a",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-08",
+    "sha": "bdae8bc99dfe54a06615b20e34084bc9b8ebb06e",
+    "path": "stage1/cohere/lint/helpers/claims/lint-wave1-08.md",
+    "sha256": "8e7c8070599227d355378ebc7dca54254e8e410c447c4b6052f7a0fcd0981f9d",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-12",
+    "sha": "e410d07d1b9c1bdc5f358aeab6e71247a11f2b4c",
+    "path": "stage1/cohere/lint/helpers/claims/lint-wave1-12.md",
+    "sha256": "fa3a4e47a506decc35b1e06165fba69ab8c3b9c73856d239924e7b8a63142cbf",
+    "selected_matches": []
+  },
+  {
+    "ref": "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-13",
+    "sha": "8d48f3f813a806a08d56dda1a71071af0c8a0674",
+    "path": "stage1/cohere/lint/helpers/claims/lint-wave1-13.md",
+    "sha256": "8a35c4266e521dab150381007d2a54bfad0de20cbfa68ddea8de5260b41fecd6",
+    "selected_matches": []
+  }
+]

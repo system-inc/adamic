@@ -1,0 +1,28 @@
+{
+  "helpers": {
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ParseRegexFlags": [
+      "no-control-regex",
+      "no-regex-spaces",
+      "no-useless-escape"
+    ],
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.RegexFlags.UV": [
+      "no-control-regex",
+      "no-regex-spaces",
+      "no-useless-escape"
+    ],
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.PatternAndFlags": [
+      "no-control-regex",
+      "no-regex-spaces",
+      "no-useless-escape"
+    ]
+  },
+  "dependency_occurrences_removed": 9,
+  "unique_consumers": 3,
+  "newly_helper_ready_from_batch_alone": [],
+  "cumulative_slot05": {
+    "helpers": 71,
+    "dependency_occurrences_removed": 374,
+    "unique_consumers": 73,
+    "helper_ready": 50
+  }
+}

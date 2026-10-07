@@ -1,0 +1,12 @@
+export interface PatternAndFlags { pattern: number[]; flags: number[]; }
+// Preserve upstream byte slicing even for malformed UTF-8 and defensive input.
+// This splits source text; it does not parse or match a regular expression.
+export function patternAndFlags(bytes: readonly number[]): PatternAndFlags {
+    if (bytes.length < 2 || bytes[0] !== 47) { return { pattern: [], flags: [] }; }
+    let lastSlash = -1;
+    for (let i = 1; i < bytes.length; i++) {
+        if (bytes[i] === 47) { lastSlash = i; }
+    }
+    if (lastSlash < 0) { return { pattern: bytes.slice(1), flags: [] }; }
+    return { pattern: bytes.slice(1, lastSlash), flags: bytes.slice(lastSlash + 1) };
+}
