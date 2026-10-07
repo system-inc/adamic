@@ -1,0 +1,2 @@
+empty: one header allocation, one malloc, zero buffer allocations; distinct headers
+first push: one realloc; header size 56 bytes
