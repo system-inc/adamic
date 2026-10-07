@@ -436,8 +436,8 @@
       "TestStage3FixtureHook"
     ],
     "message": "\"called only by the Stage 3 fixture runner\"",
-    "class": "required-input",
-    "provides": "stage3/fixtures runner sets ADAMIC_STAGE3_FIXTURE to fixture source and ADAMIC_STAGE3_RESULT to a writable result path.",
+    "class": "not-applicable",
+    "provides": "Dormant entry point called by the Stage 3 fixture runner, not an independent correctness check. With ADAMIC_STAGE3_FIXTURE empty there is no runner request, so the hook is not applicable to a whole run. stage3/fixtures supplies the fixture source and ADAMIC_STAGE3_RESULT writable result path when invoking it; opted-in execution failures still fail.",
     "opt_in_off": [
       "ADAMIC_STAGE3_FIXTURE"
     ]
