@@ -29,10 +29,22 @@ type engine struct {
 	log     io.Writer
 	adapt   bool
 	oracle  *typescriptOracle
+	jobs    int
+	timeout time.Duration
+}
+
+func (e *engine) executionTimeout() time.Duration {
+	if e.timeout > 0 {
+		return e.timeout
+	}
+	return 15 * time.Second
 }
 
 func prepare(root string, test262 string, work string) (*engine, error) {
 	if err := os.MkdirAll(work, 0o755); err != nil {
+		return nil, err
+	}
+	if err := os.WriteFile(filepath.Join(work, "results.jsonl"), nil, 0o644); err != nil {
 		return nil, err
 	}
 	adamic := filepath.Join(work, "adamic")
@@ -94,6 +106,10 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 		return filterReport{}, err
 	}
 	report := filterReport{Path: filter}
+	futures, err := e.parallelAttempts(files, limit, classifyOnly)
+	if err != nil {
+		return report, err
+	}
 	attempted := 0
 	for index, file := range files {
 		source, err := os.ReadFile(file)
@@ -113,12 +129,35 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 			one = result{Path: relative, Directory: classified.Directory, Kind: outcomeUnrun, Reason: "not run"}
 		} else {
 			attempted++
-			one = e.attempt(classified)
+			if futures != nil {
+				one = <-futures[index]
+			} else {
+				one = e.attempt(classified)
+			}
 			if one.Kind == outcomeCrashed {
 				one.Reason = withCrashPath(one.Path, one.Reason)
 			}
 		}
 		report.add(one)
+		if !classifyOnly {
+			// Retain every result, not just aggregate reasons, for before/after audits.
+			encoded, err := json.Marshal(one)
+			if err != nil {
+				return report, err
+			}
+			file, err := os.OpenFile(filepath.Join(e.work, "results.jsonl"), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o644)
+			if err != nil {
+				return report, err
+			}
+			_, writeErr := file.Write(append(encoded, '\n'))
+			closeErr := file.Close()
+			if writeErr != nil {
+				return report, writeErr
+			}
+			if closeErr != nil {
+				return report, closeErr
+			}
+		}
 		if (index+1)%50 == 0 || index+1 == len(files) {
 			fmt.Fprintf(e.log, "%s %d/%d pass=%d fail=%d refused=%d not-typescript=%d crashed=%d skipped=%d\n",
 				filter, index+1, len(files), report.Pass, report.Fail, report.Refused, report.NotTypescript, report.Crashed, report.Skipped)
@@ -178,19 +217,45 @@ func (e *engine) attempt(test classified) result {
 		return base
 	}
 	defer os.Remove(binary)
-	nativeRun := runCommand(15*time.Second, []string{
+	nativeRun := runCommand(e.executionTimeout(), []string{
 		"ASAN_OPTIONS=detect_leaks=0:abort_on_error=1:halt_on_error=1",
 		"UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1",
 	}, binary)
-	nodeRun := runCommand(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module)
+	nodeRun := runCommand(e.executionTimeout(), nil, "node", "--disable-warning=ExperimentalWarning", module)
 	decided := decide(verdictInput{
 		NegativePhase: test.NegativePhase,
 		NegativeType:  test.NegativeType,
 		Node:          nodeRun,
 		Native:        nativeRun,
 	})
+	if decided.Kind != outcomePass {
+		fmt.Fprintf(e.log, "%s: %s; native stderr: %s; Node stderr: %s\n", test.Path, decided.Reason, firstLine(nativeRun.Stderr), firstLine(nodeRun.Stderr))
+	}
 	base.Kind = decided.Kind
 	base.Reason = decided.Reason
+	// The existing generic harness checks Error ancestry, not constructor
+	// identity. Independent Node success cannot prove that missing native check.
+	// Do not award a RegExp pass until exact constructor checks are supported.
+	if base.Kind == outcomePass && test.ConstructorAssertion {
+		base.Kind = outcomeRefused
+		base.Reason = "not yet: constructor-identity assertion in RegExp harness"
+		return base
+	}
+	if base.Kind == outcomePass && test.Original != "" {
+		original := e.originalRegExp(test)
+		if crashedExecution(original) {
+			base.Kind = outcomeCrashed
+			base.Reason = "original Node test: " + crashReason(verdictInput{Node: original})
+		} else if test.NegativePhase == "runtime" {
+			if original.Exit == 0 || !errorNamed(original.Stderr, test.NegativeType) {
+				base.Kind = outcomeFail
+				base.Reason = "original Node negative expectation not observed"
+			}
+		} else if original.Exit != 0 || original.Stdout != nodeRun.Stdout || original.Stderr != nodeRun.Stderr {
+			base.Kind = outcomeFail
+			base.Reason = "original Node test disagrees with adaptation: " + firstLine(original.Stderr)
+		}
+	}
 	return base
 }
 
