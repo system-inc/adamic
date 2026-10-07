@@ -1,0 +1,85 @@
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/error_spread.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/error_spread.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/error_spread.a (0.07s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/error_spread_view.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/error_spread_view.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/error_spread_view.a (0.04s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_construct.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_construct.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_construct.a (0.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_call.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_call.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_call.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_mutated.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_mutated.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_mutated.a (0.08s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_optional.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_optional.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_optional.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_view_return.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_view_return.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_view_return.a (0.07s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_literal.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_literal.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_literal.a (0.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_new.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_new.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_new.a (0.04s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_call.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_call.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_call.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_view.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_view.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_view.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_array.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_array.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_array.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_number.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_number.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_number.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_string.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_string.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_string.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_boolean.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_boolean.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_boolean.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_closure.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_closure.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_closure.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.04s)
+
