@@ -335,3 +335,24 @@ adamic: panic: Error: Command failed: go run ./oracle/json_types.go /workspace/a
 exit status 1
 ```
 
+
+## json_decode_coverage_arrays.a
+
+Node and native agree, exit 0 and empty stderr:
+
+```text
+7
+one -
+two yes
+count 3
+at $[1].value: expected number, found string
+at $[0]: missing field kind
+at $[0].kind: expected Item, found string
+at $[0]: missing field value
+at $: expected readonly Item[], found object
+Ok
+Ok
+at $[1]: expected string | number | boolean, found null
+at $[0]: expected string | number | boolean, found object
+at $: expected readonly (string | number | boolean)[], found number
+```
