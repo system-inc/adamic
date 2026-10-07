@@ -14,23 +14,18 @@ mode build all thirteen JSX AST kinds and compare their trees with Go, then
 run the batch-8 React listeners directly. General diagnostic/recovery parity,
 binder fields and full JSX application-code compilation remain outside scope.
 
-## 1. Strong AST parent and child pointers are cycle-capable
+## 1. Strong AST parent and child pointers
 
-Go's `finishNode` gives every child a strong Parent pointer. Go's tracing
-collector can collect the resulting cycles; Adamic's reference counting cannot.
-`gaps/1_strong_ast_parent.ts` prints `root` on Node. Stage 0 refuses the push:
+Go's `finishNode` gives every child a strong Parent pointer. Graph regions now
+accept the proven closed object/array cycle in `gaps/1_strong_ast_parent.ts`.
+`TestStrongAstParentSupported` compares its `root` output with Node in release
+and ASan/UBSan builds. The former reference-counting cycle refusal is obsolete
+for this fixture; open or escaping cyclic shapes still require the compiler's
+ownership proof.
 
-```
-Adamic 0.1 refuses Tree[], an array whose elements can reach back to an array like it: a cycle reference counting can't free
-```
-
-`TestStrongAstParentGap` requires the Node answer and the `lower.Refused`
-cycle diagnostic. This is a deliberate language refusal, not a silent compile
-or a claim that immutable trees are forbidden.
-
-Workaround: a parse owns an indexed node table. Every node stores child indexes;
-no parent pointer or child pointer owns another node. Traversal starts at root
-indexes. The representation accommodates speculative parse rollback as well.
+The parser keeps its indexed node table: every node stores child indexes, and
+traversal starts at root indexes. This representation accommodates speculative
+parse rollback.
 
 ## 2. Spread into Array.push
 

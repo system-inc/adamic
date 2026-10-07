@@ -1,17 +1,18 @@
 package parser
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestStrongAstParentGap(t *testing.T) {
+func TestStrongAstParentSupported(t *testing.T) {
 	path, err := filepath.Abs("gaps/1_strong_ast_parent.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -22,16 +23,31 @@ func TestStrongAstParentGap(t *testing.T) {
 	}
 	result := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path)
 	if string(result.output) != "root\n" {
-		t.Fatalf("Node gap result %q", result.output)
+		t.Fatalf("Node cycle result %q", result.output)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var refusal *lower.Refused
-	if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "a cycle reference counting can't free") {
-		t.Fatalf("GAPS.md says strong parent/child cycle is refused, got %v", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	code := native.C(lowered)
+	for _, side := range []struct {
+		name     string
+		sanitize bool
+	}{{"release", false}, {"sanitized", true}} {
+		t.Run(side.name, func(t *testing.T) {
+			binary := filepath.Join(t.TempDir(), "cycle")
+			if err := native.Build(code, binary, native.Options{Sanitize: side.sanitize}); err != nil {
+				t.Fatal(err)
+			}
+			answer := execute(t, "", binary)
+			if !bytes.Equal(answer.output, result.output) {
+				t.Fatalf("%s cycle output %q differs from Node %q", side.name, answer.output, result.output)
+			}
+		})
 	}
 }
 
