@@ -8,7 +8,7 @@
 // cursor at the last code point found. Nearby positions are walked to in either direction from
 // that cursor, with backward reads choosing the closer of the cursor and checkpoint, so at most STEP
 // code points are visited. The checkpoints are built once, in one pass, and freed with the string.
-// Indexed strings also decode a compact UTF-16 view once for direct unit reads.
+// Indexed strings also decode a full UTF-16 view once, for direct unit reads and RegExp.
 //
 // A string is immutable, so nothing cached can go stale while it lives, and a string's memory comes
 // back from allocate with nothing cached. The program's literals are immortal, and so is the index a
@@ -97,7 +97,7 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
 	for (; checkpoint < count; checkpoint++) {
 		index->checkpoints[checkpoint] = (uint32_t)(string->length << 1);
 	}
-	index->view = malloc(units * sizeof *index->view);
+	index->view = malloc((units == 0 ? 1 : units) * sizeof *index->view);
 	if (index->view == NULL) {
 		static const char message[] = "out of memory";
 		adamic_panic(message, sizeof message - 1);

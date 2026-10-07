@@ -108,10 +108,7 @@ func TestOct6ReleaseMutant(t *testing.T) {
 	case "linux":
 		report = leakSanitizer(t, binary)
 	case "darwin":
-		result := execute(t, "leaks", "--atExit", "--", binary)
-		if result.exitCode != 0 {
-			report = string(result.stdout)
-		}
+		report = leaksCounted(t, mutated)
 	default:
 		t.Fatalf("no leak check for %s", runtime.GOOS)
 	}

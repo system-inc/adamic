@@ -12,6 +12,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"syscall"
 	"testing"
 	"time"
@@ -37,6 +38,14 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/process_exit_code.a", true, false},
+	{"internal/oracle/testdata/process_exit.a", true, false},
+	{"internal/oracle/testdata/process_exit_default.a", true, false},
+	{"internal/oracle/testdata/process_exit_uncaught.a", true, false},
+	{"internal/oracle/testdata/process_bad_code.a", true, false},
+	{"internal/oracle/testdata/process_observations.a", true, false},
+	{"internal/oracle/testdata/process_shadow.a", true, false},
+	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
 	{"internal/oracle/testdata/route_targets_virtual_fresh.a", true, false},
 	{"internal/oracle/testdata/route_targets_unknown.a", true, false},
@@ -103,7 +112,6 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_three.a", true, false},
 	{"internal/oracle/testdata/async_nested.a", true, false},
 	{"internal/oracle/testdata/async_throw.a", true, false},
-	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
@@ -658,35 +666,75 @@ func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
 // everything. No garbage collector means every reference the compiler hands out has to come back;
 // this is where a missing release shows. Only programs Node finishes with exit 0 are asked.
 //
-// macOS has the leaks tool; Linux has LeakSanitizer, part of ASan there, run on the sanitized binary
-// the comparison already built.
+// macOS has the counted build, and leaks --atExit run on it; Linux has LeakSanitizer, part of ASan
+// there, run on the sanitized binary the comparison already built.
 func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		return leaksTool(t, program)
+		return leaksCounted(t, native.C(program))
 	case "linux":
 		return leakSanitizer(t, sanitized)
 	}
-	t.Fatalf("no leak check for %s: the oracle knows macOS's leaks tool and Linux's LeakSanitizer", runtime.GOOS)
+	t.Fatalf("no leak check for %s: the oracle knows macOS's counted build and Linux's LeakSanitizer", runtime.GOOS)
 	return ""
 }
 
-// leaksTool builds a lowered program without sanitizers (they and macOS's leaks tool don't mix) and
-// with every value from malloc (Malloc: a value leaked into a size class's chunk is reachable through
-// the chunk, so leaks would never report it), runs it under leaks --atExit, and returns its report
-// when anything leaked.
-func leaksTool(t *testing.T, program *ir.Program) string {
+// leaksCounted builds C counted (runtime/count.h) and returns a report of what it never let go of, or
+// "" when it let go of everything. It runs the binary twice: on its own, where its allocations must be
+// its frees and its values in regions, the rule the counts table is read by; then under leaks --atExit.
+//
+// The counts are the check for values. Outside the sanitizers every small value lives in a chunk of
+// the runtime's size-class allocator (heap.c), and every chunk stays reachable from the runtime's own
+// table of them, so to macOS's leaks tool a value the program never let go of still reads as
+// reachable: with an array's elements never let go of, leaks --atExit passed 260 of the 261 fixtures
+// it was asked about, and the counts failed 141. leaks --atExit is the check for what the runtime
+// takes from malloc outside the counts (an array's elements, a map's table, a region's blocks): with
+// a region's blocks never freed, the counts balance and leaks finds the blocks.
+func leaksCounted(t *testing.T, code string) string {
 	t.Helper()
-	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{Malloc: true}); err != nil {
+	binary := filepath.Join(t.TempDir(), "counted")
+	if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
-	report := execute(t, "leaks", "--atExit", "--", binary)
+	if report := unbalanced(t, execute(t, binary)); report != "" {
+		return report
+	}
+	return leaksTool(execute(t, "leaks", "--atExit", "--", binary))
+}
+
+// leaksTool reads a run of macOS's leaks --atExit: its report when it found memory nothing reaches,
+// or "".
+func leaksTool(report run) string {
 	if report.exitCode == 0 {
 		return ""
 	}
 	return string(report.stdout)
+}
+
+// unbalanced reads a counted run's counts and returns a report when the program finished holding heap
+// values, or "" when its allocations are its frees and its values in regions.
+func unbalanced(t *testing.T, counted run) string {
+	t.Helper()
+	match := countsLine.FindSubmatch(counted.stderr)
+	if counted.exitCode != 0 || match == nil {
+		return fmt.Sprintf("the counted build didn't finish with its counts: exit %d, stderr %q", counted.exitCode, counted.stderr)
+	}
+	allocations, frees, regions := countOf(t, match[1]), countOf(t, match[2]), countOf(t, match[6])
+	if allocations == frees+regions {
+		return ""
+	}
+	return fmt.Sprintf("heap values leaked: %d (allocations %d, frees %d, in regions %d)", allocations-frees-regions, allocations, frees, regions)
+}
+
+// countOf is one number of a counts line, signed, so frees past allocations read as a negative leak.
+func countOf(t *testing.T, digits []byte) int64 {
+	t.Helper()
+	count, err := strconv.ParseInt(string(digits), 10, 64)
+	if err != nil {
+		t.Fatalf("counts: %v", err)
+	}
+	return count
 }
 
 // leakSanitizer runs a sanitized binary again with leak detection on, and returns LeakSanitizer's

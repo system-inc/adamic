@@ -1,0 +1,29 @@
+{
+  "site": {
+    "file": "transformers/module/system.ts",
+    "line": 1014,
+    "column": 13,
+    "function": "appendExportsOfImportDeclaration",
+    "expression": "moduleInfo",
+    "kind": "Identifier",
+    "occurrence": 14,
+    "total": 26,
+    "action": "assert",
+    "class": "required-context",
+    "invariant": "This original moduleInfo read in appendExportsOfImportDeclaration occurs in the transformation graph after transformSourceFile populates all three contexts and before its end reset; no recursive SourceFile transform occurs in that graph."
+  },
+  "checks": [
+    {
+      "name": "emitted-JavaScript",
+      "exit": 1,
+      "stdout": "PASS emitter.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS sourcemap.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/declarations.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/es2015.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/ts.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformer.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/classFields.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/classThis.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/declarations/diagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/destructuring.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/es2017.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/es2018.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/es2020.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/esDecorators.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/esnext.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/generators.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/jsx.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/legacyDecorators.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/module/esnextAnd2015.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS transformers/module/module.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+      "stderr": "/workspace/adamic/stage3/adapt/33-indexed-reads-emit/verify.cjs:22\n        throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)}`);\n        ^\n\nError: unexpected emitted JavaScript change in transformers/module/system.ts: 549ea9e9b8b762a91750dda04cdb19e5c936d5cac97d06cecd43e95fe6ea61e8 != da93abc20a616fff489618023fde31111e121688bd739832490d842bfb3c68b3\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/33-indexed-reads-emit/verify.cjs:22:15)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    },
+    {
+      "name": "site-contract",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "required read defaulted: transformers/module/system.ts:1014:13\n"
+    }
+  ]
+}

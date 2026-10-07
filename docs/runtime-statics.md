@@ -389,3 +389,53 @@ ADAMIC_REGEXP_RUNTIME_OWNER selects only the matcher ownership hooks in dynamic
 modules. The archive cache includes that flag. Ordinary archives preprocess the
 original matcher constructor, clone and result paths; the compiler feature flag
 remains confined to generated dynamic source. No startup registration exists.
+
+## Host storage added by library integration 047e857
+
+This audit records the newly merged declarations without claiming that listing
+unsafe process state makes it safe. The regex compiler adds no mutable statics.
+The process owner must address the explicitly unsafe rows before certifying
+parallel host calls; this unit does not change their semantics.
+
+| Audit key | Line | Parallel safety |
+|---|---:|---|
+| `node_fs_directory.c:error_name:1` | 23 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_fs_directory.c:type_error_name:1` | 24 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_fs_directory.c:colon:1` | 111 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_fs_directory.c:comma:1` | 112 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_fs_directory.c:quote:1` | 113 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_fs_directory.c:end:1` | 113 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_fs_directory.c:code:1` | 131 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_fs_directory.c:before:1` | 132 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_fs_directory.c:dots:1` | 195 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_fs_directory.c:cache:1` | 226 | Packed shape/slot cache uses atomic acquire/release operations in object.c and adamic.h. |
+| `node_fs_directory.c:cache:2` | 240 | Packed shape/slot cache uses atomic acquire/release operations in object.c and adamic.h. |
+| `node_fs_file.c:dots:1` | 115 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_fs_file.c:cache:1` | 427 | Packed shape/slot cache uses atomic acquire/release operations in object.c and adamic.h. |
+| `node_fs_file.c:cache:2` | 470 | Packed shape/slot cache uses atomic acquire/release operations in object.c and adamic.h. |
+| `node_process.c:saved_count:1` | 35 | Written by adamic_node_process_start before generated user code or pool startup; read afterward. Reinitialization during work is unsupported. |
+| `node_process.c:saved_values:1` | 36 | Written by adamic_node_process_start before generated user code or pool startup; read afterward. Reinitialization during work is unsupported. |
+| `node_process.c:monotonic_origin:1` | 37 | Written by adamic_node_process_start before generated user code or pool startup; read afterward. Reinitialization during work is unsupported. |
+| `node_process.c:epoch_origin:1` | 37 | Written by adamic_node_process_start before generated user code or pool startup; read afterward. Reinitialization during work is unsupported. |
+| `node_process.c:arguments:1` | 38 | Unsafe for concurrent host calls today: lazy process-global cache or performance list, with runtime writes and exit cleanup. Runtime owner followup required. |
+| `node_process.c:execution_arguments:1` | 38 | Unsafe for concurrent host calls today: lazy process-global cache or performance list, with runtime writes and exit cleanup. Runtime owner followup required. |
+| `node_process.c:current_directory:1` | 39 | Unsafe for concurrent host calls today: lazy process-global cache or performance list, with runtime writes and exit cleanup. Runtime owner followup required. |
+| `node_process.c:performance_object:1` | 40 | Unsafe for concurrent host calls today: lazy process-global cache or performance list, with runtime writes and exit cleanup. Runtime owner followup required. |
+| `node_process.c:marks:1` | 57 | Unsafe for concurrent host calls today: lazy process-global cache or performance list, with runtime writes and exit cleanup. Runtime owner followup required. |
+| `node_process.c:newline:1` | 100 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_process.c:platform:1` | 118 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_process.c:platform:2` | 120 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_process.c:error_name:1` | 145 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_process.c:mark_type:1` | 289 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_process.c:measure_type:1` | 289 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_process.c:name_error:1` | 316 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `node_process.c:method:1` | 354 | Statically initialized immortal closure, fixed function and empty environment; no writers. |
+| `node_process.c:performance_now_closure:1` | 410 | Statically initialized immortal closure, fixed function and empty environment; no writers. |
+| `node_process.c:performance_mark_closure:1` | 411 | Statically initialized immortal closure, fixed function and empty environment; no writers. |
+| `node_process.c:performance_measure_closure:1` | 412 | Statically initialized immortal closure, fixed function and empty environment; no writers. |
+| `node_process.c:performance_clear_marks_closure:1` | 413 | Statically initialized immortal closure, fixed function and empty environment; no writers. |
+| `node_process.c:performance_clear_measures_closure:1` | 414 | Statically initialized immortal closure, fixed function and empty environment; no writers. |
+| `process.c:exit_code:1` | 8 | Unsafe for concurrent setters/readers today: process-global exit status, no atomic or lock. Runtime owner followup required. |
+| `process.c:prefix:1` | 17 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `process.c:range_name:1` | 18 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |
+| `process.c:range_code:1` | 21 | Immortal literal initialized statically; shared string runtime does not mutate immortal units/index caches. |

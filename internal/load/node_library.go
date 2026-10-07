@@ -70,11 +70,19 @@ func usesNodeModules(program *compiler.Program) bool {
 
 // Unit lowerers use declaration identity, not the spelling of an imported name.
 func IsNodeLibrary(file *ast.SourceFile) bool {
-	return file != nil && strings.Contains(file.FileName(), "/"+nodeTypesRelative+"/") && strings.HasSuffix(file.FileName(), ".d.ts")
+	return file != nil && strings.Contains(file.FileName().AsString(), "/"+nodeTypesRelative+"/") && strings.HasSuffix(file.FileName().AsString(), ".d.ts")
 }
 
 // Preserve the existing console lowerer's declaration identity while letting
 // the pinned Node global Console interface merge. The package itself is untouched.
 func nodePrelude() string {
-	return strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "declare var console: Console;", 1)
+	source := strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "declare var console: Console;", 1)
+	start := strings.Index(source, "declare const process: {")
+	if start >= 0 {
+		end := strings.Index(source[start:], "\n};")
+		if end >= 0 {
+			source = source[:start] + "declare var process: NodeJS.Process;" + source[start+end+3:]
+		}
+	}
+	return source
 }

@@ -213,6 +213,7 @@ static void write_text(enum adamic_stream stream, const char *bytes, size_t leng
 
 void adamic_start(int count, char **values) {
 	adamic_arguments_save(count, values);
+	adamic_node_process_start(count, values);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
 #ifndef ADAMIC_TARGET_WASI
 	signal(SIGPIPE, SIG_IGN);
@@ -241,6 +242,18 @@ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
 	pthread_mutex_unlock(&output_lock);
 }
 
+// sys.write does not add a newline. Share console's encoding, failure and output-order rules.
+bool adamic_write_raw(enum adamic_stream stream, const adamic_string *string) {
+    if (output_mode == 0) {
+        output_mode = isatty(adamic_stdout) ? 2 : 1;
+        atexit(finish);
+    }
+    flush();
+    write_text(stream, string->bytes, string->length);
+    flush();
+    return !broken[stream];
+}
+
 _Noreturn void adamic_panic(const char *message, size_t length) {
 #ifndef ADAMIC_TARGET_WASI
 	// Losing panics must not terminate the process before the winner finishes its one message.
@@ -265,4 +278,11 @@ _Noreturn void adamic_panic(const char *message, size_t length) {
 _Noreturn void adamic_unreachable(void) {
 	static const char message[] = "compiler bug: a function ended without returning";
 	adamic_panic(message, sizeof message - 1);
+}
+
+// An explicit exit does not unwind JavaScript frames or run their finally clauses.
+_Noreturn void adamic_process_exit_now(int code) {
+	flush();
+	ADAMIC_COUNT_REPORT();
+	_exit(code);
 }

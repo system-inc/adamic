@@ -33,7 +33,12 @@ var inputFixtures = []struct {
 	// file's name, bytes and permissions, must agree too.
 	writes bool
 }{
+	{"internal/oracle/testdata/node_process_host.a", []string{"plain", "", "with space", "héllo 🌍", "--prof", "bad\xff"}, false, false},
+	{"internal/oracle/testdata/node_process_performance.a", nil, false, false},
+	{"internal/oracle/testdata/node_process_performance_core.a", nil, false, false},
+	{"internal/oracle/testdata/node_process_system.a", []string{"--noEmit", "tiny.a"}, false, false},
 	{"internal/oracle/testdata/read_files.a", nil, false, false},
+	{"internal/oracle/testdata/realpath.a", nil, false, false},
 	{"internal/oracle/testdata/empty-path.a", nil, false, false},
 	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false},
 	{"internal/oracle/testdata/arguments.a", []string{
@@ -181,7 +186,7 @@ func TestInputAgreesWithNode(t *testing.T) {
 					t.Errorf("want every input fixture to finish on Node, got exit %d, stderr %q", oracle.exitCode, oracle.stderr)
 					return
 				}
-				if leaked := inputLeaks(t, prepared(), program, binary); leaked != "" {
+				if leaked := inputLeaks(t, prepared, program, binary); leaked != "" {
 					t.Errorf("leaks:\n%s", leaked)
 				}
 
@@ -315,25 +320,29 @@ func inputNatively(t *testing.T, how inputRun, program *ir.Program, shared strin
 }
 
 // inputLeaks is leaks for an input fixture: the same check, run where and as whom the fixture runs.
-func inputLeaks(t *testing.T, how inputRun, program *ir.Program, sanitized string) string {
-	leak := inputLeaksUncached(t, how, program, sanitized)
+// prepared gives each run its own place to write.
+func inputLeaks(t *testing.T, prepared func() inputRun, program *ir.Program, sanitized string) string {
+	leak := inputLeaksUncached(t, prepared, program, sanitized)
 	rememberLeak(t, leak)
 	return leak
 }
-func inputLeaksUncached(t *testing.T, how inputRun, program *ir.Program, sanitized string) string {
+func inputLeaksUncached(t *testing.T, prepared func() inputRun, program *ir.Program, sanitized string) string {
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(sharedDirectory(t), "program")
-		if err := native.Build(native.C(program), binary, native.Options{Malloc: true}); err != nil {
+		// The counted build, then leaks --atExit on it, as leaksCounted checks every other fixture.
+		binary := filepath.Join(sharedDirectory(t), "counted")
+		if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
 			t.Fatal(err)
 		}
-		report := executeInput(t, how, nil, "leaks", append([]string{"--atExit", "--", binary}, how.arguments...)...)
-		if report.exitCode == 0 {
-			return ""
+		how := prepared()
+		if report := unbalanced(t, executeInput(t, how, nil, binary, how.arguments...)); report != "" {
+			return report
 		}
-		return string(report.stdout)
+		how = prepared()
+		return leaksTool(executeInput(t, how, nil, "leaks", append([]string{"--atExit", "--", binary}, how.arguments...)...))
 	case "linux":
+		how := prepared()
 		report := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, how.arguments...)
 		if report.exitCode == 0 {
 			return ""

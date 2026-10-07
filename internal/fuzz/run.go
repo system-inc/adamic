@@ -88,7 +88,8 @@ const (
 	// generator should stay inside what stage 0 lowers.
 	NotYet Verdict = "not yet"
 	// Checked: native and the JavaScript backend stopped at the same inserted check where the source
-	// on Node runs on. That's Adamic meaning what it says, not a bug.
+	// on Node runs on. That's Adamic meaning what it says, not a bug. The panic line has to be one of
+	// the inserted checks' (insertedCheck), not just any stop the two backends share.
 	Checked Verdict = "checked"
 	// Refused: the program was built to break a parallel proof, and the compiler named that path.
 	Refused Verdict = "refused"
@@ -119,7 +120,16 @@ func (c *Checkout) Try(source string, directory string) Outcome {
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
+	return c.TryFile(path, directory)
+}
 
+// TryFile runs a program file three ways, building in directory.
+func (c *Checkout) TryFile(path string, directory string) Outcome {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	}
+	source := string(data)
 	// The C first: the checker's and stage 0's refusals come from here.
 	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
 	expected := parallelRefusal(source)
@@ -189,6 +199,15 @@ var sanitizerReport = regexp.MustCompile(`ERROR: AddressSanitizer: ([a-z-]+)|run
 // clangWarning is the warning -Werror made an error, by its flag, so two kinds of bad C stay apart.
 var clangWarning = regexp.MustCompile(`\[-Werror,(-W[a-z-]+)\]`)
 
+// insertedCheck is the panic line of a check Adamic inserts where JavaScript doesn't stop: it goes
+// on with undefined or null a call put back after a narrowing (ir.Defined, ir.Unwrap), with the
+// holes of an array a map's or a find's callback shrank, with an array a write past its end grew or
+// a fractional index gave a property, and with an object an as cast doesn't look at (ir.CheckedCast).
+// A check whose words are JavaScript's own (TypeError: Cannot read properties of undefined, and the
+// rest) is where Node throws too, so Node's run stops there and the two agree; a shared stop on one
+// of those, or on anything else, while Node runs on, is a finding.
+var insertedCheck = regexp.MustCompile(`^adamic: panic: (?:(?:undefined|null) where the checker narrowed it away: a call since the narrowing put it back|map: the array shrank while it was being mapped|[A-Za-z]+: the array shrank while it was being searched|index [^ ]+ is outside an array of length [0-9]+|cast failed: this .+ is not a .+)\n$`)
+
 var digits = regexp.MustCompile(`[0-9]+|0x[0-9a-f]+`)
 
 // javascriptError is how oracle/adamic.mjs reports an exception the program didn't mean: a panic
@@ -222,8 +241,9 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 	}
 	if nativeDifference != "" && backendDifference != "" && difference(outcome.Backend, outcome.Native) == "" && outcome.Native.ExitCode == 70 {
 		// Both of Adamic's backends stopped at the same place, where Node didn't stop: an inserted
-		// check, as long as what was printed before it is what Node printed.
-		if bytes.HasPrefix(outcome.Node.Stdout, outcome.Native.Stdout) {
+		// check, as long as the panic says it is one and what was printed before it is what Node
+		// printed.
+		if insertedCheck.Match(outcome.Native.Stderr) && bytes.HasPrefix(outcome.Node.Stdout, outcome.Native.Stdout) {
 			outcome.Verdict, outcome.Key, outcome.Detail = Checked, "inserted check", firstLines(string(outcome.Native.Stderr), 1)
 			return outcome
 		}

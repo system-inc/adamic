@@ -1,0 +1,21 @@
+{
+  "name": "prefer-template",
+  "order": 10,
+  "kinds": [
+    "BigIntLiteral",
+    "FalseKeyword",
+    "NoSubstitutionTemplateLiteral",
+    "NullKeyword",
+    "NumericLiteral",
+    "RegularExpressionLiteral",
+    "StringLiteral",
+    "TemplateExpression",
+    "TrueKeyword"
+  ],
+  "visit": "visit",
+  "oracle": "oraclePreferTemplate",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestPreferTemplate",
+  "factory": "create",
+  "class": "Rule"
+}

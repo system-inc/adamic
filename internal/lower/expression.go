@@ -13,6 +13,14 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
+		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
+			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
+				return stored, nil
+			}
+		}
+		return ir.Number, nil
+	}
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
@@ -22,6 +30,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
 	flags := proven.Flags()
+	if l.nodeBufferType(proven, "Buffer") {
+		return ir.Array, true
+	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
 		substituted, isKnown := l.substitution[proven]
@@ -149,6 +160,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}
+	if err := l.nodeBufferUnsupportedUse(node); err != nil {
+		return nil, err
+	}
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
@@ -160,7 +174,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-			if own := l.checker.GetTypeAtLocation(node); !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
+				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+			}
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
@@ -206,6 +223,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if !l.nodeBufferView(from, to) {
+		return false
+	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
@@ -366,7 +386,27 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+	if identity := l.enumNeverIdentity(node, map[*ast.Node]bool{}); identity != nil {
+		value, err := l.enumNeverValue(node)
+		if err != nil {
+			return nil, err
+		}
+		return l.enumNeverCheck(node, value, identity), nil
+	}
+	return l.enumNeverValue(node)
+}
+
+func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeFSDirectoryValue(node); known {
+		return value, err
+	}
 	node = ast.SkipParentheses(node)
+	if value, known, err := l.processValue(node); known {
+		return value, err
+	}
+	if value, known, err := l.enumExpression(node); known {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -407,11 +447,50 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
-		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
+		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local)})
 		if l.result.Locals[local].Type == ir.Union {
 			// Where the checker has narrowed it to fewer members held one way, it's read as that.
-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union {
-				read = ir.Narrow{Value: read, To: narrowed}
+			parent := node.Parent
+			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+				parent = parent.Parent
+			}
+			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
+			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing {
+				// Calls and captured writes can invalidate the checker's narrowing. Check the
+				// held member before casting it, with ordinary IR shared by both backends.
+				name := "object"
+				switch narrowed.Present() {
+				case ir.Number:
+					name = "number"
+				case ir.Boolean:
+					name = "boolean"
+				case ir.String:
+					name = "string"
+				case ir.Closure:
+					name = "function"
+				}
+				if name == "object" {
+					// typeof cannot distinguish differently held object members.
+					declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
+					members := []*checker.Type{declared}
+					if declared.Flags()&checker.TypeFlagsUnion != 0 {
+						members = declared.Types()
+					}
+					for _, member := range members {
+						if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
+							return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
+						}
+					}
+				}
+				b := l.libraryArrayBuilder([]ir.Expression{read})
+				held := b.read(b.parameters[0])
+				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
+				if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
+				}
+				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
+				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
 			}
 		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
@@ -875,6 +954,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return l.callFunction(call, instance)
 	}
+	// Host units get their builtin dispatch first. Refuse the remainder by the
+	// resolved member name rather than attempting a declaration-only function.
+	if module, member := l.nodeHostMember(callee); module != "" {
+		return nil, l.notYet(node, module+"."+member)
+	}
 	function, isFunction := l.functions[l.symbol(callee)]
 	if !ast.IsIdentifier(callee) || !isFunction {
 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
@@ -1047,7 +1131,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		arguments = append(arguments, lowered)
 	}
 	var returns ir.Type
-	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
+	if result := l.checker.GetTypeAtLocation(node); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
@@ -1057,10 +1141,16 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	// number | undefined is packed as one.
 	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
 		for index, parameter := range signatures[0].Parameters() {
-			if index < len(arguments) {
-				if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {
-					arguments[index] = fit(arguments[index], takes)
-				}
+			takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter))
+			if !isKnown {
+				return nil, l.notYet(node, "a function value parameter without a runtime representation")
+			}
+			if index >= len(arguments) {
+				// The checker accepted an omitted optional argument. A native closure reads every
+				// declared parameter slot, so absence must be supplied as typed undefined.
+				arguments = append(arguments, fit(ir.Undefined{}, takes))
+			} else {
+				arguments[index] = fit(arguments[index], takes)
 			}
 		}
 	}

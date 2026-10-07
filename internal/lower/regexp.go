@@ -280,7 +280,7 @@ func (l *lowering) regexGroups(node *ast.Node) bool {
 	for _, info := range l.checker.GetIndexInfosOfType(proven) {
 		if declaration := info.Declaration(); declaration != nil {
 			file := ast.GetSourceFileOfNode(declaration)
-			if load.IsLibrary(file) && strings.Contains(file.AsSourceFile().FileName(), ".regexp.") {
+			if load.IsLibrary(file) && strings.Contains(file.AsSourceFile().FileName().AsString(), ".regexp.") {
 				return true
 			}
 		}

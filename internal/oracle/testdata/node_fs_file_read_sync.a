@@ -1,0 +1,27 @@
+import { programArguments } from 'adamic';
+import { Buffer } from 'node:buffer';
+import { openSync, readSync, closeSync } from 'node:fs';
+const root = programArguments()[0] ?? '';
+function failure(error: Error): void {
+    const errno: NodeJS.ErrnoException = error;
+    console.log(`${error.name}: ${errno.code ?? ''}: ${error.message}`);
+}
+const buffer = Buffer.from([0,0,0,0]);
+const fd = openSync(root + '/file','r');
+console.log(`${readSync(fd,buffer,1,2,null)} ${buffer.toString('hex')}`);
+console.log(`${readSync(fd,buffer,0,1,0)} ${buffer.toString('hex')}`);
+console.log(`${readSync(fd,buffer,3,1,null)} ${buffer.toString('hex')}`);
+console.log(`${readSync(fd,buffer,0,1,null)} ${buffer.toString('hex')}`);
+closeSync(fd);
+console.log(`${readSync(-1,buffer,4,0.5,null)}`);
+try { readSync(fd,buffer,0,1,null); } catch(error) { if(error instanceof Error) { failure(error); } }
+try { readSync(-1,buffer,-1,1,null); } catch(error) { if(error instanceof Error) { failure(error); } }
+try { readSync(-1,buffer,0.5,1,null); } catch(error) { if(error instanceof Error) { failure(error); } }
+try { readSync(-1,buffer,5,1,null); } catch(error) { if(error instanceof Error) { failure(error); } }
+try { readSync(-1,buffer,0,-1,null); } catch(error) { if(error instanceof Error) { failure(error); } }
+try { readSync(-1,buffer,0,5,null); } catch(error) { if(error instanceof Error) { failure(error); } }
+try { readSync(-1,buffer,0,0,-2); } catch(error) { if(error instanceof Error) { failure(error); } }
+try { readSync(-1,buffer,0,0,0.5); } catch(error) { if(error instanceof Error) { failure(error); } }
+try { readSync(-1,Buffer.from(''),0,1,null); } catch(error) { if(error instanceof Error) { failure(error); } }
+try { readSync(-0.5,buffer,0,1,0); } catch(error) { if(error instanceof Error) { failure(error); } }
+try { readSync(0.5,buffer,0,1,0); } catch(error) { if(error instanceof Error) { failure(error); } }
