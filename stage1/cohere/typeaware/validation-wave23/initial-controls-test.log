@@ -1,0 +1,24 @@
+=== RUN   TestWave23AgreementAndMutants
+    wave_23_test.go:103: controls: 13333 identical finding bytes; findings 39
+    wave_23_test.go:111: controls-asan: 13333 identical finding bytes; findings 39
+    wave_23_test.go:118: throw-run: exit status 70
+        file	/workspace/wave-23/controls/control-000.a
+        19	28	@typescript-eslint/only-throw-error	object	This throws a value that is not an Error, so whatever catches it gets no stack trace and no message. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between a five-minute fix and an afternoon. Throw `new Error(...)` instead.	0	0
+        36	40	@typescript-eslint/only-throw-error	undef	This throws `undefined`, which reaches the handler as a value carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.	0	0
+        47	48	@typescript-eslint/only-throw-error	object	This throws a value that is not an Error, so whatever catches it gets no stack trace and no message. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between a five-minute fix and an afternoon. Throw `new Error(...)` instead.	0	0
+        55	57	@typescript-eslint/only-throw-error	object	This throws a value that is not an Error, so whatever catches it gets no stack trace and no message. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between a five-minute fix and an afternoon. Throw `new Error(...)` instead.	0	0
+        6	11	@typescript-eslint/only-throw-error	object	This throws a value that is not an Error, so whatever catches it gets no stack trace and no message. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between a five-minute fix and an afternoon. Throw `new Error(...)` instead.	0	0
+        file	/workspace/wave-23/controls/control-001.a
+        88	89	@typescript-eslint/only-throw-error	object	This throws a value that is not an Error, so whatever catches it gets no stack trace and no message. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between a five-minute fix and an afternoon. Throw `new Error(...)` instead.	0	0
+        file	/workspace/wave-23/controls/control-002.a
+        file	/workspace/wave-23/controls/control-003.a
+        39	44	@typescript-eslint/only-throw-error	object	This throws a value that is not an Error, so whatever catches it gets no stack trace and no message. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between a five-minute fix and an afternoon. Throw `new Error(...)` instead.	0	0
+        file	/workspace/wave-23/controls/control-004.a
+        82	83	@typescript-eslint/only-throw-error	object	This throws a value that is not an Error, so whatever catches it gets no stack trace and no message. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between a five-minute fix and an afternoon. Throw `new Error(...)` instead.	0	0
+        file	/workspace/wave-23/controls/control-005.a
+        
+        adamic: panic: unsupported checker question: then-callback-parameters
+--- FAIL: TestWave23AgreementAndMutants (149.93s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	149.931s
+FAIL

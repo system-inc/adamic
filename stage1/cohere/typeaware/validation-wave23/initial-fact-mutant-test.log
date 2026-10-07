@@ -1,0 +1,14 @@
+=== RUN   TestWave23AgreementAndMutants
+    wave_23_test.go:104: controls: 13302 identical finding bytes; findings 39
+    wave_23_test.go:112: controls-asan: 13302 identical finding bytes; findings 39
+    wave_23_test.go:123: throw mutant: exit 0, empty stderr, byte oracle catches byte 86
+    wave_23_test.go:123: reject mutant: exit 0, empty stderr, byte oracle catches byte 5315
+    wave_23_test.go:123: reduce mutant: exit 0, empty stderr, byte oracle catches byte 10901
+    wave_23_test.go:131: alias-argument: exit status 1
+        
+        # github.com/system-inc/adamic/bridge/tsgo/checker
+        ../wave-23/final/alias-argument.go:28:10: declared and not used: argument
+--- FAIL: TestWave23AgreementAndMutants (61.33s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	61.332s
+FAIL
