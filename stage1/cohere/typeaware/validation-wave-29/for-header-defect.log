@@ -1,0 +1,6 @@
+=== RUN   TestWave29AgreementAndMutants
+    wave_29_test.go:151: controls mismatch byte 7973: native "005.a\nfile\t/workspace/wave29-evidence/extra-006.a\nfile\t/workspace/wave29-evidence/extra-007.a\n292\t333\tnexus/concurrency-no-check-then-write\tcheckThenWrite\tThis loop looks for a file name that is free, and the `writeFileSync` after it creates that file in a separate step, so two saves running at once" Go "005.a\nfile\t/workspace/wave29-evidence/extra-006.a\n303\t344\tnexus/concurrency-no-check-then-write\tcheckThenWrite\tThis loop looks for a file name that is free, and the `writeFileSync` after it creates that file in a separate step, so two saves running at once (in this process or in two) can both find t"
+--- FAIL: TestWave29AgreementAndMutants (7.30s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	7.301s
+FAIL

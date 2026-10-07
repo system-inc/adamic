@@ -1,0 +1,14 @@
+=== RUN   TestWave29AgreementAndMutants
+    wave_29_test.go:151: controls: 9676 identical finding bytes; findings 15
+    wave_29_test.go:157: controls-asan: 9676 identical finding bytes; findings 15
+    wave_29_test.go:168: denylist mutant exits 0, empty stderr, byte oracle catches offset 46
+    wave_29_test.go:168: match mutant exits 0, empty stderr, byte oracle catches offset 46
+    wave_29_test.go:168: race mutant exits 0, empty stderr, byte oracle catches offset 52
+    wave_29_test.go:171: provenance-mutant: exit status 1
+        
+        # github.com/system-inc/adamic/bridge/tsgo/checker
+        ../wave29-evidence/provenance-mutant.go:39:3: declared and not used: module
+--- FAIL: TestWave29AgreementAndMutants (40.16s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	40.164s
+FAIL
