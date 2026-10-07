@@ -141,3 +141,10 @@ b6b1538b0. Fresh compiler, all ten completed profiles, both parked kernels, rule
 mutants, sanitizers and released-handle probes pass. New typeof Node oracle
 mutants pass. A 654-ref audit finds no unclaimed rule; no selected Go check
 skipped. Full gate not run. See ../wave08-core-next/LANDING_D3A_REPORT.md.
+
+Main runtime-stack landing: rebased onto main 4e0bfda50 and merged lint area
+bb2ece564 into this owned branch. All ten completed profiles, parked kernels,
+mutants, sanitizers, released handles and filtered Node checks pass again.
+Registry and option-bearing owned-witness tests pass without bypassing the
+options guard. A 720-ref audit finds no unclaimed rule. No selected check
+skipped; full gate not run. See ../wave08-core-next/LANDING_4E0_REPORT.md.
