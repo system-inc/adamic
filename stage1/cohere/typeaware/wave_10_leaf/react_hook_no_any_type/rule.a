@@ -1,0 +1,77 @@
+import { Diagnostic } from '../../diagnostic.ts';
+
+export interface HookCallFactsInterface {
+    readonly start: number;
+    readonly end: number;
+    readonly hasChecker: boolean;
+    readonly hasExpression: boolean;
+    readonly calleeKind: number;
+    readonly calleeName: string;
+    readonly receiverKind: number;
+    readonly receiverName: string;
+    readonly propertyKind: number;
+    readonly propertyName: string;
+    readonly resultPresent: boolean;
+    readonly resultFlags: number;
+    readonly blindedRules: readonly string[];
+}
+export function isHookName(name: string): boolean {
+    if(name.length < 4 || !name.startsWith('use')) {
+        return false;
+    }
+    const fourth = name.charCodeAt(3);
+    return (fourth >= 65 && fourth <= 90) || (fourth >= 48 && fourth <= 57);
+}
+export function namedRules(names: readonly string[]): string {
+    if(names.length === 0) {
+        return '';
+    }
+    if(names.length === 1) {
+        return `\`${names[0] ?? ''}\``;
+    }
+    if(names.length === 2) {
+        return `\`${names[0] ?? ''}\` and \`${names[1] ?? ''}\``;
+    }
+    let result = '';
+    for(let index = 0; index < names.length; index++) {
+        const name = names[index] ?? '';
+        result += index === names.length - 1 ? `and \`${name}\`` : `\`${name}\`, `;
+    }
+    return result;
+}
+export function description(hook: string, blinded: readonly string[]): string {
+    const cost =
+        blinded.length === 0
+            ? 'Every rule that identifies a React value by its type is disabled for this file, and this build linked none of them so none can be named. '
+            : `These rules identify a React value by asking the checker for its type, so they cannot analyse this file and will report nothing in it: ${namedRules(blinded)}. Suppressing this finding turns those off for the file rather than tidying a type. `;
+    return `\`${hook}\` here resolves to \`any\`, so the type checker cannot see what this hook returns. ${cost}React's types are probably not resolving here: check that \`@types/react\` is installed and current, that no ambient declaration is shadowing it, and that the path mapping for \`react\` resolves.`;
+}
+export function visit(node: HookCallFactsInterface): Diagnostic | undefined {
+    if(!node.hasChecker || !node.hasExpression) {
+        return undefined;
+    }
+    let hook = '';
+    if(node.calleeKind === 79 && isHookName(node.calleeName)) {
+        hook = node.calleeName;
+    }
+    if(
+        node.calleeKind === 212 &&
+        node.receiverKind === 79 &&
+        node.receiverName === 'React' &&
+        node.propertyKind === 79 &&
+        isHookName(node.propertyName)
+    ) {
+        hook = `React.${node.propertyName}`;
+    }
+    if(hook === '' || !node.resultPresent || (node.resultFlags & 1) === 0) {
+        return undefined;
+    }
+    return new Diagnostic(
+        'structure/react-hook-no-any-type',
+        'reactHookNoAnyType',
+        description(hook, node.blindedRules),
+        node.start,
+        node.end,
+        '',
+    );
+}

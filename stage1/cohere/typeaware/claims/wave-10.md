@@ -102,3 +102,11 @@ these names on main/base. This claim is pushed before implementation.
 New modules will be .a, in owned rule directories, with rule.json kinds and
 supplied-node listeners. Byte agreement, native mutants, sanitizer/release checks
 and native/Go timing remain required; a claim is not a completion claim.
+
+Third continuation status: IN PROGRESS, not complete or parked. Numeric rule.json
+metadata and isolated symbol/hook verdict modules are written in wave_10_leaf.
+Their supplied-fact Go comparisons and sanitizers pass. require-await's body
+filters pass context-free Go controls; candidate reporting explicitly refuses.
+The shared numeric supplied-node adapter is absent; live bridge/corpus validation
+is not performed. Contextual require-await reporting remains unported. See
+../wave_10_leaf/README.md for exact observations and limits. No further claim.

@@ -1,0 +1,158 @@
+import { mayNeedReport, visit } from './require_await/rule.a';
+import type { FunctionFactsInterface } from './require_await/rule.a';
+import { programArguments } from 'adamic';
+const node0: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 0,
+    bodyNodes: [{ kind: 242, depth: 0, flags: 0, awaitModifier: false }],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-00.ts\t${mayNeedReport(node0) ? 1 : 0}`);
+const node1: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [{ kind: 242, depth: 0, flags: 0, awaitModifier: false }],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-01.ts\t${mayNeedReport(node1) ? 1 : 0}`);
+const node2: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [
+        { kind: 242, depth: 0, flags: 0, awaitModifier: false },
+        { kind: 224, depth: 1, flags: 0, awaitModifier: false },
+    ],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-02.ts\t${mayNeedReport(node2) ? 1 : 0}`);
+const node3: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [
+        { kind: 242, depth: 0, flags: 0, awaitModifier: false },
+        { kind: 263, depth: 1, flags: 0, awaitModifier: false },
+        { kind: 224, depth: 3, flags: 0, awaitModifier: false },
+    ],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-03.ts\t${mayNeedReport(node3) ? 1 : 0}`);
+const node4: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 3,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [{ kind: 242, depth: 0, flags: 0, awaitModifier: false }],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-04.ts\t${mayNeedReport(node4) ? 1 : 0}`);
+const node5: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 224,
+    statementCount: 0,
+    bodyNodes: [{ kind: 224, depth: 0, flags: 0, awaitModifier: false }],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-05.ts\t${mayNeedReport(node5) ? 1 : 0}`);
+const node6: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 9,
+    statementCount: 0,
+    bodyNodes: [{ kind: 9, depth: 0, flags: 0, awaitModifier: false }],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-06.ts\t${mayNeedReport(node6) ? 1 : 0}`);
+const node7: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [
+        { kind: 242, depth: 0, flags: 0, awaitModifier: false },
+        { kind: 251, depth: 1, flags: 0, awaitModifier: true },
+    ],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-07.ts\t${mayNeedReport(node7) ? 1 : 0}`);
+const node8: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [
+        { kind: 242, depth: 0, flags: 0, awaitModifier: false },
+        { kind: 251, depth: 1, flags: 0, awaitModifier: false },
+    ],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-08.ts\t${mayNeedReport(node8) ? 1 : 0}`);
+const node9: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [
+        { kind: 242, depth: 0, flags: 0, awaitModifier: false },
+        { kind: 262, depth: 1, flags: 8198, awaitModifier: false },
+    ],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-09.ts\t${mayNeedReport(node9) ? 1 : 0}`);
+const node10: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [
+        { kind: 242, depth: 0, flags: 0, awaitModifier: false },
+        { kind: 262, depth: 1, flags: 8196, awaitModifier: false },
+    ],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-10.ts\t${mayNeedReport(node10) ? 1 : 0}`);
+const node11: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [
+        { kind: 242, depth: 0, flags: 0, awaitModifier: false },
+        { kind: 262, depth: 1, flags: 8194, awaitModifier: false },
+    ],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-11.ts\t${mayNeedReport(node11) ? 1 : 0}`);
+const node12: FunctionFactsInterface = {
+    modifierFlags: 1024,
+    functionFlags: 2,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [
+        { kind: 242, depth: 0, flags: 0, awaitModifier: false },
+        { kind: 264, depth: 1, flags: 0, awaitModifier: false },
+        { kind: 224, depth: 5, flags: 0, awaitModifier: false },
+    ],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-12.ts\t${mayNeedReport(node12) ? 1 : 0}`);
+const node13: FunctionFactsInterface = {
+    modifierFlags: 0,
+    functionFlags: 0,
+    bodyPresent: true,
+    bodyKind: 242,
+    statementCount: 1,
+    bodyNodes: [{ kind: 242, depth: 0, flags: 0, awaitModifier: false }],
+};
+console.log(`case\t/workspace/wave-10-leaf-controls/require_await-13.ts\t${mayNeedReport(node13) ? 1 : 0}`);
+if(programArguments().includes('--refuse')) {
+    visit(node1);
+}

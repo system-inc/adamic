@@ -1,0 +1,34 @@
+import { Diagnostic } from '../../diagnostic.ts';
+
+// Facts belong to the supplied call. The callee is parenthesis-normalized by
+// the adapter; origins are raw checker declarations, in checker order.
+export interface SymbolCallFactsInterface {
+    readonly start: number;
+    readonly end: number;
+    readonly hasChecker: boolean;
+    readonly hasExpression: boolean;
+    readonly argumentCount: number;
+    readonly calleeKind: number;
+    readonly calleeName: string;
+    readonly symbolPresent: boolean;
+    readonly declarationFiles: readonly boolean[];
+}
+const message =
+    'This creates a symbol with no description, so it prints as `Symbol()` in every ' +
+    'stack trace, log line and debugger view, and two unrelated symbols are indistinguishable ' +
+    'from each other. The description costs nothing and is the only label the value will ever ' +
+    'carry. Pass one.';
+
+export function visit(node: SymbolCallFactsInterface): Diagnostic | undefined {
+    if(!node.hasChecker || !node.hasExpression || node.argumentCount !== 0) {
+        return undefined;
+    }
+    if(node.calleeKind !== 79 || node.calleeName !== 'Symbol') {
+        return undefined;
+    }
+    // Production resolvesToAGlobal reads the first declaration, not every one.
+    if(!node.symbolPresent || node.declarationFiles.length === 0 || node.declarationFiles[0] !== true) {
+        return undefined;
+    }
+    return new Diagnostic('symbol-description', 'expected', message, node.start, node.end, '');
+}

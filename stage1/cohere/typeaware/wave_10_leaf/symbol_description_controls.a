@@ -1,0 +1,209 @@
+import { visit } from './symbol_description/rule.a';
+import type { SymbolCallFactsInterface } from './symbol_description/rule.a';
+let findings = 0;
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-00.ts');
+const node0: SymbolCallFactsInterface = {
+    start: 0,
+    end: 8,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 0,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [true],
+};
+const finding0 = visit(node0);
+if(finding0 !== undefined) {
+    console.log(finding0.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-01.ts');
+const node1: SymbolCallFactsInterface = {
+    start: 12,
+    end: 20,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 0,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [true],
+};
+const finding1 = visit(node1);
+if(finding1 !== undefined) {
+    console.log(finding1.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-02.ts');
+const node2: SymbolCallFactsInterface = {
+    start: 0,
+    end: 11,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 1,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [true],
+};
+const finding2 = visit(node2);
+if(finding2 !== undefined) {
+    console.log(finding2.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-03.ts');
+const node3: SymbolCallFactsInterface = {
+    start: 0,
+    end: 17,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 1,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [true],
+};
+const finding3 = visit(node3);
+if(finding3 !== undefined) {
+    console.log(finding3.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-04.ts');
+const node4: SymbolCallFactsInterface = {
+    start: 20,
+    end: 28,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 0,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [false],
+};
+const finding4 = visit(node4);
+if(finding4 !== undefined) {
+    console.log(finding4.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-05.ts');
+const node5: SymbolCallFactsInterface = {
+    start: 27,
+    end: 35,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 0,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [false],
+};
+const finding5 = visit(node5);
+if(finding5 !== undefined) {
+    console.log(finding5.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-06.ts');
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-07.ts');
+const node7: SymbolCallFactsInterface = {
+    start: 0,
+    end: 19,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 0,
+    calleeKind: 212,
+    calleeName: '',
+    symbolPresent: true,
+    declarationFiles: [true],
+};
+const finding7 = visit(node7);
+if(finding7 !== undefined) {
+    console.log(finding7.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-08.ts');
+const node8: SymbolCallFactsInterface = {
+    start: 0,
+    end: 10,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 0,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [true],
+};
+const finding8 = visit(node8);
+if(finding8 !== undefined) {
+    console.log(finding8.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-09.ts');
+const node9: SymbolCallFactsInterface = {
+    start: 33,
+    end: 41,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 0,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [false],
+};
+const finding9 = visit(node9);
+if(finding9 !== undefined) {
+    console.log(finding9.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-10.ts');
+const node10: SymbolCallFactsInterface = {
+    start: 0,
+    end: 13,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 1,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [true],
+};
+const finding10 = visit(node10);
+if(finding10 !== undefined) {
+    console.log(finding10.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-11.ts');
+const node11: SymbolCallFactsInterface = {
+    start: 13,
+    end: 21,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 0,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [true],
+};
+const finding11 = visit(node11);
+if(finding11 !== undefined) {
+    console.log(finding11.written());
+    findings++;
+}
+console.log('file\t/workspace/wave-10-leaf-controls/symbol_description-12.ts');
+const node12: SymbolCallFactsInterface = {
+    start: 22,
+    end: 30,
+    hasChecker: true,
+    hasExpression: true,
+    argumentCount: 0,
+    calleeKind: 79,
+    calleeName: 'Symbol',
+    symbolPresent: true,
+    declarationFiles: [false],
+};
+const finding12 = visit(node12);
+if(finding12 !== undefined) {
+    console.log(finding12.written());
+    findings++;
+}
+console.log(`findings ${findings}`);
