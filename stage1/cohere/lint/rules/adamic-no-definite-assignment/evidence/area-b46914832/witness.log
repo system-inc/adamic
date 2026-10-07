@@ -1,0 +1,6 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:39: base/security-require-context-access witness reports no findings
+--- FAIL: TestOwnedWitnesses (7.33s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	7.348s
+FAIL

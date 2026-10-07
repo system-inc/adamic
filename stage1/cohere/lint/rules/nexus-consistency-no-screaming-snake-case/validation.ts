@@ -49,7 +49,7 @@ for(const row of corpus.node(root).children) {
     for(let index = 0; index < parser.nodes.length; index++) { for(const child of parser.node(index).children) { parents[child] = index; } }
     const settings = new Settings();
     settings.load(field(row, 'options'));
-    const context = new RuleContext(source, parser, new Scanner(source), selected, '', '', false, parents, settings);
+    const context = new RuleContext(source, parser, new Scanner(source), selected, '', '', false, parents, settings, tree);
     const rule = access(context);
     const stack = [tree];
     while(stack.length > 0) {
