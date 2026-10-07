@@ -286,3 +286,15 @@ seven shared harness tests, uncached Node and vet pass. No selected test
 skipped; full gate and external checks not run. Four analysis claims stay
 parked; 566-head audit finds no unclaimed ranked rules. No new claim. See
 wave_18_component_props/LANDING_MAIN_REPORT.md and validation-main.
+
+## Landing on current main 71d7e491b
+
+Rebased onto actual main 71d7e491b and retained area bb2ece564 ancestry.
+Both ancestors explicitly verified at tested 63e185a6. Five suites pass
+in 497.723s and prepared React in 583.686s; standalone groups, sanitizers,
+mutants, released handles, parked reporters, bridge/registry, seven shared
+harness tests, filtered uncached Node and vet pass. Four native analysis
+claims remain parked. No selected check skipped; full gate and 17 external
+checks unrun. Audit of 575 live heads finds zero unclaimed ranked rules.
+No new claim. See wave_18_component_props/LANDING_STAGE3_MAIN_REPORT.md
+and validation-stage3-main for complete logs.
