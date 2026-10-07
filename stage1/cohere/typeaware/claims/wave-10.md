@@ -65,10 +65,40 @@ selection. Checking these three names across 129 distinct origin stage1 trees
 found only config/sets.ts inventory references, not implementations. None was
 skipped. This claim is committed and pushed before implementation work.
 
-Second continuation status: reserved but unported. A minimal valid TSX input
+Second continuation status: PARKED, reserved but unported. A minimal valid TSX input
 produces one production Go iframe finding, while the unchanged native stage-1
 parser exits 70 expecting GreaterThanToken at the self-closing slash. Shared
-JSX parsing blocks these rules before listener dispatch. Ahra's explicit stop
-instruction applies to this non-harness blocker; no shared parser is edited.
+JSX parsing blocks these rules before listener dispatch. The current parking instruction counts these claims as finished for the
+landing cap while preserving their incomplete implementation status. Blockers:
+shared native JSX parsing and the numeric node-kind/supplied-node adapter API.
+JSX is landing on area/stage1-lint; analysis modules are tracked on #dnv6f2c.
+No shared parser is edited.
 See ../wave_10_react/README.md for the input, exact error, Go verdict and limits.
-No additional batch is claimed.
+The continuation below is authorized by the React parking instruction.
+
+## Third continuation claim after React parking
+
+Landing-ready source and evidence are pushed in 6d4e8cfc, rebased on current
+origin/main f8013f0b. All six completed ports pass fresh native Go-byte oracles,
+sanitizers, released-handle guards and mutants. The three React claims above
+are explicitly parked and count as finished for the work-in-progress cap.
+
+The next eligible checker-dependent rules in combined by-volume order are:
+
+- require-await (combined volume 0)
+- structure/react-hook-no-any-type (combined volume 0)
+- symbol-description (combined volume 0)
+
+All 528 origin refs were fetched. Scanning 33 distinct claim blobs across the
+197 ranked names leaves 18 unclaimed rules. The base/main ranked ports remain
+unchanged. The thirteen react/ candidates are skipped under the React parking
+instruction; require-atomic-updates imports the control_flow_graph module and
+is skipped because it needs that analysis. require-await uses AST/checker
+facts; structure/react-hook-no-any-type listens to CallExpression and uses
+checker/React binding facts without JSX or high-level analysis; symbol-description
+uses call syntax and declaration origins. No production port was found for
+these names on main/base. This claim is pushed before implementation.
+
+New modules will be .a, in owned rule directories, with rule.json kinds and
+supplied-node listeners. Byte agreement, native mutants, sanitizer/release checks
+and native/Go timing remain required; a claim is not a completion claim.
