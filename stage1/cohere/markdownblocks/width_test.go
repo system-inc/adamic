@@ -12,8 +12,9 @@ import (
 	"time"
 )
 
-// Not parallel: the exhaustive scalar corpus and sanitizer builds have a large peak working set.
+// Parallel execution reserves memory: the exhaustive scalar corpus and sanitizer builds have a large peak working set.
 func TestMarkdownUnicodeWidths(t *testing.T) {
+	parallelMarkdownMemory(t, 8)
 	widthDependencies := os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS")
 	if widthDependencies == "" {
 		t.Skip("set ADAMIC_MARKDOWNWIDTH_DEPS to an npm install of emoji-regex@10.6.0, get-east-asian-width@1.6.0 and narrow-emojis@0.0.3; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")

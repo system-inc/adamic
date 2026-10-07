@@ -12,8 +12,9 @@ import (
 	"time"
 )
 
-// Not parallel: this compares full per-node path observations and sanitized mutant output.
+// Parallel execution reserves memory: this compares full per-node path observations and sanitized mutant output.
 func TestMarkdownAstPath(t *testing.T) {
+	parallelMarkdownMemory(t, 5)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)

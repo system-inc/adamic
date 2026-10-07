@@ -16,8 +16,9 @@ import (
 	"time"
 )
 
-// Not parallel: the exhaustive numeric corpus and sanitizer run need a bounded peak working set.
+// Parallel execution reserves memory: the exhaustive numeric corpus and sanitizer run need a bounded peak working set.
 func TestMarkdownSourceDecoding(t *testing.T) {
+	parallelMarkdownMemory(t, 8)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)

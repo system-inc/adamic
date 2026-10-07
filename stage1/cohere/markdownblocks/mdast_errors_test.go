@@ -10,6 +10,7 @@ import (
 )
 
 func TestMdastMalformedEvents(t *testing.T) {
+	parallelMarkdownMemory(t, 1)
 	root, e := filepath.Abs(repository)
 	if e != nil {
 		t.Fatal(e)

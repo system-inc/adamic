@@ -13,8 +13,9 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Not parallel: the exhaustive scalar corpus and sanitizer builds have a large peak working set.
+// Parallel execution reserves memory: the exhaustive scalar corpus and sanitizer builds have a large peak working set.
 func TestMarkdownTextSplitting(t *testing.T) {
+	parallelMarkdownMemory(t, 8)
 	root, e := filepath.Abs(repository)
 	if e != nil {
 		t.Fatal(e)
