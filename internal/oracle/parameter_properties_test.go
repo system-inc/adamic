@@ -16,6 +16,13 @@ func init() {
 		"internal/oracle/testdata/parameter_properties_ownership.a",
 		"internal/oracle/testdata/parameter_properties_levels.a",
 		"internal/oracle/testdata/parameter_properties_kinds.a",
+		"internal/oracle/testdata/params_namespaces_order.a",
+		"internal/oracle/testdata/params_namespaces_values.a",
+		"internal/oracle/testdata/params_namespaces_callbacks.a",
+		"internal/oracle/testdata/params_namespaces_dotted.a",
+		"internal/oracle/testdata/params_namespaces_types.a",
+		"internal/oracle/testdata/params_namespaces_overrides.a",
+		"internal/oracle/testdata/params_namespaces_shared/main.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path    string
