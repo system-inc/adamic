@@ -79,6 +79,20 @@ func (g *generator) emitCheck() (string, error) {
 			}
 		}
 		for index, native := range call.parameters {
+			if members, isBlock := strings.CutPrefix(native.tag, "block("); isBlock {
+				// A block in the bridge's C types: clang refuses it where the header's block differs.
+				types := []string{}
+				for _, member := range splitTopLevel(strings.TrimSuffix(members, ")")) {
+					if member != "" {
+						types = append(types, tagCType(member))
+					}
+				}
+				if len(types) == 0 {
+					types = append(types, "void")
+				}
+				parameters = append(parameters, fmt.Sprintf("void (^argument%d)(%s)", index, strings.Join(types, ", ")))
+				continue
+			}
 			parameters = append(parameters, fmt.Sprintf("%s argument%d", tagCType(native.tag), index))
 		}
 		if len(parameters) == 0 {
@@ -105,7 +119,7 @@ func (g *generator) emitCheck() (string, error) {
 				// Option bits cross as an unsigned long; unsigned long long is the same 64 bits.
 				fmt.Fprintf(&text, "\t_Static_assert(__builtin_types_compatible_p(unsigned long, %s) || __builtin_types_compatible_p(unsigned long long, %s), \"%s parameter %d ABI\");\n", native.header, native.header, call.selector, index)
 			} else if native.c != "id" {
-				fmt.Fprintf(&text, "\t_Static_assert(__builtin_types_compatible_p(%s, %s), \"%s parameter %d ABI\");\n", tagCType(native.tag), native.header, call.selector, index)
+				fmt.Fprintf(&text, "\t_Static_assert(%s, \"%s parameter %d ABI\");\n", compatible(tagCType(native.tag), native.header), call.selector, index)
 			}
 			arguments = append(arguments, argument)
 		}
@@ -131,7 +145,7 @@ func (g *generator) emitCheck() (string, error) {
 			text.WriteString("\t" + expression + ";\n")
 		} else {
 			if call.result.c != "id" {
-				fmt.Fprintf(&text, "\t_Static_assert(__builtin_types_compatible_p(%s, __typeof__(%s)), \"%s result ABI\");\n", tagCType(call.result.tag), expression, call.selector)
+				fmt.Fprintf(&text, "\t_Static_assert(%s, \"%s result ABI\");\n", compatible(tagCType(call.result.tag), "__typeof__("+expression+")"), call.selector)
 			}
 			fmt.Fprintf(&text, "\t%s result = %s;\n\t(void)result;\n", tagCType(call.result.tag), expression)
 		}
@@ -146,6 +160,16 @@ func checkKey(call checkCall) string {
 		owner = call.owner.node.Name + ":" + string(call.owner.declaration.Kind)
 	}
 	return fmt.Sprintf("%s:%t:%s", owner, call.instance, call.selector)
+}
+
+// compatible asserts that header is the C type a tag crosses as; a 64-bit integer may be spelled
+// long or long long (int64_t, the progress counts), the same 64 bits.
+func compatible(c, header string) string {
+	text := fmt.Sprintf("__builtin_types_compatible_p(%s, %s)", c, header)
+	if c == "long" || c == "unsigned long" {
+		text += fmt.Sprintf(" || __builtin_types_compatible_p(%s long, %s)", c, header)
+	}
+	return text
 }
 
 // Derive the witness's native types from the tags themselves, independently
@@ -164,6 +188,9 @@ func tagCType(tag string) string {
 		return "BOOL"
 	case "rectangle":
 		return "adamic_apple_rectangle"
+	case "action":
+		// An action is two arguments: the target before it, an object, and this, its selector.
+		return "SEL"
 	}
 	if strings.HasPrefix(tag, "enum(") {
 		return "long"

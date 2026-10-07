@@ -5,9 +5,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
-	"regexp"
 	"strings"
 
 	"github.com/system-inc/adamic/internal/apple/generate"
@@ -61,85 +59,27 @@ func run(arguments []string) error {
 	if directory == "" || len(names) == 0 {
 		return fmt.Errorf("usage: adamic-apple-bindings <framework>... -o <directory> [-sdk macosx] [-platform macos] [-umbrella file -headers framework-directory]")
 	}
-	if platform == "" {
-		switch sdk {
-		case "macosx":
-			platform = "macos"
-		case "iphoneos", "iphonesimulator":
-			platform = "ios"
-		case "appletvos", "appletvsimulator":
-			platform = "tvos"
-		case "watchos", "watchsimulator":
-			platform = "watchos"
-		case "xros", "xrsimulator":
-			platform = "visionos"
-		default:
-			return fmt.Errorf("unknown SDK %s: specify -platform", sdk)
-		}
-	}
-	configuration := generate.Configuration{Platform: platform}
-	clangArguments := []string{"-x", "objective-c", "-fsyntax-only", "-fblocks", "-Werror", "-Wno-nullability-completeness", "-Xclang", "-ast-dump=json"}
 	if headerRoot == "" {
-		data, err := exec.Command("xcrun", "--sdk", sdk, "--show-sdk-path").Output()
-		if err != nil {
-			return fmt.Errorf("Apple SDK lookup: %w; fixtures can use -headers and -umbrella", err)
-		}
-		sdkPath := strings.TrimSpace(string(data))
-		headerRoot = filepath.Join(sdkPath, "System", "Library", "Frameworks")
-		versionData, versionError := exec.Command("xcrun", "--sdk", sdk, "--show-sdk-version").Output()
-		if versionError != nil {
-			return fmt.Errorf("Apple SDK version lookup: %w", versionError)
-		}
-		version := strings.TrimSpace(string(versionData))
-		if !regexp.MustCompile(`^[0-9]+(?:\.[0-9]+)*$`).MatchString(version) {
-			return fmt.Errorf("invalid SDK version %q", version)
-		}
-		operatingSystem := map[string]string{"macos": "macos", "ios": "ios", "tvos": "tvos", "watchos": "watchos", "visionos": "xros"}[platform]
-		if operatingSystem == "" {
-			return fmt.Errorf("unsupported target platform %q", platform)
-		}
-		target := "arm64-apple-" + operatingSystem + version
-		if strings.Contains(sdk, "simulator") {
-			target += "-simulator"
-		}
-		clangArguments = append(clangArguments, "-isysroot", sdkPath, "-target", target)
-		data, err = exec.Command("xcrun", "--sdk", sdk, "--find", "clang").Output()
+		output, err := generate.FromSDK(context.Background(), sdk, platform, names)
 		if err != nil {
 			return err
 		}
-		if clang == "clang" {
-			clang = strings.TrimSpace(string(data))
-		}
-	} else {
-		clangArguments = append(clangArguments, "-fobjc-runtime=macosx-10.13")
+		return output.Write(directory)
 	}
-	seen := map[string]bool{}
-	for _, name := range names {
-		if seen[name] {
-			return fmt.Errorf("duplicate framework %s", name)
-		}
-		seen[name] = true
-		if !regexp.MustCompile(`^[A-Za-z][A-Za-z0-9_]*$`).MatchString(name) {
-			return fmt.Errorf("invalid framework name %q", name)
-		}
-		headers := filepath.Join(headerRoot, name+".framework", "Headers")
-		info, err := os.Stat(headers)
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() {
-			return fmt.Errorf("not a header directory: %s", headers)
-		}
-		configuration.Frameworks = append(configuration.Frameworks, generate.Framework{Name: name, Headers: headers})
+	// Fixture headers, outside any SDK.
+	if platform == "" {
+		platform = "macos"
 	}
-	temporary := ""
+	configuration, err := generate.FrameworkConfiguration(headerRoot, platform, names)
+	if err != nil {
+		return err
+	}
 	if umbrella == "" {
 		file, err := os.CreateTemp("", "adamic-apple-*.h")
 		if err != nil {
 			return err
 		}
-		temporary = file.Name()
-		defer os.Remove(temporary)
+		defer os.Remove(file.Name())
 		for _, name := range names {
 			if _, err := fmt.Fprintf(file, "#import <%s/%s.h>\n", name, name); err != nil {
 				file.Close()
@@ -149,11 +89,11 @@ func run(arguments []string) error {
 		if err := file.Close(); err != nil {
 			return err
 		}
-		umbrella = temporary
+		umbrella = file.Name()
 	} else {
 		configuration.Umbrella = filepath.Base(umbrella)
 	}
-	clangArguments = append(clangArguments, "-F", headerRoot, umbrella)
+	clangArguments := append(generate.ClangArguments(), "-fobjc-runtime=macosx-10.13", "-F", headerRoot, umbrella)
 	output, err := generate.RunClang(context.Background(), clang, clangArguments, configuration)
 	if err != nil {
 		return err

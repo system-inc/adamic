@@ -12,9 +12,9 @@ _Static_assert(NSFixtureStyleQuiet == 8UL, "NSFixtureStyleQuiet enum value");
 _Static_assert(NSFixtureStyleFlipped == 9223372036854775808UL, "NSFixtureStyleFlipped enum value");
 
 void adamic_binding_check_0(long argument0, long argument1) {
-	_Static_assert(__builtin_types_compatible_p(long, NSInteger), "NSFixtureAdd parameter 0 ABI");
-	_Static_assert(__builtin_types_compatible_p(long, NSInteger), "NSFixtureAdd parameter 1 ABI");
-	_Static_assert(__builtin_types_compatible_p(long, __typeof__(NSFixtureAdd(argument0, argument1))), "NSFixtureAdd result ABI");
+	_Static_assert(__builtin_types_compatible_p(long, NSInteger) || __builtin_types_compatible_p(long long, NSInteger), "NSFixtureAdd parameter 0 ABI");
+	_Static_assert(__builtin_types_compatible_p(long, NSInteger) || __builtin_types_compatible_p(long long, NSInteger), "NSFixtureAdd parameter 1 ABI");
+	_Static_assert(__builtin_types_compatible_p(long, __typeof__(NSFixtureAdd(argument0, argument1))) || __builtin_types_compatible_p(long long, __typeof__(NSFixtureAdd(argument0, argument1))), "NSFixtureAdd result ABI");
 	long result = NSFixtureAdd(argument0, argument1);
 	(void)result;
 }
@@ -25,7 +25,7 @@ void adamic_binding_check_1(void) {
 }
 
 void adamic_binding_check_2(NSError * _Nonnull receiver) {
-	_Static_assert(__builtin_types_compatible_p(long, __typeof__([receiver code])), "code result ABI");
+	_Static_assert(__builtin_types_compatible_p(long, __typeof__([receiver code])) || __builtin_types_compatible_p(long long, __typeof__([receiver code])), "code result ABI");
 	long result = [receiver code];
 	(void)result;
 }
@@ -83,7 +83,7 @@ void adamic_binding_check_11(NSFixturePanel * _Nonnull receiver, adamic_apple_re
 }
 
 void adamic_binding_check_12(NSFixturePanel * _Nonnull receiver, long argument0) {
-	_Static_assert(__builtin_types_compatible_p(long, NSInteger), "showCount: parameter 0 ABI");
+	_Static_assert(__builtin_types_compatible_p(long, NSInteger) || __builtin_types_compatible_p(long long, NSInteger), "showCount: parameter 0 ABI");
 	[receiver showCount:argument0];
 }
 
@@ -111,7 +111,7 @@ void adamic_binding_check_17(NSFixtureRecord * _Nonnull receiver) {
 }
 
 void adamic_binding_check_18(NSFixtureRecord * _Nonnull receiver, long argument0) {
-	_Static_assert(__builtin_types_compatible_p(long, NSInteger), "initWithCount: parameter 0 ABI");
+	_Static_assert(__builtin_types_compatible_p(long, NSInteger) || __builtin_types_compatible_p(long long, NSInteger), "initWithCount: parameter 0 ABI");
 	id result = [receiver initWithCount:argument0];
 	(void)result;
 }
@@ -169,7 +169,11 @@ void adamic_binding_check_30(NSFixtureRecord * _Nonnull receiver, id argument0) 
 	[receiver takeText:argument0];
 }
 
-void adamic_binding_check_31(void) {
+void adamic_binding_check_31(NSFixtureRecord * _Nonnull receiver, void (^argument0)(id)) {
+	[receiver withCompletion:argument0];
+}
+
+void adamic_binding_check_32(void) {
 	id result = [NSFixtureRoot alloc];
 	(void)result;
 }

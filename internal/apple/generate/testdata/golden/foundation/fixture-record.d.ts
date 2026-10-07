@@ -7,7 +7,6 @@
 // Skipped -[NSFixtureRecord takeArray:]: C arrays are not carried by the bridge.
 // Skipped -[NSFixtureRecord takeCallback:]: function pointers are not carried by the bridge.
 // Skipped -[NSFixtureRecord variadic:]: variadic declarations are not carried by the bridge.
-// Skipped -[NSFixtureRecord withCompletion:]: blocks are omitted by this generator.
 // Skipped discardSelf: a consumed receiver cannot be passed borrowed.
 
 declare module 'apple/foundation/fixture-record' {
@@ -21,23 +20,16 @@ declare module 'apple/foundation/fixture-record' {
 	export class FixtureRecord extends FixtureRoot {
 
 		/**
-		 * -[NSFixtureRecord copyRecord]
-		 * @objc method copyRecord -> new object
-		 */
-		copy(): FixtureRecord;
-
-		/**
-		 * -[NSFixtureRecord displayText], -[NSFixtureRecord replaceText:]
-		 * @objc get displayText -> string
-		 * @objc set replaceText: string
-		 */
-		text: string;
-
-		/**
 		 * -[NSFixtureRecord initWithCount:]
 		 * @objc init initWithCount: 0.count:integer
 		 */
 		constructor(options: { readonly count: number });
+
+		/**
+		 * -[NSFixtureRecord copyRecord]
+		 * @objc method copyRecord -> new object
+		 */
+		copy(): FixtureRecord;
 
 		/**
 		 * -[NSFixtureRecord isReady]
@@ -59,6 +51,12 @@ declare module 'apple/foundation/fixture-record' {
 		readonly optionalText: string | undefined;
 
 		/**
+		 * -[NSFixtureRecord renamedAction]
+		 * @objc method renamedAction -> void
+		 */
+		performAction(): void;
+
+		/**
 		 * -[NSFixtureRecord phoneOnly]
 		 * @objc method phoneOnly -> void
 		 */
@@ -77,12 +75,6 @@ declare module 'apple/foundation/fixture-record' {
 		readText(): string;
 
 		/**
-		 * -[NSFixtureRecord renamedAction]
-		 * @objc method renamedAction -> void
-		 */
-		performAction(): void;
-
-		/**
 		 * -[NSFixtureRecord takeObject:]
 		 * @objc method takeObject: 0:object -> void
 		 */
@@ -99,5 +91,18 @@ declare module 'apple/foundation/fixture-record' {
 		 * @objc method takeText: 0:string? -> void
 		 */
 		takeText(text: string | undefined): void;
+
+		/**
+		 * -[NSFixtureRecord displayText], -[NSFixtureRecord replaceText:]
+		 * @objc get displayText -> string
+		 * @objc set replaceText: string
+		 */
+		text: string;
+
+		/**
+		 * -[NSFixtureRecord withCompletion:]
+		 * @objc method withCompletion: 0:block(string) -> void
+		 */
+		withCompletion(completion: (argument1: string) => void): void;
 	}
 }

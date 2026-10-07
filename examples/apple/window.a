@@ -12,20 +12,23 @@ const dedication = 'In dedication, with gratitude, to Kenneth Lane Thompson, who
 const application = Application.shared;
 application.setActivationPolicy('Regular');
 
-const window = new Window({ x: 0, y: 0, width: 560, height: 220 }, { styleMask: ['Titled', 'Closable', 'Miniaturizable'], backing: 'Buffered' });
+const window = new Window({ contentRectangle: { x: 0, y: 0, width: 560, height: 220 }, styleMask: ['Titled', 'Closable', 'Miniaturizable'], backing: 'Buffered', defer: false });
 window.title = 'Adamic';
 
-const content = new View({ x: 0, y: 0, width: 560, height: 220 });
-const label = TextField.label(dedication);
+const content = new View({ frame: { x: 0, y: 0, width: 560, height: 220 } });
+const label = TextField.label({ with: dedication });
 label.setFrame({ x: 20, y: 130, width: 520, height: 60 });
-const counter = TextField.label('Not pressed yet');
+const counter = TextField.label({ with: 'Not pressed yet' });
 counter.setFrame({ x: 20, y: 80, width: 520, height: 24 });
 
 let presses = 0;
-const button = new Button('Press', () => {
-	presses += 1;
-	counter.stringValue = `Pressed ${presses} ${presses === 1 ? 'time' : 'times'}`;
-	console.log(counter.stringValue);
+const button = new Button({
+	title: 'Press',
+	action: () => {
+		presses += 1;
+		counter.stringValue = `Pressed ${presses} ${presses === 1 ? 'time' : 'times'}`;
+		console.log(counter.stringValue);
+	},
 });
 button.setFrame({ x: 20, y: 24, width: 120, height: 32 });
 
@@ -35,7 +38,7 @@ content.addSubview(button);
 window.contentView = content;
 
 window.center();
-window.makeKeyAndOrderFront();
+window.makeKeyAndOrderFront(undefined);
 application.activate();
 console.log(`${window.title}: ${window.isVisible ? 'visible' : 'hidden'}`);
 application.run();

@@ -256,11 +256,32 @@ func (g *generator) emitClass(def *definition) (string, error) {
 	// of the same shape (+[NSAffineTransform transform] beside -init).
 	initializers := map[string]bool{}
 	for _, child := range nodes {
-		if child.Kind == "ObjCMethodDecl" && child.Instance && !child.Implicit && !accessors[child.Name] {
+		if child.Kind == "ObjCMethodDecl" && child.Instance && !child.Implicit && !accessors[child.Name] && !child.SetterOnly {
 			_, out, _, _, reason, err := g.callable(child, naming.InstanceMethod, n.Name, def.declaration.SwiftName, nil, nil)
 			if err == nil && reason == "" && out.Arguments.Constructor {
 				initializers[naming.Shape(out.Arguments)] = true
 			}
+		}
+	}
+	// A property whose getter's result can't cross but whose setter can (NSView's frame, a
+	// rectangle) is offered as its setter, setFrame(frame), Objective-C's own spelling.
+	if !protocol {
+		for _, p := range properties {
+			_, setter := propertySelectors(p)
+			if _, err := g.native(p.Type, n.Name, true); err == nil || setter == "" {
+				continue
+			}
+			if _, err := g.native(p.Type, n.Name, false); err != nil {
+				continue
+			}
+			attributes := []*node{}
+			for _, child := range p.Children {
+				if strings.HasSuffix(child.Kind, "Attr") {
+					attributes = append(attributes, child)
+				}
+			}
+			parameter := &node{Kind: "ParmVarDecl", Name: p.Name, Type: p.Type, Begin: p.Begin, End: p.End, Location: p.Location, Framework: n.Framework}
+			nodes = append(nodes, &node{Kind: "ObjCMethodDecl", Name: setter, Instance: !p.ClassProperty, Begin: p.Begin, End: p.End, Location: p.Location, Framework: n.Framework, Result: writtenType{Qual: "void"}, Children: append(attributes, parameter), SetterOnly: true})
 		}
 	}
 	members := []string{}
@@ -292,7 +313,7 @@ func (g *generator) emitClass(def *definition) (string, error) {
 	shortened := map[string][]*node{}
 	own := map[bool]map[string][]member{false: {}, true: {}}
 	for _, child := range nodes {
-		if child.Kind != "ObjCMethodDecl" || child.Implicit || accessors[child.Name] {
+		if child.Kind != "ObjCMethodDecl" || child.Implicit || accessors[child.Name] && !child.SetterOnly {
 			continue
 		}
 		key, ok := g.methodKey(def, child, taken(def, !child.Instance, child.Name))
@@ -312,7 +333,7 @@ func (g *generator) emitClass(def *definition) (string, error) {
 		}
 	}
 	for _, child := range nodes {
-		if child.Kind != "ObjCMethodDecl" || child.Implicit || accessors[child.Name] {
+		if child.Kind != "ObjCMethodDecl" || child.Implicit || accessors[child.Name] && !child.SetterOnly {
 			continue
 		}
 		text, entry, name, isConstructor, err := g.emitMethod(def, child, protocol, initializers, taken(def, !child.Instance, child.Name), inherited[!child.Instance])
@@ -349,7 +370,7 @@ func (g *generator) emitClass(def *definition) (string, error) {
 			def.surface[static][name] = entries
 		}
 	}
-	sort.Strings(members)
+	sortMembers(members)
 	var text strings.Builder
 	if protocol {
 		text.WriteString("\t/** " + n.Name + " */\n\texport interface " + def.output.Name + " {\n")
@@ -377,6 +398,35 @@ func (g *generator) emitClass(def *definition) (string, error) {
 	}
 	text.WriteString("\t}\n")
 	return text.String(), nil
+}
+
+// sortMembers orders a class's members by name, and a name's overloads by most fields first:
+// tsc types a closure's parameters from the first overload it tries, so the one that takes the
+// closure (dataTask({ with, completionHandler })) comes before the one that doesn't.
+func sortMembers(members []string) {
+	key := func(member string) (string, int) {
+		lines := strings.Split(strings.TrimRight(member, "\n"), "\n")
+		declaration := strings.TrimSpace(lines[len(lines)-1])
+		for _, prefix := range []string{"static ", "readonly "} {
+			declaration = strings.TrimPrefix(declaration, prefix)
+		}
+		name := declaration
+		if end := strings.IndexAny(declaration, "(:"); end >= 0 {
+			name = declaration[:end]
+		}
+		return name, strings.Count(declaration, ": ")
+	}
+	sort.SliceStable(members, func(i, j int) bool {
+		left, leftFields := key(members[i])
+		right, rightFields := key(members[j])
+		if left != right {
+			return left < right
+		}
+		if leftFields != rightFields {
+			return leftFields > rightFields
+		}
+		return members[i] < members[j]
+	})
 }
 
 // methodKey is a method's slot and shape as it would be emitted, static and instance apart.
@@ -466,7 +516,9 @@ func (g *generator) emitProperty(owner *definition, n *node, protocol bool, inhe
 		}
 	}
 	g.declarations = append(g.declarations, d)
-	g.addImport(m, owner.output.Module, native.reference)
+	for _, reference := range native.references() {
+		g.addImport(m, owner.output.Module, reference)
+	}
 	tags := []string{"get " + getter + " -> " + native.tag}
 	prefix := ""
 	if n.ClassProperty {
@@ -519,7 +571,19 @@ func (g *generator) callable(n *node, kind naming.Kind, parent, parentSwiftName 
 		return d, naming.Output{}, nil, nativeType{}, "variadic declarations are not carried by the bridge", nil
 	}
 	var natives []nativeType
-	for _, p := range children(n, "ParmVarDecl") {
+	parameters := children(n, "ParmVarDecl")
+	for i := 0; i < len(parameters); i++ {
+		p := parameters[i]
+		// A target and its action (buttonWithTitle:target:action:) are one closure, which the
+		// bridge hands Apple as both: an object that calls it, and the selector it answers.
+		if cleanType(p.Type.Qual) == "id" && i+1 < len(parameters) && cleanType(parameters[i+1].Type.Qual) == "SEL" {
+			natives = append(natives, nativeType{hidden: true, c: "id", header: "id"}, nativeType{tag: "action", adamic: "() => void", c: "id", header: "SEL"})
+			d.Parameters = append(d.Parameters,
+				naming.Parameter{Name: p.Name, Type: naming.Type{Spelling: "id", Nullability: naming.Nonnull, Framework: n.Framework}},
+				naming.Parameter{Name: parameters[i+1].Name, Type: naming.Type{Spelling: "SEL", Nullability: naming.Nonnull, Framework: n.Framework}})
+			i++
+			continue
+		}
 		if has(p, "NSConsumedAttr") || has(p, "CFConsumedAttr") {
 			return d, naming.Output{}, nil, nativeType{}, "consumed parameters cannot use the bridge's borrowed arguments", nil
 		}
@@ -534,8 +598,18 @@ func (g *generator) callable(n *node, kind naming.Kind, parent, parentSwiftName 
 		if e != nil {
 			return d, naming.Output{}, nil, nativeType{}, e.Error(), nil
 		}
+		parameterType := naming.Type{Spelling: namingSpelling(p.Type, native), Object: native.c == "id", Nullability: naming.Nonnull, Framework: referenceFramework(native, n.Framework)}
+		if strings.HasPrefix(native.tag, "block(") {
+			native = blockNames(native, source)
+			// The naming layer reads a block as a function of what it's handed.
+			function := &naming.FunctionType{Result: naming.Type{Spelling: "void"}}
+			for _, member := range native.members {
+				function.Parameters = append(function.Parameters, naming.Type{Spelling: member.header, Object: member.c == "id", Nullability: naming.Nonnull, Framework: referenceFramework(member, n.Framework)})
+			}
+			parameterType = naming.Type{Spelling: "", Function: function, Nullability: naming.Nonnull, Framework: n.Framework}
+		}
 		natives = append(natives, native)
-		d.Parameters = append(d.Parameters, naming.Parameter{Name: p.Name, Type: naming.Type{Spelling: namingSpelling(p.Type, native), Object: native.c == "id", Nullability: naming.Nonnull, Framework: referenceFramework(native, n.Framework)}})
+		d.Parameters = append(d.Parameters, naming.Parameter{Name: p.Name, Type: parameterType})
 	}
 	result, e := g.native(n.Result, parent, true)
 	if e != nil {
@@ -554,14 +628,27 @@ func (g *generator) callable(n *node, kind naming.Kind, parent, parentSwiftName 
 func signature(out naming.Output, natives []nativeType) (string, string) {
 	parameters := []string{}
 	sources := make([]string, len(natives))
-	for i, arg := range out.Arguments.Positional {
+	// A target an action carries is no argument of its own; its action's source stands for both.
+	for _, arg := range out.Arguments.Positional {
+		if natives[arg.Index].hidden {
+			continue
+		}
+		sources[arg.Index] = fmt.Sprintf("%d:%s", len(parameters), natives[arg.Index].tag)
 		parameters = append(parameters, arg.Name+": "+natives[arg.Index].adamic)
-		sources[arg.Index] = fmt.Sprintf("%d:%s", i, natives[arg.Index].tag)
 	}
-	if len(out.Arguments.Options) > 0 {
+	visible := 0
+	for _, arg := range out.Arguments.Options {
+		if !natives[arg.Index].hidden {
+			visible++
+		}
+	}
+	if visible > 0 {
 		fields := []string{}
 		position := len(parameters)
 		for _, arg := range out.Arguments.Options {
+			if natives[arg.Index].hidden {
+				continue
+			}
 			fields = append(fields, "readonly "+arg.Name+": "+natives[arg.Index].adamic)
 			sources[arg.Index] = fmt.Sprintf("%d.%s:%s", position, arg.Name, natives[arg.Index].tag)
 		}
@@ -573,9 +660,15 @@ func signature(out naming.Output, natives []nativeType) (string, string) {
 		}
 		parameters = append(parameters, optionsName+": { "+strings.Join(fields, "; ")+" }")
 	}
+	written := []string{}
+	for _, source := range sources {
+		if source != "" {
+			written = append(written, source)
+		}
+	}
 	suffix := ""
-	if len(sources) > 0 {
-		suffix = " " + strings.Join(sources, " ")
+	if len(written) > 0 {
+		suffix = " " + strings.Join(written, " ")
 	}
 	return strings.Join(parameters, ", "), suffix
 }
@@ -626,7 +719,9 @@ func (g *generator) emitMethod(owner *definition, n *node, protocol bool, initia
 	}
 	g.declarations = append(g.declarations, d)
 	for _, native := range append(append([]nativeType{}, natives...), result) {
-		g.addImport(m, owner.output.Module, native.reference)
+		for _, reference := range native.references() {
+			g.addImport(m, owner.output.Module, reference)
+		}
 	}
 	parameters, sources := signature(out, natives)
 	tagKind := "method"
@@ -653,9 +748,7 @@ func (g *generator) emitMethod(owner *definition, n *node, protocol bool, initia
 	}
 	references := []*definition{}
 	for _, native := range append(append([]nativeType{}, natives...), result) {
-		if native.reference != nil {
-			references = append(references, native.reference)
-		}
+		references = append(references, native.references()...)
 	}
 	return text, member{selector: n.Name, text: text, references: references}, out.Name, constructor, nil
 }
@@ -686,7 +779,9 @@ func (g *generator) emitFunction(n *node) error {
 	g.declarations = append(g.declarations, d)
 	m := g.getModule(out.Module)
 	for _, native := range append(append([]nativeType{}, natives...), result) {
-		g.addImport(m, out.Module, native.reference)
+		for _, reference := range native.references() {
+			g.addImport(m, out.Module, reference)
+		}
 	}
 	parameters, sources := signature(out, natives)
 	returns := " -> " + result.tag

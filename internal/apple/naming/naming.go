@@ -214,8 +214,19 @@ func Name(d Declaration) (Output, error) {
 			}
 		}
 		result.Arguments = layout
-		if (d.Kind == InstanceMethod || d.Kind == ClassMethod) && !layout.Constructor && len(layout.Options) > 0 && contains(d.TakenNames, result.Name) {
-			foldFirstLabel(&result, d)
+		if (d.Kind == InstanceMethod || d.Kind == ClassMethod) && !layout.Constructor && contains(d.TakenNames, result.Name) {
+			if len(layout.Options) > 0 {
+				foldFirstLabel(&result, d)
+			} else if !d.KeepNeedlessWords {
+				// With no label to fold, Swift's conflict rule: keep the words omission dropped,
+				// when that frees the name (NSControl's drawCell: beside NSView's drawRect:, both
+				// draw(_:) once their types' words are dropped).
+				kept := d
+				kept.KeepNeedlessWords = true
+				if named, err := Name(kept); err == nil && !contains(d.TakenNames, named.Name) {
+					return named, nil
+				}
+			}
 		}
 	}
 	if d.Result.Spelling != "" {
@@ -292,7 +303,7 @@ func MapType(t Type) (string, error) {
 	base := strings.TrimSpace(strings.TrimSuffix(s, "*"))
 	var name string
 	switch base {
-	case "CGFloat", "NSInteger", "NSUInteger", "double", "float", "int", "unsigned int", "long", "unsigned long", "short", "unsigned short", "size_t":
+	case "CGFloat", "NSInteger", "NSUInteger", "double", "float", "int", "unsigned int", "long", "unsigned long", "long long", "unsigned long long", "int64_t", "uint64_t", "short", "unsigned short", "size_t":
 		name = "number"
 	case "BOOL", "bool", "_Bool":
 		name = "boolean"

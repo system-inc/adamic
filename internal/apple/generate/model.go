@@ -55,6 +55,22 @@ type nativeType struct {
 	tag, adamic, c, header string
 	reference              *definition
 	nullable               bool
+	// A block's parameters, what Apple hands the closure; their types are imports too.
+	members []nativeType
+	// hidden is a target whose action argument carries it: the two are one closure.
+	hidden bool
+}
+
+// references are the bound types a native type names, its own and a block's members'.
+func (t nativeType) references() []*definition {
+	references := []*definition{}
+	if t.reference != nil {
+		references = append(references, t.reference)
+	}
+	for _, member := range t.members {
+		references = append(references, member.references()...)
+	}
+	return references
 }
 
 func cleanType(s string) string {
@@ -529,7 +545,7 @@ func (g *generator) native(t writtenType, parent string, result bool) (nativeTyp
 	}
 	if desugared == q {
 		switch q {
-		case "NSInteger":
+		case "NSInteger", "long long", "int64_t":
 			desugared = "long"
 		case "NSUInteger":
 			desugared = "unsigned long"
@@ -539,7 +555,10 @@ func (g *generator) native(t writtenType, parent string, result bool) (nativeTyp
 	}
 	mapped := nativeType{header: q, nullable: !strings.Contains(t.Qual, "_Nonnull")}
 	if strings.Contains(q, "^") {
-		return mapped, fmt.Errorf("blocks are omitted by this generator")
+		if result {
+			return mapped, fmt.Errorf("block results are not carried by the bridge")
+		}
+		return g.block(t.Qual, parent)
 	}
 	if strings.ContainsAny(q, "[]") {
 		return mapped, fmt.Errorf("C arrays are not carried by the bridge")
@@ -572,12 +591,13 @@ func (g *generator) native(t writtenType, parent string, result bool) (nativeTyp
 		mapped.adamic = "number"
 		mapped.c = "double"
 		return mapped, nil
-	case "long":
+	case "long", "long long":
+		// long long is long's 64 bits on every Apple target the bridge builds for.
 		mapped.tag = "integer"
 		mapped.adamic = "number"
 		mapped.c = "long"
 		return mapped, nil
-	case "unsigned long":
+	case "unsigned long", "unsigned long long":
 		mapped.tag = "unsigned"
 		mapped.adamic = "number"
 		mapped.c = "unsigned long"
@@ -672,6 +692,134 @@ func (g *generator) native(t writtenType, parent string, result bool) (nativeTyp
 	}
 	return mapped, nil
 }
+
+// block maps a block parameter, a closure Apple calls with the values its parameters list:
+// void (^)(NSData * _Nullable, NSURLResponse * _Nullable, NSError * _Nullable) is
+// block(object?,object?,object?). Its parameters are named argument1 onward until blockNames
+// reads the header's names.
+func (g *generator) block(written, parent string) (nativeType, error) {
+	mapped := nativeType{header: cleanType(written), c: "id"}
+	caret := strings.Index(written, "(^")
+	close := strings.Index(written[caret:], ")")
+	if caret < 0 || close < 0 {
+		return mapped, fmt.Errorf("unreadable block type %q", written)
+	}
+	if returned := withoutAttributes(cleanType(written[:caret])); returned != "void" {
+		return mapped, fmt.Errorf("blocks returning %s are not carried by the bridge", returned)
+	}
+	list := strings.TrimSpace(written[caret+close+1:])
+	if !strings.HasPrefix(list, "(") || !strings.HasSuffix(list, ")") {
+		return mapped, fmt.Errorf("unreadable block parameters %q", written)
+	}
+	tags, types := []string{}, []string{}
+	for i, parameter := range splitTopLevel(list[1 : len(list)-1]) {
+		if cleanType(parameter) == "void" && i == 0 {
+			break
+		}
+		member, err := g.native(writtenType{Qual: parameter}, parent, false)
+		if err != nil {
+			return mapped, fmt.Errorf("block parameter: %w", err)
+		}
+		switch {
+		case member.tag == "void", member.tag == "action", member.tag == "rectangle", strings.HasPrefix(member.tag, "block("), strings.HasPrefix(member.tag, "enum("), strings.HasPrefix(member.tag, "options("):
+			return mapped, fmt.Errorf("a block can't take a %s yet", member.tag)
+		}
+		mapped.members = append(mapped.members, member)
+		tags = append(tags, member.tag)
+		types = append(types, fmt.Sprintf("argument%d: %s", i+1, member.adamic))
+	}
+	mapped.tag = "block(" + strings.Join(tags, ",") + ")"
+	mapped.adamic = "(" + strings.Join(types, ", ") + ") => void"
+	return mapped, nil
+}
+
+// withoutAttributes drops what only annotates a type: __attribute__((...)) groups, and the macros
+// that spell them (NS_SWIFT_SENDABLE void is a void).
+func withoutAttributes(text string) string {
+	text = attributeGroup.ReplaceAllString(text, " ")
+	words := []string{}
+	for _, word := range strings.Fields(text) {
+		if !macroWord.MatchString(word) {
+			words = append(words, word)
+		}
+	}
+	return strings.Join(words, " ")
+}
+
+var attributeGroup = regexp.MustCompile(`__attribute__\(\([^)]*(?:\([^)]*\)[^)]*)*\)\)`)
+var macroWord = regexp.MustCompile(`^[A-Z][A-Z0-9_]*_[A-Z0-9_]*$`)
+
+// splitTopLevel splits a parameter list at the commas outside any parentheses or angle brackets.
+func splitTopLevel(list string) []string {
+	parts, depth, start := []string{}, 0, 0
+	for i, c := range list {
+		switch c {
+		case '(', '<':
+			depth++
+		case ')', '>':
+			depth--
+		case ',':
+			if depth == 0 {
+				parts = append(parts, strings.TrimSpace(list[start:i]))
+				start = i + 1
+			}
+		}
+	}
+	return append(parts, strings.TrimSpace(list[start:]))
+}
+
+// blockNames gives a block's closure type the parameter names its header wrote
+// (completionHandler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))), where
+// it wrote them.
+func blockNames(native nativeType, source string) nativeType {
+	// The caret may follow an attribute: (void (NS_SWIFT_SENDABLE ^)(NSData *data, ...)).
+	caret := strings.Index(source, "^")
+	if caret < 0 || len(native.members) == 0 {
+		return native
+	}
+	close := strings.Index(source[caret:], ")")
+	rest := strings.TrimSpace(source[caret+close+1:])
+	if !strings.HasPrefix(rest, "(") {
+		return native
+	}
+	// The list ends at its own closing parenthesis, not the parameter's after it
+	// (length))completionHandler).
+	end, depth := -1, 0
+	for i, c := range rest {
+		if c == '(' {
+			depth++
+		} else if c == ')' {
+			depth--
+			if depth == 0 {
+				end = i
+				break
+			}
+		}
+	}
+	if end < 0 {
+		return native
+	}
+	written := splitTopLevel(rest[1:end])
+	if len(written) != len(native.members) {
+		return native
+	}
+	types := []string{}
+	for i, member := range native.members {
+		name := fmt.Sprintf("argument%d", i+1)
+		words := strings.FieldsFunc(written[i], func(c rune) bool { return c == ' ' || c == '*' || c == '\t' })
+		if len(words) > 1 {
+			last := words[len(words)-1]
+			if identifierPattern.MatchString(last) && !strings.HasPrefix(last, "_") && last != "const" {
+				name = last
+			}
+		}
+		types = append(types, name+": "+member.adamic)
+	}
+	native.adamic = "(" + strings.Join(types, ", ") + ") => void"
+	return native
+}
+
+var identifierPattern = regexp.MustCompile(`^[a-z][A-Za-z0-9]*$`)
 
 func (g *generator) sourceRange(n *node) (string, error) {
 	if !n.Begin.Valid || !n.End.Valid || n.Begin.File != n.End.File {

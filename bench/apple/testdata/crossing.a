@@ -9,9 +9,9 @@ import { Window } from 'apple/appkit/window';
 const which = programArguments()[0] ?? 'scalar';
 const times = Number.parseInt(programArguments()[1] ?? '0', 10);
 
-const window = new Window({ x: 0, y: 0, width: 100, height: 100 }, { styleMask: ['Titled'], backing: 'Buffered', defer: true });
-window.contentView = new View({ x: 0, y: 0, width: 100, height: 100 });
-const view = new View({ x: 0, y: 0, width: 10, height: 10 });
+const window = new Window({ contentRectangle: { x: 0, y: 0, width: 100, height: 100 }, styleMask: ['Titled'], backing: 'Buffered', defer: true });
+window.contentView = new View({ frame: { x: 0, y: 0, width: 100, height: 100 } });
+const view = new View({ frame: { x: 0, y: 0, width: 10, height: 10 } });
 
 let seen = 0;
 if (which === 'scalar') {

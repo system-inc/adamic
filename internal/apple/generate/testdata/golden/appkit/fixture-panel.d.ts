@@ -16,16 +16,16 @@ declare module 'apple/appkit/fixture-panel' {
 	export class FixturePanel extends FixtureRoot {
 
 		/**
-		 * +[NSFixturePanel currentPanel]
-		 * @objc static currentPanel -> object
-		 */
-		static current(): FixturePanel;
-
-		/**
 		 * -[NSFixturePanel configureMode:style:]
 		 * @objc method configureMode:style: 0:enum(Calm=0,Loud=7) 1.style:options(Plain=0,Bright=2,Quiet=8,Flipped=9223372036854775808) -> void
 		 */
 		configureMode(mode: FixtureMode, options: { readonly style: readonly FixtureStyle[] }): void;
+
+		/**
+		 * -[NSFixturePanel initWithTitle:]
+		 * @objc init initWithTitle: 0.title:string
+		 */
+		constructor(options: { readonly title: string });
 
 		/**
 		 * -[NSFixturePanel initWithRecord:]
@@ -34,10 +34,10 @@ declare module 'apple/appkit/fixture-panel' {
 		constructor(record: FixtureRecord);
 
 		/**
-		 * -[NSFixturePanel initWithTitle:]
-		 * @objc init initWithTitle: 0.title:string
+		 * +[NSFixturePanel currentPanel]
+		 * @objc static currentPanel -> object
 		 */
-		constructor(options: { readonly title: string });
+		static current(): FixturePanel;
 
 		/**
 		 * -[NSFixturePanel paint]

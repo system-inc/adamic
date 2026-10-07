@@ -73,7 +73,7 @@ inspection work; it neither links an Apple framework nor emulates one.
 | Any object | `id` binds as `NSObject`, `FoundationObject` in Adamic, which `objc/NSObject.h` declares and Foundation's module holds. |
 | Moved headers | `CGRect`, `CGPoint` and `CGSize` are defined in CoreFoundation's `CFCGTypes.h` on current SDKs and generated with CoreGraphics, where every caller finds them. |
 | Framework availability macros | A framework's own function-like macro over `availability(...)` (CoreGraphics' `SCREEN_CAPTURE_OBSOLETE(10.5,14.0,15.0)`) is expanded from its `#define`; `unavailable` or `obsoleted` on this platform leaves the declaration out. Macro names read with their digits. |
-| Runtime-only messages | `+initialize` and `+load` are the runtime's to send, and are left out. |
+| Blocks | A block parameter that returns nothing and takes what the bridge carries becomes a closure: `completionHandler:(void (NS_SWIFT_SENDABLE ^)(NSData *data, NSURLResponse *response, NSError *error))` is `block(object?,object?,object?)` and `(data: Data \| undefined, response: UrlResponse \| undefined, error: FoundationError \| undefined) => void`, its parameter names read from the header where it wrote them (after any attribute before the caret), `argument1` onward where it didn't. A block that returns a value, or takes a rectangle, enumeration, options or block, is left out. The check file declares the block in the bridge's C types, which clang refuses where the header's block differs. |\n| Targets and actions | An `id` target followed by a `SEL` action is one closure, the `action` tag, which the bridge hands Apple as both: `buttonWithTitle:target:action:` is `constructor({ title, action })`. |\n| Setters for uncrossable getters | A readwrite property whose getter's result can't cross but whose setter can (`NSView`'s `frame`, a rectangle) is offered as its setter, `setFrame(frame)`, Objective-C's own spelling, through the ordinary method rules. |\n| 64-bit integers | `long long` and typedefs over it (`int64_t`, `NSProgress`'s counts) cross as the bridge's 64-bit integers, and the check file accepts either spelling of 64 bits. |\n| Keeping words across inheritance | A method under an inherited name with another selector and no label to fold keeps the words omission dropped, when that frees the name: `NSControl`'s `drawCell(cell)` beside `NSView`'s `draw(dirtyRect)`, `NSStackView`'s `removeView(view)`. Re-declaring the inherited overloads is the last resort, since Adamic refuses to relate overloads whose parameters differ. |\n| Overload order | A name's overloads are written most fields first: tsc types a closure's parameters from the first overload it tries, so `dataTask({ with, completionHandler })` precedes `dataTask({ with })`. |\n| Runtime-only messages | `+initialize` and `+load` are the runtime's to send, and are left out. |
 | Redeclared properties | A category that redeclares a class's property (`NSSlider`'s `vertical`, readonly in a category beside the class's readwrite) is dropped, unless it widens readonly to readwrite. |
 | Unnameable members | A member the naming layer can't name yet (a zero-argument named initializer without an explicit Swift name, such as `initListDescriptor`) is left out with its reason rather than stopping the framework. |
 
@@ -106,9 +106,8 @@ settings for deprecations when compiling the full check file.
 
 ## Explicit omissions and limits
 
-One-line comments identify omitted declarations. Blocks are deliberately omitted
-by this generator, including the limited block shapes the handwritten bridge
-already carries. C arrays, variadics, unions, function pointers, other structs,
+One-line comments identify omitted declarations. Blocks beyond the shapes above,
+C arrays, variadics, unions, function pointers, other structs,
 unknown/object-pointer shapes, generic collections, unbound object types,
 opaque CF references and unsupported scalar widths are omitted. Manual retain/release/autorelease/dealloc messages, consumed parameters and
 nonconstructor consumed receivers would violate the bridge's borrowed-reference
@@ -133,37 +132,54 @@ fixture instead passes a nullable string returned by a generated property.
 Its string | undefined declaration remains independently held by the golden
 and pattern tests. No compiler change is made for this limitation.
 
-The Linux run cannot regenerate or replace the real SDK seed bindings, compile
-the check against Apple headers, link the generated C to Apple frameworks, or
-run Apple's framework methods. The real seed files remain unchanged. The Mac
-must generate the real files and compile the header witness before using them.
+The Linux run cannot generate the real SDK's bindings, compile the check against
+Apple headers, link the generated C to Apple frameworks, or run Apple's
+framework methods. The Mac generates them, compiles the check file, and only
+then serves them (below).
+
+## In the loader
+
+The loader calls `FromSDK` for Foundation, AppKit and CoreGraphics the first time
+a program imports one of their modules, writes the output into
+`~/Library/Caches/adamic/apple/macosx-<SDK build>-<Version>/` (a partial
+directory renamed into place only once complete), and refuses to serve it unless
+`CheckSDK` compiles its check file against the SDK. `Version` hashes this
+package's sources and the naming layer's, so any change to a rule makes a new
+cache. `ADAMIC_APPLE_BINDINGS` names a directory to read instead, which is how
+the lowering test compiles against the fixture's generated modules on Linux.
+Hand-written binding files stay embedded in the loader: whole modules where
+nothing is generated, and additions merged into a generated module.
 
 ## The real SDK (macOS 27.0 SDK, October 6, 2026)
 
 `go run ./cmd/adamic-apple-bindings Foundation AppKit CoreGraphics -o <directory>`
-generates all three whole: 1,378 modules, 8.7 MB, about 6 seconds. Its check
-file holds 8,160 calls and compiles clean against the real headers with
+generates all three whole: 1,383 modules, 9.1 MB, about 6 seconds. Its check
+file holds 8,664 calls and compiles clean against the real headers with
 `xcrun clang -x objective-c -fsyntax-only -fno-objc-arc -Werror
 -Wno-deprecated-declarations -fmodules`, the bridge's own mode. Under ARC, the
 checks of `NSAutoreleasePool` and `NSGarbageCollector` are refused, as they
 should be; without `-Wno-deprecated-declarations`, deprecated declarations warn.
 
-Every module type-checks under Adamic's own compiler with no errors: all of
-them concatenated in place of one seed, the other seeds blanked, and a program
-importing it compiled with `go run -overlay <overlay> ./cmd/adamic c`. The
-first such run held 197 errors: duplicates of the hand-written seeds, protocol
-overloads written as properties, and, most of them, subclass members meeting
-inherited ones.
+Every module type-checks under Adamic's own compiler with no errors: a program
+importing each of the 1,383, compiled with `ADAMIC_APPLE_BINDINGS` naming the
+output and `go run ./cmd/adamic c`. The first such run, through an overlay that
+kept the hand-written seeds beside them, held 197 errors: duplicates of the
+seeds, protocol overloads written as properties, and, most of them, subclass
+members meeting inherited ones. internal/apple's witnesses (a window with a
+button's action, two URLSession fetches through blocks, a SwiftUI counter)
+pass on these bindings, and `examples/apple/window.a` opens its window.
 
 Each rule above marked as Swift's, and the unsigned option bits, the protocol
 results, and the redeclared properties, is a wall the real headers showed, held
-on Linux by `Collision.h`, `Shapes.h` and the golden fixture. The largest
+on Linux by `Collision.h`, `Shapes.h`, `Inheritance.h`, `Closures.h` and the
+golden fixture. The largest
 omissions, by count: global constants (2,835); unbound types (1,748), mostly
 `NSRange`, `NSPoint`, `NSSize`, `CGContextRef`, `SEL` and `Class`;
 enumeration and option results (413); pointer-to-pointer parameters (331); and
 rectangle results (82).
-Output.Write does not delete old seed or previously generated files; removing
-obsolete modules is a separate SDK-generation integration step.
+
+Output.Write does not delete previously generated files; the loader writes each
+version into a directory of its own.
 
 ## Evidence
 
@@ -174,15 +190,14 @@ attribute ranges, assume-nonnull and unannotated pointers, enum expressions,
 custom properties, getter/setter pairs, categories, protocols and an excluded
 framework followed by another selected declaration.
 
-`TestCompilerLowersGeneratedModules` runs the actual command
-`go run -overlay <temporary overlay> ./cmd/adamic c testdata/bindings.a` from the
-repository root (the fixture path there is internal/apple/generate/testdata/bindings.a).
-A Go build overlay replaces one existing embedded seed file with the generated
-files' bytes and a type-only loader anchor. The program imports the generated
-modules, constructs objects and calls rectangle, enum, options, nullable-object,
-nullable-string, property, protocol and C-function bindings. It checks the emitted
-C for the selectors and conversion routines. Seed files are never edited by the
-test. This proves checking/lowering and C generation, not linking on Linux.
+`TestCompilerLowersGeneratedModules` writes the fixture's generated modules into
+a temporary directory and runs `go run ./cmd/adamic c
+internal/apple/generate/testdata/bindings.a` from the repository root with
+`ADAMIC_APPLE_BINDINGS` naming it. The program imports the generated modules,
+constructs objects and calls rectangle, enum, options, nullable-object,
+nullable-string, property, protocol, overloaded and C-function bindings. It
+checks the emitted C for the selectors and conversion routines. This proves
+checking/lowering and C generation, not linking on Linux.
 
 The standalone mutant runner edits implementation files one at a time, logs the
 selected test, requires an assertion failure rather than a Go build failure and

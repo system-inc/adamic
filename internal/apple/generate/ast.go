@@ -30,6 +30,9 @@ type node struct {
 	// KeepNeedlessWords is the generator's, not clang's: a method whose shortened name would
 	// collide with a sibling's keeps its full one (see emitClass).
 	KeepNeedlessWords bool
+	// SetterOnly is the generator's too: a property's setter offered as a method, since its
+	// getter's result can't cross (see emitClass).
+	SetterOnly bool
 }
 type astStream struct {
 	decoder *json.Decoder

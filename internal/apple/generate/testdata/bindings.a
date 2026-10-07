@@ -1,6 +1,3 @@
-// The type-only seed import anchors a Go embed overlay for the compiler test.
-import type { Window } from 'apple/appkit/window';
-export type BindingGeneratorAnchor = Window;
 import { FixturePanel } from 'apple/appkit/fixture-panel';
 import { FixtureRecord } from 'apple/foundation/fixture-record';
 import type { FixtureReadable } from 'apple/foundation/fixture-readable';
