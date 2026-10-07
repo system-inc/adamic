@@ -47,6 +47,7 @@ var Features = []string{
 	"optional-chains",  // ?. and ?? through a linked list that may end anywhere
 	"number-formats",   // toExponential and toPrecision
 	"array-from",       // Array.from({ length }, callback)
+	"parallel",         // parallelMap over readonly values, plus a share of programs that must be refused
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -222,6 +223,19 @@ func (g *generator) program() *Program {
 
 	for range 2 + g.random.IntN(4) {
 		add(g.function())
+	}
+
+	// Parallel work runs before the random statements, so a later timeout still executed it, and a
+	// refusal is the only parallelMap in the file (preflight reports that one).
+	if section, refusal := g.parallelSection(); len(section) > 0 {
+		program.Refusal = refusal
+		if refusal != "" {
+			add(statement("// parallel-refuse: " + refusal))
+		}
+		for _, part := range section {
+			add(part)
+		}
+		program.Block.Statements = append([]*Statement{statement("import { parallelMap } from 'adamic';")}, program.Block.Statements...)
 	}
 
 	for range 6 + g.random.IntN(14) {
