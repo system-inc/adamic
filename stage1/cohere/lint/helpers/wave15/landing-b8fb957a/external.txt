@@ -1,0 +1,37 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== CONT  TestTheOracleCatchesOneByte
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+--- PASS: TestTheOracleCatchesOneByte (0.45s)
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/write_files.a (0.73s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/read_files.a (0.77s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/walk.a (0.79s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a (0.81s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/arguments.a (0.60s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a (0.47s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=6
+ok  	github.com/system-inc/adamic/internal/oracle	1.208s
